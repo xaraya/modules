@@ -1,0 +1,30 @@
+<p>
+<xar:ml>
+    <xar:mlstring>
+            Dear #(1),
+    </xar:mlstring>
+    <xar:mlvar>#$coordname#</xar:mlvar>
+</xar:ml>
+</p>
+
+<p>
+<xar:ml>
+    <xar:mlstring>
+        #(1) has enrolled in your course: #(2) which starts at #(3).
+    </xar:mlstring>
+	<xar:mlvar>#$username#</xar:mlvar>
+    <xar:mlvar>#$name#</xar:mlvar>
+    <xar:mlvar>#$planitem['startdate']#</xar:mlvar>
+</xar:ml>
+</p>
+
+<p>
+<xar:mlstring>Name of the course:</xar:mlstring> #$name#<br />
+<xar:mlstring>Code of the course:</xar:mlstring> #$course['number']#<br />
+<xar:mlstring>Link to the course:</xar:mlstring> <a href="#$viewcourse#">#$viewcourse#</a>
+</p>
+
+<p>
+<xar:mlstring>Startdate:</xar:mlstring> #$planitem['startdate']#<br />
+<xar:mlstring>Link all your courses:</xar:mlstring> <a href="#$viewaccount#">#$viewaccount#</a>
+</p>

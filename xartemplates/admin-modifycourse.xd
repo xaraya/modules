@@ -141,11 +141,11 @@
                                     <span class="help" title="#xarML('Enter the user that will serve as the main contact for this course. Like the coordinator.')#">
                                     #$contactuidlabel#
                                     </span>
-                                </label>#$contactuid# <br />
-                                <xar:data-input name="contactuid" id="contactuid" type="2" value="$contactuid" />
-                              <xar:if condition="!empty($invalid['contactuid'])">
-                                <span style="color: red"><xar:mlstring>ERROR! This is not a valid contact uid for this course</xar:mlstring></span>
-                              </xar:if>
+                                </label>
+                                <xar:data-input name="contactuid" id="contactuid" type="userlist" value="$contactuid" />
+                                <xar:if condition="!empty($invalid['contactuid'])">
+                                    <span style="color: red"><xar:mlstring>ERROR! This is not a valid contact uid for this course</xar:mlstring></span>
+                                </xar:if>
                             </p>
                             <p class="param">
                                 <label for="hidecourse">

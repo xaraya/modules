@@ -27,7 +27,7 @@ function courses_user_enroll($args)
 {
  // User must be logged in and have privilege
  if (!xarSecurityCheck('ReadCourses', 0) ||!xarUserIsLoggedIn()) {
-        return $data['error'] = xarML('You must be a registered user to enroll in this course.');
+        return $data['error'] = xarML('You must be logged in to enroll in this course. Please register and login');
     }
 
  extract($args);
@@ -40,6 +40,7 @@ function courses_user_enroll($args)
     if (!empty($objectid)) {
         $planningid = $objectid;
     }
+	// What does this do?
     $courses['transform'] = array('name');
     $item = xarModCallHooks('item',
         'transform',
@@ -50,13 +51,13 @@ function courses_user_enroll($args)
     $uid = xarUserGetVar('uid');
     //Check to see if this user is already enrolled in this course
     $enrolled = xarModAPIFunc('courses',
-                          'user',
-                          'check_enrolled',
-                          array('uid' => $uid,
-                                'planningid' => $planningid));
+                              'user',
+                              'check_enrolled',
+                              array('uid' => $uid,
+                                    'planningid' => $planningid));
     if (count($enrolled)!=0) {
     $msg = xarML('You are already enrolled in this course');
-        xarErrorSet(XAR_USER_EXCEPTION, 'ALREADY_ENROLLED',
+        xarErrorSet(XAR_USER_EXCEPTION, 'ALREADY_ENROLLED', // Or other exception here?
             new SystemException(__FILE__ . '(' . __LINE__ . '): ' . $msg));
         return;
     }
@@ -69,7 +70,8 @@ function courses_user_enroll($args)
     if (!isset($planitem) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     // If user is not enrolled already go ahead and create the enrollment
-    // Get status of student
+    // Get status of student; for the moment standard status is 1
+	// TODO: make admin configurable
     $studstatus = 1;
     $regdate = date("Y-m-d H:i:s");
 

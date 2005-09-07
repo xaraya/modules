@@ -37,20 +37,25 @@ function courses_user_sendconfirms($args)
     if (!isset($planitem) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     // Get course
     $course = xarModAPIFunc('courses',
-                          'user',
-                          'get',
-                          array('courseid' => $planitem['courseid']));
+                            'user',
+                            'get',
+                            array('courseid' => $planitem['courseid']));
     if (!isset($course) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     
     $coursename = $course['name'];
     // Check to see if coordinator exists
-    $coordinators = $course['contactuid'];
-    $coordname = 'test';
+	if (!empty ($course['contactuid'])) {
+    $coordinator = $course['contactuid'];
+    $coordname = xarUserGetVar('name', $coordinator);	
+    } else {
+	$coordinator = '';
+	}
+
     // Without coordinator, send mail to AlwaysNotify
-    if (empty($course['contactuid']) || !is_numeric($course['contactuid'])) {
+    if (empty($coordinator) || !is_numeric($coordinator)) {
         $recipients = xarModGetVar('courses', 'AlwaysNotify'); 
-    } elseif (!empty($course['contactuid']) && is_numeric($course['contactuid'])) {
-        $recipients = "xarUserGetVar('email', $coordinators).','.xarModGetVar('courses', 'AlwaysNotify')";    
+    } elseif (is_numeric($coordinator)) {
+        $recipients = xarUserGetVar('email', $coordinator);//.','.xarModGetVar('courses', 'AlwaysNotify');    
     } else {
         $msg = xarML('Wrong arguments to courses_enroll', join(', ', $invalid), 'user', 'enroll', 'Courses');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
@@ -58,10 +63,10 @@ function courses_user_sendconfirms($args)
     }
     // Does not generate errors
     if(isset($recipients)) {
-        $uid = xarUserGetVar('uid');
-        $username = xarUserGetVar('name');
+        //$uid = xarUserGetVar('uid');
+        $username = xarUserGetVar('name', $userid);
         $fromname = "Webmaster"; // Get the webmaster name
-        $femail =  xarUserGetVar('email');
+        $femail =  xarUserGetVar('email', $userid);
         $subject = $username.' '.xarVarPrepForDisplay(xarML('enrolled in your course:')).' '.$coursename;
         $viewcourse = xarModUrl('courses', 'user', 'displayplanned', array('planningid' => $planningid));
         $viewaccount = xarModUrl('roles', 'user', 'account', array('moduleload' => 'courses'));
@@ -71,32 +76,33 @@ function courses_user_sendconfirms($args)
                                        'user',
                                        'sendconfirmcoordinator',
                                         array('username'   => $username,
-                                              'femail'  => $femail,
-                                              'name' => $coursename,
+										      'coordname'  => $coordname,
+                                              'femail'     => $femail,
+                                              'name'       => $coursename,
                                               'viewcourse' => $viewcourse,
-                                              'startdate'=> $planitem['startdate'],
-                                              'viewaccount'   => $viewaccount,
-                                              'regdate' => $regdate,
+                                              'startdate'  => $planitem['startdate'],
+                                              'viewaccount'=> $viewaccount,
+                                              'regdate'    => $regdate,
                                               'recipients' => $recipients,
-                                              'course' => $course,
-                                              'planitem' => $planitem),
+                                              'course'     => $course,
+                                              'planitem'   => $planitem),
                                          'text');
     
         $htmlmessage= xarTplModule('courses',
                                       'user',
                                       'sendconfirmcoordinator',
-                                       array('username'   => $username,
-                                             'femail'  => $femail,
-                                             'name' => $coursename,
-                                             'viewcourse' => $viewcourse,
-                                             'startdate'=> $planitem['startdate'],
-                                             'viewaccount'   => $viewaccount,
-                                             'regdate' => $regdate,
-                                             'recipients' => $recipients,
-                                             'course' => $course,
-                                             'planitem' => $planitem),
+                                       array('username'    => $username,
+                                             'coordname'  => $coordname,
+                                             'femail'      => $femail,
+                                             'name'        => $coursename,
+                                             'viewcourse'  => $viewcourse,
+                                             'startdate'   => $planitem['startdate'],
+                                             'viewaccount' => $viewaccount,
+                                             'regdate'     => $regdate,
+                                             'recipients'  => $recipients,
+                                             'course'      => $course,
+                                             'planitem'    => $planitem),
                                         'html');
-        
         //let's send the email now
         if (xarModAPIFunc('mail',
                           'admin',
@@ -109,7 +115,7 @@ function courses_user_sendconfirms($args)
                                  'from'         => $femail,
                                  'fromname'     => $username))) {
             
-        xarSessionSetVar('courses_statusmsg', xarML('Coordinator Notification Sent','courses'));
+			xarSessionSetVar('courses_statusmsg', xarML('Coordinator Notification Sent','courses'));
         } else {
             $msg = xarML('The message was not sent');
             xarErrorSet(XAR_SYSTEM_EXCEPTION, 'FUNCTION_FAILED', new SystemException($msg));
@@ -137,7 +143,7 @@ function courses_user_sendconfirms($args)
             $fromemail = xarUserGetVar('mail', 'adminmail');
         }
 
-        $subject = $studentname.', '.xarVarPrepForDisplay(xarML('you have been enrolled in:')).' '.$name;
+        $subject = $studentname.', '.xarVarPrepForDisplay(xarML('you have been enrolled in:')).' '.$coursename;
         $messagebody = xarVarPrepForDisplay(xarML('Please go to your course page to see the full list of your courses'));
         // send email to user with details and link
 

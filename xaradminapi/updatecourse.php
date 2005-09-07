@@ -19,6 +19,7 @@
  * @param  $args ['courseid'] the ID of the course
  * @param  $args ['name'] the new name of the item
  * @param  $args ['number'] the new number of the item
+ * @param  $args all other course variables ;)
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function courses_adminapi_updatecourse($args)
@@ -29,6 +30,7 @@ function courses_adminapi_updatecourse($args)
     if (!xarVarFetch('objectid', 'int:1:', $objectid, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('name', 'str:1:', $name)) return;
     if (!xarVarFetch('number', 'str:1:', $number)) return;
+	/*
     if (!xarVarFetch('coursetype', 'str:1:', $coursetype, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('level', 'int:1:', $level, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('shortdesc', 'str:1:', $shortdesc, '', XARVAR_NOT_REQUIRED)) return;
@@ -38,11 +40,10 @@ function courses_adminapi_updatecourse($args)
     if (!xarVarFetch('contactuid', 'int:1:', $contactuid,'', XARVAR_NOT_REQUIRED)) return;    
     if (!xarVarFetch('hidecourse', 'int:1:', $hidecourse, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('last_modified', 'str:1:', $last_modified, '', XARVAR_NOT_REQUIRED)) return;
+    */
     
-    
-    // Argument check - make sure that all required arguments are present
-    // and in the right format, if not then set an appropriate error
-    // message and return
+    // Argument check
+	// TODO: should these be in other place? Non-API?
     $invalid = array();
     if (!isset($courseid) || !is_numeric($courseid)) {
         $invalid[] = 'Course ID';
@@ -57,8 +58,7 @@ function courses_adminapi_updatecourse($args)
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
             join(', ', $invalid), 'adminapi', 'updatecourse', 'Courses');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-            new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
     // The user API function is called.
@@ -71,7 +71,7 @@ function courses_adminapi_updatecourse($args)
 
     // Security check
     if (!xarSecurityCheck('EditCourses', 1, 'Course', "$courseid:All:All")) {
-        return;
+        echo "here";
     }
     // Get database setup
     $dbconn =& xarDBGetConn();
@@ -80,24 +80,26 @@ function courses_adminapi_updatecourse($args)
     // Update the item
     $query = "UPDATE $coursestable
               SET xar_name = ?,
-                xar_number = ?,
-                xar_type = ?,
-                xar_level = ?,
-                xar_shortdesc = ?,
-                xar_language = ?,
-                xar_freq = ?,
-                xar_contact = ?,
-                xar_contactuid =?,
-                xar_hidecourse = ?,
-                xar_last_modified = ?
+                 xar_number = ?,
+                 xar_type = ?,
+                 xar_level = ?,
+                 xar_shortdesc = ?,
+                 xar_language = ?,
+                 xar_freq = ?,
+                 xar_contact = ?,
+                 xar_contactuid =?,
+                 xar_hidecourse = ?,
+                 xar_last_modified = ?
               WHERE xar_courseid = ?";
 
     $bindvars = array($name, $number, $coursetype, $level, $shortdesc, $language, $freq, $contact, $contactuid,
-                      $hidecourse, $courseid, $last_modified);
+                      $hidecourse, $last_modified, $courseid);
     $result = &$dbconn->Execute($query, $bindvars);
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
-    if (!$result) return;
+    if (!$result) {
+		return false;
+	}
     // Let any hooks know that we have updated an item.  As this is an
     // update hook we're passing the updated $item array as the extra info
     $item['module'] = 'courses';

@@ -47,8 +47,8 @@ function courses_admin_updatecourse($args)
     // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) return;
     // We don't make an invalid here... so why need it?
- //   $invalid = array();
-    /*
+    $invalid = array();
+ 
     if (empty($name)) {
         $data['name'] = '';
     } else {
@@ -104,7 +104,7 @@ function courses_admin_updatecourse($args)
     } else {
         $data['hidecourse'] = $hidecourse;
     }
-    /*
+
     // check if we have any errors
     if (count($invalid) > 0) {
        // call the admin_modifycourse function and return the template vars
@@ -124,7 +124,7 @@ function courses_admin_updatecourse($args)
                                 'last_modified' => $last_modified,
                                 'invalid' => $invalid));
     }
-    */
+
     $last_modified = date("Y-m-d H:i:s");
     // The API function is called.
     if (!xarModAPIFunc('courses',
@@ -142,11 +142,11 @@ function courses_admin_updatecourse($args)
                              'contactuid' => $contactuid,
                              'hidecourse' => $hidecourse,
                              'last_modified' => $last_modified))) {
-        echo" error"; // throw back
+        return false; // throw back
     } 
+	// TODO: how to remove previous statusmsg?
     xarSessionSetVar('statusmsg', xarML('Course Was Successfully Updated!'));
-    // This function generated no output, and so now it is complete we redirect
-    // the user to an appropriate page for them to carry on their work
+
     xarResponseRedirect(xarModURL('courses', 'admin', 'viewcourses', array('courseid' => $courseid)));
     // Return
     return true;
