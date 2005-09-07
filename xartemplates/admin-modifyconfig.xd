@@ -82,7 +82,7 @@
 
 <xar:comment> ************************ Begin Install Options ************************</xar:comment>
     <xar:if condition="$tab eq 'basic'">
-        <form class="xar-formwidget" action="#xarModUrl('tinymce', 'admin', 'updateconfig')#" method="post" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);" enctype="application/x-www-form-urlencoded" >
+        <form class="xar-formwidget" action="#xarModUrl('tinymce', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded" >
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <input type="hidden" name="tab" id="tab" value="#$tab#" />
        <fieldset class="formelements xar-norm">
@@ -202,7 +202,7 @@
     </form>
  <xar:comment> ************************ Begin Basic Config Options ************************</xar:comment>
     <xar:elseif condition="$tab eq 'general'" />
-        <form class="xar-formwidget" action="#xarModUrl('tinymce', 'admin', 'updateconfig')#" method="post" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);" enctype="application/x-www-form-urlencoded" >
+        <form class="xar-formwidget" action="#xarModUrl('tinymce', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded" >
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <input type="hidden" name="tab" id="tab" value="#$tab#" />
         <fieldset class="formelements xar-norm">
@@ -425,7 +425,7 @@
 <xar:comment> ************************ Begin CSS and Plugin Options********************</xar:comment>
 
   <xar:elseif condition="$tab eq 'cssplug'" />
-       <form class="xar-formwidget" action="#xarModUrl('tinymce', 'admin', 'updateconfig')#" method="post" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);" enctype="application/x-www-form-urlencoded" >
+       <form class="xar-formwidget" action="#xarModUrl('tinymce', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded" >
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <input type="hidden" name="tab" id="tab" value="#$tab#" />
 
@@ -585,7 +585,7 @@
 
 <xar:comment> ************************ Advanced Theme Options********************</xar:comment>
     <xar:elseif condition="$tab eq 'customadvanced'" />
-        <form class="xar-formwidget" action="#xarModUrl('tinymce', 'admin', 'updateconfig')#" method="post" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);" enctype="application/x-www-form-urlencoded" >
+        <form class="xar-formwidget" action="#xarModUrl('tinymce', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded" >
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <input type="hidden" name="tab" id="tab" value="#$tab#" />
         <fieldset class="formelements xar-norm">
@@ -781,7 +781,7 @@
         </form>
 <xar:comment> ************************ Custom Config Option********************</xar:comment>
     <xar:elseif condition="$tab eq 'customconfig'" />
-        <form class="xar-formwidget" action="#xarModUrl('tinymce', 'admin', 'updateconfig')#" method="post" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);" enctype="application/x-www-form-urlencoded" >
+        <form class="xar-formwidget" action="#xarModUrl('tinymce', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded" >
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <input type="hidden" name="tab" id="tab" value="#$tab#" />
       <fieldset class="formelements xar-norm">
