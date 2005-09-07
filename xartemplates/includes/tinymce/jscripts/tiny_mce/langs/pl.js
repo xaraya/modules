@@ -1,6 +1,6 @@
 // PL lang variables
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 bold_desc : 'Pogrubienie',
 italic_desc : 'Kursywa',
 underline_desc : 'Podkreslenie',

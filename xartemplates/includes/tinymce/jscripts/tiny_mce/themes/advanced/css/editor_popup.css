@@ -250,11 +250,37 @@ legend {
 }
 
 .properties .column1 {
-	text-al2ign: right;
 }
 
 .properties .column2 {
 	text-align: left;
+}
+
+a:link, a:visited {
+	color: black;
+}
+
+a:hover {
+	color: #2B6FB6;
+}
+
+#plugintable thead {
+	font-weight: bold;
+	background-color: #DDDDDD;
+}
+
+#plugintable, #about #plugintable td {
+	border: 1px solid #919B9C;
+}
+
+#plugintable {
+	width: 99%;
+	margin-top: 10px;
+}
+
+#pluginscontainer {
+	height: 290px;
+	overflow: auto;
 }
 
 /* MSIE Specific styles */

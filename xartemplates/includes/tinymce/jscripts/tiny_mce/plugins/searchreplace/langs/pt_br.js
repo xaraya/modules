@@ -1,6 +1,6 @@
 // pt_BR lang variables
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 searchreplace_search_desc : 'Procurar',
 searchreplace_searchnext_desc : 'Procurar novamente',
 searchreplace_replace_desc : 'Procurar/Substituir',

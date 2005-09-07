@@ -1,6 +1,6 @@
 // DK lang variables contributed by Jan Moelgaard
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 theme_style_select : 'Styles',
 theme_code_desc : 'Rediger html-kode',
 theme_code_title : 'HTML Kodeeditor',

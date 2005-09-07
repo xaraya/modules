@@ -1,6 +1,6 @@
 // CS lang variables
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 fullscreen_title : 'Fullscreen',
 fullscreen_desc : 'Pr(epnout na fullscreen'
 });

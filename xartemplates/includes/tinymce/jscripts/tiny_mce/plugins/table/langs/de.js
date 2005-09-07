@@ -1,6 +1,6 @@
 // DE lang variables 
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 table_desc : 'Neue Tabelle einf&uuml;gen / Tabelle bearbeiten',
 table_insert_row_before_desc : 'Zeile davor einf&uuml;gen',
 table_insert_row_after_desc : 'Zeile danach einf&uuml;gen',

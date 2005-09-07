@@ -1,6 +1,6 @@
 // JP lang variables
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 table_desc : 'テーブル',
 table_insert_row_before_desc : '行挿入(前)',
 table_insert_row_after_desc : '行挿入(後)',

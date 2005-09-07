@@ -1,6 +1,6 @@
 // Arabic lang variables
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 table_desc : '&#1573;&#1583;&#1585;&#1575;&#1580;/&#1578;&#1581;&#1585;&#1610;&#1585; &#1580;&#1583;&#1608;&#1604;',
 table_insert_row_before_desc : 'Insert row before',
 table_insert_row_after_desc : 'Insert row after',

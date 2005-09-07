@@ -1,6 +1,6 @@
 // PL lang variables
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 insertdate_def_fmt : '%Y-%m-%d',
 inserttime_def_fmt : '%H:%M:%S',
 insertdate_desc : 'Wstaw aktualna date',

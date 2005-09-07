@@ -1,6 +1,6 @@
 // HU lang variables, Edited by 2XP (2xp@dino.hu)
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 table_desc : '&#218;j t&#225;bl&#225;zat beilleszt&#233;se',
 table_insert_row_before_desc : 'Sor beilleszt&#233;se el&#233;',
 table_insert_row_after_desc : 'Sor beilleszt&#233;se ut&#225;na',

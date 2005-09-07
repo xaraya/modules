@@ -1,5 +1,5 @@
 // UK lang variables
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 save_desc : 'Save'
 });

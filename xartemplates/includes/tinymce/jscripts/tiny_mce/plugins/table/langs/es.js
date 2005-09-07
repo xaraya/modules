@@ -1,6 +1,6 @@
 // ES lang variables by Alvaro Velasco
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 table_desc : 'Insertar una tabla nueva',
 table_insert_row_before_desc : 'Insertar una fila antes',
 table_insert_row_after_desc : 'Insertar una fila despues',

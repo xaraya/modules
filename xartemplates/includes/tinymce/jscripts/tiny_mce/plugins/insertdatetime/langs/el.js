@@ -1,6 +1,6 @@
 // Greek lang variables by Jacaranda Bill
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 insertdate_def_fmt : '%Y-%m-%d',
 inserttime_def_fmt : '%H:%M:%S',
 insertdate_desc : 'Εισαγωγή ημερομηνίας',

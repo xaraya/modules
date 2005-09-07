@@ -2,7 +2,7 @@
 // Translated 2004 by Crazy Chrissi
 // Edited 2004 by Krokogras
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 theme_style_select : 'Styles',
 theme_code_desc : 'HTML-Modus',
 theme_code_title : 'HTML-Code Editor',

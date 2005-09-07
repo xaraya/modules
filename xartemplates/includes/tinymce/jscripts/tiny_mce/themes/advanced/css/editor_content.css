@@ -39,17 +39,17 @@ pre {
 	background-repeat: no-repeat;
 }
 
-/* Fix for MS Office style paragraphs (MsoNormal) */
-/*
-p {
-	margin: 0px;
-	padding: 0px;
-}
-*/
-
 /* Important is needed in Gecko browsers inorder to style links */
 /*
 a {
 	color: green !important;
+}
+*/
+
+/* Style selection range colors in Gecko browsers */
+/*
+::-moz-selection {
+	background-color: red;
+	color: green;
 }
 */

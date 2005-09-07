@@ -1,6 +1,16 @@
 /* Import plugin specific language pack */
 tinyMCE.importPluginLanguagePack('insertdatetime', 'cs,el,en,fr_ca,it,ko,sv,zh_cn,fa,fr,de,pl,pt_br,nl');
 
+function TinyMCE_insertdatetime_getInfo() {
+	return {
+		longname : 'Insert date/time',
+		author : 'Moxiecode Systems',
+		authorurl : 'http://tinymce.moxiecode.com',
+		infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_insertdatetime.html',
+		version : '2.0RC1'
+	};
+};
+
 /**
  * Returns the HTML contents of the insertdate, inserttime controls.
  */

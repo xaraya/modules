@@ -1,6 +1,6 @@
 // FI lang variables by Urho Konttori from Absolutions
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 table_desc : 'Lis‰‰ uusi taulu',
 table_insert_row_before_desc : 'Lis‰‰ rivi edelle',
 table_insert_row_after_desc : 'Lis‰‰ rivi j‰lkeen',

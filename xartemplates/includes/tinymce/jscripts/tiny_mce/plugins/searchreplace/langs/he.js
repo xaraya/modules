@@ -1,6 +1,6 @@
 // HE lang variables by Liron Newman, http://eesh.net
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 searchreplace_search_desc : 'חפש',
 searchreplace_searchnext_desc : 'חפש שוב',
 searchreplace_replace_desc : 'חפש/החלף',

@@ -1,6 +1,6 @@
 // Greek lang variables by Jacaranda Bill
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 table_desc : 'Εισαγωγή πίνακα',
 table_insert_row_before_desc : 'Εισαγωγή γραμμής επάνω',
 table_insert_row_after_desc : 'Εισαγωγή γραμμής κάτω',

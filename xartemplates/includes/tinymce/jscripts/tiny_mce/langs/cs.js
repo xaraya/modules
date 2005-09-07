@@ -1,6 +1,6 @@
 // CZ lang variables thanks to "Pavel Novák" - repaired by Josef Klimosz
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 bold_desc : 'Tuènì',
 italic_desc : 'Kurzíva',
 underline_desc : 'Podtržení',

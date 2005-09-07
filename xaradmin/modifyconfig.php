@@ -69,7 +69,10 @@ function tinymce_admin_modifyconfig()
     $data['tinytilemap'] = xarModGetVar('tinymce', 'tinytilemap');
     $data['tinyadvresize'] = xarModGetVar('tinymce', 'tinyadvresize');
     $data['tinyenablepath'] = xarModGetVar('tinymce', 'tinyenablepath');
-    $data['tinyresizehorizontal'] = xarModGetVar('tinymce', 'tinyresizehorizontal');    
+    $data['tinyresizehorizontal'] = xarModGetVar('tinymce', 'tinyresizehorizontal');   
+    $data['tinyeditorselector'] = xarModGetVar('tinymce', 'tinyeditorselector');        
+    $data['tinyeditordeselector'] = xarModGetVar('tinymce', 'tinyeditordeselector');
+
     if (!isset($data['tinybrowsers'])){
         $data['tinybrowsers']='msie,gecko,safari';
     }
@@ -77,7 +80,9 @@ function tinymce_admin_modifyconfig()
     if (!isset($data['usebutton']) || ($data['tinymode']=='textareas')){
         $data['usebutton']=0;
     }
-    
+     if (!isset($data['tinyeditordeselector'])){
+        $data['tinyeditordeselector']='mceEditor';
+    }
     $examplestring='tinyMCE.init({
         mode : "textareas",
         editor_selector : "MyEditorConfig",

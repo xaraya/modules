@@ -1,6 +1,6 @@
 // PT lang variables
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 theme_style_select : 'Estilos CSS',
 theme_code_desc : 'Editar Fonte HTML',
 theme_code_title : 'Editor de fonte HTML',

@@ -1,6 +1,16 @@
 /* Import theme	specific language pack */
 tinyMCE.importPluginLanguagePack('searchreplace', 'en,sv,zh_cn,fa,fr_ca,fr,de,pl,pt_br,cs,nl');
 
+function TinyMCE_searchreplace_getInfo() {
+	return {
+		longname : 'Search/Replace',
+		author : 'Moxiecode Systems',
+		authorurl : 'http://tinymce.moxiecode.com',
+		infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_searchreplace.html',
+		version : '2.0RC1'
+	};
+};
+
 function TinyMCE_searchreplace_getControlHTML(control_name)	{
 	switch (control_name) {
 		case "search":

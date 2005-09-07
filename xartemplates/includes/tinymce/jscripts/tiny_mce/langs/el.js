@@ -1,6 +1,6 @@
 // Greek lang variables by Jacaranda Bill
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 bold_desc : 'Έντονη γραφή',
 italic_desc : 'Πλάγια γραφή',
 underline_desc : 'Υπογράμμιση',

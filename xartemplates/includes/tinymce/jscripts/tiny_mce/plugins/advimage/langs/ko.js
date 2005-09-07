@@ -1,6 +1,6 @@
 // KO lang variables
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 insert_image_alt2 : '그림 제목',
 insert_image_onmousemove : '대체 이미지',
 insert_image_mouseover : '마우스를 올렸을 때',

@@ -1,6 +1,6 @@
 // UK lang variables
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 bold_desc : 'Bold',
 italic_desc : 'Italic',
 underline_desc : 'Underline',

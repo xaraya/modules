@@ -1,6 +1,6 @@
 // NL lang variables
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 theme_style_select : 'Stijlen',
 theme_code_desc : 'Toon/bewerk HTML broncode',
 theme_code_title : 'HTML broncode editor',

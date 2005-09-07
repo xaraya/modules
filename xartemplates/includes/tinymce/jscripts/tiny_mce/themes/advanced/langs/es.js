@@ -1,6 +1,6 @@
 // ES lang variables by Alvaro Velasco
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 theme_style_select : 'Estilos',
 theme_code_desc : 'Editar codigo HTML',
 theme_code_title : 'Editor codigo HTML',

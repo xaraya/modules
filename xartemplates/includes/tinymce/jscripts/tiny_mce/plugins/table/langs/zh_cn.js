@@ -1,7 +1,7 @@
 // Simplified Chinese lang variables contributed by cube316 (cube316@gmail.com)
 //请访问 http://www.cube316.net/ 以获取TinyMCE的中文支持
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 table_desc : '插入新表格',
 table_insert_row_before_desc : '在前面插入行',
 table_insert_row_after_desc : '在后面插入行',

@@ -28,7 +28,7 @@ function insertTable() {
 
 	// Update table
 	if (action == "update") {
-		inst.execCommand("mceAddUndoLevel");
+		inst.execCommand('mceBeginUndoLevel');
 
 		tinyMCE.setAttrib(elm, 'cellPadding', cellpadding, true);
 		tinyMCE.setAttrib(elm, 'cellSpacing', cellspacing, true);
@@ -55,6 +55,7 @@ function insertTable() {
 
 		tinyMCE.handleVisualAid(inst.getBody(), true, inst.visualAid, inst);
 		tinyMCE.triggerNodeChange();
+		inst.execCommand('mceEndUndoLevel');
 		tinyMCEPopup.close();
 		return true;
 	}
@@ -90,8 +91,11 @@ function insertTable() {
 
 	html += "</table>";
 
+	inst.execCommand('mceBeginUndoLevel');
 	inst.execCommand('mceInsertContent', false, html);
 	tinyMCE.handleVisualAid(inst.getBody(), true, tinyMCE.settings['visual']);
+	inst.execCommand('mceEndUndoLevel');
+
 	tinyMCEPopup.close();
 }
 
@@ -169,30 +173,7 @@ function init() {
 		action = "update";
 	}
 
-	var className = className;
-	var styleSelectElm = document.forms[0].elements['class'];
-	var stylesAr = tinyMCE.getParam('theme_advanced_styles', false);
-	if (stylesAr) {
-		stylesAr = stylesAr.split(';');
-
-		for (var i=0; i<stylesAr.length; i++) {
-			var key, value;
-
-			key = stylesAr[i].split('=')[0];
-			value = stylesAr[i].split('=')[1];
-
-			styleSelectElm.options[styleSelectElm.length] = new Option(key, value);
-			if (value == className)
-				styleSelectElm.options.selectedIndex = styleSelectElm.options.length-1;
-		}
-	} else {
-		var csses = tinyMCE.getCSSClasses(tinyMCE.getWindowArg('editor_id'));
-		for (var i=0; i<csses.length; i++) {
-			styleSelectElm.options[styleSelectElm.length] = new Option(csses[i], csses[i]);
-			if (csses[i] == className)
-				styleSelectElm.options.selectedIndex = styleSelectElm.options.length-1;
-		}
-	}
+	addClassesToList('class', "table_styles");
 
 	// Update form
 	selectByValue(formObj, 'align', align);
@@ -218,7 +199,7 @@ function init() {
 	updateColor('bgcolor_pick', 'bgcolor');
 
 	// Resize some elements
-	if (tinyMCE.getParam("file_browser_callback") != null)
+	if (isVisible('backgroundimagebrowser'))
 		document.getElementById('backgroundimage').style.width = '180px';
 
 	// Disable some fields in update mode

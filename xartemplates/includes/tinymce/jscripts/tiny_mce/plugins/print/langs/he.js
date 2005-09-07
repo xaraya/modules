@@ -1,5 +1,5 @@
 // HE lang variables by Liron Newman, http://eesh.net
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 print_desc : 'הדפס'
 });

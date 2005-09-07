@@ -1,6 +1,6 @@
 // CZ lang variables
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 insert_link_target_same : 'Otevøít ve stejném oknì/rámu',
 insert_link_target_parent : 'Otevøít v rodièovském oknì/rámu',
 insert_link_target_top : 'Otevøít v nejvyšším rámu (pøepíše všechny rámy)',

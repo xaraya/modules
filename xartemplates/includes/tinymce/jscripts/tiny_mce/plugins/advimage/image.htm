@@ -11,53 +11,53 @@
     <form onsubmit="insertAction();return false;" action="#"> 
 		<div class="tabs">
 			<ul>
-				<li id="general_tab" class="current"><span><a href="javascript:mcTabs.displayTab('general_tab','general_panel');" onmousedown="return false;">General</a></span></li>
-				<li id="appearance_tab"><span><a href="javascript:mcTabs.displayTab('appearance_tab','appearance_panel');" onmousedown="return false;">Appearance</a></span></li>
-				<li id="advanced_tab"><span><a href="javascript:mcTabs.displayTab('advanced_tab','advanced_panel');" onmousedown="return false;">Advanced</a></span></li>
+				<li id="general_tab" class="current"><span><a href="javascript:mcTabs.displayTab('general_tab','general_panel');" onmousedown="return false;">{$lang_advimage_tab_general}</a></span></li>
+				<li id="appearance_tab"><span><a href="javascript:mcTabs.displayTab('appearance_tab','appearance_panel');" onmousedown="return false;">{$lang_advimage_tab_appearance}</a></span></li>
+				<li id="advanced_tab"><span><a href="javascript:mcTabs.displayTab('advanced_tab','advanced_panel');" onmousedown="return false;">{$lang_advimage_tab_advanced}</a></span></li>
 			</ul>
 		</div>
 
 		<div class="panel_wrapper">
 			<div id="general_panel" class="panel current">
 				<fieldset>
-						<legend>General</legend>
+						<legend>{$lang_advimage_general}</legend>
 
 						<table class="properties">
 							<tr>
-								<td class="column1"><label id="srclabel" for="src">{$lang_insert_image_src}:</label></td>
+								<td class="column1"><label id="srclabel" for="src">{$lang_insert_image_src}</label></td>
 								<td colspan="2"><table border="0" cellspacing="0" cellpadding="0">
 									<tr> 
-									  <td><input name="src" type="text" id="src" value="" style="width: 280px" onchange="showPreviewImage(this.value);" /></td> 
-									  <td><script language="javascript" type="text/javascript">renderBrowser('srcbrowser','src','image');</script></td>
+									  <td><input name="src" type="text" id="src" value="" onchange="showPreviewImage(this.value);" /></td> 
+									  <td><script language="javascript" type="text/javascript">renderBrowser('srcbrowser','src','image','advimage');</script></td>
 									</tr>
 								  </table></td>
 							</tr>
 							<script language="javascript" type="text/javascript">renderImageList('imagelistsrc','src','onSelectMainImage');</script>
 							<tr> 
-								<td class="column1"><label id="altlabel" for="alt">{$lang_insert_image_alt}:</label></td> 
-								<td colspan="2"><input id="alt" name="alt" type="text" value="" style="width: 280px" /></td> 
+								<td class="column1"><label id="altlabel" for="alt">{$lang_insert_image_alt}</label></td> 
+								<td colspan="2"><input id="alt" name="alt" type="text" value="" /></td> 
 							</tr> 
 							<tr> 
-								<td class="column1"><label id="titlelabel" for="title">{$lang_insert_image_alt2}:</label></td> 
-								<td colspan="2"><input id="title" name="title" type="text" value="" style="width: 280px" /></td> 
+								<td class="column1"><label id="titlelabel" for="title">{$lang_advimage_title}</label></td> 
+								<td colspan="2"><input id="title" name="title" type="text" value="" /></td> 
 							</tr>
 						</table>
 				</fieldset>
 
 				<fieldset>
-					<legend>Preview</legend>
-					<div id="prev" style="margin:0px; border: 1px solid black; width: 99%; height:150px; overflow: auto;"></div>
+					<legend>{$lang_advimage_preview}</legend>
+					<div id="prev"></div>
 				</fieldset>
 			</div>
 
 			<div id="appearance_panel" class="panel">
 				<fieldset>
-					<legend>Appearance</legend>
+					<legend>{$lang_advimage_tab_appearance}</legend>
 
 					<table border="0" cellpadding="4" cellspacing="0">
 						<tr> 
-							<td class="column1"><label id="alignlabel" for="align">{$lang_insert_image_align}:</label></td> 
-							<td><select id="align" name="align" style="width: 150px" onchange="changeAppearance();"> 
+							<td class="column1"><label id="alignlabel" for="align">{$lang_insert_image_align}</label></td> 
+							<td><select id="align" name="align" onchange="changeAppearance();"> 
 									<option value="">{$lang_insert_image_align_default}</option> 
 									<option value="baseline">{$lang_insert_image_align_baseline}</option> 
 									<option value="top">{$lang_insert_image_align_top}</option> 
@@ -72,7 +72,7 @@
 							</td>
 							<td rowspan="7" valign="top">
 								<div class="alignPreview">
-									<img id="alignSampleImg" src="images/sample.gif" />
+									<img id="alignSampleImg" src="images/sample.gif" alt="{$lang_advimage_example_img}" />
 									Lorem ipsum, Dolor sit amet, consectetuer adipiscing loreum ipsum edipiscing elit, sed diam
 									nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.Loreum ipsum
 									edipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam
@@ -80,12 +80,21 @@
 								</div>
 							</td>
 						</tr>
-						<script language="javascript" type="text/javascript">renderClassesList('class');</script>
+
 						<tr>
-							<td class="column1"><label id="widthlabel" for="width">{$lang_insert_image_dimensions}:</label></td>
+							<td><label id="classlabel" for="classlist">{$lang_class_name}</label></td>
+							<td>
+								 <select id="classlist" name="classlist">
+									<option value="" selected>{$lang_not_set}</option>
+								 </select>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="column1"><label id="widthlabel" for="width">{$lang_insert_image_dimensions}</label></td>
 							<td nowrap="nowrap">
-								<input name="width" type="text" id="width" value="" size="5" maxlength="5" style="vertical-align: middle; width: 50px; text-align: center;" onchange="changeHeight();" /> x 
-								<input name="height" type="text" id="height" value="" size="5" maxlength="5" style="vertical-align: middle; width: 50px; text-align: center;" onchange="changeWidth();" /> px
+								<input name="width" type="text" id="width" value="" size="5" maxlength="5" onchange="changeHeight();" /> x 
+								<input name="height" type="text" id="height" value="" size="5" maxlength="5" onchange="changeWidth();" /> px
 							</td>
 						</tr>
 
@@ -94,59 +103,64 @@
 							<td><table border="0" cellpadding="0" cellspacing="0">
 									<tr>
 										<td><input id="constrain" type="checkbox" name="constrain" class="checkbox" /></td>
-										<td><label id="constrainlabel" for="constrain">Constrain proportions</label></td>
+										<td><label id="constrainlabel" for="constrain">{$lang_advimage_constrain_proportions}</label></td>
 									</tr>
 								</table></td>
 						</tr>
 
 						<tr>
-							<td class="column1"><label id="vspacelabel" for="vspace">{$lang_insert_image_vspace}:</label></td> 
-							<td><input name="vspace" type="text" id="vspace" value="" size="3" maxlength="3" style="vertical-align: middle; width: 30px; text-align: center;" onchange="changeAppearance();updateStyle();" />
+							<td class="column1"><label id="vspacelabel" for="vspace">{$lang_insert_image_vspace}</label></td> 
+							<td><input name="vspace" type="text" id="vspace" value="" size="3" maxlength="3" onchange="changeAppearance();updateStyle();" />
 							</td>
 						</tr>
 
 						<tr> 
-							<td class="column1"><label id="hspacelabel" for="hspace">{$lang_insert_image_hspace}:</label></td> 
-							<td><input name="hspace" type="text" id="hspace" value="" size="3" maxlength="3" style="vertical-align: middle; width: 30px; text-align: center;" onchange="changeAppearance();updateStyle();" /></td> 
+							<td class="column1"><label id="hspacelabel" for="hspace">{$lang_insert_image_hspace}</label></td> 
+							<td><input name="hspace" type="text" id="hspace" value="" size="3" maxlength="3" onchange="changeAppearance();updateStyle();" /></td> 
 						</tr>
 
 						<tr>
-							<td class="column1"><label id="borderlabel" for="border">{$lang_insert_image_border}:</label></td> 
-							<td><input id="border" name="border" type="text" value="" size="3" maxlength="3" style="vertical-align: middle; width: 30px; text-align: center;" onchange="changeAppearance();updateStyle();" /></td> 
+							<td class="column1"><label id="borderlabel" for="border">{$lang_insert_image_border}</label></td> 
+							<td><input id="border" name="border" type="text" value="" size="3" maxlength="3" onchange="changeAppearance();updateStyle();" /></td> 
 						</tr>
 
 						<tr>
-							<td class="column1"><label id="stylelabel" for="style">Style</label></td> 
-							<td colspan="2"><input id="style" name="style" type="text" value="" style="width: 280px" onchange="styleUpdated();" /></td> 
+							<td class="column1"><label id="stylelabel" for="style">{$lang_advimage_style}</label></td> 
+							<td colspan="2"><input id="style" name="style" type="text" value="" onchange="styleUpdated();" /></td> 
 						</tr>
+
+						<!-- <tr>
+							<td class="column1"><label id="classeslabel" for="classes">{$lang_advimage_classes}</label></td> 
+							<td colspan="2"><input id="classes" name="classes" type="text" value="" onchange="selectByValue(this.form,'classlist',this.value,true);" /></td> 
+						</tr> -->
 					</table>
 				</fieldset>
 			</div>
 
 			<div id="advanced_panel" class="panel">
 				<fieldset>
-					<legend>Swap image</legend>
+					<legend>{$lang_advimage_swap_image}</legend>
 
 					<input type="checkbox" id="onmousemovecheck" name="onmousemovecheck" class="checkbox" onclick="changeMouseMove();" />
-					<label id="onmousemovechecklabel" for="onmousemovecheck">{$lang_insert_image_onmousemove}</label>
+					<label id="onmousemovechecklabel" for="onmousemovecheck">{$lang_advimage_alt_image}</label>
 
 					<table border="0" cellpadding="4" cellspacing="0" width="100%">
 							<tr>
-								<td class="column1"><label id="onmouseoversrclabel" for="onmouseoversrc">{$lang_insert_image_mouseover}:</label></td> 
+								<td class="column1"><label id="onmouseoversrclabel" for="onmouseoversrc">{$lang_advimage_mouseover}</label></td> 
 								<td><table border="0" cellspacing="0" cellpadding="0"> 
 									<tr> 
-									  <td><input id="onmouseoversrc" name="onmouseoversrc" type="text" value="" style="width: 240px" /></td> 
-									  <td><script language="javascript" type="text/javascript">renderBrowser('overbrowser','onmouseoversrc','image');</script></td>
+									  <td><input id="onmouseoversrc" name="onmouseoversrc" type="text" value="" /></td> 
+									  <td><script language="javascript" type="text/javascript">renderBrowser('overbrowser','onmouseoversrc','image','advimage');</script></td>
 									</tr>
 								  </table></td>
 							</tr>
 							<script language="javascript" type="text/javascript">renderImageList('imagelistover','onmouseoversrc');</script>
 							<tr> 
-								<td class="column1"><label id="onmouseoutsrclabel" for="onmouseoutsrc">{$lang_insert_image_mouseout}:</label></td> 
+								<td class="column1"><label id="onmouseoutsrclabel" for="onmouseoutsrc">{$lang_advimage_mouseout}</label></td> 
 								<td class="column2"><table border="0" cellspacing="0" cellpadding="0"> 
 									<tr> 
-									  <td><input id="onmouseoutsrc" name="onmouseoutsrc" type="text" value=""  style="width: 240px" /></td> 
-									  <td><script language="javascript" type="text/javascript">renderBrowser('outbrowser','onmouseoutsrc','image');</script></td>
+									  <td><input id="onmouseoutsrc" name="onmouseoutsrc" type="text" value="" /></td> 
+									  <td><script language="javascript" type="text/javascript">renderBrowser('outbrowser','onmouseoutsrc','image','advimage');</script></td>
 									</tr> 
 								  </table></td> 
 							</tr>
@@ -155,45 +169,45 @@
 				</fieldset>
 
 				<fieldset>
-					<legend>Miscellaneous</legend>
+					<legend>{$lang_advimage_misc}</legend>
 
 					<table border="0" cellpadding="4" cellspacing="0">
 						<tr>
-							<td class="column1"><label id="idlabel" for="id">Id</label></td> 
-							<td><input id="id" name="id" type="text" value="" style="width: 150px" /></td> 
+							<td class="column1"><label id="idlabel" for="id">{$lang_advimage_id}</label></td> 
+							<td><input id="id" name="id" type="text" value="" /></td> 
 						</tr>
 
 						<tr>
-							<td class="column1"><label id="dirlabel" for="dir">Language direction:</label></td> 
+							<td class="column1"><label id="dirlabel" for="dir">{$lang_advimage_langdir}</label></td> 
 							<td>
-								<select id="dir" name="dir" style="width: 150px" onchange="changeAppearance();"> 
+								<select id="dir" name="dir" onchange="changeAppearance();"> 
 										<option value="">{$lang_not_set}</option> 
-										<option value="ltr">Left to right</option> 
-										<option value="rtl">Right to left</option> 
+										<option value="ltr">{$lang_advimage_ltr}</option> 
+										<option value="rtl">{$lang_advimage_rtl}</option> 
 								</select>
 							</td> 
 						</tr>
 
 						<tr>
-							<td class="column1"><label id="langlabel" for="lang">Language code:</label></td> 
+							<td class="column1"><label id="langlabel" for="lang">{$lang_advimage_langcode}</label></td> 
 							<td>
-								<input id="lang" name="lang" type="text" value="" style="width: 150px" />
+								<input id="lang" name="lang" type="text" value="" />
 							</td> 
 						</tr>
 
 						<tr>
-							<td class="column1"><label id="usemaplabel" for="usemap">Image map:</label></td> 
+							<td class="column1"><label id="usemaplabel" for="usemap">{$lang_advimage_image_map}</label></td> 
 							<td>
-								<input id="usemap" name="usemap" type="text" value="" style="width: 150px" />
+								<input id="usemap" name="usemap" type="text" value="" />
 							</td> 
 						</tr>
 
 						<tr>
-							<td class="column1"><label id="longdesclabel" for="longdesc">Long description link:</label></td>
+							<td class="column1"><label id="longdesclabel" for="longdesc">{$lang_advimage_long_desc}</label></td>
 							<td><table border="0" cellspacing="0" cellpadding="0">
 									<tr>
-									  <td><input id="longdesc" name="longdesc" type="text" value="" style="width: 230px" /></td>
-									  <td><script language="javascript" type="text/javascript">renderBrowser('longdescbrowser','longdesc','file');</script></td>
+									  <td><input id="longdesc" name="longdesc" type="text" value="" /></td>
+									  <td><script language="javascript" type="text/javascript">renderBrowser('longdescbrowser','longdesc','file','advimage');</script></td>
 									</tr>
 								</table></td> 
 						</tr>

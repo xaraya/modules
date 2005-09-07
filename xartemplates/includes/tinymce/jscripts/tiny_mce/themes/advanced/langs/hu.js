@@ -1,7 +1,7 @@
 // HU lang variables
 // Edited by 2XP (2xp@dino.hu)
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 theme_style_select : 'St&#237;lusok',
 theme_code_desc : 'HTML k&#243;d szerkeszt&#233;se',
 theme_code_title : 'HTML k&#243;dszerkezt&#245;',

@@ -1,6 +1,6 @@
 // DK lang variables contributed by Jan Moelgaard
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 table_desc : 'Inds&#230;tter en ny tabel',
 table_insert_row_before_desc : 'Inds&#230;t r&#230;kke foran',
 table_insert_row_after_desc : 'Inds&#230;t r&#230;kke efter',

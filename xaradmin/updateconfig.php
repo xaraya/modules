@@ -48,6 +48,9 @@ function tinymce_admin_updateconfig()
             if (!xarVarFetch('tinynowrap','str:1:',$tinynowrap,'false',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinypara','str:1:',$tinypara,'false',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinytilemap','str:1:',$tinytilemap,'true',XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('tinyeditorselector','str:1:',$tinyeditorselector,'mceEditor',XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('tinyeditordeselector','str:1:',$tinyeditordeselector,'',XARVAR_NOT_REQUIRED)) return;
+
                xarModSetVar('tinymce', 'tinytheme', $tinytheme);
                xarModSetVar('tinymce', 'tinyask', $tinyask);
                xarModSetVar('tinymce', 'tinyundolevel',$tinyundolevel);
@@ -62,7 +65,8 @@ function tinymce_admin_updateconfig()
                xarModSetVar('tinymce', 'usebutton', $usebutton);
                xarModSetVar('tinymce', 'tinybrowsers', $tinybrowsers);
                xarModSetVar('tinymce', 'tinytilemap', $tinytilemap);
-
+               xarModSetVar('tinymce', 'tinyeditorselector', $tinyeditorselector);               
+               xarModSetVar('tinymce', 'tinyeditordeselector', $tinyeditordeselector);
             break;
         case 'cssplug':
             if (!xarVarFetch('tinyextended','str:1:',$tinyextended,'code,pre,blockquote/quote',XARVAR_NOT_REQUIRED)) return;
@@ -133,7 +137,9 @@ function tinymce_admin_updateconfig()
     if ($tinymode=='textareas'){
           xarModSetVar('tinymce','usebutton',0);
     }
-
+    if (trim(xarModGetVar('tinymce','tinyeditorselector'))==''){
+          xarModSetVar('tinymce','tinyeditorselector','mceEditor');
+    }
     $xarbaseurl=xarServerGetBaseURL();
     $tinybasepath="'.$xarbaseurl.'modules/tinymce/xartemplates/includes/tinymce/jscripts/tiny_mce/tiny_mce.js";
 
@@ -252,7 +258,6 @@ function tinymce_admin_updateconfig()
         if (trim(xarModGetVar('tinymce','tinyextended')) <> '') {
             $jstext .='extended_valid_elements : "'.xarModGetVar('tinymce','tinyextended').'", ';
         }
-
    }
 
     //Setup for 'exact' mode - we only want to replace areas that match for id or name

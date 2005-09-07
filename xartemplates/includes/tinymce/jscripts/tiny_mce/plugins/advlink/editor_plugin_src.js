@@ -1,6 +1,16 @@
 /* Import plugin specific language pack */
 tinyMCE.importPluginLanguagePack('advlink', 'en,de,sv,zh_cn,cs,fa,fr_ca,fr,pl,pt_br,nl');
 
+function TinyMCE_advlink_getInfo() {
+	return {
+		longname : 'Advanced link',
+		author : 'Moxiecode Systems',
+		authorurl : 'http://tinymce.moxiecode.com',
+		infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_advlink.html',
+		version : '2.0RC1'
+	};
+};
+
 function TinyMCE_advlink_getControlHTML(control_name) {
 	switch (control_name) {
 		case "link":
@@ -32,14 +42,17 @@ function TinyMCE_advlink_execCommand(editor_id, element, command, user_interface
 }
 
 function TinyMCE_advlink_handleNodeChange(editor_id, node, undo_index, undo_levels, visual_aid, any_selection) {
-	tinyMCE.switchClassSticky(editor_id + '_advlink', 'mceButtonNormal');
+	tinyMCE.switchClassSticky(editor_id + '_advlink', 'mceButtonDisabled', true);
 
 	if (node == null)
 		return;
 
+	if (any_selection)
+		tinyMCE.switchClassSticky(editor_id + '_advlink', 'mceButtonNormal', false);
+
 	do {
 		if (node.nodeName == "A" && tinyMCE.getAttrib(node, 'href') != "")
-			tinyMCE.switchClassSticky(editor_id + '_advlink', 'mceButtonSelected');
+			tinyMCE.switchClassSticky(editor_id + '_advlink', 'mceButtonSelected', false);
 	} while ((node = node.parentNode));
 
 	return true;

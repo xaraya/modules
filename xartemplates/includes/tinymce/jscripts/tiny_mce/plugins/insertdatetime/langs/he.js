@@ -1,6 +1,6 @@
 // HE lang variables by Liron Newman, http://eesh.net
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 insertdate_def_fmt : '%Y-%m-%d',
 inserttime_def_fmt : '%H:%M:%S',
 insertdate_desc : 'הכנס תאריך',

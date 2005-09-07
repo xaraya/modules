@@ -1,7 +1,7 @@
 /**
  * $RCSfile: tiny_mce_popup.js,v $
- * $Revision: 1.13 $
- * $Date: 2005/08/10 21:20:53 $
+ * $Revision: 1.14 $
+ * $Date: 2005/08/23 17:01:39 $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004, Moxiecode Systems AB, All rights reserved.
@@ -134,6 +134,20 @@ TinyMCEPopup.prototype.pickColor = function(e, element_id) {
 		window : window,
 		store_selection : false
 	});
+};
+
+TinyMCEPopup.prototype.openBrowser = function(element_id, type, option) {
+	var cb = tinyMCE.getParam(option, tinyMCE.getParam("file_browser_callback"));
+	var url = document.getElementById(element_id).value;
+
+	tinyMCE.setWindowArg("window", window);
+	tinyMCE.setWindowArg("document", document);
+
+	// Call to external callback
+	if (eval('typeof(tinyMCEPopup.windowOpener.' + cb + ')') == "undefined")
+		alert("Callback function: " + cb + " could not be found.");
+	else
+		eval("tinyMCEPopup.windowOpener." + cb + "(element_id, url, type, window);");
 };
 
 // Setup global instance

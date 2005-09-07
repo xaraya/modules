@@ -1,6 +1,16 @@
 /* Import plugin specific language pack */
 tinyMCE.importPluginLanguagePack('emotions', 'en,sv,zh_cn,cs,fa,fr_ca,fr,de,pl,pt_br,nl');
 
+function TinyMCE_emotions_getInfo() {
+	return {
+		longname : 'Emotions',
+		author : 'Moxiecode Systems',
+		authorurl : 'http://tinymce.moxiecode.com',
+		infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_emotions.html',
+		version : '2.0RC1'
+	};
+};
+
 /**
  * Returns the HTML contents of the emotions control.
  */

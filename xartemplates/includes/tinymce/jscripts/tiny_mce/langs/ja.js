@@ -1,6 +1,6 @@
 // JP lang variables
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 bold_desc : '太字',
 italic_desc : '斜体',
 underline_desc : '下線',

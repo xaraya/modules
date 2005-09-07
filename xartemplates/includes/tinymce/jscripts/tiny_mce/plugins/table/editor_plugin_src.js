@@ -1,9 +1,29 @@
 /* Import plugin specific language pack */
 tinyMCE.importPluginLanguagePack('table', 'en,ar,cs,da,de,el,es,fi,fr_ca,hu,it,ja,ko,nl,no,pl,pt,sv,tw,zh_cn,fr,de');
 
+function TinyMCE_table_getInfo() {
+	return {
+		longname : 'Tables',
+		author : 'Moxiecode Systems',
+		authorurl : 'http://tinymce.moxiecode.com',
+		infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_table.html',
+		version : '2.0RC1'
+	};
+};
+
 function TinyMCE_table_initInstance(inst) {
-	if (tinyMCE.isGecko)
-		tinyMCE.addEvent(inst.getDoc(), "mouseup", TinyMCE_table_mouseDownHandler);
+	if (tinyMCE.isGecko) {
+		var doc = inst.getDoc();
+
+		tinyMCE.addEvent(doc, "mouseup", TinyMCE_table_mouseDownHandler);
+
+		try {
+			// For future FF versions
+			doc.execCommand('enableInlineTableEditing', false, false);
+		} catch (e) {
+			// Ignore
+		}
+	}
 
 	inst.tableRowClipboard = null;
 }
@@ -29,10 +49,10 @@ function TinyMCE_table_getControlHTML(control_name) {
 		['table', 'table.gif', '{$lang_table_desc}', 'mceInsertTable', true],
 		['delete_col', 'table_delete_col.gif', '{$lang_table_delete_col_desc}', 'mceTableDeleteCol'],
 		['delete_row', 'table_delete_row.gif', '{$lang_table_delete_row_desc}', 'mceTableDeleteRow'],
-		['col_after', 'table_insert_col_after.gif', '{$lang_table_insert_col_after_desc}', 'mceTableInsertColAfter'],
-		['col_before', 'table_insert_col_before.gif', '{$lang_table_insert_col_before_desc}', 'mceTableInsertColBefore'],
-		['row_after', 'table_insert_row_after.gif', '{$lang_table_insert_row_after_desc}', 'mceTableInsertRowAfter'],
-		['row_before', 'table_insert_row_before.gif', '{$lang_table_insert_row_before_desc}', 'mceTableInsertRowBefore'],
+		['col_after', 'table_insert_col_after.gif', '{$lang_table_col_after_desc}', 'mceTableInsertColAfter'],
+		['col_before', 'table_insert_col_before.gif', '{$lang_table_col_before_desc}', 'mceTableInsertColBefore'],
+		['row_after', 'table_insert_row_after.gif', '{$lang_table_row_after_desc}', 'mceTableInsertRowAfter'],
+		['row_before', 'table_insert_row_before.gif', '{$lang_table_row_before_desc}', 'mceTableInsertRowBefore'],
 		['row_props', 'table_row_props.gif', '{$lang_table_row_desc}', 'mceTableRowProps', true],
 		['cell_props', 'table_cell_props.gif', '{$lang_table_cell_desc}', 'mceTableCellProps', true],
 		['split_cells', 'table_split_cells.gif', '{$lang_table_split_cells_desc}', 'mceTableSplitCells', true],
@@ -99,7 +119,13 @@ function TinyMCE_table_execCommand(editor_id, element, command, user_interface, 
 		case "mceTableCopyRow":
 		case "mceTablePasteRowBefore":
 		case "mceTablePasteRowAfter":
+		case "mceTableDelete":
+			var inst = tinyMCE.getInstanceById(editor_id);
+
+			inst.execCommand('mceBeginUndoLevel');
 			TinyMCE_table_doExecCommand(editor_id, element, command, user_interface, value);
+			inst.execCommand('mceEndUndoLevel');
+
 			return true;
 	}
 
@@ -400,6 +426,14 @@ function TinyMCE_table_doExecCommand(editor_id, element, command, user_interface
 
 			return true;
 
+		case "mceTableDelete":
+			var table = tinyMCE.getParentElement(inst.getFocusElement(), "table");
+			if (table) {
+				table.parentNode.removeChild(table);
+				inst.repaint();
+			}
+			return true;
+
 		case "mceTableSplitCells":
 		case "mceTableMergeCells":
 		case "mceTableInsertRowBefore":
@@ -412,8 +446,6 @@ function TinyMCE_table_doExecCommand(editor_id, element, command, user_interface
 		case "mceTableCopyRow":
 		case "mceTablePasteRowBefore":
 		case "mceTablePasteRowAfter":
-			inst.execCommand("mceAddUndoLevel");
-
 			// No table just return (invalid command)
 			if (!tableElm)
 				return true;

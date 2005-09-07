@@ -1,6 +1,6 @@
 // Canadian French lang variables by Virtuelcom   last modification: 2005-06-15
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 paste_text_desc : 'Coller texte seulement',
 paste_text_title : 'Utilisez CTRL+V sur votre clavier pour coller le texte dans la fenêtre.',
 paste_text_linebreaks : 'Garder les sauts de ligne',

@@ -1,7 +1,7 @@
 // Simplified Chinese lang variables contributed by cube316 (cube316@gmail.com)
 //请访问 http://www.cube316.net/ 以获取TinyMCE的中文支持
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 insertdate_desc : '插入当前日期',
 inserttime_desc : '插入当前时间',
 inserttime_months_long : new Array("一月份", "二月份", "三月份", "四月份", "五月份", "六月份", "七月份", "八月份", "九月份", "十月份", "十一月份", "十二月份"),

@@ -1,6 +1,6 @@
 // NO lang variables
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 table_desc : 'Opprett/endre tabell',
 table_insert_row_before_desc : 'Opprett rad før',
 table_insert_row_after_desc : 'Opprett rad etter',

@@ -1,6 +1,6 @@
 // TW lang variables contributed by Jim Kou
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 bold_desc : '粗體',
 bold_img : "bold.gif",
 bullist_desc : '符號項目',

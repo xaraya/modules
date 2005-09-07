@@ -1,6 +1,6 @@
 // CS lang variables
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 insert_flash : 'Vložit/editovat Flash Movie',
 insert_flash_file : 'Flash soubor (.swf)',
 insert_flash_size : 'Velikost',

@@ -1,6 +1,6 @@
 // HE lang variables by Liron Newman, http://eesh.net
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 table_desc : 'מכניס טבלה חדשה',
 table_insert_row_before_desc : 'הכנס שורה לפני',
 table_insert_row_after_desc : 'הכנס שורה אחרי',

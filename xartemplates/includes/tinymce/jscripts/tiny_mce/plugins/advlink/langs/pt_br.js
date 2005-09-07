@@ -1,6 +1,6 @@
 // pt_BR lang variables
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 insert_link_target_same : 'Abrir nesta mesma janela / frame',
 insert_link_target_parent : 'Abrir na janela / frame prévia',
 insert_link_target_top : 'Abrir no frame superior (substitui todos os frames)',

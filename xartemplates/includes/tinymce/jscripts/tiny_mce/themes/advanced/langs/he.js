@@ -1,6 +1,6 @@
 // HE lang variables by Liron Newman, http://eesh.net
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 theme_style_select : '-- סיגנונות --',
 theme_code_desc : 'ערוך את קוד ה-HTML',
 theme_code_title : 'עורך קוד HTML',

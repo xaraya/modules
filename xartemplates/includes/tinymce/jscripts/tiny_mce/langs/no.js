@@ -1,6 +1,6 @@
 // NO lang variables made by Sten Aksel Heien
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 bold_desc : 'Uthevet',
 italic_desc : 'Kursiv',
 underline_desc : 'Understreket',

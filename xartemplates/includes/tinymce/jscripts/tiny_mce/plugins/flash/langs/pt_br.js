@@ -1,6 +1,6 @@
 // pt_BR lang variables
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 insert_flash : 'Inserir / editar Arquivo Flash',
 insert_flash_file : 'Arquivo Flash (.swf)',
 insert_flash_size : 'Tamanho',

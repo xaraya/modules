@@ -1,6 +1,6 @@
 // KO lang variables
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 insert_link_target_same : '같은 창에서 링크/프레임 열기',
 insert_link_target_parent : '부모 창에서 링크/프레임 열기',
 insert_link_target_top : 'TOP 프레임에서 열기 (모든 프레임을 대체)',

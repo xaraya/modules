@@ -32,22 +32,11 @@ function init() {
 	formObj.file.value = swffile;
 	formObj.insert.value = tinyMCE.getLang('lang_' + tinyMCE.getWindowArg('action'), 'Insert', true);
 
+	selectByValue(formObj, 'link_list', swffile);
+
 	// Handle file browser
-	if (tinyMCE.getParam("file_browser_callback") != null) {
+	if (isVisible('filebrowser'))
 		document.getElementById('file').style.width = '230px';
-
-		var html = '';
-
-		html += '<img id="browserBtn" src="../../themes/advanced/images/browse.gif"';
-		html += ' onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');"';
-		html += ' onmouseout="tinyMCE.restoreClass(this);"';
-		html += ' onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');"';
-		html += ' onclick="javascript:tinyMCE.openFileBrowser(\'file\',document.forms[0].file.value,\'flash\',window);"';
-		html += ' width="20" height="18" border="0" title="' + tinyMCE.getLang('lang_browse') + '"';
-		html += ' class="mceButtonNormal" alt="' + tinyMCE.getLang('lang_browse') + '" />';
-
-		document.getElementById('browser').innerHTML = html;
-	}
 
 	// Auto select flash in list
 	if (typeof(tinyMCEFlashList) != "undefined" && tinyMCEFlashList.length > 0) {
@@ -55,6 +44,23 @@ function init() {
 			if (formObj.link_list.options[i].value == tinyMCE.getWindowArg('swffile'))
 				formObj.link_list.options[i].selected = true;
 		}
+	}
+}
+
+function renderFlashList() {
+	if (typeof(tinyMCEFlashList) != "undefined" && tinyMCEFlashList.length > 0) {
+		var html = "";
+
+		html += '<tr><td >{$lang_flash_list}:</td>';
+		html += '<td><select id="link_list" name="link_list" style="width: 250px" onchange="this.form.file.value=this.options[this.selectedIndex].value;">';
+		html += '<option value="">---</option>';
+
+		for (var i=0; i<tinyMCEFlashList.length; i++)
+			html += '<option value="' + tinyMCEFlashList[i][1] + '">' + tinyMCEFlashList[i][0] + '</option>';
+
+		html += '</select></td></tr>';
+
+		document.write(html);
 	}
 }
 

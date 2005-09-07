@@ -4,7 +4,7 @@
 // Lost@LostLord.com
 // http://www.LostLord.com
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 dir : 'rtl',
 theme_style_select : '????',
 theme_code_desc : '?????? ????',

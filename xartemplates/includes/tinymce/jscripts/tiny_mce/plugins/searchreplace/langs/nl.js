@@ -1,6 +1,6 @@
 // NL lang variables
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 searchreplace_search_desc : 'Zoeken',
 searchreplace_searchnext_desc : 'Opnieuw zoeken',
 searchreplace_replace_desc : 'Zoeken/Vervang',

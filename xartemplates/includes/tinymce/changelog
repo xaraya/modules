@@ -1,8 +1,11 @@
-Version 2.0RC1 (2005-08-xx)
+Version 2.0RC1 (2005-09-06)
 	Renamed CSS classes mcePathTop,mcePathBottom,mcePath to mceStatusbarTop,mceStatusbarBottom,mceStatusbar. [BREAKS COMPATIBLITY].
 	Moved all theme CSS files to a css directory within the theme. [BREAKS COMPATIBLITY].
 	Removed the default theme since the advanced theme can be configured to be as the default theme. [BREAKS COMPATIBLITY].
 	Removed closeDialog method from TinyMCE use tinyMCEPopup.close(); instead of tinyMCE.closeDialog();. [BREAKS COMPATIBLITY].
+	Removed the auto_cleanup_word option, since the paste plugin now handles this better than the build in function.
+	Added improved undo/redo and onchange handling. All modifications are now undo/redo:able.
+	Added new mceBeginUndoLevel/mceEndUndoLevel commands. Used to begin/end a undo/redo:able action.
 	Added new link dialog with tab interface and lots of new fields and options.
 	Added new image dialog with tab interface and lots of new fields and options.
 	Added new about dialog with tab interface, this one replaces the old help dialog.
@@ -24,9 +27,14 @@ Version 2.0RC1 (2005-08-xx)
 	Added new safari_warning option, this enables you to disable the alert that gets presented when running on Safari.
 	Added new editor_selector/editor_deselector options that enables you to specify a include/exclude from convertion class.
 	Added new tinyMCE.addToLang function to reduce the overall size of the language files.
+	Added new auto save plugin. This plugin will confirm that the user want's the leave any modifications unsaved.
+	Added new noneditable plugin. This plugin enables you to disable/enable the possibility to edit various elements.
+	Added new word example, to better illustrate how TinyMCE is to be used when pasting content from Office/Word.
 	Added missing entities eactute,iacute,oacute,uacute,Aacute,Eacute,Iacute,Oacute,Uacute,Yacute,Aacute.
 	Added updated Hebrew language pack contributed by Liron Newman.
 	Added visual aid icon for invisible anchors elements.
+	Added new insert table and delete table commands to context menu.
+	Added new convert_fonts_to_styles option, this option controls if font or span will be used when using font size, color etc.
 	Renamed the theme_advanced_path_location to theme_advanced_statusbar_location.
 	Moved all popup javascript logic into external .js files, inorder to separate presentation and logic.
 	Removed the automatic resizing of popups. Better to use relative window sizes for each language when opening a dialog.
@@ -37,6 +45,7 @@ Version 2.0RC1 (2005-08-xx)
 	Fixed so the CSS file content_css loads after the theme content CSS, user specific CSS extends theme CSS.
 	Fixed so more than 3 toolbar rows may be added in when using the default simple layout.
 	Fixed so the insertdatetime plugin polls it's default date formats from the language pack.
+	Fixes so auto_reset_designmode is enabled by default, to avoid the question about the editor not working in tabs.
 	Fixed better inline styles support for images and tables.
 	Fixed duplicate IDs on advanced theme with external toolbar, contributed by Miguel Fortea.
 	Fixed issue with remove formatting under MSIE, if all contents of a element is selected the element is also selected.
@@ -51,7 +60,6 @@ Version 2.0RC1 (2005-08-xx)
 	Fixed bug where visual aid class where presented in element path.
 	Fixed bug where HR elements with a id set to "null" produced runtime error in MSIE.
 	Fixed bug where isDirty wasn't working due to the same function name and variable name.
-	Fixed bug where undo/redo of text wasn't working correctly in Mozilla/FF.
 	Fixed bug where events like onclick wasn't removed/stored correctly in old MSIE.
 Version 1.45 (2005-06-23)
 	Fixed so the newdocument button shows again, was removed by accident in RC2.

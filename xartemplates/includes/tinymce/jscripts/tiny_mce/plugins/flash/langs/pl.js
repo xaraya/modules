@@ -1,6 +1,6 @@
 // PL lang variables
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 insert_flash : 'Wstaw/Edytuj animacje Flash',
 insert_flash_file : 'Plik Flash (.swf)',
 insert_flash_size : 'Rozmiar',

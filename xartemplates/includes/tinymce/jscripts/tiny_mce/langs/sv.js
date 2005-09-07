@@ -1,6 +1,6 @@
 // SE lang variables
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 bold_desc : 'Fet',
 italic_desc : 'Kursiv',
 underline_desc : 'Understruken',
@@ -29,8 +29,8 @@ insert_link_url : 'L&auml;nkens URL',
 insert_link_target : 'F&ouml;nster',
 insert_link_target_same : '&Ouml;ppna l&auml;nken i samma f&ouml;nster',
 insert_link_target_blank : '&Ouml;ppna l&auml;nken i ett nytt f&ouml;nster',
-insert_link_delta_width'] = 20;
-insert_link_delta_height'] = 10;
+insert_link_delta_width : 20,
+insert_link_delta_height : 10,
 insert_image_title : 'Skapa/redigera bild',
 insert_image_src : 'Bildens URL',
 insert_image_alt : 'Bildens beskrivning',

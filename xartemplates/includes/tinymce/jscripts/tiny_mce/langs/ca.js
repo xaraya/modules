@@ -1,6 +1,6 @@
 // CA lang variables by Marc Bria
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 bold_desc : 'Negreta',
 italic_desc : 'Cursiva',
 underline_desc : 'Subratllat',

@@ -1,6 +1,6 @@
 // SE lang variables
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 insert_flash : 'Skapa/uppdatera flash-film',
 insert_flash_file : 'Flash-film (.swf)',
 insert_flash_size : 'Storlek',

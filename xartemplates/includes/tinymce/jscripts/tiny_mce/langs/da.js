@@ -1,6 +1,6 @@
 // DK lang variables contributed by Jan Moelgaard
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 bold_desc : 'Fed',
 italic_desc : 'Kursiv',
 underline_desc : 'Understreg',

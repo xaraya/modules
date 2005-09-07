@@ -1,6 +1,6 @@
 // PL lang variables
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 insert_link_target_same : 'Otwórz w tym samym oknie',
 insert_link_target_parent : 'Open in parent window / frame',
 insert_link_target_top : 'Open in top frame (replaces all frames)',

@@ -1,7 +1,7 @@
 // Canadian French lang variables by Virtuelcom
 // Modify by Laurent Dran 13-02-2006
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 theme_style_select : 'Styles',
 theme_code_desc : 'Modifier le code source HTML',
 theme_code_title : '&Eacute;diteur de code source HTML',

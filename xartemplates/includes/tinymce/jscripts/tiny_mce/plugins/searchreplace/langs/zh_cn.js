@@ -1,7 +1,7 @@
 // Simplified Chinese lang variables contributed by cube316 (cube316@gmail.com)
 //请访问 http://www.cube316.net/ 以获取TinyMCE的中文支持
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 searchreplace_search_desc : '查找',
 searchreplace_searchnext_desc : '再次查找',
 searchreplace_replace_desc : '查找/替换',

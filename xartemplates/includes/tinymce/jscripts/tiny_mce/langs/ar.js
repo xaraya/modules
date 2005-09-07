@@ -1,7 +1,7 @@
 // arabic lang variables
 // Toolbar Items and Context Menu
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 dir : 'rtl',
 bold_desc : '&#1594;&#1575;&#1605;&#1602;',
 italic_desc : '&#1605;&#1575;&#1574;&#1604;',

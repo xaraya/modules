@@ -1,6 +1,6 @@
 // Canadian French lang variables by Virtuelcom   last modification: 2005-06-15
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 searchreplace_search_desc : 'Chercher',
 searchreplace_searchnext_desc : 'Chercher suivant',
 searchreplace_replace_desc : 'Chercher/Remplacer',

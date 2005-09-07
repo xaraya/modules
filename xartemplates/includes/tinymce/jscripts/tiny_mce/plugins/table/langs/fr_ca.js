@@ -1,6 +1,6 @@
 // Canadian French lang variables by Virtuelcom   last modification: 2005-06-15
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 table_desc : 'Insérer un nouveau tableau',
 table_insert_row_before_desc : 'Insérer une ligne avant',
 table_insert_row_after_desc : 'Insérer une ligne après',

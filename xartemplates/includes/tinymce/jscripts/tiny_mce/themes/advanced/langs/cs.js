@@ -1,6 +1,6 @@
 // CZ lang variables thanks to "Pavel Novák", repaired by Josef Klimosz
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 theme_style_select : 'Styly',
 theme_code_desc : 'Zobrazit HTML',
 theme_code_title : 'Editace HTML',

@@ -1,6 +1,6 @@
 // UK lang variables
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 theme_style_select : '-- Styles --',
 theme_code_desc : 'Edit HTML Source',
 theme_code_title : 'HTML Source Editor',
@@ -64,6 +64,12 @@ newdocument : 'Are you sure you want clear all contents?',
 about_title : 'About TinyMCE',
 about : 'About',
 license : 'License',
+plugins : 'Plugins',
+plugin : 'Plugin',
+author : 'Author',
+version : 'Version',
+loaded_plugins : 'Loaded plugins',
 help : 'Help',
-not_set : '-- Not set --'
+not_set : '-- Not set --',
+close : 'Close'
 });

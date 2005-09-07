@@ -1,6 +1,6 @@
 // KO lang variables
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 theme_style_select : '스타일',
 theme_code_desc : 'HTML 소스 고치기',
 theme_code_title : 'HTML 소스 편집기',

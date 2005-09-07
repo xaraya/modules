@@ -1,6 +1,6 @@
 // SE lang variables
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 insert_link_target_same : '&Ouml;ppna i samma f&ouml;nster / ram',
 insert_link_target_parent : '&Ouml;ppna i underliggande f&ouml;nster / ram',
 insert_link_target_top : '&Ouml;ppna i toppramen (ers&auml;tter alla ramar)',

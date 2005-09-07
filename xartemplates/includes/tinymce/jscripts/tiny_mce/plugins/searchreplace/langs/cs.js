@@ -1,6 +1,6 @@
 // CS lang variables
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 searchreplace_search_desc : 'Najdi',
 searchreplace_searchnext_desc : 'Najdi znova',
 searchreplace_replace_desc : 'Najdi/Nahradit',

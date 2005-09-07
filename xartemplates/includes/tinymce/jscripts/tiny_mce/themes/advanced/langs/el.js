@@ -1,6 +1,6 @@
 // Greek lang variables by Jacaranda Bill
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 theme_style_select : 'Θέματα',
 theme_code_desc : 'Επεξεργασία HTML κώδικα',
 theme_code_title : 'Επεξεργαστής HTML',

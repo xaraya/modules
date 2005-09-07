@@ -69,7 +69,7 @@
             <td><input name="linktitle" type="text" id="linktitle" value="" style="width: 200px"></td>
           </tr>
           <tr id="styleSelectRow">
-            <td>{$lang_class}:</td>
+            <td>{$lang_class_name}:</td>
             <td>
 			 <select name="styleSelect">
                 <option value="" selected>{$lang_theme_style_select}</option>
@@ -80,7 +80,7 @@
           <tr>
             <td><input type="button" id="insert" name="insert" value="{$lang_insert}" onclick="insertLink();">
             </td>
-            <td align="right"><input type="button" id="cancel" name="cancel" value="{$lang_cancel}" onclick="cancelAction();"></td>
+            <td align="right"><input type="button" id="cancel" name="cancel" value="{$lang_cancel}" onclick="tinyMCEPopup.close();"></td>
           </tr>
         </table></td>
     </tr>

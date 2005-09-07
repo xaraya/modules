@@ -1,31 +1,28 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>Option: auto_cleanup_word</title>
+<title>Plugin: autosave</title>
 <link href="css/screen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 
 <div class="header">
-	<h1>Option: auto_cleanup_word</h1>
+	<h1>Plugin: autosave</h1>
 </div>
 
 <div class="content">
+	<p>This plugin gives the user a warning if they made modifications to a editor instance but didn't submit them. This plugin will most likely be extended in the future to provide AJAX auto save support.</p>
+	<h3>Initialization Example</h3>
 	<p>
-		If you set this option to true, TinyMCE will try to auto remove some weird Word HTML when a user pastes content. This feature is disabled by default.
-	</p>
-
-	<div class="separator"></div>
-
-	<h3>Example of usage of the auto_cleanup_word option:</h3>
 	<div class="example">
-<pre>
+	<pre>
 tinyMCE.init({
-	...
-	<strong>auto_cleanup_word : true</strong>
-});
-</pre>
+	theme : &quot;advanced&quot;,
+	mode : &quot;textareas&quot;,
+	plugins : &quot;<strong>autosave</strong>&quot;
+});</pre>
 	</div>
+	</p>
 </div>
 
 <div class="footer">

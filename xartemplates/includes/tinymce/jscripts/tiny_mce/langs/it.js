@@ -1,6 +1,6 @@
 // Variabili lingua IT - fabrix.xm@lombardiacom.it
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 bold_desc : 'Grassetto',
 italic_desc : 'Corsivo',
 underline_desc : 'Sottolineato',

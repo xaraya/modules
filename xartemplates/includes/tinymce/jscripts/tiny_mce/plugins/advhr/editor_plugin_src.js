@@ -1,6 +1,16 @@
 /* Import plugin specific language pack */
 tinyMCE.importPluginLanguagePack('advhr', 'en,de,sv,zh_cn,cs,fa,fr_ca,fr,pl,pt_br,nl');
 
+function TinyMCE_advhr_getInfo() {
+	return {
+		longname : 'Advanced HR',
+		author : 'Moxiecode Systems',
+		authorurl : 'http://tinymce.moxiecode.com',
+		infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_advhr.html',
+		version : '2.0RC1'
+	};
+};
+
 function TinyMCE_advhr_getControlHTML(control_name) {
     switch (control_name) {
         case "advhr":

@@ -2,7 +2,7 @@
 // romanf@terrahost.ca
 // www.hunox.ca
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 bold_desc : 'Полужирный',
 italic_desc : 'Курсив',
 underline_desc : 'Подчеркивание',

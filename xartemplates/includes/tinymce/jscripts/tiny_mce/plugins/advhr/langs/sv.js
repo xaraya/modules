@@ -1,6 +1,6 @@
 // SE lang variables
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 insert_advhr_desc : 'Skapa/Redigera horisontell linje',
 insert_advhr_width : 'Bredd',
 insert_advhr_size : 'Höjd',

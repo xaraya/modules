@@ -1,6 +1,6 @@
 // Variabili di lingua IT - fabrix.xm@lombardiacom.it
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 table_desc : 'Inserisci una nuova tabella',
 table_insert_row_before_desc : 'Inserisci una riga prima',
 table_insert_row_after_desc : 'Inserisci una riga dopo',

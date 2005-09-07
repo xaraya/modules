@@ -37,6 +37,7 @@
 	settings['setupcontent_callback'] = 'setupContent';
 	settings['fullscreen_is_enabled'] = true;
 	settings['fullscreen_editor_id'] = window.opener.tinyMCE.getWindowArg("editor_id");
+	settings['theme_advanced_resizing'] = false;
 
 	// Init
 	tinyMCE.init(settings);
@@ -63,7 +64,7 @@
 	tinyMCE.addEvent(window, "beforeunload", unloadHandler);
 </script>
 </head>
-<body style="margin: 0px; overflow: hidden;" scrolling="no" scroll="no" onload="">
+<body style="margin: 0px; overflow: hidden; height: 100%" scrolling="no" scroll="no">
 
 <textarea id="fullscreenarea" style="width: 100%; height: 100%"></textarea>
 

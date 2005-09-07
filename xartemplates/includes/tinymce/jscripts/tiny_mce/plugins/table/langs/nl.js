@@ -1,6 +1,6 @@
 // NL lang variables
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 table_desc : 'Voeg een nieuwe tabel in',
 table_insert_row_before_desc : 'Voeg rij in voor ...',
 table_insert_row_after_desc : 'Voeg rij in na ...',

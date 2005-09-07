@@ -1,6 +1,6 @@
 // FI lang variables by Urho Konttori from Absolutions
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 bold_desc : 'Lihavoi',
 italic_desc : 'Kursivoi',
 underline_desc : 'Alleviivaa',

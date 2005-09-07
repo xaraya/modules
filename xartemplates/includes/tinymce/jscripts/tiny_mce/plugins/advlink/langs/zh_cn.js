@@ -1,7 +1,7 @@
 // Simplified Chinese lang variables contributed by cube316 (cube316@gmail.com)
 //请访问 http://www.cube316.net/ 以获取TinyMCE的中文支持
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 insert_link_target_same : '在本窗口/框架中打开',
 insert_link_target_parent : '在父窗口/框架中打开',
 insert_link_target_top : '在根框架中打开（替换所有框架）',

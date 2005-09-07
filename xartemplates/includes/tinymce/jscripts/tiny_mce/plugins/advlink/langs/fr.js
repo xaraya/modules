@@ -1,6 +1,6 @@
 // French lang variables by Laurent Dran
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 insert_link_target_same : 'Ouvre dans la fen&#281;tre / Cadre(frame)',
 insert_link_target_parent : 'Ouvre dans fen&#281;tre parente / Cadres(frame)',
 insert_link_target_top : 'Ouvre dans le Top frame (remplace toutes les cadres(frames))',

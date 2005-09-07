@@ -1,6 +1,6 @@
 // pt_BR lang variables
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 theme_style_select : 'Estilos',
 theme_code_desc : 'Editar Código HTML',
 theme_code_title : 'Editor de Código HTML',

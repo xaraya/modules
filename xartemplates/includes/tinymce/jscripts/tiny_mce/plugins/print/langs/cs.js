@@ -1,5 +1,5 @@
 // CS lang variables 
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 print_desc : 'Tisk'
 });

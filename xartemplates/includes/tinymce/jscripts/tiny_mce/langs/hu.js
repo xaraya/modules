@@ -1,7 +1,7 @@
 // HU lang variables
 // Edited by 2XP (2xp@dino.hu)
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 bold_desc : 'F&#233;lk&#246;v&#233;r',
 italic_desc : 'D&#245;lt',
 underline_desc : 'Al&#225;h&#250;zott',

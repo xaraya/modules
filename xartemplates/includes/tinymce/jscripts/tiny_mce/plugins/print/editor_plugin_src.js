@@ -1,6 +1,16 @@
 /* Import theme	specific language pack */
 tinyMCE.importPluginLanguagePack('print', 'en,sv,zh_cn,fa,fr_ca,fr,de,pl,pt_br,cs,nl');
 
+function TinyMCE_print_getInfo() {
+	return {
+		longname : 'Print',
+		author : 'Moxiecode Systems',
+		authorurl : 'http://tinymce.moxiecode.com',
+		infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_print.html',
+		version : '2.0RC1'
+	};
+};
+
 function TinyMCE_print_getControlHTML(control_name)	{
 	switch (control_name) {
 		case "print":

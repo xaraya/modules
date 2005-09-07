@@ -1,6 +1,6 @@
 // PL lang variables
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 searchreplace_search_desc : 'Znajdz',
 searchreplace_searchnext_desc : 'Znajdz ponownie',
 searchreplace_replace_desc : 'Znajdz/Zastap',

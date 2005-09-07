@@ -1,7 +1,7 @@
 // FR lang variables by Pat Boens
 // Modify by Laurent Dran
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 bold_desc : 'Gras',
 italic_desc : 'Italique',
 underline_desc : 'Soulign&eacute;',

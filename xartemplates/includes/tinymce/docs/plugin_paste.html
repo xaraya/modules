@@ -33,7 +33,11 @@ tinyMCE.init({
 	plugins : &quot;paste&quot;,
 	theme_advanced_buttons3_add : &quot;pastetext,pasteword,selectall&quot;,
 	paste_create_paragraphs : false,
-	paste_use_dialog : true
+	paste_use_dialog : true,
+	paste_auto_cleanup_on_paste : true,
+	paste_convert_middot_lists : false,
+	paste_unindented_list_class : "unindentedList",
+	paste_convert_headers_to_strong : true
 });
 </pre>
 	</div>
@@ -50,6 +54,22 @@ tinyMCE.init({
 	<tr>
 		<td>[paste_use_dialog]</td>
 		<td>MSIE specific option, if you set this to false both Mozilla and MSIE will present a paste dialog. If you set it to true pasting in MSIE will be done directly. This option is set to false by default.</td>
+	</tr>
+	<tr>
+		<td>[paste_auto_cleanup_on_paste]</td>
+		<td>MSIE specific option. If you enable this feature, a word paste will be executed when the user copy/paste content to the editor. This feature is disabled by default.</td>
+	</tr>
+	<tr>
+		<td>[paste_convert_middot_lists]</td>
+		<td>If this feature is enabled middot lists are converted into UL lists, these will be assign a special class.</td>
+	</tr>
+	<tr>
+		<td>[paste_unindented_list_class]</td>
+		<td>This option enables you to specify what class to assign to the UL list of middot converted lists. Middot lists are unindented in MS Office. This option defaults to &quot;unIndentedList&quot;.</td>
+	</tr>
+	<tr>
+		<td>[paste_convert_headers_to_strong]</td>
+		<td>This feature converts H1-6 elements to strong elements on paste, this is feature is disabled by default.</td>
 	</tr>
 	</table>
 	</p>

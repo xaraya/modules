@@ -1,6 +1,16 @@
 /* Import plugin specific language pack */
 tinyMCE.importPluginLanguagePack('preview', 'cs,de,el,en,fr_ca,it,ko,pt,sv,zh_cn,fa,fr,pl,pt_br,nl');
 
+function TinyMCE_preview_getInfo() {
+	return {
+		longname : 'Preview',
+		author : 'Moxiecode Systems',
+		authorurl : 'http://tinymce.moxiecode.com',
+		infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_preview.html',
+		version : '2.0RC1'
+	};
+};
+
 /**
  * Returns the HTML contents of the preview control.
  */

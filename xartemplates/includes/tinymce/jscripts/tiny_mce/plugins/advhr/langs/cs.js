@@ -1,6 +1,6 @@
 // UK lang variables
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 insert_advhr_desc : 'Vložit/editovat vodorovný oddìlovaè',
 insert_advhr_width : 'Šíøka',
 insert_advhr_size : 'Výška',

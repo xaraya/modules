@@ -1,6 +1,6 @@
 // pt_BR lang variables
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 insertdate_desc : 'Inserir data',
 inserttime_desc : 'Inserir hora',
 inserttime_months_long : new Array("Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"),

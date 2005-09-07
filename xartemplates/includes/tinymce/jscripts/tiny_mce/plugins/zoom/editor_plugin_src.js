@@ -1,5 +1,14 @@
 /* Import plugin specific language pack */
-//tinyMCE.importPluginLanguagePack('zoom', 'en,sv,pt,fr_ca,fr,de');
+
+function TinyMCE_zoom_getInfo() {
+	return {
+		longname : 'Zoom',
+		author : 'Moxiecode Systems',
+		authorurl : 'http://tinymce.moxiecode.com',
+		infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_zoom.html',
+		version : '2.0RC1'
+	};
+};
 
 /**
  * Returns the HTML contents of the zoom control.

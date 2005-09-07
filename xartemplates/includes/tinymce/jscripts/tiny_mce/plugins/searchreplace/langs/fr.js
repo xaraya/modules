@@ -1,6 +1,6 @@
 // Franch lang variables by Laurent Dran
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 searchreplace_search_desc : 'Trouver',
 searchreplace_searchnext_desc : 'Trouver encore',
 searchreplace_replace_desc : 'Trouver/Remplacer',

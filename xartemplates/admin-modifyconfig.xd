@@ -826,7 +826,7 @@
                 <strong><xar:mlstring>Custom Configuration Code</xar:mlstring></strong>
             </legend>
             <p>
-                <xar:mlstring>Please refer to the TinyMCE </xar:mlstring><a href="modules/tinymce/xartemplates/includes/tinymce/docs/using.htm"><xar:mlstring>Usage Documentation</xar:mlstring></a>.
+                <xar:mlstring>Please refer to the TinyMCE </xar:mlstring><a href="modules/tinymce/xartemplates/includes/tinymce/docs/index.html"><xar:mlstring>Usage Documentation</xar:mlstring></a>.
                 <xar:mlstring>You can add additional custom configuration options here that are added to the existing DEFAULT tinymce configuration string.
             </xar:mlstring>
             </p>

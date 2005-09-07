@@ -1,6 +1,6 @@
 // SE lang variables
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 searchreplace_search_desc : 'Sök',
 searchreplace_searchnext_desc : 'Sök igen',
 searchreplace_replace_desc : 'Sök/Ersätt',

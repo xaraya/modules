@@ -1,62 +1,56 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title>{$lang_insert_flash}</title>
+	<title>{$lang_flash_title}</title>
 	<script language="javascript" type="text/javascript" src="../../tiny_mce_popup.js"></script>
 	<script language="javascript" type="text/javascript" src="jscripts/flash.js"></script>
+	<script language="javascript" type="text/javascript" src="../../utils/mctabs.js"></script>
+	<script language="javascript" type="text/javascript" src="../../utils/form_utils.js"></script>
+	<link href="css/flash.css" rel="stylesheet" type="text/css" />
 </head>
 <body onload="init();">
     <form onsubmit="insertFlash();return false;" action="#">
-		<div class="title">{$lang_insert_flash}</div>
+		<div class="tabs">
+			<ul>
+				<li id="general_tab" class="current"><span><a href="javascript:mcTabs.displayTab('general_tab','general_panel');" onmousedown="return false;">{$lang_flash_general}</a></span></li>
+			</ul>
+		</div>
 
-		<fieldset>
-			<legend>General</legend>
+		<div class="panel_wrapper">
+			<div id="general_panel" class="panel current">
+				<fieldset>
+					<legend>{$lang_flash_general}</legend>
 
-		<table border="0" cellpadding="4" cellspacing="0">
-                    <tr>
-					<td nowrap="nowrap">{$lang_insert_flash_file}:</td>
-                      <td nowrap="nowrap">
-                            <table border="0" cellspacing="0" cellpadding="0">
-                              <tr>
-                                <td><input name="file" type="text" id="file" value="" onfocus="this.select();" style="width: 250px; vertical-align: middle;" /></td>
-                                <td id="browser"></td>
-                              </tr>
-                            </table>
-                        </td>
-                    </tr>
-				  <!-- Link list -->
-				  <script language="javascript" type="text/javascript">
-					if (typeof(tinyMCEFlashList) != "undefined" && tinyMCEFlashList.length > 0) {
-						var html = "";
-
-						html += '<tr><td >{$lang_insert_flash_list}:</td>';
-						html += '<td><select name="link_list" style="width: 250px" onchange="this.form.file.value=this.options[this.selectedIndex].value;">';
-						html += '<option value="">---</option>';
-
-						for (var i=0; i<tinyMCEFlashList.length; i++)
-							html += '<option value="' + tinyMCEFlashList[i][1] + '">' + tinyMCEFlashList[i][0] + '</option>';
-
-						html += '</select></td></tr>';
-
-						document.write(html);
-					}
-				  </script>
-				  <!-- /Link list -->
-                    <tr>
-                        <td nowrap="nowrap">{$lang_insert_flash_size}:</td>
-                        <td nowrap="nowrap">
-                            <input name="width" type="text" id="width" value="" onfocus="this.select();" style="width: 50px; vertical-align: middle;" />
-                            <select name="width2" id="width2" style="width: 50px; vertical-align: middle;">
-                                <option value="">px</option>
-                                <option value="%">%</option>
-                            </select>&nbsp;x&nbsp;<input name="height" type="text" id="height" value="" onfocus="this.select();" style="width: 50px; vertical-align: middle;" />
-                            <select name="height2" id="height2" style="width: 50px; vertical-align: middle;">
-                                <option value="">px</option>
-                                <option value="%">%</option>
-                            </select>
-                        </td>
-                    </tr>
-                </table>
-		</fieldset>
+					<table border="0" cellpadding="4" cellspacing="0">
+							<tr>
+							<td nowrap="nowrap">{$lang_flash_file}:</td>
+							  <td nowrap="nowrap">
+									<table border="0" cellspacing="0" cellpadding="0">
+									  <tr>
+										<td><input id="file" name="file" type="text" value="" onfocus="this.select();" /></td>
+										<td><script language="javascript" type="text/javascript">renderBrowser('filebrowser','file','flash','flash');</script></td>
+									  </tr>
+									</table>
+								</td>
+							</tr>
+							<script language="javascript" type="text/javascript">renderFlashList();</script>
+							<tr>
+								<td nowrap="nowrap">{$lang_flash_size}:</td>
+								<td nowrap="nowrap">
+									<input type="text" id="width" name="width" value="" onfocus="this.select();" />
+									<select name="width2" id="width2" style="width: 50px; vertical-align: middle;">
+										<option value="">px</option>
+										<option value="%">%</option>
+									</select>&nbsp;x&nbsp;<input id="height" name="height" type="text"  value="" onfocus="this.select();" />
+									<select name="height2" id="height2" style="width: 50px; vertical-align: middle;">
+										<option value="">px</option>
+										<option value="%">%</option>
+									</select>
+								</td>
+							</tr>
+					</table>
+				</fieldset>
+			</div>
+		</div>
 
 		<div class="mceActionPanel">
 			<div style="float: left">

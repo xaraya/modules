@@ -1,6 +1,6 @@
 // CA_FR lang variables
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 insert_link_target_same : 'Ouvrir dans la même fenêtre',
 insert_link_target_parent : 'Ouvrir dans la fenêtre parent',
 insert_link_target_top : 'Ouvrir dans le cadre supérieur',

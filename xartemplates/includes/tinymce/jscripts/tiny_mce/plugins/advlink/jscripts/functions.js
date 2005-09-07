@@ -19,6 +19,11 @@ function preinit() {
 	}
 }
 
+function changeClass() {
+	var formObj = document.forms[0];
+	formObj.classes.value = getSelectValue(formObj, 'classlist');
+}
+
 function init() {
 	var formObj = document.forms[0];
 	var inst = tinyMCE.getInstanceById(tinyMCE.getWindowArg('editor_id'));
@@ -96,9 +101,11 @@ function init() {
 		if (href.charAt(0) == '#')
 			selectByValue(formObj, 'anchorlist', href);
 
-		selectByValue(formObj, 'class', tinyMCE.getAttrib(elm, 'class'), true);
+		selectByValue(formObj, 'classlist', tinyMCE.getAttrib(elm, 'class'), true);
 		selectByValue(formObj, 'targetlist', tinyMCE.getAttrib(elm, 'target'), true);
 	}
+
+	addClassesToList('classlist', 'advlink_styles');
 
 	window.focus();
 }
@@ -354,7 +361,7 @@ function renderAnchorList(id, target) {
 
 	var html = "";
 
-	html += '<tr><td class="column1"><label for="' + id + '">Anchors</label></td><td>';
+	html += '<tr><td class="column1"><label for="' + id + '">{$lang_advlink_anchor_names}</label></td><td>';
 	html += '<select id="' + id + '" name="' + id + '" class="mceAnchorList" onchange="this.form.' + target + '.value=';
 	html += 'this.options[this.selectedIndex].value;">';
 	html += '<option value="">---</option>';
@@ -375,6 +382,8 @@ function insertAction() {
 
 	elm = tinyMCE.getParentElement(elm, "a");
 
+	tinyMCEPopup.execCommand("mceBeginUndoLevel");
+
 	// Create new anchor elements
 	if (elm == null) {
 		if (tinyMCE.isSafari)
@@ -382,12 +391,36 @@ function insertAction() {
 		else
 			tinyMCEPopup.execCommand("createlink", false, "#mce_temp_url#");
 
-		var elementArray = tinyMCE.getElementsByAttributeValue(inst.contentDocument.body, "a", "href", "#mce_temp_url#");
-		for (var i=0; i<elementArray.length; i++)
-			setAllAttribs(elementArray[i]);
+		var elementArray = tinyMCE.getElementsByAttributeValue(inst.getBody(), "a", "href", "#mce_temp_url#");
+		for (var i=0; i<elementArray.length; i++) {
+			var elm = elementArray[i];
+
+			// Move cursor behind the new anchor
+			if (tinyMCE.isGecko) {
+				var sp = inst.getDoc().createTextNode(" ");
+
+				if (elm.nextSibling)
+					elm.parentNode.insertBefore(sp, elm.nextSibling);
+				else
+					elm.parentNode.appendChild(sp);
+
+				// Set range after link
+				var rng = inst.getDoc().createRange();
+				rng.setStartAfter(elm);
+				rng.setEndAfter(elm);
+
+				// Update selection
+				var sel = inst.getSel();
+				sel.removeAllRanges();
+				sel.addRange(rng);
+			}
+
+			setAllAttribs(elm);
+		}
 	} else
 		setAllAttribs(elm);
 
+	tinyMCEPopup.execCommand("mceEndUndoLevel");
 	tinyMCEPopup.close();
 }
 
@@ -399,10 +432,10 @@ function setAllAttribs(elm) {
 
 	setAttrib(elm, 'href', href);
 	setAttrib(elm, 'title');
-	setAttrib(elm, 'target');
+	setAttrib(elm, 'target', getSelectValue(formObj, 'targetlist'));
 	setAttrib(elm, 'id');
 	setAttrib(elm, 'style');
-	setAttrib(elm, 'class');
+	setAttrib(elm, 'class', getSelectValue(formObj, 'classlist'));
 	setAttrib(elm, 'rel');
 	setAttrib(elm, 'rev');
 	setAttrib(elm, 'charset');
@@ -445,7 +478,7 @@ function renderLinkList(elm_id, target_form_element, onchange_func) {
 
 	var html = "";
 
-	html += '<tr><td class="column1"><label for="' + elm_id + '">{$lang_link_list}:</label></td>';
+	html += '<tr><td class="column1"><label for="' + elm_id + '">{$lang_link_list}</label></td>';
 	html += '<td colspan="2"><select id="' + elm_id + '" name="' + elm_id + '"';
 	html += ' class="mceLinkList" onchange="this.form.' + target_form_element + '.value=';
 	html += 'this.options[this.selectedIndex].value;';
@@ -472,10 +505,10 @@ function renderTargetList(elm_id, target_form_element) {
 	html += '<select id="' + elm_id + '" name="' + elm_id + '" onchange="this.form.' + target_form_element + '.value=';
 	html += 'this.options[this.selectedIndex].value;">';
 
-	html += '<option value="_self">' + tinyMCE.getLang('lang_insert_link_target_same') + '</option>';
-	html += '<option value="_blank">' + tinyMCE.getLang('lang_insert_link_target_blank') + '</option>';
-	html += '<option value="_parent">' + tinyMCE.getLang('lang_insert_link_target_parent') + '</option>';
-	html += '<option value="_top">' + tinyMCE.getLang('lang_insert_link_target_top') + '</option>';
+	html += '<option value="_self">' + tinyMCE.getLang('lang_advlink_target_same') + '</option>';
+	html += '<option value="_blank">' + tinyMCE.getLang('lang_advlink_target_blank') + '</option>';
+	html += '<option value="_parent">' + tinyMCE.getLang('lang_advlink_target_parent') + '</option>';
+	html += '<option value="_top">' + tinyMCE.getLang('lang_advlink_target_top') + '</option>';
 
 	for (var i=0; i<targets.length; i++) {
 		var key, value;
@@ -488,26 +521,6 @@ function renderTargetList(elm_id, target_form_element) {
 
 		html += '<option value="' + key + '">' + value + '</option>';
 	}
-
-	html += '</select>';
-
-	document.write(html);
-}
-
-function renderClassesList(form_element_name) {
-	var csses = tinyMCE.getCSSClasses(tinyMCE.getWindowArg('editor_id'));
-	if (csses.length == 0)
-		return;
-
-	var html = "";
-
-	html += '<tr><td class="column1"><label for="class">Class</label></td><td nowrap="nowrap">';
-	html += '<select id="class" name="class" style="width: 150px" onchange="this.form.classes.value=';
-	html += 'this.options[this.selectedIndex].value;">';
-	html += '<option value="">' + tinyMCE.getLang("lang_not_set") + '</option>';
-
-	for (var i=0; i<csses.length; i++)
-		html += '<option value="' + csses[i] + '">' + csses[i] + '</option>';
 
 	html += '</select>';
 

@@ -1,6 +1,6 @@
 // TW lang variables contributed by Jim Kou
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 insert_table_align : '¹ï»ô',
 insert_table_align_default : '¼Ð·Ç',
 insert_table_align_left : '»ô¥ª',

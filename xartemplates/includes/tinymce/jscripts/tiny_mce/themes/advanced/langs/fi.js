@@ -1,6 +1,6 @@
 // FI lang variables by Urho Konttori from Absolutions
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 theme_style_select : 'Tyylit',
 theme_code_desc : 'Muokkaa HTML lähdekoodia',
 theme_code_title : 'HTML Lähdekoodin muokkaus',

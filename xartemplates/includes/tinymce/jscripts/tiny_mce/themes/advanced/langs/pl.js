@@ -1,6 +1,6 @@
 // UK lang variables
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 theme_style_select : 'Styl',
 theme_code_desc : 'Edytuj zródlo html',
 theme_code_title : 'Edytor zródla html',

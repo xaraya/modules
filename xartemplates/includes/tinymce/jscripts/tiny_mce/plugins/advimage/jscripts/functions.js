@@ -54,12 +54,16 @@ function init() {
 	var action = "insert";
 
 	// Resize some elements
-	if (tinyMCE.getParam("file_browser_callback") != null) {
+	if (isVisible('srcbrowser'))
 		document.getElementById('src').style.width = '260px';
-		document.getElementById('onmouseoversrc').style.width = '260px';
-		document.getElementById('onmouseoutsrc').style.width = '260px';
-	}
 
+	if (isVisible('overbrowser'))
+		document.getElementById('onmouseoversrc').style.width = '260px';
+
+	if (isVisible('outbrowser'))
+		document.getElementById('onmouseoutsrc').style.width = '260px';
+
+	// Check action
 	if (elm != null && elm.nodeName == "IMG")
 		action = "update";
 
@@ -108,7 +112,7 @@ function init() {
 		else
 			selectByValue(formObj, 'align', getStyle(elm, style, 'align', 'cssFloat'));
 
-		selectByValue(formObj, 'class', tinyMCE.getAttrib(elm, 'class'));
+		selectByValue(formObj, 'classlist', tinyMCE.getAttrib(elm, 'class'));
 		selectByValue(formObj, 'imagelistsrc', src);
 		selectByValue(formObj, 'imagelistover', onmouseoversrc);
 		selectByValue(formObj, 'imagelistout', onmouseoutsrc);
@@ -119,6 +123,8 @@ function init() {
 
 		window.focus();
 	}
+
+	addClassesToList('classlist', 'advimage_styles');
 
 	// If option enabled default contrain proportions to checked
 	if (tinyMCE.getParam("advimage_constrain_proportions", true))
@@ -234,6 +240,7 @@ function insertAction() {
 
 	if (elm != null && elm.nodeName == "IMG") {
 		setAttrib(elm, 'src', src);
+		setAttrib(elm, 'mce_real_src', src);
 		setAttrib(elm, 'alt');
 		setAttrib(elm, 'title');
 		setAttrib(elm, 'border');
@@ -249,10 +256,10 @@ function insertAction() {
 		setAttrib(elm, 'longdesc');
 		setAttrib(elm, 'usemap');
 		setAttrib(elm, 'style');
-		setAttrib(elm, 'class', getSelectValue(formObj, 'class'));
+		setAttrib(elm, 'class', getSelectValue(formObj, 'classlist'));
 		setAttrib(elm, 'align', getSelectValue(formObj, 'align'));
 
-		tinyMCEPopup.execCommand("mceRepaint");
+		//tinyMCEPopup.execCommand("mceRepaint");
 
 		// Refresh in old MSIE
 		if (tinyMCE.isMSIE5)
@@ -276,7 +283,7 @@ function insertAction() {
 		html += makeAttrib('longdesc');
 		html += makeAttrib('usemap');
 		html += makeAttrib('style');
-		html += makeAttrib('class', getSelectValue(formObj, 'class'));
+		html += makeAttrib('class', getSelectValue(formObj, 'classlist'));
 		html += makeAttrib('align', getSelectValue(formObj, 'align'));
 		html += " />";
 
@@ -444,7 +451,7 @@ function renderImageList(elm_id, target_form_element, onchange_func) {
 
 	var html = "";
 
-	html += '<tr><td class="column1"><label for="' + elm_id + '">{$lang_image_list}:</label></td>';
+	html += '<tr><td class="column1"><label for="' + elm_id + '">{$lang_image_list}</label></td>';
 	html += '<td colspan="2"><select id="' + elm_id + '" name="' + elm_id + '"';
 	html += ' class="mceImageList" onchange="this.form.' + target_form_element + '.value=';
 	html += 'this.options[this.selectedIndex].value;';
@@ -462,23 +469,6 @@ function renderImageList(elm_id, target_form_element, onchange_func) {
 	document.write(html);
 
 	// tinyMCE.debug('-- image list start --', html, '-- image list end --');
-}
-
-function renderClassesList(form_element_name) {
-	var csses = tinyMCE.getCSSClasses(tinyMCE.getWindowArg('editor_id'));
-
-	var html = "";
-
-	html += '<tr><td class="column1"><label for="class">Class</label></td><td nowrap="nowrap">';
-	html += '<select id="class" name="class" style="width: 150px">';
-	html += '<option value="">' + tinyMCE.getLang("lang_not_set") + '</option>';
-
-	for (var i=0; i<csses.length; i++)
-		html += '<option value="' + csses[i] + '">' + csses[i] + '</option>';
-
-	html += '</select>';
-
-	document.write(html);
 }
 
 // While loading

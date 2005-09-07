@@ -1,15 +1,25 @@
 /* Import plugin specific language pack */
 tinyMCE.importPluginLanguagePack('flash', 'en,de,sv,zh_cn,cs,fa,fr_ca,fr,pl,pt_br,nl');
 
+function TinyMCE_flash_getInfo() {
+	return {
+		longname : 'Flash',
+		author : 'Moxiecode Systems',
+		authorurl : 'http://tinymce.moxiecode.com',
+		infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_flash.html',
+		version : '2.0RC1'
+	};
+};
+
 function TinyMCE_flash_initInstance(inst) {
 	if (!tinyMCE.settings['flash_skip_plugin_css'])
-		tinyMCE.importCSS(inst.getDoc(), tinyMCE.baseURL + "/plugins/flash/css/flash.css");
+		tinyMCE.importCSS(inst.getDoc(), tinyMCE.baseURL + "/plugins/flash/css/content.css");
 }
 
 function TinyMCE_flash_getControlHTML(control_name) {
     switch (control_name) {
         case "flash":
-            return '<img id="{$editor_id}_flash" src="{$pluginurl}/images/flash.gif" title="{$lang_insert_flash}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceFlash\');" />';
+            return '<img id="{$editor_id}_flash" src="{$pluginurl}/images/flash.gif" title="{$lang_flash_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceFlash\');" />';
     }
 
     return "";
@@ -70,8 +80,8 @@ function TinyMCE_flash_execCommand(editor_id, element, command, user_interface, 
 			var focusElm = inst.getFocusElement();
 
             template['file']   = '../../plugins/flash/flash.htm'; // Relative to theme
-            template['width']  = 400;
-            template['height'] = 195;
+            template['width']  = 430;
+            template['height'] = 185;
 
 			if (tinyMCE.getParam("flash_external_list_url", false))
 				template['height'] += 20;

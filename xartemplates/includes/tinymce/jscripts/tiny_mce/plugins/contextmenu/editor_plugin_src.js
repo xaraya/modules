@@ -6,6 +6,16 @@ if (!tinyMCE.settings['contextmenu_skip_plugin_css'])
 // Global contextmenu class instance
 var TinyMCE_contextmenu_contextMenu = null;
 
+function TinyMCE_contextmenu_getInfo() {
+	return {
+		longname : 'Context menus',
+		author : 'Moxiecode Systems',
+		authorurl : 'http://tinymce.moxiecode.com',
+		infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_contextmenu.html',
+		version : '2.0RC1'
+	};
+};
+
 function TinyMCE_contextmenu_initInstance(inst) {
 	// Is not working on MSIE 5.0
 	if (tinyMCE.isMSIE5_0)
@@ -114,23 +124,30 @@ function TinyMCE_contextmenu_showContextMenu(e, inst) {
 						contextMenu.addItem(tinyMCE.baseURL + "/themes/" + theme + "/images/right.gif", "$lang_justifyright_desc", "JustifyRight", "", false);
 						contextMenu.addItem(tinyMCE.baseURL + "/themes/" + theme + "/images/full.gif", "$lang_justifyfull_desc", "JustifyFull", "", false);*/
 						contextMenu.addSeparator();
-						contextMenu.addItem(tinyMCE.baseURL + "/plugins/table/images/table.gif", "$lang_table_insert_desc", "mceInsertTable", "insert");
+						contextMenu.addItem(tinyMCE.baseURL + "/plugins/table/images/table.gif", "$lang_table_desc", "mceInsertTable", "insert");
 						contextMenu.addItem(tinyMCE.baseURL + "/plugins/table/images/table.gif", "$lang_table_props_desc", "mceInsertTable");
 						contextMenu.addItem(tinyMCE.baseURL + "/plugins/table/images/table_cell_props.gif", "$lang_table_cell_desc", "mceTableCellProps");
+						contextMenu.addItem(tinyMCE.baseURL + "/plugins/table/images/table_cell_props.gif", "$lang_table_del", "mceTableDelete");
 						contextMenu.addSeparator();
 						contextMenu.addItem(tinyMCE.baseURL + "/plugins/table/images/table_row_props.gif", "$lang_table_row_desc", "mceTableRowProps");
-						contextMenu.addItem(tinyMCE.baseURL + "/plugins/table/images/table_insert_row_before.gif", "$lang_table_insert_row_before_desc", "mceTableInsertRowBefore");
-						contextMenu.addItem(tinyMCE.baseURL + "/plugins/table/images/table_insert_row_after.gif", "$lang_table_insert_row_after_desc", "mceTableInsertRowAfter");
+						contextMenu.addItem(tinyMCE.baseURL + "/plugins/table/images/table_insert_row_before.gif", "$lang_table_row_before_desc", "mceTableInsertRowBefore");
+						contextMenu.addItem(tinyMCE.baseURL + "/plugins/table/images/table_insert_row_after.gif", "$lang_table_row_after_desc", "mceTableInsertRowAfter");
 						contextMenu.addItem(tinyMCE.baseURL + "/plugins/table/images/table_delete_row.gif", "$lang_table_delete_row_desc", "mceTableDeleteRow");
 						contextMenu.addSeparator();
-						contextMenu.addItem(tinyMCE.baseURL + "/plugins/table/images/table_insert_col_before.gif", "$lang_table_insert_col_before_desc", "mceTableInsertColBefore");
-						contextMenu.addItem(tinyMCE.baseURL + "/plugins/table/images/table_insert_col_after.gif", "$lang_table_insert_col_after_desc", "mceTableInsertColAfter");
+						contextMenu.addItem(tinyMCE.baseURL + "/plugins/table/images/table_insert_col_before.gif", "$lang_table_col_before_desc", "mceTableInsertColBefore");
+						contextMenu.addItem(tinyMCE.baseURL + "/plugins/table/images/table_insert_col_after.gif", "$lang_table_col_after_desc", "mceTableInsertColAfter");
 						contextMenu.addItem(tinyMCE.baseURL + "/plugins/table/images/table_delete_col.gif", "$lang_table_delete_col_desc", "mceTableDeleteCol");
 						contextMenu.addSeparator();
 						contextMenu.addItem(tinyMCE.baseURL + "/plugins/table/images/table_split_cells.gif", "$lang_table_split_cells_desc", "mceTableSplitCells", "", (colspan == "1" && rowspan == "1"));
 						contextMenu.addItem(tinyMCE.baseURL + "/plugins/table/images/table_merge_cells.gif", "$lang_table_merge_cells_desc", "mceTableMergeCells", "", false);
 					}
 					break;
+			}
+		}  else {
+			// Add table specific
+			if (typeof(TinyMCE_table_getControlHTML) != "undefined") {
+				contextMenu.addSeparator();
+				contextMenu.addItem(tinyMCE.baseURL + "/plugins/table/images/table.gif", "$lang_table_desc", "mceInsertTable", "insert");
 			}
 		}
 

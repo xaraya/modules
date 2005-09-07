@@ -1,5 +1,5 @@
 // French lang variables by Laurent Dran
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 preview_desc : 'Pr&eacute;visualisation'
 });

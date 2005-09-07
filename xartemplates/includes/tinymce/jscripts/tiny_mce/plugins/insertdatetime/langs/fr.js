@@ -1,6 +1,6 @@
 // French lang variables by Laurent Dran
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 insertdate_def_fmt : '%Y-%m-%d',
 inserttime_def_fmt : '%H:%M:%S',
 insertdate_desc : 'Ins&egrave;rer la date',

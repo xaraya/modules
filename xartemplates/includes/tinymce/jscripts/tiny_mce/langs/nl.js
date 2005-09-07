@@ -1,6 +1,6 @@
 // NL lang variables thanks to "Meint Post"
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 bold_desc : 'Vet',
 italic_desc : 'Schuin',
 underline_desc : 'Onderstrepen',

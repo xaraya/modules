@@ -3,7 +3,7 @@
 
 /* Remember to namespace the language parameters <your plugin>_<some name> */
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 template_title : '这仅是模板的弹出窗口',
 template_desc : '这仅是模板的按钮'
 });

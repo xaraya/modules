@@ -3,7 +3,6 @@ tinyMCE.importThemeLanguagePack('advanced');
 
 // Variable declarations
 var TinyMCE_advanced_autoImportCSSClasses = true;
-var TinyMCE_advanced_foreColor = "#000000";
 var TinyMCE_advanced_resizer = new Object();
 var TinyMCE_advanced_buttons = [
 	// Control id, button img, button title, command, user_interface, value
@@ -120,27 +119,19 @@ function TinyMCE_advanced_getControlHTML(button_name)
 		return '<select id="{$editor_id}_styleSelect" onmousedown="TinyMCE_advanced_setupCSSClasses(\'{$editor_id}\');" name="{$editor_id}_styleSelect" onchange="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceSetCSSClass\',false,this.options[this.selectedIndex].value);" class="mceSelectList">{$style_select_options}</select>';
 
 		case "fontselect":
-			//fontselect
-		return '<select id="{$editor_id}_fontNameSelect" name="{$editor_id}_fontNameSelect" onchange="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'FontName\',false,this.options[this.selectedIndex].value);" class="mceSelectList">\
-		<option value="">{$lang_theme_fontdefault}</option>\
-		<option value="andale mono,times">Andale Mono</option>\
-		<option value="arial,helvetica,sans-serif">Arial</option>\
-		<option value="arial black,avant garde">Arial Black</option>\
-		<option value="book antiqua,palatino">Book Antiqua</option>\
-		<option value="comic sans ms,sand">Comic Sans MS</option>\
-		<option value="courier new,courier">Courier New</option>\
-		<option value="georgia,palatino">Georgia</option>\
-		<option value="helvetica">Helvetica</option>\
-		<option value="impact,chicago">Impact</option>\
-		<option value="symbol">Symbol</option>\
-		<option value="tahoma,arial,helvetica,sans-serif">Tahoma</option>\
-		<option value="terminal,monaco">Terminal</option>\
-		<option value="times new roman,times">Times New Roman</option>\
-		<option value="trebuchet ms,geneva">Trebuchet MS</option>\
-		<option value="verdana,geneva">Verdana</option>\
-		<option value="webdings">Webdings</option>\
-		<option value="wingdings,zapf dingbats">Wingdings</option>\
-		</select>';
+			var fontHTML = '<select id="{$editor_id}_fontNameSelect" name="{$editor_id}_fontNameSelect" onchange="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'FontName\',false,this.options[this.selectedIndex].value);" class="mceSelectList"><option value="">{$lang_theme_fontdefault}</option>';
+			var iFonts = 'Arial=arial,helvetica,sans-serif;Courier New=courier new,courier,monospace;Georgia=georgia,times new roman,times,serif;Tahoma=tahoma,arial,helvetica,sans-serif;Times New Roman=times new roman,times,serif;Verdana=verdana,arial,helvetica,sans-serif;Impact=impact;WingDings=wingdings';
+			var nFonts = 'Andale Mono=andale mono,times;Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;Comic Sans MS=comic sans ms,sand;Courier New=courier new,courier;Georgia=georgia,palatino;Helvetica=helvetica;Impact=impact,chicago;Symbol=symbol;Tahoma=tahoma,arial,helvetica,sans-serif;Terminal=terminal,monaco;Times New Roman=times new roman,times;Trebuchet MS=trebuchet ms,geneva;Verdana=verdana,geneva;Webdings=webdings;Wingdings=wingdings,zapf dingbats';
+			var fonts = tinyMCE.getParam("theme_advanced_fonts", nFonts).split(';');
+			for (var i=0; i<fonts.length; i++) {
+				if (fonts[i] != '') {
+					var parts = fonts[i].split('=');
+					fontHTML += '<option value="' + parts[1] + '">' + parts[0] + '</option>';
+				}
+			}
+
+			fontHTML += '</select>';
+			return fontHTML;
 
 		case "fontsizeselect":
 			//fontsizeselect
@@ -178,7 +169,11 @@ function TinyMCE_advanced_execCommand(editor_id, element, command, user_interfac
 	{
 		case "mceForeColor":
 			var template = new Array();
-			var inputColor = TinyMCE_advanced_foreColor;
+			var elm = tinyMCE.selectedInstance.getFocusElement();
+			var inputColor = tinyMCE.getAttrib(elm, "color");
+
+			if (inputColor == '')
+				inputColor = elm.style.color;
 
 			if (!inputColor)
 				inputColor = "#000000";
@@ -192,16 +187,15 @@ function TinyMCE_advanced_execCommand(editor_id, element, command, user_interfac
 
 		case "mceBackColor":
 			var template = new Array();
-			var inputColor = TinyMCE_advanced_foreColor;
+			var elm = tinyMCE.selectedInstance.getFocusElement();
+			var inputColor = elm.style.backgroundColor;
 
 			if (!inputColor)
-			{
 				inputColor = "#000000";
-			}
 
 			template['file'] = 'color_picker.htm';
-			template['width'] = 210;
-			template['height'] = 200;
+			template['width'] = 220;
+			template['height'] = 240;
 
 			tinyMCE.openWindow(template, {editor_id : editor_id, inline : "yes", command : "HiliteColor", input_color : inputColor});
 			//mceBackColor
@@ -233,8 +227,8 @@ function TinyMCE_advanced_execCommand(editor_id, element, command, user_interfac
 			var template = new Array();
 
 			template['file'] = 'source_editor.htm';
-			template['width'] = tinyMCE.getParam("theme_advanced_source_editor_width", 500);
-			template['height'] = tinyMCE.getParam("theme_advanced_source_editor_height", 400);
+			template['width'] = parseInt(tinyMCE.getParam("theme_advanced_source_editor_width", 500));
+			template['height'] = parseInt(tinyMCE.getParam("theme_advanced_source_editor_height", 400));
 
 			tinyMCE.openWindow(template, {editor_id : editor_id, resizable : "yes", scrollbars : "no", inline : "yes"});
 			//mceCodeEditor
@@ -405,7 +399,6 @@ function TinyMCE_advanced_getEditorTemplate(settings, editorId)
 				toolbarHTML = tinyMCE.replaceVars(toolbarHTML, tinyMCELang);
 				toolbarHTML = tinyMCE.replaceVar(toolbarHTML, 'style_select_options', styleSelectHTML);
 				toolbarHTML = tinyMCE.replaceVar(toolbarHTML, "editor_id", editorId);
-				toolbarHTML = tinyMCE.replaceVar(toolbarHTML, "default_document", tinyMCE.baseURL + "/blank.htm");
 				toolbarHTML = tinyMCE.applyTemplate(toolbarHTML);
 
 				elm.className = "mceToolbarExternal";
@@ -540,11 +533,6 @@ function TinyMCE_advanced_setResizing(e, editor_id, state) {
 		var width = editorArea.clientWidth;
 		var height = editorArea.clientHeight;
 
-		if (tinyMCE.isMSIE) {
-			width += 2;
-			height += 2;
-		}
-
 		resizeBox.style.width = width + "px";
 		resizeBox.style.height = height + "px";
 
@@ -578,8 +566,102 @@ function TinyMCE_advanced_setResizing(e, editor_id, state) {
 	} else {
 		resizer.resizing = false;
 		resizeBox.style.display = "none";
-		editorArea.style.display = "block";
+		editorArea.style.display = tinyMCE.isMSIE ? "block" : "table";
 		tinyMCE.execCommand('mceResetDesignMode');
+	}
+}
+
+function TinyMCE_advanced_initInstance(inst) {
+	if (tinyMCE.getParam("theme_advanced_resizing", false)) {
+		var w = TinyMCE_advanced_getCookie("TinyMCE_" + inst.editorId + "_width");
+		var h = TinyMCE_advanced_getCookie("TinyMCE_" + inst.editorId + "_height");
+
+		TinyMCE_advanced_resizeTo(inst, w, h, tinyMCE.getParam("theme_advanced_resize_horizontal", true));
+	}
+}
+
+function TinyMCE_advanced_setCookie(name, value, expires, path, domain, secure) {
+	var curCookie = name + "=" + escape(value) +
+		((expires) ? "; expires=" + expires.toGMTString() : "") +
+		((path) ? "; path=" + escape(path) : "") +
+		((domain) ? "; domain=" + domain : "") +
+		((secure) ? "; secure" : "");
+
+	document.cookie = curCookie;
+}
+
+function TinyMCE_advanced_getCookie(name) {
+	var dc = document.cookie;
+	var prefix = name + "=";
+	var begin = dc.indexOf("; " + prefix);
+
+	if (begin == -1) {
+		begin = dc.indexOf(prefix);
+
+		if (begin != 0)
+			return null;
+	} else
+		begin += 2;
+
+	var end = document.cookie.indexOf(";", begin);
+
+	if (end == -1)
+		end = dc.length;
+
+	return unescape(dc.substring(begin + prefix.length, end));
+}
+
+function TinyMCE_advanced_resizeTo(inst, w, h, set_w) {
+	var editorContainer = document.getElementById(inst.editorId + '_parent');
+	var tableElm = editorContainer.firstChild;
+	var iframe = inst.iframeElement;
+
+	if (w == null || w == "null") {
+		set_w = false;
+		w = 0;
+	}
+
+	if (h == null || h == "null")
+		return;
+
+	w = parseInt(w);
+	h = parseInt(h);
+
+	if (tinyMCE.isGecko) {
+		w += 2;
+		h += 2;
+	}
+
+	var dx = w - tableElm.clientWidth;
+	var dy = h - tableElm.clientHeight;
+
+	if (set_w)
+		tableElm.style.width = w + "px";
+
+	tableElm.style.height = h + "px";
+
+	iw = iframe.clientWidth + dx;
+	ih = iframe.clientHeight + dy;
+
+	if (tinyMCE.isGecko) {
+		iw -= 2;
+		ih -= 2;
+	}
+
+	if (set_w)
+		iframe.style.width = iw + "px";
+
+	iframe.style.height = ih + "px";
+
+	// Is it to small, make it bigger again
+	if (set_w) {
+		var tableBodyElm = tableElm.firstChild;
+		var minIframeWidth = tableBodyElm.scrollWidth;
+		if (inst.iframeElement.clientWidth < minIframeWidth) {
+			dx = minIframeWidth - inst.iframeElement.clientWidth;
+
+			inst.iframeElement.style.width = (iw + dx) + "px";
+		}
 	}
 }
 
@@ -609,57 +691,16 @@ function TinyMCE_advanced_resizeEventHandler(e) {
 			break;
 
 		case "mouseup":
-			resizer.resizing = false;
 			TinyMCE_advanced_setResizing(e, editorId, false);
+			TinyMCE_advanced_resizeTo(tinyMCE.getInstanceById(editorId), resizer.width + dx, resizer.height + dy, resizer.horizontal);
 
-			var editorContainer = document.getElementById(editorId + '_parent');
-			var tableElm = editorContainer.firstChild;
-			var inst = tinyMCE.getInstanceById(editorId);
-			var width = resizer.width + dx;
-			var height = resizer.height + dy;
+			// Expire in a month
+			var expires = new Date();
+			expires.setTime(expires.getTime() + 3600000 * 24 * 30);
 
-			if (resizer.horizontal)
-				var iframeWidth = resizer.iframeWidth + dx;
-
-			var iframeHeight = resizer.iframeHeight + dy;
-
-			if (tinyMCE.isGecko) {
-				width += 2;
-				height += 2;
-			}
-
-			// Range check
-			if (iframeHeight < 40)
-				return;
-
-			// Resize editor container
-			if (resizer.horizontal)
-				tableElm.style.width = width + "px";
-
-			tableElm.style.height = height + "px";
-
-			// Resize iframe
-			if (resizer.horizontal)
-				inst.iframeElement.style.width = iframeWidth + "px";
-
-			// Fixes 100% bug
-			if (tinyMCE.isGecko && !resizer.horizontal)
-				inst.iframeElement.style.width = resizer.iframeWidth + "px";
-
-			inst.iframeElement.style.height = iframeHeight +  "px";
-
-			// Is it to small, make it bigger again
-			if (resizer.horizontal) {
-				var tableBodyElm = tableElm.firstChild;
-				var minIframeWidth = tableBodyElm.scrollWidth;
-				if (inst.iframeElement.clientWidth < minIframeWidth) {
-					dx = minIframeWidth - inst.iframeElement.clientWidth;
-
-					tableElm.style.width = (width + dx) + "px";
-					inst.iframeElement.style.width = (iframeWidth + dx) + "px";
-				}
-			}
-
+			// Set the cookies
+			TinyMCE_advanced_setCookie("TinyMCE_" + editorId + "_width", "" + (resizer.horizontal ? resizer.width + dx : ""), expires);
+			TinyMCE_advanced_setCookie("TinyMCE_" + editorId + "_height", "" + (resizer.height + dy), expires);
 			break;
 	}
 }
@@ -672,8 +713,8 @@ function TinyMCE_advanced_getInsertLinkTemplate()
 	var template = new Array();
 
 	template['file'] = 'link.htm';
-	template['width'] = 300;
-	template['height'] = 150;
+	template['width'] = 350;
+	template['height'] = 180;
 
 	// Language specific width and height addons
 	template['width'] += tinyMCE.getLang('lang_insert_link_delta_width', 0);
@@ -781,11 +822,9 @@ function TinyMCE_advanced_handleNodeChange (editor_id, node, undo_index,
 				nodeData += "id: " + path[i].getAttribute('id') + " ";
 			}
 
-			var className = tinyMCE.getVisualAidClass(getAttrib(path[i], "className"), false);
+			var className = tinyMCE.getVisualAidClass(tinyMCE.getAttrib(path[i], "class"), false);
 			if (className != "" && className.indexOf('mceItem') == -1)
-			{
 				nodeData += "class: " + className + " ";
-			}
 
 			if (getAttrib(path[i], 'src') != "")
 			{
@@ -812,11 +851,9 @@ function TinyMCE_advanced_handleNodeChange (editor_id, node, undo_index,
 
 			if (getAttrib(path[i], 'name').indexOf("mce_") != 0)
 			{
-				var className = tinyMCE.getVisualAidClass(tinyMCE.getAttrib(path[i], "className"), false);
+				var className = tinyMCE.getVisualAidClass(tinyMCE.getAttrib(path[i], "class"), false);
 				if (className != "" && className.indexOf('mceItem') == -1)
-				{
 					nodeName += "." + className;
-				}
 			}
 
 			if (tinyMCE.isMSIE)
@@ -835,14 +872,6 @@ function TinyMCE_advanced_handleNodeChange (editor_id, node, undo_index,
 		}
 
 		pathElm.innerHTML = tinyMCE.getLang('lang_theme_path') + ": " + html + '&nbsp;';
-	}
-
-	// Get element color
-	var colorElm = tinyMCE.getParentElement(node, "font", "color");
-	
-	if (colorElm)
-	{
-		TinyMCE_advanced_foreColor = "" + colorElm.color.toUpperCase();
 	}
 
 	// Reset old states
@@ -865,7 +894,7 @@ function TinyMCE_advanced_handleNodeChange (editor_id, node, undo_index,
 	tinyMCE.switchClassSticky(editor_id + '_image', 'mceButtonNormal');
 	tinyMCE.switchClassSticky(editor_id + '_hr', 'mceButtonNormal');
 
-	if (node.nodeName == "IMG" && tinyMCE.getAttrib(node, "class").indexOf('mceItemAnchor') != -1)
+	if (node.nodeName == "A" && tinyMCE.getAttrib(node, "class").indexOf('mceItemAnchor') != -1)
 		tinyMCE.switchClassSticky(editor_id + '_anchor', 'mceButtonSelected');
 
 	// Get link
@@ -953,36 +982,44 @@ function TinyMCE_advanced_handleNodeChange (editor_id, node, undo_index,
 
 	// Select fontselect
 	var selectElm = document.getElementById(editor_id + "_fontNameSelect");
-	
-	if (selectElm)
-	{
-		var elm = tinyMCE.getParentElement(node, "font", "face");
-		
-		if (elm)
-		{
-			selectByValue(selectElm, elm.getAttribute("face"));
-		}
-		else
-		{
+	if (selectElm) {
+		var elm = tinyMCE.getParentElement(node);
+
+		if (elm) {
+			var family = tinyMCE.getAttrib(elm, "face");
+			if (family == '')
+				family = '' + elm.style.fontFamily;
+
+			if (!selectByValue(selectElm, family))
+				selectByValue(selectElm, "");
+		} else
 			selectByValue(selectElm, "");
-		}
 	}
 
 	// Select fontsize
 	var selectElm = document.getElementById(editor_id + "_fontSizeSelect");
+	if (selectElm) {
+		var elm = tinyMCE.getParentElement(node);
 
-	if (selectElm)
-	{
-		var elm = tinyMCE.getParentElement(node, "font", "size");
-		
-		if (elm && getAttrib(elm, "size") != "")
-		{
-			selectByValue(selectElm, elm.getAttribute("size"));
-		}
-		else
-		{
+		if (elm) {
+			var size = tinyMCE.getAttrib(elm, "size");
+			if (size == '') {
+				var sizes = new Array('', '8px', '10px', '12px', '14px', '18px', '24px', '36px');
+
+				size = '' + elm.style.fontSize;
+
+				for (var i=0; i<sizes.length; i++) {
+					if (('' + sizes[i]) == size) {
+						size = i;
+						break;
+					}
+				}
+			}
+
+			if (!selectByValue(selectElm, size))
+				selectByValue(selectElm, "");
+		} else
 			selectByValue(selectElm, "0");
-		}
 	}
 
 	// Handle align attributes

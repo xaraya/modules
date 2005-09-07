@@ -89,10 +89,6 @@ function insertLink() {
 		var dummy;
 
 		window.opener.tinyMCE.insertLink(href, target, title, dummy, style_class);
-		tinyMCE.closeDialog();
+		tinyMCEPopup.close();
 	}
-}
-
-function cancelAction() {
-	tinyMCE.closeDialog();
 }

@@ -1,6 +1,16 @@
 /* Import plugin specific language pack */
 tinyMCE.importPluginLanguagePack('directionality', 'en,sv,fr_ca,zh_cn');
 
+function TinyMCE_directionality_getInfo() {
+	return {
+		longname : 'Directionality',
+		author : 'Moxiecode Systems',
+		authorurl : 'http://tinymce.moxiecode.com',
+		infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_directionality.html',
+		version : '2.0RC1'
+	};
+};
+
 function TinyMCE_directionality_getControlHTML(control_name) {
 	var safariPatch = '" onclick="';
 

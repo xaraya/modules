@@ -1,6 +1,6 @@
 // PL lang variables
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 table_desc : 'Wstaw nowa tabele',
 table_insert_row_before_desc : 'Wstaw wiersz przed',
 table_insert_row_after_desc : 'Wstaw wiersz po',

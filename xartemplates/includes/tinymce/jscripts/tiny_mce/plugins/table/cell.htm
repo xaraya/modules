@@ -11,59 +11,59 @@
 	<form onsubmit="updateAction();return false;">
 		<div class="tabs">
 			<ul>
-				<li id="general_tab" class="current"><span><a href="javascript:mcTabs.displayTab('general_tab','general_panel');" onmousedown="return false;">General</a></span></li>
-				<li id="advanced_tab"><span><a href="javascript:mcTabs.displayTab('advanced_tab','advanced_panel');" onmousedown="return false;">Advanced</a></span></li>
+				<li id="general_tab" class="current"><span><a href="javascript:mcTabs.displayTab('general_tab','general_panel');" onmousedown="return false;">{$lang_table_general_tab}</a></span></li>
+				<li id="advanced_tab"><span><a href="javascript:mcTabs.displayTab('advanced_tab','advanced_panel');" onmousedown="return false;">{$lang_table_advanced_tab}</a></span></li>
 			</ul>
 		</div>
-	
+
 		<div class="panel_wrapper">
 			<div id="general_panel" class="panel current">
 				<fieldset>
-					<legend>General properties</legend>
+					<legend>{$lang_table_general_props}</legend>
 
 					<table border="0" cellpadding="4" cellspacing="0">
 						<tr>
-							<td><label for="align">{$lang_insert_table_align}:</label></td>
+							<td><label for="align">{$lang_table_align}</label></td>
 							<td>
 								<select id="align" name="align">
 									<option value="">{$lang_not_set}</option>
-									<option value="center">{$lang_insert_table_align_middle}</option>
-									<option value="left">{$lang_insert_table_align_left}</option>
-									<option value="right">{$lang_insert_table_align_right}</option>
+									<option value="center">{$lang_table_align_middle}</option>
+									<option value="left">{$lang_table_align_left}</option>
+									<option value="right">{$lang_table_align_right}</option>
 								</select>
 							</td>
 		
-							<td><label for="celltype">{$lang_table_cell_type}:</label></td>
+							<td><label for="celltype">{$lang_table_cell_type}</label></td>
 							<td>
 								<select id="celltype" name="celltype">
-									<option value="td">Data</option>
-									<option value="th">Header</option>
+									<option value="td">{$lang_table_td}</option>
+									<option value="th">{$lang_table_th}</option>
 								</select>
 							</td>
 						</tr>
 
 						<tr>
-							<td><label for="valign">{$lang_insert_table_valign}:</label></td>
+							<td><label for="valign">{$lang_table_valign}</label></td>
 							<td colspan="2">
 								<select id="valign" name="valign">
 									<option value="">{$lang_not_set}</option>
-									<option value="top">{$lang_insert_table_align_top}</option>
-									<option value="middle">{$lang_insert_table_align_middle}</option>
-									<option value="bottom">{$lang_insert_table_align_bottom}</option>
+									<option value="top">{$lang_table_align_top}</option>
+									<option value="middle">{$lang_table_align_middle}</option>
+									<option value="bottom">{$lang_table_align_bottom}</option>
 								</select>
 							</td>
 						</tr>
 
 						<tr>
-							<td>{$lang_insert_table_width}:</td>
+							<td><label for="width">{$lang_table_width}</label></td>
 							<td><input id="width" name="width" type="text" value="" size="4" maxlength="4" /></td>
 
-							<td>{$lang_insert_table_height}:</td>
+							<td><label for="height">{$lang_table_height}</label></td>
 							<td><input id="height" name="height" type="text" value="" size="4" maxlength="4" /></td>
 						</tr>
 
 						<tr>
-							<td><label for="class">{$lang_insert_table_class}:</label></td>
+							<td><label for="class">{$lang_class_name}</label></td>
 							<td colspan="2">
 								<select id="class" name="class">
 									<option value="" selected="selected">{$lang_not_set}</option>
@@ -76,51 +76,51 @@
 
 			<div id="advanced_panel" class="panel">
 				<fieldset>
-					<legend>Advanced properties</legend>
+					<legend>{$lang_table_advanced_props}</legend>
 
 					<table border="0" cellpadding="0" cellspacing="4">
 						<tr>
-							<td class="column1"><label for="id">Id</label></td> 
+							<td class="column1"><label for="id">{$lang_table_id}</label></td> 
 							<td><input id="id" name="id" type="text" value="" style="width: 200px" /></td> 
 						</tr>
 
 						<tr>
-							<td><label for="style">Style:</label></td>
+							<td><label for="style">{$lang_table_style}</label></td>
 							<td><input type="text" id="style" name="style" value="" style="width: 200px;" onchange="changedStyle();" /></td>
 						</tr>
 
 						<tr>
-							<td class="column1"><label for="dir">Language direction:</label></td> 
+							<td class="column1"><label for="dir">{$lang_table_langdir}</label></td> 
 							<td>
 								<select id="dir" name="dir" style="width: 200px"> 
 										<option value="">{$lang_not_set}</option> 
-										<option value="ltr">Left to right</option> 
-										<option value="rtl">Right to left</option> 
+										<option value="ltr">{$lang_table_ltr}</option> 
+										<option value="rtl">{$lang_table_rtl}</option> 
 								</select>
 							</td> 
 						</tr>
 
 						<tr>
-							<td class="column1"><label for="lang">Language code:</label></td> 
+							<td class="column1"><label for="lang">{$lang_table_langcode}</label></td> 
 							<td>
 								<input id="lang" name="lang" type="text" value="" style="width: 200px" />
 							</td> 
 						</tr>
 
 						<tr>
-							<td class="column1"><label for="backgroundimage">Background image:</label></td> 
+							<td class="column1"><label for="backgroundimage">{$lang_table_bgimage}</label></td> 
 							<td>
 								<table border="0" cellpadding="0" cellspacing="0">
 									<tr>
 										<td><input id="backgroundimage" name="backgroundimage" type="text" value="" style="width: 200px" onchange="changedBackgroundImage();" /></td>
-										<td><script language="javascript" type="text/javascript">renderBrowser('backgroundimagebrowser','backgroundimage','image');</script></td>
+										<td><script language="javascript" type="text/javascript">renderBrowser('backgroundimagebrowser','backgroundimage','image','table');</script></td>
 									</tr>
 								</table>
 							</td> 
 						</tr>
 
 						<tr>
-							<td class="column1"><label for="bordercolor">{$lang_table_bordercolor}:</label></td> 
+							<td class="column1"><label for="bordercolor">{$lang_table_bordercolor}</label></td> 
 							<td>
 								<table border="0" cellpadding="0" cellspacing="0">
 									<tr>
@@ -132,7 +132,7 @@
 						</tr>
 
 						<tr>
-							<td class="column1"><label for="bgcolor">{$lang_table_bgcolor}:</label></td> 
+							<td class="column1"><label for="bgcolor">{$lang_table_bgcolor}</label></td> 
 							<td>
 								<table border="0" cellpadding="0" cellspacing="0">
 									<tr>
@@ -150,9 +150,9 @@
 		<div class="mceActionPanel">
 			<div>
 				<select id="action" name="action">
-					<option value="cell">Update current cell</option>
-					<option value="row">Update all cells in row</option>
-					<option value="all">Update all cells in table</option>
+					<option value="cell">{$lang_table_cell_cell}</option>
+					<option value="row">{$lang_table_cell_row}</option>
+					<option value="all">{$lang_table_cell_all}</option>
 				</select>
 			</div>
 

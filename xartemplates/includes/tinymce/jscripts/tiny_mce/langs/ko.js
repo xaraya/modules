@@ -1,6 +1,6 @@
 // KO lang variables by Setzer Gabbiani
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 bold_desc : '진하게',
 italic_desc : '기울임',
 underline_desc : '밑줄',

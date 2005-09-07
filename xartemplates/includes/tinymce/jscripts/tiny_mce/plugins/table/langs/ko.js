@@ -1,6 +1,6 @@
 // KO lang variables
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 table_desc : '표 넣기',
 table_insert_row_before_desc : '앞에 행 넣기',
 table_insert_row_after_desc : '뒤에 행 넣기',

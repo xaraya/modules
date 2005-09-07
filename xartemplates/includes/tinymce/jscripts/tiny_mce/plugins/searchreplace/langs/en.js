@@ -1,6 +1,6 @@
 // UK lang variables
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 searchreplace_search_desc : 'Find',
 searchreplace_searchnext_desc : 'Find again',
 searchreplace_replace_desc : 'Find/Replace',

@@ -1,6 +1,6 @@
 // UK lang variables
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 insert_advhr_desc : 'Insert / edit Horizontale Rule',
 insert_advhr_width : 'Width',
 insert_advhr_size : 'Height',

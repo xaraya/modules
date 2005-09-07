@@ -1,5 +1,5 @@
 // SE lang variables
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 preview_desc : 'Förhandsgranska'
 });

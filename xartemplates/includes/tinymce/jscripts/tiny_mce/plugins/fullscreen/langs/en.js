@@ -1,6 +1,6 @@
 // UK lang variables
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 fullscreen_title : 'Fullscreen mode',
 fullscreen_desc : 'Toggle fullscreen mode'
 });

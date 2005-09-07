@@ -1,6 +1,6 @@
 // HE lang variables by Liron Newman, http://eesh.net
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 insert_link_target_same : 'פתח בחלון זה או מסגרת זו',
 insert_link_target_parent : 'פתח בחלון או במסגרת המקוריים',
 insert_link_target_top : 'פתח במסגרת העליונה (מחליף את כל המסגרות)',

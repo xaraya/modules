@@ -1,6 +1,6 @@
 // Canadian French lang variables by Virtuelcom   last modification: 2005-06-15
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 theme_style_select : '-- Styles --',
 theme_code_desc : 'Modifier le code source HTML',
 theme_code_title : 'Éditeur de code source HTML',

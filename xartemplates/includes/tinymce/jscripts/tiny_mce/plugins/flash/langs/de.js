@@ -1,6 +1,6 @@
 // DE lang variables
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 insert_flash : 'Flash Movie einf&uuml;gen / bearbeiten',
 insert_flash_file : 'Flash-Datei',
 insert_flash_size : 'Gr&ouml;&szlig;e',

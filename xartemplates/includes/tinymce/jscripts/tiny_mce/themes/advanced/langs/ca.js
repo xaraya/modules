@@ -1,6 +1,6 @@
 // CA lang variables by Marc Bria
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 theme_style_select : 'Estils',
 theme_code_desc : 'Editar codi HTML',
 theme_code_title : 'Editor codi HTML',

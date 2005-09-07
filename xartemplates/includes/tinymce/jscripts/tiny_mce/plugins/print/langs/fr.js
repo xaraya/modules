@@ -1,5 +1,5 @@
 // French lang variables by Laurent Dran
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 print_desc : 'Imprimer'
 });

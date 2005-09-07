@@ -1,6 +1,16 @@
 /* Import plugin specific language pack */
 tinyMCE.importPluginLanguagePack('advimage', 'en,de,sv,zh_cn,cs,fa,fr_ca,fr,pl,pt_br,nl');
 
+function TinyMCE_advimage_getInfo() {
+	return {
+		longname : 'Advanced image',
+		author : 'Moxiecode Systems',
+		authorurl : 'http://tinymce.moxiecode.com',
+		infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_advimage.html',
+		version : '2.0RC1'
+	};
+};
+
 function TinyMCE_advimage_getControlHTML(control_name) {
 	switch (control_name) {
 		case "image":

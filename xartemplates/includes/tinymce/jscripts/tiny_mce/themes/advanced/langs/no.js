@@ -1,6 +1,6 @@
 // NO lang variables
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 theme_style_select : 'Stiler',
 theme_code_desc : 'Redigere HTML Koden',
 theme_code_title : 'HTML Kildekode Redigering',

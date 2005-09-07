@@ -66,10 +66,6 @@ function init() {
 	}
 }
 
-function cancelAction() {
-	tinyMCE.closeDialog();
-}
-
 var preloadImg = new Image();
 
 function resetImageData() {

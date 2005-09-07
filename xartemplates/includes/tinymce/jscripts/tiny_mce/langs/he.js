@@ -1,6 +1,6 @@
 // HE lang variables by Liron Newman, http://eesh.net
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 bold_desc : 'מודגש',
 italic_desc : 'נטוי',
 underline_desc : 'קו תחתי',

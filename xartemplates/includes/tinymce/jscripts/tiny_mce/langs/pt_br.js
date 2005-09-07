@@ -1,6 +1,6 @@
 // PT lang variables
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 bold_desc : 'Negrito',
 italic_desc : 'Itálico',
 underline_desc : 'Sublinhar',

@@ -1,6 +1,6 @@
 // CZ lang variables thanks to "Pavel Novák"
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 table_desc : 'Vložit novou tabulku',
 table_insert_row_before_desc : 'Vložit øádek pøed',
 table_insert_row_after_desc : 'Vložit øádek po',

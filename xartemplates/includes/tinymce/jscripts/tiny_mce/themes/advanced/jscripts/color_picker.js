@@ -40,8 +40,42 @@ var colors = new Array(
 	"#ccffcc","#ccffff","#ffff00","#ffff33","#ffff66","#ffff99","#ffffcc","#ffffff"
 );
 
+function convertRGBToHex(col) {
+	var re = new RegExp("rgb\\W*\\(\\W*([0-9]+).*,\\W*([0-9]+).*,\\W*([0-9]+).*\\)", "gi");
+
+	var rgb = col.replace(re, "$1,$2,$3").split(',');
+	if (rgb.length == 3) {
+		r = parseInt(rgb[0]).toString(16);
+		g = parseInt(rgb[1]).toString(16);
+		b = parseInt(rgb[2]).toString(16);
+
+		r = r.length == 1 ? '0' + r : r;
+		g = g.length == 1 ? '0' + g : g;
+		b = b.length == 1 ? '0' + b : b;
+
+		return "#" + r + g + b;
+	}
+
+	return col;
+}
+
+function convertHexToRGB(col) {
+	if (col.indexOf('#') != -1) {
+		col = col.replace(new RegExp('[^0-9A-F]', 'gi'), '');
+
+		r = parseInt(col.substring(0, 2), 16);
+		g = parseInt(col.substring(2, 4), 16);
+		b = parseInt(col.substring(4, 6), 16);
+
+		return "rgb(" + r + "," + g + "," + b + ")";
+	}
+
+	return col;
+}
+
 function renderColorMap() {
 	var html = "";
+	var inputColor = convertRGBToHex(tinyMCE.getWindowArg('input_color'));
 
 	html += '<table border="0" cellspacing="1" cellpadding="0">'
 		+ '<tr>';
@@ -57,7 +91,7 @@ function renderColorMap() {
 		+ '<tr><td>'
 		+ '<img id="selectedColor" style="background-color:' + tinyMCE.getWindowArg('input_color') + '" border="0" src="images/spacer.gif" width="80" height="16" />'
 		+ '</td><td align="right">'
-		+ '<input id="selectedColorBox" name="selectedColorBox" type="text" size="7" maxlength="7" style="width:65px" value="' + tinyMCE.getWindowArg('input_color') + '" />'
+		+ '<input id="selectedColorBox" name="selectedColorBox" type="text" size="7" maxlength="7" style="width:65px" value="' + inputColor + '" />'
 		+ '</td></tr>'
 		+ '</table>'
 		+ '<input type="button" id="insert" name="insert" value="{$lang_theme_colorpicker_apply}" style="margin-top:3px" onclick="selectColor();">'

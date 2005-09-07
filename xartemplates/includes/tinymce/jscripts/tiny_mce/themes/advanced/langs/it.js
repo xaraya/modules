@@ -1,6 +1,6 @@
 // Variabili di lingua IT - fabrix.xm@lombardiacom.it
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 theme_style_select : 'Stili',
 theme_code_desc : 'Edita il sorgente HTML',
 theme_code_title : 'Editor Sorgente HTML',

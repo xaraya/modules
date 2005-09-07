@@ -1,6 +1,16 @@
 /* Import plugin specific language pack */
 tinyMCE.importPluginLanguagePack('save', 'en,zh_cn,cs,fa,fr_ca,fr,de,pl,pt_br,nl,he');
 
+function TinyMCE_save_getInfo() {
+	return {
+		longname : 'Save',
+		author : 'Moxiecode Systems',
+		authorurl : 'http://tinymce.moxiecode.com',
+		infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_save.html',
+		version : '2.0RC1'
+	};
+};
+
 /**
  * Returns the HTML contents of the save control.
  */

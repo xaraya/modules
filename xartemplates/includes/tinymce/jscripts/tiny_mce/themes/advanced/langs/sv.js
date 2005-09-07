@@ -1,6 +1,6 @@
 // SE lang variables
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 theme_style_select : 'Stilar',
 theme_code_desc : 'Editera HTML-koden',
 theme_code_title : 'HTML-k&auml;llkodseditor',
@@ -25,11 +25,12 @@ insert_image_align_absmiddle : 'Absoluta mitten',
 insert_image_align_absbottom : 'Absolut l&auml;ngst ner',
 insert_image_align_left : 'V&auml;nster',
 insert_image_align_right : 'H&ouml;ger',
-insert_image_delta_width'] = 30;
-insert_image_delta_height'] = 10;
+insert_image_delta_width : 30,
+insert_image_delta_height : 10,
 theme_font_size : '-- Fontstorlek --',
 theme_fontdefault : '-- Font familj --',
 theme_block : '-- Stycke --',
+theme_paragraph : 'Paragraf',
 theme_div : 'Div',
 theme_address : 'Adress',
 theme_pre : 'F&ouml;rformatterad',

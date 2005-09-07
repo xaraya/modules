@@ -220,6 +220,10 @@ function tinymce_upgrade($oldversion)
     case '0.9.0':
     xarModSetVar('tinymce', 'tinyeditorselector','mceEditor');
     xarModSetVar('tinymce', 'tinyeditordeselector','');
+    return tinymce_upgrade('0.9.2');    
+    break;
+
+    case '0.9.2':
     break;
     }
     return true;

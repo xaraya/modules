@@ -1,6 +1,6 @@
 // DE lang variables
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 insert_link_target_same : 'Im selben Frame &ouml;ffnen',
 insert_link_target_parent : 'Im dar&uuml;ber liegenden Frame &ouml;ffnen',
 insert_link_target_top : 'Im obersten Frame &ouml;ffnen',

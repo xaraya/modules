@@ -1,6 +1,6 @@
 // JP lang variables
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 theme_style_select : 'スタイル',
 theme_paragraph : '文脈',
 theme_address : 'アドレス',

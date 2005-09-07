@@ -18,7 +18,7 @@ function init() {
 	var dir = tinyMCE.getAttrib(trElm, 'dir');
 
 	// Setup form
-	addClassesToList('class', 'tr');
+	addClassesToList('class', 'table_row_styles');
 	formObj.bordercolor.value = bordercolor;
 	formObj.bgcolor.value = bgcolor;
 	formObj.backgroundimage.value = backgroundimage;
@@ -33,7 +33,7 @@ function init() {
 	selectByValue(formObj, 'dir', dir);
 
 	// Resize some elements
-	if (tinyMCE.getParam("file_browser_callback") != null)
+	if (isVisible('backgroundimagebrowser'))
 		document.getElementById('backgroundimage').style.width = '180px';
 
 	updateColor('bordercolor_pick', 'bordercolor');
@@ -47,7 +47,7 @@ function updateAction() {
 	var formObj = document.forms[0];
 	var action = getSelectValue(formObj, 'action');
 
-	inst.execCommand("mceAddUndoLevel");
+	inst.execCommand('mceBeginUndoLevel');
 
 	switch (action) {
 		case "row":
@@ -76,6 +76,7 @@ function updateAction() {
 
 	tinyMCE.handleVisualAid(inst.getBody(), true, inst.visualAid, inst);
 	tinyMCE.triggerNodeChange();
+	inst.execCommand('mceEndUndoLevel');
 	tinyMCEPopup.close();
 }
 

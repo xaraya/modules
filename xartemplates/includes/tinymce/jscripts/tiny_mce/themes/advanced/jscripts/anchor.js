@@ -4,6 +4,7 @@ function init() {
 	var inst = tinyMCE.getInstanceById(tinyMCE.getWindowArg('editor_id'));
 	var anchor = tinyMCE.getParentElement(inst.getFocusElement(), "a", "name");
 	var img = inst.getFocusElement();
+	action = 'insert';
 
 	if (anchor != null) {
 		element = anchor;
@@ -25,7 +26,7 @@ function insertAnchor() {
 	var inst = tinyMCE.getInstanceById(tinyMCE.getWindowArg('editor_id'));
 	var name = document.forms[0].anchorName.value;
 
-	inst.execCommand("mceAddUndoLevel");
+	tinyMCEPopup.execCommand("mceBeginUndoLevel");
 
 	if (action == "update") {
 		if (element.nodeName == "IMG")
@@ -48,6 +49,8 @@ function insertAnchor() {
 		tinyMCEPopup.execCommand("mceInsertContent", false, html);
 		tinyMCE.handleVisualAid(inst.getBody(), true, inst.visualAid, inst);
 	}
+
+	tinyMCEPopup.execCommand("mceEndUndoLevel");
 
 	tinyMCE.triggerNodeChange();
 	tinyMCEPopup.close();

@@ -1,6 +1,6 @@
 // DE lang variables
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 bold_desc : 'Fett',
 italic_desc : 'Kursiv',
 underline_desc : 'Unterstrichen',

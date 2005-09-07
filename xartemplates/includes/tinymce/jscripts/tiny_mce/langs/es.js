@@ -1,6 +1,6 @@
 // ES lang variables by Alvaro Velasco
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 bold_desc : 'Negrita',
 italic_desc : 'Cursiva',
 underline_desc : 'Subrayado',

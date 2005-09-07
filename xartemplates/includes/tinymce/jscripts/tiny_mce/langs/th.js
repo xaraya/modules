@@ -1,6 +1,6 @@
 // TH lang variables Thai contributed by Innozent
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 bold_desc : 'ตัวหนา',
 italic_desc : 'ตัว้เอียง',
 underline_desc : 'ขีดเส้นใต้',

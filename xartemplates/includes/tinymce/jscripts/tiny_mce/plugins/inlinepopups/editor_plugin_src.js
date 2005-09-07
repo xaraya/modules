@@ -1,7 +1,7 @@
 /**
  * $RCSfile: editor_plugin_src.js,v $
- * $Revision: 1.1 $
- * $Date: 2005/08/10 21:20:59 $
+ * $Revision: 1.2 $
+ * $Date: 2005/08/23 20:28:34 $
  *
  * Moxiecode DHTML Windows script.
  *
@@ -10,6 +10,16 @@
  */
 
 // Patch openWindow, closeWindow TinyMCE functions
+
+function TinyMCE_inlinepopups_getInfo() {
+	return {
+		longname : 'Inline Popups',
+		author : 'Moxiecode Systems',
+		authorurl : 'http://tinymce.moxiecode.com',
+		infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_inlinepopups.html',
+		version : '2.0RC1'
+	};
+};
 
 TinyMCE.prototype.orgOpenWindow = TinyMCE.prototype.openWindow;
 

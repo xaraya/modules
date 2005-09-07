@@ -1,6 +1,6 @@
 // HE lang variables by Liron Newman, http://eesh.net
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 paste_text_desc : 'הדבק כטקסט רגיל',
 paste_text_title : 'השתמש ב-CTRL+V שעל המקלדת שלך כדי להדביק את הטקסט לחלון.',
 paste_text_linebreaks : 'שמור על מעברי שורה',

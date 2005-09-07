@@ -1,6 +1,6 @@
-INSTALLATION AND USE - XarTinyMCE Version 0.9.0
+INSTALLATION AND USE - XarTinyMCE Version 0.9.2
 
-UPGRADES to 0.9.0:
+UPGRADES to 0.9.2:
 IMPORTANT!! PLEASE SEE SPECIAL UPGRADE CONSIDERATIONS AT THE END OF THIS DOCUMENT
 
 XarTinyMCE is a configurable, lightweight WYSIWYG editor.
@@ -97,7 +97,7 @@ Alternatively - cut and paste the image to your WYSIWYG editor from word or a su
 
 ******************************
 
-To UPGRADE to Version 0.9.0
+To UPGRADE to Version 0.9.2
 There has been a number of changes in tinymce that could BREAK COMPTIBILITY.
 Please check the following to ensure xartinymce continues to work for you.
 
@@ -130,9 +130,9 @@ When you are ready to upgrade your tinymce files:
    MUST set the Mode to Manual.
 
    If you have custom configurations you must use All Textareas and Auto loading.
+
    
-   
-   
+
    That's it!
 ******************************
 

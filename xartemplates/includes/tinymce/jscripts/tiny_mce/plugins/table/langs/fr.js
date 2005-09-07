@@ -1,6 +1,6 @@
 // French lang variables by Laurent Dran
 
-tinyMCE.addToLang({
+tinyMCE.addToLang('',{
 table_desc : 'Ins&eacute;rer un nouveau tableau',
 table_insert_row_before_desc : 'Ins&eacute;rer une ligne avant',
 table_insert_row_after_desc : 'Ins&eacute;rer une ligne apr&eacute;s',

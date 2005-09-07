@@ -1,6 +1,16 @@
 /* Import plugin specific language pack */
 tinyMCE.importPluginLanguagePack('fullscreen', 'en,sv,cs,fr_ca,zh_cn');
 
+function TinyMCE_fullscreen_getInfo() {
+	return {
+		longname : 'Fullscreen',
+		author : 'Moxiecode Systems',
+		authorurl : 'http://tinymce.moxiecode.com',
+		infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_fullscreen.html',
+		version : '2.0RC1'
+	};
+};
+
 function TinyMCE_fullscreen_getControlHTML(control_name) {
 	switch (control_name) {
 		case "fullscreen":
