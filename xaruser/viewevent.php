@@ -76,7 +76,7 @@ function julian_user_viewevent()
    $bl_data['organizer'] = xarUserGetVar('name',$bl_data['organizer']);
    $bl_data['datecreated'] = date("$dateformat_created",strtotime($bl_data['created']));
    $bl_data['fee'] = strcmp($bl_data['fee'],"")?xarLocaleFormatCurrency($bl_data['fee']):xarML('Unknown');
-
+   $bl_data['authid'] = xarSecGenAuthKey();
 
    //if there was a duration set for this event, format a string indicating the from and to times
    $duration='';

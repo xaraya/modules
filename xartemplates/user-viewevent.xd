@@ -7,10 +7,10 @@
         
         <div class="xar-julian-contents-icons">
         <xar:sec id="unique1" mask="Editjulian" catch="false">
-            <a href="#xarModURL('julian','user','edit',array('cal_date'=>$cal_date,'id'=> $id))#">
+            <a href="#xarModURL('julian','user','edit',array('cal_date'=>$cal_date,'id'=> $id, 'authid' => $authid))#">
                 <xar:mlstring>Edit</xar:mlstring>
             </a>
-            <a href="#xarModURL('julian','user','deleteevent',array('cal_date'=>$cal_date,'id'=> $id))#"
+            <a href="#xarModURL('julian','admin','deleteevent',array('cal_date'=>$cal_date,'event_id'=> $id, 'authid' =>$authid))#"
                onclick="answer=confirm('#$deletesummary#\n#xarML('Are you sure you want to delete this event?')#');if(!answer) return false;">
                 <xar:mlstring>Delete</xar:mlstring>
             </a>

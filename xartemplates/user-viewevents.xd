@@ -174,7 +174,7 @@
                   <xar:set name="$evid">#$loop:item['eID']#</xar:set>
                   <xar:set name="$ename">#$loop:item['eName']#</xar:set>
                   <xar:set name="$NameUrl">
-                    xarModURL('julian','user','view',array('cal_date'=>$linkdate,'event_id'=>$evid))
+                    xarModURL('julian','user','viewevent',array('cal_date'=>$linkdate,'event_id'=>$evid))
                   </xar:set>
                   <a href="#$NameUrl#" class="xar-julian-event-day">
                     #$loop:item['eName']#
