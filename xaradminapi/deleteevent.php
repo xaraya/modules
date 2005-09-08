@@ -1,7 +1,7 @@
 <?php
 
 /**
-* File: $Id: deleteevent.php,v 1.1 2005/03/30 09:50:04 caseygeene Exp $
+* File: $Id:$
 *
 * Deletes an event.
 *
