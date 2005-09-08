@@ -2,7 +2,7 @@
 /**
  * File: $Id$
  *
- * Decode the short URLs for Julian
+ * Get the long names of the month in an array
  *
  * @package julian
  * @copyright (C) 2005 by the Xaraya Development Team.

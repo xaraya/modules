@@ -14,3 +14,5 @@
 +Color picker (taken now from Xaraya DD property tcolorpicker)
 -Started move of functions out of the class
 -starting to create userapi and adminapi functions Xaraya-wise
+-userapi/getcatoptions deprecated
++ Included catid as option for views.

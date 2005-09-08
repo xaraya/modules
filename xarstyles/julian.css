@@ -120,8 +120,8 @@ div.xar-julian-calendar-icons {
     padding-right: 2px;
 }
 .xar-julian-sub{
-font-size:x-small;
-clear:both;
+    font-size:x-small;
+    clear:both;
 }
 
 .xar-julian-days-weekend {
@@ -131,7 +131,7 @@ clear:both;
     background-color: #f9f9f9;
 }
 .xar-julian-days-currentday {
-    background-color: #fff;
+    background-color: #FFFFFF;
 }
 .xar-julian-days-currentday .xar-julian-calendar-date {
     border-right: 2px solid #990000;
@@ -177,7 +177,7 @@ a.xar-julian-event {
     text-decoration: underline;
 }
 /*color the day in the month block that has an event*/
-div.xar-julian-block-calmonth a.xar-julian-event {
+div.xar-julian-block-calmonth a.xar-julian-event , div.xar-julian-user-year a.xar-julian-event{
 color:#FF0000;
 }
 

@@ -22,6 +22,7 @@
  *  @access public
  *  @param string $date YYYYMMDD date to provide link to
  *  @return string a valid link based on xarModURL()
+ *  @deprec MichelV ASP sept 2005
  *  @todo add necessary get vars to the resulting URL
  */
 function julian_userapi_getMonthLink($date=null)

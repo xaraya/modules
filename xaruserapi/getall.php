@@ -29,6 +29,7 @@
  * @param   str $sortby Sortby parameter for display in list
  * @param   date $startdate The starting date for the selection
  * @param   date $enddate The end date for the selection
+ * @param orderby sortby catid
  * @return  array $event_data
  * @throws  list of exception identifiers which can be thrown
  * @todo    Michel V. <#> make userapi_getall.php from this.
@@ -40,22 +41,22 @@ function julian_userapi_getall($args)
     extract($args);
     if (!xarVarFetch('startdate', 'isset', $startdate, NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('enddate', 'isset', $enddate, NULL, XARVAR_NOT_REQUIRED)) return;
-	
+    if (!xarVarFetch('catid', 'int:1:', $catid, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('startnum', 'int:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('numitems', 'int:1:', $numitems, '-1', XARVAR_NOT_REQUIRED)) return;    
+    	
     // Optional arguments.
-    if (!isset($startnum)) {
-        $startnum = 1;
-    }
-
-    if (!isset($numitems)) {
-        $numitems = -1;
-    }
 
     if (!isset($sortby)) {
-        $sortby = 'eventDate';
+        $sortby = 'dtstart';
     }
 
     if (!isset($orderby)) {
         $orderby = 'ASC';
+    }
+
+    if (!isset($catid)) {
+        $catid = '';
     }
 
     if (!isset($startdate)) {
@@ -106,15 +107,41 @@ function julian_userapi_getall($args)
 				   if(recur_until LIKE '0000%','',recur_until) as fRecurUntil,
 				   recur_interval,
 				   if(isallday,'',DATE_FORMAT(dtstart,'%l:%i %p')) as fStartTime,
-				   DATE_FORMAT(dtstart,'%Y-%m-%d') as fStartDate
-			  FROM " . $event_table . "
-			  WHERE (organizer='" . $current_user . "' 
-				   OR (class='0' AND organizer!='" . $current_user . "') 
-				   OR FIND_IN_SET('" . $current_user."',share_uids)) $condition
-			  ORDER BY dtstart ASC;";
-  $result = $dbconn->Execute($query);
-  // Move to display function?
+				   DATE_FORMAT(dtstart,'%Y-%m-%d') as fStartDate";
+				   
   
+    // TODO: how to select by cat ids (automatically) when needed ???
+    // My try at it...
+    if (!empty($catid) && xarModIsHooked('categories','julian')) {
+        // Get the LEFT JOIN ... ON ...  and WHERE parts from categories
+        $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
+                                       array('modid' => xarModGetIDFromName('julian'),
+                                             'catid' => $catid));
+        if (!empty($categoriesdef)) {
+            $query .= " FROM ($event_table
+                        LEFT JOIN $categoriesdef[table]
+                        ON $categoriesdef[field] = event_id )
+                        $categoriesdef[more]
+                        WHERE $categoriesdef[where]
+                        AND ";
+        } else {
+            $query .= " FROM $event_table
+                        WHERE ";
+        }
+     } else {
+        $query .= " FROM $event_table 
+                    WHERE ";
+     }
+     
+     $query .= " ( $event_table.organizer = $current_user 
+				 OR ($event_table.class= '0' AND $event_table.organizer != '" .$current_user."' )
+				 OR FIND_IN_SET('" . $current_user."',share_uids) )
+				 $condition
+			     ORDER BY $event_table.$sortby $orderby";
+    $result = $dbconn->SelectLimit($query, $numitems, $startnum-1);
+
+    if (!$result) return;
+
   while(!$result->EOF) {
 	 $eventObj = $result->FetchObject(false);
 	 if (!$eventObj->recur_freq) {

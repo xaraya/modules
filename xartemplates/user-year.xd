@@ -35,7 +35,7 @@
             </xar:if>
                     <td valign="top" align="left">
                     
-                        <table class="xar-julian-calendar-month">
+                        <table class="xar-julian-calendar-month xar-julian-calendar-year">
                             <tr>
                                 <th colspan="8" class="xar-julian-calendar-title">
                                     <xar:if condition="$month lt 10">
@@ -44,9 +44,11 @@
                                         <xar:set name="$month_2digit">$month</xar:set>
                                     </xar:if>
                                     <xar:set name="$monthviewlink">$theyear.$month_2digit."01"</xar:set>
+									<xar:comment>TODO: Replace with Locale Function</xar:comment>
                                     <a href="#xarModURL('julian','user','month',array('cal_date'=>$monthviewlink))#">
                                         #xarModAPIFunc('julian','user','getMonthNameLong',array('month'=>$month))#
                                     </a>
+									
                                 </th>
                             </tr>
                             <tr class="xar-julian-calendar-daynames">
@@ -97,8 +99,8 @@
                                         </a>
                                     </td>
                                 <xar:else />
-                                    <td class="xar-julian-calendar-day xar-julian-days-#$daycolor# xar-julian-days-empty">
-                                        &nbsp;
+                                    <td class="xar-julian-calendar-day xar-julian-days-#$daycolor# xar-julian-days-empty">&nbsp;
+                                        
                                     </td>
                                 </xar:if>
                                 </xar:foreach>
