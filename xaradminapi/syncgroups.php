@@ -153,7 +153,6 @@ function authldap_build_tree($ldap, &$processed_group, &$groups_to_empty, &$proc
   $entries = $ldap->get_entries($result);
   $group_name = $ldap->get_attribute_value($entries, $group_name_attrname);
   $group_role = authldap_get_active_group_by_name($group_name);
-  $processed_group[$group] = $group_role;
 
 
   // Backup the previous list of children groups, for later
@@ -174,6 +173,7 @@ function authldap_build_tree($ldap, &$processed_group, &$groups_to_empty, &$proc
     }
   }
   $parent_group->addMember($group_role);
+  $processed_group[$group] = $group_role;
   
 
   // Add members to group
@@ -384,7 +384,7 @@ function authldap_build_user_cache($ldap)
   // Get current users
   $roles = new xarRoles();
   $users = xarModAPIFunc('roles', 'user', 'getall',
-       array('selection' => 'AND xar_auth_module="authldap"'));
+       array('selection' => "AND xar_auth_module='authldap'"));
 
   $reverse_users = array();
   foreach($users as $user)

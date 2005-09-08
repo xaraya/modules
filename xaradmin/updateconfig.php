@@ -121,9 +121,11 @@ function authldap_admin_updateconfig()
 
     // Groups variables
     include_once('modules/authldap/xarincludes/default_variables.php');
-    foreach (array_keys($default_groups_variables) as $variable)
-        xarModSetVar('authldap', $variable, $variable);
-
+    foreach (array_keys($default_groups_variables) as $variable) {
+        unset($value); // important! else varVarFetch won't assign the $value
+        if (!xarVarFetch($variable, 'str:1:', $value, '')) return;
+        xarModSetVar('authldap', $variable, $value);
+    }
 
     $authmodules = xarConfigGetVar('Site.User.AuthenticationModules');
     if (empty($activate) && in_array('authldap', $authmodules)) {

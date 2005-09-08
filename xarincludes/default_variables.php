@@ -1,6 +1,6 @@
 <?php
 $default_groups_variables
-= Array('defaultgroup4groups_id' => 1,         // Xaraya group ID to attach LDAP groups to (1 = tree root)
+= Array('defaultgroup4groups_id' => 1,       // Xaraya group ID to attach LDAP groups to (1 = tree root)
       'ldap_groups_to_import' => '',         // Comma-separated list of groups to look for and import
       'group_name_attrname' => 'cn',         // Attribute name of the group's human-readable name
       'group_ref_attrname' => 'uniquegroup', // Attribute name that references children groups

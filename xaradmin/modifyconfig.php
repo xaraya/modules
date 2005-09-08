@@ -94,9 +94,13 @@ function authldap_admin_modifyconfig()
     if (!$groupRoles = xarGetGroups()) return; // throw back
 
     $group = array();
+    $already_seen = array();
     foreach ($groupRoles as $group) {
-      $groups[] = array('name' => xarVarPrepForDisplay($group['name']),
-            'id' => $group['uid']);
+      if(!isset($already_seen[$group['uid']])) {
+   $groups[] = array('name' => xarVarPrepForDisplay($group['name']),
+             'id' => $group['uid']);
+   $already_seen[$group['uid']] = 1;
+      }
     }
     $data['groups'] = $groups;
 
