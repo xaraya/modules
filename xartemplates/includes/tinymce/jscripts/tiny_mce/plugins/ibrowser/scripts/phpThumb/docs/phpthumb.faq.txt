@@ -1,0 +1,53 @@
+//////////////////////////////////////////////////////////////
+///  phpThumb() by James Heinrich <info@silisoftware.com>   //
+//        available at http://phpthumb.sourceforge.net     ///
+//////////////////////////////////////////////////////////////
+///                                                         //
+//    Frequently Asked Questions (FAQ) about phpThumb()     //
+//                                                         ///
+//////////////////////////////////////////////////////////////
+
+
+Q: What is the GPL? Can I use this for commercial sites?
+A: See the GPL FAQ: http://www.gnu.org/licenses/gpl-faq.html
+
+
+Q: I'm getting is this error message:
+   Failed: RenderToFile(<filename>) failed because
+   !is_resource($this->gdimg_output)
+A: You missed the call to GenerateThumbnail() before
+   RenderToFile() or OutputThumbnail.
+   See /demo/phpThumb.demo.object.php for an example.
+
+
+Q: I'm trying to save a phpThumb-generated image in Internet
+   Explorer and it saves in BMP format, why?
+A: This is not phpThumb's fault, it is an IE issue:
+   http://support.microsoft.com/default.aspx?scid=kb;en-us;810978
+   http://support.microsoft.com/default.aspx?scid=kb;en-us;260650
+
+
+Q: PNG images with transparent areas show up with gray background
+   in the areas that are supposed to be transparent.
+A: Internet Explorer has had a broken PNG alpha-channel display
+   implementation for a decade, so it may never get fixed. Other
+   major browsers generally handle alpha-transparent PNGs fine.
+   See http://www.silisoftware.com/png_transparency/
+   For an alpha-channel PNG display in IE hack, see this page:
+   http://www.koivi.com/ie-png-transparency/
+
+
+Q: I'm getting "<filename> does not exist" when I know the
+   file does exist
+A: Check these two values are present and properly configured
+   in phpThumb.config.php (introduced in v1.6.0):
+   $PHPTHUMB_CONFIG['allow_src_above_docroot']  (default=false)
+   $PHPTHUMB_CONFIG['allow_src_above_phpthumb'] (default=true)
+   If your images are outside DOCUMENT_ROOT then you will have
+   to configure 'allow_src_above_docroot' to true
+
+
+Q: Are there any front-end GUI interfaces to phpThumb()?
+A: See /demo/readme.demo.txt
+
+

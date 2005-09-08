@@ -1,55 +1,43 @@
-// Import theme specific language pack
-tinyMCE.importPluginLanguagePack('ibrowser', 'en,de');
+// ================================================
+// PHP image browser - iBrowser 
+// ================================================
+// iBrowser - tinyMCE editor interface (IE & Gecko)
+// ================================================
+// Developed: net4visions.com
+// Copyright: net4visions.com
+// License: GPL - see license.txt
+// (c)2005 All rights reserved.
+// File: editor_plugin.js
+// ================================================
+// Revision: 1.0                   Date: 08/03/2005
+// ================================================
 
-// Returns the HTML contents of the ibrowser control.
+	//-------------------------------------------------------------------------
+	// tinyMCE editor - open iBrowser
+	function TinyMCE_ibrowser_getControlHTML(control_name) {
+		switch (control_name) {
+			case 'ibrowser':
+				return '<img id="{$editor_id}_ibrowser" src="{$pluginurl}/images/ibrowser.gif" title="iBrowser" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="(iBrowser_click(\'{$editor_id}\'));">';
+			}	
+		return '';
+	}
+	//-------------------------------------------------------------------------
+	// tinyMCE editor - init iBrowser
+	function iBrowser_click(editor) {
+		ib.isMSIE = (navigator.appName == 'Microsoft Internet Explorer');
+		ib.isGecko = navigator.userAgent.indexOf('Gecko') != -1;
+		ib.oEditor = tinyMCE.getInstanceById(editor);
+		ib.editor = editor;		
+		ib.selectedElement = ib.getSelectedElement();
+		ib.baseURL = tinyMCE.baseURL + '/plugins/ibrowser/ibrowser.php';
+		iBrowser_open(); // starting iBrowser
+	}
+	//-------------------------------------------------------------------------
+	// include common interface code
+	var js  = document.createElement('script');
+	js.type	= 'text/javascript';
+	js.src  = tinyMCE.baseURL + '/plugins/ibrowser/interface/common.js';
+	// Add the new object to the HEAD element.
+	document.getElementsByTagName('head')[0].appendChild(js) ;
 
-function TinyMCE_ibrowser_getControlHTML(control_name) {
-    switch (control_name) {
-        case "ibrowser":
-            return '<img id="{$editor_id}_ibrowser" src="{$pluginurl}/images/ibrowser.gif" title="{$lang_ibrowser_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceBrowseImage\');">';
-    }
-
-    return "";
-}
-
-// Executes the mceBrowseImage command.
-
-function TinyMCE_ibrowser_execCommand(editor_id, element, command, user_interface, value) {
-    // Handle commands
-    switch (command) {
-        case "mceBrowseImage":
-            var template = new Array();
-
-            template['file'] = '../../plugins/ibrowser/ibrowser.php'; // Relative to theme location
-            template['width'] = 480;
-            template['height'] = 670;
-
-            var src = "", alt = "", border = "", hspace = "", vspace = "", width = "", height = "", align = "";
-
-            if (tinyMCE.selectedElement != null && tinyMCE.selectedElement.nodeName.toLowerCase() == "img")
-                tinyMCE.imgElement = tinyMCE.selectedElement;
-
-            if (tinyMCE.imgElement) {
-                src = tinyMCE.imgElement.getAttribute('src') ? tinyMCE.imgElement.getAttribute('src') : "";
-                alt = tinyMCE.imgElement.getAttribute('alt') ? tinyMCE.imgElement.getAttribute('alt') : "";
-                border = tinyMCE.imgElement.getAttribute('border') ? tinyMCE.imgElement.getAttribute('border') : "";
-                hspace = tinyMCE.imgElement.getAttribute('hspace') ? tinyMCE.imgElement.getAttribute('hspace') : "";
-                vspace = tinyMCE.imgElement.getAttribute('vspace') ? tinyMCE.imgElement.getAttribute('vspace') : "";
-                width = tinyMCE.imgElement.getAttribute('width') ? tinyMCE.imgElement.getAttribute('width') : "";
-                height = tinyMCE.imgElement.getAttribute('height') ? tinyMCE.imgElement.getAttribute('height') : "";
-                align = tinyMCE.imgElement.getAttribute('align') ? tinyMCE.imgElement.getAttribute('align') : "";
-
-                // Fix for drag-drop/copy paste bug in Mozilla
-                mceRealSrc = tinyMCE.imgElement.getAttribute('mce_real_src') ? tinyMCE.imgElement.getAttribute('mce_real_src') : "";
-                if (mceRealSrc != "")
-                    src = mceRealSrc;
-
-            //    src = eval(tinyMCE.settings['urlconvertor_callback'] + "(src, tinyMCE.imgElement, true);");
-            }
-                tinyMCE.openWindow(template, {editor_id : editor_id, src : src, alt : alt, border : border, hspace : hspace, vspace : vspace, width : width, height : height, align : align});
-                return true;
-    }
-
-    // Pass to next handler in chain
-    return false;
-}
+	//-------------------------------------------------------------------------	
