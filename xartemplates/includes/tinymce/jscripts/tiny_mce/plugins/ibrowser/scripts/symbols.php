@@ -13,8 +13,44 @@
 	// ================================================
 
 	//-------------------------------------------------------------------------
+	/**** START XARAYA MODIFICATION ****/
+    // we need to find the directory our server is opperating in
+    // hopefully this is complete :)
+
+    if(isset($_SERVER['DOCUMENT_ROOT'])) {
+        $root_path = $_SERVER['DOCUMENT_ROOT'];
+    } elseif(isset($HTTP_SERVER_VARS['DOCUMENT_ROOT'])) {
+        $root_path = $HTTP_SERVER_VARS['DOCUMENT_ROOT'];
+    } else {
+        $root_path = getenv('DOCUMENT_ROOT');
+    }
+    // Now for same hacking ;)
+    if(isset($_SERVER['PHP_SELF'])) {
+        $scriptpath= dirname($_SERVER['PHP_SELF']);
+    } elseif(isset($HTTP_SERVER_VARS['PHP_SELF'])) {
+        $scriptpath = dirname($HTTP_SERVER_VARS['PHP_SELF']);
+    } else {
+        $scriptpath= dirname(getenv('PHP_SELF'));
+    }
+    //ew .. but it should work ;)
+    $scriptpath=parse_url($scriptpath);
+    $scriptbase=preg_replace("/index\.php.*|\/modules.*|/is",'',$scriptpath['path']);
+    $realpath=$root_path.$scriptbase;
+    $realpath=str_replace('//','/',$realpath); //get rid of any double slashes
+
+    // include image library config settings
+    if (is_file($realpath.'/var/ibrowser/ibrowserconfig.inc')) {
+        include_once $realpath.'/var/ibrowser/ibrowserconfig.inc';
+   } else {
+        // look in the templates directory of this module for the default file
+        include_once '../../../../../../ibrowserconfig.inc';
+   }
+	//-------------------------------------------------------------------------
 	// include configuration settings
-	include '../config/config.inc.php';	
+    //	include dirname(__FILE__) . '/../config/config.inc.php';
+
+  	/**** END XARAYA MODIFICATION ****/
+
 	include '../langs/lang.class.php';	
 	// language settings	
 	$l = (@$_REQUEST['lang'] ? new PLUG_Lang(@$_REQUEST['lang']) : new PLUG_Lang($cfg['lang']));
