@@ -54,13 +54,13 @@ function xarbb_latestpostsblock_display($blockinfo)
     $vars = @unserialize($blockinfo['content']);
 
     // Defaults
-    if (empty($vars['addtopics'])) {
+   if (!isset($vars['addtopics'])) {
         $vars['addtopics'] = 'on';
     }
-    if (empty($vars['addposts'])) {
+    if (!isset($vars['addposts'])) {
         $vars['addposts'] = 'on';
     }
-    if (empty($vars['latestpost'])) {
+    if (!isset($vars['latestpost'])) {
         $vars['latestpost'] = 'off';
     }
     if (empty($vars['howmany'])) {
@@ -78,7 +78,7 @@ function xarbb_latestpostsblock_display($blockinfo)
     if (!isset($vars['addobject'])) {
         $vars['addobject'] = '1';
     }
-    if (empty($vars['adddate'])) { 
+    if (!isset($vars['adddate'])) {
         $vars['adddate'] = 'on';
     }
     if (empty($vars['truncate'])) {

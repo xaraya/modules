@@ -163,20 +163,49 @@ function xarbb_userapi_encode_shorturl($args)
     } elseif ($func == 'newtopic') {
         // check for required parameters
         if (isset($fid) && is_numeric($fid)) {
-          if (($module == $alias) && ($usealias)){
-                 $path = '/' . $aliasname . '/newtopic/' . $fid;
-            } else {
-                $path = '/' . $module . '/newtopic/' . $fid;
+           if (isset($phase) && $redirect == 'edit'&& isset($tid) && is_numeric($tid)) {
+                if (($module == $alias) && ($usealias)){
+                       $path = '/' . $aliasname . '/newtopic/'.$tid.'/edit/';
+                } else {
+                      $path = '/' . $module . '/newtopic/'.$tid.'/edit/';
+                }
+           }elseif (isset($phase) && $phase == 'quote' && isset($tid) && is_numeric($tid)){
+                if (($module == $alias) && ($usealias)){
+                       $path = '/' . $aliasname . '/newreply/'.$tid.'/quote/';
+                } else {
+                      $path = '/' . $module . '/newreply/'.$tid.'/quote/';
+                }
+           }else {
+                if (($module == $alias) && ($usealias)){
+                       $path = '/' . $aliasname . '/newtopic/' . $fid;
+                } else {
+                      $path = '/' . $module . '/newtopic/' . $fid;
+                }
             }
+
         } else {
-       }
+        }
    } elseif ($func == 'newreply') {
         // check for required parameters
         if (isset($tid) && is_numeric($tid)) {
-          if (($module == $alias) && ($usealias)){
-                 $path = '/' . $aliasname . '/newreply/' . $tid;
+            if (isset($phase) && $phase == 'edit' && isset($cid) && is_numeric($cid)) {
+                if (($module == $alias) && ($usealias)){
+                       $path = '/' . $aliasname . '/newreply/'.$tid.'/edit/' . $cid;
+                } else {
+                     $path = '/' . $module . '/newreply/'.$tid.'/edit/' . $cid;
+                }
+            }elseif (isset($phase) && $phase == 'quote' && isset($cid) && is_numeric($cid)){
+                if (($module == $alias) && ($usealias)){
+                       $path = '/' . $aliasname . '/newreply/'.$tid.'/quote/' . $cid;
+                } else {
+                     $path = '/' . $module . '/newreply/'.$tid.'/quote/' . $cid;
+                }
             } else {
-                $path = '/' . $module . '/newreply/' . $tid;
+                if (($module == $alias) && ($usealias)){
+                       $path = '/' . $aliasname . '/newreply/' . $tid;
+                } else {
+                     $path = '/' . $module . '/newreply/' . $tid;
+                }
             }
         } else {
          }

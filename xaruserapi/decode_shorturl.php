@@ -71,12 +71,13 @@ function xarbb_userapi_decode_shorturl($params)
     // The default function if we don't match any others.
     $func = 'main';
 
-    // Decode the ID, if present.
-
+    // Decode the ID, if present and CID.
     if (!empty($params[1]) && preg_match('/^(\d+)/', $params[1], $matches)) {
         $id = $matches[1];
     }
-
+    if (!empty($params[3])&& preg_match('/^(\d+)/', $params[3], $matches)) {
+        $cid=$matches[1];
+    }
     // forum
     if (preg_match('/^forum|^viewforum/i', $params[0]) && !empty($id)) {
        $args['fid'] = $id;
@@ -84,13 +85,26 @@ function xarbb_userapi_decode_shorturl($params)
     }
     // newtopic
     if (preg_match('/^newtopic/i', $params[0]) && !empty($id)) {
-       $args['fid'] = $id;
+       if (!empty($params[2]) && preg_match('/^edit/i', $params[2])) {
+           $args['redirect']= 'topic'; //edit the topic
+           $args['tid'] = $id;
+       } elseif (empty($params[2])) {     //else just create a new topic
+           $args['fid'] = $id;
+       }
        $func = 'newtopic';
     }
    // newreply
+
     if (preg_match('/^newreply/i', $params[0]) && !empty($id)) {
-       $args['tid'] = $id;
-       $func = 'newreply';
+        if (!empty($params[2]) && preg_match('/^edit/i',$params[2]) && isset($cid)) {
+            $args['phase'] = 'edit';
+            $args['cid'] = $cid;
+        }elseif (!empty($params[2]) && preg_match('/^quote/i',$params[2])&& isset($cid)) {
+             $args['phase'] = 'quote';
+             $args['cid'] = $cid;
+        }
+            $args['tid'] = $id;
+            $func = 'newreply';
     }
   // updatetopic
     if (preg_match('/^updatetopic/i', $params[0]) && !empty($id)) {

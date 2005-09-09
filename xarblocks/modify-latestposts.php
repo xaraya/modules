@@ -18,13 +18,13 @@ function xarbb_latestpostsblock_modify($blockinfo)
     // Get current content
     $vars = @unserialize($blockinfo['content']);
     // Defaults
-    if (empty($vars['addtopics'])) {
+    if (!isset($vars['addtopics'])) {
         $vars['addtopics'] = 'on';
     }
-    if (empty($vars['addposts'])) {
+    if (!isset($vars['addposts'])) {
         $vars['addposts'] = 'on';
     }
-    if (empty($vars['latestpost'])) {
+    if (!isset($vars['latestpost'])) {
         $vars['latestpost'] = 'off';
     }
     if (empty($vars['howmany'])) {
@@ -42,7 +42,7 @@ function xarbb_latestpostsblock_modify($blockinfo)
     if (!isset($vars['addobject'])) {
         $vars['addobject'] = '1';
     }
-    if (empty($vars['adddate'])) {
+    if (!isset($vars['adddate'])) {
         $vars['adddate'] = 'on';
     }
     if (empty($vars['truncate'])) {
@@ -97,7 +97,7 @@ function xarbb_latestpostsblock_modify($blockinfo)
  */
 function xarbb_latestpostsblock_update($blockinfo)
 {
-    if (!xarVarFetch('addtopics', 'checkbox', $vars['addtopics'], false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('addtopics', 'checkbox', $vars['addtopics'],false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('addposts', 'checkbox', $vars['addposts'], false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('latestpost', 'checkbox', $vars['latestpost'], false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('howmany', 'int:1:', $vars['howmany'], '10', XARVAR_NOT_REQUIRED)) return;
