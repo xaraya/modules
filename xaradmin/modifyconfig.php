@@ -114,17 +114,14 @@ function xarbb_admin_modifyconfig()
 
             $useAliasName = xarModGetVar('xarbb', 'useModuleAlias');
             $aliasname = xarModGetVar('xarbb','aliasname');
-            if (($useAliasName==1) && isset($aliasname)){
-               $usealias = true;
-            } else{
-               $usealias = false;
-            }
-
-
-            if ($usealias == 1) {
+            if (($useAliasName==1) && !empty($aliasname)){
+                $usealias = 1;
                 xarModSetAlias($aliasname,'xarbb');
-            } else {
+            } elseif (($useAliasName==0) && !empty($aliasname)) {
+                $usealias = 0;
                 xarModDelAlias($aliasname,'xarbb');
+            } else {
+                $usealias=0;
             }
             // call modifyconfig hooks with module
             $hooks = xarModCallHooks('module', 'updateconfig', 'xarbb', array('module' => 'xarbb'));
