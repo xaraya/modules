@@ -24,6 +24,6 @@
 </p>
 
 <p>
-<xar:mlstring>Startdate:</xar:mlstring> #$planitem['startdate']#<br />
-<xar:mlstring>Link all your courses:</xar:mlstring> <a href="#$viewaccount#">#$viewaccount#</a>
+<xar:mlstring>This course will start at:</xar:mlstring> #$planitem['startdate']#<br />
+<xar:mlstring>Link to all your courses:</xar:mlstring> <a href="#$viewaccount#">#$viewaccount#</a>
 </p>

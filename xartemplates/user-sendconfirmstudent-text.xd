@@ -1,12 +1,14 @@
 <xar:mlstring>Dear</xar:mlstring> #$studentname#
 <xar:mlstring>You have been enrolled in the course:</xar:mlstring> #$name# <xar:mlstring>which starts at</xar:mlstring> #$planitem['startdate']#.
 
-<xar:mlstring>Name of the course:</xar:mlstring> #$name#<br />
-<xar:mlstring>Code of the course:</xar:mlstring> #$course['number']#<br />
-<xar:mlstring>Link to the course:</xar:mlstring> <a href="#$viewcourse#">#$viewcourse#</a>
+The course details:
 
-<xar:mlstring>Startdate:</xar:mlstring> #$planitem['startdate']#<br />
-<xar:mlstring>Link all your courses:</xar:mlstring> #$viewaccount#
+<xar:mlstring>Name of the course:</xar:mlstring> #$name#
+<xar:mlstring>Code of the course:</xar:mlstring> #$course['number']#
+<xar:mlstring>Link to the course:</xar:mlstring> <a href="#$viewcourse#">#$viewcourse#</a>
+<xar:mlstring>This course will start on:</xar:mlstring> #$planitem['startdate']#
+
+<xar:mlstring>Link to all your courses:</xar:mlstring> #$viewaccount#
 
 -------------------------------------------------------------
 
