@@ -27,7 +27,8 @@ function helpdesk_admin_updateconfig()
     xarVarFetch('usercancheckstatus',   'isset', $usercancheckstatus, '');
     xarVarFetch('techsseealltickets',   'isset', $techsseealltickets, '');
     xarVarFetch('enableimages',         'isset', $enableimages, '');
-    xarVarFetch('allowcloseonsubmit',   'isset', $allowcloseonsubmit, '');
+    xarVarFetch('allowstatuschangeonsubmit',   'isset', $allowstatuschangeonsubmit, '');
+    xarVarFetch('allowcloseonsubmit',          'isset', $allowcloseonsubmit, '');
     xarVarFetch('showopenbyinsummary',         'isset', $showopenbyinsummary, '');
     xarVarFetch('showassignedtoinsummary',     'isset', $showassignedtoinsummary, '');
     xarVarFetch('showclosedbyinsummary',       'isset', $showclosedbyinsummary, '');
@@ -53,6 +54,7 @@ function helpdesk_admin_updateconfig()
     xarModSetVar('helpdesk', 'User can check status',   $usercancheckstatus);
     xarModSetVar('helpdesk', 'Techs see all tickets',   $techsseealltickets);
     xarModSetVar('helpdesk', 'Enable Images',           $enableimages);
+    xarModSetVar('helpdesk', 'AllowStatusChangeOnSubmit', $allowstatuschangeonsubmit);
     xarModSetVar('helpdesk', 'AllowCloseOnSubmit',      $allowcloseonsubmit);
     xarModSetVar('helpdesk', 'ShowOpenedByInSummary',   $showopenbyinsummary);
     xarModSetVar('helpdesk', 'ShowAssignedToInSummary', $showassignedtoinsummary);

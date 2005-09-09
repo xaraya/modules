@@ -59,15 +59,18 @@ function helpdesk_user_processsearch($args)
     
     // Lets get the ticket now for the view
     $data['mytickets_data']  = xarModAPIFunc('helpdesk', 'user', 'gettickets', 
-                                             array('userid'    => $data['userid'],
-                                                   'selection' => $selection,
-                                                   'sortorder' => $sortorder,
-                                                   'order'     => $order,
-                                                   'startnum'  => $startnum,
-                                                   'statusfilter' => $statusfilter,
-                                                   'countonly' => '0',
-                                                   'subject'   => $subject,
-                                                   'keywords'  => $keywords));
+        array(
+            'userid'    => $data['userid'],
+            'selection' => $selection,
+            'sortorder' => $sortorder,
+            'order'     => $order,
+            'startnum'  => $startnum,
+            'statusfilter' => $statusfilter,
+            'countonly' => '0',
+            'subject'   => $subject,
+            'keywords'  => $keywords
+        )
+    );
 
     $totaltickets = sizeOf($data['mytickets_data']);
     

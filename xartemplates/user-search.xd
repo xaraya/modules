@@ -6,10 +6,9 @@
     </xar:ml>
     </span>
 </div>
-<br />
+
 <div class="xar-mod-body">
 #$menu#
-<div class="tborder">
 
 <xar:if condition="!$UserLoggedIn">
     <p><xar:mlstring>Not logged in!</xar:mlstring></p>
@@ -26,41 +25,27 @@
         <input type="hidden" name="nontechsubmit" value="1" />
     </xar:if>
 
-    <div style="clear: both; padding-top: 10px;">
-    <span style="float: left; width: 20%; text-align: right;">
-        <span class="help" title="#xarML('Separate with spaces')#">
-            <xar:mlstring>Keywords:</xar:mlstring><br />
-        </span>
-    </span>
-    <span style="float: right; width: 78%; text-align: left;">
-        <input type="text" name="keywords" size="25" maxlength="255" />
-    </span>
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label"><xar:mlstring>Keywords:</xar:mlstring></label>
+        <input type="text" name="keywords" maxlength="255" class="xar-form-textlong" />
     </div>
 
-    <div style="clear: both; padding-top: 10px;">
-    <span style="float: left; width: 20%; text-align: right;">
-        <span class="help">
-            <xar:mlstring>Fields to include</xar:mlstring>:
-        </span>
-    </span>
-    <span style="float: right; width: 78%; text-align: left;">
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label"><xar:mlstring>Fields to include:</xar:mlstring></label>
         <input type="checkbox" name="subject" value="1" />
         <xar:mlstring>Subject</xar:mlstring>
-        <br />
-    </span>
     </div>
 
-    <div style="clear: both; padding-top: 10px; text-align:center;">
+    <div class="xar-form-input-wrapper-after">
         <xar:if condition="$enabledimages">
             <a href="javascript:document.searchtickets.submit();"><img src="#xarTplGetImage('search.gif', 'helpdesk')#" border="0"/></a>
         <xar:else />
-            <input type="submit" name="submit" value="Search" />
+            <input type="submit" name="submit" value="Search" class="xar-form-textlong" />
         </xar:if>
     </div>
 </form>
 
 </xar:if>
-</div>
 <br />
 #$summary#
 </div>

@@ -455,4 +455,14 @@ function helpdesk_delete()
             
     return true;
 } 
+
+function helpdesk_get_sources()
+{
+    $sources = array(
+    
+    );
+    
+    return $sources;
+}
+
 ?>

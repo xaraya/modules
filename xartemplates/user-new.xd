@@ -6,10 +6,10 @@
     </xar:ml>
     </span>
 </div>
-<br />
+
 <div class="xar-mod-body">
+
 <xar:var name="menu" />
-<div class="tborder">
 
 <xar:set name="$width">'100%'</xar:set>
 
@@ -43,12 +43,7 @@
     //-->
     </script>
 
-<xar:comment>
-    If you want to upload files here, you need to add enctype="multipart/form-data"
-    to the form tag below...
-</xar:comment>
-
-<form action="#$action#" method="POST" name="newticket">
+<form action="#$action#" method="POST" name="newticket" enctype="multipart/form-data">
 
 <xar:if condition="$enforceauthkey">
     <input type="hidden" name="authid" value="#xarSecGenAuthKey()#" />
@@ -61,180 +56,120 @@
     <input type="hidden" name="nontech" value="1" />
 </xar:if>
 
-<div class=""  style="margin-left: auto; margin-right: auto;">
 <input type="hidden" name="username" value="#$username#">
 <input type="hidden" name="userid"   value="#$userid#">
 <!-- If Not Logged in, Place Username, Email, and phone info in form: -->
 <xar:if condition="!$userisloggedin || $editaccess">
-    <div class="row">
-        <span class="label">
-            <xar:mlstring>Name</xar:mlstring>:
-        </span>
-        <span class="field">
-            <input name="name" size="30" maxlength="255" value="#$name#"/>(required)
-        </span>
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label"><xar:mlstring>Name:</xar:mlstring></label>
+        <input name="name" maxlength="255" value="#$name#" class="xar-form-textlong" />(required)
     </div>
-    <div class="row">
-        <span class="label">
-            <xar:mlstring>Phone</xar:mlstring>:
-        </span>
-        <span class="field">
-            <input name="phone" size="30" maxlength="255" value="#$phone#"/>
-        </span>
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label"><xar:mlstring>Phone:</xar:mlstring></label>
+        <input name="phone" maxlength="255" value="#$phone#" class="xar-form-textlong" />
     </div>
-    <div class="row">
-        <span class="label">
-            <xar:mlstring>E-mail</xar:mlstring>:
-        </span>
-        <span class="field">
-            <input name="email" size="30" maxlength="255" value="#$email#"/>(required)
-        </span>
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label"><xar:mlstring>E-mail:</xar:mlstring></label>
+        <input name="email" maxlength="255" value="#$email#" class="xar-form-textlong" />(required)
     </div>
 </xar:if>
     <xar:if condition="xarModGetVar('helpdesk', 'AllowDomainName')">
-    <div class="row">
-        <span class="label">
-            <xar:mlstring>Domain</xar:mlstring>:
-        </span>
-        <span class="field">
-            <input name="domain" size="30" maxlength="255"/>(required)
-        </span>
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label"><xar:mlstring>Domain:</xar:mlstring></label>
+        <input name="domain" maxlength="255" class="xar-form-textlong" />(required)
     </div>
     </xar:if>
-    <div class="row">
-        <span class="label">
-            <xar:mlstring>Subject</xar:mlstring>:
-        </span>
-        <span class="field">
-            <input name="subject" size="30" maxlength="255"/>(required)
-        </span>
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label"><xar:mlstring>Subject:</xar:mlstring></label>
+        <input name="subject" maxlength="255" class="xar-form-textlong" />(required)
     </div>
-    <div class="row">
+    <div class="xar-form-input-wrapper">
         #$hooks['categories']#
     </div>
     <xar:foreach in="$hooks" value="$hook" key="$key">
         <xar:if condition="$key ne 'categories'">
-        <div class="row">
+        <div class="xar-form-input-wrapper">
             #$hook#
         </div>
         </xar:if>
     </xar:foreach>
-    <div class="row">
-        <span class="label">
-            <xar:mlstring>Priority</xar:mlstring>:
-        </span>
-        <span class="field">
-            <select name="priority">
-            <xar:loop name="$priority">
-                <option value="#$loop:item['id']#">#$loop:item['priority']#</option>
-            </xar:loop>
-            </select>
-        </span>
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label"><xar:mlstring>Priority:</xar:mlstring></label>
+        <select name="priority" class="xar-form-textlong">
+        <xar:loop name="$priority">
+            <option value="#$loop:item['id']#">#$loop:item['priority']#</option>
+        </xar:loop>
+        </select>
     </div>
-    <div class="row">
-        <span class="label">
-            <xar:mlstring>Status</xar:mlstring>:
-        </span>
-        <span class="field">
-            <select name="status">
-            <option value=""></option>
-            <xar:loop name="$status">
-                <option value="#$loop:item['id']#">#$loop:item['status']#</option>
-            </xar:loop>
-            </select>
-        </span>
+<xar:if condition="xarModGetVar('helpdesk', 'AllowStatusChangeOnSubmit') or $editaccess">
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label"><xar:mlstring>Status:</xar:mlstring></label>
+        <select name="status" class="xar-form-textlong">
+        <option value=""></option>
+        <xar:loop name="$status">
+            <option value="#$loop:item['id']#">#$loop:item['status']#</option>
+        </xar:loop>
+        </select>
+    </div>
+</xar:if>
+<xar:if condition="$editaccess">
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label"><xar:mlstring>Ticket Opened By:</xar:mlstring></label>
+        <select name="openedby" class="xar-form-textlong">
+        <option value="">
+        <xar:loop name="$users">
+            <option value="#$loop:item['uid']#">#$loop:item['name']#</option>
+        </xar:loop>
+        </select>
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label"><xar:mlstring>Ticket Assigned To:</xar:mlstring></label>
+        <select name="assignedto" class="xar-form-textlong">
+        <option value="">
+        <xar:loop name="$reps">
+            <option value="#$loop:item['name']#">#xarUserGetVar('name', $loop:item['name'])#</option>
+        </xar:loop>
+        </select>
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label"><xar:mlstring>Ticket Source:</xar:mlstring></label>
+        <select name="source" class="xar-form-textlong">
+        <xar:loop name="$sources">
+            <option value="#$loop:item['id']#">#$loop:item['source']#</option>
+        </xar:loop>
+        </select>
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label"><xar:mlstring>Closed By:</xar:mlstring></label>
+        <select name="closedby" class="xar-form-textlong">
+        <option value="">
+        <option value="#xarUserGetVar('uid')#">#xarUserGetVar('name')#</option>
+        <xar:loop name="$reps">
+            <option value="#$loop:item['name']#">#xarUserGetVar('name', $loop:item['name'])#</option>
+        </xar:loop>
+        </select>
+    </div>
+</xar:if>
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label"><xar:mlstring>Issue Description:</xar:mlstring></label>
+        <textarea name="issue" class="xar-form-textarealarge"></textarea>
     </div>
 
 <xar:if condition="$editaccess">
-    <div class="row">
-        <span class="label">
-            <xar:mlstring>Ticket Opened By</xar:mlstring>:
-        </span>
-        <span class="field">
-            <select name="openedby">
-            <option value="">
-            <xar:loop name="$users">
-                <option value="#$loop:item['uid']#">#$loop:item['name']#</option>
-            </xar:loop>
-            </select>
-        </span>
-    </div>
-    <div class="row">
-        <span class="label">
-            <xar:mlstring>Ticket Assigned To</xar:mlstring>:
-        </span>
-        <span class="field">
-            <select name="assignedto">
-            <option value="">
-            <xar:loop name="$reps">
-                <option value="#$loop:item['name']#">#xarUserGetVar('name', $loop:item['name'])#</option>
-            </xar:loop>
-            </select>
-        </span>
-    </div>
-    <div class="row">
-        <span class="label">
-            <xar:mlstring>Ticket Source</xar:mlstring>:
-        </span>
-        <span class="field">
-            <select name="source">
-            <xar:loop name="$sources">
-                <option value="#$loop:item['id']#">#$loop:item['source']#</option>
-            </xar:loop>
-            </select>
-        </span>
-    </div>
-    <div class="row">
-        <span class="label">
-            <xar:mlstring>Closed By</xar:mlstring>:
-        </span>
-        <span class="field">
-            <select name="closedby">
-            <option value="">
-            <option value="#xarUserGetVar('uid')#">#xarUserGetVar('name')#</option>
-            <xar:loop name="$reps">
-                <option value="#$loop:item['name']#">#xarUserGetVar('name', $loop:item['name'])#</option>
-            </xar:loop>
-            </select>
-        </span>
-    </div>
-</xar:if>
-    <div class="row">
-        <span class="label">
-            <xar:mlstring>Issue Description</xar:mlstring>:
-        </span>
-        <span class="field">
-            <textarea name="issue" rows="6" cols="35"></textarea>
-        </span>
-    </div>
-
-<xar:if condition="$editaccess">
-    <div class="row">
-        <span class="label">
-            <xar:mlstring>Technician Notes</xar:mlstring>:
-        </span>
-        <span class="field">
-            <textarea name="notes" rows="6" cols="35"></textarea>
-        </span>
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label"><xar:mlstring>Technician Notes:</xar:mlstring></label>
+        <textarea name="notes" class="xar-form-textarealarge"></textarea>
     </div>
 </xar:if>
 
-    <div class="row">
-        <span class="label">
-        </span>
-        <span class="field">
+    <div class="xar-form-input-wrapper-after">
         <xar:if condition="$enabledimages">
             <a href="javascript:submitIt();"><img src="#xarTplGetImage('submit.gif', 'helpdesk')#" border="0"/></a>
         <xar:else />
             <input type="button" value="Submit" onclick="submitIt();" />
         </xar:if>
-        </span>
     </div>
-    <br />
-</div>
 </form>
-</div>
-
 <br />
 <xar:var name="summary" />
 </div>

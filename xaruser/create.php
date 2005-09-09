@@ -33,7 +33,7 @@ function helpdesk_user_create($args)
     xarVarFetch('subject',  'str:1:',   $subject,   '',  XARVAR_NOT_REQUIRED);
     xarVarFetch('nontech',  'str:1:',   $nontech,   '',  XARVAR_NOT_REQUIRED);
     xarVarFetch('source',   'int:1:',   $source,    0,  XARVAR_NOT_REQUIRED);
-    xarVarFetch('status',   'int:1:',   $status,    1,     XARVAR_NOT_REQUIRED); // default = 1 or Open
+    xarVarFetch('status',   'int:1:',   $status,    2,     XARVAR_NOT_REQUIRED); // default = 2 or Open
     xarVarFetch('priority', 'int:1:',   $priority,  0,  XARVAR_NOT_REQUIRED);
     xarVarFetch('openedby', 'int:1:',   $openedby,  0,  XARVAR_NOT_REQUIRED);
     xarVarFetch('assignedto','int:1:',  $assignedto,0,  XARVAR_NOT_REQUIRED);
@@ -54,7 +54,7 @@ function helpdesk_user_create($args)
     
     // If it is closed by someone, the ticket must be closed
     if(!empty($closedby))
-    $status = 3;
+        $status = 3;
     
     
     // If there is not assigned to rep we will try and 
@@ -71,22 +71,24 @@ function helpdesk_user_create($args)
     }
 
     $return_val = xarModAPIFunc('helpdesk','user','create',
-                                array('userid'      => $userid,
-                                      'name'        => $name,
-                                      'whosubmit'   => $whosubmit,
-                                      'phone'       => $phone,
-                                      'email'       => $email,
-                                      'subject'     => $subject,
-                                      'domain'      => $domain,
-                                      'source'      => $source,
-                                      'priority'    => $priority,
-                                      'status'      => $status,
-                                      'openedby'    => $openedby,
-                                      'assignedto'  => $assignedto,
-                                      'closedby'    => $closedby,
-                                      'issue'       => $issue,
-                                      'notes'       => $notes
-                                      ));
+        array(
+            'userid'      => $userid,
+            'name'        => $name,
+            'whosubmit'   => $whosubmit,
+            'phone'       => $phone,
+            'email'       => $email,
+            'subject'     => $subject,
+            'domain'      => $domain,
+            'source'      => $source,
+            'priority'    => $priority,
+            'status'      => $status,
+            'openedby'    => $openedby,
+            'assignedto'  => $assignedto,
+            'closedby'    => $closedby,
+            'issue'       => $issue,
+            'notes'       => $notes
+        )
+    );
 
     // The return value of the function is checked here, and if the function
     // suceeded then an appropriate message is posted.  Note that if the
@@ -210,11 +212,13 @@ function helpdesk_user_create($args)
     } else {
         $data['hooks'] = $hooks;
     } 
-                         
+                 
+    /*
+        Get template ready to display message to user.
+    */   
     $data['userid'] = $userid;
     $data['enabledimages']  = xarModGetVar('helpdesk', 'Enable Images');
     $data['menu']           = xarModFunc('helpdesk', 'user', 'menu');
-    $data['mainmsg']        = xarML('Welcome to the Help Desk.  Please click a link to use the system.');
     $data['summaryfooter']  = xarModFunc('helpdesk', 'user', 'summaryfooter');
     $data['userisloggedin'] = xarUserIsLoggedIn();
    

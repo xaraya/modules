@@ -6,157 +6,146 @@
     </xar:ml>
     </span>
 </div>
-<br />
 <div class="xar-mod-body">
+
     <xar:var name="menu" />
-    <div class="tborder">
 
-<xar:comment>
-    If you want to upload files here, you need to add enctype="multipart/form-data"
-    to the form tag below...
-</xar:comment>
+    <form action="#xarModURL('helpdesk', 'user', 'modify')#" method="post" name="modify" enctype="multipart/form-data">
 
-    <table border="1" width="100%" cellspacing="0">
-        <tr>
-            <th><xar:mlstring>Modify Ticket</xar:mlstring></th>
-        </tr>
-        <tr>
-            <form action="#xarModURL('helpdesk', 'user', 'modify')#" method="post" name="modify">
-            <xar:if condition="$enforceauthkey">
-                <input type="hidden" name="authid" value="#xarSecGenAuthKey()#"/>
-            </xar:if>
-            <input type="hidden" name="userid" value="#$userid#" />
-            <input type="hidden" name="tid"   value="#$tid#" />
-            <input type="hidden" name="confirm" value="true" />
-            <input type="hidden" name="xtra_fields" value="#$EditAccess#" />
-            <td>
-                <table border="1" width="100%" cellspacing="0">
-                    <tr>
-                        <td><xar:mlstring>Ticket</xar:mlstring> #</td>
-                        <td>#$tid#</td>
-                        <td><xar:mlstring>Date Entered</xar:mlstring>:</td>
-                        <td>#$ticketdata['date']#</td>
-                    </tr>
-                    <tr>
-                        <td colspan="1"><xar:mlstring>Name</xar:mlstring>:</td>
-                        <td colspan="1"><input type="text" name="name" value="#$ticketdata['name']#" size="30" maxlength="255"/></td>
-                        <td><xar:mlstring>Updated</xar:mlstring></td>
-                        <td>#$ticketdata['updated']#</td>
-                    </tr>
-                    <tr>
-                        <td colspan="1"><xar:mlstring>Phone</xar:mlstring>:</td>
-                        <td colspan="3"><input type="text" name="phone" value="#$ticketdata['phone']#" size="30" maxlength="255"/></td>
-                    </tr>
-                    <tr>
-                        <td colspan="1"><xar:mlstring>Subject</xar:mlstring>:</td>
-                        <td colspan="3"><input type="text" name="subject" value="#$ticketdata['subject']#" size="45" maxlength="255"/></td>
-                    </tr>
-                    <tr>
-                        <td colspan="1"><xar:mlstring>Domain</xar:mlstring>:</td>
-                        <td colspan="3"><input type="text" name="domain" value="#$ticketdata['domain']#" size="45" maxlength="255"/></td>
-                    </tr>
-                    <tr>
-                        <td><xar:mlstring>Status</xar:mlstring></td>
-                        <td colspan="1">
-                            <select name="status">
-                            <option value="">
-                            <xar:loop name="$status">
-                                <xar:if condition="$ticketdata['status'] eq $loop:item['status']">
-                                    <option value="#$loop:item['id']#" selected="selected">#$loop:item['status']#</option>
-                                <xar:else />
-                                    <option value="#$loop:item['id']#">#$loop:item['status']#</option>
-                                </xar:if>
-                            </xar:loop>
-                            </select>
-                        </td>
-                        <td><xar:mlstring>Priority</xar:mlstring>:</td>
-                        <td>
-                            <select name="priority">
-                            <xar:loop name="$priority">
-                                <xar:if condition="$ticketdata['priority']['priority'] eq $loop:item['priority']">
-                                    <option value="#$loop:item['id']#" selected="selected">#$loop:item['priority']#</option>
-                                <xar:else />
-                                    <option value="#$loop:item['id']#">#$loop:item['priority']#</option>
-                                </xar:if>
-                            </xar:loop>
-                            </select>
-                        </td>
-                    </tr>
-                    <xar:if condition="$EditAccess">
-                    <tr>
-                        <td><xar:mlstring>Ticket Opened By</xar:mlstring>:</td>
-                        <td>
-                            <select name="openedby">
-                            <option value="#$ticketdata['openedby']#">#$ticketdata['openedbyname']#</option>
-                            <option value="">---------------</option>
-                            <xar:loop name="$users">
-                                <option value="#$loop:item['uid']#">#$loop:item['name']#</option>
-                            </xar:loop>
-                            </select>
-                        </td>
-                        <td><xar:mlstring>Ticket Assigned To</xar:mlstring>:</td>
-                        <td>
-                            <select name="assignedto">
-                            <option value="#$ticketdata['assignedto']#">#$ticketdata['assignedtoname']#</option>
-                            <option value="">---------------</option>
-                            <xar:loop name="$reps">
-                                <option value="#$loop:item['name']#">#xarUserGetVar('name', $loop:item['name'])#</option>
-                            </xar:loop>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><xar:mlstring>Ticket Source</xar:mlstring>:</td>
-                        <td>
-                            <select name="source">
-                            <xar:loop name="$sources">
-                                <xar:if condition="$ticketdata['source'] eq $loop:item['source']">
-                                    <option value="#$loop:item['id']#" selected="selected">#$loop:item['source']#</option>
-                                <xar:else />
-                                    <option value="#$loop:item['id']#">#$loop:item['source']#</option>
-                                </xar:if>
-                            </xar:loop>
-                            </select>
-                        </td>
-                        <td><xar:mlstring>Closed By</xar:mlstring>:</td>
-                        <td>
-                            <select name="closedby">
-                            <option value="#$ticketdata['closedby']#">#$ticketdata['closedbyname']#</option>
-                            <option value="">---------------</option>
-                            <xar:loop name="$users">
-                                <option value="#$loop:item['uid']#">#$loop:item['name']#</option>
-                            </xar:loop>
-                            </select>
-                        </td>
-                    </tr>
-                    <xar:else />
-                        <input type="hidden" name="openedby" value="#$ticketdata['openedby']#" />
-                        <input type="hidden" name="assignedto" value="#$ticketdata['assignedto']#" />
-                        <input type="hidden" name="source" value="#$ticketdata['source']#" />
-                        <input type="hidden" name="closedby" value="#$ticketdata['closedby']#" />
-                    </xar:if>
+    <fieldset>
+        <legend><xar:mlstring>Modify Ticket</xar:mlstring></legend>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Ticket</xar:mlstring> #</label>
+            <xar:var name="tid" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Date Entered:</xar:mlstring></label>
+            <xar:var name="ticketdata.date" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Name:</xar:mlstring></label>
+            <input type="text" name="name" value="#$ticketdata.name#" class="xar-form-textlong" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Updated:</xar:mlstring></label>
+            <xar:var name="ticketdata.updated" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Phone:</xar:mlstring></label>
+            <input type="text" name="phone" value="#$ticketdata.phone#" class="xar-form-textlong" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Subject:</xar:mlstring></label>
+            <input type="text" name="subject" value="#$ticketdata.subject#" class="xar-form-textlong" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Domain:</xar:mlstring></label>
+            <input type="text" name="domain" value="#$ticketdata.domain#" class="xar-form-textlong" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Status:</xar:mlstring></label>
+            <select name="status" class="xar-form-textlong">
+            <option value="">
+            <xar:loop name="$status">
+                <xar:if condition="$ticketdata['status'] eq $loop:item['status']">
+                    <option value="#$loop:item['id']#" selected="selected">#$loop:item['status']#</option>
+                <xar:else />
+                    <option value="#$loop:item['id']#">#$loop:item['status']#</option>
+                </xar:if>
+            </xar:loop>
+            </select>
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Priority:</xar:mlstring></label>
+            <select name="priority" class="xar-form-textlong">
+            <xar:loop name="$priority">
+                <xar:if condition="$ticketdata['priority']['priority'] eq $loop:item['priority']">
+                    <option value="#$loop:item['id']#" selected="selected">#$loop:item['priority']#</option>
+                <xar:else />
+                    <option value="#$loop:item['id']#">#$loop:item['priority']#</option>
+                </xar:if>
+            </xar:loop>
+            </select>
+        </div>
+        <xar:if condition="$EditAccess">
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Ticket Opened By:</xar:mlstring></label>
+            <select name="openedby" class="xar-form-textlong">
+            <option value="#$ticketdata['openedby']#">#$ticketdata['openedbyname']#</option>
+            <option value="">---------------</option>
+            <xar:loop name="$users">
+                <option value="#$loop:item['uid']#">#$loop:item['name']#</option>
+            </xar:loop>
+            </select>
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Ticket Assigned To:</xar:mlstring></label>
+            <select name="assignedto" class="xar-form-textlong">
+            <option value="#$ticketdata['assignedto']#">#$ticketdata['assignedtoname']#</option>
+            <option value="">---------------</option>
+            <xar:loop name="$reps">
+                <option value="#$loop:item['name']#">#xarUserGetVar('name', $loop:item['name'])#</option>
+            </xar:loop>
+            </select>
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Ticket Source:</xar:mlstring></label>
+            <select name="source" class="xar-form-textlong">
+            <xar:loop name="$sources">
+                <xar:if condition="$ticketdata['source'] eq $loop:item['source']">
+                    <option value="#$loop:item['id']#" selected="selected">#$loop:item['source']#</option>
+                <xar:else />
+                    <option value="#$loop:item['id']#">#$loop:item['source']#</option>
+                </xar:if>
+            </xar:loop>
+            </select>
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Closed By:</xar:mlstring></label>
+            <select name="closedby" class="xar-form-textlong">
+            <option value="#$ticketdata['closedby']#">#$ticketdata['closedbyname']#</option>
+            <option value="">---------------</option>
+            <xar:loop name="$users">
+                <option value="#$loop:item['uid']#">#$loop:item['name']#</option>
+            </xar:loop>
+            </select>
+        </div>
+        <xar:else />
+            <input type="hidden" name="openedby" value="#$ticketdata['openedby']#" />
+            <input type="hidden" name="assignedto" value="#$ticketdata['assignedto']#" />
+            <input type="hidden" name="source" value="#$ticketdata['source']#" />
+            <input type="hidden" name="closedby" value="#$ticketdata['closedby']#" />
+        </xar:if>
+    </fieldset>
+    
+    <xar:if condition="is_array($hookoutput)">
+    <xar:foreach in="$hookoutput" value="$hook">
+        <tr><td colspan="4">#$hook#</td></tr>
+    </xar:foreach>
+    </xar:if>
+    
+    <fieldset>
+        <legend>Actions</legend>
 
-                    <tr>
-                    </tr>
-                    <xar:if condition="is_array($hookoutput)">
-                    <xar:foreach in="$hookoutput" value="$hook">
-                        <tr><td colspan="4">#$hook#</td></tr>
-                    </xar:foreach>
-                    </xar:if>
-                    <tr>
-                        <td colspan="4" align="center">
-                        <xar:if condition="$enabledimages">
-                            <a href="javascript:document.modify.submit();" title="Modify Ticket">
-                            <img src="#xarTplGetImage('modify.gif', 'helpdesk')#" border="0"/></a>
-                        <xar:else />
-                            <input type="submit" name="Update" value="Update" />
-                        </xar:if>
-                        </td>
-                    </tr>
-                </table>
-                </form>
-            </td>
-        </tr>
-    </table>
-</div>
-<xar:var name="summary" />
+        <div class="xar-form-input-wrapper-after">
+        <xar:if condition="$enforceauthkey">
+            <input type="hidden" name="authid" value="#xarSecGenAuthKey()#"/>
+        </xar:if>
+        <input type="hidden" name="userid" value="#$userid#" />
+        <input type="hidden" name="tid"   value="#$tid#" />
+        <input type="hidden" name="confirm" value="true" />
+        <input type="hidden" name="xtra_fields" value="#$EditAccess#" />
+        
+        <xar:if condition="$enabledimages">
+            <a href="javascript:document.modify.submit();" title="Modify Ticket">
+            <img src="#xarTplGetImage('modify.gif', 'helpdesk')#" border="0"/></a>
+        <xar:else />
+            <input type="submit" name="Update" value="Update" class="xar-form-textlong" />
+        </xar:if>
+        </div>
+        
+    </fieldset>                
+    </form>
+                
+    <xar:var name="summary" />
 </div>

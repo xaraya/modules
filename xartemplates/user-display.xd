@@ -7,9 +7,8 @@
     </span>
 </div>
 <div class="xar-mod-body">
-<br />
+
 <xar:var name="menu" />
-<div class="tborder">
 
 <table width="100%">
     <tr>
@@ -89,13 +88,12 @@
             </xar:foreach>
         </xar:if>
     </xar:if>
-
-    <xar:foreach in="$hookoutput" value="$hook">
-        <tr><td colspan="4" style="padding: 5px;"><br />#$hook#</td></tr>
-    </xar:foreach>
 </table>
 
-</div>
-<br />
-<xar:var name="summary" />
+<xar:foreach in="$hookoutput" value="$hook">
+    <xar:var name="hook" />
+</xar:foreach>
+
+<div class="xar-margin-thickends"><xar:var name="summary" /></div>
+
 </div>

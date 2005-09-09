@@ -15,7 +15,6 @@
 
 <div class="xar-mod-body">
 <xar:if condition="isset($menu)"><xar:var name="menu" /></xar:if>
-<div class="tborder">
 
 <xar:if condition="$UserLoggedIn">
 
@@ -28,8 +27,7 @@
     <input type="hidden" name="catid" value="#$catid#" />
     </xar:if>
 
-<div class="xar-norm-outline">
-    <table style="width: 100%; text-align: center;">
+    <table class="xar-border-thin xar-margin-thickends xar-align-center" style="width: 100%;">
         <tr>
             <th><xar:mlstring>Status</xar:mlstring></th>
             <th><xar:mlstring>Sort Order</xar:mlstring></th>
@@ -94,71 +92,69 @@
         </tr>
     </table>
     </form>
-</div>
 </xar:if>
 
-<br />
-<table border="0" width="100%" class="xar-norm-outline" cellspacing="1" cellpadding="2">
-    <tr style="text-align: center;">
-        <th colspan="12" class="xar-norm-outline">
+<table width="100%" class="xar-border-thin xar-margin-thickends" cellspacing="1" cellpadding="2">
+    <tr class="xar-align-center">
+        <th colspan="12">
             #xarSessionGetVar('ResultTitle')#
         </th>
     </tr>
-    <tr style="text-align: center;">
-        <th class="xar-norm-outline">
+    <tr class="xar-align-center">
+        <th>
             <a href="#xarModURL('helpdesk', 'user', 'view', array('sortorder' => 'TICKET_ID', 'order' => $order, 'selection' => $selection, 'statusfilter' => $statusfilter))#">
             <xar:mlstring>Ticket</xar:mlstring>#
             </a>
         </th>
-        <th class="xar-norm-outline">
+        <th>
             <a href="#xarModURL('helpdesk', 'user', 'view', array('sortorder' => 'SUBJECT', 'order' => $order, 'selection' => $selection, 'statusfilter' => $statusfilter))#">
             <xar:mlstring>Subject</xar:mlstring>
             </a>
         </th>
         <xar:if condition="$showstatusinsummary">
-        <th class="xar-norm-outline">
+        <th>
             <a href="#xarModURL('helpdesk', 'user', 'view', array('sortorder' => 'STATUS', 'order' => $order, 'selection' => $selection, 'statusfilter' => $statusfilter))#">
             <xar:mlstring>Status</xar:mlstring>
             </a>
         </th>
         </xar:if>
         <xar:if condition="$showpriorityinsummary">
-        <th class="xar-norm-outline">
+        <th>
             <a href="#xarModURL('helpdesk', 'user', 'view', array('sortorder' => 'PRIORITY', 'order' => $order, 'selection' => $selection, 'statusfilter' => $statusfilter))#">
             <xar:mlstring>Priority</xar:mlstring>
             </a>
         </th>
         </xar:if>
         <xar:if condition="$showopenbyinsummary">
-        <th class="xar-norm-outline">
+        <th>
             <a href="#xarModURL('helpdesk', 'user', 'view', array('sortorder' => 'OPENEDBY', 'order' => $order, 'selection' => $selection, 'statusfilter' => $statusfilter))#">
             <xar:mlstring>Opened by</xar:mlstring>
             </a>
         </th>
         </xar:if>
         <xar:if condition="$showassignedtoinsummary">
-        <th class="xar-norm-outline">
+        <th>
             <a href="#xarModURL('helpdesk', 'user', 'view', array('sortorder' => 'ASSIGNEDTO', 'order' => $order, 'selection' => $selection, 'statusfilter' => $statusfilter))#">
             <xar:mlstring>Assigned to</xar:mlstring>
             </a>
         </th>
         </xar:if>
         <xar:if condition="$showclosedbyinsummary">
-        <th class="xar-norm-outline">
+        <th>
             <a href="#xarModURL('helpdesk', 'user', 'view', array('sortorder' => 'CLOSEDBY', 'order' => $order, 'selection' => $selection, 'statusfilter' => $statusfilter))#">
             <xar:mlstring>Closed by</xar:mlstring>
             </a>
         </th>
         </xar:if>
         <xar:if condition="$showdateenteredinsummary">
-        <th class="xar-norm-outline">
+        <th>
             <a href="#xarModURL('helpdesk', 'user', 'view', array('sortorder' => 'DATE', 'order' => $order, 'selection' => $selection, 'statusfilter' => $statusfilter))#">
             <xar:mlstring>Date Entered</xar:mlstring>
             </a>
         </th>
         </xar:if>
         <xar:if condition="$showlastmodifiedinsummary">
-        <th class="xar-norm-outline">
+        <th>
             <a href="#xarModURL('helpdesk', 'user', 'view', array('sortorder' => 'DATEUPDATED', 'order' => $order, 'selection' => $selection, 'statusfilter' => $statusfilter))#">
             <xar:mlstring>Last Modified</xar:mlstring>
             </a>
@@ -217,15 +213,13 @@
         </xar:if>
     </xar:foreach>
 </table>
-<div style="text-align: center;">#$pager#</div>
+<div class="xar-align-center">#$pager#</div>
 <xar:else />
     <h3><xar:mlstring>Not logged in</xar:mlstring>!</h3>
     <xar:mlstring>Sorry, this feature is not available for anonymous users. Please login and try again.</xar:mlstring>
 </xar:if>
 
-</div>
-<br />
 <xar:if condition="!empty($summary)">
-    #$summary#
+    <div class="xar-margin-thickends"><xar:var name="summary" /></div>
 </xar:if>
 </div>

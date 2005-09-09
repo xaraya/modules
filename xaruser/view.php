@@ -13,7 +13,7 @@ function helpdesk_user_view($args)
     // Get arguments
     extract($args);
 
-    xarVarFetch('selection',    'str:1:',  $selection,  'ALL',  XARVAR_NOT_REQUIRED);
+    xarVarFetch('selection',    'str:1:',  $selection,  'MYALL',  XARVAR_NOT_REQUIRED);
     xarVarFetch('sortorder',    'str:1:',  $sortorder,  'TICKET_ID', XARVAR_NOT_REQUIRED);
     xarVarFetch('order',        'str:1:',  $order,      'ASC',  XARVAR_NOT_REQUIRED);
     xarVarFetch('startnum',     'str:1:',  $startnum,    1,     XARVAR_NOT_REQUIRED);

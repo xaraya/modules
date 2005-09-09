@@ -1,77 +1,44 @@
-<div class="xar-norm-outline xar-accent">
-    <table border="0" width="99%" class="xar-accent">
-        <tr>
-            <td>
-                <xar:mlstring>Total Tickets in System</xar:mlstring>: <b>#$return_val#</b>
-            </td>
-        </tr>
-        <xar:if condition="$userisloggedin">
-            <tr>
-                <td colspan="3"><xar:mlstring>Ticket Stats for</xar:mlstring> #$username#</td>
-            </tr>
-            <xar:if condition="$editaccess">
-            <tr>
-                <td colspan="3">
-                    <xar:if condition="$enablemystatshyperlink">
-                        <xar:if condition="$userstats['assignedopen'] gt 0">
-                            <a href="#xarModURL('helpdesk', 'user', 'view', array('selection'=>'MYASSIGNEDALL'))#" title="View open tickets that are assigned to you">
-                        </xar:if>
-                    </xar:if>
-                    <xar:mlstring>Open Tickets Assigned to You</xar:mlstring>:
-                    <b>#$userstats['assignedopen']#</b>
-                    <xar:if condition="$enablemystatshyperlink">
-                        <xar:if condition="$userstats['assignedopen'] gt 0">
-                            </a>
-                        </xar:if>
-                    </xar:if>
-                </td>
-            </tr>
-            </xar:if>
-            <tr>
-                <td>
-                    <xar:if condition="$enablemystatshyperlink">
-                        <xar:if condition="$userstats['open'] gt 0">
-                            <a href="#xarModURL('helpdesk', 'user', 'view', array('selection'=>'MYOPEN'))#" title="View your open tickets">
-                        </xar:if>
-                    </xar:if>
-                    <xar:mlstring>Open</xar:mlstring>:
-                    <b>#$userstats['open']#</b>
-                    <xar:if condition="$enablemystatshyperlink">
-                        <xar:if condition="$userstats['open'] gt 0">
-                            </a>
-                        </xar:if>
-                    </xar:if>
-                </td>
+<div class="xar-padding-thick xar-norm-outline ">
 
-                <td>
-                    <xar:if condition="$enablemystatshyperlink">
-                        <xar:if condition="$userstats['closed'] gt 0">
-                            <a href="#xarModURL('helpdesk', 'user', 'view', array('selection'=>'MYCLOSED'))#" title="View your closed tickets">
-                        </xar:if>
-                    </xar:if>
-                    <xar:mlstring>Closed</xar:mlstring>:
-                    <b>#$userstats['closed']#</b>
-                    <xar:if condition="$enablemystatshyperlink">
-                        <xar:if condition="$userstats['closed'] gt 0">
-                            </a>
-                        </xar:if>
-                    </xar:if>
-                </td>
-                <td>
-                    <xar:if condition="$enablemystatshyperlink">
-                        <xar:if condition="$userstats['total'] gt 0">
-                            <a href="#xarModURL('helpdesk', 'user', 'view', array('selection'=>'MYALL'))#" title="View all your tickets">
-                        </xar:if>
-                    </xar:if>
-                    <xar:mlstring>Total</xar:mlstring>:
-                    <b>#$userstats['total']#</b>
-                    <xar:if condition="$enablemystatshyperlink">
-                        <xar:if condition="$userstats['total'] gt 0">
-                            </a>
-                        </xar:if>
-                    </xar:if>
-                </td>
-            </tr>
+    <div>
+    <xar:mlstring>Total Tickets in System</xar:mlstring>: <b>#$return_val#</b>
+    </div>
+    <xar:if condition="$userisloggedin">
+        <div>
+            <xar:mlstring>Ticket Stats for</xar:mlstring> #$username#
+        </div>
+        <xar:if condition="$editaccess">
+        <div>
+            <xar:if condition="$enablemystatshyperlink and $userstats['assignedopen'] gt 0">
+                <a href="#xarModURL('helpdesk', 'user', 'view', array('selection'=>'MYASSIGNEDALL'))#" title="View open tickets that are assigned to you"><xar:mlstring>Open Tickets Assigned to You:</xar:mlstring> <b>#$userstats['assignedopen']#</b></a>
+            <xar:else />
+                <xar:mlstring>Open Tickets Assigned to You:</xar:mlstring> <b>#$userstats['assignedopen']#</b>
+            </xar:if>
+        </div>
         </xar:if>
-    </table>
+
+        <div class="xar-floatleft">
+        <xar:if condition="$enablemystatshyperlink and $userstats['open'] gt 0">
+            <a href="#xarModURL('helpdesk', 'user', 'view', array('selection'=>'MYOPEN'))#" title="View your open tickets"><xar:mlstring>Open</xar:mlstring>:<b>#$userstats['open']#</b></a>
+        <xar:else />
+            <xar:mlstring>Open:</xar:mlstring> <b>#$userstats['open']#</b>
+        </xar:if>
+        </div>
+
+        <div class="xar-floatright">
+            <xar:if condition="$enablemystatshyperlink and $userstats['total'] gt 0">
+                <a href="#xarModURL('helpdesk', 'user', 'view', array('selection'=>'MYALL'))#" title="View all your tickets"><xar:mlstring>Total:</xar:mlstring> <b>#$userstats['total']#</b></a>
+            <xar:else />
+                <xar:mlstring>Total:</xar:mlstring> <b>#$userstats['total']#</b>        
+            </xar:if>
+        </div>
+    
+        <div class="xar-align-center">
+            <xar:if condition="$enablemystatshyperlink and $userstats['closed'] gt 0">
+                <a href="#xarModURL('helpdesk', 'user', 'view', array('selection'=>'MYCLOSED'))#" title="View your closed tickets"><xar:mlstring>Closed:</xar:mlstring> <b>#$userstats['closed']#</b></a>
+            <xar:else />    
+                <xar:mlstring>Closed:</xar:mlstring> <b>#$userstats['closed']#</b>            
+            </xar:if>
+        </div>
+    </xar:if>
 </div>

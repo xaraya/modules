@@ -40,16 +40,13 @@ function helpdesk_userapi_gettickets($args)
     }
     
     // Get items Ticket Number/Date/Subject/Status/Last Update
-    $sql = "SELECT DISTINCT  $helpdesktable.xar_id,
-                             xar_date,
-                             xar_subject,
-                             xar_statusid,
-                             xar_priorityid,
-                             xar_updated,
-                             xar_assignedto,
-                             xar_openedby,
-                             xar_closedby
-                FROM $helpdesktable ";
+    $sql = "
+        SELECT DISTINCT  
+            $helpdesktable.xar_id, xar_date, xar_subject, xar_statusid,
+            xar_priorityid, xar_updated, xar_assignedto, xar_openedby,
+            xar_closedby
+        FROM $helpdesktable 
+    ";
                 
     $from ='';
     $where = array();
@@ -141,8 +138,8 @@ function helpdesk_userapi_gettickets($args)
         $words = explode(" ", $keywords);
         foreach($words as $word)
         {
-            $whereor[] = "(xar_subject LIKE '%?%')";
-            $bindvars[] = $word;
+            $whereor[] = "(xar_subject LIKE ?)";
+            $bindvars[] = $dbconn->qstr("%$word%");
         }
     }
     
