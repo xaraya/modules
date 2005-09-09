@@ -38,6 +38,11 @@
 	js.type	= 'text/javascript';
 	js.src  = tinyMCE.baseURL + '/plugins/ibrowser/interface/common.js';
 	// Add the new object to the HEAD element.
-	document.getElementsByTagName('head')[0].appendChild(js) ;
+
+	//document.getElementsByTagName('head')[0].appendChild(js) ;
+    //Xaraya fix for IE bug caused by above line: ew very very ugly - but works. Silly IE bug
+    //causes a dot on the end of the URL so IE can't get to the URL - Operation Aborted!
+
+     document.write('<sc'+'ript language="javascript" type="text/javascript" src="' + js.src + '"></script>');
 
 	//-------------------------------------------------------------------------	
