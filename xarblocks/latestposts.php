@@ -43,7 +43,7 @@ function xarbb_latestpostsblock_info()
 function xarbb_latestpostsblock_display($blockinfo)
 {
     // Security check
-    if (!xarSecurityCheck('ViewxarBB')) {
+    if (!xarSecurityCheck('ViewxarBB',0)) {
         return;
     }
     if (empty($blockinfo['content'])) {
