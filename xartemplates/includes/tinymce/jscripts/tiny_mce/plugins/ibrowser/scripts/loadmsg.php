@@ -11,11 +11,16 @@
 	// ================================================
 	// Revision: 1.0                   Date: 08/09/2005
 	// ================================================
+$m="Please wait while loading ...";
 ?>
 <div align="center" id="dialogLoadMessage" style="display:block;">
   <table width="100%" height="90%">
     <tr>
-      <td align="center" valign="middle"><div id="loadMessage"><?php echo $l->m('im_097'); ?></div></td>	  
+      <td align="center" valign="middle">
+          <div id="loadMessage">
+              <?php echo $m; ?>
+          </div>
+      </td>
     </tr>
   </table>
 </div>
