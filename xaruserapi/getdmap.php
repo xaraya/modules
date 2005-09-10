@@ -20,7 +20,7 @@ function moveabletype_userapi_getdmap()
     extract($dataTypes);
     
     // mt.getRecentPostTitles
-    $getRecentPostTitles_sig = array(array($xmlrpcArray, $xmlrpcString, $xmlrpcString, $xmlrpcString,$xmlrpcInt));
+    $getRecentPostTitles_sig = array(array($xmlrpcArray, $xmlrpcString, $xmlrpcString, $xmlrpcString,$xmlrpcI4));
     $getRecentPostTitles_doc="
         Description: Returns a bandwidth-friendly list of the most recent posts in the system.
 
