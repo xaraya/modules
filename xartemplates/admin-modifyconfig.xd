@@ -1,0 +1,72 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Search Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Modify Config</xar:mlstring></h2>
+
+    <xar:if condition="xarSessionGetVar('statusmsg') != ''">
+        <p>#xarSessionGetVar('statusmsg')#</p>
+    </xar:if>
+
+    <form method="post" action="#xarModUrl('search', 'admin', 'updateconfig')#">
+        <fieldset>
+            <legend><xar:mlstring>Display Options</xar:mlstring></legend>
+            <div class="xar-form-input-wrapper xar-clear-both">
+                <label for="showsearches" class="xar-form-label">
+                    <xar:mlstring>Display Previous Searches in Search Page</xar:mlstring>
+                </label>
+                <xar:if condition="$showLastSearches">
+                    <input type="checkbox" name="showsearches" id="showsearches" value="1" checked="checked"/>
+                <xar:else/>
+                    <input type="checkbox" name="showsearches" id="showsearches" value="1" />
+                </xar:if>
+            </div>
+            <xar:comment> TODO : currently handled as group of 10 searches
+            <div class="xar-form-input-wrapper xar-clear-both">
+                <label for="searchestoshow" class="xar-form-label">
+                    <xar:mlstring>Number of Searches to display:</xar:mlstring>
+                </label>
+                <input type="text" name="searchestoshow" id="searchestoshow" value="#$searchitemvalue#" maxlength="3" class="xar-form-textshort" />
+            </div>
+            </xar:comment>
+            <xar:comment> TODO - currently handled on module by modules basis in calling module
+            <div class="xar-form-input-wrapper xar-clear-both">
+                <label for="itemsperpage" class="xar-form-label">
+                    <xar:mlstring>Search Items Per Page:</xar:mlstring>
+                </label>
+                <input type="text" name="itemsperpage" id="itemsperpage" value="#$itemsvalue#" maxlength="3" class="xar-form-textshort" />
+            </div>
+            </xar:comment>
+        </fieldset>
+        <!--
+        <fieldset>
+            <legend><xar:mlstring>System Options</xar:mlstring></legend>
+            <div class="xar-form-input-wrapper xar-clear-both">
+                <label for="shorturls" class="xar-form-label">
+                    <xar:mlstring>Enable short URLs?</xar:mlstring>
+                </label>
+                <xar:if condition="$shorturlschecked">
+                    <input type="checkbox" name="shorturls" id="shorturls" value="1" checked="checked" />
+                <xar:else/>
+                    <input type="checkbox" name="shorturls" id="shorturls" value="1" />
+                </xar:if>
+            </div>
+        </fieldset>
+        -->
+        <div class="xar-clear-both xar-align-center">
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="submit" value="#xarML('Update Configuration')#" />
+        </div>
+        <!--
+        <fieldset>
+            <legend><xar:mlstring>Enabled Hooks</xar:mlstring></legend>
+
+                #$hooks#
+
+        </fieldset>
+        -->
+    </form>
+</div>
+
+<xar:if condition="xarSessionSetVar('statusmsg', '')"></xar:if>

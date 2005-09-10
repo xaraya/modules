@@ -23,6 +23,7 @@
 function search_init()
 {
     xarModSetVar('search', 'resultsperpage', 10);
+    xarModSetVar('search', 'showsearches', true);
     // Register blocks
     if (!xarModAPIFunc('blocks',
             'admin',
@@ -35,7 +36,7 @@ function search_init()
 
     // Register Mask
     xarRegisterMask('ReadSearch', 'All', 'search', 'All', 'All', 'ACCESS_READ');
-
+    xarRegisterMask('AdminSearch', 'All', 'search', 'All', 'All', 'ACCESS_ADMIN');
     return true;
 }
 
@@ -43,6 +44,7 @@ function search_init()
  * Upgrade the search module from an old version
  *
  * @author Johnny Robeson
+ * @author Jo Dalle NOgare
  * @access public
  * @param  $oldVersion
  * @return true on success or false on failure
@@ -55,6 +57,15 @@ function search_upgrade($oldversion)
     case '0.1':
         // Register search hook
         xarModRegisterHook('item','search','GUI','search','user','searchform');
+    
+    //fall through to next version upgrade
+    case '0.2.0':
+        //register AdminSearch mask
+        xarRegisterMask('AdminSearch', 'All', 'search', 'All', 'All', 'ACCESS_ADMIN');
+        //admin configurable prior search display
+         xarModSetVar('search', 'showsearches', true);
+    //current version
+    case '0.3.0':
         break;
     }
     return true;
@@ -70,7 +81,7 @@ function search_upgrade($oldversion)
  */
 function search_delete()
 {
-    xarModDelVar('search', 'resultsperpage');
+    xarModDelAllVars('search');
     // UnRegister blocks
     if (!xarModAPIFunc('blocks',
             'admin',

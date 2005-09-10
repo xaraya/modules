@@ -1,0 +1,6 @@
+2005-09-10: jojodee
+- added some admin modify config functions and templates
+- added an overview page template
+- added admin menus
+- added configurable view of last 10 searches in user Search page
+- Added new mod vars, adminsearch mask in init and upgrade

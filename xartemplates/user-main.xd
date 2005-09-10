@@ -1,48 +1,51 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Search Module</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>Search</xar:mlstring></h2>
 <div style="margin: auto;">
-<h4><xar:mlstring>Last 10 Searches Made</xar:mlstring></h4>
-<table>
-    <tr>
-        <th style="width: 20%;">
-            <xar:mlstring>Name</xar:mlstring>
-        </th>
-        <th style="width: 60%;">
-            <xar:mlstring>Keywords</xar:mlstring>
-        </th>
-        <th style="width: 20%;">
-            <xar:mlstring>Date and Time</xar:mlstring>
-        </th>
-    </tr>
-    <xar:loop name="$searchitems">
-    <xar:if condition="(($loop:index + 1) % 2)">
-    <tr>
-        <td style="width: 20%;">
-            #$loop:item['sname']#
-        </td>
-        <td style="width: 60%;">
-            <a href="#$loop:item['searchurl']#">#$loop:item['term']#</a>
-        </td>
-        <td style="width: 20%;">
-            #$loop:item['date']#
-        </td>
-    </tr>
-    <xar:else />
-    <tr>
-        <td class="xar-accent" style="width: 20%;">
-            #$loop:item['sname']#
-        </td>
-        <td class="xar-accent" style="width: 60%;">
-            <a href="#$loop:item['searchurl']#">#$loop:item['term']#</a>
-        </td>
-        <td class="xar-accent" style="width: 20%;">
-            #$loop:item['date']#
-        </td>
-    </tr>
-    </xar:if>
-    </xar:loop>
-</table>
+<xar:set name="showlastsearches">#xarModGetVar('search','showsearches')#</xar:set>
+<xar:if condition="$showlastsearches">
+    <h4><xar:mlstring>Last 10 Searches Made</xar:mlstring></h4>
+    <table>
+        <tr>
+            <th style="width: 20%;">
+                <xar:mlstring>Name</xar:mlstring>
+            </th>
+            <th style="width: 60%;">
+                <xar:mlstring>Keywords</xar:mlstring>
+            </th>
+            <th style="width: 20%;">
+                <xar:mlstring>Date and Time</xar:mlstring>
+            </th>
+        </tr>
+        <xar:loop name="$searchitems">
+        <xar:if condition="(($loop:index + 1) % 2)">
+        <tr>
+            <td style="width: 20%;">
+                #$loop:item['sname']#
+            </td>
+            <td style="width: 60%;">
+                <a href="#$loop:item['searchurl']#">#$loop:item['term']#</a>
+            </td>
+            <td style="width: 20%;">
+                #$loop:item['date']#
+            </td>
+        </tr>
+        <xar:else />
+        <tr>
+            <td class="xar-accent" style="width: 20%;">
+                #$loop:item['sname']#
+            </td>
+            <td class="xar-accent" style="width: 60%;">
+                <a href="#$loop:item['searchurl']#">#$loop:item['term']#</a>
+            </td>
+            <td class="xar-accent" style="width: 20%;">
+                #$loop:item['date']#
+            </td>
+        </tr>
+        </xar:if>
+        </xar:loop>
+    </table>
 <br /><br />
+</xar:if>
 <xar:if condition="!empty($message)">
     #$message#
 <xar:else />
