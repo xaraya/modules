@@ -1,3 +1,4 @@
+<?php
 /**
  * Initialisation of moveabletype module
  *
