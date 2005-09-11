@@ -1,191 +1,183 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Release Module</xar:mlstring></span></div>
-<!-- common admin menu for this module - remove link to the current function -->
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Release Module</xar:mlstring>
+    </span>
+</div>
+
 <div class="xar-mod-body">
 <h2><xar:mlstring>Release Module :: Preview</xar:mlstring></h2>
 
-<div align="center">
-    <br /><br />
     <form action="#xarModURL('release', 'user', 'addnotes')#" method="post" enctype="application/x-www-form-urlencoded">
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
-        <input type="hidden" name="phase" id="phase" value="update" />    
+        <input type="hidden" name="phase" id="phase" value="update" />
         <input type="hidden" name="rid" id="rid" value="#$rid#" />    
         <input type="hidden" name="regname" id="regname" value="#$regname#" />
         <input type="hidden" name="version" id="version" value="#$version#" />
         <input type="hidden" name="pricecheck" id="pricecheck" value="#$pricecheck#" />
         <input type="hidden" name="democheck" id="democheck" value="#$democheck#" />
         <input type="hidden" name="supportcheck" id="supportcheck" value="#$supportcheck#" />
-        <table border="0" cellpadding="5">
-            <tr>
-                <td align="left" valign="top" class="xar-accent">
+        
+        <fieldset class="formelements xar-norm">
+        <legend><xar:mlstring>Extension Release Detailed Preview</xar:mlstring></legend>
+            <p class="param">
+                <label for="extensionid" class="xar-form-label">
                     <xar:mlstring>Extension ID</xar:mlstring>
-                </td>
-                <td align="left" valign="top" class="xar-norm">
+                </label>
                     #$rid#
-                </td>
-            </tr>
-            <tr>
-                <td align="left" valign="top" class="xar-accent">
+            </p>
+            <p>
+                 <label for="extensionname" class="xar-form-label">
                     <xar:mlstring>Extension Registered Name</xar:mlstring>
-                </td>
-                <td align="left" valign="top" class="xar-norm">
-                    #$regname#
-                </td>
-            </tr>
-            <tr>
-                <td align="left" valign="top" class="xar-accent">
+                </label>
+                #$regname#
+            </p>
+
+            <p>
+                 <label for="versionnumber" class="xar-form-label">
                     <xar:mlstring>Version Number</xar:mlstring>
-                </td>
-                <td align="left" valign="top" class="xar-norm">
-                    #$version#
-                </td>
-            </tr>
-            <tr>
-                <td align="left" valign="top" class="xar-accent">
+                </label>
+                #$version#
+            </p>
+
+            <p>
+                 <label for="downloadlink" class="xar-form-label">
                     <xar:mlstring>Download Link</xar:mlstring>
-                </td>
-                <td align="left" valign="top" class="xar-norm">
-                    <a href="#$dllink#">#$dllink#</a>
-                </td>
-            </tr>
+                </label>
+                <a href="#$dllink#">#$dllink#</a>
+            </p>
             <xar:if condition="$pricecheck eq '2'">
-            <tr>
-                <td align="left" valign="top" class="xar-accent">
+            <p>
+                 <label for="price" class="xar-form-label">
                     <xar:mlstring>Price</xar:mlstring>
-                </td>
-                <td align="left" valign="top" class="xar-norm">
-                    #$price#
-                </td>
-            </tr>
+                </label>
+                #$price#
+            </p>
             </xar:if>
             <xar:if condition="$democheck eq '2'">
-            <tr>
-                <td align="left" valign="top" class="xar-accent">
-                    <xar:mlstring>Demo Link</xar:mlstring>
-                </td>
-                <td align="left" valign="top" class="xar-norm">
-                    <a href="#$demolink#">#$demolink#</a>
-                </td>
-            </tr>
+            <p>
+                 <label for="demolink" class="xar-form-label">
+                     <xar:mlstring>Demo Link</xar:mlstring>
+                </label>
+                <a href="#$demolink#">#$demolink#</a>
+            </p>
             </xar:if>
             <xar:if condition="$supportcheck eq '2'">
-            <tr>
-                <td align="left" valign="top" class="xar-accent">
-                    <xar:mlstring>Support Link</xar:mlstring>
-                </td>
-                <td align="left" valign="top" class="xar-norm">
-                    <a href="#$supportlink#">#$supportlink#</a>
-                </td>
-            </tr>
+            <p>
+                 <label for="supportlink" class="xar-form-label">
+                     <xar:mlstring>Support Link</xar:mlstring>
+                </label>
+                <a href="#$supportlink#">#$supportlink#</a>
+            </p>
             </xar:if>
-            <tr>
-                <td align="left" valign="top" class="xar-accent">
-                    <xar:mlstring>Extension State</xar:mlstring>
-                </td>
-                <td align="left" valign="top" class="xar-norm">
-                    #$extstate#
-                </td>
-            </tr>
+            <p>
+                 <label for="extensionstate" class="xar-form-label">
+                     <xar:mlstring>Extension State</xar:mlstring>
+                </label>
+                #$extstate#
+            </p>
 
-            <tr>
-                <td align="left" valign="top" class="xar-accent">
-                    <xar:mlstring>ChangeLog</xar:mlstring>
-                </td>
-                <td align="left" valign="top" class="xar-norm">
-                    #$changelogf#
-                </td>
-            </tr>
-            <tr>
-                <td align="left" valign="top" class="xar-accent">
+            <p>
+                 <label for="changelog" class="xar-form-label">
+                     <xar:mlstring>ChangeLog</xar:mlstring>
+                </label>
+                <div class="xar-form-input-wrapper">
+                     #$changelogf#
+                </div>
+            </p>
+            <p>
+                 <label for="additionalnotes" class="xar-form-label">
                     <xar:mlstring>Additional Notes</xar:mlstring>
-                </td>
-                <td align="left" valign="top" class="xar-norm">
+                </label>
+                <div class="xar-form-input-wrapper">
                     #$notesf#
-                </td>
-            </tr>
-            <tr>
-                <td align="left" valign="top" class="xar-norm">
-                    <label for="version"><xar:mlstring>Version Number</xar:mlstring></label>
-                </td>
-                <td align="left" valign="top" class="xar-norm">
-                    <input type="text" name="version" value="#$version#" size="10" maxlength="100" />
-                </td>
-            </tr>
-            <tr>
-                <td align="left" valign="top" class="xar-norm">
-                    <label for="dllink"><xar:mlstring>Download Link</xar:mlstring></label>
-                </td>
-                <td align="left" valign="top" class="xar-norm">
-                    <input type="text" name="dllink" value="#$dllink#" size="30" maxlength="100" />
-                </td>
-            </tr>
+                </div>
+            </p>
+            <p>
+                <label for="version" class="xar-form-label">
+                    <span class="help" title="#xarML('Check the version number')#">
+                        <xar:mlstring>Version Number</xar:mlstring>
+                    </span>
+                </label>
+                 <input type="text" name="version" value="#$version#" size="10" maxlength="100" />
+            </p>
+            <p>
+                <label for="dllink" class="xar-form-label">
+                    <span class="help" title="#xarML('Check the download link for your release.')#">
+                        <xar:mlstring>Download Link</xar:mlstring>
+                    </span>
+                </label>
+                <input type="text" name="dllink" value="#$dllink#" size="30" maxlength="100" />
+            </p>
              <xar:if condition="$democheck eq '2'">
-            <tr>
-                <td align="left" valign="top" class="xar-norm">
-                    <label for="demolink"><xar:mlstring>Demo Link</xar:mlstring></label>
-                </td>
-                <td align="left" valign="top" class="xar-norm">
-                    <input type="text" name="demolink" value="#$demolink#" size="30" maxlength="100" />
-                </td>
+            <p>
+               <label for="demolink" class="xar-form-label">
+                    <span class="help" title="#xarML('Check the link to the demonstration for your release.')#">
+                        <xar:mlstring>Demo Link</xar:mlstring>
+                    </span>
+                </label>
+                <input type="text" name="demolink" value="#$demolink#" size="30" maxlength="100" />
+            <p>
             </xar:if>
             <xar:if condition="$supportcheck eq '2'">
-            <tr>
-                <td align="left" valign="top" class="xar-norm">
-                    <label for="supportlink"><xar:mlstring>Support Link</xar:mlstring></label>
-                </td>
-                <td align="left" valign="top" class="xar-norm">
-                    <input type="text" name="supportlink" value="#$supportlink#" size="30" maxlength="100" />
-                </td>
+            <p>
+               <label for="supportlink" class="xar-form-label">
+                    <span class="help" title="#xarML('Check the support link for your release.')#">
+                        <xar:mlstring>Supported Link</xar:mlstring>
+                    </span>
+               </label>
+                <input type="text" name="supportlink" value="#$supportlink#" size="30" maxlength="100" />
+            </p>
             </xar:if>
            <xar:if condition="$pricecheck eq '2'">
-            <tr>
-                <td align="left" valign="top" class="xar-norm">
-                    <label for="price"><xar:mlstring>Price</xar:mlstring></label>
-                </td>
-                <td align="left" valign="top" class="xar-norm">
-                    <input type="text" name="price" value="#$price#" size="10" maxlength="100" />
-                </td>
-            </tr>
+            <p>
+               <label for="price" class="xar-form-label">
+                    <span class="help" title="#xarML('Check the the price.')#">
+                        <xar:mlstring>Price</xar:mlstring>
+                    </span>
+                </label>
+                <input type="text" name="price" value="#$price#" size="10" maxlength="100" />
+            </p>
             </xar:if>
-
-            </tr>
-                <tr>
-                    <td align="left" valign="top" class="xar-norm">
-                    <label for="rstate" class="help" title="#xarML('Current development status of your extension')#">
+            <p>
+            <p>
+                <label for="rstate" class="xar-form-label">
+                    <span class="help" title="#xarML('Checkdevelopment status of your extension')#">
                        <xar:mlstring>Extension Status:</xar:mlstring>
-                     </label>
-                   </td>
-                    <td align="left" valign="top" class="xar-norm">
-                   <select name="rstate" id="rstate" size="1">
-                      <xar:foreach in="$stateoptions" value="$v" key="$k">
-                          <xar:if condition="$k eq $rstate">
-                               <option name="rstate.#$k#" value="#$k#" selected="selected">#$v#</option>
-                          <xar:else />
-                               <option name="rstate.#$k#" value="#$k#">#$v#</option>
-                          </xar:if>
-                      </xar:foreach>
-                   </select>
-                   </td>
-                </tr>
+                     </span>
+                </label>
+                <select name="rstate" id="rstate" size="1">
+                    <xar:foreach in="$stateoptions" value="$v" key="$k">
+                        <xar:if condition="$k eq $rstate">
+                            <option name="rstate.#$k#" value="#$k#" selected="selected">#$v#</option>
+                        <xar:else />
+                            <option name="rstate.#$k#" value="#$k#">#$v#</option>
+                        </xar:if>
+                    </xar:foreach>
+               </select>
+             </p>
 
-            <tr>
-                <td align="left" valign="top" class="xar-norm">
-                    <label for="changelog"><xar:mlstring>ChangeLog</xar:mlstring></label>
-                </td>
-                <td align="left" valign="top" class="xar-norm">
+            <p>
+                <label for="changelog" class="xar-form-label">
+                    <span class="help" title="#xarML('Check your changelog for the release')#">
+                        <xar:mlstring>ChangeLog</xar:mlstring>
+                    </span>
+                </label>
+                <div class="xar-form-input-wrapper">
                     <textarea name="changelog" cols="60" rows="5" class="xar-normal">#$changelog#</textarea>
-                </td>
-            </tr>
-            <tr>
-                <td align="left" valign="top" class="xar-norm">
-                    <label for="notes"><xar:mlstring>Additional Notes</xar:mlstring></label>
-                </td>
-                <td align="left" valign="top" class="xar-norm">
+                </div>
+            </p>
+            <p>
+                <label for="notes" class="xar-form-label">
+                    <span class="help" title="#xarML('Check your changelog for the release')#">
+                        <xar:mlstring>Additional Notes</xar:mlstring>
+                    </span>
+                </label>
+                <div class="xar-form-input-wrapper">
                     <textarea name="notes" cols="60" rows="5" class="xar-normal">#$notes#</textarea>
-                </td>
-            </tr>
-        </table>            
-        <br /><br />
-        <input type="submit" value="#xarML('Announce!')#"  tabindex="6" />
+                </div>
+            </p>
+        </fieldset>
+        <p>
+            <input type="submit" value="#xarML('Announce!')#"  tabindex="6" />
+        </p>
     </form>
-</div>
 </div>

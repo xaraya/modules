@@ -216,12 +216,17 @@ function release_user_view()
               $items[$i]['extstate']=$stateoptions[$key];
            }
        }
-       
+
        $allitems=  xarModAPIFunc('release', 'user', 'countitems',array('idtypes'=>$idtypes,'catid'=>$catid));
-     $data['pager'] = xarTplGetPager($startnum,
-        $allitems,
-        xarModURL('release', 'user', 'view', array('startnum' => '%%','idtypes'=>$idtypes,'catid'=>$catid, 'sort'=>$sort)),
-        xarModGetUserVar('release', 'itemsperpage', $uid));
+
+           $data['pager'] = xarTplGetPager($startnum,
+           $allitems,
+           xarModURL('release', 'user', 'view', array('startnum' => '%%','idtypes'=>$idtypes,'catid'=>$catid, 'sort'=>$sort)),
+          xarModGetUserVar('release', 'itemsperpage', $uid));
+
+    }
+    if (!isset($allitems)) {
+        $allitems=0;
     }
     $data['sort'] = $sort;
     $data['numitems']=$allitems;
