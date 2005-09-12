@@ -18,7 +18,7 @@
  * View an event
  *
  * 
- * @author Jodie Razdrh/John Kevlin/David St.Clair
+ * @author  Jodie Razdrh/John Kevlin/David St.Clair
  * @author  Julian Development Team, MichelV. <michelv@xarayahosting.nl>
  * @access  public 
  * @param   ID $event_id for the event to display
@@ -28,17 +28,17 @@
  */
 function julian_user_viewevent()
 {
-   //get post/get vars
-   if (!xarVarFetch('event_id','str',$event_id)) return; // INT here?
-   if (!xarVarFetch('cal_date','int',$cal_date)) return;
-   
-   // Security check
-   if (!xarSecurityCheck('ViewJulian')) return; 
-   // TODO: make this an API for linked event
-   // establish a db connection
-   $dbconn =& xarDBGetConn();
-   //get db tables
-   $xartable = xarDBGetTables();
+    //get post/get vars
+    if (!xarVarFetch('event_id','str',$event_id)) return; // INT here?
+    if (!xarVarFetch('cal_date','int',$cal_date)) return; // str here?
+    
+    // Security check
+    if (!xarSecurityCheck('ViewJulian')) return; 
+    // TODO: make this an API for linked event
+    // establish a db connection
+    $dbconn =& xarDBGetConn();
+    //get db tables
+    $xartable = xarDBGetTables();
    
     $matches = array();
     if (preg_match("/^(\d+)_link$/",$event_id,$matches)) {

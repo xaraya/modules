@@ -137,7 +137,7 @@ function julian_init()
         // This should always be stored as UTC
         // Can not exist if COUNT is not null
         // MODIFIED: Changed type from varchar(14) to datetime ~DS
-        'recur_until'=>array('type'=>'datetime','size'=>'','null'=>FALSE,'default'=>''),
+        'recur_until'=>array('type'=>'datetime','size'=>'','null'=>FALSE),// Bug 4942 removed ,'default'=>''
         
         // COUNT::Recurrence Count
         // Can not exist if UNTIL is not null
@@ -162,11 +162,11 @@ function julian_init()
         
         // DTSTART::event start date/time
         // MODIFIED: Changed type from varchar(14) to datetime ~DS
-        'dtstart'=>array('type'=>'datetime','size'=>'','null'=>FALSE,'default'=>''),
+        'dtstart'=>array('type'=>'datetime','size'=>'','null'=>FALSE),// Bug 4942 removed ,'default'=>''
         
         // DTEND::event end date/time
         // MODIFIED: Changed type from varchar(14) to datetime ~DS
-        'dtend'=>array('type'=>'datetime','size'=>'','null'=>FALSE,'default'=>''),
+        'dtend'=>array('type'=>'datetime','size'=>'','null'=>FALSE),// Bug 4942 removed ,'default'=>''
         
         // DURATION::how long the event lasts
         'duration'=>array('type'=>'varchar','size'=>'50','null'=>TRUE),
@@ -179,7 +179,7 @@ function julian_init()
         
         // DUE::This property defines the date and time that a to-do is expected to be completed.
         // MODIFIED: Changed type from varchar(14) to datetime ~DS
-        'due'=>array('type'=>'datetime','size'=>'','null'=>FALSE,'default'=>''),
+        'due'=>array('type'=>'datetime','size'=>'','null'=>FALSE),// Bug 4942 removed ,'default'=>''
         
         // TRANSP::event transparency 
         // 0 = CAL_TRANSP_OPAQUE
@@ -192,7 +192,7 @@ function julian_init()
         
         // LAST-MODIFED::the date/time the event was last modified
         // MODIFIED: Changed type from varchar(14) to datetime ~DS
-        'last_modified'=>array('type'=>'datetime','size'=>'','null'=>FALSE,'default'=>'')
+        'last_modified'=>array('type'=>'datetime','size'=>'','null'=>FALSE)// Bug 4942 removed ,'default'=>''
     );
     $sql = xarDBCreateTable($event_table,$event_fields);
     if (empty($sql)) return; // throw back
@@ -371,7 +371,7 @@ function julian_init()
         // UNTIL::Recurrence End Date (YYYYMMDDHHMMSS)
         // This should always be stored as UTC
         // Can not exist if COUNT is not null
-        'recur_until'=>array('type'=>'datetime','size'=>'','null'=>FALSE,'default'=>''),
+        'recur_until'=>array('type'=>'datetime','size'=>'','null'=>FALSE),// Bug 4942 removed ,'default'=>''
     );
     $sql = xarDBCreateTable($event_linkage_table,$event_linkage_fields);
     if (empty($sql)) return; // throw back
