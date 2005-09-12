@@ -57,7 +57,7 @@
                             This DD Property automatically marks the div or textarea of the field with a special class trigger of <strong><code>class="mceEditor"</code></strong> and this acts as a marker for the WYSIWYG conversion.
                             You can also do this manually by adding the class as <strong><code>class="mceEditor"</code></strong> to any textarea or div such as the textareas in xarbb templates.
                             You can set row height and column width in the DD validation field. eg 20:80 for 20 rows high, 80 columns wide.
-                            If you can't see the xarTinyMCE GUI DD property in your DD list </xar:mlstring><a href="#$ddflushurl#"><xar:mlstring>flush the Property Cache</xar:mlstring></a>.
+                            If you can't see the xarTinyMCE GUI DD property in your DD list then </xar:mlstring><a href="#$ddflushurl#"><xar:mlstring>flush the Property Cache</xar:mlstring></a>.
                         </li>
                      </ol>
                 </li>
@@ -99,7 +99,7 @@
                  <ol>
                 <li style="margin-top:20px;">            
                 <xar:mlstring>Add a XarTinyMCE GUI Dynamic Data field to your publication type (or other module) in the usual way. For example, choose the TinyMCE property to replace your Textarea properties in your Article Publication types or xarPages page types. You <em><strong>do not add </strong></em>a template snippet
-             to your template to activate it. If you can't see the xarTinyMCE GUI DD property in your DD list then</xar:mlstring>
+             to your template to activate it. If you can't see the xarTinyMCE GUI DD property in your DD list then </xar:mlstring><a href="#$ddflushurl#"><xar:mlstring>flush the Property Cache</xar:mlstring></a>.
                 </li>
 
                 <li style="margin-top:20px;">
@@ -142,7 +142,7 @@
                <li><xar:mlstring>Lorem - adds text for fill in documents.</xar:mlstring></li>
                <li><xar:mlstring>Dictionary - lookup word in Merriam-Webster Online dictionary.</xar:mlstring></li>
                <li><xar:mlstring>Fullscreen - toggle to edit in full screen.</xar:mlstring></li>
-               <li><xar:mlstring>Paste - test only paste plugin.</xar:mlstring></li>
+               <li><xar:mlstring>Paste - text and MS Word paste plugin.</xar:mlstring></li>
                <li><xar:mlstring>Directionality - plug in for better support of right to left languages.</xar:mlstring></li>
                <li><xar:mlstring>Xaraya Page Break - icon click to add a Xaraya new page break to any of your publication type articles. Add <strong>xarpagebreak</strong> to Plugins, and <strong>xarpagebreak</strong> to Additional Tags configuration. Make sure you also allow images and appropriate attributes to view the pagebreak icon in your articles.</xar:mlstring></li>
 

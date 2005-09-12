@@ -7,14 +7,14 @@ function TinyMCE_advlink_getInfo() {
 		author : 'Moxiecode Systems',
 		authorurl : 'http://tinymce.moxiecode.com',
 		infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_advlink.html',
-		version : '2.0RC1'
+		version : tinyMCE.majorVersion + "." + tinyMCE.minorVersion
 	};
 };
 
 function TinyMCE_advlink_getControlHTML(control_name) {
 	switch (control_name) {
 		case "link":
-			return '<img id="{$editor_id}_advlink" src="{$themeurl}/images/link.gif" title="{$lang_link_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreClass(this);" onmouseup="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceAdvLink\');" />';
+			return '<a href="javascript:tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceAdvLink\');" onmousedown="return false;"><img id="{$editor_id}_advlink" src="{$themeurl}/images/link.gif" title="{$lang_link_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreClass(this);" /></a>';
 	}
 
 	return "";
@@ -23,17 +23,26 @@ function TinyMCE_advlink_getControlHTML(control_name) {
 function TinyMCE_advlink_execCommand(editor_id, element, command, user_interface, value) {
 	switch (command) {
 		case "mceAdvLink":
-			var template = new Array();
+			var anySelection = false;
+			var inst = tinyMCE.getInstanceById(editor_id);
+			var focusElm = inst.getFocusElement();
 
-			template['file']   = '../../plugins/advlink/link.htm';
-			template['width']  = 480;
-			template['height'] = 450 - (tinyMCE.isMSIE ? 30 : 0);
+			if (tinyMCE.selectedElement)
+				anySelection = (tinyMCE.selectedElement.nodeName.toLowerCase() == "img") || (selectedText && selectedText.length > 0);
 
-			// Language specific width and height addons
-			template['width']  += tinyMCE.getLang('lang_insert_link_delta_width', 0);
-			template['height'] += tinyMCE.getLang('lang_insert_link_delta_height', 0);
+			if (anySelection || (focusElm != null && focusElm.nodeName == "A")) {
+				var template = new Array();
 
-			tinyMCE.openWindow(template, {editor_id : editor_id, inline : "yes"});
+				template['file']   = '../../plugins/advlink/link.htm';
+				template['width']  = 480;
+				template['height'] = 400;
+
+				// Language specific width and height addons
+				template['width']  += tinyMCE.getLang('lang_advlink_delta_width', 0);
+				template['height'] += tinyMCE.getLang('lang_advlink_delta_height', 0);
+
+				tinyMCE.openWindow(template, {editor_id : editor_id, inline : "yes"});
+			}
 
 			return true;
 	}

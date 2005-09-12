@@ -3,11 +3,13 @@ if (url != null) {
 	// Fix relative
 	if (url.charAt(0) != '/')
 		url = tinyMCE.documentBasePath + "/" + url;
+
+	document.write('<sc'+'ript language="javascript" type="text/javascript" src="' + url + '"></sc'+'ript>');
 }
 
-document.write('<sc'+'ript language="javascript" type="text/javascript" src="' + url + '"></sc'+'ript>');
-
 function init() {
+	tinyMCEPopup.resizeToInnerSize();
+
 	var formObj = document.forms[0];
 	var swffile   = tinyMCE.getWindowArg('swffile');
 	var swfwidth  = '' + tinyMCE.getWindowArg('swfwidth');
@@ -51,8 +53,8 @@ function renderFlashList() {
 	if (typeof(tinyMCEFlashList) != "undefined" && tinyMCEFlashList.length > 0) {
 		var html = "";
 
-		html += '<tr><td >{$lang_flash_list}:</td>';
-		html += '<td><select id="link_list" name="link_list" style="width: 250px" onchange="this.form.file.value=this.options[this.selectedIndex].value;">';
+		html += '<tr><td><label for="link_list">{$lang_flash_list}</label></td>';
+		html += '<td><select id="link_list" name="link_list" style="width: 250px" onfocus="tinyMCE.addSelectAccessibility(event, this, window);" onchange="this.form.file.value=this.options[this.selectedIndex].value;">';
 		html += '<option value="">---</option>';
 
 		for (var i=0; i<tinyMCEFlashList.length; i++)

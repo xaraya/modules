@@ -1,14 +1,26 @@
 function init() {
+	tinyMCEPopup.resizeToInnerSize();
+
 	// Give FF some time
 	window.setTimeout('insertHelpIFrame();', 10);
 
-	var tbody = document.getElementById('plugintablebody');
+	var tcont = document.getElementById('plugintablecontainer');
 	var plugins = tinyMCE.getParam('plugins', '', true, ',');
 	if (plugins.length == 0)
 		document.getElementById('plugins_tab').style.display = 'none';
 
+	var html = "";
+	html += '<table id="plugintable">';
+	html += '<thead>';
+	html += '<tr>';
+	html += '<td>' + tinyMCE.getLang('lang_plugin') + '</td>';
+	html += '<td>' + tinyMCE.getLang('lang_author') + '</td>';
+	html += '<td>' + tinyMCE.getLang('lang_version') + '</td>';
+	html += '</tr>';
+	html += '</thead>';
+	html += '<tbody>';
+
 	for (var i=0; i<plugins.length; i++) {
-		var html = "";
 		var info = getPluginInfo(plugins[i]);
 
 		html += '<tr>';
@@ -25,14 +37,18 @@ function init() {
 
 		html += '<td width="15%">' + info.version + '</td>';
 		html += '</tr>';
-
-		tbody.innerHTML += html;
 	}
+
+	html += '</tbody>';
+	html += '</table>';
+
+	tcont.innerHTML = html;
 }
 
 function getPluginInfo(name) {
 	var fn = eval('tinyMCEPopup.windowOpener.TinyMCE_' + name + '_getInfo');
-	if (typeof(fn) == 'function')
+
+	if (typeof(fn) != 'undefined')
 		return fn();
 
 	return {

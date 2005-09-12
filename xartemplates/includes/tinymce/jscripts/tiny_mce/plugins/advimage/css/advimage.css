@@ -33,7 +33,7 @@
 	overflow: auto;
 }
 
-#align, #class {
+#align, #classlist {
 	width: 150px;
 }
 
@@ -58,5 +58,5 @@ input {
 }
 
 #id, #dir, #lang, #usemap, #longdesc {
-	width: 150px;
+	width: 200px;
 }

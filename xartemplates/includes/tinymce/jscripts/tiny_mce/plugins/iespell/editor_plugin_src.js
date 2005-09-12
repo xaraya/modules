@@ -7,7 +7,7 @@ function TinyMCE_iespell_getInfo() {
 		author : 'Moxiecode Systems',
 		authorurl : 'http://tinymce.moxiecode.com',
 		infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_iespell.html',
-		version : '2.0RC1'
+		version : tinyMCE.majorVersion + "." + tinyMCE.minorVersion
 	};
 };
 
@@ -17,7 +17,7 @@ function TinyMCE_iespell_getInfo() {
 function TinyMCE_iespell_getControlHTML(control_name) {
 	// Is it the iespell control and is the brower MSIE.
 	if (control_name == "iespell" && tinyMCE.isMSIE)
-		return '<img id="{$editor_id}_iespell" src="{$pluginurl}/images/iespell.gif" title="{$lang_iespell_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceIESpell\');">';
+		return '<a href="javascript:tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceIESpell\');" onmousedown="return false;"><img id="{$editor_id}_iespell" src="{$pluginurl}/images/iespell.gif" title="{$lang_iespell_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" /></a>';
 
 	return "";
 }

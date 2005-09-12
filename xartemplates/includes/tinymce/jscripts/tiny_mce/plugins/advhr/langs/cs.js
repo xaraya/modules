@@ -1,8 +1,14 @@
-// UK lang variables
+/**
+ * Czech lang variables 
+ * encoding: utf-8
+ *  
+ * $Id$ 
+ */  
 
 tinyMCE.addToLang('',{
-insert_advhr_desc : 'Vloit/editovat vodorovnı oddìlovaè',
-insert_advhr_width : 'Šíøka',
-insert_advhr_size : 'Vıška',
-insert_advhr_noshade : 'Nestínovat'
+insert_advhr_desc : 'VloÅ¾it/editovat vodorovnÃ½ oddÄ›lovaÄ',
+insert_advhr_width : 'Å Ã­Å™ka',
+insert_advhr_size : 'VÃ½Å¡ka',
+insert_advhr_noshade : 'NestÃ­novat'
 });
+

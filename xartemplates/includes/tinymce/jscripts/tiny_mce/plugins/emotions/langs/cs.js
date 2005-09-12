@@ -1,6 +1,12 @@
-// UK lang variables
+/**
+ * Czech lang variables 
+ * encoding: utf-8
+ *  
+ * $Id$ 
+ */  
 
 tinyMCE.addToLang('',{
-insert_emotions_title : 'Vloûit emotikon',
+insert_emotions_title : 'Vlo≈æit emotikonu',
 emotions_desc : 'Emotikony'
 });
+

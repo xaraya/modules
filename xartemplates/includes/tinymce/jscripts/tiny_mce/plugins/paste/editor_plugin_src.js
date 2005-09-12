@@ -7,7 +7,7 @@ function TinyMCE_paste_getInfo() {
 		author : 'Moxiecode Systems',
 		authorurl : 'http://tinymce.moxiecode.com',
 		infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_paste.html',
-		version : '2.0RC1'
+		version : tinyMCE.majorVersion + "." + tinyMCE.minorVersion
 	};
 };
 
@@ -37,13 +37,13 @@ function TinyMCE_paste_handleEvent(e) {
 function TinyMCE_paste_getControlHTML(control_name) { 
 	switch (control_name) { 
 		case "pastetext": 
-			return '<img id="{$editor_id}pastetext" src="{$pluginurl}/images/pastetext.gif" title="{$lang_paste_text_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreClass(this);" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mcePasteText\', true);" />'; 
+			return '<a href="javascript:tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mcePasteText\', true);" onmousedown="return false;"><img id="{$editor_id}pastetext" src="{$pluginurl}/images/pastetext.gif" title="{$lang_paste_text_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreClass(this);" /></a>'; 
 
 		case "pasteword": 
-			return '<img id="{$editor_id}pasteword" src="{$pluginurl}/images/pasteword.gif" title="{$lang_paste_word_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreClass(this);" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mcePasteWord\', true);" />'; 
+			return '<a href="javascript:tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mcePasteWord\', true);" onmousedown="return false;"><img id="{$editor_id}pasteword" src="{$pluginurl}/images/pasteword.gif" title="{$lang_paste_word_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreClass(this);" /></a>'; 
 
 		case "selectall": 
-			return '<img id="{$editor_id}selectall" src="{$pluginurl}/images/selectall.gif" title="{$lang_selectall_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreClass(this);" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceSelectAll\');" />';
+			return '<a href="javascript:tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceSelectAll\');" onmousedown="return false;"><img id="{$editor_id}selectall" src="{$pluginurl}/images/selectall.gif" title="{$lang_selectall_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreClass(this);" /></a>'; 
 	} 
 
 	return ''; 
@@ -155,23 +155,23 @@ function TinyMCE_paste__insertWordContent(content) {
 		var middot = String.fromCharCode(183);
 
 		if (tinyMCE.getParam("paste_convert_headers_to_strong", false)) {
-			content = content.replace(/<p class=MsoHeading.*?>(.*?)<\/p>/gi, '<p><b>$1</b></p>');
+			content = content.replace(new RegExp('<p class=MsoHeading.*?>(.*?)<\/p>', 'gi'), '<p><b>$1</b></p>');
 		}
 
-		content = content.replace(/tab-stops: list [0-9]+.0pt\">/gi, '">' + "--list--");
+		content = content.replace(new RegExp('tab-stops: list [0-9]+.0pt">', 'gi'), '">' + "--list--");
 		content = content.replace(new RegExp(bull + "(.*?)<BR>", "gi"), "<p>" + middot + "$1</p>");
-		content = content.replace(/<SPAN style=\"mso-list: Ignore\">/gi, "<span>" + bull); // Covert to bull list
+		content = content.replace(new RegExp('<SPAN style="mso-list: Ignore">', 'gi'), "<span>" + bull); // Covert to bull list
 		content = content.replace(/<o:p><\/o:p>/gi, "");
-		content = content.replace(/<br style="page-break-before: always;.*>/gi, '-- page break --'); // Replace pagebreaks
+		content = content.replace(new RegExp('<br style="page-break-before: always;.*>', 'gi'), '-- page break --'); // Replace pagebreaks
 		content = content.replace(new RegExp('<(!--)([^>]*)(--)>', 'g'), "");  // Word comments
 		content = content.replace(/<\/?span[^>]*>/gi, "");
-		content = content.replace(/<(\w[^>]*) style="([^"]*)"([^>]*)/gi, "<$1$3");
+		content = content.replace(new RegExp('<(\w[^>]*) style="([^"]*)"([^>]*)', 'gi'), "<$1$3");
 		content = content.replace(/<\/?font[^>]*>/gi, "");
 		content = content.replace(/<(\w[^>]*) class=([^ |>]*)([^>]*)/gi, "<$1$3");
 		content = content.replace(/<(\w[^>]*) lang=([^ |>]*)([^>]*)/gi, "<$1$3");
 		content = content.replace(/<\\?\?xml[^>]*>/gi, "");
 		content = content.replace(/<\/?\w+:[^>]*>/gi, "");
-		content = content.replace(/-- page break --\W*<p>&nbsp;<\/p>/gi, ""); // Remove pagebreaks
+		content = content.replace(/-- page break --\s*<p>&nbsp;<\/p>/gi, ""); // Remove pagebreaks
 		content = content.replace(/-- page break --/gi, ""); // Remove pagebreaks
 
 //		content = content.replace(/\/?&nbsp;*/gi, ""); &nbsp;

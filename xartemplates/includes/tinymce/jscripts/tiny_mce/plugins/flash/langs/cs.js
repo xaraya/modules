@@ -1,4 +1,9 @@
-// CS lang variables
+/**
+ * Czech lang variables 
+ * encoding: utf-8
+ *  
+ * $Id$ 
+ */  
 
 tinyMCE.addToLang('',{
 insert_flash : 'Vložit/editovat Flash Movie',

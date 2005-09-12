@@ -25,15 +25,19 @@ function changeClass() {
 }
 
 function init() {
+	tinyMCEPopup.resizeToInnerSize();
+
 	var formObj = document.forms[0];
 	var inst = tinyMCE.getInstanceById(tinyMCE.getWindowArg('editor_id'));
 	var elm = inst.getFocusElement();
 	var action = "insert";
 
 	// Resize some elements
-	if (tinyMCE.getParam("file_browser_callback") != null) {
+	if (isVisible('hrefbrowser'))
 		document.getElementById('href').style.width = '260px';
-	}
+
+	if (isVisible('popupurlbrowser'))
+		document.getElementById('popupurl').style.width = '180px';
 
 	elm = tinyMCE.getParentElement(elm, "a");
 	if (elm != null && elm.nodeName == "A")
@@ -187,19 +191,21 @@ function setPopupControlsDisabled(state) {
 	formObj.popupstatus.disabled = state;
 	formObj.popupreturn.disabled = state;
 	formObj.popupdependent.disabled = state;
+
+	setBrowserDisabled('popupurlbrowser', state);
 }
 
 function parseLink(link) {
 	link = link.replace(new RegExp('&#39;', 'g'), "'");
 
-	var fnName = link.replace(new RegExp("\\W*([A-Za-z0-9\.]*)\\W*\\(.*", "gi"), "$1");
+	var fnName = link.replace(new RegExp("\\s*([A-Za-z0-9\.]*)\\s*\\(.*", "gi"), "$1");
 
 	// Is function name a template function
 	var template = templates[fnName];
 	if (template) {
 		// Build regexp
 		var variableNames = template.match(new RegExp("'?\\$\\{[A-Za-z0-9\.]*\\}'?", "gi"));
-		var regExp = "\\W*[A-Za-z0-9\.]*\\W*\\(";
+		var regExp = "\\s*[A-Za-z0-9\.]*\\s*\\(";
 		var replaceStr = "";
 		for (var i=0; i<variableNames.length; i++) {
 			// Is string value
@@ -214,7 +220,7 @@ function parseLink(link) {
 			variableNames[i] = variableNames[i].replace(new RegExp("[^A-Za-z0-9]", "gi"), "");
 
 			if (i != variableNames.length-1) {
-				regExp += "\\W*,\\W*";
+				regExp += "\\s*,\\s*";
 				replaceStr += "<delim>";
 			} else
 				regExp += ".*";
@@ -362,7 +368,7 @@ function renderAnchorList(id, target) {
 	var html = "";
 
 	html += '<tr><td class="column1"><label for="' + id + '">{$lang_advlink_anchor_names}</label></td><td>';
-	html += '<select id="' + id + '" name="' + id + '" class="mceAnchorList" onchange="this.form.' + target + '.value=';
+	html += '<select id="' + id + '" name="' + id + '" class="mceAnchorList" onfocus="tinyMCE.addSelectAccessibility(event, this, window);" onchange="this.form.' + target + '.value=';
 	html += 'this.options[this.selectedIndex].value;">';
 	html += '<option value="">---</option>';
 
@@ -480,7 +486,7 @@ function renderLinkList(elm_id, target_form_element, onchange_func) {
 
 	html += '<tr><td class="column1"><label for="' + elm_id + '">{$lang_link_list}</label></td>';
 	html += '<td colspan="2"><select id="' + elm_id + '" name="' + elm_id + '"';
-	html += ' class="mceLinkList" onchange="this.form.' + target_form_element + '.value=';
+	html += ' class="mceLinkList" onfocus="tinyMCE.addSelectAccessibility(event, this, window);" onchange="this.form.' + target_form_element + '.value=';
 	html += 'this.options[this.selectedIndex].value;';
 
 	if (typeof(onchange_func) != "undefined")
@@ -502,13 +508,13 @@ function renderTargetList(elm_id, target_form_element) {
 	var targets = tinyMCE.getParam('theme_advanced_link_targets', '').split(';');
 	var html = '';
 
-	html += '<select id="' + elm_id + '" name="' + elm_id + '" onchange="this.form.' + target_form_element + '.value=';
+	html += '<select id="' + elm_id + '" name="' + elm_id + '" onfocus="tinyMCE.addSelectAccessibility(event, this, window);" onchange="this.form.' + target_form_element + '.value=';
 	html += 'this.options[this.selectedIndex].value;">';
 
 	html += '<option value="_self">' + tinyMCE.getLang('lang_advlink_target_same') + '</option>';
-	html += '<option value="_blank">' + tinyMCE.getLang('lang_advlink_target_blank') + '</option>';
-	html += '<option value="_parent">' + tinyMCE.getLang('lang_advlink_target_parent') + '</option>';
-	html += '<option value="_top">' + tinyMCE.getLang('lang_advlink_target_top') + '</option>';
+	html += '<option value="_blank">' + tinyMCE.getLang('lang_advlink_target_blank') + ' (_blank)</option>';
+	html += '<option value="_parent">' + tinyMCE.getLang('lang_advlink_target_parent') + ' (_parent)</option>';
+	html += '<option value="_top">' + tinyMCE.getLang('lang_advlink_target_top') + ' (_top)</option>';
 
 	for (var i=0; i<targets.length; i++) {
 		var key, value;
@@ -519,7 +525,7 @@ function renderTargetList(elm_id, target_form_element) {
 		key = targets[i].split('=')[0];
 		value = targets[i].split('=')[1];
 
-		html += '<option value="' + key + '">' + value + '</option>';
+		html += '<option value="' + key + '">' + value + ' (' + key + ')</option>';
 	}
 
 	html += '</select>';

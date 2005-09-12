@@ -9,8 +9,8 @@
 
 function TinyMCE() {
 	this.majorVersion = "2";
-	this.minorVersion = "0RC1";
-	this.releaseDate = "2005-09-06";
+	this.minorVersion = "0RC2";
+	this.releaseDate = "2005-09-12";
 
 	this.instances = new Array();
 	this.stickyClassesLookup = new Array();
@@ -115,7 +115,7 @@ TinyMCE.prototype.init = function(settings) {
 	this.defParam("inline_styles", false);
 	this.defParam("convert_newlines_to_brs", false);
 	this.defParam("auto_reset_designmode", true);
-	this.defParam("entities", "160,nbsp,38,amp,34,quot,162,cent,8364,euro,163,pound,165,yen,169,copy,174,reg,8482,trade,8240,permil,181,micro,183,middot,8226,bull,8230,hellip,8242,prime,8243,Prime,167,sect,182,para,223,szlig,8249,lsaquo,8250,rsaquo,171,laquo,187,raquo,8216,lsquo,8217,rsquo,8220,ldquo,8221,rdquo,8218,sbquo,8222,bdquo,60,lt,62,gt,8804,le,8805,ge,8211,ndash,8212,mdash,175,macr,8254,oline,164,curren,166,brvbar,168,uml,161,iexcl,191,iquest,710,circ,732,tilde,176,deg,8722,minus,177,plusmn,247,divide,8260,frasl,215,times,185,sup1,178,sup2,179,sup3,188,frac14,189,frac12,190,frac34,402,fnof,8747,int,8721,sum,8734,infin,8730,radic,8764,sim,8773,cong,8776,asymp,8800,ne,8801,equiv,8712,isin,8713,notin,8715,ni,8719,prod,8743,and,8744,or,172,not,8745,cap,8746,cup,8706,part,8704,forall,8707,exist,8709,empty,8711,nabla,8727,lowast,8733,prop,8736,ang,180,acute,184,cedil,170,ordf,186,ordm,8224,dagger,8225,Dagger,192,Agrave,194,Acirc,195,Atilde,196,Auml,197,Aring,198,AElig,199,Ccedil,200,Egrave,202,Ecirc,203,Euml,204,Igrave,206,Icirc,207,Iuml,208,ETH,209,Ntilde,210,Ograve,212,Ocirc,213,Otilde,214,Ouml,216,Oslash,338,OElig,217,Ugrave,219,Ucirc,220,Uuml,376,Yuml,222,THORN,224,agrave,226,acirc,227,atilde,228,auml,229,aring,230,aelig,231,ccedil,232,egrave,234,ecirc,235,euml,236,igrave,238,icirc,239,iuml,240,eth,241,ntilde,242,ograve,244,ocirc,245,otilde,246,ouml,248,oslash,339,oelig,249,ugrave,251,ucirc,252,uuml,254,thorn,255,yuml,914,Beta,915,Gamma,916,Delta,917,Epsilon,918,Zeta,919,Eta,920,Theta,921,Iota,922,Kappa,923,Lambda,924,Mu,925,Nu,926,Xi,927,Omicron,928,Pi,929,Rho,931,Sigma,932,Tau,933,Upsilon,934,Phi,935,Chi,936,Psi,937,Omega,945,alpha,946,beta,947,gamma,948,delta,949,epsilon,950,zeta,951,eta,952,theta,953,iota,954,kappa,955,lambda,956,mu,957,nu,958,xi,959,omicron,960,pi,961,rho,962,sigmaf,963,sigma,964,tau,965,upsilon,966,phi,967,chi,968,psi,969,omega,8501,alefsym,982,piv,8476,real,977,thetasym,978,upsih,8472,weierp,8465,image,8592,larr,8593,uarr,8594,rarr,8595,darr,8596,harr,8629,crarr,8656,lArr,8657,uArr,8658,rArr,8659,dArr,8660,hArr,8756,there4,8834,sub,8835,sup,8836,nsub,8838,sube,8839,supe,8853,oplus,8855,otimes,8869,perp,8901,sdot,8968,lceil,8969,rceil,8970,lfloor,8971,rfloor,9001,lang,9002,rang,9674,loz,9824,spades,9827,clubs,9829,hearts,9830,diams,8194,ensp,8195,emsp,8201,thinsp,8204,zwnj,8205,zwj,8206,lrm,8207,rlm,173,shy,233,eacute,233,eactute,237,iacute,243,oacute,250,uacute,193,Aacute,225,aacute,201,Eacute,205,Iacute,211,Oacute,218,Uacute,221,Yacute,253,yacute");
+	this.defParam("entities", "160,nbsp,38,amp,34,quot,162,cent,8364,euro,163,pound,165,yen,169,copy,174,reg,8482,trade,8240,permil,181,micro,183,middot,8226,bull,8230,hellip,8242,prime,8243,Prime,167,sect,182,para,223,szlig,8249,lsaquo,8250,rsaquo,171,laquo,187,raquo,8216,lsquo,8217,rsquo,8220,ldquo,8221,rdquo,8218,sbquo,8222,bdquo,60,lt,62,gt,8804,le,8805,ge,8211,ndash,8212,mdash,175,macr,8254,oline,164,curren,166,brvbar,168,uml,161,iexcl,191,iquest,710,circ,732,tilde,176,deg,8722,minus,177,plusmn,247,divide,8260,frasl,215,times,185,sup1,178,sup2,179,sup3,188,frac14,189,frac12,190,frac34,402,fnof,8747,int,8721,sum,8734,infin,8730,radic,8764,sim,8773,cong,8776,asymp,8800,ne,8801,equiv,8712,isin,8713,notin,8715,ni,8719,prod,8743,and,8744,or,172,not,8745,cap,8746,cup,8706,part,8704,forall,8707,exist,8709,empty,8711,nabla,8727,lowast,8733,prop,8736,ang,180,acute,184,cedil,170,ordf,186,ordm,8224,dagger,8225,Dagger,192,Agrave,194,Acirc,195,Atilde,196,Auml,197,Aring,198,AElig,199,Ccedil,200,Egrave,202,Ecirc,203,Euml,204,Igrave,206,Icirc,207,Iuml,208,ETH,209,Ntilde,210,Ograve,212,Ocirc,213,Otilde,214,Ouml,216,Oslash,338,OElig,217,Ugrave,219,Ucirc,220,Uuml,376,Yuml,222,THORN,224,agrave,226,acirc,227,atilde,228,auml,229,aring,230,aelig,231,ccedil,232,egrave,234,ecirc,235,euml,236,igrave,238,icirc,239,iuml,240,eth,241,ntilde,242,ograve,244,ocirc,245,otilde,246,ouml,248,oslash,339,oelig,249,ugrave,251,ucirc,252,uuml,254,thorn,255,yuml,914,Beta,915,Gamma,916,Delta,917,Epsilon,918,Zeta,919,Eta,920,Theta,921,Iota,922,Kappa,923,Lambda,924,Mu,925,Nu,926,Xi,927,Omicron,928,Pi,929,Rho,931,Sigma,932,Tau,933,Upsilon,934,Phi,935,Chi,936,Psi,937,Omega,945,alpha,946,beta,947,gamma,948,delta,949,epsilon,950,zeta,951,eta,952,theta,953,iota,954,kappa,955,lambda,956,mu,957,nu,958,xi,959,omicron,960,pi,961,rho,962,sigmaf,963,sigma,964,tau,965,upsilon,966,phi,967,chi,968,psi,969,omega,8501,alefsym,982,piv,8476,real,977,thetasym,978,upsih,8472,weierp,8465,image,8592,larr,8593,uarr,8594,rarr,8595,darr,8596,harr,8629,crarr,8656,lArr,8657,uArr,8658,rArr,8659,dArr,8660,hArr,8756,there4,8834,sub,8835,sup,8836,nsub,8838,sube,8839,supe,8853,oplus,8855,otimes,8869,perp,8901,sdot,8968,lceil,8969,rceil,8970,lfloor,8971,rfloor,9001,lang,9002,rang,9674,loz,9824,spades,9827,clubs,9829,hearts,9830,diams,8194,ensp,8195,emsp,8201,thinsp,8204,zwnj,8205,zwj,8206,lrm,8207,rlm,173,shy,233,eacute,237,iacute,243,oacute,250,uacute,193,Aacute,225,aacute,201,Eacute,205,Iacute,211,Oacute,218,Uacute,221,Yacute,253,yacute");
 	this.defParam("entity_encoding", "named");
 	this.defParam("cleanup_callback", "");
 	this.defParam("add_unload_trigger", true);
@@ -448,7 +448,7 @@ TinyMCE.prototype.execCommand = function(command, user_interface, value) {
 
 			template['file']   = 'about.htm';
 			template['width']  = 480;
-			template['height'] = 430 - (tinyMCE.isMSIE ? 30 : 0);
+			template['height'] = 380;
 
 			tinyMCE.openWindow(template, {
 				tinymce_version : tinyMCE.majorVersion + "." + tinyMCE.minorVersion,
@@ -736,6 +736,35 @@ TinyMCE.prototype.removeTinyMCEFormElements = function(form_obj) {
 
 		if (elementId.indexOf('mce_editor_') == 0)
 			form_obj.elements[i].disabled = true;
+	}
+};
+
+TinyMCE.prototype.accessibleEventHandler = function(e) {
+	var win = this._win;
+	e = tinyMCE.isMSIE ? win.event : e;
+	var elm = tinyMCE.isMSIE ? e.srcElement : e.target;
+
+	// Piggyback onchange
+	if (elm.nodeName == "SELECT" && !elm.oldonchange) {
+		elm.oldonchange = elm.onchange;
+		elm.onchange = null;
+	}
+
+	// Execute onchange and remove piggyback
+	if (e.keyCode == 13) {
+		elm.onchange = elm.oldonchange;
+		elm.onchange();
+		elm.oldonchange = null;
+		tinyMCE.cancelEvent(e);
+	}
+};
+
+TinyMCE.prototype.addSelectAccessibility = function(e, select, win) {
+	// Add event handlers 
+	if (!select._isAccessible) {
+		select.onkeydown = tinyMCE.accessibleEventHandler;
+		select._isAccessible = true;
+		select._win = win;
 	}
 };
 
@@ -1141,6 +1170,7 @@ TinyMCE.prototype.submitPatch = function() {
 	tinyMCE.removeTinyMCEFormElements(this);
 	tinyMCE.triggerSave();
 	this.oldSubmit();
+	tinyMCE.isNotDirty = true;
 };
 
 TinyMCE.prototype.onLoad = function() {
@@ -1642,9 +1672,9 @@ TinyMCE.prototype.parseStyle = function(str) {
 		if (st[i] == '')
 			continue;
 
-		var re = new RegExp('^\\W*([^:]*):\\W*(.*)\\W*$');
+		var re = new RegExp('^\\s*([^:]*):\\s*(.*)\\s*$');
 		var pa = st[i].replace(re, '$1||$2').split('||');
-//tinyMCE.debug(pa[0] + "=" + pa[1]);
+//tinyMCE.debug(str, pa[0] + "=" + pa[1], st[i].replace(re, '$1||$2'));
 		if (pa.length == 2)
 			ar[pa[0].toLowerCase()] = pa[1];
 	}
@@ -1690,6 +1720,8 @@ TinyMCE.prototype.serializeStyle = function(ar) {
 		var val = ar[key];
 
 		if (val != null && val != '') {
+			val = '' + val; // Force string
+
 			// Fix style URL
 			val = val.replace(new RegExp("url\\(\\'?([^\\']*)\\'?\\)", 'gi'), "url('$1')");
 
@@ -1787,26 +1819,28 @@ TinyMCE.prototype.cleanupNode = function(node) {
 			}
 
 			// Handle inline/outline styles
-			var re = new RegExp("^(TABLE|TD|TR|IMG|HR)$");
-			if (re.test(node.nodeName)) {
-				tinyMCE._moveStyle(node, 'width', 'width');
-				tinyMCE._moveStyle(node, 'height', 'height');
-				tinyMCE._moveStyle(node, 'borderWidth', 'border');
-				tinyMCE._moveStyle(node, '', 'vspace');
-				tinyMCE._moveStyle(node, '', 'hspace');
-				tinyMCE._moveStyle(node, 'textAlign', 'align');
-				tinyMCE._moveStyle(node, 'backgroundColor', 'bgColor');
-				tinyMCE._moveStyle(node, 'borderColor', 'borderColor');
-				tinyMCE._moveStyle(node, 'backgroundImage', 'background');
+			if (tinyMCE.cleanup_inline_styles) {
+				var re = new RegExp("^(TABLE|TD|TR|IMG|HR)$");
+				if (re.test(node.nodeName)) {
+					tinyMCE._moveStyle(node, 'width', 'width');
+					tinyMCE._moveStyle(node, 'height', 'height');
+					tinyMCE._moveStyle(node, 'borderWidth', 'border');
+					tinyMCE._moveStyle(node, '', 'vspace');
+					tinyMCE._moveStyle(node, '', 'hspace');
+					tinyMCE._moveStyle(node, 'textAlign', 'align');
+					tinyMCE._moveStyle(node, 'backgroundColor', 'bgColor');
+					tinyMCE._moveStyle(node, 'borderColor', 'borderColor');
+					tinyMCE._moveStyle(node, 'backgroundImage', 'background');
 
-				// Refresh element in old MSIE
-				if (tinyMCE.isMSIE5)
-					node.outerHTML = node.outerHTML;
-			} else if (tinyMCE.isBlockElement(node))
-				tinyMCE._moveStyle(node, 'textAlign', 'align');
+					// Refresh element in old MSIE
+					if (tinyMCE.isMSIE5)
+						node.outerHTML = node.outerHTML;
+				} else if (tinyMCE.isBlockElement(node))
+					tinyMCE._moveStyle(node, 'textAlign', 'align');
 
-			if (node.nodeName == "FONT")
-				tinyMCE._moveStyle(node, 'color', 'color');
+				if (node.nodeName == "FONT")
+					tinyMCE._moveStyle(node, 'color', 'color');
+			}
 
 			// Set attrib data
 			if (elementValidAttribs) {
@@ -2104,7 +2138,10 @@ TinyMCE.prototype._cleanupHTML = function(inst, doc, config, element, visual, on
 	// Remove pesky HR paragraphs
 	html = tinyMCE.regexpReplace(html, '<p><hr /></p>', '<hr />');
 	html = tinyMCE.regexpReplace(html, '<p>&nbsp;</p><hr /><p>&nbsp;</p>', '<hr />');
-	html = tinyMCE.regexpReplace(html, '<td>\\W*<br />\\W*</td>', '<td>&nbsp;</td>');
+	html = tinyMCE.regexpReplace(html, '<td>\\s*<br />\\s*</td>', '<td>&nbsp;</td>');
+
+	// Remove empty achors
+	html = html.replace(new RegExp('<a>(.*?)</a>', 'gi'), '$1');
 
 	// Remove some mozilla crap
 	if (!tinyMCE.isMSIE)
@@ -2793,6 +2830,8 @@ TinyMCE.prototype.openWindow = function(template, args) {
 	var html, width, height, x, y, resizable, scrollbars, url;
 
 	args['mce_template_file'] = template['file'];
+	args['mce_width'] = template['width'];
+	args['mce_height'] = template['height'];
 	tinyMCE.windowArgs = args;
 
 	html = template['html'];
@@ -2805,7 +2844,7 @@ TinyMCE.prototype.openWindow = function(template, args) {
 	// Add to height in M$ due to SP2 WHY DON'T YOU GUYS IMPLEMENT innerWidth of windows!!
 	if (tinyMCE.isMSIE)
 		height += 40;
-	else if (!tinyMCE.isMac)
+	else
 		height += 20;
 
 	x = parseInt(screen.width / 2.0) - (width / 2.0);
@@ -4061,12 +4100,33 @@ TinyMCEControl.prototype.isDirty = function() {
 	return this.startContent != tinyMCE.trim(this.getBody().innerHTML) && !tinyMCE.isNotDirty;
 };
 
+TinyMCEControl.prototype._mergeElements = function(pa, ch, override) {
+	ch = ch.cloneNode(true);
+	var st = tinyMCE.parseStyle(tinyMCE.getAttrib(pa, "style"));
+	var stc = tinyMCE.parseStyle(tinyMCE.getAttrib(ch, "style"));
+	var className = tinyMCE.getAttrib(pa, "class");
+
+	className += " " + tinyMCE.getAttrib(ch, "class");
+
+	if (override) {
+		for (var n in st)
+			stc[n] = st[n];
+	} else {
+		for (var n in stc)
+			st[n] = stc[n];
+	}
+
+	tinyMCE.setAttrib(ch, "style", tinyMCE.serializeStyle(st));
+	tinyMCE.setAttrib(ch, "class", tinyMCE.trim(className));
+	pa.parentNode.replaceChild(ch, pa);
+};
+
 TinyMCEControl.prototype.execCommand = function(command, user_interface, value) {
 	var doc = this.getDoc();
 	var win = this.getWin();
 	var focusElm = this.getFocusElement();
 
-	if (this.lastSafariSelection) {
+	if (this.lastSafariSelection && !new RegExp('mceStartTyping|mceEndTyping|mceBeginUndoLevel|mceEndUndoLevel|mceAddUndoLevel', 'gi').test(command)) {
 		this.moveToBookmark(this.lastSafariSelection);
 		tinyMCE.selectedElement = this.lastSafariSelectedElement;
 	}
@@ -4339,27 +4399,6 @@ TinyMCEControl.prototype.execCommand = function(command, user_interface, value) 
 				}
 			}
 
-			function mergeElements(parent, child, override) {
-				child = child.cloneNode(true);
-				var st = tinyMCE.parseStyle(tinyMCE.getAttrib(parent, "style"));
-				var stc = tinyMCE.parseStyle(tinyMCE.getAttrib(child, "style"));
-				var className = tinyMCE.getAttrib(parent, "class");
-	
-				className += " " + tinyMCE.getAttrib(child, "class");
-
-				if (override) {
-					for (var n in st)
-						stc[n] = st[n];
-				} else {
-					for (var n in stc)
-						st[n] = stc[n];
-				}
-
-				tinyMCE.setAttrib(child, "style", tinyMCE.serializeStyle(st));
-				tinyMCE.setAttrib(child, "class", tinyMCE.trim(className));
-				parent.parentNode.replaceChild(child, parent);
-			}
-
 			// Cleaup wrappers
 			var nodes = doc.getElementsByTagName(wrapper);
 			for (var i=nodes.length-1; i>=0; i--) {
@@ -4371,14 +4410,14 @@ TinyMCEControl.prototype.execCommand = function(command, user_interface, value) 
 				// Is only child a element
 				if (elm.childNodes && elm.childNodes.length == 1 && elm.childNodes[0].nodeType == 1) {
 					// tinyMCE.debug("merge1" + isNew);
-					mergeElements(elm, elm.childNodes[0], isNew);
+					this._mergeElements(elm, elm.childNodes[0], isNew);
 					continue;
 				}
 
 				// Is I the only child
 				if (elm.parentNode.childNodes.length == 1) {
 					// tinyMCE.debug("merge2" + isNew);
-					mergeElements(elm.parentNode, elm, false);
+					this._mergeElements(elm.parentNode, elm, false);
 				}
 			}
 
@@ -4996,7 +5035,7 @@ TinyMCEControl.prototype.onAdd = function(replace_element, form_element_name, ta
 	this.formTargetElementId = form_element_name;
 
 	// Get replace_element contents
-	if (replace_element.nodeName.toLowerCase() == "textarea")
+	if (replace_element.nodeName == "TEXTAREA" || replace_element.nodeName == "INPUT")
 		this.startContent = replace_element.value;
 	else
 		this.startContent = replace_element.innerHTML;

@@ -1,6 +1,12 @@
-// CS lang variables
+/**
+ * Czech lang variables 
+ * encoding: utf-8
+ *  
+ * $Id$ 
+ */  
 
 tinyMCE.addToLang('',{
-fullscreen_title : 'Fullscreen',
-fullscreen_desc : 'Pr(epnout na fullscreen'
+fullscreen_title : 'Na celou obrazovku',
+fullscreen_desc : 'Přepnout na celou obrazovku'
 });
+

@@ -4,12 +4,16 @@ function TinyMCE_noneditable_getInfo() {
 		author : 'Moxiecode Systems',
 		authorurl : 'http://tinymce.moxiecode.com',
 		infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_noneditable.html',
-		version : '2.0RC1'
+		version : tinyMCE.majorVersion + "." + tinyMCE.minorVersion
 	};
 };
 
 function TinyMCE_noneditable_initInstance(inst) {
 	tinyMCE.importCSS(inst.getDoc(), tinyMCE.baseURL + "/plugins/noneditable/css/noneditable.css");
+
+	// Ugly hack
+	if (tinyMCE.isMSIE5_0)
+		tinyMCE.settings['plugins'] = tinyMCE.settings['plugins'].replace(/noneditable/gi, 'Noneditable');
 
 	if (tinyMCE.isGecko) {
 		tinyMCE.addEvent(inst.getDoc(), "keyup", TinyMCE_noneditable_fixKeyUp);

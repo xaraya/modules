@@ -7,17 +7,17 @@ function TinyMCE_searchreplace_getInfo() {
 		author : 'Moxiecode Systems',
 		authorurl : 'http://tinymce.moxiecode.com',
 		infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_searchreplace.html',
-		version : '2.0RC1'
+		version : tinyMCE.majorVersion + "." + tinyMCE.minorVersion
 	};
 };
 
 function TinyMCE_searchreplace_getControlHTML(control_name)	{
 	switch (control_name) {
 		case "search":
-			return '<img id="{$editor_id}_search" src="{$pluginurl}/images/search.gif" title="{$lang_searchreplace_search_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceSearch\',true);" />';
+			return '<a href="javascript:tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceSearch\',true);" onmousedown="return false;"><img id="{$editor_id}_search" src="{$pluginurl}/images/search.gif" title="{$lang_searchreplace_search_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" /></a>';
 
 		case "replace":
-			return '<img id="{$editor_id}_replace" src="{$pluginurl}/images/replace.gif" title="{$lang_searchreplace_replace_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceSearchReplace\',true);" />';
+			return '<a href="javascript:tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceSearchReplace\',true);" onmousedown="return false;"><img id="{$editor_id}_replace" src="{$pluginurl}/images/replace.gif" title="{$lang_searchreplace_replace_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" /></a>';
 	}
 
 	return "";
@@ -92,12 +92,12 @@ function TinyMCE_searchreplace_execCommand(editor_id, element, command,	user_int
 
 				if (value['replacestring'] != null) {
 					template['file'] = '../../plugins/searchreplace/replace.htm'; // Relative to theme
-					template['width'] = 340;
+					template['width'] = 320;
 					template['height'] = 120;
 				} else {
 					template['file'] = '../../plugins/searchreplace/search.htm'; // Relative to theme
 					template['width'] = 310;
-					template['height'] = 110;
+					template['height'] = 105;
 				}
 
 				tinyMCE.openWindow(template, value);

@@ -13,6 +13,8 @@ function fixContent(html) {
 }
 
 function onLoadInit() {
+	tinyMCEPopup.resizeToInnerSize();
+
 	document.forms[0].htmlSource.value = fixContent(tinyMCE.getContent(tinyMCE.getWindowArg('editor_id')));
 	resizeInputs();
 	setWrap('off');

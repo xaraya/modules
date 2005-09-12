@@ -12,19 +12,35 @@
 function renderColorPicker(id, target_form_element) {
 	var html = "";
 
+	html += '<a id="' + id + '_link" href="javascript:tinyMCEPopup.pickColor(event,\'' + target_form_element +'\');" onmousedown="return false;">';
 	html += '<img id="' + id + '" src="../../themes/advanced/images/color.gif"';
 	html += ' onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');"';
 	html += ' onmouseout="tinyMCE.restoreClass(this);"';
 	html += ' onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');"';
-	html += ' onclick="return tinyMCEPopup.pickColor(event,\'' + target_form_element +'\');"';
 	html += ' width="20" height="16" border="0" title="' + tinyMCE.getLang('lang_browse') + '"';
-	html += ' class="mceButtonNormal" alt="' + tinyMCE.getLang('lang_browse') + '" />';
+	html += ' class="mceButtonNormal" alt="' + tinyMCE.getLang('lang_browse') + '" /></a>';
 
 	document.write(html);
 }
 
 function updateColor(img_id, form_element_id) {
 	document.getElementById(img_id).style.backgroundColor = document.forms[0].elements[form_element_id].value;
+}
+
+function setBrowserDisabled(id, state) {
+	var img = document.getElementById(id);
+	var lnk = document.getElementById(id + "_link");
+
+	if (lnk) {
+		if (state) {
+			lnk.setAttribute("realhref", lnk.getAttribute("href"));
+			lnk.removeAttribute("href");
+			tinyMCE.switchClass(img, 'mceButtonDisabled', true);
+		} else {
+			lnk.setAttribute("href", lnk.getAttribute("realhref"));
+			tinyMCE.switchClass(img, 'mceButtonNormal', false);
+		}
+	}
 }
 
 function renderBrowser(id, target_form_element, type, prefix) {
@@ -35,20 +51,22 @@ function renderBrowser(id, target_form_element, type, prefix) {
 
 	var html = "";
 
+	html += '<a id="' + id + '_link" href="javascript:openBrower(\'' + id + '\',\'' + target_form_element + '\', \'' + type + '\',\'' + option + '\');" onmousedown="return false;">';
 	html += '<img id="' + id + '" src="../../themes/advanced/images/browse.gif"';
 	html += ' onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');"';
 	html += ' onmouseout="tinyMCE.restoreClass(this);"';
 	html += ' onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');"';
-	html += ' onclick="tinyMCEPopup.openBrowser(\'' + target_form_element + '\', \'' + type + '\',\'' + option + '\');"';
 	html += ' width="20" height="18" border="0" title="' + tinyMCE.getLang('lang_browse') + '"';
-	html += ' class="mceButtonNormal" alt="' + tinyMCE.getLang('lang_browse') + '" />';
+	html += ' class="mceButtonNormal" alt="' + tinyMCE.getLang('lang_browse') + '" /></a>';
 
 	document.write(html);
 }
 
-function openBrower(img, target_form_element, type) {
+function openBrower(img_id, target_form_element, type, option) {
+	var img = document.getElementById(img_id);
+
 	if (img.className != "mceButtonDisabled")
-		tinyMCE.openFileBrowser(target_form_element, document.forms[0].elements[target_form_element].value, type, window);
+		tinyMCEPopup.openBrowser(target_form_element, type, option);
 }
 
 function selectByValue(form_obj, field_name, value, add_custom) {

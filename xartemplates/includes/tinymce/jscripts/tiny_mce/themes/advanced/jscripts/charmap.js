@@ -1,3 +1,7 @@
+function init() {
+	tinyMCEPopup.resizeToInnerSize();
+}
+
 var charmap = new Array();
 
 // for mor details please see w3c.org

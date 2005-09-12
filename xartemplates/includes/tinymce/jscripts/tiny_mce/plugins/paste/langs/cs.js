@@ -1,10 +1,16 @@
-// CS lang variables
+/**
+ * Czech lang variables 
+ * encoding: utf-8
+ *  
+ * $Id$ 
+ */  
 
 tinyMCE.addToLang('',{
-paste_text_desc : 'Vloûit neform·tovan˝ text',
-paste_text_title : 'Pouûi CTRL+V na kl·vesnici pro vloûenÌ textu do okna.',
-paste_text_linebreaks : 'Nechej pr(eruöenÌ r(·dku*',
-paste_word_desc : 'Vloûit text z aplikace Word',
-paste_word_title : 'Pouûi CTRL+V na kl·vesnici pro vloûenÌ textu do okna.',
-selectall_desc : 'Oznac(it vöe'
+paste_text_desc : 'Vlo≈æit neform√°tovan√Ω text',
+paste_text_title : 'Pou≈æij CTRL + V na kl√°vesnici pro vlo≈æen√≠ textu do okna.',
+paste_text_linebreaks : 'Nechej p≈ôeru≈°en√≠ ≈ô√°dk≈Ø',
+paste_word_desc : 'Vlo≈æit text z aplikace Word',
+paste_word_title : 'Pou≈æij CTRL + V na kl√°vesnici pro vlo≈æen√≠ textu do okna.',
+selectall_desc : 'Oznaƒçit v≈°e'
 });
+

@@ -1,3 +1,37 @@
+Version 2.0RC2 (2005-09-12)
+	Fixed bug with plugin tab in about dialog not working in MSIE 5.01.
+	Fixed bug issues with paste and noneditable plugin in MSIE 5.01.
+	Fixed bug where dialogs in the search/replace plugin was to small.
+	Fixed bug where about dialog sometimes produced unknown runtime error in MSIE.
+	Fixed bug where é and í characters was converted the wrong entities.
+	Fixed bug where it was possible to click on the disabled link icon when nothing was selected.
+	Fixed bug where autosave plugin wasn't working with JS submit calls or the save plugin.
+	Fixed bug where file/image browser wasn't working with the default link/image dialogs.
+	Fixed bug where style attributes where parsed/serialized incorrectly when using - and #.
+	Fixed bug where inline popups plugin wasn't working when loading the compressed JS files.
+	Fixed bug with contextmenu showing theme image dialog instead of advimage dialog.
+	Fixed bug with flash plugin trying to include a empty external list JS file.
+	Fixed bug with some fields beeing to short if the file browser was disabled.
+	Fixed bug where contextmenu wasn't recognizing flash elements.
+	Fixed bug where border styles on images and tables was removed.
+	Fixed accessibility issue with colorpicker, added titles and keyboard access.
+	Fixed accessibility issue with toolbar buttons, all toolbar buttons are now wrapped in links.
+	Fixed accessibility issue width browse buttons, these are now wrapped in links.
+	Fixed accessibility issue with select lists, all select lists has now keyboard access.
+	Fixed accessibility issues with missing labels in various dialogs.
+	Fixed accessibility issue with the emotions plugin, this one now inserts a alt text for smileys.
+	Fixed accessibility issue with the locationbar, menubar and so fort in advlink plugin.
+	Fixed accessibility issue with TOC in english help pages. This is not wrapped in a acronym element.
+	Fixed issue with the directionality plugin. It will now get disabled on invalid elements.
+	Fixed issue where popups was the wrong size a new resizeToInnerSize function resizes popups to the correct size.
+	Fixed so empty <a> elements gets removed since they serve no purpose.
+	Added support for TinyMCE grabbing text from input elements if specified in exact mode.
+	Added language specific relative popup width/heights to all build in dialogs.
+	Added missing browser for popup url in advlink plugin.
+	Added missing delete table icon to context menu.
+	Added so it's possible to see the target value in the target select dropdown in the advlink plugin.
+	Updated the documentation to include information about the new language packs.
+	Updated the swedish language pack.
 Version 2.0RC1 (2005-09-06)
 	Renamed CSS classes mcePathTop,mcePathBottom,mcePath to mceStatusbarTop,mceStatusbarBottom,mceStatusbar. [BREAKS COMPATIBLITY].
 	Moved all theme CSS files to a css directory within the theme. [BREAKS COMPATIBLITY].

@@ -14,6 +14,19 @@ tinyMCE.importPluginLanguagePack('template', 'en'); // <- Add a comma separated 
  ****/
 
 /**
+ * Information about the plugin.
+ */
+function TinyMCE_template_getInfo() {
+	return {
+		longname : 'Template plugin',
+		author : 'Your name',
+		authorurl : 'http://www.yoursite.com',
+		infourl : 'http://www.yoursite.com/docs/template.html',
+		version : "1.0"
+	};
+};
+
+/**
  * Gets executed when a editor instance is initialized
  */
 function TinyMCE_template_initInstance(inst) {
@@ -27,7 +40,7 @@ function TinyMCE_template_initInstance(inst) {
 function TinyMCE_template_getControlHTML(control_name) {
 	switch (control_name) {
 		case "template":
-			return '<img id="{$editor_id}_template" src="{$pluginurl}/images/template.gif" title="{$lang_template_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceTemplate\', true);" />';
+			return '<a href="javascript:tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceTemplate\', true);" onmousedown="return false;"><img id="{$editor_id}_template" src="{$pluginurl}/images/template.gif" title="{$lang_template_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" /></a>';
 	}
 
 	return "";

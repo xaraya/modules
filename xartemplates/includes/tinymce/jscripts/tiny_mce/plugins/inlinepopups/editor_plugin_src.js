@@ -17,7 +17,7 @@ function TinyMCE_inlinepopups_getInfo() {
 		author : 'Moxiecode Systems',
 		authorurl : 'http://tinymce.moxiecode.com',
 		infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_inlinepopups.html',
-		version : '2.0RC1'
+		version : tinyMCE.majorVersion + "." + tinyMCE.minorVersion
 	};
 };
 
@@ -171,7 +171,7 @@ MCWindows.prototype.eventDispatcher = function(e) {
 			mcWindows.selectedWindow.onFocus(e);
 			break;
 	}
-}
+};
 
 MCWindows.prototype.addEvent = function(obj, name, handler) {
 	if (this.isMSIE)

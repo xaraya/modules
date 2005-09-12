@@ -12,7 +12,7 @@ function TinyMCE_contextmenu_getInfo() {
 		author : 'Moxiecode Systems',
 		authorurl : 'http://tinymce.moxiecode.com',
 		infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_contextmenu.html',
-		version : '2.0RC1'
+		version : tinyMCE.majorVersion + "." + tinyMCE.minorVersion
 	};
 };
 
@@ -97,10 +97,10 @@ function TinyMCE_contextmenu_showContextMenu(e, inst) {
 					contextMenu.addSeparator();
 
 					// If flash
-					if (tinyMCE.getAttrib(elm, 'name', '').indexOf('mce_plugin_flash') == 0)
+					if (tinyMCE.getAttrib(elm, 'class').indexOf('mceItemFlash') == 0)
 						contextMenu.addItem(tinyMCE.baseURL + "/plugins/flash/images/flash.gif", "$lang_flash_props", "mceFlash");
 					else
-						contextMenu.addItem(tinyMCE.baseURL + "/themes/" + theme + "/images/image.gif", "$lang_image_props_desc", "mceImage");
+						contextMenu.addItem(tinyMCE.baseURL + "/themes/" + theme + "/images/image.gif", "$lang_image_props_desc", typeof(TinyMCE_advimage_getControlHTML) != "undefined" ? "mceAdvImage" : "mceImage");
 					break;
 
 				case "TABLE":
@@ -127,7 +127,7 @@ function TinyMCE_contextmenu_showContextMenu(e, inst) {
 						contextMenu.addItem(tinyMCE.baseURL + "/plugins/table/images/table.gif", "$lang_table_desc", "mceInsertTable", "insert");
 						contextMenu.addItem(tinyMCE.baseURL + "/plugins/table/images/table.gif", "$lang_table_props_desc", "mceInsertTable");
 						contextMenu.addItem(tinyMCE.baseURL + "/plugins/table/images/table_cell_props.gif", "$lang_table_cell_desc", "mceTableCellProps");
-						contextMenu.addItem(tinyMCE.baseURL + "/plugins/table/images/table_cell_props.gif", "$lang_table_del", "mceTableDelete");
+						contextMenu.addItem(tinyMCE.baseURL + "/plugins/table/images/table_delete.gif", "$lang_table_del", "mceTableDelete");
 						contextMenu.addSeparator();
 						contextMenu.addItem(tinyMCE.baseURL + "/plugins/table/images/table_row_props.gif", "$lang_table_row_desc", "mceTableRowProps");
 						contextMenu.addItem(tinyMCE.baseURL + "/plugins/table/images/table_insert_row_before.gif", "$lang_table_row_before_desc", "mceTableInsertRowBefore");

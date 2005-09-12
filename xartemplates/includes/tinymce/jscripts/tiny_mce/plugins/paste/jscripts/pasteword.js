@@ -11,6 +11,8 @@ function saveContent() {
 }
 
 function onLoadInit() {
+	tinyMCEPopup.resizeToInnerSize();
+
 	// Fix for endless reloading in FF
 	window.setTimeout('createIFrame();', 10);
 }

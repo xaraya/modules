@@ -1,5 +1,5 @@
 // SE lang variables
 
 tinyMCE.addToLang('',{
-preview_desc : 'Förhandsgranska'
+preview_desc : 'F&ouml;rhandsgranska'
 });

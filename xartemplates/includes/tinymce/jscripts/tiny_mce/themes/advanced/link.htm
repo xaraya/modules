@@ -2,9 +2,10 @@
 <head>
 	<title>{$lang_insert_link_title}</title>
 	<script language="javascript" type="text/javascript" src="../../tiny_mce_popup.js"></script>
+	<script language="javascript" type="text/javascript" src="../../utils/form_utils.js"></script>
 	<script language="javascript" type="text/javascript" src="jscripts/link.js"></script>
 </head>
-<body onload="init();">
+<body onload="init();" style="display: none">
 <form onsubmit="insertLink();return false;">
   <table border="0" cellpadding="0" cellspacing="0" width="100">
     <tr>
@@ -17,7 +18,7 @@
             <td>              <table border="0" cellspacing="0" cellpadding="0">
                 <tr>
                   <td><input name="href" type="text" id="href" value="" style="width: 200px"></td>
-                  <td id="browser"></td>
+                  <td><script language="javascript" type="text/javascript">renderBrowser('hrefbrowser','href','file','theme_advanced_link');</script></td>
                 </tr>
               </table></td>
           </tr>
@@ -71,7 +72,7 @@
           <tr id="styleSelectRow">
             <td>{$lang_class_name}:</td>
             <td>
-			 <select name="styleSelect">
+			 <select id="styleSelect" name="styleSelect">
                 <option value="" selected>{$lang_theme_style_select}</option>
              </select></td>
             <td align="right">&nbsp;</td>

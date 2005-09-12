@@ -1,3 +1,8 @@
+* Version 0.9.2b 12 Sept 05
+- Missing files in original tinymce distro
+- updated language files
+- Bug fixes
+
 * Version 0.9.2 7 Sept 05
 - updated files to include latest tinymce v2rc1 files
 - some minor enhancements to install defaults

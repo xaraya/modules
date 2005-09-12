@@ -1,7 +1,7 @@
 // Simplified Chinese lang variables contributed by cube316 (cube316@gmail.com)
-//Çë·ÃÎÊ http://www.cube316.net/ ÒÔ»ñÈ¡TinyMCEµÄÖĞÎÄÖ§³Ö
+//Çë·ÃÎÊ http://www.cube316.net/ ÒÔ»ñÈ¡TinyMCEµ&Auml;&Ouml;ĞÎ&Auml;&Ouml;§³&Ouml;
 
 tinyMCE.addToLang('',{
-fullscreen_title : 'È«ÆÁÄ£Ê½',
-fullscreen_desc : 'ÇĞ»»È«ÆÁÄ£Ê½'
+fullscreen_title : 'È«ÆÁ&Auml;£Ê½',
+fullscreen_desc : 'ÇĞ»»È«ÆÁ&Auml;£Ê½'
 });

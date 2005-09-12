@@ -7,7 +7,7 @@ function TinyMCE_emotions_getInfo() {
 		author : 'Moxiecode Systems',
 		authorurl : 'http://tinymce.moxiecode.com',
 		infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_emotions.html',
-		version : '2.0RC1'
+		version : tinyMCE.majorVersion + "." + tinyMCE.minorVersion
 	};
 };
 
@@ -17,7 +17,7 @@ function TinyMCE_emotions_getInfo() {
 function TinyMCE_emotions_getControlHTML(control_name) {
 	switch (control_name) {
 		case "emotions":
-			return '<img id="{$editor_id}_emotions" src="{$pluginurl}/images/emotions.gif" title="{$lang_emotions_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceEmotion\');">';
+			return '<a href="javascript:tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceEmotion\');" onmousedown="return false;"><img id="{$editor_id}_emotions" src="{$pluginurl}/images/emotions.gif" title="{$lang_emotions_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" /></a>';
 	}
 
 	return "";
@@ -34,7 +34,11 @@ function TinyMCE_emotions_execCommand(editor_id, element, command, user_interfac
 
 			template['file'] = '../../plugins/emotions/emotions.htm'; // Relative to theme
 			template['width'] = 160;
-			template['height'] = 180;
+			template['height'] = 160;
+
+			// Language specific width and height addons
+			template['width'] += tinyMCE.getLang('lang_emotions_delta_width', 0);
+			template['height'] += tinyMCE.getLang('lang_emotions_delta_height', 0);
 
 			tinyMCE.openWindow(template, {editor_id : editor_id, inline : "yes"});
 

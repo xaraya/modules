@@ -48,6 +48,8 @@ function getStyle(elm, st, attrib, style) {
 }
 
 function init() {
+	tinyMCEPopup.resizeToInnerSize();
+
 	var formObj = document.forms[0];
 	var inst = tinyMCE.getInstanceById(tinyMCE.getWindowArg('editor_id'));
 	var elm = inst.getFocusElement();
@@ -62,6 +64,9 @@ function init() {
 
 	if (isVisible('outbrowser'))
 		document.getElementById('onmouseoutsrc').style.width = '260px';
+
+	if (isVisible('longdescbrowser'))
+		document.getElementById('longdesc').style.width = '180px';
 
 	// Check action
 	if (elm != null && elm.nodeName == "IMG")
@@ -142,13 +147,8 @@ function setSwapImageDisabled(state) {
 
 	formObj.onmousemovecheck.checked = !state;
 
-	if (state) {
-		tinyMCE.switchClass(document.getElementById('overbrowser'),'mceButtonDisabled',true);
-		tinyMCE.switchClass(document.getElementById('outbrowser'),'mceButtonDisabled',true);
-	} else {
-		tinyMCE.switchClass(document.getElementById('overbrowser'),'mceButtonNormal',false);
-		tinyMCE.switchClass(document.getElementById('outbrowser'),'mceButtonNormal',false);
-	}
+	setBrowserDisabled('overbrowser', state);
+	setBrowserDisabled('outbrowser', state);
 
 	if (formObj.imagelistover)
 		formObj.imagelistover.disabled = state;
@@ -453,7 +453,7 @@ function renderImageList(elm_id, target_form_element, onchange_func) {
 
 	html += '<tr><td class="column1"><label for="' + elm_id + '">{$lang_image_list}</label></td>';
 	html += '<td colspan="2"><select id="' + elm_id + '" name="' + elm_id + '"';
-	html += ' class="mceImageList" onchange="this.form.' + target_form_element + '.value=';
+	html += ' class="mceImageList" onfocus="tinyMCE.addSelectAccessibility(event, this, window);" onchange="this.form.' + target_form_element + '.value=';
 	html += 'this.options[this.selectedIndex].value;';
 
 	if (typeof(onchange_func) != "undefined")

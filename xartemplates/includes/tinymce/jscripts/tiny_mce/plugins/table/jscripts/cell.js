@@ -1,4 +1,6 @@
 function init() {
+	tinyMCEPopup.resizeToInnerSize();
+
 	var inst = tinyMCE.selectedInstance;
 	var tdElm = tinyMCE.getParentElement(inst.getFocusElement(), "td,th");
 	var formObj = document.forms[0];

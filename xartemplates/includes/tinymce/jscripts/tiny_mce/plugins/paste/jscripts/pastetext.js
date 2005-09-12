@@ -13,6 +13,8 @@ function saveContent() {
 }
 
 function onLoadInit() {
+	tinyMCEPopup.resizeToInnerSize();
+
 	resizeInputs();
 }
 

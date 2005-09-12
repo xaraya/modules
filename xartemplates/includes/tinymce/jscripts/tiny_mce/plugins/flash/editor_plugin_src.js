@@ -7,7 +7,7 @@ function TinyMCE_flash_getInfo() {
 		author : 'Moxiecode Systems',
 		authorurl : 'http://tinymce.moxiecode.com',
 		infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_flash.html',
-		version : '2.0RC1'
+		version : tinyMCE.majorVersion + "." + tinyMCE.minorVersion
 	};
 };
 
@@ -19,7 +19,7 @@ function TinyMCE_flash_initInstance(inst) {
 function TinyMCE_flash_getControlHTML(control_name) {
     switch (control_name) {
         case "flash":
-            return '<img id="{$editor_id}_flash" src="{$pluginurl}/images/flash.gif" title="{$lang_flash_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceFlash\');" />';
+            return '<a href="javascript:tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceFlash\');" onmousedown="return false;"><img id="{$editor_id}_flash" src="{$pluginurl}/images/flash.gif" title="{$lang_flash_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" /></a>';
     }
 
     return "";
@@ -81,10 +81,10 @@ function TinyMCE_flash_execCommand(editor_id, element, command, user_interface, 
 
             template['file']   = '../../plugins/flash/flash.htm'; // Relative to theme
             template['width']  = 430;
-            template['height'] = 185;
+            template['height'] = 175;
 
-			if (tinyMCE.getParam("flash_external_list_url", false))
-				template['height'] += 20;
+			template['width'] += tinyMCE.getLang('lang_flash_delta_width', 0);
+			template['height'] += tinyMCE.getLang('lang_flash_delta_height', 0);
 
 			// Is selection a image
             if (focusElm != null && focusElm.nodeName.toLowerCase() == "img") {

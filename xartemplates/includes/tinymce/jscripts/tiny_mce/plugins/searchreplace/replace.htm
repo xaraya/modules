@@ -4,33 +4,33 @@
 	<script language="javascript" type="text/javascript" src="../../tiny_mce_popup.js"></script>
 	<script language="javascript" type="text/javascript" src="jscripts/replace.js"></script>
 </head>
-<body onload="init();" style="margin: 4px;">
+<body onload="init();" style="display: none; margin: 4px;">
 <form onsubmit="searchNext('none');return false;" action="#">
   <table border="0" cellspacing="0" cellpadding="2">
 	  <tr>
-		<td>{$lang_searchreplace_findwhat}:&nbsp;</td>
-		<td><input type="text" name="searchstring" style="width: 200px" /></td>
+		<td><label for="searchstring">{$lang_searchreplace_findwhat}</label></td>
+		<td><input type="text" id="searchstring" name="searchstring" style="width: 200px" /></td>
 	  </tr>
 	  <tr>
-		<td>{$lang_searchreplace_replacewith}:&nbsp;</td>
-		<td><input type="text" name="replacestring" style="width: 200px" /></td>
+		<td><label for="replacestring">{$lang_searchreplace_replacewith}</label></td>
+		<td><input type="text" id="replacestring" name="replacestring" style="width: 200px" /></td>
 	  </tr>
         <tr>
           <td colspan="2"><table border="0" cellspacing="0" cellpadding="0">
             <tr>
-              <td>{$lang_searchreplace_direction}:&nbsp;</td>
-              <td><input name="backwards" class="radio" type="radio" value="true" /></td>
-              <td>{$lang_searchreplace_up}</td>
-              <td><input name="backwards" class="radio" type="radio" value="false" /></td>
-              <td>{$lang_searchreplace_down}</td>
+              <td><label>{$lang_searchreplace_direction}</label></td>
+              <td><input id="backwardsu" name="backwards" class="radio" type="radio" value="true" /></td>
+              <td><label for="backwardsu">{$lang_searchreplace_up}</label></td>
+              <td><input id="backwardsd" name="backwards" class="radio" type="radio" value="false" /></td>
+              <td><label for="backwardsd">{$lang_searchreplace_down}</label></td>
             </tr>
           </table></td>
         </tr>
         <tr>
 <td colspan="2"><table border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td><input class="checkbox" type="checkbox" name="casesensitivebox" value="true" /></td>
-    <td>{$lang_searchreplace_case}</td>
+    <td><input id="casesensitivebox" name="casesensitivebox" class="checkbox" type="checkbox" value="true" /></td>
+    <td><label for="casesensitivebox">{$lang_searchreplace_case}</label></td>
   </tr>
 </table></td>
 </tr>

@@ -1,5 +1,5 @@
 /* Import plugin specific language pack */
-tinyMCE.importPluginLanguagePack('save', 'en,zh_cn,cs,fa,fr_ca,fr,de,pl,pt_br,nl,he');
+tinyMCE.importPluginLanguagePack('save', 'en,sv,zh_cn,cs,fa,fr_ca,fr,de,pl,pt_br,nl,he');
 
 function TinyMCE_save_getInfo() {
 	return {
@@ -7,7 +7,7 @@ function TinyMCE_save_getInfo() {
 		author : 'Moxiecode Systems',
 		authorurl : 'http://tinymce.moxiecode.com',
 		infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_save.html',
-		version : '2.0RC1'
+		version : tinyMCE.majorVersion + "." + tinyMCE.minorVersion
 	};
 };
 
@@ -17,8 +17,9 @@ function TinyMCE_save_getInfo() {
 function TinyMCE_save_getControlHTML(control_name) {
 	switch (control_name) {
 		case "save":
-			return '<img id="{$editor_id}_save" src="{$pluginurl}/images/save.gif" title="{$lang_save_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.switchClass(this,\'mceButtonNormal\');" onmousedown="tinyMCE.switchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceSave\');" />';
+			return '<a href="javascript:tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceSave\');" onmousedown="return false;"><img id="{$editor_id}_save" src="{$pluginurl}/images/save.gif" title="{$lang_save_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.switchClass(this,\'mceButtonNormal\');" onmousedown="tinyMCE.switchClass(this,\'mceButtonDown\');" /></a>';
 	}
+
 	return "";
 }
 
@@ -42,6 +43,7 @@ function TinyMCE_save_execCommand(editor_id, element, command, user_interface, v
 						formObj.elements[i].disabled = true;
 				}
 
+				tinyMCE.isNotDirty = true;
 				tinyMCE.selectedInstance.formElement.form.submit();
 			} else
 				alert("Error: No form element found.");

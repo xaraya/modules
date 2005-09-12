@@ -99,7 +99,6 @@ function insertTable() {
 	tinyMCEPopup.close();
 }
 
-
 function makeAttrib(attrib, value) {
 	var formObj = document.forms[0];
 	var valueElm = formObj.elements[attrib];
@@ -133,6 +132,8 @@ function getStyle(elm, st, attrib, style) {
 }
 
 function init() {
+	tinyMCEPopup.resizeToInnerSize();
+
 	var cols = 2, rows = 2, border = 0, cellpadding = "", cellspacing = "";
 	var align = "", width = "", height = "", bordercolor = "", bgcolor = "", className = "";
 	var id = "", summary = "", style = "", dir = "", lang = "", background = "", bgcolor = "", bordercolor = "";
@@ -142,6 +143,8 @@ function init() {
 
 	tinyMCE.tableElm = elm;
 	action = tinyMCE.getWindowArg('action');
+	if (action == null)
+		action = "insert";
 
 	if (tinyMCE.tableElm && action != "insert") {
 		var rowsAr = tinyMCE.tableElm.rows;

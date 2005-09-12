@@ -1,4 +1,6 @@
 function init() {
+	tinyMCEPopup.resizeToInnerSize();
+
 	var formObj = document.forms[0];
 
 	formObj.searchstring.value = tinyMCE.getWindowArg("searchstring");

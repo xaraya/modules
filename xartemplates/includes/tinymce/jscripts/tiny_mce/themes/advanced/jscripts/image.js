@@ -24,6 +24,8 @@ function insertImage() {
 }
 
 function init() {
+	tinyMCEPopup.resizeToInnerSize();
+
 	var formObj = document.forms[0];
 
 	for (var i=0; i<document.forms[0].align.options.length; i++) {
@@ -41,21 +43,8 @@ function init() {
 	formObj.insert.value = tinyMCE.getLang('lang_' + tinyMCE.getWindowArg('action'), 'Insert', true); 
 
 	// Handle file browser
-	if (tinyMCE.getParam("file_browser_callback") != null) {
+	if (isVisible('srcbrowser'))
 		document.getElementById('src').style.width = '180px';
-
-		var html = '';
-
-		html += '<img id="browserBtn" src="images/browse.gif"';
-		html += ' onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');"';
-		html += ' onmouseout="tinyMCE.restoreClass(this);"';
-		html += ' onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');"';
-		html += ' onclick="javascript:tinyMCE.openFileBrowser(\'src\',document.forms[0].src.value,\'image\',window);"';
-		html += ' width="20" height="18" border="0" title="' + tinyMCE.getLang('lang_browse') + '"';
-		html += ' class="mceButtonNormal" alt="' + tinyMCE.getLang('lang_browse') + '" />';
-
-		document.getElementById('browser').innerHTML = html;
-	}
 
 	// Auto select image in list
 	if (typeof(tinyMCEImageList) != "undefined" && tinyMCEImageList.length > 0) {

@@ -23,16 +23,16 @@
     *
     * INSTRUCTIONS: The main configuration file for the xarTinyMCE image browser
     *
-    * 1. Copy this file to var/ibrowser/ibrowserconfig.inc
-    * 2. Please make sure you check all configurations settings
-    * 3. Update the configurations
-    * 4. Make sure  $cfg['base_url'] below is set correctly
-    * 4. Enter the name and directories of your image libraries
-    *     Make sure the directories exist and are writeable!!
-	* 	  - image libraries (chmod 0755 or 0777) eg $cfg['ilibs'] and $cfg['ilibs_dir'] and
-    *       the dynamic library directory if used ...$cfg['ilibs_inc']. Uncomment this for dynamic image dirs
-	* 	  - ibrowser/scripts/phpThumb/cache  (chmod 0755 or 0777)
-	*     - $cfg['temp'] eg var/cache as set below
+    * 1. Copy this file to var/ibrowser/ibrowserconfig.inc - create the var/ibrowser directory if it doesn't exist
+    * 2. Please make sure you check all configurations settings below
+    * 3. Make sure your image libraries are set
+         and image libraries (chmod 0755 or 0777) eg $cfg['ilibs'] and $cfg['ilibs_dir']
+    * 4. If you want to use dynamic library uncomment the line with $cfg['ilibs_inc']
+    *    It's very important to ensure your image libraries exist and are writeable.
+ 	* 5. The temporary directory used for image caching  - $cfg['temp']is set at eg var/cache by default
+ 	*    This should also be chmod 0777 - writeable.
+ 	* 6. If you want to allow resizing of images on upload, ensure you uncomment and update 
+ 	*    the relevant phpThumb size array entries below ...
     */
 	//-------------------------------------------------------------------------
 	// CONFIGURATIONS
@@ -56,7 +56,7 @@
 	);
 	$cfg['list']		= true;														// default: true; if set to true, image selection will be shown as list; if set to false, image selection will show thumbnails
 	//-------------------------------------------------------------------------
-	// set image formats	
+	// set image formats	 - UNCOMMENT resizing info to use on upload
 	$cfg['thumbs'] = array (														 	
 		/* array (																	//				settings																	
 			'size'   	=> '*',														//				'size' = if set to '*' or '0', no image resizing will be done, otherwise set to desired width or height, e.g. 640

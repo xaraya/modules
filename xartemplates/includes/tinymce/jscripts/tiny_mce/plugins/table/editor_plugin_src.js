@@ -7,7 +7,7 @@ function TinyMCE_table_getInfo() {
 		author : 'Moxiecode Systems',
 		authorurl : 'http://tinymce.moxiecode.com',
 		infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_table.html',
-		version : '2.0RC1'
+		version : tinyMCE.majorVersion + "." + tinyMCE.minorVersion
 	};
 };
 
@@ -61,15 +61,11 @@ function TinyMCE_table_getControlHTML(control_name) {
 	// Render table control
 	for (var i=0; i<controls.length; i++) {
 		var but = controls[i];
-		var safariPatch = '" onclick="';
-
-		if (tinyMCE.isSafari)
-			safariPatch = "";
 
 		if (but[0] == control_name && (tinyMCE.isMSIE || !tinyMCE.settings['button_tile_map']))
-			return '<img id="{$editor_id}_' + but[0] + '" src="{$pluginurl}/images/' + but[1] + '" title="' + but[2] + '" width="20" height="20" class="mceButtonDisabled" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');' + safariPatch + 'tinyMCE.execInstanceCommand(\'{$editor_id}\',\'' + but[3] + '\', ' + (but.length > 4 ? but[4] : false) + (but.length > 5 ? ', \'' + but[5] + '\'' : '') + ')">';
+			return '<a href="javascript:tinyMCE.execInstanceCommand(\'{$editor_id}\',\'' + but[3] + '\', ' + (but.length > 4 ? but[4] : false) + (but.length > 5 ? ', \'' + but[5] + '\'' : '') + ');" onmousedown="return false;"><img id="{$editor_id}_' + but[0] + '" src="{$pluginurl}/images/' + but[1] + '" title="' + but[2] + '" width="20" height="20" class="mceButtonDisabled" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" /></a>';
 		else if (but[0] == control_name)
-			return '<img id="{$editor_id}_' + but[0] + '" src="{$themeurl}/images/spacer.gif" style="background-image:url({$pluginurl}/images/buttons.gif); background-position: ' + (0-(i*20)) + 'px 0px" title="' + but[2] + '" width="20" height="20" class="mceButtonDisabled" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');' + safariPatch + 'tinyMCE.execInstanceCommand(\'{$editor_id}\',\'' + but[3] + '\', ' + (but.length > 4 ? but[4] : false) + (but.length > 5 ? ', \'' + but[5] + '\'' : '') + ')">';
+			return '<a href="javascript:tinyMCE.execInstanceCommand(\'{$editor_id}\',\'' + but[3] + '\', ' + (but.length > 4 ? but[4] : false) + (but.length > 5 ? ', \'' + but[5] + '\'' : '') + ');" onmousedown="return false;"><img id="{$editor_id}_' + but[0] + '" src="{$themeurl}/images/spacer.gif" style="background-image:url({$pluginurl}/images/buttons.gif); background-position: ' + (0-(i*20)) + 'px 0px" title="' + but[2] + '" width="20" height="20" class="mceButtonDisabled" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" /></a>';
 	}
 
 	// Special tablecontrols
@@ -373,7 +369,7 @@ function TinyMCE_table_doExecCommand(editor_id, element, command, user_interface
 
 				template['file'] = '../../plugins/table/row.htm';
 				template['width'] = 380;
-				template['height'] = 310;
+				template['height'] = 295;
 
 				// Language specific width and height addons
 				template['width'] += tinyMCE.getLang('lang_table_rowprops_delta_width', 0);
@@ -395,7 +391,7 @@ function TinyMCE_table_doExecCommand(editor_id, element, command, user_interface
 
 				template['file'] = '../../plugins/table/cell.htm';
 				template['width'] = 380;
-				template['height'] = 310;
+				template['height'] = 295;
 
 				// Language specific width and height addons
 				template['width'] += tinyMCE.getLang('lang_table_cellprops_delta_width', 0);
@@ -414,7 +410,7 @@ function TinyMCE_table_doExecCommand(editor_id, element, command, user_interface
 
 				template['file'] = '../../plugins/table/table.htm';
 				template['width'] = 380;
-				template['height'] = 310;
+				template['height'] = 295;
 
 				// Language specific width and height addons
 				template['width'] += tinyMCE.getLang('lang_insert_table_delta_width', 0);
@@ -773,7 +769,11 @@ function TinyMCE_table_doExecCommand(editor_id, element, command, user_interface
 
 							template['file'] = '../../plugins/table/merge_cells.htm';
 							template['width'] = 250;
-							template['height'] = 120;
+							template['height'] = 105;
+
+							// Language specific width and height addons
+							template['width'] += tinyMCE.getLang('lang_table_merge_cells_delta_width', 0);
+							template['height'] += tinyMCE.getLang('lang_table_merge_cells_height', 0);
 
 							// Open window
 							tinyMCE.openWindow(template, {editor_id : inst.editorId, inline : "yes", action : "update", numcols : sp.colspan, numrows : sp.rowspan});

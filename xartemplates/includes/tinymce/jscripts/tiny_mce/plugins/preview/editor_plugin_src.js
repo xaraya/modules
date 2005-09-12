@@ -7,7 +7,7 @@ function TinyMCE_preview_getInfo() {
 		author : 'Moxiecode Systems',
 		authorurl : 'http://tinymce.moxiecode.com',
 		infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_preview.html',
-		version : '2.0RC1'
+		version : tinyMCE.majorVersion + "." + tinyMCE.minorVersion
 	};
 };
 
@@ -17,7 +17,7 @@ function TinyMCE_preview_getInfo() {
 function TinyMCE_preview_getControlHTML(control_name) {
 	switch (control_name) {
 		case "preview":
-			return '<img id="{$editor_id}_preview" src="{$pluginurl}/images/preview.gif" title="{$lang_preview_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mcePreview\');" />';
+			return '<a href="javascript:tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mcePreview\');" onmousedown="return false;"><img id="{$editor_id}_preview" src="{$pluginurl}/images/preview.gif" title="{$lang_preview_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" /></a>';
 	}
 
 	return "";

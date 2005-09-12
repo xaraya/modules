@@ -68,13 +68,13 @@ function TinyMCE_advanced_getControlHTML(button_name)
 				{
 					if (buttonTileMap[x] == but[1])
 					{
-						return '<img id="{$editor_id}_' + but[0] +'" src="{$themeurl}/images/spacer.gif" style="background-image:url({$themeurl}/images/buttons.gif); background-position: ' + (0-(x*20)) + 'px 0px" title="' + but[2] + '" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'' + but[3] + '\', ' + (but.length > 4 ? but[4] : false) + (but.length > 5 ? ', \'' + but[5] + '\'' : '') + ')">';
+						return '<a href="javascript:tinyMCE.execInstanceCommand(\'{$editor_id}\',\'' + but[3] + '\', ' + (but.length > 4 ? but[4] : false) + (but.length > 5 ? ', \'' + but[5] + '\'' : '') + ')" onmousedown="return false;"><img id="{$editor_id}_' + but[0] +'" src="{$themeurl}/images/spacer.gif" style="background-image:url({$themeurl}/images/buttons.gif); background-position: ' + (0-(x*20)) + 'px 0px" title="' + but[2] + '" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" /></a>';
 					}
 				}
 			}
 
 			// Old style
-			return '<img id="{$editor_id}_' + but[0] + '" src="{$themeurl}/images/' + but[1] + '" title="' + but[2] + '" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'' + but[3] + '\', ' + (but.length > 4 ? but[4] : false) + (but.length > 5 ? ', \'' + but[5] + '\'' : '') + ')">';
+			return '<a href="javascript:tinyMCE.execInstanceCommand(\'{$editor_id}\',\'' + but[3] + '\', ' + (but.length > 4 ? but[4] : false) + (but.length > 5 ? ', \'' + but[5] + '\'' : '') + ')" onmousedown="return false;"><img id="{$editor_id}_' + but[0] + '" src="{$themeurl}/images/' + but[1] + '" title="' + but[2] + '" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" /></a>';
 		}
 	}
 
@@ -82,7 +82,7 @@ function TinyMCE_advanced_getControlHTML(button_name)
 	switch (button_name)
 	{
 		case "formatselect":
-			var html = '<select id="{$editor_id}_formatSelect" name="{$editor_id}_formatSelect" onchange="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'FormatBlock\',false,this.options[this.selectedIndex].value);" class="mceSelectList">';
+			var html = '<select id="{$editor_id}_formatSelect" name="{$editor_id}_formatSelect" onfocus="tinyMCE.addSelectAccessibility(event, this, window);" onchange="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'FormatBlock\',false,this.options[this.selectedIndex].value);" class="mceSelectList">';
 			var formats = tinyMCE.getParam("theme_advanced_blockformats", "p,address,pre,h1,h2,h3,h4,h5,h6", true).split(',');
 			var lookup = [
 				['p', '{$lang_theme_paragraph}'],
@@ -116,10 +116,10 @@ function TinyMCE_advanced_getControlHTML(button_name)
 
 		case "styleselect":
 			//styleselect
-		return '<select id="{$editor_id}_styleSelect" onmousedown="TinyMCE_advanced_setupCSSClasses(\'{$editor_id}\');" name="{$editor_id}_styleSelect" onchange="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceSetCSSClass\',false,this.options[this.selectedIndex].value);" class="mceSelectList">{$style_select_options}</select>';
+		return '<select id="{$editor_id}_styleSelect" onmousedown="TinyMCE_advanced_setupCSSClasses(\'{$editor_id}\');" name="{$editor_id}_styleSelect" onfocus="tinyMCE.addSelectAccessibility(event, this, window);" onchange="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceSetCSSClass\',false,this.options[this.selectedIndex].value);" class="mceSelectList">{$style_select_options}</select>';
 
 		case "fontselect":
-			var fontHTML = '<select id="{$editor_id}_fontNameSelect" name="{$editor_id}_fontNameSelect" onchange="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'FontName\',false,this.options[this.selectedIndex].value);" class="mceSelectList"><option value="">{$lang_theme_fontdefault}</option>';
+			var fontHTML = '<select id="{$editor_id}_fontNameSelect" name="{$editor_id}_fontNameSelect" onfocus="tinyMCE.addSelectAccessibility(event, this, window);" onchange="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'FontName\',false,this.options[this.selectedIndex].value);" class="mceSelectList"><option value="">{$lang_theme_fontdefault}</option>';
 			var iFonts = 'Arial=arial,helvetica,sans-serif;Courier New=courier new,courier,monospace;Georgia=georgia,times new roman,times,serif;Tahoma=tahoma,arial,helvetica,sans-serif;Times New Roman=times new roman,times,serif;Verdana=verdana,arial,helvetica,sans-serif;Impact=impact;WingDings=wingdings';
 			var nFonts = 'Andale Mono=andale mono,times;Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;Comic Sans MS=comic sans ms,sand;Courier New=courier new,courier;Georgia=georgia,palatino;Helvetica=helvetica;Impact=impact,chicago;Symbol=symbol;Tahoma=tahoma,arial,helvetica,sans-serif;Terminal=terminal,monaco;Times New Roman=times new roman,times;Trebuchet MS=trebuchet ms,geneva;Verdana=verdana,geneva;Webdings=webdings;Wingdings=wingdings,zapf dingbats';
 			var fonts = tinyMCE.getParam("theme_advanced_fonts", nFonts).split(';');
@@ -135,8 +135,8 @@ function TinyMCE_advanced_getControlHTML(button_name)
 
 		case "fontsizeselect":
 			//fontsizeselect
-		return '<select id="{$editor_id}_fontSizeSelect" name="{$editor_id}_fontSizeSelect" onchange="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'FontSize\',false,this.options[this.selectedIndex].value);" class="mceSelectList">\
-		<option value="0">-- {$lang_theme_font_size} --</option>\
+		return '<select id="{$editor_id}_fontSizeSelect" name="{$editor_id}_fontSizeSelect" onfocus="tinyMCE.addSelectAccessibility(event, this, window);" onchange="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'FontSize\',false,this.options[this.selectedIndex].value);" class="mceSelectList">\
+		<option value="0">{$lang_theme_font_size}</option>\
 		<option value="1">1 (8 pt)</option>\
 		<option value="2">2 (10 pt)</option>\
 		<option value="3">3 (12 pt)</option>\
@@ -180,7 +180,7 @@ function TinyMCE_advanced_execCommand(editor_id, element, command, user_interfac
 
 			template['file'] = 'color_picker.htm';
 			template['width'] = 220;
-			template['height'] = 240;
+			template['height'] = 190;
 
 			tinyMCE.openWindow(template, {editor_id : editor_id, inline : "yes", command : "forecolor", input_color : inputColor});
 		return true;
@@ -195,7 +195,10 @@ function TinyMCE_advanced_execCommand(editor_id, element, command, user_interfac
 
 			template['file'] = 'color_picker.htm';
 			template['width'] = 220;
-			template['height'] = 240;
+			template['height'] = 190;
+
+			template['width'] += tinyMCE.getLang('lang_theme_advanced_backcolor_delta_width', 0);
+			template['height'] += tinyMCE.getLang('lang_theme_advanced_backcolor_delta_height', 0);
 
 			tinyMCE.openWindow(template, {editor_id : editor_id, inline : "yes", command : "HiliteColor", input_color : inputColor});
 			//mceBackColor
@@ -208,7 +211,10 @@ function TinyMCE_advanced_execCommand(editor_id, element, command, user_interfac
 
 				template['file'] = 'color_picker.htm';
 				template['width'] = 220;
-				template['height'] = 210;
+				template['height'] = 190;
+
+				template['width'] += tinyMCE.getLang('lang_theme_advanced_colorpicker_delta_width', 0);
+				template['height'] += tinyMCE.getLang('lang_theme_advanced_colorpicker_delta_height', 0);
 
 				if (typeof(value['store_selection']) == "undefined")
 					value['store_selection'] = true;
@@ -239,7 +245,10 @@ function TinyMCE_advanced_execCommand(editor_id, element, command, user_interfac
 
 			template['file'] = 'charmap.htm';
 			template['width'] = 550;
-			template['height'] = 280;
+			template['height'] = 250;
+	
+			template['width'] += tinyMCE.getLang('lang_theme_advanced_charmap_delta_width', 0);
+			template['height'] += tinyMCE.getLang('lang_theme_advanced_charmap_delta_height', 0);
 
 			tinyMCE.openWindow(template, {editor_id : editor_id, inline : "yes"});
 			//mceCharMap
@@ -250,7 +259,10 @@ function TinyMCE_advanced_execCommand(editor_id, element, command, user_interfac
 
 			template['file'] = 'anchor.htm';
 			template['width'] = 320;
-			template['height'] = 110;
+			template['height'] = 90;
+
+			template['width'] += tinyMCE.getLang('lang_theme_advanced_anchor_delta_width', 0);
+			template['height'] += tinyMCE.getLang('lang_theme_advanced_anchor_delta_height', 0);
 
 			tinyMCE.openWindow(template, {editor_id : editor_id, inline : "yes"});
 		return true;
@@ -713,8 +725,8 @@ function TinyMCE_advanced_getInsertLinkTemplate()
 	var template = new Array();
 
 	template['file'] = 'link.htm';
-	template['width'] = 350;
-	template['height'] = 180;
+	template['width'] = 330;
+	template['height'] = 170;
 
 	// Language specific width and height addons
 	template['width'] += tinyMCE.getLang('lang_insert_link_delta_width', 0);
@@ -732,7 +744,7 @@ function TinyMCE_advanced_getInsertImageTemplate()
 
 	template['file'] = 'image.htm?src={$src}';
 	template['width'] = 340;
-	template['height'] = 280;
+	template['height'] = 245;
 
 	// Language specific width and height addons
 	template['width'] += tinyMCE.getLang('lang_insert_image_delta_width', 0);
