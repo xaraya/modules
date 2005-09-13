@@ -83,6 +83,7 @@ function courses_userapi_getall($args)
      }
 
     $query .= " ORDER BY $coursestable.xar_" . $sortby;
+    $query .= " $sortorder";   
     $result = $dbconn->SelectLimit($query, $numitems, $startnum-1);
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return

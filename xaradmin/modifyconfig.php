@@ -32,6 +32,8 @@ function courses_admin_modifyconfig()
     $data['hidecoursemsg_label'] = xarVarPrepForDisplay(xarML('Message to show when a complete course is selected for hiding'));
     $data['itemslabel'] = xarVarPrepForDisplay(xarML('Courses Items Per Page?'));
     $data['itemsvalue'] = xarModGetVar('courses', 'itemsperpage');
+    $data['ShowShortDesclabel'] = xarVarPrepForDisplay(xarML('Show short description on user view page?'));
+    $data['ShowShortDescchecked'] = xarModGetVar('courses', 'ShowShortDesc') ? 'checked="checked"' : '';
     $data['updatebutton'] = xarVarPrepForDisplay(xarML('Update Configuration'));
     $data['AlwaysNotify'] = xarModGetVar('courses', 'AlwaysNotify');
     $data['AlwaysNotify_label'] = xarVarPrepForDisplay(xarML('E-mail address that will always be sent a copy of an enrollment'));
@@ -39,8 +41,7 @@ function courses_admin_modifyconfig()
     // short URLs (see xaruserapi.php), you should remove these from your
     // admin-modifyconfig.xard template !
     $data['shorturlslabel'] = xarML('Enable short URLs?');
-    $data['shorturlschecked'] = xarModGetVar('courses', 'SupportShortURLs') ?
-    'checked="checked"' : '';
+    $data['shorturlschecked'] = xarModGetVar('courses', 'SupportShortURLs') ? 'checked="checked"' : '';
 
     $hooks = xarModCallHooks('module', 'modifyconfig', 'courses',
         array('module' => 'courses'));

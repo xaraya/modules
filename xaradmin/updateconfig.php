@@ -5,7 +5,7 @@
  * Update configuration parameters of the module with information passed back by the modification form
  * 
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2005 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -24,6 +24,7 @@ function courses_admin_updateconfig()
     if (!xarVarFetch('hidecoursemsg', 'str::', $hidecoursemsg, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('AlwaysNotify', 'str::', $AlwaysNotify, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('hideplanningmsg', 'str::', $hideplanningmsg, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('ShowShortDesc', 'checkbox', $ShowShortDesc, false, XARVAR_NOT_REQUIRED)) return;
 
     // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) return;
@@ -34,6 +35,7 @@ function courses_admin_updateconfig()
     xarModSetVar('courses', 'hidecoursemsg', $hidecoursemsg);
     xarModSetVar('courses', 'hideplanningmsg', $hideplanningmsg);
     xarModSetVar('courses', 'AlwaysNotify', $AlwaysNotify);
+    xarModSetVar('courses', 'ShowShortDesc', $ShowShortDesc);    
     xarModCallHooks('module','updateconfig','courses',
                    array('module' => 'courses'));
 

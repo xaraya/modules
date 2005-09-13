@@ -20,8 +20,9 @@
 function courses_admin_viewcourses()
 {
     if (!xarVarFetch('startnum', 'int:1:', $startnum, '1',   XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('numitems', 'int:1:', $numitems, '-1',  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('catid',    'isset',  $catid,    NULL,  XARVAR_DONT_SET))     return;
+    if (!xarVarFetch('sortby',   'str:1:', $sortby,   'name'))                     return; 
+    if (!xarVarFetch('sortorder','enum:DESC:ASC:', $sortorder,   'DESC',  XARVAR_NOT_REQUIRED))return;        
     // Initialise the $data variable
     $data = xarModAPIFunc('courses', 'admin', 'menu');
     // Initialise the variable that will hold the items, so that the template
@@ -29,11 +30,13 @@ function courses_admin_viewcourses()
     $data['items'] = array();
     $data['pager'] = xarTplGetPager($startnum,
         xarModAPIFunc('courses', 'user', 'countitems', array('catid' => $catid)),
-        xarModURL('courses', 'admin', 'viewcourses', array('startnum' => '%%', 'catid' => $catid)),
+        xarModURL('courses', 'admin', 'viewcourses', array('startnum' => '%%',
+                                                           'catid'    => $catid,
+                                                           'sortby'   => $sortby,
+                                                           'sortorder'=> $sortorder)),
         xarModGetVar('courses', 'itemsperpage'));
 
-    // Security check - important to do this as early as possible to avoid
-    // potential security holes or just too much wasted processing
+    // Security check
     if (!xarSecurityCheck('EditCourses')) return;
 
     // The user API function is called.
@@ -42,7 +45,9 @@ function courses_admin_viewcourses()
         'getall',
         array('startnum' => $startnum,
               'numitems' => xarModGetVar('courses','itemsperpage'),
-              'catid'    => $catid));
+              'catid'    => $catid,
+              'sortby'   => $sortby,
+              'sortorder'=> $sortorder));
     // Check for exceptions
 //    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
@@ -96,6 +101,44 @@ function courses_admin_viewcourses()
     $data['numberlabel'] = xarVarPrepForDisplay(xarML('Course Number'));
     $data['optionslabel'] = xarVarPrepForDisplay(xarML('Course Options'));
     $data['catid'] = $catid;
+    $data['sortorder'] = $sortorder;
+    $data['sortby'] = $sortby;
+    
+    // Create sort by URLs
+    if ($sortby != 'name' ) {
+        $data['snamelink'] = xarModURL('courses',
+                                       'admin',
+                                       'viewcourses',
+                                       array('startnum' => 1,
+                                             'sortby' => 'name',
+                                             'sortorder' => $sortorder,
+                                             'catid' => $catid));
+    } else {
+        $data['snamelink'] = '';
+    }
+    if ($sortby != 'shortdesc' ) {
+        $data['sdesclink'] = xarModURL('courses',
+                                       'admin',
+                                       'viewcourses',
+                                       array('startnum' => 1,
+                                             'sortby' => 'shortdesc',
+                                             'sortorder' => $sortorder,                                             
+                                             'catid' => $catid));
+    } else {
+        $data['sdesclink'] = '';
+    }
+    if ($sortby != 'number' ) {
+        $data['snumberlink'] = xarModURL('courses',
+                                        'admin',
+                                        'viewcourses',
+                                        array('startnum' => 1,
+                                              'sortby' => 'number',
+                                              'sortorder' => $sortorder,                                             
+                                              'catid' => $catid));
+    } else {
+        $data['snumberlink'] = '';
+    }
+    
     // Return the template variables defined in this function
     return $data;
 }

@@ -23,10 +23,12 @@
                 <xar:else />
                     <th>#$namelabel#</th>
                 </xar:if>
-                <xar:if condition="$sdesclink != ''">
-                    <th><a href="#$sdesclink#">#$shortdesclabel#</a></th>
-                <xar:else />
-                    <th>#$shortdesclabel#</th>
+                <xar:if condition="$ShowShortDescchecked">
+                    <xar:if condition="$sdesclink != ''">
+                        <th><a href="#$sdesclink#">#$shortdesclabel#</a></th>
+                    <xar:else />
+                        <th>#$shortdesclabel#</th>
+                    </xar:if>
                 </xar:if>
             </tr>
         
@@ -40,7 +42,9 @@
                         <a href="#$item['link']#">#$item['name']#</a>
                     </xar:if>
                  </td>
+                 <xar:if condition="$ShowShortDescchecked">                 
                  <td>#$item['shortdesc']#</td>
+                 </xar:if>
                </tr>
            </xar:foreach>
     

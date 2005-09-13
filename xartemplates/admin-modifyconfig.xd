@@ -79,6 +79,18 @@
                         </span>
                     </p>
                     <p class="param">
+                        <label for="ShowShortDesc">
+                            <span class="help" title="#xarML('Show table column with short description for every course?')#">
+                            #$ShowShortDesclabel#
+                            </span>
+                        </label>
+                        <span class="fullright">
+                            <input type="checkbox" name="ShowShortDesc" id="ShowShortDesc" value="1" #$ShowShortDescchecked# />
+                        </span>
+                    </p>
+                    
+                    
+                    <p class="param">
                         <label for="itemsperpage" class="required">
                             <span class="help" title="#xarML('Number of items per page.')#">
                             #$itemslabel#
@@ -90,7 +102,7 @@
                         </xar:if>
                     </p>
                     <p class="param">
-                        <label for="bold">
+                        <label for="shorturls">
                             <span class="help" title="#xarML('Support short URLs.')#">
                             #$shorturlslabel#
                             </span>

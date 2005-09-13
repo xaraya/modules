@@ -27,6 +27,8 @@ function courses_userapi_getallplanned($args)
     extract($args);
     if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('numitems', 'int:1:', $numitems, -1, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('sortby',   'str:1:', $sortby,    'plannnigid',         XARVAR_NOT_REQUIRED)) return; 
+    if (!xarVarFetch('sortorder','enum:DESC:ASC:', $sortorder,'DESC',  XARVAR_NOT_REQUIRED)) return;        
 
     $items = array();
     // Security check
@@ -70,10 +72,34 @@ function courses_userapi_getallplanned($args)
                    xar_minparticipants,
                    xar_maxparticipants,
                    xar_closedate,
-                   xar_last_modified
-            FROM $planningtable
-            WHERE xar_hideplanning in ($where)            
-            ORDER BY xar_courseid";
+                   xar_last_modified";
+            
+    // TODO: how to select by cat ids (automatically) when needed ???
+    // My try at it...
+    if (!empty($catid) && xarModIsHooked('categories','courses')) {
+        // Get the LEFT JOIN ... ON ...  and WHERE parts from categories
+        $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
+                                       array('modid' => xarModGetIDFromName('courses'),
+                                             'catid' => $catid));
+        if (!empty($categoriesdef)) {
+            $query .= " FROM ($planningtable
+                        LEFT JOIN $categoriesdef[table]
+                        ON $categoriesdef[field] = xar_planningid )
+                        $categoriesdef[more]
+                        WHERE $categoriesdef[where] 
+                        AND xar_hideplanning in ($where)";
+            } else {
+                $query .= " FROM $planningtable 
+                            WHERE xar_hideplanning in ($where)";
+            }
+     } else {
+        $query .= " FROM $planningtable 
+                    WHERE xar_hideplanning in ($where)";
+     }
+
+    $query .= " ORDER BY $planningtable.xar_" . $sortby ;
+    $query .= " $sortorder";
+            
     $result = $dbconn->SelectLimit($query, $numitems, $startnum-1);
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return

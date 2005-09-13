@@ -21,7 +21,11 @@
  */
 function courses_admin_viewallplanned()
 {
-    if (!xarVarFetch('startnum', 'int:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('startnum', 'int:1:', $startnum,  '1',            XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('catid',    'isset',  $catid,     NULL,           XARVAR_DONT_SET))     return;
+    if (!xarVarFetch('sortby',   'str:1:', $sortby,    'planningid',         XARVAR_NOT_REQUIRED)) return; 
+    if (!xarVarFetch('sortorder','enum:DESC:ASC:', $sortorder,'DESC',  XARVAR_NOT_REQUIRED)) return;        
+
     // Initialise the $data variable
     $data = xarModAPIFunc('courses', 'admin', 'menu');
     // Initialise the variable that will hold the items, so that the template
@@ -30,18 +34,23 @@ function courses_admin_viewallplanned()
     // Call the xarTPL helper function to produce a pager in case
     $data['pager'] = xarTplGetPager($startnum,
         xarModAPIFunc('courses', 'user', 'countplanned'),
-        xarModURL('courses', 'admin', 'viewallplanned', array('startnum' => '%%')),
+        xarModURL('courses', 'admin', 'viewallplanned', array('startnum' => '%%',
+                                                              'catid' => $catid, 
+                                                              'sortorder' =>$sortorder, 
+                                                              'sortby' =>$sortby)),
         xarModGetVar('courses', 'itemsperpage'));
     // Security check - High level because we are nearly admin here
     if (!xarSecurityCheck('EditCourses')) return;
     
     // Get all planned courses 
     $items = xarModAPIFunc('courses',
-        'user',
-        'getallplanned',
-        array('startnum' => $startnum,
-              'numitems' => xarModGetVar('courses','itemsperpage')
-              ));
+                           'user',
+                           'getallplanned',
+                           array('startnum'  => $startnum,
+                                 'numitems'  => xarModGetVar('courses','itemsperpage'),
+                                 'sortorder' => $sortorder,
+                                 'sortby'    => $sortby
+                                 ));
     // Check for exceptions
     if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     // Quick check for emptyness...

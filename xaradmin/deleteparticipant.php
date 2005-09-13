@@ -60,7 +60,8 @@ function courses_admin_deleteparticipant($args)
         $data['itemid'] = xarML('Item ID');
         $data['planningidlabel'] = xarML('ID of course occurence');
         $data['namelabel'] = xarML('Name of Participant');
-        $data['namevalue'] = xarVarPrepForDisplay(xarUserGetVar('uname', $item['userid']));
+        $data['namevalue'] = xarVarPrepForDisplay(xarUserGetVar('name', $item['userid']));
+        $data['coursename'] = 
         $data['confirmbutton'] = xarML('Confirm');
         // Generate a one-time authorisation code for this operation
         $data['authid'] = xarSecGenAuthKey();
@@ -70,16 +71,13 @@ function courses_admin_deleteparticipant($args)
     // Start delete
     if (!xarSecConfirmAuthKey()) return;
     // The API function is called.
-    // The return value of the function is checked here, and if the function
-    // succeeded then an appropriate message is posted.
     if (!xarModAPIFunc('courses',
             'admin',
             'deleteparticipant',
             array('sid' => $sid))) {
         return; // throw back
     }
-    // This function generated no output, and so now it is complete we redirect
-    // the user to an appropriate page for them to carry on their work
+    // Return to participants for this planned course
     xarResponseRedirect(xarModURL('courses', 'admin', 'participants', array('planningid' => $planningid)));
     // Return
     return true;
