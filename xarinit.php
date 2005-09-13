@@ -1,6 +1,6 @@
 <?php
 
-require( "modules/base/xarclass/adodb-xmlschema.inc.php" );
+require_once( "modules/base/xarclass/adodb-xmlschema.inc.php" );
 
 /**
  * Initialize the module
