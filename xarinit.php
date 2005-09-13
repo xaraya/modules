@@ -332,7 +332,7 @@ function julian_init()
                   'hook_iid'     =>array('type'=>'integer','null'=>FALSE,'default'=>'0'),
 
         // DTSTART::event start date/time
-        'dtstart'=>array('type'=>'datetime','size'=>'','null'=>FALSE,'default'=>''),
+        'dtstart'=>array('type'=>'datetime','size'=>'','null'=>FALSE),// Bug 4942 removed ,'default'=>''
 
         // DURATION::how long the event lasts
         'duration'=>array('type'=>'varchar','size'=>'50','null'=>TRUE),
