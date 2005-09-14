@@ -10,7 +10,7 @@
             <xar:foreach in="$levels.groups" key="$key" value="$group">
                 <th>
                     #$groupCache[$key]['name']#<br />
-                    <xar:if condition="$showRemove">
+                    <xar:if condition="$showRemove AND (isset($user_groups[$key]) OR xarSecurityCheck('AdminPanel', 0))">
                     <xar:set name="$args">array('modid' => $modid, 'itemtype' => $itemtype, 'itemid' => $itemid, 'gid' => $key, 'returnurl' => $returnurl)</xar:set>
                     (<a href="#xarModURL('security', 'admin', 'deletegroupsecurity', $args)#">remove</a>)
                     </xar:if>
@@ -41,10 +41,14 @@
             <xar:foreach in="$levels.groups" key="$key" value="$group">
             <xar:set name="groupLevel">$secMap[$key][$currentLevel]</xar:set>
             <td>
+                <xar:set name="extra">'disabled="disabled"'</xar:set>
+                <xar:if condition="$showRemove AND (isset($user_groups[$key]) OR xarSecurityCheck('AdminPanel', 0))">
+                    <xar:set name="extra">''</xar:set>
+                </xar:if>
                 <xar:if condition="!empty($groupLevel)">
-                <input type="checkbox" name="groups[#$key#][]" value="#$secLevel['level']#" checked="checked" />
+                <input type="checkbox" name="groups[#$key#][]" value="#$secLevel['level']#" checked="checked" #$extra# />
                 <xar:else />
-                <input type="checkbox" name="groups[#$key#][]" value="#$secLevel['level']#" />
+                <input type="checkbox" name="groups[#$key#][]" value="#$secLevel['level']#"  #$extra# />
                 </xar:if>            
             </td>
             </xar:foreach>
@@ -71,11 +75,11 @@
     
     
     <div style="float: right; width: 40%;">
-    <xar:if condition="!empty($groups)">
+    <xar:if condition="!empty($user_groups)">
     <span style="margin-right: auto; margin-left: auto;">
     <form name="addgroup" action="#$action#" method="POST">
     <select name="group">
-        <xar:foreach in="$groups" value="$group">
+        <xar:foreach in="$user_groups" value="$group">
             <option value="#$group.uid#"><xar:var name="group.name" /></option>
         </xar:foreach>
     </select>

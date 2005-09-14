@@ -1,0 +1,80 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Security Hook Settings</xar:mlstring>
+    </span>
+</div>
+<div class="xar-mod-body">
+
+    <form action="#xarModURL('security', 'admin', 'hook_settings')#" method="POST">
+    <fieldset>
+        <legend><xar:mlstring>Item Type</xar:mlstring></legend>
+        
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Module / Item Type</xar:mlstring></label>
+            <select name="mod_itemtype" class="xar-form-textlong">
+                <option value="-">Default Options</option>
+                <xar:foreach in="$hook_list" key="$module" value="$itemtypes">
+                    <xar:foreach in="$itemtypes" key="$itemtype" value="$value">
+                        <xar:if condition="isset($mod_itemtype) and $mod_itemtype eq $module.'-'.$itemtype">
+                            <option value="#$module#-#$itemtype#" selected="selected"><xar:var name="module" /> - <xar:var name="itemtype" /></option>
+                        <xar:else />
+                            <option value="#$module#-#$itemtype#"><xar:var name="module" /> - <xar:var name="itemtype" /></option>
+                        </xar:if>
+                    </xar:foreach>
+                </xar:foreach>
+             </select>
+        </div>
+        <div class="xar-form-input-wrapper-after">
+            <input name="submit" type="submit" value="Reload" class="xar-form-textlong" />
+        </div>
+    </fieldset> 
+
+    <xar:if condition="!empty($settings)">
+    <fieldset>
+        <legend><xar:mlstring>Options</xar:mlstring></legend>
+        
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Exclude Groups</xar:mlstring></label>
+            <select name="exclude_gids[]" multiple="multiple" class="xar-form-textlong">
+                <xar:foreach in="$all_groups" key="$key" value="$group">
+                    <xar:if condition="!empty($settings['exclude_groups'][$key])">
+                        <option value="#$key#" selected="selected"><xar:var name="group.name" /></option>
+                    <xar:else />
+                        <option value="#$key#"><xar:var name="group.name" /></option>
+                    </xar:if>
+                </xar:foreach>
+             </select>
+        </div>
+    </fieldset> 
+    </xar:if>
+    
+    <xar:if condition="!empty($levels)">
+    <fieldset>
+        <legend><xar:mlstring>Security</xar:mlstring></legend>
+        
+        <xar:if condition="!empty($all_groups)">
+        <div class="xar-floatright" style="width: 40%;">
+        <select name="group">
+            <xar:foreach in="$all_groups" value="$group">
+                <option value="#$group.uid#"><xar:var name="group.name" /></option>
+            </xar:foreach>
+        </select>
+            <input type="submit" name="submit" value="#xarML('Add Group')#" />
+        </div>
+        </xar:if>        
+
+        <xar:template file="security-table" />
+        
+    </fieldset> 
+    
+    <fieldset>
+        <legend><xar:mlstring>Actions</xar:mlstring></legend>
+        
+        <div class="xar-form-input-wrapper-after">
+            <input name="submit" type="submit" value="Update" class="xar-form-textlong"/>
+        </div>
+    </fieldset> 
+    </xar:if>
+    
+    </form>   
+</div>

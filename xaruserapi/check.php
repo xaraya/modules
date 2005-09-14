@@ -92,14 +92,6 @@ function security_userapi_check($args)
     $result = $dbconn->Execute($query, $bindvars);
     if( $result->EOF ) return false;
     
-/*
-    while( $result->fields != null )
-    {
-        //var_dump($result->fields);
-        $result->MoveNext();
-    }
-    var_dump($result);
-*/
     return true;
 }
 ?>

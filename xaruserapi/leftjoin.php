@@ -23,7 +23,7 @@ function security_userapi_leftjoin($args)
     */
     if( xarSecurityCheck('AdminPanel', 0) )
     {        
-        return $info;
+        //return $info;
     }
     
     xarModAPILoad('owner', 'user');
@@ -85,8 +85,7 @@ function security_userapi_leftjoin($args)
     $user = $roles->getRole($currentUserId);
     $parents = $user->getParents();
     foreach( $parents as $parent )
-        $secCheck[] = 
-            " ( $secGroupLevelTable.xar_gid = $parent->uid AND xar_level & $level ) ";
+        $secCheck[] = " ( $secGroupLevelTable.xar_gid = $parent->uid AND xar_level & $level ) ";
     
     // Check for world    
     $secCheck[] = " ( $secTable.xar_worldlevel & $level ) ";
@@ -96,6 +95,7 @@ function security_userapi_leftjoin($args)
     if( count($where) > 0 )
     {
         $info['where'] = ' ( ' . join(' AND ', $where) . ' ) ';
+        if( !empty($exceptions) ){ $info['where'] = " ( {$info['where']} OR $exceptions ) "; }
     }
     
     return $info;

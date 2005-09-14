@@ -1,5 +1,7 @@
 <?php
+/*
 
+*/
 function security_adminapi_create($args)
 {
     extract($args);
@@ -10,24 +12,27 @@ function security_adminapi_create($args)
     $table = $xartable['security'];
     $groupLevelTable = $xartable['security_group_levels'];
    
-    // Default Sec levels
-    $userLevel  = SECURITY_OVERVIEW+SECURITY_READ+SECURITY_COMMENT+SECURITY_WRITE+SECURITY_ADMIN;
-    $groupLevel = SECURITY_OVERVIEW+SECURITY_READ;
-    $worldLevel = SECURITY_OVERVIEW+SECURITY_READ;
-
-    $query = "INSERT INTO $table (xar_modid, xar_itemtype, xar_itemid, xar_userlevel, xar_grouplevel, xar_worldlevel)
-              VALUES ( ?, ?, ?, ?, ?, ? )
+    if( empty($settings) )
+    {
+        return false;
+    }
+    
+    $query = "INSERT INTO $table (xar_modid, xar_itemtype, xar_itemid, xar_userlevel, xar_worldlevel)
+              VALUES ( ?, ?, ?, ?, ? )
     ";
-    $bindvars = array( $modid, $itemtype, $itemid, $userLevel, $groupLevel, $worldLevel );
+    $bindvars = array( $modid, $itemtype, $itemid, $settings['levels']['user'], $settings['levels']['world'] );
     $result = $dbconn->Execute($query, $bindvars);
     if( !$result ) return false;    
     
-    $query = "INSERT INTO $groupLevelTable (xar_modid, xar_itemtype, xar_itemid, xar_gid, xar_level)
-              VALUES ( ?, ?, ?, ?, ? )
-    ";
-    $bindvars = array( $modid, $itemtype, $itemid, $gid, $groupLevel );
-    $result = $dbconn->Execute($query, $bindvars);
-    if( !$result ) return false;
+    foreach( $settings['levels']['groups'] as $gid => $group_level )
+    {
+        $query = "INSERT INTO $groupLevelTable (xar_modid, xar_itemtype, xar_itemid, xar_gid, xar_level)
+                  VALUES ( ?, ?, ?, ?, ? )
+        ";
+        $bindvars = array( $modid, $itemtype, $itemid, $gid, $group_level );
+        $result = $dbconn->Execute($query, $bindvars);
+        if( !$result ) return false;
+    }
     
     return true;
 }

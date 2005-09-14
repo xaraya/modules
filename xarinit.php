@@ -61,6 +61,7 @@ function security_upgrade($oldversion)
     switch($oldversion) {
         case '0.1.0':
         case '0.1.1':
+        case '0.5.0':
             // Code to upgrade from version 1.1.0 goes here
             $schema = new adoSchema( $dbconn );
             $schema->setPrefix( xarDBGetSiteTablePrefix() . '_' );
