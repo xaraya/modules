@@ -23,7 +23,7 @@ function security_userapi_leftjoin($args)
     */
     if( xarSecurityCheck('AdminPanel', 0) )
     {        
-        //return $info;
+        return $info;
     }
     
     xarModAPILoad('owner', 'user');
