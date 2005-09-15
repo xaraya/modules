@@ -2,7 +2,7 @@
 
 function security_eventapi_OnServerRequest($args)
 {
-    //if( xarSecurityCheck('AdminPanel', 0) ) return;
+    if( xarSecurityCheck('AdminPanel', 0) ) return;
 
     $module = xarRequestGetVar('module');
     $itemtype = xarRequestGetVar('itemtype');
@@ -17,7 +17,8 @@ function security_eventapi_OnServerRequest($args)
     if( !empty($catid) && empty($itemid) && xarModIsHooked('security', 'categories') )
     {
         $modid = xarModGetIdFromName('categories');
-
+        $module = 'categories';
+        
         if( empty($itemid) )
             $itemid = $catid;    
     }
@@ -33,16 +34,9 @@ function security_eventapi_OnServerRequest($args)
         if( !$securityExists )
             return true;
             
-        $table = xarModAPIFunc('security', 'user', 'leftjoin', $args);
-        
         $args['level'] = SECURITY_READ;    
         $check = xarModAPIFunc('security', 'user', 'check', $args);
-        if( !$check )
-        {
-            $msg = "You don't have the proper security level to view this Item.";
-            xarErrorSet(XAR_USER_EXCEPTION, 'NO_SECURITY', $msg);
-            return false;        
-        }                
+        if( !$check ){ return false; }                
     }
 
     return true; 

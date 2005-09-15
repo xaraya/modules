@@ -15,7 +15,7 @@ function security_admin_enablemodulesecurity($args)
     xarVarFetch('user_level', 'int', $user_level, $default_user_level, XARVAR_NOT_REQUIRED);
     xarVarFetch('group_level','int', $group_level,$default_group_level, XARVAR_NOT_REQUIRED);
     xarVarFetch('world_level','int', $world_level,$default_world_level, XARVAR_NOT_REQUIRED);
-    xarVarFetch('uid',        'str', $uid, xarUserGetVar('uid'), XARVAR_NOT_REQUIRED);
+    xarVarFetch('uid',        'str', $uid, xarUserGetVar('uid'));
     xarVarFetch('group',      'int', $gid,         null, XARVAR_NOT_REQUIRED);
     xarVarFetch('submit',     'str', $submit,      null, XARVAR_NOT_REQUIRED);
     
@@ -43,7 +43,7 @@ function security_admin_enablemodulesecurity($args)
                 break;
             }
         }
-        //var_dump($cols);
+
         if( !isset($itemIdCol) )
         {
             $msg = 'Error! Could not find the primary key';
@@ -51,7 +51,8 @@ function security_admin_enablemodulesecurity($args)
             return false;
         }    
 
-        var_dump($uid);
+        if( empty($uid) ){ $uid = xarUserGetVar('uid'); }
+
         // Now get all ids from DB
         $query = "SELECT $itemIdCol, $uid FROM $table ";
         $rows = $dbconn->Execute($query);   
@@ -63,12 +64,17 @@ function security_admin_enablemodulesecurity($args)
                 'itemtype'   => $itemtype, 
                 'itemid'     => $itemid,
                 'uid'        => $uid,
-                'userLevel'  => $user_level,
-                'groupLevel' => $group_level,
-                'worldLevel' => $world_level,
-                'gid'        => $gid 
+                'settings' => array(
+                    'levels' => array(
+                        'user'  => $user_level,
+                        'world' => $world_level,
+                        'groups' => array(
+                            $gid => $group_level
+                        )
+                    )
+                ) 
             );
-            var_dump($uid);
+
             $exists = xarModAPIFunc('security', 'user', 'securityexists', $secArgs);
             if( !$exists )
                 xarModAPIFunc('security', 'admin', 'create', $secArgs);
