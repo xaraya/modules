@@ -217,7 +217,7 @@ function helpdesk_userapi_gettickets($args)
     { $results = $dbconn->Execute($sql, $bindvars); }
     else 
     { $results = $dbconn->SelectLimit($sql, $numitems, $startnum-1, $bindvars);  }
-    var_dump($sql);
+
     if( !$results ){ return false; }
 
     if( $count == true ){ return $results->fields[0]; }
