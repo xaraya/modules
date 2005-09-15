@@ -37,9 +37,9 @@ function security_userapi_leftjoin($args)
     
     $xartable =& xarDBGetTables();
        
-    $info['table'] = $xartable['security'] . ', ' . 
-                     $xartable['security_group_levels'] . ', ' .
-                     $xartable['owner'] . ' ';
+    //$info['table'] = $xartable['security']; // . ', ' . 
+                     //$xartable['security_group_levels'] . ', ' .
+                     //$xartable['owner'] . ' ';
 
     $info['iid'] = "{$xartable['security']}.xar_itemid";
 
@@ -48,36 +48,48 @@ function security_userapi_leftjoin($args)
     $secGroupLevelTable = $xartable['security_group_levels'];
     $ownerTable = $xartable['owner'];
 
-    $where[] = " $secTable.xar_modid    = $ownerTable.xar_modid ";
-    $where[] = " $secTable.xar_itemtype = $ownerTable.xar_itemtype ";
-    $where[] = " $secTable.xar_itemid   = $ownerTable.xar_itemid ";
-    $where[] = " $secTable.xar_modid    = $secGroupLevelTable.xar_modid ";
-    $where[] = " $secTable.xar_itemtype = $secGroupLevelTable.xar_itemtype ";
-    $where[] = " $secTable.xar_itemid   = $secGroupLevelTable.xar_itemid ";
+    $left = array();
     
     if( !empty($modid) )
     {
-        $where[] = " $secTable.xar_modid = $modid ";
+        $left[] = " $secTable.xar_modid = $modid ";
     }
     if( !empty($itemtype) )
     {
-        $where[] = " $secTable.xar_itemtype = $itemtype ";
-    }
-    
+        $left[] = " $secTable.xar_itemtype = $itemtype ";
+    }    
     if( !empty($iids) )
     {
         if( is_string($iids) )
-            $where[] = "$secTable.xar_itemid = $iids";
+            $left[] = "$secTable.xar_itemid = $iids";
         else if( is_array($iids) )
             $where[] = "$secTable.xar_itemid IN ( " . join(', ', $iids) . " )";
         
     }
     else if( !empty($itemid) )
     {
-        $where[] = "$secTable.xar_itemid = $itemid";
-    }
+        $left[] = "$secTable.xar_itemid = $itemid";
+    }    
     
-   // User Check
+    if( count($left) > 0  )
+    {
+        $left_join = " LEFT JOIN $secTable ON " . join(' AND ', $left);
+    }
+
+    $left_join .= " 
+        LEFT JOIN $ownerTable ON 
+            $secTable.xar_modid    = $ownerTable.xar_modid AND
+            $secTable.xar_itemtype = $ownerTable.xar_itemtype AND
+            $secTable.xar_itemid   = $ownerTable.xar_itemid 
+    ";
+    $left_join .= " 
+        LEFT JOIN $secGroupLevelTable ON 
+            $secTable.xar_modid    = $secGroupLevelTable.xar_modid AND
+            $secTable.xar_itemtype = $secGroupLevelTable.xar_itemtype AND
+            $secTable.xar_itemid   = $secGroupLevelTable.xar_itemid 
+    ";    
+        
+    // User Check
     $secCheck[] = " ( $secTable.xar_userlevel & $level AND $ownerTable.xar_uid = $currentUserId ) ";
 
     //Check Groups
@@ -97,6 +109,8 @@ function security_userapi_leftjoin($args)
         $info['where'] = ' ( ' . join(' AND ', $where) . ' ) ';
         if( !empty($exceptions) ){ $info['where'] = " ( {$info['where']} OR $exceptions ) "; }
     }
+    
+    $info['left_join'] = $left_join;
     
     return $info;
 }
