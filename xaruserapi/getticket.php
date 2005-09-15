@@ -21,37 +21,74 @@ function helpdesk_userapi_getticket($args)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $db_table = $xartable['helpdesk_tickets'];
-
-    $sql = "SELECT  xar_priorityid,
-                    xar_sourceid,
-                    xar_openedby,
-                    xar_subject,
-                    xar_domain,
-                    xar_date,
-                    xar_statusid,
-                    xar_assignedto,
-                    xar_closedby,
-                    xar_id,
-                    xar_updated,
-                    xar_name,
-                    xar_phone
-            FROM    $db_table
-            WHERE   xar_id = ?";
+    
+    /*
+        Start building parts of the query
+    */
+    $fields = array(
+        'xar_priorityid',
+        'xar_sourceid',
+        'xar_openedby',
+        'xar_subject',
+        'xar_domain',
+        'xar_date',
+        'xar_statusid',
+        'xar_assignedto',
+        'xar_closedby',
+        'xar_id',
+        'xar_updated',
+        'xar_name',
+        'xar_phone'
+    );
+    $tables = array($db_table);
+    $where = array('xar_id = ?');
+    $bindvars = array($tid);
+    
+    /*
+        NEED TO JOIN WITH SECURITY MODULE
+    */
+    if( xarModIsAvailable('security') )
+    {
+        $security_def = xarModAPIFunc('security', 'user', 'leftjoin', 
+            array(
+                'modid' => xarModGetIdFromName('helpdesk'),
+                'itemtype' => 1,
+                'level' => isset($security_level) ? $security_level : null,
+                // This exception insures that the tech assigned to the ticket can see it.
+                'exception' => 'xar_assignedto = ' . $dbconn->qstr(xarUserGetVar('uid'))
+            )
+        );        
+        if( count($security_def) > 0 )
+        {
+            $tables[] = $security_def['table'];
+            $where[] = "( {$security_def['where']} )";
+            $where[] = " {$security_def['iid']} = $db_table.xar_id";
+        }
+    }    
+    
+    /*
+        Build the query
+    */
+    $sql  = 'SELECT ' . join(', ', $fields);
+    $sql .= ' FROM '  . join(', ', $tables);
+    $sql .= ' WHERE ' . join(', ', $where);
 
     $results = $dbconn->Execute($sql, array($tid));
-    if (!$results) { return false; }
+    if( !$results ){ return false; }
+    
+    if( $results->EOF ){ return false; }
     
     list($priorityid, $sourceid, $openedby,   $subject,  $domain,
          $ticketdate, $statusid, $assignedto, $closedby, $ticket_id, 
          $lastupdate, $name,     $phone) = $results->fields;
 
-
     $cats = xarModAPIFunc('categories', 'user', 'getitemcats', 
-                          array('modid'    => 910,
-                                'itemtype' => 1,
-                                'itemid'   => $ticket_id,
-                               )
-                         );
+        array(
+            'modid'    => 910,
+            'itemtype' => 1,
+            'itemid'   => $ticket_id,
+        )
+    );
                                            
     $fieldresults = array(
         'tid'           => $ticket_id,
@@ -61,8 +98,6 @@ function helpdesk_userapi_getticket($args)
         'prioritycolor' => xarModAPIFunc('helpdesk', 'user', 'get', array('object' => 'priority', 'itemid' => $priorityid, 'field'=>'color')),
         'source'        => xarModAPIFunc('helpdesk', 'user', 'get', array('object' => 'source', 'itemid'   => $sourceid)),
         'openedby'      => $openedby,
-        // NOTE : This statement must be done, if $openedby is null the the XarUserGetVar
-        //        returns the name of the user running the app, which is very wrong to do
         'openedbyname'  => !empty($openedby) ? xarUserGetVar('name', $openedby) : '',
         'subject'       => $subject,
         'domain'        => $domain,
@@ -74,7 +109,8 @@ function helpdesk_userapi_getticket($args)
         'closedbyname'  => !empty($closedby) ? xarUserGetVar('name', $closedby) : '',
         'updated'       => xarModAPIFunc('helpdesk', 'user', 'formatdate', array('date' => $lastupdate)),
         'categories'    => $cats
-        );
+    );
+    
     return $fieldresults;
 }
 ?>

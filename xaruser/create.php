@@ -8,8 +8,9 @@
 function helpdesk_user_create($args)
 {
     $allowanonadd = xarModGetVar('helpdesk', 'Anonymous Can Submit'); 
+    
     if (empty($allowanonadd)){
-        if (!xarSecurityCheck('readhelpdesk')) return;
+        if (!xarSecurityCheck('readhelpdesk')) return false;
     }
 
     $data['enforceauthkey'] = xarModGetVar('helpdesk', 'EnforceAuthKey');

@@ -18,7 +18,7 @@
     </p>
 <xar:else />
 
-<form action="#xarModURL('helpdesk', 'user', 'processsearch')#" method="post" name="searchtickets">
+<form action="#xarModURL('helpdesk', 'user', 'view')#" method="post" name="searchtickets">
     <input type="hidden" name="userid" value="#$userid#" />
     <xar:if condition="!$EditAccess">
         <input type="hidden" name="ticketsource" value="1" />
@@ -32,7 +32,7 @@
 
     <div class="xar-form-input-wrapper">
         <label class="xar-form-label"><xar:mlstring>Fields to include:</xar:mlstring></label>
-        <input type="checkbox" name="subject" value="1" />
+        <input type="checkbox" name="search_fields[]" value="subject" />
         <xar:mlstring>Subject</xar:mlstring>
     </div>
 

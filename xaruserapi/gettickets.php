@@ -19,6 +19,10 @@ function helpdesk_userapi_gettickets($args)
     if (!isset($numitems)) {
         $numitems = 20;
     }
+    
+    if( !isset($count) ){
+        $count = false;
+    }
 
     // Database information
     $dbconn         =& xarDBGetConn();
@@ -29,182 +33,198 @@ function helpdesk_userapi_gettickets($args)
     
     xarVarFetch('override',  'str:1:', $override,  null,  XARVAR_NOT_REQUIRED);
 
+    /*
+        Init query parts
+    */
+    if( $count == true )
+    {
+        $fields = array("COUNT($helpdesktable.xar_id)"); 
+    }
+    else 
+    {
+        $fields = array(
+            "$helpdesktable.xar_id", "xar_date", "xar_subject", "xar_statusid",
+            "xar_priorityid", "xar_updated", "xar_assignedto", "xar_openedby",
+            "xar_closedby"
+        );
+    }
+    $tables = array($helpdesktable);            
+    $from ='';
+    $left_join = array();
+    $where = array();
+    $bindvars = array();
+    
     //Joins on Catids
     if(!empty($catid))
     {
         $categoriesdef = xarModAPIFunc('categories', 'user', 'leftjoin', 
-                              array('modid'    => 910,
+                              array('modid'    => xarModGetIdFromName('helpdesk'),
                                     'itemtype' => 1,
                                     'cids'     => array($catid),
                                     'andcids'  => 1));
     }
+
+    /*
+        If the security module is installed and ready to go, get ready to do a left join
+    */
+    if( xarModIsAvailable('security') )
+    {
+        $security_def = xarModAPIFunc('security', 'user', 'leftjoin', 
+            array(
+                'modid' => xarModGetIdFromName('helpdesk'),
+                'itemtype' => 1,
+                'level' => isset($level) ? $level : null,
+                // This exception insures that the tech assigned to the ticket can see it.
+                'exception' => 'xar_assignedto = ' . $dbconn->qstr(xarUserGetVar('uid'))
+            )
+        );        
+        if( count($security_def) > 0 )
+        {
+            $tables[] = $security_def['table'];
+            $where[] = "( {$security_def['where']} )";
+            $where[] = " {$security_def['iid']} = $helpdesktable.xar_id";
+        }
+    }    
     
     // Get items Ticket Number/Date/Subject/Status/Last Update
-    $sql = "
-        SELECT DISTINCT  
-            $helpdesktable.xar_id, xar_date, xar_subject, xar_statusid,
-            xar_priorityid, xar_updated, xar_assignedto, xar_openedby,
-            xar_closedby
-        FROM $helpdesktable 
-    ";
+    $sql  = ' SELECT ' . join(', ', $fields);
+    $sql .= ' FROM ' .join(', ', $tables);
                 
-    $from ='';
-    $where = array();
-    $bindvars = array();
-    if (!empty($catid) && count(array($catid)) > 0) 
+    if( !empty($catid) && count(array($catid)) > 0 ) 
     {
         // add this for SQL compliance when there are multiple JOINs
         // Add the LEFT JOIN ... ON ... parts from categories
-        $from .= ' LEFT JOIN ' . $categoriesdef['table'];
-        $from .= ' ON ' . $categoriesdef['field'] . ' = ' . $helpdesktable . '.xar_id';
+        $left_join[] = ' LEFT JOIN ' . $categoriesdef['table']
+            . ' ON ' . $categoriesdef['field'] . ' = ' . $helpdesktable . '.xar_id';
         
-        if (!empty($categoriesdef['more'])) 
+        if( !empty($categoriesdef['more']) ) 
         {
-            $from .= $categoriesdef['more'];
+            $left_join[] = $categoriesdef['more'];
         }
         
         $where[] = $categoriesdef['where'];
-        $sql .= $from;
     }
     
-    switch($selection) {
-        case 'UNASSIGNED':            
-            xarSessionSetVar('ResultTitle', xarML('Unassigned Tickets'));
-            $where[] = "xar_assignedto < ?";
-            $bindvars[] = 2;
-            break;
+    /*
+        Runs a couple conditions on the tickets
+        
+        TODO:
+            Limit selections to 
+                MY  - Tickets user created, assigned to user
+                ALL - All Tickets using only security filters
+                MYASSIGNED - Tickets assigned to user
+                UNASSIGNED - Tickets assigned to no one
+    */
+    switch($selection) 
+    {
         case 'MYALL':
             xarSessionSetVar('ResultTitle', xarML('All Your Tickets'));
-            $where[] = "xar_openedby = ?";
+            $where[] = " ( xar_openedby = ? OR xar_assignedto = ? ) ";
+            $bindvars[] = $userid;
             $bindvars[] = $userid;
             break;
-        case 'MYOPEN':
-            xarSessionSetVar('ResultTitle', xarML('All Your Open Tickets'));
-            $where[] = "xar_openedby = ?";
-            $where[] = "xar_statusid != ? ";
-            $bindvars[] = $userid;
-            $bindvars[] = 3;
-            break;
-        case 'MYCLOSED':
-            xarSessionSetVar('ResultTitle', xarML('All Your Closed Tickets'));
-            $where[] = "xar_openedby = ?";
-            $where[] = "xar_statusid = ?";
-            $bindvars[] = $userid;
-            $bindvars[] = 3;
-            break;
+            
         case 'ALL':
             xarSessionSetVar('ResultTitle', xarML('All Tickets in Database'));
             break;
-        case 'OPEN':
-            xarSessionSetVar('ResultTitle', xarML('All Open Tickets'));
-            $where[] = "xar_statusid != ?";
-            $bindvars[] = 3;
-            break;
-        case 'CLOSED':
-            xarSessionSetVar('ResultTitle', xarML('All Closed Tickets'));
-            $where[] = "xar_statusid = ?";
-            $bindvars[] = 3;
-            break;
+            
         case 'MYASSIGNEDALL':
             xarSessionSetVar('ResultTitle', xarML('All Your Assigned Tickets'));
             $where[] = "xar_assignedto = ?";
             $bindvars[] = $userid;
             break;
-        case 'MYASSIGNEDOPEN':
-            xarSessionSetVar('ResultTitle', xarML('All Your Open Assigned Tickets'));
-            $where[] = "xar_assignedto = ?";
-            $where[] = "xar_statusid != ?";
-            $bindvars[] = $userid;
-            $bindvars[] = 3;
-            break;
-        case 'MYASSIGNEDCLOSED':
-            xarSessionSetVar('ResultTitle', xarML('All Your Closed Assigned Tickets'));
-            $where[] = "xar_assignedto = ?";
-            $where[] = "xar_statusid = ?";
-            $bindvars[] = $userid;
-            $bindvars[] = 3;
+            
+        case 'UNASSIGNED':            
+            xarSessionSetVar('ResultTitle', xarML('Unassigned Tickets'));
+            $where[] = "xar_assignedto < ?";
+            $bindvars[] = 2;
             break;
     }
     
     // Status filter code
-    if(!empty($statusfilter)){
+    if( !empty($statusfilter) )
+    {
         $where[] = "xar_statusid = ? ";
         $bindvars[] = $statusfilter;
     }
     
+    /*
+        keywords used in searching tickets
+    */
     $whereor = array();
-    if(!empty($keywords) && !empty($subject))
+    if( !empty($keywords) && !empty($search_fields) )
     {
         $words = explode(" ", $keywords);
-        foreach($words as $word)
+        foreach( $search_fields as $field )
         {
-            $whereor[] = "(xar_subject LIKE ?)";
-            $bindvars[] = $dbconn->qstr("%$word%");
+            if( $field != 'subject' ){ break; }
+            foreach($words as $word)
+            {
+                $whereor[] = "(xar_$field LIKE " . $dbconn->qstr("%$word%") . ")";
+            }
         }
-    }
+    }    
     
-    if(!empty($userid) && !xarSecurityCheck('edithelpdesk', 0))
+    /*
+        Start putting the condition parts of the query together
+    */
+    if( count($left_join) > 0 )
     {
-        $where[] = "xar_openedby = ?";
-        $bindvars[] = $userid;
+        $sql .= join(' ', $left_join);
     }
     
+    if(count($whereor) > 0)
+    {
+        $where[] = ' ( ' . join(' OR ', $whereor) . ' ) ';
+    }
     if(count($where) > 0)
     {
         $sql .= ' WHERE ' . join(' AND ', $where);
     }
-    if(count($whereor) > 0)
-    {
-        if(count($where) == 0)
-        {
-            $sql .= ' WHERE ' . join(' OR ', $whereor);        
-        }
-        else
-        {
-            $sql .= ' OR ' . join(' OR ', $whereor);
-        }
-    }
     
     switch($sortorder) 
     {
-    case 'TICKET_ID':
-        $sql .= " ORDER BY xar_id $order";
-        break;
-    case 'DATEUPDATED':
-        $sql .= " ORDER BY xar_lastupdate $order";
-        break;
-    case 'DATE':
-        $sql .= " ORDER BY xar_date $order";
-        break;
-    case 'SUBJECT':
-        $sql .= " ORDER BY xar_subject $order";
-        break;
-    case 'PRIORITY':
-        $sql .= " ORDER BY xar_priorityid $order";
-        break;
-    case 'STATUS':
-        $sql .= " ORDER BY xar_statusid $order";
-        break;
-    case 'OPENEDBY':
-        $sql .= " ORDER BY xar_openedby $order";
-        break;
-    case 'ASSIGNEDTO':
-        $sql .= " ORDER BY xar_assignedto $order";
-        break;
-    case 'CLOSEDBY':
-        $sql .= " ORDER BY xar_closedby $order";
-        break;
+        case 'TICKET_ID':
+            $sql .= " ORDER BY xar_id $order";
+            break;
+        case 'DATEUPDATED':
+            $sql .= " ORDER BY xar_lastupdate $order";
+            break;
+        case 'DATE':
+            $sql .= " ORDER BY xar_date $order";
+            break;
+        case 'SUBJECT':
+            $sql .= " ORDER BY xar_subject $order";
+            break;
+        case 'PRIORITY':
+            $sql .= " ORDER BY xar_priorityid $order";
+            break;
+        case 'STATUS':
+            $sql .= " ORDER BY xar_statusid $order";
+            break;
+        case 'OPENEDBY':
+            $sql .= " ORDER BY xar_openedby $order";
+            break;
+        case 'ASSIGNEDTO':
+            $sql .= " ORDER BY xar_assignedto $order";
+            break;
+        case 'CLOSEDBY':
+            $sql .= " ORDER BY xar_closedby $order";
+            break;
     }
     
-    $pagerows = xarModGetVar('helpdesk', 'Default rows per page');
-    --$startnum;
-    $sql .= " LIMIT  $startnum , $numitems";
+    if( $count == true )
+    { $results = $dbconn->Execute($sql, $bindvars); }
+    else 
+    { $results = $dbconn->SelectLimit($sql, $numitems, $startnum-1, $bindvars);  }
+    var_dump($sql);
+    if( !$results ){ return false; }
 
-    $results = $dbconn->Execute($sql, $bindvars); //$numitems, $startnum-1);
-    // Check for an error
-    if (!$results) { return false; }
-
-    // Put items into result array
+    if( $count == true ){ return $results->fields[0]; }
+    
+    /*
+        Put items into result array
+    */
     $tickets = array();
     while( list($tid,        $ticketdate, $subject, $statusid, $priorityid, $lastupdate,
                 $assignedto, $openedby,   $closedby) = $results->fields ) 

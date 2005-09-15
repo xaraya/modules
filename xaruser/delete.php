@@ -7,20 +7,26 @@ function helpdesk_user_delete($args)
     xarVarFetch('itemtype',   'int',     $itemtype,   1,     XARVAR_NOT_REQUIRED);
     
     if( !xarModAPILoad('helpdesk', 'user') ) { return false; }
+    if( !xarModAPILoad('security', 'user') ) { return false; }
+    
+    /*
+        Security check to prevent un authorized users from deleting it
+    */
+    $has_security = xarModAPIFunc('security', 'user', 'check',
+        array(
+            'modid'     => xarModGetIDFromName('helpdesk'),
+            'itemtype'  => $itemtype,
+            'itemid'    => $tid,
+            'level'     => SECURITY_WRITE
+        )
+    );
+    if( !$has_security ){  return false; }
          
-    $isticketowner = xarModAPIFunc('helpdesk', 'user', 'ticketowner', 
-                                   array('ticket_id' => $tid, 
-                                         'userid'    => xarUserGetVar('uid')));
-
-    if( !$isticketowner && !xarSecurityCheck('deletehelpdesk', 0) ) {
-        $msg = xarML('Illegal Access - You are not allowed to be here!');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return false;
-    }
-
     if( !empty($confirm) )
     {
+        $enforceauthkey = xarModGetVar('helpdesk', 'EnforceAuthKey');
+        if ( $enforceauthkey && !xarSecConfirmAuthKey() ){ return false; }
+
         $item = array();
         $item['objectid'] = $tid;
         $item['itemtype'] = $itemtype;
@@ -34,10 +40,6 @@ function helpdesk_user_delete($args)
     
     $data = array();
     $data['tid'] = $tid;
-    $data['UserLoggedIn']   = xarUserIsLoggedIn();
-    $data['enforceauthkey'] = xarModGetVar('helpdesk', 'EnforceAuthKey');
-    $data['username'] = xarUserGetVar('uname');
-    $data['userid']   = xarUserGetVar('uid');
     
     return $data;
 }

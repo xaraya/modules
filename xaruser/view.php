@@ -4,30 +4,24 @@
 
    @param $selection - The Key of what is being viewed (optional)
    @param $startnum - id of item to start the page with (optional)
-   $param $sortorder - The order in which we do the sort (optional)
-   $param $avtivepage - I don't know what this is (optional)
-   @returns data used in a template
+   @param $sortorder - The order in which we do the sort (optional)
+
+   @return module output
 */
 function helpdesk_user_view($args)
 {
     // Get arguments
     extract($args);
 
-    xarVarFetch('selection',    'str:1:',  $selection,  'MYALL',  XARVAR_NOT_REQUIRED);
-    xarVarFetch('sortorder',    'str:1:',  $sortorder,  'TICKET_ID', XARVAR_NOT_REQUIRED);
-    xarVarFetch('order',        'str:1:',  $order,      'ASC',  XARVAR_NOT_REQUIRED);
-    xarVarFetch('startnum',     'str:1:',  $startnum,    1,     XARVAR_NOT_REQUIRED);
-    xarVarFetch('statusfilter', 'str:1:',  $statusfilter,null,  XARVAR_NOT_REQUIRED);
-    if(!xarVarFetch('catid',    'str',     $catid,       null,  XARVAR_NOT_REQUIRED)) {return;}
+    if( !xarVarFetch('selection',    'str:1:',  $selection,  'MYALL',  XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('sortorder',    'str:1:',  $sortorder,  'TICKET_ID', XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('order',        'str:1:',  $order,      'ASC',  XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('startnum',     'str:1:',  $startnum,    1,     XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('statusfilter', 'str:1:',  $statusfilter,null,  XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('catid',        'str',     $catid,       null,  XARVAR_NOT_REQUIRED) ){ return false; }
+     if( !xarVarFetch('search_fields','array',$search_fields, null,  XARVAR_NOT_REQUIRED) ){ return false; }
+     if( !xarVarFetch('keywords',    'str',     $keywords,    null,  XARVAR_NOT_REQUIRED) ){ return false; }
 
-    // if user doesn't have edit access only allow user to view his tickets
-    $EditAccess = xarSecurityCheck('edithelpdesk', 0);
-    if (!$EditAccess && substr($selection, 0, 2) != 'MY') {
-        $msg = xarML('Illegal Access - You are not allowed to be here!');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return false;
-    }
     $data = array();
     $data['menu']    = xarModFunc('helpdesk', 'user', 'menu');
     $data['summary'] = xarModFunc('helpdesk', 'user', 'summaryfooter');
@@ -37,12 +31,6 @@ function helpdesk_user_view($args)
     if (!$data['UserLoggedIn']) {
         return xarTplModule('helpdesk', 'user', 'view', $data);
     }
-
-    $data['username'] = xarUserGetVar('uname');
-    $data['userid']   = xarUserGetVar('uid');
-
-    $data['enforceauthkey'] = xarModGetVar('helpdesk', 'EnforceAuthKey');
-    $viewlimit              = xarModGetVar('helpdesk', 'Default rows per page');
 
     // Get Column View preferences
     $data['showassignedtoinsummary']    = xarModGetVar('helpdesk', 'ShowAssignedToInSummary');
@@ -54,45 +42,67 @@ function helpdesk_user_view($args)
     $data['showpriorityinsummary']      = xarModGetVar('helpdesk', 'ShowPriorityInSummary');
 
     // Lets get the ticket now for the view
-    $data['mytickets_data']  = xarModAPIFunc('helpdesk',
-                                             'user',
-                                             'gettickets',
-                                             array('userid'    => $data['userid'],
-                                                   'catid'     => $catid,
-                                                   'selection' => $selection,
-                                                   'sortorder' => $sortorder,
-                                                   'order'     => $order,
-                                                   'startnum'  => $startnum,
-                                                   'statusfilter' => $statusfilter));
-    $totaltickets = sizeOf($data['mytickets_data']);
+    $data['mytickets_data']  = xarModAPIFunc('helpdesk', 'user', 'gettickets',
+        array(
+            'userid'       => xarUserGetVar('uid'),
+            'catid'        => $catid,
+            'selection'    => $selection,
+            'sortorder'    => $sortorder,
+            'order'        => $order,
+            'startnum'     => $startnum,
+            'statusfilter' => $statusfilter,
+            'search_fields'=> $search_fields,
+            'keywords'     => $keywords
+        )
+    );
+    /**
+        Counts the number of tickets in the system
+    */
+    $totaltickets  = xarModAPIFunc('helpdesk', 'user', 'count_tickets',
+        array(
+            'userid'       => xarUserGetVar('uid'),
+            'catid'        => $catid,
+            'selection'    => $selection,
+            'sortorder'    => $sortorder,
+            'order'        => $order,
+            'startnum'     => $startnum,
+            'statusfilter' => $statusfilter,
+            'search_fields'=> $search_fields,
+            'keywords'     => $keywords
+        )
+    );
 
     //Setup args for pager so we don't lose our place
-    $args = array('selection' => $selection,
-                  'sortorder' => $sortorder,
-                  'order'     => $order,
-                  'statusfilter' => $statusfilter,
-                  'startnum' => '%%');
+    $args = array(
+        'selection'    => $selection,
+        'sortorder'    => $sortorder,
+        'order'        => $order,
+        'statusfilter' => $statusfilter,
+        'search_fields'=> $search_fields,
+        'keywords'     => $keywords,
+        'startnum'     => '%%'
+    );
 
-    $data['pager'] = xarTplGetPager($startnum,
-                                    $totaltickets,
-                                    xarModURL('helpdesk', 'user', 'view', $args),
-                                    xarModGetVar('helpdesk', 'Default rows per page'));
+    $url_template   = xarModURL('helpdesk', 'user', 'view', $args);
+    $items_per_page = xarModGetVar('helpdesk', 'Default rows per page');
+    $data['pager']  = xarTplGetPager($startnum, $totaltickets, $url_template, $items_per_page);
 
-    $data['selections'] = array('MYALL'         => xarML('My Tickets'),
-                                'MYOPEN'        => xarML('My Open Tickets'),
-                                'MYCLOSED'      => xarML('My Closed Tickets'),
-                                'ALL'           => xarML('All Tickets'),
-                                'MYASSIGNEDALL' => xarML('My Assigned Tickets'),
-                                'UNASSIGNED'    => xarML('Unassigned Tickets'));
+    $data['selections'] = array(
+        'MYALL'         => xarML('My Tickets'),
+        'ALL'           => xarML('All Tickets'),
+        'MYASSIGNEDALL' => xarML('My Assigned Tickets'),
+        'UNASSIGNED'    => xarML('Unassigned Tickets')
+    );
 
     // Sending state vars back into the form
-    $data['catid'] = $catid;
+    $data['catid']        = $catid;
     $data['selection']    = $selection;
     $data['sortorder']    = $sortorder;
     $data['order']        = $order;
     $data['statusfilter'] = $statusfilter;
-    $data['status'] = xarModAPIFunc('helpdesk', 'user', 'gets',
-                                    array('itemtype' => 3));
+    $data['status']       = xarModAPIFunc('helpdesk', 'user', 'gets', 
+        array('itemtype' => 3)
+    );
 
     return xarTplModule('helpdesk', 'user', 'view', $data);
 }

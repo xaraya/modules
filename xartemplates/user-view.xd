@@ -1,19 +1,14 @@
-<xar:if condition="!empty($catid)">
-    <xar:categories-navigation layout="trails" showchildren="1" module="helpdesk" itemtype="10" catid="$catid" showcatcount="0" showempty="1" selection="$selection" />
-<xar:else />
-    <div class="xar-mod-head">
-        <span class="xar-mod-title">
-        <xar:ml>
-            <xar:mlstring>#(1) - View Ticket</xar:mlstring>
-            <xar:mlvar>#xarModGetDisplayableName('helpdesk')#</xar:mlvar>
-        </xar:ml>
-        </span>
-    </div>
-    <br />
-   <xar:categories-navigation layout="trails" showchildren="1" module="helpdesk" itemtype="10" catid="0" showcatcount="0" showempty="1" />
-</xar:if>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+    <xar:ml>
+        <xar:mlstring>#(1) - View Tickets</xar:mlstring>
+        <xar:mlvar>#xarModGetDisplayableName('helpdesk')#</xar:mlvar>
+    </xar:ml>
+    </span>
+</div>
 
 <div class="xar-mod-body">
+    <xar:categories-navigation layout="trails" showchildren="1" module="helpdesk" itemtype="10" catid="$catid" showcatcount="0" showempty="1" selection="$selection" />
 <xar:if condition="isset($menu)"><xar:var name="menu" /></xar:if>
 
 <xar:if condition="$UserLoggedIn">
@@ -67,6 +62,7 @@
                 <option value="">-------------</option>
                 <option value="MYALL"><xar:mlstring>My Tickets</xar:mlstring></option>
 
+                <xar:comment>
                 <xar:if condition="xarSecurityCheck('edithelpdesk',0) and xarModGetVar('helpdesk', 'Techs see all tickets')">
                 <option value="MYOPEN"><xar:mlstring>My Open Tickets</xar:mlstring></option>
                 </xar:if>
@@ -74,7 +70,7 @@
                 <xar:if condition="xarSecurityCheck('edithelpdesk',0) and xarModGetVar('helpdesk', 'Techs see all tickets')">
                 <option value="MYCLOSED"><xar:mlstring>My Closed Tickets</xar:mlstring></option>
                 </xar:if>
-
+</xar:comment>
                 <xar:if condition="xarSecurityCheck('edithelpdesk',0) and xarModGetVar('helpdesk', 'Techs see all tickets')">
                 <option value="ALL"><xar:mlstring>All Tickets</xar:mlstring></option>
                 </xar:if>
@@ -171,8 +167,8 @@
     <xar:foreach in="$mytickets_data" value="$ticket">
         <xar:set name="$ticket_id">$ticket['ticket_id']</xar:set>
         <tr class="#$class#">
-            <td><a href="#xarModURL('helpdesk', 'user', 'display', array('tid' => $ticket_id, 'uid' => $userid, 'authkey' => xarSecGenAuthKey()))#" title="View Ticket">#$ticket_id#</a>&nbsp;</td>
-            <td><a href="#xarModURL('helpdesk', 'user', 'display', array('tid' => $ticket_id, 'uid' => $userid, 'authkey' => xarSecGenAuthKey()))#" title="View Ticket">#$ticket['subject']#</a>&nbsp;</td>
+            <td><a href="#xarModURL('helpdesk', 'user', 'display', array('tid' => $ticket_id, 'authkey' => xarSecGenAuthKey()))#" title="View Ticket">#$ticket_id#</a>&nbsp;</td>
+            <td><a href="#xarModURL('helpdesk', 'user', 'display', array('tid' => $ticket_id, 'authkey' => xarSecGenAuthKey()))#" title="View Ticket">#$ticket['subject']#</a>&nbsp;</td>
             <xar:if condition="$showstatusinsummary">
             <td>#$ticket['status']#</td>
             </xar:if>

@@ -12,13 +12,14 @@
         Are you sure you want to delete this ticket?
     </p>
 
-    <div class="xar-align-center" style="text-align: center;">
+    <div class="xar-align-center">
         <form action="#xarModURL('helpdesk', 'user', 'delete')#" method="POST">
+            <input type="hidden" name="authid" value="#xarSecGenAuthKey()#"/>        
             <input type="hidden" name="tid" value="#$tid#" />
             <input type="submit" name="confirm" value="#xarML('Confirm')#" />
         </form>
     
         <br />
-            <a href="#xarModURL('helpdesk', 'user', 'view')#"><xar:mlstring>Cancel</xar:mlstring></a>
+        <a href="#xarModURL('helpdesk', 'user', 'view')#"><xar:mlstring>Cancel</xar:mlstring></a>
     </div>
 </div>

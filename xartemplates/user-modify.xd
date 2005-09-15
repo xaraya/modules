@@ -128,20 +128,16 @@
         <legend>Actions</legend>
 
         <div class="xar-form-input-wrapper-after">
-        <xar:if condition="$enforceauthkey">
             <input type="hidden" name="authid" value="#xarSecGenAuthKey()#"/>
-        </xar:if>
-        <input type="hidden" name="userid" value="#$userid#" />
-        <input type="hidden" name="tid"   value="#$tid#" />
-        <input type="hidden" name="confirm" value="true" />
-        <input type="hidden" name="xtra_fields" value="#$EditAccess#" />
-        
-        <xar:if condition="$enabledimages">
-            <a href="javascript:document.modify.submit();" title="Modify Ticket">
-            <img src="#xarTplGetImage('modify.gif', 'helpdesk')#" border="0"/></a>
-        <xar:else />
-            <input type="submit" name="Update" value="Update" class="xar-form-textlong" />
-        </xar:if>
+            <input type="hidden" name="tid"   value="#$tid#" />
+            <input type="hidden" name="confirm" value="true" />
+            
+            <xar:if condition="$enabledimages">
+                <a href="javascript:document.modify.submit();" title="Modify Ticket">
+                <img src="#xarTplGetImage('modify.gif', 'helpdesk')#" border="0"/></a>
+            <xar:else />
+                <input type="submit" name="Update" value="Update" class="xar-form-textlong" />
+            </xar:if>
         </div>
         
     </fieldset>                
