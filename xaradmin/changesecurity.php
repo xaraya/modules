@@ -68,7 +68,10 @@ function security_admin_changesecurity($args)
     /*
         These groups are used in the Add groups menu thing to create new group privs
     */
-    $groups = xarModAPIFunc('roles', 'user', 'getancestors', array('uid' => $uid));
+    if( xarSecurityCheck('AdminPanel', 0) )
+        $groups = $all_groups;
+    else
+        $groups = xarModAPIFunc('roles', 'user', 'getancestors', array('uid' => $uid));
     $tmp = array();
     foreach ($groups as $key => $group) 
     {
