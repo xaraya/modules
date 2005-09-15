@@ -1,27 +1,30 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Multisites Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Administration Configuration</xar:mlstring></h2><br />
-<div align="center">
-<xar:set name="$btntxt"><xar:mlstring>Update Admin Configuration</xar:mlstring></xar:set>
-<form method="post" action="&xar-modurl-multisites-admin-updateadminconfig;" method="post" enctype="application/x-www-form-urlencoded">
-    <input type="hidden" name="authid" value="&xar-var-authid;" />
-        <table border="0" width="98%" align="center">
-              <th align="center" valign="middle" colspan="2">
-                    <xar:mlstring>Admin Options</xar:mlstring>
-                </th>
-              <tr align="left" valign="middle">
-                  <td width="40%"><br />
-                      <xar:mlstring>Number of site listings per page:</xar:mlstring>
-                  </td>
-                  <td><br />
-                      <input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#xarModGetVar('multisites', 'itemsperpage')#" />
-                  </td>
-              </tr>
-              <tr align="center" valign="middle">
-                  <td colspan="2"><br /><br /><input type="submit" value="#$btntxt#"  tabindex="3" />
-                  </td>
-              </tr>
-         </table>
- </form>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Multisites Administration</xar:mlstring></span>
 </div>
+
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Administration Configuration</xar:mlstring></h2>
+
+    <xar:set name="$btntxt"><xar:mlstring>Update Admin Configuration</xar:mlstring></xar:set>
+    <form class="xar-formwidget" method="post" action="&xar-modurl-multisites-admin-updateadminconfig;" enctype="application/x-www-form-urlencoded">
+        <input type="hidden" name="authid" value="&xar-var-authid;" />
+
+        <fieldset class="formelements xar-norm">
+        <legend><xar:mlstring>Admin Options</xar:mlstring></legend>
+        <p class="param">
+            <label for="itemsperpage" class="xar-form-label">
+                <span class="help" title="#xarML('Number of site listings per page')#">
+                    <xar:mlstring>Number of site listings per page:</xar:mlstring>
+                </span>
+            </label>
+            <input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#xarModGetVar('multisites', 'itemsperpage')#" />
+        </p>
+        </fieldset>
+        
+   </form>
+          <div class="xar-clear-both xar-align-center">
+         <input type="submit" value="#$btntxt#"  tabindex="3" />
+     </div>
+
 </div>
 

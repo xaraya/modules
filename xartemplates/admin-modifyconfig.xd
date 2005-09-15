@@ -1,8 +1,14 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Multisites Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Modify Multisites Configuration</xar:mlstring></h2><br />
-<div align="center">
-<xar:if condition="$modifysite eq 0">
-<xar:set name="$btntxt"><xar:mlstring>Set Multisite Configuration</xar:mlstring></xar:set>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Multisites Administration</xar:mlstring>
+    </span>
+</div>
+<div class="xar-mod-body">
+
+    <h2><xar:mlstring>Modify Multisites Configuration</xar:mlstring></h2>
+
+    <xar:if condition="$modifysite eq 0">
+    <xar:set name="$btntxt"><xar:mlstring>Set Multisite Configuration</xar:mlstring></xar:set>
     <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
         <p><xar:mlstring>This option will gather some server configuration data and then modify your main config.system.php file.
         Once this is complete, this site will become the Master site from which you can create other (sub)sites. Usually this operation is only carried out once. If there is a change in your server configuration, you may need to reconfigure this Master site using this option.<br /><br />
@@ -19,16 +25,16 @@
             </ol>
     </div>
 
-<xar:elseif condition="$modifysite eq 1" />
-<xar:set name="$btntxt"><xar:mlstring>Change Multisite Configuration</xar:mlstring></xar:set>
+    <xar:elseif condition="$modifysite eq 1" />
+    <xar:set name="$btntxt"><xar:mlstring>Change Multisite Configuration</xar:mlstring></xar:set>
      <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-        <p><xar:mlstring><span style="color: red">THIS SITE IS ALREADY CONFIGURED AS THE MASTER MULTISITE SITE.</span><br /><br />
-        You should only make changes to this configuration, if</xar:mlstring>:</p>
-             <ul>
-                
-        <li> <xar:mlstring>You need to add or change the domains or subdomains 
-          extensions that you wish to use with multisites.</xar:mlstring> Note 
-          that if you delete any extensions, any current sites that use this extension 
+        <p><xar:mlstring><span style="color: red">THIS SITE IS ALREADY CONFIGURED AS THE MASTER MULTISITE SITE.</xar:mlstring></span></p>
+        <p><xar:mlstring>You should only make changes to this configuration, if</xar:mlstring>:</p>
+        <ul>
+
+        <li> <xar:mlstring>You need to add or change the domains or subdomains
+          extensions that you wish to use with multisites.</xar:mlstring> Note
+          that if you delete any extensions, any current sites that use this extension
           will not function.</li>
                 <li>
                     <xar:mlstring>You want to change the Master Data directory where subsite information is held. Note that if you do this, you must move any existing site data from your old Master Data Directory to your new one manually. This module will not move it for you.</xar:mlstring>
@@ -38,7 +44,7 @@
                     site.</xar:mlstring>
                 </li>
             </ul>
-           <p><xar:mlstring>If you wish to continue with modifying your Multisites Configuration then</xar:mlstring>:<br /><br />
+           <p><xar:mlstring>If you wish to continue with modifying your Multisites Configuration then</xar:mlstring>:</p>
              <ol>
                 <li>
                     <xar:mlstring>If you are changing your Master SubSite Data folder, create this directory first, and make sure it is writable chmod 777.
@@ -49,7 +55,8 @@
                      When the Master Multisite Configuration is finished, make sure you chmod 444 your master config.system.php!</xar:mlstring>
                 </li>
             </ol>
-           <p><xar:mlstring>If you wish to remove Multisites totally from this site</xar:mlstring>:<br /><br />
+
+           <p><xar:mlstring>If you wish to remove Multisites totally from this site</xar:mlstring>:</p>
              <ol>
                 <li>
                     <xar:mlstring>Chmod 666 /var/config.system.php. Deactivate and Remove the Multisites module in Administration - Modules - View All. Once deactivated, remember to chmod
@@ -60,50 +67,63 @@
                 </li>
             </ol>
     </div>
-</xar:if>
-    <form method="post" action="&xar-modurl-multisites-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded">
+    </xar:if>
+    <form class="xar-formwidget" method="post" action="&xar-modurl-multisites-admin-updateconfig;" enctype="application/x-www-form-urlencoded">
     <input type="hidden" name="authid" value="#$authid#" />
-        
-    <table border="0" width="98%" align="center">
-      <th align="center" valign="middle" colspan="2"> <xar:mlstring>Server Configuration</xar:mlstring> 
-      </th>
-      <tr> 
-        <td align="left" valign="middle" colspan="2"><br /> <xar:mlstring>Multisites 
+
+    <fieldset class="formelements xar-norm">
+        <legend><xar:mlstring>Server Configuration</xar:mlstring></legend>
+
+        <p class="xar-form-container-after">
+         <xar:mlstring>Multisites
           can use one of 2 possible variables, HTTP_HOST, or SERVER_NAME.<br />
-          One or the other may not always work on your system, depending on the 
-          way your server is configured.</xar:mlstring><br /> <br /></td>
-      <tr align="left" valign="middle"> 
-        <td>
-        <span style="margin-left:1.2em;"><xar:mlstring>Your SERVER_NAME value&nbsp;=&nbsp;&nbsp;</xar:mlstring>#$SERVER_NAME#</span><br />
-          <span style="font:bold; margin-left:1.2em;"><xar:mlstring>Your HTTP_HOST value&nbsp;&nbsp;=&nbsp;</xar:mlstring></span><span style="color: red">#$HTTP_HOST#</span>
-        </td>
-        <td><select name="servervar" id="servervar" size="1" tabindex="1">
-            <xar:if condition="xarModGetVar('multisites', 'servervar') eq 'HTTP_HOST'"> 
-            <option value="HTTP_HOST" selected="selected"><xar:mlstring>HTTP_HOST</xar:mlstring></option>
-            <option value="SERVER_NAME"><xar:mlstring>SERVER_NAME</xar:mlstring></option>
-            <xar:elseif condition="xarModGetVar('multisites', 'servervar') eq 'SERVER_NAME'" /> 
-            <option value="HTTP_HOST"><xar:mlstring>HTTP_HOST</xar:mlstring></option>
-            <option value="SERVER_NAME" selected="selected"><xar:mlstring>SERVER_NAME</xar:mlstring></option>
-            </xar:if> </select></td>
-      </tr>
-      <tr align="left" valign="middle"> 
-        <td colspan="2"> <br />
-          <xar:mlstring>If the HTTP_HOST value above displays your correct domain 
-          name, you should make sure HTTP_HOST is selected from the drop down 
-          box. <br />
-          If the domain name for HTTP_HOST is incorrect, only then, change the 
-          value in the drop down box to SERVER_NAME.</xar:mlstring> </td>
-      </tr>
-    </table>
-    <br />
-            <table border="0" width="98%">
-                <th align="center" valign="middle" colspan="2">
-                <xar:mlstring>File Paths &amp; Domain Types</xar:mlstring>
-                  </th>
-                      <tr align="left" valign="middle">
-                          <td colspan="2"><br /><xar:mlstring>All path names are relative to the directory where Xaraya is installed.</xar:mlstring><br /><br />
-                          </td>
-                      </tr>
+          One or the other may not always work on your system, depending on the
+          way your server is configured.</xar:mlstring>
+        </p>
+        <p class="param">
+        <label for="servervar" class="xar-form-label">
+            <span class="help" title="#xarML('SERVER_NAME or HTTP_HOST')#">
+
+                <xar:mlstring>Your SERVER_NAME value&nbsp;=&nbsp;&nbsp;</xar:mlstring>#$SERVER_NAME#
+                <br /><br />
+               <xar:mlstring>Your HTTP_HOST value&nbsp;&nbsp;=&nbsp;</xar:mlstring>
+               <span style="color: red">#$HTTP_HOST#</span>
+
+            </span>
+        </label>
+
+            <select name="servervar" id="servervar" size="1" tabindex="1">
+                <xar:if condition="xarModGetVar('multisites', 'servervar') eq 'HTTP_HOST'">
+                    <option value="HTTP_HOST" selected="selected"><xar:mlstring>HTTP_HOST</xar:mlstring></option>
+                    <option value="SERVER_NAME"><xar:mlstring>SERVER_NAME</xar:mlstring></option>
+                <xar:elseif condition="xarModGetVar('multisites', 'servervar') eq 'SERVER_NAME'" />
+                    <option value="HTTP_HOST"><xar:mlstring>HTTP_HOST</xar:mlstring></option>
+                    <option value="SERVER_NAME" selected="selected"><xar:mlstring>SERVER_NAME</xar:mlstring></option>
+                </xar:if>
+             </select>
+             </p>
+
+          <p class="xar-form-container-after">
+          <xar:mlstring>If the HTTP_HOST value above displays your correct domain
+          name, you should make sure HTTP_HOST is selected from the drop down
+          box.</xar:mlstring>
+          </p>
+          <p class="xar-form-container-after">
+          <xar:mlstring>If the domain name for HTTP_HOST is incorrect, only then, change the
+          value in the drop down box to SERVER_NAME.</xar:mlstring> 
+          </p>
+
+
+        </fieldset>
+
+        <fieldset class="formelements xar-norm">
+            <legend><xar:mlstring>File Paths &amp; Domain Types</xar:mlstring></legend>
+
+              <div class="xar-form-container-after">
+              <p>
+                  <xar:mlstring>All path names are relative to the directory where Xaraya is installed.</xar:mlstring><br /><br />
+              </p>
+              </div>
 <xar:comment>                    <tr align="left" valign="middle">
                         <td width="30%"><br />
                             <xar:mlstring>Default Theme Path</xar:mlstring>:
@@ -121,42 +141,41 @@
                         (/Don't want this changed!)</td>
                     </tr>
 </xar:comment>
-                    <tr align="left" valign="middle">
-                        <td width="30%">
-                            <xar:mlstring>Default Master Data Directory Path</xar:mlstring>:
-                        </td>
-                        <td>
-                        <input type="text" name="masterfolder" id="masterfolder" size="30" maxlength="40" value="#xarModGetVar('multisites', 'masterfolder')#" />
-                        <xar:mlstring>NOTE: Do not enter trailing slashes.</xar:mlstring>
-                        </td>
-                    </tr>
-                    <tr align="left" valign="middle">
-                        <td colspan="2"><br />
-                        </td>
-                    </tr>
-
-                    <tr align="left" valign="middle">
-                        <td width="30%">
+            <p class="param">
+                <label for="masterfolder" class="xar-form-label">
+                    <span class="help" title="#xarML('Master directory')#">
+                        <xar:mlstring>Default Master Data Directory Path</xar:mlstring>:
+                    </span>
+                </label>
+                 <input type="text" name="masterfolder" id="masterfolder" size="30" maxlength="40" value="#xarModGetVar('multisites', 'masterfolder')#" />
+                 <xar:mlstring>NOTE: Do not enter trailing slashes.</xar:mlstring>
+                 
+             </p>
+            <p class="param">
+                <label for="DNexts" class="xar-form-label">
+                    <span class="help" title="#xarML('Domain and subdomain extensions that you are using')#">
                             <xar:mlstring>Domain &amp; subdomain extensions</xar:mlstring>:
-                        </td>
-                        <td>
-                        <input type="text" name="DNexts" id="DNexts" size="30" maxlength="80" value="#$DNexts#" />
-                        <xar:mlstring>Separate each by a comma (,)</xar:mlstring>
-                        </td>
-                    </tr>
-                    <tr align="left" valign="middle">
+                    </span>
+                </label>
+                <input type="text" name="DNexts" id="DNexts" size="30" maxlength="80" value="#$DNexts#" />
+                <xar:mlstring>Separate each by a comma (,)</xar:mlstring>
+            </p>
 
-        <td colspan="2"> <xar:mlstring>The common extensions are .com, .net, .org.
+           <p class="xar-form-container-after">
+           <xar:mlstring>The common extensions are .com, .net, .org.
           However, if for example you use a subdomain or domain such as www.domain.biz
-          as a site, you will need to add the .biz extension to the list.</xar:mlstring><br /><br />
+          as a site, you will need to add the .biz extension to the list.</xar:mlstring>
+          </p>
+          <p class="xar-form-container-after">
           If you want to use domain extensions to discriminate your sites eg mysite.com will be a different site to mysite.net,
-          then make sure the text field box is totally blank.</td>
-                   <tr align="center" valign="middle">
-                      <td colspan="2"><br /><br /><input type="submit" value="#$btntxt#"  tabindex="3" />
-                      </td>
-                  </tr>
-         </table>
- </form>
-</div>
+          then make sure the text field box is totally blank.
+          </p>
+
+          </fieldset>
+
+        <div class="xar-clear-both xar-align-center">
+            <input type="submit" value="#$btntxt#"  tabindex="3" />
+        </div>
+    </form>
 </div>
 

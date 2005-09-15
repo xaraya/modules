@@ -1,33 +1,31 @@
 <xar:comment> $Id </xar:comment>
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Multisites Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>View All Sites</xar:mlstring></h2><br />
-<div style="margin: auto;">
-<xar:if condition="$mastersite eq false">
-    <table border="0" width="100%" align="center">
-         <tr align="left" valign="middle">
-             <td>
-                <xar:mlstring>The Master Multisite has not yet been configured!
-                              <p>Please configure the Master Site from the menu option Multisites - Master Config.</p>
-                              <p>You can then add new sites through the menu option Multisites - Add Sites.</p>
-                              <p>Return here to View Sites once your have added sites to view!</p></xar:mlstring>
-            </td>
-         </tr>
-    </table>
-<xar:else condition="$mastersite eq true" />
-    <xar:mlstring>Total number of sites, including Master Site:</xar:mlstring> #$siteno#
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Multisites Administration</xar:mlstring></span>
+</div>
 
-    <table width="100%" border="1" cellspacing="0" cellpadding="4">
-    <tr>
-        <th><xar:mlstring>Site</xar:mlstring></th>
-        <th><xar:mlstring>Prefix</xar:mlstring></th>
-        <th><xar:mlstring>DB</xar:mlstring></th>
-        <th><xar:mlstring>Shared</xar:mlstring></th>
-        <th><xar:mlstring>Status</xar:mlstring></th>
-        <th><xar:mlstring>Options</xar:mlstring></th>
-    </tr>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>View All Sites</xar:mlstring></h2>
 
- <xar:foreach in="$items" value="$item">
-    <xar:if condition="$item['mssite'] eq $masterurl">
+    <xar:if condition="$mastersite eq false">
+        <p><xar:mlstring>The Master Multisite has not yet been configured!</xar:mlstring></p>
+        <p><xar:mlstring>Please configure the Master Site from the menu option Multisites - Master Config.</xar:mlstring></p>
+        <p><xar:mlstring>You can then add new sites through the menu option Multisites - Add Sites.</xar:mlstring></p>
+        <p><xar:mlstring>Return here to View Sites once your have added sites to view!</xar:mlstring></p>
+    <xar:else condition="$mastersite eq true" />
+        <xar:mlstring>Total number of sites, including Master Site:</xar:mlstring> #$siteno#
+
+        <table width="100%" border="1" cellspacing="0" cellpadding="4">
+        <tr>
+            <th><xar:mlstring>Site</xar:mlstring></th>
+            <th><xar:mlstring>Prefix</xar:mlstring></th>
+            <th><xar:mlstring>DB</xar:mlstring></th>
+            <th><xar:mlstring>Shared</xar:mlstring></th>
+            <th><xar:mlstring>Status</xar:mlstring></th>
+            <th><xar:mlstring>Options</xar:mlstring></th>
+        </tr>
+
+     <xar:foreach in="$items" value="$item">
+        <xar:if condition="$item['mssite'] eq $masterurl">
 
      <tr>
         <td>#xarVarPrepForDisplay($item['mssite'])#</td>
@@ -84,11 +82,10 @@
    </xar:foreach>
 
 
-</table>
-<p><xar:mlstring>Note: only the Delete function is currently implemented.</xar:mlstring></p>
+    </table>
+    <p><xar:mlstring>Note: only the Delete function is currently implemented.</xar:mlstring></p>
 
 <!-- add the pager here -->
 #$pager#
 </xar:if>
-</div>
 </div>

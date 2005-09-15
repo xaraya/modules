@@ -1,75 +1,81 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Multisites Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Add A New Site</xar:mlstring></h2><br />
-<div align="center">
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Multisites Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Add A New Site</xar:mlstring></h2>
+
 <xar:set name="$btntxt"><xar:mlstring>Create New Site</xar:mlstring></xar:set>
+
 <xar:if condition="$mastersite eq false">
-    <table border="0" width="98%" align="center">
-         <tr align="left" valign="middle">
-             <td>
-                <xar:mlstring>Multisites must be configured first before you can Add a site! <br /><br />
-                              Please configure the master site from the menu option Multisites - Master Config.
-                              <p>The Master site can then return here to Add Sites.</p></xar:mlstring>
-            </td>
-         </tr>
-    </table>
+    <p>
+    <xar:mlstring>Multisites must be configured first before you can Add a site! </xar:mlstring>
+    </p>
+    <p>
+    <xar:mlstring>Please configure the master site from the menu option Multisites - Master Config.
+      The Master site can then return here to Add Sites.</xar:mlstring>
+    </p>
+
 <xar:else condition="$mastersite eq true" />
-<div class="xar-mod-body" align="left">
- <xar:mlstring>Before you continue, please make sure you have ALREADY created your subsite tables. To do this:</xar:mlstring>
+     <p>
+     <xar:mlstring>Before you continue, please make sure you have ALREADY created your subsite tables. To do this:</xar:mlstring>
+     </p>
         <ol>
           <li><xar:mlstring>Protect your master config.system.php file located in the /var directory (copy it out somewhere safe).</xar:mlstring></li>
           <li><xar:mlstring>Run Xaraya Install to create your subsite tables.</xar:mlstring></li>
           <li><xar:mlstring>Put your master config.system.php file back in the /var directory.</xar:mlstring></li>
-          <li><xar:mlstring>Then return here to finalize creation of the subsite.</xar:mlstring></li><br />
-</div>
-<form method="post" action="&xar-modurl-multisites-admin-createsite;" method="post" enctype="application/x-www-form-urlencoded">
-    <input type="hidden" name="authid" value="&xar-var-authid;" />
+          <li><xar:mlstring>Then return here to finalize creation of the subsite.</xar:mlstring></li>
+        </ol>
 
-        <table border="0" width="98%" align="center">
-            <th align="center" valign="middle" colspan="3">
-                <xar:mlstring>Site Parameters</xar:mlstring>
-            </th>
-                <tr align="left" valign="middle">
-                    <td ><br />
+    <form class="xar-formwidget" method="post" action="&xar-modurl-multisites-admin-createsite;" enctype="application/x-www-form-urlencoded">
+        <input type="hidden" name="authid" value="&xar-var-authid;" />
+
+        <fieldset class="formelements xar-norm">
+            <legend><xar:mlstring>Site Parameters</xar:mlstring></legend>
+            <p class="param">
+                <label for="siteDN" class="xar-form-label">
+                    <span class="help" title="#xarML('Site domain nameT')#">
                         <xar:mlstring>Site Domain Name:</xar:mlstring>
-                    </td>
-                    <td><br />
-                        <input type="text" name="siteDN" id="siteDN" size="40" maxlength="60" value="#$siteDN#" />
-                    </td>
-                    <td><br />
-                        <xar:mlstring>Domain or subdomain <span style="color: red">eg hosting.mydomain.com</span></xar:mlstring>
-                    </td>
-                    </tr>
-                    <tr align="left" valign="middle">
-                        <td>
-                            <xar:mlstring>Site Table Prefix:</xar:mlstring>
-                        </td>
-                        <td>
-                        <input type="text" name="msPrefix" id="msPrefix" size="15" maxlength="20" value="#$msPrefix#" />
-                        </td>
-                        <td><xar:mlstring>Prefix of tables for new site. <span style="color: red">You must enter a prefix here.</span></xar:mlstring>
-                        </td>
-                    </tr>
-                    <tr align="left" valign="middle">
-                        <td>
-                            <xar:mlstring>Site Database:</xar:mlstring>
-                        </td>
-                        <td>
-                        <input type="text" name="siteDB" id="siteDB" size="20" maxlength="30" value="#$siteDB#" />
-                        </td>
-                        <td><xar:mlstring>Defaults to the same database as the Master System site</xar:mlstring>
-                        </td>
-                    </tr>
-                    <tr align="left" valign="middle">
-                        <td>
-                            <xar:mlstring>Shared tables prefix (NOT FUNCTIONAL):</xar:mlstring>
-                        </td>
-                        <td>
-                        <input type="text" name="sharedTables" id="sharedTables" size="15" maxlength="20" value="#$sharedTables#" />
-                        </td>
-                        <td><xar:mlstring>LEAVE EMPTY unless you want to share System tables. To share, enter the System Table prefix.</xar:mlstring>
-                        </td>
-                    </tr>
+                    </span>
+                </label>
+                <input type="text" name="siteDN" id="siteDN" size="40" maxlength="60" value="#$siteDN#" />
+            </p>
+             <p class="xar-form-container-after">
+                <xar:mlstring>Domain or subdomain <span style="color: red">eg hosting.mydomain.com</span></xar:mlstring>
+            </p>
 
+            <p class="param">
+                <label for="msPrefix" class="xar-form-label">
+                    <span class="help" title="#xarML('Site domain name')#">
+                            <xar:mlstring>Site Table Prefix:</xar:mlstring>
+                    </span>
+                </label>
+                <input type="text" name="msPrefix" id="msPrefix" size="15" maxlength="20" value="#$msPrefix#" />
+            </p>
+            <p class="xar-form-container-after">
+                <xar:mlstring>Prefix of tables for new site. <span style="color: red">You must enter a prefix here.</span></xar:mlstring>
+            </p>
+            <p class="param">
+                <label for="siteDB" class="xar-form-label">
+                    <span class="help" title="#xarML('Site Database')#">
+                            <xar:mlstring>Site Database:</xar:mlstring>
+                    </span>
+                </label>
+                <input type="text" name="siteDB" id="siteDB" size="20" maxlength="30" value="#$siteDB#" />
+             </p>
+             <p class="xar-form-container-after">
+                <xar:mlstring>Defaults to the same database as the Master System site</xar:mlstring>
+            </p>
+            <p class="param">
+                <label for="sharedTables" class="xar-form-label">
+                    <span class="help" title="#xarML('Shared tables prefix (NOT FUNCTIONAL)')#">
+                            <xar:mlstring>Shared tables prefix (NOT FUNCTIONAL):</xar:mlstring>
+                    </span>
+                </label>
+                <input type="text" name="sharedTables" id="sharedTables" size="15" maxlength="20" value="#$sharedTables#" />
+            </p>
+            <p class="xar-form-container-after">
+                <xar:mlstring>LEAVE EMPTY unless you want to share System tables. To share, enter the System Table prefix.</xar:mlstring>
+            </p>
 <xar:comment> TO DO: Additional options to be added later
 
                     <tr align="left" valign="middle">
@@ -91,23 +97,21 @@
                         </td>
                     </tr>
 </xar:comment>
-                    <tr align="left" valign="middle">
-                        <td>
+            <p class="param">
+                <label for="createdb" class="xar-form-label">
+                    <span class="help" title="#xarML('Create Databas')#">
                             <xar:mlstring>Create Database</xar:mlstring>?
-                        </td>
-                        <td>
-                               <input type="checkbox" name="createdb" id="createdb" value="1" /> /Not functional TO DO
-                        </td>
-                        <td><xar:mlstring>You must have the correct priviledges to create a DATABASE. Create it manually first if you have problems.</xar:mlstring>
-                        </td>
-                   </tr>
-                    <tr align="center" valign="middle">
-                        <td colspan="3"><br /><br /><input type="submit" value="#$btntxt#"  tabindex="3" />
-                    </td>
-                </tr>
-        </table>
+                     </span>
+                </label>
+                <input type="checkbox" name="createdb" id="createdb" value="1" /> /Not functional TO DO
+                <xar:mlstring>You must have the correct priviledges to create a DATABASE. Create it manually first if you have problems.</xar:mlstring>
+            </p>
+            </fieldset>
+            <div class="xar-clear-both xar-align-center">
+                <input type="submit" value="#$btntxt#"  tabindex="3" />
+            </div>
+
  </form>
 </xar:if>
-</div>
 </div>
 

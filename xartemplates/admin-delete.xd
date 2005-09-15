@@ -1,21 +1,22 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Multisites Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Delete A Site</xar:mlstring></h2><br />
-<div align="center">
-<xar:set name="$btntxt"><xar:mlstring>Delete Site</xar:mlstring></xar:set>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Multisites Administration</xar:mlstring></span>
+</div>
+
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Delete A Site</xar:mlstring></h2>
+
+    <xar:set name="$btntxt"><xar:mlstring>Delete Site</xar:mlstring></xar:set>
 
 <xar:if condition="$mastersite eq false">
-    <table border="0" width="100%" align="center">
-         <tr align="left" valign="middle">
-             <td>
+
+   <p>
                 <xar:mlstring>$infomsg</xar:mlstring>
-            </td>
-         </tr>
-    </table>
+   </p>
 <xar:else condition="$mastersite eq true" />
-<div class="xar-mod-body" align="left">
-<xar:mlstring>This option will delete the following site from your multisite database, the site directory in the Master Data directory if chosen as an option below, and the ability to browse to that site.</xar:mlstring>
-</div>
-<form method="post" action="&xar-modurl-multisites-admin-removesite;" method="post" enctype="application/x-www-form-urlencoded">
+    <p>
+        <xar:mlstring>This option will delete the following site from your multisite database, the site directory in the Master Data directory if chosen as an option below, and the ability to browse to that site.</xar:mlstring>
+    </p>
+    <form class="xar-formwidget"  method="post" action="&xar-modurl-multisites-admin-removesite;" enctype="application/x-www-form-urlencoded">
     <input type="hidden" name="authid" value="&xar-var-authid;" />
 
         <table border="0" width="100%" align="center">
@@ -86,6 +87,5 @@
         </table>
  </form>
 </xar:if>
-</div>
 </div>
 

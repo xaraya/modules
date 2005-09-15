@@ -41,8 +41,8 @@ function multisites_admin_modifyconfig()
     }
         $data['authid'] = xarSecGenAuthKey();
 
-        $data['SERVER_NAME'] = $HTTP_SERVER_VARS['SERVER_NAME'];
-        $data['HTTP_HOST']   = $HTTP_SERVER_VARS['HTTP_HOST'];
+        $data['SERVER_NAME'] =xarServerGetVar('SERVER_NAME');
+        $data['HTTP_HOST']   =xarServerGetVar('HTTP_HOST');
         $data['masterfolder']  = xarModGetVar('multisites','masterfolder');
         $data['DNexts']      = xarModGetVar('multisites','DNexts');
 
