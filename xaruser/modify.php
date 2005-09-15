@@ -35,18 +35,38 @@ function helpdesk_user_modify($args)
         );
         if( !$has_security ){ return false; }
         
+        if( !xarVarFetch('userid',     'str:1:',  $userid,  null,  XARVAR_NOT_REQUIRED) ){ return false; }
+        if( !xarVarFetch('name',       'str:1:',  $name,  null,  XARVAR_NOT_REQUIRED) ){ return false; }
+        if( !xarVarFetch('phone',      'str:1:',  $phone,  null,  XARVAR_NOT_REQUIRED) ){ return false; }
+        if( !xarVarFetch('subject',    'str:1:',  $subject,  null,  XARVAR_NOT_REQUIRED) ){ return false; }
+        if( !xarVarFetch('domain',     'str:1:',  $domain,  null,  XARVAR_NOT_REQUIRED) ){ return false; }
+        if( !xarVarFetch('priority',   'str:1:',  $priority,  null,  XARVAR_NOT_REQUIRED) ){ return false; }
+        if( !xarVarFetch('status',     'str:1:',  $statusid,  null,  XARVAR_NOT_REQUIRED) ){ return false; }
+        if( !xarVarFetch('openedby',   'str:1:',  $openedby,  null,  XARVAR_NOT_REQUIRED) ){ return false; }
+        if( !xarVarFetch('assignedto', 'str:1:',  $assignedto,  null,  XARVAR_NOT_REQUIRED) ){ return false; }
+        if( !xarVarFetch('source',     'str:1:',  $source,  null,  XARVAR_NOT_REQUIRED) ){ return false; }
+        if( !xarVarFetch('closedby',   'str:1:',  $closedby,  null,  XARVAR_NOT_REQUIRED) ){ return false; }
+
+        $params = array(
+            'tid'        => $tid,
+            'userid'     => $userid,
+            'name'       => $name,
+            'subject'    => $subject,
+            'domain'     => $domain,
+            'priority'   => $priority,
+            'statusid'   => $statusid,
+            'openedby'   => $openedby,
+            'assignedto' => $assignedto,
+            'source'     => $source,
+            'closedby'   => $closedby
+        );        
+        $result = xarModAPIFunc('helpdesk', 'user', 'update', $params);
+
         $item = array();
         $item['module'] = 'helpdesk';
         $item['itemtype'] = $itemtype;        
         $hooks = xarModCallHooks('item', 'update', $tid, $item);
-        if (empty($hooks)) {
-            $data['hookoutput'] = array();
-        }else {
-            $data['hookoutput'] = $hooks;
-        }
-        
-        $updateresult = xarModAPIFunc('helpdesk', 'user', 'update');
-        
+                
         xarResponseRedirect(xarModURL('helpdesk', 'user', 'view',
             array(
                 'tid'       => $tid,

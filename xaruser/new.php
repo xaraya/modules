@@ -24,12 +24,8 @@ function helpdesk_user_new()
     $data['menu'] = xarModFunc('helpdesk', 'user', 'menu');
     $data['enabledimages'] = xarModGetVar('helpdesk', 'Enable Images');
 
-    // Security check
-    // No need for a security check if Anonymous Adding is enabled:
-    // So ONLY check security if AllowAnonAdd is NOT TRUE
-    if (!$data['allowanonsubmitticket']){
-        if (!xarSecurityCheck('readhelpdesk')) return;
-    }
+    // Maybe use a security check here
+    if( !$data['allowanonsubmitticket'] && !xarUserIsLoggedIn() ){ return false; }
 
     if (!xarVarFetch('itemtype', 'int', $itemtype, 1, XARVAR_NOT_REQUIRED)) return;
 
@@ -37,13 +33,15 @@ function helpdesk_user_new()
     $data['name']     = xarUserGetVar('name');
     $data['userid']   = xarUserGetVar('uid');
 
-    if($data['userisloggedin']){
-    $data['email']    = xarUserGetVar('email');
-    $data['phone']    = ""; //xarUserGetVar('phone');
+    if($data['userisloggedin'])
+    {
+        $data['email']    = xarUserGetVar('email');
+        $data['phone']    = ""; //xarUserGetVar('phone');
     }
-    else{
-    $data['email']    = "";
-    $data['phone']    = ""; //xarUserGetVar('phone');
+    else
+    {
+        $data['email']    = "";
+        $data['phone']    = ""; //xarUserGetVar('phone');
     }
 
     /*
@@ -58,15 +56,12 @@ function helpdesk_user_new()
     $data['status'] = xarModAPIFunc('helpdesk', 'user', 'gets',
                                      array('itemtype' => 3));
 
-    if($data['editaccess']){
+    if( $data['editaccess'] )
+    {
         $data['reps'] = xarModAPIFunc('helpdesk', 'user', 'gets',
                                       array('itemtype' => 10));
         $data['users'] = xarModAPIFunc('roles', 'user', 'getall');
     }
-
-    $data['enforceauthkey'] = xarModGetVar('helpdesk', 'EnforceAuthKey');
-    $data['action']  = xarModURL('helpdesk', 'user', 'create');
-    $data['summary'] = xarModFunc('helpdesk', 'user', 'summaryfooter');
 
     $item = array();
     $item['module']   = 'helpdesk';
@@ -80,6 +75,10 @@ function helpdesk_user_new()
         $data['hooks'] = $hooks;
     }
 
+    $data['enforceauthkey'] = xarModGetVar('helpdesk', 'EnforceAuthKey');
+    $data['action']  = xarModURL('helpdesk', 'user', 'create');
+    $data['summary'] = xarModFunc('helpdesk', 'user', 'summaryfooter');    
+    
     return xarTplModule('helpdesk', 'user', 'new', $data);
 }
 ?>

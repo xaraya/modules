@@ -2,7 +2,7 @@
 /**
     Creates the Ticket
     @author Brian McGilligan
-    @param - all the ticket info TODO List everything
+    @param - all the ticket info 
     @return The new ticket id
 */
 function helpdesk_userapi_create($args)
@@ -39,9 +39,8 @@ function helpdesk_userapi_create($args)
                                     xar_email
                                    ) 
                            VALUES  ( $nextid, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
-    $bindvars = array($domain, $status, $priority, $source, $whosubmit, $subject, $time, $time, $assignedto,
-                      $closedby, $name, $phone, $email
-                     );
+    $bindvars = array($domain, $status, $priority, $source, $whosubmit, $subject, $time, $time, $assignedto, $closedby, $name, $phone, $email
+    );
     $result = $dbconn->Execute($sql, $bindvars);
 
     // Check for an error

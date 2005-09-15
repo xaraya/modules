@@ -33,7 +33,13 @@
                 <li><xar:mlstring>Modify Configuration -- Allows you to set certain configuration routines for forums.</xar:mlstring></li>
             </ul>
         </div>
-        <br />
+        
+        <div style="margin: 1em; text-align:left;">
+        <p>
+            Helpdesk Techs have chagned since using the security module.  Techs need to be set as a default group in the security module for helpdesk tickets with Overview thru Write privileges.
+        </p>
+        </div>        
+
         <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
             <xar:mlstring>Included Blocks</xar:mlstring>
         </div>

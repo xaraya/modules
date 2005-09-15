@@ -32,17 +32,8 @@ function helpdesk_user_view($args)
         return xarTplModule('helpdesk', 'user', 'view', $data);
     }
 
-    // Get Column View preferences
-    $data['showassignedtoinsummary']    = xarModGetVar('helpdesk', 'ShowAssignedToInSummary');
-    $data['showclosedbyinsummary']      = xarModGetVar('helpdesk', 'ShowClosedByInSummary');
-    $data['showopenbyinsummary']        = xarModGetVar('helpdesk', 'ShowOpenedByInSummary');
-    $data['showlastmodifiedinsummary']  = xarModGetVar('helpdesk', 'ShowLastModifiedInSummary');
-    $data['showdateenteredinsummary']   = xarModGetVar('helpdesk', 'ShowDateEnteredInSummary');
-    $data['showstatusinsummary']        = xarModGetVar('helpdesk', 'ShowStatusInSummary');
-    $data['showpriorityinsummary']      = xarModGetVar('helpdesk', 'ShowPriorityInSummary');
-
     // Lets get the ticket now for the view
-    $data['mytickets_data']  = xarModAPIFunc('helpdesk', 'user', 'gettickets',
+    $data['tickets']  = xarModAPIFunc('helpdesk', 'user', 'gettickets',
         array(
             'userid'       => xarUserGetVar('uid'),
             'catid'        => $catid,
@@ -55,7 +46,7 @@ function helpdesk_user_view($args)
             'keywords'     => $keywords
         )
     );
-    /**
+    /*
         Counts the number of tickets in the system
     */
     $totaltickets  = xarModAPIFunc('helpdesk', 'user', 'count_tickets',
@@ -72,7 +63,9 @@ function helpdesk_user_view($args)
         )
     );
 
-    //Setup args for pager so we don't lose our place
+    /*
+        Setup args for pager so we don't lose our place
+    */
     $args = array(
         'selection'    => $selection,
         'sortorder'    => $sortorder,
@@ -82,7 +75,6 @@ function helpdesk_user_view($args)
         'keywords'     => $keywords,
         'startnum'     => '%%'
     );
-
     $url_template   = xarModURL('helpdesk', 'user', 'view', $args);
     $items_per_page = xarModGetVar('helpdesk', 'Default rows per page');
     $data['pager']  = xarTplGetPager($startnum, $totaltickets, $url_template, $items_per_page);
@@ -103,6 +95,15 @@ function helpdesk_user_view($args)
     $data['status']       = xarModAPIFunc('helpdesk', 'user', 'gets', 
         array('itemtype' => 3)
     );
+    
+    // Get Column View preferences
+    $data['showassignedtoinsummary']    = xarModGetVar('helpdesk', 'ShowAssignedToInSummary');
+    $data['showclosedbyinsummary']      = xarModGetVar('helpdesk', 'ShowClosedByInSummary');
+    $data['showopenbyinsummary']        = xarModGetVar('helpdesk', 'ShowOpenedByInSummary');
+    $data['showlastmodifiedinsummary']  = xarModGetVar('helpdesk', 'ShowLastModifiedInSummary');
+    $data['showdateenteredinsummary']   = xarModGetVar('helpdesk', 'ShowDateEnteredInSummary');
+    $data['showstatusinsummary']        = xarModGetVar('helpdesk', 'ShowStatusInSummary');
+    $data['showpriorityinsummary']      = xarModGetVar('helpdesk', 'ShowPriorityInSummary');
 
     return xarTplModule('helpdesk', 'user', 'view', $data);
 }

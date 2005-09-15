@@ -390,8 +390,11 @@ function helpdesk_upgrade($oldversion)
                           array('file' => $path . 'hd_status.data.xml'));
             
         case '0.5.1':
+        case '0.5.6':
                             
-            
+        
+        default:
+            break;  
     }
     // If all else fails, return true so the module no longer shows "Upgrade" in module administration
     return true;

@@ -161,10 +161,10 @@
     <!-- Cycle through the array, creating each row of the table
          Fields to show: Ticket Number/Date/Subject/Status/Last Update -->
     <xar:set name="$class">'xar-norm'</xar:set>
-    <xar:if condition="empty($mytickets_data)">
+    <xar:if condition="empty($tickets)">
     <tr><td colspan="10"><xar:mlstring>There are no tickets!</xar:mlstring></td></tr>
     </xar:if>
-    <xar:foreach in="$mytickets_data" value="$ticket">
+    <xar:foreach in="$tickets" value="$ticket">
         <xar:set name="$ticket_id">$ticket['ticket_id']</xar:set>
         <tr class="#$class#">
             <td><a href="#xarModURL('helpdesk', 'user', 'display', array('tid' => $ticket_id, 'authkey' => xarSecGenAuthKey()))#" title="View Ticket">#$ticket_id#</a>&nbsp;</td>

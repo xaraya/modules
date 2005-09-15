@@ -19,8 +19,8 @@ function helpdesk_user_display($args)
     if( !xarVarFetch('tid',       'int:1:',  $ticket_id, null,  XARVAR_NOT_REQUIRED) ){ return false; }
     
     // Cheap way to pass info to security event
-    $_GET['itemype'] = 1;
-    $_GET['itemid'] = $ticket_id;
+    //$_GET['itemype'] = 1;
+    //$_GET['itemid'] = $ticket_id;
 
     /*
         SECURITY CHECK NEEDED HERE USING SECURITY MODULE
@@ -52,12 +52,7 @@ function helpdesk_user_display($args)
         If we don't get a ticket back, then the user does not have privs 
         to view this ticket
     */
-    if( empty($data) )
-    {
-        $msg = xarML("You do not have the proper security clearance to view this ticket!");
-        xarErrorSet(XAR_USER_EXCEPTION, 'NO_PRIVILEGES', $msg);
-        return false;
-    }
+    if( empty($data) ){ return false; }
     
     /*
         Call the hooks

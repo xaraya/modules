@@ -71,7 +71,7 @@ function helpdesk_userapi_getticket($args)
     */
     $sql  = 'SELECT ' . join(', ', $fields);
     $sql .= ' FROM '  . join(', ', $tables);
-    $sql .= ' WHERE ' . join(', ', $where);
+    $sql .= ' WHERE ' . join(' AND ', $where);
 
     $results = $dbconn->Execute($sql, array($tid));
     if( !$results ){ return false; }

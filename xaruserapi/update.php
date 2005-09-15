@@ -6,23 +6,6 @@
 function helpdesk_userapi_update($args)
 {
     extract($args);
-    xarVarFetch('userid',     'str:1:',  $userid,  null,  XARVAR_NOT_REQUIRED);
-    xarVarFetch('tid',        'str:1:',  $tid,  null,  XARVAR_NOT_REQUIRED);
-    xarVarFetch('name',       'str:1:',  $name,  null,  XARVAR_NOT_REQUIRED);
-    xarVarFetch('phone',      'str:1:',  $phone,  null,  XARVAR_NOT_REQUIRED);
-    xarVarFetch('subject',    'str:1:',  $subject,  null,  XARVAR_NOT_REQUIRED);
-    xarVarFetch('domain',     'str:1:',  $domain,  null,  XARVAR_NOT_REQUIRED);
-    xarVarFetch('priority',   'str:1:',  $priority,  null,  XARVAR_NOT_REQUIRED);
-    xarVarFetch('status',     'str:1:',  $statusid,  null,  XARVAR_NOT_REQUIRED);
-    xarVarFetch('openedby',   'str:1:',  $openedby,  null,  XARVAR_NOT_REQUIRED);
-    xarVarFetch('assignedto', 'str:1:',  $assignedto,  null,  XARVAR_NOT_REQUIRED);
-    xarVarFetch('source',     'str:1:',  $source,  null,  XARVAR_NOT_REQUIRED);
-    xarVarFetch('closedby',   'str:1:',  $closedby,  null,  XARVAR_NOT_REQUIRED);
-    xarVarFetch('comment',    'str:1:',  $issue,  null,  XARVAR_NOT_REQUIRED);
-    xarVarFetch('notes',      'str:1:',  $notes,  null,  XARVAR_NOT_REQUIRED);
-    xarVarFetch('hours',      'str:1:',  $minutes,  null,  XARVAR_NOT_REQUIRED);
-    xarVarFetch('minutes',    'str:1:',  $minutes,  null,  XARVAR_NOT_REQUIRED);
-    xarVarFetch('selection',  'str:1:',  $xtra_fields,  null,  XARVAR_NOT_REQUIRED);
 
     // Generate SQL code for Ticket entry
     $dbconn =& xarDBGetConn();
@@ -85,26 +68,23 @@ function helpdesk_userapi_update($args)
     $bindvars[] = $tid;
 
     $dbconn->Execute($sql, $bindvars);
-    
-    // Check for an error with the database code, and if so set an
-    // appropriate error message and return
-    if ($dbconn->ErrorNo() != 0) { return false; }
+    if( $dbconn->ErrorNo() != 0 ){ return false; }
     
     /**
         Send an e-mail to user when the ticket is closed
         @author MichelV.
         $mail needs to be set
 	*/
-    if ($statusid == '3'){
+    if( $statusid == '3' )
+    {
         $mailaction = 'closed';
         $mail =xarModFunc('helpdesk','user','sendmail',
-array('mailaction'  => $mailaction));
-    
+            array(
+                'mailaction'  => $mailaction
+            )
+        );   
         // Check if the email has been sent.
-        if ($mail === false) {
-            $msg = xarML('Email to user was not sent!');
-            xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        }
+        if( $mail === false ){ return false; }
     }   // End if($statusid == '3')
     
     return true;
