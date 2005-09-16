@@ -71,8 +71,9 @@ function helpdesk_userapi_gettickets($args)
     {
         $security_def = xarModAPIFunc('security', 'user', 'leftjoin', 
             array(
-                'modid' => xarModGetIdFromName('helpdesk'),
+                'modid'    => xarModGetIdFromName('helpdesk'),
                 'itemtype' => 1,
+                'itemid'   => "$helpdesktable.xar_id",
                 'level' => isset($level) ? $level : null,
                 // This exception insures that the tech assigned to the ticket can see it.
                 'exception' => 'xar_assignedto = ' . $dbconn->qstr(xarUserGetVar('uid'))
@@ -80,9 +81,8 @@ function helpdesk_userapi_gettickets($args)
         );        
         if( count($security_def) > 0 )
         {
-            $tables[] = $security_def['table'];
+            $left_join[] = "( {$security_def['left_join']} )";
             $where[] = "( {$security_def['where']} )";
-            $where[] = " {$security_def['iid']} = $helpdesktable.xar_id";
         }
     }    
     
