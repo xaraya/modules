@@ -92,8 +92,11 @@ function security_userapi_check($args)
     $result = $dbconn->Execute($query, $bindvars);
     if( $result->EOF ) 
     {
-        $msg = "You do not have the proper security to perform this action!";
-        xarErrorSet(XAR_USER_EXCEPTION, 'NO_PRIVILEGES');
+        if( empty($hide_exception) )
+        {
+            $msg = "You do not have the proper security to perform this action!";
+            xarErrorSet(XAR_USER_EXCEPTION, 'NO_PRIVILEGES');
+        }
         return false;
     }
     
