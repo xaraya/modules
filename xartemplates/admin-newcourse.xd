@@ -1,6 +1,7 @@
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:if condition="xarTplAddStyleLink('courses', 'xarform')"></xar:if>
-<xar:if condition="xarTplAddStyleLink('courses', 'courses')"></xar:if>
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
+<xar:style scope="module" file="xarform" />
+<xar:style scope="module" />
+
 <!-- This Javascript will check for required fields before the form is submitted. -->
 <xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
 <script type="text/javascript">
@@ -65,10 +66,13 @@
                         #$coursetypelabel#
                      </span>
                   </label>
-                     <xar:data-input name="coursetype" type="2" value="$coursetype" />
+                  <span class="fullright">
+                      #$hookoutput['categories']#
+                  <xar:data-input name="coursetype" type="2" value="$coursetype" />
                   <xar:if condition="!empty($invalid['coursetype'])">
-                       <span style="color: red"><xar:mlstring>ERROR! This is not a valid type</xar:mlstring></span>
+                    <span style="color: red"><xar:mlstring>ERROR! This is not a valid type</xar:mlstring></span>
                   </xar:if>
+                  </span>
                 </p>
                 <p class="param">
                     <label for="level">
@@ -93,10 +97,12 @@
                         #$shortdesclabel#
                         </span>
                     </label>
-                    <xar:data-input name="shortdesc" type="4" value="$shortdesc" />
-                  <xar:if condition="!empty($invalid['shortdesc'])">
-                    <span style="color: red"><xar:mlstring>ERROR! This is not a valid course description</xar:mlstring></span>
-                  </xar:if>
+                    <span class="fullright">
+                        <xar:data-input name="shortdesc" type="4" value="$shortdesc" />
+                        <xar:if condition="!empty($invalid['shortdesc'])">
+                        <span style="color: red"><xar:mlstring>ERROR! This is not a valid course description</xar:mlstring></span>
+                        </xar:if>
+                    </span>
                 </p>
                 <p class="param">
                     <label for="language">
@@ -126,10 +132,12 @@
                         #$contactlabel#
                         </span>
                     </label>
-                    <xar:data-input name="contact" type="4" value="$contact" />
-                  <xar:if condition="!empty($invalid['contact'])">
-                    <span style="color: red"><xar:mlstring>ERROR! This is not a valid contact for this course</xar:mlstring></span>
-                  </xar:if>
+                    <span class="fullright">                    
+                        <xar:data-input name="contact" type="4" value="$contact" />
+                        <xar:if condition="!empty($invalid['contact'])">
+                            <span style="color: red"><xar:mlstring>ERROR! This is not a valid contact for this course</xar:mlstring></span>
+                        </xar:if>
+                    </span>
                 </p>
                 <p class="param">
                     <label for="contactuid">
@@ -161,8 +169,8 @@
       
 </div>
 </div>
-<xar:comment>How do we place the categories hook in this template? #$hooks['categories']# </xar:comment>
-    #$hooks#
+
+
     <!--
         // Add an authorisation ID - this adds a hidden field in the form that
         // contains an authorisation ID.  The authorisation ID is very important in

@@ -26,8 +26,11 @@
 function courses_userapi_getall($args)
 {
     extract($args);
-    if (!xarVarFetch('startnum', 'int:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('numitems', 'int:1:', $numitems, '-1', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('startnum', 'int:1:',         $startnum, '1',     XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('numitems', 'int:1:',         $numitems, '-1',    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('sortby',   'str:1:',         $sortby,   'name',  XARVAR_NOT_REQUIRED)) return; 
+    if (!xarVarFetch('sortorder','enum:DESC:ASC:', $sortorder,'DESC',  XARVAR_NOT_REQUIRED)) return;      
+    
     // Argument check
     $valid = array('name','shortdesc','number');
     if (!isset($sortby) || !in_array($sortby,$valid)) { // Should be orderby and then sortby ASC DESC
