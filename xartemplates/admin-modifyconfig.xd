@@ -68,7 +68,10 @@
         <fieldset>
             <legend><xar:mlstring>Enabled Hooks</xar:mlstring></legend>
 
-                #$hooks#
+                #$hookoutput['categories']#
+                <xar:comment>
+                Use another name of a hooked module here to call the hook
+                </xar:comment>
 
         </fieldset>
 

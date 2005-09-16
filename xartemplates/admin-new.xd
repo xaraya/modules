@@ -1,4 +1,13 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<xar:comment>
+    This tag will add the module specific style sheet to this template (empty for the moment)
+    This file is located in /xarstyles and is -as a standard- called styles.css 
+    You can add other files by adding files="filename without extension" to the tag eg
+    <xar:style scope="module" file="forms" /> for forms.css in example/xarstyles
+</xar:comment>
+<xar:style scope="module" /> 
+
 <!-- This Javascript will check for required fields before the form is submitted. -->
 <xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
 <script type="text/javascript">
@@ -59,6 +68,12 @@
         </div>
 
         #$hooks#
+        <xar:comment>
+            You can also refer to the direct output of a hooked module by using 
+            #$hookoutput['modulename']# here. 
+            If you would like to call categories, then use 
+            #$hookoutput['categories']#
+        </xar:comment>
 
         <div class="xar-form-input-wrapper">
         <!--
