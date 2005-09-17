@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id:
- * 
  * Update an example item
  * 
  * @package Xaraya eXtensible Management System
@@ -12,8 +10,9 @@
  * @subpackage example
  * @author Example module development team 
  */
+
 /**
- * update an example item
+ * Update an example item
  * 
  * @author the Example module development team 
  * @param  $args ['exid'] the ID of the item
@@ -110,5 +109,4 @@ function example_adminapi_update($args)
     // Let the calling process know that we have finished successfully
     return true;
 } 
-
 ?>

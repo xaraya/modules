@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id:
- * 
  * Utility function to pass individual menu items to the main menu
  * 
  * @package Xaraya eXtensible Management System
@@ -12,11 +10,11 @@
  * @subpackage example
  * @author Example module development team 
  */
+
 /**
- * utility function pass individual menu items to the main menu
+ * Utility function pass individual menu items to the main menu
  * 
  * @author the Example module development team 
- * @returns array
  * @return array containing the menulinks for the main menu items.
  */
 function example_userapi_getmenulinks()
@@ -29,7 +27,7 @@ function example_userapi_getmenulinks()
         // xarModURL function, the title of the link, which will display a tool tip for the
         // module url, in order to keep the label short, and finally the exact label for the
         // function that we are displaying.
-        $menulinks[] = Array('url' => xarModURL('example',
+        $menulinks[] = array('url' => xarModURL('example',
                 'user',
                 'view'), 
             // In order to display the tool tips and label in any language,
@@ -46,5 +44,4 @@ function example_userapi_getmenulinks()
     // to the main menu for display.
     return $menulinks;
 } 
-
 ?>

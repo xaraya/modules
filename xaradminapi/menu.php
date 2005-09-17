@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id:
- * 
  * Standard function to generate the common admin menu configuration
  * 
  * @package Xaraya eXtensible Management System
@@ -12,8 +10,9 @@
  * @subpackage example
  * @author Example module development team 
  */
+
 /**
- * generate the common admin menu configuration
+ * Generate the common admin menu configuration
  */
 function example_adminapi_menu()
 { 
@@ -59,5 +58,4 @@ function example_adminapi_menu()
     // Return the array containing the menu configuration
     return $menu;
 } 
-
 ?>

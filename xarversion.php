@@ -1,15 +1,4 @@
 <?php
-/**
- * Example initialization functions
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
- * @subpackage example
- * @author Example module development team
- */
 $modversion['name']           = 'Example';
 $modversion['id']             = '36';
 $modversion['version']        = '1.0.0';
@@ -24,7 +13,6 @@ $modversion['author']         = 'Jim McDonald';
 $modversion['contact']        = 'http://www.mcdee.net/';
 $modversion['admin']          = 1;
 $modversion['user']           = 1;
-$modversion['securityschema'] = array('Example::Item' => 'Example item name::Example item ID');
 $modversion['class']          = 'Complete';
 $modversion['category']       = 'Content';
 ?>

@@ -12,7 +12,7 @@
  */
 
 /**
- * modify block settings
+ * Modify block settings
  */
 function example_firstblock_modify($blockinfo)
 { 
@@ -36,7 +36,7 @@ function example_firstblock_modify($blockinfo)
 } 
 
 /**
- * update block settings
+ * Update block settings
  */
 function example_firstblock_update($blockinfo)
 {
@@ -45,5 +45,4 @@ function example_firstblock_update($blockinfo)
     $blockinfo['content'] = $vars;
     return $blockinfo;
 } 
-
 ?>

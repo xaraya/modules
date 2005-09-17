@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id:
- * 
  * Example main administration function
  * 
  * @package Xaraya eXtensible Management System
@@ -12,6 +10,7 @@
  * @subpackage example
  * @author Example module development team 
  */
+
 /**
  * the main administration function
  * This function is the default function, and is called whenever the
@@ -44,8 +43,8 @@ function example_admin_main()
         // helps if all of the module pages have a standard menu at the top to
         // support easy navigation
         $data = xarModAPIFunc('example', 'admin', 'menu'); 
-        // Specify some other variables used in the blocklayout template
-        $data['welcome'] = xarML('Welcome to the administration part of this Example module...'); 
+        // You could specify some other variables to use in the blocklayout template
+        //$data['welcome'] = xarML('Welcome to the administration part of this Example module...'); 
         // Return the template variables defined in this function
         return $data; 
         // Note : instead of using the $data variable, you could also specify
@@ -62,5 +61,4 @@ function example_admin_main()
     // success
     return true;
 } 
-
 ?>

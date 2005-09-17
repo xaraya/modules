@@ -12,6 +12,7 @@
  * @subpackage example
  * @author Example module development team 
  */
+
 /**
  * the main user function
  * This function is the default function, and is called whenever the module is
@@ -55,5 +56,4 @@ function example_user_main()
     // 'welcome' => ...,
     // ... => ...);
 } 
-
 ?>

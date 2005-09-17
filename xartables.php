@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id: s.xartables.php 1.7 03/03/18 02:35:04-05:00 johnny@falling.local.lan $
- * 
  * Example table definitions function
  * 
  * @package Xaraya eXtensible Management System
@@ -11,11 +9,6 @@
  *
  * @subpackage example
  * @author Example module development team 
- */
-
-/**
- * Upgraded to the new security schema by Vassilis Stratigakis
- * http://www.tequilastarrise.net
  */
 
 /**
@@ -39,5 +32,4 @@ function example_xartables()
     // Return the table information
     return $xarTables;
 } 
-
 ?>

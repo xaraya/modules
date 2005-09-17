@@ -12,7 +12,7 @@
  */
 
 /**
- * initialise block
+ * Initialise block
  */
 function example_firstblock_init()
 {
@@ -26,7 +26,7 @@ function example_firstblock_init()
 }
 
 /**
- * get information on block
+ * Get information on block
  */
 function example_firstblock_info()
 { 
@@ -43,7 +43,7 @@ function example_firstblock_info()
 } 
 
 /**
- * display block
+ * Display block
  */
 function example_firstblock_display($blockinfo)
 { 
@@ -115,5 +115,4 @@ function example_firstblock_display($blockinfo)
 
     return $blockinfo;
 } 
-
 ?>

@@ -10,19 +10,21 @@
  * @subpackage example
  * @author Example module development team 
  */
+
 /**
- * view a list of items
+ * View a list of items
+ *
  * This is a standard function to provide an overview of all of the items
  * available from the module.
  */
 function example_user_view()
 { 
     // Get parameters from whatever input we need.  All arguments to this
-    // function should be obtained from xarVarFetch(), xarVarCleanFromInput()
-    // is a degraded function.  xarVarFetch allows the checking of the input
-    // variables as well as setting default values if needed.  Getting vars
-    // from other places such as the environment is not allowed, as that makes
-    // assumptions that will not hold in future versions of Xaraya
+    // function should be obtained from xarVarFetch(). xarVarFetch allows 
+    // the checking of the input variables as well as setting default 
+    // values if needed.  Getting vars from other places such as the 
+    // environment is not allowed, as that makes assumptions that will 
+    // not hold in future versions of Xaraya
     if (!xarVarFetch('startnum', 'str:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return; 
     // Initialise the $data variable that will hold the data to be used in
     // the blocklayout template, and get the common menu configuration - it
@@ -34,7 +36,6 @@ function example_user_view()
     // Prepare the array variable that will hold all items for display
     $data['items'] = array(); 
     // Specify some other variables for use in the function template
-    $data['someheader'] = xarML('Example item name');
     $data['pager'] = ''; 
     // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing
@@ -98,8 +99,7 @@ function example_user_view()
         xarModAPIFunc('example', 'user', 'countitems'),
         xarModURL('example', 'user', 'view', array('startnum' => '%%')),
         xarModGetUserVar('example', 'itemsperpage', $uid)); 
-    // Specify some other variables for use in the function template
-    $data['someheader'] = xarML('Example item name'); 
+
     // Same as above.  We are changing the name of the page to raise
     // better search engine compatibility.
     xarTplSetPageTitle(xarVarPrepForDisplay(xarML('View Examples'))); 
@@ -113,5 +113,4 @@ function example_user_view()
     // 'pager' => ...,
     // ... => ...);
 } 
-
 ?>

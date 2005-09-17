@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id:
- * 
  * Utility function to pass menu items to the main menu
  * 
  * @package Xaraya eXtensible Management System
@@ -12,8 +10,9 @@
  * @subpackage example
  * @author Example module development team 
  */
+
 /**
- * utility function pass individual menu items to the main menu
+ * Utility function pass individual menu items to the main menu
  * 
  * @author the Example module development team 
  * @returns array
@@ -76,5 +75,4 @@ function example_adminapi_getmenulinks()
     // to the main menu for display.
     return $menulinks;
 } 
-
 ?>

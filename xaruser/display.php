@@ -12,7 +12,8 @@
  */
 
 /**
- * display an item
+ * Display an item
+ *
  * This is a standard function to provide detailed informtion on a single item
  * available from the module.
  * 
@@ -30,11 +31,12 @@ function example_user_display($args)
     // checked by a certain validation.
     extract($args);
 
-    // function should be obtained from xarVarFetch(), xarVarCleanFromInput()
-    // is a degraded function.  xarVarFetch allows the checking of the input
-    // variables as well as setting default values if needed.  Getting vars
-    // from other places such as the environment is not allowed, as that makes
-    // assumptions that will not hold in future versions of Xaraya
+    // Get parameters from whatever input we need.  All arguments to this
+    // function should be obtained from xarVarFetch(). xarVarFetch allows 
+    // the checking of the input variables as well as setting default 
+    // values if needed.  Getting vars from other places such as the 
+    // environment is not allowed, as that makes assumptions that will 
+    // not hold in future versions of Xaraya
     if (!xarVarFetch('exid', 'int:1', $exid)) return;
     if (!xarVarFetch('objectid', 'str:1', $objectid, '', XARVAR_NOT_REQUIRED)) return;
 
@@ -91,9 +93,7 @@ function example_user_display($args)
     // Fill in the details of the item.  Note that a module variable is used here to determine
     // whether or not parts of the item information should be displayed in
     // bold type or not
-    $data['name_label'] = xarML('Example item name');
     $data['name_value'] = $item['name'];
-    $data['number_label'] = xarML('Example item number');
     $data['number_value'] = $item['number'];
 
     $data['exid'] = $exid;
@@ -141,6 +141,5 @@ function example_user_display($args)
     // 'item' => ...,
     // 'hookoutput' => ...,
     // ... => ...);
-} 
-
+}
 ?>

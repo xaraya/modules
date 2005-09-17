@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id:
- * 
  * Standard function to update a current item
  * 
  * @package Xaraya eXtensible Management System
@@ -12,6 +10,7 @@
  * @subpackage example
  * @author Example module development team 
  */
+
 /**
  * This is a standard function that is called with the results of the
  * form supplied by xarModFunc('example','admin','modify') to update a current item
@@ -31,11 +30,11 @@ function example_admin_update($args)
     extract($args);
 
     // Get parameters from whatever input we need.  All arguments to this
-    // function should be obtained from xarVarFetch(), xarVarCleanFromInput()
-    // is a degraded function.  xarVarFetch allows the checking of the input
-    // variables as well as setting default values if needed.  Getting vars
-    // from other places such as the environment is not allowed, as that makes
-    // assumptions that will not hold in future versions of Xaraya
+    // function should be obtained from xarVarFetch(). xarVarFetch allows 
+    // the checking of the input variables as well as setting default 
+    // values if needed.  Getting vars from other places such as the 
+    // environment is not allowed, as that makes assumptions that will 
+    // not hold in future versions of Xaraya
     if (!xarVarFetch('exid', 'int:1:', $exid, $exid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('objectid', 'str:1:', $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('invalid', 'str:1:', $invalid, XARVAR_NOT_REQUIRED)) return;
@@ -109,5 +108,4 @@ function example_admin_update($args)
     // Return
     return true;
 } 
-
 ?>

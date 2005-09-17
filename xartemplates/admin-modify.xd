@@ -29,7 +29,7 @@
         // this form.  All URLs should be generated through xarModURL() to ensure
         // compatibility with future versions of Xaraya
     -->
-    <form method="post" action="#xarModUrl('example', 'admin', 'update')#" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
+    <form method="post" action="#xarModURL('example', 'admin', 'update')#" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
         <div class="xar-form-input-wrapper xar-clear-both">
             <label for="name" title="#xarML('This is a tool tip for the input.')#" class="xar-form-label">
                 <xar:mlstring>Example Name:</xar:mlstring>

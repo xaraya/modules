@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id:
- * 
  * Get all module items
  * 
  * @package Xaraya eXtensible Management System
@@ -12,8 +10,9 @@
  * @subpackage example
  * @author Example module development team 
  */
+
 /**
- * get all example items
+ * Get all example items
  * 
  * @author the Example module development team 
  * @param numitems $ the number of items to retrieve (default -1 = all)
@@ -110,5 +109,4 @@ function example_userapi_getall($args)
     // Return the items
     return $items;
 } 
-
 ?>

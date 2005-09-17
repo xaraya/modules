@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id:
- * 
  * Standard function to modify an item
  * 
  * @package Xaraya eXtensible Management System
@@ -12,8 +10,10 @@
  * @subpackage example
  * @author Example module development team 
  */
+
 /**
- * modify an item
+ * Modify an item
+ *
  * This is a standard function that is called whenever an administrator
  * wishes to modify a current module item
  * 
@@ -31,11 +31,11 @@ function example_admin_modify($args)
     extract($args);
 
     // Get parameters from whatever input we need.  All arguments to this
-    // function should be obtained from xarVarFetch(), xar VarCleanFromInput()
-    // is a degraded function.  xarVarFetch allows the checking of the input
-    // variables as well as setting default values if needed.  Getting vars
-    // from other places such as the environment is not allowed, as that makes
-    // assumptions that will not hold in future versions of Xaraya
+    // function should be obtained from xarVarFetch(). xarVarFetch allows 
+    // the checking of the input variables as well as setting default 
+    // values if needed.  Getting vars from other places such as the 
+    // environment is not allowed, as that makes assumptions that will 
+    // not hold in future versions of Xaraya
     if (!xarVarFetch('exid', 'int:1:', $exid)) return;
     if (!xarVarFetch('objectid', 'str:1:', $objectid, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('invalid', 'str:1:', $invalid, XARVAR_NOT_REQUIRED)) return;
@@ -80,16 +80,12 @@ function example_admin_modify($args)
     $hooks = xarModCallHooks('item', 'modify', $exid, $item);
     // Return the template variables defined in this function
     return array('authid'       => xarSecGenAuthKey(),
-                 'namelabel'    => xarVarPrepForDisplay(xarML('Example Name:')),
                  'name'         => $name,
-                 'numberlabel'  => xarVarPrepForDisplay(xarML('Example Number:')),
                  'number'       => $number,
                  'invalid'      => $invalid,
-                 'updatebutton' => xarVarPrepForDisplay(xarML('Update Example')),
                  'hookoutput'   => $hooks,
 // TODO: remove this legacy template stuff
                  'hooks'        => '',
                  'item'         => $item);
 } 
-
 ?>

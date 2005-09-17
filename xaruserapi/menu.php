@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id:
- * 
  * Generate the common menu configuration
  * 
  * @package Xaraya eXtensible Management System
@@ -12,8 +10,9 @@
  * @subpackage example
  * @author Example module development team 
  */
+
 /**
- * generate the common menu configuration
+ * Generate the common menu configuration
  */
 function example_userapi_menu()
 { 
@@ -60,5 +59,4 @@ function example_userapi_menu()
     // Return the array containing the menu configuration
     return $menu;
 } 
-
 ?>

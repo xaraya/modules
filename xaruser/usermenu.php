@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id:
- *
  * Display the user menu hook
  *
  * @package Xaraya eXtensible Management System
@@ -12,8 +10,9 @@
  * @subpackage example
  * @author Example module development team
  */
+
 /**
- * display the user menu hook
+ * Display the user menu hook
  * This is a standard function to provide a link in the "Your Account Page"
  *
  * @param  $phase is the which part of the loop you are on
@@ -81,5 +80,4 @@ function example_user_usermenu($args)
     // using the data var for processing above, we need to do the same with the return.
     return $data;
 }
-
 ?>

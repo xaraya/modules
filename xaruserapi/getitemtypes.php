@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id:
- * 
  * Utility function to retrieve the list of item types of this module
  * 
  * @package Xaraya eXtensible Management System
@@ -12,10 +10,10 @@
  * @subpackage example
  * @author Example module development team 
  */
+
 /**
- * utility function to retrieve the list of item types of this module (if any)
+ * Utility function to retrieve the list of item types of this module (if any)
  *
- * @returns array
  * @return array containing the item types and their description
  */
 function example_userapi_getitemtypes($args)
@@ -31,5 +29,4 @@ function example_userapi_getitemtypes($args)
 
     return $itemtypes;
 }
-
 ?>

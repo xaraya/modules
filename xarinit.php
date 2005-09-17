@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id: s.xarinit.php 1.17 03/03/18 02:35:04-05:00 johnny@falling.local.lan $
- *
  * Example initialization functions
  *
  * @package Xaraya eXtensible Management System
@@ -11,11 +9,6 @@
  *
  * @subpackage example
  * @author Example module development team 
- */
-
-/**
- * Upgraded to the new security schema by Vassilis Stratigakis
- * http://www.tequilastarrise.net
  */
 
 /**
@@ -284,7 +277,7 @@ function example_upgrade($oldversion)
  */
 function example_delete()
 {
-    // Get datbase setup - note that both xarDBGetConn() and xarDBGetTables()
+    // Get database setup - note that both xarDBGetConn() and xarDBGetTables()
     // return arrays but we handle them differently.  For xarDBGetConn()
     // we currently just want the first item, which is the official
     // database handle.  For xarDBGetTables() we want to keep the entire
@@ -337,5 +330,4 @@ function example_delete()
     // Deletion successful
     return true;
 }
-
 ?>
