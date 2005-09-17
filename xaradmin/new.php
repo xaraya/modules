@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id:
- * 
  * Standard function to create a new module item
  * 
  * @package Xaraya eXtensible Management System
@@ -12,10 +10,14 @@
  * @subpackage example
  * @author Example module development team 
  */
+
 /**
- * add new item
+ * Add new item
+ *
  * This is a standard function that is called whenever an administrator
  * wishes to create a new module item
+ *
+ * @return array
  */
 function example_admin_new($args)
 { 
@@ -27,11 +29,11 @@ function example_admin_new($args)
     extract($args);
 
     // Get parameters from whatever input we need.  All arguments to this
-    // function should be obtained from xarVarFetch()
-    // xarVarFetch allows the checking of the input
-    // variables as well as setting default values if needed.  Getting vars
-    // from other places such as the environment is not allowed, as that makes
-    // assumptions that will not hold in future versions of Xaraya
+    // function should be obtained from xarVarFetch(). xarVarFetch allows 
+    // the checking of the input variables as well as setting default 
+    // values if needed.  Getting vars from other places such as the 
+    // environment is not allowed, as that makes assumptions that will 
+    // not hold in future versions of Xaraya
     if (!xarVarFetch('number', 'str:1:', $number, $number,XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('name', 'str:1:', $name, $name, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('invalid', 'array', $invalid, $invalid, XARVAR_NOT_REQUIRED)) return; 
@@ -46,10 +48,6 @@ function example_admin_new($args)
     // Generate a one-time authorisation code for this operation
     $data['authid'] = xarSecGenAuthKey();
     $data['invalid'] = $invalid; 
-    // Specify some labels for display
-    $data['namelabel'] = xarVarPrepForDisplay(xarML('Example Name:'));
-    $data['numberlabel'] = xarVarPrepForDisplay(xarML('Example Number:'));
-    $data['addbutton'] = xarVarPrepForDisplay(xarML('Add Example Item'));
 
     $item = array();
     $item['module'] = 'example';
@@ -80,5 +78,4 @@ function example_admin_new($args)
     // Return the template variables defined in this function
     return $data;
 } 
-
 ?>

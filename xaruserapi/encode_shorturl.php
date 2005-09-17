@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id:
- * 
  * Support for short URLs (user functions)
  * 
  * @package Xaraya eXtensible Management System
@@ -54,12 +52,11 @@
  */
 
 /**
- * return the path for a short URL to xarModURL for this module
+ * Return the path for a short URL to xarModURL for this module
  * 
  * @author the Example module development team 
  * @param  $args the function and arguments passed to xarModURL
- * @returns string
- * @return path to be added to index.php for a short URL, or empty if failed
+ * @return string path to be added to index.php for a short URL, or empty if failed
  */
 function example_userapi_encode_shorturl($args)
 { 
@@ -155,5 +152,4 @@ function example_userapi_encode_shorturl($args)
 
     return $path;
 } 
-
 ?>

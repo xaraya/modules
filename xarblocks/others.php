@@ -118,5 +118,4 @@ function example_othersblock_display($blockinfo)
 
     return $blockinfo;
 } 
-
 ?>

@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id:
- * 
  * Utility function to pass individual item links 
  * 
  * @package Xaraya eXtensible Management System
@@ -12,8 +10,9 @@
  * @subpackage example
  * @author Example module development team 
  */
+
 /**
- * utility function to pass individual item links to whoever
+ * Utility function to pass individual item links to whoever
  * 
  * @param  $args ['itemtype'] item type (optional)
  * @param  $args ['itemids'] array of item ids to get
@@ -38,5 +37,4 @@ function example_userapi_getitemlinks($args)
     } 
     return $itemlinks;
 } 
-
 ?>

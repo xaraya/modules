@@ -12,7 +12,7 @@
 */
 
 /**
- * handle the textbox property
+ * Handle the textbox property
  *
  * @package dynamicdata
  */
@@ -237,5 +237,4 @@ class Dynamic_Example_Property extends Dynamic_Property
          return true;
      }
 }
-
 ?>

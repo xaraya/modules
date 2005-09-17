@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id:
- * 
  * Validate an item
  * 
  * @package Xaraya eXtensible Management System
@@ -62,5 +60,4 @@ function example_userapi_validateitem($args)
     // Return the item array
     return $item;
 } 
-
 ?>

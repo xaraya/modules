@@ -1,7 +1,5 @@
 <?php
-/**
- * File: $Id:
- * 
+/** 
  * Extract function and arguments from short URLs for this module
  * 
  * @package Xaraya eXtensible Management System
@@ -12,13 +10,13 @@
  * @subpackage example
  * @author Example module development team 
  */
+
 /**
- * extract function and arguments from short URLs for this module, and pass
+ * Extract function and arguments from short URLs for this module, and pass
  * them back to xarGetRequestInfo()
  * 
  * @author the Example module development team 
  * @param  $params array containing the different elements of the virtual path
- * @returns array
  * @return array containing func the function to be called and args the query
  *          string arguments, or empty if it failed
  */
@@ -82,5 +80,4 @@ function example_userapi_decode_shorturl($params)
     } 
     // default : return nothing -> no short URL decoded
 } 
-
 ?>

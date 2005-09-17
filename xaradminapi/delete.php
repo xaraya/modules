@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id:
- * 
  * Delete an example item
  * 
  * @package Xaraya eXtensible Management System
@@ -12,8 +10,9 @@
  * @subpackage example
  * @author Example module development team 
  */
+
 /**
- * delete an example item
+ * Delete an example item
  * 
  * @author the Example module development team 
  * @param  $args ['exid'] ID of the item
@@ -87,5 +86,4 @@ function example_adminapi_delete($args)
     // Let the calling process know that we have finished successfully
     return true;
 } 
-
 ?>

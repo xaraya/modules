@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id:
- * 
  * Standard function to view items
  * 
  * @package Xaraya eXtensible Management System
@@ -12,17 +10,21 @@
  * @subpackage example
  * @author Example module development team 
  */
+
 /**
- * view items
+ * View items
+ *
+ * @param int startnum
+ * @return array
  */
 function example_admin_view()
 { 
     // Get parameters from whatever input we need.  All arguments to this
-    // function should be obtained from xarVarFetch(), xarVarCleanFromInput()
-    // is a degraded function.  xarVarFetch allows the checking of the input
-    // variables as well as setting default values if needed.  Getting vars
-    // from other places such as the environment is not allowed, as that makes
-    // assumptions that will not hold in future versions of Xaraya
+    // function should be obtained from xarVarFetch(). xarVarFetch allows 
+    // the checking of the input variables as well as setting default 
+    // values if needed.  Getting vars from other places such as the 
+    // environment is not allowed, as that makes assumptions that 
+    // will not hold in future versions of Xaraya
     if (!xarVarFetch('startnum', 'str:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return; 
     // Initialise the $data variable that will hold the data to be used in
     // the blocklayout template, and get the common menu configuration - it
@@ -32,10 +34,7 @@ function example_admin_view()
     // Initialise the variable that will hold the items, so that the template
     // doesn't need to be adapted in case of errors
     $data['items'] = array(); 
-    // Specify some labels for display
-    $data['namelabel'] = xarVarPrepForDisplay(xarML('Example Name'));
-    $data['numberlabel'] = xarVarPrepForDisplay(xarML('Example Number'));
-    $data['optionslabel'] = xarVarPrepForDisplay(xarML('Example Options')); 
+
     // Call the xarTPL helper function to produce a pager in case of there
     // being many items to display.
     
@@ -76,7 +75,6 @@ function example_admin_view()
         } else {
             $items[$i]['editurl'] = '';
         } 
-        $items[$i]['edittitle'] = xarML('Edit');
         if (xarSecurityCheck('DeleteExample', 0, 'Item', "$item[name]:All:$item[exid]")) {
             $items[$i]['deleteurl'] = xarModURL('example',
                 'admin',
@@ -84,15 +82,11 @@ function example_admin_view()
                 array('exid' => $item['exid']));
         } else {
             $items[$i]['deleteurl'] = '';
-        } 
-        $items[$i]['deletetitle'] = xarML('Delete');
+        }
     } 
     // Add the array of items to the template variables
     $data['items'] = $items; 
-    // Specify some labels for display
-    $data['namelabel'] = xarVarPrepForDisplay(xarML('Example Name'));
-    $data['numberlabel'] = xarVarPrepForDisplay(xarML('Example Number'));
-    $data['optionslabel'] = xarVarPrepForDisplay(xarML('Example Options')); 
+
     // Return the template variables defined in this function
     return $data; 
     // Note : instead of using the $data variable, you could also specify
@@ -102,5 +96,4 @@ function example_admin_view()
     // 'namelabel' => ...,
     // ... => ...);
 } 
-
 ?>

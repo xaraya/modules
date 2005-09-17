@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id:
- * 
  * Update configuration parameters of the module with information passed back by the modification form
  * 
  * @package Xaraya eXtensible Management System
@@ -12,6 +10,7 @@
  * @subpackage example
  * @author Example module development team 
  */
+
 /**
  * This is a standard function to update the configuration parameters of the
  * module given the information passed back by the modification form
@@ -19,11 +18,11 @@
 function example_admin_updateconfig()
 {
     // Get parameters from whatever input we need.  All arguments to this
-    // function should be obtained from xarVarFetch(), xarVarCleanFromInput()
-    // is a degraded function.  xarVarFetch allows the checking of the input
-    // variables as well as setting default values if needed.  Getting vars
-    // from other places such as the environment is not allowed, as that makes
-    // assumptions that will not hold in future versions of Xaraya
+    // function should be obtained from xarVarFetch(). xarVarFetch allows 
+    // the checking of the input variables as well as setting default 
+    // values if needed.  Getting vars from other places such as the 
+    // environment is not allowed, as that makes assumptions that will 
+    // not hold in future versions of Xaraya
     if (!xarVarFetch('bold', 'checkbox', $bold, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('itemsperpage', 'int', $itemsperpage, 10, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
@@ -49,5 +48,4 @@ function example_admin_updateconfig()
     // Return
     return true;
 }
-
 ?>

@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id:
- * 
  * Utility function counts number of items held by this module
  * 
  * @package Xaraya eXtensible Management System
@@ -12,8 +10,9 @@
  * @subpackage example
  * @author Example module development team 
  */
+
 /**
- * utility function to count the number of items held by this module
+ * Utility function to count the number of items held by this module
  * 
  * @author the Example module development team 
  * @returns integer
@@ -52,5 +51,4 @@ function example_userapi_countitems()
     // Return the number of items
     return $numitems;
 } 
-
 ?>

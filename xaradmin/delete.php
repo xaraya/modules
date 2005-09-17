@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id:
- * 
  * Standard function to delete an item
  * 
  * @package Xaraya eXtensible Management System
@@ -13,7 +11,8 @@
  * @author Example module development team 
  */
 /**
- * delete item
+ * Delete item
+ *
  * This is a standard function that is called whenever an administrator
  * wishes to delete a current module item.  Note that this function is
  * the equivalent of both of the modify() and update() functions above as
@@ -38,11 +37,11 @@ function example_admin_delete($args)
     extract($args);
 
     // Get parameters from whatever input we need.  All arguments to this
-    // function should be obtained from xarVarFetch(), xarVarCleanFromInput()
-    // is a degraded function.  xarVarFetch allows the checking of the input
-    // variables as well as setting default values if needed.  Getting vars
-    // from other places such as the environment is not allowed, as that makes
-    // assumptions that will not hold in future versions of Xaraya
+    // function should be obtained from xarVarFetch(). xarVarFetch allows 
+    // the checking of the input variables as well as setting default values 
+    // if needed.  Getting vars from other places such as the environment 
+    // is not allowed, as that makes assumptions that will not hold in 
+    // future versions of Xaraya
     if (!xarVarFetch('exid', 'int:1:', $exid)) return;
     if (!xarVarFetch('objectid', 'str:1:', $objectid, NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return; 
@@ -89,11 +88,8 @@ function example_admin_delete($args)
         // Specify for which item you want confirmation
         $data['exid'] = $exid; 
         // Add some other data you'll want to display in the template
-        $data['confirmtext'] = xarML('Confirm deleting this item ?');
         $data['itemid'] = xarML('Item ID');
-        $data['namelabel'] = xarML('Example Name');
         $data['namevalue'] = xarVarPrepForDisplay($item['name']);
-        $data['confirmbutton'] = xarML('Confirm'); 
         // Generate a one-time authorisation code for this operation
         $data['authid'] = xarSecGenAuthKey(); 
         // Return the template variables defined in this function
@@ -126,5 +122,4 @@ function example_admin_delete($args)
     // Return
     return true;
 } 
-
 ?>

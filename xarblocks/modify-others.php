@@ -45,5 +45,4 @@ function example_othersblock_update($blockinfo)
     $blockinfo['content'] = $vars;
     return $blockinfo;
 } 
-
 ?>

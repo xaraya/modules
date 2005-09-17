@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id:
- * 
  * Standard function to modify configuration parameters
  * 
  * @package Xaraya eXtensible Management System
@@ -12,9 +10,12 @@
  * @subpackage example
  * @author Example module development team 
  */
+
 /**
  * This is a standard function to modify the configuration parameters of the
  * module
+ *
+ * @return array
  */
 function example_admin_modifyconfig()
 { 
@@ -28,16 +29,12 @@ function example_admin_modifyconfig()
     if (!xarSecurityCheck('AdminExample')) return; 
     // Generate a one-time authorisation code for this operation
     $data['authid'] = xarSecGenAuthKey(); 
-    // Specify some labels and values for display
-    $data['boldlabel'] = xarVarPrepForDisplay(xarML('Display Example Items In Bold?'));
+    // Specify some values for display
     $data['boldchecked'] = xarModGetVar('example', 'bold') ? true : false;
-    $data['itemslabel'] = xarVarPrepForDisplay(xarML('Example Items Per Page?'));
     $data['itemsvalue'] = xarModGetVar('example', 'itemsperpage');
-    $data['updatebutton'] = xarVarPrepForDisplay(xarML('Update Configuration')); 
     // Note : if you don't plan on providing encode/decode functions for
-    // short URLs (see xaruserapi.php), you should remove these from your
+    // short URLs (see xaruserapi.php), you should remove this from your
     // admin-modifyconfig.xard template !
-    $data['shorturlslabel'] = xarML('Enable short URLs?');
     $data['shorturlschecked'] = xarModGetVar('example', 'SupportShortURLs') ? true : false;
 
     $hooks = xarModCallHooks('module', 'modifyconfig', 'example',
@@ -54,5 +51,4 @@ function example_admin_modifyconfig()
     // Return the template variables defined in this function
     return $data;
 } 
-
 ?>

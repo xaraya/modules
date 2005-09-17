@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id:
- * 
  * Get a specific item
  * 
  * @package Xaraya eXtensible Management System
@@ -12,8 +10,9 @@
  * @subpackage example
  * @author Example module development team 
  */
+
 /**
- * get a specific item
+ * Get a specific item
  * 
  * @author the Example module development team 
  * @param  $args ['exid'] id of example item to get
@@ -88,5 +87,4 @@ function example_userapi_get($args)
     // Return the item array
     return $item;
 } 
-
 ?>

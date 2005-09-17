@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id:
- * 
  * Create a new example item
  * 
  * @package Xaraya eXtensible Management System
@@ -12,8 +10,9 @@
  * @subpackage example
  * @author Example module development team 
  */
+
 /**
- * create a new example item
+ * Create a new example item
  * 
  * @author the Example module development team 
  * @param  $args ['name'] name of the item
@@ -107,5 +106,4 @@ function example_adminapi_create($args)
     // Return the id of the newly created item to the calling process
     return $exid;
 } 
-
 ?>

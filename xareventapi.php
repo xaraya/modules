@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id: s.xaruserapi.php 1.24 03/03/18 02:35:04-05:00 johnny@falling.local.lan $
- *
  * Example event API functions
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2005 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -20,7 +18,7 @@
  * event in index.php on each Server Request
  *
  * @author the Example module development team
- * @returns bool
+ * @return bool
  */
 function example_eventapi_OnServerRequest()
 {
@@ -30,5 +28,4 @@ function example_eventapi_OnServerRequest()
 
     return true;
 }
-
 ?>
