@@ -29,14 +29,7 @@ function security_adminapi_updatehook($args)
     // If this has not been owned before set ownership to current user
     if( !$securityExists )
     {   
-        $roles = new xarRoles();
-        $user = $roles->getRole( xarUserGetVar('uid') );
-        $group = current($user->getParents());
-        $gid = $group->uid;   
-        $sargs = array('modid' => $modid, 'itemtype' => $itemtype, 'itemid' => $itemid,
-                      'gid' => $gid
-        );
-        xarModAPIFunc('security', 'admin', 'create', $sargs);
+       xarModAPIFunc('security', 'admin', 'createhook', $args);
     }
     
     return $extrainfo;    

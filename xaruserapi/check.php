@@ -25,7 +25,6 @@ function security_userapi_check($args)
     // Get DB conn ready
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-    $pre = xarDBGetSiteTablePrefix();    
 
     $secTable = $xartable['security'];
     $secGroupLevelTable = $xartable['security_group_levels'];
@@ -34,38 +33,39 @@ function security_userapi_check($args)
     $bindvars = array();
     $where = array();
     $query = "
-        SELECT $ownerTable.xar_uid, $ownerTable.xar_gid, 
-               xar_userlevel, xar_grouplevel, xar_worldlevel,
+        SELECT $ownerTable.xar_uid, xar_userlevel, xar_worldlevel,
                $secGroupLevelTable.xar_gid, $secGroupLevelTable.xar_level
-        FROM $secTable, $ownerTable, $secGroupLevelTable ";
-    
-    $where[] = " $secTable.xar_modid    = $ownerTable.xar_modid ";
-    $where[] = " $secTable.xar_itemtype = $ownerTable.xar_itemtype ";
-    $where[] = " $secTable.xar_itemid   = $ownerTable.xar_itemid ";
-    $where[] = " $secTable.xar_modid    = $secGroupLevelTable.xar_modid ";
-    $where[] = " $secTable.xar_itemtype = $secGroupLevelTable.xar_itemtype ";
-    $where[] = " $secTable.xar_itemid   = $secGroupLevelTable.xar_itemid ";
-    
+        FROM $secTable 
+        LEFT JOIN $ownerTable ON 
+            $secTable.xar_modid    = $ownerTable.xar_modid  AND
+            $secTable.xar_itemtype = $ownerTable.xar_itemtype AND
+            $secTable.xar_itemid   = $ownerTable.xar_itemid             
+        LEFT JOIN $secGroupLevelTable ON
+            $secTable.xar_modid    = $secGroupLevelTable.xar_modid AND
+            $secTable.xar_itemtype = $secGroupLevelTable.xar_itemtype AND
+            $secTable.xar_itemid   = $secGroupLevelTable.xar_itemid
+    ";
+        
     if( !empty($modid) )
     {
         $where[] = "$secTable.xar_modid = ?";
-        $bindvars[] = $modid;
+        $bindvars[] = (int)$modid;
     }
     if( !empty($itemtype) )
     {
         $where[] = "$secTable.xar_itemtype = ?";
-        $bindvars[] = $itemtype;
+        $bindvars[] = (int)$itemtype;
     }
     if( !empty($itemid) )
     {
         $where[] = "$secTable.xar_itemid = ?";
-        $bindvars[] = $itemid;
+        $bindvars[] = (int)$itemid;
     }
     
     // User Check
-    $secCheck[] = " ( $secTable.xar_userlevel & ? AND $ownerTable.xar_uid = ? ) ";
-    $bindvars[] = $level;    
-    $bindvars[] = $currentUserId;    
+    $currentUserId = (int)$currentUserId;
+    $level = (int)$level;
+    $secCheck[] = " ( $secTable.xar_userlevel & $level AND $ownerTable.xar_uid = $currentUserId ) ";
 
     //Check Groups
     $roles = new xarRoles();
@@ -73,14 +73,11 @@ function security_userapi_check($args)
     $parents = $user->getParents();
     foreach( $parents as $parent )
     {
-        $secCheck[] = " ( $secGroupLevelTable.xar_gid = ? AND xar_level & ? ) ";
-        $bindvars[] = $parent->uid;
-        $bindvars[] = $level;
+        $secCheck[] = " ( $secGroupLevelTable.xar_gid = {$parent->uid} AND xar_level & $level ) ";
     }
     
     // Check for world    
-    $secCheck[] = " ( $secTable.xar_worldlevel & ? ) ";
-    $bindvars[] = $level;
+    $secCheck[] = " ( $secTable.xar_worldlevel & $level ) ";
     
     $where[] = " ( " . join(" OR ", $secCheck) . " ) ";
     
@@ -88,14 +85,15 @@ function security_userapi_check($args)
     {
         $query .= ' WHERE ' . join(' AND ', $where);
     }
-     
+
     $result = $dbconn->Execute($query, $bindvars);
+    
     if( $result->EOF ) 
     {
         if( empty($hide_exception) )
         {
             $msg = "You do not have the proper security to perform this action!";
-            xarErrorSet(XAR_USER_EXCEPTION, 'NO_PRIVILEGES');
+            xarErrorSet(XAR_USER_EXCEPTION, 'NO_PRIVILEGES', $msg);
         }
         return false;
     }
