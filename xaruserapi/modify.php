@@ -68,7 +68,9 @@ function comments_userapi_modify($args)
     if  (($useeditstamp ==1 ) ||
                      (($useeditstamp == 2 ) && (xarUserGetVar('uid')<>$adminid))) {
         $text .= "\n";
-        $text .= xarTplModule('comments','user','modifiedby',array());
+        $text .= xarTplModule('comments','user','modifiedby', array(
+                              'isauthor' => (xarUserGetVar('uid') == $authorid),
+                              'postanon'=>$postanon));
         $text .= "\n"; //let's keep the begin and end tags together around the wrapped content
     }
 
