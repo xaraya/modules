@@ -1,4 +1,4 @@
-<p>
+
 <xar:if condition="$postanon eq 1 and $isauthor eq 1">
     <xar:set name="modifiedbyname">xarml('author')</xar:set>
     <xar:set name="modifiedbyuname">xarml('anonymous')</xar:set>
@@ -12,4 +12,3 @@
     <xar:mlvar>#$modifiedbyuname#</xar:mlvar>
     <xar:mlvar>#xarLocaleFormatDate("%B %d, %Y %I:%M %p",time())#</xar:mlvar>
 </xar:ml>
-</p>
