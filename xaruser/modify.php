@@ -89,7 +89,7 @@ function comments_user_modify()
                                               'text'     => $package['text'],
                                               'title'    => $package['title'],
                                               'postanon' => $package['postanon'],
-                                              'authorid' => $author_id));));
+                                              'authorid' => $author_id));
 
             xarResponseRedirect($receipt['returnurl']['decoded']);
             return true;
