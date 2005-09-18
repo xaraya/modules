@@ -66,6 +66,7 @@ function xarbb_user_newreply()
 
         foreach ($data as $comment){
             $package['title'] = $comment['xar_title']; //prepped in template
+            $package['postanon'] = $comment['xar_postanon'];
             if (($phase == 'quote') && ($allowbbcode==true)){
                 $package['text'] = '[quote]'. $comment['xar_text'] .'[/quote]';
             }elseif (($phase == 'quote') && ($allowhtml==true)){
