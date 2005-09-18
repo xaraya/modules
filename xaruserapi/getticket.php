@@ -62,7 +62,7 @@ function helpdesk_userapi_getticket($args)
         );        
         if( count($security_def) > 0 )
         {
-            $left_join[] = "( {$security_def['left_join']} )";
+            $left_join[] = " {$security_def['left_join']} ";
             $where[] = "( {$security_def['where']} )";
         }
     }    
