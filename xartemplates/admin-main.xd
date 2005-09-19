@@ -2,12 +2,11 @@
 
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>Recommend Administration</xar:mlstring></span>
-        </div>
+</div>
 <div class="xar-mod-body">
-   <img src="#xarTplGetImage('admin_generic.gif', 'base')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
-    <h2>
-        <xar:mlstring>Overview</xar:mlstring>
-    </h2>
+    <img src="modules/adminpanels/xarimages/admin.gif" class="xar-module-icon" alt="official icon" width="96" height="96" />
+    <h2><xar:mlstring>Overview</xar:mlstring></h2>
+
     <h3>
             <xar:mlstring>What is it?</xar:mlstring>
     </h3>
@@ -24,7 +23,7 @@
             <xar:mlstring>How to use it?</xar:mlstring>
     </h3>
     <p>
-            <xar:mlstring>From the menu, you have one choice. </xar:mlstring>
+        <xar:mlstring>From the menu, you have one choice. </xar:mlstring>
         <xar:mlstring>"Modify Configuration".  From this menu option, you can set the template
         that will be used for the email that is sent out, as well as override that choice and
         allow users to send their own message.</xar:mlstring>
@@ -34,13 +33,15 @@
     </h3>
     <p>
             <xar:mlstring>There are no included blocks with this module.</xar:mlstring>
-        </p>
+    </p>
+
     <h3>
             <xar:mlstring>Included Hooks</xar:mlstring>
     </h3>
     <p>
             <xar:mlstring>There are no included hooks with this module.</xar:mlstring>
     </p>
+
     <h3>
             <xar:mlstring>Included Custom Tags</xar:mlstring>
     </h3>
@@ -49,7 +50,7 @@
         your article summary or display templates where you would like the 'send to a friend'
         icon or text to appear. The syntax is:</xar:mlstring>
     </p>
-            <ul>
+    <ul>
         <li>
             <code>
                 &lt;xar:recommend-sendtofriend type="icon" /&gt;
@@ -60,17 +61,33 @@
         </li>
         <li>
             <code>
-                &lt;xar:recommend-sendtofriend type="txt" /&gt;
+                &lt;xar:recommend-sendtofriend type="text" /&gt;
             </code>
             <xar:mlstring>will add a 'send to friend' text
             link in your template whereever the tag is placed. Clicking on the link will display the Recommend email form with a link to the
             specific article.</xar:mlstring>
         </li>
-            </ul>
-            <p>
-                <xar:mlstring>The email used in 'send to a friend' is customizable by overriding the user-usersendtofriend-text.xd and user-usersendtofriend-html.xd templates</xar:mlstring>
-            </p>
-        </div>
+     </ul>
+      <p>
+            <xar:mlstring>The email used in 'send to a friend' is customizable by overriding the user-usersendtofriend-text.xd and user-usersendtofriend-html.xd templates</xar:mlstring>
+      </p>
+      <h3>
+            <xar:mlstring>Further Information</xar:mlstring>
+      </h3>
+      <p>
+          <xar:mlstring>Further information on the Recommend module can be found at</xar:mlstring>
+      </p>
+       <ul>
+              <li><xar:mlstring>Recommend Extension page at</xar:mlstring> <a title="#xarML('Recommend Module - Xaraya Extension 772')#" href="http://www.xaraya.com/index.php/release/772.html">http://www.xaraya.com/index.php/release/772.html</a>.
+              <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+              </li>
+              <li><xar:mlstring>Related tutorials and documentation on the Recommend found</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/recommend/" title="#xarML('Related documentation on Recommend')#"><xar:mlstring>HERE</xar:mlstring></a>
+              </li>
+         </ul>
+         <p class="xar-sub"><strong>&nbsp;<xar:mlstring>Recommend Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.1&nbsp; 2005-09-21
+         </p>
+
+</div>
 <div class="xar-mod-foot xar-align-center xar-padding-thick">
     <p>
             <xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring>

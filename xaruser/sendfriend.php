@@ -1,19 +1,17 @@
 <?php
 /**
- *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
- * @link http://www.xaraya.org
+ * @copyright (C) 2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
  *
  * @subpackage Recommend Module - Send to Friend
- * @author Jo Dalle Nogare
 */
 /* Sendfriend prepares the text or html email to send
  *
  * Used by user_sendtofriend to forward email to friend with recommended article
- * @ Author jojodee
- * @ parameters Takes parameters passed by user_sendtofriend to generate info used by email mod
+ * @author Jo Dalle Nogare <jojodee@xaraya.com>
+ * @parameters Takes parameters passed by user_sendtofriend to generate info used by email mod
  */
 function recommend_user_sendfriend()
 {

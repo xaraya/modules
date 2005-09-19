@@ -1,4 +1,13 @@
 ChangeLog
+Version 1.0.1 - jojodee
+ * Add send to friend functionality 
+   - needs update for all itemtypes rather than aid
+ * Added send to friend DD property
+ * Send to friend custom tag
+   (left DD property as it has slightly different functionality)
+ * Short URLS for Recommend
+ * Short URLS for the Send to Friend component
+
 Version 1.0.0
  * Added Statistics
  * Added User Contributed Notes

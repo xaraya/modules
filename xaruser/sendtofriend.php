@@ -1,13 +1,9 @@
 <?php
 /**
- * File: $Id: s.xarinit.php 1.11 03/01/18 11:39:31-05:00 John.Cox@mcnabb. $
- * 
- * Xaraya Recommend
- * 
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
- * @link http://www.xaraya.org
+ * @copyright (C) 2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
  *
  * @subpackage Recommend Module
  * @author John Cox
@@ -44,7 +40,6 @@ function recommend_user_sendtofriend($args)
         $data['message'] = '';
     }
 
-    // everything else happens in Template for now
     return $data;
 }
 ?>
