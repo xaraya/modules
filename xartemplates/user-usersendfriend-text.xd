@@ -1,7 +1,7 @@
 <xar:mlstring>Hello</xar:mlstring> #$friendname#,
 
 
-<xar:mlstring>Your friend </xar:mlstring> #$username# <xar:mlstring>considered an article at our site interesting and wanted to send it to you.</xar:mlstring>
+<xar:mlstring>Your friend</xar:mlstring> #$username# <xar:mlstring>considered an article at our site interesting and wanted to send it to you.</xar:mlstring>
 
 
 <xar:mlstring>Article Title:</xar:mlstring> #$articletitle#

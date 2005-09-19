@@ -11,7 +11,7 @@
 <p>
 <xar:ml>
     <xar:mlstring>
-        Your friend #(1)considered an article at our site interesting and wanted to send it to you.
+        Your friend #(1) considered an article at our site interesting and wanted to send it to you.
     </xar:mlstring>
     <xar:mlvar>#$username#</xar:mlvar>
 </xar:ml>
