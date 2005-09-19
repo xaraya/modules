@@ -8,7 +8,7 @@
     <h2><xar:mlstring>Overview</xar:mlstring></h2>
 
     <h3>
-            <xar:mlstring>What is it?</xar:mlstring>
+            <xar:mlstring>1. What is it?</xar:mlstring>
     </h3>
     <p>
         <xar:mlstring>
@@ -20,7 +20,7 @@
          </xar:mlstring>
        </p>
     <h3>
-            <xar:mlstring>How to use it?</xar:mlstring>
+            <xar:mlstring>2. How to use it?</xar:mlstring>
     </h3>
     <p>
         <xar:mlstring>From the menu, you have one choice. </xar:mlstring>
@@ -29,21 +29,21 @@
         allow users to send their own message.</xar:mlstring>
         </p>
     <h3>
-            <xar:mlstring>Included Blocks</xar:mlstring>
+            <xar:mlstring>3. Included Blocks</xar:mlstring>
     </h3>
     <p>
             <xar:mlstring>There are no included blocks with this module.</xar:mlstring>
     </p>
 
     <h3>
-            <xar:mlstring>Included Hooks</xar:mlstring>
+            <xar:mlstring>4. Included Hooks</xar:mlstring>
     </h3>
     <p>
             <xar:mlstring>There are no included hooks with this module.</xar:mlstring>
     </p>
 
     <h3>
-            <xar:mlstring>Included Custom Tags</xar:mlstring>
+            <xar:mlstring>5. Included Custom Tags</xar:mlstring>
     </h3>
     <p>
         <xar:mlstring>There is a custom 'send to friend' tag included. The tag is placed in
@@ -71,8 +71,17 @@
       <p>
             <xar:mlstring>The email used in 'send to a friend' is customizable by overriding the user-usersendtofriend-text.xd and user-usersendtofriend-html.xd templates</xar:mlstring>
       </p>
+         <h3>
+            <xar:mlstring>6. Included DD Properties</xar:mlstring>
+    </h3>
+    <p>
+            <xar:mlstring>The Send To Friend Dynamic Data Property type can be added to any of your Article publication types after hooking Dynamic Data to your articles module itemtypes. If the property does not appear in the DD property list, flush your Dynamic Data cache to refresh the DD listing. The functinonality is similar to the custom tag.</xar:mlstring>
+    </p>
+    <p><xar:mlstring>The main difference to the custom tag is the Send to Friend DD property also adds a checkbox to your publication type. This allows you to choose whether the send to friend link will appear in the article, by checking the Send To Friend checkbox when adding or editing and article.</xar:mlstring>
+    </p>
+
       <h3>
-            <xar:mlstring>Further Information</xar:mlstring>
+            <xar:mlstring>7. Further Information</xar:mlstring>
       </h3>
       <p>
           <xar:mlstring>Further information on the Recommend module can be found at</xar:mlstring>
@@ -84,7 +93,7 @@
               <li><xar:mlstring>Related tutorials and documentation on the Recommend found</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/recommend/" title="#xarML('Related documentation on Recommend')#"><xar:mlstring>HERE</xar:mlstring></a>
               </li>
          </ul>
-         <p class="xar-sub"><strong>&nbsp;<xar:mlstring>Recommend Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.1&nbsp; 2005-09-21
+         <p class="xar-sub"><strong>&nbsp;<xar:mlstring>Recommend Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.1&nbsp; 2005-09-20
          </p>
 
 </div>
