@@ -1,4 +1,6 @@
-
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:style scope="module" file="xarform" />
+<xar:style scope="module" />
 <h2>#$menutitle#</h2>
 These are the teachers in the planned course #$planningid#<br>
 <xar:if condition="!empty($status)">

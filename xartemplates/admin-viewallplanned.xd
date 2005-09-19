@@ -1,4 +1,5 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:style scope="module" />
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Courses Administration</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2>#$menutitle#</h2><br />
 <div style="margin: auto;">
@@ -23,7 +24,12 @@
 				   <a href="#$item['displayurl']#">#$item['name']#</a>
 			   </xar:if>
 			</td>
-			<td>#$item['startdate']#</td>
+			<xar:if condition="$item['hideplanning'] eq 1">
+			<td class="coursehidden"> 
+			<xar:else />
+			<td>			
+			</xar:if>
+			#$item['startdate']#</td>
 			<td>#$item['enddate']#</td>
 			<td>#$item['minparticipants']#&#32;&#47;&#32;#$item['maxparticipants']#</td>
 			<td>

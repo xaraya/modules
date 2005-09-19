@@ -1,8 +1,6 @@
 <?php
-/**
- * File: $Id:
- * 
- * Get all module items
+/** 
+ * Get a specific participant
  * 
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team.
@@ -32,7 +30,7 @@ function courses_userapi_getparticipant($args)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $studentstable = $xartable['courses_students'];
-    // TODO: how to select by cat ids (automatically) when needed ???
+
     $query = "SELECT xar_sid,
                      xar_userid,
                      xar_planningid,

@@ -1,6 +1,6 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:if condition="xarTplAddStyleLink('courses', 'xarform')"></xar:if>
-<xar:if condition="xarTplAddStyleLink('courses', 'courses')"></xar:if>
+<xar:style scope="module" file="xarform" />
+<xar:style scope="module" />
 <div class="xar-courses xar-courses-display">
 
     <xar:template file="header" />
@@ -17,7 +17,7 @@
     <xar:else />
     
     <xar:if condition="xarModIsHooked('categories','courses')">
-      <xar:categories-navigation layout="" itemid="$courseid" module="courses" />
+      <xar:categories-navigation layout="trail" itemid="$courseid" module="courses" />
     </xar:if>
     
     <form method="post" class="xar-form"
@@ -76,12 +76,12 @@
                         </span>
                     </p>
                     <p class="param">
-                        <label for="language">
-                            <span class="help" title="#xarML('The language that will be used in this course.')#">
-                            #$languagelabel#
+                        <label for="intendedcredits">
+                            <span class="help" title="#xarML('The credits that in general will be given for this course.')#">
+                            #$intendedcreditslabel#
                             </span>
                         </label>
-                        #$item['language']#
+                        #$item['intendedcredits']#
                     </p>
                     
                </fieldset>

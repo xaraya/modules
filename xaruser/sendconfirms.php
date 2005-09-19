@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id: s.xarinit.php 1.11 03/01/18 11:39:31-05:00 John.Cox@mcnabb. $
- * 
  * Xaraya Courses
  * 
  * @package Xaraya eXtensible Management System

@@ -24,7 +24,7 @@ function courses_admin_newcourse($args)
     if (!xarVarFetch('number', 'str:1:', $number, '',XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('coursetype', 'str:1:', $coursetype, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('shortdesc', 'str:1:', $shortdesc, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('language', 'str:1:', $language, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('intendedcredits', 'str:1:30', $intendedcredits, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('freq', 'str:1:', $freq, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('contact', 'str:1:', $contact, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('contactuid', 'int:1:', $contactuid, '', XARVAR_NOT_REQUIRED)) return;
@@ -46,7 +46,7 @@ function courses_admin_newcourse($args)
     $data['coursetypelabel'] = xarVarPrepForDisplay(xarML('Course Type (Category)'));
     $data['levellabel'] = xarVarPrepForDisplay(xarML('Level'));
     $data['shortdesclabel'] = xarVarPrepForDisplay(xarML('Short Course Description'));
-    $data['languagelabel'] = xarVarPrepForDisplay(xarML('Language'));
+    $data['intendedcreditslabel'] = xarVarPrepForDisplay(xarML('The credits that in general will be given for this course'));
     $data['freqlabel'] = xarVarPrepForDisplay(xarML('Frequency'));
     $data['contactlabel'] = xarVarPrepForDisplay(xarML('Contact details'));
     $data['contactuidlabel'] = xarVarPrepForDisplay(xarML('User or role to serve as contact for course'));
@@ -96,10 +96,10 @@ function courses_admin_newcourse($args)
         $data['shortdesc'] = $shortdesc;
     }
 
-    if (empty($language)) {
-        $data['language'] = '';
+    if (empty($intendedcredits)) {
+        $data['intendedcredits'] = '';
     } else {
-        $data['language'] = $language;
+        $data['intendedcredits'] = $intendedcredits;
     }
     if (empty($freq)) {
         $data['freq'] = '';

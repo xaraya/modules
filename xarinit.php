@@ -33,7 +33,8 @@ function courses_init()
         'xar_type' => array('type' => 'varchar', 'size' => 10, 'default' => 'NULL'),
         'xar_level' => array('type' => 'varchar', 'size' => 20, 'default' => 'NULL'),
         'xar_shortdesc'=>array('null'=>FALSE, 'type'=>'text'),
-        'xar_language'=>array('null'=>TRUE, 'type'=>'text'),
+        'xar_intendedcredits' => array('type' => 'varchar', 'size' => 30, 'default' => 'NULL'),		
+//        'xar_language'=>array('null'=>TRUE, 'type'=>'text'),
         'xar_freq' =>array('null'=>TRUE, 'type' => 'varchar', 'size' => 20, 'default' => 'NULL'),
         'xar_contactuid' => array('type' => 'integer', 'size' => 'medium', 'null' => true, 'default' => 'NULL'),
         'xar_contact' => array('null'=>TRUE, 'type' => 'varchar', 'size' => 255, 'default' => 'NULL'),
@@ -60,6 +61,7 @@ function courses_init()
         'xar_prerequisites'=>array('null'=>FALSE, 'type'=>'text'),
         'xar_aim'=>array('null'=>TRUE, 'type'=>'text'),
         'xar_method'=>array('null'=>TRUE, 'type'=>'text'),
+		'xar_language'=>array('null'=>TRUE, 'type'=>'varchar', 'size'=>100),
         'xar_longdesc'=>array('null'=>FALSE, 'type'=>'text'),
         'xar_costs'=>array('null'=>FALSE, 'type'=>'varchar','size'=>100, 'default'=>'0'),
         'xar_committee'=>array('null'=>TRUE, 'type'=>'text',),
@@ -555,8 +557,40 @@ function courses_upgrade($oldversion)
             
             return courses_upgrade('0.1.0');
         case '0.1.0':
-        
-            break;
+            // Add language to planningtable
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+            $datadict =& xarDBNewDataDict($dbconn, 'CREATE');
+            $planningtable = $xartable['courses_planning'];
+            // Apply changes
+            xarDBLoadTableMaintenanceAPI();
+            $result = $datadict->addColumn($planningtable, 'xar_language varchar(100) null default(NULL)');
+            if (!$result) return;
+	
+            // Using the Datadict method to be up to date ;)
+            $datadict =& xarDBNewDataDict($dbconn, 'CREATE');
+            $coursestable = $xartable['courses'];
+            // Apply changes
+            xarDBLoadTableMaintenanceAPI();
+            $result = $datadict->dropColumn($coursestable, 'xar_language');
+            if (!$result) return;
+			
+            return courses_upgrade('0.1.1');
+		case '0.1.1':
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+            // Using the Datadict method to be up to date ;)
+            $datadict =& xarDBNewDataDict($dbconn, 'CREATE');
+            $coursestable = $xartable['courses'];
+            // Apply changes
+            xarDBLoadTableMaintenanceAPI();
+            $result = $datadict->addColumn($coursestable, 'xar_intendedcredits varchar(30) null default(NULL)');
+            if (!$result) return;
+			
+            return courses_upgrade('0.1.2');
+
+		case '0.1.2':
+		    break;
     }
     // Update successful
     return true;

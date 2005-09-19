@@ -1,3 +1,5 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
 <xar:if condition="xarTplAddStyleLink('base', 'navtabs')"></xar:if>
 
 <xar:set name="$navViewUrl">#xarModURL('courses','user','view')#</xar:set>
@@ -16,13 +18,9 @@
         </xar:if>
         <xar:if condition="$whatFunc eq 'display'">
             <dd class="active"><a href="#$navDisplayUrl#"><xar:mlstring>Display</xar:mlstring></a></dd>
-        <xar:else />
-            <dd><a href="#$navDisplayUrl#"><xar:mlstring>Display</xar:mlstring></a></dd>
         </xar:if>
         <xar:if condition="$whatFunc eq 'displayplanned'">
             <dd class="active"><a href="#$navDisplayPlannedUrl#"><xar:mlstring>Display planned</xar:mlstring></a></dd>
-        <xar:elseif condition="$whatFunc eq 'display'" />
-            <dd><xar:mlstring>Display planned</xar:mlstring></dd>
         </xar:if>
         <xar:if condition="xarUserIsLoggedIn()">
             <dd><a href="#$navMyCoursesUrl#"><xar:mlstring>My Courses</xar:mlstring></a></dd>

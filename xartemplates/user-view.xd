@@ -1,5 +1,6 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-
+<xar:style scope="module" file="xarform" />
+<xar:style scope="module" />
 <div class="xar-courses xar-courses-user-view">
     <xar:template file="header" />
     

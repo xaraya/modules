@@ -1,7 +1,5 @@
 <?php
-/**
- * File: $Id:
- * 
+/** 
  * Utility function to pass individual item links 
  * 
  * @package Xaraya eXtensible Management System

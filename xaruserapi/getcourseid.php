@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id:
- * 
  * Get the id of a course when the number is known
  * 
  * @package Xaraya eXtensible Management System
@@ -65,8 +63,8 @@ function courses_userapi_getcourseid($args)
     if (!xarSecurityCheck('ReadCourses', 1, 'Course', "$courseid:All:All")) {
         return;
         }
-    $item = array('courseid' => $courseid,
-        'hidecourse' => $hidecourse);
+    $item = array('courseid'   => $courseid,
+                  'hidecourse' => $hidecourse);
     // Return the item array
     return $item;
 }

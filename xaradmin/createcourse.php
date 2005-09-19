@@ -30,7 +30,7 @@ function courses_admin_createcourse($args)
     if (!xarVarFetch('coursetype', 'str:1:', $coursetype, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('level', 'isset:1:', $level, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('shortdesc', 'str:1:', $shortdesc, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('language', 'str:1:', $language, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('intendedcredits', 'str:1:30', $intendedcredits, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('freq', 'str:1:', $freq, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('contact', 'str:1:', $contact, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('contactuid', 'int:1:', $contactuid, '', XARVAR_NOT_REQUIRED)) return;
@@ -67,7 +67,7 @@ function courses_admin_createcourse($args)
                                 'coursetype' => $coursetype,
                                 'level' => $level,
                                 'shortdesc' => $shortdesc,
-                                'language' => $language,
+                                'intendedcredits' => $intendedcredits,
                                 'freq' => $freq,
                                 'contact' => $contact,
                                 'contactuid' => $contactuid,
@@ -85,7 +85,7 @@ function courses_admin_createcourse($args)
                                 'coursetype' => $coursetype,
                                 'level' => $level,
                                 'shortdesc' => $shortdesc,
-                                'language' => $language,
+                                'intendedcredits' => $intendedcredits,
                                 'freq' => $freq,
                                 'contact' => $contact,
                                 'contactuid' => $contactuid,
@@ -94,8 +94,7 @@ function courses_admin_createcourse($args)
     // The return value of the function is checked here, and if the function
     // succeeded then an appropriate message is posted.
     if (!isset($courseid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-    // This function generated no output, and so now it is complete we redirect
-    // the user to an appropriate page for them to carry on their work
+
     xarResponseRedirect(xarModURL('courses', 'admin', 'viewcourses'));
     xarSessionSetVar('statusmsg', xarML('Course Was Successfully Created!'));
     // Return

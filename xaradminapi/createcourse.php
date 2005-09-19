@@ -58,7 +58,7 @@ function courses_adminapi_createcourse($args)
               xar_type,
               xar_level,
               xar_shortdesc,
-              xar_language,
+              xar_intendedcredits,
               xar_freq,
               xar_contact,
               xar_contactuid,
@@ -66,7 +66,7 @@ function courses_adminapi_createcourse($args)
               xar_last_modified)
               VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
             
-    $bindvars = array((int)$nextId, $name, $number, $coursetype, $level, $shortdesc, $language, $freq, $contact, $contactuid, $hidecourse, $last_modified);
+    $bindvars = array((int)$nextId, $name, $number, $coursetype, $level, $shortdesc, $intendedcredits, $freq, $contact, $contactuid, $hidecourse, $last_modified);
     $result = &$dbconn->Execute($query, $bindvars);
     if (!$result) return;
 

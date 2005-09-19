@@ -1,11 +1,9 @@
 <?php
-/**
- * File: $Id:
- * 
- * Get all module items
+/** 
+ * Get a specific teacher
  * 
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2005 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -16,8 +14,7 @@
  * get a teacher of a planned course
  * 
  * @author the Courses module development team 
- * @param numitems $ the number of items to retrieve (default -1 = all)
- * @param startnum $ start with this item number (default 1)
+ * @param tid $ the ID of the teacher to get
  * @returns array
  * @return array of items, or false on failure
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
@@ -25,9 +22,7 @@
 function courses_userapi_getteacher($args)
 {
     extract($args);
-    // Optional arguments.
-    // Note : since we have several arguments we want to check here, we'll
-    // report all those that are invalid at the same time...
+
     $invalid = array();
     if (!isset($tid) || !is_numeric($tid)) {
         $invalid[] = 'tid';
@@ -46,17 +41,15 @@ function courses_userapi_getteacher($args)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $teacherstable = $xartable['courses_teachers'];
-    // TODO: how to select by cat ids (automatically) when needed ???
     $query = "SELECT xar_tid,
-                   xar_userid,
-                   xar_planningid,
-                   xar_type
-            FROM $teacherstable
-            WHERE xar_tid = ?";
+                     xar_userid,
+                     xar_planningid,
+                     xar_type
+              FROM $teacherstable
+              WHERE xar_tid = ?";
             
     $result = $dbconn->Execute($query, array((int)$tid));
-    // Check for an error with the database code, adodb has already raised
-    // the exception so we just return
+
     if ($result->EOF) {
         $result->Close();
         $msg = xarML('This teacher does not exists');
@@ -68,14 +61,13 @@ function courses_userapi_getteacher($args)
     for (; !$result->EOF; $result->MoveNext()) {
         list($sid, $userid, $planningid, $type) = $result->fields;
         if (xarSecurityCheck('ReadCourses', 0, 'Course', "All:$planningid:All")) { //TODO
-            $item = array('tid' => $tid,
-                'userid'        => $userid,
-                'planningid'    => $planningid,
-                'type'          => $type);
+            $item = array('tid' 	   => $tid,
+                          'userid'     => $userid,
+                		  'planningid' => $planningid,
+                		  'type'       => $type);
         }
     }
-    // All successful database queries produce a result set, and that result
-    // set should be closed when it has been finished with
+
     $result->Close();
     // Return the items
     return $item;

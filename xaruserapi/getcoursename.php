@@ -1,7 +1,5 @@
 <?php
-/**
- * File: $Id:
- * 
+/** 
  * Get a course name
  * 
  * @package Xaraya eXtensible Management System
@@ -16,6 +14,8 @@
  * get the name for a courses
  * 
  * @author Michel V.
+ * @author the Courses module development team 
+ * @param  $args ['courseid'] The ID of the coursename to get
  * @returns array
  * @return array of items, or false on failure
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
@@ -42,8 +42,8 @@ function courses_userapi_getcoursename($args)
     $xartable =& xarDBGetTables();
     $coursestable = $xartable['courses'];
     $query = "SELECT xar_name
-            FROM $coursestable
-            WHERE xar_courseid = ? AND xar_hidecourse in ($where)";
+              FROM $coursestable
+              WHERE xar_courseid = ? AND xar_hidecourse in ($where)";
     $result = &$dbconn->Execute($query, array((int)$courseid));
     if (!$result) return;
     // Check for no rows found, and if so, close the result set and return an exception
@@ -57,7 +57,7 @@ function courses_userapi_getcoursename($args)
     list($name) = $result->fields;
     $result->Close();
     $item = array('courseid' => $courseid,
-                  'name' => $name);
+                  'name'     => $name);
 
     return $item;
 }

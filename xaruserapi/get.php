@@ -47,7 +47,7 @@ function courses_userapi_get($args)
                    xar_type,
                    xar_level,
                    xar_shortdesc,
-                   xar_language,
+                   xar_intendedcredits,
                    xar_freq,
                    xar_contact,
                    xar_contactuid,
@@ -66,7 +66,7 @@ function courses_userapi_get($args)
         return;
     }
     // Extract fields
-    list($name, $number, $coursetype, $level, $shortdesc, $language, $freq, $contact, $contactuid, $hidecourse, $last_modified) = $result->fields;
+    list($name, $number, $coursetype, $level, $shortdesc, $intendedcredits, $freq, $contact, $contactuid, $hidecourse, $last_modified) = $result->fields;
     $result->Close();
 
     // Security checks 
@@ -74,18 +74,18 @@ function courses_userapi_get($args)
     if (!xarSecurityCheck('ViewCourses', 1, 'Course', "$courseid:All:All")) {
         return;
         }
-    $item = array('courseid' => $courseid,
-        'name' => $name,
-        'number' => $number,
-        'coursetype' => $coursetype,
-        'level' => $level,
-        'shortdesc' => $shortdesc,
-        'language' => $language,
-        'freq' => $freq,
-        'contact' => $contact,
-        'contactuid' => $contactuid,
-        'hidecourse' => $hidecourse,
-        'last_modified' => $last_modified);
+    $item = array('courseid' 	=> $courseid,
+				'name' 			=> $name,
+				'number' 		=> $number,
+				'coursetype' 	=> $coursetype,
+				'level' 		=> $level,
+				'shortdesc' 	=> $shortdesc,
+				'intendedcredits' => $intendedcredits,
+				'freq' 			=> $freq,
+				'contact' 		=> $contact,
+				'contactuid' 	=> $contactuid,
+				'hidecourse' 	=> $hidecourse,
+				'last_modified' => $last_modified);
     // Return the item array
     return $item;
 }

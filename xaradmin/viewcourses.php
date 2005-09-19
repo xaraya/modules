@@ -56,6 +56,7 @@ function courses_admin_viewcourses()
         $item = $items[$i];
         $courseid = $item['courseid'];
         $name = $item['name'];
+		$hidecourse = $item['hidecourse'];
         if (xarSecurityCheck('EditCourses', 0, 'Course', "$courseid:All:All")) {
             $items[$i]['planurl'] = xarModURL('courses',
                 'admin',

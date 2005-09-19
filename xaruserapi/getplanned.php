@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id:
- * 
- * Get all planned courses
+ * Get a planned course
  * 
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2005 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -13,11 +11,10 @@
  * @author Courses module development team 
  */
 /**
- * get a specific planned courses
+ * get a specific planned course
  * 
  * @author Michel V.
- * @param numitems $ the number of items to retrieve (default -1 = all)
- * @param startnum $ start with this item number (default 1)
+ * @param planningid $ ID of a specific planned course
  * @returns array
  * @return item with array of parameter, or false on failure
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
@@ -43,10 +40,7 @@ function courses_userapi_getplanned($args)
     $xartable =& xarDBGetTables();
     $planningtable = $xartable['courses_planning'];
     
-    //TODO: implement security check when this item is hidden from display
-    
-    // TODO: how to select by cat ids (automatically) when needed ???
-    
+    // TODO: implement security check when this item is hidden from display
     // Get item 
         $query = "SELECT xar_planningid,
                    xar_courseid,
@@ -59,6 +53,7 @@ function courses_userapi_getplanned($args)
                    xar_prerequisites,
                    xar_aim,
                    xar_method,
+				   xar_language,
                    xar_longdesc,
                    xar_costs,
                    xar_committee,
@@ -81,7 +76,7 @@ function courses_userapi_getplanned($args)
     if (!$result) return;
     // Put items into result array.
         list($planningid, $courseid, $credits, $creditsmin, $creditsmax, $courseyear, $startdate, $enddate,
-         $prerequisites, $aim, $method, $longdesc, $costs, $committee, $coordinators, $lecturers,
+         $prerequisites, $aim, $method, $language, $longdesc, $costs, $committee, $coordinators, $lecturers,
           $location, $material, $info, $program, $hideplanning, $minparticipants, $maxparticipants, $closedate, $last_modified) = $result->fields;
         if (xarSecurityCheck('ReadCourses', 0, 'Course', "$courseid:$planningid:All")) {
             $item = array(
@@ -96,6 +91,7 @@ function courses_userapi_getplanned($args)
             'prerequisites' => $prerequisites,
             'aim'        => $aim,
             'method'     => $method,
+			'language'   => $language,
             'longdesc'   => $longdesc,
             'costs'      => $costs,
             'committee'  => $committee,

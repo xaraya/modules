@@ -55,7 +55,7 @@ function courses_userapi_getall($args)
                    xar_type,
                    xar_level,
                    xar_shortdesc,
-                   xar_language,
+                   xar_intendedcredits,
                    xar_freq,
                    xar_contact,
                    xar_contactuid,
@@ -93,20 +93,20 @@ function courses_userapi_getall($args)
     if (!$result) return;
     // Put items into result array.
     for (; !$result->EOF; $result->MoveNext()) {
-        list($courseid, $name, $number, $coursetype, $level, $shortdesc, $language, $freq, $contact, $contactuid, $hidecourse, $last_modified) = $result->fields;
+        list($courseid, $name, $number, $coursetype, $level, $shortdesc, $intendedcredits, $freq, $contact, $contactuid, $hidecourse, $last_modified) = $result->fields;
         if (xarSecurityCheck('ViewCourses', 0, 'Course', "$courseid:All:All")) {
-            $items[] = array('courseid' => $courseid,
-                'name' => $name,
-                'number' => $number,
-                'coursetype' => $coursetype,
-                'level' => $level,
-                'shortdesc' => $shortdesc,
-                'language' => $language,
-                'freq' => $freq,
-                'contact' => $contact,
-                'contactuid' => $contactuid,
-                'hidecourse' => $hidecourse,
-                'last_modified' => $last_modified);
+            $items[] = array('courseid' 	=> $courseid,
+							'name' 			=> $name,
+							'number' 		=> $number,
+							'coursetype'	=> $coursetype,
+							'level' 		=> $level,
+							'shortdesc' 	=> $shortdesc,
+							'intendedcredits' => $intendedcredits,
+							'freq' 			=> $freq,
+							'contact' 		=> $contact,
+							'contactuid' 	=> $contactuid,
+							'hidecourse' 	=> $hidecourse,
+							'last_modified' => $last_modified);
         }
     }
     // All successful database queries produce a result set, and that result

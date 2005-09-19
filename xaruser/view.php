@@ -40,7 +40,7 @@ function courses_user_view()
     $data['aimlabel'] = xarVarPrepForDisplay(xarML('Course Aim'));
     $data['shortdesclabel'] = xarVarPrepForDisplay(xarML('Short Course Description'));
     $data['methodlabel'] = xarVarPrepForDisplay(xarML('Course Method'));
-    $data['languagelabel'] = xarVarPrepForDisplay(xarML('Course Language'));
+    $data['intendedcreditslabel'] = xarVarPrepForDisplay(xarML('Course credits'));
     $data['freqlabel'] = xarVarPrepForDisplay(xarML('Course Frequency'));
     $data['startdate_label'] = xarVarPrepForDisplay(xarML('Course Start Date'));
     $data['enddate_label'] = xarVarPrepForDisplay(xarML('Course End Date'));

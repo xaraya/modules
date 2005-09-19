@@ -106,13 +106,13 @@
                 </p>
                 <p class="param">
                     <label for="language">
-                        <span class="help" title="#xarML('Enter the language of course.')#">
-                        #$languagelabel#
+                        <span class="help" title="#xarML('The intended credits for this course.')#">
+                        #$intendedcreditslabel#
                         </span>
                     </label>
-                    <xar:data-input name="language" type="2" value="$language" />
-                  <xar:if condition="!empty($invalid['language'])">
-                    <span style="color: red"><xar:mlstring>ERROR! This is not a valid language</xar:mlstring></span>
+                    <xar:data-input name="intendedcredits" type="2" value="$intendedcredits" />
+                  <xar:if condition="!empty($invalid['intendedcredits'])">
+                    <span style="color: red"><xar:mlstring>ERROR! This is not a valid description of credits</xar:mlstring></span>
                   </xar:if>
                 </p>
                 <p class="param">

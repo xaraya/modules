@@ -44,6 +44,7 @@ function courses_userapi_getall_enrolled($args)
             $coursestable.xar_courseid,
             $planningtable.xar_planningid,
             $planningtable.xar_startdate,
+			$planningtable.xar_hideplanning,
             $studentstable.xar_status,
             $studentstable.xar_regdate
             FROM $studentstable, $coursestable
@@ -58,14 +59,15 @@ function courses_userapi_getall_enrolled($args)
     if (!$result) return;
     // Put items into result array.
     for (; !$result->EOF; $result->MoveNext()) {
-        list($name, $courseid, $planningid, $startdate, $studstatus, $regdate) = $result->fields;
+        list($name, $courseid, $planningid, $startdate, $hideplanning, $studstatus, $regdate) = $result->fields;
         if (xarSecurityCheck('ReadCourses', 0, 'Course', "$courseid:$planningid:All")) {
-            $items[] = array('name' => $name,
-                             'courseid'=> $courseid,
-                             'planningid' => $planningid,
-                             'startdate'=> $startdate,
-                             'studstatus'=> $studstatus,
-                             'regdate' => $regdate);
+            $items[] = array('name' 		=> $name,
+                             'courseid'		=> $courseid,
+                             'planningid' 	=> $planningid,
+                             'startdate'	=> $startdate,
+							 'hideplanning' => $hideplanning,
+                             'studstatus'	=> $studstatus,
+                             'regdate' 		=> $regdate);
         }
     }
     // All successful database queries produce a result set, and that result

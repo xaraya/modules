@@ -1,6 +1,6 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:if condition="xarTplAddStyleLink('courses', 'xarform')"></xar:if>
-<xar:if condition="xarTplAddStyleLink('courses', 'courses')"></xar:if>
+<xar:style scope="module" file="xarform" />
+<xar:style scope="module" />
 
 <div class="xar-courses-head">
     <span class="xar-mod-title">#$menutitle#</span>
@@ -100,7 +100,7 @@
                             #$languagelabel#
                             </span>
                         </label>
-                        #$course['language']#
+                        #$item['language']#
                     </p>
                 </xar:if>
                 <xar:if condition="!empty($item['credits']) OR $HideEmptyFields == '0'">

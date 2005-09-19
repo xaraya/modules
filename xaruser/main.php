@@ -1,8 +1,6 @@
 <?php
 /**
- * File: $Id:
- * 
- * Example main user function
+ * Courses main user function
  * 
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team.

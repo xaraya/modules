@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id:
- * 
- * Get all planned courses
+ * Get all dates that a course is planned
  * 
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2005 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -39,7 +37,6 @@ function courses_userapi_getplandates($args)
     $where = "0";
     }
     
-    
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $planningtable = $xartable['courses_planning'];
@@ -57,6 +54,7 @@ function courses_userapi_getplandates($args)
                    xar_prerequisites,
                    xar_aim,
                    xar_method,
+				   xar_language,
                    xar_longdesc,
                    xar_costs,
                    xar_committee,
@@ -78,7 +76,7 @@ function courses_userapi_getplandates($args)
     // Put items into result array.
     for (; !$result->EOF; $result->MoveNext()) {
         list($planningid, $courseid, $credits, $creditsmin, $creditsmax, $courseyear, $startdate, $enddate,
-         $prerequisites, $aim, $method, $longdesc, $costs, $committee, $coordinators, $lecturers,
+         $prerequisites, $aim, $method, $language, $longdesc, $costs, $committee, $coordinators, $lecturers,
           $location, $material, $info, $program, $hideplanning, $last_modified) = $result->fields;
         if (xarSecurityCheck('ReadCourses', 0, 'Course', "$courseid:$planningid:All")) {
             $items[] = array(
@@ -93,6 +91,7 @@ function courses_userapi_getplandates($args)
             'prerequisites' => $prerequisites,
             'aim'        => $aim,
             'method'     => $method,
+			'language'   => $language,
             'longdecr'   => $longdesc,
             'costs'      => $costs,
             'committee'  => $committee,

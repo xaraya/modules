@@ -84,7 +84,7 @@ function courses_adminapi_updatecourse($args)
                  xar_type = ?,
                  xar_level = ?,
                  xar_shortdesc = ?,
-                 xar_language = ?,
+                 xar_intendedcredits = ?,
                  xar_freq = ?,
                  xar_contact = ?,
                  xar_contactuid =?,
@@ -92,7 +92,7 @@ function courses_adminapi_updatecourse($args)
                  xar_last_modified = ?
               WHERE xar_courseid = ?";
 
-    $bindvars = array($name, $number, $coursetype, $level, $shortdesc, $language, $freq, $contact, $contactuid,
+    $bindvars = array($name, $number, $coursetype, $level, $shortdesc, $intendedcredits, $freq, $contact, $contactuid,
                       $hidecourse, $last_modified, $courseid);
     $result = &$dbconn->Execute($query, $bindvars);
     // Check for an error with the database code, adodb has already raised
@@ -109,6 +109,7 @@ function courses_adminapi_updatecourse($args)
     $item['level'] =$level;
     $item['shortdesc'] = $shortdesc;
     $item['freq'] = $freq;
+	$item['intendedcredits'] = $intendedcredits;
     $item['contact'] = $contact;
     $item['contactuid'] = $contactuid;
     $item['hidecourse'] = $hidecourse;

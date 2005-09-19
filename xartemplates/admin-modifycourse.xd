@@ -1,6 +1,6 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:if condition="xarTplAddStyleLink('courses', 'xarform')"></xar:if>
-<xar:if condition="xarTplAddStyleLink('courses', 'courses')"></xar:if>
+<xar:style scope="module" file="xarform" />
+<xar:style scope="module" />
 <!-- This Javascript will check for required fields before the form is submitted. -->
 <xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
 <script type="text/javascript">
@@ -105,13 +105,13 @@
                             </p>
                             <p class="param">
                                 <label for="language">
-                                    <span class="help" title="#xarML('Enter the language of course.')#">
-                                    #$languagelabel#
+                                    <span class="help" title="#xarML('Enter the intended credits for this course.')#">
+                                    #$intendedcreditslabel#
                                     </span>
                                 </label>
-                                <xar:data-input name="language" type="2" value="$coursedata['language']" />
-                              <xar:if condition="!empty($invalid['language'])">
-                                <span style="color: red"><xar:mlstring>ERROR! This is not a valid language</xar:mlstring></span>
+                                <xar:data-input name="intendedcredits" type="2" value="$coursedata['intendedcredits']" />
+                              <xar:if condition="!empty($invalid['intendedcredits'])">
+                                <span style="color: red"><xar:mlstring>ERROR! This is not a valid description for credits</xar:mlstring></span>
                               </xar:if>
                             </p>
                             <p class="param">

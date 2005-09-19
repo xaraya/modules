@@ -1,7 +1,5 @@
 <?php
  /**
- * File: $Id: 
- * 
  * Display an course item
  * 
  * @package Xaraya eXtensible Management System
@@ -71,6 +69,7 @@ function courses_user_display($args)
     $data['shortdesclabel'] = xarVarPrepForDisplay(xarML('Course Description'));
     $data['methodlabel'] = xarVarPrepForDisplay(xarML('Course Method'));
     $data['languagelabel'] = xarVarPrepForDisplay(xarML('Course Language'));
+    $data['intendedcreditslabel'] = xarVarPrepForDisplay(xarML('Intended credits for this course'));	
     $data['freqlabel'] = xarVarPrepForDisplay(xarML('Course Frequency'));
     $data['contactlabel'] = xarVarPrepForDisplay(xarML('Course Contact details'));
     $data['contactuidlabel'] = xarVarPrepForDisplay(xarML('Contact'));

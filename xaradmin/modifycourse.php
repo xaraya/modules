@@ -67,7 +67,7 @@ function courses_admin_modifycourse($args)
                  'freqlabel'    => xarVarPrepForDisplay(xarML('Course frequency')),
                  'coursetypelabel'  => xarVarPrepForDisplay(xarML('Course Type (Category)')),
                  'levellabel'   => xarVarPrepForDisplay(xarML('Course Level')),
-                 'languagelabel' => xarVarPrepForDisplay(xarML('Language')),
+                 'intendedcreditslabel' => xarVarPrepForDisplay(xarML('Intended credits')),
                  'shortdesclabel'  => xarVarPrepForDisplay(xarML('Short Description')),
                  'contactlabel' => xarVarPrepForDisplay(xarML('Course Contact details')),
                  'contactuidlabel' => xarVarPrepForDisplay(xarML('Course Coordinator uid')),                 

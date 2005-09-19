@@ -1,5 +1,5 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<!-- common admin menu for this module - remove link to the current function -->
+<xar:style scope="module" />
 <!-- the variables used in this menu come from example_admin_menu() -->
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Courses Administration</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2>#$menutitle#</h2><br />
@@ -7,11 +7,8 @@
 
 <div class="xar-mod-statusmsg">#xarSessionGetVar('statusmsg')#</div>
 
-
-
 <xar:if condition="xarModIsHooked('categories','courses')">
-  <xar:categories-navigation layout="trails" showchildren="1" 
-  module="courses" catid="$catid" />
+  <xar:categories-navigation layout="trails" showchildren="1" module="courses" catid="$catid" />
 </xar:if>
 
 <table width="100%" border="1" cellspacing="0" cellpadding="4">
@@ -26,7 +23,7 @@
         <xar:else />
             <th>#$numberlabel#</th>
         </xar:if>
-
+        <th>Hidden?</th>
         <th>#$optionslabel#</th>
     </tr>
     <xar:foreach in="$items" value="$item">
@@ -39,6 +36,12 @@
            </xar:if>
         </td>
         <td>#$item['number']#</td>
+		<xar:if condition="$item['hidecourse'] eq 1">
+			<td class="coursehidden">&nbsp;</td>
+		<xar:else />
+			<td>&nbsp; </td>		
+		</xar:if>
+
         <td>
            <xar:if condition="empty($item['planurl'])">
                #$item['plantitle']#
