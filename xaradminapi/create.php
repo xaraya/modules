@@ -1,6 +1,13 @@
 <?php
-/*
-
+/**
+    Creates all security levels
+    
+    @param $args['modid']
+    @param $args['itemtype']
+    @param $args['itemid']
+    @param $args['settings']
+    
+    @return boolean true if successful otherwise false
 */
 function security_adminapi_create($args)
 {

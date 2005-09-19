@@ -7,6 +7,7 @@
     @param int $args['itemtype']
     @param int $args['itemid']
     @param int $args['level']
+    
     @return boolean
 */
 function security_userapi_check($args)

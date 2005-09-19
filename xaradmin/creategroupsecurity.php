@@ -1,5 +1,9 @@
 <?php
-
+/**
+    Adds a group security level to an item
+    
+    @return boolean true on success otherwise false
+*/
 function security_admin_creategroupsecurity($args)
 {
     extract($args);

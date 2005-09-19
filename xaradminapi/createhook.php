@@ -1,6 +1,10 @@
 <?php
 /**
-    Create Security level for a xaraya item
+    Creates default security for an item if none exists
+    
+    @param $args array standard hook params
+    
+    @return $extrainfo array containing standard hooks extrainfo
 */
 function security_adminapi_createhook($args)
 {

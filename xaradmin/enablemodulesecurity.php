@@ -1,4 +1,11 @@
 <?php
+/**
+    Creates security levels for module items that already exist
+    (Useful if a bunch of items are created before the security 
+     module is hooked in.  Usefull in upgrades. )
+    
+    @return boolean true on success otherwise false
+*/
 function security_admin_enablemodulesecurity($args)
 {
     if( !xarSecurityCheck('AdminSecurity') ) return false;
@@ -64,10 +71,10 @@ function security_admin_enablemodulesecurity($args)
                 'itemtype'   => $itemtype, 
                 'itemid'     => $itemid,
                 'uid'        => $uid,
-                'settings' => array(
+                'settings'   => array(
                     'levels' => array(
-                        'user'  => $user_level,
-                        'world' => $world_level,
+                        'user'   => $user_level,
+                        'world'  => $world_level,
                         'groups' => array(
                             $gid => $group_level
                         )

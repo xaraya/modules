@@ -1,5 +1,9 @@
 <?php
-
+/**
+    Removes group security level from an item
+    
+    @return boolean true on success otherwise false
+*/
 function security_admin_deletegroupsecurity($args)
 {
     extract($args);

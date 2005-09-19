@@ -1,5 +1,11 @@
 <?php
-
+/**
+    Updates the security of a module item
+    
+    @param     
+    
+    @return boolean returns false to stop processing for the redirect
+*/
 function security_admin_updatesecurity($args)
 {
     extract($args);
@@ -102,10 +108,8 @@ function security_admin_updatesecurity($args)
         $dbconn->Execute($query, $bindvars);    
     }
     
-    
-    //exit();
     xarResponseRedirect($returnUrl);
     
-    return;
+    return false;
 }
 ?>

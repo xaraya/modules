@@ -1,5 +1,10 @@
 <?php
+/**
+    Used to Modify security levels
+        Hook for display GUI
 
+    @return string module output
+*/
 function security_admin_changesecurity($args)
 {
     extract($args);

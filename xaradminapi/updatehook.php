@@ -1,7 +1,10 @@
 <?php
-
 /**
-    Logs who created a xaraya item
+    Creates default security for an item if none exists
+    
+    @param $args array standard hook params
+    
+    @return $extrainfo array containing standard hooks extrainfo
 */
 function security_adminapi_updatehook($args)
 {

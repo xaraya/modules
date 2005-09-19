@@ -1,5 +1,24 @@
 <?php
+/**
+    Security - Provides unix style privileges to xaraya items.
+ 
+    @copyright (C) 2003-2005 by Envision Net, Inc.
+    @license GPL (http://www.gnu.org/licenses/gpl.html)
+    @link http://www.envisionnet.net/
+    @author Brian McGilligan <brian@envisionnet.net>
+ 
+    @package Xaraya eXtensible Management System
+    @subpackage Security module
+*/
 
+/*
+    NOTE: We are using the adodb XML Schema package to manage the
+    db tables. It makes it a bit easier to maintain and upgrades
+    become a snap. But the bundled version that comes with adodb 
+    does not work, there is a bug of some sorts in it. So I've patched
+    it and put it in the base module for now. I really need to sent this
+    upstream.
+*/
 require_once( "modules/base/xarclass/adodb-xmlschema.inc.php" );
 
 /**
@@ -14,9 +33,17 @@ function security_init()
     $schema->setPrefix( xarDBGetSiteTablePrefix() . '_' );
     $sql = $schema->ParseSchema( $schemaFile );
     $result = $schema->ExecuteSchema();  
+    /*
+        When adodb XMLschema tries to detects the current schema and nothing exists
+        xaraya exception are set. So we just want to get rid of them for now, till
+        I can figure out a better solution like not having the exceptions set in the 
+        first place
+    */
     xarErrorFree();
 
-    // Set up module hooks
+    /*
+        Register all the modules hooks
+    */
     if (!xarModRegisterHook('item', 'display', 'GUI',
             'security', 'admin', 'changesecurity')) {
         return false;
@@ -34,14 +61,12 @@ function security_init()
         return false;
     }
 
-    /**
-     * Register the module components that are privileges objects
-     * Format is
-     * xarregisterMask(Name,Realm,Module,Component,Instance,Level,Description)
+    /*
+      Register the module components that are privileges objects Format is
+      xarregisterMask(Name,Realm,Module,Component,Instance,Level,Description)
     */
     xarRegisterMask('UseSecurity', 'All', 'security', 'All', 'All', 'ACCESS_READ');
     xarRegisterMask('AdminSecurity', 'All', 'security', 'All', 'All', 'ACCESS_ADMIN');
-    //xarRegisterMask('ChangeOwner', 'All', 'owner', 'All', 'All', 'ACCESS_ADMIN');
     
     // Initialisation successful
     return true;
@@ -62,21 +87,17 @@ function security_upgrade($oldversion)
         case '0.1.0':
         case '0.1.1':
         case '0.5.0':
-            // Code to upgrade from version 1.1.0 goes here
             $schema = new adoSchema( $dbconn );
             $schema->setPrefix( xarDBGetSiteTablePrefix() . '_' );
             $sql = $schema->ParseSchema( $schemaFile );
             $result = $schema->ExecuteSchema();  
             xarErrorFree();
 
-            
-        case '1.1.0':
-            // Code to upgrade from version 1.1.0 goes here
             break;
 
         default:
             // Couldn't find a previous version to upgrade
-            return;
+            return false;
     }
 
     // Update successful
@@ -97,7 +118,7 @@ function security_delete()
     $sql = $schema->RemoveSchema( $schemaFile );
     $result = $schema->ExecuteSchema();  
     
-    //
+    // cleans up the module vars
     xarModDelAllVars('security');
 
     // Deletion successful

@@ -1,5 +1,15 @@
 <?php
-
+/**
+    If a xaraya item is detected perform a security check out it.
+    
+    @param $module   name of module
+    @param $itemtype item type (optional)
+    @param $itemid   item id of item
+    
+    @return boolean true if user has access otherwise false
+    
+    @throws exception when user is denied access
+*/
 function security_eventapi_OnServerRequest($args)
 {
     if( xarSecurityCheck('AdminPanel', 0) ) return;

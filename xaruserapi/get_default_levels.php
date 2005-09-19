@@ -1,33 +1,20 @@
 <?php
-
+/**
+    Gets the default security levesl for a modules / itemtype pair
+    If there are no module/ itemtype pairs matching it will return 
+    defaults to use instead.
+    
+    @param $args['modid']
+    @param $args['itemtype'] (optional)
+    
+    @return array The default security levels    
+*/
 function security_userapi_get_default_levels($args)
 {
     extract($args);
 
-    $vars = array("settings");
-    if( !empty($modid) )
-    {
-        array_push($vars, "settings.$modid");
-        if( !empty($itemtype) )
-        {
-            array_push($vars, "settings.$modid.$itemtype");
-        }
-    }
-    
-    $settings = array();
-    while( empty($settings) && ($var = array_pop($vars)) != null )
-    {
-        $settings =@ unserialize(xarModGetVar('security', $var));
-    }
-    
-    if( empty($settings['levels']) )
-    {
-        $settings['levels'] = array(
-            'user' => SECURITY_OVERVIEW+SECURITY_READ+SECURITY_COMMENT+SECURITY_WRITE+SECURITY_ADMIN,
-            'groups' => array(),
-            'world' => SECURITY_OVERVIEW+SECURITY_READ,
-        );
-    }
+    $settings = xarModAPIFunc('security', 'user', 'get_default_settings', $args);
+    if( !$settings ){ return false; }    
     
     return $settings['levels'];
 }
