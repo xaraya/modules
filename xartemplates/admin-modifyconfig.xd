@@ -27,47 +27,53 @@
             </legend>
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <input type="hidden" name="phase" id="phase" value="update" />
-            <div class="xar-form-input-wrapper xar-clear-both">
-                <label for="shorturls" class="xar-form-label">
-           <xar:mlstring>Support Short URLs</xar:mlstring>
-                </label>
-       <xar:if condition="xarModGetVar('recommend', 'SupportShortURLs')">
-           <input type="checkbox" name="shorturls" id="shorturls" value="1" checked="checked" />
-       <xar:else />
-            <input type="checkbox" name="shorturls" id="shorturls" value="1" />
-       </xar:if>
-            </div>
-            <div class="xar-form-input-wrapper xar-clear-both">
-                <label for="usernote" class="xar-form-label">
-        <xar:mlstring>Allow Users to Send Notes?</xar:mlstring>
-    </label>
-    <xar:if condition="xarModGetVar('recommend', 'usernote')">
-        <input type="checkbox" name="usernote" id="usernote" value="1" checked="checked" />
-    <xar:else />
-        <input type="checkbox" name="usernote" id="usernote" value="1" />
-    </xar:if>
-            </div>
-            <div class="xar-form-input-wrapper xar-clear-both">
-                <label for="title" class="xar-form-label">
+       <p class="param">
+            <label for="shorturls" class="xar-form-label">
+                <span class="help" title="#xarML('Support Short URLs')#">
+                    <xar:mlstring>Support Short URLs</xar:mlstring>
+                </span>
+            </label>
+            <xar:if condition="xarModGetVar('recommend', 'SupportShortURLs')">
+                <input type="checkbox" name="shorturls" id="shorturls" value="1" checked="checked" />
+            <xar:else />
+                <input type="checkbox" name="shorturls" id="shorturls" value="1" />
+            </xar:if>
+       </p>
+       <p class="param">
+            <label for="usernote" class="xar-form-label">
+                <span class="help" title="#xarML('Support Short URLs')#">
+                      <xar:mlstring>Allow Users to Send Notes?</xar:mlstring>
+                </span>
+            </label>
+            <xar:if condition="xarModGetVar('recommend', 'usernote')">
+                <input type="checkbox" name="usernote" id="usernote" value="1" checked="checked" />
+            <xar:else />
+                <input type="checkbox" name="usernote" id="usernote" value="1" />
+            </xar:if>
+       </p>
+       <p class="param">
+            <label for="usernote" class="xar-form-label">
+                <span class="help" title="#xarML('Email Subject')#">
                     <xar:mlstring>Email Subject</xar:mlstring>
-                </label>
-        <input type="text" name="title" id="title" value="#$title#" size="35" maxlength="100" />
-</div>
-            <div class="xar-form-input-wrapper xar-clear-both">
-                <label for="template" class="xar-form-label">
+                </span>
+            </label>
+            <input type="text" name="title" id="title" value="#$title#" size="35" maxlength="100" />
+        </p>
+
+       <p class="param">
+            <label for="template" class="xar-form-label">
+                <span class="help" title="#xarML('Email Template')#">
                     <xar:mlstring>Email Template</xar:mlstring>
-                </label>
-                <textarea rows="20" cols="40" name="template" id="template" tabindex="1">#$template#</textarea>
-            </div>
-            <div class="xar-accent xar-norm-outline xar-padding-thick">
+                </span>
+            </label>
+            <textarea rows="20" cols="40" name="template" id="template" tabindex="1">#$template#</textarea>
+       </p>
+       <p class="xar-form-input-wrapper-after">
             <xar:mlstring>This is the template for the mail to be sent.  If you have HTML mail enabled in your Mail Module, then HTML tags are usable.</xar:mlstring>
-            </div>
-        </fieldset>
-        <div class="xar-clear-both xar-align-center">
-            <input type="submit" value="#xarML('Save config')#" />
-        </div>
-
-
-
+       </p>
+    </fieldset>
+    <div class="xar-clear-both xar-align-center">
+        <input type="submit" value="#xarML('Save config')#" />
+    </div>
     </form>
 </div>

@@ -5,7 +5,7 @@
     </xar:mlstring>
     <xar:mlvar>#$friendname#</xar:mlvar>
 </xar:ml>
-    <xar:mlstring></xar:mlstring> #$friendname#,
+    &nbsp; #$friendname#,
 </p>
 
 <p>

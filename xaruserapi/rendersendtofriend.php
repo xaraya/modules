@@ -1,25 +1,23 @@
 <?php
 /** 
- * File: $Id$
- *
- * Handle Send to a friend tag
- *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Send To A Friend
  * @author Jo Dalle Nogare <jojodee@xaraya.com>
 */
-/**
- * Handle <xar:recommend-sendtofriend ...>  tags
+/*
+ * Handle Send to a friend tag
+ *
+ * ProvHandling for <xar:recommend-sendtofriend ...>  tags
  * Format : <xar:recommend-sendtofriend /> or
- * <xar:recommend-sentofriend type="link|icon|somethingelse??" />
- * Typical usage is <xar:recommend-sendtofriend type="text" /> will display the link
- * or <xar:recommend-sendtofriend type="icon" /> will display the mail icon.
- * The icon is displayed by default when no attributes provided.
- * Placed in template  where you wish the 'send to friend' icon or text link to appear
+ *          Typical usage is <xar:recommend-sendtofriend type="text" /> will display the link
+ *          or <xar:recommend-sendtofriend type="icon" /> will display the mail icon.
+ *          The icon is displayed by default when no attributes provided.
+ *          Placed in template  where you wish the 'send to friend' icon or text link to appear
+ *
  * @author jojodee
  * @param $args containing option for $type  - either "link" or "icon"
  * @returns string
@@ -29,13 +27,19 @@ function recommend_userapi_rendersendtofriend($args)
 {
     extract ($args);
 
+    if(!xarVarFetch('aid',  'id',   $aid,   NULL, XARVAR_NOT_REQUIRED)) {
+        $aid= xarVarGetCached('Blocks.articles','aid');
+    }
+    if (!isset($aid)) {
+        return false;
+    }
     if (empty($type)) {$type = '';}
 
     //TODO: <jojodee> make easier with text configurable, along with text for email itself.
     $linktext=xarML("Send to a friend");
     $alttext = xarML('Send this article to a friend');
 
-    $link=xarModURL('recommend','user','sendtofriend',array('aid'=>'$aid'));
+    $link=xarModURL('recommend','user','sendtofriend',array('aid'=>$aid));
 
     $sendimg = xarTplGetImage('sendtofriend.gif', 'recommend');
     if ($type=='text') {
@@ -45,6 +49,5 @@ function recommend_userapi_rendersendtofriend($args)
     }
 return $out;
 }
-
 
 ?>

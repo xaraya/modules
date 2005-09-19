@@ -1,25 +1,23 @@
 <?php
 /**
- * File: $Id: s.xarinit.php 1.11 03/01/18 11:39:31-05:00 John.Cox@mcnabb. $
- * 
- * Xaraya Recommend
- * 
+ *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
+ * @copyright (C) 2005 by the Xaraya Development Team.
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.org
  *
- * @subpackage Recommend Module
- * @author John Cox
+ * @subpackage Recommend Module - Send to Friend
+ * @author Jo Dalle Nogare
 */
-/**
- * @ Function: used by user_sendtofriend to forward email to friend with recommended article
+/* Sendfriend prepares the text or html email to send
+ *
+ * Used by user_sendtofriend to forward email to friend with recommended article
  * @ Author jojodee
  * @ parameters Takes parameters passed by user_sendtofriend to generate info used by email mod
  */
 function recommend_user_sendfriend()
 {
-    // Get parameters
+    /* Get parameters */
     if (!xarVarFetch('username', 'str:1:', $username)) return;
     if (!xarVarFetch('useremail', 'str:1:', $useremail)) return;
     if (!xarVarFetch('fname', 'str:1:', $fname)) return;
@@ -27,14 +25,14 @@ function recommend_user_sendfriend()
     if (!xarVarFetch('aid', 'isset', $aid)) return;
     if (!xarVarFetch('usernote', 'str:1:', $usernote, '', XARVAR_NOT_REQUIRED)) return;
 
-    // Confirm authorisation code.
+    /*  Confirm authorisation code. */
     if (!xarSecConfirmAuthKey()) return;
 
-    // Security Check
+    /* Security Check */
     if(!xarSecurityCheck('OverviewRecommend')) return;
 
-    // Statistics
-    //$date = date('Y-m-d G:i:s');
+    /* Statistics */
+    /* $date = date('Y-m-d G:i:s'); */
     $date = time();
     $numbersentprev = xarModGetVar('recommend', 'numbersent');
     $numbersent = $numbersentprev + 1;
@@ -56,7 +54,7 @@ function recommend_user_sendfriend()
 
     $subject = xarML('Interesting Article at %%sitename%%');
 
-    //Prepare to process entities in email message
+    /* Prepare to process entities in email message */
     $trans = get_html_translation_table(HTML_ENTITIES);
     $trans = array_flip($trans);
 
@@ -70,11 +68,13 @@ function recommend_user_sendfriend()
 
     if (xarModGetVar('recommend', 'usernote')){
         $htmlusernote = strtr(xarVarPrepHTMLDisplay($usernote), $trans);
+    } else {
+        $htmlusernote ='';
     }
     $htmltitle=strtr(xarVarPrepHTMLDisplay($title), $trans);
 
 
-// startnew
+   /* startnew message */
     $textmessage= xarTplModule('recommend',
                                    'user',
                                    'usersendfriend',
@@ -100,7 +100,7 @@ function recommend_user_sendfriend()
                                           'sitename'   => $sitename,
                                           'siteurl'    => $siteurl),
                                     'html');
-    //let's send the email now
+    /* let's send the email now */
     if (!xarModAPIFunc('mail',
                        'admin',
                        'sendmail',
@@ -115,11 +115,11 @@ function recommend_user_sendfriend()
 
 
 
-//endnew
-    // lets update status and display updated configuration
+    /* endnew */
+    /* lets update status and display updated configuration */
     xarResponseRedirect(xarModURL('recommend', 'user', 'sendtofriend', array('message' => '1', 'aid'=>$aid)));
 
-    // Return
+    / * Return true if successful */
     return true;
 }
 ?>

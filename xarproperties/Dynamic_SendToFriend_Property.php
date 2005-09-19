@@ -1,22 +1,22 @@
 <?php
 /**
- * Dynamic Send To Friend Property
- *
- * @package dynamicdata
- * @subpackage properties
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
  */
 
 /**
  * Class to handle Send To Friend property
- *
- * @package dynamicdata
+ * @author jojodee
+ * @package recommend 
  */
 include_once "modules/dynamicdata/class/properties.php";
 class Dynamic_SendToFriend_Property extends Dynamic_Property
 {
-    function validateValue($value = null)
+   function validateValue($value = null)
     {
-        if (!empty($value)) {
+      if (!empty($value)) {
             $this->value = 1;
         } else {
             $this->value = 0;
@@ -27,6 +27,9 @@ class Dynamic_SendToFriend_Property extends Dynamic_Property
     function showInput($args = array())
     {
         extract($args);
+      
+        $data=array();
+
         if (!isset($value)) {
             $value = $this->value;
         }
@@ -36,53 +39,35 @@ class Dynamic_SendToFriend_Property extends Dynamic_Property
         if (empty($id)) {
             $id = $name;
         }
-        
-        $data['name']     = $name;
-        $data['id']       = $id;
-        $data['value']    = isset($value) ? xarVarPrepForDisplay($value) : xarVarPrepForDisplay($this->value);
-        $data['tabindex'] = !empty($tabindex) ? ' tabindex="'.$tabindex.'"': '';
-        $data['invalid']  = !empty($this->invalid) ? xarML('Invalid #(1)', $this->invalid) :'';
+        $data['value']=$value;
+        $data['name']=$name;
+        $data['id']=$id;
+        $data['checked']=!empty($value) ? true : false;
+        $data['tabindex']=!empty($tabindex) ? $tabindex : 0;
+        $data['invalid'] = !empty($this->invalid) ? xarML('Invalid #(1)', $this->invalid): '';
 
         $template="";
         return xarTplProperty('recommend', 'sendtofriend', 'showinput', $data);
 
-        /*
-        return '<input type="checkbox"'.
-               ' name="' . $name . '"' .
-               ' value="1"' .
-               ' id="'. $id . '"' .
-               (!empty($tabindex) ? ' tabindex="'.$tabindex.'"' : '') .
-               (!empty($value) ? ' checked="checked"' : '') .
-               ' />' .
-               (!empty($this->invalid) ? ' <span class="xar-error">'.xarML('Invalid #(1)', $this->invalid) .'</span>' : '');
-       */
     }
 
     function showOutput($args = array())
     {   //tidy up this, add a few checks
         extract($args);
+       
         if(!xarVarFetch('aid',  'isset', $aid,   NULL, XARVAR_DONT_SET)) {return;}
 
+        $data=array();
         if (!isset($value)) {
             $value = $this->value;
         }
-
-        if (!empty($value) && isset($aid)){
-        $data['aid']=    $aid;
-        $data['value']=  $value;
-           /* move to template
-            $alttext = xarML('Send this article to a friend');
-            $sendimg = xarTplGetImage('sendtofriend.gif', 'recommend');
-               $out= '<a href="'.xarModURL('recommend','user','sendtofriend',array('aid'=>$aid)).'"><img src="'.$sendimg.'" style="border:0;" alt="'.$alttext.'" /></a>';
-            return $out;
-          */
-        $template="";
-        return xarTplProperty('recommend', 'sendtofriend', 'showoutput', $data );
-
-       } else {
-       //value is not set - we don't want to show the link
-           return '';
-        }
+        $data['value']=$value;
+        if (isset($aid)) {
+           $data['aid']=    $aid;
+          return xarTplProperty('recommend', 'sendtofriend', 'showoutput', $data );
+       }else{
+           return false;
+       }
     }
 
     /**
