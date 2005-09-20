@@ -17,14 +17,6 @@ function security_userapi_leftjoin($args)
     extract($args);
     
     $info = array();
-
-    /*
-        Admin's always have access to everything
-    */
-    if( xarSecurityCheck('AdminPanel', 0) )
-    {        
-        return $info;
-    }
     
     xarModAPILoad('owner', 'user');
     
@@ -101,8 +93,20 @@ function security_userapi_leftjoin($args)
     
     // Check for world    
     $secCheck[] = " ( $secTable.xar_worldlevel & $level ) ";
+
+    /*
+        Admin's always have access to everything
+        NOTE: But this also allows admins to use other limits or 
+              exclude params like the $limit_gids var
+    */
+    if( xarSecurityCheck('AdminPanel', 0) ){ $secCheck[] = " ( True ) "; }
     
     $where[] = " ( " . join(" OR ", $secCheck) . " ) ";
+    
+    if( isset($limit_gids) && count($limit_gids) > 0 )
+    {
+        $where[] = " $secGroupLevelTable.xar_gid IN ( " . join(', ', $limit_gids) . " ) ";
+    }
     
     if( count($where) > 0 )
     {

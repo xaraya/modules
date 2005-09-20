@@ -33,6 +33,21 @@ function security_admin_changesecurity($args)
     $data = array();    
     
     /*
+        If user has SECURITY_ADMIN level or is a site admin let them 
+        modify security otherwise don't
+    */
+    $has_admin_security = xarModAPIFunc('security', 'user', 'check',
+        array(
+            'modid'    => $modid, 
+            'itemtype' => $itemtype, 
+            'itemid'   => $itemid,
+            'level'    => SECURITY_ADMIN,
+            'hide_exception' => true
+        )
+    );
+    if( !$has_admin_security && !xarSecurityCheck('AdminPanel', 0) ){ return ''; }
+
+    /*
         Get all the current security and owner info
     */
     // Make sure their are levels if not quit
@@ -43,12 +58,6 @@ function security_admin_changesecurity($args)
     // Make user this has an owner otherwise quit
     $owner = xarModAPIFunc('owner', 'user', 'get', $args);
     if( !$owner ) return '';
-
-    /*
-        If owner is not current user or Admin quit
-    */
-    if( $owner['uid'] != xarUserGetVar('uid') && 
-        !xarSecurityCheck('AdminPanel', 0) ) return '';    
     
     /*
         Get all the groups just incase it's needed for display purposes

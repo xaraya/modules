@@ -29,15 +29,20 @@ function security_userapi_get_default_settings($args)
         $settings =@ unserialize(xarModGetVar('security', $var));
     }
     
-    if( empty($settings) )
+    if( !isset($settings['exclude_groups']) )
     {
-        $settings = array(
-            'exclude_groups' => array(),
-            'levels' => array(
-                'user' => SECURITY_OVERVIEW+SECURITY_READ+SECURITY_COMMENT+SECURITY_WRITE+SECURITY_ADMIN,
-                'groups' => array(),
-                'world' => SECURITY_OVERVIEW+SECURITY_READ
-            )
+        $settings['exclude_groups'] = array();        
+    }
+    if( !isset($settings['default_group_level']) )
+    {
+        $settings['default_group_level'] = SECURITY_OVERVIEW+SECURITY_READ;        
+    }
+    if( !isset($settings['levels']) )
+    {
+        $settings['levels'] = array(
+            'user' => SECURITY_OVERVIEW+SECURITY_READ+SECURITY_COMMENT+SECURITY_WRITE+SECURITY_ADMIN,
+            'groups' => array(),
+            'world' => SECURITY_OVERVIEW+SECURITY_READ
         );
     }
     

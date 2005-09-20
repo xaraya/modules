@@ -45,6 +45,10 @@
                 </xar:foreach>
              </select>
         </div>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Default Group Level</xar:mlstring></label>
+            <input type="text" name="default_group_level" value="#$settings['default_group_level']#" class="xar-form-textshort">
+        </div>
     </fieldset> 
     </xar:if>
     

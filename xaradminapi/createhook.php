@@ -25,12 +25,41 @@ function security_adminapi_createhook($args)
     if( !empty($objectid) )
         $itemid = $objectid;
  
+    /*
+        Check args and set any needed exceptions    
+    */    
+    if( empty($modid) )
+    {
+        $msg = "Missing module id in security_adminapi_createhook";
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'MISSING_PARAM', $msg);
+        return false;
+    }        
+        
+    /*
+        Get the default settings for this module / itemtype pair
+    */
     $settings = xarModAPIFunc('security', 'user', 'get_default_settings',
         array(
             'modid'    => isset($modid) ? $modid : null,
             'itemtype' => isset($itemtype) ? $itemtype : null
         )
     );
+
+    /*
+        Check if there are any extra security group 
+    */
+    if( !xarVarFetch('security_extra_groups', 'array', $extra_groups, array(), XARVAR_NOT_REQUIRED) ){ return false; }
+    foreach( $extra_groups as $group )
+    {
+        if( 
+            empty($settings['exclude_groups'][$group]) && 
+            empty($settings['levels']['groups'][$group]) &&
+            $group > 2 
+        )
+        {
+            $settings['levels']['groups'][$group] = $settings['default_group_level'];
+        }    
+    }
 
     $roles = new xarRoles();
     $user = $roles->getRole( xarUserGetVar('uid') );
@@ -44,8 +73,7 @@ function security_adminapi_createhook($args)
             $parent->uid > 2 
         )
         {
-            // Replace this level with a configurable one
-            $settings['levels']['groups'][$parent->uid] = SECURITY_OVERVIEW+SECURITY_READ;
+            $settings['levels']['groups'][$group] = $settings['default_group_level'];
         }
     }
         

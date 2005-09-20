@@ -22,7 +22,8 @@ function security_admin_hook_settings($args)
     {
         if( !xarVarFetch('mod_itemtype', 'str', $mod_itemtype, null) ){ return false; }
         list( $module, $itemtype ) = split('-', $mod_itemtype);
-                
+
+        $modid = null;       
         $default_var_name = "settings";
         if( !empty($module) )
         {
@@ -39,6 +40,7 @@ function security_admin_hook_settings($args)
         if( $submit == 'Update' )
         {
             if( !xarVarFetch('exclude_gids', 'array', $e_gids,   array(), XARVAR_NOT_REQUIRED) ){ return false; }
+            if( !xarVarFetch('default_group_level', 'int', $default_group_level, 48, XARVAR_NOT_REQUIRED) ){ return false; }
             if( !xarVarFetch('user',   'array', $user,   array(), XARVAR_NOT_REQUIRED) ){ return false; }
             if( !xarVarFetch('groups', 'array', $groups, array(), XARVAR_NOT_REQUIRED) ){ return false; }
             if( !xarVarFetch('world',  'array', $world,  array(), XARVAR_NOT_REQUIRED) ){ return false; }
@@ -70,13 +72,14 @@ function security_admin_hook_settings($args)
 
             $settings = array(
                 'exclude_groups' => $exclude_gids,
+                'default_group_level' => $default_group_level,
                 'levels' => array(
                     'user'   => $userLevel,
                     'groups' => $groupsLevel,
                     'world'  => $worldLevel
                 )               
             );
-            
+
             xarModSetVar('security', $default_var_name, serialize($settings)); 
         }
         /*
@@ -84,14 +87,15 @@ function security_admin_hook_settings($args)
         */
         else if( $submit == 'Reload' ) 
         {
-            $settings =@ unserialize(xarModGetVar('security', $default_var_name));
             /*
                 Default security settings
             */
-            if( empty($settings) )
-            {
-                $settings = xarModAPIFunc('security', 'user', 'get_default_settings');
-            }
+            $settings = xarModAPIFunc('security', 'user', 'get_default_settings',
+                array(
+                    'modid'    => $modid,
+                    'itemtype' => $itemtype
+                )
+            );
         }
         /*
             Adds another group to the set of levels
@@ -99,11 +103,12 @@ function security_admin_hook_settings($args)
         else if( $submit == 'Add Group' ) 
         {
             if( !xarVarFetch('group', 'int', $group, null) ){ return false; }
-            $settings =@ unserialize(xarModGetVar('security', $default_var_name));            
-            if( empty($settings) )
-            {
-                $settings = xarModAPIFunc('security', 'user', 'get_default_settings');
-            }
+            $settings = xarModAPIFunc('security', 'user', 'get_default_settings',
+                array(
+                    'modid'    => $modid,
+                    'itemtype' => $itemtype
+                )
+            );
             $settings['levels']['groups'][$group] = 0;
             xarModSetVar('security', $default_var_name, serialize($settings));
         }

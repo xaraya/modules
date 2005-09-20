@@ -18,6 +18,23 @@ function security_admin_updatesecurity($args)
     xarVarFetch('user',   'array', $user,   array(), XARVAR_NOT_REQUIRED);
     xarVarFetch('groups', 'array', $groups, array(), XARVAR_NOT_REQUIRED);
     xarVarFetch('world',  'array', $world,  array(), XARVAR_NOT_REQUIRED);
+
+    xarModAPILoad('security', 'user');
+    
+    /*
+        If user has SECURITY_ADMIN level or is a site admin let them 
+        modify security otherwise don't
+    */
+    $has_admin_security = xarModAPIFunc('security', 'user', 'check',
+        array(
+            'modid'    => $modid, 
+            'itemtype' => $itemtype, 
+            'itemid'   => $itemid,
+            'level'    => SECURITY_ADMIN,
+            'hide_exception' => true
+        )
+    );
+    if( !$has_admin_security && !xarSecurityCheck('AdminPanel', 0) ){ return ''; }
        
     // Calc all new levels
     $userLevel = 0;
