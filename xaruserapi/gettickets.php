@@ -38,7 +38,7 @@ function helpdesk_userapi_gettickets($args)
     */
     if( $count == true )
     {
-        $fields = array("COUNT($helpdesktable.xar_id)"); 
+        $fields = array("COUNT(DISTINCT $helpdesktable.xar_id)"); 
     }
     else 
     {
@@ -75,6 +75,7 @@ function helpdesk_userapi_gettickets($args)
                 'itemtype' => 1,
                 'itemid'   => "$helpdesktable.xar_id",
                 'level' => isset($level) ? $level : null,
+                'limit_gids' => !empty($company) ? array($company) : null,
                 // This exception insures that the tech assigned to the ticket can see it.
                 'exception' => 'xar_assignedto = ' . $dbconn->qstr(xarUserGetVar('uid'))
             )
@@ -120,8 +121,8 @@ function helpdesk_userapi_gettickets($args)
         case 'MYALL':
             xarSessionSetVar('ResultTitle', xarML('All Your Tickets'));
             $where[] = " ( xar_openedby = ? OR xar_assignedto = ? ) ";
-            $bindvars[] = $userid;
-            $bindvars[] = $userid;
+            $bindvars[] = (int)$userid;
+            $bindvars[] = (int)$userid;
             break;
             
         case 'ALL':
@@ -181,6 +182,9 @@ function helpdesk_userapi_gettickets($args)
     {
         $sql .= ' WHERE ' . join(' AND ', $where);
     }
+
+    if( $count != true )
+        $sql .= " GROUP BY xar_id ";    
     
     switch($sortorder) 
     {
@@ -217,7 +221,6 @@ function helpdesk_userapi_gettickets($args)
     { $results = $dbconn->Execute($sql, $bindvars); }
     else 
     { $results = $dbconn->SelectLimit($sql, $numitems, $startnum-1, $bindvars);  }
-
     if( !$results ){ return false; }
 
     if( $count == true ){ return $results->fields[0]; }

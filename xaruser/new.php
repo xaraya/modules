@@ -63,6 +63,15 @@ function helpdesk_user_new()
         $data['users'] = xarModAPIFunc('roles', 'user', 'getall');
     }
 
+    /*
+        Get the companies the current user has access to 
+    */
+    $data['groups'] = xarModAPIFunc('helpdesk', 'user', 'get_companies', 
+        array(
+            'parent' => 'Companies',
+        )
+    );    
+    
     $item = array();
     $item['module']   = 'helpdesk';
     $item['itemtype'] = $itemtype;
