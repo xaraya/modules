@@ -5,6 +5,9 @@
  */
 function logconfig_admin_view()
 {
+    xarLogMessage("Logconfig Internal test (info level)", XARLOG_LEVEL_INFO);
+    xarLogMessage("Logconfig Internal test (error level)", XARLOG_LEVEL_ERROR);
+    xarLogMessage("Logconfig Internal test (warning level)", XARLOG_LEVEL_WARNING);
     $data = xarModAPIFunc('logconfig','admin','menu');
 
     // Security check - important to do this as early as possible to avoid

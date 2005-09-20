@@ -20,7 +20,7 @@ function logconfig_adminapi_saveconfig()
         }
     }
     
-    if (!$fp = @fopen($filename, "w")) {
+    if (!$fp = fopen($filename, "w")) {
         $msg = xarML('Cannot open file "#(1)', $filename);
         xarErrorSet(XAR_SYSTEM_EXCEPTION,'FUNCTION_FAILED',$msg);
         return;
