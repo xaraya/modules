@@ -95,11 +95,11 @@ function security_userapi_leftjoin($args)
     $secCheck[] = " ( $secTable.xar_worldlevel & $level ) ";
 
     /*
-        Admin's always have access to everything
+        Admin's always have access to everything (A security level bypass)
         NOTE: But this also allows admins to use other limits or 
               exclude params like the $limit_gids var
     */
-    if( xarSecurityCheck('AdminPanel', 0) ){ $secCheck[] = " ( True ) "; }
+    if( xarSecurityCheck('AdminPanel', 0) ){ $secCheck[] = " ( 'TRUE' ) "; }
     
     $where[] = " ( " . join(" OR ", $secCheck) . " ) ";
     
