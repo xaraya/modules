@@ -16,6 +16,8 @@
  * @author the Courses module development team 
  * @param numitems $ the number of items to retrieve (default -1 = all)
  * @param startnum $ start with this item number (default 1)
+ * @param sortby $ what to sort by (default planningid)
+ * @param sortorder $how to sort (default DESC)
  * @returns array
  * @return array of items, or false on failure
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
@@ -23,10 +25,10 @@
 function courses_userapi_getallplanned($args)
 {
     extract($args);
-    if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('numitems', 'int:1:', $numitems, -1, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('sortby',   'str:1:', $sortby,    'plannnigid',         XARVAR_NOT_REQUIRED)) return; 
-    if (!xarVarFetch('sortorder','enum:DESC:ASC:', $sortorder,'DESC',  XARVAR_NOT_REQUIRED)) return;        
+    if (!xarVarFetch('startnum', 'int:1:',         $startnum,  1,           XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('numitems', 'int:1:',         $numitems, -1,           XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('sortby',   'str:1:',         $sortby,   'planningid',  XARVAR_NOT_REQUIRED)) return; 
+    if (!xarVarFetch('sortorder','enum:DESC:ASC:', $sortorder,'DESC',       XARVAR_NOT_REQUIRED)) return;        
 
     $items = array();
     // Security check
