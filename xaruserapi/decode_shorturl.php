@@ -1,22 +1,18 @@
 <?php
 /**
- * File: $Id:
- * 
- * Extract function and arguments from short URLs for sitecontact
- * 
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage sitecontact
- * @author Jo Dalle Nogare <jojodee@xaraya.com>
+ * @subpackage Sitecontact
  */
+
 /**
  * extract function and arguments from short URLs for this module, and pass
  * them back to xarGetRequestInfo()
- * 
- * @author Jo Dalle Nogare
+ *
+ * @author Jo Dalle Nogare <jojodee@xaraya.com>
  * @param  $params array containing the different elements of the virtual path
  * @returns array
  * @return array containing func the function to be called and args the query

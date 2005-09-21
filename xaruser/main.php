@@ -1,25 +1,22 @@
 <?php
 /**
- * File: $Id:
- * 
- * SiteContact main user function
- * 
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage sitecontact
- * @author jojodee
+ * @subpackage Sitecontact
  */
+
 /**
- * the main user function
+ * Main user function
  * This function is the default function, and is called whenever the module is
  * initiated without defining arguments.
+ *
+ * @author Jo Dalle Nogare
  */
 function sitecontact_user_main()
 {
- //   global $HTTP_SERVER_VARS;
     if(!xarVarFetch('message', 'isset', $message,  NULL, XARVAR_DONT_SET)) {return;}
 
     // Security Check
@@ -108,8 +105,7 @@ function sitecontact_user_main()
         $data['messagetxt'] = '';
     }
 
-    // everything else happens in Template for now
- return $data;
+   return $data;
 
 }
 

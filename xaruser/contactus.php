@@ -1,25 +1,18 @@
 <?php
 /**
- * File: $Id:
- * 
- * SiteContact main user function
- * 
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage sitecontact
- * @author SiteContact module development team 
+ * @subpackage Sitecontact
  */
 
 /**
  * @ Function: contactus
+ * @ Author Jo Dalle Nogare <jojodee@xaraya.com>
  * @ Param username, useremail, requesttext,company, usermessage,useripaddress,userreferer,altmail
- * @ Author jojodee
- * @ parameters Takes parameters passed by user_sendtofriend to generate info used by email mod
- * @ TODO: discriminate between the different DD types, and prep the data appropriately for display
- */
+  */
 function sitecontact_user_contactus($args)
 {
   extract($args);

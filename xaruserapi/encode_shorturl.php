@@ -1,20 +1,12 @@
 <?php
 /**
- * File: $Id
- * 
- * Support for short URLs (user functions)
- * 
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 by the Xaraya Development Team.
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Site Contact
- * @author Jo Dalle Nogare <jojodee@xaraya.com>
+ * @subpackage Sitecontact
  */
-/*
- * Support for short URLs (user functions)
- *
 
 /**
  * return the path for a short URL to xarModURL for this module

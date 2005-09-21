@@ -1,22 +1,19 @@
 <?php
 /**
- * File: $Id$
- *
- * SiteContact initialization functions
- *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage SiteContact
- * @author Jo Dalle Nogare <jojodee@xaraya.com>
+ * @subpackage Sitecontact
  */
 
 /**
  * Initialize the SiteContact Module
  * This function is only ever called once during the lifetime of a particular
  * module instance
+ *
+ * @author Jo Dalle Nogare <jojodee@xaraya.com>
  */
 function sitecontact_init()
 {
@@ -24,8 +21,9 @@ function sitecontact_init()
     xarModSetVar('sitecontact', 'SupportShortURLs', 0);
     xarModSetVar('sitecontact', 'useModuleAlias',0);
     xarModSetVar('sitecontact', 'aliasname','');
-   xarModSetVar('sitecontact', 'usehtmlemail', 0);
+    xarModSetVar('sitecontact', 'usehtmlemail', 0);
     xarModSetVar('sitecontact', 'allowcopy', 1);
+    xarModSetVar('sitecontact', 'scdefaultemail',xarModGetVar('mail', 'adminmail'));
     xarModSetVar('sitecontact', 'customtitle','Contact and Feedback');
     xarModSetVar('sitecontact', 'customtext',
     'Thank you for visiting. We appreciate your feedback.
