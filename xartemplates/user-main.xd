@@ -145,9 +145,8 @@
                     <input type="checkbox" name="sendcopy" id="sendcopy" value="1" checked="checked" />
                 </p>   
             </xar:if>
-            <p class="param">
+           <p class="xar-align-center">
                 <input type="submit" value="#xarML('Submit')#" />
-                <input type="reset" value="#xarML('Reset')#" />
             </p>
         </fieldset>
     </form>
