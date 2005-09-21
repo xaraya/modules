@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id$
- *
  * Displays an RSS Display.  
  *
  * @package Xaraya eXtensible Management System

@@ -1,11 +1,9 @@
-<?php 
+<?php
 /**
- * File: $Id$
- *
  * Headlines
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
+ * @copyright (C) 2005 by the Xaraya Development Team.
  * @link http://www.xaraya.com
  * 
  * @subpackage headlines module

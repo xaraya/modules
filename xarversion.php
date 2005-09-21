@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id$
- *
  * Xaraya Headlines
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
+ * @copyright (C) 2005 by the Xaraya Development Team.
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.org
  *
@@ -22,7 +20,6 @@ $modversion['author'] = 'John Cox';
 $modversion['contact'] = 'niceguyeddie@xaraya.com';
 $modversion['admin'] = 1;
 $modversion['user'] = 1;
-$modversion['securityschema'] = array('headlines::' => '::');;
 $modversion['class'] = 'Complete';
 $modversion['category'] = 'Content';
 ?>

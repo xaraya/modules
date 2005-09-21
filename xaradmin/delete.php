@@ -1,5 +1,13 @@
 <?php
 /**
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 by the Xaraya Development Team.
+ * @link http://www.xaraya.com
+ *
+ * @subpackage headlines module
+ * @author John Cox
+*/
+/**
  * delete item
  * @param 'hid' the id of the item to be deleted
  * @param 'confirmation' confirmation that this item can be deleted

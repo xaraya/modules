@@ -1,5 +1,13 @@
 <?php
 /**
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 by the Xaraya Development Team.
+ * @link http://www.xaraya.com
+ *
+ * @subpackage headlines module
+ * @author John Cox
+*/
+/**
  * return the path for a short URL to xarModURL for this module
  * 
  * @author the Example module development team 

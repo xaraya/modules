@@ -1,5 +1,13 @@
 <?php
 /**
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 by the Xaraya Development Team.
+ * @link http://www.xaraya.com
+ *
+ * @subpackage headlines module
+ * @author John Cox
+*/
+/**
  * This is a standard function that is called with the results of the
  * form supplied by headlines_admin_modify() to update a current item
  * @param 'hid' the id of the link to be updated

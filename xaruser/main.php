@@ -1,4 +1,12 @@
 <?php
+/**
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 by the Xaraya Development Team.
+ * @link http://www.xaraya.com
+ *
+ * @subpackage headlines module
+ * @author John Cox
+*/
 function headlines_user_main()
 {
     xarVarFetch('startnum', 'id', $startnum, '1', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY);

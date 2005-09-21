@@ -1,5 +1,13 @@
 <?php
 /**
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 by the Xaraya Development Team.
+ * @link http://www.xaraya.com
+ *
+ * @subpackage headlines module
+ * @author John Cox
+*/
+/**
  * modify an item
  * @param 'hid' the id of the headline to be modified
  */

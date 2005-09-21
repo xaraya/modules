@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id$
- *
  * Xaraya Headlines
  *
  * @package Xaraya eXtensible Management System

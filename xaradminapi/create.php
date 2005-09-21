@@ -1,5 +1,13 @@
 <?php
 /**
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 by the Xaraya Development Team.
+ * @link http://www.xaraya.com
+ *
+ * @subpackage headlines module
+ * @author John Cox
+*/
+/**
  * create a new headline
  * @param $args['url'] url of the item
  * @returns int

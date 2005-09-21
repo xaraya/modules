@@ -1,5 +1,12 @@
 <?php
-
+/**
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 by the Xaraya Development Team.
+ * @link http://www.xaraya.com
+ *
+ * @subpackage headlines module
+ * @author John Cox
+*/
 /**
  * utility function pass individual menu items to the main menu
  *
