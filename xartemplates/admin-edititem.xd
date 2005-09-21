@@ -80,7 +80,9 @@
         <tr>
             <td colspan="2">
                 <br />
-                <input type="reset" value="#$resetlabel#" />&nbsp;
+                <xar:comment>
+                    <input type="reset" value="#$resetlabel#" />&nbsp;
+                </xar:comment>
                 <input type="submit" value="#$submitlabel#" />
             </td>
         </tr>

@@ -474,7 +474,9 @@
     </table>
     <br />
     <div style="text-align: center;">
-      <input type="reset" name="resetconfig" id="resetconfig" value="#$resetlabel#" />&nbsp;&nbsp;
+      <xar:comment>
+          <input type="reset" name="resetconfig" id="resetconfig" value="#$resetlabel#" />&nbsp;&nbsp;
+      </xar:comment>
       <input type="submit" name="updateconfig" id="updateconfig" value="#$submitlabel#" />
     </div>
 

@@ -97,7 +97,9 @@
             <td colspan="2">
                 <br />
                 <input type="reset" value="#$resetlabel#" />&nbsp;
-                <input type="submit" value="#$submitlabel#" />
+                <xar:comment>
+                    <input type="submit" value="#$submitlabel#" />
+                </xar:comment>
             </td>
         </tr>
     </form>
