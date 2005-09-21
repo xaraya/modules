@@ -1,8 +1,6 @@
 <?php
 /**
- * File: $Id: s.xarinit.php 1.11 03/01/18 11:39:31-05:00 John.Cox@mcnabb. $
- *
- * Xaraya Referers
+  * Xaraya Referers
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002 by the Xaraya Development Team.
