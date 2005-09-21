@@ -69,7 +69,6 @@
             </xar:if>
             <p class="param">
                 <input type="submit" value="#xarML('Submit')#" />
-                <input type="reset" value="#xarML('Reset')#" />
             </p>
         </fieldset>
     </form>

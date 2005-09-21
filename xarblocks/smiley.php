@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id$
- * 
  * Xaraya Smilies
  * 
  * @package Xaraya eXtensible Management System

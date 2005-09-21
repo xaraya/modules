@@ -1,5 +1,16 @@
 <?php
 /**
+ * Xaraya Smilies
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 by the Xaraya Development Team.
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.org
+ *
+ * @subpackage Smilies Module
+ * @author Jim McDonald, Mikespub, John Cox
+*/
+/**
  * update a smilies
  * @param $args['sid'] the ID of the :)
  * @param $args['code'] the new code of the :)

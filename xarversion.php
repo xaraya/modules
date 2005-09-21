@@ -1,12 +1,9 @@
 <?php
-
 /**
- * File: $Id$
- *
  * Xaraya Smilies
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
+ * @copyright (C) 2005 by the Xaraya Development Team.
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.org
  *
@@ -29,7 +26,6 @@ $modversion['author'] = 'Jim McDonald';
 $modversion['contact'] = 'Jim@mcdee.net';
 $modversion['admin'] = 1;
 $modversion['user'] = 1;
-$modversion['securityschema'] = array();
 $modversion['class'] = 'Utility';
 $modversion['category'] = 'Global';
 ?>
