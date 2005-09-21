@@ -35,11 +35,11 @@ function example_admin_update($args)
     // values if needed.  Getting vars from other places such as the 
     // environment is not allowed, as that makes assumptions that will 
     // not hold in future versions of Xaraya
-    if (!xarVarFetch('exid', 'int:1:', $exid, $exid, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('objectid', 'str:1:', $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('invalid', 'str:1:', $invalid, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('number', 'int:1:', $number, $number, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('name', 'str:1:', $name, $name, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('exid',     'int:1:', $exid,     $exid,     XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('objectid', 'int:1:', $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('invalid',  'str:1:', $invalid,  '',        XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('number',   'int:1:', $number,   $number,   XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('name',     'str:1:', $name,     $name,     XARVAR_NOT_REQUIRED)) return;
 
     // At this stage we check to see if we have been passed $objectid, the
     // generic item identifier.  This could have been passed in by a hook or

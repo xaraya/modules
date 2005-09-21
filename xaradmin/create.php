@@ -33,11 +33,11 @@ function example_admin_create($args)
     // values if needed.  Getting vars from other places such as the 
     // environment is not allowed, as that makes assumptions that will 
     // not hold in future versions of Xaraya
-    if (!xarVarFetch('exid', 'str:1:', $exid, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('objectid', 'str:1:', $objectid, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('invalid', 'str:1:', $invalid, '', XARVAR_NOT_REQUIRED)) return; 
-    if (!xarVarFetch('number', 'str:1:', $number, '',XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('name', 'str:1:', $name, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('exid',     'int:1:', $exid,     '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('objectid', 'int:1:', $objectid, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('invalid',  'str:1:', $invalid,  '', XARVAR_NOT_REQUIRED)) return; 
+    if (!xarVarFetch('number',   'str:1:', $number,   '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('name',     'str:1:', $name,     '', XARVAR_NOT_REQUIRED)) return;
     // Argument check - make sure that all required arguments are present
     // and in the right format, if not then return to the add form with the
     // values that are there and a message with a session var.  If you perform
@@ -65,8 +65,9 @@ function example_admin_create($args)
     } 
     // check if we have any errors
     if (count($invalid) > 0) {
+        // If we get here, we have encountered errors.
+        // Send the user back to the admin_new form
         // call the admin_new function and return the template vars
-        // (you need to copy admin-new.xd to admin-create.xd here)
         return xarModFunc('example', 'admin', 'new',
                           array('name' => $name,
                                 'number' => $number,

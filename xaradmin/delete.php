@@ -42,9 +42,9 @@ function example_admin_delete($args)
     // if needed.  Getting vars from other places such as the environment 
     // is not allowed, as that makes assumptions that will not hold in 
     // future versions of Xaraya
-    if (!xarVarFetch('exid', 'int:1:', $exid)) return;
-    if (!xarVarFetch('objectid', 'str:1:', $objectid, NULL, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return; 
+    if (!xarVarFetch('exid',     'int:1:', $exid)) return;
+    if (!xarVarFetch('objectid', 'int:1:', $objectid, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('confirm',  'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return; 
     // At this stage we check to see if we have been passed $objectid, the
     // generic item identifier.  This could have been passed in by a hook or
     // through some other function calling this as part of a larger module, but

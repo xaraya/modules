@@ -52,9 +52,9 @@ function example_userapi_get($args)
     // statement from the Execute() command allows for simpler debug operation
     // if it is ever needed
     $query = "SELECT xar_name,
-                   xar_number
-            FROM $exampletable
-            WHERE xar_exid = ?";
+                     xar_number
+              FROM $exampletable
+              WHERE xar_exid = ?";
     $result = &$dbconn->Execute($query,array($exid)); 
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
@@ -81,9 +81,9 @@ function example_userapi_get($args)
         return;
     } 
     // Create the item array
-    $item = array('exid' => $exid,
-        'name' => $name,
-        'number' => $number); 
+    $item = array('exid'   => $exid,
+                  'name'   => $name,
+                  'number' => $number); 
     // Return the item array
     return $item;
 } 

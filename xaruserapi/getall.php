@@ -78,10 +78,10 @@ function example_userapi_getall($args)
     // statement from the SelectLimit() command allows for simpler debug
     // operation if it is ever needed
     $query = "SELECT xar_exid,
-                   xar_name,
-                   xar_number
-            FROM $exampletable
-            ORDER BY xar_name";
+                     xar_name,
+                     xar_number
+              FROM $exampletable
+              ORDER BY xar_name";
     // SelectLimit also supports bind variable, they get to be put in
     // as the last parameter in the function below. In this case we have no
     // bind variables, so we left the parameter out. We could have passed in an
@@ -98,9 +98,9 @@ function example_userapi_getall($args)
     for (; !$result->EOF; $result->MoveNext()) {
         list($exid, $name, $number) = $result->fields;
         if (xarSecurityCheck('ViewExample', 0, 'Item', "$name:All:$exid")) {
-            $items[] = array('exid' => $exid,
-                'name' => $name,
-                'number' => $number);
+            $items[] = array('exid'   => $exid,
+                             'name'   => $name,
+                             'number' => $number);
         } 
     } 
     // All successful database queries produce a result set, and that result
