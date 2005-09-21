@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id$
- * 
  * Standard function to encode short urls for a module
  *
  * @package Xaraya eXtensible Management System
@@ -11,6 +9,7 @@
  *
  * @subpackage  xarbb Module
  * @author John Cox
+ * @author Jo Dalle Nogare
 */
 
 /*

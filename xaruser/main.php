@@ -1,22 +1,23 @@
 <?php
 /**
- * File: $Id$
- *
  * Main user function to display list of all existing forums
  * And existing categories
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2005 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.org
  *
  * @subpackage  xarbb Module
- * @author John Cox, Roger Raymond, Carl Corliss (help)
+ * @author John Cox
 */
 
 /**
  * Configure forums and categories for display
- *
+ * @author John Cox
+ * @author Roger Raymond
+ * @author Carl Corliss (help)
+ * @author Jo dalle Nogare 
  * @access  public
  * @param   startnum used for the pager
  * @param   catid when not on top level forum

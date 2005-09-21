@@ -1,16 +1,14 @@
 <?php
 /**
- * File: $Id$
- *
  * Xaraya xarbb
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2005 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.org
  *
  * @subpackage  xarbb Module
- * @author John Cox
+ * @author John Cox, Mikespub, Jo Dalle Nogare
 */
 $modversion['name'] = 'xarbb';
 $modversion['id'] = '300';
@@ -27,7 +25,6 @@ $modversion['author'] = 'John Cox';
 $modversion['contact'] = 'niceguyeddie@xaraya.com';
 $modversion['admin'] = 1;
 $modversion['user'] = 1;
-$modversion['securityschema'] = array();
 $modversion['class'] = 'Complete';
 $modversion['category'] = 'Content';
 $modversion['dependency'] = array(147, 177, 14);

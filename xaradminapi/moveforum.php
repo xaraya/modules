@@ -1,9 +1,6 @@
 <?php
 /**
- * File: $Id$
- * 
  * Move a forum - simple move in a flat list
- *
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 by the Xaraya Development Team.

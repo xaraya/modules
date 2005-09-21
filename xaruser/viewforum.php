@@ -1,7 +1,5 @@
 <?php
 /** 
- * File: $Id$
- * 
  * View a list of topics in a forum
  * 
  * @package Xaraya eXtensible Management System
@@ -11,6 +9,7 @@
  *
  * @subpackage  xarbb Module
  * @author John Cox
+ * @author Jo dalle Nogare
 */
 function xarbb_user_viewforum()
 {

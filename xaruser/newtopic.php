@@ -1,11 +1,9 @@
 <?php
 /** 
- * File: $Id$
- * 
  * Add new or edit existing forum topic
  * 
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2005 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.org
  *
@@ -13,6 +11,8 @@
  * @author John Cox
 */
 /**
+ * @author John Cox
+ * @author jojodee
  * add new forum topic
  */
 function xarbb_user_newtopic()

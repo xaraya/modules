@@ -1,5 +1,13 @@
 <?php
-
+/**
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.org
+ *
+ * @subpackage  xarbb Module
+ * @author John Cox
+*/
 /**
  * Searches all active comments based on a set criteria
  *

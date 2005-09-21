@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id$
- * 
  * Update a topic
  * 
  * @package Xaraya eXtensible Management System
@@ -14,6 +12,8 @@
 */
 /**
  * create a new forum
+ * @author John Cox
+ * @author Jo dalle Nogare
  * @param $args['fname'] name of forum
  * @param $args['fdesc'] description of forum
  * @param $args['tid'] topic id to update

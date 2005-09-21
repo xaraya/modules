@@ -1,5 +1,13 @@
 <?php
-
+/**
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.org
+ *
+ * @subpackage  xarbb Module
+ * @author John Cox
+*/
 /**
  * Get a single comment or a list of comments. Depending on the parameters passed
  * you can retrieve either a single comment, a complete list of comments, a complete

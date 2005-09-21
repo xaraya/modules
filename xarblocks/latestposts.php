@@ -1,16 +1,16 @@
 <?php
-// File: $Id$
-// ----------------------------------------------------------------------
-// Xaraya eXtensible Management System
-// Copyright (C) 2004 by the Xaraya Development Team.
-// http://www.xaraya.org
-// ----------------------------------------------------------------------
-// Author: jojodee
-// Purpose of file: Show latest xarBB posts
-// ----------------------------------------------------------------------
-
 /**
- * initialise block
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.org
+ *
+ * @subpackage  xarbb Module
+ * @author Jo Dalle Nogare <jojodee@xaraya.com>
+*/
+/**
+ * Display latest xarbb topics and posts
+ * @author jojodee
  */
 function xarbb_latestpostsblock_init()
 {

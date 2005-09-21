@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id$
- * 
  * Get all topics in a forum
  * 
  * @package Xaraya eXtensible Management System

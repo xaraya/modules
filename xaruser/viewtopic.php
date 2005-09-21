@@ -1,9 +1,7 @@
 <?php
 /**
- * File: $Id$
- * 
  * View a forum topic and replies
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -11,6 +9,7 @@
  *
  * @subpackage  xarbb Module
  * @author John Cox
+ * @author Jo dalle Nogare
 */
 
 function xarbb_user_viewtopic($args)

@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id$
- * 
  * Update a forum view
  * 
  * @package Xaraya eXtensible Management System
@@ -14,6 +12,8 @@
 */
 /**
  * update forum view
+ * @author John Cox
+ * @author Jo dalle Nogare
  * @param $args['fid'] the forum id
  * @param $args['move'] 'positive' or 'negative'
  * @param $args['topics'] how many topics were added or removed

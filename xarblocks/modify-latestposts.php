@@ -1,18 +1,18 @@
 <?php
-// File: $Id$
-// ----------------------------------------------------------------------
-// Xaraya eXtensible Management System
-// Copyright (C) 2003 by the Xaraya Development Team.
-// http://www.xaraya.org
-// ----------------------------------------------------------------------
-// Author of file: jojodee
-// Purpose of file: Update options for the xarBB Latest Post Block
-// ----------------------------------------------------------------------
-
-
 /**
- * modify block settings
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.org
+ *
+ * @subpackage  xarbb Module
+ * @author Jo Dalle Nogare <jojodee@xaraya.com>
+*/
+/**
+ * Modify block settings for latest xarbb topics and posts
+ * @author jojodee
  */
+
 function xarbb_latestpostsblock_modify($blockinfo)
 {
     // Get current content

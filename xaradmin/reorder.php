@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id:
- * 
  * Reorder forum items - a simple approach
  *
  * @package Xaraya eXtensible Management System

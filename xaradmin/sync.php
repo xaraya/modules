@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id$
- *  
  * Re-synchronise the totals and last posts of forums
  * 
  * @package Xaraya eXtensible Management System
