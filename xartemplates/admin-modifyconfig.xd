@@ -70,8 +70,7 @@
             #$hooks#
             <p class="param">
                 <input type="submit" value="#xarML('Submit')#" />
-                <input type="reset" value="#xarML('Reset')#" />
-            </p>
+             </p>
         </fieldset>
     </form>
 </div>
