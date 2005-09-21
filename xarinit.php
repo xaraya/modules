@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id: s.xarinit.php 1.17 03/03/18 02:35:04-05:00 johnny@falling.local.lan $
- *
  * Dynamic Example initialization functions
  *
  * @package Xaraya eXtensible Management System
@@ -33,7 +31,16 @@ function logconfig_init()
 
     /**
      * import the object definition and properties from some XML file (exported from DD)
+     * FIXME: this SUCCEEDS, but the objects are not correct. The loglevel property will 
+     * only be available after *this* module is active, so the import makes this a 'static text' property
+     * Q: it should fail?
+     * Q: with a slight modification, we could use the dd api function importprops to import the property
+     *    before importing.
      */
+    // Make sure we import our property
+    $mypropdirs = array('modules/logconfig/xarproperties/');
+    $result = xarModApiFunc('dynamicdata','admin','importpropertytypes',array('dirs' => $mypropdirs));
+
     $ids = array();
     $dir = "modules/logconfig/loggers/";
     $itemsnum = 0;
@@ -96,9 +103,7 @@ function logconfig_upgrade($oldversion)
  */
 function logconfig_delete()
 {
-
     // delete the dynamic objects and their properties
-
     $objectids = unserialize(xarModGetVar('logconfig','objectids'));
     foreach ($objectids as $objectid) {
         if (!empty($objectid)) {
