@@ -1,11 +1,9 @@
 <?php
-/**
- * File: $Id:
- * 
- * Standard function to delete an item
+/** 
+ * Delete an participant
  * 
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -16,6 +14,7 @@
  * delete a participant, remove the participant from a planned course
  * This function should only be used by an admin as for normal use the status of the student should be changed instead
  * 
+ * @author MichelV <michelv@xarayahosting.nl>
  * @param  $ 'sid' the id of the student to be deleted
  * @param  $ 'planningid' the id of the planned course
  * @param  $ 'itemid' the id of the item to be deleted when another module calls this function

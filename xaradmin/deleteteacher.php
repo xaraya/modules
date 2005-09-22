@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id:
- * 
- * Standard function to delete an item
+ * Delete a teacher
  * 
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -13,9 +11,10 @@
  * @author Courses module development team 
  */
 /**
- * delete a teacher, remove the teacher from a planned course
+ * Delete a teacher, remove the teacher from a planned course
  * This function should only be used by an admin as for normal use the status of the student should be changed instead
  * 
+ * @author MichelV <michelv@xarayahosting.nl>
  * @param  $ 'tid' the id of the teacher to be deleted
  * @param  $ 'planningid' the id of the planned course
  * @param  $ 'itemid' the id of the item to be deleted when another module calls this function

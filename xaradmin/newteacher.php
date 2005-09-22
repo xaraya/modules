@@ -1,16 +1,13 @@
 <?php
  /**
- * File: $Id:
- *
  * Enroll student in course
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2004 by the Xaraya Development Team.
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage courses
- * @author Michel V.
  */
 
 /**

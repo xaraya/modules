@@ -1,18 +1,20 @@
 `<?php
 /**
- * File: $Id:
- * 
+ *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003-2005 by the Xaraya Development Team.
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage courses
- * @author Courses module development team 
+ *
  */
  
 /**
- * view teachers for one planned course
+ * View teachers for one planned course
+ *
+ * @author Courses module development team 
+ * @author MichelV <michelv@xarayahosting.nl>
  * @param ['planningid'] ID of the planned course
  * @param ['startnum']
  */

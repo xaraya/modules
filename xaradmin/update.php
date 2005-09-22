@@ -1,19 +1,31 @@
 <?php
 /**
-   Update an item of a specified item type
-   
-   @param $itemtype - type of item that is being updated (required)
-   @param $itemid - item id  (required)
-   @param $preview  - do a preview if set (optional)
-   @return true on success
-           false on failure
-*/
+ * Update a DD item for this module
+ * 
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage courses
+ * @author Courses module development team 
+ */
+
+/**
+ * Update an item of a specified item type
+ *  
+ * @param $itemtype - type of item that is being updated (required)
+ * @param $itemid - item id  (required)
+ * @param $preview  - do a preview if set (optional)
+ * @return true on success
+ *         false on failure
+ */
 function courses_admin_update($args)
 {
-    xarVarFetch('itemid',   'id', $itemid,      NULL, XARVAR_NOT_REQUIRED);
-    xarVarFetch('itemtype', 'id', $itemtype,    NULL, XARVAR_NOT_REQUIRED);
-    xarVarFetch('objectid', 'id', $objectid,    NULL, XARVAR_NOT_REQUIRED);
-    xarVarFetch('preview',  'isset', $preview,  NULL, XARVAR_NOT_REQUIRED);
+    xarVarFetch('itemid',   'id',   $itemid,   NULL, XARVAR_NOT_REQUIRED);
+    xarVarFetch('itemtype', 'id',   $itemtype, NULL, XARVAR_NOT_REQUIRED);
+    xarVarFetch('objectid', 'id',   $objectid, NULL, XARVAR_NOT_REQUIRED);
+    xarVarFetch('preview',  'isset',$preview,  NULL, XARVAR_NOT_REQUIRED);
 
     extract($args);
 

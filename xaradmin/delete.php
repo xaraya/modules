@@ -1,5 +1,18 @@
 <?php
 /**
+ * 
+ * Standard function to delete a DD item
+ * 
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage courses
+ * @author Courses module development team
+ */
+
+/**
    Delete an item
 
    @param 'itemid' the id of the item to be deleted

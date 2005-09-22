@@ -1,13 +1,26 @@
 <?php
 /**
-   Modify an item of the itemtype specified
+ * Modify DD item for courses
+ * 
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage courses
+ * @author Courses module development team 
+ */
 
-   @param $itemtype - type of item that is being created (required)
-   @param $itemid - item id  (required)
-   @param $objectid - object id is used instead of item id if there is one
-   @return template data
 
-*/
+/**
+ * Modify an item of the itemtype specified
+ *
+ * @param $itemtype - type of item that is being created (required)
+ * @param $itemid - item id  (required)
+ * @param $objectid - object id is used instead of item id if there is one
+ * @return template data
+ *
+ */
 function courses_admin_modify($args)
 {
     if (!xarVarFetch('itemid',   'id', $itemid,    NULL, XARVAR_NOT_REQUIRED)) {return;}

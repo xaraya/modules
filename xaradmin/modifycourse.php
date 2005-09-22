@@ -1,11 +1,10 @@
 <?php
 /**
- * File: $Id:
  * 
- * Standard function to modify an item
+ * Modify a course
  * 
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -16,6 +15,7 @@
  * modify a course
  * This is a standard function that is called whenever an administrator
  * wishes to modify a current module item
+ * @author MichelV <michelv@xarayahosting.nl>
  * 
  * @param  $ 'courseid' the id of the item to be modified
  */
@@ -58,28 +58,28 @@ function courses_admin_modifycourse($args)
     $levels = xarModAPIFunc('courses', 'user', 'gets', array('itemtype' => 3));
     
     // Return the template variables defined in this function
-    return array('authid'       => xarSecGenAuthKey(),
-                 'menutitle'    => xarVarPrepForDisplay(xarML('Edit a course')),
-                 'courseid'     => $courseid,
-                 'namelabel'    => xarVarPrepForDisplay(xarML('Course Name')),
-                 'lastmodilabel'=> xarVarPrepForDisplay(xarML('Last Modified')),
-                 'numberlabel'  => xarVarPrepForDisplay(xarML('Course Number')),
-                 'freqlabel'    => xarVarPrepForDisplay(xarML('Course frequency')),
+    return array('authid'           => xarSecGenAuthKey(),
+                 'menutitle'        => xarVarPrepForDisplay(xarML('Edit a course')),
+                 'courseid'         => $courseid,
+                 'namelabel'        => xarVarPrepForDisplay(xarML('Course Name')),
+                 'lastmodilabel'    => xarVarPrepForDisplay(xarML('Last Modified')),
+                 'numberlabel'      => xarVarPrepForDisplay(xarML('Course Number')),
+                 'freqlabel'        => xarVarPrepForDisplay(xarML('Course frequency')),
                  'coursetypelabel'  => xarVarPrepForDisplay(xarML('Course Type (Category)')),
-                 'levellabel'   => xarVarPrepForDisplay(xarML('Course Level')),
+                 'levellabel'       => xarVarPrepForDisplay(xarML('Course Level')),
                  'intendedcreditslabel' => xarVarPrepForDisplay(xarML('Intended credits')),
-                 'shortdesclabel'  => xarVarPrepForDisplay(xarML('Short Description')),
-                 'contactlabel' => xarVarPrepForDisplay(xarML('Course Contact details')),
-                 'contactuidlabel' => xarVarPrepForDisplay(xarML('Course Coordinator uid')),                 
-                 'invalid'      => $invalid,
-                 'hidecourselabel' => xarVarPrepForDisplay(xarML('Hide Course')),
-                 'updatebutton' => xarVarPrepForDisplay(xarML('Update Course')),
-                 'cancelbutton' => xarVarPrepForDisplay(xarML('Cancel')),
-                 'hooks'        => $hooks,
-                 'coursedata'   => $coursedata,
-                 'name'         => $coursedata['name'],
-                 'contactuid'   => $coursedata['contactuid'],
-                 'levels'       => $levels);
+                 'shortdesclabel'   => xarVarPrepForDisplay(xarML('Short Description')),
+                 'contactlabel'     => xarVarPrepForDisplay(xarML('Course Contact details')),
+                 'contactuidlabel'  => xarVarPrepForDisplay(xarML('Course Coordinator uid')),                 
+                 'invalid'          => $invalid,
+                 'hidecourselabel'  => xarVarPrepForDisplay(xarML('Hide Course')),
+                 'updatebutton'     => xarVarPrepForDisplay(xarML('Update Course')),
+                 'cancelbutton'     => xarVarPrepForDisplay(xarML('Cancel')),
+                 'hooks'            => $hooks,
+                 'coursedata'       => $coursedata,
+                 'name'             => $coursedata['name'],
+                 'contactuid'       => $coursedata['contactuid'],
+                 'levels'           => $levels);
 }
 
 ?>

@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id:
- * 
  * Standard function to update a current course
  * 
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -16,6 +14,7 @@
  * This is a standard function that is called with the results of the
  * form supplied by xarModFunc('courses','admin','modifycourse') to update a current item
  * 
+ * @author MichelV <michelv@xarayahosting.nl>
  * @param  $ 'courseid' the id of the course to be updated
  * @param  $ 'name' the name of the course to be updated
  * @param  $ 'number' the number of the course to be updated

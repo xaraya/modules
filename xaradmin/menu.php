@@ -1,8 +1,20 @@
 <?php
 /**
-    generate menu fragments
-    @param $args['page'] - func calling menu (ex. main, view, etc)
-    @return Menu template data
+ * Courses main administration function
+ * 
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage courses
+ * @author Courses module development team 
+ */
+
+/**
+ *  generate menu fragments
+ *  @param $args['page'] - func calling menu (ex. main, view, etc)
+ *  @return Menu template data
  */
 function courses_admin_menu()
 {
@@ -24,7 +36,7 @@ function courses_admin_menu()
             $data['menulinks'][] = $object;
         }
     }
-
+    // Needed?
     xarTplAddStyleLink('base',    'navtabs', $fileExt = 'css');
     xarTplAddStyleLink('courses', 'xarform', $fileExt = 'css');
 
