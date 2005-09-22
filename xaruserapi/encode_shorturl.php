@@ -49,16 +49,18 @@
  */
 
 /**
- * Return the path for a short URL to xarModURL for this module
+ * return the path for a short URL to xarModURL for this module
  * 
  * @author the Example module development team 
  * @param  $args the function and arguments passed to xarModURL
- * @return string path to be added to index.php for a short URL, or empty if failed
+ * @returns string
+ * @return path to be added to index.php for a short URL, or empty if failed
  */
 function example_userapi_encode_shorturl($args)
 { 
     /* Get arguments from argument array */
     extract($args);
+
     /* Check if we have something to work with */
     if (!isset($func)) {
         return;
@@ -68,12 +70,14 @@ function example_userapi_encode_shorturl($args)
      * default path is empty -> no short URL
      */
     $path = '';
+
     /* if we want to add some common arguments as URL parameters below */
     $join = '?';
-
+    
     /* we can't rely on xarModGetName() here -> you must specify the modname ! */
     $module = 'example';
-    /* specify some short URLs relevant to your module *?
+
+    /* specify some short URLs relevant to your module */
     if ($func == 'main') {
         $path = '/' . $module . '/';
         /* Note : if your main function calls some other function by default,
@@ -112,9 +116,8 @@ function example_userapi_encode_shorturl($args)
          * $join = '&';
          * }
          * }
-         */
     } elseif ($func == 'display') {
-        /* check for required parameters */
+         /* check for required parameters */
         if (isset($exid) && is_numeric($exid)) {
             $path = '/' . $module . '/' . $exid . '.html';
             /* you might have some additional parameter that you want to use to
@@ -131,9 +134,10 @@ function example_userapi_encode_shorturl($args)
         }
     } else {
         /* anything else that you haven't defined a short URL equivalent for
-         * -> don't create a path here
+         *  -> don't create a path here
          */
     }
+
     /* add some other module arguments as standard URL parameters */
     if (!empty($path)) {
         if (isset($startnum)) {
@@ -156,4 +160,5 @@ function example_userapi_encode_shorturl($args)
 
     return $path;
 }
+
 ?>

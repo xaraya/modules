@@ -80,6 +80,6 @@ function example_userapi_decode_shorturl($params)
          * return array('main', $args);
          */
     }
-    /* default : return nothing -> no short URL decoded *?
+    /* default : return nothing -> no short URL decoded */
 } 
 ?>

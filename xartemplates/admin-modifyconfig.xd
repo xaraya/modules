@@ -1,4 +1,5 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
 <!-- common admin menu for this module - remove link to the current function -->
 <!-- the variables used in this menu come from example_admin_menu() -->
 <div class="xar-mod-head">
@@ -6,74 +7,91 @@
 </div>
 <div class="xar-mod-body">
     <h2><xar:mlstring>Modify Config</xar:mlstring></h2>
-
     <!--
-        // display a status message to the user if an action has been 
-        // taken on an item
+         display a status message to the user if an action has been
+         taken on an item
     -->
     <xar:if condition="xarSessionGetVar('statusmsg') != ''">
         <p>#xarSessionGetVar('statusmsg')#</p>
     </xar:if>
     <!-- the specific template for the current admin function comes here -->
 
-    <!--
-        // Start form - note the use of xarModURL() to create the recipient URL of
-        // this form.  All URLs should be generated through xarModURL() to ensure
-        // compatibility with future versions of Xaraya
+    <!-- Start form - note we do not use api functions to create the recipient URL of
+         this form, but entity instead.  All URLs should be generated this way to ensure
+         compatibility with future versions of Xaraya.
     -->
 
-    <form method="post" action="#xarModUrl('example', 'admin', 'updateconfig')#">
-        <fieldset>
+    <form class="xar-formwidget"  method="post" action="&xar-modurl-example-admin-updateconfig;" enctype="application/x-www-form-urlencoded">
+    <!--
+         Add an authorisation ID - this adds a hidden field in the form that
+         contains an authorisation ID.  The authorisation ID is very important in
+         preventing certain attacks on the website
+     -->
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+
+
+     <!-- Use standard xaraya classes for form elements -->
+        <fieldset class="formelements xar-norm">
             <legend><xar:mlstring>Display Options</xar:mlstring></legend>
-            <div class="xar-form-input-wrapper xar-clear-both">
-                <label for="bold" class="xar-form-label">
-                    <xar:mlstring>Display Example Items In Bold?</xar:mlstring>
+        
+           <p class="param">
+                <label for="bold"  class="xar-form-label">
+                   <span class="help" title="#xarML('Use bold for example items.')#">
+                       <xar:mlstring>Display Example Items In Bold?</xar:mlstring>
+                   </span>
                 </label>
                 <xar:if condition="$boldchecked">
                     <input type="checkbox" name="bold" id="bold" value="1" checked="checked"/>
                 <xar:else/>
                     <input type="checkbox" name="bold" id="bold" value="1" />
                 </xar:if>
-            </div>
+            </p>
         
-            <div class="xar-form-input-wrapper xar-clear-both">
+            <p class="param">
                 <label for="itemsperpage" class="xar-form-label">
-                    <xar:mlstring>Example Items Per Page:</xar:mlstring>
+                    <span class="help" title="#xarML('Number of example items per page')#">
+                        <xar:mlstring>Example Items Per Page:</xar:mlstring>
+                    </span>
                 </label>
                 <input type="text" name="itemsperpage" id="itemsperpage" value="#$itemsvalue#" maxlength="3" class="xar-form-textshort" />
-            </div>
+            </p>
         </fieldset>
         <fieldset>
             <legend><xar:mlstring>System Options</xar:mlstring></legend>
-            <div class="xar-form-input-wrapper xar-clear-both">
+             <p class="param">
                 <label for="shorturls" class="xar-form-label">
-                    <xar:mlstring>Enable short URLs?</xar:mlstring>
+                    <span class="help" title="#xarML('Enable short URLS?')#">
+                        <xar:mlstring>Enable short URLs?</xar:mlstring>
+                    </span>
                 </label>
                 <xar:if condition="$shorturlschecked">
                     <input type="checkbox" name="shorturls" id="shorturls" value="1" checked="checked" />
                 <xar:else/>
                     <input type="checkbox" name="shorturls" id="shorturls" value="1" />
                 </xar:if>
-            </div>
+            </p>
         </fieldset>
-        <div class="xar-clear-both xar-align-center">
-        <!--
-            // Add an authorisation ID - this adds a hidden field in the form that
-            // contains an authorisation ID.  The authorisation ID is very important in
-            // preventing certain attacks on the website
-        -->
-            <input type="hidden" name="authid" id="authid" value="#$authid#" />
-            <input type="submit" value="#xarML('Update Configuration')#" />
-        </div>
+
         <fieldset>
             <legend><xar:mlstring>Enabled Hooks</xar:mlstring></legend>
+            <xar:foreach in="$hooks" key="$hookmodule">
+                <!--
+                You can display individual hooks if you want using xar:if statements
+        
+                <xar:if condition="($hookmodule eq 'categories') and !empty($hookmodule)">
+                    #$hooks['categories']#
+                </xar:if>
 
-                #$hookoutput['categories']#
-                <xar:comment>
-                Use another name of a hooked module here to call the hook
-                </xar:comment>
-
+                or display them all with one command as follows
+                -->
+                #$hooks[$hookmodule]#
+            </xar:foreach>
         </fieldset>
+
+      <div class="xar-clear-both xar-align-center">
+
+            <input type="submit" value="#xarML('Update Configuration')#" />
+        </div>
 
     </form>
 </div>

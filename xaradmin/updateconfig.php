@@ -27,6 +27,7 @@ function example_admin_updateconfig()
     if (!xarVarFetch('bold', 'checkbox', $bold, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('itemsperpage', 'int', $itemsperpage, 10, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
+
     /* Confirm authorisation code.  This checks that the form had a valid
      * authorisation code attached to it.  If it did not then the function will
      * proceed no further as it is possible that this is an attempt at sending
@@ -36,7 +37,8 @@ function example_admin_updateconfig()
     if (!xarSecConfirmAuthKey()) return;
     /* Update module variables.  Note that the default values are set in
      * xarVarFetch when recieving the incoming values, so no extra processing
-     */ is needed when setting the variables here.
+     * is needed when setting the variables here.
+     */
     xarModSetVar('example', 'bold', $bold);
     xarModSetVar('example', 'itemsperpage', $itemsperpage);
     xarModSetVar('example', 'SupportShortURLs', $shorturls);

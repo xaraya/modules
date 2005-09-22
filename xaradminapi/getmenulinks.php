@@ -24,16 +24,36 @@ function example_adminapi_getmenulinks()
      * not that he/she doesn't.
      * Security Check
      */
+
+    /* The main menu will look for this  menulinks array and return it for a tree view of the module
+     * We are just looking for three items in the array, the url, which we need to use the
+     * xarModURL function, the title of the link, which will display a tool tip for the
+     * module url, in order to keep the label short, and finally the exact label for the
+     * function that we are displaying.
+     */
+    
+    /* We usually display the menu links in a standard order
+     * An optional Overview link -
+     *  - overview shows by default immediately admin chooses the module with overviews switched on
+     *    but it is useful to have it show as a menu item also when overviews are switched off
+     *    so that it is still accessible without having to switch the overviews back on in Adminpanels
+     * Add items link
+     * View with edit/delete item link
+     * Modify Config Link usually comes last in the menu
+     */
+
+    /* Show an overview menu option here if you like */
+
     if (xarSecurityCheck('AddExample', 0)) {
-        /* The main menu will look for this array and return it for a tree view of the module
-         * We are just looking for three items in the array, the url, which we need to use the
-         * xarModURL function, the title of the link, which will display a tool tip for the
-         * module url, in order to keep the label short, and finally the exact label for the
-         * function that we are displaying.
-         */
-        $menulinks[] = Array('url' => xarModURL('example',
-                'admin',
-                'new'), 
+    $menulinks[] = Array('url' => xarModURL('example','admin','overview'),
+
+            'title' => xarML('Example Overview'),
+            'label' => xarML('Overview'));
+    }
+   
+    if (xarSecurityCheck('AddExample', 0)) {
+
+        $menulinks[] = Array('url' => xarModURL('example','admin','new'),
             /* In order to display the tool tips and label in any language,
              * we must encapsulate the calls in the xarML in the API.
              */
@@ -46,9 +66,7 @@ function example_adminapi_getmenulinks()
          * This creates the tree view for each item.  Obviously, we don't need to add every
          * function, but we do need to have a way to navigate through the module.
          */
-        $menulinks[] = Array('url' => xarModURL('example',
-                'admin',
-                'view'),
+        $menulinks[] = Array('url' => xarModURL('example','admin','view'),
             /* In order to display the tool tips and label in any language,
              * we must encapsulate the calls in the xarML in the API.
              */
@@ -61,9 +79,7 @@ function example_adminapi_getmenulinks()
          * This creates the tree view for each item.  Obviously, we don't need to add every
          * function, but we do need to have a way to navigate through the module.
          */
-        $menulinks[] = Array('url' => xarModURL('example',
-                'admin',
-                'modifyconfig'),
+        $menulinks[] = Array('url' => xarModURL('example','admin','modifyconfig'),
             /* In order to display the tool tips and label in any language,
              * we must encapsulate the calls in the xarML in the API.
              */

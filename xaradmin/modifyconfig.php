@@ -24,8 +24,11 @@ function example_admin_modifyconfig()
      * helps if all of the module pages have a standard menu at the top to
      * support easy navigation
      */
+    $data = array();
 
+    /* common menu configuration */
     $data = xarModAPIFunc('example', 'admin', 'menu');
+    
     /* Security check - important to do this as early as possible to avoid
      * potential security holes or just too much wasted processing
      */
@@ -45,16 +48,17 @@ function example_admin_modifyconfig()
     $data['shorturlschecked'] = xarModGetVar('example', 'SupportShortURLs') ? true : false;
 
     $hooks = xarModCallHooks('module', 'modifyconfig', 'example',
-        array('module' => 'example'));
+                       array('module' => 'example'));
     if (empty($hooks)) {
-        $data['hookoutput'] = '';
+        $data['hooks'] = array('categories' => xarML('You can assign base categories by enabling the categories hooks for example module'));
     } else {
-        /* You can use the output from individual hooks in your template too, e.g. with
+        $data['hooks'] = $hooks;
+    
+         /* You can use the output from individual hooks in your template too, e.g. with
          * $hookoutput['categories'], $hookoutput['dynamicdata'], $hookoutput['keywords'] etc.
          */
         $data['hookoutput'] = $hooks;
     }
-    $data['hooks'] = '';
 
     /* Return the template variables defined in this function */
     return $data;
