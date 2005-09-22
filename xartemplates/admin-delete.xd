@@ -8,22 +8,33 @@
     <h2><xar:mlstring>Delete</xar:mlstring></h2>
 
     <!-- the specific template for the current admin function comes here -->
-    
+
     
     <h3 class="xar-align-center"><xar:mlstring>Confirm deleting this item?</xar:mlstring></h3>
-    <form method="post" action="#xarModURL('example', 'admin', 'delete')#">
+    <form class="xar-formwidget"  method="post" action="&xar-modurl-example-admin-delete;">
         <!--
             // This layout is crude.  Adapt it for your module's data
          -->
-        <p>
-             <xar:mlstring>Item ID:</xar:mlstring>
-             #$exid#
-        </p>
-        <p>
-            <xar:mlstring>Example Name:</xar:mlstring>
-            #$namevalue#
-        </p>
+        <fieldset class="formelements xar-norm">
+            <legend><xar:mlstring>Item marked for deletion</xar:mlstring></legend>
+            <p class="param">
+             <label for="itemid"  class="xar-form-label">
+                 <span class="help" title="#xarML('This is the item id')#">
+                     <xar:mlstring>Item ID:</xar:mlstring>
+                 </span>
+             </label>
+              #$exid#
+            </p>
 
+            <p class="param">
+                <label for="itemname"  class="xar-form-label">
+                     <span class="help" title="#xarML('This is the item name')#">
+                         <xar:mlstring>Example Name:</xar:mlstring>
+                     </span>
+                </label>
+                 #$namevalue#
+            </p>
+        </fieldset>
         <div class="xar-clear-both xar-align-center">
         <!--
             // Add an authorisation ID - this adds a hidden field in the form that

@@ -72,20 +72,22 @@
             </p>
         </fieldset>
 
-        <fieldset>
+        <fieldset class="formelements xar-norm">
             <legend><xar:mlstring>Enabled Hooks</xar:mlstring></legend>
-            <xar:foreach in="$hooks" key="$hookmodule">
+            <xar:if condition="!empty($hooks)">
+                <xar:foreach in="$hooks" key="$hookmodule">
                 <!--
                 You can display individual hooks if you want using xar:if statements
-        
+
                 <xar:if condition="($hookmodule eq 'categories') and !empty($hookmodule)">
                     #$hooks['categories']#
                 </xar:if>
 
                 or display them all with one command as follows
                 -->
-                #$hooks[$hookmodule]#
-            </xar:foreach>
+                    #$hooks[$hookmodule]#
+                </xar:foreach>
+            </xar:if>
         </fieldset>
 
       <div class="xar-clear-both xar-align-center">

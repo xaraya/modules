@@ -1,5 +1,7 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
 <!-- This Javascript will check for required fields before the form is submitted. -->
+
 <xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
 <script type="text/javascript">
 <!--
@@ -25,45 +27,72 @@
     <!-- the specific template for the current admin function comes here -->
 
     <!--
-        // Start form - note the use of xarModURL() to create the recipient URL of
-        // this form.  All URLs should be generated through xarModURL() to ensure
+        // Start form - note we do not use api functions like xarModURL() to create the recipient URL of
+        // this form.  All URLs should be generated through the entity  equivalent of xarModURL to ensure
         // compatibility with future versions of Xaraya
     -->
-    <form method="post" action="#xarModURL('example', 'admin', 'update')#" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
-        <div class="xar-form-input-wrapper xar-clear-both">
-            <label for="name" title="#xarML('This is a tool tip for the input.')#" class="xar-form-label">
-                <xar:mlstring>Example Name:</xar:mlstring>
-            </label>
-            <xar:if condition="isset($name)">
-                <input type="text" name="name" id="name" value="#$name#" maxlength="32" class="xar-form-textmedium" />
-            <xar:else />
-                <input type="text" name="name" id="name" value="#$item.name#" maxlength="32" class="xar-form-textmedium" />
-            </xar:if>
-            <xar:if condition="!empty($invalid['name'])">
-                <p class="xar-error">
-                    <xar:mlstring>ERROR! This is not a valid example name</xar:mlstring>
-                </p>
-            </xar:if>
-        </div>
+    <form class="xar-formwidget"  method="post" action="&xar-modurl-example-admin-update;" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
+        <fieldset class="formelements xar-norm">
+            <legend><xar:mlstring>Item to Modify</xar:mlstring></legend>
+            
+            <p class="param">
+                <label for="name"  class="xar-form-label">
+                   <span class="help" title="#xarML('This is the tool tip help for this item.')#">                    
+                       <xar:mlstring>Example Name:</xar:mlstring>
+                   </span>
+                </label>
+                <xar:if condition="isset($name)">
+                    <input type="text" name="name" id="name" value="#$name#" maxlength="32" class="xar-form-textmedium" />
+                <xar:else />
+                    <input type="text" name="name" id="name" value="#$item.name#" maxlength="32" class="xar-form-textmedium" />
+                </xar:if>
 
-        <div class="xar-form-input-wrapper">
-            <label for="number" title="#xarML('This is a tool tip for the input.')#" class="xar-form-label">
-                <xar:mlstring>Example Number:</xar:mlstring>
-            </label>
+            <xar:if condition="!empty($invalid['name'])">
+                <div class="xar-error">
+                    <xar:mlstring>ERROR! This is not a valid example name</xar:mlstring>
+                </div>
+            </xar:if>
+         </p>
+
+         
+            <p class="param">
+                <label for="number"  class="xar-form-label">
+                   <span class="help" title="#xarML('This is the tool tip help for this item.')#">
+                       <xar:mlstring>Example Number:</xar:mlstring>
+                   </span>
+                </label>
                 <xar:if condition="isset($number)">
                     <input type="text" name="number" id="number"value="#$number#" maxlength="5" class="xar-form-textshort" />
                 <xar:else />
                     <input type="text" name="number" id="number"value="#$item.number#" maxlength="5" class="xar-form-textshort" />
                 </xar:if>
                 <xar:if condition="!empty($invalid['number'])">
-                    <p class="xar-error">
+                    <div class="xar-error">
                         <xar:mlstring>ERROR! This is not a valid example number</xar:mlstring>
-                    </p>
+                    </div>
                 </xar:if>
-        </div>
+        </p>
 
-        #$hooks#
+        </fieldset>
 
+        <xar:if condition="!empty($hooks)">
+        <fieldset class="formelements xar-norm">
+            <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
+
+                <xar:foreach in="$hooks" key="$hookmodule">
+              <!--
+                You can display individual hooks if you want using xar:if statements
+
+                <xar:if condition="($hookmodule eq 'categories') and !empty($hookmodule)">
+                    #$hooks['categories']#
+                </xar:if>
+
+                or display them all with one command as follows
+                -->
+                #$hooks[$hookmodule]#
+            </xar:if>
+            </xar:foreach>
+           </fieldset>
         <div class="xar-clear-both xar-align-center">
         <!--
             // Add an authorisation ID - this adds a hidden field in the form that
