@@ -1,17 +1,12 @@
 <?php
 /**
- * File: $Id$
- *
- * An example test class.
- *
- * @package example
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @author Roger Keays <r.keays@ninthave.net>
+ * @subpackage Example Module
  */
-
 
 /* a suite to add the tests to */
 $tmp = new xarTestSuite('Example Suite');
@@ -25,7 +20,6 @@ $tmp = new xarTestSuite('Example Suite');
  */
 class testExample extends xarTestCase 
 {
-
     /**
      * Initialize the Xaraya core.
      */

@@ -1,18 +1,17 @@
 <?php
 /**
- * Example Block
- * 
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage example
- * @author Example module development team 
+ * @subpackage Example Module
  */
 
 /**
  * initialise block
+ *
+ * @author Example Module development team
  */
 function example_othersblock_init()
 {
@@ -26,7 +25,7 @@ function example_othersblock_init()
  */
 function example_othersblock_info()
 { 
-    // Values
+    /* Values */
     return array(
         'text_type' => 'Others',
         'module' => 'example',
@@ -43,8 +42,9 @@ function example_othersblock_info()
  */
 function example_othersblock_display($blockinfo)
 { 
-    // See if we are currently displaying an example item
-    // (this variable is set in the user display function)
+    /* See if we are currently displaying an example item
+     * (this variable is set in the user display function)
+     */
     if (!xarVarIsCached('Blocks.example', 'exid')) {
         // if not, we don't show this
         return;
@@ -55,30 +55,31 @@ function example_othersblock_display($blockinfo)
         return;
     } 
 
-    // Security check
+    /* Security check */
     if (!xarSecurityCheck('ReadExampleBlock', 0, 'Block', $blockinfo['title'])) {return;}
 
-    // Get variables from content block.
-    // Content is a serialized array for legacy support, but will be
-    // an array (not serialized) once all blocks have been converted.
+    /* Get variables from content block.
+     * Content is a serialized array for legacy support, but will be
+     * an array (not serialized) once all blocks have been converted.
+     */
     if (!is_array($blockinfo['content'])) {
         $vars = @unserialize($blockinfo['content']);
     } else {
         $vars = $blockinfo['content'];
     }
 
-    // Defaults
+    /* Defaults */
     if (empty($vars['numitems'])) {
         $vars['numitems'] = 5;
-    } 
+    }
 
-    // Database information
+    /* Database information */
     xarModDBInfoLoad('example');
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-    $exampletable = $xartable['example']; 
+    $exampletable = $xartable['example'];
 
-    // Query
+    /* Query */
     $sql = "SELECT xar_exid, xar_name
             FROM $exampletable
             WHERE xar_exid != $current_exid
@@ -87,16 +88,16 @@ function example_othersblock_display($blockinfo)
 
     if ($dbconn->ErrorNo() != 0) {
         return;
-    } 
+    }
 
     if ($result->EOF) {
         return;
-    } 
+    }
 
-    // Create output object
+    /* Create output object */
     $items = array();
 
-    // Display each item, permissions permitting
+    /* Display each item, permissions permitting */
     for (; !$result->EOF; $result->MoveNext()) {
         list($exid, $name) = $result->fields;
 
@@ -107,15 +108,15 @@ function example_othersblock_display($blockinfo)
                     'example', 'user', 'display',
                     array('exid' => $exid)
                 );
-                
+
             }
             $item['name'] = $name;
-        } 
+        }
         $items[] = $item;
-    } 
+    }
 
     $blockinfo['content'] = array('items' => $items);
 
     return $blockinfo;
-} 
+}
 ?>

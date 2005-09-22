@@ -1,34 +1,34 @@
 <?php
 /**
- * Example Block
- * 
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage example
- * @author Example module development team 
+ * @subpackage Example Module
  */
 
 /**
+ * Other Block - another sample block
  * modify block settings
+ *
+ * @author Example Module development team
  */
 function example_othersblock_modify($blockinfo)
 { 
-    // Get current content
+    /* Get current content */
     if (!is_array($blockinfo['content'])) {
         $vars = unserialize($blockinfo['content']);
     } else {
         $vars = $blockinfo['content'];
     }
 
-    // Defaults
+    /* Defaults */
     if (empty($vars['numitems'])) {
         $vars['numitems'] = 5;
     } 
 
-    // Send content to template
+    /* Send content to template */
     return array(
         'numitems' => $vars['numitems'],
         'blockid' => $blockinfo['bid']

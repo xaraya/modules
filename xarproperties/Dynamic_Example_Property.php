@@ -1,19 +1,18 @@
 <?php
 /**
- * Dynamic Example Property (Text Box)
- *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @copyright (C) 2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage dynamicdata properties
- * @author mikespub <mikespub@xaraya.com>
-*/
+ * @subpackage Example Module
+ */
 
 /**
- * Handle the textbox property
+ * Example property - Handle the textbox property
  *
+ * @author mikespub <mikespub@xaraya.com>
+ * @author Example Module development team
  * @package dynamicdata
  */
 include_once "modules/dynamicdata/class/properties.php";
@@ -29,7 +28,7 @@ class Dynamic_Example_Property extends Dynamic_Property
     {
         $this->Dynamic_Property($args);
 
-        // check validation for allowed min/max length (or values)
+        /* check validation for allowed min/max length (or values) */
         if (!empty($this->validation)) {
             $this->parseValidation($this->validation);
         }
@@ -51,18 +50,18 @@ class Dynamic_Example_Property extends Dynamic_Property
             $this->value = null;
             return false;
         } else {
-    // TODO: allowable HTML ?
+    /*  Allow HTML Here? */
             $this->value = $value;
             return true;
         }
     }
 
-//    function showInput($name = '', $value = null, $size = 0, $maxlength = 0, $id = '', $tabindex = '')
+   /*   function showInput($name = '', $value = null, $size = 0, $maxlength = 0, $id = '', $tabindex = '') */
     function showInput($args = array())
     {
         extract($args);
         $data = array();
-        
+
         if (empty($maxlength) && isset($this->max)) {
             $this->maxlength = $this->max;
             if ($this->size > $this->maxlength) {
@@ -84,7 +83,7 @@ class Dynamic_Example_Property extends Dynamic_Property
         $data['maxlength']= !empty($maxlength) ? $maxlength : $this->maxlength;
         $data['size']     = !empty($size) ? $size : $this->size;
 
-      // Take the showinput-example.xd template from the example module and render it
+      /* Take the showinput-example.xd template from the example module and render it */
       return xarTplProperty('example', 'example','showinput', $data);
     }
 
@@ -100,13 +99,13 @@ class Dynamic_Example_Property extends Dynamic_Property
         $data=array();
 
         $data['value'] = $value;
-        
-        // Take the showoutput-example.xd template from the example module and render it
+
+        /* Take the showoutput-example.xd template from the example module and render it */
         return xarTplProperty('example', 'example', 'showoutput', $data);
 
     }
 
-    // check validation for allowed min/max length (or values)
+    /* check validation for allowed min/max length (or values) */
     function parseValidation($validation = '')
     {
         if (is_string($validation) && strchr($validation,':')) {
@@ -140,7 +139,7 @@ class Dynamic_Example_Property extends Dynamic_Property
                               'requiresmodule' => 'example',
                               'aliases' => '',
                               'args'       => serialize( $args ),
-                            // ...
+                            /* ... */
                            );
         return $baseInfo;
     }
@@ -178,11 +177,11 @@ class Dynamic_Example_Property extends Dynamic_Property
             $data['other'] = xarVarPrepForDisplay($this->validation);
         }
 
-        // allow template override by child classes
+        /* allow template override by child classes */
         if (!isset($template)) {
             $template = 'example';
         }
-        // Take the example-validation.xd template from the example module and render it
+        /* Take the example-validation.xd template from the example module and render it */
         return xarTplProperty('example', $template, 'validation', $data);
     }
 
@@ -199,12 +198,12 @@ class Dynamic_Example_Property extends Dynamic_Property
      {
          extract($args);
 
-         // in case we need to process additional input fields based on the name
+         /* in case we need to process additional input fields based on the name */
          if (empty($name)) {
              $name = 'dd_'.$this->id;
          }
 
-         // do something with the validation and save it in $this->validation
+         /* do something with the validation and save it in $this->validation */
          if (isset($validation)) {
              if (is_array($validation)) {
                  if (isset($validation['min']) && $validation['min'] !== '' && is_numeric($validation['min'])) {
@@ -233,7 +232,7 @@ class Dynamic_Example_Property extends Dynamic_Property
              }
          }
 
-         // tell the calling function that everything is OK
+         /*tell the calling function that everything is OK */
          return true;
      }
 }
