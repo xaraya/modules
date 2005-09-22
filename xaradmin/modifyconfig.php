@@ -1,40 +1,47 @@
 <?php
 /**
- * Standard function to modify configuration parameters
- * 
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage example
- * @author Example module development team 
+ * @subpackage Example Module
  */
 
 /**
+ * Modify module's configuration
+ *
  * This is a standard function to modify the configuration parameters of the
  * module
  *
+ * @author Example module development team
  * @return array
  */
 function example_admin_modifyconfig()
 { 
-    // Initialise the $data variable that will hold the data to be used in
-    // the blocklayout template, and get the common menu configuration - it
-    // helps if all of the module pages have a standard menu at the top to
-    // support easy navigation
-    $data = xarModAPIFunc('example', 'admin', 'menu'); 
-    // Security check - important to do this as early as possible to avoid
-    // potential security holes or just too much wasted processing
-    if (!xarSecurityCheck('AdminExample')) return; 
-    // Generate a one-time authorisation code for this operation
-    $data['authid'] = xarSecGenAuthKey(); 
-    // Specify some values for display
+    /* Initialise the $data variable that will hold the data to be used in
+     * the blocklayout template, and get the common menu configuration - it
+     * helps if all of the module pages have a standard menu at the top to
+     * support easy navigation
+     */
+
+    $data = xarModAPIFunc('example', 'admin', 'menu');
+    /* Security check - important to do this as early as possible to avoid
+     * potential security holes or just too much wasted processing
+     */
+    if (!xarSecurityCheck('AdminExample')) return;
+
+    /* Generate a one-time authorisation code for this operation */
+    $data['authid'] = xarSecGenAuthKey();
+
+    /* Specify some values for display */
     $data['boldchecked'] = xarModGetVar('example', 'bold') ? true : false;
     $data['itemsvalue'] = xarModGetVar('example', 'itemsperpage');
-    // Note : if you don't plan on providing encode/decode functions for
-    // short URLs (see xaruserapi.php), you should remove this from your
-    // admin-modifyconfig.xard template !
+    
+    /* Note : if you don't plan on providing encode/decode functions for
+     * short URLs (see xaruserapi.php), you should remove this from your
+     * admin-modifyconfig.xard template !
+     */
     $data['shorturlschecked'] = xarModGetVar('example', 'SupportShortURLs') ? true : false;
 
     $hooks = xarModCallHooks('module', 'modifyconfig', 'example',
@@ -42,13 +49,14 @@ function example_admin_modifyconfig()
     if (empty($hooks)) {
         $data['hookoutput'] = '';
     } else {
-        // You can use the output from individual hooks in your template too, e.g. with
-        // $hookoutput['categories'], $hookoutput['dynamicdata'], $hookoutput['keywords'] etc.
+        /* You can use the output from individual hooks in your template too, e.g. with
+         * $hookoutput['categories'], $hookoutput['dynamicdata'], $hookoutput['keywords'] etc.
+         */
         $data['hookoutput'] = $hooks;
-    } 
-// TODO: remove this legacy template stuff
+    }
     $data['hooks'] = '';
-    // Return the template variables defined in this function
+
+    /* Return the template variables defined in this function */
     return $data;
-} 
+}
 ?>
