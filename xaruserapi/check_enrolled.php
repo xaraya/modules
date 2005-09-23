@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id:
- * 
  * Check to see if user is already attached to a planned course
  * 
  * @package Xaraya eXtensible Management System
