@@ -26,6 +26,9 @@ function courses_admin_deletecourse($args)
     if (!empty($objectid)) {
         $courseid = $objectid;
     }
+    
+    xarSessionSetVar('statusmsg','');
+    
     // Get the course.
     $item = xarModAPIFunc('courses',
         'user',
@@ -60,7 +63,21 @@ function courses_admin_deletecourse($args)
     if (!xarSecConfirmAuthKey()) return;
 	
 	// TODO: Check for existing links with participants and planned courses. Only allow delete when none are present.
+	// Get the dates this course is planned
 	
+	$countplanned = count(xarModAPIFunc('courses',
+            'user',
+            'getplandates',
+            array('courseid' => $courseid)));
+            
+    if (($countplanned) > 0) {
+
+        xarSessionSetVar('statusmsg', xarML('This course has been planned for #(1) times', $countplanned));
+        xarResponseRedirect(xarModURL('courses', 'admin', 'deletecourse', array('courseid'=>$courseid)));//, 'statusMSG'=> $statusMSG
+        return ; // throw back
+    }
+    // Get on...
+    
     // Call API to do the delete
     if (!xarModAPIFunc('courses',
             'admin',
@@ -74,5 +91,4 @@ function courses_admin_deletecourse($args)
     // Return
     return true;
 }
-
 ?>

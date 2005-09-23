@@ -1,7 +1,5 @@
 <?php
-/**
- * File: $Id:
- * 
+/** 
  * Utility function to pass individual menu items to the main menu
  * 
  * @package Xaraya eXtensible Management System
@@ -24,32 +22,20 @@ function courses_userapi_getmenulinks()
     // First we need to do a security check to ensure that we only return menu items
     // that we are suppose to see.
     if (xarSecurityCheck('ViewCourses', 0)) {
-        $menulinks[] = Array('url' => xarModURL('courses',
-                'user',
-                'view'),
-            // In order to display the tool tips and label in any language,
-            // we must encapsulate the calls in the xarML in the API.
-            'title' => xarML('Displays all courses'),
-            'label' => xarML('Courses'));
+        $menulinks[] = Array('url'   => xarModURL('courses', 'user', 'view'),
+                             'title' => xarML('Displays all courses'),
+                             'label' => xarML('Courses'));
     }
 
     if (xarSecurityCheck('ViewCourses', 0)) {
-        $menulinks[] = Array('url' => xarModURL('courses',
-                'user',
-                'search'),
-            // In order to display the tool tips and label in any language,
-            // we must encapsulate the calls in the xarML in the API.
-            'title' => xarML('Search for a course'),
-            'label' => xarML('Search'));
+        $menulinks[] = Array('url' => xarModURL('search','user'),
+                             'title' => xarML('Search for a course'),
+                             'label' => xarML('Search'));
     }
     if (xarSecurityCheck('ReadCourses', 0)) {
-        $menulinks[] = Array('url' => xarModURL('roles',
-                'user',
-                'account', array('moduleload' => 'courses')),
-            // In order to display the tool tips and label in any language,
-            // we must encapsulate the calls in the xarML in the API.
-            'title' => xarML('Displays courses that I am enrolled in or act as a teacher'),
-            'label' => xarML('My courses'));
+        $menulinks[] = Array('url' => xarModURL('roles','user', 'account', array('moduleload' => 'courses')),
+                             'title' => xarML('Displays courses that I am enrolled in or act as a teacher'),
+                             'label' => xarML('My courses'));
     }
 
     // If we return nothing, then we need to tell PHP this, in order to avoid an ugly
@@ -57,8 +43,6 @@ function courses_userapi_getmenulinks()
     if (empty($menulinks)) {
         $menulinks = '';
     }
-    // The final thing that we need to do in this function is return the values back
-    // to the main menu for display.
     return $menulinks;
 }
 

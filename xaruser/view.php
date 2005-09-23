@@ -1,8 +1,6 @@
 <?php
 /**
- * File: $Id:
- * 
- * View a list of items
+ * View a list of courses
  * 
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 The Digital Development Foundation
@@ -16,6 +14,9 @@
  * view a list of courses
  * This is a standard function to provide an overview of all of the items
  * available from the module.
+ * @author MichelV <michelv@xarayahosting.nl>
+ * @param catid
+ * @param sortby Sortby parameter (standard on name)
  */
 function courses_user_view()
 {

@@ -1,9 +1,8 @@
 <?php
 /*
  *
- *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -45,8 +44,6 @@ function courses_userapi_search($args)
     }
     $join = '';
     if ($shortdesc == 1){
-    // Why have a join here?
-        $join = "LEFT JOIN $planningtable ON $coursestable.xar_courseid = $planningtable.xar_courseid";
         $where[] = "$coursestable.xar_shortdesc LIKE '%$q%'";
     }
     if ($longdesc == 1){
@@ -79,8 +76,8 @@ function courses_userapi_search($args)
         list($courseid, $name, $number) = $result->fields;
         if (xarSecurityCheck('ViewCourses', 0, 'Course', "$courseid:All:All")) {
             $courses[] = array('courseid' => $courseid,
-                               'name' => $name,
-                               'number' => $number);
+                               'name'     => $name,
+                               'number'   => $number);
         }
     }
     $result->Close();

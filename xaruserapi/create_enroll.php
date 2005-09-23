@@ -1,8 +1,6 @@
 <?php
 /**
- * File: $Id:
- *
- * Create a new example item
+ * Enroll into a course
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 The Digital Development Foundation
@@ -13,7 +11,7 @@
  * @author Courses module development team
  */
 /**
- * create an enrollement for a student
+ * create an enrollment for a student
  *
  * @author the Courses module development team
  * @param  $args ['uid'] uid of student
@@ -49,8 +47,7 @@ function courses_userapi_create_enroll($args)
             new SystemException($msg));
         return;
     }
-    // Security check - important to do this as early on as possible to
-    // avoid potential security holes or just too much wasted processing
+    // Security check
     if (!xarSecurityCheck('ReadCourses', 1, 'Course', "All:$planningid:All")) {
         return;
     }
@@ -80,6 +77,7 @@ function courses_userapi_create_enroll($args)
     $item['module'] = 'courses';
     $item['itemid'] = $enrollid;
     xarModCallHooks('item', 'create', $enrollid, $item);
+    
     // Return the id of the newly created item to the calling process
     return $enrollid;
 }

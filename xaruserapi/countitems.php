@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id:
- * 
  * Utility function counts number of items held by this module
  * 
  * @package Xaraya eXtensible Management System
@@ -13,7 +11,8 @@
  * @author Courses module development team 
  */
 /**
- * utility function to count the number of items held by this module
+ * utility function to count the number of courses present.
+ * The function takes the categories and hidden courses into account.
  * 
  * @author the Courses module development team 
  * @param $catid Category id.
@@ -41,7 +40,6 @@ function courses_userapi_countitems($args)
 
     $query = "SELECT COUNT(*) ";
             
-    // TODO: how to select by cat ids (automatically) when needed ???
     // My try at it...
     if (!empty($catid) && xarModIsHooked('categories','courses')) {
         // Get the LEFT JOIN ... ON ...  and WHERE parts from categories

@@ -63,7 +63,7 @@ function courses_userapi_getparticipant($args)
     // All successful database queries produce a result set, and that result
     // set should be closed when it has been finished with
     $result->Close();
-    // Return the items
+    // Return the item
     return $item;
 }
 

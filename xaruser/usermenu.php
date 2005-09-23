@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id:
- *
  * Display the user menu hook
  *
  * @package Xaraya eXtensible Management System
@@ -132,8 +130,7 @@ function courses_user_usermenu($args)
 
         case 'update':
             // First we need to get the data back from the template in order to process it.
-            // The example module is not setting any user vars at this time, but an example
-            // might be the number of items to be displayed per page.
+
             if (!xarVarFetch('uid', 'int:1:', $uid)) return;
             if (!xarVarFetch('itemsperpage', 'str:1:100', $itemsperpage, '20', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('name', 'str:1:100', $name, '', XARVAR_NOT_REQUIRED)) return;

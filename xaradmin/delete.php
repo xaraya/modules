@@ -22,6 +22,8 @@
 */
 function courses_admin_delete($args)
 {
+    extract($args);    
+    
     // Get Vars
     if (!xarVarFetch('itemid',    'id',    $itemid,    NULL, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('itemtype',  'id',    $itemtype,  NULL, XARVAR_NOT_REQUIRED)) {return;}
@@ -29,15 +31,11 @@ function courses_admin_delete($args)
     if (!xarVarFetch('noconfirm', 'isset', $noconfirm, NULL, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('confirm',   'isset', $confirm,   NULL, XARVAR_NOT_REQUIRED)) {return;}
 
-    if( $noconfirm )
-    {
+    if($noconfirm ) {
         xarResponseRedirect(xarModURL('courses', 'admin', 'view',
-                                      array('itemtype' => $itemtype)
-                                     )
-                           );
+                                      array('itemtype' => $itemtype))
+                            );
     }
-
-    extract($args);
 
     if (!empty($objectid)) {
         $itemid = $objectid;

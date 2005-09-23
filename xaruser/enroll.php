@@ -1,21 +1,19 @@
 <?php
- /**
- * File: $Id:
- *
+/**
  * Enroll student in course
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2004 by the Xaraya Development Team.
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage courses
- * @author XarayaGeek/Michel V.
+ * @author Courses Development team
  */
 
 /**
  * Enroll a user into a course and update database
- * @Author Michel V.
+ * @Author XarayaGeek/Michel V.
  *
  * @param  $args an array of arguments (if called by other modules)
  * @param  $args ['objectid'] a generic object id (if called by other modules)

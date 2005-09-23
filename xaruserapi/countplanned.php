@@ -1,6 +1,5 @@
 <?php
 /**
- * File: $Id:
  * 
  * Utility function counts number of items held by this module
  * 
@@ -28,8 +27,6 @@ function courses_userapi_countplanned($args)
     // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-    // It's good practice to name the table and column definitions you are
-    // getting - $table and $column don't cut it in more complex modules
     $planningtable = $xartable['courses_planning'];
     
     // Set to be able to see all courses or only non-hidden ones

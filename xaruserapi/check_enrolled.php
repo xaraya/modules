@@ -15,6 +15,7 @@
  *
  * @author Michel V.
  * @param planningid The ID of the planned course
+ * @param uid. The ID of the user to check for.
  *
  */
 function courses_userapi_check_enrolled($args)
@@ -60,6 +61,5 @@ function courses_userapi_check_enrolled($args)
     $result->Close();
     return $items;
     }
-    // TODO: how to select by cat ids (automatically) when needed ???
 }
 ?>
