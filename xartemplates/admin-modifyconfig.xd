@@ -1,8 +1,8 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:if condition="xarTplAddStyleLink('tinymce', 'forms-modifyconfig')"></xar:if>
+<xar:style scope="module" file="forms-modifyconfig" />
 <xar:comment> ************************ Setup Tabs************************</xar:comment>
-<xar:if condition="xarTplAddStyleLink('tinymce', 'navtabs')">
-</xar:if>
+<xar:style scope="module" file="navtabs" />
+
 
 <div class="xar-mod-head">
     <span class="xar-mod-title">
@@ -14,66 +14,65 @@
    <dl class="xar-tabs">
         <dt class="help" title="Choose a set of configuration options"><xar:mlstring>Actions</xar:mlstring> :</dt>
         <xar:if condition="$tab eq 'basic'">
-            <dd class="active">
-                <a href="#xarModURL('tinymce', 'admin', 'modifyconfig', array('tab' => 'basic'))#" class="active">
+            <dd class="active"><a href="&xar-modurl-tinymce-admin-modifyconfig;&amp;tab=basic" class="active">
                     <xar:mlstring>Installation</xar:mlstring>
                 </a>
             </dd>
         <xar:else />
             <dd>
-                <a href="#xarModURL('tinymce', 'admin', 'modifyconfig', array('tab' => 'basic'))#">
+                <a href="&xar-modurl-tinymce-admin-modifyconfig;&amp;tab=basic">
                     <xar:mlstring>Installation</xar:mlstring>
                 </a>
             </dd>
         </xar:if>
         <xar:if condition="$tab eq 'general'">
             <dd class="active">
-                <a href="#xarModURL('tinymce', 'admin', 'modifyconfig', array('tab' => 'general'))#" class="active">
+                <a href="&xar-modurl-tinymce-admin-modifyconfig;&amp;tab=general" class="active">
                     <xar:mlstring>Basic Options</xar:mlstring>
                 </a>
             </dd>
         <xar:else />
             <dd>
-                <a href="#xarModURL('tinymce', 'admin', 'modifyconfig', array('tab' => 'general'))#">
+                <a href="&xar-modurl-tinymce-admin-modifyconfig;&amp;tab=general">
                     <xar:mlstring>Basic Options</xar:mlstring>
                 </a>
             </dd>
         </xar:if>
         <xar:if condition="$tab eq 'cssplug'">
             <dd class="active">
-                <a href="#xarModURL('tinymce', 'admin', 'modifyconfig', array('tab' => 'cssplug'))#" class="active">
+                <a href="&xar-modurl-tinymce-admin-modifyconfig;&amp;tab=cssplug" class="active">
                     <xar:mlstring>Styles and Plugins</xar:mlstring>
                 </a>
             </dd>
         <xar:else />
             <dd>
-                <a href="#xarModURL('tinymce', 'admin', 'modifyconfig', array('tab' => 'cssplug'))#">
+                <a href="&xar-modurl-tinymce-admin-modifyconfig;&amp;tab=cssplug">
                     <xar:mlstring>Styles and Plugins</xar:mlstring>
                 </a>
             </dd>
         </xar:if>
         <xar:if condition="$tab eq 'customadvanced'">
             <dd class="active">
-                <a href="#xarModURL('tinymce', 'admin', 'modifyconfig', array('tab' => 'customadvanced'))#" class="active">
+                <a href="&xar-modurl-tinymce-admin-modifyconfig;&amp;tab=customadvanced" class="active">
                      <xar:mlstring>Custom Advanced Theme</xar:mlstring>
                 </a>
             </dd>
         <xar:else />
             <dd>
-                <a href="#xarModURL('tinymce', 'admin', 'modifyconfig', array('tab' => 'customadvanced'))#">
+                <a href="&xar-modurl-tinymce-admin-modifyconfig;&amp;tab=customadvanced">
                     <xar:mlstring>Custom Advanced Theme</xar:mlstring>
                 </a>
             </dd>
         </xar:if>
     <xar:if condition="$tab eq 'customconfig'">
             <dd class="active">
-                <a href="#xarModURL('tinymce', 'admin', 'modifyconfig', array('tab' => 'customconfig'))#" class="active">
+                <a href="&xar-modurl-tinymce-admin-modifyconfig;&amp;tab=customconfig" class="active">
                      <xar:mlstring>Advanced Options</xar:mlstring>
                 </a>
             </dd>
         <xar:else />
             <dd>
-                <a href="#xarModURL('tinymce', 'admin', 'modifyconfig', array('tab' => 'customconfig'))#">
+                <a href="&xar-modurl-tinymce-admin-modifyconfig;&amp;tab=customconfig">
                     <xar:mlstring>Advanced Options</xar:mlstring>
                 </a>
             </dd>
@@ -82,7 +81,7 @@
 
 <xar:comment> ************************ Begin Install Options ************************</xar:comment>
     <xar:if condition="$tab eq 'basic'">
-        <form class="xar-formwidget" action="#xarModUrl('tinymce', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded" >
+        <form class="xar-formwidget" action="&xar-modurl-tinymce-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded" >
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <input type="hidden" name="tab" id="tab" value="#$tab#" />
        <fieldset class="formelements xar-norm">
@@ -92,7 +91,7 @@
 
             <ol  class="xar-norm" style="list-style-type:lower-alpha;">
                 <li><xar:mlstring>Go to the HTML module</xar:mlstring></li>
-                <li><a href="index.php?module=html&amp;type=admin&amp;func=set" rel="ext"><xar:mlstring>Set HTML tags allowed</xar:mlstring></a><xar:mlstring> eg code, span, image, h1 and so on so they are rendered.</xar:mlstring></li>
+                <li><a href="&xar-modurl-html-admin-set;" rel="ext"><xar:mlstring>Set HTML tags allowed</xar:mlstring></a><xar:mlstring> eg code, span, image, h1 and so on so they are rendered.</xar:mlstring></li>
             </ol>
 
         </fieldset>
@@ -202,7 +201,7 @@
     </form>
  <xar:comment> ************************ Begin Basic Config Options ************************</xar:comment>
     <xar:elseif condition="$tab eq 'general'" />
-        <form class="xar-formwidget" action="#xarModUrl('tinymce', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded" >
+        <form class="xar-formwidget" action="&xar-modurl-tinymce-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded" >
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <input type="hidden" name="tab" id="tab" value="#$tab#" />
         <fieldset class="formelements xar-norm">
@@ -425,7 +424,7 @@
 <xar:comment> ************************ Begin CSS and Plugin Options********************</xar:comment>
 
   <xar:elseif condition="$tab eq 'cssplug'" />
-       <form class="xar-formwidget" action="#xarModUrl('tinymce', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded" >
+       <form class="xar-formwidget" action="&xar-modurl-tinymce-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded" >
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <input type="hidden" name="tab" id="tab" value="#$tab#" />
 
@@ -557,7 +556,7 @@
 
 <xar:comment> ************************ Advanced Theme Options********************</xar:comment>
     <xar:elseif condition="$tab eq 'customadvanced'" />
-        <form class="xar-formwidget" action="#xarModUrl('tinymce', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded" >
+        <form class="xar-formwidget" action="&xar-modurl-tinymce-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded" >
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <input type="hidden" name="tab" id="tab" value="#$tab#" />
         <fieldset class="formelements xar-norm">
@@ -755,7 +754,7 @@
         </form>
 <xar:comment> ************************ Custom Config Option********************</xar:comment>
     <xar:elseif condition="$tab eq 'customconfig'" />
-        <form class="xar-formwidget" action="#xarModUrl('tinymce', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded" >
+        <form class="xar-formwidget" action="&xar-modurl-tinymce-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded" >
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <input type="hidden" name="tab" id="tab" value="#$tab#" />
       <fieldset class="formelements xar-norm">
