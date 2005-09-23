@@ -6,6 +6,8 @@ Publication Templates
 Each publication can have it's own HTML and text email template. To create a new template, you will need to copy one of the existing templates and modify the template for the desired appearance.
 
 The default templates are located the directory "modules/newsletter/templates"
+You can override templates by placing them in your theme at either this location: [yourthemedir]/modules/newsletter/templates
+or in the standard modules/newsletter/templates directory.
 
 The default templates are:
     publication-template-html.xd    - default HTML template
