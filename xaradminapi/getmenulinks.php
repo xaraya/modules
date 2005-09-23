@@ -1,15 +1,13 @@
 <?php
 /**
- * File: $Id:
- *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2004 by the Xaraya Development Team.
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage tinymce
+ * @subpackage xartinymce
  * @author Jo Dalle Nogare <jojodee@xaraya.com>
- */
+ *
 /**
  * Utility function pass individual menu items to the main menu
  *
@@ -18,8 +16,7 @@
  */
 function tinymce_adminapi_getmenulinks()
 {
-
-    // Security Check
+    /* Security Check */
     if (xarSecurityCheck('AdminTinyMCE', 0)) {
        $menulinks[] = Array('url' => xarModURL('tinymce', 'admin','overview'),
                                                'title' => xarML('Overview'),
@@ -32,8 +29,9 @@ function tinymce_adminapi_getmenulinks()
     if (empty($menulinks)) {
         $menulinks = '';
     }
-    // The final thing that we need to do in this function is return the values back
-    // to the main menu for display.
+    /* The final thing that we need to do in this function is return the values back
+     * to the main menu for display.
+     */
     return $menulinks;
 } 
 

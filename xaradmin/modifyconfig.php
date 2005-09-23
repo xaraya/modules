@@ -1,26 +1,27 @@
 <?php
 /**
- * File: $Id$
- * 
- * Realms configuration modification
- * 
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
-  * @subpackage Realms
- * @author Jo Dalle Nogare <jojodee@xaraya.com>
+ * @subpackage xartinymce
  */
+
 /**
  * This is a standard function to modify the configuration parameters of the
  * module
+ *
+ * @author Jo Dalle Nogare <jojodee@xaraya.com>
  */
 function tinymce_admin_modifyconfig()
 {
     if (!xarSecurityCheck('AdminTinyMCE')) return;
     if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'basic', XARVAR_NOT_REQUIRED)) return;
-  //  $data = xarModAPIFunc('tinymce', 'admin', 'menu');
+    
+    /* No admin menu on page
+     * $data = xarModAPIFunc('tinymce', 'admin', 'menu');
+     */
 
     $data['authid'] = xarSecGenAuthKey();
     // Specify some labels and values for display
@@ -89,7 +90,8 @@ function tinymce_admin_modifyconfig()
         height: "100px",
         theme : "simple"
     });';
-    //prepare multiconfig for display
+    
+    /* prepare multiconfig for display */
     $data['multiconfig']=trim($data['multiconfig']);
     if ($data['dousemulticonfig']){
      $multiconfig=$data['multiconfig'];
@@ -101,7 +103,7 @@ function tinymce_admin_modifyconfig()
     if (!isset($data['usebutton'])) {
       $data['usebutton']=false;
     }
-    //Prepare the display of current configuration
+    /* Prepare the display of current configuration */
     $stringstart='tinyMCE.init({';
     $stringend=' });';
 
@@ -138,24 +140,24 @@ function tinymce_admin_modifyconfig()
     if (!isset($data['tinycustom'])) {
         $data['tinycustom']='';
     }
-     //get list of valid themes
+    /* get list of valid themes */
     $tinythemepath="./modules/tinymce/xartemplates/includes/tinymce/jscripts/tiny_mce/themes";
     $themelist=array();
     $handle=opendir($tinythemepath);
     $skip_array = array('.','..','SCCS','CVS','index.htm','index.html','readme.txt');
     while (false !== ($file = readdir($handle))) {
-        // check the skip array and add files in it to array
+        /* check the skip array and add files in it to array */
         if (!in_array($file,$skip_array)) {
             $themelist[]=$file;
         }
     }
     closedir($handle);
-    //get list of valid languages
+    /* get list of valid languages */
     $tinylangpath="./modules/tinymce/xartemplates/includes/tinymce/jscripts/tiny_mce/langs";
     $langlist=array();
     $handle=opendir($tinylangpath);
     while (false !== ($file = readdir($handle))) {
-        // check the skip array and add files in it to array
+        /* check the skip array and add files in it to array */
         if (!in_array($file,$skip_array)) {
             $langlist[]=str_replace('.js', '', $file);
         }
@@ -173,7 +175,7 @@ function tinymce_admin_modifyconfig()
     } else {
         $data['hooks'] = $hooks;
     }
-    // Return the template variables defined in this function
+    /* Return the template variables defined in this function */
     return $data;
 }
 

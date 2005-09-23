@@ -1,15 +1,19 @@
 <?php
 /**
- * Dynamic TinyMCE Property
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
  *
- * Utilizes JavaScript based WYSIWYG Editor, TinyMCE
+ * @subpackage xartinymce
+ * @author Jo Dalle Nogare <jojodee@xaraya.com>
  *
- * @package dynamicdata
- * @subpackage properties
  */
 
 /**
- * handle tinymce wysiwyg textarea property
+ * Handle tinymce wysiwyg textarea property
+ * Utilizes JavaScript based WYSIWYG Editor, TinyMCE
+ *
  * @author jojodee
  * @package dynamicdata
  */
@@ -22,7 +26,7 @@ class Dynamic_TinyMCE_Property extends Dynamic_Property
   function Dynamic_TinyMCE_Property($args)
   {
          $this->Dynamic_Property($args);
-        // check validation for allowed rows/cols (or values)
+        /* check validation for allowed rows/cols (or values) */
         if (!empty($this->validation) && strchr($this->validation,':')) {
             list($rows,$cols) = explode(':',$this->validation);
             if ($rows !== '' && is_numeric($rows)) {
@@ -40,7 +44,7 @@ class Dynamic_TinyMCE_Property extends Dynamic_Property
         if (!isset($value)) {
             $value = $this->value;
         }
-    // TODO: allowable HTML ?
+       /*  allowable HTML handled by tinymce */
         $this->value = $value;
         return true;
     }

@@ -1,15 +1,11 @@
 <?php
 /**
- * File: $Id:
- * 
- * TinyMCE  main function
- * 
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage TinyMCE 
+ * @subpackage xartinymce
  * @author Jo Dalle Nogare <jojodee@xaraya.com>
  */
 /**
@@ -18,7 +14,7 @@
 function tinymce_admin_overview()
 {
     if (!xarSecurityCheck('AdminTinyMCE')) return;
-    // success
+
     $data=array();
     $data['ddflushurl']=xarModURL('dynamicdata','admin','modifyconfig');
     return xarTplModule('tinymce', 'admin', 'main', $data,'main');

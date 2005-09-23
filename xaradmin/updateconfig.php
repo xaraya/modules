@@ -1,18 +1,16 @@
 <?php
 /**
- * File: $Id$
- * 
- * Update configuration parameters of the module with information passed back by the modification form
- *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2004 by the Xaraya Development Team.
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
-  * @subpackage xartinymce
+ * @subpackage xartinymce
  * @author Jo Dalle Nogare <jojodee@xaraya.com>
  */
 /**
+ * Update configuration parameters to relevant vars in database
+ *
  * This is a standard function to update the configuration parameters of the
  * module given the information passed back by the modification form
  */
@@ -33,9 +31,10 @@ function tinymce_admin_updateconfig()
         case 'general':
             if (!xarVarFetch('tinytheme','str:1:',$tinytheme,'default',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinyask','str:1:',$tinyask,'true',XARVAR_NOT_REQUIRED)) return;
-            // We have fancy validation rules to avoid writing the same code over and over
-            // This one: treats the string as a comma-separeted list of tokens. Each token
-            // is lower-cased, trimmed and compared to a list of allowed browsers.
+            /*  We have fancy validation rules to avoid writing the same code over and over
+             * This one: treats the string as a comma-separeted list of tokens. Each token
+             * is lower-cased, trimmed and compared to a list of allowed browsers.
+             */
             if (!xarVarFetch('tinybrowsers', 'strlist:,:pre:lower:trim:passthru:enum:msie:gecko:safari', $tinybrowsers, 'msie,gecko,safari', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('usebutton','str:1:',$usebutton,'false',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinyundolevel','int:1:3',$tinyundolevel,'',XARVAR_NOT_REQUIRED)) return;
@@ -81,13 +80,13 @@ function tinymce_admin_updateconfig()
             if (!xarVarFetch('editorcss','str:1:',$editorcss,'',XARVAR_NOT_REQUIRED)) return;
                  xarModSetVar('tinymce', 'tinyextended', $tinyextended);
                 xarModSetVar('tinymce', 'tinyinlinestyle',$tinyinlinestyle);
-                xarModSetVar('tinymce','tinyencode', $tinyencode); //not used at this stage
+                xarModSetVar('tinymce','tinyencode', $tinyencode); /* not used at this stage */
                 xarModSetVar('tinymce','tinyplugins', $tinyplugins);
                 xarModSetVar('tinymce', 'tinycsslist', $tinycsslist);
                 xarModSetVar('tinymce','tinydate', $tinydate);
                 xarModSetVar('tinymce','tinytime', $tinytime);
                 xarModSetVar('tinymce','tinyinvalid', $tinyinvalid);
-                //xarModSetVar('tinymce', 'useibrowser', $useibrowser);
+                /* xarModSetVar('tinymce', 'useibrowser', $useibrowser); deprecated version 0.9.2 */
                xarModSetVar('tinymce', 'tinyeditorcss', $editorcss);
 
             break;
@@ -144,10 +143,11 @@ function tinymce_admin_updateconfig()
     $tinybasepath="'.$xarbaseurl.'modules/tinymce/xartemplates/includes/tinymce/jscripts/tiny_mce/tiny_mce.js";
 
 
-    //Turn our settings into javascript for insert into template
-    //Let's call the variable jstext
+    /* Turn our settings into javascript for insert into template
+     *Let's call the variable jstext
+     */
 
-    //start the string
+    /* start building the string */
     $jstext = 'mode : "'.xarModGetVar('tinymce','tinymode').'",';
     $jstext .='theme : "'.xarModGetVar('tinymce','tinytheme').'",';
     $jstext .='document_base_url : "'.xarServerGetBaseURL().'",';
@@ -212,7 +212,7 @@ function tinymce_admin_updateconfig()
 
         if (xarModGetVar('tinymce','tinyenablepath')==0){
             $jstext .='theme_advanced_path: "false", ';
-        } else { //if not false set the status path location and resizing
+        } else { /* if not false set the status path location and resizing */
             $jstext .='theme_advanced_statusbar_location: "'.xarModGetVar('tinymce','tinyshowpath').'", ';
          
             if (xarModGetVar('tinymce','tinyadvresize')==1 ){
@@ -227,7 +227,7 @@ function tinymce_admin_updateconfig()
         if (trim(xarModGetVar('tinymce','tinyplugins')) <> '') {
             $jstext .='plugins : "'.xarModGetVar('tinymce','tinyplugins').'", ';
         }
-     // $jstext .= 'theme_advanced_styles : "'.trim(xarModGetVar('tinymce','tinyexstyle')).'",';
+        /* $jstext .= 'theme_advanced_styles : "'.trim(xarModGetVar('tinymce','tinyexstyle')).'",'; */
 
         if (trim(xarModGetVar('tinymce','tinybuttonsremove')) <> '') {
             $jstext .='theme_advanced_disable : "'.trim(xarModGetVar('tinymce','tinybuttonsremove')).' ",';
@@ -251,17 +251,19 @@ function tinymce_admin_updateconfig()
         if (xarModGetVar('tinymce','tinybuild3') <> '') {
           $jstext .='theme_advanced_buttons3 : "'.xarModGetVar('tinymce','tinybuild3').'",';
         }
-  //      $jstext .= 'debug : "true",';
+       /*  Uncomment to get a debug popup dialog showing paths used
+         $jstext .= 'debug : "true",';
+       */
         if (trim(xarModGetVar('tinymce','tinyadvformat')) <> '') {
           $jstext .='theme_advanced_blockformats : "'.xarModGetVar('tinymce','tinyadvformat').'", ';
         }
-        
+
         if (trim(xarModGetVar('tinymce','tinyextended')) <> '') {
             $jstext .='extended_valid_elements : "'.xarModGetVar('tinymce','tinyextended').'", ';
         }
    }
 
-    //Setup for 'exact' mode - we only want to replace areas that match for id or name
+    /* Setup for 'exact' mode - we only want to replace areas that match for id or name */
     if ((xarModGetVar('tinymce','tinymode') =='exact') and (trim(xarModGetVar('tinymce','tinyinstances')) <> '')){
       $elementlist=explode(',',xarModGetVar('tinymce','tinyinstances'));
             $jstext .='elements : "'.xarModGetVar('tinymce','tinyinstances').'", ';
@@ -274,12 +276,12 @@ function tinymce_admin_updateconfig()
        $jstext .=xarModGetVar('tinymce','tinycustom');
     }
 
-   // $jstext .='force_br_newlines : "",';    //works only for IE at the moment
+    /* $jstext .='force_br_newlines : "",';   //works only for IE at the moment */
     $jstext .='directionality : "'.xarModGetVar('tinymce','tinydirection').'",';
-    //add known requirement last to ensure proper syntax with no trailing comma
+    /* add known requirement last to ensure proper syntax with no trailing comma */
     $jstext .='language : "'.xarModGetVar('tinymce','tinylang').'" ';
 
-    //now add the other configurations
+    /* now add the other configurations */
     if (xarModGetVar('tinymce','usemulticonfig')){
         if (strlen(trim(xarModGetVar('tinymce','multiconfig')))>0) {
           $multiconfig =xarModGetVar('tinymce','multiconfig');
@@ -287,8 +289,8 @@ function tinymce_admin_updateconfig()
     }else{
           $multiconfig='';
     }
-    
-    //let's set button or popup
+
+    /* let's set button or popup */
     $buttonon=xarML('Turn On');
     $buttonoff=xarML('Turn Off');
     if (xarModGetVar('tinymce','usebutton') == 'true' && xarModGetVar('tinymce','tinymode') =='specific_textareas') {
@@ -305,7 +307,7 @@ function tinymce_admin_updateconfig()
     }else{
        $buttonswitch='';
     }
-    //let's set the var to hold the js text
+    /* let's set the var to hold the js text */
     xarModSetVar('tinymce','jstext',$jstext);
     xarModSetVar('tinymce','multiconfig',$multiconfig);
     xarModSetVar('tinymce','buttonstring',$buttonswitch);

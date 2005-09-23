@@ -1,23 +1,21 @@
 <?php
 /**
- * File: $Id
- *
- * xarTinymce event API functions
- *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage xartinymce
- * @author jojodee@xaraya.com
+ * @author Jo Dalle Nogare <jojodee@xaraya.com>
  */
 
 /**
  * Tinymce event handler for the system event ServerRequest
  *
- * this function is called when the system triggers the
+ * This function is called when the system triggers the
  * event in index.php on each Server Request
+ * In this case it loads tinymce javascript on every page load
+ * if it is active and set as the default wysiwyg editor and mode is automatice
  *
  * @author Jo Dalle Nogare <jojodee@xaraya.com>
  * @returns bool
@@ -27,7 +25,7 @@ function tinymce_eventapi_OnServerRequest()
 
     if (xarModGetVar('base','editor') == 'tinymce' && (xarModIsAvailable('tinymce')) && (xarModGetVar('tinymce','tinyloadmode')<>'manual')) {
         $data=array();
-         xarTpl_includeModuleTemplate('tinymce','tinymce_insert',$data);
+        xarTpl_includeModuleTemplate('tinymce','tinymce_insert',$data);
     }
     return true;
 }
