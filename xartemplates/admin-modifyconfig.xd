@@ -538,35 +538,7 @@
                     <xar:mlstring>%H hour using a 24-hour clock, %M minute as 00-59, %S second as 00-59, %% - a literal `%' character</xar:mlstring>
             </p>
         </xar:if>
-<!-- IBROWSER AUTO
-           <p class="param">
-               <label for="useibrowser" class="xar-form-label">
-                   <span class="help" title="#xarML('Automatically add the image browser to use with xarTinyMCE')#">
-                        <xar:mlstring>Auto add Image Browser?</xar:mlstring>
-                   </span>
-               </label>
-               <select name="useibrowser" id="useibrowser" size="1">
-                <xar:if condition="$useibrowser eq 0">
-                    <option value="0" selected="selected"><xar:mlstring>Manual set</xar:mlstring></option>
-                    <option value="1"><xar:mlstring>Auto add</xar:mlstring></option>
-                    <option value="2"><xar:mlstring>Auto remove</xar:mlstring></option>
-                <xar:elseif condition="$useibrowser eq 1" />
-                    <option value="0"><xar:mlstring>Manual set</xar:mlstring></option>
-                    <option value="1" selected="selected"><xar:mlstring>Auto add</xar:mlstring></option>
-                    <option value="2"><xar:mlstring>Auto remove</xar:mlstring></option>
-                <xar:elseif condition="$useibrowser eq 2" />
-                    <option value="0"><xar:mlstring>Manual set</xar:mlstring></option>
-                    <option value="1"><xar:mlstring>Auto add</xar:mlstring></option>
-                    <option value="2" selected="selected"><xar:mlstring>Auto remove</xar:mlstring></option>
-                </xar:if>
-                </select>
-                </p>
-                <p class="param">
-                          <xar:mlstring>Adds the plugin, changes theme to Advanced, adds the Ibrowser button, and removes
-                the Image button.</xar:mlstring>
 
-            </p>
--->
          <p class="xar-norm">
             <xar:mlstring><strong>To Use the IBROWSER image browser plugin:</strong></xar:mlstring>
             <ul style="clear:left;">
@@ -747,7 +719,9 @@
                 <strong><xar:mlstring>Build Your Own Layout</xar:mlstring></strong>
             </legend>
         <p class="xar-norm">
-            <xar:mlstring>You can define your own Custom Editor Layout from here using existing buttons.</xar:mlstring>
+            <xar:mlstring>You can define your own Custom Editor Layout from here using existing buttons. 
+                          Any entry in a row will force use of this custom layout. A space alone will remove a row.
+            </xar:mlstring>
         </p>
         <p class="param">
              <label for="tinybuild1" class="xar-form-label">

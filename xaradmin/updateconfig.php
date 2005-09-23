@@ -241,13 +241,14 @@ function tinymce_admin_updateconfig()
         if (trim(xarModGetVar('tinymce','tinybuttons3')) <> '') {
           $jstext .='theme_advanced_buttons3_add : "'.trim(xarModGetVar('tinymce','tinybuttons3')).'", ';
         }
-        if (trim(xarModGetVar('tinymce','tinybuild1')) <> '') {
+        /* Do not trim these build vars - a space will render the line blank */
+        if (xarModGetVar('tinymce','tinybuild1') <> '') {
           $jstext .='theme_advanced_buttons1 : "'.xarModGetVar('tinymce','tinybuild1').'", ';
         }
-        if (trim(xarModGetVar('tinymce','tinybuild2')) <> '') {
+        if (xarModGetVar('tinymce','tinybuild2') <> '') {
           $jstext .='theme_advanced_buttons2 : "'.xarModGetVar('tinymce','tinybuild2').'",';
         }
-        if (trim(xarModGetVar('tinymce','tinybuild3')) <> '') {
+        if (xarModGetVar('tinymce','tinybuild3') <> '') {
           $jstext .='theme_advanced_buttons3 : "'.xarModGetVar('tinymce','tinybuild3').'",';
         }
   //      $jstext .= 'debug : "true",';

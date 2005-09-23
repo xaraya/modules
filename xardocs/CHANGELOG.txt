@@ -1,3 +1,6 @@
+* Version 0.9.x
+- Allow a space to act to remove line totall in custom adv theme row building
+
 * Version 0.9.2b 12 Sept 05
 - Missing files in original tinymce distro
 - updated language files
