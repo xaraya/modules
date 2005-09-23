@@ -23,5 +23,4 @@ function sitecontact_userapi_menu()
     $menu['menulink_view'] = xarModURL('sitecontact', 'user', 'main');
     return $menu;
 }
-
 ?>

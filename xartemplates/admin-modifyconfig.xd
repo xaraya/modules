@@ -3,12 +3,15 @@
 <script type="text/javascript">
 
 </script>
+<xar:style scope="module" file="forms" />
 
-<xar:if condition="xarTplAddStyleLink('sitecontact', 'forms')"></xar:if>
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Site Contact Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Modify Site Contact Configuration</xar:mlstring></h2>
-
-<form class="xar-formwidget" method="post" action="&xar-modurl-sitecontact-admin-updateconfig;">
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Site Contact Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Modify Site Contact Configuration</xar:mlstring></h2>
+    
+    <form class="xar-formwidget" method="post" action="&xar-modurl-sitecontact-admin-updateconfig;">
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
 
     <fieldset class="formelements xar-norm">

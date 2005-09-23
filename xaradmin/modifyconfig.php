@@ -17,7 +17,7 @@ function sitecontact_admin_modifyconfig()
     $data = xarModAPIFunc('sitecontact', 'admin', 'menu');
     if (!xarSecurityCheck('AdminSiteContact')) return;
     $data['authid'] = xarSecGenAuthKey();
-    // Specify some labels and values for display
+    /* Specify some labels and values for display */
     $data['customtext'] = xarModGetVar('sitecontact', 'customtext');
     $data['customtitle'] = xarModGetVar('sitecontact', 'customtitle');
     $data['optiontext'] = xarModGetVar('sitecontact', 'optiontext');
@@ -56,7 +56,7 @@ function sitecontact_admin_modifyconfig()
         $data['hooks'] = $hooks;
     }
 
-    // Return the template variables defined in this function
+    /* Return the template variables defined in this function */
     return $data;
 }
 ?>

@@ -7,7 +7,7 @@
  *
  * @package Sitecontact
  */
- 
+
 /**
  * The main administration function
  * @author Jo Dalle Nogare <jojodee@xaraya.com>
@@ -17,15 +17,15 @@ function sitecontact_admin_main()
     if (!xarSecurityCheck('EditSiteContact')) return;
     if (xarModGetVar('adminpanels', 'overview') == 0) {
         $data = xarModAPIFunc('sitecontact', 'admin', 'menu');
-        // Specify some other variables used in the blocklayout template
+        /* Specify some other variables used in the blocklayout template */
         $data['welcome'] = xarML('Welcome to the administration part of this SiteContact module...');
-        // Return the template variables defined in this function
+
+        /* Return the template variables defined in this function */
         return $data;
     } else {
         xarResponseRedirect(xarModURL('sitecontact', 'admin', 'modifyconfig'));
     }
-    // success
+    /* success */
     return true;
-} 
-
+}
 ?>

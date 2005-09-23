@@ -18,9 +18,9 @@
  */
 function sitecontact_userapi_encode_shorturl($args)
 { 
-    // Get arguments from argument array
-    extract($args); 
-    // Check if we have something to work with
+    /* Get arguments from argument array */
+    extract($args);
+    /* Check if we have something to work with */
     if (!isset($func)) {
         return;
     } 
@@ -33,17 +33,17 @@ function sitecontact_userapi_encode_shorturl($args)
         $usealias = false;
     }
     $path = '';
-    // if we want to add some common arguments as URL parameters below
+    /* if we want to add some common arguments as URL parameters below */
     $join = '?';
-    // we can't rely on xarModGetName() here -> you must specify the modname !
+    /* we can't rely on xarModGetName() here -> you must specify the modname */
     $module = 'sitecontact';
     $alias = xarModGetAlias($module);
-    // specify some short URLs relevant to your module
+    /* specify some short URLs relevant to your module */
     if ($func == 'main') {
         if (($module == $alias) && ($usealias)){
-        // OK, we can use a 'fake' module name here
+            /* OK, we can use a 'fake' module name here */
             $path = '/' . $aliasname . '/';
-           if (isset($message) && is_numeric($message)) {
+            if (isset($message) && is_numeric($message)) {
                 $path = '/' . $aliasname . '/' . $message;
             }
         }else {
@@ -65,7 +65,7 @@ function sitecontact_userapi_encode_shorturl($args)
               }
           }
     }
-    // add some other module arguments as standard URL parameters
+    /* add some other module arguments as standard URL parameters */
     if (!empty($path)) {
         if (isset($startnum)) {
             $path .= $join . 'startnum=' . $startnum;
@@ -87,5 +87,4 @@ function sitecontact_userapi_encode_shorturl($args)
 
     return $path;
 }
-
 ?>

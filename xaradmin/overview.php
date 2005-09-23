@@ -14,10 +14,12 @@
  */
 function sitecontact_admin_overview()
 {
-      if (!xarSecurityCheck('AdminSiteContact')) return;
-    // success
+    if (!xarSecurityCheck('AdminSiteContact')) return;
+
     $data=array();
-   return xarTplModule('sitecontact', 'admin', 'main',$data,'main');
+    
+    /* let's just display the main module overview */
+    return xarTplModule('sitecontact', 'admin', 'main',$data,'main');
 }
 
 ?>

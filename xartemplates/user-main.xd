@@ -1,6 +1,6 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
-<xar:if condition="xarTplAddStyleLink('sitecontact', 'forms')"></xar:if>
+<xar:style scope="module" file="forms" />
 <script type="text/javascript">
 <!--
     // Enter name of mandatory fields

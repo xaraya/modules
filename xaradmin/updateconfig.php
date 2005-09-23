@@ -79,7 +79,7 @@ function sitecontact_admin_updateconfig()
 
    xarResponseRedirect(xarModURL('sitecontact', 'admin', 'modifyconfig'));
 
-    // Return
+    /* Return true */
     return true;
 }
 

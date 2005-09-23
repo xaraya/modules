@@ -16,7 +16,7 @@
  */
 function sitecontact_adminapi_getmenulinks()
 {
-     // Security Check
+     /*Security Check */
     if (xarSecurityCheck('AdminSiteContact', 0)) {
         $menulinks[] = Array('url' => xarModURL('sitecontact',
                                                 'admin',
@@ -32,8 +32,9 @@ function sitecontact_adminapi_getmenulinks()
     if (empty($menulinks)) {
         $menulinks = '';
     }
-    // The final thing that we need to do in this function is return the values back
-    // to the main menu for display.
+    /* The final thing that we need to do in this function is return the values back
+     * to the main menu for display.
+     */
     return $menulinks;
 } 
 

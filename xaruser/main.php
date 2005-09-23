@@ -19,10 +19,10 @@ function sitecontact_user_main()
 {
     if(!xarVarFetch('message', 'isset', $message,  NULL, XARVAR_DONT_SET)) {return;}
 
-    // Security Check
+    /* Security Check */
     if(!xarSecurityCheck('ViewSiteContact')) return;
 
-    // Generate a onetime authorisation code for this operation
+    /*  Generate a onetime authorisation code for this operation */
     $data['authid'] = xarSecGenAuthKey();
     if (!empty($invalid)) {
         $data['invalid']=$invalid;
@@ -108,5 +108,4 @@ function sitecontact_user_main()
    return $data;
 
 }
-
 ?>

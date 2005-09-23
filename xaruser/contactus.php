@@ -16,7 +16,7 @@
 function sitecontact_user_contactus($args)
 {
   extract($args);
-    // Get parameters
+    /* Get parameters */
     if (!xarVarFetch('username', 'str:1:', $username, '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
     if (!xarVarFetch('useremail', 'str:1:', $useremail, '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
     if (!xarVarFetch('requesttext', 'str:1:', $requesttext, '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
@@ -26,20 +26,20 @@ function sitecontact_user_contactus($args)
     if (!xarVarFetch('userreferer', 'str:1:', $userreferer, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('sendcopy', 'checkbox', $sendcopy, true, XARVAR_NOT_REQUIRED)) return;
 
-    // Confirm authorisation code.
+    /* Confirm authorisation code. */
     if (!xarSecConfirmAuthKey()) return;
     $dditems=array();
     $propdata=array();
     if (xarModIsAvailable('dynamicdata')) {
-        // get the Dynamic Object defined for this module (and itemtype, if relevant)
+        /* get the Dynamic Object defined for this module (and itemtype, if relevant) */
         $object = xarModAPIFunc('dynamicdata','user','getobject',
                              array('module' => 'sitecontact'));
-        if (!isset($object)) return;  // throw back
+        if (!isset($object)) return;  /* throw back */
 
-        // check the input values for this object and do ....what here?
+        /* check the input values for this object and do ....what here? */
         $isvalid = $object->checkInput();
 
-        //we just want a copy of data - don't need to save it in a table (no request yet anyway!)
+        /*we just want a copy of data - don't need to save it in a table (no request yet anyway!) */
         $dditems =& $object->getProperties();
 
         foreach ($dditems as $itemid => $fields) {
@@ -56,8 +56,10 @@ function sitecontact_user_contactus($args)
         }
      }
 
-    // Security Check
-//    if(!xarSecurityCheck('ReadSiteContact')) return;
+    /* Security Check - caused some problems here with anon browsing and cachemanager
+     * should be ok now - review
+     * if(!xarSecurityCheck('ReadSiteContact')) return;
+     */
     $notetouser = xarModGetVar('sitecontact','notetouser');
     if (!isset($notetouser)){
         $notetouser = xarModGetVar('sitecontact','defaultnote');
@@ -108,16 +110,16 @@ function sitecontact_user_contactus($args)
                             $company,
                             $notetouser);
 
-   //Get the existing value of htmlmail module
+    /* Get the existing value of htmlmail module */
     $oldhtmlvalue=xarModGetVar('mail','html');
     if (!isset($oldhtmlvalue) ) {
     $oldhtmlvalue=false;
     }
     if ($usehtmlemail ==1) {
-    //temporarily set the use of html in mail.
+    /* temporarily set the use of html in mail. */
         xarModSetVar('mail','html',1);
     } else {
-    //make sure at least temporarily it is set to use text in mail
+    /*make sure at least temporarily it is set to use text in mail */
         xarModSetVar('mail','html',0);
     }
     $sendname=xarModGetVar('sitecontact','scdefaultname');
@@ -128,7 +130,8 @@ function sitecontact_user_contactus($args)
     $sitename = xarModGetVar('themes','SiteName');
     $siteurl = xarServerGetBaseURL();
     $subject = $requesttext;
-    //Prepare the html text message to user
+
+    /* Prepare the html text message to user */
      
     $trans = get_html_translation_table(HTML_ENTITIES);
     $trans = array_flip($trans);
@@ -138,11 +141,12 @@ function sitecontact_user_contactus($args)
     $htmlnotetouser  = strtr(xarVarPrepHTMLDisplay($notetouser), $trans);
    
 
-    // jojodee: html_entity_decode only available in php >=4.3
-    //$htmlsubject = html_entity_decode(xarVarPrepHTMLDisplay($requesttext));
-    //  $htmlcompany = html_entity_decode(xarVarPrepHTMLDisplay($company));
-    //  $htmlusermessage = html_entity_decode(xarVarPrepHTMLDisplay($usermessage));
-    //$htmlnotetouser = xarVarPrepHTMLDisplay($notetouser);
+    /* jojodee: html_entity_decode only available in php >=4.3
+     * $htmlsubject = html_entity_decode(xarVarPrepHTMLDisplay($requesttext));
+     * $htmlcompany = html_entity_decode(xarVarPrepHTMLDisplay($company));
+     *  $htmlusermessage = html_entity_decode(xarVarPrepHTMLDisplay($usermessage));
+     * $htmlnotetouser = xarVarPrepHTMLDisplay($notetouser);
+     */
     $userhtmlmessage= xarTplModule('sitecontact',
                                    'user',
                                    'usermail',
@@ -159,7 +163,7 @@ function sitecontact_user_contactus($args)
                                     'html');
 
 
-        //prepare the text message to user
+        /* prepare the text message to user */
         $textsubject = strtr($requesttext,$trans);
         $textcompany = strtr($company,$trans);
         $textusermessage = strtr($usermessage,$trans);
@@ -184,7 +188,8 @@ function sitecontact_user_contactus($args)
    if (($allowcopy) and ($sendcopy)) {
     /* let's send a copy of the feedback form to the sender
      * if it is permitted by admin, and the user wants it */
-   //send mail to user
+
+   /* send mail to user */
     if (!xarModAPIFunc('mail',
                        'admin',
                        'sendmail',
@@ -195,10 +200,9 @@ function sitecontact_user_contactus($args)
                              'htmlmessage'  => $userhtmlmessage,
                              'from'         => $setmail,
                              'fromname'     => $sendname))) return;
-    }//allow copy
+    }/* allow copy*/
 
-    //now let's do the html message to admin
-
+    /* now let's do the html message to admin */
    $adminhtmlmessage= xarTplModule('sitecontact',
                                    'user',
                                    'adminmail',
@@ -216,8 +220,8 @@ function sitecontact_user_contactus($args)
                                           'userreferer' => $userreferer),
                                           'html');
 
-    //Let's do admin text message
-  $admintextmessage= xarTplModule('sitecontact',
+    /* Let's do admin text message */
+    $admintextmessage= xarTplModule('sitecontact',
                                    'user',
                                    'adminmail',
                                     array('notetouser' => $textnotetouser,
@@ -233,7 +237,7 @@ function sitecontact_user_contactus($args)
                                           'propdata'    => $propdata,
                                           'userreferer' => $userreferer),
                                           'text');
-    //send email to admin
+    /* send email to admin */
     if (!xarModAPIFunc('mail',
                        'admin',
                        'sendmail',
@@ -245,13 +249,13 @@ function sitecontact_user_contactus($args)
                              'from'         => $useremail,
                              'fromname'     => $username))) return;
 
-    //set back the original value of html mail in case it has been changed
+    /* set back the original value of html mail in case it has been changed */
     xarModSetVar('mail','html',$oldhtmlvalue);
 
-    // lets update status and display updated configuration
+    /* lets update status and display updated configuration */
     xarResponseRedirect(xarModURL('sitecontact', 'user', 'main', array('message' => '1')));
 
-    // Return
+    /* Return */
     return true;
 }
 ?>
