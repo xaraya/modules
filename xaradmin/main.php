@@ -38,14 +38,17 @@ function example_admin_main()
     if (xarModGetVar('adminpanels', 'overview') == 0) {
         /* If you want to go directly to some default function, instead of
          * having a separate main function, you can simply call it here, and
-         * use the same template for admin-main.xard as for admin-view.xard
+         * use the same template for admin-main.xd as for admin-view.xd
          * return xarModFunc('example','admin','view');
-         * Initialise the $data variable that will hold the data to be used in
+         */
+
+        /* Initialise the $data variable that will hold the data to be used in
          * the blocklayout template, and get the common menu configuration - it
          * helps if all of the module pages have a standard menu at the top to
          * support easy navigation
          */
         $data = xarModAPIFunc('example', 'admin', 'menu');
+
         /* You could specify some other variables to use in the blocklayout template
          *$data['welcome'] = xarML('Welcome to the administration part of this Example module...');
          * Return the template variables defined in this function
@@ -60,9 +63,9 @@ function example_admin_main()
          * ... => ...);
          */
     } else {
-        /* If docs are turned off, then we just return the view page, or whatever
-         * function seems to be the most fitting.
-        */
+        /* If the Overview documentation is turned off, then we just return the view page,
+         * or whatever function seems to be the most fitting.
+         */
         xarResponseRedirect(xarModURL('example', 'admin', 'view'));
     }
     /* success so return true */

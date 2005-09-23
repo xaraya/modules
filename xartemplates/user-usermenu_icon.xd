@@ -3,7 +3,7 @@
 <xar:set name="current">xarModURL('roles', 'user', 'account', array('moduleload' => 'example'))</xar:set>
 <xar:if condition="$compare eq $current">
     <dd class="active">
-        <a href="#xarServerGetCurrentURL()#">
+        <a href="&xar-currenturl;">
             <xar:mlstring>
                 Example
             </xar:mlstring>
@@ -11,10 +11,10 @@
     </dd>    
 <xar:else />
     <dd>
-        <a href="&xar-modurl-roles-user-account;&amp;moduleload=example">
+        <a href="&xar-modurl-roles-user-account&amp;moduleload=example;">
             <xar:mlstring>
                 Example
             </xar:mlstring>
         </a>
-    </dd>    
+    </dd>
 </xar:if>
