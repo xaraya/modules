@@ -73,7 +73,7 @@ function security_adminapi_createhook($args)
             $parent->uid > 2 
         )
         {
-            $settings['levels']['groups'][$group] = $settings['default_group_level'];
+            $settings['levels']['groups'][$parent->uid] = $settings['default_group_level'];
         }
     }
         

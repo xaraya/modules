@@ -29,10 +29,6 @@ function security_userapi_leftjoin($args)
     
     $xartable =& xarDBGetTables();
        
-    //$info['table'] = $xartable['security']; // . ', ' . 
-                     //$xartable['security_group_levels'] . ', ' .
-                     //$xartable['owner'] . ' ';
-
     $info['iid'] = "{$xartable['security']}.xar_itemid";
 
        
@@ -99,7 +95,8 @@ function security_userapi_leftjoin($args)
         NOTE: But this also allows admins to use other limits or 
               exclude params like the $limit_gids var
     */
-    if( xarSecurityCheck('AdminPanel', 0) ){ $secCheck[] = " ( 'TRUE' ) "; }
+    if( xarSecurityCheck('AdminPanel', 0) ){ $secCheck[] = " ( 'TRUE' = 'TRUE' ) "; }
+    //if( xarSecurityCheck('AdminPanel', 0) ){ return array(); }
     
     $where[] = " ( " . join(" OR ", $secCheck) . " ) ";
     
