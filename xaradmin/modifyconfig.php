@@ -114,6 +114,11 @@ function xarbb_admin_modifyconfig()
             $aliasname = xarModGetVar('xarbb','aliasname');
             if (($useAliasName==1) && !empty($aliasname)){
                 $usealias = 1;
+                /*check for old alias and delete it*/
+                $oldalias = xarModGetAlias('xarbb');
+                if (isset($oldalias)) {
+                   xarModDelAlias($oldalias,'xarbb');
+                }
                 xarModSetAlias($aliasname,'xarbb');
             } elseif (($useAliasName==0) && !empty($aliasname)) {
                 $usealias = 0;
