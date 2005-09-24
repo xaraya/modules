@@ -43,6 +43,11 @@
         <li><xar:mlstring>usermenu -- Allows interface with the "My Account Page"</xar:mlstring></li>
         <li><xar:mlstring>search -- Allows interface with Search Module</xar:mlstring></li>
     </ul>
+    <h3><xar:mlstring>Included Dynamic Data Properties</xar:mlstring></h3>
+    <ul>
+        <li><xar:mlstring>Example -- Provides example code and templates for an Example property</xar:mlstring></li>
+
+    </ul>
 
     <h3>
         <xar:mlstring>Further Information</xar:mlstring>
