@@ -1,19 +1,13 @@
 <?php
-/*
- * File: $Id: getmenulinks.php,v 1.1 2003/09/19 09:16:03 jojodee Exp $
- *
- * Standard utility functin to pass individual menu items to the main menu
- *
+/**
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage SiteTools module
- * @author jojodee <jojodee@xaraya.com>
-*/
-
-
+ * @subpackage Sitetools
+ * @author Jo Dalle Nogare <jojodee@xaraya.com>
+ */
 /**
  * utility function pass individual menu items to the main menu
  *
@@ -25,9 +19,14 @@ function sitetools_adminapi_getmenulinks()
 { 
     $menulinks = array();
 
-     // Security Check
+     /* Security Check */
     if (xarSecurityCheck('AdminSiteTools', 0)) {
-        // The main menu will look for this array and return it for a tree view of the module
+        /* The main menu will look for this array and return it for a tree view of the module*/
+       $menulinks[] = Array('url' => xarModURL('sitetools',
+                'admin',
+                'overview'),
+            'title' => xarML('Overview of sitetools'),
+            'label' => xarML('Overview'));
         $menulinks[] = Array('url' => xarModURL('sitetools',
                 'admin',
                 'optimize'),
@@ -69,8 +68,9 @@ function sitetools_adminapi_getmenulinks()
             'label' => xarML('Modify Config'));
     }
 
-    // The final thing that we need to do in this function is return the values back
-    // to the main menu for display.
+    /* The final thing that we need to do in this function is return the values back
+     * to the main menu for display.
+     */
     return $menulinks;
 }
 ?>

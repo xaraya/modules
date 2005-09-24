@@ -9,8 +9,8 @@
 <xar:set name="savedtext"><xar:mlstring>This optimization run has saved</xar:mlstring></xar:set>
 <xar:set name="totaltext"><xar:mlstring>The database is currently a total size of </xar:mlstring></xar:set>
 <xar:set name="totgaintd"><xar:mlstring>Since installing this script you have saved </xar:mlstring></xar:set>
-<xar:if condition="xarTplAddStyleLink('sitetools', 'forms')"></xar:if>
 
+<xar:style scope="module" file="forms" />
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:mlstring>Site Tools Administration</xar:mlstring>
@@ -21,7 +21,7 @@
         <xar:mlstring>Optimize Database Tables</xar:mlstring>
     </h2>
     <xar:if condition="$optimized eq false">
-    <form class="xar-formwidget" id="post" action="#xarModURL('sitetools', 'admin', 'optimize')#" method="post" enctype="application/x-www-form-urlencoded">
+    <form class="xar-formwidget" id="post" action="&xar-modurl-sitetools-admin-optimize;" method="post" enctype="application/x-www-form-urlencoded">
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <input type="hidden" name="confirm" id="confirm" value="true" />
         <fieldset class="formelements xar-norm">

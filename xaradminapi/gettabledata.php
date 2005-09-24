@@ -1,18 +1,13 @@
 <?php
-/*
- * File: $Id:
- *
- * Get table information from a database
- *
+/**
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage SiteTools module
- * @author jojodee <jojodee@xaraya.com>
-*/
-
+ * @subpackage Sitetools
+ * @author Jo Dalle Nogare <jojodee@xaraya.com>
+ */
 /* @Get table information from a database for selection of tables for partial backup
  * @author jojodee
  * @param database name, $dbname the physical database name (optional)

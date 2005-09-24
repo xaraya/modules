@@ -1,7 +1,7 @@
 <xar:comment>
-    License: GPL http://www.gnu.org/copyleft/gpl.html 
+    License: GPL http://www.gnu.org/copyleft/gpl.html
 </xar:comment>
-<xar:if condition="xarTplAddStyleLink('sitetools', 'forms')"></xar:if>
+<xar:style scope="module" file="forms" />
 
 <div class="xar-mod-head">
     <span class="xar-mod-title">
@@ -56,7 +56,7 @@
         #$warningmessage#
     </div>
 <xar:elseif condition="$startbackup eq ''" />
-    <form class="xar-formwidget" class="xar-formwidget" method="post" action="#xarModURL('sitetools', 'admin', 'backup')#" enctype="application/x-www-form-urlencoded">
+    <form class="xar-formwidget" class="xar-formwidget" method="post" action="&xar-modurl-sitetools-admin-backup;" enctype="application/x-www-form-urlencoded">
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <fieldset class="formelements xar-norm">
             <legend><xar:mlstring>Backup Options</xar:mlstring></legend>
@@ -116,7 +116,7 @@
         </form>
  <!-- Start partial database table selection display -->
 <xar:elseif condition="$startbackup eq 'partial'" />
-            <form action="#xarModURL('sitetools', 'admin', 'backup')#" method="post" name="SelectedTablesForm" id="SelectedTablesForm" enctype="application/x-www-form-urlencoded">
+            <form action="&xar-modurl-sitetools-admin-backup" method="post" name="SelectedTablesForm" id="SelectedTablesForm" enctype="application/x-www-form-urlencoded">
 
                 <input type="hidden" name="authid" id="authid" value="#$authid#" />
                 <input type="hidden" name="startbackup" id="startbackup" value="complete" />

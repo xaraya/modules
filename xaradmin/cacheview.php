@@ -1,18 +1,13 @@
 <?php
-/*
- * File: $Id$
- *
- * View cache files
- *
+/**
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage SiteTools module
- * @author jojodee <jojodee@xaraya.com>
-*/
-
+ * @subpackage Sitetools
+ * @author Jo Dalle Nogare <jojodee@xaraya.com>
+ */
 /**
  *
  * @ View Cache Files
@@ -21,13 +16,13 @@
  */
 function sitetools_admin_cacheview($args)
 {
-    // Get parameters from whatever input we need.
+    /* Get parameters from whatever input we need. */
     if (!xarVarFetch('action', 'str:1', $action, false, XARVAR_NOT_REQUIRED)) return;
      if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('hashn', 'str:1:', $hashn, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('templn', 'str:1:', $templn, false, XARVAR_NOT_REQUIRED)) return;
 
-    // Security check - important to do this as early as possible
+    /* Security check - important to do this as early as possible */
     if (!xarSecurityCheck('AdminSiteTools')) {
         return;
     }
@@ -37,17 +32,17 @@ function sitetools_admin_cacheview($args)
     $scriptcache=xarModGetVar('sitetools','templcachepath').'/d4609360b2e77516aabf27c1f468ee33.php';
     $data=array();
           $data['popup']=false;
-    // Check for confirmation.
+    /* Check for confirmation. */
     $data['authid'] = xarSecGenAuthKey();
     if (empty($action)) {
-        // No action set yet - display cache file list and await action
+        /* No action set yet - display cache file list and await action */
          $data['showfiles']=false;
-        // Generate a one-time authorisation code for this operation
+        /* Generate a one-time authorisation code for this operation */
         $data['items']='';
         $cachelist=array();
         $cachenames=array();
 
-        //put all the names of the templates and hashed cache file into an array
+        /* put all the names of the templates and hashed cache file into an array */
         umask();
         $count=0;
         $cachekeyfile=file($cachefile);
@@ -58,7 +53,8 @@ function sitetools_admin_cacheview($args)
         }
         $data['count']=$count;
         fclose($fd);
-        //generate all the URLS for cache file list
+
+        /* generate all the URLS for cache file list */
         foreach($cachelist as $hashname) {
             foreach ($hashname as $filen) {
                $hashn=htmlspecialchars($filen[0]);
@@ -70,12 +66,13 @@ function sitetools_admin_cacheview($args)
                                    'fullnurl'=>$fullnurl);
             }
         }
- //      var=$scriptcache;
- //      if ($var == true) unlink $scriptcache;
+        /*      var=$scriptcache;
+               if ($var == true) unlink $scriptcache;
+        */
         asort($cachenames);
         $data['items']=$cachenames;
-        // Return the template variables defined in this function
 
+        /* Return the template variables defined in this function */
         return $data;
 
     } elseif ($action=='show'){
@@ -96,10 +93,8 @@ function sitetools_admin_cacheview($args)
         return $data;
     }
 
-    // This function generated no output, and so now it is complete we redirect
-    // the user to an appropriate page for them to carry on their work
     xarResponseRedirect(xarModURL('sitetools', 'admin', 'cacheview'));
-    // Return
+    /*  Return */
     return true;
 }
 ?>

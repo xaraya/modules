@@ -1,5 +1,18 @@
 <?php
+/**
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Sitetools
+ * @author Jo Dalle Nogare <jojodee@xaraya.com>
+ */
 
+ /* A simple sql terminal for Sitetools
+  * @author jojodee
+  * @author Marcel van der Boom - supplied original script on which this is based
+  */
 function sitetools_admin_terminal()
 {
     if(!xarVarFetch('term_input','str::',$term_input,'')) return;

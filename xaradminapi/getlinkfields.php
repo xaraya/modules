@@ -1,17 +1,13 @@
 <?php
-/*
- * File: $Id:
- *
- * Get fields containing links for different modules/itemtypes
- *
+/**
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage SiteTools module
- * @author jojodee <jojodee@xaraya.com>
-*/
+ * @subpackage Sitetools
+ * @author Jo Dalle Nogare <jojodee@xaraya.com>
+ */
 
 /**
  * Get fields containing links for different modules/itemtypes

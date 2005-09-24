@@ -1,15 +1,13 @@
 <?php
-/* * File: $Id: $
- *
- * SiteTools Module
- *
+/**
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @copyright (C) 2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
- * @author jojodee <jojodee@xaraya.com>
- * @based in part on backupDB() by James Heinrich <info@silisoftware.com>
-*/
+ *
+ * @subpackage Sitetools
+ * @author Jo Dalle Nogare <jojodee@xaraya.com>
+ */
 
 /**
  * @Backup tables in your database
@@ -25,11 +23,11 @@ function sitetools_admin_backup($args)
    if (!xarVarFetch('screen', 'int:1', $screen, 0, XARVAR_NOT_REQUIRED)) return;
    if (!xarVarFetch('dbname', 'str:1', $dbname,'' , XARVAR_NOT_REQUIRED)) return;
    if (!xarVarFetch('SelectedTables', 'array:', $SelectedTables, '', XARVAR_NOT_REQUIRED)) return;
-   // Security check
+   /* Security check */
     if (!xarSecurityCheck('AdminSiteTools')) return;
 
     $data=array();
-    //setup variables
+    /*setup variables */
     $data['usegz']=$usegz;
     $data['screen']=$screen;
       $data['startbackup']=$startbackup;
@@ -47,7 +45,7 @@ function sitetools_admin_backup($args)
        return $data;
     }
     $data['authid']     = xarSecGenAuthKey();
-    //Setup the current database for backup - until there is option to choose it TODO
+    /* Setup the current database for backup - until there is option to choose it TODO */
     if (($dbname='') || (empty($dbname))){
         $dbconn =& xarDBGetConn();
             $dbname= xarDBGetName();
@@ -60,9 +58,10 @@ function sitetools_admin_backup($args)
 
 
     if (empty($startbackup)) {
-       // No confirmation yet - display a suitable form to obtain confirmation
-       // of this action from the user
-       //setup option links
+       /* No confirmation yet - display a suitable form to obtain confirmation
+        * of this action from the user
+        * setup option links
+        */
         $data['backupops']=array();
         $data['backupops']['complete'] = xarML('Full backup - complete inserts');
         $data['backupops']['standard'] = xarML('Full backup - standard inserts');
@@ -71,7 +70,7 @@ function sitetools_admin_backup($args)
 
         $confirm='';
 
-    //Start actual backup for all types here
+    /* Start actual backup for all types here */
     } elseif ($startbackup) {
 
         $confirm='';
@@ -79,21 +78,21 @@ function sitetools_admin_backup($args)
            $tabledata=array();
            $tabledata=xarModAPIFunc('sitetools','admin','gettabledata');
            if ($tabledata == false) {
-                // Throw back any system exceptions (e.g. database failure)
+                /* Throw back any system exceptions (e.g. database failure) */
                 if (xarCurrentErrorType() == XAR_SYSTEM_EXCEPTION) {
-                    return; // throw back
+                    return; /* throw back */
                 }
-                // Handle the user exceptions yourself
+                /* Handle the user exceptions yourself */
                 $status = xarML('Unable to access database table information');
                 $reason = xarCurrentError();
                 if (!empty($reason)) {
                     $status .= '<br /><br />'. xarML('Reason') .' : '. $reason->toString();
                 }
-                // Free the exception to tell Xaraya that you handled it
+                /* Free the exception to tell Xaraya that you handled it */
                 xarErrorFree();
                 return $status;
             }
-            //set javascript header
+            /* set javascript header */
             xarModAPIfunc('base', 'javascript', 'modulefile', array('filename'=>'sitetools_admin_backup.js'));
 
             $data['dbtables']    = $tabledata['dbtables'];
@@ -119,17 +118,17 @@ function sitetools_admin_backup($args)
 
 
         if ($bkupdata == false) {
-            // Throw back any system exceptions (e.g. database failure)
+            /* Throw back any system exceptions (e.g. database failure) */
             if (xarCurrentErrorType() == XAR_SYSTEM_EXCEPTION) {
                 return; // throw back
             }
-            // Handle the user exceptions yourself
+            /* Handle the user exceptions yourself */
             $status = xarML('Unable to backup database');
             $reason = xarCurrentError();
             if (!empty($reason)) {
                 $status .= '<br /><br />'. xarML('Reason') .' : '. $reason->toString();
             }
-            // Free the exception to tell Xaraya that you handled it
+            /* Free the exception to tell Xaraya that you handled it */
             xarErrorFree();
             return $status;
         }
@@ -151,8 +150,9 @@ function sitetools_admin_backup($args)
         $data['completetime'] =$bkupdata['completetime'];
         $data['backuptype'] =$bkupdata['backuptype'];
         $data['btype'] =$bkupdata['btype'];
- //       $downloadfile=$bkupdata['bkname'];
-       //Generate download, view and delete URLS
+        /*  $downloadfile=$bkupdata['bkname']; */
+
+       /*Generate download, view and delete URLS */
 
         $data['downloadurl']= xarModURL('sitetools','admin','downloadbkup',
                                      array('savefile' => $data['bkname']));
@@ -160,10 +160,6 @@ function sitetools_admin_backup($args)
                                      array('savefile' => $data['bkname']));
     }
 
- //end if start backup
-
-
-   //Return data for display
   return $data;
 
 }

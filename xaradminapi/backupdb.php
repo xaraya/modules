@@ -1,16 +1,13 @@
 <?php
-/*
- * File: $Id: $
- *
- * SiteTools Module
- *
+/**
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @copyright (C) 2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
- * @author jojodee@xaraya.com <http://xaraya.athomeandabout.com>
- * @based in part on backupDB() by James Heinrich <info@silisoftware.com>
-*/
+ *
+ * @subpackage Sitetools
+ * @author Jo Dalle Nogare <jojodee@xaraya.com>
+ */
 
 /**
  * @Backup tables in your database

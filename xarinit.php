@@ -1,15 +1,12 @@
 <?php
 /**
- * File: $Id: xarinit.php,v 1.1 2003/09/19 09:15:24 jojodee Exp $
- *
- * sitetools initialization functions
- *
- * @copyright (C) 2003 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage example
- * @author jojodee <jojodee@xaraya.com>
+ * @subpackage Sitetools
+ * @author Jo Dalle Nogare <jojodee@xaraya.com>
  */
 
 /**
@@ -19,18 +16,20 @@
  */
 function sitetools_init()
 {
-    // Get datbase setup - note that both xarDBGetConn() and xarDBGetTables()
-    // return arrays but we handle them differently.
+    /* Get datbase setup - note that both xarDBGetConn() and xarDBGetTables()
+     * return arrays but we handle them differently.
+     */
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
     $sitetoolstable = $xartable['sitetools'];
 
     xarDBLoadTableMaintenanceAPI();
-    // Define the table structure in this associative array
-    // There is one element for each field.  The key for the element is
-    // the physical field name.  The element contains another array specifying the
-    // data type and associated parameters
+    /* Define the table structure in this associative array
+     * There is one element for each field.  The key for the element is
+     * the physical field name.  The element contains another array specifying the
+     * data type and associated parameters
+     */
     $fields = array('xar_stid' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
                     'xar_stgained' => array('type'=>'float', 'size' =>'decimal', 'width'=>12, 'decimals'=>2)
                 );
@@ -38,7 +37,7 @@ function sitetools_init()
     $query = xarDBCreateTable($sitetoolstable, $fields);
     if (empty($query)) return; // throw back
 
-    // Pass the Table Create DDL to adodb to create the table and send exception if unsuccessful
+    /* Pass the Table Create DDL to adodb to create the table and send exception if unsuccessful */
     $result = &$dbconn->Execute($query);
     if (!$result) return;
 
@@ -55,7 +54,6 @@ function sitetools_init()
                                    'xar_status'     => array('type'        => 'integer',
                                                             'null'        => false,
                                                             'default'     => '0'),
-// TODO: replace with unique id
                                    'xar_moduleid'   => array('type'        => 'integer',
                                                             'unsigned'    => true,
                                                             'null'        => false,
@@ -78,13 +76,13 @@ function sitetools_init()
                                                             'default'     => ''),
                                   ));
 
-    if (empty($query)) return; // throw back
+    if (empty($query)) return;
 
-    // Pass the Table Create DDL to adodb to create the table and send exception if unsuccessful
+    /* Pass the Table Create DDL to adodb to create the table and send exception if unsuccessful */
     $result = &$dbconn->Execute($query);
     if (!$result) return;
 
-    // allow several entries for the same link here
+    /* allow several entries for the same link here */
     $index = array(
         'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_sitetools_links_link',
         'fields'    => array('xar_link'),
@@ -94,7 +92,7 @@ function sitetools_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    // allow several links for the same module item
+    /* allow several links for the same module item */
     $index = array(
         'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_sitetools_links_combo',
         'fields'    => array('xar_moduleid','xar_itemtype','xar_itemid'),
@@ -104,7 +102,7 @@ function sitetools_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    // allow many entries with the same status here
+    /* allow many entries with the same status here */
     $index = array(
         'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_sitetools_links_status',
         'fields'    => array('xar_status'),
@@ -114,23 +112,24 @@ function sitetools_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    // create the dynamic object that will represent our items
+    /* create the dynamic object that will represent our items */
     $objectid = xarModAPIFunc('dynamicdata','util','import',
                               array('file' => 'modules/sitetools/sitetools_links.xml'));
     if (empty($objectid)) return;
     // save the object id for later
     xarModSetVar('sitetools','objectid_links',$objectid);
 
-    // Set up an initial value for a module variable.
-    // Use relative path for now
-   /*   if( isset( $_SERVER['PATH_TRANSLATED'] ) )
+    /* Set up an initial value for a module variable. */
+    /* Use relative path for now */
+    /*   if( isset( $_SERVER['PATH_TRANSLATED'] ) )
     {
         $backupdir = dirname(realpath($_SERVER['PATH_TRANSLATED'])) . '/var/uploads/backup';
     } elseif( isset( $_SERVER['SCRIPT_FILENAME'] ) ) {
         $backupdir = dirname(realpath($_SERVER['SCRIPT_FILENAME'])) . '/var/uploads/backup';
     } else {
         $backupdir = 'var/uploads/backup';
-    } */
+    } 
+    */
     $backupdir=xarCoreGetVarDirPath()."/uploads";
     xarModSetVar('sitetools','adocachepath',xarCoreGetVarDirPath()."/cache/adodb");
     xarModSetVar('sitetools','rsscachepath', xarCoreGetVarDirPath()."/cache/rss");
@@ -166,10 +165,10 @@ function sitetools_init()
  */
 function sitetools_upgrade($oldversion)
 {
-    // Upgrade dependent on old version number
+    /* Upgrade dependent on old version number */
     switch ($oldversion) {
         case 0.1:
-            // Code to upgrade from version 0.1 goes here
+
             $dbconn =& xarDBGetConn();
             $xartable =& xarDBGetTables();
 
@@ -188,7 +187,7 @@ function sitetools_upgrade($oldversion)
                                            'xar_status'     => array('type'        => 'integer',
                                                                     'null'        => false,
                                                                     'default'     => '0'),
-        // TODO: replace with unique id
+        /* TODO: replace with unique id*/
                                            'xar_moduleid'   => array('type'        => 'integer',
                                                                     'unsigned'    => true,
                                                                     'null'        => false,
@@ -213,11 +212,11 @@ function sitetools_upgrade($oldversion)
 
             if (empty($query)) return; // throw back
 
-            // Pass the Table Create DDL to adodb to create the table and send exception if unsuccessful
+            /* Pass the Table Create DDL to adodb to create the table and send exception if unsuccessful */
             $result = &$dbconn->Execute($query);
             if (!$result) return;
 
-            // allow several entries for the same link here
+            /* allow several entries for the same link here */
             $index = array(
                 'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_sitetools_links_link',
                 'fields'    => array('xar_link'),
@@ -227,7 +226,7 @@ function sitetools_upgrade($oldversion)
             $result =& $dbconn->Execute($query);
             if (!$result) return;
 
-            // allow several links for the same module item
+            /* allow several links for the same module item */
             $index = array(
                 'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_sitetools_links_combo',
                 'fields'    => array('xar_moduleid','xar_itemtype','xar_itemid'),
@@ -237,7 +236,7 @@ function sitetools_upgrade($oldversion)
             $result =& $dbconn->Execute($query);
             if (!$result) return;
 
-            // allow many entries with the same status here
+            /* allow many entries with the same status here */
             $index = array(
                 'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_sitetools_links_status',
                 'fields'    => array('xar_status'),
@@ -247,23 +246,22 @@ function sitetools_upgrade($oldversion)
             $result =& $dbconn->Execute($query);
             if (!$result) return;
 
-            // create the dynamic object that will represent our items
+            /* create the dynamic object that will represent our items */
             $objectid = xarModAPIFunc('dynamicdata','util','import',
                                       array('file' => 'modules/sitetools/sitetools_links.xml'));
             if (empty($objectid)) return;
-            // save the object id for later
+            /* save the object id for later */
             xarModSetVar('sitetools','objectid_links',$objectid);
-            //update vars for backup tool
+            /*update vars for backup tool*/
             xarModSetVar('sitetools','colnumber',3);
             xarModSetVar('sitetools','defaultbktype','complete');
         case '0.2':
         case 1.0:
-            // Code to upgrade from version 1.0 goes here
+
         case 2.0:
-            // Code to upgrade from version 2.0 goes here
     }
-    // Update successful
-    return true;
+    /* Update successful */
+        return true;
 }
 
 /**
@@ -273,19 +271,20 @@ function sitetools_upgrade($oldversion)
  */
 function sitetools_delete()
 {
-    // Get datbase setup
+    /* Get datbase setup */
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
     xarDBLoadTableMaintenanceAPI();
-    // Generate the SQL to drop the table using the API
+    /* Generate the SQL to drop the table using the API */
     $query = xarDBDropTable($xartable['sitetools']);
     if (empty($query)) return;
-    // Drop the table and send exception if returns false.
+
+    /* Drop the table and send exception if returns false. */
     $result = &$dbconn->Execute($query);
     if (!$result) return;
 
-    // delete the dynamic object and its properties
+    /* delete the dynamic object and its properties */
     $objectid = xarModGetVar('sitetools','objectid_links');
     if (!empty($objectid)) {
         xarModAPIFunc('dynamicdata','admin','deleteobject',
@@ -293,27 +292,20 @@ function sitetools_delete()
         xarModDelVar('sitetools','objectid_links');
     }
 
-    // Generate the SQL to drop the table using the API
+    /* Generate the SQL to drop the table using the API */
     $query = xarDBDropTable($xartable['sitetools_links']);
     if (empty($query)) return;
-    // Drop the table and send exception if returns false.
+    /* Drop the table and send exception if returns false. */
     $result = &$dbconn->Execute($query);
     if (!$result) return;
 
-    // Delete any module variables
-    xarModDelVar('sitetools','adocachepath');
-    xarModDelVar('sitetools','rsscachepath');
-    xarModDelVar('sitetools','templcachepath');
-    xarModDelVar('sitetools','backuppath');
-    xarModDelVar('sitetools','lineterm'); 
-    xarModDelVar('sitetools','timestamp');
-    xarModDelVar('sitetools','colnumber');
-    xarModDelVar('sitetools','defaultbktype');
+    /* Delete any sitetools module variables */
+    xarModDelAllVars('sitetools');
 
-    // Remove Masks and Instances
+    /* Remove Masks and Instances */
     xarRemoveMasks('sitetools');
 
-    // Deletion successful
+    /* Deletion successful */
     return true;
 }
 

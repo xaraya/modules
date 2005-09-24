@@ -3,7 +3,7 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Site Tools Administration</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>Search for Links</xar:mlstring></h2>
 <div style="margin: auto;">
-<form action="#xarModURL('sitetools', 'admin', 'links')#" method="post">
+<form action="&xar-modurl-sitetools-admin-links;" method="post">
 <table border="0" cellpadding="4" cellspacing="0">
  <tr>
   <input type="hidden" name="authid" id="authid" value="#$authid#" />
@@ -89,7 +89,7 @@
     </tr>
     <xar:foreach in="$stats" value="$stat">
     <tr>
-      <td><a href="#xarModURL('sitetools','admin','links',array('status' => $stat['status']))#">#$stat['status']#</a></td>
+      <td><a href="&xar-modurl-sitetools-admin-links&amp;status=$stat['status']">#$stat['status']#</a></td>
       <td>#$stat['id']#</td>
     </tr>
     </xar:foreach>
@@ -97,9 +97,9 @@
 
   <h2><xar:mlstring>View Links</xar:mlstring></h2>
   <xar:if condition="empty($where)">
-    <a href="#xarModURL('sitetools','admin','links',array('filter' => 1))#"><xar:mlstring>Show Broken Links Only</xar:mlstring></a>
+    <a href="&xar-modurl-sitetools-admin-links&amp;filter=1"><xar:mlstring>Show Broken Links Only</xar:mlstring></a>
   <xar:else/>
-    <a href="#xarModURL('sitetools','admin','links')#"><xar:mlstring>Show All Links</xar:mlstring></a>
+    <a href="&xar-modurl-sitetools-admin-links;"><xar:mlstring>Show All Links</xar:mlstring></a>
   </xar:if>
 
   <xar:set name="$numitems">100</xar:set>
@@ -139,7 +139,7 @@
     </xar:if>
   </xar:if>
   </p>
-  <a href="#xarServerGetCurrentURL()##top"><xar:mlstring>Back to top</xar:mlstring></a>
+  <a href="&xar-currenturl;#top"><xar:mlstring>Back to top</xar:mlstring></a>
 </xar:if>
 
 </div>
