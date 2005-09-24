@@ -139,7 +139,7 @@ function example_init()
             'register_block_type',
             array('modName' => 'example',
                 'blockType' => 'others'))) return;
-    // Register blocks
+    /* Register blocks */
     if (!xarModAPIFunc('blocks',
             'admin',
             'register_block_type',
@@ -287,7 +287,7 @@ function example_upgrade($oldversion)
             /* Code to upgrade from version 2.0 goes here */
             break;
     }
-    // Update successful
+    /* Update successful */
     return true;
 }
 
@@ -322,7 +322,10 @@ function example_delete()
     /* Delete any module variables 
      * You can do this one at a time
      * or delete all of them if you want
-     * with one command xarModDelAllVars('example');
+     * with one command 
+
+        xarModDelAllVars('example');
+
      * Using one command ensures all modvars for the module are deleted
      */
     xarModDelVar('example', 'itemsperpage');

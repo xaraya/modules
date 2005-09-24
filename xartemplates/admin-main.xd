@@ -37,10 +37,23 @@
         <li><xar:mlstring>search -- Allows interface with Search Module</xar:mlstring></li>
     </ul>
 
-    <h3><xar:mlstring>And more.. [for module developers]</xar:mlstring></h3>
+    <h3>
+        <xar:mlstring>Further Information</xar:mlstring>
+    </h3>
     <p>
-        <xar:mlstring>Please use this consistent template for your module overview.</xar:mlstring>
+        <xar:mlstring>Further information on the Example module can be found at</xar:mlstring>
     </p>
+       <ul>
+              <li><xar:mlstring>Example Extension page at</xar:mlstring> <a title="#xarML('Example Module - Xaraya Extension 36')#" href="http://www.xaraya.com/index.php/release/36.html">Xaraya Extension and Releases</a>.
+              <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+              </li>
+              <li><xar:mlstring>Related tutorials and documentation on Example found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/example/" title="#xarML('Related documentation on Example')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+              </li>
+         </ul>
+         <p class="xar-sub">
+             <strong>&nbsp;<xar:mlstring>Example Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.2&nbsp; 2005-09-24
+         </p>
+      </div>
 </div>
 <div class="xar-mod-foot xar-align-center xar-padding-thick">
     <p>
