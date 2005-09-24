@@ -52,14 +52,16 @@ function example_admin_updateconfig()
         xarModSetVar('example', 'useModuleAlias', 0);
 
     }
-
     $useAliasName = xarModGetVar('example', 'useModuleAlias');
     $aliasname = trim(xarModGetVar('example','aliasname'));
-    /* let's set the alias if it's chosen
-     * else we want to delete it from the module alias list
-     */
+
     if (($useAliasName==1) && !empty($aliasname)){
         $usealias = 1;
+        /*check for old alias and delete it*/
+        $oldalias = xarModGetAlias('example');
+        if (isset($oldalias)) {
+            xarModDelAlias($oldalias,'example');
+        }
         xarModSetAlias($aliasname,'example');
     } elseif (($useAliasName==0) && !empty($aliasname)) {
         $usealias = 0;
