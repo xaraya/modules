@@ -49,7 +49,7 @@
         <xar:mlstring>Further Information</xar:mlstring>
     </h3>
     <p>
-        <xar:mlstring>Further information on the Recommend module can be found at</xar:mlstring>
+        <xar:mlstring>Further information on the Sitetools module can be found at</xar:mlstring>
     </p>
        <ul>
               <li><xar:mlstring>Sitetools Extension page at</xar:mlstring> <a title="#xarML('Sitetools Module - Xaraya Extension 887')#" href="http://www.xaraya.com/index.php/release/887.html">Xaraya Extension and Releases</a>.
