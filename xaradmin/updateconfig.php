@@ -40,7 +40,7 @@ function sitecontact_admin_updateconfig()
     xarModSetVar('sitecontact', 'scdefaultemail', $scdefaultemail);
     xarModSetVar('sitecontact', 'scdefaultname', $scdefaultname);
     if (isset($aliasname) && trim($aliasname)<>'') {
-        xarModSetVar('sitecontact', 'aliasname', $aliasname);
+        xarModSetVar('sitecontact', 'aliasname', trim($aliasname));
         xarModSetVar('sitecontact', 'useModuleAlias', $modulealias);
     } else{
         xarModSetVar('sitecontact', 'aliasname', '');
@@ -66,6 +66,12 @@ function sitecontact_admin_updateconfig()
 
     if (($useAliasName==1) && !empty($aliasname)){
         $usealias = 1;
+        /*check for old alias and delete it*/
+        $oldalias = xarModGetAlias('sitecontact');
+        if (isset($oldalias)) {
+            xarModDelAlias($oldalias,'sitecontact');
+        }
+          /* set the new alias */
         xarModSetAlias($aliasname,'sitecontact');
     } elseif (($useAliasName==0) && !empty($aliasname)) {
         $usealias = 0;

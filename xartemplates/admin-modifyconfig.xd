@@ -30,7 +30,7 @@
         </xar:if>
     </p>
     <p class="param">
-                <label for = "usealias">
+                <label for = "usealias" class="xar-form-label">
                     <span clas"help" title="#xarML('Use an alias instead of the module name')#">
                         <xar:mlstring>
                             Use a module alias
@@ -44,7 +44,7 @@
 
     </p>
             <p class="param">
-                <label for="aliasname">
+                <label for="aliasname" class="xar-form-label">
                     <span class="help" title="#xarML('The name of module alias to be used.')#">
                         <xar:mlstring>
                             Module Alias Name
