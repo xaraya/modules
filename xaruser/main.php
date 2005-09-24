@@ -17,7 +17,7 @@ function recommend_user_main($args)
     if (!xarVarFetch('message', 'str:1:', $message, '', XARVAR_NOT_REQUIRED)) return;
     if(!xarSecurityCheck('OverviewRecommend')) return;
     xarTplSetPageTitle(xarVarPrepForDisplay(xarML('Thank You')));
-    // Generate a one-time authorisation code for this operation
+    /* Generate a one-time authorisation code for this operation */
     $data['authid'] = xarSecGenAuthKey();
     $data['submit'] = xarML('Submit');
     if ($message == 1){

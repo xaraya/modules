@@ -52,7 +52,7 @@ class Dynamic_SendToFriend_Property extends Dynamic_Property
     }
 
     function showOutput($args = array())
-    {   //tidy up this, add a few checks
+    {   /* tidy up this, add a few checks */
         extract($args);
        
         if(!xarVarFetch('aid',  'isset', $aid,   NULL, XARVAR_DONT_SET)) {return;}

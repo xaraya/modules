@@ -9,12 +9,15 @@
  */
 /**
  * utility function pass individual menu items to the admin panels
+ *
+ * @author John Cox
+ * @author jojodee
  * @returns array
  * @return array containing the menulinks for the main menu items.
  */
 function recommend_adminapi_getmenulinks()
 { 
-   // Security Check
+   /*  Security Check */
     if (xarSecurityCheck('EditRecommend', 0)) {
         $menulinks[] = Array('url' => xarModURL('recommend',
                                                 'admin',

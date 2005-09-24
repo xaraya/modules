@@ -9,7 +9,7 @@
 
         <h2><xar:mlstring>Please, recommend us to a friend</xar:mlstring>.</h2>
 
-        <form class="xar-formwidget" action="#xarModUrl('recommend', 'user', 'send')#" method="post" enctype="application/x-www-form-urlencoded">
+        <form class="xar-formwidget" action="&xar-modurl-recommend-user-send;" method="post" enctype="application/x-www-form-urlencoded">
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
 
 

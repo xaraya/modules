@@ -12,7 +12,7 @@
  */
 function recommend_admin_modifyconfig()
 { 
-    // Security Check
+    /* Security Check */
     if (!xarSecurityCheck('EditRole')) return;
 
     if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED)) return;
@@ -41,8 +41,8 @@ function recommend_admin_modifyconfig()
             $data['submitlabel']    = xarML('Submit');
             $data['shorturlschecked'] = xarModGetVar('recommend', 'SupportShortURLs') ? 'checked' : '';
 
-             // dynamic properties (if any)
-/*
+            /* dynamic properties (if any) */
+            /*
             $data['properties'] = null;
             if (xarModIsAvailable('dynamicdata')) {
                 // get the Dynamic Object defined for this module (and itemtype, if relevant)
@@ -53,7 +53,7 @@ function recommend_admin_modifyconfig()
                     $data['properties'] = &$object->getProperties();
                 } 
             } 
-*/
+            */
             break;
 
         case 'update':
@@ -62,7 +62,7 @@ function recommend_admin_modifyconfig()
             if (!xarVarFetch('title', 'str:1:', $title)) return;
             if (!xarVarFetch('usernote', 'checkbox', $usernote, false, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
-            // Confirm authorisation code
+            /* Confirm authorisation code */
             if (!xarSecConfirmAuthKey()) return;
 
             xarModSetVar('recommend', 'template', $template);

@@ -14,18 +14,19 @@
 function recommend_user_send($args)
 {
     extract($args);
-    // Get parameters
+    /* Get parameters */
     if (!xarVarFetch('username', 'str:1:', $username)) return;
     if (!xarVarFetch('useremail', 'str:1:', $useremail)) return; 
     if (!xarVarFetch('fname', 'str:1:', $fname)) return;
     if (!xarVarFetch('info', 'str:1:', $info)) return; 
     if (!xarVarFetch('usernote', 'str:1:', $usernote, '', XARVAR_NOT_REQUIRED)) return;
-    // Confirm authorisation code.
-    if (!xarSecConfirmAuthKey()) return; 
-    // Security Check
+    /* Confirm authorisation code. */
+    if (!xarSecConfirmAuthKey()) return;
+    /* Security Check */
     if(!xarSecurityCheck('OverviewRecommend')) return;
-    // Statistics
-    //$date = date('Y-m-d G:i:s');
+
+    /* Statistics */
+    /*$date = date('Y-m-d G:i:s'); */
     $date = time();
     $numbersentprev = xarModGetVar('recommend', 'numbersent');
     $numbersent = $numbersentprev + 1;
@@ -36,7 +37,8 @@ function recommend_user_send($args)
     xarModSetVar('recommend', 'username', $username);
     $subject = xarModGetVar('recommend', 'title');
     $message = xarModGetVar('recommend', 'template');
-    //Prepare to process entities in email message
+
+    /*Prepare to process entities in email message */
     $trans = get_html_translation_table(HTML_ENTITIES);
     $trans = array_flip($trans);
 
@@ -68,9 +70,10 @@ function recommend_user_send($args)
                              'message'      => $message,
                              'from'         => $useremail,
                              'fromname'     => $username))) return;
-    // lets update status and display updated configuration
+    
+    /* lets update status and display updated configuration */
     xarResponseRedirect(xarModURL('recommend', 'user', 'main', array('message' => '1')));
-    // Return
+    /* Return */
     return true;
 }
 ?>

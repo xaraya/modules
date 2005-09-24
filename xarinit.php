@@ -12,12 +12,13 @@
 /**
  * initialise the Recommend Module
  * @author John Cox
+ * @author jojodee
  */
 function recommend_init()
 {
 
     $title = 'Interesting Site :: %%sitename%%';
-    // Set ModVar
+    /* Set ModVar */
     $email = 'Hello %%toname%%, your friend %%name%% considered our site interesting and wanted to send it to you.
 
 Site Name: %%sitename%% :: %%siteslogan%%
@@ -48,19 +49,18 @@ Site URL: %%siteurl%%';
  */
 function recommend_upgrade($oldversion)
 {
-        // Upgrade dependent on old version number
     switch ($oldversion) {
         case '0.01':
             // Remove Masks and Instances
             xarRemoveMasks('recommend');
             xarRemoveInstances('recommend');
             
-            //Set custom sendtofriend tag
+            /* Set custom sendtofriend tag */
             xarTplRegisterTag(
                'recommend', 'recommend-sendtofriend', array(),
                'recommend_userapi_rendersendtofriend'
             );
-            // Set ModVar
+            /* Set ModVar */
             $email = 'Hello %%toname%%, your friend %%name%% considered our site interesting and wanted to send it to you.
 
         Site Name: %%sitename%% :: %%siteslogan%%
@@ -75,7 +75,7 @@ function recommend_upgrade($oldversion)
             xarModSetVar('recommend', 'username', 'Admin');
             xarModSetVar('recommend', 'template', $email);
 
-            // Register Masks
+            /* Register Masks */
             xarRegisterMask('OverviewRecommend','All','recommend','All','All','ACCESS_OVERVIEW');
             xarRegisterMask('EditRecommend','All','recommend','All','All','ACCESS_EDIT');
             
@@ -88,7 +88,7 @@ function recommend_upgrade($oldversion)
             break;
     }
 
-    // Update successful
+    /* Update successful */
     return true;
 }
 
@@ -97,7 +97,7 @@ function recommend_upgrade($oldversion)
  */
 function recommend_delete()
 {
-    // Remove Masks and Instances
+    /* Remove Masks and Instances */
     xarRemoveMasks('recommend');
     xarRemoveInstances('recommend');
     xarTplUnregisterTag('recommend-sendtofriend');

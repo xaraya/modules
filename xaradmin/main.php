@@ -12,7 +12,7 @@
  */
 function recommend_admin_main()
 {
-    // Security Check
+    /* Security Check */
     if (!xarSecurityCheck('EditRecommend')) return;
 
     if (xarModGetVar('adminpanels', 'overview') == 0) {
@@ -20,7 +20,7 @@ function recommend_admin_main()
     } else {
         xarResponseRedirect(xarModURL('recommend', 'admin', 'modifyconfig'));
     }
-    // success
+    /* success */
     return true;
 }
 
