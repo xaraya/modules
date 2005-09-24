@@ -3,22 +3,21 @@
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>Administration - SiteContact</xar:mlstring></span>
 </div>
-<div class="xar-mod-body" style="display:block;">
-    <h2><xar:mlstring>Overview</xar:mlstring></h2>
-    <div>
-        <div style="float:right;display:block;background-color:#ffffff;padding:10px;"> 
-            <img src="modules/adminpanels/xarimages/admin.gif" alt="official icon" width="96" height="96" /> 
-        </div>
-        <div class="xar-mod-title" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
-            <xar:mlstring>What is it?</xar:mlstring> 
-        </div><br />
+<div class="xar-mod-body">
+    <img src="modules/adminpanels/xarimages/admin.gif" class="xar-module-icon" alt="official icon" width="96" height="96" />
+    <h2>
+        <xar:mlstring>Overview</xar:mlstring>
+    </h2>
+    <h3>
+      <xar:mlstring>What is it?</xar:mlstring>
+    </h3>
         <p style="margin-left: 1em; margin-right: 1em; text-align:left;"> <em><xar:mlstring>SiteContact
             is a simple module that allows visitors to easily contact the Site
             Administrator by email.</xar:mlstring></em>
         </p>
-        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
-            <xar:mlstring>How to use it?</xar:mlstring> 
-        </div><br />
+    <h3>
+        <xar:mlstring>How to use it?</xar:mlstring>
+    </h3>
         <p style="margin-left: 1em; margin-right: 1em; text-align:left;"> <xar:mlstring>Install SiteContact
             as usual from the administration Module listing. There are no tables involved. Then, setup the module configuration in Modify Config option.</xar:mlstring>
         </p>
@@ -56,20 +55,37 @@
             usermail-text.xd and user-usermail-html.xd).
             </xar:mlstring></li>
             <li><xar:mlstring><strong>Hook Dynamic Data to Site Contact</strong> and setup your custom dynamic data property fields.
-            These currently assume the output of the dynamic data is string type. 
+            These currently assume the output of the dynamic data is string type.
             Your Dynamic Data fields will be included in outgoing emails by default, but you can further template the dynamic data output in the respective templates.
 
             </xar:mlstring></li>
         </ol>
-        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
-            <xar:mlstring>Included Blocks</xar:mlstring>
-        </div>
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left; margin-top: 10px;">
-            None at this stage 
-        </div><br />
-        <div class="xar-accent" style="text-align: center; border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;"> 
-            <xar:mlstring>Extended information about this module can be found 
-            at <a href="http://xaraya.athomeandabout.com" title="http://xaraya.athomeandabout.com" target="_blank">http://xaraya.athomeandabout.com</a></xar:mlstring>
-        </div>
+    <h3>
+        <xar:mlstring>Included Blocks</xar:mlstring>
+    </h3>
+    <p>
+        None at this stage
+    </p>
+    <h3>
+        <xar:mlstring>Further Information</xar:mlstring>
+    </h3>
+    <p>
+        <xar:mlstring>Further information on the Sitecontact module can be found at</xar:mlstring>
+    </p>
+       <ul>
+              <li><xar:mlstring>Sitecontact Extension page at</xar:mlstring> <a title="#xarML('Sitecontact Module - Xaraya Extension 890')#" href="http://www.xaraya.com/index.php/release/890.html">Xaraya Extension and Releases</a>.
+              <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+              </li>
+              <li><xar:mlstring>Related tutorials and documentation on the Sitecontact found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/sitecontact/" title="#xarML('Related documentation on Sitecontact')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+              </li>
+         </ul>
+         <p class="xar-sub">
+             <strong>&nbsp;<xar:mlstring>Sitecontact Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2005-09-24
+         </p>
+      </div>
+     <div class="xar-mod-foot xar-align-center xar-padding-thick">
+        <p>
+            <xar:mlstring>Extended information about this module can be found at&nbsp;</xar:mlstring><a href="http://xaraya.athomeandabout.com">http://xaraya.athomeandabout.com</a>
+        </p>
     </div>
-    </div>
+
