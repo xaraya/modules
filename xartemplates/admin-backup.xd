@@ -116,7 +116,7 @@
         </form>
  <!-- Start partial database table selection display -->
 <xar:elseif condition="$startbackup eq 'partial'" />
-            <form action="&xar-modurl-sitetools-admin-backup" method="post" name="SelectedTablesForm" id="SelectedTablesForm" enctype="application/x-www-form-urlencoded">
+            <form action="&xar-modurl-sitetools-admin-backup;" method="post" name="SelectedTablesForm" id="SelectedTablesForm" enctype="application/x-www-form-urlencoded">
 
                 <input type="hidden" name="authid" id="authid" value="#$authid#" />
                 <input type="hidden" name="startbackup" id="startbackup" value="complete" />
