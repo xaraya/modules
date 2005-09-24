@@ -65,6 +65,16 @@ function example_userapi_encode_shorturl($args)
     if (!isset($func)) {
         return;
     }
+    
+    /* Check if we have module alias set or not */
+    $aliasisset = xarModGetVar('example', 'useModuleAlias');
+    $aliasname = xarModGetVar('example','aliasname');
+    if (($aliasisset) && isset($aliasname)) {
+        $usealias   = true;
+    } else{
+        $usealias = false;
+    }
+
     /* Note : make sure you don't pass the following variables as arguments in
      * your module too - adapt here if necessary
      * default path is empty -> no short URL
@@ -76,15 +86,28 @@ function example_userapi_encode_shorturl($args)
     
     /* we can't rely on xarModGetName() here -> you must specify the modname ! */
     $module = 'example';
+    $alias = xarModGetAlias($module);
+    /* specify some short URLs relevant to your module 
+     * If you have a module alias make provision for it
+     * The following code should be changed to suit and
+     * demonstrates overtly how alias name is added instead of module
+     */
 
-    /* specify some short URLs relevant to your module */
     if ($func == 'main') {
-        $path = '/' . $module . '/';
+        if (($module == $alias) && ($usealias)){
+            $path = '/' . $aliasname . '/';
+        } else {
+            $path = '/' . $module . '/';
+        }
         /* Note : if your main function calls some other function by default,
          * you should set the path to directly to that other function
          */
     } elseif ($func == 'view') {
-        $path = '/' . $module . '/list.html';
+      if (($module == $alias) && ($usealias)){
+            $path = '/' . $aliasname . '/list.html';
+        } else {
+            $path = '/' . $module . '/list.html';
+        }
         /* we'll add the optional $startnum parameter below, as a regular
          * URL parameter
          * you might have some additional parameter that you want to use to
@@ -115,11 +138,16 @@ function example_userapi_encode_shorturl($args)
          * // change the join character (once would be enough)
          * $join = '&';
          * }
-         * }
+         * } 
+         */
     } elseif ($func == 'display') {
          /* check for required parameters */
         if (isset($exid) && is_numeric($exid)) {
-            $path = '/' . $module . '/' . $exid . '.html';
+            if (($module == $alias) && ($usealias)){
+                $path = '/' . $aliasname . '/'. $exid . '.html';
+            } else {
+                $path = '/' . $module . '/' . $exid . '.html';
+            }
             /* you might have some additional parameter that you want to use to
              * create different virtual paths here - for example a category name
              * See above for an example...

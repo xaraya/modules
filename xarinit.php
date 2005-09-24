@@ -133,6 +133,12 @@ function example_init()
      * be able to turn it on or off in your module administration
      */
     xarModSetVar('example', 'SupportShortURLs', 0);
+    /* If you provide short URL encoding functions you might want to also
+     * provide module aliases and have them set in the module's administraiotn.
+     */
+    xarModSetVar('example', 'useModuleAlias','');
+    xarModGetVar('example','aliasname',false);
+    
     /* Register Block types (this *should* happen at activation/deactivation) */
     if (!xarModAPIFunc('blocks',
             'admin',
@@ -281,10 +287,18 @@ function example_upgrade($oldversion)
              */
             return example_upgrade('1.0');
         case '1.0':
+             return example_upgrade('1.0.0');
+        case '1.0.0':
             /* Code to upgrade from version 1.0 goes here */
+            
+            /*Provide some way for admin to switch on and off Module aliases
+             * in the admin config area. You must also provide short urls
+             */
+            xarModSetVar('example', 'useModuleAlias','');
+            xarModGetVar('example','aliasname',false);
             break;
-        case '2.0.0':
-            /* Code to upgrade from version 2.0 goes here */
+        case '1.5.0': /* current version */
+            /* Code to upgrade from version 1.5.0 goes here */
             break;
     }
     /* Update successful */

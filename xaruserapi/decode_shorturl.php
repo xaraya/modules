@@ -21,11 +21,25 @@ function example_userapi_decode_shorturl($params)
 { 
     /* Initialise the argument list we will return */
     $args = array();
+    $module = 'example';
+    /* Check and see if we have a module alias */
+    $aliasisset = xarModGetVar('example', 'useModuleAlias');
+    $aliasname = xarModGetVar('example','aliasname');
+    if (($aliasisset) && isset($aliasname)) {
+        $usealias   = true;
+    } else{
+        $usealias = false;
+    }
+
+
     /* Analyse the different parts of the virtual path
      * $params[1] contains the first part after index.php/example
      * In general, you should be strict in encoding URLs, but as liberal
      * as possible in trying to decode them...
      */
+    if ($params[0] != $module) { /* it's possibly some type of alias */
+        $aliasname = xarModGetVar('example','aliasname');
+    }
     if (empty($params[1])) {
         /*( nothing specified -> we'll go to the main function */
         return array('main', $args);

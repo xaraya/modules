@@ -27,6 +27,8 @@ function example_admin_updateconfig()
     if (!xarVarFetch('bold', 'checkbox', $bold, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('itemsperpage', 'int', $itemsperpage, 10, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('aliasname', 'str:1:', $aliasname, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('modulealias','checkbox', $modulealias,false,XARVAR_NOT_REQUIRED)) return;
 
     /* Confirm authorisation code.  This checks that the form had a valid
      * authorisation code attached to it.  If it did not then the function will
@@ -42,7 +44,29 @@ function example_admin_updateconfig()
     xarModSetVar('example', 'bold', $bold);
     xarModSetVar('example', 'itemsperpage', $itemsperpage);
     xarModSetVar('example', 'SupportShortURLs', $shorturls);
+    if (isset($aliasname) && trim($aliasname)<>'') {
+        xarModSetVar('example', 'aliasname', $aliasname);
+        xarModSetVar('example', 'useModuleAlias', $modulealias);
+    } else{
+        xarModSetVar('example', 'aliasname', '');
+        xarModSetVar('example', 'useModuleAlias', 0);
 
+    }
+
+    $useAliasName = xarModGetVar('example', 'useModuleAlias');
+    $aliasname = trim(xarModGetVar('example','aliasname'));
+    /* let's set the alias if it's chosen
+     * else we want to delete it from the module alias list
+     */
+    if (($useAliasName==1) && !empty($aliasname)){
+        $usealias = 1;
+        xarModSetAlias($aliasname,'example');
+    } elseif (($useAliasName==0) && !empty($aliasname)) {
+        $usealias = 0;
+        xarModDelAlias($aliasname,'example');
+    } else {
+        $usealias=0;
+    }
     xarModCallHooks('module','updateconfig','example',
                    array('module' => 'example'));
 

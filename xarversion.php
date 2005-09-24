@@ -11,7 +11,7 @@
 
 $modversion['name']           = 'example'; /* lowercase, no spaces or special chars */
 $modversion['id']             = '36';
-$modversion['version']        = '1.0.0'; /* three point version number */
+$modversion['version']        = '1.5.0'; /* three point version number */
 $modversion['displayname']    = xarML('Example');
 $modversion['description']    = 'Example for new modules';
 $modversion['credits']        = 'xardocs/credits.txt';
