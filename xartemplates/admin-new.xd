@@ -34,34 +34,29 @@
         // this form. Instead we use the entity tag equivalent. All URLs should be generated through the entity equivalent of xarModURL() to ensure
         // compatibility with future versions of Xaraya
     -->
-    <form class="xar-formwidget"  method="post" action="&xar-modurl-example-admin-create;" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
-         <fieldset class="formelements xar-norm">
-             <legend><xar:mlstring>Creating a new item</xar:mlstring></legend>
+    <form method="post" action="&xar-modurl-example-admin-create;" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
+        <fieldset>
+            <legend><xar:mlstring>Creating a new item</xar:mlstring></legend>
 
-                 <p class="param">
-                     <label for="itemid"  class="xar-form-label">
-                         <span class="help" title="#xarML('This is the item name')#">
-                            <xar:mlstring>Example Name:</xar:mlstring>
-                         </span>
-                     </label>
-                </p>
-                <xar:if condition="isset($name)">
-                    <input type="text" name="name" id="name" value="#$name#" maxlength="32" class="xar-form-textmedium" />
-                <xar:else />
+            <div class="xar-form-input-wrapper">
+                 <label for="itemid"  class="xar-form-label" title="#xarML('This is the item name')#">
+                        <xar:mlstring>Example Name:</xar:mlstring>
+                 </label>
+             <xar:if condition="isset($name)">
+                 <input type="text" name="name" id="name" value="#$name#" maxlength="32" class="xar-form-textmedium" />
+             <xar:else />
                     <input type="text" name="name" id="name" value="#$item.name#" maxlength="32" class="xar-form-textmedium" />
-                </xar:if>
-                <xar:if condition="!empty($invalid['name'])">
-                    <div class="xar-error">
+             </xar:if>
+             <xar:if condition="!empty($invalid['name'])">
+                 <div class="xar-error">
                         <xar:mlstring>ERROR! This is not a valid example name</xar:mlstring>
-                   </div>
-                </xar:if>
-            </p>
+                 </div>
+             </xar:if>
+            </div>
 
-            <p class="param">
-                 <label for="itemid"  class="xar-form-label">
-                     <span class="help" title="#xarML('This is the item number')#">
+            <div class="xar-form-input-wrapper">
+                 <label for="itemid"  class="xar-form-label" title="#xarML('This is the item number')#">
                          <xar:mlstring>Example Number:</xar:mlstring>
-                     </span>
                 </label>
 
                 <xar:if condition="isset($number)">
@@ -74,10 +69,10 @@
                         <xar:mlstring>ERROR! This is not a valid example number</xar:mlstring>
                     </div>
                 </xar:if>
-            </p>
+            </div>
         </fieldset>
         <xar:if condition="!empty($hooks)">
-         <fieldset class="formelements xar-norm">
+         <fieldset>
             <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
                 <xar:foreach in="$hooks" key="$hookmodule">
               <!--
@@ -93,16 +88,16 @@
                 </xar:foreach>
         </fieldset>
         </xar:if>
-        <div class="xar-form-input-wrapper">
+        <fieldset>
+            <div class="xar-form-input-wrapper-after">
         <!--
             // Add an authorisation ID - this adds a hidden field in the form that
             // contains an authorisation ID.  The authorisation ID is very important in
             // preventing certain attacks on the website
         -->
-            <div class="xar-form-input-wrapper-after">
                 <input type="hidden" name="authid" id="authid" value="#$authid#" />
                 <input type="submit" value="#xarML('Add Example Item')#" />
             </div>
-        </div>
+        </fieldset>
     </form>
 </div>

@@ -333,6 +333,13 @@ function example_delete()
     $result = &$dbconn->Execute($query);
     if (!$result) return;
 
+    /* Remove any module aliases before deleting module vars */
+    $aliasname =xarModGetVar('example','aliasname');
+    $isalias = xarModGetAlias($aliasname);
+    if (isset($isalias) && ($isalias =='example')){
+        xarModDelAlias($aliasname,'example');
+    }
+
     /* Delete any module variables 
      * You can do this one at a time
      * or delete all of them if you want

@@ -31,15 +31,15 @@
         // this form.  All URLs should be generated through the entity  equivalent of xarModURL to ensure
         // compatibility with future versions of Xaraya
     -->
-    <form class="xar-formwidget"  method="post" action="&xar-modurl-example-admin-update;" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
-        <fieldset class="formelements xar-norm">
-            <legend><xar:mlstring>Item to Modify</xar:mlstring></legend>
-            
-            <p class="param">
-                <label for="name"  class="xar-form-label">
-                   <span class="help" title="#xarML('This is the tool tip help for this item.')#">                    
+    <form method="post" action="&xar-modurl-example-admin-update;" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
+        <fieldset>
+            <legend>
+                <xar:mlstring>Item to Modify</xar:mlstring>
+            </legend>
+
+            <div class="xar-form-input-wrapper">
+                <label for="name"  class="xar-form-label" title="#xarML('This is the tool tip help for this item.')#">
                        <xar:mlstring>Example Name:</xar:mlstring>
-                   </span>
                 </label>
                 <xar:if condition="isset($name)">
                     <input type="text" name="name" id="name" value="#$name#" maxlength="32" class="xar-form-textmedium" />
@@ -48,18 +48,16 @@
                 </xar:if>
 
             <xar:if condition="!empty($invalid['name'])">
-                <div class="xar-error">
+                <p class="xar-error">
                     <xar:mlstring>ERROR! This is not a valid example name</xar:mlstring>
-                </div>
+                </p>
             </xar:if>
-         </p>
+            </div>
 
-         
-            <p class="param">
-                <label for="number"  class="xar-form-label">
-                   <span class="help" title="#xarML('This is the tool tip help for this item.')#">
+
+            <div class="xar-form-input-wrapper">
+                <label for="number"  class="xar-form-label" title="#xarML('This is the tool tip help for this item.')#">
                        <xar:mlstring>Example Number:</xar:mlstring>
-                   </span>
                 </label>
                 <xar:if condition="isset($number)">
                     <input type="text" name="number" id="number"value="#$number#" maxlength="5" class="xar-form-textshort" />
@@ -67,16 +65,16 @@
                     <input type="text" name="number" id="number"value="#$item.number#" maxlength="5" class="xar-form-textshort" />
                 </xar:if>
                 <xar:if condition="!empty($invalid['number'])">
-                    <div class="xar-error">
+                    <p class="xar-error">
                         <xar:mlstring>ERROR! This is not a valid example number</xar:mlstring>
-                    </div>
+                    </p>
                 </xar:if>
-        </p>
+            </div>
 
         </fieldset>
 
         <xar:if condition="!empty($hooks)">
-        <fieldset class="formelements xar-norm">
+        <fieldset>
             <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
                 <xar:foreach in="$hooks" key="$hookmodule">
                 <!--
@@ -90,18 +88,20 @@
                 -->
                 #$hooks[$hookmodule]#
 
-               </xar:foreach>
-           </fieldset>
         </xar:if>
-        <div class="xar-clear-both xar-align-center">
+               </xar:foreach>
+        </fieldset>
+        <fieldset>
+            <div class="xar-form-input-wrapper-after">
         <!--
             // Add an authorisation ID - this adds a hidden field in the form that
             // contains an authorisation ID.  The authorisation ID is very important in
             // preventing certain attacks on the website
         -->
-            <input type="hidden" name="authid" id="authid" value="#$authid#" />
-            <input type="hidden" name="exid" id="exid" value="#$item.exid#" />
-            <input type="submit" value="#xarML('Update Example')#" />
-        </div>
+               <input type="hidden" name="authid" id="authid" value="#$authid#" />
+               <input type="hidden" name="exid" id="exid" value="#$item.exid#" />
+               <input type="submit" value="#xarML('Update Example')#" />
+            </div>
+        </fieldset>
     </form>
 </div>

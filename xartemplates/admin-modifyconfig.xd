@@ -21,7 +21,7 @@
          compatibility with future versions of Xaraya.
     -->
 
-    <form class="xar-formwidget"  method="post" action="&xar-modurl-example-admin-updateconfig;" enctype="application/x-www-form-urlencoded">
+    <form method="post" action="&xar-modurl-example-admin-updateconfig;" enctype="application/x-www-form-urlencoded">
     <!--
          Add an authorisation ID - this adds a hidden field in the form that
          contains an authorisation ID.  The authorisation ID is very important in
@@ -30,49 +30,43 @@
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
 
 
-     <!-- Use standard xaraya classes for form elements -->
-        <fieldset class="formelements xar-norm">
-            <legend><xar:mlstring>Display Options</xar:mlstring></legend>
-        
-           <p class="param">
-                <label for="bold"  class="xar-form-label">
-                   <span class="help" title="#xarML('Use bold for example items.')#">
+        <!-- Use standard xaraya classes for form elements -->
+        <fieldset>
+        <legend><xar:mlstring>Display Options</xar:mlstring></legend>
+
+            <div class="xar-form-input-wrapper">
+                <label for="bold class="xar-form-label" help" title="#xarML('Use bold for example items.')#">
                        <xar:mlstring>Display Example Items In Bold?</xar:mlstring>
-                   </span>
                 </label>
                 <xar:if condition="$boldchecked">
                     <input type="checkbox" name="bold" id="bold" value="1" checked="checked"/>
                 <xar:else/>
                     <input type="checkbox" name="bold" id="bold" value="1" />
                 </xar:if>
-            </p>
+            </div>
         
-            <p class="param">
-                <label for="itemsperpage" class="xar-form-label">
-                    <span class="help" title="#xarML('Number of example items per page')#">
+            <div class="xar-form-input-wrapper">
+                <label for="itemsperpage" class="xar-form-label" title="#xarML('Number of example items per page')#">
                         <xar:mlstring>Example Items Per Page:</xar:mlstring>
-                    </span>
                 </label>
                 <input type="text" name="itemsperpage" id="itemsperpage" value="#$itemsvalue#" maxlength="3" class="xar-form-textshort" />
-            </p>
+            </div>
         </fieldset>
         <fieldset>
             <legend><xar:mlstring>System Options</xar:mlstring></legend>
-             <p class="param">
-                <label for="shorturls" class="xar-form-label">
-                    <span class="help" title="#xarML('Enable short URLS?')#">
+            <div class="xar-form-input-wrapper">
+                <label for="shorturls" class="xar-form-label" title="#xarML('Enable short URLS?')#">
                         <xar:mlstring>Enable short URLs?</xar:mlstring>
-                    </span>
                 </label>
                 <xar:if condition="$shorturlschecked">
                     <input type="checkbox" name="shorturls" id="shorturls" value="1" checked="checked" />
                 <xar:else/>
                     <input type="checkbox" name="shorturls" id="shorturls" value="1" />
                 </xar:if>
-            </p>
+            </div>
         </fieldset>
 
-        <fieldset class="formelements xar-norm">
+        <fieldset>
             <legend><xar:mlstring>Enabled Hooks</xar:mlstring></legend>
             <xar:if condition="!empty($hooks)">
                 <xar:foreach in="$hooks" key="$hookmodule">
@@ -90,8 +84,8 @@
             </xar:if>
         </fieldset>
 
-      <div class="xar-clear-both xar-align-center">
-
+     <fieldset>
+                <div class="xar-form-input-wrapper-after">
             <input type="submit" value="#xarML('Update Configuration')#" />
         </div>
 

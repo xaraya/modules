@@ -45,30 +45,27 @@ function example_admin_updateconfig()
     xarModSetVar('example', 'itemsperpage', $itemsperpage);
     xarModSetVar('example', 'SupportShortURLs', $shorturls);
     if (isset($aliasname) && trim($aliasname)<>'') {
-        xarModSetVar('example', 'aliasname', $aliasname);
         xarModSetVar('example', 'useModuleAlias', $modulealias);
     } else{
-        xarModSetVar('example', 'aliasname', '');
-        xarModSetVar('example', 'useModuleAlias', 0);
-
+         xarModSetVar('example', 'useModuleAlias', 0);
     }
-    $useAliasName = xarModGetVar('example', 'useModuleAlias');
-    $aliasname = trim(xarModGetVar('example','aliasname'));
+    $currentalias = xarModGetVar('example','aliasname');
+    $newalias = trim($aliasname);
+    $hasalias= xarModGetAlias($currentalias);
+    $useAliasName= xarModGetVar('example','useModuleAlias');
 
-    if (($useAliasName==1) && !empty($aliasname)){
-        $usealias = 1;
-        /*check for old alias and delete it*/
-        $oldalias = xarModGetAlias('example');
-        if (isset($oldalias)) {
-            xarModDelAlias($oldalias,'example');
+    if (($useAliasName==1) && !empty($newalias)){
+        /* we want to use an aliasname */
+        /* First check for old alias and delete it */
+        if (isset($hasalias) && ($hasalias =='example')){
+            xarModDelAlias($currentalias,'example');
         }
-        xarModSetAlias($aliasname,'example');
-    } elseif (($useAliasName==0) && !empty($aliasname)) {
-        $usealias = 0;
-        xarModDelAlias($aliasname,'example');
-    } else {
-        $usealias=0;
+        /* now set the new alias if it's a new one */
+          xarModSetAlias($newalias,'example');
     }
+    /* now set the alias modvar */
+    xarModSetVar('example', 'aliasname', $newalias);
+
     xarModCallHooks('module','updateconfig','example',
                    array('module' => 'example'));
 
