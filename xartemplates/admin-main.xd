@@ -1,50 +1,73 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Administration - xarBB</xar:mlstring></span></div>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Administration - xarBB</xar:mlstring></span>
+</div>
 <div class="xar-mod-body">
+    <img src="modules/adminpanels/xarimages/admin.gif" class="xar-module-icon" alt="official icon" width="96" height="96" />
+
     <h2><xar:mlstring>Overview</xar:mlstring></h2>
-    <div style="padding: 1px;" class="xar-norm-outline">
-        <div style="float:right;padding:10px;">
-            <img src="#xarTplGetImage('admin.gif')#" alt="official icon" width="96" height="96" />
-        </div>
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>What is it?</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>xarbb provides basic forum functions provided mainly from Xaraya utility modules.  The forum itself is very light weight, but designed to handle large volume postings.</xar:mlstring>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>How to use it?</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+
+    <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+        <p>
+            <xar:mlstring>xarBB provides basic forum functions provided mainly from Xaraya utility modules (topics are provided by xarBB and reply posts by the comments module, for example).  The forum itself is very light weight, but designed to handle large volume postings.</xar:mlstring>
+        </p>
+
+    <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
+        <p>
             <xar:mlstring>
-            From the menu, you have three choices.  "Modify Configuration", "Add Forums", and "View Forums". 
+            xarBB allows users to post Topics and reply posts to those topics. There are a number of options available from the administration menu.
             </xar:mlstring>
             <ul>
-                <li><xar:mlstring>Modify Configuration -- Allows you to set certain configuration routines for forums.</xar:mlstring></li>
-                <li><xar:mlstring>View Forums -- Allows you to view the forums that you have configured on your system.</xar:mlstring></li>
-                <li><xar:mlstring>Add Forums -- Allows you to add new forums to your system.</xar:mlstring></li>
+               <li><xar:mlstring>Add Forums -- Allows you to add new forums to your system. Each forum has a number of configuration options.</xar:mlstring></li>
+               <li><xar:mlstring>View Forums -- Allows you to view the forums that you have configured on your system.</xar:mlstring></li>
+               <li><xar:mlstring>Modify Configuration -- Allows you to set certain master configuration routines for forums.</xar:mlstring></li>
+                <li><xar:mlstring>Reorder Forums -- Allows you to reorder your existing forums</xar:mlstring></li>
             </ul>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>Included Blocks</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>There is currently one block provided called Latest Posts. If the block is not 
-            showing as an option when adding a Block instance it may not have been registered. In this case 
+        </p>
+        <p>
+            <xar:mlstring>You can add additional functionality to xarBB forums as you require it.</xar:mlstring>
+            <ul>
+               <li><xar:mlstring>Hook BBCode or HTML to allow formatted user input and also the option to supply linebreaks for plain text.</xar:mlstring></li>
+               <li><xar:mlstring>Turn off modify 'stamps' in topics and posts and hook Changelog module to allow enhanced changelog management of posts and topics</xar:mlstring></li>
+               <li><xar:mlstring>If you have imported the extra default User dynamic data such as avatars, msn, irc and so on, to your user roles, then these attributes will automatically be displayed in xarbb topics and posts.</xar:mlstring></li>
+               <li><xar:mlstring>Set privilges for Comments module and xarBB to allow or disallow viewing, posting of topics and replies, editing of their own posts by users, and setup of moderator groups.</xar:mlstring></li>
+            </ul>
+        </p>
+        <p><xar:mlstring>Administrators and moderators have additional functionality including deleting posts, marking posts as announcements or sticky topics, moving posts, and locking topics from further postings.</xar:mlstring>
+        </p>
+        <p>
+            <xar:mlstring>You can build the functionality you would like into xarBB and use override templates to customize every aspect of the xarBB templates.</xar:mlstring>
+        </p>
+    <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
+        <p>
+            <xar:mlstring>There is currently one block provided called Latest Posts. If the block is not
+            showing as an option when adding a Block instance it may not have been registered. In this case
             please add the block type through Admin Blocks-Add Block Type</xar:mlstring>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>Included Hooks</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>There are no included hooks</xar:mlstring>
-        </div>
-    </div>
+        </p>
+
+    <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
+        <p>
+            <xar:mlstring>There is currently a Search hook. If you hook xarBB to the Search module, users will be able to search through topics and posts, and more specifically for topic and post authors.</xar:mlstring>
+        </p>
+    <h3>
+        <xar:mlstring>Further Information</xar:mlstring>
+    </h3>
+    <p>
+        <xar:mlstring>Further information on the XarBB module can be found at</xar:mlstring>
+    </p>
+       <ul>
+              <li><xar:mlstring>Xarbb Extension page at</xar:mlstring> <a title="#xarML('xarBB Module - Xaraya Extension 300')#" href="http://www.xaraya.com/index.php/release/300.html">Xaraya Extension and Releases</a>.
+              <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+              </li>
+              <li><xar:mlstring>Related tutorials and documentation on XarBB found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/xarbb/" title="#xarML('Related documentation on xarBB')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+              </li>
+         </ul>
+         <p class="xar-sub">
+             <strong>&nbsp;<xar:mlstring>xarBB Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2005-09-25
+         </p>
+</div>
+<div class="xar-mod-foot xar-align-center xar-padding-thick">
+    <p>
+        <xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring>
+    </p>
 </div>

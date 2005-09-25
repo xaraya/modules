@@ -7,7 +7,7 @@
 <meta http-equiv="refresh" content="3;url=#$topicreturn#"/>
 
 <h4>
-    <a class="xar-title" href="#xarModURL('xarbb', 'user', 'main')#">
+    <a class="xar-title" href="&xar-modurl-xarbb-user-main;">
        <xar:if condition="!empty($xarbbtitle)">
         #$xarbbtitle#
         <xar:else />

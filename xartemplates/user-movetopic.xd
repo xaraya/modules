@@ -18,7 +18,7 @@
     </tr>
 </table>
 
-<form action="#xarModUrl('xarbb', 'user', 'movetopic')#" method="post" name="post" id="post" style="display: inline;">
+<form action="&xar-modurl-xarbb-user-movetopic;" method="post" name="post" id="post" style="display: inline;">
 <table width="98%" border="0" class="forumline">
     <tr>
         <th>

@@ -18,7 +18,7 @@
 </script>
 <div class="xarbb-topiccontrols">
     <span class="xar-sub">
-        <a href="#xarModUrl('xarbb', 'user', 'main')#">
+        <a href="&xar-modurl-xarbb-user-main;">
         <xar:if condition="!empty($xarbbtitle)">
             #$xarbbtitle#
         <xar:else />

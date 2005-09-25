@@ -7,16 +7,23 @@
 <xar:template file="navtabs-action" type="module" />
 
 <h2><xar:mlstring>Delete a Forum</xar:mlstring></h2>
-<form method="post" action="#xarModURL('xarbb', 'admin', 'delete')#" enctype="application/x-www-form-urlencoded" >
+<form method="post" action="&xar-modurl-xarbb-admin-delete;" enctype="application/x-www-form-urlencoded" >
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <input type="hidden" name="fid" id="fid" value="#$fid#" />
     <input type="hidden" name="confirm" id="confirm" value="1" />
     <input type="hidden" name="confirmation" id="confirmation" value="1" />
-
-    <span class="xar-title"><xar:mlstring>Confirm deletion of forum</xar:mlstring></span><br /><br />
-    <xar:set name="$mlconfirm"><xar:mlstring>Confirm</xar:mlstring></xar:set>
-    <input type="submit" value="#$mlconfirm#"  tabindex="1" /><br /><br />
-    
-    <a href="#xarModURL('xarbb', 'admin', 'view')#"><xar:mlstring>Cancel deletion of forum</xar:mlstring></a>
+        <fieldset>
+            <legend><xar:mlstring>Forum for Deletion</xar:mlstring>
+                <div class="xar-form-input-wrapper">
+                    <label for="confirm" class="xar-form-label" title="#xarML('Confirm deletion of forum')#">
+                        <xar:mlstring>Confirm deletion of forum</xar:mlstring>
+                    </label>
+                </div>
+               <div class="xar-form-input-wrapper-after">
+                  <xar:set name="$mlconfirm"><xar:mlstring>Confirm</xar:mlstring></xar:set>
+                <input type="submit" value="#$mlconfirm#"  tabindex="1" />
+              </div>
+        </fieldset>
+    <a href="&xar-modurl-xarbb-admin-view;"><xar:mlstring>Cancel deletion of forum</xar:mlstring></a>
 </form>        
 </div>

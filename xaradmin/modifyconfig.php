@@ -80,11 +80,14 @@ function xarbb_admin_modifyconfig()
 
             // Update module variables
             xarModSetVar('xarbb', 'SupportShortURLs', $supportshorturls);
-            xarModSetVar('xarbb', 'useModuleAlias', $modulealias);
-            xarModSetVar('xarbb', 'aliasname', $aliasname);
             xarModSetVar('xarbb', 'cookiename', $cookiename);
             xarModSetVar('xarbb', 'cookiepath', $cookiepath);
-            xarModSetVar('xarbb', 'xarbbtitle', $xarbbtitle);            
+            xarModSetVar('xarbb', 'xarbbtitle', $xarbbtitle);
+            if (isset($aliasname) && trim($aliasname)<>'') {
+                xarModSetVar('xarbb', 'useModuleAlias', $modulealias);
+            } else{
+              xarModSetVar('xarbb', 'useModuleAlias', 0);
+            }
             //xarModSetVar('xarbb', 'cookiedomain', $cookiedomain);
             xarModSetVar('xarbb', 'forumsperpage', $forumsperpage); //only required for admin view
             // default settings for xarbb
@@ -109,23 +112,23 @@ function xarbb_admin_modifyconfig()
             xarModSetVar('xarbb', 'settings', serialize($settings));
  
             // Module alias for short URLs
+           $currentalias = xarModGetVar('xarbb','aliasname');
+           $newalias = trim($aliasname);
+           $hasalias= xarModGetAlias('xarbb');
+           $useAliasName= xarModGetVar('xarbb','useModuleAlias');
 
-            $useAliasName = xarModGetVar('xarbb', 'useModuleAlias');
-            $aliasname = xarModGetVar('xarbb','aliasname');
-            if (($useAliasName==1) && !empty($aliasname)){
-                $usealias = 1;
-                /*check for old alias and delete it*/
-                $oldalias = xarModGetAlias('xarbb');
-                if (isset($oldalias)) {
-                   xarModDelAlias($oldalias,'xarbb');
-                }
-                xarModSetAlias($aliasname,'xarbb');
-            } elseif (($useAliasName==0) && !empty($aliasname)) {
-                $usealias = 0;
-                xarModDelAlias($aliasname,'xarbb');
-            } else {
-                $usealias=0;
-            }
+           if (($useAliasName==1) && !empty($newalias)){
+               /* we want to use an aliasname */
+               /* First check for old alias and delete it */
+               if (isset($hasalias) && ($hasalias =='xarbb')){
+                   xarModDelAlias($currentalias,'xarbb');
+               }
+               /* now set the new alias if it's a new one */
+               xarModSetAlias($newalias,'xarbb');
+           }
+           /* now set the alias modvar */
+           xarModSetVar('xarbb', 'aliasname', $newalias);
+
             // call modifyconfig hooks with module
             $hooks = xarModCallHooks('module', 'updateconfig', 'xarbb', array('module' => 'xarbb'));
             if (empty($hooks)) {

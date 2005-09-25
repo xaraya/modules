@@ -18,13 +18,13 @@
 </script>
 <div class="xarbb-topiccontrols">
     <span class="xar-sub">
-        <a href="#xarModUrl('xarbb', 'user', 'main')#">
+        <a href="&xar-modurl-xarbb-user-main;">
             <xar:mlstring>
                 Forum Index 
             </xar:mlstring>
         </a>
         -&gt; 
-        <a href="#xarModUrl('xarbb', 'user', 'viewforum', array('fid' => $fid))#">
+        <a href="&xar-modurl-xarbb-user-viewforum;&amp;fid=#$fid#">
             #$fname# 
         </a>
     </span>
@@ -79,7 +79,7 @@
     Otherwise, users can also reference uploaded files by using #file:NN# in the body,
     if you enable the uploads hooks for xarbb (for all forums or a particular forum).
 </xar:comment>
-    <form method="post" action="#xarModURL('xarbb', 'user', 'newtopic', array('phase' => 'update'))#" name="post" id="post" enctype="application/x-www-form-urlencoded" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
+    <form method="post" action="&xar-modurl-xarbb-user-newtopic;&amp;phase=update" name="post" id="post" enctype="application/x-www-form-urlencoded" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
         <table>
             <tr>
                 <th colspan="2">
@@ -192,7 +192,7 @@
                             Smilies are
                         </xar:mlstring>
                         <xar:if condition="xarModIsHooked('smilies','xarbb',$fid)">
-                            <a href="#xarModUrl('smilies', 'user', 'main', array('theme' => 'print'))#" onclick="popUp(this.href,'fixed',400,400);return false;" target="newWin" style="color: green;">
+                            <a href="&xar-modurl-smilies-user-main;&amp;theme=print" onclick="popUp(this.href,'fixed',400,400);return false;" target="newWin" style="color: green;">
                                 <xar:mlstring>
                                     On 
                                 </xar:mlstring>

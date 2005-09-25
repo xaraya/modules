@@ -1,20 +1,16 @@
 <?php
 /**
- * File: $Id$
- *
- * Xaraya xarbb
- *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.org
- *
+ * @link http://www.xaraya.com
+ * 
  * @subpackage xarbb Module
  * @author John Cox
 */
 
 include_once 'includes/xarDate.php';
-//Load Table Maintainance API
+/* Load Table Maintainance API */
 xarDBLoadTableMaintenanceAPI();
 
 /**
@@ -22,7 +18,7 @@ xarDBLoadTableMaintenanceAPI();
  */
 function xarbb_init()
 {
-    // Set up database tables
+    /* Set up database tables */
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
@@ -148,25 +144,7 @@ function xarbb_init()
     xarRegisterMask('PostxarBB','All','xarbb','Forum','All:All','ACCESS_COMMENT');  // Allows Posting Replys and Topics
     // for what is moderate good?
 
- /*   //-----------------------------------------------------------------------------------
-    // Topic
-    $instances = array(
-        array('header' => 'Topic ID:',
-            'query' => "SELECT DISTINCT xar_tid FROM " . $xbbtopicstable,
-            'limit' => 20
-            )
-        );
-    xarDefineInstance('xarbb', 'Topic', $instances);
-    // Register Masks
-    xarRegisterMask('ReadxarBB','All','xarbb','Topic','All','ACCESS_READ');
-    xarRegisterMask('EditxarBB','All','xarbb','Topic','All','ACCESS_EDIT');
-    xarRegisterMask('AddxarBB','All','xarbb','Topic','All','ACCESS_ADD');
-    xarRegisterMask('DeletexarBB','All','xarbb','Topic','All','ACCESS_DELETE');
-    xarRegisterMask('AdminxarBB','All','xarbb','Topic','All','ACCESS_ADMIN');
-    xarRegisterMask('ModxarBB','All','xarbb','Topic','All','ACCESS_MODERATE');    */
-    // for what is moderate good?
-
-    // Enable categories hooks for xarbb forums
+     // Enable categories hooks for xarbb forums
     if (xarModIsAvailable('categories')) {
         xarModAPIFunc('modules','admin','enablehooks', 
                        array('callerModName' => 'xarbb', 'hookModName' => 'categories'));
@@ -571,18 +549,18 @@ function xarbb_upgrade($oldversion)
 
 function xarbb_delete()
 {
-    //Let's first get all the forums
+    /* Let's first get all the forums */
     $forums = xarModAPIFunc('xarbb','user','getallforums');
 
-    //Now if there are forums, let's identify all the topics associated with each forum
-    // and delete al the replies associated with each topic
-
+    /* Now if there are forums, let's identify all the topics associated with each forum
+     * and delete all the replies associated with each topic
+     */
     foreach($forums as $forum) {
            xarModAPIFunc('xarbb','admin','deletealltopics',
                                   array('fid'=>$forum['fid']));
     }
 
-    // Drop the table
+    /* Drop the table */
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
@@ -595,7 +573,12 @@ function xarbb_delete()
     $query = xarDBDropTable($xbbtopicstable);
     $result =& $dbconn->Execute($query);
     if (!$result) return;
-
+   /* Remove any module aliases before deleting module vars */
+    $aliasname =xarModGetVar('xarbb','aliasname');
+    $isalias = xarModGetAlias($aliasname);
+    if (isset($isalias) && ($isalias =='xarbb')){
+        xarModDelAlias($aliasname,'xarbb');
+    }
     // Delete any module variables
     xarModDelAllVars('xarbb');
     // Remove Masks and Instances

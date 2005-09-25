@@ -35,7 +35,7 @@
                 <td class="xar-norm author" valign="top">
                     <div>
                         <strong>
-                            <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $tposter))#">
+                            <a href="&xar-modurl-roles-user-display;&amp;uid=#$tposter#">
                                 #$postername# 
                             </a>
                         </strong>
@@ -84,7 +84,7 @@
                             Reply post could be anonymous - need to check 
                         </xar:comment>
                         <xar:if condition="$item['xar_postanon'] eq 0">
-                            <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $item['xar_uid']))#">
+                            <a href="&xar-modurl-roles-user-display;&amp;uid=#$item['xar_uid']#">
                                 #$item['xar_author']# 
                             </a>
                             <xar:else />

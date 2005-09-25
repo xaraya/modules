@@ -15,21 +15,21 @@
     <xar:if condition="xarUserIsLoggedIn()">
         <ul>
             <li>
-                <a href="#xarModURL('xarbb', 'user', 'searchtopics', array('from' => $lastvisitdate))#">
+                <a href="&xar-modurl-xarbb-user-searchtopics;&amp;from=#$lastvisitdate#">
                     <xar:mlstring>
                         View topics since last visit 
                     </xar:mlstring>
                 </a>
             </li>
             <li>
-                <a href="#xarModURL('xarbb', 'user', 'searchtopics', array('by' => $uid))#">
+                <a href="&xar-modurl-xarbb-user-searchtopics;&amp;by=#$uid#">
                     <xar:mlstring>
                         View your topics 
                     </xar:mlstring>
                 </a>
             </li>
             <li>
-                <a href="#xarModURL('xarbb', 'user', 'searchtopics', array('replies' => 1))#">
+                <a href="&xar-modurl-xarbb-user-searchtopics;&amp;replies=1">
                     <xar:mlstring>
                         View unanswered topics 
                     </xar:mlstring>
@@ -55,7 +55,7 @@
     </xar:if>
 </div>
 <h4>
-    <a class="xar-title" href="#xarModURL('xarbb', 'user', 'main')#">
+    <a class="xar-title" href="&xar-modurl-xarbb-user-main;">
         <xar:if condition="!empty($xarbbtitle)">
         #$xarbbtitle#
         <xar:else />

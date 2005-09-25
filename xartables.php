@@ -1,8 +1,6 @@
 <?php
 /**
- * Xaraya xarbb
- * 
- * @package Xaraya eXtensible Management System
+  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 by the Xaraya Development Team.
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.org
@@ -13,23 +11,23 @@
 
 function xarbb_xartables()
 {
-    // Initialise table array
+    /* Initialise table array */
     $xartable = array();
     $prefix = xarDBGetSiteTablePrefix();
-    // Get the name for the autolinks item table
+    /* Get the name for the autolinks item table */
     $xbbforums = $prefix . '_xbbforums';
     $xbbtopics = $prefix . '_xbbtopics';
 
-    // Set the table name
+    /* Set the table name */
     $xartable['xbbforums'] = $xbbforums;
     $xartable['xbbtopics'] = $xbbtopics;
 
-    // Name for template database entities
+    /* Name for template database entities */
     $comments_table = xarDBGetSiteTablePrefix() . '_comments';
 
-    // Table name
+    /* Table name */
     $xartable['comments'] = $comments_table;
-    // Column names
+    /* Column names */
     $xartable['comments_column'] = array('cid'      => $comments_table . '.xar_cid',
                                          'pid'      => $comments_table . '.xar_pid',
                                          'modid'    => $comments_table . '.xar_modid',
@@ -46,7 +44,7 @@ function xarbb_xartables()
                                          'postanon' => $comments_table . '.xar_anonpost'
                                         );
 
-    // Return the table information
+    /* Return the table information */
     return $xartable;
 }
 

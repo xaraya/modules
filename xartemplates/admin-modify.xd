@@ -2,7 +2,6 @@
     License: GPL http://www.gnu.org/copyleft/gpl.html 
 </xar:comment>
 <script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
-<xar:if condition="xarTplAddStyleLink('xarbb', 'forms')"></xar:if>
 <script type="text/javascript" >
 <!--
     // Enter name of mandatory fields
@@ -31,8 +30,8 @@
             #$warning#
         </p>
     </xar:if>
-    <form class="xar-formwidget" method="post" name="post" id="post" action="#xarModURL('xarbb', 'admin', 'modify', array('phase' => 'update'))#" enctype="application/x-www-form-urlencoded" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
-        <fieldset class="formelements xar-norm">
+    <form method="post" name="post" id="post" action="&xar-modurl-xarbb-admin-modify;&amp;phase=update" enctype="application/x-www-form-urlencoded" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
+        <fieldset >
             <legend>
                 <strong>
                     <xar:mlstring>
@@ -42,33 +41,27 @@
             </legend>
             <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
             <input type="hidden" name="fid" id="fid" value="#$fid#" />
-            <p class="param">
-                <label for="fname">
-                    <span class="help" title="#xarML('The name of the forum that you are creating.')#">
+                <div class="xar-form-input-wrapper">
+                <label for="fname" class="xar-form-label" title="#xarML('The name of the forum that you are creating.')#">
                         <xar:mlstring>
                             Forum Name
                         </xar:mlstring>
-                    </span>
                 </label>
                 <input type="text" name="fname" id="fname" value="#$fname#" size="32" maxlength="100" />
-            </p>
-            <p class="param">
-                <label for="fdesc">
-                    <span class="help" title="#xarML('The name of the forum that you are creating.')#">
+                </div>
+                <div class="xar-form-input-wrapper">
+                <label for="fdesc" class="xar-form-label" title="#xarML('The name of the forum that you are creating.')#">
                         <xar:mlstring>
                             Forum Description
                         </xar:mlstring>
-                    </span>
                 </label>
                 <textarea name="fdesc" rows="10" cols="50">#$fdesc#</textarea>
-            </p>
-            <p class="param">
-                <label for="fstatus">
-                    <span class="help" title="#xarML('The status of the forum that is being created.')#">
+                </div>
+                <div class="xar-form-input-wrapper">
+                <label for="fstatus" class="xar-form-label" title="#xarML('The status of the forum that is being created.')#">
                         <xar:mlstring>
                             Forum Status
                         </xar:mlstring>
-                    </span>
                 </label>
                 <select name="fstatus" id="fstatus" size="1">
                     <xar:if condition="$fstatus eq 0">
@@ -95,9 +88,9 @@
                         </option>
                     </xar:if>
                 </select>
-            </p>
+            </div>
         </fieldset>
-        <fieldset class="formelements xar-norm">
+        <fieldset>
             <legend>
                 <strong>
                     <xar:mlstring>
@@ -124,31 +117,26 @@
             <xar:module main="false" module="dynamicdata" type="admin" func="modifyconfighook" extrainfo="$extrainfo" />
         </fieldset>
         </xar:if>
-        <fieldset class="formelements xar-norm">
+        <fieldset>
             <legend>
-                <strong>
                     <xar:mlstring>
                         Forum Configuration
                     </xar:mlstring>
-                </strong>
+
             </legend>
-            <p class="param">
-                <label for="topicsperpage">
-                    <span class="help" title="#xarML('The number of topics to show per page in this forum.')#">
+            <div class="xar-form-input-wrapper">
+                <label for="topicsperpage" class="xar-form-label" title="#xarML('The number of topics to show per page in this forum.')#">
                         <xar:mlstring>
                             Topics per page
                         </xar:mlstring>
-                    </span>
                 </label>
                 <input type="text" name="topicsperpage" id="topicsperpage" value="#$topicsperpage#" size="2" maxlength="4" />
-            </p>
-            <p class="param">
-                <label for="topicsortby">
-                    <span class="help" title="#xarML('The sort field for topics in this forum.')#">
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="topicsortby" class="xar-form-label" title="#xarML('The sort field for topics in this forum.')#">
                         <xar:mlstring>
                             Sort topics by
                         </xar:mlstring>
-                    </span>
                 </label>
                 <select name="topicsortby" id="topicsortby">
                     <xar:if condition="!empty($topicsortby) and $topicsortby eq 'tid'">
@@ -159,14 +147,12 @@
                         <option value="time" selected="selected"><xar:mlstring>Last Post</xar:mlstring></option>
                     </xar:if>
                 </select>
-            </p>
-            <p class="param">
-                <label for="topicsortorder">
-                    <span class="help" title="#xarML('The sort field for topics in this forum.')#">
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="topicsortorder" class="xar-form-label" title="#xarML('The sort field for topics in this forum.')#">
                         <xar:mlstring>
                             Topic sort order
                         </xar:mlstring>
-                    </span>
                 </label>
                 <select name="topicsortorder" id="topicsortorder">
                     <xar:if condition="empty($topicsortorder) or $topicsortorder eq 'DESC'">
@@ -177,34 +163,28 @@
                         <option value="DESC"><xar:mlstring>Descending</xar:mlstring></option>
                     </xar:if>
                 </select>
-            </p>
-            <p class="param">
-                <label for="hottopic">
-                    <span class="help" title="#xarML('Threshhold for individual topics to be considered hot.')#">
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="hottopic" class="xar-form-label" title="#xarML('Threshhold for individual topics to be considered hot.')#">
                         <xar:mlstring>
                             Hot Topic
                         </xar:mlstring>
-                    </span>
-                </label>
+                 </label>
                 <input type="text" name="hottopic" id="hottopic" value="#$hottopic#" size="2" maxlength="4" />
-            </p>
-            <p class="param">
-                <label for="postsperpage">
-                    <span class="help" title="#xarML('The number of posts to show per page in each topic.')#">
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="postsperpage" class="xar-form-label" title="#xarML('The number of posts to show per page in each topic.')#">
                         <xar:mlstring>
                             Posts per page
                         </xar:mlstring>
-                    </span>
                 </label>
                 <input type="text" name="postsperpage" id="postsperpage" value="#$postsperpage#" size="2" maxlength="4" />
-            </p>
-            <p class="param">
-                <label for="postsortorder">
-                    <span class="help" title="#xarML('The sort order for posts in each topic.')#">
+              </div>
+                <div class="xar-form-input-wrapper">
+                <label for="postsortorder" class="xar-form-label" title="#xarML('The sort order for posts in each topic.')#">
                         <xar:mlstring>
                             Post sort order
                         </xar:mlstring>
-                    </span>
                 </label>
                 <select name="postsortorder" id="postsortorder">
                     <xar:if condition="empty($postsortorder) or $postsortorder eq 'ASC'">
@@ -215,28 +195,24 @@
                         <option value="DESC" selected="selected"><xar:mlstring>Descending</xar:mlstring></option>
                     </xar:if>
                 </select>
-            </p>
-            <p class="param">
-                <label for="allowhtml">
-                    <span class="help" title="#xarML('Allow HTML in this forum.')#">
+              </div>
+                <div class="xar-form-input-wrapper">
+                <label for="allowhtml"  class="xar-form-label" title="#xarML('Allow HTML in this forum.')#">
                         <xar:mlstring>
                             Allow HTML
                         </xar:mlstring>
-                    </span>
                 </label>
                 <xar:if condition="$allowhtml">
                     <input type="checkbox" name="allowhtml" id="allowhtml" checked="checked" />
                 <xar:else />
                     <input type="checkbox" name="allowhtml" id="allowhtml"  />
                 </xar:if>
-            </p>
-            <p class="param">
-                <label for="allowbbcode">
-                    <span class="help" title="#xarML('Allow BBCode in this forum.')#">
+                </div>
+                <div class="xar-form-input-wrapper">
+                <label for="allowbbcode"  class="xar-form-label" title="#xarML('Allow BBCode in this forum.')#">
                         <xar:mlstring>
                             Allow BBCode
                         </xar:mlstring>
-                    </span>
                 </label>
                 <xar:if condition="xarModIsAvailable('bbcode')">
                     <xar:if condition="$allowbbcode">
@@ -247,14 +223,12 @@
                 <xar:else />
                     <em><xar:mlstring>BBCode Module is not available.</xar:mlstring></em>
                 </xar:if>
-            </p>
-            <p class="param">
-                <label for="editstamp">
-                    <span class="help" title="#xarML('Default value for Topic Edit Stamp use.')#">
+                </div>
+               <div class="xar-form-input-wrapper" >
+                <label for="editstamp"  class="xar-form-label" title="#xarML('Default value for Topic Edit Stamp use.')#">
                         <xar:mlstring>
                             Use Topic Edit Stamp?
                         </xar:mlstring>
-                    </span>
                 </label>
                 <select name="editstamp" id="editstamp">
                 <xar:if condition="$editstamp eq '0'">
@@ -271,15 +245,13 @@
                    <option value="2" selected="selected"><xar:mlstring>Yes - exclude for Admin</xar:mlstring></option>
                 </xar:if>
                 </select>
-            </p>
+            </div>
             <xar:if condition="xarModIsAvailable('newsgroups')">
-                <p class="param">
-                    <label for="nntp">
-                        <span class="help" title="#xarML('Associate with which Newsgroup')#">
+               <div class="xar-form-input-wrapper">
+                    <label for="nntp"  class="xar-form-label" title="#xarML('Associate with which Newsgroup')#">
                             <xar:mlstring>
                                 NNTP Association
                             </xar:mlstring>
-                        </span>
                     </label>
                     <select name="nntp" id="nntp">
                         <xar:foreach in="$items" key="$name" value="$info">
@@ -290,92 +262,69 @@
                             </xar:if>
                         </xar:foreach>
                     </select>
-                </p>
+                </div>
             </xar:if>
         </fieldset>
-        <fieldset class="formelements xar-norm">
-            <p class="param">
+        <fieldset>
+           <div class="xar-form-input-wrapper-after">
                 <input type="submit" value="#xarML('Submit')#" />
-            </p>
+            </div>
         </fieldset>
     </form>
-</div>        
+</div>
 
 
 <xar:comment>
 <xar:if condition="xarModIsAvailable('nntp')">
-            <div style="clear: both; padding-top: 10px; width:98%;">
-                <span style="float: left; width: 20%; text-align: right;">
-                    <span class="help" title="#xarML('Link this forum to nntp.')#">
-                        <label for="linknntp">
-                            <xar:mlstring>
-                                Link to NNTP
-                            </xar:mlstring>
-                        </label>
+               <div class="xar-form-input-wrapper">
+                   <label for="linknntp" class="xar-form-label" title="#xarML('Link this forum to nntp.')#">
+                        <xar:mlstring>
+                            Link to NNTP
+                        </xar:mlstring>
+                    </label>
                         :
-                    </span>
-                </span>
-                <span style="float: right; width: 78%; text-align: left;">
                     <xar:if condition="$linknntp">
                         <input type="checkbox" name="linknntp" id="linknntp" checked="checked" />
                         <xar:else />
                         <input type="checkbox" name="linknntp" id="linknntp" />
                     </xar:if>
-                </span>
             </div>
         </xar:if>
         <xar:if condition="$linknntp">
-            <div style="clear: both; padding-top: 10px; width:98%;">
-                <span style="float: left; width: 20%; text-align: right;">
-                    <span class="help" title="#xarML('NNTP Server to link')#">
+               <div class="xar-form-input-wrapper">
+                   <label for="nntpserver"  class="xar-form-label" title="#xarML('NNTP Server to link')#">
                         <label for="nntpserver">
                             <xar:mlstring>
                                 NNTP Server
                             </xar:mlstring>
                         </label>
                         :
-                    </span>
-                </span>
-                <span style="float: right; width: 78%; text-align: left;">
                     <input type="text" name="nntpserver" id="nntpserver" value="#$nntpserver#" size="25" maxlength="255" />
-                </span>
-            </div>
-            <div style="clear: both; padding-top: 10px; width:98%;">
-                <span style="float: left; width: 20%; text-align: right;">
-                    <span class="help" title="#xarML('The port of the NNTP server that you are linking')#">
-                        <label for="nntpport">
-                            <xar:mlstring>
-                                NNTP Port
-                            </xar:mlstring>
-                        </label>
+                </div>
+                <div class="xar-form-input-wrapper">
+                   <label for="nntpport" class="xar-form-label" title="#xarML('The port of the NNTP server that you are linking')#">
+                        <xar:mlstring>
+                            NNTP Port
+                        </xar:mlstring>
+                    </label>
                         :
-                    </span>
-                </span>
-                <span style="float: right; width: 78%; text-align: left;">
                     <input type="text" name="nntpport" id="nntpport" value="#$nntpport#" size="3" maxlength="4" />
-                </span>
-            </div>
-            <div style="clear: both; padding-top: 10px; width:98%;">
-                <span style="float: left; width: 20%; text-align: right;">
-                    <span class="help" title="#xarML('The group on the server you are linking')#">
-                        <label for="nntpgroup">
-                            <xar:mlstring>
-                                NNTP Group
-                            </xar:mlstring>
-                        </label>
+               </div>
+               <div class="xar-form-input-wrapper">
+                    <label for="nntpgroup" class="xar-form-label" title="#xarML('The group on the server you are linking')#">
+                        <xar:mlstring>
+                            NNTP Group
+                        </xar:mlstring>
+                    </label>
                         :
-                    </span>
-                </span>
-                <span style="float: right; width: 78%; text-align: left;">
                     <input type="text" name="nntpgroup" id="nntpgroup" value="#$nntpgroup#" size="25" maxlength="255" />
-                </span>
-            </div>
+                </div>
         </xar:if>
-        <div style="clear: both; padding-top: 10px; width:98%;">
-            <span style="float: left; width: 30%; text-align: right;">
-                <input type="submit" value="#$createlabel#" />
-            </span>
-        </div>
+        <fieldset>
+            <div class="xar-form-input-wrapper-after">
+                 <input type="submit" value="#$createlabel#" />
+            </div>
+        </fieldset>
     </form>
 </div>
 </xar:comment>
