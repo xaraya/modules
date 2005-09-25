@@ -11,175 +11,156 @@
 <div class="xar-mod-body">
     <h2><xar:mlstring>Modify Site Contact Configuration</xar:mlstring></h2>
     
-    <form class="xar-formwidget" method="post" action="&xar-modurl-sitecontact-admin-updateconfig;">
+    <form method="post" action="&xar-modurl-sitecontact-admin-updateconfig;">
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
 
-    <fieldset class="formelements xar-norm">
+    <fieldset>
     <legend><xar:mlstring>General Options</xar:mlstring></legend>
 
-    <p class="param">
-        <label for="shorturls" class="xar-form-label">
-            <span class="help" title="#xarML('Use short URLS for contact form.')#">
+        <div class="xar-form-input-wrapper">
+            <label for="shorturls" class="xar-form-label" title="#xarML('Use short URLS for contact form.')#">
                 <xar:mlstring>Support Short URLs</xar:mlstring>
-            </span>
-        </label>
-        <xar:if condition="xarModGetVar('sitecontact', 'SupportShortURLs')">
-            <input type="checkbox" name="shorturls" id="shorturls" value="1" checked="checked" />
-        <xar:else />
-            <input type="checkbox" name="shorturls" id="shorturls" value="1" />
-        </xar:if>
-    </p>
-    <p class="param">
-                <label for = "usealias" class="xar-form-label">
-                    <span clas"help" title="#xarML('Use an alias instead of the module name')#">
-                        <xar:mlstring>
-                            Use a module alias
-                        </xar:mlstring>
-                </label>
-                <xar:if condition="xarModGetVar('sitecontact', 'useModuleAlias')">
-                    <input type="checkbox" name="modulealias" id="modulealias" value="1" checked="checked" />
-                <xar:else />
-                    <input type="checkbox" name="modulealias" id="modulealias" value="1" />
-                </xar:if>
+            </label>
+            <xar:if condition="xarModGetVar('sitecontact', 'SupportShortURLs')">
+                <input type="checkbox" name="shorturls" id="shorturls" value="1" checked="checked" />
+            <xar:else />
+                <input type="checkbox" name="shorturls" id="shorturls" value="1" />
+            </xar:if>
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label for = "usealias" class="xar-form-label" title="#xarML('Use an alias instead of the module name')#">
+                <xar:mlstring>
+                    Use a module alias
+                </xar:mlstring>
+            </label>
+            <xar:if condition="xarModGetVar('sitecontact', 'useModuleAlias')">
+                <input type="checkbox" name="modulealias" id="modulealias" value="1" checked="checked" />
+            <xar:else />
+                <input type="checkbox" name="modulealias" id="modulealias" value="1" />
+            </xar:if>
 
-    </p>
-            <p class="param">
-                <label for="aliasname" class="xar-form-label">
-                    <span class="help" title="#xarML('The name of module alias to be used.')#">
-                        <xar:mlstring>
-                            Module Alias Name
-                        </xar:mlstring>
-                    </span>
-                </label>
-                <input type="text" name="aliasname" id="aliasname" value="#xarModGetVar('sitecontact', 'aliasname')#" size="32" maxlength="100" />
-            </p>
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label for="aliasname" class="xar-form-label" title="#xarML('The name of module alias to be used.')#">
+                    <xar:mlstring>
+                        Module Alias Name
+                    </xar:mlstring>
+            </label>
+            <input type="text" name="aliasname" id="aliasname" value="#xarModGetVar('sitecontact', 'aliasname')#" size="32" maxlength="100" />
+        </div>
 
-
-    <p class="param">
-        <label for="scdefaultemail" class="xar-form-label">
-            <span class="help" title="#xarML('Default site email for receiving and sending contact emails. Defaults to Admin email')#">
+        <div class="xar-form-input-wrapper">
+            <label for="scdefaultemail" class="xar-form-label" title="#xarML('Default site email for receiving and sending contact emails. Defaults to Admin email')#">
                 <xar:mlstring>Default email:</xar:mlstring>
-            </span>
-        </label>
-            <input type="text" name="scdefaultemail" id="scdefaultemail" size="40" maxlength="128" value="#$scdefaultemail#" />
-    </p>
 
-    <p class="param">
-        <label for="scdefaultname" class="xar-form-label">
-            <span class="help" title="#xarML('Default name for receiving and sending contact emails. Defaults to site Admin name')#">
+            </label>
+            <input type="text" name="scdefaultemail" id="scdefaultemail" size="40" maxlength="128" value="#$scdefaultemail#" />
+        </div>
+
+        <div class="xar-form-input-wrapper">
+            <label for="scdefaultname" class="xar-form-label" title="#xarML('Default name for receiving and sending contact emails. Defaults to site Admin name')#">
                 <xar:mlstring>Default email name:</xar:mlstring>
-            </span>
-        </label>
+            </label>
             <input type="text" name="scdefaultname" id="scdefaultname" size="40" maxlength="128" value="#$scdefaultname#" />
-    </p>
+        </div>
     </fieldset>
 
-   <fieldset class="formelements xar-norm">
+    <fieldset>
     <legend><xar:mlstring>Contact Page Options</xar:mlstring></legend>
 
-    <p class="param">
-         <label for="customtitle" class="xar-form-label">
-            <span class="help" title="#xarML('Custom title for your contact page.')#">
+        <div class="xar-form-input-wrapper">
+            <label for="customtitle" class="xar-form-label" title="#xarML('Custom title for your contact page.')#">
                <xar:mlstring>Custom page title:</xar:mlstring>
-            </span>
-        </label>
-        <input type="text" name="customtitle" id="customtitle" size="40" maxlength="128" value="#$customtitle#" />
-    </p>
+            </label>
+            <input type="text" name="customtitle" id="customtitle" size="40" maxlength="128" value="#$customtitle#" />
+        </div>
 
-    <p class="param">
-         <label for="customtext" class="xar-form-label">
-             <span class="help" title="#xarML('Custom text for the contact page. You can use HTML here if configured on your site.')#">
+        <div class="xar-form-input-wrapper">
+            <label for="customtext" class="xar-form-label" title="#xarML('Custom text for the contact page. You can use HTML here if configured on your site.')#">
                  <xar:mlstring>Your custom text:</xar:mlstring>
-            </span>
-         </label>
+            </label>
             <textarea name="customtext" id="customtext" rows="5" cols="50">#$customtext#</textarea>
-    </p>
-
-    <p class="param">
-         <label for="webconfirmtext" class="xar-form-label">
-             <span class="help" title="#xarML('Custom text displayed on your site after the user sends their message.')#">
+        </div>
+    
+        <div class="xar-form-input-wrapper">
+         <label for="webconfirmtext" class="xar-form-label" title="#xarML('Custom text displayed on your site after the user sends their message.')#">
                  <xar:mlstring>Confirm Page Text:</xar:mlstring>
-             </span>
         </label>
             <textarea name="webconfirmtext" id="webconfirmtext" rows="5" cols="50">#$webconfirmtext#</textarea>
-    </p>
-    
+        </div>
     </fieldset>
 
-   <fieldset class="formelements xar-norm">
+   <fieldset>
     <legend><xar:mlstring>User Email Options</xar:mlstring></legend>
-    <p class="param">
-         <label for="optiontext" class="xar-form-label">
-             <span class="help" title="#xarML('Subject and optional email address per line. Form : Subject[semicolon]email[comma]')#">
+        <div class="xar-form-input-wrapper">
+         <label for="optiontext" class="xar-form-label" title="#xarML('Subject and optional email address per line. Form : Subject[semicolon]email[comma]')#">
                  <xar:mlstring>Options for subject with optional alternative email address:</xar:mlstring>
-             </span>
          </label>
-            <textarea name="optiontext" id="optiontext" rows="10" cols="50">#$optiontext#</textarea>
-   </p>
-   <p style="clear:both;float:right; text-align:left; width: 70%; padding-left:0.5em; margin-top:5px; margin-bottom:5px; margin-right:0.5em;">
+         <textarea name="optiontext" id="optiontext" rows="10" cols="50">#$optiontext#</textarea>
+        </div>
 
-    <xar:mlstring>Each line above should be entered with the semicolon and comma: </xar:mlstring>
-    <strong><xar:mlstring>subject;optional-email,</xar:mlstring></strong><br />
-    <xar:mlstring>The optional email and semicolon can be omitted but must have comma to separate each line.</xar:mlstring>
-   </p>
+        <div class="xar-form-input-wrapper-after">
+            <xar:mlstring>Each line above should be entered with the semicolon and comma: </xar:mlstring>
+           <strong><xar:mlstring>subject;optional-email,</xar:mlstring></strong><br />
+            <xar:mlstring>The optional email and semicolon can be omitted but must have comma to separate each line.</xar:mlstring>
+       </div>
 
-    <p class="param">
-         <label for="allowcopy" class="xar-form-label">
-             <span class="help" title="#xarML('Allow sending of copy to feedback sender')#">
-                <xar:mlstring>Allow a copy of note to feedback sender?</xar:mlstring>
-             </span>
-         </label>
-        <xar:if condition="xarModGetVar('sitecontact', 'allowcopy')">
-            <input type="checkbox" name="allowcopy" id="allowcopy" value="1" checked="checked" />
-        <xar:else />
-            <input type="checkbox" name="allowcopy" id="allowcopy" value="1" />
-        </xar:if>
-    </p>
+        <div class="xar-form-input-wrapper">
+            <label for="allowcopy" class="xar-form-label" title="#xarML('Allow sending of copy to feedback sender')#">
+                 <xar:mlstring>Allow a copy of note to feedback sender?</xar:mlstring>
+            </label>
+            <xar:if condition="xarModGetVar('sitecontact', 'allowcopy')">
+                <input type="checkbox" name="allowcopy" id="allowcopy" value="1" checked="checked" />
+            <xar:else />
+                <input type="checkbox" name="allowcopy" id="allowcopy" value="1" />
+            </xar:if>
+       </div>
 
-    <p class="param">
-         <label for="usehtmlemail" class="xar-form-label">
-             <span class="help" title="#xarML('Allow HTML in feedback emails')#">
+        <div class="xar-form-input-wrapper">
+            <label for="usehtmlemail" class="xar-form-label" title="#xarML('Allow HTML in feedback emails')#">
                 <xar:mlstring>Use HTML Email?</xar:mlstring>
-            </span>
-        </label>
-        <xar:if condition="xarModGetVar('sitecontact', 'usehtmlemail')">
-            <input type="checkbox" name="usehtmlemail" id="usehtmlemail" value="1" checked="checked" />
-        <xar:else />
-            <input type="checkbox" name="usehtmlemail" id="usehtmlemail" value="1" />
-        </xar:if>
-    </p>
+            </label>
+            <xar:if condition="xarModGetVar('sitecontact', 'usehtmlemail')">
+                <input type="checkbox" name="usehtmlemail" id="usehtmlemail" value="1" checked="checked" />
+            <xar:else />
+                <input type="checkbox" name="usehtmlemail" id="usehtmlemail" value="1" />
+            </xar:if>
+        </div>
 
-    <p class="param">
-          <label for="notetouser" class="xar-form-label">
-              <span class="help" title="#xarML('Included in email to user - use HTML only if email configured for HTML')#">
-                  <xar:mlstring>Default emailed note to user (in template as ##$notetouser##):</xar:mlstring>
-              </span>
-         </label>
-         <textarea name="notetouser" id="notetouser" rows="10" cols="50">#$notetouser#</textarea>
-    </p>
-       <p style="float:right; text-align:left; width: 70%; padding-left:0.5em; margin-top:5px; margin-bottom:5px; margin-right:0.5em;">
+        <div class="xar-form-input-wrapper">
+            <label for="notetouser" class="xar-form-label" title="#xarML('Included in email to user - use HTML only if email configured for HTML')#">
+                <xar:mlstring>Default emailed note to user (in template as ##$notetouser##):</xar:mlstring>
+             </label>
+             <textarea name="notetouser" id="notetouser" rows="10" cols="50">#$notetouser#</textarea>
+        </div>
+
+       <div  class="xar-form-input-wrapper-after">
 
         <xar:mlstring>You can use the following variables in your email:</xar:mlstring>
-       </p>
-       <p style="float:right; text-align:left; width: 70%; padding-left:0.5em; margin-top:5px; margin-bottom:5px; margin-right:0.5em;">
+       </div>
+       <div  class="xar-form-input-wrapper-after">
 
         %%useremail%%    &nbsp;&nbsp;<xar:mlstring>User email</xar:mlstring><br />
          %%username%%     &nbsp;&nbsp;<xar:mlstring>User name</xar:mlstring><br />
          %%requesttext%%  &nbsp;&nbsp;<xar:mlstring>Subject from drop down list</xar:mlstring><br />
          %%company%%  &nbsp;&nbsp;<xar:mlstring>Organization</xar:mlstring><br />
-         </p>
+         </div>
 
     </fieldset>
 
-    <div style="clear: both; padding-top: 10px;">
-        #$hooks#
-    </div>
-
-    <xar:set name="$updatebutton"><xar:mlstring>Update Configuration</xar:mlstring></xar:set>
-
-    <div class="xar-clear-both xar-align-center">
-             <input type="submit" value="#$updatebutton#" />
-    </div>
+    <fieldset>
+       <legend><xar:mlstring>Enabled Hooks</xar:mlstring></legend>
+            <xar:if condition="!empty($hooks)">
+                <xar:foreach in="$hooks" key="$hookmodule">
+                    #$hooks[$hookmodule]#
+                </xar:foreach>
+            </xar:if>
+    </fieldset>
+    <fieldset>
+        <div class="xar-form-input-wrapper-after">
+            <xar:set name="$updatebutton"><xar:mlstring>Update Configuration</xar:mlstring></xar:set>
+                <input type="submit" value="#$updatebutton#" />
+        </div>
+    </fieldset>
     </form>
-
 </div>

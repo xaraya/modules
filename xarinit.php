@@ -133,6 +133,12 @@ function sitecontact_upgrade($oldversion)
  */
 function sitecontact_delete()
 {
+    /* Remove any module aliases before deleting module vars */
+    $aliasname =xarModGetVar('sitecontact','aliasname');
+    $isalias = xarModGetAlias($aliasname);
+    if (isset($isalias) && ($isalias =='sitecontact')){
+        xarModDelAlias($aliasname,'sitecontact');
+    }
     // Delete any module variables
      xarModDelAllVars('sitecontact');
     // UnRegister blocks

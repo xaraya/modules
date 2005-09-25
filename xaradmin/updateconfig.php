@@ -40,12 +40,9 @@ function sitecontact_admin_updateconfig()
     xarModSetVar('sitecontact', 'scdefaultemail', $scdefaultemail);
     xarModSetVar('sitecontact', 'scdefaultname', $scdefaultname);
     if (isset($aliasname) && trim($aliasname)<>'') {
-        xarModSetVar('sitecontact', 'aliasname', trim($aliasname));
         xarModSetVar('sitecontact', 'useModuleAlias', $modulealias);
     } else{
-        xarModSetVar('sitecontact', 'aliasname', '');
-        xarModSetVar('sitecontact', 'useModuleAlias', 0);
-
+         xarModSetVar('sitecontact', 'useModuleAlias', 0);
     }
     $scdefaultemail=trim($scdefaultemail);
     if ((!isset($scdefaultemail)) || $scdefaultemail=='') {
@@ -61,24 +58,22 @@ function sitecontact_admin_updateconfig()
 
     xarModSetVar('sitecontact', 'scdefaultname', $scdefaultname);
 
-    $useAliasName = xarModGetVar('sitecontact', 'useModuleAlias');
-    $aliasname = trim(xarModGetVar('sitecontact','aliasname'));
+    $currentalias = xarModGetVar('sitecontact','aliasname');
+    $newalias = trim($aliasname);
+    $hasalias= xarModGetAlias($currentalias);
+    $useAliasName= xarModGetVar('sitecontact','useModuleAlias');
 
-    if (($useAliasName==1) && !empty($aliasname)){
-        $usealias = 1;
-        /*check for old alias and delete it*/
-        $oldalias = xarModGetAlias('sitecontact');
-        if (isset($oldalias)) {
-            xarModDelAlias($oldalias,'sitecontact');
+    if (($useAliasName==1) && !empty($newalias)){
+        /* we want to use an aliasname */
+        /* First check for old alias and delete it */
+        if (isset($hasalias) && ($hasalias =='sitecontact')){
+            xarModDelAlias($currentalias,'sitecontact');
         }
-          /* set the new alias */
-        xarModSetAlias($aliasname,'sitecontact');
-    } elseif (($useAliasName==0) && !empty($aliasname)) {
-        $usealias = 0;
-        xarModDelAlias($aliasname,'sitecontact');
-    } else {
-        $usealias=0;
+        /* now set the new alias if it's a new one */
+          xarModSetAlias($newalias,'sitecontact');
     }
+    /* now set the alias modvar */
+    xarModSetVar('sitecontact', 'aliasname', $newalias);
 
     xarModCallHooks('module','updateconfig','sitecontact',
               array('module' => 'sitecontact'));

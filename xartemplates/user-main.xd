@@ -1,6 +1,5 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
-<xar:style scope="module" file="forms" />
 <script type="text/javascript">
 <!--
     // Enter name of mandatory fields
@@ -32,58 +31,53 @@
         </p>
        
        <xar:if condition="isset($withupload) and $withupload">
-            <form class="xar-formwidget" action="#xarModUrl('sitecontact', 'user', 'contactus')#" method="post" enctype="multipart/form-data" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
+            <form action="#xarModUrl('sitecontact', 'user', 'contactus')#" method="post" enctype="multipart/form-data" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
         <xar:else/>
-            <form class="xar-formwidget" action="#xarModUrl('sitecontact', 'user', 'contactus')#" method="post" enctype="application/x-www-form-urlencoded" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
+            <form action="#xarModUrl('sitecontact', 'user', 'contactus')#" method="post" enctype="application/x-www-form-urlencoded" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
         </xar:if>
-            <fieldset class="formelements xar-norm">
+            <fieldset>
                 <legend>
-                    <strong>
                         #$contacttitle#
-                    </strong>
                 </legend>
             <input type="hidden" name="useripaddress" value="#$useripaddress#" />
             <input type="hidden" name="userreferer" value="#$userreferer#" />
             <input type="hidden" name="authid" id="authid" value="#$authid#" />
             <input type="hidden" name="message" id="message" value="1" />
-             <p class="param">
-                <label for="username" class="required">
-                    <span class="help" title="#xarML('Enter your name')#">
+            <div class="xar-form-input-wrapper">
+                <label for="username" class="xar-form-label" title="#xarML('Enter your name')#">
                         <xar:mlstring>
                             Your Name
                         </xar:mlstring>
-                    </span>
                 </label>
+
                 <xar:if condition = "xarUserIsLoggedIn()">
                     <input type="hidden" name="username" id="username" value="#xarUserGetVar('name')#" />
                     #xarUserGetVar('name')#
                 <xar:else />
-                    <input type="text" name="username" id="username" value="" size="25" maxlength="25" />
+                    <input type="text" name="username" id="username" value="" size="25" maxlength="25" /> <xar:mlstring>(required)</xar:mlstring>
                 </xar:if>
-            </p>    
-            <p class="param">
-                <label for="useremail" class="required">
-                    <span class="help" title="#xarML('Enter your email')#">
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="useremail" class="xar-form-label" title="#xarML('Enter your email')#">
                         <xar:mlstring>
                             Your Email
                         </xar:mlstring>
-                    </span>
                 </label>
+
                 <xar:if condition = "xarUserIsLoggedIn()">
                    <input type="hidden" name="useremail" id="useremail" value="#xarUserGetVar('email')#" />
                        #xarUserGetVar('email')#
                 <xar:else />
-                    <input type="text" name="useremail" id="useremail" value="" size="25" maxlength="40" />
+                    <input type="text" name="useremail" id="useremail" value="" size="25" maxlength="40" /> <xar:mlstring>(required)</xar:mlstring>
                 </xar:if>
-            </p>   
-            <p class="param">
-                <label for="requesttext" class="required">
-                    <span class="help" title="#xarML('Subject')#">
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="requesttext" class="xar-form-label" title="#xarML('Subject')#">
                         <xar:mlstring>
                             Subject
                         </xar:mlstring>
-                    </span>
                 </label>
+
                 <select id="requesttext" name="requesttext">
                 <xar:foreach in="$optionitems" value="$optionrequest" key="$key" >
                     <xar:if condition="$optionrequest[0] eq $requesttext">
@@ -93,27 +87,24 @@
                     </xar:if>
                 </xar:foreach>
                 </select>
-            </p>   
-            <p class="param">
-                <label for="company">
-                    <span class="help" title="#xarML('Please enter your organization name.')#">
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="company" class="xar-form-label" title="#xarML('Please enter your organization name.')#">
                         <xar:mlstring>
                             Organization
                         </xar:mlstring>
-                    </span>
                 </label>
                 <input type="text" name="company" id="company" size="40" value="" maxlength="128"  />
-            </p> 
-            <p class="param">
-                <label for="usermessage" class="required">
-                    <span class="help" title="#xarML('Type in your message')#">
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="usermessage" class="xar-form-label" title="#xarML('Type in your message')#">
                         <xar:mlstring>
                             Message
                         </xar:mlstring>
-                    </span>
                 </label>
+
                 <textarea name="usermessage" id="usermessage" rows="5" cols="40"></textarea>
-            </p>
+            </div>
             <xar:comment>
                 Dynamic Data properties added here for input
             </xar:comment>
@@ -121,34 +112,33 @@
                 <xar:data-getitem name="$properties" module="sitecontact" itemid="0" />
                 <xar:if condition="isset($properties) and count($properties) gt 0">
                     <xar:foreach in="$properties" key="$name">
-                    <p class="param">
-                        <label for="$properties[$name]">
-                            <span class="help" title="#$properties[$name]#">
+                    <div class="xar-form-input-wrapper">
+                        <label for="$properties[$name]" class="xar-form-label"  title="#$properties[$name]#">
                                 <xar:data-label property="$properties[$name]" label="id" />
-                            </span>
                         </label>
                         <xar:data-input property="$properties[$name]" />
-                    </p>
+                    </div>
                     </xar:foreach>
                 </xar:if>
             </xar:if>
 
             <xar:if condition="xarModGetVar('sitecontact', 'allowcopy')">
-                <p class="param">
-                    <label for="sendcopy">
-                        <span class="help" title="#xarML('Would you like to have a copy of the message sent to your email')#">
-                            <xar:mlstring>
-                                Copy email to you
-                            </xar:mlstring>
-                        </span>
-                    </label>
-                    <input type="checkbox" name="sendcopy" id="sendcopy" value="1" checked="checked" />
-                </p>   
+            <div class="xar-form-input-wrapper">
+                <label for="sendcopy" class="xar-form-label" title="#xarML('Would you like to have a copy of the message sent to your email')#">
+                        <xar:mlstring>
+                            Copy email to you
+                        </xar:mlstring>
+                </label>
+                <input type="checkbox" name="sendcopy" id="sendcopy" value="1" checked="checked" />
+            </div>
             </xar:if>
-           <p class="xar-align-center">
-                <input type="submit" value="#xarML('Submit')#" />
-            </p>
-        </fieldset>
-    </form>
+           </fieldset>
+
+           <fieldset>
+               <div class="xar-form-input-wrapper-after">
+                  <input type="submit" value="#xarML('Submit')#" />
+               </div>
+           </fieldset>
+      </form>
 </xar:if>
 </div>
