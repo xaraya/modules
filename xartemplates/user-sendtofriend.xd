@@ -15,14 +15,12 @@
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <input type="hidden" name="aid" id="aid" value="#$aid#" />
 
-        <fieldset class="formelements xar-norm">
+        <fieldset>
         <legend><xar:mlstring>Email Details</xar:mlstring></legend>
 
-        <p class="param">
-            <label for="username" class="xar-form-label">
-                <span class="help" title="#xarML('Your Name')#">
+        <div class="xar-form-input-wrapper">
+            <label for="username" class="xar-form-label" title="#xarML('Your Name')#">
                     <xar:mlstring>Your Name</xar:mlstring>:
-                </span>
             </label>
             <xar:if condition = "xarUserIsLoggedIn()">
                 <input type="hidden" name="username" id="username" value="#xarUserGetVar('name')#" />
@@ -30,13 +28,11 @@
             <xar:else />
                 <input type="text" name="username" id="username" value="" size="25" maxlength="25" />
             </xar:if>
-        </p>
+        </div>
     
-        <p class="param">
-            <label for="useremail" class="xar-form-label">
-                <span class="help" title="#xarML('Your Email')#">
+        <div class="xar-form-input-wrapper">
+            <label for="useremail" class="xar-form-label" title="#xarML('Your Email')#">
                     <xar:mlstring>Your Email</xar:mlstring>:
-                </span>
             </label>
             <xar:if condition = "xarUserIsLoggedIn()">
                 <input type="hidden" name="useremail" id="useremail" value="#xarUserGetVar('email')#" />
@@ -44,43 +40,37 @@
             <xar:else />
                 <input type="text" name="useremail" id="useremail" value="" size="25" maxlength="25" />
             </xar:if>
-        </p>
+        </div>
 
-        <p class="param">
-            <label for="fname" class="xar-form-label">
-                <span class="help" title="#xarML("Your friend's name")#">
+        <div class="xar-form-input-wrapper">
+            <label for="fname" class="xar-form-label" title="#xarML("Your friend's name")#">
                     <xar:mlstring>Your Friend's Name</xar:mlstring>:
-                </span>
             </label>
             <input type="text" name="fname" id="fname" value="" size="25" maxlength="25" />
-        </p>
+        </div>
 
-        <p class="param">
-            <label for="info" class="xar-form-label">
-
-                <span class="help" title="#xarML('Email Address or your friend')#">
+        <div class="xar-form-input-wrapper">
+            <label for="info" class="xar-form-label" title="#xarML('Email Address or your friend')#">
                     <xar:mlstring>Your Friend's Email Address:</xar:mlstring>
-                </span>
             </label>
             <input type="text" name="info" id="info" value="" size="35" maxlength="255" />
-        </p>
+        </div>
 
         <xar:if condition="xarModGetVar('recommend', 'usernote')">
-        <p class="param">
-            <label for="usernote" class="xar-form-label">
-                <span class="help" title="#xarML('Your Added Notes')#">
+        <div class="xar-form-input-wrapper">
+            <label for="usernote" class="xar-form-label" title="#xarML('Your Added Notes')#">
                     <xar:mlstring>Your Added Notes</xar:mlstring>
-                </span>
             </label>
             <textarea name="usernote" id="usernote" rows="10" cols="40"></textarea>
-        </p>
+        </div>
         </xar:if>
 
         </fieldset>
-
-        <div class="xar-clear-both xar-align-center">
-            <input type="submit" value="#$submit#" />
-        </div>
+        <fieldset>
+            <div class="xar-form-input-wrapper-after">
+                <input type="submit" value="#$submit#" />
+            </div>
+        </fieldset>
         </form>
     </xar:if>
 </div>

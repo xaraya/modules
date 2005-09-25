@@ -7,8 +7,8 @@
     </span>
 </div>
 <div class="xar-mod-body">
-    <form class="xar-formwidget" name="post" id="post" action="&xar-modurl-recommend-admin-modifyconfig;" method="post" enctype="application/x-www-form-urlencoded">
-        <fieldset class="formelements xar-norm">
+    <form name="post" id="post" action="&xar-modurl-recommend-admin-modifyconfig;" method="post" enctype="application/x-www-form-urlencoded">
+        <fieldset>
             <legend>
                 <xar:mlstring>
                     Statistic
@@ -19,61 +19,55 @@
             <p><xar:mlstring>Last Email sent From:</xar:mlstring>&nbsp;&nbsp; #$username#</p>
             <p><xar:mlstring>Date last sent:</xar:mlstring>&nbsp;&nbsp;#xarLocaleGetFormattedDate('long',$date)#</p>
         </fieldset>
-        <fieldset class="formelements xar-norm">
+        <fieldset>
             <legend>
                 <xar:mlstring>
                     Modify Configuration
                 </xar:mlstring>
             </legend>
-    <input type="hidden" name="authid" id="authid" value="#$authid#" />
-    <input type="hidden" name="phase" id="phase" value="update" />
-       <p class="param">
-            <label for="shorturls" class="xar-form-label">
-                <span class="help" title="#xarML('Support Short URLs')#">
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="hidden" name="phase" id="phase" value="update" />
+            <div class="xar-form-input-wrapper">
+                <label for="shorturls" class="xar-form-label" title="#xarML('Support Short URLs')#">
                     <xar:mlstring>Support Short URLs</xar:mlstring>
-                </span>
-            </label>
-            <xar:if condition="xarModGetVar('recommend', 'SupportShortURLs')">
-                <input type="checkbox" name="shorturls" id="shorturls" value="1" checked="checked" />
-            <xar:else />
-                <input type="checkbox" name="shorturls" id="shorturls" value="1" />
-            </xar:if>
-       </p>
-       <p class="param">
-            <label for="usernote" class="xar-form-label">
-                <span class="help" title="#xarML('Support Short URLs')#">
+                </label>
+                <xar:if condition="xarModGetVar('recommend', 'SupportShortURLs')">
+                    <input type="checkbox" name="shorturls" id="shorturls" value="1" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="shorturls" id="shorturls" value="1" />
+                </xar:if>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="usernote" class="xar-form-label" title="#xarML('Support Short URLs')#">
                       <xar:mlstring>Allow Users to Send Notes?</xar:mlstring>
-                </span>
-            </label>
-            <xar:if condition="xarModGetVar('recommend', 'usernote')">
-                <input type="checkbox" name="usernote" id="usernote" value="1" checked="checked" />
-            <xar:else />
-                <input type="checkbox" name="usernote" id="usernote" value="1" />
-            </xar:if>
-       </p>
-       <p class="param">
-            <label for="usernote" class="xar-form-label">
-                <span class="help" title="#xarML('Email Subject')#">
+                </label>
+                <xar:if condition="xarModGetVar('recommend', 'usernote')">
+                    <input type="checkbox" name="usernote" id="usernote" value="1" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="usernote" id="usernote" value="1" />
+                </xar:if>
+           </div>
+           <div class="xar-form-input-wrapper">
+               <label for="usernote" class="xar-form-label" title="#xarML('Email Subject')#">
                     <xar:mlstring>Email Subject</xar:mlstring>
-                </span>
-            </label>
-            <input type="text" name="title" id="title" value="#$title#" size="35" maxlength="100" />
-        </p>
+               </label>
+               <input type="text" name="title" id="title" value="#$title#" size="35" maxlength="100" />
+           </div>
 
-       <p class="param">
-            <label for="template" class="xar-form-label">
-                <span class="help" title="#xarML('Email Template')#">
+           <div class="xar-form-input-wrapper">
+            <label for="template" class="xar-form-label" title="#xarML('Email Template')#">
                     <xar:mlstring>Email Template</xar:mlstring>
-                </span>
             </label>
             <textarea rows="20" cols="40" name="template" id="template" tabindex="1">#$template#</textarea>
-       </p>
-       <p class="xar-form-input-wrapper-after">
+          </div>
+          <div class="xar-form-input-wrapper-after">
             <xar:mlstring>This is the template for the mail to be sent.  If you have HTML mail enabled in your Mail Module, then HTML tags are usable.</xar:mlstring>
-       </p>
+          </div>
     </fieldset>
-    <div class="xar-clear-both xar-align-center">
-        <input type="submit" value="#xarML('Save config')#" />
-    </div>
+    <fieldset>
+        <div class="xar-form-input-wrapper-after">
+            <input type="submit" value="#xarML('Save config')#" />
+       </div>
+    </fieldset>
     </form>
 </div>

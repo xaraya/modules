@@ -117,7 +117,7 @@ function recommend_user_sendfriend()
     /* lets update status and display updated configuration */
     xarResponseRedirect(xarModURL('recommend', 'user', 'sendtofriend', array('message' => '1', 'aid'=>$aid)));
 
-    / * Return true if successful */
+    /* Return true if successful */
     return true;
 }
 ?>
