@@ -50,7 +50,7 @@ function example_admin_modifyconfig()
      * You must also use short URLS for aliases, and provide appropriate encode/decode functions.
      */
     $data['useAliasName'] = xarModGetVar('example', 'useModuleAlias');
-    $data['aliasname ']= xarModGetVar('example','aliasname') ? true : false;
+    $data['aliasname ']= xarModGetVar('example','aliasname');
 
     $hooks = xarModCallHooks('module', 'modifyconfig', 'example',
                        array('module' => 'example'));

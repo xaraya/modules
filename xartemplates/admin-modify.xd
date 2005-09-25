@@ -88,9 +88,10 @@
                 -->
                 #$hooks[$hookmodule]#
 
-        </xar:if>
+
                </xar:foreach>
         </fieldset>
+         </xar:if>
         <fieldset>
             <div class="xar-form-input-wrapper-after">
         <!--
