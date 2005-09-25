@@ -25,12 +25,12 @@ function julian_userapi_email_alerts()
 {
     //load the calendar class
     $c =& xarModAPIFunc('julian','user','factory','calendar');
-    // TODO possibillity to configure when alerts are send (1 day before?, 1 week?)
+    // TODO possibility to configure when alerts are send (1 day before?, 1 week?)
     //get tomorrow's events
     $startdate = date("Y-m-d",strtotime("tomorrow"));
     // get events where to send alertmails for.
 	$events = array();
-    //$events    = $c->getEvents($startdate);
+    // get all the events from tomorrow to tomorrow
     $events = xarModApiFunc('julian','user','getall', array('startdate'=>$startdate, 'enddate'=>$startdate));
     // get all subscriptions per user
     $allsubscriptions = xarModAPIFunc('julian','user','getallsubcriptions');

@@ -1,7 +1,5 @@
 <?php
 /**
-* File: $Id: countevents.php,v 1.1 2005/06/24 11:26:01 michelv01 Exp $
-*
 * Count all events.
 *
 * @package Xaraya eXtensible Management System
