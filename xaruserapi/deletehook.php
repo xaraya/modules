@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id$
- *
  * Delete and item via a hook
  *
- * @package unassigned
- * @copyright (C) 2005 by the Xaraya Development Team.
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -36,7 +34,7 @@ function julian_userapi_deletehook($args)
 
      // Get the id of the object to delete (the id as used in the hooking module).
     if (!isset($objectid) || !is_numeric($objectid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)', 'object ID', 'user', 'createhook', 'julian');
+        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)', 'object ID', 'user', 'deletehook', 'julian');
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
@@ -51,7 +49,7 @@ function julian_userapi_deletehook($args)
      // Convert module name into module id.
     $modid = xarModGetIDFromName($modname);
     if (empty($modid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)','module name', 'user', 'createhook', 'julian');
+        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)','module name', 'user', 'deletehook', 'julian');
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
