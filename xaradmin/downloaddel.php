@@ -17,7 +17,7 @@ function sitetools_admin_downloaddel ($args)
 {
    if (!xarVarFetch('savefile', 'str:1', $savefile,'')) return;
 
-   // Security check
+   /* Security checkn*/
    if (!xarSecurityCheck('AdminSiteTools')) return;
 
    if ((!isset($savefile)) || (empty($savefile))) {
@@ -27,24 +27,24 @@ function sitetools_admin_downloaddel ($args)
        if (!empty($reason)) {
           $status .= '<br /><br />'. xarML('Reason') .' : '. $reason->toString();
        }
-       // Free the exception to tell Xaraya that you handled it
+       /* Free the exception to tell Xaraya that you handled it */
        xarErrorFree();
        return $status;
   }
    $info=array();
-   //check the file exists
+   /*check the file exists */
    $pathtofile=xarModGetVar('sitetools','backuppath');
 
   $filetodelete = $pathtofile.'/'.$savefile;
 
   if (!file_exists($filetodelete)) {
-        // Handle the user exceptions yourself
+        /* Handle the user exceptions yourself */
        $status = xarML('The file to delete does not exist.');
        $reason = xarCurrentError();
        if (!empty($reason)) {
           $status .= '<br /><br />'. xarML('Reason') .' : '. $reason->toString();
        }
-       // Free the exception to tell Xaraya that you handled it
+       /* Free the exception to tell Xaraya that you handled it */
        xarErrorFree();
        return $status;
   }

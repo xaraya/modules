@@ -20,7 +20,7 @@ function sitetools_admin_terminal()
    if (!xarSecurityCheck('AdminSiteTools')) return;
     $output = array();
     if($term_input != '') {
-        // Pass verbatim to database;
+        /* Pass verbatim to database; */
         $dbconn =& xarDBGetConn();
         $result =& $dbconn->Execute($term_input);
         if(!$result) {
@@ -39,8 +39,8 @@ function sitetools_admin_terminal()
             }
         }
     }
-     
-    //$data['term_output'] = print_r($output,true);
+
+    /* $data['term_output'] = print_r($output,true); */
     $data['term_output'] = $output;
     $data['term_input'] = $term_input;
     return $data;

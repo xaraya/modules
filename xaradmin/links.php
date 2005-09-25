@@ -18,7 +18,7 @@ function sitetools_admin_links()
     if (!xarVarFetch('find', 'str:1:', $find, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('check', 'str:1:', $check, '', XARVAR_NOT_REQUIRED)) return;
 
-    // Security check
+    /* Security check */
     if (!xarSecurityCheck('AdminSiteTools')) return;
 
     $data = array();
@@ -36,7 +36,7 @@ function sitetools_admin_links()
         $data['where'] = '';
     }
 
-    // get the list of relevant link fields per module/itemtype
+    /* get the list of relevant link fields per module/itemtype */
     $data['modules'] = xarModAPIFunc('sitetools','admin','getlinkfields');
     if (!isset($data['modules'])) return;
 
@@ -54,42 +54,43 @@ function sitetools_admin_links()
             }
         }
 
-        // nothing more to do here...
+        /* nothing more to do here... */
         if (empty($check)) {
-            // Generate a one-time authorisation code for this operation
+            /* Generate a one-time authorisation code for this operation */
             $data['authid'] = xarSecGenAuthKey();
 
-            // Return the template variables defined in this function
+            /* Return the template variables defined in this function */
             return $data;
         }
     }
 
-    // Confirm authorisation code.
+    /* Confirm authorisation code. */
     if (!xarSecConfirmAuthKey()) return;
 
     if (!empty($check)) {
-        // let's run without interruptions for a while :)
+        /* let's run without interruptions for a while :) */
         @ignore_user_abort(true);
         @set_time_limit(30*60);
 
-        // For some reason, PHP thinks it's in the Apache root during shutdown functions,
-        // so we save the current base dir here - otherwise xarModAPIFunc() will fail
+        /* For some reason, PHP thinks it's in the Apache root during shutdown functions,
+         * so we save the current base dir here - otherwise xarModAPIFunc() will fail
+         */
         $GLOBALS['xarSitetools_BaseDir'] = realpath('.');
 
-        // register the shutdown function that will execute the jobs after this script finishes
+        /* register the shutdown function that will execute the jobs after this script finishes */
         register_shutdown_function('sitetools_admin_startcheck');
 
-        // try to force a reload (still doesn't work for Windows servers)
+        /* try to force a reload (still doesn't work for Windows servers) */
         $url = xarModURL('sitetools','admin','links');
         $url = preg_replace('/&amp;/','&',$url);
         header("Refresh: 0; URL=$url");
 
         $data['checked'] = xarML('Link check started');
 
-        // Generate a one-time authorisation code for this operation
+        /* Generate a one-time authorisation code for this operation *?
         $data['authid'] = xarSecGenAuthKey();
 
-        // Return the template variables defined in this function
+        /* Return the template variables defined in this function */
         return $data;
     }
 
@@ -110,7 +111,7 @@ function sitetools_admin_links()
         $fields[$matches[1]][$matches[2]][] = $matches[3];
     }
 
-    // find the links in the different fields and save them to the database
+    /* find the links in the different fields and save them to the database */
     $data['count'] = xarModAPIFunc('sitetools','admin','findlinks',
                                    array('fields' => $fields,
                                          'skiplocal' => $skiplocal));
@@ -129,16 +130,16 @@ function sitetools_admin_links()
     xarModSetVar('sitetools','links_method',$method);
     xarModSetVar('sitetools','links_follow',$follow);
 
-    // some clean-up of previous link checks
+    /* some clean-up of previous link checks */
     if (!empty($data['checked'])) {
         $data['checked'] = '';
         xarModDelVar('sitetools','links_checked');
     }
 
-    // Generate a one-time authorisation code for this operation
+    /* Generate a one-time authorisation code for this operation */
     $data['authid'] = xarSecGenAuthKey();
 
-    //return
+    /*return */
     return $data;
 }
 
@@ -147,8 +148,9 @@ function sitetools_admin_links()
  */
 function sitetools_admin_startcheck()
 {
-    // For some reason, PHP thinks it's in the Apache root during shutdown functions,
-    // so we move back to our own base dir first - otherwise xarModAPIFunc() will fail
+    /* For some reason, PHP thinks it's in the Apache root during shutdown functions,
+     * so we move back to our own base dir first - otherwise xarModAPIFunc() will fail
+     */
     if (!empty($GLOBALS['xarSitetools_BaseDir'])) {
         chdir($GLOBALS['xarSitetools_BaseDir']);
     }

@@ -3,7 +3,7 @@
 <!-- the variables used in this menu come from example_admin_menu() -->
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:mlstring>Example Administration</xar:mlstring>
+        <xar:mlstring>SiteTools Administration</xar:mlstring>
     </span>
 </div>
 <div class="xar-mod-body">
@@ -20,19 +20,19 @@
         </tr>
         <xar:foreach in="$items" value="$item">
         <tr>
-            <td>#$item['name']#</td>
-            <td>#$item['number']#</td>
+            <td>#$item.name#</td>
+            <td>#$item.name#</td>
             <td>
-            <xar:if condition="empty($item['editurl'])">
-                #$item['edittitle']#
+            <xar:if condition="empty($item.editurl)">
+                #$item.editurl#
             <xar:else />
-                <a href="#$item['editurl']#">#$item['edittitle']#</a>
+                <a href="#$item.editurl#">#$item.edititle#</a>
             </xar:if>
             |
-            <xar:if condition="empty($item['deleteurl'])">
-                #$item['deletetitle']#
+            <xar:if condition="empty($item.deleteurl)">
+                #$item.deleteurl#
             <xar:else />
-                <a href="#$item['deleteurl']#">#$item['deletetitle']#</a>
+                <a href="#$item.deleteurl#">#$item.deletetitle#</a>
             </xar:if>
             </td>
         </tr>

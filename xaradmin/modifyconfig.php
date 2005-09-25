@@ -15,14 +15,15 @@
  */
 function sitetools_admin_modifyconfig()
 { 
-    // Initialise the $data variable that will hold the data to be used in
-    // the blocklayout template, and get the common menu configuration
+    /* Initialise the $data variable that will hold the data to be used in
+     * the blocklayout template, and get the common menu configuration
+     */
     $data = xarModAPIFunc('sitetools', 'admin', 'menu');
-    // Security check - important to do this as early as possible
+    /* Security check - important to do this as early as possible */
     if (!xarSecurityCheck('AdminSiteTools')) return;
-    // Generate a one-time authorisation code for this operation
-    $data['authid'] = xarSecGenAuthKey(); 
-    // Specify some labels and values for display
+    /* Generate a one-time authorisation code for this operation */
+    $data['authid'] = xarSecGenAuthKey();
+    /* Specify some labels and values for display */
     $data['adopath']     = xarModGetVar('sitetools','adocachepath');
     $data['rsspath']     = xarModGetVar('sitetools','rsscachepath');
     $data['templpath']   = xarModGetVar('sitetools','templcachepath');
@@ -38,9 +39,9 @@ function sitetools_admin_modifyconfig()
     $data['defrsspath']   = xarCoreGetVarDirPath()."/cache/rss";
     $data['deftemplpath'] = xarCoreGetVarDirPath()."/cache/templates";
 
-    // scheduler functions available in sitetools at the moment
+    /* scheduler functions available in sitetools at the moment */
     $schedulerapi = array('optimize','backup');
-    //Define for each job type
+    /* Define for each job type */
     $data['schedule']['optimize']=xarML('Run Optimize Job');
     $data['schedule']['backup']=xarML('Run Backup Job');
 
@@ -75,7 +76,7 @@ function sitetools_admin_modifyconfig()
         $data['hooks'] = $hooks;
     } 
 
-   // Return the template variables defined in this function
+   /*Return the template variables defined in this function */
  return $data;
 }
 ?>

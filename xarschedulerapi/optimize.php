@@ -18,15 +18,17 @@ function sitetools_schedulerapi_optimize($args)
 {
     extract($args);
 
-    // DO LATER: get some configuration info here if necessary
-    // for now lets just use current database
+    /* DO LATER: get some configuration info here if necessary
+     * for now lets just use current database
+     */
     if (empty($dbname)){
         $dbconn =& xarDBGetConn();
             $dbname= xarDBGetName();
     }
 
-    //   It may return true (or some logging text) if it succeeds, and null if it fails
-    //   return
+    /*   It may return true (or some logging text) if it succeeds, and null if it fails
+     *   return
+     */
      $tabledata=xarModAPIFunc('sitetools','admin','optimizedb',
                       array('dbname' => $dbname));
 

@@ -18,26 +18,25 @@ function sitetools_admin_optimize()
 {
    if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return;
 
-    // Security check
+    /* Security check */
     if (!xarSecurityCheck('AdminSiteTools')) return;
-    // Check for confirmation.
+    /* Check for confirmation. */
     if (empty($confirm)) {
-        // No confirmation yet - display a suitable form to obtain confirmation
-        // of this action from the user
+        /* No confirmation yet - display a suitable form to obtain confirmation
+         * of this action from the user
+         */
         $data['optimized']=false;
-         // Generate a one-time authorisation code for this operation
+        /* Generate a one-time authorisation code for this operation */
         $data['authid'] = xarSecGenAuthKey();
-       // Return the template variables defined in this function
+        /* Return the template variables defined in this function */
         return $data;
     }
-    // If we get here it means that the user has confirmed the action
+    /* If we get here it means that the user has confirmed the action */
     $data=array();
-    // Confirm authorisation code.
+    /* Confirm authorisation code. */
     if (!xarSecConfirmAuthKey()) return;
 
-   // Start optimization api
-
-
+    /* Start optimization api */
         $data=array();
         $tabledata=array();
         $total_gain=0;
@@ -46,17 +45,17 @@ function sitetools_admin_optimize()
         $tabledata= xarModAPIFunc('sitetools','admin','optimizedb');
 
         if ($tabledata == false) {
-            // Throw back any system exceptions (e.g. database failure)
+            /* Throw back any system exceptions (e.g. database failure) */
             if (xarCurrentErrorType() == XAR_SYSTEM_EXCEPTION) {
                 return; // throw back
             }
-            // Handle the user exceptions yourself
+            /* Handle the user exceptions yourself */
             $status = xarML('Optimizing database failed');
             $reason = xarCurrentError();
             if (!empty($reason)) {
                 $status .= '<br /><br />'. xarML('Reason') .' : '. $reason->toString();
             }
-            // Free the exception to tell Xaraya that you handled it
+            /* Free the exception to tell Xaraya that you handled it */
             xarErrorFree();
             return $status;
         }
@@ -76,7 +75,7 @@ function sitetools_admin_optimize()
 
       if (!isset($optid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
-       //get total number of times this script has run and total kbs
+       /*get total number of times this script has run and total kbs */
       $items = xarModAPIFunc('sitetools', 'admin', 'getall');
        $gaintd=0;
        $runtimes=0;
@@ -89,7 +88,7 @@ function sitetools_admin_optimize()
        $data['gaintd']=$gaintd;
        $data['optimized']=true;
 
-    //return
+    /* return */
 return $data;
 }
 ?>

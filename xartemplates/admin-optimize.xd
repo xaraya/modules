@@ -21,41 +21,37 @@
         <xar:mlstring>Optimize Database Tables</xar:mlstring>
     </h2>
     <xar:if condition="$optimized eq false">
-    <form class="xar-formwidget" id="post" action="&xar-modurl-sitetools-admin-optimize;" method="post" enctype="application/x-www-form-urlencoded">
+    <form id="post" action="&xar-modurl-sitetools-admin-optimize;" method="post" enctype="application/x-www-form-urlencoded">
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <input type="hidden" name="confirm" id="confirm" value="true" />
-        <fieldset class="formelements xar-norm">
+        <fieldset>
         <legend><xar:mlstring>MySQL Database</xar:mlstring></legend>
-         <p class="param">
-            <label for="optibutton" class="xar-form-label">
-                <span class="help" title="#xarML('Clicking optimize will optimize all tables in your MySQL database')#">
+            <div class="xar-form-input-wrapper">
+                <label for="optibutton" class="xar-form-label" title="#xarML('Clicking optimize will optimize all tables in your MySQL database')#">
                     #$optinote#
-                </span>
-            </label>
-          <input id="optibutton" type="submit" value="#$optibutton#"  />
-        </p>
+                </label>
+                <input id="optibutton" type="submit" value="#$optibutton#"  />
+            </div>
         </fieldset>
     </form>
 
     <xar:elseif condition="$optimized eq true" />
-    <p style="width:98%; clear: both; ">
-         <span class="xar-mod-title" style="float: left; padding-bottom: 10px; padding-top: 0px; width: 98%; text-align: center;">
-            #$optititle#&nbsp;#$dbname#
-         </span>
-    </p>
-    <div style="clear: both; padding-top: 10px;">
+           <div class="xar-form-input-wrapper-after">
+                    #$optititle#&nbsp;#$dbname#
+           </div>
+
         <table style="width:100%; border:0; cellspacing:1; cellpadding:1;">
             <tr>
-                <th style="width:100px; text-align:left;">
+                <th>
                     <label class="xar-mod-title"><xar:mlstring>Table</xar:mlstring></label>
                 </th>
-                <th style="width:100px;text-align:right;">
+                <th>
                     <label class="xar-mod-title"><xar:mlstring>Size</xar:mlstring></label>
                 </th>
-                <th style="width:100px;text-align:right;">
+                <th>
                     <label class="xar-mod-title"><xar:mlstring>Saved</xar:mlstring></label>
                 </th>
-                <th style="width:100px;text-align:right;">
+                <th>
                     <label class="xar-mod-title"><xar:mlstring>State</xar:mlstring></label>
                 </th>
             </tr>
@@ -89,7 +85,7 @@
                 </tr>
                 </xar:foreach>
             </table>
-        </div>
+
         <p class="xar-txttitle" style="clear: both; float: left; padding-bottom: 5x; padding-top: 5px; width: 98%; text-align: center;">
                  #$runtext# #$totalruns#
 

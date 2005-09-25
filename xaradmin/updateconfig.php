@@ -28,14 +28,15 @@ function sitetools_admin_updateconfig()
     if (!xarVarFetch('confirm', 'str:4:128', $confirm, '', XARVAR_NOT_REQUIRED)) return;
 
     if (!xarSecConfirmAuthKey()) return;
-    // Update module variables.  Note that the default values are set in 
-    // xarVarFetch when recieving the incoming values, so no extra processing
-    // is needed when setting the variables here.
+    /* Update module variables.  Note that the default values are set in
+     * xarVarFetch when recieving the incoming values, so no extra processing
+     * is needed when setting the variables here.
+     */
     xarModSetVar('sitetools','adocachepath',$adopath);
     xarModSetVar('sitetools','rsscachepath', $rsspath);
     xarModSetVar('sitetools','templcachepath', $templpath);
     xarModSetVar('sitetools','backuppath', $backuppath);
-//    xarModSetVar('sitetools','lineterm', $lineterm);
+    /*    xarModSetVar('sitetools','lineterm', $lineterm);  */
     xarModSetVar('sitetools','timestamp', $usetimestamp);
     xarModSetVar('sitetools','usedbprefix', $usedbprefix);    
     xarModSetVar('sitetools','colnumber',$colnumber);
@@ -43,16 +44,16 @@ function sitetools_admin_updateconfig()
 
     if (xarModIsAvailable('scheduler')) {
         if (!xarVarFetch('interval', 'isset', $interval, array(), XARVAR_NOT_REQUIRED)) return;
-        // for each of the functions specified in the template
+        /* for each of the functions specified in the template */
         foreach ($interval as $func => $howoften) {
-            // see if we have a scheduler job running to execute this function
+            /* see if we have a scheduler job running to execute this function */
             $job = xarModAPIFunc('scheduler','user','get',
                                  array('module' => 'sitetools',
                                        'type' => 'scheduler',
                                        'func' => $func));
             if (empty($job) || empty($job['interval'])) {
                 if (!empty($howoften)) {
-                    // create a scheduler job
+                    /* create a scheduler job */
                     xarModAPIFunc('scheduler','admin','create',
                                   array('module' => 'sitetools',
                                         'type' => 'scheduler',
@@ -60,13 +61,13 @@ function sitetools_admin_updateconfig()
                                         'interval' => $howoften));
                 }
             } elseif (empty($howoften)) {
-                // delete the scheduler job
+                /* delete the scheduler job */
                 xarModAPIFunc('scheduler','admin','delete',
                               array('module' => 'sitetools',
                                     'type' => 'scheduler',
                                     'func' => $func));
             } elseif ($howoften != $job['interval']) {
-                // update the scheduler job
+                /* update the scheduler job */
                 xarModAPIFunc('scheduler','admin','update',
                               array('module' => 'sitetools',
                                     'type' => 'scheduler',
@@ -79,11 +80,12 @@ function sitetools_admin_updateconfig()
     xarModCallHooks('module','updateconfig','sitetools',
                    array('module' => 'sitetools'));
 
-    // This function generated no output, and so now it is complete we redirect
-    // the user to an appropriate page for them to carry on their work
+    /* This function generated no output, and so now it is complete we redirect
+     * the user to an appropriate page for them to carry on their work
+     */
     xarResponseRedirect(xarModURL('sitetools', 'admin', 'modifyconfig'));
 
-    // Return
+    /* Return */
     return true;
 }
 ?>

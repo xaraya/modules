@@ -35,131 +35,110 @@
 <xar:set name="schedulingoff"><xar:mlstring>not scheduled</xar:mlstring></xar:set>
 <xar:set name="schedulinghelp"><xar:mlstring>Specify how often this job should be executed</xar:mlstring></xar:set>
 <xar:set name="schedulingnote"><xar:mlstring>Please note that if you stop the scheduler or if it isn't triggered, these jobs will not be executed.</xar:mlstring></xar:set>
-<xar:if condition="xarTplAddStyleLink('sitetools', 'forms')"></xar:if>
 
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Site Tools Administration</xar:mlstring></span></div>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Site Tools Administration</xar:mlstring></span>
+</div>
 <div class="xar-mod-body"><h2><xar:mlstring>Modify Configuration</xar:mlstring></h2>
-    <form class="xar-formwidget" action="&xar-modurl-sitetools-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded">
-       <input type="hidden" name="authid" id="authid" value="#$authid#" />
-  
-       <fieldset class="formelements xar-norm">
-        <legend>#$cacheoptions#</legend>
-        <p style="float:right; text-align:left; width: 70%; padding-left:0.5em; margin-top:5px; margin-bottom:5px; margin-right:0.5em;">
+    <form action="&xar-modurl-sitetools-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded">
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+
+        <fieldset>
+            <legend>#$cacheoptions#</legend>
+            <div class="xar-form-input-wrapper-after">
                 #$updatenote#
-       </p>
-   
-        <p class="param">
-            <label for="adopath" class="xar-form-label">
-                <span class="help" title="#$defado# #$defadopath#">
-                    #$adocachel#
-                </span>
-            </label>
-            <input type="text" name="adopath" id="adopath" size="40" maxlength="128" value="#$adopath#" />
-        </p>
+            </div>
 
-        <p class="param">
-            <label for="rsspath" class="xar-form-label">
-                <span class="help" title="#$defrss# #$defrsspath#">
+            <div class="xar-form-input-wrapper">
+                <label for="adopath" class="xar-form-label" title="#$defado# #$defadopath#">
+                        #$adocachel#
+                </label>
+                <input type="text" name="adopath" id="adopath" size="40" maxlength="128" value="#$adopath#" />
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                <label for="rsspath" class="xar-form-label" title="#$defrss# #$defrsspath#">
                     #$rsscachel#
-                </span>
-            </label>
-            <input type="text" name="rsspath" id="rsspath" size="40" maxlength="128" value="#$rsspath#" />
-        </p>
+                </label>
+                <input type="text" name="rsspath" id="rsspath" size="40" maxlength="128" value="#$rsspath#" />
+            </div>
 
-        <p class="param">
-            <label for="templpath" class="xar-form-label">
-               <span class="help" title="#$deftem# #$deftemplpath#">
-                   #$templcachel#
-               </span>
-            </label>
-            <input type="text" name="templpath" id="templpath" size="40" maxlength="128" value="#$templpath#" />
-        </p>
-   </fieldset>
-   <fieldset class="formelements xar-norm">
-       <legend>#$backupoptions#</legend>
-           <p class="param">
-               <label for="backuppath" class="xar-form-label">
-                   <span class="help" title="#$bkup#">
+            <div class="xar-form-input-wrapper">
+                <label for="templpath" class="xar-form-label" title="#$deftem# #$deftemplpath#">
+                       #$templcachel#
+                </label>
+                <input type="text" name="templpath" id="templpath" size="40" maxlength="128" value="#$templpath#" />
+            </div>
+       </fieldset>
+       <fieldset>
+           <legend>#$backupoptions#</legend>
+               <div class="xar-form-input-wrapper">
+                   <label for="backuppath" class="xar-form-label" title="#$bkup#">
                        #$backuppathl#
-                   </span>
-               </label>
-            <input type="text" name="backuppath" id="backuppath" size="60" maxlength="128" value="#$backuppath#" />
-        <p style="float:right; text-align:left; width: 70%; padding-left:0.5em; margin-top:5px; margin-bottom:5px; margin-right:0.5em;">
-                        <xar:mlstring>Must be writeable chmod 777</xar:mlstring>
-            </p>
+                   </label>
+                   <input type="text" name="backuppath" id="backuppath" size="60" maxlength="128" value="#$backuppath#" />
+               <div class="xar-form-input-wrapper-after">
+                     <xar:mlstring>Must be writeable chmod 777</xar:mlstring>
+               </div>
 
-            <p class="param">
-                <label for="timestampl" class="xar-form-label">
-                       <span class="help" title="#$tshelp#">
+               <div class="xar-form-input-wrapper">
+                    <label for="timestampl" class="xar-form-label" title="#$tshelp#">
                            #$timestampl#
-                       </span>
-                </label>
-            <xar:if condition="$usetimestamp eq 1">
-                <input type="checkbox" name="usetimestamp" id="usetimestamp" value="1" checked="checked" />
-            <xar:else />
-                <input type="checkbox" name="usetimestamp" id="usetimestamp" value="1" />
-            </xar:if>
-            </p>
+                    </label>
+                    <xar:if condition="$usetimestamp eq 1">
+                        <input type="checkbox" name="usetimestamp" id="usetimestamp" value="1" checked="checked" />
+                    <xar:else />
+                        <input type="checkbox" name="usetimestamp" id="usetimestamp" value="1" />
+                    </xar:if>
+                </div>
 
-            <p class="param">
-                <label for="usedbprefix" class="xar-form-label">
-                    <span class="help" title="#$dbprefixhelp#">
+                <div class="xar-form-input-wrapper">
+                    <label for="usedbprefix" class="xar-form-label" title="#$dbprefixhelp#">
                         #$dbprefixl#
-                    </span>
-                </label>
-            <xar:if condition="$usedbprefix eq 1">
-                <input type="checkbox" name="usedbprefix" id="usedbprefix" value="1" checked="checked" />
-            <xar:else />
-                <input type="checkbox" name="usedbprefix" id="usedbprefix" value="1" />
-            </xar:if>
-            </p>
+                    </label>
+                    <xar:if condition="$usedbprefix eq 1">
+                        <input type="checkbox" name="usedbprefix" id="usedbprefix" value="1" checked="checked" />
+                    <xar:else />
+                        <input type="checkbox" name="usedbprefix" id="usedbprefix" value="1" />
+                    </xar:if>
+                </div>
 
-
-            <p class="param">
-                <label for="colnumber" class="xar-form-label">
-                    <span class="help" title="#$colnumhelp#">
+               <div class="xar-form-input-wrapper">
+                    <label for="colnumber" class="xar-form-label" title="#$colnumhelp#">
                         #$colnumberlabel#
-                    </span>
-                </label>
-            <input type="text" name="colnumber" id="colnumber" size="2" maxlength="3" value="#$colnumber#" />
-            </p>
+                    </label>
+                    <input type="text" name="colnumber" id="colnumber" size="2" maxlength="3" value="#$colnumber#" />
+                </div>
 
-        <xar:comment> Later if required
-       <div style="clear: both; width: 98%; padding-top: 5px;">
-        <span style="float: left; width: 30%; text-align: right;">
-        <span class="help" title="#$linehelp#">
-            <label for="lineoption">#$lineopl#</label>
-        </span>
-        </span>
-        <span style="float: right; width: 68%; text-align: left;">
-        <select name="lineterm" id="lineterm" size="1" tabindex="1">
-            <xar:if condition="xarModGetVar('sitetools', 'lineterm') eq '\n'">
-               <option value="\n" selected="selected">#$lineoption1#</option>
-               <option value="\n\r">#$lineoption2#</option>
-               <option value="\r">#$lineoption3#</option>
-            <xar:elseif condition="xarModGetVar('sitetools', 'lineterm') eq '\n\r'" />
-               <option value="\n">#$lineoption1#</option>
-               <option value="\n\r" selected="selected">#$lineoption2#</option>
-               <option value="\r">#$lineoption3#</option>
-            <xar:elseif condition="xarModGetVar('sitetools', 'lineterm') eq '\r'" />
-              <option value="\n">#$lineoption1#</option>
-               <option value="\n\r">#$lineoption2#</option>
-               <option value="\r" selected="selected">#$lineoption3#</option>
-            </xar:if> </select>
-        </span>
-     </div> 
-    </xar:comment>
-
-    </fieldset>
-    <fieldset class="formelements xar-norm">
-        <legend>#$schedulingoptions#</legend>
-    
-        <xar:if condition="xarModIsAvailable('scheduler')">
-           <p class="param">
-                <label for="defaultbktype" class="xar-form-label">
-                    <span class="help" title="#$bkdefaulthelp#">
+              <xar:comment> Later if required
+              <div class="xar-form-input-wrapper">
+                  <label for="lineoption" class="xar-form-label" title="#$linehelp#">
+                       #$lineopl#
+                  </label>
+                  <select name="lineterm" id="lineterm" size="1" tabindex="1">
+                  <xar:if condition="xarModGetVar('sitetools', 'lineterm') eq '\n'">
+                      <option value="\n" selected="selected">#$lineoption1#</option>
+                      <option value="\n\r">#$lineoption2#</option>
+                      <option value="\r">#$lineoption3#</option>
+                   <xar:elseif condition="xarModGetVar('sitetools', 'lineterm') eq '\n\r'" />
+                       <option value="\n">#$lineoption1#</option>
+                       <option value="\n\r" selected="selected">#$lineoption2#</option>
+                       <option value="\r">#$lineoption3#</option>
+                   <xar:elseif condition="xarModGetVar('sitetools', 'lineterm') eq '\r'" />
+                       <option value="\n">#$lineoption1#</option>
+                       <option value="\n\r">#$lineoption2#</option>
+                       <option value="\r" selected="selected">#$lineoption3#</option>
+                   </xar:if>
+                   </select>
+             </div>
+             </xar:comment>
+        </fieldset>
+        <fieldset>
+            <legend>#$schedulingoptions#</legend>
+            <xar:if condition="xarModIsAvailable('scheduler')">
+            <div class="xar-form-input-wrapper">
+                <label for="defaultbktype" class="xar-form-label" title="#$bkdefaulthelp#">
                         #$defaultbktypel#
-                    </span>
                 </label>
                 <select name="defaultbktype" id="defaultbktype">
                 <xar:if condition="xarModGetVar('sitetools', 'defaultbktype') eq 'complete'">
@@ -176,39 +155,37 @@
                     <option value="structure" selected="selected">#$bkoption3#</option>
                 </xar:if>
                 </select>
-            </p>
-         <xar:foreach in="$schedule" key="$what" value="$descr">
-         <p class="param">
-             <label for="interval_#$what#" class="xar-form-label">
-                <span class="help" title="#$schedulinghelp#">
+            </div>
+             <xar:foreach in="$schedule" key="$what" value="$descr">
+             <div class="xar-form-input-wrapper">
+                 <label for="interval_#$what#" class="xar-form-label" title="#$schedulinghelp#">
                     #$descr#
-                </span>
-            </label>
-            <select name="interval[#$what#]" id="interval_#$what#">
-                    <option value="">#$schedulingoff#</option>
-                <xar:foreach in="$intervals" key="$name" value="$display">
-                    <xar:if condition="!empty($interval[$what]) and $interval[$what] eq $name">
-                        <option value="#$name#" selected="selected">#$display#</option>
-                    <xar:else/>
-                        <option value="#$name#">#$display#</option>
-                    </xar:if>
-                </xar:foreach>
-            </select>
-       </p>
-       </xar:foreach>
-        <p style="float:right; text-align:left; width: 70%; padding-left:0.5em; margin-top:5px; margin-bottom:5px; margin-right:0.5em;">
-                   #$schedulingnote#
-        </p>
-    <xar:else />
-        <p style="float:right; text-align:left; width: 70%; padding-left:0.5em; margin-top:5px; margin-bottom:5px; margin-right:0.5em;">
-               <xar:mlstring>Please install and activate the Scheduler module to enable scheduling.</xar:mlstring>
-       </p>
-    </xar:if>
-    </fieldset>
-
-     <div class="xar-clear-both xar-align-center">
-            <input type="submit" value="#$updatebutton#" />
-     </div>
-  </form>
+                 </label>
+                 <select name="interval[#$what#]" id="interval_#$what#">
+                     <option value="">#$schedulingoff#</option>
+                     <xar:foreach in="$intervals" key="$name" value="$display">
+                         <xar:if condition="!empty($interval[$what]) and $interval[$what] eq $name">
+                            <option value="#$name#" selected="selected">#$display#</option>
+                         <xar:else/>
+                            <option value="#$name#">#$display#</option>
+                         </xar:if>
+                     </xar:foreach>
+                 </select>
+             </div>
+             </xar:foreach>
+            <div class="xar-form-input-wrapper-after">
+                #$schedulingnote#
+            </div>
+        <xar:else />
+            <div class="xar-form-input-wrapper-after">
+                <xar:mlstring>Please install and activate the Scheduler module to enable scheduling.</xar:mlstring>
+           </div>
+        </xar:if>
+        </fieldset>
+        <fieldset>
+            <div class="xar-form-input-wrapper-after">
+                <input type="submit" value="#$updatebutton#" />
+            </div>
+        </fieldset>
+    </form>
 </div>
-
