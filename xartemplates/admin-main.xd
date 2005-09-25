@@ -171,10 +171,10 @@ tinyMCE.init({
         </h3>
             <p><xar:mlstring>Further information on xarTinyMCE can be found at</xar:mlstring></p>
             <ul>
-                 <li><xar:mlstring>xarTinyMCE Extension page at</xar:mlstring> <a title="#xarML('xarTinyMCE Xaraya Extension 63')#" href="http://www.xaraya.com/index.php/release/63.html">http://www.xaraya.com/index.php/release/63.html</a>.
+                 <li><xar:mlstring>xarTinyMCE Extension page at</xar:mlstring> <a title="#xarML('xarTinyMCE Xaraya Extension 63')#" href="http://www.xaraya.com/index.php/release/63.html">Xaraya Extensions and Releases</a>.
                      <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
                  </li>
-                 <li><xar:mlstring>Related tutorials and documentation on xarTinyMCE found</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/xartinymce/" title="#xarML('Related documentation on XarTinyMCE')#"><xar:mlstring>HERE</xar:mlstring></a>
+                 <li><xar:mlstring>Related tutorials and documentation on xarTinyMCE found at </xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/xartinymce/" title="#xarML('Related documentation on XarTinyMCE')#"><xar:mlstring>Xaraya Documentation</xar:mlstring></a>
                  </li>
              </ul>
             <p style="font-size:smaller;"><strong>&nbsp;<xar:mlstring>xarTinyMCE WYSIWYG Editor - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 2.9&nbsp; 2005-08-21 jojodee

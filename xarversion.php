@@ -1,3 +1,4 @@
+<?php
 /**
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 The Digital Development Foundation
@@ -7,7 +8,7 @@
  * @subpackage xartinymce
  * @author Jo Dalle Nogare <jojodee@xaraya.com>
  */
-<?php
+
 $modversion['name'] = 'tinymce';
 $modversion['id'] = '63';
 $modversion['version'] = '0.9.2';
