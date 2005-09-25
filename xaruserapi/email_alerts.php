@@ -19,7 +19,8 @@
  * @author Jodie Razdrh/John Kevlin/David St.Clair
  * @link http://www.metrostat.net
  *
- * @ TODO MichelV <1> Generate cleaner function to incorporate templates.
+ * @TODO MichelV <1> Generate cleaner function to incorporate templates.
+ * @Legacy This function is moved to xarschedulerapi for nicer compatibility
  */
 function julian_userapi_email_alerts()
 {

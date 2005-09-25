@@ -72,6 +72,12 @@ form.xar-form fieldset.formelements label.required span:before {
     content: " * ";
     color: red;
 }
+/* Need only this for the form really after UIScrub */
+
+label.required span:before {
+    content: " * ";
+    color: red;
+}
 
 form.xar-form fieldset.formelements label span {
     line-height: 1.8em;

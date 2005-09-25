@@ -1,5 +1,14 @@
 <?php
-// $Id: main.php,v 1.2 2005/01/26 08:45:25 michelv01 Exp $
+/**
+ * Main user function
+ * 
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Julian Module
+ */
 
 function julian_user_main()
 {    

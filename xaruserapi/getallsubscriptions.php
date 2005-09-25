@@ -34,8 +34,10 @@ function julian_userapi_getallsubscriptions()
     if (!$modvarid) return;
 
     // it's all about this query
-    $query = "SELECT xar_uid,xar_value FROM $module_uservarstable
-                  WHERE xar_mvid = ?";
+    $query = "SELECT xar_uid,
+                     xar_value 
+              FROM   $module_uservarstable
+              WHERE  xar_mvid = ?";
 
     $result =& $dbconn->Execute($query, array((int)$modvarid));
     $subscriptions = array();

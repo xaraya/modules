@@ -1,7 +1,7 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:comment> This call should be replaced by proper xaraya call</xar:comment>
-<xar:if condition="xarTplAddStyleLink('julian', 'julian')"></xar:if>
-<xar:if condition="xarTplAddStyleLink('julian', 'xarform')"></xar:if>
+
+<xar:style scope="module" file="julian" />
+<xar:style scope="module" file="xarform" />
 <xar:set name="$modifylabel"><xar:mlstring>Modify</xar:mlstring></xar:set>
 <xar:set name="$addlabel"><xar:mlstring>Add</xar:mlstring></xar:set>
 <div class="xar-julian xar-julian-admin-modifycategories">
@@ -14,65 +14,65 @@
         </xar:mlstring>
     </h2>
 
-    <form name="cat_modify" class="xar-form" action="#xarModURL('julian','admin','modifycategories')#" onSubmit="if(!isCancel){return validate2(this)}" method="post" enctype="application/x-www-form-urlencoded">
-        <fieldset class="formelements xar-norm">
+    <form name="cat_modify" action="#xarModURL('julian','admin','modifycategories')#" onSubmit="if(!isCancel){return validate2(this)}" method="post" enctype="application/x-www-form-urlencoded">
+        <fieldset>
             <legend>
                 <strong><xar:mlstring>Existing category colors</xar:mlstring></strong>
             </legend>
-
-            <table width="100%" cellspacing="0" cellpadding="2" border="0" bgcolor="#eeeeee">
-                <xar:foreach in="$categories" key="$cat_id">
-                    <tr>
-                        <td width="85%"><font size="3" color="#$categories[$cat_id]['color']#">#$BulletForm#</font>&nbsp;#$categories[$cat_id]['name']#</td>
-                        <td align="right">
-                              <xar:set name="$deletecat">addslashes($categories[$cat_id]['name'])</xar:set>
-                                    
-                              <a href="#xarModURL('julian','admin','modifycategories',array('cid'=>$cat_id,'action' => 'Delete'))#" onclick="answer = confirm('Are you sure you want to delete: #$deletecat# ?');if(!answer) return false;">Delete</a> 
-                              <a href="#xarModURL('julian','admin','modifycategories',array('cid'=>$cat_id,'action' => 'Edit'))#"><xar:mlstring>Edit</xar:mlstring></a>
-                        </td>
-                    <xar:if condition="$edit_cond == $cat_id">
-                    </tr>
-                    <tr bgcolor="#dbdad2">
-                        <td colspan="2">
-                            <input type="hidden" name="cid" value="#$cat_id#">
-                            <xar:mlstring>Category Name</xar:mlstring>:&nbsp;#$categories[$cat_id]['name']#&nbsp;&nbsp;<xar:mlstring>Color</xar:mlstring>:&nbsp;
-							<xar:data-input name="color" type="tcolorpicker" value="$categories[$cat_id]['color']" defaultValue="$categories[$cat_id]['color']" readonly="readonly"/>
-						</td>
-                    </tr>
-                    <tr bgcolor="#dbdad2">
-                        <td align="left" colspan="2">
-                            <input name="editaction" type="submit" value="Modify" />
-                            <input name="editaction" type="submit" value="Cancel" onclick="isCancel=true" />
-                        </td>
-                    </xar:if>
-                    </tr>
-                </xar:foreach>
-            </table>
-
+            <div class="xar-form-input-wrapper">
+                <table width="99%" cellspacing="0" cellpadding="2" border="0" bgcolor="#eeeeee">
+                    <xar:foreach in="$categories" key="$cat_id">
+                        <tr>
+                            <td width="85%"><font size="3" color="#$categories[$cat_id]['color']#">#$BulletForm#</font>&nbsp;#$categories[$cat_id]['name']#</td>
+                            <td align="right">
+                                  <xar:set name="$deletecat">addslashes($categories[$cat_id]['name'])</xar:set>
+                                        
+                                  <a href="#xarModURL('julian','admin','modifycategories',array('cid'=>$cat_id,'action' => 'Delete'))#" onclick="answer = confirm('Are you sure you want to delete: #$deletecat# ?');if(!answer) return false;">Delete</a> 
+                                  <a href="#xarModURL('julian','admin','modifycategories',array('cid'=>$cat_id,'action' => 'Edit'))#"><xar:mlstring>Edit</xar:mlstring></a>
+                            </td>
+                        <xar:if condition="$edit_cond == $cat_id">
+                        </tr>
+                        <tr bgcolor="#dbdad2">
+                            <td colspan="2">
+                                <input type="hidden" name="cid" value="#$cat_id#">
+                                <xar:mlstring>Category Name</xar:mlstring>:&nbsp;#$categories[$cat_id]['name']#&nbsp;&nbsp;<xar:mlstring>Color</xar:mlstring>:&nbsp;
+    							<xar:data-input name="color" type="tcolorpicker" value="$categories[$cat_id]['color']" defaultValue="$categories[$cat_id]['color']" readonly="readonly"/>
+    						</td>
+                        </tr>
+                        <tr bgcolor="#dbdad2">
+                            <td align="left" colspan="2">
+                                <input name="editaction" type="submit" value="Modify" />
+                                <input name="editaction" type="submit" value="Cancel" onclick="isCancel=true" />
+                            </td>
+                        </xar:if>
+                        </tr>
+                    </xar:foreach>
+                </table>
+            </div>
         </fieldset>
     </form>
             
-    <form name="cat_add" class="xar-form" action="#xarModURL('julian','admin','modifycategories')#" onSubmit="if(!isCancel){return validate2(this)}" method="post" enctype="application/x-www-form-urlencoded">
-        <fieldset class="formelements xar-norm">
+    <form name="cat_add" action="#xarModURL('julian','admin','modifycategories')#" onSubmit="if(!isCancel){return validate2(this)}" method="post" enctype="application/x-www-form-urlencoded">
+        <fieldset>
             <legend>
                 <strong><xar:mlstring>Add Category Color</xar:mlstring></strong>
             </legend>
-            <p class="param">
-                <label for="cat_name" class="required">
+            <div class="xar-form-input-wrapper">
+                <label for="cat_name" class="xar-form-label required">
                     <span class="help" title="#xarML('Each category requires a unique name.')#">
                         <xar:mlstring>Category Name:</xar:mlstring>
                     </span>
                 </label>
                 #$category_select#
-            </p>
-            <p class="param">
-                <label for="color" class="required">
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="color" class="xar-form-label required">
                     <span class="help" title="#xarML('Each category has a color which refers to it.')#">
                         <xar:mlstring>Color:</xar:mlstring>
                     </span>
                 </label>
-				<xar:data-input name="color" type="tcolorpicker"  readonly="readonly"/>
-			</p>
+				<xar:data-input name="color" type="tcolorpicker" readonly="readonly"/>
+			</div>
             <input name="addaction" type="submit" value="Add" />
             <input name="addaction" type="submit" value="Cancel" onclick="isCancel=true" />
         </fieldset>

@@ -1,6 +1,6 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:if condition="xarTplAddStyleLink('julian', 'xarform')"></xar:if>
 <xar:base-include-javascript module="base" filename="formcheck.js" />
+<xar:style scope="module" file="xarform" />
 <script type="text/javascript">
 <!--
     // Enter name of mandatory fields
@@ -28,228 +28,219 @@
     <center>#$statusmsg#</center>
     <xar:set name="$statusmsg">xarSessionSetVar('statusmsg','')</xar:set>
 
-    <form class="xar-form"
-          action="#xarModUrl('julian', 'admin', 'updateconfig')#"
+    <form action="&xar-modurl-julian-admin-updateconfig;"
           method="post"
           onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);"
           enctype="application/x-www-form-urlencoded">
-        <fieldset class="xar-norm">
-            <fieldset class="formelements xar-norm">
-                <legend>
-                    <strong><xar:mlstring>Display options for the calendar</xar:mlstring></strong>
-                </legend>
-                <p class="param">
-                    <label for="ical_links">
-                        <span class="help" title="#xarML('Check box to show iCalendar icon.')#">
-                            <xar:mlstring>
-                                Show iCalendar icon:
-                            </xar:mlstring>
-                            <img src="#xarTplGetImage('export.gif')#" alt="#xarML('Export Event')#" title="#xarML('Export event to desktop calendar')#" align="middle "/>
-                        </span>
-                    </label>
-                    <xar:if condition="xarModGetVar('julian','ical_links')">
-                        <input type="checkbox" name="ical_links" id="ical_links" value="on" checked="checked" />
-                    <xar:else />
-                        <input type="checkbox" name="ical_links" id="ical_links" value="on" />
+        <fieldset class="formelements xar-norm">
+            <legend>
+                <strong><xar:mlstring>Display options for the calendar</xar:mlstring></strong>
+            </legend>
+            <div class="xar-form-input-wrapper">
+                <label for="ical_links" class="xar-form-label">
+                    <span class="help" title="#xarML('Check box to show iCalendar icon.')#">
+                        <xar:mlstring>
+                            Show iCalendar icon:
+                        </xar:mlstring>
+                        <img src="#xarTplGetImage('export.gif')#" alt="#xarML('Export Event')#" title="#xarML('Export event to desktop calendar')#" align="middle "/>
+                    </span>
+                </label>
+                <xar:if condition="xarModGetVar('julian','ical_links')">
+                    <input type="checkbox" name="ical_links" id="ical_links" value="on" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="ical_links" id="ical_links" value="on" />
+                </xar:if>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="startDayOfWeek" class="xar-form-label">
+                    <span class="help" title="#xarML('Starting day of the week.')#">
+                        <xar:mlstring>
+                            Starting day of the week:
+                        </xar:mlstring>
+                    </span>
+                </label>
+                <select name="startDayOfWeek" id="startDayOfWeek">
+                    <xar:if condition="xarModGetVar('julian', 'startDayOfWeek') eq 0">
+                         <option value="0" selected="selected"><xar:mlstring>Sunday</xar:mlstring></option>
+                         <option value="1"><xar:mlstring>Monday</xar:mlstring></option>
+                    <xar:elseif condition="xarModGetVar('julian', 'startDayOfWeek') eq 1" />
+                         <option value="0"><xar:mlstring>Sunday</xar:mlstring></option>
+                         <option value="1" selected="selected"><xar:mlstring>Monday</xar:mlstring></option>
                     </xar:if>
-                </p>
-                <p class="param">
-                    <label for="startDayOfWeek">
-                        <span class="help" title="#xarML('Starting day of the week.')#">
-                            <xar:mlstring>
-                                Starting day of the week:
-                            </xar:mlstring>
+                </select>
+            </div>
+            <div class="xar-form-input-wrapper">
+                    <label for="numitems"  class="xar-form-label required">
+                        <span class="help" title="#xarML('Number of items per page.')#">
+                        <xar:mlstring>
+                            Number of items per page (in eventslist):
+                        </xar:mlstring>
                         </span>
                     </label>
-                    <select name="startDayOfWeek" id="startDayOfWeek">
-                        <xar:if condition="xarModGetVar('julian', 'startDayOfWeek') eq 0">
-                             <option value="0" selected="selected"><xar:mlstring>Sunday</xar:mlstring></option>
-                             <option value="1"><xar:mlstring>Monday</xar:mlstring></option>
-                        <xar:elseif condition="xarModGetVar('julian', 'startDayOfWeek') eq 1" />
-                             <option value="0"><xar:mlstring>Sunday</xar:mlstring></option>
-                             <option value="1" selected="selected"><xar:mlstring>Monday</xar:mlstring></option>
-                        </xar:if>
-                    </select>
-                </p>
-                    <p class="param">
-                        <label for="numitems" class="required">
-                            <span class="help" title="#xarML('Number of items per page.')#">
-                            <xar:mlstring>
-                                Number of items per page (in eventslist):
-                            </xar:mlstring>
-                            </span>
-                        </label>
-                        <xar:data-input name="numitems" type="15" value="$numitems" />
-                    </p>
-                <p class="param">
-                    <label for="dateformat">
-                        <span class="help" title="#xarML('Choose the date format.')#">
-                            <xar:mlstring>
-                                Date format:
-                            </xar:mlstring>
-                        </span>
-                    </label>
-                    <select name="dateformat" id="dateformat" size="1">
-                        <xar:if condition="$dateformat eq 'd/m/Y'">
-                            <option label="d/m/Y" value="d/m/Y" selected="selected">d/m/Y</option>
-                        <xar:else />
-                            <option label="d/m/Y" value="d/m/Y">d/m/Y</option>
-                        </xar:if>
-                        <xar:if condition="$dateformat eq 'm/d/Y'">
-                            <option label="m/d/Y" value="m/d/Y" selected="selected">m/d/Y</option>
-                        <xar:else />
-                            <option label="m/d/Y" value="m/d/Y">m/d/Y</option>
-                        </xar:if>
-                    </select>
-                </p>
-                <xar:comment>TODO
-                <p class="param">
-                    <label for="timeformat">
-                        <span class="help" title="#xarML('Choose the format for time to display.')#">
-                            <xar:mlstring>
-                                Time format:
-                            </xar:mlstring>
-                        </span>
-                    </label>
-                    <select name="timeformat" id="timeformat" size="1">
-                        <xar:if condition="$timeformat eq 'h:i a'">
-                            <option label="h:i a" value="h:i a" selected="selected">h:i a</option>
-                        <xar:else />
-                            <option label="h:i a" value="h:i a">h:i a</option>
-                        </xar:if>
-                        <xar:if condition="$timeformat eq 'H:i'">
-                            <option label="H:i" value="H:i" selected="selected">H:i</option>
-                        <xar:else />
-                            <option label="H:i" value="H:i">H:i</option>
-                        </xar:if>
-                    </select>
-                </p>
-                </xar:comment>
-                <p class="param">
-                    <label for="BulletForm">
-                        <span class="help" title="#xarML('Choose the bullet that will be used to mark the category of the event')#">
-                            <xar:mlstring>
-                                Bullet style:
-                            </xar:mlstring>
-                        </span>
-                    </label>
-                    <select name="BulletForm" id="BulletForm">
-                        <xar:if condition="$BulletForm eq 'bull'">
-                             <option value="bull" selected="selected">&nbsp;&bull;&nbsp;</option>
-                             <option value="gt">&nbsp;&gt;&nbsp;</option>
-                             <option value="lt">&nbsp;&lt;&nbsp;</option>
-                             <option value="loz">&nbsp;&loz;&nbsp; </option>
-                        <xar:elseif condition="$BulletForm eq 'gt'" />
-                             <option value="bull">&nbsp;&bull;&nbsp;</option>
-                             <option value="gt" selected="selected">&nbsp;&gt;&nbsp;</option>
-                             <option value="lt">&nbsp;&lt;&nbsp;</option>
-                             <option value="loz">&nbsp;&loz;&nbsp; </option>
-                        <xar:elseif condition="$BulletForm eq 'lt'" />
-                             <option value="bull">&nbsp;&bull;&nbsp;</option>
-                             <option value="gt">&nbsp;&gt;&nbsp;</option>
-                             <option value="lt" selected="selected">&nbsp;&lt;&nbsp;</option>
-                             <option value="loz">&nbsp;&loz;&nbsp; </option>
-                        <xar:elseif condition="$BulletForm eq 'loz'" />
-                             <option value="bull">&nbsp;&bull;&nbsp;</option>
-                             <option value="gt">&nbsp;&gt;&nbsp;</option>
-                             <option value="lt">&nbsp;&lt;&nbsp;</option>
-                             <option value="loz" selected="selected">&nbsp;&loz;&nbsp; </option>
-                        </xar:if>
-                    </select>
-                </p>
-            </fieldset>            
-            <fieldset class="formelements xar-alt">
-                <legend>
-                    <strong><xar:mlstring>Privacy options</xar:mlstring></strong>
-                </legend>
-                <p class="param">
-                    <label for="share_group">
-                        <span class="help" title="#xarML('Share Event Group.')#">
-                            <xar:mlstring>
-                                Share Event Group:
-                            </xar:mlstring>
-                        </span>
-                    </label>
-                    <select name="share_group" id="share_group">
-                        <xar:foreach in="$group_options" value="$item">
-                          <xar:if condition="$item['selected']">
-                            <option value="#$item['uid']#" selected="selected">
-                          <xar:else />
-                            <option value="#$item['uid']#">
-                          </xar:if>
-                                 #xarVarPrepForDisplay($item['name'])# 
-                            </option>
-                        </xar:foreach>
-                        #$group_options# 
-                    </select>
-                </p>
-            </fieldset>
-            <fieldset class="formelements xar-norm">
-                <legend>
-                    <strong><xar:mlstring>Calendar Alerts Configuration</xar:mlstring></strong>
-                </legend>
-                <p class="param">
-                    <label for="from_name" class="required">
-                        <span class="help" title="#xarML('Name for From Email Address.')#">
-                            <xar:mlstring>
-                                Name for From Email Address:
-                            </xar:mlstring>
-                        </span>
-                    </label>
-                    <input type="text" name="from_name" size="40" id="from_name" value="#xarModGetVar('julian','from_name')#" maxlength="255" />
-                </p>
-                <p class="param">
-                    <label for="from_email" class="required">
-                        <span class="help" title="#xarML('From Email Address.')#">
-                            <xar:mlstring>
-                                From Email Address:
-                            </xar:mlstring>
-                        </span>
-                    </label>
-                    <input type="text" name="from_email" size="40" id="from_email" value="#xarModGetVar('julian','from_email')#" maxlength="255" />
-                </p>
-                <p class="param">
-                    <label for="TelFieldType">
-                        <span class="help" title="#xarML('Telephone field options.')#">
-                            <xar:mlstring>
-                                Telephone field options:
-                            </xar:mlstring>
-                        </span>
-                    </label>
-                    <select name="TelFieldType" id="TelFieldType">
-                        <xar:if condition="xarModGetVar('julian', 'TelFieldType') eq 'US'">
-                             <option value="US" selected="selected"><xar:mlstring>US</xar:mlstring>: &nbsp;3-3-4</option>
-                             <option value="EU"><xar:mlstring>EU International</xar:mlstring>: &nbsp;3-3-10</option>
-                             <option value="EUC"><xar:mlstring>EU Country</xar:mlstring>: &nbsp;4-10</option>
-                             <option value="OPEN"><xar:mlstring>Open field, maximum characters</xar:mlstring>: &nbsp;25 </option>
-                        <xar:elseif condition="xarModGetVar('julian', 'TelFieldType') eq 'EU'" />
-                             <option value="US"><xar:mlstring>US</xar:mlstring>: &nbsp;3-3-4</option>
-                             <option value="EU" selected="selected"><xar:mlstring>EU International</xar:mlstring>: &nbsp;3-3-10</option>
-                             <option value="EUC"><xar:mlstring>EU Country</xar:mlstring>: &nbsp;4-10</option>
-                             <option value="OPEN"><xar:mlstring>Open field, maximum characters</xar:mlstring>: &nbsp;25 </option>
-                        <xar:elseif condition="xarModGetVar('julian', 'TelFieldType') eq 'EUC'" />
-                             <option value="US"><xar:mlstring>US</xar:mlstring>: &nbsp;3-3-4</option>
-                             <option value="EU"><xar:mlstring>EU International</xar:mlstring>: &nbsp;3-3-10</option>
-                             <option value="EUC" selected="selected"><xar:mlstring>EU Country</xar:mlstring>: &nbsp;4-10</option>
-                             <option value="OPEN"><xar:mlstring>Open field, maximum characters</xar:mlstring>: &nbsp;25 </option>
-                        <xar:elseif condition="xarModGetVar('julian', 'TelFieldType') eq 'OPEN'" />
-                             <option value="US"><xar:mlstring>US</xar:mlstring>: &nbsp;3-3-4</option>
-                             <option value="EU"><xar:mlstring>EU International</xar:mlstring>: &nbsp;3-3-10</option>
-                             <option value="EUC"><xar:mlstring>EU Country</xar:mlstring>: &nbsp;4-10</option>
-                             <option value="OPEN" selected="selected"><xar:mlstring>Open field, maximum characters</xar:mlstring>: &nbsp;25 </option>
-                        </xar:if>
-                    </select>
-                </p>
-            </fieldset>
-
-            <fieldset class="formelements xar-norm">
-                <legend>
-                    <strong><xar:mlstring>Categories</xar:mlstring></strong>
-                </legend>
-                #$hooks# 
-            </fieldset>
-            
-            <input type="submit" name="submit" value="#xarML('Update')#">
+                    <xar:data-input name="numitems" type="15" value="$numitems" />
+                </div>
+            <div class="xar-form-input-wrapper">
+                <label for="dateformat" class="xar-form-label">
+                    <span class="help" title="#xarML('Choose the date format.')#">
+                        <xar:mlstring>
+                            Date format:
+                        </xar:mlstring>
+                    </span>
+                </label>
+                <select name="dateformat" id="dateformat" size="1">
+                    <xar:if condition="$dateformat eq 'd/m/Y'">
+                        <option label="d/m/Y" value="d/m/Y" selected="selected">d/m/Y</option>
+                    <xar:else />
+                        <option label="d/m/Y" value="d/m/Y">d/m/Y</option>
+                    </xar:if>
+                    <xar:if condition="$dateformat eq 'm/d/Y'">
+                        <option label="m/d/Y" value="m/d/Y" selected="selected">m/d/Y</option>
+                    <xar:else />
+                        <option label="m/d/Y" value="m/d/Y">m/d/Y</option>
+                    </xar:if>
+                </select>
+            </div>
+            <xar:comment>TODO
+            <div class="xar-form-input-wrapper">
+                <label for="timeformat" class="xar-form-label">
+                    <span class="help" title="#xarML('Choose the format for time to display.')#">
+                        <xar:mlstring>
+                            Time format:
+                        </xar:mlstring>
+                    </span>
+                </label>
+                <select name="timeformat" id="timeformat" size="1">
+                    <xar:if condition="$timeformat eq 'h:i a'">
+                        <option label="h:i a" value="h:i a" selected="selected">h:i a</option>
+                    <xar:else />
+                        <option label="h:i a" value="h:i a">h:i a</option>
+                    </xar:if>
+                    <xar:if condition="$timeformat eq 'H:i'">
+                        <option label="H:i" value="H:i" selected="selected">H:i</option>
+                    <xar:else />
+                        <option label="H:i" value="H:i">H:i</option>
+                    </xar:if>
+                </select>
+            </div>
+            </xar:comment>
+            <div class="xar-form-input-wrapper">
+                <label for="BulletForm" class="xar-form-label">
+                    <span class="help" title="#xarML('Choose the bullet that will be used to mark the category of the event')#">
+                        <xar:mlstring>
+                            Bullet style:
+                        </xar:mlstring>
+                    </span>
+                </label>
+                <select name="BulletForm" id="BulletForm">
+                    <xar:if condition="$BulletForm eq 'bull'">
+                         <option value="bull" selected="selected">&nbsp;&bull;&nbsp;</option>
+                         <option value="gt">&nbsp;&gt;&nbsp;</option>
+                         <option value="lt">&nbsp;&lt;&nbsp;</option>
+                         <option value="loz">&nbsp;&loz;&nbsp; </option>
+                    <xar:elseif condition="$BulletForm eq 'gt'" />
+                         <option value="bull">&nbsp;&bull;&nbsp;</option>
+                         <option value="gt" selected="selected">&nbsp;&gt;&nbsp;</option>
+                         <option value="lt">&nbsp;&lt;&nbsp;</option>
+                         <option value="loz">&nbsp;&loz;&nbsp; </option>
+                    <xar:elseif condition="$BulletForm eq 'lt'" />
+                         <option value="bull">&nbsp;&bull;&nbsp;</option>
+                         <option value="gt">&nbsp;&gt;&nbsp;</option>
+                         <option value="lt" selected="selected">&nbsp;&lt;&nbsp;</option>
+                         <option value="loz">&nbsp;&loz;&nbsp; </option>
+                    <xar:elseif condition="$BulletForm eq 'loz'" />
+                         <option value="bull">&nbsp;&bull;&nbsp;</option>
+                         <option value="gt">&nbsp;&gt;&nbsp;</option>
+                         <option value="lt">&nbsp;&lt;&nbsp;</option>
+                         <option value="loz" selected="selected">&nbsp;&loz;&nbsp; </option>
+                    </xar:if>
+                </select>
+            </div>
+        </fieldset>            
+        <fieldset>
+            <legend>
+                <strong><xar:mlstring>Privacy options</xar:mlstring></strong>
+            </legend>
+            <div class="xar-form-input-wrapper">
+                <label for="share_group" class="xar-form-label">
+                    <span class="help" title="#xarML('Share your events with users from this group.')#">
+                        <xar:mlstring>
+                            Share Event Group:
+                        </xar:mlstring>
+                    </span>
+                </label>
+                <xar:data-input name="share_group" id="share_group" type="grouplist" value="$share_group" />                    
+            </div>
         </fieldset>
+        <fieldset>
+            <legend>
+                <strong><xar:mlstring>Calendar Alerts Configuration</xar:mlstring></strong>
+            </legend>
+            <div class="xar-form-input-wrapper">
+                <label for="from_name" class="xar-form-label required">
+                    <span class="help" title="#xarML('Name for From Email Address.')#">
+                        <xar:mlstring>
+                            Name for From Email Address:
+                        </xar:mlstring>
+                    </span>
+                </label>
+                <xar:data-input name="from_name" id="from_name" type="textbox" value="$from_name" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="from_email" class="xar-form-label required">
+                    <span class="help" title="#xarML('From Email Address.')#">
+                        <xar:mlstring>
+                            From Email Address:
+                        </xar:mlstring>
+                    </span>
+                </label>
+                <xar:data-input name="from_email" id="from_email" type="textbox" value="$from_email" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="TelFieldType" class="xar-form-label">
+                    <span class="help" title="#xarML('Telephone field options.')#">
+                        <xar:mlstring>
+                            Telephone field options:
+                        </xar:mlstring>
+                    </span>
+                </label>
+                <select name="TelFieldType" id="TelFieldType">
+                    <xar:if condition="xarModGetVar('julian', 'TelFieldType') eq 'US'">
+                         <option value="US" selected="selected"><xar:mlstring>US</xar:mlstring>: &nbsp;3-3-4</option>
+                         <option value="EU"><xar:mlstring>EU International</xar:mlstring>: &nbsp;3-3-10</option>
+                         <option value="EUC"><xar:mlstring>EU Country</xar:mlstring>: &nbsp;4-10</option>
+                         <option value="OPEN"><xar:mlstring>Open field, maximum characters</xar:mlstring>: &nbsp;25 </option>
+                    <xar:elseif condition="xarModGetVar('julian', 'TelFieldType') eq 'EU'" />
+                         <option value="US"><xar:mlstring>US</xar:mlstring>: &nbsp;3-3-4</option>
+                         <option value="EU" selected="selected"><xar:mlstring>EU International</xar:mlstring>: &nbsp;3-3-10</option>
+                         <option value="EUC"><xar:mlstring>EU Country</xar:mlstring>: &nbsp;4-10</option>
+                         <option value="OPEN"><xar:mlstring>Open field, maximum characters</xar:mlstring>: &nbsp;25 </option>
+                    <xar:elseif condition="xarModGetVar('julian', 'TelFieldType') eq 'EUC'" />
+                         <option value="US"><xar:mlstring>US</xar:mlstring>: &nbsp;3-3-4</option>
+                         <option value="EU"><xar:mlstring>EU International</xar:mlstring>: &nbsp;3-3-10</option>
+                         <option value="EUC" selected="selected"><xar:mlstring>EU Country</xar:mlstring>: &nbsp;4-10</option>
+                         <option value="OPEN"><xar:mlstring>Open field, maximum characters</xar:mlstring>: &nbsp;25 </option>
+                    <xar:elseif condition="xarModGetVar('julian', 'TelFieldType') eq 'OPEN'" />
+                         <option value="US"><xar:mlstring>US</xar:mlstring>: &nbsp;3-3-4</option>
+                         <option value="EU"><xar:mlstring>EU International</xar:mlstring>: &nbsp;3-3-10</option>
+                         <option value="EUC"><xar:mlstring>EU Country</xar:mlstring>: &nbsp;4-10</option>
+                         <option value="OPEN" selected="selected"><xar:mlstring>Open field, maximum characters</xar:mlstring>: &nbsp;25 </option>
+                    </xar:if>
+                </select>
+            </div>
+        </fieldset>
+
+        <fieldset class="formelements xar-norm">
+            <legend>
+                <strong><xar:mlstring>Enabled hooks</xar:mlstring></strong>
+            </legend>
+            <xar:if condition="!empty($hooks)">
+                <xar:foreach in="$hooks" key="$hookmodule">
+                #$hooks[$hookmodule]#
+                </xar:foreach>
+            </xar:if>
+        </fieldset>
+        <div class="xar-form-input-wrapper-after">
+            <input type="submit" name="submit" value="#xarML('Update')#">
+        </div>
     </form>
 </div>

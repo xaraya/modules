@@ -1,6 +1,5 @@
 <?php
 /**
-* File: $Id: modifycategories.php,v 1.3 2005/04/01 12:15:16 michelv01 Exp $
 *
 * This function manages the calendar categories.
 *
