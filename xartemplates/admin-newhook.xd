@@ -1,6 +1,6 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
     <div class="xar-form-input-wrapper">
-        <label for"keywords" class="xar-form-label" title="#xarML('select the keywords for this item.')#">
+        <label for="keywords" class="xar-form-label" title="#xarML('select the keywords for this item.')#">
         <xar:mlstring>Keywords</xar:mlstring>:
         </label>
     
