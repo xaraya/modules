@@ -77,12 +77,13 @@
                        #$backuppathl#
                    </label>
                    <input type="text" name="backuppath" id="backuppath" size="60" maxlength="128" value="#$backuppath#" />
-               <div class="xar-form-input-wrapper-after">
-                     <xar:mlstring>Must be writeable chmod 777</xar:mlstring>
+                   <div class="xar-form-input-wrapper-after">
+                        <xar:mlstring>Must be writeable chmod 777</xar:mlstring>
+                   </div>
                </div>
 
                <div class="xar-form-input-wrapper">
-                    <label for="timestampl" class="xar-form-label" title="#$tshelp#">
+                    <label for="usetimestamp" class="xar-form-label" title="#$tshelp#">
                            #$timestampl#
                     </label>
                     <xar:if condition="$usetimestamp eq 1">
