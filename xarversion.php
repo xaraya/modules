@@ -1,12 +1,12 @@
 <?php
 /**
- * File: $Id$
- *
  * Keywords initialization functions
  *
- * @copyright (C) 2003 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
+ *
  * @subpackage keywords
  * @author mikespub
  */
@@ -25,7 +25,6 @@ $modversion['author']         = 'mikespub,alberto cazzaniga <janez>, Kams';
 $modversion['contact']        = 'http://www.xaraya.com/';
 $modversion['admin']          = 1;
 $modversion['user']           = 1;
-$modversion['securityschema'] = array('Keywords::Item' => 'Module ID:Item Type:Item ID');
 $modversion['class']          = 'Utility';
 $modversion['category']       = 'Miscellaneous';
 ?>

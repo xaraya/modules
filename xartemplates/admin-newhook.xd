@@ -1,24 +1,27 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-    <div style="clear: both; padding-top: 10px;">
-    <span style="float: left; width: 20%; text-align: right;">
-        <span class="help" title="#xarML('select the keywords for this item.')#"><xar:mlstring>Keywords</xar:mlstring>:</span>
-    </span>
-    <span style="float: right; width: 78%; text-align: left;">
-
-    <xar:if condition="$restricted eq 0">   
-        <p><input type="text" name="keywords" id="keywords" value="#$keywords#" size="50" maxlength="254" /></p>
-        <p><xar:mlstring>Allowed delimiters</xar:mlstring>: #$delimiters#</p>
+    <div class="xar-form-input-wrapper">
+        <label for"keywords" class="xar-form-label" title="#xarML('select the keywords for this item.')#">
+        <xar:mlstring>Keywords</xar:mlstring>:
+        </label>
+    
+        <xar:if condition="$restricted eq 0">
+                <input type="text" name="keywords" id="keywords" value="#$keywords#" size="50" maxlength="254" />
+            </div>
+       <div class="xar-form-input-wrapper">
+            <label for"keywords" class="xar-form-label" title="#xarML('select the keywords for this item.')#">
+                <xar:mlstring>Allowed delimiters</xar:mlstring>: 
+            </label>
+            #$delimiters#
     <xar:else />
     
     <xar:base-include-javascript filename="selectbox.js"/>
     
     <script type="text/javascript">
         var opt = new OptionTransfer("list1","list2");
-    opt.setAutoSort(true);
-    opt.setDelimiter("#$delimiter#");
-    opt.saveNewRightOptions("keywords");
+        opt.setAutoSort(true);
+        opt.setDelimiter("#$delimiter#");
+        opt.saveNewRightOptions("keywords");
     </script>
-    <div style="clear: both; padding-top: 10px;">
         <table>
             <tbody>
                 <tr>
@@ -71,6 +74,5 @@
         opt.init(document.forms['post']);
     </script>
     </xar:if>           
-    </span>
-    </div>
+</div>
 
