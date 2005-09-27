@@ -3,7 +3,6 @@
 <script type="text/javascript">
 
 </script>
-<xar:style scope="module" file="forms" />
 
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>Site Contact Administration</xar:mlstring></span>
