@@ -1,5 +1,7 @@
 <?php
 /**
+ * Standard function to Delete and item
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -8,7 +10,7 @@
  * @subpackage Example Module
  */
 /**
- * Standard function to Delete and item
+ * Standard function to Delete an item
  *
  * This is a standard function that is called whenever an administrator
  * wishes to delete a current module item.  Note that this function is

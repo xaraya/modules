@@ -1,5 +1,7 @@
 <?php
 /**
+ * Example initialization functions
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -26,71 +28,76 @@ function example_init()
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     /* It's good practice to name the table definitions you
-     * are using - $table doesn't cut it in more complex
-     * modules
+     * are using - $table doesn't cut it in more complex modules
      */
     $exampletable = $xartable['example'];
-    /* adodb does not provide the functionality to abstract table creates
-     * across multiple databases.  Xaraya offers the xarCreateTable function
-     * contained in the following file to provide this functionality.
-     */
-    xarDBLoadTableMaintenanceAPI();
-    /* Define the table structure in this associative array
-     * There is one element for each field.  The key for the element is
-     * the physical field name.  The element contains another array specifying the
+    
+    /* Get a data dictionary object with all the item create methods in it */
+    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+
+    /* Define the table structure in a string, each field and it's description
+     * separated by a comma. The key for the element is the physical field name.  
+     * Each field descripton contains other data specifying the
      * data type and associated parameters
      */
-    $fields = array('xar_exid'   => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
+
+     /* Old method of specifying fields and table creation  - deprecated
+       xarDBLoadTableMaintenanceAPI();
+
+       $fields = array('xar_exid'   => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
                     'xar_name'   => array('type' => 'varchar', 'size' => 32,      'null' => false),
                     'xar_number' => array('type' => 'integer', 'size' => 'small', 'null' => false, 'default' => '0')
         );
-    /* $query = "CREATE TABLE $exampletable (
-     * xar_exid int(10) NOT NULL auto_increment,
-     * xar_name varchar(32) NOT NULL default '',
-     * xar_number int(5) NOT NULL default 0,
-     * PRIMARY KEY(xar_exid))";
-     * More sample field create statements
-     * 'xar_i000'=>array('null'=>FALSE, 'type'=>'integer','unsigned'=>TRUE,'increment'=>TRUE,'primary_key'=>TRUE),
-     * 'xar_i001'=>array('null'=>FALSE, 'type'=>'integer','size'=>'tiny',   'default'=>'0'),
-     * 'xar_i002'=>array('null'=>FALSE, 'type'=>'integer','size'=>'small',  'default'=>'0'),
-     * 'xar_i003'=>array('null'=>TRUE, 'type'=>'integer','size'=>'medium', 'default'=>'0'),
-     * 'xar_i004'=>array('type'=>'integer','size'=>'big',    'default'=>'0'),
-     * 'xar_v001'=>array('null'=>FALSE, 'type'=>'varchar','size'=>255),
-     * 'xar_v002'=>array('null'=>TRUE,  'type'=>'varchar','size'=>100, 'default'=>'NULL'),
-     * 'xar_v003'=>array('null'=>TRUE,  'type'=>'varchar','size'=>11,  'default'=>'XX'),
-     * 'xar_c001'=>array('null'=>FALSE, 'type'=>'char','size'=>255),
-     * 'xar_c002'=>array('null'=>TRUE,  'type'=>'char','size'=>100, 'default'=>'NULL'),
-     * 'xar_c003'=>array('null'=>TRUE,  'type'=>'char','size'=>11,  'default'=>'XX'),
-     * 'xar_t001'=>array('null'=>FALSE, 'type'=>'text'),
-     * 'xar_t002'=>array('null'=>FALSE, 'type'=>'text', 'size'=>'tiny'),
-     * 'xar_t003'=>array('null'=>FALSE, 'type'=>'text', 'size'=>'medium'),
-     * 'xar_t004'=>array('null'=>FALSE, 'type'=>'text', 'size'=>'long'),
-     * 'xar_b001'=>array('null'=>FALSE, 'type'=>'blob'),
-     * 'xar_b002'=>array('null'=>FALSE, 'type'=>'blob','size'=>'tiny'),
-     * 'xar_b003'=>array('null'=>FALSE, 'type'=>'blob','size'=>'medium'),
-     * 'xar_b004'=>array('null'=>FALSE, 'type'=>'blob','size'=>'long'),
-     * 'xar_l001'=>array('null'=>FALSE, 'type'=>'boolean','default'=>FALSE),
-     * 'xar_d001'=>array('type'=>'datetime','default'=>array('year'=>2002,'month'=>04,'day'=>17,'hour'=>'12','minute'=>59,'second'=>0)),
-     * 'xar_d002'=>array('null'=>FALSE, 'type'=>'date','default'=>array('year'=>2002,'month'=>04,'day'=>17)),
-     * 'xar_f000'=>array('type'=>'float'),
-     * 'xar_f001'=>array('type'=>'float', 'width'=>6,'decimals'=>2),
-     * 'xar_f002'=>array('type'=>'float', 'size'=>'double','width'=>12, 'decimals'=>2),
-     * 'xar_f003'=>array('type'=>'float', 'size'=>'decimal','width'=>12, 'decimals'=>2),
-     * 'xar_ts01'=>array('type'=>'timestamp'),
-     * 'xar_ts02'=>array('type'=>'timestamp', 'size'=>'YYYYMMDD'),
-     * Create the Table - the function will return the SQL is successful or
-     * raise an exception if it fails, in this case $query is empty
-     */
-    $query = xarDBCreateTable($exampletable, $fields);
-    if (empty($query)) return; /* throw back */
+    */
+    $fields = "xar_exid      I         AUTO       PRIMARY,
+               xar_name      C(100)    NotNull    DEFAULT '',
+               xar_number    I         NotNull    DEFAULT 0
+              ";
 
-    /* Pass the Table Create DDL to adodb to create the table and
-     * send exception if unsuccessful
-     */
+    /* C:  Varchar, capped to 255 characters.
+       X:  Larger varchar, capped to 4000 characters
+       XL: For Oracle, returns CLOB, otherwise the largest varchar size.
+       C2: Multibyte varchar
+       X2: Multibyte varchar (largest size)
+       B:  BLOB (binary large object)
+       D:  Date
+       T:  Datetime or Timestamp
+       L:  Integer field suitable for storing booleans (0 or 1)
+       I:  Integer (mapped to I4)
+       I1: 1-byte integer
+       I2: 2-byte integer
+       I4: 4-byte integer
+       I8: 8-byte integer
+       F:  Floating point number
+       N:  Numeric or decimal numbe
+    */
+    /*
+       AUTO          For autoincrement numbers and sets NOTNULL also.
+       KEY           Primary key field. Sets NOTNULL also.
+       PRIMARY       Same as KEY.
+       DEFAULT       The default value. Character strings are auto-quoted unless
+                        the string begins and ends with spaces, eg ' SYSDATE '.
+       NOTNULL       If field is not null.
+       DEFDATE       Set default value to call function to get today's date.
+       DEFTIMESTAMP  Set default to call function to get today's datetime.
+       NOQUOTE       Prevents autoquoting of default string values.
+       CONSTRAINTS   Additional constraints defined at end of field definition.
+    */
 
-    $result = &$dbconn->Execute($query);
-    if (!$result) return;
-    
+    /* Create or alter the table as necessary */
+    $result = $datadict->changeTable($exampletable, $fields);
+    if (!$result) {return;}
+
+    /* If and as necessary create indexes for your tables */
+    /*
+    $result = $datadict->createIndex(
+        'i_' . xarDBGetSiteTablePrefix() . '_example_number',
+        $exampletable,
+        'xar_number'
+    );
+    if (!$result) {return;}
+    */
+
     /* If Categories API loaded and available, generate proprietary
      * module master category cid and child subcids
      */
@@ -130,15 +137,17 @@ function example_init()
     xarModSetVar('example', 'bold', 0);
     xarModSetVar('example', 'itemsperpage', 10);
     /* If your module supports short URLs, the website administrator should
-     * be able to turn it on or off in your module administration
+     * be able to turn it on or off in your module administration.
+     * Use the standard module var name for short url support.
      */
     xarModSetVar('example', 'SupportShortURLs', 0);
     /* If you provide short URL encoding functions you might want to also
-     * provide module aliases and have them set in the module's administraiotn.
+     * provide module aliases and have them set in the module's administration.
+     * Use the standard module var names for useModuleAlias and aliasname.
      */
     xarModSetVar('example', 'useModuleAlias','');
     xarModGetVar('example','aliasname',false);
-    
+
     /* Register Block types (this *should* happen at activation/deactivation) */
     if (!xarModAPIFunc('blocks',
             'admin',
@@ -320,20 +329,15 @@ function example_delete()
      */
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-    /* adodb does not provide the functionality to abstract table creates
-     * across multiple databases.  Xaraya offers the xarDropeTable function
-     * contained in the following file to provide this functionality.
-     */
-    xarDBLoadTableMaintenanceAPI();
-    /* Generate the SQL to drop the table using the API */
-    $query = xarDBDropTable($xartable['example']);
-    if (empty($query)) return; // throw back
+    $exampletable = $xartable['example'];
+    /* Get a data dictionary object with item create and delete methods */
+    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
 
-    /* Drop the table and send exception if returns false. */
-    $result = &$dbconn->Execute($query);
-    if (!$result) return;
+    /* Drop the example tables */
+     $result = $datadict->dropTable($exampletable);
 
-    /* Remove any module aliases before deleting module vars */
+     /* Remove any module aliases before deleting module vars */
+    /* Assumes one module alias in this case */
     $aliasname =xarModGetVar('example','aliasname');
     $isalias = xarModGetAlias($aliasname);
     if (isset($isalias) && ($isalias =='example')){

@@ -1,5 +1,7 @@
 <?php
 /**
+ * Example table definition functions
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -19,14 +21,16 @@
  */
 function example_xartables()
 { 
-    // Initialise table array
-    $xarTables = array(); 
-    // Get the name for the example item table.  This is not necessary
-    // but helps in the following statements and keeps them readable
-    $exampleTable = xarDBGetSiteTablePrefix() . '_example'; 
-    // Set the table name
-    $xarTables['example'] = $exampleTable; 
-    // Return the table information
+    /* Initialise table array */
+    $xarTables = array();
+    /* Get the name for the example item table.  This is not necessary
+     * but helps in the following statements and keeps them readable
+     */
+    $exampleTable = xarDBGetSiteTablePrefix() . '_example';
+    
+    /* Set the table name */
+    $xarTables['example'] = $exampleTable;
+    /* Return the table information */
     return $xarTables;
-} 
+}
 ?>

@@ -1,5 +1,7 @@
 <?php
 /**
+ * Validate an item
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -8,9 +10,9 @@
  * @subpackage Example Module
  */
  
- /* Validate an item
-  *
- * @author the Example module development team
+ /*
+  * Validate an item
+  * @author the Example module development team
   */
 function example_userapi_validateitem($args)
 { 
