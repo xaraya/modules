@@ -146,7 +146,7 @@ function example_init()
      * Use the standard module var names for useModuleAlias and aliasname.
      */
     xarModSetVar('example', 'useModuleAlias','');
-    xarModGetVar('example','aliasname',false);
+    xarModSetVar('example','aliasname',false);
 
     /* Register Block types (this *should* happen at activation/deactivation) */
     if (!xarModAPIFunc('blocks',
@@ -271,23 +271,10 @@ function example_upgrade($oldversion)
              * multiple upgrades need it
              */
             $exampletable = $xartable['example'];
-            /* Add a column to the table
-             * adodb does not provide the functionality to abstract table creates
-             * across multiple databases.  Xaraya offers the xarCreateTable function
-             * contained in the following file to provide this functionality.
-             */
-            xarDBLoadTableMaintenanceAPI();
-            /* $query = "ALTER TABLE $exampletable
-             * ADD xar_number INTEGER NOT NULL DEFAULT '0'";
-             */
-            $query = xarDBAlterTable($exampletable,
-                array('command' => 'add',
-                    'field' => 'xar_number',
-                    'type' => 'integer',
-                    'null' => false,
-                    'default' => '0'));
-            /* Pass to ADODB, and send exception if the result isn't valid. */
-            $result = &$dbconn->Execute($query);
+            /* Add a column to the table */
+            $result = $datadict->ChangeTable(
+                $exampletable, 'xar_number I NotNull Default 0'
+            );
             if (!$result) return;
             /* At the end of the successful completion of this function we
              * recurse the upgrade to handle any other upgrades that need
@@ -304,8 +291,8 @@ function example_upgrade($oldversion)
              * in the admin config area. You must also provide short urls
              */
             xarModSetVar('example', 'useModuleAlias','');
-            xarModGetVar('example','aliasname',false);
-            break;
+            xarModSetVar('example','aliasname',false);
+            return example_upgrade('1.5.0');
         case '1.5.0': /* current version */
             /* Code to upgrade from version 1.5.0 goes here */
             break;
@@ -355,6 +342,10 @@ function example_delete()
      */
     xarModDelVar('example', 'itemsperpage');
     xarModDelVar('example', 'bold');
+    xarModDelVar('example', 'SupportShortURLs');
+    xarModDelVar('example', 'useModuleAlias');
+    xarModDelVar('example','aliasname');
+
     if (xarModIsAvailable('categories')) {
         xarModDelVar('example', 'number_of_categories');
         xarModDelVar('example', 'mastercids');
