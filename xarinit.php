@@ -51,7 +51,7 @@ function example_init()
     */
     $fields = "xar_exid      I         AUTO       PRIMARY,
                xar_name      C(100)    NotNull    DEFAULT '',
-               xar_number    I         NotNull    DEFAULT 0
+               xar_number    I4        NotNull    DEFAULT 0
               ";
 
     /* C:  Varchar, capped to 255 characters.
@@ -167,7 +167,10 @@ function example_init()
             'example', 'user', 'usermenu')) {
         return false;
     }
-
+    /* Register search hook */
+    if (!xarModRegisterHook('item', 'search', 'GUI', 'example', 'user', 'search')) {
+        return false;
+    }
     /**
      * Define instances for this module
      * Format is
@@ -286,7 +289,10 @@ function example_upgrade($oldversion)
              return example_upgrade('1.0.0');
         case '1.0.0':
             /* Code to upgrade from version 1.0 goes here */
-            
+            /* Register search hook */
+            if (!xarModRegisterHook('item', 'search', 'GUI', 'example', 'user', 'search')) {
+               return false;
+            }
             /*Provide some way for admin to switch on and off Module aliases
              * in the admin config area. You must also provide short urls
              */

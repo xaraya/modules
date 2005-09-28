@@ -40,9 +40,19 @@
 
     <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
     <ul>
-        <li><xar:mlstring>usermenu -- Allows interface with the "My Account Page"</xar:mlstring></li>
-        <li><xar:mlstring>search -- Allows interface with Search Module</xar:mlstring></li>
+        <li><xar:mlstring>Usermenu -- Allows interface with the Roles "My Account Page"</xar:mlstring></li>
+        <li><xar:mlstring>Search -- Allows interface with the Search Module.</xar:mlstring></li>
     </ul>
+    <p>
+        <xar:mlstring>
+        In these cases, the Example module provides the hook functionality.
+        To activate the hooks go to </xar:mlstring>
+        <a href="&xar-modurl-modules-admin-hooks;&amp;hook=example"><xar:mlstring>Modules - Configure Hooks - Example Module.</xar:mlstring></a>
+        <xar:mlstring>From there click on the checkbox in either Roles or 
+        the Search module toactivate the respective hooks.
+        </xar:mlstring>
+    </p>
+
     <h3><xar:mlstring>Included Dynamic Data Properties</xar:mlstring></h3>
     <ul>
         <li><xar:mlstring>Example -- Provides example code and templates for an Example property</xar:mlstring></li>
@@ -63,7 +73,7 @@
               </li>
          </ul>
          <p class="xar-sub">
-             <strong>&nbsp;<xar:mlstring>Example Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.2&nbsp; 2005-09-24
+             <strong>&nbsp;<xar:mlstring>Example Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.3&nbsp; 2005-09-28
          </p>
       </div>
 </div>

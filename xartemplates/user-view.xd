@@ -17,11 +17,13 @@
     <xar:if condition="!empty($status)">
         <strong>#$status#</strong>
     </xar:if>
-    <table class="xar-halfwidth">
+    <table>
         <tr>
+            <th><xar:mlstring>Unique ID</xar:mlstring></th>
+            <th><xar:mlstring>Example number</xar:mlstring></th>
             <th><xar:mlstring>Example item name</xar:mlstring></th>
         </tr>
-    
+
         <!-- Loop over all the items given by the function. Since $data['items']
              is preset to an empty array, we don't need to use an if/else
              structure like we do in user-display.xd -->
@@ -29,9 +31,19 @@
         <xar:foreach in="$items" value="$item">
         <tr>
             <td>
-    
+                    #$item.exid#
+            </td>
+            <td>
+                <xar:if condition="empty($item.link)">
+                    #$item.number#
+                <xar:else />
+                    <a href="#$item.link#">#$item.number#</a>
+                </xar:if>
+            </td>
+            <td>
+
                 <!-- we only show a link if the item link variable is not empty -->
-        
+
                 <xar:if condition="empty($item.link)">
                     #$item.name#
                 <xar:else />

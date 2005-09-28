@@ -95,14 +95,31 @@
         <fieldset>
             <div class="xar-form-input-wrapper-after">
         <!--
-            // Add an authorisation ID - this adds a hidden field in the form that
-            // contains an authorisation ID.  The authorisation ID is very important in
-            // preventing certain attacks on the website
+            * Add an authorisation ID - this adds a hidden field in the form that
+            * contains an authorisation ID.  The authorisation ID is very important in
+            * preventing certain attacks on the website
         -->
                <input type="hidden" name="authid" id="authid" value="#$authid#" />
                <input type="hidden" name="exid" id="exid" value="#$item.exid#" />
                <input type="submit" value="#xarML('Update Example')#" />
             </div>
+            <!--
+             * Let's set a return URL here for cancelling the delete.
+             * In this case it's easy as we know where the user
+             * has come from - there is only the admin view form that leads to delete
+             * so let's set that here
+             * Make sure we also set the text so it can be translated
+             * by wrapping the display text in xar:mlstring tag
+             *
+             * Adding a link rather than a button and moving it away from Submit
+             * make it less likely of a mistaken click on cancel
+             *
+            -->
+            <div class="xar-form-input-wrapper-before">
+             <a href="&xar-modurl-example-admin-view;">
+                 <xar:mlstring>Cancel and Return</xar:mlstring>
+             </a>
+             </div>
         </fieldset>
     </form>
 </div>
