@@ -145,8 +145,8 @@ function example_init()
      * provide module aliases and have them set in the module's administration.
      * Use the standard module var names for useModuleAlias and aliasname.
      */
-    xarModSetVar('example', 'useModuleAlias','');
-    xarModSetVar('example','aliasname',false);
+    xarModSetVar('example', 'useModuleAlias',false);
+    xarModSetVar('example','aliasname','');
 
     /* Register Block types (this *should* happen at activation/deactivation) */
     if (!xarModAPIFunc('blocks',
@@ -290,8 +290,8 @@ function example_upgrade($oldversion)
             /*Provide some way for admin to switch on and off Module aliases
              * in the admin config area. You must also provide short urls
              */
-            xarModSetVar('example', 'useModuleAlias','');
-            xarModSetVar('example','aliasname',false);
+            xarModSetVar('example', 'useModuleAlias',false);
+            xarModSetVar('example','aliasname','');
             return example_upgrade('1.5.0');
         case '1.5.0': /* current version */
             /* Code to upgrade from version 1.5.0 goes here */
