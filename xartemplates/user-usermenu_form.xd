@@ -22,7 +22,7 @@
 
 <fieldset>
     <div class="xar-form-input-wrapper-after">
-         <input type="submit" value="Modify Example Information"  tabindex="2" />
+         <input type="submit" value="#xarML('Modify Example Information')#"  tabindex="2" />
     </div>
 </fieldset>
 </form>
