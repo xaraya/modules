@@ -47,9 +47,9 @@
         <xar:mlstring>
         In these cases, the Example module provides the hook functionality.
         To activate the hooks go to </xar:mlstring>
-        <a href="&xar-modurl-modules-admin-hooks;&amp;hook=example"><xar:mlstring>Modules - Configure Hooks - Example Module.</xar:mlstring></a>
-        <xar:mlstring>From there click on the checkbox in either Roles or 
-        the Search module toactivate the respective hooks.
+        <a href="&xar-modurl-modules-admin-hooks;&amp;hook=example"><xar:mlstring>Modules - Configure Hooks - Example Module</xar:mlstring></a>.
+        <xar:mlstring> From there click on the checkbox in either Roles or
+        the Search module to activate the respective hooks.
         </xar:mlstring>
     </p>
 
