@@ -2,8 +2,6 @@ This file is a placeholder file in the sandbox branch, so there is an area where
 things can be tried out without disturbing too much
 
 Made a few changes
-Server upgrade notification test
-Changed file, testing both notifcations and sort
-Testing push time
-Testing push time 2
-Testing push time 3
+Testing for pushing both revision and extra certs at same time
+Change for xml/cia
+Another change for cia, blah
