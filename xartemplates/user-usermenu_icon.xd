@@ -11,7 +11,7 @@
     </dd>    
 <xar:else />
     <dd>
-        <a href="&xar-modurl-roles-user-account&amp;moduleload=example;">
+        <a href="&xar-modurl-roles-user-account;&amp;moduleload=example">
             <xar:mlstring>
                 Example
             </xar:mlstring>

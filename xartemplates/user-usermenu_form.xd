@@ -5,14 +5,24 @@
 
 <form action="&xar-modurl-example-user-usermenu;" method="post" enctype="application/x-www-form-urlencoded">
 <input type="hidden" name="authid" id="authid" value="#$authid#" />    
-<input type="hidden" name="uid" id="uid" value="#$uid#" />    
+<input type="hidden" name="uid" id="uid" value="#$uid#" />
 <input type="hidden" name="phase" id="phase" value="update" />
-<input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#$value#" /> -- <label for="itemsperpage"><xar:mlstring>Items Per Page</xar:mlstring></label><br /><br />
+<fieldset>
+    <legend><xar:mlstring>Display Options</xar:mlstring></legend>
+        <div class="xar-form-input-wrapper">
+            <label for="itemsperpage" class="xar-form-label" title="#xarML('Your customized number of items per page')#">
+                <xar:mlstring>Items Per Page</xar:mlstring>
+            </label>
+           <input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#$value#" />
+       </div>
+       <div class="xar-form-input-wrapper-after">
+           <xar:mlstring>This is only an example of hooking the user menu.  You may or may not need this functionality for your module, or wish to add more.</xar:mlstring>
+       </div>
+</fieldset>
 
-<xar:mlstring>This is only an example of hooking the user menu.  You may or may not need this functionality for your module.</xar:mlstring>
-
-<br /><br />
-
-
-<input type="submit" value="Modify Example Information"  tabindex="2" />
+<fieldset>
+    <div class="xar-form-input-wrapper-after">
+         <input type="submit" value="Modify Example Information"  tabindex="2" />
+    </div>
+</fieldset>
 </form>
