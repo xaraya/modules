@@ -7,7 +7,7 @@
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
- * @subpackage Example
+ * @subpackage Example Module
  */
 
 /**

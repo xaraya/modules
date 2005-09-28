@@ -7,12 +7,16 @@
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
- * @subpackage Release
+ * @subpackage Example Module
  */
 
 /*
+ * Search for an example item
+ * 
  * @author Jo Dalle Nogare
- * Search for an example
+ * @param q REQUIRED
+ * @param bool REQUIRED
+ * @param sort REQUIRED
  *
  */
 function example_user_search()
@@ -122,7 +126,7 @@ function example_user_search()
     if (empty($data['example'])){
         $data['status'] = xarML('No Example item found that matches your search');
     }
-
+    /* Return the results to the search hook */
     return $data;
 }
 ?>
