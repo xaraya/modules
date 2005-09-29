@@ -49,7 +49,7 @@ function example_userapi_search($args)
         $bindvars[] = $exid;
     }
     */
-    
+
     /* if you needed author search with uid
      * you might do something like the following.
      * Don't forget to add to the other checks following as well*/

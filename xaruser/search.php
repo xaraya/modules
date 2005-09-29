@@ -3,7 +3,7 @@
  * Example Module
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @copyright (C) 2005 by the Xaraya Development Team
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -80,14 +80,14 @@ function example_user_search()
         $data['exid']=0;
         $exid=0;
     }
-    if (isset($xarname)) {
+    if (isset($name)) {
         $search['name'] = $q;
         $data['name']=1;
     } else {
         $data['name']=0;
         $regname='';
     }
-    if (isset($xarnumber)) {
+    if (isset($number)) {
         $search['number'] = $q;
         $data['number']=1;
     } else {
