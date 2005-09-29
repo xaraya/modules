@@ -1,5 +1,7 @@
 <?php
 /**
+ * Overview menu link
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -9,7 +11,7 @@
  */
 
 /**
- * The main administration function
+ * The displays the overview in the menu
  * @author Jo Dalle Nogare
  */
 function sitecontact_admin_overview()
