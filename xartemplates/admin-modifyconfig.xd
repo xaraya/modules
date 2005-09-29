@@ -81,7 +81,7 @@
 
 <xar:comment> ************************ Begin Install Options ************************</xar:comment>
     <xar:if condition="$tab eq 'basic'">
-        <formaction="&xar-modurl-tinymce-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded" >
+        <form action="&xar-modurl-tinymce-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded" >
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <input type="hidden" name="tab" id="tab" value="#$tab#" />
         <fieldset>
@@ -628,26 +628,26 @@
                 <label for="tinybuttons" class="xar-form-label" title="#xarML('Additional buttons for this theme for Line 1 - see manual')#">
                      <xar:mlstring>Row 1</xar:mlstring>
                 </label>
-                <input type="text" name="tinybuttons" id="tinybuttons" value="#$tinybuttons#" size="60" maxlength="120" />
+                <input type="text" name="tinybuttons" id="tinybuttons" value="#$tinybuttons#" size="60" maxlength="250" />
         </div>
         <div class="xar-form-input-wrapper">
                 <label for="tinybuttons2" class="xar-form-label" title="#xarML('Additional buttons for this theme for Line 2 - see manual')#">
                     <xar:mlstring>Row 2</xar:mlstring>
                </label>
-                <input type="text" name="tinybuttons2" id="tinybuttons2" value="#$tinybuttons2#" size="60" maxlength="120" />
+                <input type="text" name="tinybuttons2" id="tinybuttons2" value="#$tinybuttons2#" size="60" maxlength="250" />
         </div>
         <div class="xar-form-input-wrapper">
                 <label for="tinybuttons3" class="xar-form-label" title="#xarML('Additional buttons for this theme for Line 3 - see manual')#">
                     <xar:mlstring>Row 3</xar:mlstring>
                </label>
-                <input type="text" name="tinybuttons3" id="tinybuttons3" value="#$tinybuttons3#" size="60" maxlength="120" />
+                <input type="text" name="tinybuttons3" id="tinybuttons3" value="#$tinybuttons3#" size="60" maxlength="250" />
         </div>
 
         <div class="xar-form-input-wrapper">
                 <label for="tinybuttonsremove" class="xar-form-label" title="#xarML('Buttons to remove from Advanced theme')#">
                         <xar:mlstring>Remove these buttons:</xar:mlstring>
                 </label>
-                <input type="text" name="tinybuttonsremove" id="tinybuttons" value="#$tinybuttonsremove#" size="60" maxlength="120" />
+                <input type="text" name="tinybuttonsremove" id="tinybuttons" value="#$tinybuttonsremove#" size="60" maxlength="250" />
         </div>
         </fieldset>
         <fieldset>
@@ -663,19 +663,19 @@
                 <label for="tinybuild1" class="xar-form-label" title="#xarML('Restrict buttons for Line 1 to these buttons only')#">
                      <xar:mlstring>Row 1</xar:mlstring>
                 </label>
-                <input type="text" name="tinybuild1" id="tinybuild1" value="#$tinybuild1#" size="60" maxlength="120" />
+                <input type="text" name="tinybuild1" id="tinybuild1" value="#$tinybuild1#" size="60" maxlength="250" />
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="tinybuild2" class="xar-form-label" title="#xarML('Restrict buttons for Line 2 to these buttons only')#">
                     <xar:mlstring>Row 2</xar:mlstring>
                 </label>
-                <input type="text" name="tinybuild2" id="tinybuild2" value="#$tinybuild2#" size="60" maxlength="120" />
+                <input type="text" name="tinybuild2" id="tinybuild2" value="#$tinybuild2#" size="60" maxlength="250" />
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="tinybuild3" class="xar-form-label" title="#xarML('Restrict buttons for Line 3 to these buttons only')#">
                     <xar:mlstring>Row 3</xar:mlstring>
                 </label>
-                <input type="text" name="tinybuild3" id="tinybuttons3" value="#$tinybuild3#" size="60" maxlength="120" />
+                <input type="text" name="tinybuild3" id="tinybuttons3" value="#$tinybuild3#" size="60" maxlength="250" />
             </div>
        </fieldset>
        <fieldset>
@@ -686,7 +686,7 @@
    </form>
 <xar:comment> ************************ Custom Config Option********************</xar:comment>
     <xar:elseif condition="$tab eq 'customconfig'" />
-        <formaction="&xar-modurl-tinymce-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded" >
+        <form action="&xar-modurl-tinymce-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded" >
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <input type="hidden" name="tab" id="tab" value="#$tab#" />
         <fieldset>

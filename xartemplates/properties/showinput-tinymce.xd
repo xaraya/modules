@@ -28,9 +28,13 @@
         <label class="xar-form-label">#$wysiwygprompt#</label>
         <input type="button" value="#$buttonon#" onclick="mce_button_toggle('#$id#', this);" />
     </div>
-    <xar:else />
+<xar:elseif condition="$usewysiwyg eq 1" />
     <div class="xar-form-container-after">
-    <textarea class="mceEditor" rows="#$rows#" cols="#$cols#" id="#$id#" name="#$name#" tabindex="#$tabindex#">#$value#</textarea>
+    <textarea mce_editable="true" class="mceEditor" rows="#$rows#" cols="#$cols#" id="#$id#" name="#$name#" tabindex="#$tabindex#">#$value#</textarea>
+    </div>
+<xar:else />
+    <div class="xar-form-container-after">
+    <textarea rows="#$rows#" cols="#$cols#" id="#$id#" name="#$name#" tabindex="#$tabindex#">#$value#</textarea>
     </div>
 </xar:if>
 <xar:if condition="!empty($invalid)">
