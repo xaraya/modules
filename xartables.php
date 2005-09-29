@@ -7,6 +7,8 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
+ * @author Original Author of file: Jim McDonald
+ *
  * @subpackage Todolist Module
  */
 /**
@@ -15,7 +17,7 @@
  *
  * This function is called internally by the core whenever the module is
  * loaded.  It is loaded by xarMod__loadDbInfo().
- * @author Original Author of file: Jim McDonald
+
  * @author Todolist Module development team
  * @access private
  * @return array
