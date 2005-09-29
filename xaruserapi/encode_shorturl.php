@@ -34,6 +34,7 @@ function sitecontact_userapi_encode_shorturl($args)
     } else{
         $usealias = false;
     }
+
     $path = '';
     /* if we want to add some common arguments as URL parameters below */
     $join = '?';

@@ -62,6 +62,11 @@ function sitecontact_admin_updateconfig()
 
     $currentalias = xarModGetVar('sitecontact','aliasname');
     $newalias = trim($aliasname);
+          /* Get rid of the spaces if any, it's easier here and use that as the alias*/
+    if ( strpos($newalias,'_') === FALSE )
+    {
+        $newalias = str_replace(' ','_',$newalias);
+    }
     $hasalias= xarModGetAlias($currentalias);
     $useAliasName= xarModGetVar('sitecontact','useModuleAlias');
 
