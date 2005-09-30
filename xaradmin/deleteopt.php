@@ -4,7 +4,7 @@
  * Polls Module
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -23,6 +23,7 @@ function polls_admin_deleteopt()
     // Get parameters
     if (!xarVarFetch('pid', 'id', $pid, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('opt', 'int:0:', $opt, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('votes', 'int:0:', $votes, 0,  XARVAR_DONT_SET)) return;
     if (!xarVarFetch('confirm', 'isset', $confirm, '', XARVAR_NOT_REQUIRED)) return;
 
     if ((!isset($pid) || !isset($opt)) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
@@ -34,7 +35,8 @@ function polls_admin_deleteopt()
 
     if (!isset($poll) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
-    if (!xarSecurityCheck('EditPolls',1,'All',"$poll[title]:All:$pid")) {
+
+    if (!xarSecurityCheck('EditPolls',1,'Polls',"$poll[title]:$poll[type]")) {
         return;
     }
 
@@ -56,14 +58,11 @@ function polls_admin_deleteopt()
         $data['warning'] = '';
         $data['authid'] = xarSecGenAuthKey();
 
-
         if (($poll['type'] == 'single') &&
             ($poll['options'][$opt]['votes'] != 0)) {
             $data['warning'] = xarML('This option has votes.  Delete anyway?');
         }
-
-        $data['cancelurl'] = xarModURL('polls', 'admin', 'display', array('pid' => $pid));
-
+        $data['cancelurl'] = xarModURL('polls', 'admin', 'modify', array('pid' => $pid));
         return $data;
     }
 
@@ -75,13 +74,14 @@ function polls_admin_deleteopt()
                      'admin',
                      'deleteopt',
                      array('pid' => $pid,
-                           'opt' => $opt))) {
+                           'opt' => $opt,
+                           'votes' => $votes))) {
         // Success
         xarSessionSetVar('statusmsg', xarML('Deleted option'));
 
     }
 
-    xarResponseRedirect(xarModURL('polls', 'admin', 'display', array('pid' => $pid)));
+    xarResponseRedirect(xarModURL('polls', 'admin', 'modify', array('pid' => $pid)));
 
     return true;
 }

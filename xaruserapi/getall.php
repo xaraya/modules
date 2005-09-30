@@ -4,7 +4,7 @@
  * Polls Module
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -38,12 +38,31 @@ function polls_userapi_getall($args)
     $bindvars = array();
 
     if (isset($status) && is_numeric($status)) {
-        $where = " WHERE $pollstable.xar_open = ?";
-        $bindvars[]= (int) $status;
+       
+        if ($status == 1) {
+            $where = " WHERE $pollstable.xar_start_date <= ? and ($pollstable.xar_end_date >= ? or $pollstable.xar_end_date = 0)";
+            $bindvars[]= (int) time();
+            $bindvars[]= (int) time();
+            if (isset($hook) && is_numeric($hook)) {
+                $where .= " AND $pollstable.xar_itemid = ?";
+                $bindvars[]= (int) $hook;
+                }
+        } elseif ($status == 2) { 
+            $where = " WHERE $pollstable.xar_start_date >= ?";
+            $bindvars[]= time();
+            if (isset($hook) && is_numeric($hook)) {
+                $where .= " AND $pollstable.xar_itemid = ?";
+                $bindvars[]= (int) $hook;
+                }
+        } elseif ($status == 3) { 
+            $where = " WHERE $pollstable.xar_end_date <= ? and $pollstable.xar_end_date > 0";
+            $bindvars[]= time();
         if (isset($hook) && is_numeric($hook)) {
             $where .= " AND $pollstable.xar_itemid = ?";
             $bindvars[]= (int) $hook;
             }
+        }                                      
+       
     } else {
         if (isset($modid) && is_numeric($modid)) {
         $where = " WHERE $pollstable.xar_modid = ?";
@@ -52,6 +71,7 @@ function polls_userapi_getall($args)
         $where = '';
     }
     }
+
     if (!empty($catid) && xarModIsHooked('categories','polls')) {
         // Get the LEFT JOIN ... ON ...  and WHERE parts from categories
         $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
@@ -80,6 +100,8 @@ function polls_userapi_getall($args)
                    $pollstable.xar_itemtype,
                    $pollstable.xar_itemid,
                    $pollstable.xar_votes,
+                   $pollstable.xar_start_date,
+                   $pollstable.xar_end_date,
                    $pollstable.xar_reset
             FROM $pollstable
             $where
@@ -92,8 +114,8 @@ function polls_userapi_getall($args)
 
     // Put polls into result array.
     for (; !$result->EOF; $result->MoveNext()) {
-        list($pid, $title, $type, $open, $private, $modid, $itemtype, $itemid, $votes, $reset) = $result->fields;
-        if (xarSecurityCheck('ViewPolls',0,'All',"$title:All:$pid")) {
+        list($pid, $title, $type, $open, $private, $modid, $itemtype, $itemid, $votes, $start_date, $end_date, $reset) = $result->fields;
+        if (xarSecurityCheck('ViewPolls',0,'Polls',"$title:$type")) {
             $polls[] = array('pid' => $pid,
                              'title' => $title,
                              'type' => $type,
@@ -103,6 +125,8 @@ function polls_userapi_getall($args)
                              'itemtype' => $itemtype,
                              'itemid' => $itemid,
                              'votes' => $votes,
+                             'start_date' => $start_date,
+                             'end_date' => $end_date,
                              'reset' => $reset);
         }
     }

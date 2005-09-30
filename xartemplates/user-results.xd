@@ -1,11 +1,7 @@
-<xar:comment>
-    License: GPL http://www.gnu.org/copyleft/gpl.html
-</xar:comment>
+<xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:mlstring>
-            Poll Results
-        </xar:mlstring>
+        <xar:mlstring>Poll Results</xar:mlstring>
     </span>
 </div>
 <div class="xar-mod-body">
@@ -15,31 +11,27 @@
     <h2>
         #$title#
     </h2>
-    <div style="clear: both; padding-top: 10px; width: 100%; text-align: center; margin: auto;">
+    <div class="xar-center xar-standard-box-padding">
         <xar:if condition="$private">
-            <p>
-                <xar:mlstring>
-                    This Poll is currently private.  Please check again soon for the results.
-                </xar:mlstring>
-            </p>
-        <xar:else />
-            <table cellpadding="2" cellspacing="0" style="align: center;margin: auto;border: 0px;">
-                <xar:loop name="$options">
+            <div>
+                <xar:mlstring>This Poll is currently private.  Please check again soon for the results.</xar:mlstring>
+            </div>
+        <xar:else /> 
+           <table style="margin: auto;" class="xar-autowidth xar-noborder">
+            <xar:loop name="$options">
                     <tr>
-                        <td style="text-align: left;vertical-align: middle;" colspan="3">
-                            <b>
-                                #$loop:item['name']#
-                            </b>
+                        <td class="xar-align-left xar-valign-middle">
+                            <b>#$loop:item['name']#</b>
                             [ #$loop:item['percentage']#%
                             <xar:if condition="$showtotalvotes eq 1">
                                 &nbsp;(#$loop:item['votes']#)
                             </xar:if>    
-                                 ]<br />
+                            ]<br />
                             <xar:if condition="$imggraph eq 1">
                                 <xar:if condition="$loop:item['barwidth'] le 1">
-                                    <img src="#xarTplGetImage('bar.png')#" style="width: 1px;height: 10px;" alt="vote bar" />
+                                    <img src="#xarTplGetImage('bar.png','polls')#" style="width: 1px;height: 10px;" alt="vote bar" />
                                 <xar:else />
-                                    <img src="#xarTplGetImage('bar.png')#" style="width: #$loop:item['barwidth']#%;height: 10px;" alt="vote bar" />
+                                    <img src="#xarTplGetImage('bar.png', 'polls')#" style="width: #$loop:item['barwidth']#%;height: 10px;" alt="vote bar" />
                                 </xar:if>
                             <xar:else/>
                                 <div class="xar-alt" style="width:#$loop:item['barwidth']#%; height: 1em;min-width:1px; float:left; display:inline;">
@@ -51,48 +43,32 @@
             </table>
         </xar:if>
     </div>
-    <div style="clear: both; padding-top: 10px;">
+    <div class="xar-standard-box-padding xar-align-center">
         <xar:if condition="$showtotalvotes eq 1">
-        <span style="float: left; width: 100%; text-align: center;">
             <b>
-                <xar:mlstring>
-                    Total votes
-                </xar:mlstring>
+                <xar:mlstring>Total votes</xar:mlstring>
                 : #$totalvotes#
             </b>
-        </span>
         </xar:if>
-        <span class="xar-sub" style="float: left; width: 100%; text-align: center;">
-            <xar:mlstring>
-                We allow just one vote
-            </xar:mlstring>
-            #$votelimit#
-        </span>
-    </div>
-    <div style="clear: both; padding-top: 10px;">
-        <span style="float: left; width: 100%; text-align: center;">    [
-            <xar:if condition="$canvote">
-                <a class="xar-normal" href="#$voteurl#">
-                    <xar:mlstring>
-                        Vote
-                    </xar:mlstring>
+    </div>    
+    <div class="xar-standard-box-padding xar-align-center">  
+        <xar:if condition="$open == 1">
+            <div>
+                <xar:mlstring>We allow just one vote</xar:mlstring>
+                    #$votelimit# 
+            </div>
+            <xar:if condition="$canvote">                                         
+                <a href="#$voteurl#">
+                    <xar:mlstring>Vote</xar:mlstring>
                 </a>
                 |
-            <xar:else />
-                <xar:mlstring>
-                    Already voted
-                </xar:mlstring>
-                |
             </xar:if>
-            <a class="xar-normal" href="#$listurl#">
-                <xar:mlstring>
-                    Main List
-                </xar:mlstring>
-            </a>
-            ]
-        </span>
+        </xar:if>
+        <a href="#$listurl#">
+            <xar:mlstring>Main List</xar:mlstring>
+        </a>
     </div>
 </div>
-<div style="clear: both; padding-top: 10px;" class="xar-mod-foot">
-    #$hookoutput#
+<div class="xar-standard-box-padding xar-align-center">
+#$hookoutput#
 </div>

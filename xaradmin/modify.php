@@ -4,7 +4,7 @@
  * Polls Module
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -20,6 +20,12 @@ function polls_admin_modify()
     // Get parameters
     if (!xarVarFetch('pid', 'id', $pid)) return;
 
+     if (empty($pid)) {
+        $msg = xarML('No poll selected');
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        return;
+    }
+
     // Start output
     $data = array();
 
@@ -33,38 +39,95 @@ function polls_admin_modify()
 
     // Security check
 
-    if (!xarSecurityCheck('EditPolls',1,'All',"$poll[title]:All:$pid")) {
+    if (!xarSecurityCheck('EditPolls',1,'Polls',"$poll[title]:$poll[type]")) {
         return;
     }
-
-    // Title
     $data['authid'] = xarSecGenAuthKey();
     $data['pid'] = $pid;
-
     $data['buttonlabel'] = xarML('Modify Poll');
-
     $data['polltitle'] = xarVarPrepHTMLDisplay($poll['title']);
     $data['polltype'] = $poll['type'];
     $data['private'] = $poll['private'];
+    $data['start_date'] = $poll['start_date'];
+    $data['end_date'] = $poll['end_date'];
 
-    $defaultopts = xarModGetVar('polls', 'defaultopts');
-    if(count($poll['options']) > $defaultopts){
-        $defaultopts = count($poll['options']);
+/* start options */ 
+   
+    $data['uplabel'] = xarML('Up');
+    $data['downlabel'] = xarML('Down');
+    $data['newurl'] = xarModURL('polls',
+                                'admin',
+                                'newopt',
+                                array('pid' => $pid));
+    $data['backurl'] = xarModURL('polls',
+                                 'admin',
+                                 'list');
+
+    $data['options'] = array();
+    
+    $rownum = 1;
+    foreach ($poll['options'] as $opt => $optinfo) {
+        $row = array();
+        $row['down'] = NULL;
+        $row['up'] = NULL;
+
+        $upurl = xarModURL('polls',
+                           'admin',
+                           'incopt',
+                           array('pid' => $pid,
+                                 'opt' => $opt,
+                                 'authid' => $data['authid']));
+        $downurl = xarModURL('polls',
+                             'admin',
+                             'decopt',
+                             array('pid' => $pid,
+                                   'opt' => $opt,
+                                   'authid' => $data['authid']));
+        
+        if (count($poll['options']) > 1) {
+            switch($rownum) {
+                case 1:
+                    $row['down'] = $downurl;
+                    break;
+                case count($poll['options']):
+                    $row['up'] = $upurl;
+                    break;
+                default:
+                    $row['down'] = $downurl;
+                    $row['up'] = $upurl;
+            }
+        }                                
+        $row['name'] = $optinfo['name'];
+
+        $row['votes'] = $optinfo['votes'];                                
+                                        
+        if (xarSecurityCheck('EditPolls',0,'Polls',"$poll[title]:$poll[type]")) {
+            $row['modify'] = xarModURL('polls',
+                                               'admin',
+                                               'modifyopt',
+                                               array('pid' => $pid,
+                                                     'opt' => $opt));
+        }
+        if (xarSecurityCheck('EditPolls',0,'Polls',"$poll[title]:$poll[type]")) {
+             if (($optinfo['votes'] != 0)) {
+                $row['delete_confirm'] = xarML('Option "#(1)" has votes.  Delete anyway?', addslashes($optinfo['name']));
+            } else {
+            $row['delete_confirm'] = xarML('Are you sure to delete option "#(1)"', addslashes($optinfo['name']));
+            }
+            $row['delete'] = xarModURL('polls',
+                                       'admin',
+                                       'deleteopt',
+                                        array('pid' => $pid,
+                                              'authid' => $data['authid'],
+                                              'opt' => $opt,
+                                              'votes' => $row['votes']));                                
+        }
+        $data['options'][] = $row;
+        $rownum++;
+        $row = NULL;
     }
 
-    $options = array();
-    for($i = 1; $i <= $defaultopts;$i++){
-        if(isset($poll['options'][$i])){
-            $options[$i]['name'] = xarVarPrepHTMLDisplay($poll['options'][$i]['name']);
-        }
-        else{
-            $options[$i]['name'] = '';
-        }
-        $options[$i]['field'] = "option_$i";
-        $options[$i]['counter'] = $i;
-    }
-
-    $data['options'] = $options;
+/*  end options */
 
     $item['module'] = 'polls';
     $item['itemid'] = $pid;

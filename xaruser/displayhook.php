@@ -4,7 +4,7 @@
  * Polls Module
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -65,10 +65,8 @@ function polls_user_displayhook($args)
         $data['returnurl'] = xarServerGetCurrentURL();
     }
 
-    // See if user is allowed to vote
-    if (xarSecurityCheck('VotePolls',0,'All',"$poll[title]:All:$poll[pid]")) {
         if ((xarModAPIFunc('polls', 'user', 'usercanvote', array('pid' => $pid)))) {
-            // They have not voted yet, display voting options
+        if (xarSecurityCheck('VotePolls',0,'Polls',"$poll[title]:$poll[type]")) {
             $data['canvote'] = 1;
             $data['type'] = $poll['type'];
             $data['private'] = $poll['private'];
@@ -77,28 +75,34 @@ function polls_user_displayhook($args)
                                   'resultshook',
                                   array('pid' => $poll['pid']));
             $data['previewresults'] = xarModGetVar('polls', 'previewresults');
-
             $data['authid'] = xarSecGenAuthKey('polls');
             $data['pid'] =  $poll['pid'];
             $data['options'] = $poll['options'];
             $data['callingmod'] = $modname;
-        }
-        else {
-            // They have voted, display current results
+        } else {
+            if (xarSecurityCheck('ViewPolls',0,'Polls',"$poll[title]:$poll[type]")) {
             return xarModFunc('polls',
                               'user',
                               'resultshook',
                               array('pid' => $pid,
                                     'returnurl' => $data['returnurl']));
+            } else {  
+                $data['canvote'] = 0;
         }
     }
-    else {
+    } else {
+        // controllo autorizzazione a vedere polls
+        if (xarSecurityCheck('ViewPolls',0,'Polls',"$poll[title]:$poll[type]")) {
+            return xarModFunc('polls',
+                              'user',
+                              'resultshook',
+                               array('pid' => $pid,
+                                     'returnurl' => $data['returnurl']));
+        } else { 
         $data['canvote'] = 0;
     }
-
+    }  
 /* no hook calls inside hook calls :-) */
-
-    $data['buttonlabel'] = xarML('Vote');
 
     // Return output
     return $data;

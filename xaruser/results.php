@@ -4,7 +4,7 @@
  * Polls Module
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -24,7 +24,7 @@ function polls_user_results($args)
 
     extract($args);
 
-    if(!xarSecurityCheck('ViewResultsPolls')){
+    if(!xarSecurityCheck('ViewPolls')){
         return;
     }
 
@@ -58,13 +58,14 @@ function polls_user_results($args)
         return;
     }
 
-    if ($canvote && !xarSecurityCheck('VotePolls',0,'All',"$poll[title]:All:$poll[pid]")) {
+    if ($canvote && !xarSecurityCheck('VotePolls',0,'Polls',"$poll[title]:$poll[type]")) {
         $canvote = 0;
     }
 
     $data['pid'] = $poll['pid'];
     $data['title'] = $poll['title'];
     $data['private'] = $poll['private'];
+    $data['open'] = $poll['open'];
 
     // Number of participants
     $data['totalvotes'] = $poll['votes'];

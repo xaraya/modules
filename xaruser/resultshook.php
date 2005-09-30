@@ -4,7 +4,7 @@
  * Polls Module
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -53,6 +53,7 @@ function polls_user_resultshook($args)
     $data['pid'] = $poll['pid'];
     $data['title'] = $poll['title'];
     $data['private'] = $poll['private'];
+    $data['open'] = $poll['open'];
 
     // Number of participants
     $data['totalvotes'] = $poll['votes'];

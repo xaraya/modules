@@ -1,16 +1,12 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:mlstring>
-            Polls Administration
-        </xar:mlstring>
+        <xar:mlstring>Polls Administration</xar:mlstring>
     </span>
 </div>
 <div class="xar-mod-body">
     <h2>
-        <xar:mlstring>
-            Delete Poll
-        </xar:mlstring>
+        <xar:mlstring>Delete Poll</xar:mlstring>
     </h2>
     <div style="clear: both; padding-top: 10px; text-align: center; margin: auto;">
         <h3>
@@ -21,9 +17,7 @@
             <input type="hidden" name="pid" value="#$pid#">
             <input type="hidden" name="confirm" value="#$confirm#">
             <div style="clear: both; padding-top: 10px;">
-                <xar:mlstring>
-                    Delete this Poll?
-                </xar:mlstring>
+                <xar:mlstring>Delete this Poll?</xar:mlstring>
             </div>
             <div style="clear: both; padding-top: 10px;">
                 <input type="submit" value="#xarML('Delete Poll')#"> &nbsp; &nbsp;

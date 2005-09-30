@@ -1,111 +1,150 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:if condition="xarTplAddStyleLink('polls', 'forms')"></xar:if>
+<xar:style scope="common" />
+<xar:base-include-javascript module="base" filename="confirmlink.js" />
+<xar:comment> <xar:if condition="xarTplAddStyleLink('polls', 'forms')"></xar:if> </xar:comment>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:mlstring>
-            Polls Administration
-        </xar:mlstring>
+        <xar:mlstring>Polls Administration</xar:mlstring>
     </span>
 </div>
 <div class="xar-mod-body">
     <h2>
-        <xar:mlstring>
-            Modify Poll
-        </xar:mlstring>
+        <xar:mlstring>Modify Poll</xar:mlstring>
     </h2>
-    <form class="xar-formwidget" name="post" id="post" action="&xar-modurl-polls-admin-update;" method="post" enctype="application/x-www-form-urlencoded">
-        <fieldset class="formelements xar-norm">
+    <form name="post" id="post" action="&xar-modurl-polls-admin-update;" method="post" enctype="application/x-www-form-urlencoded">
+        <fieldset>
             <legend>
-                <strong>
-                    <xar:mlstring>
-                        Modify main poll settings
-                    </xar:mlstring>
-                </strong>
+                <xar:mlstring>Modify main poll settings</xar:mlstring>
             </legend>
             <input type="hidden" name="authid" value="#$authid#">
             <input type="hidden" name="pid" value="#$pid#">
-            <p class="param">
-                    <label for="title">
-                    <span class="help" title="#xarML('The name of the new poll')#">
-                        <xar:mlstring>
-                            Poll title
-                        </xar:mlstring>
-                </span>
+            <div class="xar-form-input-wrapper">
+                <label for="title" title="#xarML('The name of the new poll')#" class="xar-form-label">
+                    <xar:mlstring>Poll title</xar:mlstring>:
                 </label>
-                    <input type="text" name="title" id="title" size="50" maxlength="100" value="#$polltitle#">
-            </p>
-            <p class="param">
-                <label for="type">
-                    <span class="help" title="#xarML('The type of the new poll')#">
-                    <xar:mlstring>
-                        Poll type
-                    </xar:mlstring>:
-                </span>
+                <input type="text" name="title" id="title" size="50" maxlength="100" value="#$polltitle#">
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="polltype" title="#xarML('The type of the new poll')#" class="xar-form-label">
+                    <xar:mlstring>Poll type</xar:mlstring>:
                 </label>
-                    <xar:if condition="$polltype eq 'single'">
-                        <input type="radio" name="polltype" value="single" checked="checked" />
-                    <xar:else />
-                        <input type="radio" name="polltype" value="single" />
-                    </xar:if>
-                    &nbsp;
-                    <xar:mlstring>
-                        Single Choice
-                    </xar:mlstring>
-                    <xar:if condition="$polltype eq 'multi'">
-                        <input type="radio" name="polltype" value="multi" checked="checked" />
-                    <xar:else />
-                        <input type="radio" name="polltype" value="multi" />
-                    </xar:if>
-                    &nbsp;
-                    <xar:mlstring>
-                        Multiple Choice
-                    </xar:mlstring>
-            </p>
-            <p class="param">
-                    <label for="private">
-                    <span class="help" title="#xarML('who can view the new poll')#">
-                        <xar:mlstring>
-                            Private
-                        </xar:mlstring>
-                </span>
+                <xar:if condition="$polltype eq 'single'">
+                    <input type="radio" id="polltype" name="polltype" value="single" checked="checked" />
+                <xar:else />
+                    <input type="radio" id="polltype" name="polltype" value="single" />
+                </xar:if>
+                &nbsp;
+                <xar:mlstring>Single Choice</xar:mlstring>
+                <xar:if condition="$polltype eq 'multi'">
+                    <input type="radio" id="polltype" name="polltype" value="multi" checked="checked" />
+                <xar:else />
+                    <input type="radio" id="polltype" name="polltype" value="multi" />
+                </xar:if>
+                &nbsp;
+                <xar:mlstring>Multiple Choice</xar:mlstring>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="private" title="#xarML('who can view the new poll')#" class="xar-form-label">
+                    <xar:mlstring>Private</xar:mlstring>
                 </label>
-                    <xar:if condition="$private">
-                        <input type="checkbox" name="private" id="private" value="1" checked="checked" />
-                    <xar:else />
-                        <input type="checkbox" name="private" id="private" value="1" />
-                    </xar:if>
-            </p>
+                <xar:if condition="$private">
+                    <input type="checkbox" name="private" id="private" value="1" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="private" id="private" value="1" />
+                </xar:if>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="start_date_input" title="#xarML('Poll active from')#" class="xar-form-label">
+                    <xar:mlstring>Start date</xar:mlstring>
+                </label>
+                <xar:data-input id="start_date" type="calendar" name="start_date" value="$start_date" validation="date" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="end_date_input" title="#xarML('Poll not active from')#" class="xar-form-label">
+                    <xar:mlstring>End date</xar:mlstring>
+                </label>
+                <xar:data-input id="end_date" type="calendar" name="end_date" value="$end_date" validation="date" />
+            </div>
         </fieldset>
-        <fieldset class="formelements xar-norm">
+        <fieldset>
             <legend>
-                <strong>
-                        <xar:mlstring>
-                            Edit options
-                        </xar:mlstring>
-                </strong>
+                <xar:mlstring>Edit options</xar:mlstring>
             </legend>
-            <a href="&xar-modurl-polls-admin-display;&amp;pid=#$pid#">
-                <xar:mlstring>
-                    Edit
-                </xar:mlstring>
-                    </a>
+            <div class="xar-form-input-wrapper">
+                <table class="xar-fullwidth">
+                    <tr>
+                        <th class="xar-align-center">
+                            <xar:mlstring>Options</xar:mlstring>
+                        </th>
+                        <th class="xar-align-center">
+                            <xar:mlstring>Votes</xar:mlstring>
+                        </th>
+                        <th class="xar-align-center">
+                            <xar:mlstring>Order</xar:mlstring>
+                        </th>
+                        <th class="xar-align-center">
+                            <xar:mlstring>Actions</xar:mlstring>
+                        </th>
+                    </tr>
+                    <xar:loop name="$options">
+                    <tr>
+                        <td>
+                            #$loop:item['name']#
+                        </td>
+                        <td class="xar-align-center">
+                            #$loop:item['votes']#
+                        </td>
+                        <td class="xar-align-center">
+                            <xar:if condition="isset($loop:item['down'])">
+                                <a href="#$loop:item['down']#" title="#$downlabel#" >
+                                    <img src="#xarTplGetImage('downarrow.gif', 'polls')#" style="border: 0px;" alt="#$downlabel#" />
+                                </a>
+                            <xar:else />
+                                <img src="#xarTplGetImage('noarrow.gif', 'polls')#" style="border: 0px;" alt="" />
+                            </xar:if>
+                            <xar:if condition="isset($loop:item['up'])">
+                                <a href="#$loop:item['up']#" title="#$uplabel#">
+                                    <img src="#xarTplGetImage('uparrow.gif', 'polls')#" style="border: 0px;" alt="#$uplabel#" />
+                                </a>
+                            <xar:else />
+                                <img src="#xarTplGetImage('noarrow.gif', 'polls')#" style="border: 0px;" alt="" />
+                            </xar:if>
+                        </td>
+                        <td class="xar-align-center">
+                            <xar:if condition="isset($loop:item['modify'])">
+                                <a href="#$loop:item['modify']#">
+                                    <xar:mlstring>Modify</xar:mlstring>
+                                </a>
+                                |
+                            </xar:if>
+                            <xar:if condition="isset($loop:item['delete'])">
+                                <a href="#$loop:item['delete']#" onclick="return xar_base_confirmLink(this, '#xarVarPrepForDisplay($loop:item['delete_confirm'])#')">
+                                    <xar:mlstring>Delete</xar:mlstring>
+                                </a>
+                            </xar:if>
+                        </td>
+                    </tr>
+                    </xar:loop>
+                </table>
+            </div>
+            <div class="xar-form-input-wrapper-after">
+                <a href="#$newurl#">
+                    <xar:mlstring>New option</xar:mlstring>
+                </a>
+            </div>
         </fieldset>
         <xar:if condition="!empty($hooks)">
-            <fieldset class="formelements xar-norm">
+            <fieldset>
                 <legend>
-                    <strong>
-                        <xar:mlstring>
-                            Configure hooks
-                        </xar:mlstring>
-                    </strong>
+                    <xar:mlstring>Configure hooks</xar:mlstring>
                 </legend>
-                <p class="param">
+                <div class="xar-form-input-wrapper">
                     #$hooks#
-                </p>
+                </div>
             </fieldset>
         </xar:if>
-        <p class="param">
+        <div class="xar-form-input-wrapper-after">
             <input type="submit" value="#xarML('Modify Poll')#" />
-        </p>
-        </form>
-    </div>
+        </div>
+    </form>
+</div>

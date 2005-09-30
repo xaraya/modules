@@ -4,7 +4,7 @@
  * Polls Module
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -114,6 +114,12 @@ function polls_adminapi_updatehook($args)
             $poll['private'] = 1;
         }
     }
+    if (empty($poll['start_date'])) {
+        $poll['start_date'] = time();
+            }
+    if (empty($poll['end_date'])) {
+        $poll['end_date'] = 0;
+            }
 
     // get the current poll for this item
     $oldpoll = xarModAPIFunc('polls','user','gethooked',
@@ -183,7 +189,9 @@ function polls_adminapi_updatehook($args)
                                  array('pid' => $pid,
                                        'title' => $poll['title'],
                                        'type' => $poll['type'],
-                                       'private' => $poll['private']));
+                                       'private' => $poll['private'],
+                                       'start_date' => $poll['start_date'],
+                                       'end_date' => $poll['end_date']));
         if (empty($updated)) {
             // Something went wrong - return
             $msg = xarML('Unable to update poll');

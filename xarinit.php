@@ -36,6 +36,8 @@ function polls_init()
         'xar_itemid'=>array('type'=>'integer','unsigned'=>TRUE,'null'=>FALSE,'default'=>'0'),
         'xar_opts'=>array('type'=>'integer','size'=>'small','null'=>FALSE,'default'=>'0'),
         'xar_votes'=>array('type'=>'integer','size'=>'medium','null'=>FALSE,'default'=>'0'),
+        'xar_start_date'=>array('type'=>'integer','size'=>'large','null'=>FALSE,'default'=>time()),
+        'xar_end_date'=>array('type'=>'integer','size'=>'large','null'=>FALSE,'default'=>'0'),
         'xar_reset'=>array('type'=>'integer','size'=>'large','null'=>FALSE,'default'=>'0')
     );
 
@@ -168,23 +170,19 @@ function polls_init()
 
     $query1 = "SELECT DISTINCT xar_title FROM ".xarDBGetSiteTablePrefix()."_polls";
     $query2 = "SELECT DISTINCT xar_type FROM ".xarDBGetSiteTablePrefix()."_polls";
-    $query3 = "SELECT DISTINCT xar_pid FROM ".xarDBGetSiteTablePrefix()."_polls";
     $instances = array(
-                        array('header' => 'Poll Title:',
+                        array('header' => 'Poll title:',
                                 'query' => $query1,
                                 'limit' => 20
                             ),
                         array('header' => 'Poll Type:',
                                 'query' => $query2,
                                 'limit' => 20
-                            ),
-                        array('header' => 'Poll ID:',
-                                'query' => $query3,
-                                'limit' => 20
                             )
                     );
-    xarDefineInstance('polls', 'Polls', $instances, 0, '', '', '', 'Security instance for Polls.');
+    xarDefineInstance('polls', 'Polls', $instances);
 
+    /*
     $query1 = "SELECT DISTINCT xar_pid FROM ".xarDBGetSiteTablePrefix()."_polls_info";
     $query2 = "SELECT DISTINCT xar_optnum FROM ".xarDBGetSiteTablePrefix()."_polls_info";
     $query3 = "SELECT DISTINCT XAR_optname FROM ".xarDBGetSiteTablePrefix()."_polls_info";
@@ -203,29 +201,29 @@ function polls_init()
                             )
                     );
     xarDefineInstance('polls', 'PollsInfo', $instances, 0, '', '', '', 'Security instance for Poll Options.');
-
+   */
     /*********************************************************************
     * Register the module components that are privileges objects
     * Format is
     * xarregisterMask(Name,Realm,Module,Component,Instance,Level,Description)
     *********************************************************************/
 
-    xarRegisterMask('AdminPolls','All','polls','Polls','All:All:All','ACCESS_ADMIN');
-    xarRegisterMask('DeletePolls','All','polls','Polls','All:All:All','ACCESS_DELETE');
-    xarRegisterMask('AddPolls','All','polls','Polls','All:All:All','ACCESS_ADD');
-    xarRegisterMask('EditPolls','All','polls','Polls','All:All:All','ACCESS_EDIT');
-    xarRegisterMask('VotePolls','All','polls','Polls','All:All:All','ACCESS_COMMENT');
-    xarRegisterMask('CommentPolls','All','polls','Polls','All:All:All','ACCESS_COMMENT');
-    xarRegisterMask('ViewPolls','All','polls','Polls','All:All:All','ACCESS_READ');
-    xarRegisterMask('ViewResultsPolls','All','polls','Polls','All:All:All','ACCESS_READ');
-    xarRegisterMask('ListPolls','All','polls','Polls','All:All:All','ACCESS_OVERVIEW');
+    xarRegisterMask('AdminPolls','All','polls','Polls','All:All','ACCESS_ADMIN');
+    xarRegisterMask('DeletePolls','All','polls','Polls','All:All','ACCESS_DELETE');
+    xarRegisterMask('AddPolls','All','polls','Polls','All:All','ACCESS_ADD');
+    xarRegisterMask('EditPolls','All','polls','Polls','All:All','ACCESS_EDIT');
+    xarRegisterMask('VotePolls','All','polls','Polls','All:All','ACCESS_COMMENT');
+    xarRegisterMask('ViewPolls','All','polls','Polls','All:All','ACCESS_READ');
+    xarRegisterMask('ListPolls','All','polls','Polls','All:All','ACCESS_OVERVIEW');
 
+    xarRegisterMask('ViewPollBlock','All','polls','PollBlock','All:All','ACCESS_READ');
+
+    /*
     xarRegisterMask('AdminPollOptions','All','polls','All','All','ACCESS_ADMIN');
     xarRegisterMask('DeletePollOptions','All','polls','All','All','ACCESS_DELETE');
     xarRegisterMask('AddPollOptions','All','polls','All','All','ACCESS_ADD');
     xarRegisterMask('EditPollOptions','All','polls','All','All','ACCESS_EDIT');
-
-    xarRegisterMask('ViewPollBlock','All','polls','PollBlock','All','ACCESS_READ');
+    */
 
     // Initialisation successful
     return true;
@@ -398,14 +396,6 @@ function polls_upgrade($oldversion)
                                                                'new_name' => $pref . '_polls_info'));
                 $result =& $dbconn->Execute($sql);
                 if (!$result) return;
-                /*
-                $bindvars1 = array();
-                $sql9 = "UPDATE " . $tables . " SET xar_table = ? WHERE xar_table = ?";
-                $bindvars1[] = (string) $pref .'_polls_info';
-                $bindvars1[] = (string) $pref .'_temp_polls_info';
-                $result9 = $dbconn->Execute($sql9, $bindvars1);
-                if (!$result9) return;
-                */
 
         }
         $index = array('name'   => 'i_' . xarDBGetSiteTablePrefix() . '_polls_pid',
@@ -418,6 +408,62 @@ function polls_upgrade($oldversion)
 
         case '1.4.0':
             xarModSetVar('polls', 'showtotalvotes', 1);          
+        
+        case '1.4.1':
+        
+        $dbconn =& xarDBGetConn();
+        $xartable =& xarDBGetTables();
+        $pollstable = $xartable['polls'];
+        
+            //Load Table Maintenance API
+        xarDBLoadTableMaintenanceAPI();
+
+            $query = xarDBAlterTable($pollstable,
+                                     array('command'  => 'add',
+                                           'field'    => 'xar_start_date',
+                                           'type'     => 'integer',
+                                           'unsigned' => true,
+                                           'null'     => false,
+                                           'default'  => time()));
+
+            $result =& $dbconn->Execute($query);
+            if (!$result) return;
+
+            $query = xarDBAlterTable($pollstable,
+                                     array('command'  => 'add',
+                                           'field'    => 'xar_end_date',
+                                           'type'     => 'integer',
+                                           'unsigned' => true,
+                                           'null'     => false,
+                                           'default'  => '0'));
+
+            $result =& $dbconn->Execute($query);
+            if (!$result) return;
+            
+            $sql = 'update ' . $pollstable . ' set xar_start_date = '. time() . ' , xar_end_date = 0 where xar_open = 1';
+            $result =& $dbconn->Execute($sql);
+            if (!$result) return;
+            
+            $sql = 'update ' . $pollstable . ' set xar_start_date = '. time() . ' , xar_end_date = '. time() . ' where xar_open = 0';
+            $result =& $dbconn->Execute($sql);
+            if (!$result) return;
+            
+            xarUnregisterMask('ViewResultsPolls');
+            xarUnregisterMask('CommentPolls'); 
+            xarRemoveInstances('polls'); 
+            $query1 = "SELECT DISTINCT xar_title FROM ".xarDBGetSiteTablePrefix()."_polls";
+            $query2 = "SELECT DISTINCT xar_type FROM ".xarDBGetSiteTablePrefix()."_polls";
+            $instances = array(
+                        array('header' => 'Poll title:',
+                                'query' => $query1,
+                                'limit' => 20
+                            ),
+                        array('header' => 'Poll Type:',
+                                'query' => $query2,
+                                'limit' => 20
+                            )
+                    );
+            xarDefineInstance('polls', 'Polls', $instances);          
         
         case 2.0:
             // Code to upgrade from version 2.0 goes here

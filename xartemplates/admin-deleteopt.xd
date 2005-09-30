@@ -2,45 +2,33 @@
 <xar:if condition="xarTplAddStyleLink('polls', 'forms')"></xar:if>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:mlstring>
-            Polls Administration
-        </xar:mlstring>
+        <xar:mlstring>Polls Administration</xar:mlstring>
     </span>
 </div>
 <div class="xar-mod-body">
     <h2>
-        <xar:mlstring>
-            Delete Option for poll
-        </xar:mlstring>
-             #$polltitle#
+        <xar:mlstring>Delete Option for poll</xar:mlstring>
+            #$polltitle#
     </h2>
-    <form class="xar-formwidget" action="&xar-modurl-polls-admin-deleteopt;" method="post" enctype="application/x-www-form-urlencoded">
-        <fieldset class="formelements xar-norm">
+    <form action="&xar-modurl-polls-admin-deleteopt;" method="post" enctype="application/x-www-form-urlencoded">
+        <fieldset>
             <legend>
-                <strong>
-                    <xar:mlstring>
-                        Delete option
-                    </xar:mlstring>
-                </strong>
+                <xar:mlstring>Delete option</xar:mlstring>
             </legend>
             <input type="hidden" name="authid" value="#$authid#">
             <input type="hidden" name="pid" value="#$pid#">
             <input type="hidden" name="opt" value="#$opt#">
             <input type="hidden" name="confirm" value="#$confirm#">
-            <p class="param">
-                <label for="option">
-                    <span class="help" title="#xarML('The name of the option you want to delete')#">
-                    <xar:mlstring>
-                            Option Text
-                    </xar:mlstring>
-                    </span>
+            <div class="xar-form-input-wrapper">
+                <label for="option" title="#xarML('The name of the option you want to delete')#" class="xar-form-label">
+                    <xar:mlstring>Option Text</xar:mlstring>
                 </label>
                 #$option#
-            </p>
+            </div>
         </fieldset>
-        <p class="param">
+        <div class="xar-form-input-wrapper-after">
             <input type="submit" value="#xarML('Delete Option')#"> &nbsp; &nbsp;
             <input type="button" value="#xarML('Cancel')#" onclick="location.href='#$cancelurl#'">
-        </p>
-        </form>
-    </div>
+        </div>
+    </form>
+</div>

@@ -1,2 +1,20 @@
 1.0 24th March 2002
    - Initial version
+
+1.5.0 30 sept 2005
+revision of instance and privileges 
+
+*************ATTENTION***********************
+
+if you have set permissions on single polls or type of polls 
+this can cause something wrong!
+
+*********************************************
+
+added start/end date for polls (default time()/0 -> no time limit)
+a lot of cleaning and small bugs fixing
+removing inline styles
+standard classes used
+header
+.....
+ 

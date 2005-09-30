@@ -4,7 +4,7 @@
  * Polls Module
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -23,7 +23,7 @@ function polls_user_list($args)
 
     // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing
-    if(!xarSecurityCheck('ListPolls')){
+    if(!xarSecurityCheck('ListPolls', 1)){
         return;
     }
 
@@ -55,23 +55,27 @@ function polls_user_list($args)
         $poll['type'] = $item['type'];
         $poll['private'] = $item['private'];
         $poll['votes'] = $item['votes'];
+        $poll['start_date'] = $item['start_date'];
+        $poll['end_date'] = $item['end_date'];
         if($item['open'] == '1'){
             $poll['open'] = 1;
-        }
-        else {
+        } else {
             $poll['open'] = 0;
         }
-        if (xarSecurityCheck('VotePolls',0,'All',"$item[title]:All:$item[pid]")) {
+        if (xarSecurityCheck('VotePolls',0,'Polls',"$item[pid]:$item[type]")) {
+        
+            
             $poll['canvote'] = xarModAPIFunc('polls',
                                              'user',
                                              'usercanvote',
+                                             array('pid' => $item['pid']));
+                                             
+            $poll['action_vote'] = xarModURL('polls', 'user', 'display',
                                              array('pid' => $item['pid']));
         } else {
             $poll['canvote'] = 0;
         }
 
-        $poll['action_vote'] = xarModURL('polls', 'user', 'display',
-                               array('pid' => $item['pid']));
         $poll['action_results'] = xarModURL('polls', 'user', 'results',
                                   array('pid' => $item['pid']));
 

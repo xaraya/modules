@@ -1,51 +1,38 @@
-<xar:comment>
-    License: GPL http://www.gnu.org/copyleft/gpl.html
-</xar:comment>
+<xar:comment> this template it's not used from version 1.5.0 </xar:comment>
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:mlstring>
-            Polls Administration
-        </xar:mlstring>
+        <xar:mlstring>Polls Administration</xar:mlstring>
     </span>
 </div>
 <div class="xar-mod-body">
     <h2>
-        <xar:mlstring>
-            Modify Poll Options
-        </xar:mlstring>
+        <xar:mlstring>Modify Poll Options</xar:mlstring>
     </h2>
-    <div class="xar-fullwidth xar-noborder" style="padding: 5px;">
+    <div class="xar-form-input-wrapper">
         <h3>
             #$polltitle#
         </h3>
-        <table width="100%" cellspacing="1" cellpadding="2">
+        <table class="xar-fullwidth">
             <tr>
-                <th style="text-align: center;">
-                    <xar:mlstring>
-                        Options
-                    </xar:mlstring>
+                <th class="xar-align-center">
+                    <xar:mlstring>Options</xar:mlstring>
                 </th>
-                <th style="text-align: center;">
-                    <xar:mlstring>
-                        Order
-                    </xar:mlstring>
+                <th class="xar-align-center">
+                    <xar:mlstring>Order</xar:mlstring>
                 </th>
-                <th style="text-align: center;">
-                    <xar:mlstring>
-                        Actions
-                    </xar:mlstring>
+                <th class="xar-align-center">
+                    <xar:mlstring>Actions</xar:mlstring>
                 </th>
             </tr>
             <xar:loop name="$options">
             <tr>
-                <td class="xar-norm" style="text-align: left;">
+                <td>
                     #$loop:item['name']# (#$loop:item['votes']#
-                    <xar:mlstring>
-                        votes
-                    </xar:mlstring>
+                    <xar:mlstring>votes</xar:mlstring>
                     )
                 </td>
-                <td class="xar-norm" style="text-align: center;">
+                <td class="xar-align-center">
                     <xar:if condition="isset($loop:item['down'])">
                         <a href="#$loop:item['down']#" title="#$downlabel#" >
                             <img src="modules/polls/xarimages/downarrow.gif" style="border: 0px;" alt="#$downlabel#" />
@@ -61,41 +48,33 @@
                         <img src="modules/polls/xarimages/noarrow.gif" style="border: 0px;" alt="" />
                     </xar:if>
                 </td>
-                <td class="xar-norm" style="text-align: center;">
+                <td class="xar-align-center">
                     <xar:if condition="isset($loop:item['modify'])">
-                    [
+                        [
                         <a href="#$loop:item['modify']#">
-                            <xar:mlstring>
-                                Modify
-                            </xar:mlstring>
+                            <xar:mlstring>Modify</xar:mlstring>
                         </a>
-                     |
+                        |
                     </xar:if>
                     <xar:if condition="isset($loop:item['delete'])">
                         <a href="#$loop:item['delete']#">
-                            <xar:mlstring>
-                                Delete
-                            </xar:mlstring>
+                            <xar:mlstring>Delete</xar:mlstring>
                         </a>
                     </xar:if>
                     ]
                 </td>
             </tr>
-            </xar:loop>
+        </xar:loop>
         </table>
-        <div style="clear: both; padding-top: 10px; margin: auto;">
-            <span style="float: left; width: 45%; text-align: right;">
+        <div class="xar-form-input-wrapper-after">
+            <span>
                 <a href="#$backurl#">
-                    <xar:mlstring>
-                        Back to the main list
-                    </xar:mlstring>
-                </a>
+                    <xar:mlstring>Back to the main list</xar:mlstring>
+                </a>&nbsp;&nbsp;&nbsp;
             </span>
-            <span style="float: right; width: 45%; text-align: left;">
+            <span>
                 <a href="#$newurl#">
-                    <xar:mlstring>
-                        New option
-                    </xar:mlstring>
+                    <xar:mlstring>New option</xar:mlstring>
                 </a>
             </span>
         </div>

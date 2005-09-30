@@ -4,7 +4,7 @@
  * Polls Module
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -34,7 +34,7 @@ function polls_admin_decopt()
     // Redirect
     xarResponseRedirect(xarModURL('polls',
                         'admin',
-                        'display',
+                        'modify',
                         array('pid' => $pid)));
     return true;
 }

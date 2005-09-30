@@ -1,35 +1,27 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:if condition="xarTplAddStyleLink('polls', 'forms')"></xar:if>
+<xar:style scope="common" />
+<xar:base-include-javascript module="base" filename="confirmlink.js" />
+<xar:comment><xar:if condition="xarTplAddStyleLink('polls', 'forms')"></xar:if></xar:comment>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:mlstring>
-            Polls Administration
-        </xar:mlstring>
+        <xar:mlstring>Polls Administration</xar:mlstring>
     </span>
 </div>
 <div class="xar-mod-body">
     <h2>
-        <xar:mlstring>
-            Existing Poll List
-        </xar:mlstring>
+        <xar:mlstring>Existing Poll List</xar:mlstring>
     </h2>
-    <form class="xar-formwidget" action="&xar-modurl-polls-admin-list;" method="post" enctype="application/x-www-form-urlencoded">
-        <fieldset class="formelements xar-norm">
+    <form action="&xar-modurl-polls-admin-list;" method="post" enctype="application/x-www-form-urlencoded">
+        <fieldset>
             <legend>
-                <strong>
-                    <xar:mlstring>
-                        Choose polls status
-                    </xar:mlstring>
-                </strong>
+                    <xar:mlstring>Choose polls status</xar:mlstring>
             </legend>        
-            <p class="param">
-                <label for="polls">
-                    <xar:mlstring>
-                        Status
-                    </xar:mlstring>
+            <div class="xar-form-input-wrapper">
+                <label for="status" class="xar-form-label">
+                    <xar:mlstring> Status</xar:mlstring>
                 </label>
                 <select name="status" id="status" onchange="this.form.submit()">
-                <xar:if condition="$status eq 2">
+                <xar:if condition="$status eq 1">
                     <option value = 1 selected = selected>
                     <xar:mlstring>
                         opened
@@ -42,82 +34,98 @@
                     </xar:mlstring>
                     </option>
                 </xar:if>
-                <xar:if condition="$status eq 0">
-                    <option value = 0 selected=selected>
-                    <xar:mlstring>
-                        closed
-                    </xar:mlstring>
-                    </option>
-                <xar:else />
-                    <option value = 0>
-                    <xar:mlstring>
-                        closed
-                    </xar:mlstring>
-                    </option>
-                </xar:if>
                 <xar:if condition="$status eq 2">
                     <option value = 2 selected = selected>
                     <xar:mlstring>
-                        all
+                        upcoming
                     </xar:mlstring>
                     </option>
                 <xar:else />
                 <option value = 2>
                     <xar:mlstring>
-                        all
+                        upcoming
+                    </xar:mlstring>
+                    </option>
+                </xar:if>                 
+                <xar:if condition="$status eq 3">
+                    <option value = 3 selected=selected>
+                    <xar:mlstring>
+                        closed
+                    </xar:mlstring>
+                    </option>
+                <xar:else />
+                    <option value = 3>
+                    <xar:mlstring>
+                        closed
                     </xar:mlstring>
                     </option>
                 </xar:if>
-                </select>
-            </p>
-        </fieldset>
-        <fieldset class="formelements xar-norm">
-            <legend>
-                <strong>
+                <xar:if condition="$status eq 4">
+                    <option value = 4 selected = selected>
                     <xar:mlstring>
-                        Available polls
+                        all
                     </xar:mlstring>
-                </strong>
-            </legend>
+                    </option>
+                <xar:else />
+                <option value = 4>
+                    <xar:mlstring>
+                        all
+                    </xar:mlstring>
+                    </option>
+                </xar:if>               
+                </select>
+            </div>
+        </fieldset>
+        
+        
         <xar:if condition="!isset($polls)">
-                <p class="param">
-                <xar:mlstring>
-                    There are no polls available
-                </xar:mlstring>
+                <p>
+                    <xar:mlstring>There are no polls available</xar:mlstring>
                 </p>
         <xar:else/>
-            <table class="fullwidth">
+            <table class="xar-fullwidth">
                 <tr>
-                    <th class="caption">
+                    <th rowspan="2">
                             <xar:mlstring>
                                 Title
                             </xar:mlstring>
                     </th>
-                    <th class="caption">
+                    <th rowspan="2">
                             <xar:mlstring>
                                 Type
                             </xar:mlstring>
                     </th>
-                    <th class="caption">
+                    <th rowspan="2">
                             <xar:mlstring>
                                 Hooked
                             </xar:mlstring>
                     </th>
-                    <th class="caption">
+                    <xar:comment>
+                    <th rowspan="2">
                             <xar:mlstring>
                                 Status
                             </xar:mlstring>
                     </th>
-                    <th class="caption">
+                    </xar:comment>
+                    <th colspan="2" class="xar-align-center">
+                            <xar:mlstring>
+                               Open
+                            </xar:mlstring>
+                    </th>  
+                    <th rowspan="2">
                             <xar:mlstring>
                                 Votes
                             </xar:mlstring>
                     </th>
-                    <th class="caption">
+                    <th rowspan="2">
                             <xar:mlstring>
                                 Actions
                             </xar:mlstring>
                     </th>
+                </tr>
+                <tr>
+                <th class= "xar-align-center">from</th>
+                <th class= "xar-align-center">to</th>
                 </tr>
                 <xar:loop name="$polls">
                 <tr>
@@ -126,9 +134,7 @@
                         <xar:if condition="$loop:item['private']">
                             [
                             <span class="xar-error">
-                                <xar:mlstring>
-                                    Private
-                                </xar:mlstring>
+                                <xar:mlstring>Private</xar:mlstring>
                             </span>
                             ]
                         </xar:if>
@@ -139,22 +145,31 @@
                     <td>
                         #$loop:item['hook']#
                     </td>
+                    <xar:comment>
                     <td>
                         #$loop:item['open']#
                     </td>
+                    </xar:comment>
                     <td>
+                    #xarLocaleGetFormattedDate('short',$loop:item['start_date'])#
+                    </td>
+                    <td>
+                   <xar:if condition="$loop:item['end_date']">
+                    #xarLocaleGetFormattedDate('short',$loop:item['end_date'])# 
+                   </xar:if>
+                    </td>
+                    <td class="xar-align-center">
                         #$loop:item['votes']#
                     </td>
                     <td>
-                        [
-                        <a href="#$loop:item['action_display']#">
+                        <xar:comment><a href="#$loop:item['action_display']#">
                             <xar:mlstring>
                                 Options
                             </xar:mlstring>
                         </a>
-                        |
+                        |</xar:comment>
                         <xar:if condition="isset($loop:item['action_close'])">
-                            <a href="#$loop:item['action_close']#">
+                            <a href="#$loop:item['action_close']#" onclick="return xar_base_confirmLink(this, '#xarVarPrepForDisplay($loop:item['close_confirm'])#')">
                                 <xar:mlstring>
                                     Close
                                 </xar:mlstring>
@@ -177,17 +192,15 @@
                             </a>
                             |
                         </xar:if>
-                        <a href="#$loop:item['action_delete']#">
+                        <a href="#$loop:item['action_delete']#" onclick="return xar_base_confirmLink(this, '#xarVarPrepForDisplay($loop:item['delete_confirm'])#')">
                             <xar:mlstring>
                                 Delete
                             </xar:mlstring>
                         </a>
-                        ]
                     </td>
-                </tr>
+                </tr>                
             </xar:loop>
             </table>
-    </xar:if>
-</fieldset>
+        </xar:if>
     </form>
 </div>

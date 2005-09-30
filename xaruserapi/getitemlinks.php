@@ -4,7 +4,7 @@
  * Polls Module
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -33,7 +33,8 @@ function polls_userapi_getitemlinks($args)
 
     // Get polls
     $sql = "SELECT xar_pid,
-                   xar_title
+                   xar_title,
+                   xar_type
             FROM $pollstable
             WHERE xar_pid IN (". join(', ', $itemids) . ")";
     $result =& $dbconn->Execute($sql);
@@ -41,9 +42,9 @@ function polls_userapi_getitemlinks($args)
 
     // Put polls into result array.
     for (; !$result->EOF; $result->MoveNext()) {
-        list($pid, $title) = $result->fields;
-        if (xarSecurityCheck('ViewPolls',0,'All',"$title:All:$pid")) {
-             $itemlinks[$pid] = array('url'   => xarModURL('polls', 'user', 'display',
+        list($pid, $title,$type) = $result->fields;
+        if (xarSecurityCheck('ViewPolls',0,'Polls',"$title:$type")) {
+             $itemlinks[$pid] = array('url'   => xarModURL('polls', 'user', 'results',
                                                            array('pid' => $pid)),
                                       'title' => xarML('View Poll'),
                                       'label' => xarVarPrepForDisplay($title));

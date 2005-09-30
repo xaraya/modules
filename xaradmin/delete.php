@@ -4,7 +4,7 @@
  * Polls Module
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -18,20 +18,19 @@
 function polls_admin_delete()
 {
     // Get parameters
-
     if (!xarVarFetch('pid', 'id', $pid)) return;
     if (!xarVarFetch('confirm', 'isset', $confirm, NULL, XARVAR_DONT_SET)) return;
 
     if (!isset($pid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
+   
+       
     $poll = xarModAPIFunc('polls',
                            'user',
                            'get',
                            array('pid' => $pid));
 
-    if (!xarSecurityCheck('DeletePolls',1,'All',"$poll[title]:All:$pid")) {
-        return;
-    }
+    if (!xarSecurityCheck('DeletePolls',1,'Polls',"$poll[title]:$poll[type]")) {return;}
 
     // Check for confirmation
     if ($confirm != 1) {

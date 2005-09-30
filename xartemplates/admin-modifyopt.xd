@@ -1,46 +1,34 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:if condition="xarTplAddStyleLink('polls', 'forms')"></xar:if>
+<xar:comment><xar:if condition="xarTplAddStyleLink('polls', 'forms')"></xar:if></xar:comment>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:mlstring>
-            Polls Administration
-        </xar:mlstring>
+        <xar:mlstring>Polls Administration</xar:mlstring>
     </span>
 </div>
 <div class="xar-mod-body">
-    <h2>
-        <xar:mlstring>
-            Modify Option for poll
-        </xar:mlstring>
+    <h3>
+        <xar:mlstring>Poll title</xar:mlstring>:
             #$polltitle#
-    </h2>
-    <form class="xar-formwidget" action="&xar-modurl-polls-admin-updateopt;" method="post" enctype="application/x-www-form-urlencoded">
-        <fieldset class="formelements xar-norm">
+    </h3>
+    <form action="&xar-modurl-polls-admin-updateopt;" method="post" enctype="application/x-www-form-urlencoded">
+        <fieldset>
             <legend>
-                <strong>
-                    <xar:mlstring>
-                        Modify option
-                    </xar:mlstring>
-                </strong>
+                    <xar:mlstring>Modify option</xar:mlstring>
             </legend>
             <input type="hidden" name="authid" value="#$authid#">
             <input type="hidden" name="pid" value="#$pid#">
             <input type="hidden" name="opt" value="#$opt#">
-            <p class="param">
-                        <label for="option">
-                    <span class="help" title="#xarML('The new name of the option')#">
-                            <xar:mlstring>
-                                Option Text
-                            </xar:mlstring>
-                    </span>
+            <div class="xar-form-input-wrapper">
+                        <label for="option" title="#xarML('The new name of the option')#" class="xar-form-label">
+                            <xar:mlstring>Option Text</xar:mlstring>
                 </label>
                         <input type="text" name="option" id="option" size="50" maxlength="100" value="#$option#">
-            </p>
+            </div>
         </fieldset>
-        <p class="param">
+        <div class="xar-form-input-wrapper-after">
             <input type="submit" value="#xarML('Modify Option')#"> &nbsp; &nbsp;
             <input type="button" value="#xarML('Cancel')#" onclick="location.href='#$cancelurl#'">
-        </p>
+        </div>
         </form>
     </div>
 </div>

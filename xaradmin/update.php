@@ -4,7 +4,7 @@
  * Polls Module
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -23,6 +23,8 @@ function polls_admin_update()
     if (!xarVarFetch('polltype', 'str:1:', $type, 'single', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('private', 'int:0:1', $private, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('title', 'str:1:', $title, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('start_date', 'str:1:', $start_date, time(), XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('end_date', 'str:1:', $end_date, NULL, XARVAR_NOT_REQUIRED)) return;
 
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;
@@ -30,6 +32,12 @@ function polls_admin_update()
     if($private != 1){
         $private = 0;
     }
+    if ($start_date != "") {
+                $start_date = strtotime($start_date);
+       }
+    if ($end_date != "") {
+                $end_date = strtotime($end_date);
+       }
 
     // Get poll info
     $poll = xarModAPIFunc('polls', 'user', 'get', array('pid' => $pid));
@@ -40,7 +48,7 @@ function polls_admin_update()
     }
 
     // security check
-    if (!xarSecurityCheck('EditPolls',1,'All',"$poll[title]:All:$pid")) {
+    if (!xarSecurityCheck('EditPolls',1,'Polls',"$poll[title]:$poll[type]")) {
         return;
     }
     $options = $poll['options'];
@@ -52,7 +60,9 @@ function polls_admin_update()
                       array('pid' => $pid,
                            'title' => $title,
                            'type' => $type,
-                           'private' => $private));
+                           'private' => $private,
+                           'start_date' => $start_date,
+                           'end_date' => $end_date));
     if(!$updated){
        return false;
     }

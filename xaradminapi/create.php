@@ -4,7 +4,7 @@
  * Polls Module
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -41,6 +41,13 @@ function polls_adminapi_create($args)
     if ($private != 1){
         $private = 0;
     }
+    if (!isset($start_date) || !is_numeric($start_date)) {
+        $start_date = time();
+        }
+    if (!isset($end_date) || !is_numeric($end_date)) {
+        $end_date = 0;
+        }
+    
     // Security check
     if (!xarSecurityCheck('AddPolls')) {
         return;
@@ -79,10 +86,12 @@ function polls_adminapi_create($args)
               xar_modid,
               xar_itemtype,
               xar_itemid,
+              xar_start_date,
+              xar_end_date,
               xar_reset)
-            VALUES (?,?,?,1,?,?,?,?,?,?)";
+            VALUES (?,?,?,1,?,?,?,?,?,?,?,?)";
 
-    $bindvars = array((int)$nextId, $title, $polltype, $private, $votes, (int)$modid, $itemtype, $itemid, $time);
+    $bindvars = array((int)$nextId, $title, $polltype, $private, $votes, (int)$modid, $itemtype, $itemid, $start_date, $end_date, $time);
     $result = $dbconn->Execute($sql, $bindvars);
 
 

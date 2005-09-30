@@ -4,7 +4,7 @@
  * Polls Module
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -42,7 +42,8 @@ function polls_pollblock_info()
 function polls_pollblock_display($blockinfo)
 {
     // Security check
-    if (!xarSecurityCheck('ViewPollBlock',0,'Pollblock',"$blockinfo[title]:All:All")) return;
+
+    if (!xarSecurityCheck('ViewPollBlock',0,'Pollblock',"$blockinfo[title]:$blockinfo[type]")) return;
 
     // Get variables from content block
     $vars = @unserialize($blockinfo['content']);
@@ -51,7 +52,7 @@ function polls_pollblock_display($blockinfo)
     if (isset($vars['pid']) && ($vars['pid'] > 0)) {
         $poll = xarModAPIFunc('polls', 'user', 'get', array('pid' => $vars['pid']));
     } else {
-        $poll = xarModAPIFunc('polls', 'user', 'get');
+        $poll = xarModAPIFunc('polls', 'user', 'get', array('act' => 1));
     }
 
     if (!$poll) {
@@ -61,7 +62,7 @@ function polls_pollblock_display($blockinfo)
     }
 
     // Permissions check
-    if (!xarSecurityCheck('ListPolls',1,'Polls',"$poll[title]:All:$poll[pid]")) return;
+    if (!xarSecurityCheck('ListPolls',0,'Polls',"$poll[title]:$poll[type]")) return;
 
     // Create output object
     $data = array();
@@ -69,13 +70,16 @@ function polls_pollblock_display($blockinfo)
     // Block content
     $data['title'] = $poll['title'];
     $data['type'] = $poll['type'];
+    $data['open'] = $poll['open'];
+    $data['start_date'] = $poll['start_date'];
     $data['buttonlabel'] = xarML('Vote');
     $data['previewresults'] = xarModGetVar('polls', 'previewresults');
+    $data['showtotalvotes'] = xarModGetVar('polls', 'showtotalvotes');
     $data['canvote'] = xarModAPIFunc('polls', 'user', 'usercanvote', array('pid' => $poll['pid']));
     $data['bid'] = $blockinfo['bid'];
 
     // See if user is allowed to vote
-    if ((xarSecurityCheck('VotePolls',0,'Polls',"$poll[title]:All:$poll[pid]")) &&
+    if ((xarSecurityCheck('VotePolls',0,'Polls',"$poll[title]:$poll[type]")) &&
                          ($data['canvote'])){
         // They have not voted yet, display voting options
 

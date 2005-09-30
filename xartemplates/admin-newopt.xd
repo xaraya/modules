@@ -2,43 +2,33 @@
 <xar:if condition="xarTplAddStyleLink('polls', 'forms')"></xar:if>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:mlstring>
-            Polls Administration
-        </xar:mlstring>
+        <xar:mlstring>Polls Administration</xar:mlstring>
     </span>
 </div>
 <div class="xar-mod-body">
     <h2>
-        <xar:mlstring>
-            New Option for poll
-        </xar:mlstring>
+        <xar:mlstring>New Option for poll</xar:mlstring>
             #$polltitle#
     </h2>
-    <form class="xar-formwidget" action="&xar-modurl-polls-admin-createopt;" method="post" enctype="application/x-www-form-urlencoded">
-        <fieldset class="formelements xar-norm">
+    <form action="&xar-modurl-polls-admin-createopt;" method="post" enctype="application/x-www-form-urlencoded">
+        <fieldset>
             <legend>
-                <strong>
-                    <xar:mlstring>
-                        Add new option to poll
-                    </xar:mlstring>
-                </strong>
+                <xar:mlstring>Add new option to poll</xar:mlstring>
             </legend>
             <input type="hidden" name="authid" value="#$authid#">
             <input type="hidden" name="pid" value="#$pid#">
-            <p class="param">
-                    <label for="option">
-                    <span class="help" title="#xarML('The name of the new option')#">
-                        <xar:mlstring>
-                            Option Text
-                        </xar:mlstring>
-                </span>
+            <div class="xar-form-input-wrapper">
+                <label for="option" title="#xarML('The name of the new option')#" class="xar-form-label">
+                    <xar:mlstring>Option Text</xar:mlstring>
                 </label>
-                    <input type="text" name="option" id="option" size="50" maxlength="100" value="">
-            </p>
+                <input type="text" name="option" id="option" size="50" maxlength="100" value="">
+            </div>
         </fieldset>
-        <p class="param">
-            <input type="submit" value="#xarML('Create Option')#"> &nbsp; &nbsp;
-            <input type="button" value="#xarML('Cancel')#" onclick="location.href='#$cancelurl#'">
-        </p>
-        </form>
-    </div>
+        <fieldset>
+            <div class="xar-form-input-wrapper-after">
+                <input type="submit" value="#xarML('Create Option')#"> &nbsp; &nbsp;
+                <input type="button" value="#xarML('Cancel')#" onclick="location.href='#$cancelurl#'">
+            </div>
+        </fieldset>
+    </form>
+</div>

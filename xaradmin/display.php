@@ -4,7 +4,7 @@
  * Polls Module
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -37,7 +37,7 @@ function polls_admin_display()
     }
 
     // Security check
-    if(!xarSecurityCheck('EditPolls',1,'All',"$poll[title]:All:$pid")){
+    if(!xarSecurityCheck('EditPolls',1,'Polls',"$poll[title]:$poll[type]")){
         return;
     }
 
@@ -95,14 +95,14 @@ function polls_admin_display()
 
         $row['votes'] = $optinfo['votes'];
 
-        if (xarSecurityCheck('EditPolls',0,'All',"$poll[title]:All:$pid")) {
+        if (xarSecurityCheck('EditPolls',0,'Polls',"$poll[title]:$poll[type]")) {
             $row['modify'] = xarModURL('polls',
                                                'admin',
                                                'modifyopt',
                                                array('pid' => $pid,
                                                      'opt' => $opt));
         }
-        if (xarSecurityCheck('EditPolls',0,'All',"$poll[title]:All:$pid")) {
+        if (xarSecurityCheck('EditPolls',0,'Polls',"$poll[title]:$poll[type]")) {
             $row['delete'] = xarModURL('polls',
                                                'admin',
                                                'deleteopt',

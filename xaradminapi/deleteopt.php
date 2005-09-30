@@ -4,7 +4,7 @@
  * Polls Module
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -57,19 +57,21 @@ function polls_adminapi_deleteopt($args)
     }
 
     // Decrement number of options
+    $new_votes = ($poll['votes'] - $votes);
     $pollstable = $xartable['polls'];
     $sql = "UPDATE $pollstable
-            SET xar_opts = xar_opts - 1
+            SET xar_opts = xar_opts - 1,
+            xar_votes = ?
             WHERE xar_pid = ?";
 
-    $result = $dbconn->Execute($sql, array((int)$pid));
+    $result = $dbconn->Execute($sql, array((int)$new_votes,(int)$pid));
 
     if (!$result) {
         return;
     }
 
     // Resequence
-    xarModAPIFunc('polls','admin','resequence',array('pid' => $pid));
+   // xarModAPIFunc('polls','admin','resequence',array('pid' => $pid));
 
     return true;
 }

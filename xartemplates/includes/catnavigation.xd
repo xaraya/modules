@@ -1,3 +1,4 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:if condition="!isset($catid)">
     <xar:set name="catid">0</xar:set>
 </xar:if>

@@ -4,7 +4,7 @@
  * Polls Module
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -25,6 +25,8 @@ function polls_admin_new()
     $data = array();
     $data['authid'] = xarSecGenAuthKey();
     $data['optcount'] = xarModGetVar('polls', 'defaultopts');
+    $data['start_date']= time();
+    $data['end_date']= NULL;
 
 
     $item = array();

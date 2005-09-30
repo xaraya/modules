@@ -1,46 +1,34 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:mlstring>
-            Polls Administration
-        </xar:mlstring>
+        <xar:mlstring>Polls Administration</xar:mlstring>
     </span>
 </div>
 <div class="xar-mod-body">
     <h2>
-        <xar:mlstring>
-            Reset Poll
-        </xar:mlstring>
+        <xar:mlstring>Reset Poll</xar:mlstring>
     </h2>
-    <div style="text-align: center; margin: auto; padding-top: 10px;">
-        <form method="post" action="&xar-modurl-polls-admin-reset;">
+    <form method="post" action="&xar-modurl-polls-admin-reset;">
+        <fieldset>
+            <legend>
+                <xar:mlstring>Reset poll votes</xar:mlstring>
+            </legend>
             <input type="hidden" name="authid" value="#$authid#">
             <input type="hidden" name="pid" value="#$pid#">
             <input type="hidden" name="confirm" value="#$confirm#">
-            <div style="clear: both; padding-top: 10px;">
-                <h3>
-                    <xar:mlstring>
-                        Reset this poll?
-                    </xar:mlstring>
-                </h3>
+            <div class="xar-form-input-wrapper">
+                <xar:mlstring>Reset votes for poll: </xar:mlstring>
                 #$polltitle#
             </div>
-            <div style="clear: both; padding-top: 10px;">
+            <div class="xar-form-input-wrapper">
                 (
-                    <xar:mlstring>
-                        all votes will be deleted
-                    </xar:mlstring>
+                    <xar:mlstring>all votes will be deleted</xar:mlstring>
                 )
             </div>
-            <div style="clear: both; padding-top: 10px;">
-                <input type="submit" value="#$buttonlabel#"><br /><br />
-            </div>
-            <div style="clear: both; padding-top: 10px;">
-                <a href="&xar-modurl-polls-admin-list;">
-                    <xar:mlstring>
-                        Cancel Reset
-                    </xar:mlstring>
-                </a>
-            </div>
-       </form>
-    </div>
+        </fieldset>
+        <div class="xar-form-input-wrapper-after">
+            <input type="submit" value="#$buttonlabel#">&nbsp;&nbsp;
+            <input type="button" value="#xarML('Cancel Reset')#" onclick="location.href='&xar-modurl-polls-admin-list;'">
+        </div>
+    </form>
 </div>

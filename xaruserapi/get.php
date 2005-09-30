@@ -4,7 +4,7 @@
  * Polls Module
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -33,8 +33,13 @@ function polls_userapi_get($args)
     if (!empty($pid)) {
         $extra = "WHERE xar_pid = ?";
         $bindvars[]=(int)$pid;
+// inserire una condizione sul polls con data futura
     } else {
         $extra = "WHERE xar_modid = " . xarModGetIDFromName('polls');
+        if (isset ($act)) {
+         $extra .= " AND xar_open = 1 AND xar_start_date <= ? ";
+         $bindvars[]= time();
+         }     
         $extra .= " ORDER BY xar_pid DESC";
     }
 
@@ -49,11 +54,13 @@ function polls_userapi_get($args)
                    xar_itemid,
                    xar_opts,
                    xar_votes,
+                   xar_start_date,
+                   xar_end_date,
                    xar_reset
             FROM $pollstable
             $extra";
 
-    if (!empty($pid)) {
+    if (!empty($pid) || !empty($act)) {
          $result = $dbconn->execute($sql, $bindvars);
     }else {
          $result = $dbconn->execute($sql);
@@ -70,12 +77,12 @@ function polls_userapi_get($args)
     }
 
     // Obtain the poll information from the result set
-    list($pid, $title, $type, $open, $private, $modid, $itemtype, $itemid, $opts, $votes, $reset) = $result->fields;
+    list($pid, $title, $type, $open, $private, $modid, $itemtype, $itemid, $opts, $votes, $start_date, $end_date, $reset) = $result->fields;
 
     $result->Close();
 
     // Security check
-    if(!xarSecurityCheck('ViewPolls',0,'All',"$title:All:$pid")){
+    if(!xarSecurityCheck('ViewPolls',0,'Polls',"$title:$type")){
         return;
     }
 
@@ -113,6 +120,8 @@ function polls_userapi_get($args)
                   'itemid' => $itemid,
                   'opts' => $opts,
                   'votes' => $votes,
+                  'start_date' => $start_date,
+                  'end_date' => $end_date,
                   'reset' => $reset,
                   'options' => $options);
 

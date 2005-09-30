@@ -4,7 +4,7 @@
  * Polls Module
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -46,15 +46,17 @@ function polls_adminapi_update($args)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $pollstable = $xartable['polls'];
-    $prefix = xarConfigGetVar('prefix');
+   // $prefix = xarConfigGetVar('prefix');
 
     $sql = "UPDATE $pollstable
             SET xar_title = ?,
             xar_type = ?,
-            xar_private = ?
+            xar_private = ?,
+            xar_start_date = ?,
+            xar_end_date = ?
             WHERE xar_pid = ?";
 
-    $bindvars = array($title, $type, $private, (int)$pid);
+    $bindvars = array($title, $type, $private, $start_date, $end_date, (int)$pid);
     $result = $dbconn->Execute($sql, $bindvars);
 
     if (!$result) {
