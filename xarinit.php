@@ -24,7 +24,6 @@ function todolist_init()
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
-    
     /* Get a data dictionary object with all the item create methods in it */
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
 
@@ -166,8 +165,9 @@ function todolist_init()
     xarModSetVar('todolist', 'VERY_IMPORTANT_COLOR', "#ff3366");
     xarModSetVar('todolist', 'VERY_IMPORTANT_DAYS', 3);
     xarModSetVar('todolist', 'ITEMS_PER_PAGE', 20);
+// These should go to user Vars...
 
-    xarModSetVar('todolist','userpref','1;all;0;1');
+//    xarModSetVar('todolist','userpref','1;all;0;1');
 
 
     /**
