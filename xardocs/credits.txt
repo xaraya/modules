@@ -1,0 +1,6 @@
+Portions of the POP3 Gateway are credited to:
+
+WordPress:  http://www.wordpress.org -- Ideas for Implementation and Code
+SquirrelMail:  http://www.squirrelmail.org -- POP3 Class
+
+Xaraya implementation: http://www.wyome.com

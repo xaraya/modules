@@ -1,0 +1,4 @@
+Portions of the POP3 Gateway are credited to:
+
+WordPress:  http://www.wordpress.org
+SquirrelMail:  http://www.squirrelmail.com
