@@ -20,45 +20,17 @@
  */
 function todolist_userapi_countusers()
 { 
-    /* Get database setup - note that both xarDBGetConn() and xarDBGetTables()
-
-/**
- * function to count the number of users
- * @returns integer
- * @return number of items held by this module
-
-
-    $todolist_project_members_column = &$pntable['todolist_project_members_column'];    
-
-    // FIXME convert query to COUNT
-    // $sql = "SELECT COUNT(1) $todolist_project_members_column[member_id] FROM $pntable[todolist_project_members]";
-    // $result = $dbconn->Execute($sql);
-    // list($numitems) = $result->fields;
-
-    $sql = "SELECT DISTINCT $todolist_project_members_column[member_id] FROM $pntable[todolist_project_members]";
-    $result = $dbconn->Execute($sql);
-    $numitems = $result->PO_RecordCount();
-
-    if ($dbconn->ErrorNo() != 0) {
-        return false;
-    }
-
-    $result->Close();
-
-   */
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     /* It's good practice to name the table and column definitions you are
      * getting - $table and $column don't cut it in more complex modules
      */
-    $exampletable = $xartable['example'];
-    /* Get item - the formatting here is not mandatory, but it does make the
-     * SQL statement relatively easy to read.  Also, separating out the sql
-     * statement from the Execute() command allows for simpler debug operation
-     * if it is ever needed
+    $project_memberstable = $xartable['todolist_project_members'];
+    /* Get item distinct
+     * Should this be per project?
      */
-    $query = "SELECT COUNT(1)
-            FROM $exampletable";
+    $query = "SELECT DISTINCT xar_member_id
+            FROM $project_memberstable";
     /* If there are no variables you can pass in an empty array for bind variables
      * or no parameter.
      */
@@ -68,7 +40,7 @@ function todolist_userapi_countusers()
      */
     if (!$result) return;
     /* Obtain the number of items */
-    list($numitems) = $result->fields;
+    $numitems = $result->PO_RecordCount();
     /* All successful database queries produce a result set, and that result
      * set should be closed when it has been finished with
      */

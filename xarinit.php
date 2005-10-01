@@ -11,7 +11,7 @@
  */
 /**
  * Todolist initialization functions
- * Initialise the example module
+ * Initialise the todolist module
  * This function is only ever called once during the lifetime of a particular
  * module instance
  * @Original Author of file: Jim McDonald
