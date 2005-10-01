@@ -14,8 +14,6 @@ function mybookmarks_user_new()
         default:
             // The user API function is called.
             $data['url'] = $url;
-            $data['authid']         = xarSecGenAuthKey();
-            $data['submitlabel']    = xarML('Submit');
             $item = array();
             $item['module'] = 'mybookmarks';
             $item['itemtype'] = NULL;
@@ -31,15 +29,15 @@ function mybookmarks_user_new()
         case 'update':
             // Get parameters
             if (!xarVarFetch('name', 'str:1:100', $name)) return;
-            if (!xarSecConfirmAuthKey()) return;
             // The API function is called.
+            $data['url'] = $url;
             if(!xarModAPIFunc('mybookmarks',
                               'user',
                               'create',
                                array('url'      => $url,
                                      'name'     => $name,
                                      'uid'      => $uid))) return;
-            xarResponseRedirect(xarModURL('mybookmarks', 'user', 'new', array('submitted' => 1, 'theme' => 'print')));
+            xarResponseRedirect($url);
             break;
     }
     return $data;

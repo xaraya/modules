@@ -16,7 +16,7 @@
 function mybookmarks_user_view($args)
 {
     extract($args);
-    if (!xarVarFetch('startnum', 'int:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return; 
+    if (!xarVarFetch('url','str',$url, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarSecurityCheck('Viewmybookmarks')) return;
     if (!xarUserIsLoggedIn()) return;
     $bookmarks = xarModAPIFunc('mybookmarks',
@@ -27,23 +27,17 @@ function mybookmarks_user_view($args)
     // Check individual permissions for Edit / Delete
     for ($i = 0; $i < count($bookmarks); $i++) {
         $bookmark = $bookmarks[$i];
-
         $bookmarks[$i]['deleteurl'] = xarModURL('mybookmarks',
                                                 'user',
                                                 'delete',
                                                 array('id' => $bookmark['id'],
                                                       'authid' => xarSecGenAuthKey(),
-                                                      'confirm' => 1));
+                                                      'confirm' => 1,
+                                                      'redirect' => $url));
         $bookmarks[$i]['javascript'] = "return confirmLink(this, '" . xarML('Delete Bookmark') . " $bookmark[name] ?')";
         $bookmarks[$i]['deletetitle'] = xarML('Delete');
     }
     $data['bookmarks'] = $bookmarks;
-    /*
-    $data['pager'] = xarTplGetPager($startnum,
-        xarModAPIFunc('mybookmarks', 'user', 'countitems'),
-        xarModURL('mybookmarks', 'user', 'view', array('startnum' => '%%', 'theme' => 'print')),
-        20);
-    */
     return $data;
 }
 ?>

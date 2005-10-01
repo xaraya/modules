@@ -22,6 +22,7 @@ function mybookmarks_user_delete($args)
 { 
     // Get parameters from whatever input we need.
     if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return; 
+    if (!xarVarFetch('url','str',$url, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('id', 'int', $id)) return; 
     // Security Check
     if (!xarSecurityCheck('Viewmybookmarks')) return; 
@@ -37,7 +38,7 @@ function mybookmarks_user_delete($args)
                              'uid'=> $uid))) {
         return;
     } 
-    xarResponseRedirect(xarModURL('mybookmarks', 'user', 'view', array('theme' => 'print'))); 
+    xarResponseRedirect($url); 
     return true;
 } 
 ?>

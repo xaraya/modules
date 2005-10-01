@@ -1,17 +1,18 @@
-<script type="text/javascript" src="modules/mybookmarks/xartemplates/popup.js"></script>
+<xar:base-include-javascript position="body" module="base" filename="xmlhttprequest.js" />
 <ul>
     <li>
-        <a href="#xarModUrl('mybookmarks', 'user', 'new', array('url' => $url, 'theme' => 'print'))#" onclick="popUp(this.href,'fixed',200,600);return false;">
+        <a href="#xarModUrl('mybookmarks', 'user', 'new', array('url' => $url))#" onclick="return loadContent(this.href,'mbreplace')">
             <xar:mlstring>
                 Bookmark This!
             </xar:mlstring>
         </a>
     </li>
     <li>
-        <a href="#xarModUrl('mybookmarks', 'user', 'view', array('theme' => 'print'))#" onclick="popUp(this.href,'console',400,600);return false;">
+        <a href="#xarModUrl('mybookmarks', 'user', 'view')#" onclick="return loadContent(this.href,'mbreplace')">
             <xar:mlstring>
                 View Bookmarks
             </xar:mlstring>
         </a>
     </li>
 </ul>
+<div id="mbreplace"></div>

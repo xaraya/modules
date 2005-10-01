@@ -1,35 +1,16 @@
 <xar:base-include-javascript module="base" filename="confirmlink.js" position="head" />
-<script type="text/javascript" src="modules/mybookmarks/xartemplates/redirect.js"></script>
-<div class="xar-mod-head">
-    <span class="xar-mod-title">
-        <xar:mlstring>
-            myBookMarks
-        </xar:mlstring>
-    </span>
-</div>
-<!-- common admin menu for this module - remove link to the current function -->
-<div class="xar-mod-body">
-    <h2>
-        <xar:mlstring>
-            Bookmarks
-        </xar:mlstring>
-    </h2>
-    <div class="xar-norm-outline" style="margin: 0px 3px 6px 3px;padding: 3px;text-align: left;">
-        <div class="xar-norm" style="padding: 3px;">
-            <span style="float: left; text-align: left; width: 89%;"><xar:mlstring>Name</xar:mlstring></span>
-            <span style="float: right; text-align: right; width: 9%;"><xar:mlstring>Action</xar:mlstring></span><br />
-        </div>
+<div id="mbreplace">
     <xar:loop name="$bookmarks">
         <xar:if condition="(($loop:index + 1) % 2)">
         <div class="xar-norm" style="padding: 3px;">
             <span style="float: left; text-align: left; width: 89%;">
-                <a href="#" onClick="redirect('#$loop:item['url']#'); javascript:window.close(); return false">
+                <a href="#$loop:item['url']#">
                     #$loop:item['name']#
                 </a>
             </span>
             <span style="float: right; text-align: right; width: 9%;">
-                <a href="#$loop:item['deleteurl']#" onClick="#$loop:item['javascript']#">
-                    #$loop:item['deletetitle']#
+                <a href="#$loop:item['deleteurl']#" onclick="#$loop:item['javascript']#">
+                    X
                 </a>
             </span>
         <br />
@@ -37,18 +18,17 @@
         <xar:else />
         <div class="xar-accent" style="padding: 3px;">
             <span style="float: left; text-align: left; width: 89%;">
-                <a href="#" onClick="redirect('#$loop:item['url']#'); javascript:window.close(); return false">
+                <a href="#$loop:item['url']#">
                     #$loop:item['name']#
                 </a>
             </span>
             <span style="float: right; text-align: right; width: 9%;">
-                <a href="#$loop:item['deleteurl']#" onClick="#$loop:item['javascript']#">
-                    #$loop:item['deletetitle']#
+                <a href="#$loop:item['deleteurl']#" onclick="#$loop:item['javascript']#">
+                    X
                 </a>
             </span>
         <br />
         </div>
         </xar:if>
     </xar:loop>
-    </div>
 </div>

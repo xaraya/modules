@@ -7,35 +7,10 @@
     var fieldDescription = Array("Name");
 //-->
 </script>
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>My Bookmarks</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Add Bookmark</xar:mlstring></h2>
-    <div style="margin: auto;">
-    <xar:if condition="!empty($submitted)">
-        <p>
-            <xar:mlstring>
-                Bookmark Added!
-            </xar:mlstring>
-        </p>
-    <xar:else />
-        <form action="#xarModURL('mybookmarks', 'user', 'new')#" method="post" onsubmit="return formCheck(this, fieldRequired, fieldDescription);" enctype="application/x-www-form-urlencoded" >
-            
-            <div style="clear: both; padding-top: 10px;">
-            <input type="hidden" name="authid" id="authid" value="#$authid#" />
-            <input type="hidden" name="phase" id="phase" value="update" />
-            <input type="hidden" name="url" id="url" value="#$url#" />
-            <span style="float: left; width: 20%; text-align: right;">
-                <span class="help" title="#xarML('The long name for the bbcode.')#"><label for="name"><xar:mlstring>Name</xar:mlstring></label>:</span>
-            </span>
-            <span style="float: right; width: 78%; text-align: left;">
-                <input type="text" name="name" id="name" value="" size="32" maxlength="255" />
-            </span>
-            </div>
-
-            <br /><br />
-            <span style="float: left; width: 30%; text-align: right;">
-                <input type="submit" value="#$submitlabel#" />
-            </span>
-        </form>
-    </xar:if>
-    </div>
+<div id="mbreplace">
+    <form action="#xarModURL('mybookmarks', 'user', 'new')#" method="post" onsubmit="return formCheck(this, fieldRequired, fieldDescription);" enctype="application/x-www-form-urlencoded" >
+        <input type="hidden" name="phase" id="phase" value="update" />
+        <input type="hidden" name="url" id="url" value="#$url#" />
+        <input type="text" name="name" id="name" maxlength="255" onfocus="this.value='';" onblur="if (this.value=='') {this.value='Bookmark Title';}" value="Bookmark Title" />
+    </form>
 </div>
