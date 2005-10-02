@@ -31,14 +31,14 @@ function julian_user_addevent($args)
     if (!xarSecurityCheck('Editjulian')) return;
     
     if (!xarVarFetch('cal_date','int::',$cal_date)) return;
-    
+
     // Build description for the item we want the hooks (i.e. category) for.
     $item = array();
     $item['module'] = 'julian';
     $item['multiple'] = false;
      
     // Get the hooks for this item.
-    $hooks = xarModCallHooks('item', 'new', 0, $item);
+    $hooks = xarModCallHooks('item', 'new', '', $item);
      
     // Deal with no-hook scenario (the template then must get an empty hook-array)
      if (empty($hooks)) {

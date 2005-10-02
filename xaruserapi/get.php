@@ -1,19 +1,16 @@
 <?php
-
 /**
-* File: $Id: view.php,v 1.4 2005/03/22 16:53:10 michelv01 Exp $
-*
-* Get an event.
-*
-* @package Xaraya eXtensible Management System
-* @copyright (C) 2004 by Metrostat Technologies, Inc.
-* @license GPL {@link http://www.gnu.org/licenses/gpl.html}
-* @link http://www.metrostat.net
-*
-* @subpackage julian
-* initial template: Roger Raymond
-* @author Julian package development team
-*/
+ * Get an event.
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage julian
+ * @link http://www.metrostat.net
+ * initial template: Roger Raymond
+ */
 
 /**
  * Get a single event
@@ -21,7 +18,7 @@
  * Get a single event from the events table 
  * Later we will look in the linked events table
  *  
- *
+ * @author Julian package development team
  * @author  MichelV (Michelv@xarayahosting.nl)
  * @access  public
  * @param   int $event_id ID of the event to get

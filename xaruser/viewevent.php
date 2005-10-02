@@ -1,23 +1,21 @@
 <?php
-
 /**
-* File: $Id: viewevent.php,v 1.2 2005/06/24 09:28:25 michelv01 Exp $
-*
-* Views an event.
-*
-* @package Xaraya eXtensible Management System
-* @copyright (C) 2005 by Metrostat Technologies, Inc.
-* @license GPL {@link http://www.gnu.org/licenses/gpl.html}
-* @link http://www.metrostat.net
-* @author  Julian Development Team
-* @subpackage julian
-* initial template: Roger Raymond
-* 
-*/
+ * Views an event.
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage julian
+ * initial template: Roger Raymond
+ * @link http://www.metrostat.net 
+ * 
+ */
 /**
  * View an event
  *
- * 
+ * @copyright (C) 2005 by Metrostat Technologies, Inc.
  * @author  Jodie Razdrh/John Kevlin/David St.Clair
  * @author  Julian Development Team, MichelV. <michelv@xarayahosting.nl>
  * @access  public 
@@ -37,7 +35,7 @@ function julian_user_viewevent()
     // TODO: make this an API for linked event
     // establish a db connection
     $dbconn =& xarDBGetConn();
-    //get db tables
+    // get db tables
     $xartable = xarDBGetTables();
    
     $matches = array();
@@ -60,7 +58,7 @@ function julian_user_viewevent()
    $bl_data = array();
    $bl_data = xarModAPIFunc('julian','user','get',array('event_id'=>$event_id));
    
-   //Make an admin adjustable time format
+   // Make an admin adjustable time format
    $dateformat=xarModGetVar('julian', 'dateformat');
    $timeformat=xarModGetVar('julian', 'timeformat');  
    $dateformat_created="$dateformat $timeformat";
@@ -72,11 +70,32 @@ function julian_user_viewevent()
 
    $bl_data['id'] = $bl_data['event_id'];
    $bl_data['deletesummary'] = xarVarPrepForDisplay($bl_data['summary']);
-   $bl_data['URL'] = $bl_data['url']; // TODO: Get rid of this
+
    $bl_data['organizer'] = xarUserGetVar('name',$bl_data['organizer']);
    $bl_data['datecreated'] = date("$dateformat_created",strtotime($bl_data['created']));
    $bl_data['fee'] = strcmp($bl_data['fee'],"")?xarLocaleFormatCurrency($bl_data['fee']):xarML('Unknown');
    $bl_data['authid'] = xarSecGenAuthKey();
+   // Add obfuscator: for later Bug 4971
+   // $bl_data['email'] = xarModAPIFunc('sitecontact', 'user', 'obfuemail', array('email'=>$bl_data['email']));
+   
+   /* Get rid of the NULLs */
+   
+    if (isset($bl_data['phone'])) {
+        $bl_data['phone'] = xarVarPrepForDisplay($bl_data['phone']);
+    } else {
+        $bl_data['phone'] ='';
+    }
+    if (!is_null($bl_data['url'])) {  
+        $bl_data['URL'] = xarVarPrepForDisplay($bl_data['url']); // TODO: Get rid of this   
+    } else {
+        $bl_data['URL'] ='';
+    }
+    if (isset($bl_data['zip'])) {
+        $bl_data['zip'] = xarVarPrepForDisplay($bl_data['zip']);
+    } else {
+        $bl_data['zip'] ='';
+    }
+
 
    //if there was a duration set for this event, format a string indicating the from and to times
    $duration='';

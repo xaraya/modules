@@ -1,5 +1,14 @@
 <?php
-
+/**
+ * Hook for create Julian
+ * 
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Julian Module
+ */
 /**
  * process date/time for the new item - hook for ('item','create','API')
  */

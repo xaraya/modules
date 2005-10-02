@@ -1,4 +1,5 @@
-<xar:if condition="xarTplAddStyleLink('julian', 'julian')"></xar:if>
+<xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:style scope="module" file="julian" />
 <xar:if condition="xarTplAddStyleLink('julian', 'xarform')"></xar:if>
 <script language="Javascript" src="modules/julian/xarjavascript/utilities_lite.js"></script>
 <script language="Javascript">
