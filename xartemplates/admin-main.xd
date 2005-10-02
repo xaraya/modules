@@ -48,6 +48,28 @@
         <li><xar:mlstring>Example -- Provides example code and templates for an Example property</xar:mlstring></li>
 
     </ul>
+     <h3><xar:mlstring>Privilege Masks</xar:mlstring></h3>
+
+    <p><xar:mlstring>You can set privileges for this module based on the following included masks:</xar:mlstring></p>
+        <ul>
+            <li><xar:mlstring>ReadExampleBlock: allows site visitors to read the example blocks</xar:mlstring></li>
+            <li><xar:mlstring>ViewExample: allows overview of example items</xar:mlstring></li>
+             <li><xar:mlstring>ReadExample: allows reading of fully displayed example items</xar:mlstring></li>
+            <li><xar:mlstring>EditExample: permits editing of an example item</xar:mlstring></li>
+            <li><xar:mlstring>AddExample: permits addition and editing of an example item</xar:mlstring></li>
+            <li><xar:mlstring>DeleteExample: allows deletion, additiona and editing of an example item</xar:mlstring></li>
+            <li><xar:mlstring>AdminExample: permits access to administrate the example module</xar:mlstring></li>
+
+        </ul>
+    <p><xar:mlstring>Note that Comment level mask is not provided in this example as there is no user submission process for Example items.
+       In other modules, Comment level would usually allow a site visitor to submit an item for approval prior to 'publication' on the site.
+       See the documentation for further information on privileges, masks and configuring them in your system.</xar:mlstring></p>
+    <h3>
+        <xar:mlstring>For Developers</xar:mlstring>
+    </h3>
+    <p>
+        <xar:mlstring>Please see the documentation on module development and the </xar:mlstring><a href="http://xaraya.com/documentation/rfcs/"><xar:mlstring>RFC library</xar:mlstring></a><xar:mlstring> for further information on Module development.</xar:mlstring>
+    </p>
 
     <h3>
         <xar:mlstring>Further Information</xar:mlstring>
@@ -63,12 +85,7 @@
               </li>
          </ul>
          <p class="xar-sub">
-             <strong>&nbsp;<xar:mlstring>Example Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.2&nbsp; 2005-09-24
+             <strong>&nbsp;<xar:mlstring>Example Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.4&nbsp; 2005-10-02
          </p>
-      </div>
 </div>
-<div class="xar-mod-foot xar-align-center xar-padding-thick">
-    <p>
-        <xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring>
-    </p>
-</div>
+
