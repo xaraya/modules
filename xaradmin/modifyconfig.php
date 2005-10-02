@@ -33,11 +33,14 @@ function julian_admin_modifyconfig()
     $data['numitems']   = xarModGetVar('julian','numitems');
     $data['from_name']  = xarModGetVar('julian','from_name');
     $data['from_email'] = xarModGetVar('julian','from_email');
-    
+
+    /* Generate a one-time authorisation code for this operation */
+    $data['authid'] = xarSecGenAuthKey();
+
     // Call hooks
     $hooks = xarModCallHooks('module', 'modifyconfig', 'julian', array('module' => 'julian'));
     if (empty($hooks)) {
-        $data['hooks'] = '';
+        $data['hooks'] = array();
     } else {
         $data['hooks'] = $hooks;
     }

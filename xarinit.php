@@ -1,7 +1,21 @@
 <?php
 /**
- *  Module Initialisation Function
- *  @version $Id: xarinit.php,v 1.21 2005/06/24 10:10:40 michelv01 Exp $
+ * Julian initialization functions
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Julian Module
+ */
+/**
+ * Julian initialization functions
+ * Initialise the example module
+ * This function is only ever called once during the lifetime of a particular
+ * module instance
+ *
+ * @author Julian module development team
  */
 function julian_init()
 {

@@ -1,6 +1,6 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:base-include-javascript module="base" filename="formcheck.js" />
-<xar:style scope="module" file="xarform" />
+<xar:comment><xar:style scope="module" file="xarform" /></xar:comment>
 <script type="text/javascript">
 <!--
     // Enter name of mandatory fields
@@ -25,14 +25,15 @@
     </h2>
 
     <xar:set name="$statusmsg">xarSessionGetVar('statusmsg')</xar:set>
-    <center>#$statusmsg#</center>
+    <center><font style=color:green>#$statusmsg#</font></center>
     <xar:set name="$statusmsg">xarSessionSetVar('statusmsg','')</xar:set>
 
     <form action="&xar-modurl-julian-admin-updateconfig;"
           method="post"
           onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);"
           enctype="application/x-www-form-urlencoded">
-        <fieldset class="formelements xar-norm">
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <fieldset>
             <legend>
                 <strong><xar:mlstring>Display options for the calendar</xar:mlstring></strong>
             </legend>
@@ -100,29 +101,6 @@
                     </xar:if>
                 </select>
             </div>
-            <xar:comment>TODO
-            <div class="xar-form-input-wrapper">
-                <label for="timeformat" class="xar-form-label">
-                    <span class="help" title="#xarML('Choose the format for time to display.')#">
-                        <xar:mlstring>
-                            Time format:
-                        </xar:mlstring>
-                    </span>
-                </label>
-                <select name="timeformat" id="timeformat" size="1">
-                    <xar:if condition="$timeformat eq 'h:i a'">
-                        <option label="h:i a" value="h:i a" selected="selected">h:i a</option>
-                    <xar:else />
-                        <option label="h:i a" value="h:i a">h:i a</option>
-                    </xar:if>
-                    <xar:if condition="$timeformat eq 'H:i'">
-                        <option label="H:i" value="H:i" selected="selected">H:i</option>
-                    <xar:else />
-                        <option label="H:i" value="H:i">H:i</option>
-                    </xar:if>
-                </select>
-            </div>
-            </xar:comment>
             <div class="xar-form-input-wrapper">
                 <label for="BulletForm" class="xar-form-label">
                     <span class="help" title="#xarML('Choose the bullet that will be used to mark the category of the event')#">
@@ -131,6 +109,7 @@
                         </xar:mlstring>
                     </span>
                 </label>
+                <div class="xar-form-input-wrapper-after">
                 <select name="BulletForm" id="BulletForm">
                     <xar:if condition="$BulletForm eq 'bull'">
                          <option value="bull" selected="selected">&nbsp;&bull;&nbsp;</option>
@@ -154,6 +133,7 @@
                          <option value="loz" selected="selected">&nbsp;&loz;&nbsp; </option>
                     </xar:if>
                 </select>
+                </div>
             </div>
         </fieldset>            
         <fieldset>
@@ -229,7 +209,7 @@
             </div>
         </fieldset>
 
-        <fieldset class="formelements xar-norm">
+        <fieldset>
             <legend>
                 <strong><xar:mlstring>Enabled hooks</xar:mlstring></strong>
             </legend>

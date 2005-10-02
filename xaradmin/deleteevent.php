@@ -1,16 +1,14 @@
 <?php
 /**
- * File: $Id:
- * 
- * Standard function to delete an item
+ * Delete an event
  * 
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage example
- * @author Example module development team 
+ * @subpackage Julian
+ * @author Julian module development team 
  */
 /**
  * delete item
@@ -25,8 +23,8 @@ function julian_admin_deleteevent($args)
     extract($args);
 
     if (!xarVarFetch('event_id', 'int:1:', $event_id)) return;
-    if (!xarVarFetch('objectid', 'str:1:', $objectid, NULL, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('cal_date','isset',$cal_date)) return;
+    if (!xarVarFetch('objectid', 'int:1:', $objectid, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('cal_date', 'isset',  $cal_date)) return;
     
     if (!empty($objectid)) {
         $event_id = $objectid;

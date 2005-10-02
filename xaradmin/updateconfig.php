@@ -31,6 +31,8 @@ function julian_admin_updateconfig($args)
     if (!xarVarFetch('dateformat', 'str', $dateformat, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('timeform', 'str', $timeform, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('numitems', 'int', $numitems, 10, XARVAR_NOT_REQUIRED)) return;
+
+    if (!xarSecConfirmAuthKey()) return;
     
     xarModSetVar('julian','ical_links',$ical_links);
     xarModSetVar('julian','share_group',$share_group);
@@ -45,7 +47,7 @@ function julian_admin_updateconfig($args)
 
     xarModCallHooks('module','updateconfig','julian', array('module' => 'julian')); //Call hooks
 
-    xarSessionSetVar('statusmsg',xarML('<font color="green">Configuration Updated</font>'));
+    xarSessionSetVar('statusmsg',xarML('Configuration Updated'));
     xarResponseRedirect(xarModURL('julian', 'admin', 'modifyconfig')); 
     return true;
 } 

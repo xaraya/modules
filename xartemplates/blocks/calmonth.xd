@@ -5,9 +5,14 @@ These calls don't seem to work:
 <xar:overlib-init />
 When bug (3868 and others) for not calling AddStyleLink is fixed in xarblocks this call can be implemented:
 <xar:if condition="xarTplAddStyleLink('julian', 'julian')"></xar:if>
+or:
+<xar:style scope="block" file="julian" />
 </xar:comment>
+
 <link type="text/css" rel="stylesheet" href="modules/julian/xarstyles/julian.css">
+
 <script type="text/javascript" src="modules/julian/xarjavascript/popupstyle.js"></script>
+
 
 <xar:comment>Direct call to the java-script, normally performed by the overlib tag</xar:comment>
 <script type="text/javascript" src="modules/overlib/config.inc.js"></script>
