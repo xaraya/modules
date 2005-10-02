@@ -26,41 +26,6 @@
 // Purpose of file:  todolist administration API
 // ----------------------------------------------------------------------
 
-function todolist_adminapi_creategroup($args)
-{
-    extract($args);
-    
-   if ((!isset($group_name)) && (!isset($group_description)) && (!isset($group_leader))) {
-        pnSessionSetVar('errormsg', xarML('Error in API arguments'));
-        return false;
-    }
-
-    if (!pnSecAuthAction(0, 'todolist::', "::", ACCESS_ADD)) {
-        pnSessionSetVar('errormsg', xarML('Not authorised to access Todolist module'));
-        return false;
-    }
-
-    $dbconn =& xarDBGetConn();;
-    $pntable =& xarDBGetTables();
-
-    $todolist_groups_column = &$pntable['todolist_groups_column'];
-    $newgid = $dbconn->GenId("$pntable[todolist_groups]");
-    $result = $dbconn->Execute("INSERT INTO $pntable[todolist_groups] VALUES
-                    ($newgid,'$group_name','$group_description',$group_leader)");
-    if ($result === false) {
-        pnSessionSetVar('errormsg', xarML('Insert error occured'));
-        return false;
-    }
-    $newgid = $dbconn->PO_Insert_ID("$pntable[todolist_groups]","$todolist_groups_column[id]");
-
-    $result = $dbconn->Execute("INSERT INTO $pntable[todolist_group_members] VALUES
-                    ($newgid,$group_leader)");
-    if ($result === false) {
-        pnSessionSetVar('errormsg', xarML('Insert error occured'));
-        return false;
-    }
-    return true;
-}
 
 
 function todolist_adminapi_updategroup($args)

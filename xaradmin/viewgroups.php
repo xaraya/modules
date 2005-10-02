@@ -1,6 +1,6 @@
 <?php
 /**
- * Standard function to view items
+ * View groups
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 The Digital Development Foundation
@@ -11,7 +11,7 @@
  */
 
 /**
- * Standard function to view items
+ * Standard function to view groups
  *
  * @author Todolist module development team
  * @param int startnum
@@ -25,7 +25,7 @@ function todolist_admin_viewgroups()
      * helps if all of the module pages have a standard menu at the top to
      * support easy navigation
      */
-    $data = xarModAPIFunc('example', 'admin', 'menu');
+    $data = xarModAPIFunc('todolist', 'admin', 'menu');
     /* Initialise the variable that will hold the items, so that the template
      * doesn't need to be adapted in case of errors
      */
