@@ -62,7 +62,7 @@ function example_admin_modifyconfig()
         $data['hooks'] = $hooks;
     
          /* You can use the output from individual hooks in your template too, e.g. with
-         * $hookoutput['categories'], $hookoutput['dynamicdata'], $hookoutput['keywords'] etc.
+         * $hooks['categories'], $hooks['dynamicdata'], $hooks['keywords'] etc.
          */
         $data['hookoutput'] = $hooks;
     }
