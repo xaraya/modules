@@ -1,0 +1,20 @@
+ --- rss_parse.inc       Tue Feb  8 20:00:20 2005
+ +++ rss_parse.patched.inc       Tue Feb  8 20:22:58 2005
+ @@ -101,7 +101,17 @@
+                            "http://www.php.net/manual/en/ref.xml.php",
+                             E_USER_ERROR );
+          }
+ -        
+ +
+ +       # Check for a valid xml header if input encoding detection is on
+ +       # or php"s xml parser will choke
+ +       if (($detect_encoding || $input_encoding == null) &&
+ +           preg_match("|.*<\?xml.*encoding.*>|i",$source) == 0) {
+ +           # We don"t have much of a choice here: we must force an input
+ +           # encoding even though it could be wrong
+ +           $detect_encoding = false;
+ +           $input_encoding = "UTF-8";
+ +       }
+ +
+          list($parser, $source) = $this->create_parser($source, 
+                  $output_encoding, $input_encoding, $detect_encoding);
