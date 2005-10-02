@@ -1,19 +1,24 @@
 <?php
 
 /**
- * File: $Id$
  *
  * Initialization of tasks module
  *
- * @package modules
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
  * 
  * @subpackage tasks
- * @author Chad Kraeft
-*/
+ */
+
 
 /**
- * Initialize db structure
+ * initialization functions
+ * Initialise the Tasks module
+ * This function is only ever called once during the lifetime of a particular
+ * module instance
+ * @author Chad Kraeft
  *
  */
 function tasks_init()

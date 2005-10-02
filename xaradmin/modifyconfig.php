@@ -1,7 +1,23 @@
 <?php
 /**
- * Modify configuration
+ * Modify module's configuration
  *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Tasks Module
+ */
+
+/**
+ * Modify module's configuration
+ *
+ * This is a standard function to modify the configuration parameters of the
+ * module
+ *
+ * @author Tasks module development team
+ * @return array
  */
 function tasks_admin_modifyconfig()
 {
@@ -29,7 +45,7 @@ function tasks_admin_modifyconfig()
     $data['dateformatdropdown']=$dateformatdropdown;
     $data['dateformat']=xarModGetVar('tasks','dateformat');
     $data['showoptions']= xarModGetVar('tasks','showoptions');
-
+    $data['showoptionschecked'] = xarModGetVar('tasks','showoptions') ? true : false;
     // WHICH ID TO RETURN DISPLAY TO (CURRENT | PARENT)
     $returnfromoptions = array(array('id' => 0, 'name' => xarML('Current task')),
                                array('id' => 1, 'name' => xarML('Parent task'))
@@ -40,6 +56,10 @@ function tasks_admin_modifyconfig()
     $data['returnfromsurface']=xarModGetVar('tasks','returnfromsurface');
     $data['returnfrommigrate']=xarModGetVar('tasks','returnfrommigrate');
     $data['submitbutton']=xarML("Update tasks config");
+    
+    /* Generate a one-time authorisation code for this operation */
+    $data['authid'] = xarSecGenAuthKey();
+    
     return $data;
 }
 

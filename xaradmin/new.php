@@ -1,7 +1,23 @@
 <?php
 /**
- * Add a new task
+ * Add new task
  *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Tasks Module
+ */
+
+/**
+ * Add new task
+ *
+ * This is a standard function that is called whenever an administrator
+ * wishes to create a new module item
+ *
+ * @author Tasks module development team
+ * @return array
  */
 function tasks_admin_new($args)
 {
@@ -24,7 +40,7 @@ function tasks_admin_new($args)
     $prioritydropdown =xarModAPIFunc('tasks','user','getpriorities');
     $data['prioritydropdown']=$prioritydropdown;
     
-    $data['feedback'] = xarGetStatusMsg();
+    $data['feedback'] = '';//xarGetStatusMsg(); // Legacy
 
     $data['parentid']= (empty($parentid))? 0: $parentid;
     $data['modname']= (empty($module)) ? '' : $module;
