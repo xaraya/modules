@@ -1,0 +1,126 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:if condition="xarTplAddStyleLink('dailydelicious', 'forms')"></xar:if>
+<xar:base-include-javascript module="base" filename="formcheck.js" />
+<script type="text/javascript">
+<!--
+    // Enter name of mandatory fields
+    var base_fieldRequired = Array("username, password");
+    // Enter field description to appear in the dialog box
+    var base_fieldDescription = Array("UserName, Password");
+//-->
+</script>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>
+            Daily Delicious Administration
+        </xar:mlstring>
+    </span>
+</div>
+<div class="xar-mod-body">
+    <h2>
+        <xar:mlstring>
+            Modify Configuration
+        </xar:mlstring>
+    </h2>
+    <form class="xar-formwidget" action="#xarModUrl('dailydelicious', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded">
+        <fieldset class="formelements xar-norm">
+            <legend>
+                <strong>
+                    <xar:mlstring>
+                        Delicious Settings
+                    </xar:mlstring>
+                </strong>
+            </legend>
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <p class="param">
+                <label for="username" class="required">
+                    <span class="help" title="#xarML('Enter your delicious username')#">
+                        <xar:mlstring>
+                            Delicious Username
+                        </xar:mlstring>
+                    </span>
+                </label>
+                <input type="text" name="username" id="username" value="#xarModGetVar('dailydelicious', 'username', 1)#" />
+            </p>
+            <p class="param">
+                <label for="password" class="required">
+                    <span class="help" title="#xarML('Enter the password for delicious')#">
+                        <xar:mlstring>
+                            Delicious Password
+                        </xar:mlstring>
+                    </span>
+                </label>
+                <input type="password" name="password" id="password" value="#xarModGetVar('dailydelicious', 'password', 1)#" />
+            </p>
+        </fieldset>
+        <fieldset class="formelements xar-norm">
+            <legend>
+                <strong>
+                    <xar:mlstring>
+                        Articles Settings
+                    </xar:mlstring>
+                </strong>
+            </legend>
+            <p class="param">
+                <label for="title" class="required">
+                    <span class="help" title="#xarML('Title for post.')#">
+                        <xar:mlstring>
+                            Default Title for Post
+                        </xar:mlstring>
+                    </span>
+                </label>
+                <input type="text" name="title" id="title" value="#xarModGetVar('dailydelicious', 'title', 1)#" />
+            </p>
+            <p class="param">
+                <label for="importpubtype">
+                    <span class="help" title="#xarML('Choose a publication type for import.')#">
+                        <xar:mlstring>
+                            Import to Publication Type
+                        </xar:mlstring>
+                    </span>
+                </label>
+                <select name="importpubtype" id="importpubtype">
+                <xar:foreach in="$pubtypes" key="$ptid" value="$pubtype">
+                    <xar:if condition="!empty($importpubtype) and $importpubtype eq $ptid">
+                        <option value="#$ptid#" selected="selected">#$pubtype['descr']#</option>
+                    <xar:else/>
+                        <option value="#$ptid#">#$pubtype['descr']#</option>
+                    </xar:if>
+                </xar:foreach>
+                </select>
+            </p>
+            <p class="param">
+                <label for="defaultstatus">
+                    <span class="help" title="#xarML('Choose the default status for incoming articles.')#">
+                        <xar:mlstring>
+                            Default Status
+                        </xar:mlstring>
+                    </span>
+                </label>
+                <select name="defaultstatus" id="defaultstatus">
+                    <xar:if condition="xarModGetVar('dailydelicious', 'defaultstatus') eq 0">   
+                        <option value="0" selected="selected">Submitted</option>
+                        <option value="2">Approved</option>
+                        <option value="3">Front Page</option>
+                    <xar:elseif condition="xarModGetVar('dailydelicious', 'defaultstatus') eq 2" />
+                        <option value="2" selected="selected">Approved</option>
+                        <option value="0">Submitted</option>
+                        <option value="3">Front Page</option>
+                    <xar:elseif condition="xarModGetVar('dailydelicious', 'defaultstatus') eq 3" />
+                        <option value="3" selected="selected">Front Page</option>
+                        <option value="2">Approved</option>
+                        <option value="0">Submitted</option>
+                    <xar:else />
+                        <option value="0" selected="selected">Submitted</option>
+                        <option value="2">Approved</option>
+                        <option value="3">Front Page</option>
+                    </xar:if>
+                </select>
+            </p>
+            <p class="param">
+                <input type="submit" value="#xarML('Submit')#" />
+                <input type="reset" value="#xarML('Reset')#" />
+            </p>
+        </fieldset>
+    </form>
+</div>

@@ -1,0 +1,6 @@
+Portions of Daily Delicious are credited to:
+
+Marc Nozell -- http://nozell.com/blog/
+Stephen Eyre -- http://www.dot-totally.co.uk
+
+Xaraya implementation: http://www.wyome.com
