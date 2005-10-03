@@ -1,7 +1,7 @@
 <?php
 $modversion['name'] = 'AuthSQL';
 $modversion['id'] = '10512';
-$modversion['version'] = '1.1';
+$modversion['version'] = '1.1.0';
 $modversion['displayname'] = xarML('AuthSQL');
 $modversion['description'] = 'Xaraya SQL authentication module';
 $modversion['credits'] = 'xardocs/credits.txt';
