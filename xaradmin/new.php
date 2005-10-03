@@ -46,14 +46,14 @@ function courses_admin_new($args)
     $item = array();
     $item['module'] = 'courses';
     $item['itemtype'] = $itemtype;
+
     $hooks = xarModCallHooks('item','new','',$item);
     if (empty($hooks)) {
         $data['hooks'] = '';
-    } elseif (is_array($hooks)) {
-        $data['hooks'] = join('',$hooks);
-    } else {
+    }else {
         $data['hooks'] = $hooks;
     }
+
     // The Generic Menu
     $data['menu']      = xarModFunc('courses','admin','menu');
     $data['menutitle'] = xarVarPrepForDisplay(xarML('Make a new hooked dynamic data object'));

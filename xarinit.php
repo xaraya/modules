@@ -31,7 +31,7 @@ function courses_init()
         'xar_type' => array('type' => 'varchar', 'size' => 10, 'default' => 'NULL'),
         'xar_level' => array('type' => 'varchar', 'size' => 20, 'default' => 'NULL'),
         'xar_shortdesc'=>array('null'=>FALSE, 'type'=>'text'),
-        'xar_intendedcredits' => array('type' => 'varchar', 'size' => 30, 'default' => 'NULL'),		
+        'xar_intendedcredits' => array('type' => 'integer', 'size' => 30, 'default' => 'NULL'),		
 //        'xar_language'=>array('null'=>TRUE, 'type'=>'text'),
         'xar_freq' =>array('null'=>TRUE, 'type' => 'varchar', 'size' => 20, 'default' => 'NULL'),
         'xar_contactuid' => array('type' => 'integer', 'size' => 'medium', 'null' => true, 'default' => 'NULL'),

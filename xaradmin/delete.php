@@ -13,13 +13,13 @@
  */
 
 /**
-   Delete an item
-
-   @param 'itemid' the id of the item to be deleted
-   @param 'confirm' confirm that this item can be deleted
-   @return true of success
-           false on failure
-*/
+ * Delete a DD course parameter
+ *
+ * @param 'itemid' the id of the item to be deleted
+ * @param 'confirm' confirm that this item can be deleted
+ * @return true of success
+ *         false on failure
+ */
 function courses_admin_delete($args)
 {
     extract($args);    
@@ -72,7 +72,7 @@ function courses_admin_delete($args)
     if (!xarSecurityCheck('AdminCourses')) return;
 
     $data['menu']      = xarModFunc('courses','admin','menu');
-    $data['menutitle'] = xarModAPIFunc('courses','admin','menu');
+    $data['menutitle'] = xarML('Delete this item?');
 
     // Check for confirmation.
     if (empty($confirm)) {
@@ -83,7 +83,11 @@ function courses_admin_delete($args)
         $data['itemid']   = $itemid;
         $data['itemtype'] = $itemtype;
         $data['object']   =& $object;
-
+        // Authentication
+        $data['authid']   = xarSecGenAuthKey();
+        // Empty the status message
+        xarSessionSetVar('statusmsg', '');
+        
         // Return the template variables defined in this function
         return $data;
     }
@@ -91,10 +95,15 @@ function courses_admin_delete($args)
     // If we get here it means that the user has confirmed the action
     // so check the Auth Key
     if (!xarSecConfirmAuthKey()) return;
-
+    /* Delete the item */
+    
     $itemid = $object->deleteItem();
-    if (empty($itemid)) return;
-
+    //if (empty($itemid)) return;
+    
+    /* Set the session var to confirm the deletion */
+    xarSessionSetVar('statusmsg', xarML('Item deleted'));
+    /* Redirect back */
+    // Why doesn't this work???
     xarResponseRedirect(xarModURL('courses', 'admin', 'view', array('itemtype' => $itemtype)));
 
     // Return

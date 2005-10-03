@@ -62,7 +62,10 @@ function courses_admin_update($args)
 
     // check the input values for this object
     $isvalid = $object->checkInput();
-
+    /* Get menu elements */
+    $data['menu']      = xarModFunc('courses','admin','menu');
+    $data['menutitle'] = xarML('Modify course parameter');
+    
     // if we're in preview mode, or if there is some invalid input, show the form again
     if (!empty($preview) || !$isvalid) {
         $data = xarModAPIFunc('courses','admin','menu');
@@ -84,7 +87,10 @@ function courses_admin_update($args)
         }else {
             $data['hooks'] = $hooks;
         }
-
+        /* Authentication */
+        $data['authid'] = xarSecGenAuthKey();
+        // Empty status message
+        xarSessionSetVar('statusmsg', '');
         // Return the template variables defined in this function
         return xarTplModule('courses','admin','modify', $data);
     }
@@ -93,6 +99,7 @@ function courses_admin_update($args)
     $itemid = $object->updateItem();
     if (empty($itemid)) return; // throw back
     // let's go back to the admin view
+    xarSessionSetVar('statusmsg', xarML('Item deleted'));
     // Why does this one not work correct?
     xarResponseRedirect(xarModURL('courses', 'admin', 'view', array('itemtype' => $itemtype)));
 

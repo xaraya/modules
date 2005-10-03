@@ -63,7 +63,7 @@ function courses_admin_modify($args)
     if (!isset($newid) || $newid != $itemid) return;
 
     $data['menu']      = xarModFunc('courses','admin','menu');
-    $data['menutitle'] = xarModAPIFunc('courses','admin','menu');
+    $data['menutitle'] = xarML('Modify Parameter');
 
     // Get data ready for the template
     $data['itemid']   = $itemid;
@@ -81,7 +81,8 @@ function courses_admin_modify($args)
     }else {
         $data['hooks'] = $hooks;
     }
-
+    // Authentication
+    $data['authid'] =xarSecGenAuthKey();
     // Return the template variables defined in this function
     return $data;
 }

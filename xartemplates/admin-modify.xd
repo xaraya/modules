@@ -1,42 +1,38 @@
-<div class="xar-mod-head">
-    <span class="xar-mod-title">
-        Courses Administration - Modify
-    </span>
-</div>
-<br />
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
-<xar:if condition="!empty($menu)">
-#$menu#
-</xar:if>
-<div class="tborder">
-	<xar:if condition="!empty($preview)">
-		<table width="100%" border="1" cellspacing="0" cellpadding="4">
-			<tr>
-				<td align="center">
-					<b><xar:mlstring>Preview</xar:mlstring></b>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<xar:data-display object="$object" tplmodule="courses"/>
-				</td>
-			</tr>
-		</table>
-	</xar:if>
-	<br />
-	<form method="POST" action="#xarModURL('courses', 'admin', 'update')#">
-		<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Courses Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <h2>#$menutitle#</h2>
+
+    <xar:if condition="!empty($menu)">
+    #$menu#
+    </xar:if>
+    <xar:if condition="!empty($preview)">
+	<strong><xar:mlstring>Preview</xar:mlstring></strong>
+			<xar:data-display object="$object" tplmodule="courses"/>
+    </xar:if>
+    <fieldset>
+        <legend>
+            <xar:mlstring>Parameter to modify</xar:mlstring>
+        </legend>
+        <div class="xar-form-input-wrapper">
+             <label for="itemid"  class="xar-form-label" title="#xarML('This is the item')#">
+                     <xar:mlstring>Item:</xar:mlstring>
+             </label>
+		    <xar:data-form object="$object" tplmodule="courses"/>
+        </div>
+    </fieldset>
+
+
+    <div class="xar-form-input-wrapper-after">
+	<form method="POST" action="&xar-modurl-courses-admin-update;">
+		<input type="hidden" name="authid" id="authid" value="#$authid#" />
 		<input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
 		<input type="hidden" name="itemtype" id="itemtype" value="#$itemtype#" />
-		<table width="100%" border="0" cellspacing="0" cellpadding="4">
-			<xar:data-form object="$object" tplmodule="courses"/>
-			<tr>
-				<td colspan="2" align="center">
 					<input type="submit" name="preview" value="#xarML('Preview')#" />
 					&nbsp;&nbsp;&nbsp;
 					<input type="submit" value="#xarML('Update')#" />
-				</td>
-			</tr>
-		</table>
 	</form>
-</div>
+    </div>

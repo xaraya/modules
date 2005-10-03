@@ -1,6 +1,5 @@
 <?php
 /**
- * 
  * Standard function to create a new DD item
  * 
  * @package Xaraya eXtensible Management System
@@ -13,13 +12,17 @@
  */
 
 /**
- *  Create an item of item type
+ * Create an item of item type
  *
  * @param $itemtype - type of item that is being created (required)
  * @param $itemid - item id  (optional)
  * @param $preview  - do a preview if set (optional)
  * @return true on success
  *         false on failure
+ * @TODO MichelV <1> This function works, but generates an error:
+ *                  "User Error"
+ *                  "BAD_PARAM"
+ *                  "Invalid create/update for admin function createhook() in module dynamicdata"
  */
 function courses_admin_create($args)
 {
@@ -71,9 +74,7 @@ function courses_admin_create($args)
         $item['itemtype'] = $itemtype;
         $hooks = xarModCallHooks('item','new','',$item);
         if (empty($hooks)) {
-            $data['hooks'] = '';
-        } elseif (is_array($hooks)) {
-            $data['hooks'] = join('',$hooks);
+            $data['hooks'] = array();
         } else {
             $data['hooks'] = $hooks;
         }

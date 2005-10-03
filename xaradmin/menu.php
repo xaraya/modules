@@ -1,6 +1,6 @@
 <?php
 /**
- * Courses main administration function
+ * Courses administration menu
  * 
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 The Digital Development Foundation
@@ -36,9 +36,6 @@ function courses_admin_menu()
             $data['menulinks'][] = $object;
         }
     }
-    // Needed?
-    xarTplAddStyleLink('base',    'navtabs', $fileExt = 'css');
-    xarTplAddStyleLink('courses', 'xarform', $fileExt = 'css');
 
     return xarTplModule('courses', 'admin', 'menu', $data);
 }
