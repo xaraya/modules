@@ -2,7 +2,7 @@
 // image feed module: infomation file
 $modversion['name']           = 'Image Feed';
 $modversion['id']             = '781';
-$modversion['version']        = '1.00';
+$modversion['version']        = '1.0.0';
 $modversion['displayname']    = xarML('ImageFeed');
 $modversion['description']    = 'Show an image feed';
 $modversion['credits']        = '';
