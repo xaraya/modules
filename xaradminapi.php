@@ -27,149 +27,6 @@
 // ----------------------------------------------------------------------
 
 
-
-function todolist_adminapi_updategroup($args)
-{
-    extract($args);
-    
-   if ((!isset($group_id)) && (!isset($group_name)) && (!isset($group_description)) && (!isset($groupt_leader))) {
-        pnSessionSetVar('errormsg', xarML('Error in API arguments'));
-        return false;
-    }
-
-    if (!pnSecAuthAction(0, 'todolist::', "::", ACCESS_EDIT)) {
-        pnSessionSetVar('errormsg', xarML('Not authorised to access Todolist module'));
-        return false;
-    }
-
-    $dbconn =& xarDBGetConn();;
-    $pntable =& xarDBGetTables();
-
-    $todolist_groups_column = &$pntable['todolist_groups_column'];
-    $query = "UPDATE $pntable[todolist_groups] SET
-                      $todolist_groups_column[group_name]='$new_group_name',
-                      $todolist_groups_column[description]='$new_group_description',
-                      $todolist_groups_column[group_leader]=$new_group_leader
-                      WHERE $todolist_groups_column[id]=$group_id";
-    $result = $dbconn->Execute($query);
-    if ($result === false) {
-        pnSessionSetVar('errormsg', xarML('Update error occured'));
-        return false;
-    }
-    // update group-members... Is there a more elegant way to do this?
-    // do we have to delete the tasks where someone is assigned who is no longer
-    // member of the group?
-    $todolist_group_members_column = &$pntable['todolist_group_members_column'];
-    $query = "DELETE from $pntable[todolist_group_members]
-                      WHERE $todolist_group_members_column[group_id]=$group_id";
-    $result = $dbconn->Execute($query);
-    if ($result === false) {
-        pnSessionSetVar('errormsg', xarML('Delete error occured'));
-        return false;
-    }
-
-    if (sizeof($new_group_members) > 0) {
-        $query="INSERT INTO $pntable[todolist_group_members] VALUES ";
-        
-        while ($member_id=array_pop($new_group_members)){
-            $query .= "($group_id, $member_id)";
-            if (sizeof($new_group_members) > 0)
-                $query .= ',';
-        }
-    }
-    $result = $dbconn->Execute("$query");
-    if ($result === false) {
-        pnSessionSetVar('errormsg', xarML('Insert error occured'));
-        return false;
-    }
-
-    pnSessionSetVar('errormsg', xarML('Group was updated'));
-    return true;
-}
-
-// Deletes a whole group. A mail-notify is not generated!
-// @param $group_id    int    the primary key of the group
-function todolist_adminapi_deletegroup($args)
-{
-    // TODO: We have to make user only ADMIN and group-leader can do that!
-    extract($args);
-    
-    if (!isset($group_id)) {
-        pnSessionSetVar('errormsg', xarML('Error in API arguments'));
-        return false;
-    }
-
-    if (!pnSecAuthAction(0, 'todolist::', "::", ACCESS_DELETE)) {
-        pnSessionSetVar('errormsg', xarML('Not authorised to access Todolist module'));
-        return false;
-    }
-
-    $dbconn =& xarDBGetConn();;
-    $pntable =& xarDBGetTables();
-
-    $todolist_groups_column = &$pntable['todolist_groups_column'];
-    $result = $dbconn->Execute("DELETE FROM $pntable[todolist_groups]
-        WHERE $todolist_groups_column[id]=$group_id");
-    if ($result === false) {
-        pnSessionSetVar('errormsg', xarML('Delete error occured'));
-        return false;
-    }
-
-    $todolist_group_members_column = &$pntable['todolist_group_members_column'];
-    $result = $dbconn->Execute("DELETE FROM $pntable[todolist_group_members]
-        WHERE $todolist_group_members_column[group_id]=$group_id");
-    if ($result === false) {
-        pnSessionSetVar('errormsg', xarML('Delete error occured'));
-        return false;
-    }
-
-    $todolist_responsible_groups_column = &$pntable['todolist_responsible_groups_column'];
-    $result = $dbconn->Execute("DELETE FROM $pntable[todolist_responsible_groups]
-        WHERE $todolist_responsible_groups_column[group_id]=$group_id");
-    if ($result === false) {
-        pnSessionSetVar('errormsg', xarML('Delete error occured'));
-        return false;
-    }
-
-    return true;
-}
-
-function todolist_adminapi_createproject($args)
-{
-    extract($args);
-    
-   if ((!isset($project_name)) && (!isset($project_description)) && (!isset($project_leader))) {
-        pnSessionSetVar('errormsg', xarML('Error in API arguments'));
-        return false;
-    }
-
-    if (!pnSecAuthAction(0, 'todolist::', "::", ACCESS_ADD)) {
-        pnSessionSetVar('errormsg', xarML('Not authorised to access Todolist module'));
-        return false;
-    }
-
-    $dbconn =& xarDBGetConn();;
-    $pntable =& xarDBGetTables();
-
-    $todolist_projects_column = &$pntable['todolist_projects_column'];
-    $newpid = $dbconn->GenId("$pntable[todolist_projects]");
-    $result = $dbconn->Execute("INSERT INTO $pntable[todolist_projects] VALUES
-                    ($newpid,'$project_name','$project_description',$project_leader)");
-    if ($result === false) {
-        pnSessionSetVar('errormsg', xarML('Insert error occured'));
-        return false;
-    }
-    $newpid = $dbconn->PO_Insert_ID("$pntable[todolist_projects]","$todolist_projects_column[id]");
-    $result = $dbconn->Execute("INSERT INTO $pntable[todolist_project_members] VALUES
-                    ($newpid,$project_leader)");
-    if ($result === false) {
-        pnSessionSetVar('errormsg', xarML('Insert error occured'));
-        return false;
-    }
-    return true;
-}
-
-
 function todolist_adminapi_updateproject($args)
 {
     extract($args);
@@ -304,7 +161,9 @@ function todolist_adminapi_deleteproject($args)
     }
     return true;
 }
-
+/*
+* Deprecated
+*/
 function todolist_adminapi_createuser($args)
 {
     extract($args);
@@ -341,7 +200,9 @@ function todolist_adminapi_createuser($args)
 
     return true;
 }
-
+/*
+* Deprecated
+*/
 function todolist_adminapi_updateuser($args)
 {
     extract($args);
@@ -372,8 +233,10 @@ function todolist_adminapi_updateuser($args)
     return true;
 }
 
-// Deletes a user.
-// @param $user_id    int    the primary key of the group
+/* Deletes a user.
+* @param $user_id    int    the primary key of the group
+* Deprecated
+*/
 function todolist_adminapi_deleteuser($args)
 {
     // TODO: We have to make user only ADMIN and group-leader can do that!

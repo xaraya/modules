@@ -7,21 +7,21 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Example Module
+ * @subpackage Todolist Module
  */
 
 /**
- * Get a specific item
+ * Get a todo
  * 
  * Standard function of a module to retrieve a specific item
  *
- * @author the Example module development team
- * @param  $args ['exid'] id of example item to get
+ * @author the Todolist module development team
+ * @param  $args ['todo_id'] id of example item to get
  * @returns array
  * @return item array, or false on failure
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
-function todolist_userapi_getuser($args)
+function todolist_userapi_get($args)
 {
     /* Get arguments from argument array - all arguments to this function
 
@@ -62,9 +62,9 @@ function todolist_userapi_getuser($args)
      * in the right format, if not then set an appropriate error message
      * and return
      */
-    if (!isset($exid) || !is_numeric($exid)) {
+    if (!isset($todo_id) || !is_numeric($todo_id)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-            'item ID', 'user', 'get', 'Example');
+            'item ID', 'user', 'get', 'Todolist');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException($msg));
         return;
@@ -80,16 +80,26 @@ function todolist_userapi_getuser($args)
     /* It's good practice to name the table and column definitions you are
      * getting - $table and $column don't cut it in more complex modules
      */
-    $exampletable = $xartable['example'];
+    $todostable = $xartable['todolist_todos'];
+
     /* Get item - the formatting here is not mandatory, but it does make the
      * SQL statement relatively easy to read.  Also, separating out the sql
      * statement from the Execute() command allows for simpler debug operation
      * if it is ever needed
      */
-    $query = "SELECT xar_name,
-                     xar_number
-              FROM $exampletable
-              WHERE xar_exid = ?";
+    $query = "SELECT 
+            xar_project_id,
+            xar_todo_text,
+            xar_todo_priority,
+            xar_percentage_completed,
+            xar_created_by,
+            xar_due_date,
+            xar_date_created,
+            xar_date_changed,
+            xar_changed_by,
+            xar_status
+              FROM $todostable
+              WHERE xar_todo_id = ?";
     $result = &$dbconn->Execute($query,array($exid));
     /* Check for an error with the database code, adodb has already raised
      * the exception so we just return
@@ -104,24 +114,38 @@ function todolist_userapi_getuser($args)
         return;
     }
     /* Obtain the item information from the result set */
-    list($name, $number) = $result->fields;
+    list($project_id,
+            $todo_text,
+            $todo_priority,
+            $percentage_completed,
+            $created_by,
+            $due_date,
+            $date_created,
+            $date_changed,
+            $changed_by,
+            $status) = $result->fields;
     /* All successful database queries produce a result set, and that result
      * set should be closed when it has been finished with
      */
     $result->Close();
-    /* Security check - important to do this as early on as possible to avoid
-     * potential security holes or just too much wasted processing.  Although
-     * this one is a bit late in the function it is as early as we can do it as
-     * this is the first time we have the relevant information.
-     * For this function, the user must *at least* have READ access to this item
+    /* Security check
      */
-    if (!xarSecurityCheck('ReadExample', 1, 'Item', "$name:All:$exid")) {
+    if (!xarSecurityCheck('ReadTodolist', 1, 'Item', "All:All:All")) { //TODO
         return;
     }
     /* Create the item array */
-    $item = array('exid'   => $exid,
-                  'name'   => $name,
-                  'number' => $number);
+    $item = array('todo_id'                 => $todo_id,
+                  'project_id'              => $project_id,
+                  'todo_text'               => $todo_text,
+                  'todo_priority'           => $todo_priority,
+                  'percentage_completed'    => $percentage_completed,
+                  'created_by'              => $created_by,
+                  'due_date'                => $due_date,
+                  'date_created'            => $date_created,
+                  'date_changed'            => $date_changed,
+                  'changed_by'              => $changed_by,
+                  'status'                  => $status
+                  );
     /* Return the item array */
     return $item;
 }

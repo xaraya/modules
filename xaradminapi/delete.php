@@ -10,12 +10,12 @@
  * @subpackage Example Module
  */
 /**
- * Delete an example item
+ * deletes a todo-entry
  *
- * Standard function to delete a module item
+ * Deletes a Todo-Entry, and all associated notes. A mail-notify is not generated!
  *
  * @author the Example module development team 
- * @param  $args ['exid'] ID of the item
+ * @param $todo_id    int    the primary key of the todo-entry
  * @returns bool
  * @return true on success, false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
@@ -23,9 +23,14 @@
 function example_adminapi_delete($args)
 { 
     /* Get arguments from argument array - all arguments to this function
-     * should be obtained from the $args array, getting them from other
-     * places such as the environment is not allowed, as that makes
-     * assumptions that will not hold in future versions of Xaraya
+
+    if (pnUserGetVar('uid')) {
+        // TODO: Add mail-notification
+        generateMail($todo_id, "todo_delete");
+        
+
+
+
      */
     extract($args);
     /* Argument check - make sure that all required arguments are present and
@@ -44,44 +49,42 @@ function example_adminapi_delete($args)
      * appropriate item.  If the item does not exist we post an appropriate
      * message and return
      */
-    $item = xarModAPIFunc('example',
+    $item = xarModAPIFunc('todolist',
         'user',
         'get',
-        array('exid' => $exid));
+        array('todo_id' => $todo_id));
     /* Check for exceptions */
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; /* throw back */
 
-    /* Security check - important to do this as early on as possible to
-     * avoid potential security holes or just too much wasted processing.
-     * However, in this case we had to wait until we could obtain the item
-     * name to complete the instance information so this is the first
-     * chance we get to do the check
-     */
-    if (!xarSecurityCheck('DeleteExample', 1, 'Item', "$item[name]:All:$exid")) {
+    if (!xarSecurityCheck('DeleteTodolist', 1, 'Item', "All:All:All")) {//TODO
         return;
     }
-    /* Get database setup - note that both xarDBGetConn() and xarDBGetTables()
-     * return arrays but we handle them differently.  For xarDBGetConn()
-     * we currently just want the first item, which is the official
-     * database handle.  For xarDBGetTables() we want to keep the entire
-     * tables array together for easy reference later on
-     */
+
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-    /* It's good practice to name the table and column definitions you
-     * are getting - $table and $column don't cut it in more complex
-     * modules
+    $todostable = $xartable['todolist_todos'];
+    /* Get tables
+        $todolist_notes_column = &$pntable['todolist_notes_column'];
+        $todolist_responsible_persons_column = &$pntable['todolist_responsible_persons_column'];
+        $todolist_responsible_groups_column = &$pntable['todolist_responsible_groups_column'];
+        $todolist_todos_column = &$pntable['todolist_todos_column'];
+        
+        $dbconn->Execute("DELETE FROM $pntable[todolist_notes]
+            WHERE $todolist_notes_column[todo_id]=$todo_id");
+        $dbconn->Execute("DELETE FROM $pntable[todolist_responsible_persons]
+            WHERE $todolist_responsible_persons_column[todo_id]=$todo_id");
+        $dbconn->Execute("DELETE FROM $pntable[todolist_responsible_groups]
+            WHERE $todolist_responsible_groups_column[todo_id]=$todo_id");
+        $dbconn->Execute("DELETE FROM $pntable[todolist_todos]
+            WHERE $todolist_todos_column[todo_id]=$todo_id");
      */
-    $exampletable = $xartable['example'];
-    /* Delete the item - the formatting here is not mandatory, but it does
-     * make the SQL statement relatively easy to read.  Also, separating
-     * out the sql statement from the Execute() command allows for simpler
-     * debug operation if it is ever needed
+
+    /* Delete the todo finally
      */
-    $query = "DELETE FROM $exampletable WHERE xar_exid = ?";
+    $query = "DELETE FROM $todostable WHERE xar_todo_id = ?";
 
     /* The bind variable $exid is directly put in as a parameter. */
-    $result = &$dbconn->Execute($query,array($exid));
+    $result = &$dbconn->Execute($query,array($todo_id));
     
     /* Check for an error with the database code, adodb has already raised
      * the exception so we just return
@@ -91,9 +94,9 @@ function example_adminapi_delete($args)
      * delete hook we're not passing any extra info
      * xarModCallHooks('item', 'delete', $exid, '');
      */
-    $item['module'] = 'example';
-    $item['itemid'] = $exid;
-    xarModCallHooks('item', 'delete', $exid, $item);
+    $item['module'] = 'todolist';
+    $item['itemid'] = $todo_id;
+    xarModCallHooks('item', 'delete', $todo_id, $item);
     
     /* Let the calling process know that we have finished successfully */
     return true;

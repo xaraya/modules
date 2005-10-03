@@ -7,31 +7,82 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Example Module
+ * @subpackage Todolist Module
  */
 
 /**
- * Update an example item
+ * updates a todo-entry
+ *
+ * Updates a Todo-Entry into database and generates a mail-notify to subscribed users.
  * 
  * @author the Example module development team 
+ * @param $due_date        string    the due date
+ * @param $priority
+ * @param $status
+ * @param $percentage_completed
+ * @param $text
+ * @param $responsible_persons
+ * @param $id
+ * @param $note_text
+ * @param $selected_project
  * @param  $args ['exid'] the ID of the item
  * @param  $args ['name'] the new name of the item
  * @param  $args ['number'] the new number of the item
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
-function example_adminapi_update($args)
+function todolist_adminapi_update($args)
 { 
-    /* Get arguments from argument array - all arguments to this function
-     * should be obtained from the $args array, getting them from other
-     * places such as the environment is not allowed, as that makes
-     * assumptions that will not hold in future versions of Xaraya
+    /* Das Datum muß evtl. wieder nach US-Format konvertiert werden... 
+    if (pnModGetVar('todolist', 'DATEFORMAT') != "1") {
+        $due_date=convDateToUS($due_date);
+    }
+    $priority = switchPriority($priority);
+
+
+    $querystatus = $dbconn->Execute($query);
+
+    // update responsible_persons
+    if ((count($responsible_persons) > 0) && ($querystatus == true)) {
+
+        // delete old responsibilities
+        $todolist_responsible_persons_column = &$pntable['todolist_responsible_persons_column'];
+        if (!$dbconn->Execute("DELETE from $pntable[todolist_responsible_persons]
+            WHERE $todolist_responsible_persons_column[todo_id]=$id")) {
+            return false;
+        }
+
+        $query = "INSERT INTO $pntable[todolist_responsible_persons] VALUES ";
+
+        $anzahl = count($responsible_persons);
+        for ($i=0; $i < $anzahl ; $i++) {
+            $query .= "($id, $responsible_persons[$i])";
+            if (($i+1) < $anzahl)
+                $query .= ", ";
+        }
+
+        $querystatus = $dbconn->Execute($query);
+    }
+
+    // if new note entered insert it into DB
+    if (($note_text != "") && ($querystatus == true)) {
+        // not needed.
+        // $todolist_todos_column = &$pntable['todolist_todos_column'];
+        // $dbconn->Execute("UPDATE $pntable[todolist_todos] set $todolist_todos_column[date_changed]=".time()." where $todolist_todos_column[todo_id]='$id'");
+        $todolist_notes_column = &$pntable['todolist_notes_column'];
+        $sql = "INSERT INTO $pntable[todolist_notes]
+            ($todolist_notes_column[todo_id], $todolist_notes_column[text],
+            $todolist_notes_column[usernr], $todolist_notes_column[date]) VALUES
+            ('$id', '" .addslashes($note_text)."', ".pnUserGetVar('uid').", ".time().")";
+        $querystatus = $dbconn->Execute($sql);
+    }
+
+    generateMail($id, "todo_change");
+
      */
     extract($args);
     /* Argument check - make sure that all required arguments are present
-     * and in the right format, if not then set an appropriate error
-     * message and return
-     * Note : since we have several arguments we want to check here, we'll
-     * report all those that are invalid at the same time...
+$due_date, $priority, $status, $percentage_completed, $text, $responsible_persons, $id,
+        $note_text, $selected_project
      */
     $invalid = array();
     if (!isset($exid) || !is_numeric($exid)) {
@@ -50,15 +101,12 @@ function example_adminapi_update($args)
             new SystemException($msg));
         return;
     }
-    /* The user API function is called.  This takes the item ID which
-     * we obtained from the input and gets us the information on the
-     * appropriate item.  If the item does not exist we post an appropriate
-     * message and return
+    /* Get Todo
      */
-    $item = xarModAPIFunc('example',
+    $item = xarModAPIFunc('todolist',
         'user',
         'get',
-        array('exid' => $exid)); 
+        array('todo_id' => $todo_id)); 
     /*Check for exceptions */
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
@@ -79,28 +127,39 @@ function example_adminapi_update($args)
     if (!xarSecurityCheck('EditExample', 1, 'Item', "$name:All:$exid")) {
         return;
     }
-    /* Get database setup - note that both xarDBGetConn() and xarDBGetTables()
-     * return arrays but we handle them differently.  For xarDBGetConn()
-     * we currently just want the first item, which is the official
-     * database handle.  For xarDBGetTables() we want to keep the entire
-     * tables array together for easy reference later on
-     */
+
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-    /* It's good practice to name the table and column definitions you
-     * are getting - $table and $column don't cut it in more complex
-     * modules
-     */
-    $exampletable = $xartable['example'];
+
+    $todostable = $xartable['todolist_todos'];
     /* Update the item - the formatting here is not mandatory, but it does
-     * make the SQL statement relatively easy to read.  Also, separating
-     * out the sql statement from the Execute() command allows for simpler
-     * debug operation if it is ever needed
+    $todolist_todos_column = &$pntable['todolist_todos_column'];
+    $query = "UPDATE $pntable[todolist_todos]
+        SET $todolist_todos_column[todo_priority]=$priority,
+        $todolist_todos_column[status]=$status,
+        $todolist_todos_column[project_id]=$selected_project,
+        $todolist_todos_column[percentage_completed]=$percentage_completed,
+        $todolist_todos_column[todo_text]='".addslashes($text)."', "
+        ."$todolist_todos_column[due_date]='$due_date', $todolist_todos_column[date_changed]=".time().", "
+        ."$todolist_todos_column[changed_by]=" .pnUserGetVar('uid')
+        ." where $todolist_todos_column[todo_id]='$id'";
+
      */
-    $query = "UPDATE $exampletable
-            SET xar_name =?, xar_number = ?
-            WHERE xar_exid = ?";
-    $bindvars = array($name, $number, $exid);
+    $query = "UPDATE $todostable
+            SET
+            xar_project_id           = ?,
+            xar_todo_text            = ?,
+            xar_todo_priority        = ?,
+            xar_percentage_completed = ?,
+            xar_created_by           = ?,
+            xar_due_date             = ?,
+            xar_date_created         = ?,
+            xar_date_changed         = ?,
+            xar_changed_by           = ?,
+            xar_status               = ?
+            WHERE xar_todo_id        = ?";
+    $bindvars = array($project_id, $text, $priority, $percentage_completed, $created_by, $date_created, 
+    $date_changed, $changed_by, $status, $todo_id);
     $result = &$dbconn->Execute($query,$bindvars);
     /* Check for an error with the database code, adodb has already raised
      * the exception so we just return
@@ -109,11 +168,11 @@ function example_adminapi_update($args)
     /* Let any hooks know that we have updated an item.  As this is an
      * update hook we're passing the updated $item array as the extra info
      */
-    $item['module'] = 'example';
-    $item['itemid'] = $exid;
+    $item['module'] = 'todolist';
+    $item['itemid'] = $todo_id;
     $item['name'] = $name;
     $item['number'] = $number;
-    xarModCallHooks('item', 'update', $exid, $item);
+    xarModCallHooks('item', 'update', $todo_id, $item);
     
     /* Let the calling process know that we have finished successfully */
     return true;

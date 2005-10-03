@@ -7,25 +7,80 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Example Module
+ * @subpackage Todolist Module
  */
 
 /**
- * Add new item
+ * add a todo-entry
  *
+ * Inserts a Todo-Entry into database and generates a mail-notify to subscribed users.
  * This is a standard function that is called whenever an administrator
  * wishes to create a new module item
  *
- * @author Example module development team
+ * @param $due_date        string    the due date
+ * @param $priority
+ * @param $project
+ * @param $percentage_completed
+ * @param $text
+ * @param $responsible_persons
+ * @param $note_text
+ *
+ * @author Todolist module development team
  * @return array
  */
-function example_admin_new($args)
+function todolist_admin_new($args)
 { 
-    /* Admin functions of this type can be called by other modules.  If this
-     * happens then the calling module will be able to pass in arguments to
-     * this function through the $args parameter.  Hence we extract these
-     * arguments *before* we have obtained any form-based input through
-     * xarVarFetch().
+/*
+function add_todo($due_date,$priority,$project,$percentage_completed,$text,$responsible_person,$note_text)
+{
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
+    if (pnModGetVar('todolist', 'DATEFORMAT') != "1") {
+        // datum is the due date
+        $due_date = convDateToUS($due_date);
+    }
+    $priority = switchPriority($priority);
+
+    if (pnUserGetVar('uid')) {
+        $todolist_todos_column = &$pntable['todolist_todos_column'];
+        $query = "INSERT INTO $pntable[todolist_todos]
+            ($todolist_todos_column[project_id], $todolist_todos_column[todo_text],
+            $todolist_todos_column[todo_priority], $todolist_todos_column[percentage_completed],
+            $todolist_todos_column[created_by], $todolist_todos_column[due_date],
+            $todolist_todos_column[date_created], $todolist_todos_column[date_changed],
+            $todolist_todos_column[changed_by]) VALUES ('$project','".
+            addslashes($text)."', '$priority', 0, '".pnUserGetVar('uid').
+            "','$due_date',".time().",".time().",'".pnUserGetVar('uid')."')";
+
+        if ($dbconn->Execute($query)){
+            $insert_success = true;
+        } else {
+            $insert_success = false;
+        }
+        if ((count($responsible_person) > 0) && ($insert_success == true)) {
+            $query = "INSERT INTO $pntable[todolist_responsible_persons] VALUES ";
+
+            $anzahl = count($responsible_person);
+            for ($i=0; $i < $anzahl ; $i++) {
+                $query .= "(LAST_INSERT_ID(), $responsible_person[$i])";
+                if (($i+1) < $anzahl)
+                    $query .= ", ";
+            }
+
+            if ($dbconn->Execute($query)){
+                $insert_success = true;
+            } else {
+                $insert_success = false;
+            }
+            generateMail("LAST_INSERT_ID()", "todo_add");
+        }
+
+    } else {
+        // not authenticated - don't allow them to add it.
+        echo 'Authentication Failure!';
+        return false;
+    }
+
      */
     extract($args);
 
