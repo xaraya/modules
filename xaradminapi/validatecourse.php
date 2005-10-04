@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id:
- * 
  * Validate a course: retrieve an array based on the name and number supplied
  * 
  * @package Xaraya eXtensible Management System

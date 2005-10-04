@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id:
- * 
  * Utility function to pass menu items to the main menu
  * 
  * @package Xaraya eXtensible Management System

@@ -30,15 +30,15 @@ function courses_user_enroll($args)
 
  extract($args);
 
-  if (!xarVarFetch('planningid', 'int::', $planningid, NULL, XARVAR_DONT_SET)) return;
-  if (!xarVarFetch('objectid', 'str:1:', $objectid, '', XARVAR_NOT_REQUIRED)) return;
+  if (!xarVarFetch('planningid', 'id', $planningid, NULL, XARVAR_DONT_SET)) return;
+  if (!xarVarFetch('objectid', 'id', $objectid, '', XARVAR_NOT_REQUIRED)) return;
   if (!xarVarFetch('message', 'str:1:', $message, '', XARVAR_NOT_REQUIRED)) return;
 
     //check for override by objectid
     if (!empty($objectid)) {
         $planningid = $objectid;
     }
-	// What does this do?
+    // What does this do?
     $courses['transform'] = array('name');
     $item = xarModCallHooks('item',
         'transform',
@@ -69,7 +69,7 @@ function courses_user_enroll($args)
 
     // If user is not enrolled already go ahead and create the enrollment
     // Get status of student; for the moment standard status is 1
-	// TODO: make admin configurable
+    // TODO: make admin configurable
     $studstatus = 1;
     $regdate = date("Y-m-d H:i:s");
 

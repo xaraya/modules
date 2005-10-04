@@ -23,7 +23,7 @@
 function courses_userapi_countparticipants($args)
 {
     extract ($args);
-    if (!xarVarFetch('planningid', 'int:1:', $planningid)) return;
+    if (!xarVarFetch('planningid', 'id', $planningid)) return;
 
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();

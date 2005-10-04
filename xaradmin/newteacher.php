@@ -24,8 +24,8 @@ function courses_admin_newteacher($args)
 
  extract($args);
 
-  if (!xarVarFetch('planningid', 'int::', $planningid, NULL, XARVAR_DONT_SET)) return;
-  if (!xarVarFetch('userid', 'int::', $userid, NULL, XARVAR_DONT_SET)) return;
+  if (!xarVarFetch('planningid', 'id', $planningid, NULL, XARVAR_DONT_SET)) return;
+  if (!xarVarFetch('userid',     'int::', $userid, NULL, XARVAR_DONT_SET)) return;
   // if (!xarVarFetch('extpid',       'isset', $extpid,       NULL, XARVAR_DONT_SET)) {return;}
     // Check to see if this user is already enrolled in this course
     $check = xarModAPIFunc('courses',

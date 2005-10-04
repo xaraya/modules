@@ -21,7 +21,7 @@
 function courses_user_view()
 {
     if (!xarVarFetch('startnum', 'int:1:', $startnum, '1',  XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('catid',    'isset',  $catid,    NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('catid',    'id',     $catid,    NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('sortby',   'str:1:', $sortby,   'name')) return;
 
     $data = xarModAPIFunc('courses', 'user', 'menu');

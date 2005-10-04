@@ -1,6 +1,6 @@
 <?php
- /**
- * Display an item
+/**
+ * Display an planned course
  * 
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 The Digital Development Foundation
@@ -24,8 +24,8 @@
 function courses_user_displayplanned($args)
 {
     extract($args);
-    if (!xarVarFetch('planningid', 'int:1:', $planningid)) return;
-    if (!xarVarFetch('objectid', 'int:1:', $objectid, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('planningid', 'id', $planningid)) return;
+    if (!xarVarFetch('objectid', 'id', $objectid, '', XARVAR_NOT_REQUIRED)) return;
 
     if (!empty($objectid)) {
         $planningid = $objectid;

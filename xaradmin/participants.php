@@ -1,6 +1,6 @@
 `<?php
 /**
- * File: $Id:
+ * View Participants for a course
  * 
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003-2005 by the Xaraya Development Team.
@@ -8,11 +8,14 @@
  * @link http://www.xaraya.com
  *
  * @subpackage courses
- * @author Courses module development team 
  */
  
 /**
- * view participants for one planned course
+ * View participants for one planned course
+ *
+ * @author Courses module development team  
+ * @author MichelV michelv@xarayahosting.nl
+ *
  * @param ['planningid'] ID of the planned course
  * @param ['startnum']
  */

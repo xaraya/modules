@@ -1,8 +1,6 @@
 <?php
 /**
- * File: $Id:
- * 
- * Get all module items
+ * Get all participants for one planned course
  * 
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 The Digital Development Foundation
@@ -25,7 +23,7 @@
 function courses_adminapi_getallparticipants($args)
 {
     extract($args);
-    if (!xarVarFetch('planningid', 'int:1:', $planningid)) return;
+    if (!xarVarFetch('planningid', 'id', $planningid)) return;
     if (!xarVarFetch('startnum', 'int:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('numitems', 'int:1:', $numitems, '-1', XARVAR_NOT_REQUIRED)) return;
 

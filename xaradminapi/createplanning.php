@@ -1,8 +1,6 @@
 <?php
 /**
- * File: $Id:
- *
- * Create a new Course item
+ * Create a new planned course
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 The Digital Development Foundation
@@ -67,7 +65,7 @@ function courses_adminapi_createplanning($args)
                            xar_last_modified)
               VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             
-    $bindvars = array((int)$nextId, $courseid, $year, $credits, $creditsmin, $creditsmax, $startdate, $enddate, $prerequisites, $aim, $method, $longdesc,
+    $bindvars = array($nextId, $courseid, $year, $credits, $creditsmin, $creditsmax, $startdate, $enddate, $prerequisites, $aim, $method, $longdesc,
      $costs, $committee, $coordinators, $lecturers, $location, $material, $info, $program, $minparticipants, $maxparticipants, $closedate, $hideplanning, $last_modified);
     $result = &$dbconn->Execute($query, $bindvars);
     // Check for an error with the database code, adodb has already raised

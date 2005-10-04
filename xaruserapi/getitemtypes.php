@@ -1,6 +1,5 @@
 <?php
 /**
- * 
  * Utility function to retrieve the list of item types of this module
  * 
  * @package Xaraya eXtensible Management System

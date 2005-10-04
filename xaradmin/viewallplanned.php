@@ -1,8 +1,6 @@
 `<?php
 /**
- * File: $Id:
- * 
- * Standard function to view items
+ * Standard all planned courses
  * 
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 The Digital Development Foundation

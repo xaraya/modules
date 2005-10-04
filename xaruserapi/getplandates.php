@@ -23,7 +23,7 @@
 function courses_userapi_getplandates($args)
 {
     extract($args);
-    if (!xarVarFetch('courseid', 'int:1:', $courseid)) return;
+    if (!xarVarFetch('courseid', 'id',     $courseid)) return;
     if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('numitems', 'int:1:', $numitems, -1, XARVAR_NOT_REQUIRED)) return;
     
@@ -54,7 +54,7 @@ function courses_userapi_getplandates($args)
                    xar_prerequisites,
                    xar_aim,
                    xar_method,
-				   xar_language,
+                   xar_language,
                    xar_longdesc,
                    xar_costs,
                    xar_committee,
@@ -91,7 +91,7 @@ function courses_userapi_getplandates($args)
             'prerequisites' => $prerequisites,
             'aim'        => $aim,
             'method'     => $method,
-			'language'   => $language,
+            'language'   => $language,
             'longdecr'   => $longdesc,
             'costs'      => $costs,
             'committee'  => $committee,

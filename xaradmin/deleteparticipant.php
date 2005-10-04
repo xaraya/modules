@@ -25,10 +25,10 @@ function courses_admin_deleteparticipant($args)
     // Admin functions of this type can be called by other modules.
     extract($args);
     // Get parameters from whatever input we need.
-    if (!xarVarFetch('sid', 'int:1:', $sid)) return;
-    if (!xarVarFetch('planningid', 'int:1:', $planningid)) return;
-    if (!xarVarFetch('objectid', 'str:1:', $objectid, NULL, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('sid',         'id', $sid)) return;
+    if (!xarVarFetch('planningid',  'id', $planningid)) return;
+    if (!xarVarFetch('objectid',    'id', $objectid, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('confirm',     'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return;
 
     if (!empty($objectid)) {
         $sid = $objectid;

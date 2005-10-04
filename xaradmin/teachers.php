@@ -1,5 +1,6 @@
 `<?php
 /**
+ * View teachers for one planned course
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 The Digital Development Foundation
@@ -20,7 +21,7 @@
  */
 function courses_admin_teachers()
 {
-    if (!xarVarFetch('planningid', 'int:1:', $planningid)) return;
+    if (!xarVarFetch('planningid', 'id', $planningid)) return;
     if (!xarVarFetch('startnum', 'int:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
     // Initialise the $data variable
     $data = xarModAPIFunc('courses', 'admin', 'menu');

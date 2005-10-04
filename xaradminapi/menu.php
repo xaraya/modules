@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id:
- * 
  * Standard function to generate the common admin menu configuration
  * 
  * @package Xaraya eXtensible Management System
@@ -14,6 +12,7 @@
  */
 /**
  * generate the common admin menu configuration
+ * @TODO ALL
  */
 function courses_adminapi_menu()
 {

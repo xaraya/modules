@@ -1,7 +1,6 @@
 <?php
 /**
- * 
- * Standard function to create a new item
+ * Create a new course
  * 
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 The Digital Development Foundation
@@ -24,16 +23,16 @@ function courses_admin_createcourse($args)
     extract($args);
 
     // Get parameters from whatever input we need.
-    if (!xarVarFetch('name', 'str:1:', $name, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('number', 'str:1:', $number, '',XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('coursetype', 'str:1:', $coursetype, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('level', 'isset:1:', $level, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('shortdesc', 'str:1:', $shortdesc, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('intendedcredits', 'str:1:30', $intendedcredits, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('freq', 'str:1:', $freq, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('contact', 'str:1:', $contact, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('contactuid', 'int:1:', $contactuid, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('hidecourse', 'int:1:', $hidecourse, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('name',        'str:1:', $name, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('number',      'str:1:', $number, '',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('coursetype',  'str:1:', $coursetype, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('level',       'isset', $level, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('shortdesc',   'str:1:', $shortdesc, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('intendedcredits', 'int:1:30', $intendedcredits, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('freq',        'str:1:', $freq, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('contact',     'str:1:', $contact, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('contactuid',  'int:1:', $contactuid, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('hidecourse',  'int:1:', $hidecourse, '', XARVAR_NOT_REQUIRED)) return;
     // Argument check
     $item = array();
     // Check for duplicate name and/or number

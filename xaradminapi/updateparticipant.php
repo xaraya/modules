@@ -1,8 +1,6 @@
 <?php
 /**
- * File: $Id:
- *
- * Create a new participant item
+ * Update a participant
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 The Digital Development Foundation
@@ -26,8 +24,8 @@
 function courses_adminapi_updateparticipant($args)
 {
     extract($args);
-    if (!xarVarFetch('planningid', 'int:1:', $planningid)) return;
-    if (!xarVarFetch('sid', 'int:1:', $sid)) return;
+    if (!xarVarFetch('planningid', 'id', $planningid)) return;
+    if (!xarVarFetch('sid', 'id', $sid)) return;
     if (!xarVarFetch('statusid', 'int:1:', $statusid)) return;
 
     $invalid = array();
@@ -63,7 +61,7 @@ function courses_adminapi_updateparticipant($args)
                   xar_status = ?
               WHERE xar_sid = ?
               ";
-    $bindvars = array((int)$planningid, $statusid, $sid);
+    $bindvars = array($planningid, $statusid, $sid);
     $result = &$dbconn->Execute($query, $bindvars);
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return

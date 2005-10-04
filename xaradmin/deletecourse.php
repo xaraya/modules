@@ -19,8 +19,8 @@
 function courses_admin_deletecourse($args)
 {
     extract($args);
-    if (!xarVarFetch('courseid', 'int:1:', $courseid)) return;
-    if (!xarVarFetch('objectid', 'str:1:', $objectid, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('courseid', 'id', $courseid)) return;
+    if (!xarVarFetch('objectid', 'id', $objectid, NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return;
 
     if (!empty($objectid)) {
@@ -61,11 +61,11 @@ function courses_admin_deletecourse($args)
     }
     // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) return;
-	
-	// TODO: Check for existing links with participants and planned courses. Only allow delete when none are present.
-	// Get the dates this course is planned
-	
-	$countplanned = count(xarModAPIFunc('courses',
+    
+    // TODO: Check for existing links with participants and planned courses. Only allow delete when none are present.
+    // Get the dates this course is planned
+    
+    $countplanned = count(xarModAPIFunc('courses',
             'user',
             'getplandates',
             array('courseid' => $courseid)));

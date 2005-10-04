@@ -1,8 +1,6 @@
 <?php
 /**
- * File: $Id:
- *
- * Create a new example item
+  * Create a new teacher
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 The Digital Development Foundation
@@ -26,9 +24,9 @@
 function courses_adminapi_create_teacher($args)
 {
     extract($args);
-  if (!xarVarFetch('planningid', 'int:1:', $planningid, NULL, XARVAR_DONT_SET)) return;
-  if (!xarVarFetch('userid', 'int:1:', $userid)) return;
-  if (!xarVarFetch('type', 'int:1:', $type, '1', XARVAR_DONT_SET)) return;
+  if (!xarVarFetch('planningid', 'id', $planningid, NULL, XARVAR_DONT_SET)) return;
+  if (!xarVarFetch('userid',    'int:1:', $userid)) return;
+  if (!xarVarFetch('type',      'int:1:', $type, '1', XARVAR_DONT_SET)) return;
 
     // Security check - important to do this as early on as possible to
     // avoid potential security holes or just too much wasted processing
@@ -48,7 +46,7 @@ function courses_adminapi_create_teacher($args)
               xar_planningid,
               xar_type)
             VALUES (?,?,?,?)";
-    $bindvars = array((int)$nextId, (int)$userid, (int)$planningid, $type);
+    $bindvars = array($nextId, (int)$userid, (int)$planningid, $type);
     $result = &$dbconn->Execute($query, $bindvars);
     if (!$result) return;
 

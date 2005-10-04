@@ -1,8 +1,6 @@
 <?php
 /**
- * File: $Id:
- * 
- * Get all module items
+ * Get all courses
  * 
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 The Digital Development Foundation
@@ -95,18 +93,18 @@ function courses_userapi_getall($args)
     for (; !$result->EOF; $result->MoveNext()) {
         list($courseid, $name, $number, $coursetype, $level, $shortdesc, $intendedcredits, $freq, $contact, $contactuid, $hidecourse, $last_modified) = $result->fields;
         if (xarSecurityCheck('ViewCourses', 0, 'Course', "$courseid:All:All")) {
-            $items[] = array('courseid' 	=> $courseid,
-							'name' 			=> $name,
-							'number' 		=> $number,
-							'coursetype'	=> $coursetype,
-							'level' 		=> $level,
-							'shortdesc' 	=> $shortdesc,
-							'intendedcredits' => $intendedcredits,
-							'freq' 			=> $freq,
-							'contact' 		=> $contact,
-							'contactuid' 	=> $contactuid,
-							'hidecourse' 	=> $hidecourse,
-							'last_modified' => $last_modified);
+            $items[] = array('courseid'     => $courseid,
+                            'name'          => $name,
+                            'number'        => $number,
+                            'coursetype'    => $coursetype,
+                            'level'         => $level,
+                            'shortdesc'     => $shortdesc,
+                            'intendedcredits' => $intendedcredits,
+                            'freq'          => $freq,
+                            'contact'       => $contact,
+                            'contactuid'    => $contactuid,
+                            'hidecourse'    => $hidecourse,
+                            'last_modified' => $last_modified);
         }
     }
     // All successful database queries produce a result set, and that result

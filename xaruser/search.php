@@ -1,7 +1,6 @@
 <?php
-/*
- *
- * Courses Module
+/**
+ * Search in Courses Module
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 The Digital Development Foundation
@@ -9,13 +8,12 @@
  * @link http://www.xaraya.com
  *
  * @subpackage courses
- * @original author Jim McDonalds, dracos, mikespub et al.
  */
 
 /*
  * @author Michel V.
  * Search for a course via content description
- *
+ * @original author Jim McDonalds, dracos, mikespub et al.
  *
  */
 function courses_user_search()

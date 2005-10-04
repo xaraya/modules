@@ -22,7 +22,7 @@ function courses_userapi_check_enrolled($args)
 {
     // Get arguments from argument array
     extract($args);
-    if (!xarVarFetch('planningid', 'int:1:', $planningid)) return;
+    if (!xarVarFetch('planningid', 'id', $planningid)) return;
     if (!xarVarFetch('uid', 'int:1:', $uid)) return;
     
     if (!isset($planningid) || !is_numeric($planningid)) {

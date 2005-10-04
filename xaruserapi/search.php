@@ -1,5 +1,6 @@
 <?php
-/*
+/**
+ * Perform search in Courses
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 The Digital Development Foundation

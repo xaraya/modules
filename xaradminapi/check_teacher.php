@@ -1,8 +1,6 @@
 <?php
 /**
- * File: $Id:
- * 
- * Get all module items
+ * Check teacher
  * 
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 The Digital Development Foundation
@@ -10,16 +8,16 @@
  * @link http://www.xaraya.com
  *
  * @subpackage courses
- * @author Michel V.
+
  */
 /**
  * see if there is already a link between the current user and a planned course
- *
+ * @author Michel V.
  */
 function courses_adminapi_check_teacher($args)
 {
     extract($args);
-    if (!xarVarFetch('planningid', 'int:1:', $planningid)) return;
+    if (!xarVarFetch('planningid', 'id', $planningid)) return;
     if (!xarVarFetch('userid', 'int:1:', $userid)) return;
 
     $items = array();

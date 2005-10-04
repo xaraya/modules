@@ -1,7 +1,6 @@
 <?php
 /**
- * File: $Id:
- * 
+ * get all course and names that a teacher is linked to
  * 
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 The Digital Development Foundation

@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id:
- * 
  * Standard function to view courses and their planning
  * 
  * @package Xaraya eXtensible Management System

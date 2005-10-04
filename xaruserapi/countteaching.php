@@ -1,8 +1,6 @@
 <?php
 /**
- * File: $Id:
- * 
- * Utility function counts number of items held by this module
+ * Count the number courses a user is a teacher in
  * 
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 The Digital Development Foundation
@@ -13,7 +11,7 @@
  * @author Courses module development team 
  */
 /**
- * utility function to count the number of participants per planned course
+ * utility function to count the number courses a user is a teacher in
  * 
  * @author Michel V.
  *

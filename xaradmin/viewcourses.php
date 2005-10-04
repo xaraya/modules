@@ -1,8 +1,6 @@
 `<?php
 /**
- * File: $Id:
- * 
- * Standard function to view items
+ * Admin function to view items
  * 
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 The Digital Development Foundation
@@ -56,7 +54,7 @@ function courses_admin_viewcourses()
         $item = $items[$i];
         $courseid = $item['courseid'];
         $name = $item['name'];
-		$hidecourse = $item['hidecourse'];
+        $hidecourse = $item['hidecourse'];
         if (xarSecurityCheck('EditCourses', 0, 'Course', "$courseid:All:All")) {
             $items[$i]['planurl'] = xarModURL('courses',
                 'admin',

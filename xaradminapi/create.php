@@ -1,8 +1,6 @@
 <?php
 /**
- * File: $Id:
- *
- * Create a new courses item
+ * Create a new DD courses item
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 The Digital Development Foundation
@@ -13,7 +11,7 @@
  * @author Courses module development team
  */
 /**
- * create a new course item
+ * create a new DD course item
  *
  * @author the course module development team
  * @param  $args ['name'] name of the item
@@ -21,6 +19,7 @@
  * @returns int
  * @return example item ID on success, false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @deprecated
  */
 function courses_adminapi_create($args)
 {

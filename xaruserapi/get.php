@@ -1,8 +1,6 @@
 <?php
 /**
- * File: $Id:
- * 
- * Get a specific item
+ * Get a specific course
  * 
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 The Digital Development Foundation

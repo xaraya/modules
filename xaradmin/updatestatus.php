@@ -1,15 +1,27 @@
 <?php
-
+/**
+ * Update status for student
+ * 
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage courses
+ * @author Courses module development team 
+ */
 /**
  * update participant item from courses_admin_modify
+ *
+ * @author MichelV <michelv@xarayahosting.nl>
  */
 function courses_admin_updatestatus()
 {
     // Get parameters
-    if(!xarVarFetch('sids',   'isset', $sids,    NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('statusid', 'int::', $statusid,  NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('sids',      'isset', $sids,    NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('statusid',  'int::', $statusid,  NULL, XARVAR_DONT_SET)) {return;}
    // if(!xarVarFetch('catid',  'isset', $catid,   NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('planningid',   'isset', $planningid,    NULL, XARVAR_DONT_SET)) {return;}//Change this?
+    if(!xarVarFetch('planningid','id', $planningid,    NULL, XARVAR_DONT_SET)) {return;}//Change this?
 
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;

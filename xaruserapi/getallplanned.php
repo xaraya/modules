@@ -59,7 +59,7 @@ function courses_userapi_getallplanned($args)
                    xar_prerequisites,
                    xar_aim,
                    xar_method,
-				   xar_language,
+                   xar_language,
                    xar_longdesc,
                    xar_costs,
                    xar_committee,
@@ -73,7 +73,7 @@ function courses_userapi_getallplanned($args)
                    xar_minparticipants,
                    xar_maxparticipants,
                    xar_closedate,
-				   xar_hideplanning,
+                   xar_hideplanning,
                    xar_last_modified";
             
     // TODO: how to select by cat ids (automatically) when needed ???
@@ -125,7 +125,7 @@ function courses_userapi_getallplanned($args)
             'prerequisites' => $prerequisites,
             'aim'        => $aim,
             'method'     => $method,
-			'language'   => $language,
+            'language'   => $language,
             'longdecr'   => $longdesc,
             'costs'      => $costs,
             'committee'  => $committee,
@@ -138,7 +138,7 @@ function courses_userapi_getallplanned($args)
             'minparticipants' => $minparticipants,
             'maxparticipants' => $maxparticipants,
             'closedate' => $closedate,
-			'hideplanning'  => $hideplanning,
+            'hideplanning'  => $hideplanning,
             'last_modified' => $last_modified);
         }
     }

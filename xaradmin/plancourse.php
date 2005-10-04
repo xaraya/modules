@@ -1,8 +1,6 @@
 <?php
 /**
- * File: $Id:
- * 
- * Standard function to create a new module item
+ * Plan a course
  * 
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 The Digital Development Foundation
@@ -10,12 +8,14 @@
  * @link http://www.xaraya.com
  *
  * @subpackage courses
- * @author Courses module development team 
+
  */
 /**
  * Add new planning for a course
  * This is a standard function that is called whenever an administrator
  * wishes to create a new planning for a specified course
+ *
+ * @author Courses module development team  
  *
  * @param ['courseid'] Id of the course that will be planned
  */
@@ -24,7 +24,7 @@ function courses_admin_plancourse($args)
     extract($args);
 
     // Get parameters from whatever input we need.
-    if (!xarVarFetch('courseid', 'int:1:', $courseid)) return;
+    if (!xarVarFetch('courseid', 'id', $courseid)) return;
     if (!xarVarFetch('name', 'str:1:', $name, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('number', 'str:1:', $number, '',XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('coursetype', 'str:1:', $coursetype, '', XARVAR_NOT_REQUIRED)) return;

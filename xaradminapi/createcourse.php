@@ -1,8 +1,6 @@
 <?php
 /**
- * File: $Id:
- *
- * Create a new Course item
+ * Create a new Course
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 The Digital Development Foundation
@@ -66,7 +64,7 @@ function courses_adminapi_createcourse($args)
               xar_last_modified)
               VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
             
-    $bindvars = array((int)$nextId, $name, $number, $coursetype, $level, $shortdesc, $intendedcredits, $freq, $contact, $contactuid, $hidecourse, $last_modified);
+    $bindvars = array($nextId, $name, $number, $coursetype, $level, $shortdesc, $intendedcredits, $freq, $contact, $contactuid, $hidecourse, $last_modified);
     $result = &$dbconn->Execute($query, $bindvars);
     if (!$result) return;
 

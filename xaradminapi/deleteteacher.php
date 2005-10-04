@@ -1,8 +1,6 @@
 <?php
 /**
- * File: $Id:
- * 
- * Delete an student item
+ * Delete a teacher
  * 
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 The Digital Development Foundation
@@ -24,7 +22,7 @@
 function courses_adminapi_deleteteacher($args)
 {
     extract($args);
-    if (!xarVarFetch('tid', 'int:1:', $tid)) return;
+    if (!xarVarFetch('tid', 'id', $tid)) return;
 
     // Argument check - make sure that all required arguments are present and
     // in the right format, if not then set an appropriate error message
@@ -59,9 +57,8 @@ function courses_adminapi_deleteteacher($args)
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
     if (!$result) return;
-    // Let any hooks know that we have deleted an item.  As this is a
-    // delete hook we're not passing any extra info
-    // xarModCallHooks('item', 'delete', $exid, '');
+    
+    // Let any hooks know that we have deleted an item.
     $item['module'] = 'courses';
     $item['itemid'] = $tid;
     xarModCallHooks('item', 'delete', $tid, $item);

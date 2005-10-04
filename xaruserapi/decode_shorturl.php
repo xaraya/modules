@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id:
- * 
  * Extract function and arguments from short URLs for this module
  * 
  * @package Xaraya eXtensible Management System

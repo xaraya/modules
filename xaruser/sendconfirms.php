@@ -25,8 +25,8 @@ function courses_user_sendconfirms($args)
     extract ($args);
     if (!xarVarFetch('studstatus', 'int:1:', $studstatus)) return;
     if (!xarVarFetch('userid',     'str::',  $userid))     return;
-    if (!xarVarFetch('planningid', 'int:1:', $planningid)) return;
-    if (!xarVarFetch('enrollid',   'int:1:', $enrollid))   return;
+    if (!xarVarFetch('planningid', 'id', $planningid)) return;
+    if (!xarVarFetch('enrollid',   'id', $enrollid))   return;
     // Get planned course
     $planitem = xarModAPIFunc('courses',
                           'user',
@@ -42,12 +42,12 @@ function courses_user_sendconfirms($args)
     
     $coursename = $course['name'];
     // Check to see if coordinator exists
-	if (!empty ($course['contactuid'])) {
+    if (!empty ($course['contactuid'])) {
     $coordinator = $course['contactuid'];
-    $coordname = xarUserGetVar('name', $coordinator);	
+    $coordname = xarUserGetVar('name', $coordinator);   
     } else {
-	$coordinator = '';
-	}
+    $coordinator = '';
+    }
 
     // Without coordinator, send mail to AlwaysNotify
     if (empty($coordinator) || !is_numeric($coordinator)) {
@@ -74,7 +74,7 @@ function courses_user_sendconfirms($args)
                                        'user',
                                        'sendconfirmcoordinator',
                                         array('username'   => $username,
-										      'coordname'  => $coordname,
+                                              'coordname'  => $coordname,
                                               'femail'     => $femail,
                                               'name'       => $coursename,
                                               'viewcourse' => $viewcourse,
@@ -113,7 +113,7 @@ function courses_user_sendconfirms($args)
                                  'from'         => $femail,
                                  'fromname'     => $username))) {
             
-			xarSessionSetVar('courses_statusmsg', xarML('Coordinator Notification Sent','courses'));
+            xarSessionSetVar('courses_statusmsg', xarML('Coordinator Notification Sent','courses'));
         } else {
             $msg = xarML('The message was not sent');
             xarErrorSet(XAR_SYSTEM_EXCEPTION, 'FUNCTION_FAILED', new SystemException($msg));

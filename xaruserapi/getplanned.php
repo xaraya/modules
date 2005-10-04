@@ -53,7 +53,7 @@ function courses_userapi_getplanned($args)
                    xar_prerequisites,
                    xar_aim,
                    xar_method,
-				   xar_language,
+                   xar_language,
                    xar_longdesc,
                    xar_costs,
                    xar_committee,
@@ -70,7 +70,7 @@ function courses_userapi_getplanned($args)
                    xar_last_modified
             FROM $planningtable
             WHERE xar_planningid = ?";
-    $result = $dbconn->Execute($query, array((int)$planningid));
+    $result = $dbconn->Execute($query, array($planningid));
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
     if (!$result) return;
@@ -91,7 +91,7 @@ function courses_userapi_getplanned($args)
             'prerequisites' => $prerequisites,
             'aim'        => $aim,
             'method'     => $method,
-			'language'   => $language,
+            'language'   => $language,
             'longdesc'   => $longdesc,
             'costs'      => $costs,
             'committee'  => $committee,

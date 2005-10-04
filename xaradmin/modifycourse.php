@@ -1,6 +1,5 @@
 <?php
 /**
- * 
  * Modify a course
  * 
  * @package Xaraya eXtensible Management System
@@ -9,13 +8,14 @@
  * @link http://www.xaraya.com
  *
  * @subpackage courses
- * @author Courses module development team 
+
  */
 /**
  * modify a course
  * This is a standard function that is called whenever an administrator
  * wishes to modify a current module item
  * @author MichelV <michelv@xarayahosting.nl>
+ * @author Courses module development team  
  * 
  * @param  $ 'courseid' the id of the item to be modified
  */
@@ -23,10 +23,10 @@ function courses_admin_modifycourse($args)
 {
     extract($args);
     // Get parameters from whatever input we need.
-    if (!xarVarFetch('courseid', 'isset:', $courseid, NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('objectid', 'str:1:', $objectid, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('courseid', 'id', $courseid, NULL, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('objectid', 'id', $objectid, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('itemtype', 'int', $itemtype, 3, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('invalid', 'str:1:', $invalid, '', XARVAR_NOT_REQUIRED)) return; // array?
+    if (!xarVarFetch('invalid',  'str:1:', $invalid, '', XARVAR_NOT_REQUIRED)) return; // array?
     
     // At this stage we check to see if we have been passed $objectid, the
     // generic item identifier.

@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id:
- * 
  * Standard function to update a current course
  * 
  * @package Xaraya eXtensible Management System
@@ -25,8 +23,8 @@ function courses_admin_updateplanned($args)
     extract($args);
 
     // Get parameters from whatever input we need.
-    if (!xarVarFetch('planningid', 'int:1:', $planningid)) return;
-    if (!xarVarFetch('objectid', 'int:1:', $objectid, '', XARVAR_NOT_REQUIRED )) return;
+    if (!xarVarFetch('planningid', 'id', $planningid)) return;
+    if (!xarVarFetch('objectid', 'id', $objectid, '', XARVAR_NOT_REQUIRED )) return;
     if (!xarVarFetch('name', 'str:1:', $name, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('number', 'str:1:', $number, '',XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('coursetype', 'str:1:', $coursetype, '', XARVAR_NOT_REQUIRED)) return;

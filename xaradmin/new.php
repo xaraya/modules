@@ -21,7 +21,7 @@ function courses_admin_new($args)
 
     // Get parameters for the dyn data objects.
     if (!xarVarFetch('itemtype', 'int:1:', $itemtype, 3, XARVAR_GET_OR_POST)) return;
-    if (!xarVarFetch('preview', 'str', $preview, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('preview',  'str', $preview, '', XARVAR_NOT_REQUIRED)) return;
     if (empty($itemtype)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                      'item type', 'admin', 'new', 'courses');

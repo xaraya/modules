@@ -1,8 +1,6 @@
 <?php
 /**
- * File: $Id:
- * 
- * Delete an example item
+ * Delete a course
  * 
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 The Digital Development Foundation
@@ -24,7 +22,7 @@
 function courses_adminapi_deletecourse($args)
 {
     extract($args);
-    if (!xarVarFetch('courseid', 'int:1:', $courseid)) return;
+    if (!xarVarFetch('courseid', 'id', $courseid)) return;
 
     if (!isset($courseid) || !is_int($courseid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
@@ -51,7 +49,7 @@ function courses_adminapi_deletecourse($args)
     // Delete the item
     $query = "DELETE FROM $coursestable
             WHERE xar_courseid = ?";
-    $result = &$dbconn->Execute($query, array((int)$courseid));
+    $result = &$dbconn->Execute($query, array($courseid));
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
     if (!$result) return;

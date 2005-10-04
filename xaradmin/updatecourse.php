@@ -24,8 +24,8 @@ function courses_admin_updatecourse($args)
     extract($args);
 
     // Get parameters from whatever input we need.
-    if (!xarVarFetch('courseid', 'int:1:', $courseid)) return;
-    if (!xarVarFetch('objectid', 'int:1:', $objectid, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('courseid', 'id', $courseid)) return;
+    if (!xarVarFetch('objectid', 'id', $objectid, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('name', 'str:1:', $name)) return;
     if (!xarVarFetch('number', 'str:1:', $number)) return;
     if (!xarVarFetch('coursetype', 'str:1:', $coursetype, '', XARVAR_NOT_REQUIRED)) return;
@@ -143,7 +143,7 @@ function courses_admin_updatecourse($args)
                              'last_modified' => $last_modified))) {
         return false; // throw back
     } 
-	// TODO: how to remove previous statusmsg?
+    // TODO: how to remove previous statusmsg?
     xarSessionSetVar('statusmsg', xarML('Course Was Successfully Updated!'));
 
     xarResponseRedirect(xarModURL('courses', 'admin', 'viewcourses', array('courseid' => $courseid)));

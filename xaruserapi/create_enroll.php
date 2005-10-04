@@ -24,7 +24,7 @@
 function courses_userapi_create_enroll($args)
 {
     extract($args);
-    if (!xarVarFetch('planningid', 'int:1:', $planningid)) return;
+    if (!xarVarFetch('planningid', 'id', $planningid)) return;
     if (!xarVarFetch('uid', 'int:1:', $uid)) return;
     if (!xarVarFetch('studstatus', 'int:1:', $studstatus, '1')) return;
     if (!xarVarFetch('regdate', 'str:1:', $regdate)) return;

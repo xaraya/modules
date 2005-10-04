@@ -1,8 +1,6 @@
 <?php
 /**
- * File: $Id:
- * 
- * Get all module items
+ * Get all teachers for one planned course
  * 
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 The Digital Development Foundation
@@ -18,6 +16,7 @@
  * @author the Courses module development team 
  * @param numitems $ the number of items to retrieve (default -1 = all)
  * @param startnum $ start with this item number (default 1)
+ * @param planningid $ ID of planned course
  * @returns array
  * @return array of items, or false on failure
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION

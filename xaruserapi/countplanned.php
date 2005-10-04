@@ -1,7 +1,6 @@
 <?php
 /**
- * 
- * Utility function counts number of items held by this module
+ * Utility function counts number planned courses
  * 
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 The Digital Development Foundation

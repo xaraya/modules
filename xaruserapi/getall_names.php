@@ -1,8 +1,6 @@
 <?php
 /**
- * File: $Id:
- * 
- * Get all module items
+ * Get all names of courses
  * 
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 The Digital Development Foundation
@@ -13,7 +11,7 @@
  * @author Courses module development team 
  */
 /**
- * get all names of all courses items
+ * get the names of all courses
  * 
  * @author the Courses module development team 
  * @param numitems $ the number of items to retrieve (default -1 = all)
