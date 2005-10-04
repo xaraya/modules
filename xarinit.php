@@ -16,6 +16,7 @@
  * module instance
  * @Original Author of file: Jim McDonald
  * @author Todolist module development team
+ * @author MichelV <michelv@xarayahosting.nl>
  */
 
 function todolist_init()
@@ -139,11 +140,8 @@ function todolist_init()
         return false;
     }
 */
-    // Set up an initial value for a module variable.  Note that all module
-    // variables should be initialised with some value in this way rather
-    // than just left blank, this helps the user-side code and means that
-    // there doesn't need to be a check to see if the variable is set in
-    // the rest of the code as it always will be
+    // Set up an initial value for a module variable.
+    // TODO: lowercasing these
 
     xarModSetVar('todolist', 'ACCESS_RESTRICTED', 0);
     xarModSetVar('todolist', 'BACKGROUND_COLOR', "#99ccff");
@@ -164,7 +162,9 @@ function todolist_init()
     xarModSetVar('todolist', 'TODO_HEADING', "Todolist");
     xarModSetVar('todolist', 'VERY_IMPORTANT_COLOR', "#ff3366");
     xarModSetVar('todolist', 'VERY_IMPORTANT_DAYS', 3);
-    xarModSetVar('todolist', 'ITEMS_PER_PAGE', 20);
+    // New additions
+    xarModSetVar('todolist', 'itemsperpage', 20);
+    xarModSetVar('todolist', 'SupportShortURLs', 0);
 // These should go to user Vars...
 
 //    xarModSetVar('todolist','userpref','1;all;0;1');
