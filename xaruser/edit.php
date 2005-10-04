@@ -266,10 +266,12 @@ function julian_user_edit()
      $bl_data['allday_checked'][0] = 'checked';
      $bl_data['allday_checked'][1] = '';
    } 
+   // 0 = CAL_CLASS_PUBLIC
+   // 1 = CAL_CLASS_PRIVATE
    //determine if this is a public or private event
    $bl_data['class'][0] = 'checked';
    $bl_data['class'][1] = '';
-   if ($edit_obj->class) {
+   if ($item['class'] == 1) {
      $bl_data['class'][0] = '';
      $bl_data['class'][1] = 'checked';
    } 
@@ -367,6 +369,10 @@ function julian_user_edit()
    $bl_data['share_options'] = xarModAPIFunc('julian','user','getuseroptions',array('uids'=>$edit_obj->share_uids));
    $bl_data['share_uids'] = $item['share_uids'];
    $bl_data['share_group'] = xarModGetVar('julian', 'share_group');
+   // Build the group name. Type 1 is a group
+   $group = xarModAPIFunc ('roles', 'user', 'get', array('uid'=> $bl_data['share_group'], 'type' =>1));
+   $bl_data['share_group_name'] = $group['name'];  
+
    //Determining which end date radio to check. 0 index indicates this event as an end date and 1 index means it does not
    $event_endtype_checked[0] = '';
    $event_endtype_checked[1] = 'checked';
@@ -463,6 +469,17 @@ function julian_user_edit()
      $bl_data['class'][0] = '';
      $bl_data['class'][1] = 'checked';
    } 
+   
+   // 0 = CAL_CLASS_PUBLIC
+   // 1 = CAL_CLASS_PRIVATE
+   //determine if this is a public or private event
+   $bl_data['class'][0] = 'checked ';
+   $bl_data['class'][1] = '';
+   if ($item['class'] == 1) {
+     $bl_data['class'][0] = '';
+     $bl_data['class'][1] = 'checked ';
+   }
+   
    //determine if this is there is an enddate present
    $bl_data['enddatedisabled'] = 'disabled';
    if (isset($event_endmonth) || isset($event_endday) || isset($event_endyear)) {
