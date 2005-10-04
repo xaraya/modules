@@ -19,10 +19,11 @@
  */
 function example_userapi_search($args)
 {
+    extract($args);
+
     if (empty($args) || count($args) < 1) {
         return;
     }
-    extract($args);
 
      if($q == ''){
         return;
@@ -41,7 +42,7 @@ function example_userapi_search($args)
 
     /* setup arrays for the sql where clause, and the bindvars array */
     $bindvars = array();
-    
+
     /* include search on exid - the item id - if required */
     /*
     if (isset($exid)) {
@@ -63,7 +64,7 @@ function example_userapi_search($args)
     */
 
     if (isset($name)) {
-        $sql .= " xar_name LIKE ?";
+        $sql .= " xar_name LIKE ?"; /* Item name must match exactly */
         $bindvars[] = $name;
     }
     if (isset($number)) {
@@ -77,6 +78,7 @@ function example_userapi_search($args)
     $sql .=")  ORDER BY xar_name ASC";
 
     $result =& $dbconn->Execute($sql, $bindvars);
+
     if (!$result) return;
     /* no results to return .. then return none :p */
     if ($result->EOF) {
