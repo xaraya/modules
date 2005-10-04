@@ -44,8 +44,8 @@ function example_admin_delete($args)
      * is not allowed, as that makes assumptions that will not hold in
      * future versions of Xaraya
      */
-    if (!xarVarFetch('exid',     'int:1:', $exid)) return;
-    if (!xarVarFetch('objectid', 'int:1:', $objectid, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('exid',     'id', $exid)) return;
+    if (!xarVarFetch('objectid', 'id', $objectid, NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('confirm',  'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return;
     /* At this stage we check to see if we have been passed $objectid, the
      * generic item identifier.  This could have been passed in by a hook or

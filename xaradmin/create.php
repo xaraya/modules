@@ -38,10 +38,10 @@ function example_admin_create($args)
      * environment is not allowed, as that makes assumptions that will
      * not hold in future versions of Xaraya
      */
-    if (!xarVarFetch('exid',     'int:1:', $exid,     '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('objectid', 'int:1:', $objectid, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('exid',     'id',     $exid,     $exid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('objectid', 'id',     $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('invalid',  'str:1:', $invalid,  '', XARVAR_NOT_REQUIRED)) return; 
-    if (!xarVarFetch('number',   'str:1:', $number,   '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('number',   'int:1:', $number,   $number, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('name',     'str:1:', $name,     '', XARVAR_NOT_REQUIRED)) return;
     /* Argument check - make sure that all required arguments are present
      * and in the right format, if not then return to the add form with the

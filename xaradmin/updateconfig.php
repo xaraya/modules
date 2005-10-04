@@ -26,11 +26,11 @@ function example_admin_updateconfig()
      * environment is not allowed, as that makes assumptions that will
      * not hold in future versions of Xaraya
      */
-    if (!xarVarFetch('bold', 'checkbox', $bold, false, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('itemsperpage', 'int', $itemsperpage, 10, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('aliasname', 'str:1:', $aliasname, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('modulealias','checkbox', $modulealias,false,XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('bold',         'checkbox', $bold, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('itemsperpage', 'int',      $itemsperpage, 10, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('shorturls',    'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('aliasname',    'str:1:',   $aliasname, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('modulealias',  'checkbox', $modulealias,false,XARVAR_NOT_REQUIRED)) return;
 
     /* Confirm authorisation code.  This checks that the form had a valid
      * authorisation code attached to it.  If it did not then the function will
@@ -53,6 +53,11 @@ function example_admin_updateconfig()
     }
     $currentalias = xarModGetVar('example','aliasname');
     $newalias = trim($aliasname);
+    /* Get rid of the spaces if any, it's easier here and use that as the alias*/
+    if ( strpos($newalias,'_') === FALSE )
+    {
+        $newalias = str_replace(' ','_',$newalias);
+    }
     $hasalias= xarModGetAlias($currentalias);
     $useAliasName= xarModGetVar('example','useModuleAlias');
 

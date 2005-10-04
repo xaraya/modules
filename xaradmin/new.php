@@ -36,7 +36,7 @@ function example_admin_new($args)
      * environment is not allowed, as that makes assumptions that will
      * not hold in future versions of Xaraya
      */
-    if (!xarVarFetch('number',  'str:1:', $number,  $number,  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('number',  'int:1:', $number,  $number,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('name',    'str:1:', $name,    $name,    XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('invalid', 'array',  $invalid, $invalid, XARVAR_NOT_REQUIRED)) return;
     /* Initialise the $data variable that will hold the data to be used in

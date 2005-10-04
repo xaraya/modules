@@ -32,7 +32,7 @@ function example_user_search()
     /* example module fields for possible searching and identification */
     if (!xarVarFetch('name',   'str:0:', $name,  '',   XARVAR_DONT_SET)) return;
     if (!xarVarFetch('number', 'str:0:', $number,'',   XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('exid',      'id',  $exid,   NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('exid',       'id',  $exid,   NULL, XARVAR_NOT_REQUIRED)) return;
 
     /* example for search where an author is involved, not included in this example module */
     /* if(!xarVarFetch('author',     'isset',  $author,   NULL, XARVAR_DONT_SET)) {return;}
