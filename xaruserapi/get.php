@@ -87,7 +87,7 @@ function julian_userapi_get($args)
 			last_modified
              FROM $event_table
              WHERE event_id =?";
-    $result = &$dbconn->Execute($query, array((int)$event_id));
+    $result = &$dbconn->Execute($query, array($event_id));
     if (!$result) return;
     // Check for no rows found, and if so, close the result set and return an exception
     if ($result->EOF) {

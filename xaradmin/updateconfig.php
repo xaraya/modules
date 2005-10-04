@@ -22,7 +22,7 @@ function julian_admin_updateconfig($args)
     extract($args);
 
     if (!xarVarFetch('ical_links', 'checkbox', $ical_links, false, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('share_group', 'str', $share_group, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('share_group', 'int', $share_group, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('from_name', 'str', $from_name, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('from_email', 'str', $from_email, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('startDayOfWeek', 'str', $startDayOfWeek, false, XARVAR_NOT_REQUIRED)) return;

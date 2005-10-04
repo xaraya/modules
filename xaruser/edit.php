@@ -28,18 +28,24 @@
  */
 function julian_user_edit()
   {  
-   //This prevents users from viewing something they are not suppose to.
-   if (!xarSecurityCheck('Editjulian')) return;  
-   //get post/get vars
-   if(!xarVarFetch('id','id',$id)) return;
-   // This is the var to set the first day of the week
-   if(!xarVarFetch('cal_date','int::',$cal_date,0)) return;
+    //This prevents users from viewing something they are not suppose to.
+    if (!xarSecurityCheck('Editjulian')) return;  
+
+    if (!xarVarFetch('id',      'id',    $id)) return;
+    if (!xarVarFetch('objectid', 'id',   $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
+    // This is the var to set the first day of the week
+    if (!xarVarFetch('cal_date','int::', $cal_date, 0, XARVAR_NOT_REQUIRED)) return;
+
+    if (!empty($objectid)) {
+        $id = $objectid;
+    }
    //load the calendar class
+   // TODO: get rid of this call
    $c = xarModAPIFunc('julian','user','factory','calendar');
     //set the selected date parts and timestamp in the data array
    $bl_data = xarModAPIFunc('julian','user','getUserDateTimeInfo');
    
-   // TODO: move this to a get function
+   // TODO: make sure we don't need this
    // establish db connection      
    $dbconn =& xarDBGetConn();
    //get db tables
@@ -63,87 +69,113 @@ function julian_user_edit()
    $bl_data['todays_month'] = $month;
    $bl_data['todays_year'] = $year;
    $bl_data['todays_day'] = $day;
+
+   // Get event the decent way
+   $item = xarModAPIFunc('julian', 'user', 'get', array('event_id' => $id));
  
-   //If there is not a duration, set dur_hours and dur_minutes. Default for both is empty string.
-   $dur_hours = '';
-   $dur_minutes = '';
-   if (strcmp($edit_obj->duration,''))
-     list($dur_hours,$dur_minutes) = explode(":",$edit_obj->duration);
+/* 
+   // End date and time
+   // determine the end date for a recurring event
+   // TODO: With the new get.php this should be rewritten
+   list($event_endyear,$event_endmonth,$event_endday) = explode("-",$item['recur_until']);
+
+    //Date time from item
+    //setting start date time variables
+    $hour = date("h",strtotime($item['dtstart'])); //12 hour format
+    $ampm = !strcmp(date("a",strtotime($item['dtstart'])),"am")?0:1;
+    $minute = date("i",strtotime($item['dtstart']));
+    list($year,$month,$day) = explode("-",date("Y-m-d",strtotime($item['dtstart'])));
+    //set the start date parts in the data array
+    $data['todays_month'] = $month;
+    $data['todays_year'] = $year;
+    $data['todays_day'] = $day;
+
    
-   //Checking to see which repeating rule was used so the event_repeat can be set.
-   $event_repeat=0;
-   if ($edit_obj->recur_count && $edit_obj->recur_freq)
-      $event_repeat = 2;
-   else if (!$edit_obj->recur_count && $edit_obj->recur_freq) 
-     $event_repeat = 1;
-   //Depending on which rule was used, set the appropriate frequency field to the db value.
-   $bl_data['event_repeat_on_freq'] = '';
-   $bl_data['event_repeat_freq'] = '';
-   if ($event_repeat == 1) // event repeats every
-      $bl_data['event_repeat_freq'] = $edit_obj->recur_freq;
-   else if ($event_repeat == 2) // event repeats on
-      $bl_data['event_repeat_on_freq'] = $edit_obj->recur_freq;
-   
-   $bl_data['event_id'] = $edit_obj->event_id;
-   $bl_data['title'] = $edit_obj->summary;
-   $bl_data['month'] =  $month;
-   $bl_data['day'] = $day;
-   $bl_data['event_year'] = $year;
-   $bl_data['event_desc'] = $edit_obj->description;
-   $bl_data['event_allday'] = $edit_obj->isallday;
-   $bl_data['event_starttimeh'] = $hour;
-   $bl_data['event_starttimem'] = $minute;
-   $bl_data['event_startampm'] = $ampm;
-   $bl_data['event_dur_hours'] = $dur_hours;
-   $bl_data['event_dur_minutes'] = $dur_minutes;
-   $bl_data['category'] = $edit_obj->categories;
-   $bl_data['location'] = $edit_obj->location;
-   $bl_data['street1'] = $edit_obj->street1;
-   $bl_data['street2'] = $edit_obj->street2;
-   $bl_data['city'] = $edit_obj->city;
-   $bl_data['state'] = $edit_obj->state;
-   $bl_data['postal'] = $edit_obj->zip;
-   $bl_data['event_repeat'] = $event_repeat;
-   $bl_data['phone1'] = '';
-   $bl_data['phone2'] = '';
-   $bl_data['phone3'] = '';
-   //Breaking the phone number into 3 parts
-   //TODO: what if the field definition changes? Causes errors when there are less field available.
-   if (strcmp($edit_obj->phone,'')!=0)
-   {
-   $TelFieldType = xarModGetVar('julian', 'TelFieldType');
-      $phoneArray = explode("-",$edit_obj->phone);
-     if (strcmp($TelFieldType,'US')==0) {
-      $bl_data['phone1'] = $phoneArray[0];
-      $bl_data['phone2'] = $phoneArray[1];
-      $bl_data['phone3'] = $phoneArray[2];
-      }
-     elseif (strcmp($TelFieldType, 'EU')==0) {
-      $bl_data['phone1'] = $phoneArray[0];
-      $bl_data['phone2'] = $phoneArray[1];
-      $bl_data['phone3'] = $phoneArray[2];
-      }
-     elseif (strcmp($TelFieldType, 'EUC')==0) {
-      $bl_data['phone1'] = $phoneArray[0];
-      $bl_data['phone2'] = $phoneArray[1];
-      }
-     elseif (strcmp($TelFieldType, 'OPEN')==0) {
-      $bl_data['phone1'] = $phoneArray[0];
-      }
-   }
-   $bl_data['email'] = $edit_obj->email;
-   $bl_data['fee'] = $edit_obj->fee;
-   $bl_data['website'] = $edit_obj->url;
-   $bl_data['contact'] = $edit_obj->contact;
-   $bl_data['event_repeat_freq_type'] = $edit_obj->rrule;
-   $bl_data['event_endmonth'] = $event_endmonth;
-   $bl_data['event_endday'] = $event_endday;
-   $bl_data['event_endyear'] = $event_endyear;
-   $bl_data['event_repeat_on_day'] = $edit_obj->recur_count;
-   $bl_data['event_repeat_on_num'] = $edit_obj->recur_interval;
+    // If there is not a duration, set dur_hours and dur_minutes. 
+    // Default for both is empty string.
+    if (strcmp($item['duration'],'')) {
+        list($dur_hours,$dur_minutes) = explode(":",$item['duration']);
+    } else {
+        $dur_hours = '';
+        $dur_minutes = '';
+    }
+    
+    //Checking to see which repeating rule was used so the event_repeat can be set.
+    if ($item['recur_count'] && $item['recur_freq']) {
+        $event_repeat = 2;
+    } else if (!$item['recur_count'] && $item['recur_freq']) {
+        $event_repeat = 1;
+    } else {
+        $event_repeat = 0;
+    }
+    
+    //Depending on which rule was used, set the appropriate frequency field to the db value.
+    $data['event_repeat_on_freq'] = '';
+    $data['event_repeat_freq'] = '';
+    if ($event_repeat == 1) {// event repeats every
+      $data['event_repeat_freq'] = $item['recur_freq'];
+    } else if ($event_repeat == 2) {// event repeats on
+      $data['event_repeat_on_freq'] = $item['recur_freq'];
+    }
+
+    $data['event_id'] = $item['event_id'];
+    $data['title'] = xarVarPrepForDisplay($item['summary']);
+    $data['month'] =  $month;
+    $data['day'] = $day;
+    $data['event_year'] = $year;
+    $data['event_desc'] = xarVarPrepForDisplay($item['description']);
+    $data['event_allday'] = $item['isallday'];
+    $data['event_starttimeh'] = $hour;
+    $data['event_starttimem'] = $minute;
+    $data['event_startampm'] = $ampm;
+    $data['event_dur_hours'] = $dur_hours;
+    $data['event_dur_minutes'] = $dur_minutes;
+
+    $data['location'] = xarVarPrepForDisplay($item['location']);
+    $data['street1'] = xarVarPrepForDisplay($item['street1'];
+    $data['street2'] = xarVarPrepForDisplay($item['street2'];
+    $data['city'] = xarVarPrepForDisplay($item['city'];
+    $data['state'] = xarVarPrepForDisplay($item['state'];
+    $data['postal'] = xarVarPrepForDisplay($item['zip'];
+    $data['event_repeat'] = $event_repeat;
+
+    // The phone fields
+    $data['phone1'] = '';
+    $data['phone2'] = '';
+    $data['phone3'] = '';
+    //Breaking the phone number into 3 parts
+    //TODO: what if the field definition changes? Causes errors when there are less field available.
+    if (strcmp($item['phone'],'')!=0) {
+        $TelFieldType = xarModGetVar('julian', 'TelFieldType');
+        $phoneArray = explode("-",$item['phone']);
+        if (strcmp($TelFieldType,'US')==0) {
+          $data['phone1'] = $phoneArray[0];
+          $data['phone2'] = $phoneArray[1];
+          $data['phone3'] = $phoneArray[2];
+        } elseif (strcmp($TelFieldType, 'EU')==0) {
+          $data['phone1'] = $phoneArray[0];
+          $data['phone2'] = $phoneArray[1];
+          $data['phone3'] = $phoneArray[2];
+        } elseif (strcmp($TelFieldType, 'EUC')==0) {
+          $data['phone1'] = $phoneArray[0];
+          $data['phone2'] = $phoneArray[1];
+        } elseif (strcmp($TelFieldType, 'OPEN')==0) {
+          $data['phone1'] = $phoneArray[0];
+        }
+    }
+    $data['email'] = $item['email'];
+    $data['fee'] = $item['fee'];
+    $data['website'] = $item['url'];
+    $data['contact'] = $item['contact'];
+    $data['event_repeat_freq_type'] = $item['rrule'];
+    $data['event_endmonth'] = $event_endmonth;
+    $data['event_endday'] = $event_endday;
+    $data['event_endyear'] = $event_endyear;
+    $data['event_repeat_on_day'] = $item['recur_count'];
+    $data['event_repeat_on_num'] = $item['recur_interval'];
    
    //building share options
-   $bl_data['share_options'] = xarModAPIFunc('julian','user','getuseroptions',array('uids'=>$edit_obj->share_uids));
+   $data['share_options'] = xarModAPIFunc('julian','user','getuseroptions',array('uids'=>$item['share_uids']));
    
    //Determining which end date radio to check. 0 index indicates this event as an end date and 1 index means it does not
    $event_endtype_checked[0] = '';
@@ -225,9 +257,197 @@ function julian_user_edit()
    for ($i = 1; $i < 8; $i++)
      $bl_data['repeat_on_day_selection'][$i] = '';
    $bl_data['repeat_on_day_selection'][$edit_obj->recur_count] = 'selected';
+
+
+   //Setting allday checked
+   $bl_data['allday_checked'][0] = '';
+   $bl_data['allday_checked'][1] = 'checked';
+   if ($item['isallday'] == 1) {
+     $bl_data['allday_checked'][0] = 'checked';
+     $bl_data['allday_checked'][1] = '';
+   } 
+   //determine if this is a public or private event
+   $bl_data['class'][0] = 'checked';
+   $bl_data['class'][1] = '';
+   if ($edit_obj->class) {
+     $bl_data['class'][0] = '';
+     $bl_data['class'][1] = 'checked';
+   } 
+   //determine if this is there is an enddate present
+   $bl_data['enddatedisabled'] = 'disabled';
+   if (isset($event_endmonth) || isset($event_endday) || isset($event_endyear)) {
+     $bl_data['enddatedisabled'] = '';
+   }
    
-// Get event decent way
-   $item = xarModAPIFunc('julian', 'user', 'get', array('event_id' => $id));
+* 
+*/
+
+
+   //If there is not a duration, set dur_hours and dur_minutes. Default for both is empty string.
+   $dur_hours = '';
+   $dur_minutes = '';
+   if (strcmp($edit_obj->duration,''))
+     list($dur_hours,$dur_minutes) = explode(":",$edit_obj->duration);
+   
+   //Checking to see which repeating rule was used so the event_repeat can be set.
+   $event_repeat=0;
+   if ($edit_obj->recur_count && $edit_obj->recur_freq)
+      $event_repeat = 2;
+   elseif (!$edit_obj->recur_count && $edit_obj->recur_freq) 
+     $event_repeat = 1;
+   //Depending on which rule was used, set the appropriate frequency field to the db value.
+   $bl_data['event_repeat_on_freq'] = '';
+   $bl_data['event_repeat_freq'] = '';
+   if ($event_repeat == 1) // event repeats every
+      $bl_data['event_repeat_freq'] = $edit_obj->recur_freq;
+   elseif ($event_repeat == 2) // event repeats on
+      $bl_data['event_repeat_on_freq'] = $edit_obj->recur_freq;
+   
+   $bl_data['event_id'] = $edit_obj->event_id;
+   $bl_data['title'] = $edit_obj->summary;
+   $bl_data['month'] =  $month;
+   $bl_data['day'] = $day;
+   $bl_data['event_year'] = $year;
+   $bl_data['event_desc'] = $edit_obj->description;
+   $bl_data['event_allday'] = $edit_obj->isallday;
+   $bl_data['event_starttimeh'] = $hour;
+   $bl_data['event_starttimem'] = $minute;
+   $bl_data['event_startampm'] = $ampm;
+   $bl_data['event_dur_hours'] = $dur_hours;
+   $bl_data['event_dur_minutes'] = $dur_minutes;
+   $bl_data['category'] = $edit_obj->categories;
+   $bl_data['location'] = $edit_obj->location;
+   $bl_data['street1'] = $edit_obj->street1;
+   $bl_data['street2'] = $edit_obj->street2;
+   $bl_data['city'] = $edit_obj->city;
+   $bl_data['state'] = $edit_obj->state;
+   $bl_data['postal'] = $edit_obj->zip;
+   $bl_data['event_repeat'] = $event_repeat;
+   
+   
+   $bl_data['phone1'] = '';
+   $bl_data['phone2'] = '';
+   $bl_data['phone3'] = '';
+   //Breaking the phone number into 3 parts
+   //TODO: what if the field definition changes? Causes errors when there are less field available.
+   if (strcmp($edit_obj->phone,'')!=0)
+   {
+   $TelFieldType = xarModGetVar('julian', 'TelFieldType');
+      $phoneArray = explode("-",$edit_obj->phone);
+     if (strcmp($TelFieldType,'US')==0) {
+      $bl_data['phone1'] = $phoneArray[0];
+      $bl_data['phone2'] = $phoneArray[1];
+      $bl_data['phone3'] = $phoneArray[2];
+      }
+     elseif (strcmp($TelFieldType, 'EU')==0) {
+      $bl_data['phone1'] = $phoneArray[0];
+      $bl_data['phone2'] = $phoneArray[1];
+      $bl_data['phone3'] = $phoneArray[2];
+      }
+     elseif (strcmp($TelFieldType, 'EUC')==0) {
+      $bl_data['phone1'] = $phoneArray[0];
+      $bl_data['phone2'] = $phoneArray[1];
+      }
+     elseif (strcmp($TelFieldType, 'OPEN')==0) {
+      $bl_data['phone1'] = $phoneArray[0];
+      }
+   }
+   $bl_data['email'] = $edit_obj->email;
+   $bl_data['fee'] = $edit_obj->fee;
+   $bl_data['website'] = $edit_obj->url;
+   $bl_data['contact'] = $edit_obj->contact;
+   $bl_data['event_repeat_freq_type'] = $edit_obj->rrule;
+   $bl_data['event_endmonth'] = $event_endmonth;
+   $bl_data['event_endday'] = $event_endday;
+   $bl_data['event_endyear'] = $event_endyear;
+   $bl_data['event_repeat_on_day'] = $edit_obj->recur_count;
+   $bl_data['event_repeat_on_num'] = $edit_obj->recur_interval;
+   
+   //building share options
+   $bl_data['share_options'] = xarModAPIFunc('julian','user','getuseroptions',array('uids'=>$edit_obj->share_uids));
+   $bl_data['share_uids'] = $item['share_uids'];
+   $bl_data['share_group'] = xarModGetVar('julian', 'share_group');
+   //Determining which end date radio to check. 0 index indicates this event as an end date and 1 index means it does not
+   $event_endtype_checked[0] = '';
+   $event_endtype_checked[1] = 'checked';
+   if ($edit_obj->hasRecurDate)
+   {
+     $event_endtype_checked[0] = 'checked';
+     $event_endtype_checked[1] = '';
+   }
+   $bl_data['event_endtype_checked'] = $event_endtype_checked;
+                 
+   //Building start hour options
+   $start_hour_options = '';
+   for($i = 1;$i <= 12; $i++)
+   {
+     $j = str_pad($i,2,"0",STR_PAD_LEFT);
+     $start_hour_options.='<option value="'.$i.'"';
+     if ($i == $hour)
+        $start_hour_options.= " SELECTED";
+      $start_hour_options.='>'.$j.'</option>';
+   }
+   $bl_data['start_hour_options'] = $start_hour_options;
+   
+   //Building start minute options
+   $start_minute_options = '';
+   for($i = 0;$i < 46; $i = $i + 15)
+   {
+     $j = str_pad($i,2,"0",STR_PAD_LEFT);
+     $start_minute_options.='<option value="'.$i.'"';
+     if ($i == $minute)
+       $start_minute_options.= " selected";
+     $start_minute_options.='>'.$j.'</option>';
+   }
+   $bl_data['start_minute_options'] = $start_minute_options;
+   
+   //Building duration hour options
+   $dur_hour_options = '';
+   for($i = 0;$i <= 24; $i++)
+   {
+     $j = str_pad($i,2,"0",STR_PAD_LEFT);
+     $dur_hour_options.='<option value="'.$i.'"';
+     if ($i == $dur_hours)
+        $dur_hour_options.= " selected";
+     $dur_hour_options.='>'.$j.'</option>';
+   }
+   $bl_data['dur_hour_options'] = $dur_hour_options;
+   
+   //Building duration minute options
+   $dur_minute_options = '';
+   for($i = 0;$i < 46; $i = $i + 15)
+   {
+     $j = str_pad($i,2,"0",STR_PAD_LEFT);
+     $dur_minute_options.='<option value="'.$j.'"';
+     if ($i == $dur_minutes)
+        $dur_minute_options.= " selected";
+     $dur_minute_options.='>'.$j.'</option>';
+   }
+   $bl_data['dur_minute_options'] = $dur_minute_options;
+   
+   //Setting event repeat selection
+   for ($i = 0; $i < 3; $i++)
+     $bl_data['event_repeat_checked'][$i] = '';
+   $bl_data['event_repeat_checked'][$event_repeat] = "checked";
+   
+   //Setting freq type selection (days,weeks,months,years)
+   for ($i = 1; $i < 5; $i++)
+     $bl_data['freq_type_selected'][$i] = '';
+     
+   //Show rrule only if the first repeating option was selected (2nd radio button) - every
+   if ($event_repeat == 1)
+     $bl_data['freq_type_selected'][$edit_obj->rrule] = 'selected';
+   
+   //Setting repeat on num selection
+   for ($i = 1; $i < 6; $i++)
+     $bl_data['repeat_on_num_selected'][$i] = '';
+   $bl_data['repeat_on_num_selected'][$edit_obj->recur_interval] = 'selected';
+   
+   //Setting repeat on day selection
+   for ($i = 1; $i < 8; $i++)
+     $bl_data['repeat_on_day_selection'][$i] = '';
+   $bl_data['repeat_on_day_selection'][$edit_obj->recur_count] = 'selected';
+
 
    //Setting allday checked
    $bl_data['allday_checked'][0] = '';

@@ -143,7 +143,7 @@
     
 </script>
 
-<div class="xar-julian xar-julian-user-addevent">
+<div class="xar-julian xar-julian-user-editevent">
     <xar:template file="header" />
 
     <div class="xar-julian-contents">
@@ -430,7 +430,6 @@
                                onclick="document.getElementById('share').style.visibility='visible';">
 
                             <xar:mlstring>Private</xar:mlstring>
-
                     </div>
                     <xar:if condition="$class[1] eq 'checked'">
                         <xar:set name="$showshare">'visible'</xar:set>
@@ -438,14 +437,15 @@
                         <xar:set name="$showshare">'hidden'</xar:set>
                     </xar:if>
                     <div class="xar-form-input-wrapper" id="share" style="visibility:#$showshare#;">
-                          <label for="share_uids" class="xar-form-label">
-                              <span class="help" title="#xarML('Share.')#">
-                                  <xar:mlstring>Share:</xar:mlstring>
-                              </span>
-                          </label>
-                          <select name="share_uids[]" id="share_uids" multiple="multiple" style="width:150px;height:100px;">
-                            <option value=""></option>#$share_options# 
-                          </select>
+                      <label for="share_uids" class="xar-form-label" title="#xarML('Share.')#">
+                              <xar:mlstring>Share with:</xar:mlstring>
+                      </label>
+                      <xar:comment>
+                      <xar:data-input name="share_uids" type="userlist" value="$share_uids" validation="$share_group"/>
+                      </xar:comment>
+                      <select name="share_uids[]" id="share_uids" multiple="multiple" style="width:150px;height:100px;">
+                        <option value=""></option>share_options 
+                      </select>
                     </div>
                 </fieldset>
                 <fieldset>
