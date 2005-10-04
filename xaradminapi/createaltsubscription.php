@@ -84,7 +84,7 @@ function newsletter_adminapi_createaltsubscription($args)
               xar_htmlmail)
             VALUES (?, ?, ?, ?, ?)";
 
-    $bindvars = array((int) $nextId, 
+    $bindvars = array($nextId, 
                       (string) $name,
                       (string) $email, 
                       (int) $pid,

@@ -1,7 +1,5 @@
 <?php
 /*
- * File: $Id: $
- *
  * Newsletter 
  *
  * @package Xaraya eXtensible Management System
@@ -117,7 +115,7 @@ function newsletter_adminapi_searchsubscription($args)
                     $query .= " AND ($nwsltrAltSubTable.xar_name LIKE '%" . $searchname . "%' OR $nwsltrAltSubTable.xar_email LIKE  '%" . $searchname . "%')";
                 }
 
-                $query .= " ORDER BY xar_pid";
+                $query .= " ORDER BY $nwsltrAltSubTable.xar_pid";
    
             } else {
             
@@ -165,7 +163,7 @@ function newsletter_adminapi_searchsubscription($args)
                     $query .= " AND ($nwsltrAltSubTable.xar_name LIKE '%" . $searchname . "%' OR $nwsltrAltSubTable.xar_email LIKE  '%" . $searchname . "%')";
                 }
    
-                $query .= " ORDER BY xar_pid";
+                $query .= " ORDER BY $nwsltrAltSubTable.xar_pid";
             }
 
             break;
@@ -209,7 +207,7 @@ function newsletter_adminapi_searchsubscription($args)
                 $query .= " AND $nwsltrAltSubTable.xar_email LIKE  '%" . $searchname . "%'";
             }
 
-            $query .= " ORDER BY xar_email";
+            $query .= " ORDER BY $nwsltrAltSubTable.xar_email";
 
             break;
 
@@ -256,7 +254,7 @@ function newsletter_adminapi_searchsubscription($args)
                 $query .= " AND $nwsltrAltSubTable.xar_name LIKE  '%" . $searchname . "%'";
             }
 
-            $query .= " ORDER BY xar_name";
+            $query .= " ORDER BY $nwsltrAltSubTable.xar_name";
 
             break;
     }

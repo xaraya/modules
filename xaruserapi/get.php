@@ -1,7 +1,5 @@
 <?php
 /*
- * File: $Id: $
- *
  * Newsletter 
  *
  * @package Xaraya eXtensible Management System
@@ -339,7 +337,7 @@ function newsletter_userapi_get($args)
                 $bindvars = array();
             }
 
-            $query .= " ORDER by xar_order";
+            $query .= " ORDER by $topicsTable.xar_order";
 
             $result = $dbconn->SelectLimit($query, $numitems, $startnum-1, $bindvars);
 
@@ -613,7 +611,7 @@ function newsletter_userapi_get($args)
                 $bindvars[] = (int) $uid;
             }
 
-            $query .= " ORDER by xar_uid, xar_pid";
+            $query .= " ORDER by $subscriptionsTable.xar_uid, $subscriptionsTable.xar_pid";
             $result = $dbconn->SelectLimit($query, $numitems, $startnum-1, $bindvars);
 
             // Check for an error
@@ -671,7 +669,7 @@ function newsletter_userapi_get($args)
             
             $bindvars[] = (int) $pid;
 
-            $query .= " ORDER by xar_email";
+            $query .= " ORDER by $nwsltrTable.xar_email";
             $result = $dbconn->SelectLimit($query, $numitems, $startnum-1, $bindvars);
 
             // Check for an error

@@ -115,7 +115,7 @@ function newsletter_adminapi_createstory($args)
               xar_articleid)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    $bindvars = array((int) $nextId,
+    $bindvars = array($nextId,
                       (int) $ownerId,
                       (int) $publicationId,
                       (int) $categoryId,

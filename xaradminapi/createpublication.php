@@ -110,7 +110,7 @@ function newsletter_adminapi_createpublication($args)
               xar_fromemail)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    $bindvars = array((int)     $nextId,
+    $bindvars = array($nextId,
                       (int)     $ownerId,
                       (int)     $categoryId,
                       (string)  $altcids,

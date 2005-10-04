@@ -72,7 +72,7 @@ function newsletter_adminapi_createdisclaimer($args)
               xar_text)
             VALUES (?, ?, ?)";
 
-    $bindvars = array((int) $nextId, (string) $title, (string) $disclaimer);
+    $bindvars = array($nextId, (string) $title, (string) $disclaimer);
 
     $result =& $dbconn->Execute($query, $bindvars);
 
