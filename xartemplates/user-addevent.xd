@@ -1,6 +1,5 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:if condition="xarTplAddStyleLink('julian', 'julian')"></xar:if>
-<xar:if condition="xarTplAddStyleLink('julian', 'xarform')"></xar:if>
+<xar:style scope="module" file="julian" />
 <script language="Javascript" src="modules/julian/xarjavascript/utilities_lite.js"></script>
 <script language="Javascript">
     var isCancel = 0
@@ -34,7 +33,7 @@
                 error_msg += "The End Date Year field must be filled in\n"
         }
         //If phone fields are filled out (length = 10) or not filled out (length = 0)
-        //then don't add error_msg. Any partally filled out phone number is not ok.
+        //then don't add error_msg. Any partially filled out phone number is not ok.
         //TODO Need to rewrite this check for more and other phone fields
         //var string = form.phone1.value + form.phone2.value + form.phone3.value
         //if (!(string.length == 10 || string.length == 0))
@@ -117,51 +116,41 @@
 
     <div class="xar-julian-contents">
 
-        <form name="cal_submit" class="xar-form"
-              action="#xarModUrl('julian','user','updateevent')#" 
+        <form name="cal_submit"
+              action="&xar-modurl-julian-user-updateevent;" 
               onsubmit="if (!isCancel){return validate2(this)}"
               method="post"
               enctype="application/x-www-form-urlencoded">
-            <fieldset class="xar-norm">
-                <fieldset class="formelements xar-norm">
+                <fieldset>
                     <legend>
                         <strong><xar:mlstring>Add Event</xar:mlstring></strong>
                     </legend>
-                    <p class="param">
-                        <label for="title" class="required">
+                    <div class="xar-form-input-wrapper">
+                        <label for="title" class="required xar-form-label">
                             <span class="help" title="#xarML('Each event requires a title.')#">
                                 <xar:mlstring>Event Title:</xar:mlstring>
                             </span>
                         </label>
                         <input type="text" name="title" id="title" maxlength="80" />
-                    </p>
-                    <p class="param">
-                        <label for="event_desc" class="required">
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="event_desc" class="required xar-form-label">
                             <span class="help" title="#xarML('Event Description.')#">
                                 <xar:mlstring>Event Description:</xar:mlstring>
                             </span>
                         </label>
-                        <span class="fullright">
-                            <textarea class="fullright" name="event_desc" id="event_desc" wrap="virtual" rows="15" cols="40"></textarea>
-                        </span>
-                    </p>
-                    <!--<p class="param">-->
-                    #$hooks['categories']#
-                        <!--<label for="category">
-                            <span class="help" title="#xarML('Event Category.')#">
-                                <xar:mlstring>Event Category:</xar:mlstring>
-                            </span>
-                        </label>
-                        <select name="category" id="category"></select>#$cat_options#!-->
-                    <!--</p>-->
-                    
-                    <p class="param">
-                        <label for="month" class="required">
+                            <textarea name="event_desc" id="event_desc" wrap="virtual" rows="15" cols="40"></textarea>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        #$hooks['categories']#
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="month" class="required xar-form-label">
                             <span class="help" title="#xarML('Date the event starts.')#">
                                 <xar:mlstring>Start Date:</xar:mlstring>
                             </span>
                         </label>
-                        <select name="month" title="Event Date:Month" onchange="populateSelect(this, this.form.day, this.form.event_year)">
+                        <select name="month" title="#xarML('Event Date:Month')#" onchange="populateSelect(this, this.form.day, this.form.event_year)">
                             <option value=""></option>
                         <xar:for start="$i = 1" test="$i le 12" iter="$i++">
                             <xar:if condition="$i lt 10">
@@ -177,7 +166,7 @@
                             <option value="#$currMonth#" #$monthSelected#>#$currMonth_long#</option>
                         </xar:for>
                         </select>
-                        <select name="day" title="Event Date:Day">
+                        <select name="day" title="#xarML('Event Date:Day')#">
                             <option value=""></option>
                         <xar:for start="$i = 1" test="$i le 31" iter="$i++">
                             <xar:if condition="$i lt 10">
@@ -192,7 +181,7 @@
                             <option value="#$currDay#" #$daySelected#>#$currDay#</option>
                         </xar:for>
                         </select>
-                        <select name="event_year" title="Event Date:Year" onchange="populateSelect(this.form.month, this.form.day, this)">
+                        <select name="event_year" title="#xarML('Event Date:Year')#" onchange="populateSelect(this.form.month, this.form.day, this)">
                             <option value=""></option>
                         <xar:for start="$i = date('Y')+10" test="$i ge date('Y')-10" iter="$i--">
                             <xar:set name="$yearSelected">""</xar:set>
@@ -202,23 +191,29 @@
                             <option value="#$i#" #$yearSelected#>#$i#</option>
                         </xar:for>
                         </select>
-                    </p>
-                    <p class="param">
-                        <span class="help" title="#xarML('Duration of event: all day or partial.')#">
-                            <xar:mlstring>Event Duration:</xar:mlstring>
-                        </span>
-                        <span class="fullright">
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>
+                        <strong><xar:mlstring>Time and Location</xar:mlstring></strong>
+                    </legend>
+
+                    <div class="xar-form-input-wrapper">
+                        <label class="required xar-form-label" title="#xarML('Duration of event: all day or partial.')#">
+                            <xar:mlstring>Event Duration</xar:mlstring>
+                        </label>
+
+                            <xar:mlstring>All day event</xar:mlstring> 
                             <input type="radio" name="event_allday" id="event_allday1" value="1"
                                    onclick="document.getElementById('p_event_startdur').style.visibility='hidden';" />
-                            <label for="event_allday1" class="xar-norm"><xar:mlstring>All day event</xar:mlstring></label><br />
+                            <xar:mlstring>Timed event</xar:mlstring>
                             <input type="radio" name="event_allday" id="event_allday2" value="0" checked="checked"
                                    onclick="document.getElementById('p_event_startdur').style.visibility='visible';" />
-                            <label for="event_allday2" class="xar-norm"><xar:mlstring>Timed event</xar:mlstring></label>
-                        </span>
-                    </p>
+
+                    </div>
                     <div id="p_event_startdur">
-                        <p class="param">
-                            <label for="event_starttimeh">
+                    <div class="xar-form-input-wrapper">
+                            <label for="event_starttimeh" class="xar-form-label">
                                 <span class="help" title="#xarML('Time event starts.')#">
                                     <xar:mlstring>Start Time:</xar:mlstring>
                                 </span>
@@ -247,9 +242,9 @@
                                 <option value="1">AM</option>
                                 <option value="2" selected>PM</option>
                             </select>
-                        </p>
-                        <p class="param">
-                            <label for="event_dur_hours">
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                            <label for="event_dur_hours" class="xar-form-label">
                                 <span class="help" title="#xarML('Duration.')#">
                                     <xar:mlstring>Duration:</xar:mlstring>
                                 </span>
@@ -289,22 +284,21 @@
                                 <option value="45" >45</option>
                             </select>
                             <xar:mlstring>Minutes</xar:mlstring>
-                        </p>
+                    </div>
                     </div>
                     
-                    <p class="param">
-                        <span class="help" title="#xarML('Event Recurs.')#">
+                    <div class="xar-form-input-wrapper">
+                        <label for="recur" class="required xar-form-label" title="#xarML('Event Recurs.')#">
                             <xar:mlstring>Event Recurs:</xar:mlstring>
-                        </span>
-                        <span class="fullright">
-                        
-                            <input type="radio" name="event_repeat" id="event_repeat1" value="0" checked="checked"
-                                   onclick="processEventRepeat(this.form,this); document.getElementById('p_event_recurend').style.visibility='hidden';" />
-                            <label for="event_repeat1" class="xar-norm"><xar:mlstring>Once</xar:mlstring></label><br />
+                        </label>
+                        <input type="radio" name="event_repeat" id="event_repeat1" value="0" checked="checked"
+                               onclick="processEventRepeat(this.form,this); document.getElementById('p_event_recurend').style.visibility='hidden';" />
+                        <xar:mlstring>Takes places once</xar:mlstring><br />
 
-                            <input type="radio" name="event_repeat" id="event_repeat2" value="1"
-                                   onclick="processEventRepeat(this.form,this); document.getElementById('p_event_recurend').style.visibility='visible';" />
-                            <label for="event_repeat2" class="xar-norm"><xar:mlstring>Every</xar:mlstring></label>
+                        <input type="radio" name="event_repeat" id="event_repeat2" value="1"
+                               onclick="processEventRepeat(this.form,this); document.getElementById('p_event_recurend').style.visibility='visible';" />
+                        <xar:mlstring>Every (period)</xar:mlstring>
+                        <div class="xar-form-input-wrapper-after" id="p_event_recurend" style="visibility:hidden">
                             <input type="text" name="event_repeat_freq" size="4" onkeyup="checkNumericy(this);" onfocus="document.cal_submit.event_repeat[1].checked = 'true';processEventRepeat(this.form,document.cal_submit.event_repeat[1])" />
                             <select name="event_repeat_freq_type" onchange="document.cal_submit.event_repeat[1].checked = 'true';processEventRepeat(this.form,document.cal_submit.event_repeat[1])">
                                 <option value="0"></option>
@@ -313,10 +307,12 @@
                                 <option value="3" ><xar:mlstring>Month(s)</xar:mlstring></option>
                                 <option value="4" ><xar:mlstring>Year(s)</xar:mlstring></option>
                             </select><br />
-                            
+                            <xar:mlstring>or every</xar:mlstring>
                             <input type="radio" name="event_repeat" id="event_repeat3" value="2"
                                    onclick="processEventRepeat(this.form,this); document.getElementById('p_event_recurend').style.visibility='visible';" />
-                            <label for="event_repeat3" class="xar-norm"><xar:mlstring>On</xar:mlstring></label>
+                            <p>
+                            <xar:mlstring>On</xar:mlstring>
+                            
                             <select name="event_repeat_on_num" onchange="document.cal_submit.event_repeat[2].checked = 'true';processEventRepeat(this.form,document.cal_submit.event_repeat[2])">
                                 <option value="0"></option>
                                 <option value="1" ><xar:mlstring>First</xar:mlstring></option>
@@ -325,6 +321,7 @@
                                 <option value="4" ><xar:mlstring>Fourth</xar:mlstring></option>
                                 <option value="5" ><xar:mlstring>Last</xar:mlstring></option>
                             </select>
+
                             <select name="event_repeat_on_day" onchange="document.cal_submit.event_repeat[2].checked = 'true';processEventRepeat(this.form,document.cal_submit.event_repeat[2])">
                                 <option value=""></option>
                                 <option value="1" ><xar:mlstring>Sun</xar:mlstring></option>
@@ -335,73 +332,76 @@
                                 <option value="6" ><xar:mlstring>Fri</xar:mlstring></option>
                                 <option value="7" ><xar:mlstring>Sat</xar:mlstring></option>
                             </select> 
+                            </p>
                             <xar:mlstring>every</xar:mlstring> 
                             <input type="text" name="event_repeat_on_freq" size="4" onkeyup="checkNumericy(this);"
                                    onfocus="document.cal_submit.event_repeat[2].checked = 'true';processEventRepeat(this.form,document.cal_submit.event_repeat[2])" />
                             <xar:mlstring>month(s)</xar:mlstring>.
-                        </span>
-                    </p>
-                    <div id="p_event_recurend" style="visibility:hidden;">
-                        <p class="param">
-                            <span class="help" title="#xarML('Recurring End Date.')#">
-                                <xar:mlstring>Recurring End Date:</xar:mlstring>
-                            </span>
-                            <span class="fullright">
-                                <input type="radio" name="event_endtype" id="event_endtype1" value="1" disabled="disabled" />
-                                <select name="event_endmonth" disabled="disabled" onchange="populateSelect(this, this.form.event_endday, this.form.event_endyear);document.cal_submit.event_endtype[0].checked = true;if (document.cal_submit.event_endmonth.value == ''){document.cal_submit.event_endday.value='';document.cal_submit.event_endyear.value='';document.cal_submit.event_endtype[1].checked = true}">
-                                    <option value=""></option>
-                                <xar:for start="$i = 1" test="$i le 12" iter="$i++">
-                                    <xar:if condition="$i lt 10">
-                                        <xar:set name="$currMonth">str_pad($i,2,'0',STR_PAD_LEFT)</xar:set>
-                                    <xar:else />
-                                        <xar:set name="$currMonth">#$i#</xar:set>
-                                    </xar:if>
-                                    <xar:set name="$currMonth_long">date("F",mktime(0,0,0,$currMonth,1,2000))</xar:set>
-                                    <xar:set name="$monthSelected">""</xar:set>                            
-                                    <option value="#$currMonth#" #$monthSelected#>#$currMonth_long#</option>
-                                </xar:for>
-                                </select>
-                                <select name="event_endday" disabled="disabled" onchange="document.cal_submit.event_endtype[0].checked = true;if(document.cal_submit.event_endday.value == ''){document.cal_submit.event_endmonth.value == ''; document.cal_submit.event_endyear.value == ''}">
-                                    <option value=""></option>
-                                <xar:for start="$i = 1" test="$i le 31" iter="$i++">
-                                    <xar:if condition="$i lt 10">
-                                        <xar:set name="$currDay">str_pad($i,2,'0',STR_PAD_LEFT)</xar:set>
-                                    <xar:else />
-                                        <xar:set name="$currDay">#$i#</xar:set>
-                                    </xar:if>
-                                    <xar:set name="$daySelected">""</xar:set>
-                                    <option value="#$currDay#" #$daySelected#>#$currDay#</option>
-                                </xar:for>
-                                </select>
-                                <select name="event_endyear" disabled="disabled" onchange="populateSelect(this.form.event_endmonth, this.form.event_endday, this);document.cal_submit.event_endtype[0].checked = true;if(document.cal_submit.event_endyear.value == ''){document.cal_submit.event_endyear.value == ''; document.cal_submit.event_endday.value == ''}">
-                                    <option value=""></option>
-                                <xar:for start="$i = date('Y')+10" test="$i ge date('Y')-10" iter="$i--">
-                                    <xar:set name="$yearSelected">""</xar:set>
-                                    <option value="#$i#" #$yearSelected#>#$i#</option>
-                                </xar:for>
-                                </select><br />
-                                
-                                <input type="radio" name="event_endtype" id="event_endtype2" value="0" disabled="disabled" onclick="document.cal_submit.event_endmonth.value = document.cal_submit.event_endday.value = document.cal_submit.event_endyear.value = ''" checked="checked" />
-                                <label for="event_endtype2" class="xar-norm"><xar:mlstring>no end date</xar:mlstring></label>
-                            </span>
-                        </p>
+                         </div>
                     </div>
-                    <p class="param">
-                        <span class="help" title="#xarML('Share you event (only) with:')#">
+                    <div id="p_event_recurend">
+                        <div class="xar-form-input-wrapper">
+                            <label for="enddate" class="xar-form-label" title="#xarML('Recurring End Date.')#">
+                                <xar:mlstring>Recurring End Date:</xar:mlstring>
+                            </label>
+                            <input type="radio" name="event_endtype" id="event_endtype1" value="1" disabled="disabled" />
+                            <select name="event_endmonth" disabled="disabled" onchange="populateSelect(this, this.form.event_endday, this.form.event_endyear);document.cal_submit.event_endtype[0].checked = true;if (document.cal_submit.event_endmonth.value == ''){document.cal_submit.event_endday.value='';document.cal_submit.event_endyear.value='';document.cal_submit.event_endtype[1].checked = true}">
+                                <option value=""></option>
+                            <xar:for start="$i = 1" test="$i le 12" iter="$i++">
+                                <xar:if condition="$i lt 10">
+                                    <xar:set name="$currMonth">str_pad($i,2,'0',STR_PAD_LEFT)</xar:set>
+                                <xar:else />
+                                    <xar:set name="$currMonth">#$i#</xar:set>
+                                </xar:if>
+                                <xar:set name="$currMonth_long">date("F",mktime(0,0,0,$currMonth,1,2000))</xar:set>
+                                <xar:set name="$monthSelected">""</xar:set>                            
+                                <option value="#$currMonth#" #$monthSelected#>#$currMonth_long#</option>
+                            </xar:for>
+                            </select>
+                            <select name="event_endday" disabled="disabled" onchange="document.cal_submit.event_endtype[0].checked = true;if(document.cal_submit.event_endday.value == ''){document.cal_submit.event_endmonth.value == ''; document.cal_submit.event_endyear.value == ''}">
+                                <option value=""></option>
+                            <xar:for start="$i = 1" test="$i le 31" iter="$i++">
+                                <xar:if condition="$i lt 10">
+                                    <xar:set name="$currDay">str_pad($i,2,'0',STR_PAD_LEFT)</xar:set>
+                                <xar:else />
+                                    <xar:set name="$currDay">#$i#</xar:set>
+                                </xar:if>
+                                <xar:set name="$daySelected">""</xar:set>
+                                <option value="#$currDay#" #$daySelected#>#$currDay#</option>
+                            </xar:for>
+                            </select>
+                            <select name="event_endyear" disabled="disabled" onchange="populateSelect(this.form.event_endmonth, this.form.event_endday, this);document.cal_submit.event_endtype[0].checked = true;if(document.cal_submit.event_endyear.value == ''){document.cal_submit.event_endyear.value == ''; document.cal_submit.event_endday.value == ''}">
+                                <option value=""></option>
+                            <xar:for start="$i = date('Y')+10" test="$i ge date('Y')-10" iter="$i--">
+                                <xar:set name="$yearSelected">""</xar:set>
+                                <option value="#$i#" #$yearSelected#>#$i#</option>
+                            </xar:for>
+                            </select>
+                        </div>
+                        <div class="xar-form-input-wrapper">
+                            <label for="noenddate" class="xar-form-label" title="#xarML('Has no Recurrence End Date.')#">
+                                <xar:mlstring>No End Date:</xar:mlstring>
+                            </label>
+                                <input type="radio" name="event_endtype" id="event_endtype2" value="0" disabled="disabled" onclick="document.cal_submit.event_endmonth.value = document.cal_submit.event_endday.value = document.cal_submit.event_endyear.value = ''" checked="checked" />
+                        </div>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="access" class="xar-form-label" title="#xarML('Share you event (only) with:')#">
                             <xar:mlstring>Access:</xar:mlstring>
-                        </span>
-                        <span class="fullright">
+                        </label>
                         <input type="radio" name="class" id="class1" value="0" checked="checked"
                                onclick="document.getElementById('share').style.visibility='hidden';document.cal_submit.elements['share_uids[]'].selectedIndex=0;">
-                        <label for="class1" class="xar-norm">Public</label><br/>
+
+                            <xar:mlstring>Public</xar:mlstring>
+                        <br/>
                         <input type="radio" name="class" id="class2" value="1"
                                onclick="document.getElementById('share').style.visibility='visible';">
-                        <label for="class2" class="xar-norm">Private</label>
-                        </span>
-                    </p>
-                    <div id="share" style="visibility:hidden;">
-                      <p class="param">
-                          <label for="share_uids">
+
+                            <xar:mlstring>Private</xar:mlstring>
+
+                    </div>
+                    <div class="xar-form-input-wrapper" id="share" style="visibility:hidden;">
+                          <label for="share_uids" class="xar-form-label">
                               <span class="help" title="#xarML('Share.')#">
                                   <xar:mlstring>Share:</xar:mlstring>
                               </span>
@@ -409,68 +409,65 @@
                           <select name="share_uids[]" id="share_uids" multiple="multiple" style="width:150px;height:100px;">
                             <option value=""></option>#$share_options# 
                           </select>
-                      </p>
                     </div>
                 </fieldset>
-                <fieldset class="formelements xar-alt">
+                <fieldset>
                     <legend>
                         <strong><xar:mlstring>Extra Event Information</xar:mlstring></strong>
                     </legend>
-                    <p class="param">
-                        <label for="location">
+                    <div class="xar-form-input-wrapper">
+                        <label for="location" class="xar-form-label">
                             <span class="help" title="#xarML('Event Location.')#">
                                 <xar:mlstring>Event Location:</xar:mlstring>
                             </span>
                         </label>
-                        <input type="text" name="location" id="location" maxlength="255" />
-                    </p>
-                    <p class="param">
-                        <label for="street1">
+                        <input type="text" name="location" id="location" maxlength="255" class="xar-form-textmedium" />
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="street1" class="xar-form-label">
                             <span class="help" title="#xarML('Street.')#">
                                 <xar:mlstring>Street:</xar:mlstring>
                             </span>
                         </label>
-                        <input type="text" name="street1" id="street1" maxlength="255" />
-                    </p>
-                    <p class="param">
-                        <span class="fullright">
-                            <input type="text" name="street2" id="street2" maxlength="255" />
-                        </span>
-                    </p>
-                    <p class="param">
-                        <label for="city">
+                            <input type="text" name="street1" id="street1" maxlength="255" class="xar-form-textmedium" /><br />
+                        <div class="xar-form-input-wrapper-after">
+                            <input type="text" name="street2" id="street2" maxlength="255" class="xar-form-textmedium" />
+                        </div>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="city" class="xar-form-label">
                             <span class="help" title="#xarML('City.')#">
                                 <xar:mlstring>City:</xar:mlstring>
                             </span>
                         </label>
-                        <input type="text" name="city" id="city" maxlength="255" />
-                    </p>
-                    <p class="param">
-                        <label for="state">
+                        <input type="text" name="city" id="city" maxlength="255" class="xar-form-textmedium" />
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="state" class="xar-form-label">
                             <span class="help" title="#xarML('State.')#">
                                 <xar:mlstring>State:</xar:mlstring>
                             </span>
                         </label>
-                        <input type="text" name="state" id="state" maxlength="255" />
-                    </p>
-                    <p class="param">
-                        <label for="postal">
+                        <input type="text" name="state" id="state" maxlength="255" class="xar-form-textmedium" />
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="postal" class="xar-form-label">
                             <span class="help" title="#xarML('Postal/Providence.')#">
                                 <xar:mlstring>Postal/Providence:</xar:mlstring>
                             </span>
                         </label>
-                        <input type="text" name="postal" id="postal" maxlength="255" />
-                    </p>
-                    <p class="param">
-                        <label for="contact">
+                        <input type="text" name="postal" id="postal" maxlength="255" class="xar-form-textmedium" />
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="contact" class="xar-form-label">
                             <span class="help" title="#xarML('Contact.')#">
                                 <xar:mlstring>Contact:</xar:mlstring>
                             </span>
                         </label>
-                        <input type="text" name="contact" id="contact" maxlength="255" />
-                    </p>
-                    <p class="param">
-                        <label for="phone1">
+                        <input type="text" name="contact" id="contact" maxlength="255" class="xar-form-textmedium" />
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="phone1" class="xar-form-label">
                             <span class="help" title="#xarML('Phone.')#">
                                 <xar:mlstring>Phone:</xar:mlstring>
                             </span>
@@ -489,39 +486,39 @@
                         <xar:elseif condition="xarModGetVar('Julian','TelFieldType') eq 'OPEN'"/>
                            <input type="text" name="phone1" id="phone1" value="" size="25" maxlength="25" />
                         </xar:if>
-                    </p>
-                    <p class="param">
-                        <label for="email">
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="email" class="xar-form-label">
                             <span class="help" title="#xarML('Email.')#">
                                 <xar:mlstring>Email:</xar:mlstring>
                             </span>
                         </label>
-                        <input type="text" name="email" id="email" maxlength="255" />
-                    </p>
-                    <p class="param">
-                        <label for="website">
+                        <input type="text" name="email" id="email" maxlength="255" class="xar-form-textmedium" />
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="website" class="xar-form-label">
                             <span class="help" title="#xarML('Event Website.')#">
                                 <xar:mlstring>Event Website:</xar:mlstring>
                             </span>
                         </label>
-                        <input type="text" name="website" id="website" maxlength="255" />
-                    </p>
-                    <p class="param">
-                        <label for="fee">
+                        <input type="text" name="website" id="website" maxlength="255" class="xar-form-textmedium" />
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="fee" class="xar-form-label">
                             <span class="help" title="#xarML('Event Fee.')#">
                                 <xar:mlstring>Event Fee:</xar:mlstring>
                             </span>
                         </label>
-                        <input type="text" name="fee" id="fee" onkeyup="checkNumericy(this);" maxlength="255" />
-                    </p>
+                        <input type="text" name="fee" id="fee" onkeyup="checkNumericy(this);" maxlength="255" class="xar-form-textmedium" />
+                    </div>
                 </fieldset>
-                
+            <div class="xar-form-input-wrapper-after">
                 <input type="hidden" name="is_update" value="" />
                 <input type="hidden" name="pc_event_id" value="" />
                 <input type="hidden" name="data_loaded" value="1" />
                 <input type="submit" name="submit" value="#xarML('Update')#">
                 <input type="submit" name="cancel" value="#xarML('Cancel')#" onclick="isCancel=1" /> 
-            </fieldset>
+            </div>
         </form>
     </div>
 </div>

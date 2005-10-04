@@ -195,3 +195,14 @@ a.xar-julian-event:hover {
 .xar-julian-user-year .xar-julian-calendar-weeknumber .xar-julian-arrow {
     font-size: 10px;
 }
+/* Form elements */
+form fieldset.formelements label.required span:before {
+    content: " * ";
+    color: red;
+}
+
+
+label.required span:before {
+    content: " * ";
+    color: red;
+}
