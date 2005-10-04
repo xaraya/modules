@@ -15,7 +15,7 @@ function netquery_adminapi_flcreate($args)
     $query = "INSERT INTO $FlagsTable (
               flag_id, flagnum, keyword, fontclr, lookup_1)
               VALUES (?,?,?,?,?)";
-    $bindvars = array((int)$nextId, (int)$flag_flagnum, $flag_keyword, $flag_fontclr, $flag_lookup_1);
+    $bindvars = array($nextId, (int)$flag_flagnum, $flag_keyword, $flag_fontclr, $flag_lookup_1);
     $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;
     $flag_id = $dbconn->PO_Insert_ID($FlagsTable, 'flag_id');

@@ -22,7 +22,7 @@ function netquery_adminapi_lgcreate($args)
               ospf6d, ospf6d_port, ospf6d_password,
               use_argc)
               VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-    $bindvars = array((int)$nextId, $router_router, $router_address, $router_username, $router_password,
+    $bindvars = array($nextId, $router_router, $router_address, $router_username, $router_password,
                       (int)$router_zebra, (int)$router_zebra_port, $router_zebra_password,
                       (int)$router_ripd, (int)$router_ripd_port,$router_ripd_password,
                       (int)$router_ripngd, (int)$router_ripngd_port, $router_ripngd_password,

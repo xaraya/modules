@@ -13,7 +13,7 @@ function netquery_adminapi_wicreate($args)
     $WhoisTable = $xartable['netquery_whois'];
     $nextId = $dbconn->GenId($WhoisTable);
     $query = "INSERT INTO $WhoisTable (whois_id, whois_ext, whois_server) VALUES (?,?,?)";
-    $bindvars = array((int)$nextId, $whois_ext, $whois_server);
+    $bindvars = array($nextId, $whois_ext, $whois_server);
     $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;
     $whois_id = $dbconn->PO_Insert_ID($WhoisTable, 'whois_id');
