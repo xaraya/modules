@@ -1,6 +1,5 @@
-
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <SCRIPT language="JavaScript">
-
 
 function newwindow(urlGoto,windowName,widthPassed,heightPassed)
 {
@@ -255,8 +254,8 @@ window.open(urlGoto,windowName,'width='+widthPassed+',height='+heightPassed+',re
             <tr>
                 <td colspan="2" align="center">
                     <br /><br />
-                    <input type="submit" name="submitValue" value="#$nextlabel#" tabindex="18" />
-                    <input type="submit" name="submitValue" value="#$addlabel#" tabindex="19" />
+                    <input type="submit" name="submitValueNext" value="#$nextlabel#" tabindex="18" />
+                    <input type="submit" name="submitValueAdd" value="#$addlabel#" tabindex="19" />
                 </td>
             </tr>
         </form>

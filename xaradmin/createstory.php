@@ -1,11 +1,10 @@
 <?php
 /*
- * File: $Id: $
- *
- * Newsletter 
+ * Newsletter create story
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003-2004 by the Xaraya Development Team
+ * @copyright (C) 2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage newsletter module
@@ -50,13 +49,13 @@ function newsletter_admin_createstory()
         $formErrorMsg['owner'] .= xarML('You must select an owner name.');
     }
 
-    if (!xarVarFetch('publicationId', 'int:0:', $publicationId, 0)) return;
-    if (!xarVarFetch('issueId', 'int:0:', $issueId, 0)) return;
-    if (!xarVarFetch('categoryId', 'id', $categoryId, 0)) return;
-    if (!xarVarFetch('source', 'str:1:', $source, '')) return;
-    if (!xarVarFetch('articleid', 'int:0', $articleid, 0)) return;
-    if (!xarVarFetch('title', 'str', $title, '')) return;
-    if (!xarVarFetch('content', 'str', $content, '')) return;
+    if (!xarVarFetch('publicationId',   'int:0:',   $publicationId, 0)) return;
+    if (!xarVarFetch('issueId',         'int:0:',   $issueId, 0)) return;
+    if (!xarVarFetch('categoryId',      'id',       $categoryId, 0)) return;
+    if (!xarVarFetch('source',          'str:1:',   $source, '')) return;
+    if (!xarVarFetch('articleid',       'int:0',    $articleid, 0)) return;
+    if (!xarVarFetch('title',           'str',      $title, '')) return;
+    if (!xarVarFetch('content',         'str',      $content, '')) return;
 
     // they must enter a title, unless they have selected an article
     if (empty($title) && ($articleid==0)) {
@@ -86,19 +85,20 @@ function newsletter_admin_createstory()
         $title = $_article['title'];
     }
 
-    if (!xarVarFetch('priority', 'int:0:1:', $priority, 0)) return;
-    if (!xarVarFetch('storyDateMon', 'str:1:', $storyDateMon, '')) return;
-    if (!xarVarFetch('storyDateDay', 'str:1:', $storyDateDay, '')) return;
-    if (!xarVarFetch('storyDateYear', 'str:1:', $storyDateYear, '')) return;
-    if (!xarVarFetch('altDate', 'str:1:', $altDate, '')) return;
-    if (!xarVarFetch('fullTextLink', 'str:1:', $fullTextLink, '')) return;
-    if (!xarVarFetch('registerLink', 'int:0:1:', $registerLink, 0)) return;
-    if (!xarVarFetch('linkExpiration', 'int:0:', $linkExpiration, -1)) return;
-    if (!xarVarFetch('commentary', 'str:1:', $commentary, '')) return;
-    if (!xarVarFetch('commentarySource', 'str:1:', $commentarySource, '')) return;
+    if (!xarVarFetch('priority',            'int:0:1:', $priority, 0)) return;
+    if (!xarVarFetch('storyDateMon',        'str:1:', $storyDateMon, '')) return;
+    if (!xarVarFetch('storyDateDay',        'str:1:', $storyDateDay, '')) return;
+    if (!xarVarFetch('storyDateYear',       'str:1:', $storyDateYear, '')) return;
+    if (!xarVarFetch('altDate',             'str:1:', $altDate, '')) return;
+    if (!xarVarFetch('fullTextLink',        'str:1:', $fullTextLink, '')) return;
+    if (!xarVarFetch('registerLink',        'int:0:1:', $registerLink, 0)) return;
+    if (!xarVarFetch('linkExpiration',      'int:0:', $linkExpiration, -1)) return;
+    if (!xarVarFetch('commentary',          'str:1:', $commentary, '')) return;
+    if (!xarVarFetch('commentarySource',    'str:1:', $commentarySource, '')) return;
     if (!xarVarFetch('newCommentarySource', 'str:1:', $newCommentarySource, '')) return;
     // Get submit button
-    if (!xarVarFetch('submitValue', 'str:1:', $submitbutton, '')) return;
+    if (!xarVarFetch('submitValueAdd',      'str:1:', $submitbuttonAdd, '', XARVAR_NOT_REQUIRED)) return;
+    //if (!xarVarFetch('submitValueNext',     'str:1:', $submitbuttonNext, '', XARVAR_NOT_REQUIRED)) return;
 
     // If commentary exists, then check that a commentary source was entered
     if (!empty($commentary) && (empty($commentarySource) && empty($newCommentarySource))) {
@@ -219,7 +219,8 @@ function newsletter_admin_createstory()
                               'categoryId' => $categoryId);
                               
     // If creating another story
-    if ($submitbutton == 'Add Another Story') {
+    // MichelV: changed to provide for easier translations of button
+    if (empty($submitbuttonAdd)) {
         xarResponseRedirect(xarModURL('newsletter', 'admin', 'newstory', $templateVarArray));
     } else {
         // Go to view issue

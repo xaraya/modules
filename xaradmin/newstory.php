@@ -1,11 +1,10 @@
 <?php
 /*
- * File: $Id: $
- *
- * Newsletter 
+ * Newsletter add story
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003-2004 by the Xaraya Development Team
+ * @copyright (C) 2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage newsletter module
@@ -36,17 +35,16 @@ function newsletter_admin_newstory($args)
     if(!xarSecurityCheck('AddNewsletter')) return;
 
     // Get input parameters as defaults for new story
-    if (!xarVarFetch('publicationId', 'int:0:', $publicationId, 0)) return;
-    if (!xarVarFetch('ownerId', 'int:0:', $ownerId, 0)) return;
-    if (!xarVarFetch('issueId', 'int:0:', $issueId, 0)) return;
-    if (!xarVarFetch('categoryId', 'int:0:', $categoryId, 0)) return;
-    if (!xarVarFetch('articleid', 'int:0:', $articleid, NULL,XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('publicationId',   'int:0:', $publicationId, 0)) return;
+    if (!xarVarFetch('ownerId',         'int:0:', $ownerId, 0)) return;
+    if (!xarVarFetch('issueId',         'int:0:', $issueId, 0)) return;
+    if (!xarVarFetch('categoryId',      'int:0:', $categoryId, 0)) return;
+    if (!xarVarFetch('articleid',       'int:0:', $articleid, NULL,XARVAR_NOT_REQUIRED)) return;
     
     // get input if they have an error and need the form repopulated
     if (!xarVarFetch('content', 'str:0:', $content, NULL,XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('altDate', 'str:0:', $altDate, NULL,XARVAR_NOT_REQUIRED)) return;
-    
-    
+
     // see if there was an error and they're passing back some vars
     //xarVarFetch('content', 'str:0:', $data['content'], NULL,XARVAR_NOT_REQUIRED);
 
