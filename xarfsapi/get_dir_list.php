@@ -45,7 +45,7 @@
  */
 
 
-function uploads_fsapi_get_dir_list($args)
+function filemanager_fsapi_get_dir_list($args)
 {
     static $level       = 1;         // Current level node we are on in $pathDest
     static $exclude     = '';        // Exclude folders that match this
@@ -78,7 +78,7 @@ function uploads_fsapi_get_dir_list($args)
     }
 
     if (isset($pathDest)) {
-        $path = xarModAPIFunc('uploads', 'vdir', 'split_path', array('path' => $pathDest));
+        $path = xarModAPIFunc('filemanager', 'vdir', 'split_path', array('path' => $pathDest));
         if (!count($path)) {
             $path[1] = '';
         } else {
@@ -87,7 +87,7 @@ function uploads_fsapi_get_dir_list($args)
 
         if (!isset($mountId)) {
 
-            $mountpoints = @unserialize(xarModGetVar('uploads', 'mountpoints'));
+            $mountpoints = @unserialize(xarModGetVar('filemanager', 'mountpoints'));
             if (is_array($mountpoints) && in_array($pathRoot, $mountpoints)) {
                 $vdir_id = array_search($pathRoot, $mountpoints);
             } else {
@@ -95,7 +95,7 @@ function uploads_fsapi_get_dir_list($args)
             }
 
 
-            $mountopts = @unserialize(xarModGetVar('uploads', 'mountopts'));
+            $mountopts = @unserialize(xarModGetVar('filemanager', 'mountopts'));
             if (is_array($mountopts) && in_array($vdir_id, array_keys($mountopts))) {
                 if (isset($mountopts[$vdir_id]['exclude'])) {
                     $exclude = $mountopts[$vdir_id]['exclude'];
@@ -106,7 +106,7 @@ function uploads_fsapi_get_dir_list($args)
         }
 
         if (!empty($vdir_id)) {
-            $vdir_path = xarModAPIFunc('uploads', 'vdir', 'path_encode', array('vdir_id' => $vdir_id));
+            $vdir_path = xarModAPIFunc('filemanager', 'vdir', 'path_encode', array('vdir_id' => $vdir_id));
             $vdir_path .= '/';
         }
     }
@@ -123,7 +123,7 @@ function uploads_fsapi_get_dir_list($args)
 
     if (!is_readable($pathRoot)) {
         $msg = xarML('Xaraya does not have access to read this directory...');
-        xarErrorSet(XAR_USER_EXCEPTION, 'UPLOADS_FOLDER_UNREADABLE', new SystemException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'FILEMANAGER_FOLDER_UNREADABLE', new SystemException($msg));
         return NULL;
     }
 
@@ -185,12 +185,12 @@ function uploads_fsapi_get_dir_list($args)
                 $largs =& $linkInfo['args'];
                 $largs['vpath'] = $vdir_path . $relPath . $file;
 
-                $list[$file]['link'] = xarModURL('uploads', 'user', $func, $largs);
+                $list[$file]['link'] = xarModURL('filemanager', 'user', $func, $largs);
                 // Only descend into directories that are in our $pathDest
                 // Otherwise, just add the directory to our list and continue on...
                 if ($file == $path[$level]) {
                     $level++;
-                    $children = uploads_fsapi_get_dir_list(array('pathRoot' => $realpath . '/', 'linkInfo' => $linkInfo));
+                    $children = filemanager_fsapi_get_dir_list(array('pathRoot' => $realpath . '/', 'linkInfo' => $linkInfo));
                     $level--;
 
                     if (!isset($children)) {

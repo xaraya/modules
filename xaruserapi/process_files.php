@@ -15,7 +15,7 @@
  *                      they will have a fileId associated with them if they were added to the DB
  */
 
-function uploads_userapi_process_files( $args ) 
+function filemanager_userapi_process_files( $args ) 
 {
 
     
@@ -24,25 +24,25 @@ function uploads_userapi_process_files( $args )
     $storeList = array();
     
     if (!isset($action)) {
-        $msg = xarML("Missing parameter [#(1)] to API function [#(2)] in module [#(3)].", 'action', 'process_files', 'uploads');
+        $msg = xarML("Missing parameter [#(1)] to API function [#(2)] in module [#(3)].", 'action', 'process_files', 'filemanager');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
         
     // If not store type defined, default to DB ENTRY AND FILESYSTEM STORE
     if (!isset($storeType)) {
-        // this is the same as _UPLOADS_STORE_DB_ENTRY OR'd with _UPLOADS_STORE_FILESYSTEM
-        $storeType = _UPLOADS_STORE_FSDB;
+        // this is the same as _FILEMANAGER_STORE_DB_ENTRY OR'd with _FILEMANAGER_STORE_FILESYSTEM
+        $storeType = _FILEMANAGER_STORE_FSDB;
     }
     
     switch ($action) {
     
-        case _UPLOADS_GET_UPLOAD:
+        case _FILEMANAGER_GET_UPLOAD:
             break;
-        case _UPLOADS_GET_EXTERNAL:
+        case _FILEMANAGER_GET_EXTERNAL:
         
             if (!isset($import)) {
-                $msg = xarML('Missing parameter [#(1)] to API function [#(2)] in module [#(3)].', 'import', 'process_files', 'uploads');
+                $msg = xarML('Missing parameter [#(1)] to API function [#(2)] in module [#(3)].', 'import', 'process_files', 'filemanager');
                 xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
                 return;
             }
@@ -56,11 +56,11 @@ function uploads_userapi_process_files( $args )
             
             switch ($uri['scheme']) {
                 case 'ftp': 
-                    $fileList = xarModAPIFunc('uploads', 'user', 'import_external_ftp', array('uri' => $uri));
+                    $fileList = xarModAPIFunc('filemanager', 'user', 'import_external_ftp', array('uri' => $uri));
                     break;
                 case 'https':
                 case 'http': 
-                    $fileList = xarModAPIFunc('uploads', 'user', 'import_external_http', array('uri' => $uri));
+                    $fileList = xarModAPIFunc('filemanager', 'user', 'import_external_http', array('uri' => $uri));
                     break;
                 case 'file':
                 case 'gopher':
@@ -74,7 +74,7 @@ function uploads_userapi_process_files( $args )
             }
             break;
         default:
-            $msg = xarML("Invalid parameter [#(1)] to API function [#(2)] in module [#(3)].", 'action', 'process_files', 'uploads');
+            $msg = xarML("Invalid parameter [#(1)] to API function [#(2)] in module [#(3)].", 'action', 'process_files', 'filemanager');
             xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
             return;
             
@@ -90,7 +90,7 @@ function uploads_userapi_process_files( $args )
             continue;
         }
         
-        $storeList[] = xarModAPIFunc('uploads', 'user', 'store',
+        $storeList[] = xarModAPIFunc('filemanager', 'user', 'store',
                                       array('fileInfo'  => $fileInfo,
                                             'storeType' => $storeType));
     }

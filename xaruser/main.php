@@ -1,11 +1,11 @@
 <?php
 
-/*FUNC*/function uploads_user_main()
+/*FUNC*/function filemanager_user_main()
 {
   //this is a default page that will show the status of the item requested.
     
     // Security check
-    if (!xarSecurityCheck('ViewUploads')) return;
+    if (!xarSecurityCheck('ViewFileManager')) return;
     
     $ulid = xarVarCleanFromInput('ulid');
     $ulname = xarVarCleanFromInput('ulname');
@@ -15,7 +15,7 @@
     $thumb = xarVarCleanFromInput('thumb');
     
     //Download the file to the user
-    return xarModAPIFunc('uploads',
+    return xarModAPIFunc('filemanager',
                           'admin',
                           'download',
                           array('ulid'=>$ulid

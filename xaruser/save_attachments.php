@@ -1,6 +1,6 @@
 <?php
 
-function uploads_user_save_attachments($args)
+function filemanager_user_save_attachments($args)
 {
     // Get parameters
     if (!xarVarFetch('modname',   'isset', $modname,    NULL, XARVAR_DONT_SET)) {return;}

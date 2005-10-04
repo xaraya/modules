@@ -10,30 +10,30 @@
  * @returns boolean             true if successful, false otherwise
  */
  
-function uploads_userapi_purge_files( $args ) 
+function filemanager_userapi_purge_files( $args ) 
 {
 
     extract ( $args );
     
     if (!isset($fileList)) {
         $msg = xarML('Missing required parameter [#(1)] for API function [#(2)] in module [#(3)]',
-                     'fileList', 'purge_files', 'uploads');
+                     'fileList', 'purge_files', 'filemanager');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
     
     foreach ($fileList as $fileName => $fileInfo) {
         
-        if ($fileInfo['storeType'] & _UPLOADS_STORE_FILESYSTEM) {
-            xarModAPIFunc('uploads', 'fs', 'delete', array('fileName' => $fileInfo['fileLocation']));
+        if ($fileInfo['storeType'] & _FILEMANAGER_STORE_FILESYSTEM) {
+            xarModAPIFunc('filemanager', 'fs', 'delete', array('fileName' => $fileInfo['fileLocation']));
         }
         
-        if ($fileInfo['storeType'] & _UPLOADS_STORE_DB_DATA) {
-            xarModAPIFunc('uploads', 'user', 'db_delete_file_data', array('fileId' => $fileInfo['fileId']));            
+        if ($fileInfo['storeType'] & _FILEMANAGER_STORE_DB_DATA) {
+            xarModAPIFunc('filemanager', 'user', 'db_delete_file_data', array('fileId' => $fileInfo['fileId']));            
         }
         
         // go ahead and delete the file from the database.
-        xarModAPIFunc('uploads', 'user', 'db_delete_file', array('fileId' => $fileInfo['fileId']));
+        xarModAPIFunc('filemanager', 'user', 'db_delete_file', array('fileId' => $fileInfo['fileId']));
         
     }
      

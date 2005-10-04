@@ -1,6 +1,6 @@
 <?php
 
-function uploads_fsapi_get_dir_contents( $args )
+function filemanager_fsapi_get_dir_contents( $args )
 {
     $excludeFiles  = array();
     $path          = NULL;
@@ -28,9 +28,9 @@ function uploads_fsapi_get_dir_contents( $args )
         }
     }
 
-    $vdir_path = xarModAPIFunc('uploads', 'vdir', 'path_encode', array('vdir_id' => $vdir_id));
+    $vdir_path = xarModAPIFunc('filemanager', 'vdir', 'path_encode', array('vdir_id' => $vdir_id));
     $pathDest = str_replace($vdir_path, '', $path);
-    $mountpoints = @unserialize(xarModGetVar('uploads', 'mount.list'));
+    $mountpoints = @unserialize(xarModGetVar('filemanager', 'mount.list'));
 
     if (is_array($mountpoints) && in_array($vdir_id, array_keys($mountpoints))) {
 
@@ -58,7 +58,7 @@ function uploads_fsapi_get_dir_contents( $args )
     
     if (!is_readable($path)) {
         $msg = xarML('Xaraya does not have access to read this directory...');
-        xarErrorSet(XAR_USER_EXCEPTION, 'UPLOADS_FOLDER_UNREADABLE', new SystemException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'FILEMANAGER_FOLDER_UNREADABLE', new SystemException($msg));
         return NULL;
     }
 
@@ -98,7 +98,7 @@ function uploads_fsapi_get_dir_contents( $args )
                     }
                 }
 
-                $filesize = xarModAPIfunc('uploads', 'user', 'normalize_filesize',
+                $filesize = xarModAPIfunc('filemanager', 'user', 'normalize_filesize',
                                            array('fileSize' => filesize($fullPath)));
                 $mtime = @filemtime($fullPath);
                 $ctime = @filectime($fullPath);
@@ -107,7 +107,7 @@ function uploads_fsapi_get_dir_contents( $args )
                 $linkargs =& $linkInfo['args'];
                 $linkargs['vpath'] = str_replace('//', '/', $vdir_path . '/' . $pathDest . '/' . $file);
 
-                $fileInfo = @end(xarModAPIFunc('uploads', 'user', 'db_get_file_entry', 
+                $fileInfo = @end(xarModAPIFunc('filemanager', 'user', 'db_get_file_entry', 
                                             array('fileLocation' => 'mount://' . $vdir_id . $pathDest)));
                                             
                 $list[$file]['name']       = $file;
@@ -127,7 +127,7 @@ function uploads_fsapi_get_dir_contents( $args )
                 $list[$file]['size']       = $filesize['short'];
                 $list[$file]['sizeval']    = @filesize($fullPath);
                 $list[$file]['time']       = $mtime ? $mtime : ($ctime ? $ctime : 0);
-                $list[$file]['link'] = xarModURL('uploads', 'user', $linkfunc, $linkargs);
+                $list[$file]['link'] = xarModURL('filemanager', 'user', $linkfunc, $linkargs);
 
             }
         }

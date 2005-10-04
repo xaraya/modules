@@ -38,7 +38,7 @@
         
         <xar:base-include-javascript filename="openDialog.js" />
         
-        <form action="#xarModUrl('uploads','admin','view')#" method="post">
+        <form action="#xarModUrl('filemanager','admin','view')#" method="post">
         
         <table summary="Files" width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent xar-accent-outline">
             <tr>
@@ -55,7 +55,7 @@
                                 <input type="checkbox" name="fileId[]" id="fileId_#$loop:item['fileId']#" value="#$loop:item['fileId']#"/>
                             </td>
                             <td class="xar-norm" align="center">&nbsp;
-                                <a style="cursor: pointer;" onClick="PropertiesDialog('#xarModURL('uploads', 'fs', 'properties', array('fileId' => $loop:item['fileId']))#'); return false;">
+                                <a style="cursor: pointer;" onClick="PropertiesDialog('#xarModURL('filemanager', 'fs', 'properties', array('fileId' => $loop:item['fileId']))#'); return false;">
                                     #$loop:item['fileName']#
                                 </a>
                             </td>
@@ -68,7 +68,7 @@
                                 <input type="checkbox" name="fileId[]" id="fileId_#$loop:item['fileId']#" value="#$loop:item['fileId']#"/>
                             </td>
                             <td class="xar-accent" align="center">&nbsp;
-                                <a style="cursor: pointer;" onClick="PropertiesDialog('#xarModURL('uploads', 'fs', 'properties', array('fileId' => $loop:item['fileId']))#'); return false;">
+                                <a style="cursor: pointer;" onClick="PropertiesDialog('#xarModURL('filemanager', 'fs', 'properties', array('fileId' => $loop:item['fileId']))#'); return false;">
                                     #$loop:item['fileName']#
                                 </a>
                             </td>
@@ -78,7 +78,7 @@
                     </xar:if>
                 </xar:loop>
                 <tr>
-                    <xar:if condition="!xarModGetVar('uploads','file.auto-purge')">
+                    <xar:if condition="!xarModGetVar('filemanager','file.auto-purge')">
                         <xar:set name="colspan">3</xar:set>
                     <xar:else />
                         <xar:set name="colspan">4</xar:set>
@@ -104,8 +104,8 @@
                             </tr>
                         </table>
                     </td>
-                    <xar:if condition="!xarModGetVar('uploads','file.auto-purge')">
-                        <form action="#xarModUrl('uploads','admin','purge_rejected')#" method="post">
+                    <xar:if condition="!xarModGetVar('filemanager','file.auto-purge')">
+                        <form action="#xarModUrl('filemanager','admin','purge_rejected')#" method="post">
                             <td class="xar-accent">
                                 <table summary="Commands" width="100%" border="0" cellpadding="0" cellspacing="0" class="xar-norm">
                                     <tr>

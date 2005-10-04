@@ -1,6 +1,6 @@
 <?php
 
-function uploads_user_help($args)
+function filemanager_user_help($args)
 {
 
     $data = array();

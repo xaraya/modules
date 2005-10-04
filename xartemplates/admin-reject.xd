@@ -1,9 +1,9 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Uploads Administration</xar:mlstring></span></div>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>FileManager Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
     <h2><xar:mlstring>Confirm Delete</xar:mlstring></h2><br />
     <div style="margin: auto;">
 
-        <table summary="Uploads" width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent">
+        <table summary="FileManager" width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent">
             <tr>
                 <th><xar:mlstring>Source Module</xar:mlstring></th>
                 <th><xar:mlstring>Upload Code</xar:mlstring></th>
@@ -22,7 +22,7 @@
                     <td class="xar-norm">#$loop:item['ulfile']#</td>
                     <td class="xar-norm">#$loop:item['ulhash']#</td>
                     <td class="xar-norm">
-                        <a href="#xarModURL('uploads', 'admin', 'confirmdelete', array('ulid'=>$loop:item['ulid'], 'authid' => $authid))#">
+                        <a href="#xarModURL('filemanager', 'admin', 'confirmdelete', array('ulid'=>$loop:item['ulid'], 'authid' => $authid))#">
                             <xar:mlstring>Confirm Delete</xar:mlstring>\
                         </a>
                     </td>

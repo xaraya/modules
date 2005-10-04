@@ -1,16 +1,16 @@
 <?php
 
 
-function uploads_adminapi_dd_configure($confString = NULL)
+function filemanager_adminapi_dd_configure($confString = NULL)
 {
     // Default to multiple selection
     $multiple = TRUE;
     // Grab the sitewide defaults for the methods
     $methods = array(
-            'trusted'  => xarModGetVar('uploads', 'dd.fileupload.trusted')  ? TRUE : FALSE,
-            'external' => xarModGetVar('uploads', 'dd.fileupload.external') ? TRUE : FALSE,
-            'upload'   => xarModGetVar('uploads', 'dd.fileupload.upload')   ? TRUE : FALSE,
-            'stored'   => xarModGetVar('uploads', 'dd.fileupload.stored')   ? TRUE : FALSE
+            'trusted'  => xarModGetVar('filemanager', 'dd.fileupload.trusted')  ? TRUE : FALSE,
+            'external' => xarModGetVar('filemanager', 'dd.fileupload.external') ? TRUE : FALSE,
+            'upload'   => xarModGetVar('filemanager', 'dd.fileupload.upload')   ? TRUE : FALSE,
+            'stored'   => xarModGetVar('filemanager', 'dd.fileupload.stored')   ? TRUE : FALSE
             );
 
     if (!isset($confString) || empty($confString)) {
@@ -57,7 +57,7 @@ function uploads_adminapi_dd_configure($confString = NULL)
 
                         switch ($method) {
                             case 'upload':
-                            case 'uploads':
+                            case 'filemanager':
                                 $methods['upload'] = $modifier;
                                 break;
                             case 'external':

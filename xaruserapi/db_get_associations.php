@@ -13,7 +13,7 @@
  * @returns array   A list of associations, including the fileid -> modid -> itemtype -> objectId
  */
 
-function uploads_userapi_db_get_associations( $args )
+function filemanager_userapi_db_get_associations( $args )
 {
 
     extract($args);
@@ -46,7 +46,7 @@ function uploads_userapi_db_get_associations( $args )
         }
     }
 
-    $associations = xarVarGetCached('uploads', 'cache.associations');
+    $associations = xarVarGetCached('filemanager', 'cache.associations');
 
     if (isset($associations[$hash])) {
         return $associations[$hash];
@@ -111,7 +111,7 @@ function uploads_userapi_db_get_associations( $args )
             $fileCache[$hash] = $fileAssoc;
             $result->MoveNext();
         }
-        xarVarSetCached('uploads', 'file.associations', $fileCache);
+        xarVarSetCached('filemanager', 'file.associations', $fileCache);
         return $fileList;
     }
 }

@@ -20,11 +20,11 @@
 
 
 
-$modversion['name'] = 'uploads';
+$modversion['name'] = 'filemanager';
 $modversion['id'] = '666';
-$modversion['version'] = '2.0.0'; // long jump from current uploads version
-$modversion['displayname']    = xarML('Uploads');
-$modversion['description'] = 'Upload/Download File Handler';
+$modversion['version'] = '2.0.0'; // long jump from current filemanager version
+$modversion['displayname']    = xarML('FileManager');
+$modversion['description'] = 'Virtual/Real Directory and File Management';
 $modversion['credits'] = 'docs/credits.txt';
 $modversion['help'] = 'docs/help.txt';
 $modversion['changelog'] = 'docs/changelog.txt';
@@ -34,7 +34,7 @@ $modversion['author'] = 'Marie Altobelli (Ladyofdragons); Michael Cortez (mcorte
 $modversion['contact'] = 'ladyofdragons@xaraya.com; mcortez@xaraya.com; rabbitt@xaraya.com';
 $modversion['admin'] = 1;
 $modversion['user']  = 0;
-$modversion['securityschema'] = array('uploads::File' => 'Content Type:Content Subtype:File ID');
+$modversion['securityschema'] = array('filemanagemer::File' => 'Content Type:Content Subtype:File ID');
 $modversion['class'] = 'Utility';
 $modversion['category'] = 'Global';
 $modversion['dependency'] = array(999);

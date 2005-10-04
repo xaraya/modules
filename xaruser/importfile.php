@@ -1,25 +1,25 @@
 <?php
 
-function uploads_user_importfile($args)
+function filemanager_user_importfile($args)
 {
 
-    if (!xarSecurityCheck('AddUploads')) return;
+    if (!xarSecurityCheck('AddFileManager')) return;
 
-    $actionList[] = _UPLOADS_GET_UPLOAD;
-    $actionList[] = _UPLOADS_GET_EXTERNAL;
-    $actionList[] = _UPLOADS_GET_LOCAL;
-    $actionList[] = _UPLOADS_GET_REFRESH_LOCAL;
+    $actionList[] = _FILEMANAGER_GET_UPLOAD;
+    $actionList[] = _FILEMANAGER_GET_EXTERNAL;
+    $actionList[] = _FILEMANAGER_GET_LOCAL;
+    $actionList[] = _FILEMANAGER_GET_REFRESH_LOCAL;
     $actionList = 'enum:' . implode(':', $actionList);
 
     if (!xarVarFetch('action',        $actionList, $action, '', XARVAR_NOT_REQUIRED)) return;
     
     // StoreType can -only- be one of FSDB or DB_FULL
-    $storeTypes = _UPLOADS_STORE_FSDB . ':' . _UPLOADS_STORE_DB_FULL;
+    $storeTypes = _FILEMANAGER_STORE_FSDB . ':' . _FILEMANAGER_STORE_DB_FULL;
     if (!xarVarFetch('storeType',     "enum:$storeTypes", $storeType, '', XARVAR_NOT_REQUIRED)) return;
 
     
     // now make sure someone hasn't tried to change our maxsize on us ;-)
-    $file_maxsize = xarModGetVar('uploads', 'file.maxsize');
+    $file_maxsize = xarModGetVar('filemanager', 'file.maxsize');
 
     if (!isset($action)) {
         $action = NULL;
@@ -27,18 +27,18 @@ function uploads_user_importfile($args)
     $args['action']    = $action;
 
     switch ($action) {
-        case _UPLOADS_GET_UPLOAD:
+        case _FILEMANAGER_GET_UPLOAD:
             if (!xarVarFetch('MAX_FILE_SIZE', "int::$file_maxsize", $maxsize)) return;
             if (!xarVarFetch('', 'array:1:', $_FILES['upload'])) return;
             $upload = $_FILES['upload'];
             $args['upload'] = $upload;
             break;
-        case _UPLOADS_GET_EXTERNAL:
+        case _FILEMANAGER_GET_EXTERNAL:
             // minimum external import link must be: ftp://a.ws  <-- 10 characters total
             if (!xarVarFetch('import', 'regexp:/^([a-z]*).\/\/(.{7,})/', $import, 'NULL', XARVAR_NOT_REQUIRED)) return;
             $args['import'] = $import;
             break;
-        case _UPLOADS_GET_LOCAL:
+        case _FILEMANAGER_GET_LOCAL:
             if (!xarVarFetch('fileList', 'list:regexp:/(?<!\.{2,2}\/)[\w\d]*/', $fileList)) return;
             if (!xarVarFetch('file_all', 'checkbox', $file_all, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('addbutton', 'str:1', $addbutton, '',  XARVAR_NOT_REQUIRED)) return;
@@ -52,33 +52,33 @@ function uploads_user_importfile($args)
                 $args['bAction'] = (!empty($addbutton)) ? $addbutton : $delbutton;
             }
             
-            $cwd = xarModGetUserVar('uploads', 'path.imports-cwd');
+            $cwd = xarModGetUserVar('filemanager', 'path.imports-cwd');
             foreach ($fileList as $file) {
-                $args['fileList']["$cwd/$file"] = xarModAPIFunc('uploads', 'fs', 'get_metadata', 
+                $args['fileList']["$cwd/$file"] = xarModAPIFunc('filemanager', 'fs', 'get_metadata', 
                                                                  array('fileLocation' => "$cwd/$file"));
             }
             $args['getAll'] = $file_all;
         
             break;
         default:
-        case _UPLOADS_GET_REFRESH_LOCAL:
+        case _FILEMANAGER_GET_REFRESH_LOCAL:
             if (!xarVarFetch('inode', 'regexp:/(?<!\.{2,2}\/)[\w\d]*/', $inode, '', XARVAR_NOT_REQUIRED)) return;
             
             $cwd = '';
 
-            $data['storeType']['DB_FULL']     = _UPLOADS_STORE_DB_FULL;
-            $data['storeType']['FSDB']        = _UPLOADS_STORE_FSDB;
+            $data['storeType']['DB_FULL']     = _FILEMANAGER_STORE_DB_FULL;
+            $data['storeType']['FSDB']        = _FILEMANAGER_STORE_FSDB;
             $data['inodeType']['DIRECTORY']   = _INODE_TYPE_DIRECTORY;
             $data['inodeType']['FILE']        = _INODE_TYPE_FILE;
-            $data['getAction']['LOCAL']       = _UPLOADS_GET_LOCAL;
-            $data['getAction']['EXTERNAL']    = _UPLOADS_GET_EXTERNAL;
-            $data['getAction']['UPLOAD']      = _UPLOADS_GET_UPLOAD;
-            $data['getAction']['REFRESH']     = _UPLOADS_GET_REFRESH_LOCAL;
+            $data['getAction']['LOCAL']       = _FILEMANAGER_GET_LOCAL;
+            $data['getAction']['EXTERNAL']    = _FILEMANAGER_GET_EXTERNAL;
+            $data['getAction']['UPLOAD']      = _FILEMANAGER_GET_UPLOAD;
+            $data['getAction']['REFRESH']     = _FILEMANAGER_GET_REFRESH_LOCAL;
             $data['local_add_button']         = xarML('Add Files');
             $data['local_del_button']         = xarML('Delete Files');
-            $data['local_import_post_url']    = xarModURL('uploads', 'admin', 'get_files');
-            $data['external_import_post_url'] = xarModURL('uploads', 'admin', 'get_files');
-            $data['upload_post_url'] = xarModURL('uploads', 'admin', 'get_files');
+            $data['local_import_post_url']    = xarModURL('filemanager', 'admin', 'get_files');
+            $data['external_import_post_url'] = xarModURL('filemanager', 'admin', 'get_files');
+            $data['upload_post_url'] = xarModURL('filemanager', 'admin', 'get_files');
             $data['fileList'] = array();
             $data['curDir'] = '';
             $data['noPrevDir'] = FALSE;
@@ -92,11 +92,11 @@ function uploads_user_importfile($args)
     if (isset($storeType)) {
         $args['storeType'] = $storeType;
     }
-    $list = xarModAPIFunc('uploads','user','process_files', $args);
+    $list = xarModAPIFunc('filemanager','user','process_files', $args);
     if (is_array($list) && count($list)) {
-        return xarTplModule('uploads','admin', 'addfile-status', array('fileList' => $list), NULL);
+        return xarTplModule('filemanager','admin', 'addfile-status', array('fileList' => $list), NULL);
     } else {
-        xarResponseRedirect(xarModURL('uploads', 'admin', 'get_files'));                return;
+        xarResponseRedirect(xarModURL('filemanager', 'admin', 'get_files'));                return;
     }
 
     return $data;

@@ -3,15 +3,15 @@
 /**
  * the main administration function
  */
-function uploads_admin_main()
+function filemanager_admin_main()
 {
     // Security Check
-    if (!xarSecurityCheck('EditUploads')) return;
+    if (!xarSecurityCheck('EditFileManager')) return;
 
     if (xarModGetVar('adminpanels', 'overview') == 0) {
         return array();
     } else {
-        xarResponseRedirect(xarModURL('uploads', 'admin', 'view'));
+        xarResponseRedirect(xarModURL('filemanager', 'admin', 'view'));
     }
     // success
     return true;

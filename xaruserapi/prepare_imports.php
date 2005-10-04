@@ -1,19 +1,19 @@
 <?php
 
-function uploads_userapi_prepare_imports( $args )
+function filemanager_userapi_prepare_imports( $args )
 {
 
     extract ($args);
 
     if (!isset($importFrom)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
-                     'importFrom','prepare_imports','uploads');
+                     'importFrom','prepare_imports','filemanager');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }
 
     if (!isset($import_directory)) {
-        $import_directory = xarModGetVar('uploads', 'path.untrust');
+        $import_directory = xarModGetVar('filemanager', 'path.untrust');
     }
 
     /**
@@ -28,12 +28,12 @@ function uploads_userapi_prepare_imports( $args )
         }
     }
 
-    $imports = xarModAPIFunc('uploads','user','import_get_filelist',
+    $imports = xarModAPIFunc('filemanager','user','import_get_filelist',
                               array('fileLocation'  => $importFrom,
                                     'descend'       => $descend));
     if ($imports) {
 
-        $imports = xarModAPIFunc('uploads','user','import_prepare_files',
+        $imports = xarModAPIFunc('filemanager','user','import_prepare_files',
                                   array('fileList'  => $imports,
                                         'savePath'  => $import_directory,
                                         'obfuscate' => $import_obfuscate));
@@ -55,7 +55,7 @@ function uploads_userapi_prepare_imports( $args )
                                        'errorId'    => $errorObj->getID());
                 } else {
                     $fileError = array('errorMesg'   => 'Unknown Error!',
-                                       'errorId'    => _UPLOADS_ERROR_UNKNOWN);
+                                       'errorId'    => _FILEMANAGER_ERROR_UNKNOWN);
                 }
 
                 if (!isset($fileInfo['errors'])) {
@@ -67,7 +67,7 @@ function uploads_userapi_prepare_imports( $args )
             }
         } else {
             $fileInfo['errors'][]['errorMsg'] = xarML('Unknown');
-            $fileInfo['errors'][]['errorId']  = _UPLOADS_ERROR_UNKNOWN;
+            $fileInfo['errors'][]['errorId']  = _FILEMANAGER_ERROR_UNKNOWN;
         }
         return array($fileInfo);
     }

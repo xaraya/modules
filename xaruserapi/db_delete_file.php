@@ -13,18 +13,18 @@
  *  @returns integer The number of affected rows on success, or FALSE on error
  */
 
-function uploads_userapi_db_delete_file( $args )
+function filemanager_userapi_db_delete_file( $args )
 {
     extract($args);
 
     if (!isset($fileId) || !is_numeric($fileId)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
-                     'file_id','db_delete_file','uploads');
+                     'file_id','db_delete_file','filemanager');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }
 
-    //add to uploads table
+    //add to filemanager table
     // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -44,7 +44,7 @@ function uploads_userapi_db_delete_file( $args )
     }
 
     // Pass the arguments to the hook modules too
-    $args['module'] = 'uploads';
+    $args['module'] = 'filemanager';
     $args['itemtype'] = 1; // Files
     xarModCallHooks('item', 'delete', $fileId, $args);
 

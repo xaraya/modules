@@ -19,14 +19,14 @@
  *  @return  mixed  Array representing the attachment settings for the current modid/itemtype pairing
  */
 
-function uploads_adminapi_get_attachment_settings( $args )
+function filemanager_adminapi_get_attachment_settings( $args )
 {
     $modid    = 0;
     $itemtype = 0;
     
     extract($args);
     
-    $settings = @unserialize(xarModGetVar('uploads', "settings.attachment.$modid.$itemtype"));
+    $settings = @unserialize(xarModGetVar('filemanager', "settings.attachment.$modid.$itemtype"));
     
     if (!isset($settings) || !is_array($settings) || empty($settings) ) {
         $settings['mimetype']       = 0;

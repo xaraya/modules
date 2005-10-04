@@ -1,9 +1,9 @@
 <?php
 
-function uploads_adminapi_updateconfighook($args)
+function filemanager_adminapi_updateconfighook($args)
 {
     //security check
-    if (!xarSecurityCheck('AdminUploads')) return;
+    if (!xarSecurityCheck('AdminFileManager')) return;
 
     // extract args out of an array and into local name space
     extract($args);
@@ -22,7 +22,7 @@ function uploads_adminapi_updateconfighook($args)
     }
 
     // get the modID & itemType for the modSets below, this will allow multiple
-    // instances of uploads on a page/pubtype
+    // instances of filemanager on a page/pubtype
     $modId = xarModGetIDFromName($modName);
     $itemType = (isset($args['extrainfo']['itemtype'])?$args['extrainfo']['itemtype']:0);
 
@@ -32,7 +32,7 @@ function uploads_adminapi_updateconfighook($args)
     if (!xarVarFetch('maxattachmnts',   'int:1:',               $data['maxattachmnts'], NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('displayas',       'enum:icons:list:raw:', $data['displayas'],     NULL, XARVAR_DONT_SET)) {return;}
 
-    xarModSetVar('uploads',"settings.attachment.$modId.$itemType", serialize($data));
+    xarModSetVar('filemanager',"settings.attachment.$modId.$itemType", serialize($data));
 
     return true;
 }

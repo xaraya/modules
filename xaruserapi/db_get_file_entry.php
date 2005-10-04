@@ -17,13 +17,13 @@
  * @returns array   All of the metadata stored for the particular file
  */
 
-function uploads_userapi_db_get_file_entry( $args )
+function filemanager_userapi_db_get_file_entry( $args )
 {
     extract($args);
 
     if (!isset($fileId) && !isset($fileName) && !isset($fileStatus) && !isset($fileLocation) &&
         !isset($userId)  && !isset($fileType) && !isset($store_type) && !isset($fileHash)) {
-        $msg = xarML('Missing parameters for function [#(1)] in module [#(2)]', 'db_get_file', 'uploads');
+        $msg = xarML('Missing parameters for function [#(1)] in module [#(2)]', 'db_get_file', 'filemanager');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }
@@ -35,7 +35,7 @@ function uploads_userapi_db_get_file_entry( $args )
         $inverse = FALSE;
     }
 
-    $fileCache = xarVarGetCached('uploads', 'file.list');
+    $fileCache = xarVarGetCached('filemanager', 'file.list');
 
     if (!isset($fileCache) || empty($fileCache)) {
         $fileCache = array();
@@ -155,10 +155,10 @@ function uploads_userapi_db_get_file_entry( $args )
         return array();
     }
 
-    $trustedDir = eregi_replace('/$', '', xarModGetVar('uploads','path.trusted'));
-    $untrustDir = eregi_replace('/$', '', xarModGetVar('uploads','path.untrust'));
+    $trustedDir = eregi_replace('/$', '', xarModGetVar('filemanager','path.trusted'));
+    $untrustDir = eregi_replace('/$', '', xarModGetVar('filemanager','path.untrust'));
 
-    $mountlist = @unserialize(xarModGetVar('uploads', 'mount.list'));
+    $mountlist = @unserialize(xarModGetVar('filemanager', 'mount.list'));
     if (!is_array($mountlist)) {
         $mountlist = array();
     }
@@ -173,18 +173,18 @@ function uploads_userapi_db_get_file_entry( $args )
         $file['id']                 = $row['xar_fileentry_id'];
         $file['name']               = $row['xar_filename'];
         $file['size']['value']      = $row['xar_filesize'];
-        $file['size']['text']       = uploads_userapi__normalize_filesize($row['xar_filesize']);
+        $file['size']['text']       = filemanager_userapi__normalize_filesize($row['xar_filesize']);
         $file['owner']['id']        = $row['xar_user_id'];
         $file['owner']['name']      = xarUserGetVar('name', $row['xar_user_id']);
         $file['status']['value']       = $row['xar_status'];
         switch($row['xar_status']) {
-            case _UPLOADS_STATUS_REJECTED:
+            case _FILEMANAGER_STATUS_REJECTED:
                 $file['status']['text'] = xarML('Rejected');
                 break;
-            case _UPLOADS_STATUS_APPROVED:
+            case _FILEMANAGER_STATUS_APPROVED:
                 $file['status']['text'] = xarML('Approved');
                 break;
-            case _UPLOADS_STATUS_SUBMITTED:
+            case _FILEMANAGER_STATUS_SUBMITTED:
                 $file['status']['text'] = xarML('Submitted');
                 break;
             default:
@@ -195,12 +195,12 @@ function uploads_userapi_db_get_file_entry( $args )
         $file['storetype']['value'] = $row['xar_store_type'];
         $storeTypeText = 'Database File Entry';
 
-        if (_UPLOADS_STORE_FILESYSTEM & $row['xar_store_type']) {
+        if (_FILEMANAGER_STORE_FILESYSTEM & $row['xar_store_type']) {
             if (!empty($storeTypeText)) {
                 $storeTypeText .= ' / ';
             }
             $storeTypeText .= 'File System Store';
-        } elseif (_UPLOADS_STORE_DB_DATA & $row['xar_store_type']) {
+        } elseif (_FILEMANAGER_STORE_DB_DATA & $row['xar_store_type']) {
             if (!empty($storeTypeText)) {
                 $storeTypeText = ' / ';
             }
@@ -211,7 +211,7 @@ function uploads_userapi_db_get_file_entry( $args )
         $file['mimetype']              = xarModAPIFunc('mime', 'user', 'get_rev_mimetype', array('mimeType' => $row['xar_mime_type']));
         $file['mimetype']['text']      = $row['xar_mime_type'];
         $file['mimetype']['imagepath'] = xarModAPIFunc('mime', 'user', 'get_mime_image', array('mimeType' => $row['xar_mime_type']));
-        $file['link']['url']           = xarModURL('uploads', 'user', 'download', array('fileId' => $file['id']));
+        $file['link']['url']           = xarModURL('filemanager', 'user', 'download', array('fileId' => $file['id']));
         $file['link']['label']         = xarML('Download file: #(1)', $file['name']);
         $file['link']['link']          = '<a href="'.$file['link']['url'].'" alt="'.$file['link']['label'].'">' . $file['name'] . '</a>';
         $file['location']['uri']       = $row['xar_location'];
@@ -243,7 +243,7 @@ function uploads_userapi_db_get_file_entry( $args )
             case 'mount':
                 if (in_array($pathInfo['host'], array_keys($mountlist))) {
                     $mountInfo = $mountlist[$pathInfo['host']];
-                    $vpath = xarModAPIFunc('uploads', 'vdir', 'path_encode', array('vdir_id' => $pathInfo['host']));
+                    $vpath = xarModAPIFunc('filemanager', 'vdir', 'path_encode', array('vdir_id' => $pathInfo['host']));
                     $path = (($pathInfo['path']{0} == '/') ? substr($pathInfo['path'], 1) : $pathInfo['path']);
 
                     $file['location']['real']    = $mountInfo['path'] . '/' . $path;
@@ -254,12 +254,12 @@ function uploads_userapi_db_get_file_entry( $args )
                 }
                 break;
             case 'xarfs':
-                if (!xarModAPIFunc('uploads', 'fs', 'in_trash', array('fileId' => $file['id']))) {
-                    $dirId = xarModAPIFunc('uploads', 'vdir', 'get_file_location', 
+                if (!xarModAPIFunc('filemanager', 'fs', 'in_trash', array('fileId' => $file['id']))) {
+                    $dirId = xarModAPIFunc('filemanager', 'vdir', 'get_file_location', 
                         array('fileId' => $file['id'], 'asPath' => FALSE));
 
                     if ($dirId) {
-                        $vpath = xarModAPIFunc('uploads', 'vdir', 'path_encode', array('vdir_id' => $dirId));
+                        $vpath = xarModAPIFunc('filemanager', 'vdir', 'path_encode', array('vdir_id' => $dirId));
                     } else {
                         $vpath = '/' . xarML('corrupted location');
                     }
@@ -298,13 +298,13 @@ function uploads_userapi_db_get_file_entry( $args )
     }
 
     $result->Close();
-    xarVarSetCached('uploads', 'file.list', $fileList);
+    xarVarSetCached('filemanager', 'file.list', $fileList);
 
     return $fileList;
 }
 
 
-function uploads_userapi__normalize_filesize( $args )
+function filemanager_userapi__normalize_filesize( $args )
 {
 
     if (is_array($args)) {

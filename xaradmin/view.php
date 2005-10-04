@@ -1,11 +1,11 @@
 <?php
 
-xarModAPILoad('uploads','user');
+xarModAPILoad('filemanager','user');
 
-function uploads_admin_view( ) 
+function filemanager_admin_view( ) 
 {
     //security check
-    if (!xarSecurityCheck('AdminUploads')) return;
+    if (!xarSecurityCheck('AdminFileManager')) return;
     
     /**
      *  Validate variables passed back
@@ -25,7 +25,7 @@ function uploads_admin_view( )
     if (!isset($mimetype) || !isset($subtype) || !isset($status) || !isset($inverse)) {
         // if the filter settings are empty, then 
         // grab the users last view filter
-        $options  = unserialize(xarModGetUserVar('uploads','view.filter'));
+        $options  = unserialize(xarModGetUserVar('filemanager','view.filter'));
         $data     = $options['data'];
         $filter   = $options['filter'];
         unset($options);
@@ -37,7 +37,7 @@ function uploads_admin_view( )
         $filters['status']   = $status;
         $filters['inverse']  = $inverse;
 
-        $options  =  xarModAPIFunc('uploads','user','process_filters', $filters);
+        $options  =  xarModAPIFunc('filemanager','user','process_filters', $filters);
         $data     = $options['data'];
         $filter   = $options['filter'];
         unset($options);
@@ -66,19 +66,19 @@ function uploads_admin_view( )
         }
         
         switch ($action) {
-            case _UPLOADS_STATUS_APPROVED:
-                    xarModAPIFunc('uploads','user','db_change_status', $args + array('newStatus'    => _UPLOADS_STATUS_APPROVED));
+            case _FILEMANAGER_STATUS_APPROVED:
+                    xarModAPIFunc('filemanager','user','db_change_status', $args + array('newStatus'    => _FILEMANAGER_STATUS_APPROVED));
                     break;
-            case _UPLOADS_STATUS_SUBMITTED:
-                    xarModAPIFunc('uploads','user','db_change_status', $args + array('newStatus'    => _UPLOADS_STATUS_SUBMITTED));
+            case _FILEMANAGER_STATUS_SUBMITTED:
+                    xarModAPIFunc('filemanager','user','db_change_status', $args + array('newStatus'    => _FILEMANAGER_STATUS_SUBMITTED));
                     break;
-            case _UPLOADS_STATUS_REJECTED:
-                xarModAPIFunc('uploads','user','db_change_status', $args + array('newStatus'   => _UPLOADS_STATUS_REJECTED));
-                if (xarModGetVar('uploads', 'file.auto-purge')) {
-                    if (xarModGetVar('uploads', 'file.delete-confirmation')) {
-                        return xarModFunc('uploads', 'admin', 'purge_rejected', array('confirmation' => FALSE, 'authid' => xarSecGenAuthKey('uploads')));
+            case _FILEMANAGER_STATUS_REJECTED:
+                xarModAPIFunc('filemanager','user','db_change_status', $args + array('newStatus'   => _FILEMANAGER_STATUS_REJECTED));
+                if (xarModGetVar('filemanager', 'file.auto-purge')) {
+                    if (xarModGetVar('filemanager', 'file.delete-confirmation')) {
+                        return xarModFunc('filemanager', 'admin', 'purge_rejected', array('confirmation' => FALSE, 'authid' => xarSecGenAuthKey('filemanager')));
                     } else {
-                        return xarModFunc('uploads', 'admin', 'purge_rejected', array('confirmation' => TRUE, 'authid' => xarSecGenAuthKey('uploads')));
+                        return xarModFunc('filemanager', 'admin', 'purge_rejected', array('confirmation' => TRUE, 'authid' => xarSecGenAuthKey('filemanager')));
                     }
                 }
                 break;
@@ -93,27 +93,27 @@ function uploads_admin_view( )
      */
      
     if (!isset($filter) || count($filter) <= 0) {
-        $items = xarModAPIFunc('uploads', 'user', 'db_getall_files');
+        $items = xarModAPIFunc('filemanager', 'user', 'db_getall_files');
     } else {
-        $items = xarModAPIFunc('uploads', 'user', 'db_get_file', $filter);
+        $items = xarModAPIFunc('filemanager', 'user', 'db_get_file', $filter);
     }
     
-    if (xarSecurityCheck('EditUploads', 0)) {
+    if (xarSecurityCheck('EditFileManager', 0)) {
     
-        $data['diskUsage']['stored_size_filtered'] = xarModAPIFunc('uploads', 'user', 'db_diskusage', $filter);
-        $data['diskUsage']['stored_size_total']    = xarModAPIFunc('uploads', 'user', 'db_diskusage');
+        $data['diskUsage']['stored_size_filtered'] = xarModAPIFunc('filemanager', 'user', 'db_diskusage', $filter);
+        $data['diskUsage']['stored_size_total']    = xarModAPIFunc('filemanager', 'user', 'db_diskusage');
 
-        $uploadsdir = realpath(xarModGetVar('uploads', 'path.uploads-directory'));
-        $data['diskUsage']['device_free']   = disk_free_space($uploadsdir);
-        $data['diskUsage']['device_total']  = disk_total_space($uploadsdir);
+        $filemanagerdir = realpath(xarModGetVar('filemanager', 'path.filemanager-directory'));
+        $data['diskUsage']['device_free']   = disk_free_space($filemanagerdir);
+        $data['diskUsage']['device_total']  = disk_total_space($filemanagerdir);
         $data['diskUsage']['device_used']  = $data['diskUsage']['device_total'] - $data['diskUsage']['device_free'];
 
         foreach ($data['diskUsage'] as $key => $value) {
-            $data['diskUsage'][$key] = xarModAPIFunc('uploads', 'user', 'normalize_filesize', $value);
+            $data['diskUsage'][$key] = xarModAPIFunc('filemanager', 'user', 'normalize_filesize', $value);
         }
 
-        $data['diskUsage']['numfiles_filtered']   = xarModAPIfunc('uploads', 'user', 'db_count', $filter);
-        $data['diskUsage']['numfiles_total']      = xarModAPIFunc('uploads', 'user', 'db_count');
+        $data['diskUsage']['numfiles_filtered']   = xarModAPIfunc('filemanager', 'user', 'db_count', $filter);
+        $data['diskUsage']['numfiles_total']      = xarModAPIFunc('filemanager', 'user', 'db_count');
     }
     // now we check to see if the user has enough access to view 
     // each particular file - if not, we just silently remove it
@@ -128,7 +128,7 @@ function uploads_admin_view( )
         if (is_array($instance)) {
             $instance = implode(':', $instance);
         } 
-        if (!xarSecurityCheck('EditUploads', 0, 'File', $instance)) {
+        if (!xarSecurityCheck('EditFileManager', 0, 'File', $instance)) {
             unset($items[$key]);
         }
     }

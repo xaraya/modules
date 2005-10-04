@@ -1,6 +1,6 @@
 <?php
 
-function uploads_mountapi_is_mountpoint( $args )
+function filemanager_mountapi_is_mountpoint( $args )
 {
     $path    = NULL;
     $vdir_id = NULL;
@@ -12,7 +12,7 @@ function uploads_mountapi_is_mountpoint( $args )
         // definitely say that it's not a mount point ;-)
         return FALSE;
     } else {
-        $mountPoints = @unserialize(xarModGetVar('uploads', 'mount.list'));
+        $mountPoints = @unserialize(xarModGetVar('filemanager', 'mount.list'));
         
         if (isset($vdir_id) && !empty($vdir_id)) {
             if (in_array($vdir_id, array_keys($mountPoints))) {

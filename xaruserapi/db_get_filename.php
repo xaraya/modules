@@ -10,18 +10,18 @@
  * @returns array   All of the metadata stored for the particular file
  */
 
-function uploads_userapi_db_get_filename( $args )
+function filemanager_userapi_db_get_filename( $args )
 {
 
     extract($args);
 
     if (!isset($fileId) || (!is_numeric($fileId) && !is_array($fileId))) {
-        $msg = xarML('Missing [#(1)] parameter for function [#(2)] in module [#(3)]', 'fileId', 'db_get_filename', 'uploads');
+        $msg = xarML('Missing [#(1)] parameter for function [#(2)] in module [#(3)]', 'fileId', 'db_get_filename', 'filemanager');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }
 
-    $fileCache = xarVarGetCached('uploads', 'file.list');
+    $fileCache = xarVarGetCached('filemanager', 'file.list');
     if (!isset($fileCache) || empty($fileCache)) {
         $fileCache = array();
     } elseif (is_numeric($fileId) && isset($fileCache[$fileId])) {

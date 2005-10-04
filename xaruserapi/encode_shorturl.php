@@ -10,7 +10,7 @@
  */
 
 
-function uploads_userapi_encode_shorturl($args)
+function filemanager_userapi_encode_shorturl($args)
 {
     // Get arguments from argument array
     extract($args);
@@ -25,7 +25,7 @@ function uploads_userapi_encode_shorturl($args)
     // if we want to add some common arguments as URL parameters below
     $join = '?';
     // we can't rely on xarModGetName() here -> you must specify the modname !
-    $module = 'uploads';
+    $module = 'filemanager';
 
     switch(strtolower($func)) {
         case 'download':
@@ -33,7 +33,7 @@ function uploads_userapi_encode_shorturl($args)
             if (!isset($fileId) || empty($fileId) && (!isset($vdir_path) || empty($vdir_path))) {
                 break;
             } else {
-                $path = xarModAPIFunc('uploads', 'vdir', 'get_file_path', array('fileId' => $fileId));
+                $path = xarModAPIFunc('filemanager', 'vdir', 'get_file_path', array('fileId' => $fileId));
             }
 
             if (!empty($fileId) && is_numeric($fileId)) {
@@ -44,7 +44,7 @@ function uploads_userapi_encode_shorturl($args)
             if (isset($vpath) && is_string($vpath) && !empty($vpath)) {
                 $vdir_path = $vpath;
             } elseif (isset($vdir_id) && is_numeric($vdir_id) && !empty($vdir_id)) {
-                $vdir_path = xarModAPIFunc('uploads', 'vdir', 'path_encode', array('vdir_id' => $vdir_id));
+                $vdir_path = xarModAPIFunc('filemanager', 'vdir', 'path_encode', array('vdir_id' => $vdir_id));
             }
 
             if (!empty($vdir_path)) {

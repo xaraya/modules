@@ -9,20 +9,20 @@
  *  @returns integer The number of affected rows on success, or FALSE on error
  */
 
-function uploads_userapi_db_change_status( $args )
+function filemanager_userapi_db_change_status( $args )
 {
     extract($args);
 
     if (!isset($fileId) && !isset($fileType)) {
         $msg = xarML('Missing identifying parameters (#(1)/#(2)) for function [#(3)] in module [#(4)]',
-                     'fileId', 'fileType', 'db_change_status','uploads');
+                     'fileId', 'fileType', 'db_change_status','filemanager');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }
 
     if (!isset($newStatus)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
-                     'newStatus','db_change_status','uploads');
+                     'newStatus','db_change_status','filemanager');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }
@@ -67,7 +67,7 @@ function uploads_userapi_db_change_status( $args )
         $bindvars[] = (int) $curStatus;
     }
 
-    //add to uploads table
+    //add to filemanager table
     // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();

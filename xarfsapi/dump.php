@@ -10,7 +10,7 @@
  *  returns  integer           The total bytes stored or boolean FALSE on error
  */
 
-function uploads_fsapi_dump( $args )
+function filemanager_fsapi_dump( $args )
 {
 
     extract($args);
@@ -20,47 +20,47 @@ function uploads_fsapi_dump( $args )
     }
     if (!isset($source)) {
         $msg = xarML('Missing parameter [#(1)] for API function [#(2)] in module [#(3)].',
-                      'source', 'file_dump', 'uploads');
+                      'source', 'file_dump', 'filemanager');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }
 
     if (!isset($fileId)) {
         $msg = xarML('Missing parameter [#(1)] for API function [#(2)] in module [#(3)].',
-                      'fileId', 'file_dump', 'uploads');
+                      'fileId', 'file_dump', 'filemanager');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }
 
     if (!file_exists($source)) {
         $msg = xarML('Unable to locate file [#(1)]. Are you sure it\'s there??', $source);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UPLOADS_ERR_NOT_EXIST', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'FILEMANAGER_ERR_NOT_EXIST', new SystemException($msg));
         return FALSE;
     }
 
     if (!is_readable($source) || !is_writable($source)) {
         $msg = xarML('Cannot read and/or write to file [#(1)]. File will be read from and deleted afterwards. Please ensure that this application has sufficient access to do so.', $source);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UPLOADS_ERR_NO_READWRITE', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'FILEMANAGER_ERR_NO_READWRITE', new SystemException($msg));
         return FALSE;
     }
 
-    $fileInfo = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $fileId));
+    $fileInfo = xarModAPIFunc('filemanager', 'user', 'db_get_file', array('fileId' => $fileId));
     $fileInfo = end($fileInfo);
 
     if (!count($fileInfo) || empty($fileInfo)) {
         $msg = xarML('FileId [#(1)] does not exist. File [#(2)] does not have a corresponding metadata entry in the databsae.',
                      $fileId, $source);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UPLOADS_ERR_NO_DB_ENTRY', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'FILEMANAGER_ERR_NO_DB_ENTRY', new SystemException($msg));
         return FALSE;
     } else {
-        $dataBlocks = xarModAPIFunc('uploads', 'user', 'db_count_data', array('fileId' => $fileId));
+        $dataBlocks = xarModAPIFunc('filemanager', 'user', 'db_count_data', array('fileId' => $fileId));
 
         if ($dataBlocks > 0) {
             // we don't support non-truncated overwrites nor appends
             // so truncate the file and then save it
-            if (!xarModAPIFunc('uploads', 'user', 'db_delete_file_data', array('fileId' => $fileId))) {
+            if (!xarModAPIFunc('filemanager', 'user', 'db_delete_file_data', array('fileId' => $fileId))) {
                 $msg = xarML('Unable to truncate file [#(1)] in database.', $fileInfo['fileName']);
-                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UPLOADS_ERR_NO_DB_ENTRY', new SystemException($msg));
+                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'FILEMANAGER_ERR_NO_DB_ENTRY', new SystemException($msg));
                 return FALSE;
             }
         }
@@ -75,22 +75,22 @@ function uploads_fsapi_dump( $args )
                     fclose($srcId);
                     break;
                 }
-                if (!xarModAPIFunc('uploads', 'user', 'db_add_file_data', array('fileId' => $fileId, 'fileData' => $data))) {
+                if (!xarModAPIFunc('filemanager', 'user', 'db_add_file_data', array('fileId' => $fileId, 'fileData' => $data))) {
                     // there was an error, so close the input file and delete any blocks
                     // we may have written, unlink the file (if specified), and return an exception
                     fclose($srcId);
                     if ($unlink) {
                         @unlink($source); // fail silently
                     }
-                    xarModAPIFunc('uploads', 'user', 'db_delete_file_data', array('fileId' => $fileId));
+                    xarModAPIFunc('filemanager', 'user', 'db_delete_file_data', array('fileId' => $fileId));
                     $msg = xarML('Unable to save file contents to database.');
-                    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UPLOADS_ERR_NO_DB_WRITE', new SystemException($msg));
+                    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'FILEMANAGER_ERR_NO_DB_WRITE', new SystemException($msg));
                     return FALSE;
                 }
             } while (TRUE);
        } else {
             $msg = xarML('Cannot read and/or write to file [#(1)]. File will be read from and deleted afterwards. Please ensure that this application has sufficient access to do so.', $source);
-            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UPLOADS_ERR_NO_READWRITE', new SystemException($msg));
+            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'FILEMANAGER_ERR_NO_READWRITE', new SystemException($msg));
             return FALSE;
        }
     }

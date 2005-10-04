@@ -17,10 +17,10 @@
  * @return mixed    An array of files -> metadata, FALSE or null on error
  */
 
-function uploads_userapi_db_get_file( $args )
+function filemanager_userapi_db_get_file( $args )
 {
 
-    $files = xarModAPIFunc('uploads', 'user', 'db_get_file_entry', $args);
+    $files = xarModAPIFunc('filemanager', 'user', 'db_get_file_entry', $args);
 
     if (is_null($files) || $files === FALSE || !is_array($files)) {
         return;

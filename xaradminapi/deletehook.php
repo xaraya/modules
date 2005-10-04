@@ -7,7 +7,7 @@
  *
  * Note: if deleting directories via the categories module, all previous directory structure,
  * including files->directory linkages will have been removed. All interaction with directories
- * should be done via uploads API calls, or the uploads GUI.
+ * should be done via filemanager API calls, or the filemanager GUI.
  *
  * @author Carl P. Corliss (ccorliss@schwabfoundation.org)
  * @param array $extrainfo array containing information about the deleted object
@@ -15,7 +15,7 @@
  * @return TRUE on success, FALSE on failure
  */
 
-function uploads_adminapi_deletehook( $args )
+function filemanager_adminapi_deletehook( $args )
 {
 
     extract($args);
@@ -30,34 +30,34 @@ function uploads_adminapi_deletehook( $args )
         switch(strtolower($extrainfo['module'])) {
             case 'categories':
                 // Load the api just in case we need it
-                xarModAPILoad('uploads', 'user');
+                xarModAPILoad('filemanager', 'user');
 
                 $initLevel = 0;
 
-                $rootfs = xarModGetVar('uploads', 'folders.rootfs');
-                $public = xarModGetVar('uploads', 'folders.public-files');
-                $users  = xarModGetVar('uploads', 'folders.users');
-                $trash  = xarModGetVar('uploads', 'folders.trash');
+                $rootfs = xarModGetVar('filemanager', 'folders.rootfs');
+                $public = xarModGetVar('filemanager', 'folders.public-files');
+                $users  = xarModGetVar('filemanager', 'folders.users');
+                $trash  = xarModGetVar('filemanager', 'folders.trash');
 
                 // Make sure that none of the base filesystem directories
                 // were deleted - if they were, rebuild them
                 switch ($extrainfo['cid']) {
                     case $rootfs:
-                        $initLevel = _UPLOADS_VDIR_ALL;
+                        $initLevel = _FILEMANAGER_VDIR_ALL;
                         break;
                     case $public:
-                        $initLevel = _UPLOADS_VDIR_PUBLIC;
+                        $initLevel = _FILEMANAGER_VDIR_PUBLIC;
                         break;
                     case $users:
-                        $initLevel = _UPLOADS_VDIR_USERS;
+                        $initLevel = _FILEMANAGER_VDIR_USERS;
                         break;
                     case $trash:
-                        $initLevel = _UPLOADS_VDIR_TRASH;
+                        $initLevel = _FILEMANAGER_VDIR_TRASH;
                         break;
                 }
 
                 if ($initLevel) {
-                    xarModAPIFunc('uploads', 'vdir', 'init',
+                    xarModAPIFunc('filemanager', 'vdir', 'init',
                                    array('initLevel' => $initLevel));
                 }
 

@@ -13,11 +13,10 @@
  * XarFSAPI library contains the file system level functions.
  *
  * @author Carl P. Corliss (carl.corliss@xaraya.com)
- * @subpackage uploads
- */
+ * @subpackage filemanager  */
 
 
 
-xarModAPILoad('uploads', 'user');
+xarModAPILoad('filemanager', 'user');
 
 ?>

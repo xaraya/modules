@@ -5,7 +5,7 @@
         </th>
     </tr>
     <tr>
-        <form action="#xarModUrl('uploads','admin','view')#" method="post">
+        <form action="#xarModUrl('filemanager','admin','view')#" method="post">
         <td width="15%" align="center">
             <label for="inverse">
                 <xar:mlstring>

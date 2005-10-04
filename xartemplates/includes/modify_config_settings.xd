@@ -1,15 +1,15 @@
 
 <div class="xar-mod-body">
     <h2>
-        <xar:mlstring>Modify Uploads Configuration</xar:mlstring>
+        <xar:mlstring>Modify FileManager Configuration</xar:mlstring>
     </h2>
     <div style="margin: auto;">
 
-        <form method="post" action="#xarModUrl('uploads', 'admin', 'updateconfig')#">
+        <form method="post" action="#xarModUrl('filemanager', 'admin', 'updateconfig')#">
             <input type="hidden" name="authid" value="#$authid#"/>
             <p>
-                <strong><xar:mlstring>Uploads Directory</xar:mlstring>:</strong>&nbsp;&nbsp;
-                <input type="text" name="path[uploads-directory]" value="#$path['uploads-directory']#" size="70"/>
+                <strong><xar:mlstring>FileManager Directory</xar:mlstring>:</strong>&nbsp;&nbsp;
+                <input type="text" name="path[filemanager-directory]" value="#$path['filemanager-directory']#" size="70"/>
                 <br />
                 <xar:mlstring>
                     This is the full path to the directory where uploaded and external import files will be placed. 
@@ -108,7 +108,7 @@
                 <br/>
                 <xar:mlstring>
                     Normally, when you reject files, you have to manually purge them by clicking on 
-                    the 'Purge Rejected' button located on the <em>Admin->Uploads->View page</em>. This 
+                    the 'Purge Rejected' button located on the <em>Admin->FileManager->View page</em>. This 
                     option forces any file you set to 'rejected' status to be deleted right away.
                 </xar:mlstring>
             </p>
@@ -160,7 +160,7 @@
             <p>
                 <xar:mlstring>
                     These settings allow you to redefine certain characteristics of the FileUpload DynamicData Property. 
-                    These settings only take effect if you have 'hooked' the uploads module to the module using the 
+                    These settings only take effect if you have 'hooked' the filemanager module to the module using the 
                     FileUpload property.
                 </xar:mlstring>
             </p>

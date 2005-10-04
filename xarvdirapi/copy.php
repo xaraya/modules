@@ -14,7 +14,7 @@
  */
 
 
-function uploads_vdirapi_copy( $args )
+function filemanager_vdirapi_copy( $args )
 {
 
 }

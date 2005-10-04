@@ -11,13 +11,13 @@
     </tr>
     <tr>
         <td>
-            <a href="#xarModURL('uploads', 'admin', 'get_files')#" alt="#xarML('Add more files.')#">
+            <a href="#xarModURL('filemanager', 'admin', 'get_files')#" alt="#xarML('Add more files.')#">
                 <xar:mlstring>
                     Add Files
                 </xar:mlstring>
             </a>
             &nbsp;|&nbsp;
-            <a href="#xarModURL('uploads', 'admin', 'view')#" alt="#xarML('View files.')#">
+            <a href="#xarModURL('filemanager', 'admin', 'view')#" alt="#xarML('View files.')#">
                 <xar:mlstring>
                     View files
                 </xar:mlstring>
@@ -141,13 +141,13 @@
                 </xar:loop>
             </table>
             <br />
-            <a href="#xarModURL('uploads', 'admin', 'get_files')#" alt="#xarML('Add more files.')#">
+            <a href="#xarModURL('filemanager', 'admin', 'get_files')#" alt="#xarML('Add more files.')#">
                 <xar:mlstring>
                     Add Files
                 </xar:mlstring>
             </a>
             &nbsp;|&nbsp;
-            <a href="#xarModURL('uploads', 'admin', 'view')#" alt="#xarML('View files.')#">
+            <a href="#xarModURL('filemanager', 'admin', 'view')#" alt="#xarML('View files.')#">
                 <xar:mlstring>
                     View files
                 </xar:mlstring>

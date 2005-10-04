@@ -11,21 +11,21 @@
  * @return  id of new directory or === FALSE on error
  */
 
-function uploads_vdirapi_create( $args )
+function filemanager_vdirapi_create( $args )
 {
 
     extract($args);
 
     if (!isset($parentid) || empty($parentid)) {
         $msg = xarML('Missing parameter \'#(1)\' in module \'#(2)\' function \'#(3)\'',
-                     'parentid', 'uploads', 'vdir_create');
+                     'parentid', 'filemanager', 'vdir_create');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }
 
     if (!isset($name) || empty($name)) {
         $msg = xarML('Missing parameter \'#(1)\' in module \'#(2)\' function \'#(3)\'',
-                     'parentid', 'uploads', 'vdir_create');
+                     'parentid', 'filemanager', 'vdir_create');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }

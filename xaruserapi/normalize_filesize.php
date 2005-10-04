@@ -1,6 +1,6 @@
 <?php
 
-function uploads_userapi_normalize_filesize( $args )
+function filemanager_userapi_normalize_filesize( $args )
 {
 
     if (is_array($args)) {

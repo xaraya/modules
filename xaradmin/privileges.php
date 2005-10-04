@@ -3,7 +3,7 @@
 /**
  * Manage definition of instances for privileges (unfinished)
  */
-function uploads_admin_privileges($args)
+function filemanager_admin_privileges($args)
 {
     extract($args);
 
@@ -36,9 +36,9 @@ function uploads_admin_privileges($args)
     // Otherwise do a quick check to make sure this user has access 
     if (empty($mimetype) || !is_numeric($mimetype)) {
         $mimetype = 0;
-        if (!xarSecurityCheck('AdminUploads')) return;
+        if (!xarSecurityCheck('AdminFileManager')) return;
     } else {
-        if (!xarSecurityCheck('AdminUploads',1,'Upload',"$mimetype:All:All:All")) return;
+        if (!xarSecurityCheck('AdminFileManager',1,'Upload',"$mimetype:All:All:All")) return;
     }
 
     // Check to see if subtype is set, if not assume 'All'
@@ -100,7 +100,7 @@ function uploads_admin_privileges($args)
     if (empty($fileId) || $fileId == 'All' || !is_numeric($fileId)) {
         $fileId = 0;
     } else {
-        $fileInfo = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $fileId));
+        $fileInfo = xarModAPIFunc('filemanager', 'user', 'db_get_file', array('fileId' => $fileId));
         
         if (isset($fileInfo[$fileId])) {  
             
@@ -147,7 +147,7 @@ function uploads_admin_privileges($args)
     }
 
     $filters['storeOptions'] = FALSE;    
-    $options            = xarModAPIFunc('uploads', 'user', 'process_filters', $filters);
+    $options            = xarModAPIFunc('filemanager', 'user', 'process_filters', $filters);
     unset($filters);
     
     $filter             = $options['filter'];
@@ -158,9 +158,9 @@ function uploads_admin_privileges($args)
 
     // Count how many items there are based on 
     // the currently selected privilege settings    
-    $numitems = xarModAPIFunc('uploads', 'user', 'db_count', $filter);
+    $numitems = xarModAPIFunc('filemanager', 'user', 'db_count', $filter);
     
-    $userNameList += xarModAPIFunc('uploads','user','db_get_users', 
+    $userNameList += xarModAPIFunc('filemanager','user','db_get_users', 
                                     array('mimeType' => $filter['fileType']));
 
     // Set up default 'All' option for users                            
@@ -177,7 +177,7 @@ function uploads_admin_privileges($args)
     unset($filter['userId']);
     unset($filter['fileId']);
     
-    $fileList = xarModAPIFunc('uploads', 'user', 'db_get_file', $filter);
+    $fileList = xarModAPIFunc('filemanager', 'user', 'db_get_file', $filter);
     $fileList[0]['fileId'] = 0;
     $fileList[0]['fileName'] = xarML('All');
     $fileList[0]['fileLocation'] = $fileList[0]['fileName'];

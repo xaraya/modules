@@ -17,7 +17,7 @@
  *  @returns integer The id of the fileEntry that was added, or FALSE on error
  */
 
-function uploads_userapi_db_add_file( $args )
+function filemanager_userapi_db_add_file( $args )
 {
 
     $name       = NULL;
@@ -26,21 +26,21 @@ function uploads_userapi_db_add_file( $args )
     $userId         = xarSessionGetVar('uid');
     $status     = NULL;
     $size       = NULL;
-    $store_type     = _UPLOADS_STORE_FILESYSTEM;
+    $store_type     = _FILEMANAGER_STORE_FILESYSTEM;
     $type       = NULL;
     
     extract($args);
 
     if (!isset($name)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
-                     'name','db_add_file','uploads');
+                     'name','db_add_file','filemanager');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }
 
     if (!isset($destination) || empty($destination)) {
         $msg = xarML('Missing or incorrect parameter [#(1)] for function [#(2)] in module [#(3)]',
-                     'location', 'db_add_file', 'uploads');
+                     'location', 'db_add_file', 'filemanager');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     } elseif (!file_exists($destination) || !is_readable($destination)) {
@@ -51,11 +51,11 @@ function uploads_userapi_db_add_file( $args )
     
     // Use the public files folder if no folder was specified
     if (!isset($dirId) || empty($dirId)) {
-        $dirId = xarModGetVar('uploads', 'folders.public-files');
+        $dirId = xarModGetVar('filemanager', 'folders.public-files');
     }
         
     // Grab the actual patch for the xaraya filestore (untrusted files)
-    $xarfs = eregi_replace('/$', '', xarModGetVar('uploads', 'path.untrust'));
+    $xarfs = eregi_replace('/$', '', xarModGetVar('filemanager', 'path.untrust'));
     
     // If location has the xarfs path in it, then we
     // need to make location == xarfs://[virtual dir id]/[real name]
@@ -64,24 +64,24 @@ function uploads_userapi_db_add_file( $args )
         // change location to: xarfs://[virtual dir id]/[real name]
         $location = 'xarfs://' . $dirId . '/' . str_replace("$xarfs/", '', $destination);
     
-    } elseif ($dirId = xarModAPIFunc('uploads', 'mount', 'is_mountpoint', array('path' => $destination))) {
+    } elseif ($dirId = xarModAPIFunc('filemanager', 'mount', 'is_mountpoint', array('path' => $destination))) {
         
         // Otherwise, if it's a file inside a mount point, we
         // set the location to: mount://[mount point id]/[path to file]
-        $mountInfo = xarModAPIFunc('uploads', 'mount', 'get', array('vdir_id' => $dirId));
+        $mountInfo = xarModAPIFunc('filemanager', 'mount', 'get', array('vdir_id' => $dirId));
         $location = 'mount://' . str_replace('//', '/', $dirId . '/' . str_replace($mountInfo['path'], '', $destination));
     } 
 
 // FIXME: this is not synchronised with 1.0.0 branch !
     
     if (!isset($status)) {
-        $autoApprove = xarModGetVar('uploads', 'file.auto-approve');
+        $autoApprove = xarModGetVar('filemanager', 'file.auto-approve');
 
-        if ($autoApprove == _UPLOADS_APPROVE_EVERYONE ||
-           ($autoApprove == _UPLOADS_APPROVE_ADMIN && xarSecurityCheck('AdminUploads', 0))) {
-                $status = _UPLOADS_STATUS_APPROVED;
+        if ($autoApprove == _FILEMANAGER_APPROVE_EVERYONE ||
+           ($autoApprove == _FILEMANAGER_APPROVE_ADMIN && xarSecurityCheck('AdminFileManager', 0))) {
+                $status = _FILEMANAGER_STATUS_APPROVED;
         } else {
-            $status = _UPLOADS_STATUS_SUBMITTED;
+            $status = _FILEMANAGER_STATUS_SUBMITTED;
         }
     }
 
@@ -106,7 +106,7 @@ function uploads_userapi_db_add_file( $args )
         $extrainfo = serialize($extrainfo);
     }
 
-    //add to uploads table
+    //add to filemanager table
     // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -151,7 +151,7 @@ function uploads_userapi_db_add_file( $args )
     $fileId = $dbconn->PO_Insert_ID($xartable['file_entry'], 'xar_fileEntry_id');
 
     // Pass the arguments to the hook modules too
-    $args['module'] = 'uploads';
+    $args['module'] = 'filemanager';
     $args['itemtype'] = 1; // Files
     xarModCallHooks('item', 'create', $fileId, $args);
 

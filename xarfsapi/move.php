@@ -14,7 +14,7 @@
  *  @returns boolean TRUE on success, FALSE otherwise
  */
 
-function uploads_fsapi_move( $args )
+function filemanager_fsapi_move( $args )
 {
 
     extract ($args);
@@ -30,14 +30,14 @@ function uploads_fsapi_move( $args )
 
     if (!isset($source)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
-                     'source','file_move','uploads');
+                     'source','file_move','filemanager');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }
 
     if (!isset($destination)) {
         $msg = xarML('Missing parameter [#(1)] for function [(#(2)] in module [#(3)]',
-                     'destination','file_move','uploads');
+                     'destination','file_move','filemanager');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }

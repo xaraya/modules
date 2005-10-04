@@ -1,13 +1,13 @@
 <?php
 /**
- * show output for uploads module (used in DD properties)
+ * show output for filemanager module (used in DD properties)
  *
  * @param  $args ['value'] string the current value(s)
  * @param  $args ['format'] string format specifying 'fileupload', 'textupload' or 'upload'
  * @returns string
- * @return string containing the uploads output
+ * @return string containing the filemanager output
  */
-function uploads_userapi_showoutput($args)
+function filemanager_userapi_showoutput($args)
 {
     extract($args);
     if (empty($value)) {
@@ -24,8 +24,8 @@ function uploads_userapi_showoutput($args)
 
     // Check to see if an old value is present. Old values just file names
     // and do not start with a semicolon (our delimiter)
-    if (xarModAPIFunc('uploads', 'admin', 'dd_value_needs_conversion', $value)) {
-        $newValue = xarModAPIFunc('uploads', 'admin', 'dd_convert_value', array('value' =>$value));
+    if (xarModAPIFunc('filemanager', 'admin', 'dd_value_needs_conversion', $value)) {
+        $newValue = xarModAPIFunc('filemanager', 'admin', 'dd_convert_value', array('value' =>$value));
 
         // if we were unable to convert the value, then go ahead and and return
         // an empty string instead of processing the value and bombing out
@@ -58,16 +58,16 @@ function uploads_userapi_showoutput($args)
 
     if (isset($style) && $style = 'icon') {
         if (is_array($value) && count($value)) {
-            $data['Attachments'] = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $value));
+            $data['Attachments'] = xarModAPIFunc('filemanager', 'user', 'db_get_file', array('fileId' => $value));
         } else {
             $data['Attachments'] = '';
         }
 
         $data['format'] = $format;
-        return xarTplModule('uploads', 'user', 'attachment-list', $data, NULL);
+        return xarTplModule('filemanager', 'user', 'attachment-list', $data, NULL);
     } else {
         // return a raw array for now
-        return xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $value));
+        return xarModAPIFunc('filemanager', 'user', 'db_get_file', array('fileId' => $value));
     }
 
 }

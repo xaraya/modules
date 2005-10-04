@@ -11,14 +11,14 @@
  * @return  TRUE on success, FALSE otherwise
  */
 
-function uploads_vdirapi_delete( $args )
+function filemanager_vdirapi_delete( $args )
 {
 
     extract($args);
 
     if (!isset($dirId) && !isset($dirIds)) {
         $msg = xarML('Missing parameter [#(1)] for function [(#(2)] in module [#(3)]',
-                     'dirId/dirIds', 'vdir_delete', 'uploads');
+                     'dirId/dirIds', 'vdir_delete', 'filemanager');
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }
@@ -32,10 +32,10 @@ function uploads_vdirapi_delete( $args )
             unset($dirId);
     }
 
-    $protected[] = xarModGetVar('uploads', 'folders.rootfs');
-    $protected[] = xarModGetVar('uploads', 'folders.public-files');
-    $protected[] = xarModGetVar('uploads', 'folders.users');
-    $protected[] = xarModGetVar('uploads', 'folders.trash');
+    $protected[] = xarModGetVar('filemanager', 'folders.rootfs');
+    $protected[] = xarModGetVar('filemanager', 'folders.public-files');
+    $protected[] = xarModGetVar('filemanager', 'folders.users');
+    $protected[] = xarModGetVar('filemanager', 'folders.trash');
 
     // Flip the key->value pairs around so we can
     // check for protected directories

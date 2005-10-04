@@ -1,6 +1,6 @@
 <?php
 
-function uploads_userapi_process_filters( $args ) 
+function filemanager_userapi_process_filters( $args ) 
 {
 
     extract ( $args );
@@ -12,7 +12,7 @@ function uploads_userapi_process_filters( $args )
         $storeOptions = TRUE;
     }
     
-    $options   =  unserialize(xarModGetVar('uploads', 'view.filter'));
+    $options   =  unserialize(xarModGetVar('filemanager', 'view.filter'));
     
     $data      =  $options['data'];
     $filter    =  $options['filter'];   
@@ -87,25 +87,25 @@ function uploads_userapi_process_filters( $args )
      */
     
     switch($status) {
-        case _UPLOADS_STATUS_REJECTED:
-            $filter['fileStatus'] = _UPLOADS_STATUS_REJECTED;
-            $statuses[_UPLOADS_STATUS_REJECTED]['selected'] = TRUE;
+        case _FILEMANAGER_STATUS_REJECTED:
+            $filter['fileStatus'] = _FILEMANAGER_STATUS_REJECTED;
+            $statuses[_FILEMANAGER_STATUS_REJECTED]['selected'] = TRUE;
             break;
-        case _UPLOADS_STATUS_SUBMITTED:
-            $filter['fileStatus'] = _UPLOADS_STATUS_SUBMITTED;
-            $statuses[_UPLOADS_STATUS_SUBMITTED]['selected'] = TRUE;
+        case _FILEMANAGER_STATUS_SUBMITTED:
+            $filter['fileStatus'] = _FILEMANAGER_STATUS_SUBMITTED;
+            $statuses[_FILEMANAGER_STATUS_SUBMITTED]['selected'] = TRUE;
             break;
-        case _UPLOADS_STATUS_APPROVED:
-            $filter['fileStatus'] = _UPLOADS_STATUS_APPROVED;
-            $statuses[_UPLOADS_STATUS_APPROVED]['selected'] = TRUE;
+        case _FILEMANAGER_STATUS_APPROVED:
+            $filter['fileStatus'] = _FILEMANAGER_STATUS_APPROVED;
+            $statuses[_FILEMANAGER_STATUS_APPROVED]['selected'] = TRUE;
             break;
         case 0:
             $filter['fileStatus'] = '';
             $statuses[0]['selected'] = TRUE;
             break;
         default:
-            $filter['fileStatus'] = _UPLOADS_STATUS_SUBMITTED;
-            $statuses[_UPLOADS_STATUS_SUBMITTED]['selected'] = TRUE;
+            $filter['fileStatus'] = _FILEMANAGER_STATUS_SUBMITTED;
+            $statuses[_FILEMANAGER_STATUS_SUBMITTED]['selected'] = TRUE;
             break;
     }        
     unset($statuses);
@@ -114,7 +114,7 @@ function uploads_userapi_process_filters( $args )
     
     if ($storeOptions) {
         // Save the filter settings for later use
-        xarModSetUserVar('uploads','view.filter', serialize($filterInfo));
+        xarModSetUserVar('filemanager','view.filter', serialize($filterInfo));
     }
     
     return $filterInfo;

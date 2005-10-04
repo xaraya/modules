@@ -10,7 +10,7 @@
  * @returns array   All of the metadata stored for the particular file
  */
 
-function uploads_userapi_db_getall_files( /* VOID */ )
+function filemanager_userapi_db_getall_files( /* VOID */ )
 {
 
     // Get database setup
@@ -42,8 +42,8 @@ function uploads_userapi_db_getall_files( /* VOID */ )
         return array();
     }
 
-    $trustedDir = eregi_replace('/$', '', xarModGetVar('uploads','path.imports-directory'));
-    $untrustDir = eregi_replace('/$', '', xarModGetVar('uploads','path.uploads-directory'));
+    $trustedDir = eregi_replace('/$', '', xarModGetVar('filemanager','path.imports-directory'));
+    $untrustDir = eregi_replace('/$', '', xarModGetVar('filemanager','path.filemanager-directory'));
 
     while (!$result->EOF) {
         $row = $result->GetRowAssoc(false);
@@ -54,20 +54,20 @@ function uploads_userapi_db_getall_files( /* VOID */ )
         $file['name']               = $row['xar_filename'];
 
         $file['size']['value']      = $row['xar_filesize'];
-        $file['size']['text']       = xarModAPIFunc('uploads', 'user', 'normalize_filesize', $row['xar_filesize']);
+        $file['size']['text']       = xarModAPIFunc('filemanager', 'user', 'normalize_filesize', $row['xar_filesize']);
 
         $file['owner']['id']        = $row['xar_user_id'];
         $file['owner']['name']      = xarUserGetVar('name', $row['xar_user_id']);
 
         $file['status']['value']       = $row['xar_status'];
         switch($row['xar_status']) {
-            case _UPLOADS_STATUS_REJECTED:
+            case _FILEMANAGER_STATUS_REJECTED:
                 $file['status']['text'] = xarML('Rejected');
                 break;
-            case _UPLOADS_STATUS_APPROVED:
+            case _FILEMANAGER_STATUS_APPROVED:
                 $file['status']['text'] = xarML('Approved');
                 break;
-            case _UPLOADS_STATUS_SUBMITTED:
+            case _FILEMANAGER_STATUS_SUBMITTED:
                 $file['status']['text'] = xarML('Submitted');
                 break;
             default:
@@ -78,12 +78,12 @@ function uploads_userapi_db_getall_files( /* VOID */ )
         $file['storetype']['value'] = $row['xar_store_type'];
         $storeTypeText = 'Database File Entry';
 
-        if (_UPLOADS_STORE_FILESYSTEM & $row['xar_store_type']) {
+        if (_FILEMANAGER_STORE_FILESYSTEM & $row['xar_store_type']) {
             if (!empty($storeTypeText)) {
                 $storeTypeText .= ' / ';
             }
             $storeTypeText .= 'File System Store';
-        } elseif (_UPLOADS_STORE_DB_DATA & $row['xar_store_type']) {
+        } elseif (_FILEMANAGER_STORE_DB_DATA & $row['xar_store_type']) {
             if (!empty($storeTypeText)) {
                 $storeTypeText = ' / ';
             }
@@ -93,7 +93,7 @@ function uploads_userapi_db_getall_files( /* VOID */ )
         $file['mimetype']              = xarModAPIFunc('mime', 'user', 'get_rev_mimetype', array('mimeType' => $row['xar_mime_type']));
         $file['mimetype']['text']      = $row['xar_mime_type'];
         $file['mimetype']['imagepath'] = xarModAPIFunc('mime', 'user', 'get_mime_image', array('mimeType' => $row['xar_mime_type']));
-        $file['link']['url']  = xarModURL('uploads', 'user', 'download', array('fileId' => $file['id']));
+        $file['link']['url']  = xarModURL('filemanager', 'user', 'download', array('fileId' => $file['id']));
         $file['link']['label']     = xarML('Download file: #(1)', $file['name']);
         $file['link']['link']      = '<a href="'.$file['link']['url'].'" alt="'.$file['link']['label'].'">'
                                    . $file['name'] . '</a>';

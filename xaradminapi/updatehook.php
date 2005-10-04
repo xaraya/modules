@@ -1,6 +1,6 @@
 <?php
 
-function uploads_adminapi_updatehook($args)
+function filemanager_adminapi_updatehook($args)
 {
 
     // extract args out of an array and into local name space
@@ -20,7 +20,7 @@ function uploads_adminapi_updatehook($args)
     }
 
     // get the modID & itemId for the modSets below, this will allow multiple
-    // instances of uploads on a page/pubtype
+    // instances of filemanager on a page/pubtype
     $modId = xarModGetIDFromName($modName);
     $itemType = (isset($args['extrainfo']['itemtype'])?$args['extrainfo']['itemtype']:0);
     $itemId = (isset($args['objectid'])?$args['objectid']:0);
@@ -45,7 +45,7 @@ function uploads_adminapi_updatehook($args)
     // call delete assoc every time and then add back any passed items,
     // if any
     
-    $_deletedFileIds = xarModAPIFunc('uploads','user','db_delete_association',
+    $_deletedFileIds = xarModAPIFunc('filemanager','user','db_delete_association',
         array(
             'modid'        => $modId,
             'itemtype'    => $itemType,
@@ -57,7 +57,7 @@ function uploads_adminapi_updatehook($args)
         foreach ($selectedFiles as $_fileId) {
             
             // add the stuff to the db for this item
-            $_resultingFileId = xarModAPIFunc('uploads','user','db_add_association',
+            $_resultingFileId = xarModAPIFunc('filemanager','user','db_add_association',
                 array(
                     'modid'        =>$modId,
                     'itemtype'    =>$itemType,

@@ -7,11 +7,11 @@
  * http://www.xaraya.org
  * ----------------------------------------------------------------------
  * Original Author of file: Carl P. Corliss (ccorliss@schwabfoundation.org)
- * Purpose of file:  uploads user API
+ * Purpose of file:  filemanager user API
  * ----------------------------------------------------------------------
  */
 
 
-xarModAPILoad('uploads', 'user');
+xarModAPILoad('filemanager', 'user');
 
 ?>

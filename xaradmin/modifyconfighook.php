@@ -1,9 +1,9 @@
 <?php
 
-function uploads_admin_modifyconfighook($args)
+function filemanager_admin_modifyconfighook($args)
 {
     //security check
-    if (!xarSecurityCheck('AdminUploads')) return;
+    if (!xarSecurityCheck('AdminFileManager')) return;
 
 
     // extract args out of an array and into local name space
@@ -23,14 +23,14 @@ function uploads_admin_modifyconfighook($args)
     }
 
     // get the modID & itemType for the modSets below, this will allow multiple
-    // instances of uploads on a page/pubtype
+    // instances of filemanager on a page/pubtype
     $modId = xarModGetIDFromName($modName);
     $itemType = (isset($args['extrainfo']['itemtype'])?$args['extrainfo']['itemtype']:0);
 
 
     // get all the info out of the db/passed form and then extract it
     // make sure the xarModGetVar worked and use an empty array just in case
-    $data = (xarModGetVar('uploads',"settings.attachment.$modId.$itemType")?unserialize(xarModGetVar('uploads',"settings.attachment.$modId.$itemType")):array());
+    $data = (xarModGetVar('filemanager',"settings.attachment.$modId.$itemType")?unserialize(xarModGetVar('filemanager',"settings.attachment.$modId.$itemType")):array());
 
 
     if (!xarVarFetch('mimetype',          'int:0:',               $data['mimetype'],      0,     XARVAR_NOT_REQUIRED)) {return;}
@@ -43,7 +43,7 @@ function uploads_admin_modifyconfighook($args)
     $itemType = 0;
 
     // get the list of all the mime types
-    $options  = xarModAPIFunc('uploads','user','process_filters',
+    $options  = xarModAPIFunc('filemanager','user','process_filters',
                                array('mimetype'=>$data['mimetype'],
                                      'subtype'=>$data['mimesubtype']));
 

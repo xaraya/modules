@@ -5,30 +5,30 @@
  * @returns array
  * @return array containing the menulinks for the main menu items.
  */
-function uploads_adminapi_getmenulinks()
+function filemanager_adminapi_getmenulinks()
 {
-    if (xarSecurityCheck('EditUploads')) {
-        $menulinks[] = Array('url'   => xarModURL('uploads',
+    if (xarSecurityCheck('EditFileManager')) {
+        $menulinks[] = Array('url'   => xarModURL('filemanager',
                                                   'admin',
                                                   'main'),
-                             'title' => xarML('Uploads Module Overview'),
+                             'title' => xarML('FileManager Module Overview'),
                              'label' => xarML('Overview'));
-        $menulinks[] = Array('url'   => xarModURL('uploads',
+        $menulinks[] = Array('url'   => xarModURL('filemanager',
                                                   'admin',
                                                   "view"),
                              'title' => xarML('View All Files'),
                              'label' => xarML('View Files'));
-        $menulinks[] = Array('url'   => xarModURL('uploads',
+        $menulinks[] = Array('url'   => xarModURL('filemanager',
                                                   'admin',
                                                   'get_files'),
                              'title' => xarML('Add a File'),
                              'label' => xarML('Add File'));
     }
-    if (xarSecurityCheck('AdminUploads')) {
-        $menulinks[] = Array('url'   => xarModURL('uploads',
+    if (xarSecurityCheck('AdminFileManager')) {
+        $menulinks[] = Array('url'   => xarModURL('filemanager',
                                                   'admin',
                                                   'modifyconfig'),
-                             'title' => xarML('Edit the Uploads Configuration'),
+                             'title' => xarML('Edit the FileManager Configuration'),
                              'label' => xarML('Modify Config'));
     }
     if (empty($menulinks)){

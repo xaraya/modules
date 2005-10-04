@@ -9,7 +9,7 @@
  *  @returns <type>
  */
 
-function uploads_userapi_import_get_filelist( $args )
+function filemanager_userapi_import_get_filelist( $args )
 {
 
 
@@ -45,7 +45,7 @@ function uploads_userapi_import_get_filelist( $args )
 
     if (!isset($fileLocation)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)].',
-                     'fileLocation', 'import_get_filelist', 'uploads');
+                     'fileLocation', 'import_get_filelist', 'filemanager');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
@@ -85,7 +85,7 @@ function uploads_userapi_import_get_filelist( $args )
         case _INODE_TYPE_FILE:
             if ($onlyNew) {
 
-                $file = xarModAPIfunc('uploads', 'user', 'db_get_file',
+                $file = xarModAPIfunc('filemanager', 'user', 'db_get_file',
                                        array('fileLocation' => $fileLocation));
                 if (count($file)) {
                     break;
@@ -96,7 +96,7 @@ function uploads_userapi_import_get_filelist( $args )
             if ((isset($search) && preg_match("/$search/", $fileName)) &&
                 (!isset($exclude) || !preg_match("/$exclude/", $fileName))) {
                     $fileList["$type:$fileName"] =
-                        xarModAPIFunc('uploads', 'fs', 'get_metadata',
+                        xarModAPIFunc('filemanager', 'fs', 'get_metadata',
                                        array('fileLocation' => $fileLocation));
             }
             break;
@@ -132,18 +132,18 @@ function uploads_userapi_import_get_filelist( $args )
                             $fileName = $fileLocation . '/' . $inode;
 
                             if ($onlyNew) {
-                                $file = xarModAPIfunc('uploads', 'user', 'db_get_file',
+                                $file = xarModAPIfunc('filemanager', 'user', 'db_get_file',
                                                     array('fileLocation' => $fileName));
                                 if (count($file)) {
                                     continue;
                                 }
                             }
-                            $file = xarModAPIFunc('uploads', 'fs', 'get_metadata',
+                            $file = xarModAPIFunc('filemanager', 'fs', 'get_metadata',
                                                 array('fileLocation' => $fileName));
 
                             if ((!isset($search) || preg_match("/$search/", $fileName)) &&
                                 (!isset($exclude) || !preg_match("/$exclude/", $fileName))) {
-                                    $file = xarModAPIFunc('uploads', 'fs', 'get_metadata',
+                                    $file = xarModAPIFunc('filemanager', 'fs', 'get_metadata',
                                                         array('fileLocation' => $fileName));
                                     $fileList["$file[inodeType]:$fileName"] = $file;
                             }
@@ -151,7 +151,7 @@ function uploads_userapi_import_get_filelist( $args )
                         case _INODE_TYPE_DIRECTORY:
                             $dirName = "$fileLocation/$inode";
                             if ($descend) {
-                                $files = xarModAPIFunc('uploads', 'user', 'import_get_filelist',
+                                $files = xarModAPIFunc('filemanager', 'user', 'import_get_filelist',
                                                         array('fileLocation' => $dirName,
                                                           'descend' => TRUE,
                                                           'exclude' => $exclude,
@@ -161,7 +161,7 @@ function uploads_userapi_import_get_filelist( $args )
 
                                 if ((!isset($search) || preg_match("/$search/", $dirName)) &&
                                     (!isset($exclude) || !preg_match("/$exclude/", $dirName))) {
-                                        $files = xarModAPIFunc('uploads', 'fs', 'get_metadata',
+                                        $files = xarModAPIFunc('filemanager', 'fs', 'get_metadata',
                                                             array('fileLocation' => $dirName));
                                         $fileList["$files[inodeType]:$inode"] = $files;
                                 }

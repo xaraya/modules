@@ -6,13 +6,13 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <base href="http://localhost:9000/index.php" />
     <script>
-        function uploads_browser_error() {
+        function filemanager_browser_error() {
             alert('#$error['message']#');
             history.back();
         }
     </script>
 </head>
-<body onLoad="uploads_browser_error()">
+<body onLoad="filemanager_browser_error()">
     <h4 style="color: red;">
         #$error['message']#
     </h1>

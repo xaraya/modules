@@ -1,30 +1,30 @@
 <xar:base-include-javascript filename="switchImport.js" />
-<xar:set name="$stylesheet">xarTplAddStyleLink('uploads', 'uploads')</xar:set>
+<xar:set name="$stylesheet">xarTplAddStyleLink('filemanager', 'filemanager')</xar:set>
 
-<div class="xar-uploads-clearer">&nbsp;</div>
+<div class="xar-filemanager-clearer">&nbsp;</div>
 <xar:mlstring>Attach file(s) from source:</xar:mlstring><br />
 <p>
     <xar:if condition="$methods['trusted'] eq TRUE">
-        <a class="xar-uploads-action" onClick="javascript:xar_uploads_switchImport(1, #$getAction['LOCAL']#, '#$id#');true;" 
+        <a class="xar-filemanager-action" onClick="javascript:xar_filemanager_switchImport(1, #$getAction['LOCAL']#, '#$id#');true;" 
            name="attach_trusted" title="#xarML('Attach file from Trusted Directory')#">Trusted</a> |
     </xar:if>
     
     <xar:if condition="$methods['external'] eq TRUE">
-        <a class="xar-uploads-action" onClick="javascript:xar_uploads_switchImport(2, #$getAction['EXTERNAL']#, '#$id#');true;" 
+        <a class="xar-filemanager-action" onClick="javascript:xar_filemanager_switchImport(2, #$getAction['EXTERNAL']#, '#$id#');true;" 
            name="attach_external" title="#xarML('Attach file from external source (http(s)|ftp)')#">External</a> |
     </xar:if>
     
     <xar:if condition="$methods['upload'] eq TRUE">
-        <a class="xar-uploads-action" onClick="javascript:xar_uploads_switchImport(3, #$getAction['UPLOAD']#, '#$id#');true;" 
+        <a class="xar-filemanager-action" onClick="javascript:xar_filemanager_switchImport(3, #$getAction['UPLOAD']#, '#$id#');true;" 
            name="attach_upload" title="#xarML('Attach uploaded file')#">Upload</a> |
     </xar:if>
     
     <xar:if condition="$methods['stored'] eq TRUE AND (isset($storedList) AND count($storedList))">
-        <a class="xar-uploads-action" onClick="javascript:xar_uploads_switchImport(4, #$getAction['STORED']#, '#$id#');true;" 
+        <a class="xar-filemanager-action" onClick="javascript:xar_filemanager_switchImport(4, #$getAction['STORED']#, '#$id#');true;" 
            name="attach_stored" title="#xarML('Attach previously stored file')#">Stored</a> |
     </xar:if>
     
-    <a class="xar-uploads-action" onClick="javascript:xar_uploads_switchImport(5, -1, '#$id#');true;" 
+    <a class="xar-filemanager-action" onClick="javascript:xar_filemanager_switchImport(5, -1, '#$id#');true;" 
        name="attach_reset" title="#xarML('Reset')#">Reset</a> 
     <br />
     

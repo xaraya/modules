@@ -9,7 +9,7 @@
  * @returns output
  * @return output with rating information
  */
-function uploads_user_display_attachments($args)
+function filemanager_user_display_attachments($args)
 {
     extract($args);
     
@@ -47,10 +47,10 @@ function uploads_user_display_attachments($args)
     
     // save the current attachment info for use later on if the 
     // user decides to add / remove attachments for this item
-    xarModSetUserVar('uploads', 'save.attachment-info', serialize($args));
+    xarModSetUserVar('filemanager', 'save.attachment-info', serialize($args));
     
     // Run API function
-    $associations = xarModAPIFunc('uploads', 'user', 'db_get_associations', $args);
+    $associations = xarModAPIFunc('filemanager', 'user', 'db_get_associations', $args);
 
     if (!empty($associations)) {
         $fileIds = array();
@@ -58,16 +58,16 @@ function uploads_user_display_attachments($args)
             $fileIds[] = $assoc['fileId'];
         } 
         
-        $Attachments = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $fileIds));
+        $Attachments = xarModAPIFunc('filemanager', 'user', 'db_get_file', array('fileId' => $fileIds));
     } else {
         $Attachments = array();
     }
 
     $data = $args;    
     $data['Attachments']              = $Attachments;
-    $data['local_import_post_url']    = xarModURL('uploads', 'user', 'display_attachments');    
+    $data['local_import_post_url']    = xarModURL('filemanager', 'user', 'display_attachments');    
     // module name is mandatory here, because this is displayed via hooks (= from within another module)
-    $data['authid'] = xarSecGenAuthKey('uploads');
+    $data['authid'] = xarSecGenAuthKey('filemanager');
     return $data;
 }
 

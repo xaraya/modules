@@ -4,34 +4,34 @@ body {
     font-family: sans-serif;
     font-size: 10pt;
 }
-#uploads-browser-treepane {
+#filemanager-browser-treepane {
     float: left;
 }
-#uploads-browser-tree {
+#filemanager-browser-tree {
     margin-bottom: 5px;
     border: 2px inset;
     width: 15em;
     height: 225px;
     overflow: auto;
 }
-#uploads-browser-fileinfo {
+#filemanager-browser-fileinfo {
     border: 2px inset;
     width: 15em;
     height: 275px;
     overflow: auto;
 }
 
-#uploads-browser-fileinfo img {
+#filemanager-browser-fileinfo img {
     margin-left: 25px
 }
 
-#uploads-browser-filepath {
+#filemanager-browser-filepath {
     margin-bottom: 0px;
     border: 2px inset;
     overflow: auto;
     width: 100%;
 }
-.uploads-browser-filelist {
+.filemanager-browser-filelist {
     margin-left: 5px;
     border: 2px inset;
     width: 475px;
@@ -40,7 +40,7 @@ body {
     overflow: scroll;
 }
 
-.uploads-browser-selectlist {
+.filemanager-browser-selectlist {
     margin-left: 5px;
     border: 2px inset;
     width: 100%;
@@ -48,56 +48,56 @@ body {
     height: 200px;
     overflow: scroll;
 }
-#uploads-browser-fileinfo h4 {
+#filemanager-browser-fileinfo h4 {
     margin-top: 0;
 }
-#uploads-browser-treeroot {
+#filemanager-browser-treeroot {
     display: block !important;
     margin-top: 0;
     margin-left: -16px;
     padding-left: 0;
 }
-#uploads-browser-treeroot li {
+#filemanager-browser-treeroot li {
     margin-top: 0;
     padding-left: 18px;
     list-style-type: none;
 }
 
-#uploads-browser-treeroot ul {
+#filemanager-browser-treeroot ul {
     padding-left: 0;
     margin-left: 0;
 }
-.uploads-browser-filetable, .uploads-browser-selecttable {
+.filemanager-browser-filetable, .filemanager-browser-selecttable {
     width: 100%;
     border-collapse: collapse;
 }
-.uploads-browser-filetable th, .uploads-browser-filetable td, .uploads-browser-selecttable th, .uploads-browser-selecttable td {
+.filemanager-browser-filetable th, .filemanager-browser-filetable td, .filemanager-browser-selecttable th, .filemanager-browser-selecttable td {
     text-align: left;
     padding: 1px 4px;
     white-space: nowrap;
 }
-.uploads-browser-filetable td.uploads-browser-file-right, .uploads-browser-filetable th.uploads-browser-file-right {
+.filemanager-browser-filetable td.filemanager-browser-file-right, .filemanager-browser-filetable th.filemanager-browser-file-right {
     text-align: right;
 }
-#uploads-browser-treeroot li a, .uploads-browser-filetable a {
+#filemanager-browser-treeroot li a, .filemanager-browser-filetable a {
     color: #000;
     text-decoration: none;
     white-space: nowrap;
     padding: 0 5px;
 }
-#uploads-browser-treeroot a img, .uploads-browser-filetable a img, .uploads-browser-selecttable a img {
+#filemanager-browser-treeroot a img, .filemanager-browser-filetable a img, .filemanager-browser-selecttable a img {
     border: 0;
     vertical-align: text-bottom;
     margin-right: 5px;
 }
-#uploads-browser-treeroot a.uploads-browser-current {
+#filemanager-browser-treeroot a.filemanager-browser-current {
     background-color: #eee;
 }
 
-#uploads-browser-filetablebody tr:hover {
+#filemanager-browser-filetablebody tr:hover {
     background-color: lightblue;
 }
 
-.uploads-browser-selectedfile {
+.filemanager-browser-selectedfile {
     background-color: lightgreen;
 }

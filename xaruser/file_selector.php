@@ -1,26 +1,26 @@
 <?php
 
-function uploads_user_file_selector( $args=array() )
+function filemanager_user_file_selector( $args=array() )
 {
 
     extract($args);
-    xarModAPILoad('uploads', 'user');
+    xarModAPILoad('filemanager', 'user');
 
     if (!xarVarFetch('vpath',    'str:7:', $data['path'],       '/fsroot/', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('error',    'array',  $error,              NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('sortby',   'str:1:', $data['sortby'],     _UPLOADS_VDIR_SORTBY_NAME, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('sortdir',  'str:1:', $data['sortdir'],    _UPLOADS_VDIR_SORT_ASC,   XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('sortby',   'str:1:', $data['sortby'],     _FILEMANAGER_VDIR_SORTBY_NAME, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('sortdir',  'str:1:', $data['sortdir'],    _FILEMANAGER_VDIR_SORT_ASC,   XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('prefix',   'str:1:', $data['prefix'],     ''  ,   XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('tab',      'enum:browser:uploadfile:importfile:help', $tab, 'browser', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('action',   'enum:delsel:addsel:info', $data['action'], '', XARVAR_NOT_REQUIRED)) return;
 
     if (isset($error) && is_array($error) && isset($error['message'])) {
         $data['error'] = $error;
-        echo xarTplModule('uploads', 'user', 'file_browser_error', $data, NULL);
+        echo xarTplModule('filemanager', 'user', 'file_browser_error', $data, NULL);
         exit();
     }
 
-    $data['pathInfo'] = xarModAPIFunc('uploads', 'vdir', 'path_decode', array('path' => $data['path']));
+    $data['pathInfo'] = xarModAPIFunc('filemanager', 'vdir', 'path_decode', array('path' => $data['path']));
     if (is_array($data['pathInfo'])) {
         extract($data['pathInfo']);
     } else {
@@ -53,10 +53,10 @@ function uploads_user_file_selector( $args=array() )
     // because of the extracted data[pathInfo], current directory ID is
     // in $dirId
     if (!empty($dirId)) {
-        $data['path'] = xarModAPIFunc('uploads', 'vdir', 'path_encode', array('vdir_id' => $dirId));
+        $data['path'] = xarModAPIFunc('filemanager', 'vdir', 'path_encode', array('vdir_id' => $dirId));
     }
 
-    $data['dirList'] = xarModAPIFunc('uploads', 'user', 'get_dir_list',
+    $data['dirList'] = xarModAPIFunc('filemanager', 'user', 'get_dir_list',
                               array('path'     => $data['path'],
                                     'linkInfo' => $data['linkInfo']));
 
@@ -65,19 +65,19 @@ function uploads_user_file_selector( $args=array() )
     $data['listingfunction']="file_selector";
 
     // get the html for current paths directory browser to display in the browser
-    $data['directorybrowser'] = xarModFunc('uploads','user','directorybrowser',$data);
+    $data['directorybrowser'] = xarModFunc('filemanager','user','directorybrowser',$data);
 
     // If dirList is NULL, we have an error
     if (!isset($data['dirList']) || empty($data['dirList'])) {
         if (xarCurrentErrorType() !== XAR_NO_EXCEPTION) {
             $error = xarCurrentError();
             $data['error']['message'] = $error->msg;
-            echo xarTplModule('uploads', 'user', 'file_browser_error', $data, NULL);
+            echo xarTplModule('filemanager', 'user', 'file_browser_error', $data, NULL);
             exit();
         } else {
             $error = xarCurrentError();
             $data['error'] = xarML('unknown error retrieving directory list...');
-            echo xarTplModule('uploads', 'user', 'file_browser_error', $data, NULL);
+            echo xarTplModule('filemanager', 'user', 'file_browser_error', $data, NULL);
             exit();
         }
     }
@@ -96,20 +96,20 @@ function uploads_user_file_selector( $args=array() )
 
         // pass all current args (linkInfo[args]) into xarModURL and assign it to an array which we'll use to navigate
         // w/i the attachment manager
-        $tabs[$key]['link'] = xarModURL('uploads', 'user', 'file_selector', $linkInfo['args']);
+        $tabs[$key]['link'] = xarModURL('filemanager', 'user', 'file_selector', $linkInfo['args']);
     }
 
     // create an array of all the tabs we want have the template show
     $data['tabs'] = $tabs;
 
     // prep the link to be clicked when they're done w/ the pop up window
-    $data['finished'] = xarModURL('uploads', 'user', 'file_selector', $data['linkInfo']['args']);
+    $data['finished'] = xarModURL('filemanager', 'user', 'file_selector', $data['linkInfo']['args']);
 
     //. make the call for this specific tab
-    $data['taboutput'] = xarModFunc('uploads', 'user', $tab, $data);
+    $data['taboutput'] = xarModFunc('filemanager', 'user', $tab, $data);
     if (!is_string($data['taboutput'])) { return; }
 
-    echo xarTplModule('uploads','user','file_selector', $data, $tab);
+    echo xarTplModule('filemanager','user','file_selector', $data, $tab);
     exit();
     //return $data;
 

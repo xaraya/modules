@@ -9,7 +9,7 @@
  *  @returns array          FALSE on error, otherwise an array containing the fileInformation
  */
  
-function uploads_userapi_import_external_http( $args ) 
+function filemanager_userapi_import_external_http( $args ) 
 {
          
     extract($args);
@@ -39,7 +39,7 @@ function uploads_userapi_import_external_http( $args )
         $uri['fragment'] = '';
     }
     $total = 0;
-    $maxSize = xarModGetVar('uploads', 'file.maxsize');
+    $maxSize = xarModGetVar('filemanager', 'file.maxsize');
     
     // create the URI in the event we don't have the http library
     $httpURI = "$uri[scheme]://$uri[host]:$uri[port]$uri[path]$uri[query]$uri[fragment]";
@@ -64,12 +64,12 @@ function uploads_userapi_import_external_http( $args )
     if (($httpId = fopen($httpURI, 'rb')) === FALSE) {
         $msg = xarML('Unable to connect to host [#(1):#(2)] to retrieve file [#(3)]', 
                     $uri['host'], $uri['port'], basename($uri['path']));
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, '_UPLOADS_ERR_NO_CONNECT', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, '_FILEMANAGER_ERR_NO_CONNECT', new SystemException($msg));
     } else {
         if (($tmpId = fopen($tmpName, 'wb')) === FALSE) {
             $msg = xarML('Unable to open temp file to store remote host [#(1):#(2)] file [#(3)]', 
                         $uri['host'], $uri['port'], basename($uri['path']));
-            xarErrorSet(XAR_SYSTEM_EXCEPTION, '_UPLOADS_ERR_NO_OPEN', new SystemException($msg));
+            xarErrorSet(XAR_SYSTEM_EXCEPTION, '_FILEMANAGER_ERR_NO_OPEN', new SystemException($msg));
         } else {
 
             // Note that this is a -blocking- process - the connection will 
@@ -83,11 +83,11 @@ function uploads_userapi_import_external_http( $args )
                     $total += strlen($data);
                     if ($total > $maxSize) {
                         $msg = xarML('File size is greater than the maximum allowable.');
-                        xarErrorSet(XAR_SYSTEM_EXCEPTION, '_UPLOADS_ERR_NO_WRITE', new SystemException($msg));
+                        xarErrorSet(XAR_SYSTEM_EXCEPTION, '_FILEMANAGER_ERR_NO_WRITE', new SystemException($msg));
                         break;
                     } elseif (fwrite($tmpId, $data, strlen($data)) !== strlen($data)) {
                         $msg = xarML('Unable to write to temp file!');
-                        xarErrorSet(XAR_SYSTEM_EXCEPTION, '_UPLOADS_ERR_NO_WRITE', new SystemException($msg));
+                        xarErrorSet(XAR_SYSTEM_EXCEPTION, '_FILEMANAGER_ERR_NO_WRITE', new SystemException($msg));
                         break;
                     }
                 }
@@ -127,7 +127,7 @@ function uploads_userapi_import_external_http( $args )
                                    'errorId'   => $errorObj->getID());
             } else {
                 $fileError = array('errorMesg' => 'Unknown Error!',
-                                   'errorId'   => _UPLOADS_ERROR_UNKNOWN);
+                                   'errorId'   => _FILEMANAGER_ERROR_UNKNOWN);
             }
 
             if (!isset($fileInfo['errors'])) {
@@ -143,14 +143,14 @@ function uploads_userapi_import_external_http( $args )
     } else {
         $fileInfo['fileSrc'] = $fileInfo['fileLocation'];
 
-        $obfuscate_fileName = xarModGetVar('uploads','file.obfuscate-on-upload');
-        $savePath = xarModGetVar('uploads', 'path.uploads-directory');
+        $obfuscate_fileName = xarModGetVar('filemanager','file.obfuscate-on-upload');
+        $savePath = xarModGetVar('filemanager', 'path.filemanager-directory');
 
         // remoe any trailing slash from the Save Path
         $savePath = preg_replace('/\/$/', '', $savePath);
 
         if ($obfuscate_fileName) {
-            $obf_fileName = xarModAPIFunc('uploads', 'fs', 'obfuscate_name', 
+            $obf_fileName = xarModAPIFunc('filemanager', 'fs', 'obfuscate_name', 
                                         array('fileName' => $fileInfo['fileName']));
             $fileInfo['fileDest'] = $savePath . '/' . $obf_fileName;
         } else {

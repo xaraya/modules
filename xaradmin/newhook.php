@@ -6,10 +6,9 @@
  * @copyright (C) 2003 Xaraya
  * @link http://www.xaraya.com
  *
- * @subpackage uploads
- * @author ashley jones <ajones@schwabfoundation.org>
+ * @subpackage filemanager  * @author ashley jones <ajones@schwabfoundation.org>
 */
-function uploads_admin_newhook($args)
+function filemanager_admin_newhook($args)
 {
     // extract args out of an array and into local name space
     extract($args);
@@ -28,7 +27,7 @@ function uploads_admin_newhook($args)
     }
 
     // get the modID & itemType for the modSets below, this will allow multiple
-    // instances of uploads on a page/pubtype
+    // instances of filemanager on a page/pubtype
     $modId = xarModGetIDFromName($modName);
     $itemType = (isset($args['extrainfo']['itemtype'])?$args['extrainfo']['itemtype']:0);
     $itemId = (isset($args['extrainfo']['itemid'])?$args['extrainfo']['itemid']:0);
@@ -39,11 +38,11 @@ function uploads_admin_newhook($args)
     $varName = 'files.selected.'.$data['prefix'];// modid_itemtype_itemid
     
     // see if there has been an error with the form.  if yes, get the value, if no, set it to empty array()
-    if (xarSessionGetVar('uploads_'.$data['prefix'].'_fristTime')){
+    if (xarSessionGetVar('filemanager_'.$data['prefix'].'_fristTime')){
         // get the list of files from before, possibly when there was an error w/ the new item's form
-        $value = @unserialize(xarModGetUserVar('uploads', $varName));
+        $value = @unserialize(xarModGetUserVar('filemanager', $varName));
     } else {
-        xarSessionSetVar('uploads_'.$data['prefix'].'_fristTime',1);
+        xarSessionSetVar('filemanager_'.$data['prefix'].'_fristTime',1);
         $value = array();
     }
     
@@ -62,15 +61,15 @@ function uploads_admin_newhook($args)
 
 
     // prep the URL that will open to select files.
-    $data['destination_url'] = xarModURL('uploads', 'user', 'file_selector', array('prefix' => $data['prefix']));
+    $data['destination_url'] = xarModURL('filemanager', 'user', 'file_selector', array('prefix' => $data['prefix']));
      
     // set the array of ID's so we have access to it on a different page: the file selector pop up window
-    if (!xarModGetVar('uploads', $varName)) {
-        xarModSetVar('uploads', $varName, serialize(array()));
+    if (!xarModGetVar('filemanager', $varName)) {
+        xarModSetVar('filemanager', $varName, serialize(array()));
     }
-    xarModSetUserVar('uploads', $varName, serialize($value));
+    xarModSetUserVar('filemanager', $varName, serialize($value));
 
-    return xarTplModule('uploads', 'user', 'showinput', $data, NULL);
+    return xarTplModule('filemanager', 'user', 'showinput', $data, NULL);
 }
 
 ?>

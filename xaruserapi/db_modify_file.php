@@ -18,7 +18,7 @@
  *  @returns integer The number of affected rows on success, or FALSE on error
  */
 
-function uploads_userapi_db_modify_file( $args )
+function filemanager_userapi_db_modify_file( $args )
 {
     extract($args);
 
@@ -26,7 +26,7 @@ function uploads_userapi_db_modify_file( $args )
 
     if (!isset($fileId)) {
         $msg = xarML('Missing parameter [#(1)] for API function [#(2)] in module (#3)]',
-                     'fileId','db_modify_file','uploads');
+                     'fileId','db_modify_file','filemanager');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }
@@ -84,7 +84,7 @@ function uploads_userapi_db_modify_file( $args )
         $update_args[] = $fileId;
     }
 
-    //add to uploads table
+    //add to filemanager table
     // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -104,7 +104,7 @@ function uploads_userapi_db_modify_file( $args )
     }
 
     // Pass the arguments to the hook modules too
-    $args['module'] = 'uploads';
+    $args['module'] = 'filemanager';
     $args['itemtype'] = 1; // Files
     xarModCallHooks('item', 'update', $fileId, $args);
 

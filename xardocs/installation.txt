@@ -1,10 +1,10 @@
-* Initialize and Enable the Uploads Module
+* Initialize and Enable the FileManager Module
 
-* Enable the uploads module hooks for Articles
+* Enable the filemanager module hooks for Articles
 
 
 
-* In the Uploads Admin, select Modify Config
+* In the FileManager Admin, select Modify Config
 
 * Specify an upload folder
 

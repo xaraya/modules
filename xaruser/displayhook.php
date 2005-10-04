@@ -1,16 +1,16 @@
 <?php
 /**
- * show input fields for uploads module (used in DD properties)
+ * show input fields for filemanager module (used in DD properties)
  *
  * @param  $args ['id'] string id of the upload field(s)
  * @param  $args ['value'] string the current value(s)
  * @param  $args ['format'] string format specifying 'fileupload', 'textupload' or 'upload' (future ?)
- * @param  $args ['multiple'] boolean allow multiple uploads or not
+ * @param  $args ['multiple'] boolean allow multiple filemanager or not
  * @param  $args ['methods'] array of allowed methods 'trusted', 'external', 'stored' and/or 'upload'
  * @returns string
  * @return string containing the input fields
  */
-function uploads_user_displayhook($args)
+function filemanager_user_displayhook($args)
 {
     extract($args);
   // When called via hooks, the module name may be empty, so we get it from
@@ -22,7 +22,7 @@ function uploads_user_displayhook($args)
     }
 
     // get the modID & itemId for the modSets below, this will allow multiple
-    // instances of uploads on a page/pubtype
+    // instances of filemanager on a page/pubtype
     $modId = xarModGetIDFromName($modName);
     $itemType = (isset($args['extrainfo']['itemtype'])?$args['extrainfo']['itemtype']:0);
     $itemId = (isset($args['objectid'])?$args['objectid']:0);
@@ -32,7 +32,7 @@ function uploads_user_displayhook($args)
     $varName = 'files.selected.' .  $data['prefix'];
 
     // get all the file the user may have associated with this item
-    $selectedFiles =array_keys(xarModAPIFunc('uploads','user','db_get_associations',array(
+    $selectedFiles =array_keys(xarModAPIFunc('filemanager','user','db_get_associations',array(
                 'modid'        =>$modId,
                 'itemtype'    =>$itemType,
                 'itemid'     =>$itemId)));
@@ -42,7 +42,7 @@ function uploads_user_displayhook($args)
         $selectedFiles = array();
     } else {
         // make sure each file exists by getting info on the file from the DB
-        $fileList = xarModAPIFunc('uploads', 'user', 'db_get_file_entry', array('fileId' => $selectedFiles));
+        $fileList = xarModAPIFunc('filemanager', 'user', 'db_get_file_entry', array('fileId' => $selectedFiles));
         if (is_array($fileList)){
             // return all the found IDs in the DB.  IDs that the DB didn't find, were'nt returned with db_get_file_entry
             // and thus have been discarded
@@ -51,16 +51,16 @@ function uploads_user_displayhook($args)
     }
     
     // get the settings string  into the $settings array
-    $settings = xarModAPIFunc('uploads', 'admin', 'get_attachment_settings', array('modid' => $modId, 'itemtype' => $itemType));
+    $settings = xarModAPIFunc('filemanager', 'admin', 'get_attachment_settings', array('modid' => $modId, 'itemtype' => $itemType));
 
     // get the array file meta data based on the $list array
-    $data['attached_items'] = xarModAPIFunc('uploads','user','db_get_file_entry',array(
+    $data['attached_items'] = xarModAPIFunc('filemanager','user','db_get_file_entry',array(
                      'fileId' => $selectedFiles));
     
     switch($settings['displayas']){
         case "list":
         case "icons":  
-            return xarTplModule('uploads','user','display_hook',$data,$settings['displayas']);
+            return xarTplModule('filemanager','user','display_hook',$data,$settings['displayas']);
             break; 
         case "raw":  
             // TODO get the mod name and itemtype name for human readabilty
@@ -70,7 +70,7 @@ function uploads_user_displayhook($args)
                         array(), 0);
             $itemName = strtolower(xarVarPrepForOS($types[$itemType]['label']));
             
-            return xarTplModule('uploads','user','display_hook',$data,'raw_'.$modName."_".$itemName);
+            return xarTplModule('filemanager','user','display_hook',$data,'raw_'.$modName."_".$itemName);
             break;
     }
 }

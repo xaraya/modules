@@ -8,7 +8,7 @@
  * @return  TRUE on success, FALSE otherwise
  */
 
-function uploads_vdirapi_move_dir( $args )
+function filemanager_vdirapi_move_dir( $args )
 {
 
 }

@@ -1,6 +1,6 @@
  <?php
 
- function uploads_userapi_flush_page_buffer(/*VOID*/)
+ function filemanager_userapi_flush_page_buffer(/*VOID*/)
  {
     if (ini_get('output_handler') == 'ob_gzhandler' || ini_get('zlib.output_compression') == TRUE) {
         do {

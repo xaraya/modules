@@ -9,7 +9,7 @@
  * @return  the vdir_id of directory represented by the specified path
  */
 
-function uploads_vdirapi_path_decode( $args )
+function filemanager_vdirapi_path_decode( $args )
 {
     $path       = NULL;
     $is_mounted = FALSE;
@@ -25,7 +25,7 @@ function uploads_vdirapi_path_decode( $args )
 
     if (!isset($path) || (!is_array($path) && !is_string($path))) {
         $msg = xarML('Missing parameter [#(1)] for function [(#(2)] in module [#(3)]',
-                     'path', 'vdir_path_decode', 'uploads');
+                     'path', 'vdir_path_decode', 'filemanager');
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
 
@@ -39,12 +39,12 @@ function uploads_vdirapi_path_decode( $args )
             $origPath = $path;
         }
 
-        $path = xarModAPIFunc('uploads', 'vdir', 'split_path', array('path' => $path));
+        $path = xarModAPIFunc('filemanager', 'vdir', 'split_path', array('path' => $path));
     } else {
         return FALSE;
     }
 
-    $pathCache = xarVarGetCached('uploads', 'path.decoded');
+    $pathCache = xarVarGetCached('filemanager', 'path.decoded');
     if (!is_array($pathCache)) {
         $pathCache = array();
     } elseif (isset($pathCache[md5($origPath)]) && !empty($pathCache[md5($origPath)])) {
@@ -53,7 +53,7 @@ function uploads_vdirapi_path_decode( $args )
         
     // Grab the complete directory list from the root on down
     $dirList = xarModAPIFunc('categories', 'user', 'getcat',
-                              array('cid'           => xarModGetVar('uploads', 'folders.rootfs'),
+                              array('cid'           => xarModGetVar('filemanager', 'folders.rootfs'),
                                     'getchildren'   => TRUE,
                                     'return_itself' => TRUE));
 
@@ -67,10 +67,10 @@ function uploads_vdirapi_path_decode( $args )
         if ($curIndex == ($entry['indentation']) &&     // If the indentation matches
             TRUE == $found_parent[$curIndex] &&         // and the parent was found for this
             $entry['name'] == $path[$curIndex]) {       // and the name matches
-                if (xarModAPIFunc('uploads', 'mount', 'is_mountpoint', array('vdir_id' => $entry['cid']))) {
+                if (xarModAPIFunc('filemanager', 'mount', 'is_mountpoint', array('vdir_id' => $entry['cid']))) {
                     
                     // Get the stored information on the mount point
-                    $mountInfo = xarModAPIFunc('uploads', 'mount', 'get', array('vdir_id' => $entry['cid']));
+                    $mountInfo = xarModAPIFunc('filemanager', 'mount', 'get', array('vdir_id' => $entry['cid']));
 
                     if (file_exists($mountInfo['path']) && is_dir($mountInfo['path'])) {
                         // Remove the current path component from
@@ -88,9 +88,9 @@ function uploads_vdirapi_path_decode( $args )
                     // If we've made it here we possibly have a malformed
                     // mount, so let's drop an error message so the user
                     // knows that something is terribly wrong here
-                    $path = xarModAPIFunc('uploads', 'vdir', 'path_encode', array('vdir_id' => $entry['cid']));
+                    $path = xarModAPIFunc('filemanager', 'vdir', 'path_encode', array('vdir_id' => $entry['cid']));
                     $msg = xarML('Location pointed to by mountpoint: [#(1)] does not exist...', $path);
-                    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UPLOADS_MOUNT_POINT_CORRUPT', new SystemException($msg));
+                    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'FILEMANAGER_MOUNT_POINT_CORRUPT', new SystemException($msg));
                     return FALSE;
                 }
 
@@ -130,11 +130,11 @@ function uploads_vdirapi_path_decode( $args )
         if (FALSE == $pathInfo['is_mounted']) {
             // If not mounted, then attempt to find the file
             // in the directory specified by dirId 
-            $assocList = xarModAPIFunc('uploads', 'user', 'db_get_associations',
+            $assocList = xarModAPIFunc('filemanager', 'user', 'db_get_associations',
                                         array('modid'  => xarModGetIdFromName('categories'),
                                               'itemtype' => 0,
                                               'itemid' => $dirId));
-            $file = @end(xarModAPIFunc('uploads', 'user', 'db_get_file_entry',
+            $file = @end(xarModAPIFunc('filemanager', 'user', 'db_get_file_entry',
                                         array('fileId' => array_keys($assocList),
                                               'fileName' => end($path))));
 
@@ -156,7 +156,7 @@ function uploads_vdirapi_path_decode( $args )
                 
                 if (file_exists($filePath)) {
                     if (is_file($filePath)) {
-                        $file = @end(xarModAPIFunc('uploads', 'user', 'db_get_file_entry',
+                        $file = @end(xarModAPIFunc('filemanager', 'user', 'db_get_file_entry',
                                      array('fileLocation' => $fileLocation)));
                                                     
                         if (isset($file['id']) && !empty($file['id'])) {
@@ -168,10 +168,10 @@ function uploads_vdirapi_path_decode( $args )
                             $addFileArgs['name']     = end($path);
                             $addFileArgs['destination'] = $fileLocation;
 
-                            if (($fileId = xarModAPIFunc('uploads', 'user', 'db_add_file', $addFileArgs))) {
+                            if (($fileId = xarModAPIFunc('filemanager', 'user', 'db_add_file', $addFileArgs))) {
                                 // Cool - it was added, so now add the
                                 // association with the mount point directory
-                                xarModAPIFunc('uploads', 'user', 'db_add_association',
+                                xarModAPIFunc('filemanager', 'user', 'db_add_association',
                                                array('modid'    => xarModGetIDFromName('categories'),
                                                      'itemtype' => 0,
                                                      'itemid'   => $dirId,
@@ -202,7 +202,7 @@ function uploads_vdirapi_path_decode( $args )
         $pathInfo['is_dir'] = TRUE;
     }
     $pathCache[md5($origPath)] = $pathInfo;
-    xarVarSetCached('uploads', 'path.decoded', $pathCache);
+    xarVarSetCached('filemanager', 'path.decoded', $pathCache);
     return $pathInfo;
 }
 

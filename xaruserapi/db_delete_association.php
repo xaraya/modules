@@ -17,7 +17,7 @@
  *  @returns integer The number of affected rows on success, or FALSE on error
  */
 
-function uploads_userapi_db_delete_association( $args )
+function filemanager_userapi_db_delete_association( $args )
 {
 
     extract($args);
@@ -66,12 +66,12 @@ function uploads_userapi_db_delete_association( $args )
 
     if (0 == $fileId && (!isset($itemid) || !isset($itemtype) || !isset($modid))) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
-                     'fileId','db_delete_assocation','uploads');
+                     'fileId','db_delete_assocation','filemanager');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     } 
         
-    //add to uploads table
+    //add to filemanager table
     // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();

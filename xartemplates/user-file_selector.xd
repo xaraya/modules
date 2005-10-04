@@ -8,11 +8,11 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <base href="#xarServerGetBaseURL()#" />
     <style type="text/css">
-        @import url(modules/uploads/xarstyles/tree.css);
+        @import url(modules/filemanager/xarstyles/tree.css);
     </style>
-    <script type="text/javascript" src="modules/uploads/xartemplates/includes/functions.js"></script>
+    <script type="text/javascript" src="modules/filemanager/xartemplates/includes/functions.js"></script>
 </head>
-<body class="uploads-browser-body">
+<body class="filemanager-browser-body">
 <div>
     <dl class="xar-tabs">
         <dt class="help">
@@ -39,11 +39,11 @@
         <xar:if condition="$tab eq 'browser'">
             <dd style="float: right;">
                 <xar:if condition="isset($prefix) AND !empty($prefix)">
-                    <a href="#$finished#"  onclick="uploads_update_selected('#$prefix#');return false;">
+                    <a href="#$finished#"  onclick="filemanager_update_selected('#$prefix#');return false;">
                         Finish and Close
                     </a>
                 <xar:else />
-                    <a href="#$finished#"  onclick="uploads_update_selected('');return false;">
+                    <a href="#$finished#"  onclick="filemanager_update_selected('');return false;">
                         Finished and Close
                     </a>
                 </xar:if>

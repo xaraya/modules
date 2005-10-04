@@ -1,6 +1,6 @@
 <?php
 
-function uploads_adminapi_createhook($args)
+function filemanager_adminapi_createhook($args)
 {
 
     // extract args out of an array and into local name space
@@ -20,7 +20,7 @@ function uploads_adminapi_createhook($args)
     }
 
     // get the modID & itemId for the modSets below, this will allow multiple
-    // instances of uploads on a page/pubtype
+    // instances of filemanager on a page/pubtype
     $modId = xarModGetIDFromName($modName);
     $itemType = (isset($args['extrainfo']['itemtype'])?$args['extrainfo']['itemtype']:0);
     $itemId = 0;
@@ -32,7 +32,7 @@ function uploads_adminapi_createhook($args)
     if (!xarVarFetch($data['prefix'] . 'attachment_list', 'str:0:', $value, '', XARVAR_NOT_REQUIRED)) return;
 
     // make sure that any new articles wont try to load another, defunct new articles selected list
-    xarSessionSetVar('uploads_'.$data['prefix'].'_fristTime',0);
+    xarSessionSetVar('filemanager_'.$data['prefix'].'_fristTime',0);
     
     // if we didnt get a value for $value, make it an empty string
     if (empty($value)) {
@@ -51,14 +51,14 @@ function uploads_adminapi_createhook($args)
     // set the var name so that we can do a xarModSetVar using the real itemId, instead of 
     // using 0 as a temp id
     $varName = 'files.selected.'.$modId.'_'.$itemType.'_'.$itemId.'_';// modid_itemtype_itemid
-    xarModSetVar('uploads', $varName, serialize($selectedFiles));
+    xarModSetVar('filemanager', $varName, serialize($selectedFiles));
     
     if (!empty($list)){
         // loop through the passed file IDs and process each one
         foreach ($selectedFiles as $_fileId) {
             
             // add the stuff to the db for this item
-            $_resultingFileId = xarModAPIFunc('uploads','user','db_add_association',array(
+            $_resultingFileId = xarModAPIFunc('filemanager','user','db_add_association',array(
                     'modid'        =>$modId,
                     'itemtype'    =>$itemType,
                     'itemid'     =>$itemId,

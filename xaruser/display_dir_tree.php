@@ -2,11 +2,11 @@
 /*
  * File: $Id: $
  *
- * @package Uploads
+ * @package FileManager
  * @copyright (C) 2004 by the Schwab Foundation
  * @link http://wwwk.schwabfoundation.org
  *
- * @subpackage uploads module
+ * @subpackage filemanager module
  * @author "Carl P. Corliss" <ccorliss@schwabfoundation.org>
 */
 
@@ -17,7 +17,7 @@
  * @copyright 2004 (c) The Charles and Helen Schwab Foundation
  */
 
-function uploads_user_dir_branch_descend( $args )
+function filemanager_user_dir_branch_descend( $args )
 {
     extract($args);
 
@@ -31,7 +31,7 @@ function uploads_user_dir_branch_descend( $args )
 
         $data['tree'] = $tree;
 
-        $output = xarTplModule('uploads', 'user', 'directory_branch', $data);
+        $output = xarTplModule('filemanager', 'user', 'directory_branch', $data);
 
         return $output;
     }

@@ -9,14 +9,14 @@
  * @return  total size of directory or FALSE on error
  */
 
-function uploads_vdirapi_size( $args )
+function filemanager_vdirapi_size( $args )
 {
 
     extract($args);
 
     if (!isset($vdir_id)) {
         $msg = xarML('Missing parameter [#(1)] for function [(#(2)] in module [#(3)]',
-                     'dirId/dirIds', 'vdir_delete', 'uploads');
+                     'dirId/dirIds', 'vdir_delete', 'filemanager');
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
 
@@ -33,12 +33,12 @@ function uploads_vdirapi_size( $args )
     $totalSize += count($directories) * 1024;
 
     foreach ($directories as $directory) {
-        $fileList = array_keys(xarModAPIFunc('uploads', 'user', 'db_get_associations',
+        $fileList = array_keys(xarModAPIFunc('filemanager', 'user', 'db_get_associations',
                                    array('modid'    => xarModGetIDFromName('categories'),
                                          'itemtype' => 0,
                                          'itemid'   => $directory)));
 
-        $totalSize += xarModAPIFunc('uploads', 'user', 'db_get_filesize', array('fileId' => $fileList));
+        $totalSize += xarModAPIFunc('filemanager', 'user', 'db_get_filesize', array('fileId' => $fileList));
     }
 
     return $totalSize;

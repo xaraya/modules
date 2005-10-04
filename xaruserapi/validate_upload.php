@@ -15,14 +15,14 @@
  *  @returns boolean                      TRUE if checks pass, FALSE otherwise 
  */
 
-function uploads_userapi_validate_upload( $args ) 
+function filemanager_userapi_validate_upload( $args ) 
 {
 
     extract ($args);
     
     if (!isset($fileInfo)) {
         $msg = xarML('Missing parameter [#(1)] for function [(#(2)] in module [#(3)]',
-                     'fileInfo','validate_upload','uploads');
+                     'fileInfo','validate_upload','filemanager');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }        
@@ -53,7 +53,7 @@ function uploads_userapi_validate_upload( $args )
             break;
     }
     
-    $maxsize = xarModGetVar('uploads', 'file.maxsize');
+    $maxsize = xarModGetVar('filemanager', 'file.maxsize');
     $maxsize = $maxsize > 0 ? $maxsize : 0;
     
     if ($fileInfo['size'] > $maxsize) {

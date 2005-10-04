@@ -9,12 +9,12 @@
  * @returns The total of all file sizes requested, NULL on error
  */
 
-function uploads_userapi_db_get_filesize( $args )
+function filemanager_userapi_db_get_filesize( $args )
 {
     extract($args);
 
     if (!isset($fileId) || (!is_numeric($fileId) && !is_array($fileId))) {
-        $msg = xarML('Missing [#(1)] parameter for function [#(2)] in module [#(3)]', 'fileId', 'db_get_filename', 'uploads');
+        $msg = xarML('Missing [#(1)] parameter for function [#(2)] in module [#(3)]', 'fileId', 'db_get_filename', 'filemanager');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }

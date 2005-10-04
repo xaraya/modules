@@ -9,7 +9,7 @@
  *  @returns <type>
  */
 
-function uploads_fsapi_obfuscate_name( $args )
+function filemanager_fsapi_obfuscate_name( $args )
 {
 
     extract ($args);

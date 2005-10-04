@@ -13,13 +13,13 @@
  *  @returns integer The id of the file that was associated, FALSE with exception on error
  */
 
-function uploads_userapi_db_add_association( $args )
+function filemanager_userapi_db_add_association( $args )
 {
     extract($args);
 
     if (!isset($fileid)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
-                     'fileid','db_add_assocation','uploads');
+                     'fileid','db_add_assocation','filemanager');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     } else {
@@ -28,7 +28,7 @@ function uploads_userapi_db_add_association( $args )
 
     if (!isset($modid)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
-                     'modid','db_add_assocation','uploads');
+                     'modid','db_add_assocation','filemanager');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     } else {
@@ -45,7 +45,7 @@ function uploads_userapi_db_add_association( $args )
     }
     $bindvars[] = (int) $itemid;
 
-    //add to uploads table
+    //add to filemanager table
     // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();

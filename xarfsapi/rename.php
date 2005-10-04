@@ -9,9 +9,9 @@
  *  @returns <type> 
  */
 
-function uploads_fsapi_rename( $args ) 
+function filemanager_fsapi_rename( $args ) 
 { 
-    return xarModAPIFunc('uploads', 'fs', 'move', $args);
+    return xarModAPIFunc('filemanager', 'fs', 'move', $args);
 }
 
 ?>

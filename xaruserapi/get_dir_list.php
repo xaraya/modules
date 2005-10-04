@@ -1,7 +1,7 @@
 <?php
 
 
-function uploads_userapi_get_dir_list( $args )
+function filemanager_userapi_get_dir_list( $args )
 {
 
 
@@ -9,7 +9,7 @@ function uploads_userapi_get_dir_list( $args )
 
     if (!isset($path) || empty($path) || !is_string($path)) {
         $msg = xarML('Missing parameter [#(1)] for function [(#(2)] in module [#(3)]',
-                     'path', 'get_dir_,list', 'uploads');
+                     'path', 'get_dir_,list', 'filemanager');
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }
@@ -22,16 +22,16 @@ function uploads_userapi_get_dir_list( $args )
         $linkInfo['args'] = array();
     }
 
-    $mountpoints = @unserialize(xarModGetVar('uploads', 'mount.list'));
+    $mountpoints = @unserialize(xarModGetVar('filemanager', 'mount.list'));
     if (!is_array($mountpoints)) {
         $mountpoints = array();
     }
 
-    $vdirInfo = xarModAPIFunc('uploads', 'vdir', 'path_decode', array('path' => $path));
+    $vdirInfo = xarModAPIFunc('filemanager', 'vdir', 'path_decode', array('path' => $path));
 
     if (FALSE !== $vdirInfo) {
 
-        $dirList = xarModAPIFunc('uploads', 'vdir', 'get_dir_list',
+        $dirList = xarModAPIFunc('filemanager', 'vdir', 'get_dir_list',
                                   array('vdir_id'  => $vdirInfo['dirId'],
                                         'path'     => $path,
                                         'linkInfo' => $linkInfo));
@@ -43,7 +43,7 @@ function uploads_userapi_get_dir_list( $args )
 
             // Find the directory that we are going to append
             // children to and grab a reference to it
-            $pathArray = xarModAPIFunc('uploads', 'vdir', 'split_path', array('path' => $path));
+            $pathArray = xarModAPIFunc('filemanager', 'vdir', 'split_path', array('path' => $path));
             $node = 1;
 
             while (true) {
@@ -66,7 +66,7 @@ function uploads_userapi_get_dir_list( $args )
             }
 
             // Now grab the directory tree from the filesystem
-            $fs_dirlist = xarModAPIfunc('uploads', 'fs', 'get_dir_list',
+            $fs_dirlist = xarModAPIfunc('filemanager', 'fs', 'get_dir_list',
                                          array('pathRoot' => $pathRoot,
                                                'pathDest' => $pathDest,
                                                'linkInfo' => $linkInfo));

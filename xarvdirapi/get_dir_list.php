@@ -44,21 +44,21 @@
  */
 
 
-function uploads_vdirapi_get_dir_list( $args )
+function filemanager_vdirapi_get_dir_list( $args )
 {
 
     extract($args);
 
     if (!isset($vdir_id) || empty($vdir_id) || !is_numeric($vdir_id)) {
         $msg = xarML('Missing parameter [#(1)] for function [(#(2)] in module [#(3)]',
-                     'vdir_id', 'vdir_get_dir_list', 'uploads');
+                     'vdir_id', 'vdir_get_dir_list', 'filemanager');
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }
 
     if (!isset($path) || empty($path) || !is_string($path)) {
         $msg = xarML('Missing parameter [#(1)] for function [(#(2)] in module [#(3)]',
-                     'path', 'vdir_get_dir_list', 'uploads');
+                     'path', 'vdir_get_dir_list', 'filemanager');
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }
@@ -72,12 +72,12 @@ function uploads_vdirapi_get_dir_list( $args )
     }
 
     // Ensures the user has a home directory, creating it if necessary
-    $userDir = xarModAPIFunc('uploads', 'vdir', 'check_user_homedir');
+    $userDir = xarModAPIFunc('filemanager', 'vdir', 'check_user_homedir');
 
-    $path = xarModAPIFunc('uploads', 'vdir', 'split_path', array('path' => $path));
+    $path = xarModAPIFunc('filemanager', 'vdir', 'split_path', array('path' => $path));
 
     $dirList = xarModAPIFunc('categories', 'user', 'getcat',
-                              array('cid'           => xarModGetVar('uploads', 'folders.rootfs'),
+                              array('cid'           => xarModGetVar('filemanager', 'folders.rootfs'),
                                     'return_itself' => TRUE,
                                     'getchildren'   => TRUE));
 
@@ -89,7 +89,7 @@ function uploads_vdirapi_get_dir_list( $args )
     // so we need to reconstruct it here
     foreach ($dirList as $key => $entry) {
         $newList[$entry['cid']] = $entry;
-        $newList[$entry['cid']]['is_mount_point'] = xarModAPIFunc('uploads', 'mount', 'is_mountpoint', 
+        $newList[$entry['cid']]['is_mount_point'] = xarModAPIFunc('filemanager', 'mount', 'is_mountpoint', 
                                                             array('vdir_id' => $entry['cid']));
     }
     $dirList = $newList;
@@ -108,10 +108,10 @@ function uploads_vdirapi_get_dir_list( $args )
         }
     }
 
-    return __uploads_vdir_create_dir_list($dirList, $linkInfo, $path);
+    return __filemanager_vdir_create_dir_list($dirList, $linkInfo, $path);
 }
 
-function __uploads_vdir_create_dir_list($dirList, $linkInfo, $pathDest=NULL)
+function __filemanager_vdir_create_dir_list($dirList, $linkInfo, $pathDest=NULL)
 {
     static $is_users = 0;           // Whether or not this is a user's directory
     static $level    = 1;           // Current level node we are on in $pathDest
@@ -120,9 +120,9 @@ function __uploads_vdir_create_dir_list($dirList, $linkInfo, $pathDest=NULL)
            $list     = array();     // our final list of directories
            
 
-    $homeDirId  = xarModGetUserVar('uploads', 'folders.home');     // the user's home directory id
-    $pubDirId   = xarModGetVar('uploads', 'folders.public-files'); // the public files directory id
-    $usersDirId = xarModGetVar('uploads', 'folders.users');        // the users directory id
+    $homeDirId  = xarModGetUserVar('filemanager', 'folders.home');     // the user's home directory id
+    $pubDirId   = xarModGetVar('filemanager', 'folders.public-files'); // the public files directory id
+    $usersDirId = xarModGetVar('filemanager', 'folders.users');        // the users directory id
     
     if (isset($pathDest)) {
         $path = $pathDest;
@@ -146,9 +146,9 @@ function __uploads_vdir_create_dir_list($dirList, $linkInfo, $pathDest=NULL)
             $list[$entry['name']]['name'] = $entry['name'];
         }
         
-        $vpath = xarModAPIFunc('uploads', 'vdir', 'path_encode', array('vdir_id' => $entry['cid']));
+        $vpath = xarModAPIFunc('filemanager', 'vdir', 'path_encode', array('vdir_id' => $entry['cid']));
         $linkInfo['args']['vpath'] = $vpath;
-        $link = xarModURL('uploads', 'user', $linkInfo['func'], $linkInfo['args']);
+        $link = xarModURL('filemanager', 'user', $linkInfo['func'], $linkInfo['args']);
         $list[$entry['name']]['link'] = $link;
 
         if ($entry['name'] == $path[$level]) {
@@ -156,7 +156,7 @@ function __uploads_vdir_create_dir_list($dirList, $linkInfo, $pathDest=NULL)
             // so we can handle renaming of each user's folder name appropriately
             if ($entry['cid'] == $usersDirId) { $is_users = 1; } 
             $level++;
-            $children = __uploads_vdir_create_dir_list($entry['children'], $linkInfo);
+            $children = __filemanager_vdir_create_dir_list($entry['children'], $linkInfo);
             $level--;
             if ($entry['cid'] == $usersDirId && $is_users) { $is_users = 0; } 
             

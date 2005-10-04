@@ -1,10 +1,10 @@
-.xar-uploads-attachment-wrapper
+.xar-filemanager-attachment-wrapper
 {
     float:       left;
     width:       100%;
 }
 
-.xar-uploads-clearer
+.xar-filemanager-clearer
 {
     clear:       left;
     display:     block;
@@ -12,7 +12,7 @@
     height:      0;
 }
 
-.xar-uploads-icon
+.xar-filemanager-icon
 {
     float:       left;
     width:       30px;
@@ -24,14 +24,14 @@
     word-break:  normal;
 }
 
-.xar-uploads-icon img
+.xar-filemanager-icon img
 {
     float:       left;
     width:       36px;
     height:      39px;
 }
 
-.xar-uploads-action:hover
+.xar-filemanager-action:hover
 {
     cursor: pointer;
     color: #F12600;

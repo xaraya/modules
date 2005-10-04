@@ -6,7 +6,7 @@
  * @returns array
  * @return array containing the item types and their description
  */
-function uploads_userapi_getitemtypes($args)
+function filemanager_userapi_getitemtypes($args)
 {
     $itemtypes = array();
 
@@ -14,7 +14,7 @@ function uploads_userapi_getitemtypes($args)
     $id = 1;
     $itemtypes[$id] = array('label' => xarML('Files'),
                             'title' => xarML('View All Files'),
-                            'url'   => xarModURL('uploads','admin','view')
+                            'url'   => xarModURL('filemanager','admin','view')
                            );
 
     // TODO: Assoc, VDir and other future tables ?

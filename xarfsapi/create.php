@@ -17,7 +17,7 @@
  *  @return  integer The fileId of the newly created file, or ZERO (FALSE) on error
  */
 
-function uploads_fsapi_create( $args )
+function filemanager_fsapi_create( $args )
 {
 
     $fileName       = NULL;
@@ -29,7 +29,7 @@ function uploads_fsapi_create( $args )
     
     if (file_exists($fileLocation)) {
         $msg = xarML('File [#(1)] already exists.', $fileLocation);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UPLOADS_ERR_FILE_EXIST', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'FILEMANAGER_ERR_FILE_EXIST', new SystemException($msg));
         return FALSE;
     }
 
@@ -37,20 +37,20 @@ function uploads_fsapi_create( $args )
 
     if (!is_readable($path) || !is_writable($path)) {
         $msg = xarML('Cannot read and/or write file [#(1)] to directory [#(2)]. Are you sure you have access to read/write to the directory?', $fileName, $path);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UPLOADS_ERR_NO_READWRITE', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'FILEMANAGER_ERR_NO_READWRITE', new SystemException($msg));
         return FALSE;
     }
 /*    
     if (empty($contents)) {
         if (!isset($fromType)) {
             $msg = xarML('Cannot create a zero byte file.');
-            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UPLOADS_ERR_NO_CREATE', new SystemException($msg));
+            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'FILEMANAGER_ERR_NO_CREATE', new SystemException($msg));
             return FALSE;
         } else {
             if (!eregi('^(file|db)', strtolower($fromType))) {
                 $msg = xarML('Incorrect value for paramater #(1) in module #(2) function #(3). Value was: [#(4)] - expected #(5) or #(6).',
-                             'fromType', 'uploads', 'fsapi_create', $fromType, 'file', 'db');
-                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UPLOADS_ERR_NO_CREATE', new SystemException($msg));
+                             'fromType', 'filemanager', 'fsapi_create', $fromType, 'file', 'db');
+                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'FILEMANAGER_ERR_NO_CREATE', new SystemException($msg));
                 return FALSE;
             } else {
                 switch (strtolower($fromType)) {

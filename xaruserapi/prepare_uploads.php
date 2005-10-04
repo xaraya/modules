@@ -19,7 +19,7 @@
  */
 
 
-function uploads_userapi_prepare_uploads( $args )
+function filemanager_userapi_prepare_uploads( $args )
 {
     $fileList = array();
     $fileInfo = NULL;
@@ -37,7 +37,7 @@ function uploads_userapi_prepare_uploads( $args )
         foreach ($_FILES as $key => $file) {
             if (isset($file['name']) && !empty($file['name'])) {
 
-                // Check for multiple uploads under
+                // Check for multiple filemanager under
                 // the same input tag attribute name
                 if (is_array($file['name'])) {
                     // If we have multiple, reorganize them into:
@@ -86,13 +86,13 @@ function uploads_userapi_prepare_uploads( $args )
         }
     
         if (!isset($saveFSPath)) {
-            $saveFSPath = xarModGetVar('uploads', 'path.untrust');
+            $saveFSPath = xarModGetVar('filemanager', 'path.untrust');
         }
     
         // Check to see if we're importing and, if not, check the file and ensure that it
         // meets any requirements we might have for it. If it doesn't pass the tests,
         // then return FALSE
-        if (!xarModAPIFunc('uploads','user','validate_upload', array('fileInfo' => $file))) {
+        if (!xarModAPIFunc('filemanager','user','validate_upload', array('fileInfo' => $file))) {
             $errorObj = xarCurrentError();
     
             if (is_object($errorObj)) {
@@ -100,7 +100,7 @@ function uploads_userapi_prepare_uploads( $args )
                 $fileError['errorId']   = $errorObj->getID();
             } else {
                 $fileError['errorMesg'] = 'Unknown Error!';
-                $fileError['errorId']   = _UPLOADS_ERROR_UNKNOWN;
+                $fileError['errorId']   = _FILEMANAGER_ERROR_UNKNOWN;
             }
             $file['errors']      = $fileError;
     
@@ -108,7 +108,7 @@ function uploads_userapi_prepare_uploads( $args )
             xarErrorHandled();
         }
     
-        $obf_fileName = xarModAPIFunc('uploads', 'fs', 'obfuscate_name',
+        $obf_fileName = xarModAPIFunc('filemanager', 'fs', 'obfuscate_name',
                                        array('name' => $file['name']));
     
         $file['destination'] = $saveFSPath . '/' . $obf_fileName;

@@ -1,17 +1,17 @@
 <?php
 /**
- * validate input values for uploads module (used in DD properties)
+ * validate input values for filemanager module (used in DD properties)
  *
  * @param  $args ['id'] string id of the upload field(s)
  * @param  $args ['value'] string the current value(s)
  * @param  $args ['format'] string format specifying 'fileupload', 'textupload' or 'upload' (future ?)
- * @param  $args ['multiple'] boolean allow multiple uploads or not
+ * @param  $args ['multiple'] boolean allow multiple filemanager or not
  * @param  $args ['maxsize'] integer maximum size for upload files
  * @param  $args ['methods'] array allowed methods 'trusted', 'external', 'stored' and/or 'upload'
  * @returns array
  * @return array of (result, value) with result true, false or NULL (= error)
  */
-function uploads_adminapi_validatevalue($args)
+function filemanager_adminapi_validatevalue($args)
 {
     extract($args);
     if (empty($id)) {
@@ -49,8 +49,8 @@ function uploads_adminapi_validatevalue($args)
 
     // Check to see if an old value is present. Old values just file names
     // and do not start with a semicolon (our delimiter)
-    if (xarModAPIFunc('uploads', 'admin', 'dd_value_needs_conversion', $value)) {
-        $newValue = xarModAPIFunc('uploads', 'admin', 'dd_convert_value', array('value' =>$value));
+    if (xarModAPIFunc('filemanager', 'admin', 'dd_value_needs_conversion', $value)) {
+        $newValue = xarModAPIFunc('filemanager', 'admin', 'dd_convert_value', array('value' =>$value));
 
         // if we were unable to convert the value, then go ahead and and return
         // an empty string instead of processing the value and bombing out
@@ -64,19 +64,19 @@ function uploads_adminapi_validatevalue($args)
     }
 
 
-    xarModAPILoad('uploads','user');
+    xarModAPILoad('filemanager','user');
 
     if (isset($methods) && count($methods) > 0) {
-        $typeCheck = 'enum:0:' . _UPLOADS_GET_STORED;
-        $typeCheck .= (isset($methods['external']) && $methods['external'])  ? ':' . _UPLOADS_GET_EXTERNAL : '';
-        $typeCheck .= (isset($methods['trusted']) && $methods['trusted']) ? ':' . _UPLOADS_GET_LOCAL : '';
-        $typeCheck .= (isset($methods['upload']) && $methods['upload']) ? ':' . _UPLOADS_GET_UPLOAD : '';
+        $typeCheck = 'enum:0:' . _FILEMANAGER_GET_STORED;
+        $typeCheck .= (isset($methods['external']) && $methods['external'])  ? ':' . _FILEMANAGER_GET_EXTERNAL : '';
+        $typeCheck .= (isset($methods['trusted']) && $methods['trusted']) ? ':' . _FILEMANAGER_GET_LOCAL : '';
+        $typeCheck .= (isset($methods['upload']) && $methods['upload']) ? ':' . _FILEMANAGER_GET_UPLOAD : '';
         $typeCheck .= ':';
     } else {
-        $typeCheck = 'enum:0:' . _UPLOADS_GET_STORED;
-        $typeCheck .= (xarModGetVar('uploads', 'dd.fileupload.external') == TRUE) ? ':' . _UPLOADS_GET_EXTERNAL : '';
-        $typeCheck .= (xarModGetVar('uploads', 'dd.fileupload.trusted') == TRUE) ? ':' . _UPLOADS_GET_LOCAL : '';
-        $typeCheck .= (xarModGetVar('uploads', 'dd.fileupload.upload') == TRUE) ? ':' . _UPLOADS_GET_UPLOAD : '';
+        $typeCheck = 'enum:0:' . _FILEMANAGER_GET_STORED;
+        $typeCheck .= (xarModGetVar('filemanager', 'dd.fileupload.external') == TRUE) ? ':' . _FILEMANAGER_GET_EXTERNAL : '';
+        $typeCheck .= (xarModGetVar('filemanager', 'dd.fileupload.trusted') == TRUE) ? ':' . _FILEMANAGER_GET_LOCAL : '';
+        $typeCheck .= (xarModGetVar('filemanager', 'dd.fileupload.upload') == TRUE) ? ':' . _FILEMANAGER_GET_UPLOAD : '';
         $typeCheck .= ':';
     }
 
@@ -88,9 +88,9 @@ function uploads_adminapi_validatevalue($args)
 
     $args['action']    = $action;
     switch ($action) {
-        case _UPLOADS_GET_UPLOAD:
+        case _FILEMANAGER_GET_UPLOAD:
 
-            $file_maxsize = xarModGetVar('uploads', 'file.maxsize');
+            $file_maxsize = xarModGetVar('filemanager', 'file.maxsize');
             $file_maxsize = $file_maxsize > 0 ? $file_maxsize : $maxsize;
 
             if (!xarVarFetch('MAX_FILE_SIZE', "int::$file_maxsize", $maxsize)) return;
@@ -100,7 +100,7 @@ function uploads_adminapi_validatevalue($args)
             $upload         =& $_FILES[$id . '_attach_upload'];
             $args['upload'] =& $_FILES[$id . '_attach_upload'];
             break;
-        case _UPLOADS_GET_EXTERNAL:
+        case _FILEMANAGER_GET_EXTERNAL:
             // minimum external import link must be: ftp://a.ws  <-- 10 characters total
 
             if (!xarVarFetch($id . '_attach_external', 'regexp:/^([a-z]*).\/\/(.{7,})/', $import, 0, XARVAR_NOT_REQUIRED)) return;
@@ -111,19 +111,19 @@ function uploads_adminapi_validatevalue($args)
 
             $args['import'] = $import;
             break;
-        case _UPLOADS_GET_LOCAL:
+        case _FILEMANAGER_GET_LOCAL:
 */
 //            if (!xarVarFetch($id . '_attach_trusted', 'list:regexp:/(?<!\.{2,2}\/)[\w\d]*/', $fileList)) return;
 /*
-            $importDir = xarmodGetVar('uploads', 'path.imports-directory');
+            $importDir = xarmodGetVar('filemanager', 'path.imports-directory');
             foreach ($fileList as $file) {
                 $file = str_replace('/trusted', $importDir, $file);
-                $args['fileList']["$file"] = xarModAPIFunc('uploads', 'fs', 'get_metadata',
+                $args['fileList']["$file"] = xarModAPIFunc('filemanager', 'fs', 'get_metadata',
                                                             array('fileLocation' => "$file"));
                 $args['fileList']["$file"]['fileSize'] = $args['fileList']["$file"]['fileSize']['long'];
             }
             break;
-        case _UPLOADS_GET_STORED:
+        case _FILEMANAGER_GET_STORED:
 
             if (!xarVarFetch($id . '_attach_stored', 'list:int:1:', $fileList, 0, XARVAR_NOT_REQUIRED)) return;
 
@@ -164,7 +164,7 @@ function uploads_adminapi_validatevalue($args)
             $args['storeType'] = $storeType;
         }
 
-        $list = xarModAPIFunc('uploads','user','process_files', $args);
+        $list = xarModAPIFunc('filemanager','user','process_files', $args);
         $storeList = array();
         foreach ($list as $file => $fileInfo) {
             if (!isset($fileInfo['errors'])) {

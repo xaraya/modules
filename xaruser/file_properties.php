@@ -3,25 +3,25 @@
 /**
  *  Display a file properties window detailing information about the file
  */
-xarModAPILoad('uploads','user');
+xarModAPILoad('filemanager','user');
 
-function uploads_user_file_properties( $args ) 
+function filemanager_user_file_properties( $args ) 
 {
     
     extract($args);
 
-    if (!xarSecurityCheck('ViewUploads')) return;
+    if (!xarSecurityCheck('ViewFileManager')) return;
     if (!xarVarFetch('fileId',   'int:1', $fileId)) return;
     if (!xarVarFetch('fileName', 'str:1:64', $fileName, '', XARVAR_NOT_REQUIRED)) return;
     
     if (!isset($fileId)) {
         $msg = xarML('Missing paramater [#(1)] for GUI function [#(2)] in module [#(3)].',
-                     'fileId', 'file_properties', 'uploads');
+                     'fileId', 'file_properties', 'filemanager');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
     
-    $fileInfo = xarModAPIFunc('uploads','user','db_get_file', array('fileId' => $fileId));
+    $fileInfo = xarModAPIFunc('filemanager','user','db_get_file', array('fileId' => $fileId));
     if (empty($fileInfo) || !count($fileInfo)) {
         $data['fileInfo']   = array();
         $data['error']      = xarML('File not found!');
@@ -36,10 +36,10 @@ function uploads_user_file_properties( $args )
 
         $instance = implode(':', $instance);
 
-        if (xarSecurityCheck('EditUploads', 0, 'File', $instance)) {
+        if (xarSecurityCheck('EditFileManager', 0, 'File', $instance)) {
             $data['allowedit'] = 1;
             $data['hooks'] = xarModCallHooks('item', 'modify', $fileId,
-                                             array('module'    => 'uploads',
+                                             array('module'    => 'filemanager',
                                                    'itemtype'  => 1));
         } else {
             $data['allowedit'] = 0;
@@ -51,13 +51,13 @@ function uploads_user_file_properties( $args )
                 $args['fileId'] = $fileId;
                 $args['fileName'] = trim($fileName);
                 
-                if (!xarModAPIFunc('uploads', 'user', 'db_modify_file', $args)) {
+                if (!xarModAPIFunc('filemanager', 'user', 'db_modify_file', $args)) {
                     $msg = xarML('Unable to change filename for file: #(1) with file Id #(2)', 
                                   $fileInfo['fileName'], $fileInfo['fileId']);
                     xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN_ERROR', new SystemException($msg));
                     return;
                 }
-                xarResponseRedirect(xarModURL('uploads', 'user', 'file_properties', array('fileId' => $fileId)));
+                xarResponseRedirect(xarModURL('filemanager', 'user', 'file_properties', array('fileId' => $fileId)));
                 return;
             } else {
                 xarErrorHandled();
@@ -68,7 +68,7 @@ function uploads_user_file_properties( $args )
             }
         }
         
-        if ($fileInfo['fileStatus'] == _UPLOADS_STATUS_APPROVED || xarSecurityCheck('ViewUploads', 1, 'File', $instance)) {
+        if ($fileInfo['fileStatus'] == _FILEMANAGER_STATUS_APPROVED || xarSecurityCheck('ViewFileManager', 1, 'File', $instance)) {
 
 
             // we don't want the theme to show up, so 
@@ -78,12 +78,12 @@ function uploads_user_file_properties( $args )
             $storeType  = array('long' => '', 'short' => $fileInfo['storeType']);
             $storeType['long'] = 'Database File Entry';
 
-            if (_UPLOADS_STORE_FILESYSTEM & $fileInfo['storeType']) {
+            if (_FILEMANAGER_STORE_FILESYSTEM & $fileInfo['storeType']) {
                 if (!empty($storeType['long'])) {
                     $storeType['long'] .= ' / ';
                 }
                 $storeType['long'] .= 'File System Store';
-            } elseif (_UPLOADS_STORE_DB_DATA & $fileInfo['storeType']) {
+            } elseif (_FILEMANAGER_STORE_DB_DATA & $fileInfo['storeType']) {
                 if (!empty($storeType['long'])) {
                     $storeType['long'] .= ' / ';
                 }
@@ -93,7 +93,7 @@ function uploads_user_file_properties( $args )
             $fileInfo['storeType'] = $storeType;
             unset($storeType);
 
-            $fileInfo['size'] = xarModAPIFunc('uploads', 'user', 'normalize_filesize', array('fileSize' => $fileInfo['fileSize']));
+            $fileInfo['size'] = xarModAPIFunc('filemanager', 'user', 'normalize_filesize', array('fileSize' => $fileInfo['fileSize']));
 
             if (ereg('^image', $fileInfo['fileType'])) {
                 if (xarModIsAvailable('images')) {
@@ -124,7 +124,7 @@ function uploads_user_file_properties( $args )
 
             $data['fileInfo'] = $fileInfo;
 
-            echo xarTplModule('uploads','user','file_properties', $data, NULL);
+            echo xarTplModule('filemanager','user','file_properties', $data, NULL);
             exit();
         } else {
             xarErrorHandled();

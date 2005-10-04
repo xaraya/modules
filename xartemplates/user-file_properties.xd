@@ -24,7 +24,7 @@
             <xar:if condition="!empty($allowedit)">
             <tr>
                 <td align="center">
-                    <form action="#xarModUrl('uploads','user','file_properties')#" method="post">
+                    <form action="#xarModUrl('filemanager','user','file_properties')#" method="post">
                     <table width="100%" border="0" cellspacing="0" cellpadding="0" class="xar-norm">
                         <tr>
                             <td width="20%">
@@ -139,8 +139,8 @@
                                 file:#$fileInfo['fileId']# 
                             </td>
                         </tr>
-                        <xar:if condition="xarModIsHooked('dynamicdata','uploads',1)">
-                            <xar:data-getitem name="$ddprops" module="uploads" itemtype="1" itemid="$fileInfo['fileId']" />
+                        <xar:if condition="xarModIsHooked('dynamicdata','filemanager',1)">
+                            <xar:data-getitem name="$ddprops" module="filemanager" itemtype="1" itemid="$fileInfo['fileId']" />
                             <xar:if condition="!empty($ddprops)">
                                 <xar:foreach in="$ddprops" key="$ddname">
                                     <td class="xar-norm" width="20%">
@@ -173,7 +173,7 @@
                                         <xar:if condition="xarModIsAvailable('images')">
                                             <xar:template file="image-thumbnail" type="module" />
                                         <xar:else />
-                                            <img src="#xarModURL('uploads', 'user', 'download', array('fileId' => $fileInfo['fileId']))#" 
+                                            <img src="#xarModURL('filemanager', 'user', 'download', array('fileId' => $fileInfo['fileId']))#" 
                                                  height="#$fileInfo['image']['height']#" 
                                                  width="#$fileInfo['image']['width']#" 
                                                  alt="#$fileInfo['fileName']#" />

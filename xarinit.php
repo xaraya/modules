@@ -8,13 +8,12 @@
 // ----------------------------------------------------------------------
 // Original Author of file: Marie Altobelli (Ladyofdragons)
 // Current Maintainer: Michael Cortez (mcortez)
-// Purpose of file:  Initialisation functions for uploads
-// ----------------------------------------------------------------------
+// Purpose of file:  Initialisation functions for filemanager // ----------------------------------------------------------------------
 
 /**
  * initialise the module
  */
-function uploads_init()
+function filemanager_init()
 {
     //Not needed anymore with the dependency checks.
     if (!xarModIsAvailable('mime')) {
@@ -24,25 +23,25 @@ function uploads_init()
     }
 
     // load the predefined constants
-    xarModAPILoad('uploads', 'user');
+    xarModAPILoad('filemanager', 'user');
 
     if(xarServerGetVar('SCRIPT_FILENAME')) {
         $base_directory = dirname(realpath(xarServerGetVar('SCRIPT_FILENAME')));
     } else {
         $base_directory = './';
     }
-    xarModSetVar('uploads', 'path.untrust',   xarML('Change me!!'));
-    xarModSetVar('uploads', 'path.trusted',   xarML('Change me!!'));
-    xarModSetVar('uploads', 'file.maxsize',            '10000000');
-    xarModSetVar('uploads', 'file.delete-confirmation', TRUE);
-    xarModSetVar('uploads', 'file.auto-purge',          FALSE);
-    xarModSetVar('uploads', 'path.cwd', xarModGetVar('uploads', 'path.trusted'));
-    xarModSetVar('uploads', 'dd.fileupload.stored',   TRUE);
-    xarModSetVar('uploads', 'dd.fileupload.external', TRUE);
-    xarModSetVar('uploads', 'dd.fileupload.upload',   TRUE);
-    xarModSetVar('uploads', 'dd.fileupload.trusted',  TRUE);
-    xarModSetVar('uploads', 'file.auto-approve', _UPLOADS_APPROVE_ADMIN);
-    xarModGetVar('uploads', 'db.blocksize', (64 * 1024));
+    xarModSetVar('filemanager', 'path.untrust',   xarML('Change me!!'));
+    xarModSetVar('filemanager', 'path.trusted',   xarML('Change me!!'));
+    xarModSetVar('filemanager', 'file.maxsize',            '10000000');
+    xarModSetVar('filemanager', 'file.delete-confirmation', TRUE);
+    xarModSetVar('filemanager', 'file.auto-purge',          FALSE);
+    xarModSetVar('filemanager', 'path.cwd', xarModGetVar('filemanager', 'path.trusted'));
+    xarModSetVar('filemanager', 'dd.fileupload.stored',   TRUE);
+    xarModSetVar('filemanager', 'dd.fileupload.external', TRUE);
+    xarModSetVar('filemanager', 'dd.fileupload.upload',   TRUE);
+    xarModSetVar('filemanager', 'dd.fileupload.trusted',  TRUE);
+    xarModSetVar('filemanager', 'file.auto-approve', _FILEMANAGER_APPROVE_ADMIN);
+    xarModGetVar('filemanager', 'db.blocksize', (64 * 1024));
 
     $data['filters']['inverse']                     = FALSE;
     $data['filters']['mimetypes'][0]['typeId']      = 0;
@@ -51,19 +50,19 @@ function uploads_init()
     $data['filters']['subtypes'][0]['subtypeName']  = xarML('All');
     $data['filters']['status'][0]['statusId']       = 0;
     $data['filters']['status'][0]['statusName']     = xarML('All');
-    $data['filters']['status'][_UPLOADS_STATUS_SUBMITTED]['statusId']    = _UPLOADS_STATUS_SUBMITTED;
-    $data['filters']['status'][_UPLOADS_STATUS_SUBMITTED]['statusName']  = 'Submitted';
-    $data['filters']['status'][_UPLOADS_STATUS_APPROVED]['statusId']     = _UPLOADS_STATUS_APPROVED;
-    $data['filters']['status'][_UPLOADS_STATUS_APPROVED]['statusName']   = 'Approved';
-    $data['filters']['status'][_UPLOADS_STATUS_REJECTED]['statusId']     = _UPLOADS_STATUS_REJECTED;
-    $data['filters']['status'][_UPLOADS_STATUS_REJECTED]['statusName']   = 'Rejected';
+    $data['filters']['status'][_FILEMANAGER_STATUS_SUBMITTED]['statusId']    = _FILEMANAGER_STATUS_SUBMITTED;
+    $data['filters']['status'][_FILEMANAGER_STATUS_SUBMITTED]['statusName']  = 'Submitted';
+    $data['filters']['status'][_FILEMANAGER_STATUS_APPROVED]['statusId']     = _FILEMANAGER_STATUS_APPROVED;
+    $data['filters']['status'][_FILEMANAGER_STATUS_APPROVED]['statusName']   = 'Approved';
+    $data['filters']['status'][_FILEMANAGER_STATUS_REJECTED]['statusId']     = _FILEMANAGER_STATUS_REJECTED;
+    $data['filters']['status'][_FILEMANAGER_STATUS_REJECTED]['statusName']   = 'Rejected';
     $filter['fileType']     = '%';
     $filter['fileStatus']   = '';
 
     $mimetypes =& $data['filters']['mimetypes'];
     $mimetypes += xarModAPIFunc('mime','user','getall_types');
 
-    xarModSetVar('uploads','view.filter', serialize(array('data' => $data,'filter' => $filter)));
+    xarModSetVar('filemanager','view.filter', serialize(array('data' => $data,'filter' => $filter)));
     unset($mimetypes);
 
     // Get datbase setup
@@ -120,21 +119,21 @@ function uploads_init()
     $result  =& $dbconn->Execute($query);
 
     $instances[0]['header'] = 'external';
-    $instances[0]['query']  = xarModURL('uploads', 'admin', 'privileges');
+    $instances[0]['query']  = xarModURL('filemanager', 'admin', 'privileges');
     $instances[0]['limit']  = 0;
 
-    xarDefineInstance('uploads', 'File', $instances);
+    xarDefineInstance('filemanager', 'File', $instances);
 
-    xarRegisterMask('ViewUploads',  'All','uploads','File','All:All:All:All','ACCESS_READ');
-    xarRegisterMask('AddUploads',   'All','uploads','File','All:All:All:All','ACCESS_ADD');
-    xarRegisterMask('EditUploads',  'All','uploads','File','All:All:All:All','ACCESS_EDIT');
-    xarRegisterMask('DeleteUploads','All','uploads','File','All:All:All:All','ACCESS_DELETE');
-    xarRegisterMask('AdminUploads', 'All','uploads','File','All:All:All:All','ACCESS_ADMIN');
+    xarRegisterMask('ViewFileManager',  'All','filemanager','File','All:All:All:All','ACCESS_READ');
+    xarRegisterMask('AddFileManager',   'All','filemanager','File','All:All:All:All','ACCESS_ADD');
+    xarRegisterMask('EditFileManager',  'All','filemanager','File','All:All:All:All','ACCESS_EDIT');
+    xarRegisterMask('DeleteFileManager','All','filemanager','File','All:All:All:All','ACCESS_DELETE');
+    xarRegisterMask('AdminFileManager', 'All','filemanager','File','All:All:All:All','ACCESS_ADMIN');
 
     /**
      * Register hooks
      */
-    if (!xarModRegisterHook('item', 'transform', 'API', 'uploads', 'user', 'transformhook')) {
+    if (!xarModRegisterHook('item', 'transform', 'API', 'filemanager', 'user', 'transformhook')) {
          $msg = xarML('Could not register hook');
          xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
          return;
@@ -144,7 +143,7 @@ function uploads_init()
     if (xarCurrentErrorType() !== XAR_NO_EXCEPTION) {
         // if there was an error, make sure to remove the tables
         // so the user can try the install again
-        uploads_delete();
+        filemanager_delete();
         return;
     }
 
@@ -152,24 +151,24 @@ function uploads_init()
 }
 
 /**
- * upgrade the uploads module from an old version
+ * upgrade the filemanager module from an old version
  */
 /**
  * upgrade the articles module from an old version
  */
-function uploads_upgrade($oldversion)
+function filemanager_upgrade($oldversion)
 {
     // Upgrade dependent on old version number
     switch($oldversion) {
         case '0.10':
         case '0.1.0':
-            include_once("modules/uploads/upgrades/0.1.0.php");
+            include_once("modules/filemanager/upgrades/0.1.0.php");
 
         case '0.7.5':
-            xarModAPILoad('uploads', 'user');
-            xarModSetVar('uploads', 'file.auto-approve', _UPLOADS_APPROVE_ADMIN);
+            xarModAPILoad('filemanager', 'user');
+            xarModSetVar('filemanager', 'file.auto-approve', _FILEMANAGER_APPROVE_ADMIN);
 
-        case '0.9.8': // last version of uploads module before 1.0.0 
+        case '0.9.8': // last version of filemanager module before 1.0.0 
             $dbconn =& xarDBGetConn();
             $xartable =& xarDBGetTables();
             $file_entry_table = $xartable['file_entry'];
@@ -182,16 +181,16 @@ function uploads_upgrade($oldversion)
             $result = &$dbconn->Execute($query);
             if (!$result) return;
 
-        case '1.0.0': // current version of uploads module
-            include_once("modules/uploads/upgrades/0.9.8.php");
+        case '1.0.0': // current version of filemanager module
+            include_once("modules/filemanager/upgrades/0.9.8.php");
 
         /**
-         * continue upgrades from uploads module here
+         * continue upgrades from filemanager module here
          */
 
             break;
 
-        case '0.9.9': // last version of uploads_guimods module before 2.0.0
+        case '0.9.9': // last version of filemanager_guimods module before 2.0.0
             $dbconn =& xarDBGetConn();
             $xartable =& xarDBGetTables();
             $file_entry_table = $xartable['file_entry'];
@@ -204,10 +203,10 @@ function uploads_upgrade($oldversion)
             $result = &$dbconn->Execute($query);
             if (!$result) return;
 
-        case '2.0.0': // current version of uploads_guimods module
+        case '2.0.0': // current version of filemanager_guimods module
 
         /**
-         * continue upgrades from uploads_guimods module here
+         * continue upgrades from filemanager_guimods module here
          */
 
             break;
@@ -220,30 +219,30 @@ function uploads_upgrade($oldversion)
 }
 
 /**
- * delete the uploads module
+ * delete the filemanager module
  */
-function uploads_delete()
+function filemanager_delete()
 {
-    xarModDelVar('uploads', 'path.untrust');
-    xarModDelVar('uploads', 'path.trusted');
-    xarModDelVar('uploads', 'file.maxsize');
-    xarModDelVar('uploads', 'file.delete-confirmation');
-    xarModDelVar('uploads', 'file.auto-purge');
-    xarModDelVar('uploads', 'path.cwd');
-    xarModDelVar('uploads', 'dd.fileupload.stored');
-    xarModDelVar('uploads', 'dd.fileupload.external');
-    xarModDelVar('uploads', 'dd.fileupload.upload');
-    xarModDelVar('uploads', 'dd.fileupload.trusted');
-    xarModDelVar('uploads', 'file.auto-approve');
-    xarModDelVar('uploads', 'view.filter');
+    xarModDelVar('filemanager', 'path.untrust');
+    xarModDelVar('filemanager', 'path.trusted');
+    xarModDelVar('filemanager', 'file.maxsize');
+    xarModDelVar('filemanager', 'file.delete-confirmation');
+    xarModDelVar('filemanager', 'file.auto-purge');
+    xarModDelVar('filemanager', 'path.cwd');
+    xarModDelVar('filemanager', 'dd.fileupload.stored');
+    xarModDelVar('filemanager', 'dd.fileupload.external');
+    xarModDelVar('filemanager', 'dd.fileupload.upload');
+    xarModDelVar('filemanager', 'dd.fileupload.trusted');
+    xarModDelVar('filemanager', 'file.auto-approve');
+    xarModDelVar('filemanager', 'view.filter');
 
-    xarUnregisterMask('ViewUploads');
-    xarUnregisterMask('AddUploads');
-    xarUnregisterMask('EditUploads');
-    xarUnregisterMask('DeleteUploads');
-    xarUnregisterMask('AdminUploads');
+    xarUnregisterMask('ViewFileManager');
+    xarUnregisterMask('AddFileManager');
+    xarUnregisterMask('EditFileManager');
+    xarUnregisterMask('DeleteFileManager');
+    xarUnregisterMask('AdminFileManager');
 
-    xarModUnregisterHook('item', 'transform', 'API', 'uploads', 'user', 'transformhook');
+    xarModUnregisterHook('item', 'transform', 'API', 'filemanager', 'user', 'transformhook');
 
     // Get database information
 

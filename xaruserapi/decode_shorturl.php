@@ -10,7 +10,7 @@
  * @return array containing func the function to be called and args the query
  *         string arguments, or empty if it failed
  */
-function uploads_userapi_decode_shorturl($params)
+function filemanager_userapi_decode_shorturl($params)
 {
     // Initialise the argument list we will return
     $args = array();
@@ -38,7 +38,7 @@ function uploads_userapi_decode_shorturl($params)
     } 
     
     // Assume this is the path to a folder first
-    $vdirInfo = xarModAPIfunc('uploads', 'vdir', 'path_decode', array('path' => $path));
+    $vdirInfo = xarModAPIfunc('filemanager', 'vdir', 'path_decode', array('path' => $path));
 
     // If we got false back, then we might have a virtual directory path to a file
     if (FALSE === $vdirInfo) {
@@ -46,7 +46,7 @@ function uploads_userapi_decode_shorturl($params)
 
         $errMsg = xarML('Xaraya can not find a file or folder by the name of "#(1)." Please check the spelling and try again.', $path);
         $args['error']['message']   = addslashes($errMsg);
-        $args['error']['number']    = _UPLOADS_ERROR_INVALID_PATH;
+        $args['error']['number']    = _FILEMANAGER_ERROR_INVALID_PATH;
 
     } elseif(is_array($vdirInfo)) {
 

@@ -9,20 +9,20 @@
  * @return  the string version of the path
  */
 
-function uploads_vdirapi_path_encode( $args )
+function filemanager_vdirapi_path_encode( $args )
 {
 
     extract($args);
 
     if (!isset($vdir_id)) {
         $msg = xarML('Missing parameter [#(1)] for function [(#(2)] in module [#(3)]',
-                     'dirId', 'vdir_path_encode', 'uploads');
+                     'dirId', 'vdir_path_encode', 'filemanager');
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
 
     }
 
-    $vdirCache = xarVarGetCached('uploads', 'cache.vpathEncoded');
+    $vdirCache = xarVarGetCached('filemanager', 'cache.vpathEncoded');
     if (isset($vdirCache[$vdir_id])) {
         return $vdirCache[$vidr_id];
     } elseif(!isset($vdirCache) || empty($vdirCache)) {
@@ -45,7 +45,7 @@ function uploads_vdirapi_path_encode( $args )
         $path = '/';
     }
 
-    xarVarSetCached('uploads', 'cache.vpathEncoded', $vdirCache);
+    xarVarSetCached('filemanager', 'cache.vpathEncoded', $vdirCache);
     return $path;
 }
 

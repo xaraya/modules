@@ -14,14 +14,14 @@
  *                   fileInfo['fileSize']   The size of the file (in bytes)
  *  @returns boolean            TRUE if it passed the checks, FALSE otherwise
  */
-function uploads_userapi_validate_file ( $args ) 
+function filemanager_userapi_validate_file ( $args ) 
 {
 
     extract ($args);
 
     if (!isset($fileInfo)) {
         $msg = xarML('Missing parameter [#(1)] for function [(#(2)] in module [#(3)]',
-                     'fileInfo','validate_file','uploads');
+                     'fileInfo','validate_file','filemanager');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }

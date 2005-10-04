@@ -6,19 +6,19 @@
 // http://www.xaraya.org 
 // ---------------------------------------------------------------------- 
 // Original Author of file: Carl P. corliss
-// Purpose of file:  Table information for uploads module 
+// Purpose of file:  Table information for filemanager module 
 // ---------------------------------------------------------------------- 
  
 /** 
  * This function is called internally by the core whenever the module is 
  * loaded.  It adds in the information 
  */ 
-function uploads_xartables() 
+function filemanager_xartables() 
 { 
     // Initialise table array 
     $xartable = array(); 
  
-    // Get the name for the uploads item table.  This is not necessary 
+    // Get the name for the filemanager item table.  This is not necessary 
     // but helps in the following statements and keeps them readable 
     $fileEntry_table = xarDBGetSiteTablePrefix() . '_file_entry'; 
     $fileData_table  = xarDBGetSiteTablePrefix() . '_file_data'; 

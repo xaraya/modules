@@ -9,7 +9,7 @@
  *  @returns string           The complete path to the new Current Working Directory within the sandbox
  */
 
-function uploads_userapi_import_chdir( $args )
+function filemanager_userapi_import_chdir( $args )
 {
     extract ( $args );
 
@@ -17,30 +17,30 @@ function uploads_userapi_import_chdir( $args )
         $dirName = NULL;
     }
 
-    $cwd = xarModGetUserVar('uploads', 'path.cwd');
-    $importDir = xarModGetVar('uploads', 'path.imports-directory');
+    $cwd = xarModGetUserVar('filemanager', 'path.cwd');
+    $importDir = xarModGetVar('filemanager', 'path.imports-directory');
 
     if (!empty($dirName)) {
         if ($dirName == '...') {
             if (stristr($cwd, $importDir) && strlen($cwd) > strlen($importDir)) {
                 $cwd = dirname($cwd);
-                xarModSetUserVar('uploads', 'path.cwd', $cwd);
+                xarModSetUserVar('filemanager', 'path.cwd', $cwd);
             }
         } else {
             if (file_exists("$cwd/$dirName") && is_dir("$cwd/$dirName")) {
                 $cwd = "$cwd/$dirName";
-                xarModSetUserVar('uploads', 'path.cwd', $cwd);
+                xarModSetUserVar('filemanager', 'path.cwd', $cwd);
             }
         }
     } else {
         // if dirName is empty, then reset the cwd to the top level directory
-        $cwd = xarModGetVar('uploads', 'path.imports-directory');
-        xarModSetUserVar('uploads', 'path.cwd', $cwd);
+        $cwd = xarModGetVar('filemanager', 'path.imports-directory');
+        xarModSetUserVar('filemanager', 'path.cwd', $cwd);
     }
 
     if (!stristr($cwd, $importDir)) {
         $cwd = $importDir;
-        xarModSetUserVar('uploads', 'path.cwd', $importDir);
+        xarModSetUserVar('filemanager', 'path.cwd', $importDir);
     }
 
     return $cwd;

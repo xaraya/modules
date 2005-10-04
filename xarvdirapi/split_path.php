@@ -1,12 +1,12 @@
 <?php
 
-function uploads_vdirapi_split_path( $args )
+function filemanager_vdirapi_split_path( $args )
 {
     extract($args);
 
     if (!isset($path)) {
         $msg = xarML('Missing parameter [#(1)] for function [(#(2)] in module [#(3)]',
-                     'path', 'vdir_get_dir_list', 'uploads');
+                     'path', 'vdir_get_dir_list', 'filemanager');
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }

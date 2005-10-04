@@ -1,17 +1,17 @@
 
 <style type="text/css">
-    @import url(#xarServerGetBaseURL()#modules/uploads/xarstyles/tree.css);
+    @import url(#xarServerGetBaseURL()#modules/filemanager/xarstyles/tree.css);
 </style>
 
-<div id="uploads-browser-tree">
-    <ul id="uploads-browser-treeroot" class="uploads-browser-folder-open">
-        <li class="uploads-browser-folder-closed">
-            <a id="a_0" href="#xarServerGetBaseURL()#index.php/uploads/fsroot">
-                <img src="#xarTplGetImage('system.png', 'uploads')#" width="18" height="18" id="img_0" alt="folder" />Xaraya File System
+<div id="filemanager-browser-tree">
+    <ul id="filemanager-browser-treeroot" class="filemanager-browser-folder-open">
+        <li class="filemanager-browser-folder-closed">
+            <a id="a_0" href="#xarServerGetBaseURL()#index.php/filemanager/fsroot">
+                <img src="#xarTplGetImage('system.png', 'filemanager')#" width="18" height="18" id="img_0" alt="folder" />Xaraya File System
             </a>
             <xar:foreach in="$dirList" value="$branch">
                 <xar:if condition="count($branch['children'])">
-                    #xarModAPIFunc('uploads', 'user', 'dir_branch_descend', array('tree' =&gt; $branch['children']))#
+                    #xarModAPIFunc('filemanager', 'user', 'dir_branch_descend', array('tree' =&gt; $branch['children']))#
                 </xar:if>
             </xar:foreach>
         </li>

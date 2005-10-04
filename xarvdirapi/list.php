@@ -11,14 +11,14 @@
  * @return  array of files and directories in the order specified by sortby/direction, or FALSE on error
  */
 
-function uploads_vdirapi_list( $args )
+function filemanager_vdirapi_list( $args )
 {
 
     extract($args);
 
     if (!isset($vdir_id) || empty($vdir_id)) {
         $msg = xarML('Missing parameter [#(1)] for function [(#(2)] in module [#(3)]',
-                     'vdir_id', 'vdir_list', 'uploads');
+                     'vdir_id', 'vdir_list', 'filemanager');
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }
@@ -26,11 +26,11 @@ function uploads_vdirapi_list( $args )
     if (!isset($sortby)) {
         // Note: directories always come before
         // files in a directory listing
-        $sortby = _UPLOADS_VDIR_SORTBY_NAME;
+        $sortby = _FILEMANAGER_VDIR_SORTBY_NAME;
     }
 
     if (!isset($direction)) {
-        $direction = _UPLOADS_VDIR_SORT_ASC;
+        $direction = _FILEMANAGER_VDIR_SORT_ASC;
     }
 
     /**
@@ -58,7 +58,7 @@ function uploads_vdirapi_list( $args )
         $directories[$parent]['description'] = xarML('Parent Folder');
     }
 
-    $files = xarModAPIFunc('uploads', 'user', 'db_get_associations',
+    $files = xarModAPIFunc('filemanager', 'user', 'db_get_associations',
                             array('modid'  => xarModGetIdFromName('categories'),
                                   'itemid' => $vdir_id,
                                   'itemtype' => 0,
@@ -68,30 +68,30 @@ function uploads_vdirapi_list( $args )
         $files = array();
     }
 
-    $files = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => array_keys($files)));
+    $files = xarModAPIFunc('filemanager', 'user', 'db_get_file', array('fileId' => array_keys($files)));
 
     foreach ($directories as $entry => $data) {
 
         // TODO: modify so that by size works for
         //       directories, as well as by owner
-        $sizeValue = xarModAPIFunc('uploads', 'vdir', 'size', array('vdir_id' => $data['cid']));
-        $sizeArray = xarModAPIFunc('uploads', 'user', 'normalize_filesize', $sizeValue);
+        $sizeValue = xarModAPIFunc('filemanager', 'vdir', 'size', array('vdir_id' => $data['cid']));
+        $sizeArray = xarModAPIFunc('filemanager', 'user', 'normalize_filesize', $sizeValue);
 
         // handle current and parent directory a little differently
         // they shouldn't be shown in the list and so shouldn't be
         // processed in the same manner
 
         switch($sortby) {
-            case _UPLOADS_VDIR_SORTBY_CREATION:
+            case _FILEMANAGER_VDIR_SORTBY_CREATION:
                 $hash = "d.$data[cid]";
                 break;
-            case _UPLOADS_VDIR_SORTBY_SIZE:
-                $size = xarModAPIFunc('uploads', 'vdir', 'size', array('vdir_id' => $data['cid']));;
+            case _FILEMANAGER_VDIR_SORTBY_SIZE:
+                $size = xarModAPIFunc('filemanager', 'vdir', 'size', array('vdir_id' => $data['cid']));;
                 $hash = 'd.' . str_pad((string) $size, 20, '0', STR_PAD_LEFT) . ".$data[name]";
                 break;
-            case _UPLOADS_VDIR_SORTBY_TYPE:
-            case _UPLOADS_VDIR_SORTBY_OWNER:
-            case _UPLOADS_VDIR_SORTBY_NAME:
+            case _FILEMANAGER_VDIR_SORTBY_TYPE:
+            case _FILEMANAGER_VDIR_SORTBY_OWNER:
+            case _FILEMANAGER_VDIR_SORTBY_NAME:
             default:
                 $hash = "d.$data[name]";
                 break;
@@ -103,7 +103,7 @@ function uploads_vdirapi_list( $args )
         $list[$hash]['name']     = $data['name'];
         $list[$hash]['id']       = $data['cid'];
         $list[$hash]['type']     = 'application/directory';
-        $list[$hash]['link']     = xarModURL('uploads', 'user', 'file_browser', array('vdir_id' => $data['cid']));
+        $list[$hash]['link']     = xarModURL('filemanager', 'user', 'file_browser', array('vdir_id' => $data['cid']));
         $list[$hash]['comment']  = $data['description'];
         $list[$hash]['owner']    = 0;
         $list[$hash]['size']     = $sizeArray;
@@ -115,20 +115,20 @@ function uploads_vdirapi_list( $args )
     foreach ($files as $entry => $data) {
 
         switch($sortby) {
-            case _UPLOADS_VDIR_SORTBY_CREATION:
+            case _FILEMANAGER_VDIR_SORTBY_CREATION:
                 $hash = "f.$data[id]";
                 break;
-            case _UPLOADS_VDIR_SORTBY_TYPE:
+            case _FILEMANAGER_VDIR_SORTBY_TYPE:
                 $hash = "f.{$data['mimetype']['text']}.{$data['name']}";
                 break;
-            case _UPLOADS_VDIR_SORTBY_SIZE:
+            case _FILEMANAGER_VDIR_SORTBY_SIZE:
                 $size = (string) $data['size']['value'];
                 $hash = 'f.' . str_pad((string) $size, 20, '0', STR_PAD_LEFT);
                 break;
-            case _UPLOADS_VDIR_SORTBY_OWNER:
+            case _FILEMANAGER_VDIR_SORTBY_OWNER:
                 $hash = "f.{$data['owner']['name']}";
                 break;
-            case _UPLOADS_VDIR_SORTBY_NAME:
+            case _FILEMANAGER_VDIR_SORTBY_NAME:
             default:
                 $hash = "f.$data[fileName]";
                 break;
@@ -139,7 +139,7 @@ function uploads_vdirapi_list( $args )
         $list[$hash]['id']       = $data['id'];
         $list[$hash]['location'] = $data['location']['virtual'];
         $list[$hash]['type']     = $data['mimetype'];
-        $list[$hash]['link']     = xarModURL('uploads', 'user', 'download', array('fileId' => $data['id']));
+        $list[$hash]['link']     = xarModURL('filemanager', 'user', 'download', array('fileId' => $data['id']));
         $list[$hash]['comment']  = '';
         $list[$hash]['owner']    = $data['owner']['name'];
         $list[$hash]['size']     = $data['size']['text'];
@@ -155,11 +155,11 @@ function uploads_vdirapi_list( $args )
         $list = array();
     } else {
         switch($direction) {
-            case _UPLOADS_VDIR_SORT_DESC:
+            case _FILEMANAGER_VDIR_SORT_DESC:
                 uksort($list, 'strnatcmp');
                 $list = array_reverse($list);
                 break;
-            case _UPLOADS_VDIR_SORT_ASC:
+            case _FILEMANAGER_VDIR_SORT_ASC:
             default:
                 uksort($list, 'strnatcmp');
                 break;

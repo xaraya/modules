@@ -6,7 +6,7 @@
  * @returns
  * @return
  */
-function & uploads_userapi_transformhook ( $args )
+function & filemanager_userapi_transformhook ( $args )
 {
     extract($args);
 
@@ -14,21 +14,21 @@ function & uploads_userapi_transformhook ( $args )
         if (isset($extrainfo['transform']) && is_array($extrainfo['transform'])) {
             foreach ($extrainfo['transform'] as $key) {
                 if (isset($extrainfo[$key])) {
-                    $extrainfo[$key] =& uploads_userapi_transform($extrainfo[$key]);
+                    $extrainfo[$key] =& filemanager_userapi_transform($extrainfo[$key]);
                 }
             }
             return $extrainfo;
         }
         foreach ($extrainfo as $key => $text) {
-            $result[] =& uploads_userapi_transform($text);
+            $result[] =& filemanager_userapi_transform($text);
         }
     } else {
-        $result =& uploads_userapi_transform($extrainfo);
+        $result =& filemanager_userapi_transform($extrainfo);
     }
     return $result;
 }
 
-function & uploads_userapi_transform ( $body )
+function & filemanager_userapi_transform ( $body )
 {
     while(eregi('#(ulid|file|ulidd|ulfn|fileURL|fileIcon|fileName|fileLinkedIcon):([^#]+)#', $body, $matches)) {
         $replacement=NULL;
@@ -38,36 +38,36 @@ function & uploads_userapi_transform ( $body )
             case 'ulid':
                 // DEPRECATED
             case 'file':
-                //$replacement = "index.php?module=uploads&func=download&fileId=$id";
-                $list = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $id));
-                $replacement = xarTplModule('uploads', 'user', 'attachment-list',
+                //$replacement = "index.php?module=filemanager&func=download&fileId=$id";
+                $list = xarModAPIFunc('filemanager', 'user', 'db_get_file', array('fileId' => $id));
+                $replacement = xarTplModule('filemanager', 'user', 'attachment-list',
                                              array('Attachments' => $list,
                                                    'style' => 'transform'));
                 break;
             case 'ulidd':
                 // DEPRECATED
-                //$replacement = "index.php?module=uploads&func=download&fileId=$id";
-                $replacement = xarModAPIFunc('uploads','user','showoutput',
+                //$replacement = "index.php?module=filemanager&func=download&fileId=$id";
+                $replacement = xarModAPIFunc('filemanager','user','showoutput',
                                              array('value' => $id));
                 break;
             case 'ulfn': // ULFN is DEPRECATED
             case 'fileLinkedIcon':
-                $list = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $id));
-                $replacement = xarTplModule('uploads', 'user', 'attachment-list',
+                $list = xarModAPIFunc('filemanager', 'user', 'db_get_file', array('fileId' => $id));
+                $replacement = xarTplModule('filemanager', 'user', 'attachment-list',
                                              array('Attachments' => $list));
                 break;
             case 'fileIcon':
-                $file = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $id));
+                $file = xarModAPIFunc('filemanager', 'user', 'db_get_file', array('fileId' => $id));
                 $file = end($file);
                 $replacement = $file['mimeImage'];
                 break;
             case 'fileURL':
-                $file = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $id));
+                $file = xarModAPIFunc('filemanager', 'user', 'db_get_file', array('fileId' => $id));
                 $file = end($file);
                 $replacement = $file['fileDownload'];
                 break;
             case 'fileName':
-                $file = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $id));
+                $file = xarModAPIFunc('filemanager', 'user', 'db_get_file', array('fileId' => $id));
                 $file = end($file);
                 $replacement = $file['fileName'];
                 break;

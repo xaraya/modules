@@ -11,7 +11,7 @@
  *
  */
  
-function uploads_fsapi_get_metadata( $args ) 
+function filemanager_fsapi_get_metadata( $args ) 
 {
  
     extract($args);
@@ -40,10 +40,10 @@ function uploads_fsapi_get_metadata( $args )
         $name = basename($file);    
 
         if ($normalize) {
-            $size = xarModAPIFunc('uploads', 'user', 'normalize_filesize', $size);
+            $size = xarModAPIFunc('filemanager', 'user', 'normalize_filesize', $size);
         }
 
-        $relative_path = str_replace(xarModGetVar('uploads', 'path.imports-directory'), '/trusted', $file);
+        $relative_path = str_replace(xarModGetVar('filemanager', 'path.imports-directory'), '/trusted', $file);
         
         $fileInfo = array('inodeType'    => $type,
                           'fileName'     => $name,

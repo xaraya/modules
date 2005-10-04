@@ -13,19 +13,19 @@
                  Total:
             </xar:mlstring>
         
-            <span id="#$prefix#uploads_attachment_total">#$totalAttachments#</span>
+            <span id="#$prefix#filemanager_attachment_total">#$totalAttachments#</span>
 
             <xar:if condition="isset($prefix) AND !empty($prefix)">
-                <input type="hidden" style="display: hidden;" id="#$prefix#uploads_attachment_list" name="#$prefix#attachment_list" value="#$attachment_list#" />
+                <input type="hidden" style="display: hidden;" id="#$prefix#filemanager_attachment_list" name="#$prefix#attachment_list" value="#$attachment_list#" />
             <xar:else />
-                <input type="hidden" style="display: hidden;" id="uploads_attachment_list" name="attachment_list" value="#$attachment_list#" />
+                <input type="hidden" style="display: hidden;" id="filemanager_attachment_list" name="attachment_list" value="#$attachment_list#" />
             </xar:if>
             
-            <a href="#$destination_url#" onclick="uploads_popup('#$destination_url#');return false;" style="margin-left: 50px;">
+            <a href="#$destination_url#" onclick="filemanager_popup('#$destination_url#');return false;" style="margin-left: 50px;">
                 <xar:mlstring>Modify Attachment List</xar:mlstring>
             </a>
             
-            <a href="#$destination_url#" onclick="uploads_test('#$prefix#');return false;" style="margin-left: 50px;">
+            <a href="#$destination_url#" onclick="filemanager_test('#$prefix#');return false;" style="margin-left: 50px;">
                 <xar:mlstring>Test</xar:mlstring>
             </a>
         </span>

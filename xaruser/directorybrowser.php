@@ -1,6 +1,6 @@
 <?php
 
-function uploads_user_directorybrowser($args)
+function filemanager_user_directorybrowser($args)
 {
      extract($args);
 
@@ -9,7 +9,7 @@ function uploads_user_directorybrowser($args)
 
      $data['linkInfo']['func']=$listingfunction;
 
-     $data['dirList'] = xarModAPIFunc('uploads', 'user', 'get_dir_list',
+     $data['dirList'] = xarModAPIFunc('filemanager', 'user', 'get_dir_list',
                                array('path'     => $data['path'],
                                      'linkInfo' => $data['linkInfo']));
 
@@ -18,12 +18,12 @@ function uploads_user_directorybrowser($args)
          if (xarCurrentErrorType() !== XAR_NO_EXCEPTION) {
              $error = xarCurrentError();
              $data['error']['message'] = $error->msg;
-             echo xarTplModule('uploads', 'user', 'file_browser_error', $data, NULL);
+             echo xarTplModule('filemanager', 'user', 'file_browser_error', $data, NULL);
              exit();
          } else {
              $error = xarCurrentError();
              $data['error'] = xarML('unknown error retrieving directory list...');
-             echo xarTplModule('uploads', 'user', 'file_browser_error', $data, NULL);
+             echo xarTplModule('filemanager', 'user', 'file_browser_error', $data, NULL);
              exit();
          }
      }

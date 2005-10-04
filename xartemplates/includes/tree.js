@@ -1,9 +1,9 @@
 f_open = new Image();
-f_open.src = 'modules/uploads/xarimages/folderopen.gif';
+f_open.src = 'modules/filemanager/xarimages/folderopen.gif';
 f_more = new Image();
-f_more.src = 'modules/uploads/xarimages/foldermore.gif';
+f_more.src = 'modules/filemanager/xarimages/foldermore.gif';
 f_closed = new Image();
-f_closed.src = 'modules/uploads/xarimages/folder.gif';
+f_closed.src = 'modules/filemanager/xarimages/folder.gif';
 
 var tree_current;
 
@@ -14,7 +14,7 @@ function treeToggle(e){
     var li = e.parentNode;
 
     // open the closed folder
-    if(li.getAttribute('class') == 'uploads-browser-folder-closed'){
+    if(li.getAttribute('class') == 'filemanager-browser-folder-closed'){
         openNode(e);
     }
     else{
@@ -35,11 +35,11 @@ function openNode(e){
         tree_current.setAttribute('class', '');
     }
     tree_current = e;
-    tree_current.setAttribute('class', 'uploads-browser-current');
+    tree_current.setAttribute('class', 'filemanager-browser-current');
 
-    li.setAttribute('class', 'uploads-browser-folder-open');
+    li.setAttribute('class', 'filemanager-browser-folder-open');
     if(ul != undefined && ul.nodeName == 'UL'){
-        ul.setAttribute('class', 'uploads-browser-folder-open');
+        ul.setAttribute('class', 'filemanager-browser-folder-open');
         ul.style.display = 'block';
 
         // loop thru inner list to find nested lists
@@ -75,13 +75,13 @@ function closeNode(e){
         tree_current.setAttribute('class', '');
     }
     tree_current = e;
-    tree_current.setAttribute('class', 'uploads-browser-current');
+    tree_current.setAttribute('class', 'filemanager-browser-current');
 
-    li.setAttribute('class', 'uploads-browser-folder-closed');
+    li.setAttribute('class', 'filemanager-browser-folder-closed');
 
     if(ul != undefined && ul.nodeName == 'UL'){
         img.src = f_more.src;
-        ul.setAttribute('class', 'uploads-browser-folder-closed');
+        ul.setAttribute('class', 'filemanager-browser-folder-closed');
         ul.style.display = 'none';
     }
 
@@ -101,11 +101,11 @@ function updatePath(){
             l = false;
         }
     }
-    document.getElementById('uploads-browser-filepath').value =  '/' + p;
+    document.getElementById('filemanager-browser-filepath').value =  '/' + p;
 }
 
 function openPath(){
-    p = document.getElementById('uploads-browser-filepath').value;
+    p = document.getElementById('filemanager-browser-filepath').value;
     nodelist = p.split('/');
     nodelist.shift();
 //    alert(nodelist[0]);

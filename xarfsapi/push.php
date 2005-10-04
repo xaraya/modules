@@ -13,44 +13,44 @@
  *  @param    long int  fileSize        The size of the file (in bytes)
  *  @returns  boolean                   This function will return true upon succes and, returns False and throws an exception otherwise
  *  @throws   BAD_PARAM                 missing or invalid parameter
- *  @throws   UPLOADS_ERR_NO_READ       couldn't read from the specified file
+ *  @throws   FILEMANAGER_ERR_NO_READ       couldn't read from the specified file
  */
 
-function uploads_fsapi_push( $args )
+function filemanager_fsapi_push( $args )
 {
 
     extract ( $args );
 
     if (!isset($fileName)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
-                     'fileName','file_push','uploads');
+                     'fileName','file_push','filemanager');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }
 
     if (!isset($fileLocation)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
-                     'fileLocation','file_push','uploads');
+                     'fileLocation','file_push','filemanager');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }
 
     if (!isset($fileType)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
-                     'fileType','file_push','uploads');
+                     'fileType','file_push','filemanager');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }
 
     if (!isset($storeType)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
-                     'storeType','file_push','uploads');
+                     'storeType','file_push','filemanager');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
-    } elseif ($storeType & _UPLOADS_STORE_DB_DATA) {
+    } elseif ($storeType & _FILEMANAGER_STORE_DB_DATA) {
         if (!isset($fileId)) {
             $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
-                        'fileId','file_push','uploads');
+                        'fileId','file_push','filemanager');
             xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
             return FALSE;
         }
@@ -58,7 +58,7 @@ function uploads_fsapi_push( $args )
 
     if (!isset($fileSize)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
-                     'fileSize','file_push','uploads');
+                     'fileSize','file_push','filemanager');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }
@@ -66,10 +66,10 @@ function uploads_fsapi_push( $args )
     // then restart the buffer to store the file
     $finished = FALSE;
 
-    $pageBuffer = xarModAPIFunc('uploads', 'user', 'flush_page_buffer');
+    $pageBuffer = xarModAPIFunc('filemanager', 'user', 'flush_page_buffer');
 
 
-    if ($storeType & _UPLOADS_STORE_FILESYSTEM || ($storeType == _UPLOADS_STORE_DB_ENTRY)) {
+    if ($storeType & _FILEMANAGER_STORE_FILESYSTEM || ($storeType == _FILEMANAGER_STORE_DB_ENTRY)) {
 
         // Start buffering for the file
         ob_start();
@@ -108,7 +108,7 @@ function uploads_fsapi_push( $args )
         //       ending Xaraya in a safe manner
         $finished = TRUE;
 
-    } elseif ($storeType & _UPLOADS_STORE_DB_DATA) {
+    } elseif ($storeType & _FILEMANAGER_STORE_DB_DATA) {
 
         // Start buffering for the file
         ob_start();
@@ -116,7 +116,7 @@ function uploads_fsapi_push( $args )
         // FIXME: <rabbitt> if we happen to be pushing a really big file, this
         //        method of grabbing it from the database and pushing will consume
         //        WAY too much memory. Think of an alternate method
-        $data = xarModAPIFunc('uploads', 'user', 'db_get_file_data', array('fileId' => $fileId));
+        $data = xarModAPIFunc('filemanager', 'user', 'db_get_file_data', array('fileId' => $fileId));
         echo implode('', $data);
 
         // Headers -can- be sent after the actual data
@@ -152,7 +152,7 @@ function uploads_fsapi_push( $args )
     unset($pageBuffer);
 
     $msg = xarML('Could not open file [#(1)] for reading', $fileName);
-    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UPLOADS_ERR_NO_READ', new SystemException($msg));
+    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'FILEMANAGER_ERR_NO_READ', new SystemException($msg));
     return FALSE;
 
 }

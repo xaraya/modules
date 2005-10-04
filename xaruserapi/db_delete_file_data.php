@@ -12,18 +12,18 @@
  *  @returns integer The number of affected rows on success, or FALSE on error
  */
 
-function uploads_userapi_db_delete_file_data( $args )
+function filemanager_userapi_db_delete_file_data( $args )
 {
     extract($args);
 
     if (!isset($fileId)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
-                     'fileId','db_delete_file_data','uploads');
+                     'fileId','db_delete_file_data','filemanager');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }
 
-    //add to uploads table
+    //add to filemanager table
     // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();

@@ -1,4 +1,4 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Uploads Administration</xar:mlstring></span></div>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>FileManager Administration</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>Import Files</xar:mlstring></h2><br />
 <div style="margin: auto;">
 
@@ -7,7 +7,7 @@
 </xar:if>
 
 <xar:if condition="is_array($files) AND count($files)">
-<form method="post" action="&xar-modurl-uploads-admin-fileimport;">
+<form method="post" action="&xar-modurl-filemanager-admin-fileimport;">
     <table summary="Imported Files" width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent">
     <tr>
         <th><xar:mlstring>File</xar:mlstring><input type="hidden" name="authid" value="#$authid#" /></th>

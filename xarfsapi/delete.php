@@ -10,14 +10,14 @@
  *  @returns TRUE on success, FALSE on error
  */
 
-function uploads_fsapi_delete( $args ) 
+function filemanager_fsapi_delete( $args ) 
 { 
 
     extract ($args);
     
     if (!isset($fileName)) {
         $msg = xarML('Missing parameter [#(1)] for function [(#(2)] in module [#(3)]',
-                     'fileName','file_move','uploads');
+                     'fileName','file_move','filemanager');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }

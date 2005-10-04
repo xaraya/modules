@@ -1,5 +1,5 @@
 <?php
 
-xarModAPILoad('uploads','user');
+xarModAPILoad('filemanager','user');
 
 ?>
