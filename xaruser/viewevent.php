@@ -123,7 +123,7 @@ function julian_user_viewevent()
          // build a day array
          $weektimes = array("1"=>"First","2"=>"Second","3"=>"Third","4"=>"Fourth","5"=>"Last");
          // this is for the 'on every' recurring event type
-         $time .= "the ".$weektimes[$recur_interval] ." ".$day_array[$recur_count]." every ".$recur_freq." ". $intervals[$rrule] . $eff;
+         $time .= "the ".$weektimes[$recur_interval] ." ".$day_array[$recur_count]." every ".$bl_data['recur_freq']." ". $intervals[$rrule] . $eff;
       }
 	  
       

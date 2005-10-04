@@ -1,18 +1,16 @@
 <?php
 /**
-  * File: $Id$
-  *
-  * Generates a form for editing an existing event.
-  *
-  * @package Xaraya eXtensible Management System
-  * @copyright (C) 2005 by Metrostat Technologies, Inc.
-  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
-  * @link http://www.metrostat.net
-  *
-  * @subpackage julian
-  * @author Julian development Team 
-  * initial template: Roger Raymond
-  */
+ * Generates a form for editing an existing event.
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 by Metrostat Technologies, Inc.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.metrostat.net
+ *
+ * @subpackage julian
+ * @author Julian development Team 
+ * initial template: Roger Raymond
+ */
   
 /**
  * Edit a single event
@@ -33,7 +31,7 @@ function julian_user_edit()
    //This prevents users from viewing something they are not suppose to.
    if (!xarSecurityCheck('Editjulian')) return;  
    //get post/get vars
-   if(!xarVarFetch('id','isset',$id)) return;
+   if(!xarVarFetch('id','id',$id)) return;
    // This is the var to set the first day of the week
    if(!xarVarFetch('cal_date','int::',$cal_date,0)) return;
    //load the calendar class
@@ -228,22 +226,28 @@ function julian_user_edit()
      $bl_data['repeat_on_day_selection'][$i] = '';
    $bl_data['repeat_on_day_selection'][$edit_obj->recur_count] = 'selected';
    
+// Get event decent way
+   $item = xarModAPIFunc('julian', 'user', 'get', array('event_id' => $id));
+
    //Setting allday checked
-   $bl_data['allday_checked'][0] = "";
-   $bl_data['allday_checked'][1] = "checked";
-   if ($edit_obj->isallday)
-   {
-     $bl_data['allday_checked'][0] = "checked";
-     $bl_data['allday_checked'][1] = "";
+   $bl_data['allday_checked'][0] = '';
+   $bl_data['allday_checked'][1] = 'checked';
+   if ($item['isallday'] == 1) {
+     $bl_data['allday_checked'][0] = 'checked';
+     $bl_data['allday_checked'][1] = '';
    } 
    //determine if this is a public or private event
-   $bl_data['class'][0] = "checked";
-   $bl_data['class'][1] = "";
-   if ($edit_obj->class)
-   {
-     $bl_data['class'][0] = "";
-     $bl_data['class'][1] = "checked";
+   $bl_data['class'][0] = 'checked';
+   $bl_data['class'][1] = '';
+   if ($edit_obj->class) {
+     $bl_data['class'][0] = '';
+     $bl_data['class'][1] = 'checked';
    } 
+   //determine if this is there is an enddate present
+   $bl_data['enddatedisabled'] = 'disabled';
+   if (isset($event_endmonth) || isset($event_endday) || isset($event_endyear)) {
+     $bl_data['enddatedisabled'] = '';
+   }
    
     // Get hook information for the event that we will edit.
     // Build description for the item we want the hooks (i.e. category) for.

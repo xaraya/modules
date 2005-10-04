@@ -37,7 +37,7 @@ function julian_user_updateevent()
       xarResponseRedirect($back_link);
    }
    
-   if (!xarVarFetch('id',               'int:1:',   $id,            '', XARVAR_NOT_REQUIRED)) return;
+   if (!xarVarFetch('id',               'id',       $id,            $id, XARVAR_NOT_REQUIRED)) return;
    if (!xarVarFetch('cal_sdow',         'int:0:6',  $cal_sdow,      0, XARVAR_NOT_REQUIRED)) return;
    if (!xarVarFetch('title',            'str:1:',   $summary,       '')) return;
    if (!xarVarFetch('month',            'str:1:',   $month,         '')) return;
