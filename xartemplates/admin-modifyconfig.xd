@@ -35,7 +35,7 @@
         <legend><xar:mlstring>Display Options</xar:mlstring></legend>
 
             <div class="xar-form-input-wrapper">
-                <label for="bold" class="xar-form-label" help" title="#xarML('Use bold for example items.')#">
+                <label for="bold" class="xar-form-label" title="#xarML('Use bold for example items.')#">
                        <xar:mlstring>Display Example Items In Bold?</xar:mlstring>
                 </label>
                 <xar:if condition="$boldchecked">
