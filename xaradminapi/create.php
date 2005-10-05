@@ -1,6 +1,5 @@
 <?php
 /**
- * File: $Id:
  * @copyright (C) 2004 by Jo Dalle Nogare
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://xaraya.athomeandabout.com
@@ -17,9 +16,9 @@
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function xarcpshop_adminapi_create($args)
-{ 
+{
       extract($args);
-  
+
     $invalid = array();
     if (!isset($name) || !is_string($name)) {
         $invalid[] = 'name';
@@ -47,7 +46,7 @@ function xarcpshop_adminapi_create($args)
     }
 
     $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables(); 
+    $xartable =& xarDBGetTables();
     // It's good practice to name the table and column definitions you
     // are getting - $table and $column don't cut it in more complex
     // modules
@@ -63,7 +62,7 @@ function xarcpshop_adminapi_create($args)
               xar_tid)
             VALUES (?,?,?,?,?)";
 
-    $bindvars = array((int)$nextId, (string)$name, (string)$nickname, (string)$toplevel, $tid);
+    $bindvars = array($nextId, (string)$name, (string)$nickname, (string)$toplevel, $tid);
     $result = &$dbconn->Execute($query,$bindvars);
 
     // Check for an error with the database code, adodb has already raised
