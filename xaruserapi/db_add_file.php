@@ -107,7 +107,7 @@ function uploads_userapi_db_add_file( $args )
                       )
                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    $bindvars = array((int) $file_id,
+    $bindvars = array( $file_id,
                       (int) $userId,
                       (string) $fileName, 
                       (string) $fileLocation, 
