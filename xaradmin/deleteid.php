@@ -1,9 +1,26 @@
 <?php
-
+/**
+ * Delete an id
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Release Module
+ */
+/**
+ * Delete and ID
+ * 
+ * @param $rid ID
+ * 
+ * Original Author of file: John Cox via phpMailer Team
+ * @author Release module development team
+ */
 function release_admin_deleteid()
 {
     // Get parameters
-    if (!xarVarFetch('rid', 'int:1:', $rid)) return;
+    if (!xarVarFetch('rid', 'id', $rid)) return;
     if (!xarVarFetch('obid', 'str:1:', $obid, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('confirmation','str:1:',$confirmation,'',XARVAR_NOT_REQUIRED)) return;
     

@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id:
- * 
  * Standard function to modify configuration parameters
  * 
  * @package Xaraya eXtensible Management System

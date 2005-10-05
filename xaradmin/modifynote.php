@@ -1,11 +1,28 @@
 <?php
-
+/**
+ * Modify a Note
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Release Module
+ */
+/**
+ * Modify a note
+ * 
+ * @param $rnid ID
+ * 
+ * Original Author of file: John Cox via phpMailer Team
+ * @author Release module development team
+ */
 function release_admin_modifynote()
 {
     // Security Check
     if(!xarSecurityCheck('EditRelease')) return;
 
-    if (!xarVarFetch('rnid', 'int:1:', $rnid)) return;
+    if (!xarVarFetch('rnid', 'id', $rnid)) return;
     if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED)) return;
 
     switch(strtolower($phase)) {

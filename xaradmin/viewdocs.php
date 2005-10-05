@@ -1,11 +1,33 @@
 <?php
-
+/**
+ * View the documentation
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Release Module
+ */
+/**
+ * View the Documentation
+ * 
+ * @param 
+ * 
+ * Original Author of file: John Cox via phpMailer Team
+ * @author Release module development team
+ */
 function release_admin_viewdocs()
 {
     // Security Check
     if(!xarSecurityCheck('EditRelease')) return;
 
     // Get parameters
+    if (!(xarVarFetch('phase', 'enum:unapproved:viewall:certified:price:supported', $phase, 'unapproved', XARVAR_NOT_REQUIRED)) return;
+    if (!(xarVarFetch('startnum', 'int', $starnum, 1, XARVAR_NOT_REQUIRED)) return;
+    if (!(xarVarFetch('filter', 'str', $filter, $filter, XARVAR_NOT_REQUIRED)) return;
+    if (!(xarVarFetch('type', 'str', $type, $type, XARVAR_NOT_REQUIRED)) return;
+    /*
     list($startnum,
          $phase,
          $filter,
@@ -13,7 +35,7 @@ function release_admin_viewdocs()
                                        'phase',
                                        'filter',
                                        'type');
-    
+    */
     $data['items'] = array();
 
     if (empty($phase)){

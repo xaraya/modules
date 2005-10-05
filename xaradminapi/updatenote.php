@@ -1,5 +1,22 @@
 <?php
-
+/**
+ * Update a note
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Release Module
+ */
+/**
+ * Update a note
+ * 
+ * @param $rnid ID
+ * 
+ * Original Author of file: John Cox via phpMailer Team
+ * @author Release module development team
+ */
 function release_adminapi_updatenote($args)
 {
     // Get arguments from argument array
