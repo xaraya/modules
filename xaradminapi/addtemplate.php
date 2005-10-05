@@ -64,7 +64,7 @@ function pubsub_adminapi_addtemplate($args)
               xar_template,
               xar_compiled)
             VALUES (?,?,?,?)";
-    $bindvars = array((int)$nextId, $name, $template, $compiled);
+    $bindvars = array($nextId, $name, $template, $compiled);
     $result = $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 

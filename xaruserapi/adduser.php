@@ -82,7 +82,7 @@ function pubsub_userapi_adduser($args)
               xar_subdate,
               xar_email)
             VALUES (?,?,?,?," . time() . ",?)";
-    $bindvars = array((int)$nextId, $eventid, $userid, $actionid, $email);
+    $bindvars = array($nextId, $eventid, $userid, $actionid, $email);
     $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;
 
