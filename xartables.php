@@ -10,10 +10,10 @@
  * @subpackage Release Module
  */
 /**
- * initialization functions
- * Initialise the Release module
- * This function is only ever called once during the lifetime of a particular
- * module instance
+ * Table definitions
+ * 
+ * This function is called when Xaraya searches for the tables in this module
+ *
  * Original Author of file: John Cox via phpMailer Team
  * @author Release module development team
  */
