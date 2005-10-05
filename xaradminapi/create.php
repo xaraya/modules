@@ -29,7 +29,7 @@ function ping_adminapi_create($args)
               xar_url,
               xar_method)
             VALUES (?,?,?)";
-    $bindvars = array((int)$nextId, $url, $method);
+    $bindvars = array($nextId, $url, $method);
     $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;
     // Get the ID of the item that we inserted

@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id$
- * 
  * Ping initialization functions
  * 
  * @copyright (C) 2003 by the Xaraya Development Team.
