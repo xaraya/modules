@@ -36,10 +36,11 @@ function courses_userapi_get($args)
     $where = "0";
     }
     
-    // Get database setup
+    /* Get database setup */
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $coursestable = $xartable['courses'];
+    /* Get the course */
     $query = "SELECT xar_name,
                    xar_number,
                    xar_type,
