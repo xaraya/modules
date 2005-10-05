@@ -10,7 +10,7 @@
  * @subpackage Release Module
  */
 /**
- * Modify an ID
+ * Modify an ID by user
  * 
  * @param $rnid 
  * 

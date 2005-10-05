@@ -1,7 +1,18 @@
 <?php
-
 /**
- * count the number of docs per item
+ * Count the number of docs
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Release Module
+ */
+/**
+ * count the number of docs per release
+ * 
+ * @param $rid ID
  * @returns integer
  * @returns number of docs for rid
  */

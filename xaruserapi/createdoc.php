@@ -1,5 +1,21 @@
 <?php
-
+/**
+ * Create a doc
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Release Module
+ */
+/**
+ * Create a doc by user
+ * 
+ * Original Author of file: John Cox via phpMailer Team
+ * @author Release module development team
+ * @param rid, title, doc, type, approved
+ */
 function release_userapi_createdoc($args)
 {
     // Get arguments

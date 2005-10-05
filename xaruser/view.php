@@ -1,5 +1,15 @@
 <?php
 /**
+ * Main view for Releases
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Release Module
+ */
+/**
  * @author niceguyeddie
  * @author jojodee
  * @param $idtypes: 1- all, 2-themes, 3-modules
@@ -8,10 +18,10 @@
  */
 function release_user_view()
 {
-    if (!xarVarFetch('startnum', 'str:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('phase', 'str:1:', $phase, 'all', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('catid', 'int', $catid, null,  XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('sort', 'strlist:,:pre:trim:lower:alnum', $sort, NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('sort', 'enum:pre:trim:lower:alnum', $sort, NULL, XARVAR_NOT_REQUIRED)) {return;}
    // Default parameters
     if (!isset($startnum)) {
         $startnum = 1;
@@ -19,7 +29,7 @@ function release_user_view()
     // Security Check
     if(!xarSecurityCheck('OverviewRelease')) return;
 
-    $phase = xarVarCleanFromInput('phase');
+    //$phase = xarVarCleanFromInput('phase');
 
     $uid = xarUserGetVar('uid');
 

@@ -1,5 +1,23 @@
 <?php
-
+/**
+ * Get documents
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Release Module
+ */
+/**
+ * Get the docs
+ * 
+ * @param $rnid $rid $approved
+ * 
+ * Original Author of file: John Cox via phpMailer Team
+ * @author Release module development team
+ * 
+ */
 function release_userapi_getdocs($args)
 {
     extract($args);
