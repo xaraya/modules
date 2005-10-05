@@ -116,7 +116,7 @@ function changelog_adminapi_createhook($args)
                                        xar_content)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    $bindvars = array((int) $nextId,
+    $bindvars = array($nextId,
                       (int) $modid, 
                       (int) $itemtype,
                       (int) $objectid,
