@@ -1,0 +1,7 @@
+This module can be used to manage courses.
+
+Terminology:
+*course: a set of lessons with one theme. A course must be given a unique code, and can be planned.
+*planned course: an occurence of one particular course
+
+There is at this moment (0.1) no mechanism to group courses in an educational plan.
