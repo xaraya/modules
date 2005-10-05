@@ -57,7 +57,7 @@ function polls_adminapi_createopt($args)
               xar_optname)
             VALUES (?,?,?,?)";
 
-    $bindvars = array((int)$pid, $newitemnum, $votes, $option);
+    $bindvars = array($pid, $newitemnum, $votes, $option);
     $result = $dbconn->Execute($sql, $bindvars);
 
     if(!$result) {
