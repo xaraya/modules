@@ -1,4 +1,15 @@
 <?php
+/**
+ * Release Version definitions
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Release Module
+ */
+
 $modversion['name'] = 'release';
 $modversion['id'] = '773';
 $modversion['version'] = '0.1.2';
@@ -13,7 +24,6 @@ $modversion['author'] = 'John Cox';
 $modversion['contact'] = 'niceguyeddie@xaraya.com';
 $modversion['user'] = 1;
 $modversion['admin'] = 1;
-$modversion['securityschema'] = array('' => '::');
 $modversion['class'] = 'Complete';
 $modversion['category'] = 'Content';
 ?>
