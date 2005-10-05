@@ -103,7 +103,7 @@ function xlink_adminapi_createhook($args)
                                        xar_itemid)
             VALUES (?, ?, ?, ?, ?, ?)";
 
-    $bindvars = array((int) $nextId, 
+    $bindvars = array($nextId,
                       (string) $base, 
                       (string) $refid,
                       (int) $modid,
