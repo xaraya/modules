@@ -31,7 +31,7 @@ function userpoints_adminapi_createptype($args)
                                        xar_action,
                                        xar_tpoints)
             VALUES (?,?,?,?,?)";
-    $bindvars = array((int)$nextId, $pmodule, $itemtype, $paction, $tpoints);
+    $bindvars = array($nextId, $pmodule, $itemtype, $paction, $tpoints);
     $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;
 

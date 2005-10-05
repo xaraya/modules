@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id:
- * 
- * Create a new example item
+ * Create a new Userpoints rank
  * 
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -77,7 +75,7 @@ function userpoints_adminapi_createrank($args)
               xar_rankname,
               xar_rankminscore)
             VALUES (?,?,?)";
-    $result = &$dbconn->Execute($query, array((int)$nextId, $rankname, $rankminscore));
+    $result = &$dbconn->Execute($query, array($nextId, $rankname, $rankminscore));
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
     if (!$result) return; 
