@@ -7,12 +7,12 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage example
- * @author Example module development team 
+ * @subpackage courses
+ * @author Courses module development team 
  */
 
 /**
- * modify block settings
+ * modify block settings for "new"
  */
 function courses_newblock_modify($blockinfo)
 {

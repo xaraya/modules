@@ -50,10 +50,14 @@ function courses_admin_modifycourse($args)
     $coursedata['module'] = 'courses';
     $hooks = xarModCallHooks('item', 'modify', $courseid, $coursedata);
     if (empty($hooks)) {
-        $hooks = '';
-    } elseif (is_array($hooks)) {
-        $hooks = join('', $hooks);
+        $data['hookoutput'] = '';
+    } else {
+        /* You can use the output from individual hooks in your template too, e.g. with
+         * $hookoutput['categories'], $hookoutput['dynamicdata'], $hookoutput['keywords'] etc.
+         */
+        $data['hookoutput'] = $hooks;
     }
+    
     $levels = array();
     $levels = xarModAPIFunc('courses', 'user', 'gets', array('itemtype' => 3));
     
@@ -65,7 +69,7 @@ function courses_admin_modifycourse($args)
                  'lastmodilabel'    => xarVarPrepForDisplay(xarML('Last Modified')),
                  'numberlabel'      => xarVarPrepForDisplay(xarML('Course Number')),
                  'freqlabel'        => xarVarPrepForDisplay(xarML('Course frequency')),
-                 'coursetypelabel'  => xarVarPrepForDisplay(xarML('Course Type (Category)')),
+                 'coursetypelabel'  => xarVarPrepForDisplay(xarML('Course Type (other than Category)')),
                  'levellabel'       => xarVarPrepForDisplay(xarML('Course Level')),
                  'intendedcreditslabel' => xarVarPrepForDisplay(xarML('Intended credits')),
                  'shortdesclabel'   => xarVarPrepForDisplay(xarML('Short Description')),

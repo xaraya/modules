@@ -1,5 +1,4 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
-<xar:style scope="module" file="xarform" />
 <xar:style scope="module" />
 <!-- This Javascript will check for required fields before the form is submitted. -->
 <xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
@@ -23,99 +22,84 @@
     <div class="xar-courses xar-courses-modifyconfig">
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     
-    <form method="post" class="xar-form"
+    <form method="post"
           action="#xarModUrl('courses', 'admin', 'updateconfig')#"
           onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
-          
-          <fieldset class="xar-norm">
-               <fieldset class="formelements xar-norm">
-                    <legend>
-                        <strong><xar:mlstring>Course configuration</xar:mlstring></strong>
-                    </legend>
-                    <p class="param">
-                        <label for="hideplanningmsg">
-                            <span class="help" title="#xarML('The message to display when a user wants to see a course that is hidden.')#">
-                            #$hideplanningmsg_label#
-                            </span>
-                        </label>
-                        <span class="fullright">
-                            <textarea class="fullright" name="hideplanningmsg" id="hideplanningmsg" wrap="virtual" rows="10" cols="40">#$hideplanningmsg#</textarea>
-                        </span>
-                        <xar:if condition="!empty($invalid['hideplanningmsg'])">
-                            <span style="color: red"><xar:mlstring>ERROR! This is not a valid material description</xar:mlstring></span>
-                        </xar:if>
-                    </p>
-                    <p class="param">
-                        <label for="hidecoursemsg">
-                            <span class="help" title="#xarML('The message to display when a user wants to see a course that is hidden.')#">
-                            #$hidecoursemsg_label#
-                            </span>
-                        </label>
-                        <span class="fullright">
-                            <textarea class="fullright" name="hidecoursemsg" id="hidecoursemsg" wrap="virtual" rows="10" cols="40">#$hidecoursemsg#</textarea>
-                        </span>
-                        <xar:if condition="!empty($invalid['hidecoursemsg'])">
-                            <span style="color: red"><xar:mlstring>ERROR! This is not a valid hidecoursemsg</xar:mlstring></span>
-                        </xar:if>
-                    </p>
-                    <p class="param">
-                        <label for="AlwaysNotify">
-                            <span class="help" title="#xarML('The e-mail address that will receive all enrollments from this modules.')#">
-                            #$AlwaysNotify_label#
-                            </span>
-                        </label>
-                        <xar:data-input name="AlwaysNotify" id="AlwaysNotify" type="2" value="$AlwaysNotify" />
-                        <xar:if condition="!empty($invalid['AlwaysNotify'])">
-                            <span style="color: red"><xar:mlstring>ERROR! This is not a valid email address</xar:mlstring></span>
-                        </xar:if>
-                    </p>
-                    <p class="param">
-                        <label for="HideEmptyField">
-                            <span class="help" title="#xarML('Hide fields in display templates that are empty?')#">
-                            #$hideemptyfieldslabel#
-                            </span>
-                        </label>
-                        <span class="fullright">
-                            <input type="checkbox" name="HideEmptyFields" id="HideEmptyFields" value="1" #$hideemptyfieldschecked# />
-                        </span>
-                    </p>
-                    <p class="param">
-                        <label for="ShowShortDesc">
-                            <span class="help" title="#xarML('Show table column with short description for every course?')#">
-                            #$ShowShortDesclabel#
-                            </span>
-                        </label>
-                        <span class="fullright">
-                            <input type="checkbox" name="ShowShortDesc" id="ShowShortDesc" value="1" #$ShowShortDescchecked# />
-                        </span>
-                    </p>
-                    
-                    
-                    <p class="param">
-                        <label for="itemsperpage" class="required">
-                            <span class="help" title="#xarML('Number of items per page.')#">
-                            #$itemslabel#
-                            </span>
-                        </label>
-                        <xar:data-input name="itemsperpage" type="15" value="$itemsvalue" />
-                        <xar:if condition="!empty($invalid['credits'])">
-                            <span style="color: red"><xar:mlstring>ERROR! This is not a valid amount of credits</xar:mlstring></span>
-                        </xar:if>
-                    </p>
-                    <p class="param">
-                        <label for="shorturls">
-                            <span class="help" title="#xarML('Support short URLs.')#">
-                            #$shorturlslabel#
-                            </span>
-                        </label>
-                        <span class="fullright">
-                            <input type="checkbox" name="shorturls" id="shorturls" value="1" #$shorturlschecked# />
-                        </span>
-                    </p>
-                    
-               </fieldset>
-          </fieldset>
-          #$hooks#
+           <fieldset>
+                <legend>
+                    <strong><xar:mlstring>Course configuration</xar:mlstring></strong>
+                </legend>
+                <div class="xar-form-input-wrapper">
+                    <label for="hideplanningmsg" class="xar-form-label" title="#xarML('The message to display when a user wants to see a course that is hidden.')#">
+                        <span class="required" >#$hideplanningmsg_label#</span>
+                    </label>
+                    <span class="fullright">
+                        <textarea class="fullright" name="hideplanningmsg" id="hideplanningmsg" wrap="virtual" rows="10" cols="40">#$hideplanningmsg#</textarea>
+                    </span>
+                    <xar:if condition="!empty($invalid['hideplanningmsg'])">
+                        <span style="color: red"><xar:mlstring>ERROR! This is not a valid material description</xar:mlstring></span>
+                    </xar:if>
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="hidecoursemsg" class="xar-form-label" title="#xarML('The message to display when a user wants to see a course that is hidden.')#">
+                        <span class="required" >#$hidecoursemsg_label#</span>
+                    </label>
+                    <span class="fullright" class="xar-form-label">
+                        <textarea class="fullright" name="hidecoursemsg" id="hidecoursemsg" wrap="virtual" rows="10" cols="40">#$hidecoursemsg#</textarea>
+                    </span>
+                    <xar:if condition="!empty($invalid['hidecoursemsg'])">
+                        <span style="color: red"><xar:mlstring>ERROR! This is not a valid hidecoursemsg</xar:mlstring></span>
+                    </xar:if>
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="AlwaysNotify" class="xar-form-label" title="#xarML('The e-mail address that will receive all enrollments from this modules.')#">
+                        #$AlwaysNotify_label#
+                    </label>
+                    <xar:data-input name="AlwaysNotify" id="AlwaysNotify" type="2" value="$AlwaysNotify" />
+                    <xar:if condition="!empty($invalid['AlwaysNotify'])">
+                        <span style="color: red"><xar:mlstring>ERROR! This is not a valid email address</xar:mlstring></span>
+                    </xar:if>
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="HideEmptyField" class="xar-form-label" title="#xarML('Hide fields in display templates that are empty?')#">
+                        #$hideemptyfieldslabel#
+                    </label>
+                    <span class="fullright">
+                        <input type="checkbox" name="HideEmptyFields" id="HideEmptyFields" value="1" #$hideemptyfieldschecked# />
+                    </span>
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="ShowShortDesc" class="xar-form-label" title="#xarML('Show table column with short description for every course?')#">
+                        #$ShowShortDesclabel#
+                    </label>
+                    <span class="fullright">
+                        <input type="checkbox" name="ShowShortDesc" id="ShowShortDesc" value="1" #$ShowShortDescchecked# />
+                    </span>
+                </div>                
+                <div class="xar-form-input-wrapper">
+                    <label for="itemsperpage" class="xar-form-label" title="#xarML('Number of items per page.')#">
+                        <span class="required" >#$itemslabel#</span>
+                    </label>
+                    <xar:data-input name="itemsperpage" type="15" value="$itemsvalue" />
+                    <xar:if condition="!empty($invalid['credits'])">
+                        <span style="color: red"><xar:mlstring>ERROR! This is not a valid amount of credits</xar:mlstring></span>
+                    </xar:if>
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="shorturls" class="xar-form-label" title="#xarML('Support short URLs.')#">
+                        #$shorturlslabel#
+                    </label>
+                        <input type="checkbox" name="shorturls" id="shorturls" value="1" #$shorturlschecked# />
+                </div>
+           </fieldset>
+           <xar:if condition="!empty($hooks)">
+            <fieldset>
+                <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
+                    <xar:foreach in="$hooks" key="$hookmodule">
+                    #$hooks[$hookmodule]#
+                    </xar:foreach>
+            </fieldset>
+           </xar:if>
           <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
           <input type="submit" value="#$updatebutton#" />
     </form>

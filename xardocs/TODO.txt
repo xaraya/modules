@@ -16,7 +16,7 @@
 10. Minimum/max participants (Partly done, need check for enroll)
 11. Improve the admin functions
 12. Link teachers to the planned courses, besides showing their addresses
-13. Link course coordinators to courses
+13. Link course coordinators to courses (done?)
 14. Check all security functions
 15. Short URLs.
 16. Integration with categories(done, needs checking)

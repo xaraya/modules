@@ -44,13 +44,16 @@ function courses_admin_modifyconfig()
     $data['shorturlschecked'] = xarModGetVar('courses', 'SupportShortURLs') ? 'checked="checked"' : '';
 
     $hooks = xarModCallHooks('module', 'modifyconfig', 'courses',
-        array('module' => 'courses'));
+                       array('module' => 'courses'));
     if (empty($hooks)) {
-        $data['hooks'] = '';
-    } elseif (is_array($hooks)) {
-        $data['hooks'] = join('', $hooks);
+        $data['hooks'] = array('categories' => xarML('You can assign base categories by enabling the categories hooks for this module'));
     } else {
         $data['hooks'] = $hooks;
+    
+         /* You can use the output from individual hooks in your template too, e.g. with
+         * $hooks['categories'], $hooks['dynamicdata'], $hooks['keywords'] etc.
+         */
+        $data['hookoutput'] = $hooks;
     }
     // Return the template variables defined in this function
     return $data;
