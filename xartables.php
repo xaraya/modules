@@ -1,13 +1,22 @@
 <?php 
-// File: $Id$
-// ----------------------------------------------------------------------
-// Xaraya eXtensible Management System
-// Copyright (C) 2002 by the Xaraya Development Team.
-// http://www.xaraya.org
-// ----------------------------------------------------------------------
-// Original Author of file: Jim McDonald
-// Purpose of file:  Table information for release module
-// ----------------------------------------------------------------------
+/**
+ * Release Table definitions
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Release Module
+ */
+/**
+ * initialization functions
+ * Initialise the Release module
+ * This function is only ever called once during the lifetime of a particular
+ * module instance
+ * Original Author of file: John Cox via phpMailer Team
+ * @author Release module development team
+ */
 
 function release_xartables()
 {
