@@ -113,7 +113,7 @@ function julian_init()
         'city'=>array('type'=>'varchar','size'=>'30','null'=>TRUE),
         
         // STATE::the state of the location
-        'state'=>array('type'=>'char','size'=>'2','null'=>TRUE),
+        'state'=>array('type'=>'varchar','size'=>'50','null'=>TRUE),
         
         // ZIP::the zipcode of the location
         'zip'=>array('type'=>'varchar','size'=>'10','null'=>TRUE),
@@ -751,8 +751,19 @@ function julian_upgrade($oldversion)
                 return julian_upgrade('0.2.3');
                 
         case '0.2.3':
-            // Nothing yet
-            // Remove masks and make new ones...?
+            /* Remove masks and make new ones...?
+             * STATE::enlarge and change type from char(2)
+             * 'state'=>array('type'=>'varchar','size'=>'50','null'=>TRUE)
+             */
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+            $datadict =& xarDBNewDataDict($dbconn, 'CREATE');
+            $juliantable = xarDBgetSiteTablePrefix() . '_julian_events';
+            // Apply changes
+            xarDBLoadTableMaintenanceAPI();
+            $result = $datadict->alterColumn($juliantable, 'state C(50) Null');
+            if (!$result) return;
+        
             break;
         case '1.0.0':
             // Code to upgrade from version 1.0 goes here
