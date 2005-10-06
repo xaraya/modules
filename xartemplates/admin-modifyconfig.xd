@@ -1,6 +1,6 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:base-include-javascript module="base" filename="formcheck.js" />
-<xar:comment><xar:style scope="module" file="xarform" /></xar:comment>
+<xar:style scope="module" file="julian" />
 <script type="text/javascript">
 <!--
     // Enter name of mandatory fields
@@ -109,7 +109,6 @@
                         </xar:mlstring>
                     </span>
                 </label>
-                <div class="xar-form-input-wrapper-after">
                 <select name="BulletForm" id="BulletForm">
                     <xar:if condition="$BulletForm eq 'bull'">
                          <option value="bull" selected="selected">&nbsp;&bull;&nbsp;</option>
@@ -133,7 +132,6 @@
                          <option value="loz" selected="selected">&nbsp;&loz;&nbsp; </option>
                     </xar:if>
                 </select>
-                </div>
             </div>
         </fieldset>            
         <fieldset>

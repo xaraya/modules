@@ -1,7 +1,6 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
 <xar:style scope="module" file="julian" />
-<xar:style scope="module" file="xarform" />
 <xar:set name="$modifylabel"><xar:mlstring>Modify</xar:mlstring></xar:set>
 <xar:set name="$addlabel"><xar:mlstring>Add</xar:mlstring></xar:set>
 <div class="xar-julian xar-julian-admin-modifycategories">
@@ -14,7 +13,7 @@
         </xar:mlstring>
     </h2>
 
-    <form name="cat_modify" action="#xarModURL('julian','admin','modifycategories')#" onSubmit="if(!isCancel){return validate2(this)}" method="post" enctype="application/x-www-form-urlencoded">
+    <form name="cat_modify" action="&xar-modurl-julian-admin-modifycategories;" onSubmit="if(!isCancel){return validate2(this)}" method="post" enctype="application/x-www-form-urlencoded">
         <fieldset>
             <legend>
                 <strong><xar:mlstring>Existing category colors</xar:mlstring></strong>
@@ -52,7 +51,7 @@
         </fieldset>
     </form>
             
-    <form name="cat_add" action="#xarModURL('julian','admin','modifycategories')#" onSubmit="if(!isCancel){return validate2(this)}" method="post" enctype="application/x-www-form-urlencoded">
+    <form name="cat_add" action="&xar-modurl-julian-admin-modifycategories;" onSubmit="if(!isCancel){return validate2(this)}" method="post" enctype="application/x-www-form-urlencoded">
         <fieldset>
             <legend>
                 <strong><xar:mlstring>Add Category Color</xar:mlstring></strong>

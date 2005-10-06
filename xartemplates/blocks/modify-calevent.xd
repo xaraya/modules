@@ -1,14 +1,10 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:comment>
-    We know that xarform.css file is already included, so no need to do it twice 
-</xar:comment>
-<p class="param">
-    <label for="EventBlockDays" class="required">
-        <span class="help" title="#xarML('Number of days that calendar should show events for.')#">
-            <xar:mlstring>
-                Number of upcoming days:
-            </xar:mlstring>
-        </span>
+
+<div class="xar-form-input-wrapper">
+    <label for="EventBlockDays" class="xar-form-label required" title="#xarML('Number of days that calendar should show events for.')#">
+        <xar:mlstring>
+            Number of upcoming days:
+        </xar:mlstring>
     </label>
     <input type="text" name="EventBlockDays" id="EventBlockDays" value="#$EventBlockDays#" size="2" />
-</p>
+</div>
