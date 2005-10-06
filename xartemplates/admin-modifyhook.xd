@@ -21,23 +21,17 @@
                 opt.setDelimiter("#$delimiter#");
                 opt.saveNewRightOptions("keywords");
             </script>
-
-                <table>
-                    <tbody>
+        <table class="xar-noborder">
                         <tr>
-                            <td>
-                                <xar:mlstring>
-                                    List of keywords
-                                </xar:mlstring>
-                            </td>
-                            <td>
-                                <img name="pix" src="modules/keywords/xarimages/pix.gif" alt="" /> 
-                            </td>
-                            <td>
-                                <xar:mlstring>
-                                    Chosen keywords
-                                </xar:mlstring>
-                            </td>
+                <th class="xar-align-center">
+                    <xar:mlstring>List of keywords</xar:mlstring>
+                </th>
+                <th class="xar-align-center">
+                    <img name="pix" src="#xarTplGetImage('pix.gif','keywords')#" alt="" />
+                </th>
+                <th class="xar-align-center">
+                    <xar:mlstring>Chosen keywords</xar:mlstring>
+                </th>
                         </tr>
                         <tr>
                             <td align ="center">
@@ -69,16 +63,11 @@
                                 </select> 
                             </td>
                         </tr>
-                    </tbody>
                 </table>
-
             <input type="hidden" size="70" name="keywords" id="keywords"/> 
             </div>
             <script type="text/javascript">
                 opt.init(document.forms['post']);
             </script>
         </xar:if>   
-
 </div>
-
-
