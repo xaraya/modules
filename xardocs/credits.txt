@@ -7,3 +7,5 @@ Second todolist script author - Max Hammond joined to team in April 2001.
 
 In one's turn, "todolist" script  was inspired some CGI-Scripts,
 written by Marc Bayerkohler and Joel Thomas.
+
+Images used from the module "tasks" by Xaraya.

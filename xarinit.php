@@ -57,9 +57,9 @@ function todolist_init()
     /* Create or alter the table as necessary */
     $result = $datadict->changeTable($groupstable, $fields);
     if (!$result) {return;}
-
+    
+    /* Can't we do this with comments ??? */
     $notestable = $xartable['todolist_notes'];
-
     $fields = "xar_todo_id I unsigned NOTNULL default 0,
             xar_note_id I unsigned PRIMARY auto,
             xar_text text,

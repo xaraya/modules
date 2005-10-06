@@ -1,66 +1,48 @@
 <?php
 /**
- * Display an item
+ * Display a todo
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Example Module
+ * @subpackage Todolist Module
  */
 
 /**
- * Display an item
+ * Display a todo
  *
  * This is a standard function to provide detailed informtion on a single item
  * available from the module.
  * 
- * @author the Example module development team
+ * @author the Todolist module development team
  * @param  $args an array of arguments (if called by other modules)
  * @param  $args ['objectid'] a generic object id (if called by other modules)
  * @param  $args ['exid'] the item id used for this example module
  */
-function example_user_display($args)
+function todolist_user_display($args)
 { 
-    /* User functions of this type can be called by other modules.  If this
-     * happens then the calling module will be able to pass in arguments to
-     * this function through the $args parameter.  Hence we extract these
-     * arguments *before* we have obtained any form-based input through
-     * xarVarFetch(), so that parameters passed by the modules can also be
-     * checked by a certain validation.
-     */
     extract($args);
 
-    /* Get parameters from whatever input we need.  All arguments to this
-     * function should be obtained from xarVarFetch(). xarVarFetch allows
-     * the checking of the input variables as well as setting default
-     * values if needed.  Getting vars from other places such as the
-     * environment is not allowed, as that makes assumptions that will
-     * not hold in future versions of Xaraya
-     */
-    if (!xarVarFetch('exid', 'int:1', $exid)) return;
-    if (!xarVarFetch('objectid', 'str:1', $objectid, '', XARVAR_NOT_REQUIRED)) return;
-
-    /* At this stage we check to see if we have been passed $objectid, the
-     * generic item identifier.  This could have been passed in by a hook or
-     * through some other function calling this as part of a larger module, but
-     * if it exists it overrides $exid
-
-     * Note that this module could just use $objectid everywhere to avoid all
-     * of this munging of variables, but then the resultant code is less
-     * descriptive, especially where multiple objects are being used.  The
-     * decision of which of these ways to go is up to the module developer
-     */
+    if (!xarVarFetch('todo_id', 'id', $todo_id)) return;
+    if (!xarVarFetch('objectid', 'id', $objectid, '', XARVAR_NOT_REQUIRED)) return;
+    /*if (!xarVarFetch('todo_text', 'str::', $todo_text, '', XARVAR_NOT_REQUIRED)) return;
+    
+    if (!xarVarFetch('todo_priority', 'int::', $todo_priority, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('percentage_completed', 'int::', $percentage_completed, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('created_by', 'int', $created_by, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('due_date', 'str', $due_date, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('date_created', 'str', $date_created, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('date_changed', 'str', $date_changed, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('changed_by', 'int::', $changed_by, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('todo_status', 'str', $todo_status, '', XARVAR_NOT_REQUIRED)) return;
+    */
     if (!empty($objectid)) {
-        $exid = $objectid;
+        $todo_id = $objectid;
     } 
-    /* Initialise the $data variable that will hold the data to be used in
-     * the blocklayout template, and get the common menu configuration - it
-     * helps if all of the module pages have a standard menu at the top to
-     * support easy navigation
-     */
-    $data = xarModAPIFunc('example', 'user', 'menu');
+    /* Get menu */
+    $data = xarModAPIFunc('todolist', 'user', 'menu');
     /* Prepare the variable that will hold some status message if necessary */
     $data['status'] = '';
     /* The API function is called.  The arguments to the function are passed in
@@ -71,43 +53,30 @@ function example_user_display($args)
     $item = xarModAPIFunc('example',
         'user',
         'get',
-        array('exid' => $exid));
+        array('todo_id' => $todo_id));
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; /* throw back */
 
-    /* If your module deals with different types of items, you should specify the item type
-     * here, before calling any hooks
+    /* Do we need to set itemtypes?
      * $item['itemtype'] = 0;
-     * Security check 2 - if your API function does *not* check for the
-     * appropriate access rights, or if for some reason you require higher
-     * access than READ for this function, you *must* check this here !
-     * if (!xarSecurityCheck('CommentExample',0,'Item',"$item[name]:All:$item[exid]")) {
-     *    //Fill in the status variable with the status to be shown
-     * $data['status'] = _EXAMPLENOAUTH;
-     *    //Return the template variables defined in this function
-     * return $data;
-     *}
      */
+
+    /* Get the project this todo belongs to */
+    /* Get the resonsible people */
 
     /* Let any transformation hooks know that we want to transform some text.
-     * You'll need to specify the item id, and an array containing the names of all
-     * the pieces of text that you want to transform (e.g. for autolinks, wiki,
-     * smilies, bbcode, ...).
      */
-    $item['transform'] = array('name');
+    $item['transform'] = array('todo_text','date_created','date_changed');
     $item = xarModCallHooks('item',
         'transform',
-        $exid,
+        $todo_id,
         $item);
-    /* Fill in the details of the item.  Note that a module variable is used here to determine
-     * whether or not parts of the item information should be displayed in
-     * bold type or not
-     */
+    /* Fill in the details of the item.
     $data['name_value'] = $item['name'];
     $data['number_value'] = $item['number'];
-
-    $data['exid'] = $exid;
-
-    $data['is_bold'] = xarModGetVar('example', 'bold');
+     */
+    $data['todo_id'] = $todo_id;
+    $data['item'] = $item;
+    //$data['is_bold'] = xarModGetVar('example', 'bold');
     /* Note : module variables can also be specified directly in the
      * blocklayout template by using &xar-mod-<modname>-<varname>;
      * Note that you could also pass on the $item variable, and specify
@@ -115,30 +84,21 @@ function example_user_display($args)
      * use the <xar:ml>, <xar:mlstring> or <xar:mlkey> tags then, so that
      * labels can be translated for other languages...
      * Save the currently displayed item ID in a temporary variable cache
-     * for any blocks that might be interested (e.g. the Others block)
-     * You should use this -instead of globals- if you want to make
-     * information available elsewhere in the processing of this page request
      */
-    xarVarSetCached('Blocks.example', 'exid', $exid);
-    /* Let any hooks know that we are displaying an item.  As this is a display
-     * hook we're passing a return URL in the item info, which is the URL that any
-     * hooks will show after they have finished their own work.  It is normal
-     * for that URL to bring the user back to this function
+    xarVarSetCached('Blocks.todolist', 'todo_id', $todo_id);
+    /* Let any hooks know that we are displaying an item.
      */
-    $item['returnurl'] = xarModURL('example',
+    $item['returnurl'] = xarModURL('todolist',
         'user',
         'display',
-        array('exid' => $exid));
+        array('todo_id' => $todo_id));
     $hooks = xarModCallHooks('item',
         'display',
-        $exid,
+        $todo_id,
         $item);
     if (empty($hooks)) {
         $data['hookoutput'] = '';
     } else {
-        /* You can use the output from individual hooks in your template too, e.g. with
-         * $hookoutput['comments'], $hookoutput['hitcount'], $hookoutput['ratings'] etc.
-         */
         $data['hookoutput'] = $hooks;
     }
     /* Once again, we are changing the name of the title for better
@@ -147,13 +107,5 @@ function example_user_display($args)
     xarTplSetPageTitle(xarVarPrepForDisplay($item['name']));
     /* Return the template variables defined in this function */
     return $data;
-    /* Note : instead of using the $data variable, you could also specify
-     * the different template variables directly in your return statement :
-     *
-     * return array('menu' => ...,
-     * 'item' => ...,
-     * 'hookoutput' => ...,
-     * ... => ...);
-     */
 }
 ?>

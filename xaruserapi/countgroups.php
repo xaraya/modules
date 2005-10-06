@@ -11,7 +11,7 @@
  */
 
 /**
- * Utility function to count the number of items held by this module
+ * Utility function to count the number of groups
  * 
  * @author the Todolist module development team 
  * @returns integer
