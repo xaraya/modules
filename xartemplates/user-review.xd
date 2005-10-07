@@ -1,0 +1,48 @@
+
+<xar:comment>
+    Display a review summary of a complete survey.
+</xar:comment>
+
+<xar:style scope="module" file="general" />
+<xar:style scope="module" file="review" />
+
+<xar:comment>Flag up submit links if the survey is submittable.</xar:comment>
+<xar:template file="submittable" type="module" subdata="array('usersurvey'=&gt;$usersurvey)" />
+
+<h2>#$usersurvey.name#</h2>
+<h3>#$usersurvey.desc#</h3>
+
+<div class="survey-review">
+    <xar:foreach in="$map['items']" value="$mapitem">
+        <xar:if condition="!empty($mapitem.questions)">
+            <div class="review-group">
+                <div class="review-group-header">
+                    <span class="review-group-name">
+                        <xar:if condition="$editable"> <xar:comment>$usersurvey.system_status eq 'ACTIVE'</xar:comment>
+                            <a href="#xarModURL('surveys','user','gotosurvey',array('usid'=&gt;$usersurvey.usid,'gid'=&gt;$mapitem.gid))#" title="#xarML('Change your answer to this question')#">
+                                #$mapitem.group_name#
+                                <xar:if condition="!empty($mapitem.group_desc)">: #$mapitem.group_desc#</xar:if>
+                            </a>
+                        <xar:else />
+                            #$mapitem.group_name#
+                            <xar:if condition="!empty($mapitem.group_desc)">: #$mapitem.group_desc#</xar:if>
+                        </xar:if>
+                    </span>
+                </div>
+                <div class="review-group-body">
+                    <xar:loop name="$mapitem.questions">
+                        <xar:if condition="$loop:index eq 0">
+                            <div class="review-question-first">
+                                #$loop:item.object->render(array('target'=>'output','template'=>'review'))#
+                            </div>
+                        <xar:else />
+                            <div class="review-question">
+                                #$loop:item.object->render(array('target'=>'output','template'=>'review'))#
+                            </div>
+                        </xar:if>
+                    </xar:loop>
+                </div>
+            </div>
+        </xar:if>
+    </xar:foreach>
+</div>

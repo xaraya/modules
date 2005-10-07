@@ -1,0 +1,58 @@
+
+/* Survey review page */
+
+div.survey-review {
+}
+
+div.survey-review .question-text, div.survey-review .surveys-boilerplate {
+}
+
+div.survey-review .survey-answer {
+}
+
+div.survey-review ul, div.survey-review ul li {
+}
+
+div.survey-review .review-group {
+}
+
+div.survey-review .review-group-header {
+}
+
+div.survey-review .review-group-name {
+}
+
+div.survey-review .review-group-body {
+}
+
+div.survey-review .review-question-first {
+}
+div.survey-review .review-question {
+}
+
+div.survey-review div.question-name {
+}
+
+div.survey-review div.error {
+}
+
+@media print {
+
+/* Hide the left menus and top banner. */
+#leftmenus, table.remas-header-wrapper {
+	display: none;
+}
+
+body {
+}
+
+div.survey-review, div.review-group-body, table#classiccontentarea, td#maincontent {
+}
+
+div.survey-review .review-group-body {
+}
+
+div.message-submittable {
+}
+
+} /* close @media declarations */ 

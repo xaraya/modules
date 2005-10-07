@@ -1,0 +1,85 @@
+<xar:if condition="empty($refgid)">
+    <xar:set name="$refgid">0</xar:set>
+    <xar:if condition="!empty($func) and $func eq 'modify'">
+        <xar:set name="$position">1</xar:set>
+    <xar:else/>
+        <xar:set name="$position">2</xar:set>
+    </xar:if>
+</xar:if>
+
+<xar:if condition="count($groups) eq 0">
+    <input type="hidden" name="moving[#$gid#]" id="moving_#$gid#" value="false" />
+    <input type="hidden" name="refgid[#$gid#]" id="refgid_#$gid#" value="#$refgid#" />
+    <input type="hidden" name="position[#$gid#]" id="position_#$gid#" value="#$position#" />
+    <input type="hidden" name="groupexists[#$gid#]" id="groupexists_#$gid#" value="false" />
+<xar:else />
+    <input type="hidden" name="moving[#$gid#]" id="moving_#$gid#" value="true" />
+    <input type="hidden" name="groupexists[#$gid#]" id="groupexists_#$gid#" value="true" />
+    <tr align="left" valign="middle">
+        <td><label for="refgid_#$gid#"><xar:mlstring>In relation to this group</xar:mlstring></label></td>
+        <td><select name="refgid[#$gid#]" id="refgid_#$gid#">
+            <xar:for start="$i = 0" test="$i lt count($groups)" iter="$i++">
+                <xar:if condition="$groups[$i]['xar_left'] eq $group['xar_left']-1">
+                    <option value="#$groups[$i]['gid']#" selected="selected">
+                    <xar:set name="$position">4</xar:set>
+                <xar:elseif condition="$groups[$i]['xar_right'] eq $group['xar_left']-1" />
+                    <option value="#$groups[$i]['gid']#" selected="selected">
+                    <xar:set name="$position">2</xar:set>
+                <xar:else />
+                    <option value="#$groups[$i]['gid']#">
+                </xar:if>
+
+                #$groups[$i]['slash_separated']#
+            </xar:for>
+        </select></td>
+    </tr>
+    <xar:comment> The position needs to be set after groups select because
+          There is no position which we can have a selected group that will
+          work in all cases  </xar:comment>
+    <tr>
+        <td><label for="position_#$gid#"><xar:mlstring>Position</xar:mlstring></label></td>
+        <td><select name="position[#$gid#]" id="position_#$gid#">
+            <xar:if condition="$position eq 1">
+                <option value="1" selected="selected">
+                    <xar:mlstring>Right before, in the same level</xar:mlstring>
+                </option>
+            <xar:else />
+                <option value="1">
+                    <xar:mlstring>Right before, in the same level</xar:mlstring>
+                </option>
+            </xar:if>
+
+            <xar:if condition="$position eq 2">
+                <option value="2" selected="selected">
+                    <xar:mlstring>Right after, in the same level</xar:mlstring>
+                </option>
+            <xar:else />
+                <option value="2">
+                    <xar:mlstring>Right after, in the same level</xar:mlstring>
+                </option>
+            </xar:if>
+
+            <xar:if condition="$position eq 4">
+                <option value="4" selected="selected">
+                    <xar:mlstring>The first child group</xar:mlstring>
+                </option>
+            <xar:else />
+                <option value="4">
+                    <xar:mlstring>The first child group</xar:mlstring>
+                </option>
+            </xar:if>
+
+            <xar:if condition="$position eq 3">
+                <option value="3" selected="selected">
+                    <xar:mlstring>The last child group</xar:mlstring>
+                </option>
+            <xar:else />
+                <option value="3">
+                    <xar:mlstring>The last child group</xar:mlstring>
+                </option>
+            </xar:if>
+
+        </select></td>
+    </tr>
+</xar:if>
+

@@ -1,0 +1,40 @@
+<xar:comment>Hidden field indicates that the question has been submitted</xar:comment>
+<input type="hidden" name="#$submit_hidden#" value="1" />
+
+<div class="surveys-linkedsurvey">
+    <xar:if condition="!empty($error)">
+        <div class="error"><xar:mlstring>Attention:</xar:mlstring>&nbsp;#$error#</div>
+    </xar:if>
+
+    <xar:if condition="!empty($user_surveys)">
+        <div class="surveys-instruction">
+            <div class="question-text"><div class="question-name">#$question_name#</div>
+                <label for="#$id#">#$question_text#</label>
+            </div>
+
+            <xar:if condition="$mandatory">
+                <div class="mandatory"><xar:mlstring>Mandatory - must be completed</xar:mlstring></div>
+            </xar:if>
+
+            <select name="#$name#" id="#$id#">
+                <xar:loop name="$user_surveys">
+                    <xar:if condition="$loop:item.usid eq $current_value">
+                        <option value="#xarVarPrepForDisplay($loop:item.usid)#" id="#$loop:item.id#" selected="selected">#xarVarPrepForDisplay($loop:item.label)#</option>
+                    <xar:else />
+                        <option value="#xarVarPrepForDisplay($loop:item.usid)#" id="#$loop:item.id#">#xarVarPrepForDisplay($loop:item.label)#</option>
+                    </xar:if>
+                </xar:loop>
+            </select>
+        </div>
+    <xar:else />
+        <xar:comment>No surveys of the relevant type have been completed.</xar:comment>
+        <div class="error"><xar:mlstring>No site details have been entered. You must complete a site survey for at least one site before continuing. To enter details for a site, click below:</xar:mlstring></div>
+        <div class="surveys-overview">
+            <ul>
+                <li class="survey-NEW">
+                    <a href="#xarModURL('surveys','user','startsurvey',array('sid'=&gt;$survey_id))#"><xar:mlstring>Create a site survey</xar:mlstring></a><br/>&nbsp;
+                </li>
+            </ul>
+        </div>
+    </xar:if>
+</div>

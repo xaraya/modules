@@ -1,0 +1,124 @@
+<xar:comment>
+    // Example invocation code:
+    <xar:template file="map" type="module" subdata="array('map'=&gt;$map,'showmap'=&gt;$showmap,'current_gid'=&gt;$current_gid,'current_ancestors'=&gt;$current_ancestors)" />
+    
+    // Explanation of conditions used to determine whether a group is displayed in the map.
+    // The condition can be used to show or hide groups by CSS or markup.
+    // We have chosen markup here for portability, but the CSS version can be
+    // made more sophisticated, with DHTML used to open and close groups
+    // dynamically.
+
+    // The 'current context' rules are designed to balance the groups
+    // displayed to help the user navigate the survey, with the amount
+    // of space available for displaying the map. They include the following:
+
+    // Group is active
+        $loop:item.status ne 'NA'
+    // Group is level 0 or 1 (not used) (also caught by 'children of ancestors')
+        $loop:item.level le 1
+    // Group is ancestor of current group
+        $loop:item.xar_left lt $map.items[$current_gid]['xar_left'] and $loop:item.xar_right gt $map.items[$current_gid]['xar_left']
+    // Group is a sibling of the current group (also caught by 'children of ancestors')
+        $loop:item.parent eq $map.items[$current_gid]['parent']
+    // Group is a child of the current group
+        $loop:item.parent eq $current_gid
+    // Children of ancestors (helps show context of the current group)
+        in_array($loop:item.parent, $current_ancestors)
+
+    // Values of $showmap
+        0 = no map
+        1 = current context (see rules above)
+        2 = all valid groups
+        3 = all possible groups including not applicable
+</xar:comment>
+
+<xar:if condition="empty($showmap)"><xar:set name="showmap">$map['showmap']</xar:set></xar:if>
+<xar:if condition="empty($current_gid)"><xar:set name="current_gid">$map['current_gid']</xar:set></xar:if>
+<xar:if condition="empty($current_ancestors)"><xar:set name="current_ancestors">$map['current_ancestors']</xar:set></xar:if>
+
+<xar:comment>Draw the map</xar:comment>
+<xar:set name="dummy">xarTplAddStyleLink('surveys','map')</xar:set>
+
+<xar:if condition="$map['showmap'] gt 0">
+<div class="map">
+    <xar:foreach in="$map.items" value="$mapitem">
+        <xar:if condition="($mapitem.status ne 'NA' or $map['showmap'] gt 2) and ($map['showmap'] gt 1 or ($mapitem.parent eq $current_gid or ($mapitem.xar_left lt $map.items[$current_gid]['xar_left'] and $mapitem.xar_right gt $map.items[$current_gid]['xar_left']) or $mapitem.parent eq $map.items[$current_gid]['parent'] or $mapitem.parent eq $current_gid or in_array($mapitem.parent, $current_ancestors)))">
+
+            <xar:comment>Determine the status of the group</xar:comment>
+            <xar:if condition="$mapitem.status eq 'INVALID'"><xar:set name="group_class">'group-invalid'</xar:set></xar:if>
+            <xar:if condition="$mapitem.status eq 'NORESPONSE'"><xar:set name="group_class">'group-noresponse'</xar:set></xar:if>
+            <xar:if condition="$mapitem.status eq 'COMPLETE'">
+                <xar:if condition="!empty($mapitem.incomplete_desc)">
+                    <xar:set name="group_class">'group-semicomplete'</xar:set>
+                <xar:else />
+                    <xar:set name="group_class">'group-complete'</xar:set>
+                </xar:if>
+            </xar:if>
+
+            <xar:comment>Determine whether the group has any children, and set appropriate class</xar:comment>
+            <xar:if condition="isset($mapitem.childcount)">
+                <xar:set name="childcount">$mapitem['childcount']</xar:set>
+            <xar:else />
+                <xar:set name="childcount">0</xar:set>
+            </xar:if>
+
+            <xar:if condition="$childcount gt 0">
+                <xar:if condition="$mapitem.gid eq $current_gid">
+                    <xar:set name="indent_class">'group-children-current'</xar:set>
+                <xar:else />
+                    <xar:set name="indent_class">'group-children'</xar:set>
+                </xar:if>
+            <xar:else />
+                <xar:if condition="$mapitem.gid eq $current_gid">
+                    <xar:set name="indent_class">'group-nochildren-current'</xar:set>
+                <xar:else />
+                    <xar:set name="indent_class">'group-nochildren'</xar:set>
+                </xar:if>
+            </xar:if>
+
+            <xar:comment>Class to highlight the current item</xar:comment>
+            <xar:if condition="$mapitem.gid eq $current_gid">
+                <xar:set name="current_class">'current'</xar:set>
+            <xar:else />
+                <xar:set name="current_class">''</xar:set>
+            </xar:if>
+
+            <xar:comment>Indent wrapper first, with invisible border to prevent margin collapsing</xar:comment>
+            <div class="#$indent_class#" style="margin-left: #$mapitem.level#em; border-left: 1px solid #ffffff;">
+                <div class="#$group_class#">
+                    <xar:comment>
+                        Use xarServerGetCurrentURL(() rather than xarModURL so that the map
+                        can be used on many different pages. It also avoids having to include
+                        anciliary parameters, such as 'showmap'.
+                    </xar:comment>
+                    <a href="#xarServerGetCurrentURL(array('gid'=&gt;$mapitem.gid))#" title="#xarVarPrepForDisplay(xarML('Go to page ') . $mapitem.group_name)#" class="#$current_class#">
+                        <xar:if condition="!empty($mapitem.group_desc)">
+                            <xar:if condition="$mapitem.gid eq $current_gid">
+                                [#$mapitem.group_desc#]
+                            <xar:else />
+                                #$mapitem.group_desc#
+                            </xar:if>
+                        <xar:else />
+                            <xar:if condition="$mapitem.gid eq $current_gid">
+                                [#$mapitem.group_name#]
+                            <xar:else />
+                                #$mapitem.group_name#
+                            </xar:if>
+                        </xar:if>
+                    </a>
+                </div>
+            </div>
+        </xar:if>
+    </xar:foreach>
+
+    <div class="map-key">
+        <xar:if condition="$map['showmap'] eq 1">
+            <a href="#xarServerGetCurrentURL(array('showmap'=&gt;2))#"><xar:mlstring>Show Expanded Map</xar:mlstring></a>
+        </xar:if>
+        <xar:if condition="$map['showmap'] gt 1">
+            <a href="#xarServerGetCurrentURL(array('showmap'=&gt;1))#"><xar:mlstring>Show Compact Map</xar:mlstring></a>
+        </xar:if>
+    </div>
+    <a href="#xarModURL('surveys','user','group_help',array('gid'=&gt;'PROGRESS'))#" target="surveyhelp" title="#xarML('Help for this page')#"><img src="#xarTplGetImage('help_btn.gif')#" alt="#xarML('Help button')#" style="vertical-align: middle;" /><xar:mlstring>Progress Map Help</xar:mlstring></a>
+</div> <xar:comment>map section</xar:comment>
+</xar:if>

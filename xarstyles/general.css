@@ -1,0 +1,65 @@
+/* General survey styles */
+
+/* Wrapper for each question */
+.surveys-question {
+}
+
+/* Error message, when a question fails validation */
+.surveys-question .error {
+}
+
+/* Make checkboxes and radio buttons a tad bigger */
+.surveys-question input[type=checkbox], .surveys-question input[type=radio] {
+}
+
+/* General font style within any question */
+.surveys-question .question-text {
+}
+
+/* Question text */
+.surveys-question .question-text {
+}
+
+/* Highlight the question text when the question is in error. */
+.error .question-text {
+}
+
+/* Question instruction */
+.surveys-question .surveys-instruction {
+}
+
+/* Bit of room on the inside of the fieldsets */
+.surveys-question fieldset {
+}
+
+/* Make submit buttons a little more interactive */
+input[type=submit]:hover {
+}
+
+/* Question names - largely low profile: keep faint and to the RHS */
+.surveys-question .question-text .question-name, .surveys-question legend.question-name {
+}
+/* For some reason, needed for non-legend question names, but causes legends to behave strangely. */
+.surveys-question .question-text .question-name {
+}
+
+/* */
+.surveys-question .mandatory {
+}
+
+/* Survey form butons */
+.question-form .button_prev, .question-form .button_update, .question-form .button_next {
+}
+
+/* Progress screen/general */
+
+div.showgroup h2 {
+}
+
+div.message-submittable {
+}
+
+span.survey-summary {
+}
+span.survey-description {
+}

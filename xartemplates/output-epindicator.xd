@@ -1,0 +1,24 @@
+<div class="question-text"><div class="question-name">#$question_name#</div>#$attribute.item_long_name#</div>
+
+<xar:if condition="$status eq 'INVALID'">
+    <div class="error"><xar:mlstring>This question is incomplete</xar:mlstring></div>
+</xar:if>
+
+<xar:if condition="empty($indicator)">
+    <div><xar:mlstring>No indicator selected</xar:mlstring></div>
+<xar:else />
+    <div class="survey-answer">
+        <xar:mlstring>Indicator:</xar:mlstring>&nbsp;
+        #xarVarPrepForDisplay($indicator.item_desc)#
+    </div>
+
+    <div class="survey-answer">
+        <xar:mlstring>Value:</xar:mlstring>&nbsp;
+        #xarModAPIfunc('surveys','user','scientificsymbols',xarVarPrepForDisplay($value))#
+    </div>
+
+    <div>
+        <div class="question-text"><xar:mlstring>The following comment was added:</xar:mlstring></div>
+        <div class="survey-answer">#xarVarPrepForDisplay($comment)#</div>
+    </div>
+</xar:if>

@@ -1,0 +1,60 @@
+
+<xar:comment>Hidden field indicates that the question has been submitted</xar:comment>
+<input type="hidden" name="#$submit_hidden#" value="1" />
+
+<div class="surveys-subsector">
+    <fieldset>
+        <legend class="question-name">#$question_name#</legend>
+
+        <xar:if condition="!empty($error)">
+            <div class="error"><xar:mlstring>Attention:</xar:mlstring>&nbsp;#$error#</div>
+        </xar:if>
+
+        <div class="question-text"><label for="#$id_sector#">#$question_text#</label></div>
+
+        <div>
+            <div class="surveys-instruction"><xar:mlstring>Sector:</xar:mlstring></div>
+            <select name="#$id_sector#" id="#$name_sector#">
+                <xar:loop name="$sectors">
+                    <xar:if condition="$loop:item.value eq $current_sector">
+                        <option value="#xarVarPrepForDisplay($loop:item.value)#" id="#$loop:item.id#" selected="selected">#xarVarPrepForDisplay($loop:item.label)#</option>
+                    <xar:else />
+                        <option value="#xarVarPrepForDisplay($loop:item.value)#" id="#$loop:item.id#">#xarVarPrepForDisplay($loop:item.label)#</option>
+                    </xar:if>
+                </xar:loop>
+            </select>
+        </div>
+
+        <xar:if condition="!empty($current_sector)">
+            <div>
+                <div class="surveys-instruction"><xar:mlstring>Sub-sector:</xar:mlstring></div>
+                <select name="#$id#" id="#$name#">
+                    <xar:loop name="$subsectors">
+                        <xar:if condition="$loop:item.sector eq $current_sector">
+                            <xar:if condition="$loop:item.value eq $current_subsector">
+                                <option value="#xarVarPrepForDisplay($loop:item.value)#" id="#$loop:item.id#" selected="selected">#xarVarPrepForDisplay($loop:item.label)#</option>
+                            <xar:else />
+                                <option value="#xarVarPrepForDisplay($loop:item.value)#" id="#$loop:item.id#">#xarVarPrepForDisplay($loop:item.label)#</option>
+                            </xar:if>
+                        </xar:if>
+                    </xar:loop>
+                </select>
+            </div>
+        </xar:if>
+
+        <div>
+            <div class="surveys-instruction">
+                <label for="#$id_custom#">
+                    <div class="question-text" style="border-top: 1px solid #D8D8D8; margin-top: 0.25em;"><xar:mlstring>or</xar:mlstring></div>
+                    <xar:mlstring>Specify your business sector if not listed above:</xar:mlstring>
+                </label>
+            </div>
+
+            <input type="text" name="#$name_custom#" id="#$id_custom#" style="width: 60%;" value="#xarVarPrepForDisplay($current_custom)#" maxlength="200" />
+
+            <div class="surveys-instruction">
+                <xar:mlstring>(Include the NACE code if you know it)</xar:mlstring>
+            </div>
+        </div>
+    </fieldset>
+</div>

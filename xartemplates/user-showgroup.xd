@@ -1,0 +1,105 @@
+
+<xar:set name="dummy">xarTplAddStyleLink('surveys','general')</xar:set>
+
+<div class="showgroup">
+
+<div><xar:mlstring>Survey owner:</xar:mlstring> #xarVarPrepForDisplay(xarUserGetVar('name', $usersurvey.uid))# (#xarVarPrepForDisplay(xarUserGetVar('uname', $usersurvey.uid))#)</div>
+
+<xar:comment>Flag up submit links if the survey is submittable.</xar:comment>
+<xar:template file="submittable" type="module" subdata="array('usersurvey'=&gt;$usersurvey)" />
+
+<xar:comment>Draw the progress bar</xar:comment>
+<xar:template file="progress-bar" type="module" subdata="array('progress'=&gt;$progress)" />
+
+<xar:comment>Title for the section (parent group)</xar:comment>
+<xar:if condition="!empty($current_ancestors[0]) and !empty($map['items'][$current_ancestors[0]]['group_desc'])">
+    <h1>#$map['items'][$current_ancestors[0]]['group_desc']#</h1>
+</xar:if>
+
+<xar:comment>Title for the question group</xar:comment>
+<xar:if condition="!empty($map.items[$current_gid]['group_desc'])">
+    <h2>#$map.items[$current_gid]['group_desc']#</h2>
+</xar:if>
+
+<div>
+    <a href="#xarModURL('surveys','user','group_help',array('gid'=&gt;$current_gid))#" target="surveyhelp" title="#xarML('Help for this page')#"><img src="#xarTplGetImage('help_btn.gif')#" alt="#xarML('Help button')#" style="vertical-align: middle;" />
+    <xar:mlstring>Help for this page</xar:mlstring></a>
+</div>
+
+<xar:if condition="$survey_editor">
+    <div><a href="#xarModURL('surveys','admin','modifygroup',array('gid'=&gt;$current_gid))#">[<xar:mlstring>Edit Group</xar:mlstring>]</a></div>
+</xar:if>
+
+
+<xar:comment>Render the list of questions ,'debugx'=&gt;'Y'</xar:comment>
+<form method="post" action="#xarModURL('surveys','user','showgroup', array('showmap'=&gt;$showmap))#" class="question-form" >
+    <xar:if condition="!empty($questions)">
+        <xar:foreach in="$questions" value="$question">
+            <xar:if condition="!empty($question-&gt;error)">
+                <xar:set name="error_class">'error'</xar:set>
+            <xar:else />
+                <xar:set name="error_class">''</xar:set>
+            </xar:if>
+            <div class="surveys-question #$error_class#">
+                <xar:comment>If this page is readonly, then set the question readonly</xar:comment>
+                <xar:if condition="$readonly and ($question-&gt;readonly = true)"></xar:if>
+
+                <xar:comment>If the user is an admin for this survey, then set the flag on the survey</xar:comment>
+                <xar:if condition="$survey_editor and ($question-&gt;survey_editor = true)"></xar:if>
+
+                <xar:comment>Debug: dump the question</xar:comment>
+                <xar:comment><xar:set name="dummy">var_dump($question)</xar:set></xar:comment>
+
+                <xar:comment>Render the question</xar:comment>
+                <xar:if condition="$readonly">
+                    #$question->render(array('target'=>'output'))#
+                <xar:else />
+                    #$question->render(array('target'=>'input'))#
+                </xar:if>
+
+                <xar:if condition="!empty($survey_editor)">
+                    <div>
+                        [<a href="#xarModURL('surveys','admin','modifyquestion',array('qid'=&gt;$question-&gt;dbquestion['qid']))#"><xar:mlstring>Edit Question</xar:mlstring></a>]
+                    </div>
+                </xar:if>
+            
+            </div>
+        </xar:foreach>
+    <xar:else />
+        <div class="error"><xar:mlstring>There are no questions on this page</xar:mlstring></div>
+    </xar:if>
+
+    <xar:comment>
+        Next/Update/Previous buttons.
+        Buttons are disabled at the start and end of the survey.
+        TODO: we may have to leave the 'next' button permanently enabled, as there may
+        be 'next' groups that do not actually get enabled until after the current 
+        group is submitted, so we do not know about those groups at this point.
+    </xar:comment>
+    <div style="text-align: center; clear: both;">
+        <xar:if condition="$current_gid ne $map.last">
+            <input style="float: right; border: 3px solid;" class="button_next" name="submit_next" type="submit" value="#xarML('Next')# &gt;&gt;" title="#xarML('Submit this page and move on to the next page')#" />
+        <xar:else />
+            <input style="float: right;" class="button_next" name="submit_next" type="submit" value="#xarML('Next')# &gt;&gt;" title="#xarML('Submit this page and move on to the next page')#" />
+        </xar:if>
+        <xar:if condition="$current_gid ne $map.first">
+            <input style="float: left;" class="button_prev" name="submit_prev" type="submit" value="&lt;&lt; #xarML('Previous')#" title="#xarML('Submit this page and go back to the previous page')#" />
+        <xar:else />
+            <input disabled="disabled" style="float: left;" class="button_prev" name="submit_prev" type="submit" value="&lt;&lt; #xarML('Previous')#" title="#xarML('Submit this page and go back to the previous page')#" />
+        </xar:if>
+        <xar:if condition="$map['items'][$current_gid]['count_response'] gt 0 and !$readonly">
+            <input class="button_update" name="submit" type="submit" value="#xarML('Save')#" title="#xarML('Save changes to this page without moving')#" />
+        <xar:else />
+            <input disabled="disabled" class="button_update" name="submit" type="submit" value="#xarML('Save')#" title="#xarML('Save changes to this page without moving')#" />
+        </xar:if>
+    </div>
+</form>
+<hr />
+
+<xar:comment>Draw the map (note: just set it cached now, so it can be picked up by a block)</xar:comment>
+<xar:set name="dummy">xarVarSetCached('surveys', 'map', $map)</xar:set>
+<xar:comment>Pull in the map JS at this point, since blocks cannot do that yet.</xar:comment>
+<xar:set name="dummy">xarTplAddStyleLink('surveys','map')</xar:set>
+<xar:comment><xar:template file="map" type="module" subdata="array('map'=&gt;$map)" /></xar:comment>
+
+</div> <xar:comment>showgroup page</xar:comment>

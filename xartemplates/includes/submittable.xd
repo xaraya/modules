@@ -1,0 +1,8 @@
+<xar:comment>Flag up links if the current survey is submittable</xar:comment>
+<xar:if condition="$usersurvey.status eq 'SUBMITTABLE'">
+    <xar:comment>This survey has all valid responses and can be submitted now if the user wants</xar:comment>
+    <div class="message-submittable">
+        <xar:mlstring>This survey has been answered fully. To review and submit your responses, click here:</xar:mlstring>
+        <a href="#xarModURL('surveys','user','submit',array('usid'=&gt;$usersurvey.usid))#"><xar:mlstring>review and submit this survey</xar:mlstring></a>
+    </div>
+</xar:if>

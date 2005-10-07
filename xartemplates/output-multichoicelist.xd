@@ -1,0 +1,39 @@
+<div class="question-text"><div class="question-name">#$question_name#</div>#$question_text#</div>
+<xar:if condition="$status eq 'INVALID'">
+    <div class="error"><xar:mlstring>This question is incomplete</xar:mlstring></div>
+</xar:if>
+
+<xar:if condition="!empty($multiselect)">
+    <xar:if condition="count($listitems) gt 0">
+        <ul class="survey-answer">
+            <xar:loop name="$listitems">
+                <xar:if condition="$loop:item.name ne $loop:item.label">
+                    <li>#$loop:item.label# (#$loop:item.name#)</li>
+                <xar:else />
+                    <li>#$loop:item.name#</li>
+                </xar:if>
+            </xar:loop>
+        </ul>
+    <xar:else />
+        <ul><li><xar:mlstring>No options selected</xar:mlstring></li></ul>
+    </xar:if>
+<xar:else />
+    <xar:if condition="count($listitems) gt 0">
+        <xar:loop name="$listitems">
+            <xar:if condition="$loop:item.name ne $loop:item.label">
+                <div class="survey-answer">#$loop:item.label# (#$loop:item.name#)</div>
+            <xar:else />
+                <div class="survey-answer">#$loop:item.name#</div>
+            </xar:if>
+        </xar:loop>
+    <xar:else />
+        <div class="survey-answer"><xar:mlstring>No options selected</xar:mlstring></div>
+    </xar:if>
+</xar:if>
+
+<xar:if condition="$commentbox && $comment ne ''">
+    <div>
+        <div class="question-text"><xar:mlstring>The following comment was added:</xar:mlstring></div>
+        <div class="survey-answer">#xarVarPrepForDisplay($comment)#</div>
+    </div>
+</xar:if>

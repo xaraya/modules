@@ -1,0 +1,94 @@
+
+<xar:comment>User main page - custom surveys screen for the project</xar:comment>
+
+<xar:style scope="module" file="general" />
+<xar:style scope="module" file="overview" />
+
+<div class="surveys-overview">
+
+<xar:comment>Need to be logged in to see anything useful</xar:comment>
+<xar:if condition="!xarUserIsLoggedIn()">
+    <xar:comment>Default page when not logged in</xar:comment>
+    <xar:template file="lang-article" type="module" module="surveys" subdata="array('catname'=&gt;'mainanon')" />
+<xar:else />
+    <xar:comment>Default page intro when logged in</xar:comment>
+    <xar:template file="lang-article" type="module" module="surveys" subdata="array('catname'=&gt;'mainlogged')" />
+
+    <xar:comment>Active 2: #$counts[2]['ACTIVE']#</xar:comment>
+    <xar:comment><xar:set name="dummy">var_dump($counts)</xar:set></xar:comment>
+
+    <div style="padding: 4px; border: 1px solid #FF0066; margin: 1em 0;">
+        <h2><xar:mlstring>The Assessment</xar:mlstring></h2>
+
+        <xar:if condition="$counts[2]['ACTIVE'] gt 0">
+            <h3><xar:mlstring>Continue Survey</xar:mlstring></h3>
+            <xar:foreach in="$active" value="$survey">
+                <xar:if condition="$survey.sid eq 2">
+                    <div>
+                        <a href="#xarModURL('surveys','user','gotosurvey',array('usid'=&gt;$survey.usid))#" class="continue-survey"><img src="#xarTplGetImage('writepad.gif')#" alt="view" style="vertical-align: middle;"/><strong style="border-bottom: 2px solid red;"><xar:mlstring>Continue answering this survey</xar:mlstring></strong></a>
+                        <div><a href="#xarModURL('surveys','user','review',array('usid'=&gt;$survey.usid))#" class="continue-survey"><img src="#xarTplGetImage('view1.gif')#" alt="Magnifying glass" style="vertical-align: middle; margin: 0 8px;"/><xar:mlstring>View your responses</xar:mlstring></a></div>
+                        <xar:if condition="$survey.status eq 'SUBMITTABLE'">
+                            <div class="message-submittable">
+                                <a href="#xarModURL('surveys','user','submit',array('usid'=&gt;$survey.usid))#"><strong style="border-bottom: 2px solid red;"><xar:mlstring>All questions have been answered in this survey. You may now submit this survey. Click here to submit.</xar:mlstring></strong></a>
+                                <xar:comment>#$survey.status_desc#</xar:comment>
+                            </div>
+                        </xar:if>
+                        <xar:if condition="!empty($survey.summary)">
+                            <div><span class="survey-summary">#$survey.summary#</span></div>
+                        </xar:if>
+                    </div>
+                </xar:if>
+            </xar:foreach>
+        </xar:if>
+
+        <xar:if condition="!empty($new[2])">
+            <div>
+                <h3><xar:mlstring>Start New Survey</xar:mlstring></h3>
+                <div><xar:if condition="$counts[2]['CLOSED'] eq 0">
+                    <xar:mlstring>You have not started a survey yet. Click below to start a survey now.</xar:mlstring>
+                <xar:else />
+                    <xar:mlstring>You have already completed one survey. You may start another survey for a different site or year if you wish.</xar:mlstring>
+                </xar:if></div>
+
+                <a href="#xarModURL('surveys','user','startsurvey',array('sid'=>$new[2]['sid']))#" class="continue-survey"><xar:mlstring>Click here to start a new survey</xar:mlstring></a>
+            </div>
+        </xar:if>
+
+        <xar:if condition="$counts[2]['CLOSED'] gt 0 or $counts[2]['LOCKED'] gt 0">
+            <div>
+                <h3><xar:mlstring>Completed Surveys</xar:mlstring></h3>
+                <div><xar:mlstring>You have completed at least one survey.</xar:mlstring></div>
+                <xar:foreach in="$closed" value="$survey">
+                    <xar:if condition="$survey.sid eq 2">
+                        <div style="margin-top: 1em;">
+                            <div><a href="#xarModURL('surveys','user','review',array('usid'=&gt;$survey.usid))#" class="continue-survey"><img src="#xarTplGetImage('view1.gif')#" alt="Magnifying glass" style="vertical-align: middle; margin: 0 8px;"/><xar:mlstring>View your responses</xar:mlstring></a></div>
+
+                            <xar:if condition="$survey.status eq 'COMPLETE' or $survey.status eq 'SUBMITTED' or $survey.status eq 'INSPECTOR' or $survey.status eq 'VERIFIED'"> 
+                            <div><a href="#xarModURL('surveys','user','graph_redirect',array('usid'=&gt;$survey.usid))#" class="continue-survey" target="charts"><img src="#xarTplGetImage('bar-graph.gif')#" alt="Bar graph" style="vertical-align: middle"><xar:mlstring>View your charts</xar:mlstring></a></div>
+                            </xar:if>
+
+                            #$survey.status_desc#
+                            <xar:if condition="!empty($survey.summary)">
+                                <br /><span class="survey-summary">#$survey.summary#</span>
+                            </xar:if>
+                        </div>
+                    </xar:if>
+                </xar:foreach>
+                <xar:foreach in="$locked" value="$survey">
+                    <xar:if condition="$survey.sid eq 2">
+                        <div style="margin-top: 1em;">
+                            <div><a href="#xarModURL('surveys','user','review',array('usid'=&gt;$survey.usid))#" class="continue-survey"><img src="#xarTplGetImage('view1.gif')#" alt="Magnifying glass" style="vertical-align: middle;  margin: 0 8px;"><xar:mlstring>View your responses</xar:mlstring></a></div>
+                            <div><a href="#xarModURL('surveys','user','graph_redirect',array('usid'=&gt;$survey.usid))#" class="continue-survey" target="charts"><img src="#xarTplGetImage('bar-graph.gif')#" alt="Bar graph" style="vertical-align: middle"><xar:mlstring>View your charts</xar:mlstring></a></div>
+                            #$survey.status_desc#
+                            <xar:if condition="!empty($survey.summary)">
+                                <br /><span class="survey-summary">#$survey.summary#</span>
+                            </xar:if>
+                        </div>
+                    </xar:if>
+                </xar:foreach>
+            </div>
+        </xar:if>
+    </div>
+</xar:if>
+
+</div>

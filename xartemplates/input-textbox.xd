@@ -1,0 +1,23 @@
+<xar:comment>Hidden field indicates that the question has been submitted</xar:comment>
+<input type="hidden" name="#$submit_hidden#" value="1" />
+
+<div class="surveys-textbox">
+    <xar:if condition="!empty($error)">
+        <div class="error"><xar:mlstring>Attention:</xar:mlstring>&nbsp;#$error#</div>
+    </xar:if>
+
+    <div class="surveys-instruction">
+        <div class="question-text"><div class="question-name">#$question_name#</div>
+            <label for="#$id#">#$question_text#</label>
+        </div>
+
+        <xar:if condition="$mandatory">
+            <div class="mandatory"><xar:mlstring>Mandatory - must be completed</xar:mlstring></div>
+        </xar:if>
+
+        <xar:if condition="!empty($hint)">
+            <div class="surveys-instruction">#xarVarPrepForDisplay($hint)#</div>
+        </xar:if>
+        <input type="text" name="#$name#" id="#$id#" style="width: 60%;" value="#xarVarPrepForDisplay($current_value)#" maxlength="200" />
+    </div>
+</div>

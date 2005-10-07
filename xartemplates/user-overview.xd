@@ -1,0 +1,124 @@
+
+<xar:comment>User overview page - look at all surveys for a user</xar:comment>
+
+<xar:style scope="module" file="general" />
+<xar:style scope="module" file="overview" />
+
+<div class="surveys-overview">
+
+<xar:comment><xar:template file="logged-in" type="module" subdata="array()" /></xar:comment>
+
+<h1><xar:mlstring>Overview Of Your Surveys</xar:mlstring></h1>
+
+<h2><xar:mlstring>Open Surveys</xar:mlstring></h2>
+<p><xar:mlstring>These are surveys you have started and are still working though. The surveys are unlocked and you may continue working through them now.</xar:mlstring></p>
+<xar:if condition="!empty($active)">
+    <ul>
+        <xar:foreach in="$active" value="$survey">
+            <li class="survey-#$survey.status#">
+                <span style="width: 14em;">#$survey.name#</span>
+                <xar:if condition="false and !empty($current_survey) and $current_survey.usid eq $survey.usid">
+                    <a href="#xarModURL('surveys','user','showgroup')#"><strong><xar:mlstring>Continue with this survey</xar:mlstring></strong></a>
+                <xar:else />
+                    <a href="#xarModURL('surveys','user','gotosurvey',array('usid'=&gt;$survey.usid))#" class="continue-survey">Continue with this survey</a>
+                </xar:if>
+
+                <xar:if condition="$survey.status eq 'SUBMITTABLE'">
+                    <div class="message-submittable">
+                        <em class="survey-description">
+                            <a href="#xarModURL('surveys','user','submit',array('usid'=&gt;$survey.usid))#">#$survey.status_desc#</a>
+                        </em>
+                    </div>
+                </xar:if>
+
+                <xar:if condition="!empty($survey.desc)">
+                    <div><em class="survey-description">(#xarVarPrepForDisplay($survey.desc)#)</em></div>
+                </xar:if>
+
+                <xar:if condition="!empty($survey.summary)">
+                    <div><span class="survey-summary">#$survey.summary#</span></div>
+                </xar:if>
+            </li>
+        </xar:foreach>
+    </ul>
+<xar:else />
+    <xar:if condition="empty($new)">
+        <p>
+            <xar:mlstring>You do not have any active surveys and there are no new surveys to start. </xar:mlstring>
+            <xar:if condition="xarUserIsLoggedIn()">
+                <xar:mlstring>You have either completed all surveys allocated to you, or there are no surveys set up. </xar:mlstring>
+            <xar:else />
+                <xar:mlstring>You may have to log in to start a new survey. </xar:mlstring>
+            </xar:if>
+        </p>
+    <xar:else />
+        <p><xar:mlstring>You do not have any active surveys. To start a survey, choose a new survey from the section below.</xar:mlstring></p>
+    </xar:if>
+</xar:if>
+
+
+<xar:if condition="!empty($locked)">
+    <h2><xar:mlstring>Locked surveys</xar:mlstring></h2>
+    <div><xar:mlstring>These surveys have been completed and submitted for inspection. You may view the responses you have given, but you cannot change any of them.</xar:mlstring></div>
+    <ul>
+        <xar:foreach in="$locked" value="$survey">
+            <li class="survey-#$survey.status#">
+                <xar:comment>TODO: Flag the complete, aborted and rejected surveys</xar:comment>
+                <span style="width: 14em;">#$survey.name#</span>
+                <a href="#xarModURL('surveys','user','review',array('usid'=&gt;$survey.usid))#">View survey responses</a>
+                <xar:if condition="!empty($survey.desc)">
+                    <br /><span class="survey-description">#xarVarPrepForDisplay($survey.desc)#</span>
+                </xar:if>
+                <xar:if condition="!empty($survey.summary)">
+                    <br /><span class="survey-summary">#$survey.summary#</span>
+                </xar:if>
+                <br /><xar:mlstring>Status:</xar:mlstring>&nbsp;#$survey.status_desc#
+            </li>
+        </xar:foreach>
+    </ul>
+<xar:else />
+    <xar:comment>No locked surveys for this user.</xar:comment>
+</xar:if>
+
+
+<xar:if condition="!empty($new)">
+    <h2><xar:mlstring>Start a new survey</xar:mlstring></h2>
+    <div><xar:mlstring>You may start a new survey from any of those listed below. The 'Site Details' survey is used to capture details for a site. You must complete the details for at least one site before starting the main survey.</xar:mlstring></div>
+    <ul>
+        <xar:foreach in="$new" value="$survey">
+            <li class="survey-NEW">
+                <span style="width: 14em;">#$survey.name#</span>
+                <a href="#xarModURL('surveys','user','startsurvey',array('sid'=>$survey.sid))#">Start taking this survey</a>
+                <xar:if condition="!empty($survey.desc)">
+                    <br /><span class="survey-description">(#xarVarPrepForDisplay($survey.desc)#)</span>
+                </xar:if>
+            </li>
+        </xar:foreach>
+    </ul>
+<xar:else />
+    <xar:comment>No new surveys that can be started at this time.</xar:comment>
+</xar:if>
+
+<xar:if condition="!empty($closed)">
+    <h2><xar:mlstring>Closed surveys</xar:mlstring></h2>
+    <div><xar:mlstring>These surveys are all closed. No further changes can be made to these surveys. You can view the results.</xar:mlstring></div>
+    <ul>
+        <xar:foreach in="$closed" value="$survey">
+            <li class="survey-#$survey.status#">
+                <span style="width: 14em;">#$survey.name#</span>
+                <a href="#xarModURL('surveys','user','review',array('usid'=&gt;$survey.usid))#">View survey responses</a>
+                <xar:if condition="!empty($survey.desc)">
+                    <br /><span class="survey-description">(#xarVarPrepForDisplay($survey.desc)#)</span>
+                </xar:if>
+                <xar:if condition="!empty($survey.summary)">
+                    <br /><span class="survey-summary">#$survey.summary#</span>
+                </xar:if>
+                <br /><xar:mlstring>Status:</xar:mlstring>&nbsp;#$survey.status_desc#
+            </li>
+        </xar:foreach>
+    </ul>
+<xar:else />
+    <xar:comment>No closed surveys for this user.</xar:comment>
+</xar:if>
+
+</div>

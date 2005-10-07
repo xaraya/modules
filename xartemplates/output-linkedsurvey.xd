@@ -1,0 +1,19 @@
+<div class="question-text"><div class="question-name">#$question_name#</div>#$question_text#</div>
+
+<xar:if condition="$status eq 'INVALID'">
+    <div class="error"><xar:mlstring>This question is incomplete</xar:mlstring></div>
+</xar:if>
+
+<div class="survey-answer">
+    <xar:if condition="!empty($user_survey)">
+        <xar:comment>#xarVarPrepForDisplay($user_survey.label)#</xar:comment>
+        <a href="#xarModURL('surveys','user','review',array('usid'=&gt;$usid))#" target="linkedsurvey"><xar:mlstring>Show all responses</xar:mlstring></a>
+    <xar:else />
+        <xar:mlstring>No survey selected</xar:mlstring>
+    </xar:if>
+
+    <xar:if condition="!empty($summary)">
+        <xar:comment>Display a digest/summary of the survey responses</xar:comment>
+        <span class="survey-summary">#$summary#</span>
+    </xar:if>
+</div>

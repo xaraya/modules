@@ -1,0 +1,61 @@
+
+- Fill init and upgrade scripts.
+- Admin screens for surveys, questions overview, dependancy rules etc.
+- Security checks
+- Fix the moving os surveys from the session to the current user when the user logs in for the first time
+
+- Further flags for surveys:
+-- max number multiple in progress [done]
+-- max number in total for each user [done]
+-- icon or class
+-- workflow integration to handle status changes and other rules
+-- flag to indicate whether anonymous, logged in or invited-only respondants [done]
+
+- When a survey is in read-only mode, suppress the 'update' button [done]
+- Split the 'showgroup' function into smaller helper functions so they can be put together in different ways
+- Ditto for the 'showgroup' template - make it a series of include templates to allow reuse of the progress bar/map/etc. [done]
+
+- Provide some block support, so the map/progress bar/etc can be put in blocks of their own [can be achieved manually, through templates]
+- Provide a block for initiating a survey (or continuing it if the user has already started)
+
+- Export functions: various(!)
+-- perhaps extension of the question class to return the response value split up into multiple rows where relevant
+   (e.g. for multi-select checkboxes where there could be many selections made to one question)
+-- Function to provide 'data warehouse' type export of a survey, that expands a complete user survey in every
+   way possible: survey details, questions, answers, etc.
+
+- Support for a table-based layout if required (for review etc.) to make copy/paste easier
+  (this will probably include a wrapper template for the whole questions block, linked to a 'master' template
+  name that gets applied to each question, over-riding the template that may be defined at the question group level)
+  The wrapper template would also pull in the stylesheet.
+
+- Provide 'review' screen detailing the results of an entire survey in one go [done]
+
+- Tighter integration with workflow throughout, so that e-mails get sent, data transfers get initiated etc. at the relevant stages.
+
+- Ability to e-mail survey details, results etc. to the completing client or survey administrators.
+
+- Question types/objects:
+-- Support for function-based default values for a question (current date, user name, etc.)
+-- Function-based boiler-plate type question (to show username, current date, survey summary etc)
+
+- Tools for copying (duplicating) surveys, so similar surveys can run together
+
+- Audit trail so event dates can be recorded (user started survey on X, user submitted survey on Y, etc)
+- Audit trail is simple on changes to the states of individual groups, but not so easy to monitor
+  changes to parent groups (e.g. we may want to be informed that group A is now complete, because groups
+  B, C D and E under it have now been completed). There is actually no *direct* stored information relating
+  the status of groups and their child groups, except when the survey map is built up in memory. This means
+  there is no individual status flag to change state, and so no flag to monitor, hence no state change
+  that can be used to determine when a group's child groups have all turned 'COMPLETE'. Confused yet?
+  Put another way:
+  There is no mechanism that will work with the current data structure, to determine when, say, section
+  X of a survey has just been completed, if they section X contains many child sections. That has been
+  requested by a client, who would like to be flagged when the users reach certain key stages of a survey.
+  Those key stages are reached when certain question groups, and all their child groups, contain only
+  COMPLETE questions, and the event should only be triggered on answering that last question.
+
+  Perhaps: as group changes from some state to COMPLETE, a check of all sibling (and sibling descendants)
+  group statuses would tell us whether that was the last question to set a group to COMPLETE. This would
+  only work one level up, but may be sufficient.
+

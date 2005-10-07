@@ -1,0 +1,6 @@
+<div class="surveys-boilerplate">
+    <div class="question-text">
+        <div class="question-name">#$question_name#</div>
+        #xarVarPrepHTMLDisplay($question_text)#
+    </div>
+</div>

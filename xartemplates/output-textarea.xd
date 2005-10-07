@@ -1,0 +1,7 @@
+<div class="question-text"><div class="question-name">#$question_name#</div>#$question_text#</div>
+
+<xar:if condition="$status eq 'INVALID'">
+    <div class="error"><xar:mlstring>This question is incomplete</xar:mlstring></div>
+</xar:if>
+
+<div class="survey-answer">#xarVarPrepForDisplay($value)#</div>

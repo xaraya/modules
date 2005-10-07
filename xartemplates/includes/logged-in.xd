@@ -1,0 +1,8 @@
+<xar:comment>TODO: put this in a block or the main page</xar:comment>
+<div style="font-weight: bold;">
+    <xar:if condition="xarUserIsLoggedIn()">
+        <xar:mlstring>Welcome </xar:mlstring>#xarUserGetVar('name')#
+    <xar:else/>
+        <xar:mlstring>You are not logged in</xar:mlstring>
+    </xar:if>
+</div>

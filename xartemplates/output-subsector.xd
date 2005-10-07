@@ -1,0 +1,13 @@
+<div class="question-text"><div class="question-name">#$question_name#</div>#$question_text#</div>
+
+<xar:if condition="$status eq 'INVALID'">
+    <div class="error"><xar:mlstring>This question is incomplete</xar:mlstring></div>
+</xar:if>
+
+<xar:if condition="!empty($sector) and !empty($nace)">
+    <div class="survey-answer"><xar:mlstring>Sector:</xar:mlstring>&nbsp;#xarVarPrepForDisplay($sector)#</div>
+    <div class="survey-answer"><xar:mlstring>Sub-sector:</xar:mlstring>&nbsp;#xarVarPrepForDisplay($subsector)# (#xarVarPrepForDisplay($nace)#)</div>
+<xar:else />
+    <div class="survey-answer"><xar:mlstring>Sub-sector:</xar:mlstring>&nbsp;#xarVarPrepForDisplay($subsector)#</div>
+    <div class="survey-answer"><xar:mlstring>Other sector:</xar:mlstring>&nbsp;#xarVarPrepForDisplay($othersector)#</div>
+</xar:if>

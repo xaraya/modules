@@ -1,0 +1,49 @@
+
+<xar:set name="dummy">xarTplAddStyleLink('surveys','overview')</xar:set>
+
+<h2>#xarVarPrepForDisplay($usersurvey.name)#</h2>
+<p><em>#xarVarPrepForDisplay($usersurvey.desc)#</em></p>
+
+<xar:if condition="$stage lt 2">
+    <p><xar:mlstring>This survey is now complete - all necessary questions have been answered correctly.</p>
+    <p>You now have a number of choices:</xar:mlstring></p>
+
+    <ul>
+        <li><a href="#xarModURL('surveys','user','review',array('usid'=&gt;$usersurvey.usid))#">
+           <xar:mlstring>Review your answers</xar:mlstring></a> 
+           - <xar:mlstring>View all your answers on one page (may take a few seconds to display)</xar:mlstring>
+        </li>
+        <li>
+           <a href="#xarModURL('surveys','user','gotosurvey',array('usid'=&gt;$usersurvey.usid))#"><xar:mlstring>Change your answers</xar:mlstring></a>
+           -  <xar:mlstring>Go back to the data entry screens</xar:mlstring>
+        </li>
+        <li>
+           <a href="#xarServerGetCurrentURL(array('stage'=&gt;1))#"><xar:mlstring>Submit the survey</xar:mlstring></a>
+           -  <xar:mlstring>Send us your completed survey now</xar:mlstring>
+        </li>
+    </ul>
+</xar:if>
+
+<xar:if condition="$stage eq 1">
+    <xar:comment>User has requested the survey be submitted</xar:comment>
+    <p>
+        <xar:mlstring>Please confirm you want to submit this survey.
+        Once submitted, you cannot normally change your answers.</xar:mlstring>
+    </p>
+    <p>
+        <xar:mlstring>Click here to confirm: </xar:mlstring>
+        <a href="#xarServerGetCurrentURL(array('stage'=&gt;2))#"><xar:mlstring>Yes, this survey is complete</xar:mlstring></a>
+    </div>
+</xar:if>
+
+<xar:if condition="$stage ge 3">
+    <xar:comment>User has requested the survey be submitted, and the submission was successful</xar:comment>
+    <p><xar:mlstring>The survey has been submitted.</xar:mlstring></p>
+
+    <xar:if condition="$usersurvey.status eq 'SUBMITTED'">
+        <p><xar:mlstring>This survey has been passed to the quality team for checking.</xar:mlstring></p>
+    </xar:if>
+
+    <p><a href="#xarModURL('surveys','user','main')#"><xar:mlstring>Click here to return to the surveys main page</xar:mlstring></a></p>
+</xar:if>
+

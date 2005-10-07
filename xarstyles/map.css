@@ -1,0 +1,30 @@
+/* Styles for the survey map groups */
+/*
+	If this stylesheet needs to be moved to a theme, then
+	the images directory should be changed to '../images/'.
+*/
+div.map div {
+}
+div.map .group-invalid {
+}
+div.map .group-noresponse {
+}
+div.map .group-complete {
+}
+div.map .group-semicomplete {
+}
+
+div.map .group-children {
+}
+div.map .group-children-current {
+}
+div.map .group-nochildren {
+}
+div.map .group-nochildren-current {
+}
+div.map a.current {
+}
+
+div.map .map-key {
+}
+

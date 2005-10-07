@@ -1,0 +1,39 @@
+/* Survey overview */
+
+div.surveys-overview ul {
+}
+div.surveys-overview li {
+}
+
+/* Open padlock */
+div.surveys-overview li.survey-PROGRESS {
+}
+/* Open padlock */
+div.surveys-overview li.survey-SUBMITTABLE {
+}
+/* Postbox */
+div.surveys-overview li.survey-SUBMITTED {
+}
+/* Magnifying glass */
+div.surveys-overview li.survey-INSPECTOR {
+}
+/* Tick */
+div.surveys-overview li.survey-VERIFIED {
+}
+/* Tick */
+div.surveys-overview li.survey-COMPLETE {
+}
+/* Cross */
+div.surveys-overview li.survey-REJECTED {
+}
+/* Waste basket */
+div.surveys-overview li.survey-ABORTED {
+}
+/* Pen and clipboard */
+div.surveys-overview li.survey-NEW {
+}
+
+/* Link to continue with a survey */
+a.continue-survey {
+}
+

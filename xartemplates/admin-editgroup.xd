@@ -1,0 +1,66 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Question Groups Administration</xar:mlstring></span></div>
+<div class="xar-mod-body">
+<h2>
+    <xar:if condition="$func eq 'modify'">
+        <xar:mlstring>Modify Group</xar:mlstring>
+    <xar:else />
+        <xar:mlstring>Create New Group</xar:mlstring>
+    </xar:if>
+</h2>
+
+<div style="margin: auto;">
+    <form action="#xarModURL('surveys','admin','updategroup',array())#" method="post">
+        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+        <xar:for iter="$i++" start="$i=0" test="$i lt $repeat">
+            <h3><xar:mlstring>Group</xar:mlstring> #$i+1#</h3>
+            <input type="hidden" name="gids[]" id="gids[]" value="#$gid#" />
+            <table border="0" width="100%" cellpadding="2" cellspacing="0">
+                <tr>
+                    <td><label for="name[#$gid#]"><xar:mlstring>Name</xar:mlstring></label></td>
+                    <td><input type="text" name="name[#$gid#]" id="name[#$gid#]" value="#$group['group_name']#" size="32" maxlength="64" /></td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;"><label for="description[#$gid#]"><xar:mlstring>Description</xar:mlstring></label></td>
+                    <td><textarea name="description[#$gid#]" id="description[#$gid#]" cols="40" rows="3" maxlength="255">#$group['group_desc']#</textarea></td>
+                </tr>
+                <xar:template file="localization" type="module" />
+                <xar:if condition="!empty($hooks)">
+                <tr>
+                    <td colspan="2">
+                        #$hooks#
+                    </td>
+                </tr>
+                </xar:if>
+            </table>
+        </xar:for>
+        <table>
+            <tr>
+                <td colspan="2" style="text-align: center"><br />
+                    <xar:if condition="$func eq 'modify'">
+                        <input type="submit" value="#$modifylabel#" />
+                        <input type="hidden" name="creating" id="creating" value="false">
+                    <xar:else />
+                        <input type="submit" value="#$addlabel#"  />
+                        <input type="hidden" name="creating" id="creating" value="true">
+                    </xar:if>
+                    <br />&nbsp;
+                </td>
+            </tr>
+            <xar:if condition="$func eq 'create' AND count($groups) ne 0">
+                <tr>
+                    <td><label for="repeat"><xar:mlstring>Create in a batch</xar:mlstring></label></td>
+                    <td><input type="text" name="repeat" id="repeat" value="#$repeat#" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: center">
+                        <br />
+                        <input type="submit" name="reassign" id="reassign" size="3" value="#$reassignlabel#" />
+                        <br />
+                    </td>
+                </tr>
+            </xar:if>
+        </table>
+        </form>
+        <br />
+    </div>
+</div>

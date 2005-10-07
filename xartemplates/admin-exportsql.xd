@@ -1,0 +1,11 @@
+
+<h1>Export Survey Data</h1>
+
+<ul>
+    <xar:loop name="$table_list">
+        <li>
+            <a href="#xarModURL('surveys','admin','exportsql',array('tablename'=&gt;$loop:item,'module'=&gt;'surveys','func'=&gt;'exportsql'),true,'','stream.php')#">#$loop:item#</a>
+            <xar:comment><a href="#xarModURL('surveys','admin','exportsql',array('tablename'=&gt;$loop:item))#">#$loop:item#</a></xar:comment>
+        </li>
+    </xar:loop>
+</ul>

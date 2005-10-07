@@ -1,0 +1,91 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Surveys Administration</xar:mlstring></span></div>
+<div class="xar-mod-body">
+    <h2>
+        <xar:ml>
+            <xar:mlstring>Select Surveys for Privilege '#(1)'</xar:mlstring>
+            <xar:mlvar>#$extname#</xar:mlvar>
+        </xar:ml>
+    </h2>
+    <div style="margin: auto;">
+        <form method="post" action="#xarModURL('surveys','admin','privileges')#">
+            <div>
+                <input type="hidden" name="extpid" id="extpid" value="#$extpid#" />
+                <input type="hidden" name="extname" id="extname" value="#$extname#" />
+                <input type="hidden" name="extrealm" id="extrealm" value="#$extrealm#" />
+                <input type="hidden" name="extmodule" id="extmodule" value="#$extmodule#" />
+                <input type="hidden" name="extcomponent" id="extcomponent" value="#xarVarPrepForDisplay($extcomponent)#" />
+                <input type="hidden" name="extlevel" id="extlevel" value="#$extlevel#" />
+
+                <div>
+                    <div>
+                        <label for="sid"><xar:mlstring>Survey</xar:mlstring></label>
+                    </div>
+                    <select name="sid" id="sid">
+                        <xar:loop name="$surveys">
+                            <xar:if condition="$sid eq $loop:item.sid">
+                                <option value="#$loop:item.sid#" selected="selected">#$loop:item.name#</option>
+                            <xar:else />
+                                <option value="#$loop:item.sid#">#$loop:item.name#</option>
+                            </xar:if>
+                        </xar:loop>
+                    </select>
+                </div>
+
+                <div>
+                    <div>
+                        <label for="sid"><xar:mlstring>System status</xar:mlstring></label>
+                    </div>
+                    <select name="system_status" id="system_status">
+                        <xar:loop name="$system_statuses">
+                            <xar:if condition="$system_status eq $loop:item">
+                                <option value="#$loop:item#" selected="selected">#$loop:item#</option>
+                            <xar:else />
+                                <option value="#$loop:item#">#$loop:item#</option>
+                            </xar:if>
+                        </xar:loop>
+                    </select>
+                </div>
+
+                <div>
+                    <div>
+                        <label for="sid"><xar:mlstring>Status</xar:mlstring></label>
+                    </div>
+                    <select name="status" id="status">
+                        <xar:loop name="$statuses">
+                            <xar:if condition="$status eq $loop:item">
+                                <option value="#$loop:item#" selected="selected">#$loop:item#</option>
+                            <xar:else />
+                                <option value="#$loop:item#">#$loop:item#</option>
+                            </xar:if>
+                        </xar:loop>
+                    </select>
+                </div>
+
+                <div>
+                    <div>
+                        <label for="sid"><xar:mlstring>User</xar:mlstring></label>
+                    </div>
+                    <select name="uid" id="uid">
+                        <xar:loop name="$users">
+                            <xar:if condition="$uid eq $loop:item.uid">
+                                <option value="#$loop:item.uid#" selected="selected">#$loop:item.name# (#$loop:item.uname#)</option>
+                            <xar:else />
+                                <option value="#$loop:item.uid#">#$loop:item.name# (#$loop:item.uname#)</option>
+                            </xar:if>
+                        </xar:loop>
+                    </select>
+                </div>
+
+                <div>
+                    <xar:ml>
+                        <xar:mlstring>Instance definition '#(1)'</xar:mlstring>
+                        <xar:mlvar>#xarVarPrepForDisplay($extinstance)#</xar:mlvar>
+                    </xar:ml>
+                </div>
+
+                <input type="submit" name="refresh" value="#xarML('Refresh')#" />
+                <input type="submit" name="apply" value="#xarML('Apply this instance')#" />
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,152 @@
+
+<xar:set name="dateformat">'%d-%m-%y'</xar:set>
+
+<xar:if condition="!empty($log)">
+    <a href="#$returnurl#">Return to overview</a>
+    <br/>
+    #$log#
+</xar:if>
+
+<xar:if condition="empty($log)">
+    <div>
+        <xar:mlstring>Status:</xar:mlstring>
+        <a href="#xarServerGetCurrentURL(array('status'=>'','system_status'=>'','changestatus'=>''))#"> <xar:mlstring>All</xar:mlstring></a>
+        <xar:loop name="$system_statuses" id="system_statuses">
+            | <xar:if condition="empty($system_status) or $system_status ne $loop:system_statuses:item">
+                <a href="#xarServerGetCurrentURL(array('status'=>'','system_status'=>$loop:system_statuses:item,'changestatus'=>''))#">#$loop:system_statuses:item#</a>:
+            <xar:else />
+                <span style="color: #339900; font-weight: bold;">#$loop:system_statuses:item#</span>
+            </xar:if>
+            <xar:loop name="$statuses">
+                <xar:if condition="$loop:item.system_status eq $loop:system_statuses:item">
+                    <xar:if condition="empty($status) or $status ne $loop:item.status">
+                        <a href="#xarServerGetCurrentURL(array('status'=>$loop:item.status,'system_status'=>'','changestatus'=>''))#" title="#$loop:item.desc#">#$loop:item.status#</a>
+                    <xar:else />
+                        <span title="#$loop:item.desc#" style="color: #339900; font-weight: bold;">#$loop:item.status#</span>
+                    </xar:if>
+                </xar:if>
+            </xar:loop>
+        </xar:loop>
+    </div>
+
+    <div>
+        <xar:mlstring>Username:</xar:mlstring>
+        <xar:loop name="$letters">
+            <xar:if condition="$loop:item eq $initletter">
+                <span style="color: #339900; font-weight: bold;">#$loop:item#</span>
+            <xar:else />
+                <a href="#xarServerGetCurrentURL(array('initletter'=&gt;$loop:item))#" title="#$loop:item.desc#">#$loop:item#</a>
+            </xar:if>
+        </xar:loop>
+    </div>
+
+    <div>
+        <xar:if condition="!empty($show_summary)">
+            <a href="#xarServerGetCurrentURL(array('show_summary'=>'0'))#"><xar:mlstring>Hide summaries</xar:mlstring></a>
+        <xar:else />
+            <a href="#xarServerGetCurrentURL(array('show_summary'=>'1'))#"><xar:mlstring>Show summaries</xar:mlstring></a>
+        </xar:if>
+    </div>
+</xar:if>
+
+<xar:if condition="!empty($surveys)">
+
+<table cellpadding="4">
+    <tr>
+        <th><a href="#xarServerGetCurrentURL($toggle_order['usid'])#">USID#$current_order['usid']#</a></th>
+        <th><a href="#xarServerGetCurrentURL($toggle_order['username'])#">Username#$current_order['username']#</a></th>
+        <th><a href="#xarServerGetCurrentURL($toggle_order['fullname'])#">Full Name#$current_order['fullname']#</a></th>
+        <th><a href="#xarServerGetCurrentURL($toggle_order['system_status'])#">System Status#$current_order['system_status']#</a></th>
+        <th><a href="#xarServerGetCurrentURL($toggle_order['status'])#">Status#$current_order['status']#</a></th>
+        <th>Survey</th>
+        <th><a href="#xarServerGetCurrentURL($toggle_order['start_date'])#">Started#$current_order['start_date']#</a></th>
+        <th><a href="#xarServerGetCurrentURL($toggle_order['submit_date'])#">Submitted#$current_order['submit_date']#</a></th>
+        <th><a href="#xarServerGetCurrentURL($toggle_order['closed_date'])#">Closed#$current_order['closed_date']#</a></th>
+        <th><a href="#xarServerGetCurrentURL($toggle_order['last_updated'])#">Last Updated#$current_order['last_updated']#</a></th>
+        <th>Actions</th>
+    </tr>
+
+    <xar:if condition="!empty($show_summary)">
+        <xar:set name="actions_row_span">2</xar:set>
+    <xar:else />
+        <xar:set name="actions_row_span">1</xar:set>
+    </xar:if>
+
+    <xar:loop name="$surveys" id="surveys">
+        <tr valign="top">
+            <td><a name="usid_#$loop:item.usid#"></a>#$loop:item.usid#</td>
+            <td>
+                <xar:if condition="!empty($loop:item.username)">
+                    #$loop:item.username#
+                <xar:else />
+                    Anonymous
+                </xar:if>
+            </td>
+            <td>
+                <xar:if condition="!empty($loop:item.fullname)">
+                    #$loop:item.fullname#
+                <xar:else />
+                    Anonymous
+                </xar:if>
+            </td>
+            <td>#$loop:item.system_status#</td>
+            <td>
+                <xar:if condition="!empty($changestatus) and $changestatus eq $loop:item.usid">
+                    <xar:loop name="$statuses">
+                        <xar:if condition="$loop:surveys:item.status ne $loop:item.status">
+                            <a href="#xarServerGetCurrentURL(array('newstatus'=&gt;$loop:item.status))###usid_#$loop:surveys:item.usid#" title="#$loop:item.desc#">#$loop:item.status#</a><br />
+                        <xar:else />
+                            #$loop:item.status#<br />
+                        </xar:if>
+                    </xar:loop>
+                <xar:else />
+                    <a href="#xarServerGetCurrentURL(array('changestatus'=&gt;$loop:item.usid))###usid_#$loop:item.usid#" title="#$loop:item.status_desc#">
+                        #$loop:item.status#
+                    </a>
+                </xar:if>
+            </td>
+            <td>#$loop:item.name#</td>
+            <td>
+                <xar:if condition="!empty($loop:item.start_date)">
+                    #xarLocaleFormatDate($dateformat, $loop:item.start_date)#
+                <xar:else />
+                    &nbsp;
+                </xar:if>
+            </td>
+            <td>
+                <xar:if condition="!empty($loop:item.submit_date)">
+                    #xarLocaleFormatDate($dateformat, $loop:item.submit_date)#
+                <xar:else />
+                    &nbsp;
+                </xar:if>
+            </td>
+            <td>
+                <xar:if condition="!empty($loop:item.closed_date)">
+                    #xarLocaleFormatDate($dateformat, $loop:item.closed_date)#
+                <xar:else />
+                    &nbsp;
+                </xar:if>
+            </td>
+            <td>
+                <xar:if condition="!empty($loop:item.last_updated)">
+                    #xarLocaleFormatDate($dateformat, $loop:item.last_updated)#
+                <xar:else />
+                    &nbsp;
+                </xar:if>
+            </td>
+            <td nowrap="nowrap" rowspan="#$actions_row_span#">
+                <a href="#xarServerGetCurrentURL(array('transfer'=&gt;$loop:item.usid))#" title="Transfer Data"><img src="#xarTplGetImage('copy-file2.gif')#" style="vertical-align: middle"/></a>
+                <a href="#xarModURL('surveys','user','gotosurvey',array('usid'=&gt;$loop:item.usid))#" title="Edit Survey Responses"><img src="#xarTplGetImage('writepad.gif')#" style="vertical-align: middle"/></a>
+                <a href="#xarModURL('surveys','user','graph_redirect',array('usid'=&gt;$loop:item.usid))#" title="Graphing System" target="graphs"><img src="#xarTplGetImage('bar-graph.gif')#" style="vertical-align: middle"/></a>
+                <a href="#xarModURL('surveys','user','review',array('usid'=&gt;$loop:item.usid))#" title="Overview Survey"><img src="#xarTplGetImage('view1.gif')#" style="vertical-align: middle"/></a>
+            </td>
+        </tr>
+        <xar:if condition="!empty($show_summary)">
+            <tr valign="top" style="border-bottom: 1px solid gray;">
+                <td>&nbsp;</td>
+                <td colspan="9" style="border-bottom: 1px solid #DDDDDD;"><em>#$loop:item.summary#</em></td>
+            </tr>
+        </xar:if>
+    </xar:loop>
+</table>
+</xar:if>

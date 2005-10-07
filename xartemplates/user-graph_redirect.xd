@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<xar:set name="dummy">xarTplSetPageTemplateName('blank')</xar:set>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Graphing Redirect</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+    <body onload="document.go.submit();">
+        <div style="margin: 1em; text-align: center;"><xar:mlstring>You are being redirected to the graphing site...</xar:mlstring></div>
+        <xar:comment>http://82.108.50.37/dev/v3/graph/login.asp</xar:comment>
+        <form name="go" id="go" method="post" action="http://82.108.50.37/remas/graph/login.asp">
+            <div style="margin: 1em; text-align: center;">
+                <input name="username" type="hidden" id="username" value="#xarVarPrepForDisplay($username)#" />
+                <input name="password" type="hidden" id="password" value="#$password#" />
+                <label for="Submit"></label>
+                <input type="submit" name="Submit" value="Click here if you do not get redirected automatically" id="Submit" />
+            </div>
+        </form>
+    </body>
+</html>

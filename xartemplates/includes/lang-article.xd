@@ -1,0 +1,12 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<!-- common user menu for this module - remove link to the current function -->
+<!-- the variables used in this menu come from example_user_menu() -->
+<div>
+    <strong class="xar-margin-thickright"></strong>
+    <!-- a link to a particular menu item -->
+
+
+    <!-- more menu items come here... remember to add some kind of 
+      // separator between them
+    -->
+</div>

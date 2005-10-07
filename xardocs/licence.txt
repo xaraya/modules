@@ -1,0 +1,12 @@
+/**
+ * File: $Id$
+ *
+ * Xaraya surveys module
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2004 Academe Computing Ltd
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.academe.co.uk
+ * @subpackage surveys module
+ * @author Jason Judge
+ */

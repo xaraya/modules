@@ -1,0 +1,73 @@
+<xar:base-include-javascript filename="setproperty.js" />
+
+<xar:comment>Hidden field indicates that the question has been submitted</xar:comment>
+<input type="hidden" name="#$submit_hidden#" value="1" />
+
+<xar:if condition="!empty($error)">
+    <div class="error"><xar:mlstring>Attention:</xar:mlstring>&nbsp;#$error#</div>
+</xar:if>
+
+<div class="surveys-tickbox">
+    <fieldset>
+        <legend class="question-name">#$question_name#</legend>
+        <div class="question-text">#$question_text#</div>
+
+        <div class="surveys-instruction">
+            <xar:mlstring>Choose from one group of options</xar:mlstring>
+        </div>
+
+        <xar:loop id="groups" name="$groups">
+            <xar:comment>Different handling if there is one or many options within this group</xar:comment>
+            <xar:if condition="count($loop:groups:item) eq 1">
+                <fieldset>
+                    <xar:loop id="group1" name="$loop:groups:item">
+                        <xar:if condition="$loop:groups:key eq $current_group">
+                            <input id="#$name#_group#$loop:groups:key#" name="#$name#_group" value="#$loop:groups:key#" type="radio" checked="checked" />
+                        <xar:else />
+                            <input id="#$name#_group#$loop:groups:key#" name="#$name#_group" value="#$loop:groups:key#" type="radio" />
+                        </xar:if>
+                        <label for="#$name#_group#$loop:groups:key#">
+                            #$listitems[$loop:group1:item]['label']#
+                            <xar:if condition="$listitems[$loop:group1:item]['value'] eq 'unable'"><em> <xar:mlstring>(please state reasons in comment box below)</xar:mlstring></em></xar:if>
+                        </label>
+                        <input name="#$name#[]" type="hidden" value="#xarVarPrepForDisplay($listitems[$loop:group1:item]['value'])#" />
+                    </xar:loop>
+                </fieldset>
+            </xar:if>
+            <xar:if condition="count($loop:groups:item) gt 1">
+                <fieldset>
+                    <div class="surveys-instruction">
+                        <xar:if condition="$loop:groups:key eq $current_group">
+                            <input id="#$name#_group#$loop:groups:key#" name="#$name#_group" value="#$loop:groups:key#" type="radio" checked="checked" />
+                        <xar:else />
+                            <input id="#$name#_group#$loop:groups:key#" name="#$name#_group" value="#$loop:groups:key#" type="radio" />
+                        </xar:if>
+                        <label for="#$name#_group#$loop:groups:key#">
+                            <xar:mlstring>Please select all that apply:</xar:mlstring>
+                        </label>
+                    </div>
+                    <xar:loop id="group2" name="$loop:groups:item">
+                        <div class="surveys-option">
+                            <xar:if condition="in_array($listitems[$loop:group2:item]['value'],$current_value)">
+                                <input type="checkbox" name="#$name#[]" value="#xarVarPrepForDisplay($listitems[$loop:group2:item]['value'])#" id="#$listitems[$loop:group2:item]['id']#" checked="checked" onclick="MM_changeProp('#$name#_group#$loop:groups:key#','','checked',true,'INPUT/RADIO')" />
+                            <xar:else />
+                                <input type="checkbox" name="#$name#[]" value="#xarVarPrepForDisplay($listitems[$loop:group2:item]['value'])#" id="#$listitems[$loop:group2:item]['id']#" onclick="MM_changeProp('#$name#_group#$loop:groups:key#','','checked',true,'INPUT/RADIO')" />
+                            </xar:if>
+                            <label for="#$listitems[$loop:group2:item]['id']#">
+                                #$listitems[$loop:group2:item]['label']#
+                            </label>
+                        </div>
+                    </xar:loop>
+                </fieldset>
+            </xar:if>
+        </xar:loop>
+
+        <xar:if condition="$commentbox">
+            <div class="surveys-instruction">
+                <div><label for="#$comment_id#"><xar:mlstring>I would like to make the following comment:</xar:mlstring></label></div>
+                <textarea name="#$comment_name#" rows="4" id="#$comment_id#" style="width: 100%;">#xarVarPrepForDisplay($current_comment)#</textarea>
+            </div>
+        </xar:if>
+
+    </fieldset>
+</div>

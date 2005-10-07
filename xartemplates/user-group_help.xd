@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<xar:set name="classicthemedir">#xarTplGetThemeDir()#</xar:set>
+<xar:comment>Set the default page template</xar:comment>
+<xar:set name="dummy">xarTplSetPageTemplateName('blank')</xar:set>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Survey Help</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <style type="text/css" media="all">@import url(&xar-baseurl;#$classicthemedir#/style/style.css);</style>
+    <style type="text/css" media="all">@import url(&xar-baseurl;#$classicthemedir#/style/remas.css);</style>
+    <link rel="stylesheet" type="text/css" media="print" href="&xar-baseurl;#$classicthemedir#/style/remas_print.css" />
+</head>
+    <body style="background: #CCFFFF;">
+        <div class="" style="width: 200px;">
+            <xar:block instance="language" />
+        </div>
+
+        <h1><xar:mlstring>Survey Help</xar:mlstring></h1>
+
+        <div>
+            <xar:if condition="!empty($articles)">
+                <xar:foreach in="$articles" value="$article">
+                    <h2>#$article.title#</h2>
+                    <xar:set name="dummy">xarTplSetPageTitle($article['title'])</xar:set>
+                    <div>#$article.body#</div>
+                </xar:foreach>
+            <xar:else />
+                <h2><xar:mlstring>No Help Available</xar:mlstring></h2>
+                <xar:mlstring>There is no help available for this page.</xar:mlstring>
+            </xar:if>
+        </div>
+
+        <xar:if condition="!empty($children)">
+            <hr/>
+            <xar:mlstring>See also:</xar:mlstring>
+            <xar:loop name="$children">
+                <div>
+                    <a href="#xarModURL('surveys','user','group_help',array('gid'=&gt;$loop:item.gid))#">
+                        #$loop:item.group_name#
+                        <xar:if condition="!empty($loop:item.group_desc)">
+                            : #$loop:item.group_desc#
+                        </xar:if>
+                    </a>
+                </div>
+            </xar:loop>
+        </xar:if>
+
+        <hr/>
+        <p><xar:mlstring>If you need clarification of the question please contact the remas team</xar:mlstring> <a href="mailto:jstephens@remas.info">jstephens@remas.info</a></p>
+
+        <p><xar:mlstring>If there is no answer that fully describes your site choose the answer that is closest.</xar:mlstring></p>
+
+    </body>
+</html>

@@ -1,0 +1,40 @@
+<xar:comment>Hidden field indicates that the question has been submitted</xar:comment>
+<input type="hidden" name="#$submit_hidden#" value="1" />
+
+<div class="surveys-epindicator">
+    <fieldset>
+        <legend class="question-name">#$question_name#</legend>
+        <xar:if condition="!empty($error)">
+            <div class="error"><xar:mlstring>Attention:</xar:mlstring>&nbsp;#$error#</div>
+        </xar:if>
+
+        <div class="question-text">#$attribute.item_long_name#</div>
+
+        <xar:if condition="$mandatory">
+            <div class="mandatory"><xar:mlstring>Mandatory - must be completed</xar:mlstring></div>
+        <xar:else />
+            <div><xar:mlstring>Optional - click "next" to skip this indicator</xar:mlstring></div>
+        </xar:if>
+
+        <div class="question-text"><label for="#$indicator_id#"><xar:mlstring>Select your indicator:</xar:mlstring></label></div>
+        <select name="#$indicator_id#" id="#$indicator_name#">
+            <xar:loop name="$listitems">
+                <xar:if condition="$loop:item.item_code eq $current_indicator">
+                    <option value="#xarVarPrepForDisplay($loop:item.item_code)#" selected="selected">#xarModAPIfunc('surveys','user','scientificsymbols',xarVarPrepForDisplay($loop:item.item_desc))#</option>
+                <xar:else />
+                    <option value="#xarVarPrepForDisplay($loop:item.item_code)#">#xarModAPIfunc('surveys','user','scientificsymbols',xarVarPrepForDisplay($loop:item.item_desc))#</option>
+                </xar:if>
+            </xar:loop>
+        </select>
+
+        <div class="question-text"><label for="#$value_id#"><xar:mlstring>Enter your indicator value:</xar:mlstring></label></div>
+        <div>
+            <input name="#$value_id#" id="#$value_name#" type="text" maxlength="30" value="#xarVarPrepForStore($current_value)#" style="width: 10em;" />
+        </div>
+
+        <div class="surveys-instruction">
+            <div><label for="#$comment_id#"><xar:mlstring>I would like to make the following comment:</xar:mlstring></label></div>
+            <textarea name="#$comment_name#" rows="4" id="#$comment_id#" style="width: 100%;">#xarVarPrepForDisplay($current_comment)#</textarea>
+        </div>
+    </fieldset>
+</div>

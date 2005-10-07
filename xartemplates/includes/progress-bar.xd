@@ -1,0 +1,20 @@
+
+<xar:comment>Draw the progress bar. A few hoops are jumped through here to work around the different browser box models.</xar:comment>
+<xar:comment>TODO: move the progress bar to an include template</xar:comment>
+<div style="width: 50%; position: relative; left: 25%;" title="#xarML('This bar shows your progress through the pages that are relevant at this stage. The number of pages may go up or down, depending upon answers you give.')#">
+    <div style="text-align: center;"><xar:ml><xar:mlstring>Progress (total #(1) survey pages)</xar:mlstring><xar:mlvar>#$progress.total#</xar:mlvar></xar:ml></div>
+    <div style="border: 1px solid black;">
+        <div style="width: 100%; background-color: #FFFF66; position: relative;">
+            <div style="position: relative; left: 0; width: #$progress.pc_invalid+$progress.pc_complete#%; background-color: #FF8080; border-right: 1px solid black;">
+            <xar:comment>TODO: Make the division by 0 possible here</xar:comment>
+                <div style="height: 2em; width: #$progress.pc_complete*100/($progress.pc_complete+$progress.pc_invalid+0.000000000000001)#%; background-color: #95FF95; border-right: 1px solid black;"></div>
+            </div>
+            <div style="position: absolute; left: 1em; top: 0.25em; font-weight: bold; vertical-align: middle; color: black;">
+                #$progress.pc_complete#%
+                <xar:if condition="$progress.pc_invalid gt 0">
+                    (#$progress.pc_invalid#% invalid)
+                </xar:if>
+            </div>
+        </div>
+    </div>
+</div>

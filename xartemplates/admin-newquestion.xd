@@ -1,0 +1,66 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:comment> $Id </xar:comment>
+<xar:set name="$createbuttonlabel"><xar:mlstring>Create</xar:mlstring></xar:set>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Surveys Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Create Survey Question</xar:mlstring></h2>
+
+    <div style="margin: auto;">
+    <form method="post" action="&xar-modurl-surveys-admin-createquestion;" enctype="application/x-www-form-urlencoded">
+        <xar:comment><input type="hidden" name="authid" id="authid" value="#$authid#" /></xar:comment>
+    
+            <fieldset>
+            <legend><xar:mlstring>Create a question</xar:mlstring></legend>
+    
+                <div class="xar-form-input-wrapper">
+                    <label for="name" class="xar-form-label help" title="#xarML('A unique name for the question')#">
+                           <xar:mlstring>Name</xar:mlstring>
+                    </label>
+                    <input type="text" name="name" id="name" value="#xarVarPrepForDisplay($name)#" size="30" maxlength="100"/>
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="mandatory" class="xar-form-label help" title="#xarML('Flag determines whether the question is mandatory')#">
+                        <xar:mlstring>Mandatory</xar:mlstring>
+                    </label>
+                    <xar:if condition="$mandatory eq 'Y'">
+                        <input type="checkbox" name="mandatory" id="mandatory" value="Y" checked="checked"/>
+                    <xar:else />
+                        <input type="checkbox" name="mandatory" id="mandatory" value="Y"/>
+                    </xar:if>
+                </div>
+    
+                <div class="xar-form-input-wrapper">
+                    <label for="default" class="xar-form-label help" title="#xarML('A default value for the question')#">
+                        <xar:mlstring>Default</xar:mlstring>
+                    </label>
+                    <textarea name="default" id="default" cols="32" rows="5" >#xarVarPrepForDisplay($default)#</textarea>
+                </div>
+    
+                <div class="xar-form-input-wrapper">
+                    <label for="description" class="xar-form-label help" title="#xarML('A description of the question')#">
+                        <xar:mlstring>Description</xar:mlstring>
+                    </label>
+                    <textarea name="desc" id="desc" cols="32" rows="5" >#xarVarPrepForDisplay($desc)#</textarea>
+                </div>
+            </fieldset>
+    
+        <xar:comment> Display the DD hooks </xar:comment>
+        <xar:if condition="!empty($hooks)">
+            <xar:foreach in="$hooks" key="$hookmodule">
+                <xar:if condition="$hookmodule eq 'dynamicdata'">#$hooks[$hookmodule]#</xar:if>
+            </xar:foreach>
+        </xar:if>
+        <br style="clear: both;" />
+    
+        <xar:comment> Display the non-DD hooks </xar:comment>
+        <xar:if condition="!empty($hooks)">
+            <xar:foreach in="$hooks" key="$hookmodule">
+                <xar:if condition="$hookmodule ne 'dynamicdata'">#$hooks[$hookmodule]#</xar:if>
+            </xar:foreach>
+        </xar:if>
+        <input type="submit" value="#$createbuttonlabel#" />
+    </form>
+    </div>
+</div>

@@ -1,0 +1,94 @@
+
+<xar:comment>Hidden field indicates that the question has been submitted</xar:comment>
+<input type="hidden" name="#$submit_hidden#" value="1" />
+
+<xar:if condition="!empty($error)">
+    <div class="error"><xar:mlstring>Attention:</xar:mlstring>&nbsp;#$error#</div>
+</xar:if>
+
+<xar:if condition="$format eq 'tickbox'">
+    <div class="surveys-tickbox">
+        <fieldset>
+            <legend class="question-name">#$question_name#</legend>
+            <div class="question-text">#$question_text#</div>
+            <xar:if condition="$multiselect">
+                <div class="surveys-instruction"><xar:mlstring>Please select all that apply:</xar:mlstring></div>
+                <xar:loop name="$listitems">
+                    <div class="surveys-option">
+                        <xar:if condition="in_array($loop:item.value,$current_value)">
+                            <input type="checkbox" name="#$name#[]" value="#xarVarPrepForDisplay($loop:item.value)#" id="#$loop:item.id#" checked="checked" />
+                        <xar:else />
+                            <input type="checkbox" name="#$name#[]" value="#xarVarPrepForDisplay($loop:item.value)#" id="#$loop:item.id#" />
+                        </xar:if>
+                        <label for="#$loop:item.id#">#$loop:item.label#</label>
+                    </div>
+                </xar:loop>
+            </xar:if>
+            <xar:if condition="!$multiselect">
+                <div class="surveys-instruction"><xar:mlstring>Please select one:</xar:mlstring></div>
+                <xar:loop name="$listitems">
+                    <div class="surveys-option">
+                        <xar:if condition="$loop:item.value eq $current_value">
+                            <input type="radio" name="#$name#" value="#xarVarPrepForDisplay($loop:item.value)#" id="#$loop:item.id#" checked="checked" />
+                        <xar:else />
+                            <input type="radio" name="#$name#" value="#xarVarPrepForDisplay($loop:item.value)#" id="#$loop:item.id#" />
+                        </xar:if>
+                        <label for="#$loop:item.id#">#$loop:item.label#</label>
+                        <xar:if condition="$loop:item.value eq 'unable'"><em> <xar:mlstring>(please state reasons in comment box below)</xar:mlstring></em></xar:if>
+                    </div>
+                </xar:loop>
+            </xar:if>
+            <xar:if condition="$commentbox">
+                <div class="surveys-instruction">
+                    <div><label for="#$comment_id#"><xar:mlstring>I would like to make the following comment:</xar:mlstring></label></div>
+                    <textarea name="#$comment_name#" rows="4" id="#$comment_id#" style="width: 100%;">#xarVarPrepForDisplay($current_comment)#</textarea>
+                </div>
+            </xar:if>
+        </fieldset>
+    </div>
+</xar:if>
+
+<xar:if condition="$format eq 'combo'">
+    <div class="surveys-combo">
+        <div class="question-text"><div class="question-name">#$question_name#</div><label for="#$id#">#$question_text#</label></div>
+            <xar:if condition="$multiselect">
+                <xar:comment>Set list size to size of list, with an upper bound</xar:comment>
+                <xar:set name="sizelimit">10</xar:set>
+                <xar:set name="size">count($listitems)</xar:set>
+                <xar:if condition="$size gt $sizelimit">
+                    <xar:set name="size">$sizelimit</xar:set>
+                </xar:if>
+                <div class="surveys-instruction">
+                    <xar:mlstring>Please select all that apply:</xar:mlstring>
+                </div>
+                <select name="#$name#[]" id="#$id#" multiple="multiple" size="#$size#" >
+                <xar:loop name="$listitems">
+                    <xar:if condition="in_array($loop:item.value, $current_value)">
+                        <xar:comment>TODO: is there a point putting an ID on every option?</xar:comment>
+                        <option value="#xarVarPrepForDisplay($loop:item.value)#" id="#$loop:item.id#" selected="selected">#xarVarPrepForDisplay($loop:item.label)#</option>
+                    <xar:else />
+                        <option value="#xarVarPrepForDisplay($loop:item.value)#" id="#$loop:item.id#">#xarVarPrepForDisplay($loop:item.label)#</option>
+                    </xar:if>
+                </xar:loop>
+                </select>
+                <div class="surveys-instruction"><xar:mlstring>Hint: use shift/control keys to select multiple items</xar:mlstring></div>
+            </xar:if>
+            <xar:if condition="!$multiselect">
+                <select name="#$id#" id="#$name#">
+                <xar:loop name="$listitems">
+                    <xar:if condition="$loop:item.value eq $current_value">
+                        <option value="#xarVarPrepForDisplay($loop:item.value)#" id="#$loop:item.id#" selected="selected">#xarVarPrepForDisplay($loop:item.label)#</option>
+                    <xar:else />
+                        <option value="#xarVarPrepForDisplay($loop:item.value)#" id="#$loop:item.id#">#xarVarPrepForDisplay($loop:item.label)#</option>
+                    </xar:if>
+                </xar:loop>
+                </select>
+            </xar:if>
+        <xar:if condition="$commentbox">
+            <div class="surveys-instruction">
+                <div><label for="#$comment_id#"><xar:mlstring>I would like to make the following comment:</xar:mlstring></label></div>
+                <textarea name="#$comment_name#" rows="4" id="#$comment_id#" style="width: 100%;">#xarVarPrepForDisplay($current_comment)#</textarea>
+            </div>
+        </xar:if>
+    </div>
+</xar:if>
