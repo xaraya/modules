@@ -8,10 +8,11 @@
  * @link http://www.xaraya.com
  *
  * @subpackage Surveys
- * @author Surveys module development team 
  */
 /*
  * Initialise the surveys module.
+ * @author Surveys module development team  
+ * @author MichelV <michelv@xarayahosting.nl>
  */
 
 function surveys_init()
