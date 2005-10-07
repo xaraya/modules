@@ -1,0 +1,12 @@
+<div class="xar-form-input-wrapper">
+    <label for="list_name" class="xar-form-label" title=""><xar:mlstring>List name</xar:mlstring></label>
+    <input type="text" name="list_name" id="list_name" value="#$list.list_name#" size="40" maxlength="100"/>
+</div>
+<div class="xar-form-input-wrapper">
+    <label for="list_desc" class="xar-form-label" title=""><xar:mlstring>Description</xar:mlstring></label>
+    <textarea name="list_desc" id="list_desc" cols="40" rows="5" >#xarVarPrepForDisplay($list.list_desc)#</textarea>
+</div>
+<div class="xar-form-input-wrapper">
+    <label for="list_order_columns" class="xar-form-label" title=""><xar:mlstring>Order columns</xar:mlstring></label>
+    <input type="text" name="list_order_columns" id="list_order_columns" value="#$list.list_order_columns#" size="40" maxlength="200"/>
+</div>

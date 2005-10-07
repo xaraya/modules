@@ -1,0 +1,36 @@
+
+TODO:
+- File headers
+- Privileges throughout
+- Remove 'value' and 'validation' table columns
+- Better 'view' formatting
+- Pager functionality
+- Parameter checks on APIs
+- Single-item get APIs
+- Delete GUI and APIs
+- Re-order screen for 'item_order' function
+- Document reserved column names (to avoid DD clashes, and for ordering)
+- General docs
+- Count APIs
+- Categories to be included in privs
+- Default 'item code' to the iid
+- Default 'item order' to the next highest number available to the list
+- In batch mode, show the last item created
+- Extend batch mode to updates, or provide next/prev links (actually, the pager should be able to do this)
+- Check parameters on APIs
+- Display error messages on forms when incorrect
+- Implement auth codes for security
+- Full menu system
+- Admin overview (main)
+- Register ID and module name
+- Extend DD hooks so they are transparent to the update APIs.
+- Extend DD hooks so they are transparent to the create APIs.
+- Support where-conditions on list items, so sub-selections can be retrieved from a single list ('code' especially and other fields; = < > *)
+- Different templates for different type/list/item types (split main template into smaller templates)
+- Allow the page to be called up by names as well as IDs: tname/lname/icode
+- Generic import/export functions to manage lists
+- Structured search facility for getting to a list or item when lists get big
+
+MichelV:
+- Headers done
+- Module name was registered. Changed ID

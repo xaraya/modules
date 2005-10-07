@@ -1,0 +1,54 @@
+/* Styles for the lists module only */
+
+/* xar-mod-lists-view is used in the lists view screen */
+
+div.xar-mod-lists-view label {
+}
+
+div.xar-mod-lists-view input, div.xar-mod-lists textarea, div.xar-mod-lists checkbox {
+}
+
+/* Common to all levels */
+div.xar-mod-lists-view ul {
+}
+div.xar-mod-lists-view ul {
+}
+div.xar-mod-lists-view ul.edit, div.xar-mod-lists ul.new {
+}
+div.xar-mod-lists-view ul.edit li, div.xar-mod-lists ul.new li {
+}
+div.xar-mod-lists-view li {
+}
+
+/* Least specific - list type */
+div.xar-mod-lists-view ul {
+}
+div.xar-mod-lists-view li {
+}
+div.xar-mod-lists-view ul.edit li {
+}
+div.xar-mod-lists-view ul.new li {
+}
+
+/* Next specific - lists */
+div.xar-mod-lists-view ul ul {
+}
+div.xar-mod-lists-view li li {
+}
+div.xar-mod-lists-view li li ul.edit li {
+}
+div.xar-mod-lists-view li ul.new li {
+}
+
+/* Next specific - list items */
+div.xar-mod-lists-view ul ul ul {
+}
+div.xar-mod-lists-view li li li {
+}
+div.xar-mod-lists-view li li li ul.edit li {
+}
+div.xar-mod-lists-view li li ul.new li {
+}
+
+div.xar-mod-lists-view br {
+}

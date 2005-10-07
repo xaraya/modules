@@ -1,0 +1,20 @@
+<div class="xar-form-input-wrapper">
+    <label for="item_code"  class="xar-form-label" title=""><xar:mlstring>Item code</xar:mlstring></label>
+    <input type="text" name="item_code" id="item_code" value="#$item.item_code#" size="40" maxlength="100"/>
+</div>
+<div class="xar-form-input-wrapper">
+    <label for="item_short_name"  class="xar-form-label" title=""><xar:mlstring>Short name</xar:mlstring></label>
+    <input type="text" name="item_short_name" id="item_short_name" value="#$item.item_short_name#" size="40" maxlength="100"/>
+</div>
+<div class="xar-form-input-wrapper">
+    <label for="item_long_name"  class="xar-form-label" title=""><xar:mlstring>Long name</xar:mlstring></label>
+    <input type="text" name="item_long_name" id="item_long_name" value="#$item.item_long_name#" size="40" maxlength="200"/>
+</div>
+<div class="xar-form-input-wrapper">
+    <label for="item_desc"  class="xar-form-label" title=""><xar:mlstring>Description</xar:mlstring></label>
+    <textarea name="item_desc" id="item_desc" cols="40" rows="5" >#xarVarPrepForDisplay($item.item_desc)#</textarea>
+</div>
+<div class="xar-form-input-wrapper">
+    <label for="item_order"  class="xar-form-label" title=""><xar:mlstring>Order</xar:mlstring></label>
+    <input type="text" name="item_order" id="item_order" value="#$item.item_order#" size="20" maxlength="20"/>
+</div>
