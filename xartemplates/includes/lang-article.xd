@@ -1,12 +1,39 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<!-- common user menu for this module - remove link to the current function -->
-<!-- the variables used in this menu come from example_user_menu() -->
-<div>
-    <strong class="xar-margin-thickright"></strong>
-    <!-- a link to a particular menu item -->
+<xar:comment>
+    Purpose:
+        Display an article of the revevant selected language, falling back
+        to English where not available.
+    Input:
+        catname: the main category name
+</xar:comment>
 
+<xar:if condition="!empty($catname)">
+    <xar:set name="cat1">xarModAPIfunc('categories','user','name2cid',array('name'=>$catname))</xar:set>
+</xar:if>
 
-    <!-- more menu items come here... remember to add some kind of 
-      // separator between them
-    -->
-</div>
+<xar:if condition="!empty($cat1)">
+    <xar:set name="locale">xarLocaleGetInfo(xarMLSGetCurrentLocale())</xar:set>
+    <xar:set name="cat2">xarModAPIfunc('categories','user','name2cid',array('name'=>$locale['lang']))</xar:set>
+    <xar:set name="cat3">xarModAPIfunc('categories','user','name2cid',array('name'=>'en'))</xar:set>
+    <xar:set name="articles">xarModAPIfunc('articles','user','getall',array('cids'=>array($cat1,$cat2),'andcids'=>true))</xar:set>
+
+    <xar:comment>If no articles, try the English version.</xar:comment>
+    <xar:if condition="empty($articles)">
+       <xar:set name="articles">xarModAPIfunc('articles','user','getall',array('cids'=>array($cat1,$cat3),'andcids'=>true))</xar:set>
+    </xar:if>
+
+    <xar:comment>If no articles, try any language.</xar:comment>
+    <xar:if condition="empty($articles)">
+        <xar:set name="articles">xarModAPIfunc('articles','user','getall',array('cids'=>array($cat1)))</xar:set>
+    </xar:if>
+
+    <xar:if condition="!empty($articles)">
+        <xar:foreach in="$articles" value="$article">
+            <h1>#$article.title#</h1>
+            <xar:set name="dummy">xarTplSetPageTitle($article['title'])</xar:set>
+            <div>#$article.body#</div>
+        </xar:foreach>
+    </xar:if>
+
+    <xar:comment><xar:set name="dummy">var_dump($articles)</xar:set></xar:comment>
+</xar:if>
