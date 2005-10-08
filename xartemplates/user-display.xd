@@ -49,10 +49,8 @@
             <!-- 2. for each property, display its label and value in output format -->
             <xar:if condition="isset($properties) and count($properties) gt 0">
                 <xar:foreach in="$properties" key="$name">
-                    <p>
-                        <xar:data-label property="$properties[$name]" />:
+                          <xar:data-label property="$properties[$name]" />:
                         <xar:data-output property="$properties[$name]" />
-                    </p>
                 </xar:foreach>
             </xar:if>
         </xar:if>

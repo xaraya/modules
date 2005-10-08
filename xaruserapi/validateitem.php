@@ -2,16 +2,18 @@
 /**
  * Validate an item
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Example Module
+ * @link http://xaraya.com/index.php/release/36.html
+ * @author Example Module Development Team
  */
- 
  /*
   * Validate an item
+  *
   * @author the Example module development team
   */
 function example_userapi_validateitem($args)
