@@ -21,9 +21,23 @@ function lists_adminapi_getmenulinks()
     // Security Check
     //if (xarSecurityCheck('EditLists',0)) {
         $menulinks[] = array(
+            'url'   => xarModURL('lists', 'admin', 'main'),
+            'title' => xarML('Overview'),
+            'label' => xarML('Overview'));
+    //}
+    // Security Check
+    //if (xarSecurityCheck('EditLists',0)) {
+        $menulinks[] = array(
             'url'   => xarModURL('lists', 'admin', 'view'),
             'title' => xarML('View lists'),
             'label' => xarML('View lists'));
+    //}
+    // Security Check
+    //if (xarSecurityCheck('EditLists',0)) {
+        $menulinks[] = array(
+            'url'   => xarModURL('lists', 'admin', 'modifyconfig'),
+            'title' => xarML('Modify Configuration'),
+            'label' => xarML('Modify Config'));
     //}
 
     if (empty($menulinks)){

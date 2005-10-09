@@ -33,8 +33,9 @@ function lists_admin_main()
      * module, and allow the site admins to turn it on and off as they see fit.
      */
     if (xarModGetVar('adminpanels', 'overview') == 0) {
-        // Return to view function
-         return xarModFunc('lists','admin','view');
+        // Return to main function
+        $data = array();
+         return $data;
         /* Initialise the $data variable that will hold the data to be used in
          * the blocklayout template, and get the common menu configuration
         $data = xarModAPIFunc('lists', 'admin', 'menu');
@@ -44,7 +45,7 @@ function lists_admin_main()
         /* If the Overview documentation is turned off, then we just return the view page,
          * or whatever function seems to be the most fitting.
          */
-        xarResponseRedirect(xarModURL('lists', 'admin', 'view'));
+        xarResponseRedirect(xarModURL('lists', 'admin', 'main'));
     }
     /* success so return true */
     return true;
