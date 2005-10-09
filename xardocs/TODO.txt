@@ -1,7 +1,13 @@
+Todo
 
-- Fill init and upgrade scripts.
-- Admin screens for surveys, questions overview, dependancy rules etc.
+Version 20051009
+Was already present. Changes added by MichelV
+
+- Fill init and upgrade scripts.[done MichelV]
+
 - Security checks
+- Security scheme in init
+- Privileges.php ?
 - Fix the moving os surveys from the session to the current user when the user logs in for the first time
 
 - Further flags for surveys:
@@ -59,3 +65,12 @@
   group statuses would tell us whether that was the last question to set a group to COMPLETE. This would
   only work one level up, but may be sufficient.
 
+<MichelV: these here are the main tasks I think>
+- Admin screens for 
+ -- surveys building, 
+ -- questions overview, 
+ -- questions adding [done]
+ -- adding groups
+ -- dependancy rules etc.
+ -- User inputs monitoring
+ -- 
