@@ -13,6 +13,7 @@
 /*
  * Main user function
  *
+ * This function gets the present list items and dumps them.
  */
 function lists_user_main($args) {
     //$types = xarModAPIfunc('lists', 'user', 'getlisttypes');
