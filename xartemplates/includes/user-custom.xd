@@ -20,97 +20,97 @@ function LimitText(fieldObj,maxChars) {
 //-->
 </script>
 <table class="xar-alt-outline" cellpadding="1" cellspacing="0">
-    <tr>
-        <th><a href="javascript:document.addcontact.submit();" onclick="javascript:document.addcontact.action.value=0;"><xar:mlstring>Name</xar:mlstring></a></th>
-        <th><a href="javascript:document.addcontact.submit();" onclick="javascript:document.addcontact.action.value=1;"><xar:mlstring>Address</xar:mlstring></a></th>
-        <th><a href="javascript:document.addcontact.submit();" onclick="javascript:document.addcontact.action.value=2;"><xar:mlstring>Contact</xar:mlstring></a></th>
-        <th>#$custom_tab#</th>
-        <th><a href="javascript:document.addcontact.submit();" onclick="javascript:document.addcontact.action.value=4;"><xar:mlstring>Note</xar:mlstring></a></th>
-    </tr>
-    <tr>
-        <td colspan="#$numcols#">
+  <tr>
+    <th><a href="javascript:document.addcontact.submit();" onclick="javascript:document.addcontact.action.value=0;"><xar:mlstring>Name</xar:mlstring></a></th>
+    <th><a href="javascript:document.addcontact.submit();" onclick="javascript:document.addcontact.action.value=1;"><xar:mlstring>Address</xar:mlstring></a></th>
+    <th><a href="javascript:document.addcontact.submit();" onclick="javascript:document.addcontact.action.value=2;"><xar:mlstring>Contact</xar:mlstring></a></th>
+    <th>#$custom_tab#</th>
+    <th><a href="javascript:document.addcontact.submit();" onclick="javascript:document.addcontact.action.value=4;"><xar:mlstring>Note</xar:mlstring></a></th>
+  </tr>
+  <tr>
+    <td colspan="#$numcols#">
       <table width="100%" border="0" cellspacing="0" cellpadding="5">
-<xar:for start="$i=0" test="$i lt count($custUserData)" iter="$i++">
-        <tr>
-  <xar:comment>Two-column-span custom data</xar:comment>
-  <xar:if condition="!strcmp($custUserData[$i]['custType'],_AB_CUSTOM_BLANKLINE) or !strcmp($custUserData[$i]['custType'],_AB_CUSTOM_HORIZ_RULE)">
-          <td colspan="2" align="left" valign="middle">
-    <xar:if condition="!strcmp($custUserData[$i]['custType'],_AB_CUSTOM_BLANKLINE)">
-            <br />
-    </xar:if>
-    <xar:if condition="!strcmp($custUserData[$i]['custType'],_AB_CUSTOM_HORIZ_RULE)">
-            <hr />
-    </xar:if>
-            <input type="hidden" name="custUserData[#$i#][custType]" id="custUserData[#$i#][custType]" value="#$custUserData[$i]['custType']#" />
-            <input type="hidden" name="custUserData[#$i#][colName]" id="custUserData[#$i#][colName]" value="#$custUserData[$i]['colName']#" />
-            <input type="hidden" name="custUserData[#$i#][custLabel]" id="custUserData[#$i#][custLabel]" value="#$custUserData[$i]['custLabel']#">
-          </td>
-  <xar:else/>
-    <xar:comment>Two column custom data</xar:comment>
-          <td align="left" valign="middle">
-            #$custUserData[$i]['custLabel']#:
-          </td>
-          <td align="left" valign="middle">
-            <input type="hidden" name="custUserData[#$i#][custType]" id="custUserData[#$i#][custType]" value="#$custUserData[$i]['custType']#" />
-            <input type="hidden" name="custUserData[#$i#][colName]" id="custUserData[#$i#][colName]" value="#$custUserData[$i]['colName']#" />
-            <input name="custUserData[#$i#][custLabel]" id="custUserData[#$i#][custType]" value="#$custUserData[$i]['custLabel']#" type="hidden">
-    <xar:if condition="!strcmp($custUserData[$i]['custType'],_AB_CUSTOM_TEXT_SHORT)">
-      <xar:if condition="isset($custUserData[$i]['userData'])">
-            <input name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" value="#$custUserData[$i]['userData']#" size="60" maxlength="60" />
-      <xar:else />
-            <input name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" value="" size="60" maxlength="60" />
-      </xar:if>
-    <xar:elseif condition="!strcmp($custUserData[$i]['custType'],_AB_CUSTOM_TEXT_MEDIUM)" />
-      <xar:if condition="isset($custUserData[$i]['userData'])">
-            <textarea name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" cols="#$textareawidth#" rows="2" onkeyup="TrackCount(this,120)" onkeypress="LimitText(this,120)" STYLE="overflow:hidden;">#$custUserData[$i]['userData']#</textarea>
-      <xar:else />
-            <textarea name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" cols="#$textareawidth#" rows="2" onkeyup="TrackCount(this,120)" onkeypress="LimitText(this,120)" STYLE="overflow:hidden;"></textarea>
-      </xar:if>
-    <xar:elseif condition="!strcmp($custUserData[$i]['custType'],_AB_CUSTOM_TEXT_LONG)" />
-      <xar:if condition="isset($custUserData[$i]['userData'])">
-            <textarea name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" cols="#$textareawidth#" rows="4" onkeyup="TrackCount(this,240)" onkeypress="LimitText(this,120)" STYLE="overflow:hidden;">#$custUserData[$i]['userData']#</textarea>
-      <xar:else />
-            <textarea name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" cols="#$textareawidth#" rows="4" onkeyup="TrackCount(this,240)" onkeypress="LimitText(this,120)" STYLE="overflow:hidden;"></textarea>
-      </xar:if>
-    <xar:elseif condition="!strcmp($custUserData[$i]['custType'],_AB_CUSTOM_DECIMAL)" />
-      <xar:if condition="isset($custUserData[$i]['userData'])">
-            <input name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" value="#$custUserData[$i]['userData']#" size="12" maxlength="12" />
-      <xar:else />
-            <input name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" value="" size="12" maxlength="12" />
-      </xar:if>
-    <xar:elseif condition="!strcmp($custUserData[$i]['custType'],_AB_CUSTOM_INTEGER)" />
-      <xar:if condition="isset($custUserData[$i]['userData'])">
-            <input name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" value="#$custUserData[$i]['userData']#" size="9" maxlength="9" />
-      <xar:else />
-            <input name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" value="" size="9" maxlength="9" />
-      </xar:if>
-    <xar:elseif condition="!strcmp($custUserData[$i]['custType'],_AB_CUSTOM_CHECKBOX)" />
-      <xar:if condition="!empty($custUserData[$i]['userData'])">
-            <input name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" type="checkbox" checked value="1" />
-      <xar:else />
-            <input name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" type="checkbox" value="1"/>
-      </xar:if>
-    <xar:elseif condition="!strcmp($custUserData[$i]['custType'],_AB_CUSTOM_DATE)" />
-      <xar:if condition="!empty($custUserData[$i]['userData'])">
-        <xar:if condition="xarModGetVar(__ADDRESSBOOK__,'dateformat') eq 0">
-          <xar:set name="$date">date("m.d.Y",$custUserData[$i]['userData']);</xar:set>
-        <xar:else />
-          <xar:set name="$date">date("d.m.Y",$custUserData[$i]['userData']);</xar:set>
-        </xar:if>
-                  <input name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" value="#$date#" size="10" maxlength="10" />
-      <xar:else />
-                  <input name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" value="" size="10" maxlength="10" />
-      </xar:if>
-      <xar:if condition="xarModGetVar(__ADDRESSBOOK__,'dateformat') eq 0">
-                  &nbsp;&nbsp;#$dateformat_1#
-      <xar:else />
-                  &nbsp;&nbsp;#$dateformat_2#
-      </xar:if>
-    </xar:if>
-          </td>
-  </xar:if>
-        </tr>
-</xar:for>
+        <xar:for start="$i=0" test="$i lt count($custUserData)" iter="$i++">
+          <tr>
+            <xar:comment>Two-column-span custom data</xar:comment>
+            <xar:if condition="!strcmp($custUserData[$i]['custType'],_AB_CUSTOM_BLANKLINE) or !strcmp($custUserData[$i]['custType'],_AB_CUSTOM_HORIZ_RULE)">
+              <td colspan="2" align="left" valign="middle">
+                <xar:if condition="!strcmp($custUserData[$i]['custType'],_AB_CUSTOM_BLANKLINE)">
+                  <br />
+                </xar:if>
+                <xar:if condition="!strcmp($custUserData[$i]['custType'],_AB_CUSTOM_HORIZ_RULE)">
+                  <hr />
+                </xar:if>
+                <input type="hidden" name="custUserData[#$i#][custType]" id="custUserData[#$i#][custType]" value="#$custUserData[$i]['custType']#" />
+                <input type="hidden" name="custUserData[#$i#][colName]" id="custUserData[#$i#][colName]" value="#$custUserData[$i]['colName']#" />
+                <input type="hidden" name="custUserData[#$i#][custLabel]" id="custUserData[#$i#][custLabel]" value="#$custUserData[$i]['custLabel']#"/>
+              </td>
+              <xar:else/>
+              <xar:comment>Two column custom data</xar:comment>
+              <td align="left" valign="middle">
+                #$custUserData[$i]['custLabel']#:
+              </td>
+              <td align="left" valign="middle">
+                <input type="hidden" name="custUserData[#$i#][custType]" id="custUserData[#$i#][custType]" value="#$custUserData[$i]['custType']#" />
+                <input type="hidden" name="custUserData[#$i#][colName]" id="custUserData[#$i#][colName]" value="#$custUserData[$i]['colName']#" />
+                <input name="custUserData[#$i#][custLabel]" id="custUserData[#$i#][custType]" value="#$custUserData[$i]['custLabel']#" type="hidden"/>
+                  <xar:if condition="!strcmp($custUserData[$i]['custType'],_AB_CUSTOM_TEXT_SHORT)">
+                    <xar:if condition="isset($custUserData[$i]['userData'])">
+                      <input name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" value="#$custUserData[$i]['userData']#" size="60" maxlength="60" />
+                      <xar:else />
+                      <input name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" value="" size="60" maxlength="60" />
+                    </xar:if>
+                    <xar:elseif condition="!strcmp($custUserData[$i]['custType'],_AB_CUSTOM_TEXT_MEDIUM)" />
+                    <xar:if condition="isset($custUserData[$i]['userData'])">
+                      <textarea name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" cols="#$textareawidth#" rows="2" onkeyup="TrackCount(this,120)" onkeypress="LimitText(this,120)" STYLE="overflow:hidden;">#$custUserData[$i]['userData']#</textarea>
+                      <xar:else />
+                      <textarea name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" cols="#$textareawidth#" rows="2" onkeyup="TrackCount(this,120)" onkeypress="LimitText(this,120)" STYLE="overflow:hidden;"></textarea>
+                    </xar:if>
+                    <xar:elseif condition="!strcmp($custUserData[$i]['custType'],_AB_CUSTOM_TEXT_LONG)" />
+                    <xar:if condition="isset($custUserData[$i]['userData'])">
+                      <textarea name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" cols="#$textareawidth#" rows="4" onkeyup="TrackCount(this,240)" onkeypress="LimitText(this,120)" STYLE="overflow:hidden;">#$custUserData[$i]['userData']#</textarea>
+                      <xar:else />
+                      <textarea name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" cols="#$textareawidth#" rows="4" onkeyup="TrackCount(this,240)" onkeypress="LimitText(this,120)" STYLE="overflow:hidden;"></textarea>
+                    </xar:if>
+                    <xar:elseif condition="!strcmp($custUserData[$i]['custType'],_AB_CUSTOM_DECIMAL)" />
+                    <xar:if condition="isset($custUserData[$i]['userData'])">
+                      <input name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" value="#$custUserData[$i]['userData']#" size="12" maxlength="12" />
+                      <xar:else />
+                      <input name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" value="" size="12" maxlength="12" />
+                    </xar:if>
+                    <xar:elseif condition="!strcmp($custUserData[$i]['custType'],_AB_CUSTOM_INTEGER)" />
+                    <xar:if condition="isset($custUserData[$i]['userData'])">
+                      <input name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" value="#$custUserData[$i]['userData']#" size="9" maxlength="9" />
+                      <xar:else />
+                      <input name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" value="" size="9" maxlength="9" />
+                    </xar:if>
+                    <xar:elseif condition="!strcmp($custUserData[$i]['custType'],_AB_CUSTOM_CHECKBOX)" />
+                    <xar:if condition="!empty($custUserData[$i]['userData'])">
+                      <input name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" type="checkbox" checked="checked" value="1" />
+                      <xar:else />
+                      <input name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" type="checkbox" value="1"/>
+                    </xar:if>
+                    <xar:elseif condition="!strcmp($custUserData[$i]['custType'],_AB_CUSTOM_DATE)" />
+                    <xar:if condition="!empty($custUserData[$i]['userData'])">
+                      <xar:if condition="xarModGetVar(__ADDRESSBOOK__,'dateformat') eq 0">
+                        <xar:set name="$date">date("m.d.Y",$custUserData[$i]['userData']);</xar:set>
+                        <xar:else />
+                        <xar:set name="$date">date("d.m.Y",$custUserData[$i]['userData']);</xar:set>
+                      </xar:if>
+                      <input name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" value="#$date#" size="10" maxlength="10" />
+                      <xar:else />
+                      <input name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" value="" size="10" maxlength="10" />
+                    </xar:if>
+                    <xar:if condition="xarModGetVar(__ADDRESSBOOK__,'dateformat') eq 0">
+                      &nbsp;&nbsp;#$dateformat_1#
+                      <xar:else />
+                      &nbsp;&nbsp;#$dateformat_2#
+                    </xar:if>
+                  </xar:if>
+              </td>
+            </xar:if>
+          </tr>
+        </xar:for>
       </table>
     </td>
   </tr>
