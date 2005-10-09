@@ -1,32 +1,32 @@
-<div>
-    <label for="type_name" title=""><xar:mlstring>List type name</xar:mlstring></label>
+<div class="xar-form-input-wrapper">
+    <label for="type_name" class="xar-form-label" title=""><xar:mlstring>List type name</xar:mlstring></label>
     <input type="text" name="type_name" id="type_name" value="#$type.type_name#" size="40" maxlength="100"/>
 </div>
 
-<div>
-    <label for="type_desc" title=""><xar:mlstring>Description</xar:mlstring></label>
+<div class="xar-form-input-wrapper">
+    <label for="type_desc" class="xar-form-label" title=""><xar:mlstring>Description</xar:mlstring></label>
     <textarea name="type_desc" id="type_desc" cols="40" rows="5" >#xarVarPrepForDisplay($type.type_desc)#</textarea>
 </div>
 
-<div>
-    <label for="type_order_columns" title=""><xar:mlstring>Order columns</xar:mlstring></label>
+<div class="xar-form-input-wrapper">
+    <label for="type_order_columns" class="xar-form-label" title=""><xar:mlstring>Order columns</xar:mlstring></label>
     <input type="text" name="type_order_columns" id="type_order_columns" value="#$type.type_order_columns#" size="40" maxlength="200"/>
 </div>
 
 <xar:comment>We are not allowing this to be changed at the moment.
 <xar:if condition="count($types) gt 0">
-<div>
-    <label for="type_parenttype" title=""><xar:mlstring>Parent type</xar:mlstring></label>
-    <select name="type_parenttype" id="type_parenttype">
-        <option value=""><xar:mlstring>-- None --</xar:mlstring></option>
-        <xar:loop name="$types">
-            <xar:if condition="$type.type_parenttype eq $loop:item.tid">
-                <option value="#$loop:item.tid#" selected="selected">#$loop:item.tid#: #$loop:item.type_name#</option>
-            <xar:else />
-                <option value="#$loop:item.tid#">#$loop:item.tid#: #$loop:item.type_name#</option>
-            </xar:if>
-        </xar:loop>
-    </select>
-</div>
+    <div class="xar-form-input-wrapper">
+        <label for="type_parenttype" class="xar-form-label" title=""><xar:mlstring>Parent type</xar:mlstring></label>
+        <select name="type_parenttype" id="type_parenttype">
+            <option value=""><xar:mlstring>-- None --</xar:mlstring></option>
+            <xar:loop name="$types">
+                <xar:if condition="$type.type_parenttype eq $loop:item.tid">
+                    <option value="#$loop:item.tid#" selected="selected">#$loop:item.tid#: #$loop:item.type_name#</option>
+                <xar:else />
+                    <option value="#$loop:item.tid#">#$loop:item.tid#: #$loop:item.type_name#</option>
+                </xar:if>
+            </xar:loop>
+        </select>
+    </div>
 </xar:if>
 </xar:comment>
