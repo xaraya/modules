@@ -34,7 +34,8 @@ function & images_userapi_load_image( $args )
     if (!empty($fileId) && is_numeric($fileId)) {
         // if we only get the fileId
         if (empty($fileLocation) || !isset($storeType)) {
-            $fileInfo = end(xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $fileId)));
+            $fileInfoArray = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $fileId));
+            $fileInfo = end($fileInfoArray );
             if (empty($fileInfo)) {
                 return NULL;
             }
@@ -74,16 +75,19 @@ function & images_userapi_load_image( $args )
     switch(xarModGetVar('images', 'type.graphics-library')) {
         case _IMAGES_LIBRARY_IMAGEMAGICK:
             include_once('modules/images/xarclass/image_ImageMagick.php');
-            return new Image_ImageMagick($location, $thumbsdir);
+            $newImage = new Image_ImageMagick($location, $thumbsdir);
+            return $newImage;
             break;
         case _IMAGES_LIBRARY_NETPBM:
             include_once('modules/images/xarclass/image_NetPBM.php');
-            return new Image_NetPBM($location, $thumbsdir);
+            $newImage = new Image_NetPBM($location, $thumbsdir);
+            return $newImage;
             break;
         default:
         case _IMAGES_LIBRARY_GD:
             include_once('modules/images/xarclass/image_gd.php');
-            return new Image_GD($location, $thumbsdir);
+            $newImage = new Image_GD($location, $thumbsdir);
+            return $newImage;
             break;
     }
 }
