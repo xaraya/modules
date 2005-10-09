@@ -33,17 +33,11 @@ function lists_admin_main()
      * module, and allow the site admins to turn it on and off as they see fit.
      */
     if (xarModGetVar('adminpanels', 'overview') == 0) {
-        /* If you want to go directly to some default function, instead of
-         * having a separate main function, you can simply call it here, and
-         * use the same template for admin-main.xd as for admin-view.xd
-         * For now: move to view
-         */
+        // Return to view function
          return xarModFunc('lists','admin','view');
         /* Initialise the $data variable that will hold the data to be used in
          * the blocklayout template, and get the common menu configuration
         $data = xarModAPIFunc('lists', 'admin', 'menu');
-
-
         return $data;
          */
     } else {
