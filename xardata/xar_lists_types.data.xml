@@ -1,0 +1,50 @@
+<items>
+  <xar_lists_types itemid="1">
+    <tid>1</tid>
+    <list_type_id></list_type_id>
+    <type>G</type>
+    <name>group_Long list of Countries</name>
+    <desc></desc>
+    <order_columns></order_columns>
+  </xar_lists_types>
+  <xar_lists_types itemid="2">
+    <tid>2</tid>
+    <list_type_id>1</list_type_id>
+    <type>T</type>
+    <name>Long list of Countries</name>
+    <desc>Simple long listing</desc>
+    <order_columns>+item_order,+item_short_name</order_columns>
+  </xar_lists_types>
+  <xar_lists_types itemid="3">
+    <tid>3</tid>
+    <list_type_id>2</list_type_id>
+    <type>L</type>
+    <name>Countries</name>
+    <desc>Countries</desc>
+    <order_columns></order_columns>
+  </xar_lists_types>
+  <xar_lists_types itemid="4">
+    <tid>4</tid>
+    <list_type_id></list_type_id>
+    <type>G</type>
+    <name>group_Years</name>
+    <desc></desc>
+    <order_columns></order_columns>
+  </xar_lists_types>
+  <xar_lists_types itemid="5">
+    <tid>5</tid>
+    <list_type_id>4</list_type_id>
+    <type>T</type>
+    <name>Years</name>
+    <desc>Years</desc>
+    <order_columns>+item_order,+item_short_name</order_columns>
+  </xar_lists_types>
+  <xar_lists_types itemid="6">
+    <tid>6</tid>
+    <list_type_id>5</list_type_id>
+    <type>L</type>
+    <name>Years</name>
+    <desc>Single years</desc>
+    <order_columns></order_columns>
+  </xar_lists_types>
+</items>

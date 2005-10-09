@@ -30,6 +30,7 @@ function lists_init()
     $fields_lists = "
         xar_tid             I           AUTO    PRIMARY,
         xar_list_type_id    I           Null,
+        xar_type            C(1)        NOTNULL,
         xar_name            C(100)      NotNull DEFAULT 'name',
         xar_desc            X(2000)     Null    DEFAULT '',
         xar_order_columns   C(200)      Null    DEFAULT ''

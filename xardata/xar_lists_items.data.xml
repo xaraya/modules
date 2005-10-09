@@ -1,0 +1,2342 @@
+<items>
+  <xar_lists_items itemid="1">
+    <iid>1</iid>
+    <lid>6</lid>
+    <code>2000</code>
+    <short_name>2000</short_name>
+    <long_name>item_long_name</long_name>
+    <desc>2000</desc>
+    <order>0</order>
+  </xar_lists_items>
+  <xar_lists_items itemid="2">
+    <iid>2</iid>
+    <lid>6</lid>
+    <code>2001</code>
+    <short_name>2001</short_name>
+    <long_name>item_long_name</long_name>
+    <desc>2001</desc>
+    <order>0</order>
+  </xar_lists_items>
+  <xar_lists_items itemid="3">
+    <iid>3</iid>
+    <lid>6</lid>
+    <code>2002</code>
+    <short_name>2002</short_name>
+    <long_name>item_long_name</long_name>
+    <desc>2002</desc>
+    <order>0</order>
+  </xar_lists_items>
+  <xar_lists_items itemid="4">
+    <iid>4</iid>
+    <lid>6</lid>
+    <code>2003</code>
+    <short_name>2003</short_name>
+    <long_name>item_long_name</long_name>
+    <desc>2003</desc>
+    <order>0</order>
+  </xar_lists_items>
+  <xar_lists_items itemid="5">
+    <iid>5</iid>
+    <lid>6</lid>
+    <code>2004</code>
+    <short_name>2004</short_name>
+    <long_name>item_long_name</long_name>
+    <desc>2004</desc>
+    <order>0</order>
+  </xar_lists_items>
+  <xar_lists_items itemid="6">
+    <iid>6</iid>
+    <lid>6</lid>
+    <code>1998</code>
+    <short_name>1998</short_name>
+    <long_name>item_long_name</long_name>
+    <desc>1998</desc>
+    <order>0</order>
+  </xar_lists_items>
+  <xar_lists_items itemid="7">
+    <iid>7</iid>
+    <lid>6</lid>
+    <code>1997</code>
+    <short_name>1997</short_name>
+    <long_name>item_long_name</long_name>
+    <desc>1997</desc>
+    <order>0</order>
+  </xar_lists_items>
+  <xar_lists_items itemid="8">
+    <iid>8</iid>
+    <lid>6</lid>
+    <code>1996</code>
+    <short_name>1996</short_name>
+    <long_name>item_long_name</long_name>
+    <desc>1996</desc>
+    <order>0</order>
+  </xar_lists_items>
+  <xar_lists_items itemid="9">
+    <iid>9</iid>
+    <lid>6</lid>
+    <code>1995</code>
+    <short_name>1995</short_name>
+    <long_name>item_long_name</long_name>
+    <desc>1995</desc>
+    <order>0</order>
+  </xar_lists_items>
+  <xar_lists_items itemid="10">
+    <iid>10</iid>
+    <lid>6</lid>
+    <code>1994</code>
+    <short_name>1994</short_name>
+    <long_name>item_long_name</long_name>
+    <desc>1994</desc>
+    <order>0</order>
+  </xar_lists_items>
+  <xar_lists_items itemid="11">
+    <iid>11</iid>
+    <lid>6</lid>
+    <code>1993</code>
+    <short_name>1993</short_name>
+    <long_name>item_long_name</long_name>
+    <desc>1993</desc>
+    <order>0</order>
+  </xar_lists_items>
+  <xar_lists_items itemid="12">
+    <iid>12</iid>
+    <lid>6</lid>
+    <code>1992</code>
+    <short_name>1992</short_name>
+    <long_name>item_long_name</long_name>
+    <desc>1992</desc>
+    <order>0</order>
+  </xar_lists_items>
+  <xar_lists_items itemid="13">
+    <iid>13</iid>
+    <lid>6</lid>
+    <code>1991</code>
+    <short_name>1991</short_name>
+    <long_name>item_long_name</long_name>
+    <desc>1991</desc>
+    <order>0</order>
+  </xar_lists_items>
+  <xar_lists_items itemid="14">
+    <iid>14</iid>
+    <lid>6</lid>
+    <code>1990</code>
+    <short_name>1990</short_name>
+    <long_name>item_long_name</long_name>
+    <desc>1990</desc>
+    <order>0</order>
+  </xar_lists_items>
+  <xar_lists_items itemid="15">
+    <iid>15</iid>
+    <lid>6</lid>
+    <code>1989</code>
+    <short_name>1989</short_name>
+    <long_name>item_long_name</long_name>
+    <desc>1989</desc>
+    <order>0</order>
+  </xar_lists_items>
+  <xar_lists_items itemid="16">
+    <iid>16</iid>
+    <lid>6</lid>
+    <code>1988</code>
+    <short_name>1988</short_name>
+    <long_name>item_long_name</long_name>
+    <desc>1988</desc>
+    <order>0</order>
+  </xar_lists_items>
+  <xar_lists_items itemid="17">
+    <iid>17</iid>
+    <lid>6</lid>
+    <code>1987</code>
+    <short_name>1987</short_name>
+    <long_name>item_long_name</long_name>
+    <desc>1987</desc>
+    <order>0</order>
+  </xar_lists_items>
+  <xar_lists_items itemid="18">
+    <iid>18</iid>
+    <lid>6</lid>
+    <code>1986</code>
+    <short_name>1986</short_name>
+    <long_name>item_long_name</long_name>
+    <desc>1986</desc>
+    <order>0</order>
+  </xar_lists_items>
+  <xar_lists_items itemid="19">
+    <iid>19</iid>
+    <lid>6</lid>
+    <code>1985</code>
+    <short_name>1985</short_name>
+    <long_name>item_long_name</long_name>
+    <desc>1985</desc>
+    <order>0</order>
+  </xar_lists_items>
+  <xar_lists_items itemid="20">
+    <iid>20</iid>
+    <lid>6</lid>
+    <code>1984</code>
+    <short_name>1984</short_name>
+    <long_name>item_long_name</long_name>
+    <desc>1984</desc>
+    <order>0</order>
+  </xar_lists_items>
+  <xar_lists_items itemid="21">
+    <iid>21</iid>
+    <lid>6</lid>
+    <code>1983</code>
+    <short_name>1983</short_name>
+    <long_name>item_long_name</long_name>
+    <desc>1983</desc>
+    <order>0</order>
+  </xar_lists_items>
+  <xar_lists_items itemid="22">
+    <iid>22</iid>
+    <lid>6</lid>
+    <code>1982</code>
+    <short_name>1982</short_name>
+    <long_name>item_long_name</long_name>
+    <desc>1982</desc>
+    <order>0</order>
+  </xar_lists_items>
+  <xar_lists_items itemid="23">
+    <iid>23</iid>
+    <lid>6</lid>
+    <code>1981</code>
+    <short_name>1981</short_name>
+    <long_name>item_long_name</long_name>
+    <desc>1981</desc>
+    <order>0</order>
+  </xar_lists_items>
+  <xar_lists_items itemid="24">
+    <iid>24</iid>
+    <lid>6</lid>
+    <code>1980</code>
+    <short_name>1980</short_name>
+    <long_name>item_long_name</long_name>
+    <desc>1980</desc>
+    <order>0</order>
+  </xar_lists_items>
+  <xar_lists_items itemid="25">
+    <iid>25</iid>
+    <lid>3</lid>
+    <code>United Kingdom</code>
+    <short_name>United Kingdom</short_name>
+    <long_name>item_long_name</long_name>
+    <desc>United Kingdom</desc>
+    <order>0</order>
+  </xar_lists_items>
+  <xar_lists_items itemid="26">
+    <iid>26</iid>
+    <lid>3</lid>
+    <code>Albania</code>
+    <short_name>Albania</short_name>
+    <long_name>item_long_name</long_name>
+    <desc>Albania</desc>
+    <order>0</order>
+  </xar_lists_items>
+  <xar_lists_items itemid="27">
+    <iid>27</iid>
+    <lid>3</lid>
+    <code>Algeria</code>
+    <short_name>Algeria</short_name>
+    <long_name>item_long_name</long_name>
+    <desc>Algeria</desc>
+    <order>0</order>
+  </xar_lists_items>
+  <xar_lists_items itemid="28">
+    <iid>28</iid>
+    <lid>3</lid>
+    <code>American Samoa</code>
+    <short_name>American Samoa</short_name>
+    <long_name>item_long_name</long_name>
+    <desc>American Samoa</desc>
+    <order>0</order>
+  </xar_lists_items>
+  <xar_lists_items itemid="29">
+    <iid>29</iid>
+    <lid>3</lid>
+    <code>Andorra</code>
+    <short_name>Andorra</short_name>
+    <long_name>item_long_name</long_name>
+    <desc>Andorra</desc>
+    <order>0</order>
+  </xar_lists_items>
+  <xar_lists_items itemid="30">
+    <iid>30</iid>
+    <lid>3</lid>
+    <code>Angola</code>
+    <short_name>Angola</short_name>
+    <long_name>item_long_name</long_name>
+    <desc>Angola</desc>
+    <order>0</order>
+  </xar_lists_items>
+  <xar_lists_items itemid="31">
+    <iid>31</iid>
+    <lid>3</lid>
+    <code>Anguilla</code>
+    <short_name>Anguilla</short_name>
+    <long_name>item_long_name</long_name>
+    <desc>Anguilla</desc>
+    <order>0</order>
+  </xar_lists_items>
+  <xar_lists_items itemid="32">
+    <iid>32</iid>
+    <lid>3</lid>
+    <code>Antarctica</code>
+    <short_name>Antarctica</short_name>
+    <long_name>item_long_name</long_name>
+    <desc>Antarctica</desc>
+    <order>0</order>
+  </xar_lists_items>
+  <xar_lists_items itemid="33">
+    <iid>33</iid>
+    <lid>3</lid>
+    <code>Antigua and Barbuda</code>
+    <short_name>Antigua and Barbuda</short_name>
+    <long_name>item_long_name</long_name>
+    <desc>Antigua and Barbuda</desc>
+    <order>0</order>
+  </xar_lists_items>
+  <xar_lists_items itemid="34">
+    <iid>34</iid>
+    <lid>3</lid>
+    <code>Argentina</code>
+    <short_name>Argentina</short_name>
+    <long_name></long_name>
+    <desc>Argentina</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="35">
+    <iid>35</iid>
+    <lid>3</lid>
+    <code>Armenia</code>
+    <short_name>Armenia</short_name>
+    <long_name></long_name>
+    <desc>Armenia</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="36">
+    <iid>36</iid>
+    <lid>3</lid>
+    <code>Aruba</code>
+    <short_name>Aruba</short_name>
+    <long_name></long_name>
+    <desc>Aruba</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="37">
+    <iid>37</iid>
+    <lid>3</lid>
+    <code>Australia</code>
+    <short_name>Australia</short_name>
+    <long_name></long_name>
+    <desc>Australia</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="38">
+    <iid>38</iid>
+    <lid>3</lid>
+    <code>Austria</code>
+    <short_name>Austria</short_name>
+    <long_name></long_name>
+    <desc>Austria</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="39">
+    <iid>39</iid>
+    <lid>3</lid>
+    <code>Azerbaijan</code>
+    <short_name>Azerbaijan</short_name>
+    <long_name></long_name>
+    <desc>Azerbaijan</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="40">
+    <iid>40</iid>
+    <lid>3</lid>
+    <code>Bahamas</code>
+    <short_name>Bahamas</short_name>
+    <long_name></long_name>
+    <desc>Bahamas</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="41">
+    <iid>41</iid>
+    <lid>3</lid>
+    <code>Bahrain</code>
+    <short_name>Bahrain</short_name>
+    <long_name></long_name>
+    <desc>Bahrain</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="42">
+    <iid>42</iid>
+    <lid>3</lid>
+    <code>Bangladesh</code>
+    <short_name>Bangladesh</short_name>
+    <long_name></long_name>
+    <desc>Bangladesh</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="43">
+    <iid>43</iid>
+    <lid>3</lid>
+    <code>Barbados</code>
+    <short_name>Barbados</short_name>
+    <long_name></long_name>
+    <desc>Barbados</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="44">
+    <iid>44</iid>
+    <lid>3</lid>
+    <code>Belarus</code>
+    <short_name>Belarus</short_name>
+    <long_name></long_name>
+    <desc>Belarus</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="45">
+    <iid>45</iid>
+    <lid>3</lid>
+    <code>Belgium</code>
+    <short_name>Belgium</short_name>
+    <long_name></long_name>
+    <desc>Belgium</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="46">
+    <iid>46</iid>
+    <lid>3</lid>
+    <code>Belize</code>
+    <short_name>Belize</short_name>
+    <long_name></long_name>
+    <desc>Belize</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="47">
+    <iid>47</iid>
+    <lid>3</lid>
+    <code>Benin</code>
+    <short_name>Benin</short_name>
+    <long_name></long_name>
+    <desc>Benin</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="48">
+    <iid>48</iid>
+    <lid>3</lid>
+    <code>Bermuda</code>
+    <short_name>Bermuda</short_name>
+    <long_name></long_name>
+    <desc>Bermuda</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="49">
+    <iid>49</iid>
+    <lid>3</lid>
+    <code>Bhutan</code>
+    <short_name>Bhutan</short_name>
+    <long_name></long_name>
+    <desc>Bhutan</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="50">
+    <iid>50</iid>
+    <lid>3</lid>
+    <code>Bolivia</code>
+    <short_name>Bolivia</short_name>
+    <long_name></long_name>
+    <desc>Bolivia</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="51">
+    <iid>51</iid>
+    <lid>3</lid>
+    <code>Bosnia and Herzegovina</code>
+    <short_name>Bosnia and Herzegovina</short_name>
+    <long_name></long_name>
+    <desc>Bosnia and Herzegovina</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="52">
+    <iid>52</iid>
+    <lid>3</lid>
+    <code>Botswana</code>
+    <short_name>Botswana</short_name>
+    <long_name></long_name>
+    <desc>Botswana</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="53">
+    <iid>53</iid>
+    <lid>3</lid>
+    <code>Bouvet Island</code>
+    <short_name>Bouvet Island</short_name>
+    <long_name></long_name>
+    <desc>Bouvet Island</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="54">
+    <iid>54</iid>
+    <lid>3</lid>
+    <code>Brazil</code>
+    <short_name>Brazil</short_name>
+    <long_name></long_name>
+    <desc>Brazil</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="55">
+    <iid>55</iid>
+    <lid>3</lid>
+    <code>British Indian Ocean Territory</code>
+    <short_name>British Indian Ocean Territory</short_name>
+    <long_name></long_name>
+    <desc>British Indian Ocean Territory</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="56">
+    <iid>56</iid>
+    <lid>3</lid>
+    <code>Brunei</code>
+    <short_name>Brunei</short_name>
+    <long_name></long_name>
+    <desc>Brunei</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="57">
+    <iid>57</iid>
+    <lid>3</lid>
+    <code>Bulgaria</code>
+    <short_name>Bulgaria</short_name>
+    <long_name></long_name>
+    <desc>Bulgaria</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="58">
+    <iid>58</iid>
+    <lid>3</lid>
+    <code>Burkina Faso</code>
+    <short_name>Burkina Faso</short_name>
+    <long_name></long_name>
+    <desc>Burkina Faso</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="59">
+    <iid>59</iid>
+    <lid>3</lid>
+    <code>Burundi</code>
+    <short_name>Burundi</short_name>
+    <long_name></long_name>
+    <desc>Burundi</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="60">
+    <iid>60</iid>
+    <lid>3</lid>
+    <code>Cambodia</code>
+    <short_name>Cambodia</short_name>
+    <long_name></long_name>
+    <desc>Cambodia</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="61">
+    <iid>61</iid>
+    <lid>3</lid>
+    <code>Cameroon</code>
+    <short_name>Cameroon</short_name>
+    <long_name></long_name>
+    <desc>Cameroon</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="62">
+    <iid>62</iid>
+    <lid>3</lid>
+    <code>Canada</code>
+    <short_name>Canada</short_name>
+    <long_name></long_name>
+    <desc>Canada</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="63">
+    <iid>63</iid>
+    <lid>3</lid>
+    <code>Cape Verde</code>
+    <short_name>Cape Verde</short_name>
+    <long_name></long_name>
+    <desc>Cape Verde</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="64">
+    <iid>64</iid>
+    <lid>3</lid>
+    <code>Cayman Islands</code>
+    <short_name>Cayman Islands</short_name>
+    <long_name></long_name>
+    <desc>Cayman Islands</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="65">
+    <iid>65</iid>
+    <lid>3</lid>
+    <code>Central African Republic</code>
+    <short_name>Central African Republic</short_name>
+    <long_name></long_name>
+    <desc>Central African Republic</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="66">
+    <iid>66</iid>
+    <lid>3</lid>
+    <code>Chad</code>
+    <short_name>Chad</short_name>
+    <long_name></long_name>
+    <desc>Chad</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="67">
+    <iid>67</iid>
+    <lid>3</lid>
+    <code>Chile</code>
+    <short_name>Chile</short_name>
+    <long_name></long_name>
+    <desc>Chile</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="68">
+    <iid>68</iid>
+    <lid>3</lid>
+    <code>China</code>
+    <short_name>China</short_name>
+    <long_name></long_name>
+    <desc>China</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="69">
+    <iid>69</iid>
+    <lid>3</lid>
+    <code>Christmas Island</code>
+    <short_name>Christmas Island</short_name>
+    <long_name></long_name>
+    <desc>Christmas Island</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="70">
+    <iid>70</iid>
+    <lid>3</lid>
+    <code>Cocos (Keeling) Islands</code>
+    <short_name>Cocos (Keeling) Islands</short_name>
+    <long_name></long_name>
+    <desc>Cocos (Keeling) Islands</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="71">
+    <iid>71</iid>
+    <lid>3</lid>
+    <code>Colombia</code>
+    <short_name>Colombia</short_name>
+    <long_name></long_name>
+    <desc>Colombia</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="72">
+    <iid>72</iid>
+    <lid>3</lid>
+    <code>Comoros</code>
+    <short_name>Comoros</short_name>
+    <long_name></long_name>
+    <desc>Comoros</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="73">
+    <iid>73</iid>
+    <lid>3</lid>
+    <code>Congo</code>
+    <short_name>Congo</short_name>
+    <long_name></long_name>
+    <desc>Congo</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="74">
+    <iid>74</iid>
+    <lid>3</lid>
+    <code>Cook Islands</code>
+    <short_name>Cook Islands</short_name>
+    <long_name></long_name>
+    <desc>Cook Islands</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="75">
+    <iid>75</iid>
+    <lid>3</lid>
+    <code>Costa Rica</code>
+    <short_name>Costa Rica</short_name>
+    <long_name></long_name>
+    <desc>Costa Rica</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="76">
+    <iid>76</iid>
+    <lid>3</lid>
+    <code>Côte d'Ivoire</code>
+    <short_name>Côte d'Ivoire</short_name>
+    <long_name></long_name>
+    <desc>Côte d'Ivoire</desc>
+    <order>0</order>
+  </xar_lists_items>
+  <xar_lists_items itemid="77">
+    <iid>77</iid>
+    <lid>3</lid>
+    <code>Croatia (Hrvatska)</code>
+    <short_name>Croatia (Hrvatska)</short_name>
+    <long_name></long_name>
+    <desc>Croatia (Hrvatska)</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="78">
+    <iid>78</iid>
+    <lid>3</lid>
+    <code>Cuba</code>
+    <short_name>Cuba</short_name>
+    <long_name></long_name>
+    <desc>Cuba</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="79">
+    <iid>79</iid>
+    <lid>3</lid>
+    <code>Cyprus</code>
+    <short_name>Cyprus</short_name>
+    <long_name></long_name>
+    <desc>Cyprus</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="80">
+    <iid>80</iid>
+    <lid>3</lid>
+    <code>Czech Republic</code>
+    <short_name>Czech Republic</short_name>
+    <long_name></long_name>
+    <desc>Czech Republic</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="81">
+    <iid>81</iid>
+    <lid>3</lid>
+    <code>Congo (DRC)</code>
+    <short_name>Congo (DRC)</short_name>
+    <long_name></long_name>
+    <desc>Congo (DRC)</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="82">
+    <iid>82</iid>
+    <lid>3</lid>
+    <code>Denmark</code>
+    <short_name>Denmark</short_name>
+    <long_name></long_name>
+    <desc>Denmark</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="83">
+    <iid>83</iid>
+    <lid>3</lid>
+    <code>Djibouti</code>
+    <short_name>Djibouti</short_name>
+    <long_name></long_name>
+    <desc>Djibouti</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="84">
+    <iid>84</iid>
+    <lid>3</lid>
+    <code>Dominica</code>
+    <short_name>Dominica</short_name>
+    <long_name></long_name>
+    <desc>Dominica</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="85">
+    <iid>85</iid>
+    <lid>3</lid>
+    <code>Dominican Republic</code>
+    <short_name>Dominican Republic</short_name>
+    <long_name></long_name>
+    <desc>Dominican Republic</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="86">
+    <iid>86</iid>
+    <lid>3</lid>
+    <code>East Timor</code>
+    <short_name>East Timor</short_name>
+    <long_name></long_name>
+    <desc>East Timor</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="87">
+    <iid>87</iid>
+    <lid>3</lid>
+    <code>Ecuador</code>
+    <short_name>Ecuador</short_name>
+    <long_name></long_name>
+    <desc>Ecuador</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="88">
+    <iid>88</iid>
+    <lid>3</lid>
+    <code>Egypt</code>
+    <short_name>Egypt</short_name>
+    <long_name></long_name>
+    <desc>Egypt</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="89">
+    <iid>89</iid>
+    <lid>3</lid>
+    <code>El Salvador</code>
+    <short_name>El Salvador</short_name>
+    <long_name></long_name>
+    <desc>El Salvador</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="90">
+    <iid>90</iid>
+    <lid>3</lid>
+    <code>Equatorial Guinea</code>
+    <short_name>Equatorial Guinea</short_name>
+    <long_name></long_name>
+    <desc>Equatorial Guinea</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="91">
+    <iid>91</iid>
+    <lid>3</lid>
+    <code>Eritrea</code>
+    <short_name>Eritrea</short_name>
+    <long_name></long_name>
+    <desc>Eritrea</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="92">
+    <iid>92</iid>
+    <lid>3</lid>
+    <code>Estonia</code>
+    <short_name>Estonia</short_name>
+    <long_name></long_name>
+    <desc>Estonia</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="93">
+    <iid>93</iid>
+    <lid>3</lid>
+    <code>Ethiopia</code>
+    <short_name>Ethiopia</short_name>
+    <long_name></long_name>
+    <desc>Ethiopia</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="94">
+    <iid>94</iid>
+    <lid>3</lid>
+    <code>Falkland Islands (Islas Malvinas)</code>
+    <short_name>Falkland Islands (Islas Malvinas)</short_name>
+    <long_name></long_name>
+    <desc>Falkland Islands (Islas Malvinas)</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="95">
+    <iid>95</iid>
+    <lid>3</lid>
+    <code>Faroe Islands</code>
+    <short_name>Faroe Islands</short_name>
+    <long_name></long_name>
+    <desc>Faroe Islands</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="96">
+    <iid>96</iid>
+    <lid>3</lid>
+    <code>Fiji Islands</code>
+    <short_name>Fiji Islands</short_name>
+    <long_name></long_name>
+    <desc>Fiji Islands</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="97">
+    <iid>97</iid>
+    <lid>3</lid>
+    <code>Finland</code>
+    <short_name>Finland</short_name>
+    <long_name></long_name>
+    <desc>Finland</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="98">
+    <iid>98</iid>
+    <lid>3</lid>
+    <code>France</code>
+    <short_name>France</short_name>
+    <long_name></long_name>
+    <desc>France</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="99">
+    <iid>99</iid>
+    <lid>3</lid>
+    <code>French Guiana</code>
+    <short_name>French Guiana</short_name>
+    <long_name></long_name>
+    <desc>French Guiana</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="100">
+    <iid>100</iid>
+    <lid>3</lid>
+    <code>French Polynesia</code>
+    <short_name>French Polynesia</short_name>
+    <long_name></long_name>
+    <desc>French Polynesia</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="101">
+    <iid>101</iid>
+    <lid>3</lid>
+    <code>French Southern and Antarctic Lands</code>
+    <short_name>French Southern and Antarctic Lands</short_name>
+    <long_name></long_name>
+    <desc>French Southern and Antarctic Lands</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="102">
+    <iid>102</iid>
+    <lid>3</lid>
+    <code>Gabon</code>
+    <short_name>Gabon</short_name>
+    <long_name></long_name>
+    <desc>Gabon</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="103">
+    <iid>103</iid>
+    <lid>3</lid>
+    <code>Gambia</code>
+    <short_name>Gambia</short_name>
+    <long_name></long_name>
+    <desc>Gambia</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="104">
+    <iid>104</iid>
+    <lid>3</lid>
+    <code>Georgia</code>
+    <short_name>Georgia</short_name>
+    <long_name></long_name>
+    <desc>Georgia</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="105">
+    <iid>105</iid>
+    <lid>3</lid>
+    <code>Germany</code>
+    <short_name>Germany</short_name>
+    <long_name></long_name>
+    <desc>Germany</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="106">
+    <iid>106</iid>
+    <lid>3</lid>
+    <code>Ghana</code>
+    <short_name>Ghana</short_name>
+    <long_name></long_name>
+    <desc>Ghana</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="107">
+    <iid>107</iid>
+    <lid>3</lid>
+    <code>Gibraltar</code>
+    <short_name>Gibraltar</short_name>
+    <long_name></long_name>
+    <desc>Gibraltar</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="108">
+    <iid>108</iid>
+    <lid>3</lid>
+    <code>Greece</code>
+    <short_name>Greece</short_name>
+    <long_name></long_name>
+    <desc>Greece</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="109">
+    <iid>109</iid>
+    <lid>3</lid>
+    <code>Greenland</code>
+    <short_name>Greenland</short_name>
+    <long_name></long_name>
+    <desc>Greenland</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="110">
+    <iid>110</iid>
+    <lid>3</lid>
+    <code>Grenada</code>
+    <short_name>Grenada</short_name>
+    <long_name></long_name>
+    <desc>Grenada</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="111">
+    <iid>111</iid>
+    <lid>3</lid>
+    <code>Guadeloupe</code>
+    <short_name>Guadeloupe</short_name>
+    <long_name></long_name>
+    <desc>Guadeloupe</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="112">
+    <iid>112</iid>
+    <lid>3</lid>
+    <code>Guam</code>
+    <short_name>Guam</short_name>
+    <long_name></long_name>
+    <desc>Guam</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="113">
+    <iid>113</iid>
+    <lid>3</lid>
+    <code>Guatemala</code>
+    <short_name>Guatemala</short_name>
+    <long_name></long_name>
+    <desc>Guatemala</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="114">
+    <iid>114</iid>
+    <lid>3</lid>
+    <code>Guinea</code>
+    <short_name>Guinea</short_name>
+    <long_name></long_name>
+    <desc>Guinea</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="115">
+    <iid>115</iid>
+    <lid>3</lid>
+    <code>Guinea-Bissau</code>
+    <short_name>Guinea-Bissau</short_name>
+    <long_name></long_name>
+    <desc>Guinea-Bissau</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="116">
+    <iid>116</iid>
+    <lid>3</lid>
+    <code>Guyana</code>
+    <short_name>Guyana</short_name>
+    <long_name></long_name>
+    <desc>Guyana</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="117">
+    <iid>117</iid>
+    <lid>3</lid>
+    <code>Haiti</code>
+    <short_name>Haiti</short_name>
+    <long_name></long_name>
+    <desc>Haiti</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="118">
+    <iid>118</iid>
+    <lid>3</lid>
+    <code>Heard Island and McDonald Islands</code>
+    <short_name>Heard Island and McDonald Islands</short_name>
+    <long_name></long_name>
+    <desc>Heard Island and McDonald Islands</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="119">
+    <iid>119</iid>
+    <lid>3</lid>
+    <code>Honduras</code>
+    <short_name>Honduras</short_name>
+    <long_name></long_name>
+    <desc>Honduras</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="120">
+    <iid>120</iid>
+    <lid>3</lid>
+    <code>Hong Kong SAR</code>
+    <short_name>Hong Kong SAR</short_name>
+    <long_name></long_name>
+    <desc>Hong Kong SAR</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="121">
+    <iid>121</iid>
+    <lid>3</lid>
+    <code>Hungary</code>
+    <short_name>Hungary</short_name>
+    <long_name></long_name>
+    <desc>Hungary</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="122">
+    <iid>122</iid>
+    <lid>3</lid>
+    <code>Iceland</code>
+    <short_name>Iceland</short_name>
+    <long_name></long_name>
+    <desc>Iceland</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="123">
+    <iid>123</iid>
+    <lid>3</lid>
+    <code>India</code>
+    <short_name>India</short_name>
+    <long_name></long_name>
+    <desc>India</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="124">
+    <iid>124</iid>
+    <lid>3</lid>
+    <code>Indonesia</code>
+    <short_name>Indonesia</short_name>
+    <long_name></long_name>
+    <desc>Indonesia</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="125">
+    <iid>125</iid>
+    <lid>3</lid>
+    <code>Iran</code>
+    <short_name>Iran</short_name>
+    <long_name></long_name>
+    <desc>Iran</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="126">
+    <iid>126</iid>
+    <lid>3</lid>
+    <code>Iraq</code>
+    <short_name>Iraq</short_name>
+    <long_name></long_name>
+    <desc>Iraq</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="127">
+    <iid>127</iid>
+    <lid>3</lid>
+    <code>Ireland</code>
+    <short_name>Ireland</short_name>
+    <long_name></long_name>
+    <desc>Ireland</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="128">
+    <iid>128</iid>
+    <lid>3</lid>
+    <code>Israel</code>
+    <short_name>Israel</short_name>
+    <long_name></long_name>
+    <desc>Israel</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="129">
+    <iid>129</iid>
+    <lid>3</lid>
+    <code>Italy</code>
+    <short_name>Italy</short_name>
+    <long_name></long_name>
+    <desc>Italy</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="130">
+    <iid>130</iid>
+    <lid>3</lid>
+    <code>Jamaica</code>
+    <short_name>Jamaica</short_name>
+    <long_name></long_name>
+    <desc>Jamaica</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="131">
+    <iid>131</iid>
+    <lid>3</lid>
+    <code>Japan</code>
+    <short_name>Japan</short_name>
+    <long_name></long_name>
+    <desc>Japan</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="132">
+    <iid>132</iid>
+    <lid>3</lid>
+    <code>Jordan</code>
+    <short_name>Jordan</short_name>
+    <long_name></long_name>
+    <desc>Jordan</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="133">
+    <iid>133</iid>
+    <lid>3</lid>
+    <code>Kazakhstan</code>
+    <short_name>Kazakhstan</short_name>
+    <long_name></long_name>
+    <desc>Kazakhstan</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="134">
+    <iid>134</iid>
+    <lid>3</lid>
+    <code>Kenya</code>
+    <short_name>Kenya</short_name>
+    <long_name></long_name>
+    <desc>Kenya</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="135">
+    <iid>135</iid>
+    <lid>3</lid>
+    <code>Kiribati</code>
+    <short_name>Kiribati</short_name>
+    <long_name></long_name>
+    <desc>Kiribati</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="136">
+    <iid>136</iid>
+    <lid>3</lid>
+    <code>Korea</code>
+    <short_name>Korea</short_name>
+    <long_name></long_name>
+    <desc>Korea</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="137">
+    <iid>137</iid>
+    <lid>3</lid>
+    <code>Kuwait</code>
+    <short_name>Kuwait</short_name>
+    <long_name></long_name>
+    <desc>Kuwait</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="138">
+    <iid>138</iid>
+    <lid>3</lid>
+    <code>Kyrgyzstan</code>
+    <short_name>Kyrgyzstan</short_name>
+    <long_name></long_name>
+    <desc>Kyrgyzstan</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="139">
+    <iid>139</iid>
+    <lid>3</lid>
+    <code>Laos</code>
+    <short_name>Laos</short_name>
+    <long_name></long_name>
+    <desc>Laos</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="140">
+    <iid>140</iid>
+    <lid>3</lid>
+    <code>Latvia</code>
+    <short_name>Latvia</short_name>
+    <long_name></long_name>
+    <desc>Latvia</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="141">
+    <iid>141</iid>
+    <lid>3</lid>
+    <code>Lebanon</code>
+    <short_name>Lebanon</short_name>
+    <long_name></long_name>
+    <desc>Lebanon</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="142">
+    <iid>142</iid>
+    <lid>3</lid>
+    <code>Lesotho</code>
+    <short_name>Lesotho</short_name>
+    <long_name></long_name>
+    <desc>Lesotho</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="143">
+    <iid>143</iid>
+    <lid>3</lid>
+    <code>Liberia</code>
+    <short_name>Liberia</short_name>
+    <long_name></long_name>
+    <desc>Liberia</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="144">
+    <iid>144</iid>
+    <lid>3</lid>
+    <code>Libya</code>
+    <short_name>Libya</short_name>
+    <long_name></long_name>
+    <desc>Libya</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="145">
+    <iid>145</iid>
+    <lid>3</lid>
+    <code>Liechtenstein</code>
+    <short_name>Liechtenstein</short_name>
+    <long_name></long_name>
+    <desc>Liechtenstein</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="146">
+    <iid>146</iid>
+    <lid>3</lid>
+    <code>Lithuania</code>
+    <short_name>Lithuania</short_name>
+    <long_name></long_name>
+    <desc>Lithuania</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="147">
+    <iid>147</iid>
+    <lid>3</lid>
+    <code>Luxembourg</code>
+    <short_name>Luxembourg</short_name>
+    <long_name></long_name>
+    <desc>Luxembourg</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="148">
+    <iid>148</iid>
+    <lid>3</lid>
+    <code>Macao SAR</code>
+    <short_name>Macao SAR</short_name>
+    <long_name></long_name>
+    <desc>Macao SAR</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="149">
+    <iid>149</iid>
+    <lid>3</lid>
+    <code>Macedonia, Former Yugoslav Republic of</code>
+    <short_name>Macedonia, Former Yugoslav Republic of</short_name>
+    <long_name></long_name>
+    <desc>Macedonia, Former Yugoslav Republic of</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="150">
+    <iid>150</iid>
+    <lid>3</lid>
+    <code>Madagascar</code>
+    <short_name>Madagascar</short_name>
+    <long_name></long_name>
+    <desc>Madagascar</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="151">
+    <iid>151</iid>
+    <lid>3</lid>
+    <code>Malawi</code>
+    <short_name>Malawi</short_name>
+    <long_name></long_name>
+    <desc>Malawi</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="152">
+    <iid>152</iid>
+    <lid>3</lid>
+    <code>Malaysia</code>
+    <short_name>Malaysia</short_name>
+    <long_name></long_name>
+    <desc>Malaysia</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="153">
+    <iid>153</iid>
+    <lid>3</lid>
+    <code>Maldives</code>
+    <short_name>Maldives</short_name>
+    <long_name></long_name>
+    <desc>Maldives</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="154">
+    <iid>154</iid>
+    <lid>3</lid>
+    <code>Mali</code>
+    <short_name>Mali</short_name>
+    <long_name></long_name>
+    <desc>Mali</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="155">
+    <iid>155</iid>
+    <lid>3</lid>
+    <code>Malta</code>
+    <short_name>Malta</short_name>
+    <long_name></long_name>
+    <desc>Malta</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="156">
+    <iid>156</iid>
+    <lid>3</lid>
+    <code>Marshall Islands</code>
+    <short_name>Marshall Islands</short_name>
+    <long_name></long_name>
+    <desc>Marshall Islands</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="157">
+    <iid>157</iid>
+    <lid>3</lid>
+    <code>Martinique</code>
+    <short_name>Martinique</short_name>
+    <long_name></long_name>
+    <desc>Martinique</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="158">
+    <iid>158</iid>
+    <lid>3</lid>
+    <code>Mauritania</code>
+    <short_name>Mauritania</short_name>
+    <long_name></long_name>
+    <desc>Mauritania</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="159">
+    <iid>159</iid>
+    <lid>3</lid>
+    <code>Mauritius</code>
+    <short_name>Mauritius</short_name>
+    <long_name></long_name>
+    <desc>Mauritius</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="160">
+    <iid>160</iid>
+    <lid>3</lid>
+    <code>Mayotte</code>
+    <short_name>Mayotte</short_name>
+    <long_name></long_name>
+    <desc>Mayotte</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="161">
+    <iid>161</iid>
+    <lid>3</lid>
+    <code>Mexico</code>
+    <short_name>Mexico</short_name>
+    <long_name></long_name>
+    <desc>Mexico</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="162">
+    <iid>162</iid>
+    <lid>3</lid>
+    <code>Micronesia</code>
+    <short_name>Micronesia</short_name>
+    <long_name></long_name>
+    <desc>Micronesia</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="163">
+    <iid>163</iid>
+    <lid>3</lid>
+    <code>Moldova</code>
+    <short_name>Moldova</short_name>
+    <long_name></long_name>
+    <desc>Moldova</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="164">
+    <iid>164</iid>
+    <lid>3</lid>
+    <code>Monaco</code>
+    <short_name>Monaco</short_name>
+    <long_name></long_name>
+    <desc>Monaco</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="165">
+    <iid>165</iid>
+    <lid>3</lid>
+    <code>Mongolia</code>
+    <short_name>Mongolia</short_name>
+    <long_name></long_name>
+    <desc>Mongolia</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="166">
+    <iid>166</iid>
+    <lid>3</lid>
+    <code>Montserrat</code>
+    <short_name>Montserrat</short_name>
+    <long_name></long_name>
+    <desc>Montserrat</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="167">
+    <iid>167</iid>
+    <lid>3</lid>
+    <code>Morocco</code>
+    <short_name>Morocco</short_name>
+    <long_name></long_name>
+    <desc>Morocco</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="168">
+    <iid>168</iid>
+    <lid>3</lid>
+    <code>Mozambique</code>
+    <short_name>Mozambique</short_name>
+    <long_name></long_name>
+    <desc>Mozambique</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="169">
+    <iid>169</iid>
+    <lid>3</lid>
+    <code>Myanmar</code>
+    <short_name>Myanmar</short_name>
+    <long_name></long_name>
+    <desc>Myanmar</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="170">
+    <iid>170</iid>
+    <lid>3</lid>
+    <code>Namibia</code>
+    <short_name>Namibia</short_name>
+    <long_name></long_name>
+    <desc>Namibia</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="171">
+    <iid>171</iid>
+    <lid>3</lid>
+    <code>Nauru</code>
+    <short_name>Nauru</short_name>
+    <long_name></long_name>
+    <desc>Nauru</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="172">
+    <iid>172</iid>
+    <lid>3</lid>
+    <code>Nepal</code>
+    <short_name>Nepal</short_name>
+    <long_name></long_name>
+    <desc>Nepal</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="173">
+    <iid>173</iid>
+    <lid>3</lid>
+    <code>Netherlands</code>
+    <short_name>Netherlands</short_name>
+    <long_name></long_name>
+    <desc>Netherlands</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="174">
+    <iid>174</iid>
+    <lid>3</lid>
+    <code>Netherlands Antilles</code>
+    <short_name>Netherlands Antilles</short_name>
+    <long_name></long_name>
+    <desc>Netherlands Antilles</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="175">
+    <iid>175</iid>
+    <lid>3</lid>
+    <code>New Caledonia</code>
+    <short_name>New Caledonia</short_name>
+    <long_name></long_name>
+    <desc>New Caledonia</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="176">
+    <iid>176</iid>
+    <lid>3</lid>
+    <code>New Zealand</code>
+    <short_name>New Zealand</short_name>
+    <long_name></long_name>
+    <desc>New Zealand</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="177">
+    <iid>177</iid>
+    <lid>3</lid>
+    <code>Nicaragua</code>
+    <short_name>Nicaragua</short_name>
+    <long_name></long_name>
+    <desc>Nicaragua</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="178">
+    <iid>178</iid>
+    <lid>3</lid>
+    <code>Niger</code>
+    <short_name>Niger</short_name>
+    <long_name></long_name>
+    <desc>Niger</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="179">
+    <iid>179</iid>
+    <lid>3</lid>
+    <code>Nigeria</code>
+    <short_name>Nigeria</short_name>
+    <long_name></long_name>
+    <desc>Nigeria</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="180">
+    <iid>180</iid>
+    <lid>3</lid>
+    <code>Niue</code>
+    <short_name>Niue</short_name>
+    <long_name></long_name>
+    <desc>Niue</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="181">
+    <iid>181</iid>
+    <lid>3</lid>
+    <code>Norfolk Island</code>
+    <short_name>Norfolk Island</short_name>
+    <long_name></long_name>
+    <desc>Norfolk Island</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="182">
+    <iid>182</iid>
+    <lid>3</lid>
+    <code>North Korea</code>
+    <short_name>North Korea</short_name>
+    <long_name></long_name>
+    <desc>North Korea</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="183">
+    <iid>183</iid>
+    <lid>3</lid>
+    <code>Northern Mariana Islands</code>
+    <short_name>Northern Mariana Islands</short_name>
+    <long_name></long_name>
+    <desc>Northern Mariana Islands</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="184">
+    <iid>184</iid>
+    <lid>3</lid>
+    <code>Norway</code>
+    <short_name>Norway</short_name>
+    <long_name></long_name>
+    <desc>Norway</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="185">
+    <iid>185</iid>
+    <lid>3</lid>
+    <code>Oman</code>
+    <short_name>Oman</short_name>
+    <long_name></long_name>
+    <desc>Oman</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="186">
+    <iid>186</iid>
+    <lid>3</lid>
+    <code>Pakistan</code>
+    <short_name>Pakistan</short_name>
+    <long_name></long_name>
+    <desc>Pakistan</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="187">
+    <iid>187</iid>
+    <lid>3</lid>
+    <code>Palau</code>
+    <short_name>Palau</short_name>
+    <long_name></long_name>
+    <desc>Palau</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="188">
+    <iid>188</iid>
+    <lid>3</lid>
+    <code>Panama</code>
+    <short_name>Panama</short_name>
+    <long_name></long_name>
+    <desc>Panama</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="189">
+    <iid>189</iid>
+    <lid>3</lid>
+    <code>Papua New Guinea</code>
+    <short_name>Papua New Guinea</short_name>
+    <long_name></long_name>
+    <desc>Papua New Guinea</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="190">
+    <iid>190</iid>
+    <lid>3</lid>
+    <code>Paraguay</code>
+    <short_name>Paraguay</short_name>
+    <long_name></long_name>
+    <desc>Paraguay</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="191">
+    <iid>191</iid>
+    <lid>3</lid>
+    <code>Peru</code>
+    <short_name>Peru</short_name>
+    <long_name></long_name>
+    <desc>Peru</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="192">
+    <iid>192</iid>
+    <lid>3</lid>
+    <code>Philippines</code>
+    <short_name>Philippines</short_name>
+    <long_name></long_name>
+    <desc>Philippines</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="193">
+    <iid>193</iid>
+    <lid>3</lid>
+    <code>Pitcairn Islands</code>
+    <short_name>Pitcairn Islands</short_name>
+    <long_name></long_name>
+    <desc>Pitcairn Islands</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="194">
+    <iid>194</iid>
+    <lid>3</lid>
+    <code>Poland</code>
+    <short_name>Poland</short_name>
+    <long_name></long_name>
+    <desc>Poland</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="195">
+    <iid>195</iid>
+    <lid>3</lid>
+    <code>Portugal</code>
+    <short_name>Portugal</short_name>
+    <long_name></long_name>
+    <desc>Portugal</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="196">
+    <iid>196</iid>
+    <lid>3</lid>
+    <code>Puerto Rico</code>
+    <short_name>Puerto Rico</short_name>
+    <long_name></long_name>
+    <desc>Puerto Rico</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="197">
+    <iid>197</iid>
+    <lid>3</lid>
+    <code>Qatar</code>
+    <short_name>Qatar</short_name>
+    <long_name></long_name>
+    <desc>Qatar</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="198">
+    <iid>198</iid>
+    <lid>3</lid>
+    <code>Reunion</code>
+    <short_name>Reunion</short_name>
+    <long_name></long_name>
+    <desc>Reunion</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="199">
+    <iid>199</iid>
+    <lid>3</lid>
+    <code>Romania</code>
+    <short_name>Romania</short_name>
+    <long_name></long_name>
+    <desc>Romania</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="200">
+    <iid>200</iid>
+    <lid>3</lid>
+    <code>Russia</code>
+    <short_name>Russia</short_name>
+    <long_name></long_name>
+    <desc>Russia</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="201">
+    <iid>201</iid>
+    <lid>3</lid>
+    <code>Rwanda</code>
+    <short_name>Rwanda</short_name>
+    <long_name></long_name>
+    <desc>Rwanda</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="202">
+    <iid>202</iid>
+    <lid>3</lid>
+    <code>Samoa</code>
+    <short_name>Samoa</short_name>
+    <long_name></long_name>
+    <desc>Samoa</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="203">
+    <iid>203</iid>
+    <lid>3</lid>
+    <code>San Marino</code>
+    <short_name>San Marino</short_name>
+    <long_name></long_name>
+    <desc>San Marino</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="204">
+    <iid>204</iid>
+    <lid>3</lid>
+    <code>São Tomé and Príncipe</code>
+    <short_name>São Tomé and Príncipe</short_name>
+    <long_name></long_name>
+    <desc>São Tomé and Príncipe</desc>
+    <order>0</order>
+  </xar_lists_items>
+  <xar_lists_items itemid="205">
+    <iid>205</iid>
+    <lid>3</lid>
+    <code>Saudi Arabia</code>
+    <short_name>Saudi Arabia</short_name>
+    <long_name></long_name>
+    <desc>Saudi Arabia</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="206">
+    <iid>206</iid>
+    <lid>3</lid>
+    <code>Senegal</code>
+    <short_name>Senegal</short_name>
+    <long_name></long_name>
+    <desc>Senegal</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="207">
+    <iid>207</iid>
+    <lid>3</lid>
+    <code>Serbia and Montenegro</code>
+    <short_name>Serbia and Montenegro</short_name>
+    <long_name></long_name>
+    <desc>Serbia and Montenegro</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="208">
+    <iid>208</iid>
+    <lid>3</lid>
+    <code>Seychelles</code>
+    <short_name>Seychelles</short_name>
+    <long_name></long_name>
+    <desc>Seychelles</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="209">
+    <iid>209</iid>
+    <lid>3</lid>
+    <code>Sierra Leone</code>
+    <short_name>Sierra Leone</short_name>
+    <long_name></long_name>
+    <desc>Sierra Leone</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="210">
+    <iid>210</iid>
+    <lid>3</lid>
+    <code>Singapore</code>
+    <short_name>Singapore</short_name>
+    <long_name></long_name>
+    <desc>Singapore</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="211">
+    <iid>211</iid>
+    <lid>3</lid>
+    <code>Slovakia</code>
+    <short_name>Slovakia</short_name>
+    <long_name></long_name>
+    <desc>Slovakia</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="212">
+    <iid>212</iid>
+    <lid>3</lid>
+    <code>Slovenia</code>
+    <short_name>Slovenia</short_name>
+    <long_name></long_name>
+    <desc>Slovenia</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="213">
+    <iid>213</iid>
+    <lid>3</lid>
+    <code>Solomon Islands</code>
+    <short_name>Solomon Islands</short_name>
+    <long_name></long_name>
+    <desc>Solomon Islands</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="214">
+    <iid>214</iid>
+    <lid>3</lid>
+    <code>Somalia</code>
+    <short_name>Somalia</short_name>
+    <long_name></long_name>
+    <desc>Somalia</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="215">
+    <iid>215</iid>
+    <lid>3</lid>
+    <code>South Africa</code>
+    <short_name>South Africa</short_name>
+    <long_name></long_name>
+    <desc>South Africa</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="216">
+    <iid>216</iid>
+    <lid>3</lid>
+    <code>South Georgia and the South Sandwich Islands</code>
+    <short_name>South Georgia and the South Sandwich Islands</short_name>
+    <long_name></long_name>
+    <desc>South Georgia and the South Sandwich Islands</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="217">
+    <iid>217</iid>
+    <lid>3</lid>
+    <code>Spain</code>
+    <short_name>Spain</short_name>
+    <long_name></long_name>
+    <desc>Spain</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="218">
+    <iid>218</iid>
+    <lid>3</lid>
+    <code>Sri Lanka</code>
+    <short_name>Sri Lanka</short_name>
+    <long_name></long_name>
+    <desc>Sri Lanka</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="219">
+    <iid>219</iid>
+    <lid>3</lid>
+    <code>St. Helena</code>
+    <short_name>St. Helena</short_name>
+    <long_name></long_name>
+    <desc>St. Helena</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="220">
+    <iid>220</iid>
+    <lid>3</lid>
+    <code>St. Kitts and Nevis</code>
+    <short_name>St. Kitts and Nevis</short_name>
+    <long_name></long_name>
+    <desc>St. Kitts and Nevis</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="221">
+    <iid>221</iid>
+    <lid>3</lid>
+    <code>St. Lucia</code>
+    <short_name>St. Lucia</short_name>
+    <long_name></long_name>
+    <desc>St. Lucia</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="222">
+    <iid>222</iid>
+    <lid>3</lid>
+    <code>St. Pierre and Miquelon</code>
+    <short_name>St. Pierre and Miquelon</short_name>
+    <long_name></long_name>
+    <desc>St. Pierre and Miquelon</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="223">
+    <iid>223</iid>
+    <lid>3</lid>
+    <code>St. Vincent and the Grenadines</code>
+    <short_name>St. Vincent and the Grenadines</short_name>
+    <long_name></long_name>
+    <desc>St. Vincent and the Grenadines</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="224">
+    <iid>224</iid>
+    <lid>3</lid>
+    <code>Sudan</code>
+    <short_name>Sudan</short_name>
+    <long_name></long_name>
+    <desc>Sudan</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="225">
+    <iid>225</iid>
+    <lid>3</lid>
+    <code>Suriname</code>
+    <short_name>Suriname</short_name>
+    <long_name></long_name>
+    <desc>Suriname</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="226">
+    <iid>226</iid>
+    <lid>3</lid>
+    <code>Svalbard and Jan Mayen</code>
+    <short_name>Svalbard and Jan Mayen</short_name>
+    <long_name></long_name>
+    <desc>Svalbard and Jan Mayen</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="227">
+    <iid>227</iid>
+    <lid>3</lid>
+    <code>Swaziland</code>
+    <short_name>Swaziland</short_name>
+    <long_name></long_name>
+    <desc>Swaziland</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="228">
+    <iid>228</iid>
+    <lid>3</lid>
+    <code>Sweden</code>
+    <short_name>Sweden</short_name>
+    <long_name></long_name>
+    <desc>Sweden</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="229">
+    <iid>229</iid>
+    <lid>3</lid>
+    <code>Switzerland</code>
+    <short_name>Switzerland</short_name>
+    <long_name></long_name>
+    <desc>Switzerland</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="230">
+    <iid>230</iid>
+    <lid>3</lid>
+    <code>Syria</code>
+    <short_name>Syria</short_name>
+    <long_name></long_name>
+    <desc>Syria</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="231">
+    <iid>231</iid>
+    <lid>3</lid>
+    <code>Taiwan</code>
+    <short_name>Taiwan</short_name>
+    <long_name></long_name>
+    <desc>Taiwan</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="232">
+    <iid>232</iid>
+    <lid>3</lid>
+    <code>Tajikistan</code>
+    <short_name>Tajikistan</short_name>
+    <long_name></long_name>
+    <desc>Tajikistan</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="233">
+    <iid>233</iid>
+    <lid>3</lid>
+    <code>Tanzania</code>
+    <short_name>Tanzania</short_name>
+    <long_name></long_name>
+    <desc>Tanzania</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="234">
+    <iid>234</iid>
+    <lid>3</lid>
+    <code>Thailand</code>
+    <short_name>Thailand</short_name>
+    <long_name></long_name>
+    <desc>Thailand</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="235">
+    <iid>235</iid>
+    <lid>3</lid>
+    <code>Togo</code>
+    <short_name>Togo</short_name>
+    <long_name></long_name>
+    <desc>Togo</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="236">
+    <iid>236</iid>
+    <lid>3</lid>
+    <code>Tokelau</code>
+    <short_name>Tokelau</short_name>
+    <long_name></long_name>
+    <desc>Tokelau</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="237">
+    <iid>237</iid>
+    <lid>3</lid>
+    <code>Tonga</code>
+    <short_name>Tonga</short_name>
+    <long_name></long_name>
+    <desc>Tonga</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="238">
+    <iid>238</iid>
+    <lid>3</lid>
+    <code>Trinidad and Tobago</code>
+    <short_name>Trinidad and Tobago</short_name>
+    <long_name></long_name>
+    <desc>Trinidad and Tobago</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="239">
+    <iid>239</iid>
+    <lid>3</lid>
+    <code>Tunisia</code>
+    <short_name>Tunisia</short_name>
+    <long_name></long_name>
+    <desc>Tunisia</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="240">
+    <iid>240</iid>
+    <lid>3</lid>
+    <code>Turkey</code>
+    <short_name>Turkey</short_name>
+    <long_name></long_name>
+    <desc>Turkey</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="241">
+    <iid>241</iid>
+    <lid>3</lid>
+    <code>Turkmenistan</code>
+    <short_name>Turkmenistan</short_name>
+    <long_name></long_name>
+    <desc>Turkmenistan</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="242">
+    <iid>242</iid>
+    <lid>3</lid>
+    <code>Turks and Caicos Islands</code>
+    <short_name>Turks and Caicos Islands</short_name>
+    <long_name></long_name>
+    <desc>Turks and Caicos Islands</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="243">
+    <iid>243</iid>
+    <lid>3</lid>
+    <code>Tuvalu</code>
+    <short_name>Tuvalu</short_name>
+    <long_name></long_name>
+    <desc>Tuvalu</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="244">
+    <iid>244</iid>
+    <lid>3</lid>
+    <code>Uganda</code>
+    <short_name>Uganda</short_name>
+    <long_name></long_name>
+    <desc>Uganda</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="245">
+    <iid>245</iid>
+    <lid>3</lid>
+    <code>Ukraine</code>
+    <short_name>Ukraine</short_name>
+    <long_name></long_name>
+    <desc>Ukraine</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="246">
+    <iid>246</iid>
+    <lid>3</lid>
+    <code>United Arab Emirates</code>
+    <short_name>United Arab Emirates</short_name>
+    <long_name></long_name>
+    <desc>United Arab Emirates</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="247">
+    <iid>247</iid>
+    <lid>3</lid>
+    <code>United States</code>
+    <short_name>United States</short_name>
+    <long_name></long_name>
+    <desc>United States</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="248">
+    <iid>248</iid>
+    <lid>3</lid>
+    <code>United States Minor Outlying Islands</code>
+    <short_name>United States Minor Outlying Islands</short_name>
+    <long_name></long_name>
+    <desc>United States Minor Outlying Islands</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="249">
+    <iid>249</iid>
+    <lid>3</lid>
+    <code>Uruguay</code>
+    <short_name>Uruguay</short_name>
+    <long_name></long_name>
+    <desc>Uruguay</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="250">
+    <iid>250</iid>
+    <lid>3</lid>
+    <code>Uzbekistan</code>
+    <short_name>Uzbekistan</short_name>
+    <long_name></long_name>
+    <desc>Uzbekistan</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="251">
+    <iid>251</iid>
+    <lid>3</lid>
+    <code>Vanuatu</code>
+    <short_name>Vanuatu</short_name>
+    <long_name></long_name>
+    <desc>Vanuatu</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="252">
+    <iid>252</iid>
+    <lid>3</lid>
+    <code>Vatican City</code>
+    <short_name>Vatican City</short_name>
+    <long_name></long_name>
+    <desc>Vatican City</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="253">
+    <iid>253</iid>
+    <lid>3</lid>
+    <code>Venezuela</code>
+    <short_name>Venezuela</short_name>
+    <long_name></long_name>
+    <desc>Venezuela</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="254">
+    <iid>254</iid>
+    <lid>3</lid>
+    <code>Viet Nam</code>
+    <short_name>Viet Nam</short_name>
+    <long_name></long_name>
+    <desc>Viet Nam</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="255">
+    <iid>255</iid>
+    <lid>3</lid>
+    <code>Virgin Islands (British)</code>
+    <short_name>Virgin Islands (British)</short_name>
+    <long_name></long_name>
+    <desc>Virgin Islands (British)</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="256">
+    <iid>256</iid>
+    <lid>3</lid>
+    <code>Virgin Islands</code>
+    <short_name>Virgin Islands</short_name>
+    <long_name></long_name>
+    <desc>Virgin Islands</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="257">
+    <iid>257</iid>
+    <lid>3</lid>
+    <code>Wallis and Futuna</code>
+    <short_name>Wallis and Futuna</short_name>
+    <long_name></long_name>
+    <desc>Wallis and Futuna</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="258">
+    <iid>258</iid>
+    <lid>3</lid>
+    <code>Yemen</code>
+    <short_name>Yemen</short_name>
+    <long_name></long_name>
+    <desc>Yemen</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="259">
+    <iid>259</iid>
+    <lid>3</lid>
+    <code>Zambia</code>
+    <short_name>Zambia</short_name>
+    <long_name></long_name>
+    <desc>Zambia</desc>
+    <order></order>
+  </xar_lists_items>
+  <xar_lists_items itemid="260">
+    <iid>260</iid>
+    <lid>3</lid>
+    <code>Zimbabwe</code>
+    <short_name>Zimbabwe</short_name>
+    <long_name></long_name>
+    <desc>Zimbabwe</desc>
+    <order></order>
+  </xar_lists_items>
+</items>

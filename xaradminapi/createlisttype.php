@@ -1,6 +1,6 @@
 <?php
 /**
- * Update an autolink
+ * Create a list type
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 The Digital Development Foundation
@@ -11,7 +11,7 @@
  */
  
 /**
- * update an autolink
+ * Create a list type
  * @param $args['lid'] the ID of the link
  * @param $args['keyword'] the new keyword of the link (optional)
  * @param $args['title'] the new title of the link (optional)

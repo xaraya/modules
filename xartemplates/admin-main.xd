@@ -1,0 +1,96 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<!-- This is a standard template for the module overview  -->
+<!-- Each Module Should have an overview explaining exactly what it does, and giving an overview of the blocks and hooks that it includes or accepts. -->
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Lists Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+<!--    <img src="modules/adminpanels/xarimages/admin.gif" class="xar-module-icon" alt="official icon" width="96" height="96" /> -->
+
+    <h2><xar:mlstring>Overview</xar:mlstring></h2>
+
+    <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+    <p>
+        <em><xar:mlstring>Lists is a module that can hold lists of items.</xar:mlstring></em>
+        <xar:mlstring>It is currently responsible for accomplishing the following tasks:</xar:mlstring>
+    </p>
+    <ol>
+        <li><xar:mlstring>Allow for the input of user defined lists of items.</xar:mlstring></li>
+        <li><xar:mlstring>Interact with the surveys module.</xar:mlstring></li>
+
+    </ol>
+
+    <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
+    <p>
+        <xar:mlstring>This module is packed with two example lists: one of countries, and another one of years.</xar:mlstring>
+        
+    </p>
+    <ol>
+        <li><xar:mlstring>Install the lists module.</xar:mlstring></li>
+        <li><xar:mlstring>Make sure the Dynamic Data module is present.</xar:mlstring></li>
+        <li><xar:mlstring> Go to the admin area of Dynamic Data</xar:mlstring></li>
+        <li><xar:mlstring> Go to import</xar:mlstring></li>
+        <li><xar:mlstring> Refresh the directory for modules/lists</xar:mlstring></li>
+        <li><xar:mlstring> Import the list types data with the option "preserve item ids"</xar:mlstring></li>
+        <li><xar:mlstring> Import the list items data.</xar:mlstring></li>
+        <li><xar:mlstring> Locate the lists in the lists module.</xar:mlstring></li>
+    </ol>
+
+    <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
+    <ul>
+        <li><xar:mlstring>None</xar:mlstring></li>
+
+    </ul>
+
+    <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
+    <ul>
+        <li><xar:mlstring>None</xar:mlstring></li>
+
+    </ul>
+
+    <h3><xar:mlstring>Included Dynamic Data Properties</xar:mlstring></h3>
+    <ul>
+        <li><xar:mlstring>None</xar:mlstring></li>
+
+    </ul>
+     <h3><xar:mlstring>Privilege Masks [TODO]</xar:mlstring></h3>
+
+    <p><xar:mlstring>You can set privileges for this module based on the following included masks:</xar:mlstring></p>
+        <ul>
+            <li><xar:mlstring>ReadExampleBlock: allows site visitors to read the example blocks</xar:mlstring></li>
+            <li><xar:mlstring>ViewExample: allows overview of example items</xar:mlstring></li>
+             <li><xar:mlstring>ReadExample: allows reading of fully displayed example items</xar:mlstring></li>
+            <li><xar:mlstring>EditExample: permits editing of an example item</xar:mlstring></li>
+            <li><xar:mlstring>AddExample: permits addition and editing of an example item</xar:mlstring></li>
+            <li><xar:mlstring>DeleteExample: allows deletion, additiona and editing of an example item</xar:mlstring></li>
+            <li><xar:mlstring>AdminExample: permits access to administrate the example module</xar:mlstring></li>
+
+        </ul>
+    <p><xar:mlstring>Note that Comment level mask is not provided in this example as there is no user submission process for Example items.
+       In other modules, Comment level would usually allow a site visitor to submit an item for approval prior to 'publication' on the site.
+       See the documentation for further information on privileges, masks and configuring them in your system.</xar:mlstring></p>
+    <h3>
+        <xar:mlstring>For Developers</xar:mlstring>
+    </h3>
+    <p>
+        <xar:mlstring>Please see the documentation on module development and the </xar:mlstring><a href="http://xaraya.com/documentation/rfcs/"><xar:mlstring>RFC library</xar:mlstring></a><xar:mlstring> for further information on Module development.</xar:mlstring>
+    </p>
+
+    <h3>
+        <xar:mlstring>Further Information</xar:mlstring>
+    </h3>
+    <p>
+        <xar:mlstring>Further information on the Example module can be found at</xar:mlstring>
+    </p>
+       <ul>
+              <li><xar:mlstring>Example Extension page at</xar:mlstring> <a title="#xarML('Example Module - Xaraya Extension 36')#" href="http://www.xaraya.com/index.php/release/36.html">Xaraya Extension and Releases</a>.
+              <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+              </li>
+              <li><xar:mlstring>Related tutorials and documentation on Example found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/example/" title="#xarML('Related documentation on Example')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+              </li>
+         </ul>
+         <p class="xar-sub">
+             <strong>&nbsp;<xar:mlstring>Lists Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 0.1.0&nbsp; 2005-10-07
+         </p>
+</div>
+
