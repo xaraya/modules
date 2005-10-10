@@ -38,7 +38,7 @@
       </tr>
     </table>
     <xar:else/>
-    <form method="post" action="#xarModURL('pubsub', 'admin', 'modifytemplates')#" method="post" enctype="application/x-www-form-urlencoded" >
+    <form method="post" action="#xarModURL('pubsub', 'admin', 'modifytemplates')#" enctype="application/x-www-form-urlencoded" >
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <input type="hidden" name="action" id="action" value="#$action#" />
         <input type="hidden" name="templateid" id="templateid" value="#$templateid#" />
@@ -50,7 +50,7 @@
                 <td valign="top"><input type="text" name="name" id="name" value="#$name#" /></td>
               </tr>
               <tr>
-                <td valign="top"><label for="template"><xar:mlstring>Template:</xar:mlstring></label></label></td>
+                <td valign="top"><label for="template"><xar:mlstring>Template:</xar:mlstring></label></td>
                 <td valign="top"><textarea name="template" id="template" rows="10" cols="60">#$template#</textarea></td>
               </tr>
             </table>

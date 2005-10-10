@@ -1,17 +1,4 @@
-<xar:comment>
-  File: $Id$
-
-  Pubsub Admin->ViewSubscribers Template
-
-  @package Xaraya eXtensible Management System
-  @copyright (C) 2002 by the Xaraya Development Team.
-  @license GPL <http://www.gnu.org/licenses/gpl.html>
-  @link http://www.xaraya.org
-
-  @subpackage Pubsub Module
-  @author Chris Dudley <miko@xaraya.com>
-  @author Garrett Hunter <garrett@blacktower.com>
-</xar:comment>
+<xar:comment>http://www.gnu.org/licenses/gpl.html</xar:comment>
 
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Publish / Subscribe Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
