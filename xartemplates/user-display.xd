@@ -29,7 +29,7 @@
             <!-- display depends on another variable specified by the function -->
 
             <xar:if condition="!empty($is_bold)">
-                <strong>#$name_value#</strong> <xar:mlstring>(in bold now)</xar:mlstring></td>
+                <strong>#$name_value#</strong> <xar:mlstring>(in bold now)</xar:mlstring>
             <xar:else />
                     #$name_value# <xar:mlstring>(not in bold now)</xar:mlstring>
             </xar:if>

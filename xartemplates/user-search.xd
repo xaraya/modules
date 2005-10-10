@@ -38,7 +38,7 @@
 </p>
 
 <p>
-    <xar:if condition="isset($name) && $name eq '1'">
+    <xar:if condition="isset($name) and $name eq '1'">
     <input type="checkbox" name="name" id="name" value="1" checked="checked" />
     <xar:else />
     <input type="checkbox" name="name" id="name" value="1" />
