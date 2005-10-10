@@ -29,10 +29,10 @@ window.open(urlGoto,windowName,'width='+widthPassed+',height='+heightPassed+',re
                 <xar:if condition="$publicationId eq 0">
                     <td>
                         <select name="publicationId" onChange="if(this.options[this.selectedIndex].value != 0) this.form.submit();" tabindex="1">
-                        <option value=0>Choose Publication</option>
+                        <option value="0">Choose Publication</option>
                             <xar:loop name="$publications">
                                 <xar:if condition="$publicationId eq $loop:item['id']">
-                                    <option name="pid" value="#$loop:item['id']#" selected>#$loop:item['title']#</option>
+                                    <option name="pid" value="#$loop:item['id']#" selected="selected">#$loop:item['title']#</option>
                                 <xar:else />
                                     <option name="pid" value="#$loop:item['id']#">#$loop:item['title']#</option>
                                 </xar:if>
@@ -55,15 +55,15 @@ window.open(urlGoto,windowName,'width='+widthPassed+',height='+heightPassed+',re
                     </td>
                     <td>
                         <xar:if condition="isSet($articletitle)">
-                            #$articletitle# <br>
+                            #$articletitle# <br/>
                             <a href="#xarModURL('newsletter', 'admin', 'newstory')#&amp;publicationId=#$publicationId#&amp;issueId=#$issueId#&amp;articleid=0" tabindex="2">None</a> - 
                             
                                 
-                            <A HREF="javascript:newwindow('#xarModURL('articles', 'user', 'display', array('aid' => $articleid))#?theme=print')" tabindex="3" >Preview</A> - 
+                            <a href="javascript:newwindow('#xarModURL('articles', 'user', 'display', array('aid' => $articleid))#?theme=print')" tabindex="3" >Preview</a> - 
                             <input type="hidden" name="articleid" id="articleid" value="#$articleid#" />   
                         </xar:if>
-                        <!--<A HREF="javascript:newwindow('#xarModURL('newsletter', 'admin', 'choosearticle')#&amp;publicationId=#$publicationId#&amp;issueId=#$issueId#','Choose Article','600','400')" >Choose</A>-->
-                        <A HREF="javascript:newwindow('#xarModURL('newsletter', 'admin', 'choosearticle')#&amp;publicationId=#$publicationId#&amp;issueId=#$issueId#')"  tabindex="4">Choose</A>
+                        <!--<a href="javascript:newwindow('#xarModURL('newsletter', 'admin', 'choosearticle')#&amp;publicationId=#$publicationId#&amp;issueId=#$issueId#','Choose Article','600','400')" >Choose</a>-->
+                        <a href="javascript:newwindow('#xarModURL('newsletter', 'admin', 'choosearticle')#&amp;publicationId=#$publicationId#&amp;issueId=#$issueId#')"  tabindex="4">Choose</a>
                         
                         
                     </td>
@@ -79,7 +79,7 @@ window.open(urlGoto,windowName,'width='+widthPassed+',height='+heightPassed+',re
                 <select name="ownerId" tabindex="5">
                     <xar:loop name="$owners">
                         <xar:if condition="$ownerId eq $loop:item['id']">
-                            <option name="uid" value="#$loop:item['id']#" selected>#$loop:item['name']#</option>
+                            <option name="uid" value="#$loop:item['id']#" selected="selected">#$loop:item['name']#</option>
                         <xar:else />
                             <option name="uid" value="#$loop:item['id']#">#$loop:item['name']#</option>
                         </xar:if>
@@ -99,7 +99,7 @@ window.open(urlGoto,windowName,'width='+widthPassed+',height='+heightPassed+',re
                         <select name="categoryId" tabindex="6">
                             <xar:loop name="$categories">
                                 <xar:if condition="!empty($categoryId) and $categoryId eq $loop:item['cid']">
-                                    <option name="cid" value="#$loop:item['cid']#" selected>#$loop:item['name']#</option>
+                                    <option name="cid" value="#$loop:item['cid']#" selected="selected">#$loop:item['name']#</option>
                                 <xar:else/>
                                     <option name="cid" value="#$loop:item['cid']#">#$loop:item['name']#</option>
                                 </xar:if>
@@ -211,7 +211,7 @@ window.open(urlGoto,windowName,'width='+widthPassed+',height='+heightPassed+',re
                         <input type="text" name="linkExpiration" id="linkExpiration" size="4" maxlength="4" tabindex="15" />
                     </xar:if>
                     &nbsp;<xar:mlstring>(0 = link never expires)</xar:mlstring>
-                <td>
+                </td>
             </tr>
             <tr>
                 <td valign="top">
@@ -238,7 +238,7 @@ window.open(urlGoto,windowName,'width='+widthPassed+',height='+heightPassed+',re
                         </select>
                         <br /><br />
                     </xar:if>
-                    <xar:mlstring>Add a new commentary source:</xar:mlstring></b>
+                    <b><xar:mlstring>Add a new commentary source:</xar:mlstring></b>
                     <br /><br />
 
                     <xar:if condition="!empty($fullTextLink)">
@@ -258,7 +258,7 @@ window.open(urlGoto,windowName,'width='+widthPassed+',height='+heightPassed+',re
                     <input type="submit" name="submitValueAdd" value="#$addlabel#" tabindex="19" />
                 </td>
             </tr>
-        </form>
         </table>       
+        </form>
     </div>
 </div>     

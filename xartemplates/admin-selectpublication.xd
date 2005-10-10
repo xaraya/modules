@@ -11,7 +11,7 @@
                     </td>
                     <td>                       
                         <select name="publicationId" tabindex="1">
-                            <option value=0>New Publication</option>
+                            <option value="0">New Publication</option>
                             <xar:loop name="$publications">
                                 <option name="pid" value="#$loop:item['id']#">#$loop:item['title']#</option>
                             </xar:loop>

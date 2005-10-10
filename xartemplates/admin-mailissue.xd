@@ -10,7 +10,7 @@
         <div style="text-align: left;margin: auto;">
             <table width="100%" border="0" cellspacing="0" cellpadding="4">
                 <tr>
-                    <td colspan=2>
+                    <td colspan="2">
                         <b><xar:mlstring>Publication Results</xar:mlstring></b>
                     </td>
                 </tr>
@@ -44,13 +44,13 @@
                 <br />
                 <xar:if condition="$issueCounts['total'] != 0">
                     <tr>
-                        <td colspan=2>
+                        <td colspan="2">
                             <a href="#$viewsubscriptionurl#"><xar:mlstring>Click here to view subscriptions</xar:mlstring></a>
                         </td>
                     </tr>
                 <xar:else />
                     <tr>
-                        <td colspan=2>
+                        <td colspan="2">
                             <b><xar:mlstring>Nobody has subscribed to this publication!</xar:mlstring></b>
                         </td>
                     </tr>

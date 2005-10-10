@@ -22,7 +22,7 @@
                 </td>
                 <td>
                     <xar:if condition="$htmlmail eq 1">
-                        <input type="checkbox" name="htmlmail" id="htmlmail" value="1" checked />
+                        <input type="checkbox" name="htmlmail" id="htmlmail" value="1" checked="checked" />
                     <xar:else />
                         <input type="checkbox" name="htmlmail" id="htmlmail" value="1" />
                     </xar:if>
@@ -46,7 +46,7 @@
                     </td>
                     <td align="left" valign="center">
                         <xar:if condition="$loop:item['checked'] eq true">
-                            <input type="checkbox" name="pids[]" id="pids[]" value="#$loop:item['id']#" checked />
+                            <input type="checkbox" name="pids[]" id="pids[]" value="#$loop:item['id']#" checked="checked" />
                         <xar:else />
                             <input type="checkbox" name="pids[]" id="pids[]" value="#$loop:item['id']#" />
                         </xar:if>

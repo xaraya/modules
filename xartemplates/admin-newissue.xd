@@ -23,10 +23,10 @@
                 <xar:if condition="$publicationId eq 0">
                     <td>
                         <select name="publication" onChange="if(this.options[this.selectedIndex].value != 0) this.form.submit();" tabindex="1">
-                        <option value=0>Choose Publication</option>
+                        <option value="0">Choose Publication</option>
                             <xar:loop name="$publications">
                                 <xar:if condition="$publicationId eq $loop:item['id']">
-                                    <option name="id" value="#$loop:item['id']#" selected>#$loop:item['title']#</option>
+                                    <option name="id" value="#$loop:item['id']#" selected="selected">#$loop:item['title']#</option>
                                 <xar:else />
                                     <option name="id" value="#$loop:item['id']#">#$loop:item['title']#</option>
                                 </xar:if>
@@ -47,7 +47,7 @@
                     <select name="ownerId" tabindex="2">
                         <xar:loop name="$owners">
                             <xar:if condition="$loggeduser['uid'] eq $loop:item['id']">
-                                <option name="id" value="#$loop:item['id']#" selected>#$loop:item['name']#</option>
+                                <option name="id" value="#$loop:item['id']#" selected="selected">#$loop:item['name']#</option>
                             <xar:else />
                                 <option name="id" value="#$loop:item['id']#">#$loop:item['name']#</option>
                             </xar:if>
@@ -81,7 +81,7 @@
                 </td>
                 <td>
                     <xar:if condition="$externalvalue eq 1">
-                        <input type="checkbox" name="external" value="1" checked tabindex="6" />
+                        <input type="checkbox" name="external" value="1" checked="checked" tabindex="6" />
                     <xar:else />
                         <input type="checkbox" name="external" value="1" tabindex="9" />
                     </xar:if>

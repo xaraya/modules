@@ -1,133 +1,134 @@
 <html>
-    <head> 
-        <title>#$publication['title']# :: #$issue['title']#</title>
-    </head>
-    <body>
-        <table border="0" width="100%" cellpadding="5">
-            <xar:if condition="!empty($publication['logo'])">
-                <tr>
-                    <td colspan=2>
-                    <img src="#$publication['logo']#" alt="#$publication['title']#" align:left; vertical-align:top; border:0px" />
-                    </td>
-                </tr>
-            </xar:if>
-            <xar:if condition="!empty($publication['introduction'])">
-                <tr>
-                    <td colspan=2>
-                        #$publication['introduction']#
-                    </td>
-                </tr>
-            </xar:if>
-            <xar:if condition="!empty($issue['editorNote'])">
-                <tr>
-                    <td colspan=2>
-                        <b>Editor's Note:</b>&nbsp;&nbsp;#$issue['editorNote']#
-                    </td>
-                </tr>
-            </xar:if>
-            <xar:if condition="!empty($issue['headlines']) and count($issue['headlines']) gt 0">
-                <tr>
-                    <td colspan=2>
-                    <xar:loop name="$issue['headlines']">
-                        <br /><b>#$loop:item['category']#&nbsp;Headlines</b>
-                        <xar:loop name="$loop:item['stories']">
-
-                            <xar:comment>
-                                this if statement checks to see if there is an article in use.  If there is AND the article
-                                has a title, then it will use it.  If not, it will default to the newsletter story title
-                            </xar:comment>
-                            <xar:if condition="!empty($loop:item['article']['title'])">
-                                #$loop:item['article']['title']#
-                            <xar:else/>
-                               #$loop:item['title']#
-                            </xar:if>
-                            
-                        </xar:loop>
-                        <br />
-                    </xar:loop>
-                    </td>
-                </tr>
-            </xar:if>
-            <tr>
-                <td colspan=2>
-                <p>
+  <head> 
+    <title>#$publication['title']# :: #$issue['title']#</title>
+  </head>
+  <body>
+    <table border="0" width="100%" cellpadding="5">
+      <xar:if condition="!empty($publication['logo'])">
+        <tr>
+          <td colspan="2">
+            <img src="#$publication['logo']#" alt="#$publication['title']#" style="align:left; vertical-align:top; border:0px" />
+          </td>
+        </tr>
+      </xar:if>
+      <xar:if condition="!empty($publication['introduction'])">
+        <tr>
+          <td colspan="2">
+            #$publication['introduction']#
+          </td>
+        </tr>
+      </xar:if>
+      <xar:if condition="!empty($issue['editorNote'])">
+        <tr>
+          <td colspan="2">
+            <b>Editor's Note:</b>&nbsp;&nbsp;#$issue['editorNote']#
+          </td>
+        </tr>
+      </xar:if>
+      <xar:if condition="!empty($issue['headlines']) and count($issue['headlines']) gt 0">
+        <tr>
+          <td colspan="2">
+            <xar:loop name="$issue['headlines']">
+              <br /><b>#$loop:item['category']#&nbsp;Headlines</b>
+              <xar:loop name="$loop:item['stories']">
+                
+                <xar:comment>
+                  this if statement checks to see if there is an article in use.  If there is AND the article
+                  has a title, then it will use it.  If not, it will default to the newsletter story title
+                </xar:comment>
+                <xar:if condition="!empty($loop:item['article']['title'])">
+                  #$loop:item['article']['title']#
+                  <xar:else/>
+                  #$loop:item['title']#
+                </xar:if>
+                
+              </xar:loop>
+              <br />
+            </xar:loop>
+          </td>
+        </tr>
+      </xar:if>
+      <tr>
+        <td colspan="2">
+          <p>
+            ------------------------------------------------------------
+            <xar:loop name="$issue['headlines']">
+              <br />
+              <b>#$loop:item['category']#</b>
+              <br />
+              <xar:loop name="$loop:item['stories']">
+                <br />
+                
+                <xar:comment>
+                  this if statement checks to see if there is an article in use.  If there is AND the article
+                  has a title, then it will use it.  If not, it will default to the newsletter story title
+                </xar:comment>
+                <xar:if condition="!empty($loop:item['article']['title'])">
+                  #$loop:item['article']['title']#
+                  <xar:else/>
+                  #$loop:item['title']#
+                </xar:if>
+                
+                <br />(
+                #$loop:item['source']#,&nbsp;
+                <xar:if condition="$loop:item['storyDate']['timestamp'] != 0">
+                  #$loop:item['storyDate']['mon']#/#$loop:item['storyDate']['day']#/#$loop:item['storyDate']['year']#
+                  <xar:if condition="!empty($loop:item['altDate'])">
+                    #$loop:item['altDate']#
+                  </xar:if>
+                  <xar:else />
+                  #$loop:item['altDate']#
+                </xar:if>
+                )
+                    
+                <xar:comment>
+                  this if statement checks to see if there is an article in use.  If there is AND the article
+                  has a sumarry and a body, then it will use the summary first.  If not, it will default to the newsletter story title
+                </xar:comment>
+                <xar:if condition="!empty($loop:item['article']['summary'])">
+                  <p>#$loop:item['article']['summary']#</p>
+                  <xar:elseif  condition="!empty($loop:item['article']['body'])"/>
+                  <p>#$loop:item['article']['body']#</p>
+                  <xar:else/>
+                  <p>#$loop:item['content']#</p>
+                </xar:if>
+                
+                
+                <xar:if condition="!empty($loop:item['commentarySource']) and !empty($loop:item['commentary'])">
+                  #$loop:item['commentarySource']#:
+                  <br /><i>#$loop:item['commentary']#</i><br />
+                </xar:if>
+                <br />
+                <xar:if condition="$loop:item['linkExpired'] eq true">
+                  Full text (expired): #$loop:item['fullTextLink']#<br />
+                  <xar:else />
+                  Full text: <a href="#$loop:item['fullTextLink']#">#$loop:item['fullTextLink']#</a><br />
+                </xar:if>
+                <xar:if condition="$loop:item['registerLink'] eq 1">
+                  #$publication['linkRegistration']#
+                </xar:if>
+                <br />
                 ------------------------------------------------------------
-                <xar:loop name="$issue['headlines']">
-                    <br />
-                    <b>#$loop:item['category']#</b>
-                    <br />
-                    <xar:loop name="$loop:item['stories']">
-                        <br />
-                        
-                        <xar:comment>
-                            this if statement checks to see if there is an article in use.  If there is AND the article
-                            has a title, then it will use it.  If not, it will default to the newsletter story title
-                        </xar:comment>
-                        <xar:if condition="!empty($loop:item['article']['title'])">
-                            #$loop:item['article']['title']#
-                        <xar:else/>
-                           #$loop:item['title']#
-                        </xar:if>
-                        
-                        <br />(
-                        #$loop:item['source']#,&nbsp;
-                        <xar:if condition="$loop:item['storyDate']['timestamp'] != 0">
-                        #$loop:item['storyDate']['mon']#/#$loop:item['storyDate']['day']#/#$loop:item['storyDate']['year']#
-                            <xar:if condition="!empty($loop:item['altDate'])">
-                                #$loop:item['altDate']#
-                            </xar:if>
-                        <xar:else />
-                            #$loop:item['altDate']#
-                        </xar:if>
-                        )</p>
-
-                        <xar:comment>
-                            this if statement checks to see if there is an article in use.  If there is AND the article
-                            has a sumarry and a body, then it will use the summary first.  If not, it will default to the newsletter story title
-                        </xar:comment>
-                        <xar:if condition="!empty($loop:item['article']['summary'])">
-                            <p>#$loop:item['article']['summary']#</p>
-                        <xar:elseif  condition="!empty($loop:item['article']['body'])"/>
-                            <p>#$loop:item['article']['body']#</p>
-                        <xar:else/>
-                            <p>#$loop:item['content']#</p>
-                        </xar:if>
-                        
-                        
-                        <xar:if condition="!empty($loop:item['commentarySource']) and !empty($loop:item['commentary'])">
-                            #$loop:item['commentarySource']#:
-                            <br /><i>#$loop:item['commentary']#</i><br />
-                        </xar:if>
-                        <br />
-                        <xar:if condition="$loop:item['linkExpired'] eq true">
-                            Full text (expired): #$loop:item['fullTextLink']#<br />
-                        <xar:else />
-                            Full text: <a href="#$loop:item['fullTextLink']#">#$loop:item['fullTextLink']#</a><br />
-                        </xar:if>
-                        <xar:if condition="$loop:item['registerLink'] eq 1">
-                            #$publication['linkRegistration']#
-                        </xar:if>
-                        <br />
-                    ------------------------------------------------------------
-                    </xar:loop>
-                </xar:loop>
-                </td>
-            </tr>
-            <tr>
-                <td colspan=2>
-                    #$issue['ownerName']#
-                    <xar:if condition="!empty($issue['ownerSignature'])">
-                        <br />#$issue['ownerSignature']#
-                    </xar:if>
-                </td>
-            </tr>
-            <xar:if condition="!empty($publication['disclaimer'])">
-                <tr>
-                    <td colspan=2>
-                        <b>Disclaimer:  </b>#$publication['disclaimer']#
-                    </td>
-                </tr>
-            </xar:if>
-        </table>            
-    </body>
+              </xar:loop>
+            </xar:loop>
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          #$issue['ownerName']#
+          <xar:if condition="!empty($issue['ownerSignature'])">
+            <br />#$issue['ownerSignature']#
+          </xar:if>
+        </td>
+      </tr>
+      <xar:if condition="!empty($publication['disclaimer'])">
+        <tr>
+          <td colspan="2">
+            <b>Disclaimer:  </b>#$publication['disclaimer']#
+          </td>
+        </tr>
+      </xar:if>
+    </table>            
+  </body>
 </html>

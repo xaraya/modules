@@ -26,7 +26,12 @@
                             <xar:mlstring>Enable Bulk Email:</xar:mlstring>
                         </td>
                         <td align="left">
-                            <input type="checkbox" name="bulkemail" id="bulkemail" value="1" #$bulkemail# tabindex="1"/>
+                          <xar:if condition="$bulkemail == 'checked'">
+                            <input type="checkbox" name="bulkemail" id="bulkemail" value="1" checked="checked" tabindex="1"/>
+                            <xar:else/>
+                            <input type="checkbox" name="bulkemail" id="bulkemail" value="1" tabindex="1"/>
+                          </xar:if>
+
                             <br />
                         </td>
                     </tr>
@@ -42,7 +47,12 @@
                             <xar:mlstring>Send to active users:</xar:mlstring>
                         </td>
                         <td align="left">
-                            <input type="checkbox" name="activeusers" id="activeusers" value="1" #$activeuserschecked# tabindex="2"/>
+                          <xar:if condition="$activeuserschecked == 'checked'">
+                            <input type="checkbox" name="activeusers" id="activeusers" value="1" checked="checked" tabindex="2"/>
+                            <xar:else/>
+                            <input type="checkbox" name="bulkemail" id="bulkemail" value="1" tabindex="1"/>
+                          </xar:if>
+
                         </td>
                     </tr>
                     <tr>
@@ -56,7 +66,11 @@
                             <xar:mlstring>Enable Short URL Support:</xar:mlstring>
                         </td>
                         <td align="left">
-                            <input type="checkbox" name="shorturls" id="shorturls" value="1" #$shorturlschecked# tabindex="3"/>
+                          <xar:if condition="$shorurlschecked =='checked'">
+                            <input type="checkbox" name="shorturls" id="shorturls" value="1" checked="checked" tabindex="3"/>
+                            <xar:else/>
+                            <input type="checkbox" name="shorturls" id="shorturls" value="1" tabindex="3"/>
+                          </xar:if>
                         </td>
                     </tr>
                 </table>

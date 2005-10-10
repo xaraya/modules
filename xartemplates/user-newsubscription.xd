@@ -52,7 +52,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <input type="checkbox" name="htmlmail" id="htmlmail" value="1"checked />
+                            <input type="checkbox" name="htmlmail" id="htmlmail" value="1" checked="checked" />
                         </td>
                         <td>
                             HTML Mail

@@ -31,7 +31,7 @@
                 </td>
                 <td>
                     <xar:if condition="$subscription['htmlmail'] eq 1">
-                        <input type="checkbox" name="htmlmail" id="htmlmail" value="1" checked />
+                        <input type="checkbox" name="htmlmail" id="htmlmail" value="1" checked="checked" />
                     <xar:else />
                         <input type="checkbox" name="htmlmail" id="htmlmail" value="1" />
                     </xar:if>
@@ -54,7 +54,11 @@
                         <b>#$loop:item['title']#</b>
                     </td>
                     <td align="left" valign="center">
-                        <input type="checkbox" name="pids[]" id="pids[]" value="#$loop:item['id']#" #$loop:item['checked']# />
+                        <xar:if condition="$loop:item['checked'] == 'checked'">
+                          <input type="checkbox" name="pids[]" id="pids[]" value="#$loop:item['id']#" checked="checked" />
+                          <xar:else/>
+                          <input type="checkbox" name="pids[]" id="pids[]" value="#$loop:item['id']#" />
+                        </xar:if>
                     </td>
                 </tr>
             </xar:loop>

@@ -41,14 +41,14 @@
                             <xar:mlstring>Mail Options</xar:mlstring>
                         </td>
                         <td>
-                            <input type="checkbox" name="validate" id="validate" value="1" checked />
+                            <input type="checkbox" name="validate" id="validate" value="1" checked="checked" />
                             &nbsp;&nbsp;Validate Email Address (syntax check)
                         </td>
                     </tr>
                     <tr>
                         <td>&nbsp;</td>
                         <td>
-                            <input type="checkbox" name="htmlmail" id="htmlmail" value="1" checked />
+                            <input type="checkbox" name="htmlmail" id="htmlmail" value="1" checked="checked" />
                             &nbsp;&nbsp;HTML Mail
                         </td>
                     </tr>
