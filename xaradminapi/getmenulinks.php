@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id$
- *
  * Pass admin links to the admin menu
  *
  * @package modules

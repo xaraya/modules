@@ -1,16 +1,26 @@
 <?php
-// ----------------------------------------------------------------------
-// Copyright (C) 2004: Marc Lutolf (marcinmilan@xaraya.com)
-// Purpose of file:  Configuration functions for commerce
-// ----------------------------------------------------------------------
-//  based on:
-//  (c) 2003 XT-Commerce
-//  (c) 2000-2001 The Exchange Project  (earlier name of osCommerce)
-//  (c) 2002-2003 osCommerce (oscommerce.sql,v 1.83); www.oscommerce.com
-//  (c) 2003  nextcommerce (nextcommerce.sql,v 1.76 2003/08/25); www.nextcommerce.org
-// ----------------------------------------------------------------------
+/**
+ * Show products categories screen
+ *
+ * @package modules
+ * @copyright (C) 2004: Marc Lutolf (marcinmilan@xaraya.com)
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage products
+ * @author marcinmilan
+ *
+ *  based on:
+ * (c) 2003 XT-Commerce
+ * (c) 2000-2001 The Exchange Project  (earlier name of osCommerce)
+ * (c) 2002-2003 osCommerce (oscommerce.sql,v 1.83); www.oscommerce.com
+ * (c) 2003  nextcommerce (nextcommerce.sql,v 1.76 2003/08/25); www.nextcommerce.org
+ */
 
-function commerce_admin_categories_screen()
+/**
+ * Show products categories screen
+ */
+function products_admin_categories_screen()
 {
     include_once 'modules/commerce/xarclasses/object_info.php';
 
@@ -53,8 +63,8 @@ function commerce_admin_categories_screen()
                     $q2->addfield('categories_status',$categories_status);
 
                     $q->addtable($xartables['categories']);
-                    $q1->addtable($xartables['commerce_categories_description']);
-                    $q2->addtable($xartables['commerce_categories']);
+                    $q1->addtable($xartables['products_categories_description']);
+                    $q2->addtable($xartables['products_categories']);
                     if ($action == 'insert_category') {
                         $q->settype('INSERT');
                         $q1->settype('INSERT');
@@ -122,26 +132,26 @@ function commerce_admin_categories_screen()
                     }
 */
                 }
-                xarResponseRedirect(xarModURL('commerce','admin','categories', array('cPath' => $data['cPath'], 'cID' => $categories_id)));
+                xarResponseRedirect(xarModURL('products','admin','categories', array('cPath' => $data['cPath'], 'cID' => $categories_id)));
             }
     }
 
     $q = new xenQuery('SELECT');
-    $q->addtable($xartables['commerce_categories_description'],'cd');
+    $q->addtable($xartables['products_categories_description'],'cd');
     $q->addfield('cd.categories_name');
     $q->eq('cd.language_id',$data['langid']);
     $q->eq('cd.categories_id',$data['cID']);
     if(!$q->run()) return;
 
     if($q->row() == array()) {
-        $q1 = new xenQuery('INSERT',$xartables['commerce_categories_description']);
+        $q1 = new xenQuery('INSERT',$xartables['products_categories_description']);
         $q1->addfield('language_id',$data['langid']);
         $q1->addfield('categories_id',$data['cID']);
         if(!$q1->run()) return;
     }
 
     $q->addtable($xartables['categories'],'xc');
-    $q->addtable($xartables['commerce_categories'],'c');
+    $q->addtable($xartables['products_categories'],'c');
     $q->addfields(array('cd.categories_heading_title',
                         'cd.categories_description',
                         'cd.categories_meta_title',
@@ -183,11 +193,11 @@ function commerce_admin_categories_screen()
         $default_array[]=array('id' => 'default','text' => xarML('--No files available--'));
     }
     $data['producttemplatefiles'] = $default_array;
-    $dirname = 'modules/commerce/xartemplates/product_listing/';
+    $dirname = 'modules/products/xartemplates/product_listing/';
     if (isset($dirname) && $dir = opendir($dirname)){
         $files = array();
         while  (($file = readdir($dir)) !==false) {
-            if (is_file('modules/commerce/xartemplates/product_listing/'.$file) and ($file !="index.html")){
+            if (is_file('modules/products/xartemplates/product_listing/'.$file) and ($file !="index.html")){
             $files[]=array(
                         'id' => $file,
                         'text' => $file);
@@ -206,11 +216,11 @@ function commerce_admin_categories_screen()
         $default_array[]=array('id' => 'default','text' => xarML('--No files available--'));
     }
     $data['categorytemplatefiles'] = $default_array;
-    $dirname = 'modules/commerce/xartemplates/category_listing/';
+    $dirname = 'modules/products/xartemplates/category_listing/';
     if (isset($dirname) && $dir = opendir($dirname)){
         $files = array();
         while  (($file = readdir($dir)) !==false) {
-            if (is_file('modules/commerce/xartemplates/category_listing/'.$file) and ($file !="index.html")){
+            if (is_file('modules/products/xartemplates/category_listing/'.$file) and ($file !="index.html")){
             $files[]=array(
                         'id' => $file,
                         'text' => $file);

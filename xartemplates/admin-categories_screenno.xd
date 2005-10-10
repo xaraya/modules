@@ -25,11 +25,11 @@
 	<xar:loop name="$languages">
 		<div>
 			<xar:if condition="$loop:item['id'] eq $langid">
-				<a href="#xarModURL('commerce', 'admin', 'categories_screen', array('langid' => $loop:item['id']))#" class="active">#$loop:item['name']#
+				<a href="#xarModURL('products', 'admin', 'categories_screen', array('langid' => $loop:item['id']))#" class="active">#$loop:item['name']#
 					<img src="#xarTplGetImage($loop:item['directory'] .'/admin/' . $loop:item['image'])#" border="0" alt="#xarML($loop:item['name'])#">
 				</a>
 			<xar:else />
-				<a href="#xarModURL('commerce', 'admin', 'categories_screen', array('langid' => $loop:item['id']))#">#$loop:item['name']#
+				<a href="#xarModURL('products', 'admin', 'categories_screen', array('langid' => $loop:item['id']))#">#$loop:item['name']#
 					<img src="#xarTplGetImage($loop:item['directory'] .'/admin/' . $loop:item['image'])#" border="0" alt="#xarML($loop:item['name'])#">
 				</a>
 			</xar:if>

@@ -32,7 +32,7 @@ function commerce_admin_configuration()
         new xenQuery("DELETE FROM personal_offers_by_customers_status_" . $_GET['statusID'] . " WHERE products_id = '" . $_GET['pID'] . "' AND quantity = '" . $_GET['quantity'] . "'");
     break;
     }
-    xarRedirectResponse(xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $_GET['cPath'] . '&action=new_product&pID=' . $_GET['pID']));
+    xarRedirectResponse(xarModURL('products','admin',(FILENAME_CATEGORIES, 'cPath=' . $_GET['cPath'] . '&action=new_product&pID=' . $_GET['pID']));
   }
   if ($_GET['action']) {
     switch ($_GET['action']) {
@@ -46,7 +46,7 @@ function commerce_admin_configuration()
           }
         }
 
-        xarRedirectResponse(xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $_GET['cPath']));
+        xarRedirectResponse(xarModURL('products','admin',(FILENAME_CATEGORIES, 'cPath=' . $_GET['cPath']));
         break;
 
       case 'new_category':
@@ -108,7 +108,7 @@ function commerce_admin_configuration()
             new xenQuery("update " . TABLE_CATEGORIES . " set categories_image = '" . xtc_db_input($categories_image->filename) . "' where categories_id = '" . (int)$categories_id . "'");
             }
 
-          xarRedirectResponse(xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $_GET['cPath'] . '&cID=' . $categories_id));
+          xarRedirectResponse(xarModURL('products','admin',(FILENAME_CATEGORIES, 'cPath=' . $_GET['cPath'] . '&cID=' . $categories_id));
         }
         break;
 
@@ -159,7 +159,7 @@ function commerce_admin_configuration()
           }
         }
 
-        xarRedirectResponse(xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath));
+        xarRedirectResponse(xarModURL('products','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath));
         break;
       case 'delete_product_confirm':
         if ( ($_POST['products_id']) && (is_array($_POST['product_categories'])) ) {
@@ -180,7 +180,7 @@ function commerce_admin_configuration()
           }
         }
 
-        xarRedirectResponse(xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath));
+        xarRedirectResponse(xarModURL('products','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath));
         break;
       case 'move_category_confirm':
         if ( ($_POST['categories_id']) && ($_POST['categories_id'] != $_POST['move_to_category_id']) ) {
@@ -189,7 +189,7 @@ function commerce_admin_configuration()
           new xenQuery("update " . TABLE_CATEGORIES . " set parent_id = '" . xtc_db_input($new_parent_id) . "', last_modified = now() where categories_id = '" . xtc_db_input($categories_id) . "'");
         }
 
-        xarRedirectResponse(xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $new_parent_id . '&cID=' . $categories_id));
+        xarRedirectResponse(xarModURL('products','admin',(FILENAME_CATEGORIES, 'cPath=' . $new_parent_id . '&cID=' . $categories_id));
         break;
       case 'move_product_confirm':
         $products_id = xtc_db_prepare_input($_POST['products_id']);
@@ -201,12 +201,12 @@ function commerce_admin_configuration()
         $duplicate_check = $q->output();
         if ($duplicate_check['total'] < 1) new xenQuery("update " . TABLE_PRODUCTS_TO_CATEGORIES . " set categories_id = '" . xtc_db_input($new_parent_id) . "' where products_id = '" . xtc_db_input($products_id) . "' and categories_id = '" . $current_category_id . "'");
 
-        xarRedirectResponse(xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $new_parent_id . '&pID=' . $products_id));
+        xarRedirectResponse(xarModURL('products','admin',(FILENAME_CATEGORIES, 'cPath=' . $new_parent_id . '&pID=' . $products_id));
         break;
       case 'insert_product':
       case 'update_product':
 
-// START IN-SOLUTION Zurückberechung des Nettopreises falls der Bruttopreis übergeben wurde
+// START IN-SOLUTION Zurï¿½ckberechung des Nettopreises falls der Bruttopreis ï¿½bergeben wurde
         if (PRICE_IS_BRUTTO=='true' && $_POST['products_price']){
                 $tax_query = new xenQuery("select tax_rate from " . TABLE_TAX_RATES . " where tax_class_id = '".$_POST['products_tax_class_id']."' ");
       $q = new xenQuery();
@@ -347,7 +347,7 @@ function commerce_admin_configuration()
             }
           }
 
-          xarRedirectResponse(xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&pID=' . $products_id));
+          xarRedirectResponse(xarModURL('products','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&pID=' . $products_id));
         }
         break;
       case 'copy_to_confirm':
@@ -387,7 +387,7 @@ function commerce_admin_configuration()
           }
   }
 
-        xarRedirectResponse(xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $categories_id . '&pID=' . $products_id));
+        xarRedirectResponse(xarModURL('products','admin',(FILENAME_CATEGORIES, 'cPath=' . $categories_id . '&pID=' . $products_id));
         break;
     }
   }

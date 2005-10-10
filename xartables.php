@@ -1,72 +1,51 @@
 <?php
 /**
- * File: $Id$
+ * Return table names to Xaraya
  *
- * Purpose of file:  Table information for roles module
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @package modules
+ * @copyright (C) 2004: Marc Lutolf (marcinmilan@xaraya.com)
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
- * @subpackage Roles module
- * @author Marc Lutolf <marcinmilan@xaraya.com>
+ *
+ * @subpackage products
+ * @author marcinmilan
+ *
+ *  based on:
+ * (c) 2003 XT-Commerce
+ * (c) 2000-2001 The Exchange Project  (earlier name of osCommerce)
+ * (c) 2002-2003 osCommerce (oscommerce.sql,v 1.83); www.oscommerce.com
+ * (c) 2003  nextcommerce (nextcommerce.sql,v 1.76 2003/08/25); www.nextcommerce.org
  */
 
 /**
- * specifies module tables namees
+ * Return table names to Xaraya
  *
- * @author Marc Lutolf <marcinmilan@xaraya.com>
- * @access public
- * @param none $
- * @return $xartable array
- * @throws no exceptions
- * @todo nothing
+ * @return array xartables
  */
 function products_xartables()
 {
-// Initialise table array
-    $xartable = array();
+    $xartables = array();
+    $prefix = xarDBGetSiteTablePrefix();
 
-    $products_categories = xarDBGetSiteTablePrefix() . '_products_categories';
-    $products_categories_description = xarDBGetSiteTablePrefix() . '_products_categories_description';
-    $products_configuration = xarDBGetSiteTablePrefix() . '_products_configuration';
-    $products_configuration_group = xarDBGetSiteTablePrefix() . '_products_configuration_group';
-    $products_manufacturers = xarDBGetSiteTablePrefix() . '_products_manufacturers';
-    $products_manufacturers_info = xarDBGetSiteTablePrefix() . '_products_manufacturers_info';
-    $products_products = xarDBGetSiteTablePrefix() . '_products_products';
-    $products_products_attributes = xarDBGetSiteTablePrefix() . '_products_products_attributes';
-    $products_products_attributes_download = xarDBGetSiteTablePrefix() . '_products_products_attributes_download';
-    $products_products_description = xarDBGetSiteTablePrefix() . '_products_products_description';
-    $products_products_notifications = xarDBGetSiteTablePrefix() . '_products_products_notifications';
-    $products_products_options = xarDBGetSiteTablePrefix() . '_products_products_options';
-    $products_products_options_values = xarDBGetSiteTablePrefix() . '_products_products_options_values';
-    $products_products_options_values_to_products_options = xarDBGetSiteTablePrefix() . '_products_products_options_values_to_products_options';
-    $products_products_graduated_prices = xarDBGetSiteTablePrefix() . '_products_products_graduated_prices';
-    $products_products_to_categories = xarDBGetSiteTablePrefix() . '_products_products_to_categories';
-    $products_products_content = xarDBGetSiteTablePrefix() . '_products_products_content';
-    $products_content_manager = xarDBGetSiteTablePrefix() . '_products_content_manager';
+    $xartable['products_categories'] = $prefix . '_products_categories';
+    $xartable['products_categories_description'] = $prefix . '_products_categories_description';
+    $xartable['products_configuration'] = $prefix . '_products_configuration';
+    $xartable['products_configuration_group'] = $prefix . '_products_configuration_group';
+    $xartable['products_manufacturers'] = $prefix . '_products_manufacturers';
+    $xartable['products_manufacturers_info'] = $prefix . '_products_manufacturers_info';
+    $xartable['products_products'] = $prefix . '_products_products';
+    $xartable['products_products_attributes'] = $prefix . '_products_products_attributes';
+    $xartable['products_products_attributes_download'] = $prefix . '_products_products_attributes_download';
+    $xartable['products_products_description'] = $prefix . '_products_products_description';
+    $xartable['products_products_notifications'] = $prefix . '_products_products_notifications';
+    $xartable['products_products_options'] = $prefix . '_products_products_options';
+    $xartable['products_products_options_values'] = $prefix . '_products_products_options_values';
+    $xartable['products_products_options_values_to_products_options'] = $prefix . '_products_products_options_values_to_products_options';
+    $xartable['products_products_graduated_prices'] = $prefix . '_products_products_graduated_prices';
+    $xartable['products_products_to_categories'] = $prefix . '_products_products_to_categories';
+    $xartable['products_products_content'] = $prefix . '_products_products_content';
+    $xartable['products_content_manager'] = $prefix . '_products_content_manager';
 
-    $xartable['products_categories'] = $products_categories;
-    $xartable['products_categories_description'] = $products_categories_description;
-    $xartable['products_configuration'] = $products_configuration;
-    $xartable['products_configuration_group'] = $products_configuration_group;
-    $xartable['products_manufacturers'] = $products_manufacturers;
-    $xartable['products_manufacturers_info'] = $products_manufacturers_info;
-    $xartable['products_products'] = $products_products;
-    $xartable['products_products_attributes'] = $products_products_attributes;
-    $xartable['products_products_attributes_download'] = $products_products_attributes_download;
-    $xartable['products_products_description'] = $products_products_description;
-    $xartable['products_products_notifications'] = $products_products_notifications;
-    $xartable['products_products_options'] = $products_products_options;
-    $xartable['products_products_options_values'] = $products_products_options_values;
-    $xartable['products_products_options_values_to_products_options'] = $products_products_options_values_to_products_options;
-    $xartable['products_products_graduated_prices'] = $products_products_graduated_prices;
-    $xartable['products_products_to_categories'] = $products_products_to_categories;
-    $xartable['products_products_content'] = $products_products_content;
-    $xartable['products_content_manager'] = $products_content_manager;
-
-    // Return the table information
     return $xartable;
 }
-
 ?>
