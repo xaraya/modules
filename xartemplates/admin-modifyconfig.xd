@@ -28,7 +28,7 @@
     <xar:elseif condition="$modifysite eq 1" />
     <xar:set name="$btntxt"><xar:mlstring>Change Multisite Configuration</xar:mlstring></xar:set>
      <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-        <p><xar:mlstring><span style="color: red">THIS SITE IS ALREADY CONFIGURED AS THE MASTER MULTISITE SITE.</xar:mlstring></span></p>
+        <p><span style="color: red"><xar:mlstring>THIS SITE IS ALREADY CONFIGURED AS THE MASTER MULTISITE SITE.</xar:mlstring></span></p>
         <p><xar:mlstring>You should only make changes to this configuration, if</xar:mlstring>:</p>
         <ul>
 
