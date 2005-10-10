@@ -1,57 +1,57 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
 <div class="xar-mod-head">
-    <span class="xar-mod-title"><xar:mlstring>xarBB Forum Administration</xar:mlstring></span>
+  <span class="xar-mod-title"><xar:mlstring>xarBB Forum Administration</xar:mlstring></span>
 </div>
 <div class="xar-mod-body">
-    <h2><xar:mlstring>Order xarBB Forums</xar:mlstring></h2>
-
-    <table class="xar-fullwidth">
-        <tr>
-           <th>
-                <xar:mlstring>Forum Position</xar:mlstring>
-            </th>
-            <th>
-                <xar:mlstring>Forum ID</xar:mlstring>
-            </th>
-            <th>
-                <xar:mlstring>Forum Name</xar:mlstring>
-            </th>
-            <th>
-                <xar:mlstring>Move</xar:mlstring>
-            </th>
-        </tr>
-        <xar:foreach in="$items" value="$item">
-        <tr>
-            <td>
-             #$item.calcorder#
-            </td>
-            <td>
-                #$item.fid#
-            </td>
-            <td>
-                #$item.fname#
-            </td>
-            <td class="xar-align-center">
-               <xar:if condition="empty($item['upurl'])">
-                   #$item.upurl#
-               <xar:else />
-                <a href="#$item.upurl#"><img src="#xarTplGetImage('up.gif','xarbb')#" title="#xarML('Up')#"></a>
-                      </xar:if>
-
-               <xar:if condition="empty($item['downurl'])">
-                   #$item.downurl#
-               <xar:else />
-                   <a href="#$item.downurl#"><img src="#xarTplGetImage('down.gif','xarbb')#" title="#xarML('Down')#"></a>
-               </xar:if>
-            </td>
-        </tr>
-        </xar:foreach>
-    </table>
-
-    <div class="xar-align-center xar-padding-thick">
-        <!-- add the pager here -->
-        #$pager#
-    </div>
+  <h2><xar:mlstring>Order xarBB Forums</xar:mlstring></h2>
+  
+  <table class="xar-fullwidth">
+    <tr>
+      <th>
+        <xar:mlstring>Forum Position</xar:mlstring>
+      </th>
+      <th>
+        <xar:mlstring>Forum ID</xar:mlstring>
+      </th>
+      <th>
+        <xar:mlstring>Forum Name</xar:mlstring>
+      </th>
+      <th>
+        <xar:mlstring>Move</xar:mlstring>
+      </th>
+    </tr>
+    <xar:foreach in="$items" value="$item">
+      <tr>
+        <td>
+          #$item.calcorder#
+        </td>
+        <td>
+          #$item.fid#
+        </td>
+        <td>
+          #$item.fname#
+        </td>
+        <td class="xar-align-center">
+          <xar:if condition="empty($item['upurl'])">
+            #$item.upurl#
+            <xar:else />
+            <a href="#$item.upurl#"><img src="#xarTplGetImage('up.gif','xarbb')#" title="#xarML('Up')#"/></a>
+          </xar:if>
+          
+          <xar:if condition="empty($item['downurl'])">
+            #$item.downurl#
+            <xar:else />
+            <a href="#$item.downurl#"><img src="#xarTplGetImage('down.gif','xarbb')#" title="#xarML('Down')#"/></a>
+          </xar:if>
+        </td>
+      </tr>
+    </xar:foreach>
+  </table>
+  
+  <div class="xar-align-center xar-padding-thick">
+    <!-- add the pager here -->
+    #$pager#
+  </div>
 </div>
 

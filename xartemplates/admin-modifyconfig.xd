@@ -87,7 +87,6 @@
                         <xar:mlstring>
                             Forum Home Link Title
                         </xar:mlstring>
-                    </span>
                 </label>
                 <input type="text" name="xarbbtitle" id="xarbbtitle" value="#xarModGetVar('xarbb', 'xarbbtitle', 1)#" size="32" maxlength="100" />
             </div>
