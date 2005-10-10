@@ -137,20 +137,20 @@
                     </xar:set>
                     <xar:foreach in="$dbtables" value="$dbtable">
                         <xar:if condition="$i++ lt $number_of_cols">
-                            <td class="xar-norm-outline" style="text-align: left;margin-left:2px; margin-top:2px; margin-bottom:2px;width:4%;border-width: 0px 0px 1px 0px;border-style: dotted;">
-                                <input type="checkbox" name="#$checkboxname#" value="#$dbtable['tablename']#" checked />
-                                #$dbtable['tablename']# (#$dbtable['tablerecs']#)
-                            </td>
-                            <xar:else />
-                            <td class="xar-norm-outline" style="text-align: left;margin-left:2px; margin-top:2px; margin-bottom:2px;width:4%;border-width: 0px 0px 1px 0px;border-style: dotted;">
-                                <input type="checkbox" name="#$checkboxname#" value="#$dbtable['tablename']#" checked />
-                                #$dbtable['tablename']# (#$dbtable['tablerecs']#)
-                                <xar:set name="$i">
+                          <td class="xar-norm-outline" style="text-align: left;margin-left:2px; margin-top:2px; margin-bottom:2px;width:4%;border-width: 0px 0px 1px 0px;border-style: dotted;">
+                            <input type="checkbox" name="#$checkboxname#" value="#$dbtable['tablename']#" checked="checked" />
+                            #$dbtable['tablename']# (#$dbtable['tablerecs']#)
+                          </td>
+                        <xar:else />
+                          <td class="xar-norm-outline" style="text-align: left;margin-left:2px; margin-top:2px; margin-bottom:2px;width:4%;border-width: 0px 0px 1px 0px;border-style: dotted;">
+                            <input type="checkbox" name="#$checkboxname#" value="#$dbtable['tablename']#" checked="checked" />
+                            #$dbtable['tablename']# (#$dbtable['tablerecs']#)
+                            <xar:set name="$i">
                                     1
-                                </xar:set>
-                            </td>
-                        </tr>
-                        <tr>
+                            </xar:set>
+                          </td>
+                          </tr>
+                          <tr>
                         </xar:if>
                     </xar:foreach>
                 </tr>

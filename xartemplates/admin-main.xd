@@ -29,7 +29,7 @@
         <xar:mlstring>How to use it?</xar:mlstring>
     </h3>
         <p><xar:mlstring>SiteTools only provides Administration options requiring administration priviledges.</xar:mlstring></p>
-        <p><xar:mlstring>Start by checking settings in the SiteTools configuration options.</xar:mlstring>
+        <p><xar:mlstring>Start by checking settings in the SiteTools configuration options.</xar:mlstring></p>
         <p><xar:mlstring>Warning: Default cache and backup directory paths  should only be changed if alternative cache or backup paths have already been created
             and are writeable - chmod 777. At this time, backup paths are configurable, but cache paths are not configurable from within Xaraya administration.</xar:mlstring>
         </p>

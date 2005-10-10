@@ -54,9 +54,9 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="2"style="font-weight:bold;"><xar:mlstring>Cache file for:&nbsp;</xar:mlstring>#$templn#
+                <td colspan="2" style="font-weight:bold;"><xar:mlstring>Cache file for:&nbsp;</xar:mlstring>#$templn#
                 </td>
-            <tr>
+            </tr>
             <xar:foreach in="$items" key="$key" value="$line">
             <tr>
                 <td valign="top" style="text-align:left; font-size:smaller; color:red">
