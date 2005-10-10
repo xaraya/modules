@@ -52,9 +52,10 @@
             <div style="clear: both; padding-top: 10px;">
                 <p>
                     <input type="submit" value="#xarML('Update Newsgroup Selection')#" />
-<script language="JavaScript" type="text/javascript">
+<script language="JavaScript" type="text/javascript"><![CDATA[
     document.write("[ <a href=\"javascript:xar_base_checkall(document.forms['selectgroups'],true)\"><xar:mlstring>Check All</xar:mlstring></a> | ");
     document.write("<a href=\"javascript:xar_base_checkall(document.forms['selectgroups'],false)\"><xar:mlstring>Uncheck All</xar:mlstring></a> ]");
+]]>
 </script>
                 </p>
             </div>
