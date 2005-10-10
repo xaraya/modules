@@ -56,7 +56,6 @@
                     </tr>
                 </form>
                 </xar:foreach>
-                </tr>
             </table>
         </div>
         <xar:if condition="$message ne ''">
