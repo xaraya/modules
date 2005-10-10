@@ -29,10 +29,10 @@ function sitecontact_userapi_obfuemail($args)
 
     /* Initialise the array that will hold the returned data*/
     $maildata = array();
-	$encoded = bin2hex($email);
-	$encoded = chunk_split($encoded, 2, '%');
-	$encoded = '%' . substr($encoded, 0, strlen($encoded) - 1);
-	$maildata['encoded']=$encoded;
+    $encoded = bin2hex($email);
+    $encoded = chunk_split($encoded, 2, '%');
+    $encoded = '%' . substr($encoded, 0, strlen($encoded) - 1);
+    $maildata['encoded']=$encoded;
     if (!isset($text) || empty($text)) {
         $maildata['text']=xarML('email us');
     }else{
