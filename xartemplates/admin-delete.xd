@@ -1,7 +1,7 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>BBCode Administration</xar:mlstring></span></div>
 <div class="xar-mod-body" align="center">
 <h2><xar:mlstring>Delete BBCode</xar:mlstring></h2>
-<form method="post" action="#xarModURL('bbcode', 'admin', 'delete')#" method="post" enctype="application/x-www-form-urlencoded" >
+<form method="post" action="&xar-modurl-bbcode-admin-delete;" enctype="application/x-www-form-urlencoded" >
 <div>
     <input type="hidden" name="authid" value="#$authid#" />
     <input type="hidden" name="id" id="id" value="#$id#" />
