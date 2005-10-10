@@ -9,81 +9,94 @@
 //-->
 </script>
 
-<xar:if condition="xarTplAddStyleLink('censor', 'forms')"></xar:if>
-
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:mlstring>
-            Censor Administration
-        </xar:mlstring>
-        </span>
-        </div>
+        <xar:mlstring>Censor Administration</xar:mlstring>
+    </span>
+</div>
 <div class="xar-mod-body">
     <h2>
-        <xar:mlstring>
-            Add
-        </xar:mlstring>
+        <xar:mlstring>Add</xar:mlstring>
     </h2>
-    <form class="xar-formwidget" name="post" id="post" action="&xar-modurl-censor-admin-create;" method="post" onsubmit="return formCheck(this, fieldRequired, fieldDescription);" enctype="application/x-www-form-urlencoded">
-        <fieldset class="formelements xar-norm">
+    <form name="post" id="post" action="&xar-modurl-censor-admin-create;" method="post" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);" enctype="application/x-www-form-urlencoded">
+        <fieldset>
             <legend>
-                <strong>
-                    <xar:mlstring>
-                        Add censored word
-                    </xar:mlstring>
-                </strong>
+                    <xar:mlstring>Add censored word</xar:mlstring>
             </legend>
             <input type="hidden" name="authid" id="authid" value="#$authid#" />
-            <p class="param">
-                <label for="Keyword">
-                    <span class="help" title="#xarML('This is the keyword, that when matched will be replaced.')#">
-                        <xar:mlstring>
-                            Keyword
-                        </xar:mlstring>
-        </span>
+            <div class="xar-form-input-wrapper">
+                <label for="keyword" title="#xarML('This is the keyword, that when matched will be replaced.')#" class="xar-form-label">
+                    <xar:mlstring>Keyword</xar:mlstring>
                 </label>
-                <input type="text" name="keyword" id="keyword" value="" size="32" maxlength="255" />
-            </p>
-            <p class="param">
-                <label for="case">
-                    <span class="help" title="#xarML('Case Sensitive substitution.')#">
-                        <xar:mlstring>
-                            Case sensitive
-                        </xar:mlstring>
-        </span>
+                <input type="text" name="keyword" id="keyword" value="#$keyword#" size="32" maxlength="255" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="case" title="#xarML('Case Sensitive substitution.')#" class="xar-form-label">
+                    <xar:mlstring>Case sensitive</xar:mlstring>
                 </label>
-                <input type="checkbox" name="case" id="case" value="1" />
-            </p>
-            <p class="param">
-                <label for="matchcase">
-                    <span class="help" title="#xarML('Match Case substitution.')#">
-                        <xar:mlstring>
-                            Match Case
-                        </xar:mlstring>
-        </span>
+                 <xar:if condition="$case eq 1">
+                    <input type="checkbox" name="case" id="case" value="1" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="case" id="case" value="1" />
+                </xar:if>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="matchcase" title="#xarML('Match Case substitution.')#" class="xar-form-label">
+                    <xar:mlstring>Match Case</xar:mlstring>
                 </label>
-                <input type="radio" name="matchcase" id="matchcase" value="0" checked="checked" /><xar:mlstring>Exact</xar:mlstring>&nbsp;|&nbsp;
-                <input type="radio" name="matchcase" id="matchcase" value="1" /><xar:mlstring>Start with</xar:mlstring> ...&nbsp;|&nbsp;
-                <input type="radio" name="matchcase" id="matchcase" value="2" /><xar:mlstring>End with</xar:mlstring> ...&nbsp;|&nbsp;
-                        <input type="radio" name="matchcase" id="matchcase" value="3" /><xar:mlstring>Everywhere</xar:mlstring>
-            </p>
-            <p class="param">
-                <label for="locale">
-                    <span class="help" title="#xarML('This is the locale, for that when matched will be replaced.')#">
-                        <xar:mlstring>
-                            Locale
-                        </xar:mlstring>
-                </span>
+                <xar:if condition="$match_case eq 0">
+                    <input type="radio" name="matchcase" id="matchcase" value="0" checked="checked" /><xar:mlstring>Exact</xar:mlstring>&nbsp;|&nbsp;
+                <xar:else />
+                    <input type="radio" name="matchcase" id="matchcase" value="0" /><xar:mlstring>Exact</xar:mlstring>&nbsp;|&nbsp;
+                </xar:if>
+                <xar:if condition="$match_case eq 1">
+                    <input type="radio" name="matchcase" id="matchcase" value="1" checked="checked" /><xar:mlstring>Start with</xar:mlstring> ...&nbsp;|&nbsp;
+                <xar:else />
+                    <input type="radio" name="matchcase" id="matchcase" value="1" /><xar:mlstring>Start with</xar:mlstring> ...&nbsp;|&nbsp;
+                </xar:if>
+                <xar:if condition="$match_case eq 2">
+                    <input type="radio" name="matchcase" id="matchcase" value="2" checked="checked" /><xar:mlstring>End with</xar:mlstring> ...&nbsp;|&nbsp;
+                <xar:else />
+                    <input type="radio" name="matchcase" id="matchcase" value="2" /><xar:mlstring>End with</xar:mlstring> ...&nbsp;|&nbsp;
+                </xar:if>
+                <xar:if condition="$match_case eq 3">
+                    <input type="radio" name="matchcase" id="matchcase" value="3" checked="checked" /><xar:mlstring>Everywhere</xar:mlstring>&nbsp;|&nbsp;
+                <xar:else />
+                    <input type="radio" name="matchcase" id="matchcase" value="3" /><xar:mlstring>Everywhere</xar:mlstring>&nbsp;|&nbsp;
+                </xar:if>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="all" title="#xarML('Choose if this censored word is tipical of one or more avaiable locale.')#" class="xar-form-label">
+                    <xar:mlstring>Choose Locale</xar:mlstring>
                 </label>
-    <select multiple="multiple" size="5" name="locale[]" id="locale">
-    <xar:loop name="$locales">
-    <option value="#$loop:item['value']#">#$loop:item['name']#</option>
-    </xar:loop>
-                </select>
-            </p>
+                <select name="all" id="all" onchange="javascript:this.form.action = '&xar-modurl-censor-admin-new;';this.form.submit();">
+                     <xar:if condition="$all eq 1">
+                         <option value="1" selected="selected">#xarML('Yes')#</option>
+                     <xar:else />
+                         <option value="1">#xarML('Yes')#</option>
+                     </xar:if>
+                     <xar:if condition="$all eq 0">
+                         <option value="0" selected="selected">#xarML('No')#</option>
+                     <xar:else/>
+                         <option value="0">#xarML('No')#</option>
+                     </xar:if>
+                 </select>  
+            </div>
+            <xar:if condition="$all eq 1">
+                <div class="xar-form-input-wrapper">
+                    <label for="locale" title="#xarML('This is the locale, for that when matched will be replaced.')#" class="xar-form-label">
+                        <xar:mlstring>Locale</xar:mlstring>
+                    </label>
+                    <select multiple="multiple" size="5" name="locale[]" id="locale">
+                        <xar:loop name="$locales">
+                            <option value="#$loop:item['value']#">#$loop:item['name']#</option>
+                        </xar:loop>
+                    </select>
+                </div>
+            </xar:if>            
         </fieldset>
-        <p class="param">
+        <div class="xar-form-input-wrapper-after">
             <input type="submit" value="#xarML('Add')#" />
-        </p>
+        </div>
     </form>
-    </div>
+</div>

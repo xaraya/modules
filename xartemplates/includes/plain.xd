@@ -1,64 +1,52 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<table class="fullwidth">
-        <tr>
-        <th class="caption">
+<table class="xar-fullwidth">
+    <tr>
+        <th class="xar-align-center">
                 <xar:mlstring>Keyword</xar:mlstring>
             </th>
-        <th class="caption">
+        <th class="xar-align-center">
                 <xar:mlstring>Case Sensitive</xar:mlstring>
             </th>
-        <th class="caption">
+        <th class="xar-align-center">
                 <xar:mlstring>Match Case</xar:mlstring>
             </th>
-        <th class="caption">
+        <th class="xar-align-center">
                 <xar:mlstring>Locale</xar:mlstring>
             </th>
-        <th class="caption">
+        <th class="xar-align-center">
                 <xar:mlstring>Actions</xar:mlstring>
             </th>
-        </tr>
-        <xar:loop name="$items">
-             <tr>
+    </tr>
+    <xar:loop name="$items">
+        <tr>
             <td>
                 #$loop:item['keyword']#
             </td>
-            <td>
-            <xar:if condition="$loop:item['case_sensitive'] eq '1'">
-                    <xar:mlstring>
-                        Yes
-                    </xar:mlstring>
-            <xar:else />
-                    <xar:mlstring>
-                        No
-                    </xar:mlstring>
-            </xar:if>
+            <td class="xar-align-center">
+                <xar:if condition="$loop:item['case_sensitive'] eq '1'">
+                    <xar:mlstring>Yes</xar:mlstring>
+                <xar:else />
+                    <xar:mlstring>No</xar:mlstring>
+                </xar:if>
             </td>
-            <td>
-            <xar:if condition="$loop:item['match_case'] eq '0'">
-                    <xar:mlstring>
-                        Exact
-                    </xar:mlstring>
-            <xar:elseif condition="$loop:item['match_case'] eq '1'" />
-                    <xar:mlstring>
-                        Start
-                    </xar:mlstring>
-            <xar:elseif condition="$loop:item['match_case'] eq '2'" />
-                    <xar:mlstring>
-                        End
-                    </xar:mlstring>
-            <xar:else />
-                    <xar:mlstring>
-                        Everywhere
-                    </xar:mlstring>
-            </xar:if>
+            <td class="xar-align-center">
+                <xar:if condition="$loop:item['match_case'] eq '0'">
+                    <xar:mlstring>Exact</xar:mlstring>
+                <xar:elseif condition="$loop:item['match_case'] eq '1'" />
+                    <xar:mlstring>Start</xar:mlstring>
+                <xar:elseif condition="$loop:item['match_case'] eq '2'" />
+                    <xar:mlstring>End</xar:mlstring>
+                <xar:else />
+                    <xar:mlstring>Everywhere</xar:mlstring>
+                </xar:if>
             </td>
-            <td>
-            #$loop:item['locale']#
+            <td class="xar-align-center">
+                #$loop:item['locale']#
             </td>
-            <td>
+            <td class="xar-align-center">
                 <a href="#$loop:item['editurl']#"><xar:mlstring>Edit</xar:mlstring></a>  |
                 <a href="#$loop:item['deleteurl']#"><xar:mlstring>Delete</xar:mlstring></a>
             </td>
         </tr>
-        </xar:loop>
-    </table>
+    </xar:loop>
+</table>

@@ -20,8 +20,13 @@ function censor_admin_modify($args)
     // Get parameters
     if (!xarVarFetch('cid', 'int:1:', $cid)) return;
     if (!xarVarFetch('obid', 'str:1:', $obid, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('all', 'int:0:1', $all, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('keyword', 'str:1:', $newkey, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('case', 'isset', $newcase, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('matchcase', 'isset', $newmatchcase, NULL, XARVAR_NOT_REQUIRED)) return;
 
     extract($args);
+    $data = array();
 
     if (!empty($obid)) {
         $cid = $obid;
@@ -34,10 +39,31 @@ function censor_admin_modify($args)
 
     if ($data == false) return;
 
+    
     // Security Check
     if (!xarSecurityCheck('EditCensor')) return;
+    
     $data['locale'] = unserialize($data['locale']);
+    
+    if (isset($all)) {
+        $data['all']=$all;
+    } else {
+        if ($data['locale'][0] == 'ALL') {
+            $data['all'] = 0;
+        } else {
+            $data['all'] = 1;
+        }           
+    }
+    
     $data['authid'] = xarSecGenAuthKey();
+   
+  
+    if (isset($newkey)) {
+        $data['keyword'] = $newkey;
+        $data['case_sensitive'] = $newcase;
+        $data['match_case'] = $newmatchcase;
+        }
+    
     $allowedlocales = xarConfigGetVar('Site.MLS.AllowedLocales');
 
      foreach($allowedlocales as $loc) {

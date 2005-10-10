@@ -8,55 +8,36 @@
     var fieldDescription = Array("Replace String", "Items Per Page");
 //-->
 </script>
-
-<xar:if condition="xarTplAddStyleLink('censor', 'forms')"></xar:if>
-
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:mlstring>
-            Censor Administration
-        </xar:mlstring>
+        <xar:mlstring>Censor Administration</xar:mlstring>
     </span>
 </div>
 <div class="xar-mod-body">
     <h2>
-        <xar:mlstring>
-            Configure Censor
-        </xar:mlstring>
+        <xar:mlstring>Modify configuration</xar:mlstring>
     </h2>
-    <form class="xar-formwidget" name="post" id="post" action="&xar-modurl-censor-admin-updateconfig;" method="post" onsubmit="return formCheck(this, fieldRequired, fieldDescription);" enctype="application/x-www-form-urlencoded">
-        <fieldset class="formelements xar-norm">
+    <form name="post" id="post" action="&xar-modurl-censor-admin-updateconfig;" method="post" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);" enctype="application/x-www-form-urlencoded">
+        <fieldset>
             <legend>
-                <strong>
-                    <xar:mlstring>
-                        Modify Configuration
-                    </xar:mlstring>
-                </strong>
+                <xar:mlstring>Settings</xar:mlstring>
             </legend>
         <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-            <p class="param">
-                <label for="replace">
-                    <span class="help" title="#xarML('This is what will the replacement for the keywords that you specify.')#">
-                        <xar:mlstring>
-                            Replace String
-                        </xar:mlstring>
-        </span>
+            <div class="xar-form-input-wrapper">
+                <label for="replace" title="#xarML('This is what will the replacement for the keywords that you specify.')#" class="xar-form-label">
+                    <xar:mlstring>Replace String</xar:mlstring>
                 </label>
-      <input type="text" name="replace" id="replace" value="#$replace#" size="32" maxlength="100" />
-            </p>
-            <p class="param">
-                <label for="numitems">
-                    <span class="help" title="#xarML('This is the number of items shown on the individual admin view page.')#">
-                        <xar:mlstring>
-                            Items Per Page
-                        </xar:mlstring>
-        </span>
+                <input type="text" name="replace" id="replace" value="#$replace#" size="32" maxlength="100" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="itemsperpage" title="#xarML('This is the number of items shown on the individual admin view page.')#" class="xar-form-label">
+                    <xar:mlstring>Items Per Page</xar:mlstring>
                 </label>
-      <input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#$itemsperpage#" />
-            </p>
+                <input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#$itemsperpage#" />
+            </div>
         </fieldset>
-        <p class="param">
+         <div class="xar-form-input-wrapper-after">
             <input type="submit" value="#xarML('Save config')#" />
-        </p>
+        </div>
     </form>
-    </div>
+</div>

@@ -48,6 +48,8 @@ function censor_userapi_getall($args)
     for (; !$result->EOF; $result->MoveNext()) {
         list($cid, $keyword,$case_sensitive,$match_case,$locale) = $result->fields;
         if (xarSecurityCheck('ReadCensor',0,'All',"$keyword:$cid")) {
+        
+        
         $censors[] = array('cid' => $cid,
                            'keyword' => $keyword,
                             'case_sensitive' => $case_sensitive,

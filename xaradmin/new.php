@@ -15,6 +15,11 @@
  */
 function censor_admin_new()
 { 
+    if (!xarVarFetch('all', 'int:0:1', $all, '0',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('keyword', 'str:1:', $keyword, "", XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('case', 'isset', $case, 0,XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('matchcase', 'isset', $matchcase, 0,XARVAR_NOT_REQUIRED)) return;
+    
     // Security Check
     if (!xarSecurityCheck('AddCensor')) return;
     $allowedlocales = xarConfigGetVar('Site.MLS.AllowedLocales');
@@ -22,6 +27,10 @@ function censor_admin_new()
        $data['locales'][] = array('name' => $locale, 'value' => $locale);
     }
     $data['authid'] = xarSecGenAuthKey(); 
+    $data['keyword'] = $keyword;
+    $data['case'] = $case;
+    $data['match_case'] = $matchcase;
+    $data['all'] = $all;
 
     return $data;
 } 

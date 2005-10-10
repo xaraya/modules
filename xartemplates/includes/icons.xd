@@ -1,62 +1,52 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<table class="fullwidth">
-        <tr>
-        <th class="caption">
-            <xar:mlstring>
-                Keyword
-            </xar:mlstring>
+<table class="xar-fullwidth">
+    <tr>
+        <th class="xar-align-center">
+                <xar:mlstring>Keyword</xar:mlstring>
             </th>
-        <th class="caption">
-            <xar:mlstring>
-                Case Sensitive
-            </xar:mlstring>
+        <th class="xar-align-center">
+                <xar:mlstring>Case Sensitive</xar:mlstring>
             </th>
-        <th class="caption">
-            <xar:mlstring>
-                Match Case
-            </xar:mlstring>
+        <th class="xar-align-center">
+                <xar:mlstring>Match Case</xar:mlstring>
             </th>
-        <th class="caption">
-            <xar:mlstring>
-                Locale
-            </xar:mlstring>
+        <th class="xar-align-center">
+                <xar:mlstring>Locale</xar:mlstring>
             </th>
-        <th class="caption">
-            <xar:mlstring>
-                Actions
-            </xar:mlstring>
+        <th class="xar-align-center">
+                <xar:mlstring>Actions</xar:mlstring>
             </th>
-        </tr>
-        <xar:loop name="$items">
-        <tr>
-            <td>
-                #$loop:item['keyword']#
-            </td>
-            <td>
+    </tr>
+    <xar:loop name="$items">
+    <tr>
+        <td>
+            #$loop:item['keyword']#
+        </td>
+        <td class="xar-align-center">
             <xar:if condition="$loop:item['case_sensitive'] eq '1'">
-            <img src="#xarTplGetImage('yes.gif','censor')#" alt="#xarML('Yes')#" />
+                <img src="#xarTplGetImage('yes.gif','censor')#" alt="#xarML('Yes')#" />
             <xar:else/>
-            <img src="#xarTplGetImage('no.gif','censor')#" alt="#xarML('No')#" />
+                <img src="#xarTplGetImage('no.gif','censor')#" alt="#xarML('No')#" />
             </xar:if>
-            </td>
-            <td>
+        </td>
+        <td class="xar-align-center">
             <xar:if condition="$loop:item['match_case'] eq '0'">
-            <img src="#xarTplGetImage('no.gif','censor')#" alt="#xarML('Exact')#" />
+                <img src="#xarTplGetImage('no.gif','censor')#" alt="#xarML('Exact')#" />
             <xar:elseif condition="$loop:item['match_case'] eq '1'" />
-            <img src="#xarTplGetImage('start.gif','censor')#" alt="#xarML('Start with ...')#" />
+                <img src="#xarTplGetImage('start.gif','censor')#" alt="#xarML('Start with ...')#" />
             <xar:elseif condition="$loop:item['match_case'] eq '2'" />
-            <img src="#xarTplGetImage('end.gif','censor')#" alt="#xarML('End with ...')#"  />
+                <img src="#xarTplGetImage('end.gif','censor')#" alt="#xarML('End with ...')#"  />
             <xar:else />
-            <img src="#xarTplGetImage('ever.gif','censor')#" alt="#xarML('Everywhere')#"  />
+                <img src="#xarTplGetImage('ever.gif','censor')#" alt="#xarML('Everywhere')#"  />
             </xar:if>
-            </td>
-            <td>
+        </td>
+        <td class="xar-align-center">
             #$loop:item['locale']#
-            </td>
-            <td>
-                <a href="#$loop:item['editurl']#"><img src="#xarTplGetImage('edit.gif','censor')#" alt="#xarML('Edit')#" /></a>
-                <a href="#$loop:item['deleteurl']#"><img src="#xarTplGetImage('delete.gif','censor')#" alt="#xarML('Delete')#" /></a>
-            </td>
-        </tr>
-        </xar:loop>
-    </table>
+        </td>
+        <td class="xar-align-center">
+            <a href="#$loop:item['editurl']#"><img src="#xarTplGetImage('edit.gif','censor')#" alt="#xarML('Edit')#" /></a>
+            <a href="#$loop:item['deleteurl']#"><img src="#xarTplGetImage('delete.gif','censor')#" alt="#xarML('Delete')#" /></a>
+        </td>
+    </tr>
+    </xar:loop>
+</table>
