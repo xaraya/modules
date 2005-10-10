@@ -43,7 +43,7 @@
         </div>
 
         <div class="xar-form-input-wrapper">
-            <label for="fname" class="xar-form-label" title="#xarML("Your friend's name")#">
+            <label for="fname" class="xar-form-label" title="#xarML('Your friend\'s name')#">
                     <xar:mlstring>Your Friend's Name</xar:mlstring>:
             </label>
             <input type="text" name="fname" id="fname" value="" size="25" maxlength="25" />
