@@ -1,6 +1,6 @@
-<tr><td colspan=2>
+<tr><td colspan="2">
 <h3 align="center">Das sind die gespielten Matches</h3>
-<table cellpadding=4 width="100%" border=5>
+<table cellpadding="4" width="100%" border="5">
 <thead>
 <tr>
     <xar:foreach in="$properties" key="$name">
