@@ -12,7 +12,7 @@
  *
  * You call this file by adding the tag <xar:style scope="module" />
  * to your templates. This tag implies that this style sheet is called style.css
- * You can extend the tag with <xar:style scope="module" "file=name" />. That will add the file 'name.css' to your template.
+ * You can extend the tag with <xar:style scope="module" file="name" />. That will add the file 'name.css' to your template.
  *
  * @author Example Module development team
  */
