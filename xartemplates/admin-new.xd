@@ -60,9 +60,9 @@
                 </label>
 
                 <xar:if condition="isset($number)">
-                    <input type="text" name="number" id="number"value="#$number#" maxlength="5" class="xar-form-textshort" />
+                    <input type="text" name="number" id="number" value="#$number#" maxlength="5" class="xar-form-textshort" />
                 <xar:else />
-                    <input type="text" name="number" id="number"value="#$item.number#" maxlength="5" class="xar-form-textshort" />
+                    <input type="text" name="number" id="number" value="#$item.number#" maxlength="5" class="xar-form-textshort" />
                 </xar:if>
                 <xar:if condition="!empty($invalid['number'])">
                     <div class="xar-error">
