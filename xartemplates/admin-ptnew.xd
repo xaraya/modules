@@ -1,71 +1,70 @@
 <div class="xar-mod-head">
-    <span class="xar-mod-title"><xar:mlstring>Netquery Administration</xar:mlstring></span>
+  <span class="xar-mod-title"><xar:mlstring>Netquery Administration</xar:mlstring></span>
 </div>
 
 <div class="xar-mod-body">
-
-<h2><xar:mlstring>Add New Port Service or Exploit</xar:mlstring></h2>
-
-<form action="#xarModURL('netquery', 'admin', 'ptnew')#" method="post" enctype="application/x-www-form-urlencoded" >
-<table>
-    <tr>
+  <h2><xar:mlstring>Add New Port Service or Exploit</xar:mlstring></h2>
+  
+  <form action="#xarModURL('netquery', 'admin', 'ptnew')#" method="post" enctype="application/x-www-form-urlencoded" >
+    <table>
+      <tr>
         <td>
-        <input type="hidden" name="authid" value="#$authid#" />
-        <input type="hidden" name="phase" id="phase" value="update" />
-        <input type="hidden" name="portnum" id="portnum" value="#$portnum#" />
+          <input type="hidden" name="authid" value="#$authid#" />
+          <input type="hidden" name="phase" id="phase" value="update" />
+          <input type="hidden" name="portnum" id="portnum" value="#$portnum#" />
         </td>
-    </tr>
-    <tr>
+      </tr>
+      <tr>
         <td>
-        <span class="help" title="#xarML('The port number')#"><label for="port_port"><xar:mlstring>Port</xar:mlstring></label></span>
-        </td>
-        <td>
-        <span class="help" title="#xarML('The port protocol')#"><label for="port_protocol"><xar:mlstring>Protocol</xar:mlstring></label></span>
+          <span class="help" title="#xarML('The port number')#"><label for="port_port"><xar:mlstring>Port</xar:mlstring></label></span>
         </td>
         <td>
-        <span class="help" title="#xarML('The port service')#"><label for="port_service"><xar:mlstring>Service</xar:mlstring></label></span>
+          <span class="help" title="#xarML('The port protocol')#"><label for="port_protocol"><xar:mlstring>Protocol</xar:mlstring></label></span>
         </td>
         <td>
-        <span class="help" title="#xarML('Notes and comments')#"><label for="port_comment"><xar:mlstring>Comment</xar:mlstring></label></span>
+          <span class="help" title="#xarML('The port service')#"><label for="port_service"><xar:mlstring>Service</xar:mlstring></label></span>
         </td>
         <td>
-        <span class="help" title="#xarML('Flag - 1=trojan, 2=backdoor')#"><label for="port_flag"><xar:mlstring>Flag</xar:mlstring></label></span>
-        </td>
-    </tr>
-    <tr>
-        <td>
-        <input type="text" name="port_port" id="port_port" value="#$portnum#" size="2" maxlength="5" />
+          <span class="help" title="#xarML('Notes and comments')#"><label for="port_comment"><xar:mlstring>Comment</xar:mlstring></label></span>
         </td>
         <td>
-        <input type="text" name="port_protocol" id="port_protocol" value="" size="3" maxlength="3" />
+          <span class="help" title="#xarML('Flag - 1=trojan, 2=backdoor')#"><label for="port_flag"><xar:mlstring>Flag</xar:mlstring></label></span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input type="text" name="port_port" id="port_port" value="#$portnum#" size="2" maxlength="5" />
         </td>
         <td>
-        <input type="text" name="port_service" id="port_service" value="" size="20" maxlength="35" />
+          <input type="text" name="port_protocol" id="port_protocol" value="" size="3" maxlength="3" />
         </td>
         <td>
-        <input type="text" name="port_comment" id="port_comment" value="" size="25" maxlength="50" />
+          <input type="text" name="port_service" id="port_service" value="" size="20" maxlength="35" />
         </td>
         <td>
-        <select name="port_flag" id="port_flag" tabindex="0">
+          <input type="text" name="port_comment" id="port_comment" value="" size="25" maxlength="50" />
+        </td>
+        <td>
+          <select name="port_flag" id="port_flag" tabindex="0">
             <xar:foreach in="$flags" value="$flagg">
-                <xar:if condition="!empty($flagg.keyword)">
-                    <xar:if condition="$flagg.flagnum eq 0">
-                        <option selected="selected" value="#$flagg.flagnum#">#$flagg.keyword#</option>
-                    <xar:else />
-                        <option value="#$flagg.flagnum#">#$flagg.keyword#</option>
-                    </xar:if>
+              <xar:if condition="!empty($flagg.keyword)">
+                <xar:if condition="$flagg.flagnum eq 0">
+                  <option selected="selected" value="#$flagg.flagnum#">#$flagg.keyword#</option>
+                  <xar:else />
+                  <option value="#$flagg.flagnum#">#$flagg.keyword#</option>
                 </xar:if>
+              </xar:if>
             </xar:foreach>
-        </select>
+          </select>
         </td>
-    </tr>
-    <tr>
+      </tr>
+      <tr>
         <td colspan="4">
-        <input type="submit" name="Submit" id="Submit" value="#$submitlabel#" />
-        <input type="submit" name="Cancel" id="Cancel" value="#$cancellabel#" />
+          <input type="submit" name="Submit" id="Submit" value="#$submitlabel#" />
+          <input type="submit" name="Cancel" id="Cancel" value="#$cancellabel#" />
         </td>
-    </tr>
-</form>
-</table>
-
+      </tr>
+    </table>
+  </form>
 </div>
+

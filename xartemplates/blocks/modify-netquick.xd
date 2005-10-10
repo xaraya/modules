@@ -1,109 +1,131 @@
 <div style="clear: both; padding-top: 10px;">
-    <span style="float: left; width: 100%; text-align: left;">
-        <b><xar:mlstring>Netquery Block Options</xar:mlstring></b>
-    </span>
+  <span style="float: left; width: 100%; text-align: left;">
+    <b><xar:mlstring>Netquery Block Options</xar:mlstring></b>
+  </span>
 </div>
 <div style="clear: both; padding-top: 10px;">
-    <span style="float: left; width: 20%; text-align: right;">
-        <xar:mlstring>Query Type</xar:mlstring>
-    </span>
-    <span style="float: right; width: 78%; text-align: left;">
-        <select name="blockquery">
-            <xar:if condition="$blockquery eq 'clientinfo'">
-                <option value="clientinfo" selected="selected">
-            <xar:else/>
-                <option value="clientinfo">
-            </xar:if>
-            <xar:mlstring>Client Info</xar:mlstring>
-            </option>
-            <xar:if condition="$blockquery eq 'topcountries'">
-                <option value="topcountries" selected="selected">
-            <xar:else/>
-                <option value="topcountries">
-            </xar:if>
-            <xar:mlstring>Top Countries</xar:mlstring>
-            </option>
-          <xar:if condition="$whois_enabled">
-            <xar:if condition="$blockquery eq 'whois'">
-                <option value="whois" selected="selected">
-            <xar:else/>
-                <option value="whois">
-            </xar:if>
+  <span style="float: left; width: 20%; text-align: right;">
+    <xar:mlstring>Query Type</xar:mlstring>
+  </span>
+  <span style="float: right; width: 78%; text-align: left;">
+    <select name="blockquery">
+      <xar:if condition="$blockquery eq 'clientinfo'">
+        <option value="clientinfo" selected="selected">
+          <xar:mlstring>Client Info</xar:mlstring>
+        </option>
+        <xar:else/>
+        <option value="clientinfo">
+          <xar:mlstring>Client Info</xar:mlstring>
+        </option>
+      </xar:if>
+      <xar:if condition="$blockquery eq 'topcountries'">
+        <option value="topcountries" selected="selected">
+          <xar:mlstring>Top Countries</xar:mlstring>
+        </option>
+        <xar:else/>
+        <option value="topcountries">
+          <xar:mlstring>Top Countries</xar:mlstring>
+        </option>
+      </xar:if>
+      <xar:if condition="$whois_enabled">
+        <xar:if condition="$blockquery eq 'whois'">
+          <option value="whois" selected="selected">
             <xar:mlstring>Whois Domain</xar:mlstring>
-            </option>
-          </xar:if>
-          <xar:if condition="$whoisip_enabled">
-            <xar:if condition="$blockquery eq 'whoisip'">
-                <option value="whoisip" selected="selected">
-            <xar:else/>
-                <option value="whoisip">
-            </xar:if>
+          </option>
+          <xar:else/>
+          <option value="whois">
+            <xar:mlstring>Whois Domain</xar:mlstring>
+          </option>
+        </xar:if>
+      </xar:if>
+      <xar:if condition="$whoisip_enabled">
+        <xar:if condition="$blockquery eq 'whoisip'">
+          <option value="whoisip" selected="selected">
             <xar:mlstring>Whois IP/AS</xar:mlstring>
-            </option>
-          </xar:if>
-          <xar:if condition="$dns_lookup_enabled">
-            <xar:if condition="$blockquery eq 'lookup'">
-                <option value="lookup" selected="selected">
-            <xar:else/>
-                <option value="lookup">
-            </xar:if>
+          </option>
+          <xar:else/>
+          <option value="whoisip">
+            <xar:mlstring>Whois IP/AS</xar:mlstring>
+          </option>
+        </xar:if>
+      </xar:if>
+      <xar:if condition="$dns_lookup_enabled">
+        <xar:if condition="$blockquery eq 'lookup'">
+          <option value="lookup" selected="selected">
             <xar:mlstring>DNS Lookup</xar:mlstring>
+          </option>
+          <xar:else/>
+            <option value="lookup">
+              <xar:mlstring>DNS Lookup</xar:mlstring>
             </option>
-          </xar:if>
-          <xar:if condition="$dns_dig_enabled">
-            <xar:if condition="$blockquery eq 'dig'">
-                <option value="dig" selected="selected">
-            <xar:else/>
-                <option value="dig">
-            </xar:if>
+        </xar:if>
+      </xar:if>
+      <xar:if condition="$dns_dig_enabled">
+        <xar:if condition="$blockquery eq 'dig'">
+          <option value="dig" selected="selected">
             <xar:mlstring>DNS Dig</xar:mlstring>
+          </option>
+          <xar:else/>
+            <option value="dig">
+              <xar:mlstring>DNS Dig</xar:mlstring>
             </option>
-          </xar:if>
-           <xar:if condition="$email_check_enabled">
-            <xar:if condition="$blockquery eq 'email'">
-                <option value="email" selected="selected">
-            <xar:else/>
-                <option value="email">
-            </xar:if>
+        </xar:if>
+      </xar:if>
+      <xar:if condition="$email_check_enabled">
+        <xar:if condition="$blockquery eq 'email'">
+          <option value="email" selected="selected">
             <xar:mlstring>Validate Email</xar:mlstring>
-            </option>
-          </xar:if>
-          <xar:if condition="$port_check_enabled">
-            <xar:if condition="$blockquery eq 'port'">
-                <option value="port" selected="selected">
-            <xar:else/>
-                <option value="port">
-            </xar:if>
+          </option>
+          <xar:else/>
+          <option value="email">
+            <xar:mlstring>Validate Email</xar:mlstring>
+          </option>
+        </xar:if>
+      </xar:if>
+      <xar:if condition="$port_check_enabled">
+        <xar:if condition="$blockquery eq 'port'">
+          <option value="port" selected="selected">
             <xar:mlstring>Port Services</xar:mlstring>
-            </option>
-          </xar:if>
-          <xar:if condition="$http_req_enabled">
-            <xar:if condition="$blockquery eq 'http'">
-                <option value="http" selected="selected">
-            <xar:else/>
-                <option value="http">
-            </xar:if>
+          </option>
+          <xar:else/>
+          <option value="port">
+            <xar:mlstring>Port Services</xar:mlstring>
+          </option>
+        </xar:if>
+      </xar:if>
+      <xar:if condition="$http_req_enabled">
+        <xar:if condition="$blockquery eq 'http'">
+          <option value="http" selected="selected">
             <xar:mlstring>HTTP Request</xar:mlstring>
-            </option>
-          </xar:if>
-          <xar:if condition="$ping_enabled">
-            <xar:if condition="$blockquery eq 'ping'">
-                <option value="ping" selected="selected">
-            <xar:else/>
-                <option value="ping">
-            </xar:if>
+          </option>
+          <xar:else/>
+          <option value="http">
+            <xar:mlstring>HTTP Request</xar:mlstring>
+          </option>
+        </xar:if>
+      </xar:if>
+      <xar:if condition="$ping_enabled">
+        <xar:if condition="$blockquery eq 'ping'">
+          <option value="ping" selected="selected">
             <xar:mlstring>Ping Host</xar:mlstring>
-            </option>
-          </xar:if>
-          <xar:if condition="$trace_enabled">
-            <xar:if condition="$blockquery eq 'trace'">
-                <option value="trace" selected="selected">
-            <xar:else/>
-                <option value="trace">
-            </xar:if>
+          </option>
+          <xar:else/>
+          <option value="ping">
+            <xar:mlstring>Ping Host</xar:mlstring>
+          </option>
+        </xar:if>
+      </xar:if>
+      <xar:if condition="$trace_enabled">
+        <xar:if condition="$blockquery eq 'trace'">
+          <option value="trace" selected="selected">
             <xar:mlstring>Traceroute</xar:mlstring>
-            </option>
-          </xar:if>
-        </select>
-    </span>
+          </option>
+          <xar:else/>
+          <option value="trace">
+            <xar:mlstring>Traceroute</xar:mlstring>
+          </option>
+        </xar:if>
+      </xar:if>
+    </select>
+  </span>
 </div>
