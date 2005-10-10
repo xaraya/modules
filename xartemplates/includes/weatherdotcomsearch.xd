@@ -6,6 +6,6 @@
 <input type="hidden" name="module" value="weather" />
 <input type="hidden" name="func" value="search" />
 <input type="hidden" name="type" value="user" />
-<input id="loc" type="text" name="loc" value="#$loc#"> 
-<input type="submit" name="Submit" value="Search">
+<input id="loc" type="text" name="loc" value="#$loc#"/> 
+<input type="submit" name="Submit" value="Search"/>
 </form>

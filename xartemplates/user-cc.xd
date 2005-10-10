@@ -100,6 +100,7 @@
                 <xar:mlvar>#$wData.observStation#</xar:mlvar>
                 <xar:mlvar>#$wData.lastUpdate#</xar:mlvar>
             </xar:ml>
+            </p>
         </td>
     </tr>
 </table>
@@ -136,15 +137,15 @@
             <td valign="middle" align="center">#$eData[0]['part']['d']['ppcp']#%</td>
         </tr>
         <!-- extended forecast details -->
-        <xar:for start="$i=1" test="$i <= $maxdays-1" iter="$i++">
+        <xar:for start="$i=1" test="$i le $maxdays-1" iter="$i++">
         <xar:if condition="(bool)$switch">
-            <xar:set name="$bgcolor">'bgcolor="#aaccff"'</xar:set>
+            <xar:set name="$bgcolor">'#aaccff'</xar:set>
             <xar:set name="$switch">false</xar:set>
         <xar:else />
             <xar:set name="$bgcolor">''</xar:set>
             <xar:set name="$switch">true</xar:set>
         </xar:if>
-        <tr #$bgcolor#>
+        <tr bgcolor="#$bgcolor#">
             <td valign="middle" align="left">
                 <strong>
                 <a href="#xarModURL('weather','user','details',array('xwday'=>$i))#">#$eData[$i]['wkday']#</a>

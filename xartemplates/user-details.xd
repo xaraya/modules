@@ -17,12 +17,12 @@
         <th><xar:mlstring>Tonight</xar:mlstring></th>
     </tr>
     <tr>
-        <td valign"top" align="center">
+        <td valign="top" align="center">
             <xar:comment> TODO::use the tpl image apis here </xar:comment>
             <img src="modules/weather/xarimages/icons/default/32/#$eData[$day]['part']['d']['icon']#.png" /><br />
             <strong>#$eData[$day]['part']['d']['cond']#</strong><br />
         </td>
-        <td valign"top" align="center">
+        <td valign="top" align="center">
             <xar:comment> TODO::use the tpl image apis here </xar:comment>
             <img src="modules/weather/xarimages/icons/default/32/#$eData[$day]['part']['n']['icon']#.png" /><br />
             <strong>#$eData[$day]['part']['n']['cond']#</strong><br />
@@ -33,10 +33,10 @@
         <th><xar:mlstring>Overnight Low</xar:mlstring>  (&deg;#$eData[0]['unitsTemp']#)</th>
     </tr>
     <tr>
-        <td valign"top" align="center">
+        <td valign="top" align="center">
             <strong style="color:red;">#$eData[$day]['hi']#&deg;</strong>
         </td>
-        <td valign"top" align="center">
+        <td valign="top" align="center">
             <strong style="color:blue;">#$eData[$day]['lo']#&deg;</strong>
         </td>
     </tr>
@@ -45,10 +45,10 @@
         <th><xar:mlstring>Sunset</xar:mlstring></th>
     </tr>
     <tr>
-        <td valign"top" align="center">
+        <td valign="top" align="center">
             <strong>#$eData[$day]['sunr']#</strong>
         </td>
-        <td valign"top" align="center">
+        <td valign="top" align="center">
             <strong>#$eData[$day]['suns']#</strong>
         </td>
     </tr>

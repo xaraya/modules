@@ -1,11 +1,11 @@
 <div id="weather">
 <table border="0" cellpadding="2" cellspacing="2">
     <tr>
-        <td valign"top" align="center">
+        <td valign="top" align="center">
             <img src="modules/weather/xarimages/icons/default/64/#$wData.icon#.png" /><br />
             <strong>#$wData.conditions#</strong>
         </td>
-        <td valign"top" align="right">
+        <td valign="top" align="right">
             <h2>#$wData.temp#&deg;#$wData.unitsTemp#</h2>
             <strong><xar:mlstring>Feels Like</xar:mlstring><br />
             #$wData.feelsLike#&deg;#$wData.unitsTemp#</strong>
@@ -36,7 +36,6 @@
     <tr>
         <td nowrap="nowrap"><xar:mlstring>Wind: </xar:mlstring></td>
         <td nowrap="nowrap">#$wData.windDirname# at #$wData.wind##$wData.unitsSpeed#</td>
-    </tr>
     </tr>
     <tr>
         <td colspan="2" align="center">

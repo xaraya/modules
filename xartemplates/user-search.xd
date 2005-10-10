@@ -14,7 +14,7 @@
         <option value="#$location.zip#">#$location.name#</option>
     </xar:foreach>
     </select>
-    <input type="submit" name="submit" value="Get Forecast">
+    <input type="submit" name="submit" value="Get Forecast"/>
     </form>
 <xar:elseif condition="$error eq true" />
     <p class="xar-error">No Matches were found</p>
