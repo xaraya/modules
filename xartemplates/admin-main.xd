@@ -1,95 +1,94 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
-    <span class="xar-mod-title"><xar:mlstring>Scheduler Administration </xar:mlstring></span>
-        </div>
+  <span class="xar-mod-title"><xar:mlstring>Scheduler Administration </xar:mlstring></span>
+</div>
 <div class="xar-mod-body">
-    <img src="#xarTplGetImage('admin_generic.gif', 'base')#" alt="official icon" width="96" height="96" class="xar-module-icon" />
-    <h2>
-        <xar:mlstring>
-            Overview
-        </xar:mlstring>
-    </h2>
-    <h3>
-            <xar:mlstring>What is it?</xar:mlstring>
-    </h3>
-        <p>
-            <em>
-                <xar:mlstring>This module allows you to schedule Xaraya jobs at certain times of the day/week/month (cron)</xar:mlstring>
-            </em>
-        </p>
-        <p>
-            <xar:mlstring>Those jobs could be for instance :</xar:mlstring>
-            <ul>
-                <li>
-                    <xar:mlstring>sending a daily digest mail</xar:mlstring>
-                </li>
-                <li>
-                    <xar:mlstring>expiring temporary user passwords</xar:mlstring>
-                </li>
-                <li>
-                    <xar:mlstring>escalating a workflow process</xar:mlstring>
-                </li>
-                <li>
-                    <xar:mlstring>doing a backup of the database</xar:mlstring>
-                </li>
-                <li>
-                    <xar:mlstring>refreshing cache files</xar:mlstring>
-                </li>
-                <li>
-                    <xar:mlstring>...</xar:mlstring>
-                </li>
-            </ul>
-        </p>
-        <h3>
-            <xar:mlstring>How to use it?</xar:mlstring>
-        </h3>
-            <p>
-                <xar:mlstring>
-                    The scheduler module relies on other modules to actually execute 
-                    whatever jobs are scheduled, so first you need to find out 
-                    which <b>module functions</b> can be scheduled.
-                </xar:mlstring>
-            </p>
-            <p>
-                <a href="&xar-modurl-scheduler-admin-search;">
-                    <xar:mlstring>Search for scheduler API functions</xar:mlstring>
-                </a>
-            </p>
-
-            <p>
-                <xar:mlstring>
-                    Then you need some kind of <b>trigger</b> to wake up the scheduler - 
-                    this can be done e.g. by requesting a specific webpage automatically 
-                    from your own system via a Unix cron entry or Windows AT command,
-                    or via a web-based scheduler service like <a href="http://webcron.org/">http://webcron.org/</a>,
-                    or (if you really have no other choice) by relying on web hits from your 
-                    visitors if your site is relatively busy.
-                </xar:mlstring>
-            </p>
-            <p>
-                <xar:mlstring>The rest will be handled by the scheduler module :-)</xar:mlstring>
-            </p>
-        </p>
-        <h3>
-            <xar:mlstring>Included Blocks</xar:mlstring>
-        </h3>
-        <p>
-            <ul>
-                <li><xar:mlstring>trigger block</xar:mlstring></li>
-            </ul>
-        </p>
-        <br />
-        <h3>
-            <xar:mlstring>Included Hooks</xar:mlstring>
-    </h3>
-    <p>
-            <ul>
-                <li><xar:mlstring>to be defined</xar:mlstring></li>
-            </ul>
-        </p>
-        </div>
+  <img src="#xarTplGetImage('admin_generic.gif', 'base')#" alt="official icon" width="96" height="96" class="xar-module-icon" />
+  <h2>
+    <xar:mlstring>
+      Overview
+    </xar:mlstring>
+  </h2>
+  <h3>
+    <xar:mlstring>What is it?</xar:mlstring>
+  </h3>
+  <p>
+    <em>
+      <xar:mlstring>This module allows you to schedule Xaraya jobs at certain times of the day/week/month (cron)</xar:mlstring>
+    </em>
+  </p>
+  <p>
+    <xar:mlstring>Those jobs could be for instance :</xar:mlstring>
+    <ul>
+      <li>
+        <xar:mlstring>sending a daily digest mail</xar:mlstring>
+      </li>
+      <li>
+        <xar:mlstring>expiring temporary user passwords</xar:mlstring>
+      </li>
+      <li>
+        <xar:mlstring>escalating a workflow process</xar:mlstring>
+      </li>
+      <li>
+        <xar:mlstring>doing a backup of the database</xar:mlstring>
+      </li>
+      <li>
+        <xar:mlstring>refreshing cache files</xar:mlstring>
+      </li>
+      <li>
+        <xar:mlstring>...</xar:mlstring>
+      </li>
+    </ul>
+  </p>
+  <h3>
+    <xar:mlstring>How to use it?</xar:mlstring>
+  </h3>
+  <p>
+    <xar:mlstring>
+      The scheduler module relies on other modules to actually execute 
+      whatever jobs are scheduled, so first you need to find out 
+      which <b>module functions</b> can be scheduled.
+    </xar:mlstring>
+  </p>
+  <p>
+    <a href="&xar-modurl-scheduler-admin-search;">
+      <xar:mlstring>Search for scheduler API functions</xar:mlstring>
+    </a>
+  </p>
+  
+  <p>
+    <xar:mlstring>
+      Then you need some kind of <b>trigger</b> to wake up the scheduler - 
+      this can be done e.g. by requesting a specific webpage automatically 
+      from your own system via a Unix cron entry or Windows AT command,
+      or via a web-based scheduler service like <a href="http://webcron.org/">http://webcron.org/</a>,
+      or (if you really have no other choice) by relying on web hits from your 
+      visitors if your site is relatively busy.
+    </xar:mlstring>
+  </p>
+  <p>
+    <xar:mlstring>The rest will be handled by the scheduler module :-)</xar:mlstring>
+  </p>
+  <h3>
+    <xar:mlstring>Included Blocks</xar:mlstring>
+  </h3>
+  <p>
+    <ul>
+      <li><xar:mlstring>trigger block</xar:mlstring></li>
+    </ul>
+  </p>
+  <br />
+  <h3>
+    <xar:mlstring>Included Hooks</xar:mlstring>
+  </h3>
+  <p>
+    <ul>
+      <li><xar:mlstring>to be defined</xar:mlstring></li>
+    </ul>
+  </p>
+</div>
 <div class="xar-mod-foot xar-align-center xar-padding-thick">
-    <p>
-            <xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring>
-    </p>
+  <p>
+    <xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring>
+  </p>
 </div>
