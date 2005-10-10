@@ -6,6 +6,7 @@
 function changelog_admin_updateconfig()
 { 
     // Get parameters
+    // FIXME: xarVarFetch validation? array? isset?
     $changelog = xarVarCleanFromInput('changelog');
 
     // Confirm authorisation code
