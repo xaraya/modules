@@ -1,9 +1,19 @@
 <?php
-//$Id: xarversion.php,v 1.11 2005/06/24 09:31:47 michelv01 Exp $
+/**
+ * Julian Module : calendar with events
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Julian Module
+ * @author Julian Module development team
+ */
 
 $modversion['name']           = 'Julian';
 $modversion['id']             = '319';
-$modversion['version']        = '0.2.3';
+$modversion['version']        = '0.2.4';
 $modversion['description']    = 'Event Calendar for keeping track of events';
 $modversion['credits']        = 'xardocs/credits.txt';
 $modversion['help']           = 'xardocs/help.txt';
@@ -17,11 +27,5 @@ $modversion['user']           = 1;
 $modversion['class']          = 'Complete';
 $modversion['category']       = 'Content';
 $modversion['dependency']     = array(4, 147); //Making overlib and categories module required
-$modversion['securityschema'] = array('julian::event'     => 'Event Title::Event ID',
-                                      'julian::category'  => 'Category Name::Category ID',
-                                      'julian::topic'     => 'Topic Name::Topic ID',
-                                      'julian::user'      => 'User Name::User ID',
-                                      'julian::sharing'   => 'User Name::User ID',
-                                      'julian::'          => '::');
 
 ?>
