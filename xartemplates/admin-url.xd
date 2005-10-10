@@ -45,10 +45,11 @@
 <xar:else />
     <xar:loop name="$urls">
     <xar:if condition="$loop:item['urlid'] eq $id">
-        <tr class="xar-accent" align="left" valign="middle">
+      <xar:set name="rowclass">'xar-accent'</xar:set>
     <xar:else />
-        <tr class="xar-norm" align="left" valign="middle">
+      <xar:set name="rowclass">'xar-norm'</xar:set>
     </xar:if>
+    <tr class="#$rowclass#" align="left" valigne="middle">
             <td>
                 #$loop:item['urladdress']#
             </td>
@@ -101,15 +102,15 @@
     <td colspan="2">
         <xar:mlstring>Only for registered users</xar:mlstring>
     </td>
-    <td NOWRAP>
+    <td nowrap="nowrap">
         <xar:if condition =" $reg_user_only eq 1">
             <input type="radio" name="reg_user_only" id="reg_user_only" value="0" tabindex="11" />
 
             <xar:mlstring>No</xar:mlstring>
-            <input type="radio" name="reg_user_only" id="reg_user_only" checked value="1" tabindex="12" />
+            <input type="radio" name="reg_user_only" id="reg_user_only" checked="checked" value="1" tabindex="12" />
             <xar:mlstring>Yes</xar:mlstring>
         <xar:else />
-            <input type="radio" name="reg_user_only" id="reg_user_only" checked value="0"  tabindex="11" />
+            <input type="radio" name="reg_user_only" id="reg_user_only" checked="checked" value="0"  tabindex="11" />
             <xar:mlstring>No</xar:mlstring>
             <input type="radio" name="reg_user_only" id="reg_user_only" value="1" tabindex="12" />
 
@@ -121,15 +122,15 @@
     <td colspan="2">
         <xar:mlstring>Add link for Open in new window</xar:mlstring>
     </td>
-    <td NOWRAP>
+    <td nowrap="nowrap">
 
         <xar:if condition =" $open_direct eq 1">
             <input type="radio" name="open_direct" id="open_direct" value="0"  tabindex="13" />
             <xar:mlstring>No</xar:mlstring>
-            <input type="radio" name="open_direct" id="open_direct" value="1" checked tabindex="14" />
+            <input type="radio" name="open_direct" id="open_direct" value="1" checked="checked" tabindex="14" />
             <xar:mlstring>Yes</xar:mlstring>
         <xar:else />
-            <input type="radio" name="open_direct" id="open_direct" value="0" checked tabindex="13" />
+            <input type="radio" name="open_direct" id="open_direct" value="0" checked="checked" tabindex="13" />
             <xar:mlstring>No</xar:mlstring>
 
             <input type="radio" name="open_direct" id="open_direct" value="1" tabindex="14" />
@@ -142,14 +143,14 @@
         <xar:mlstring>Use fixed title</xar:mlstring>
     </td>
 
-    <td NOWRAP>
+    <td nowrap="nowrap">
         <xar:if condition =" $use_fixed_title eq 1">
             <input type="radio" name="use_fixed_title" id="use_fixed_title" value="0"  tabindex="15" />
             <xar:mlstring>No</xar:mlstring>
-            <input type="radio" name="use_fixed_title" id="use_fixed_title" value="1" checked tabindex="16" />
+            <input type="radio" name="use_fixed_title" id="use_fixed_title" value="1" checked="checked" tabindex="16" />
             <xar:mlstring>Yes</xar:mlstring>
         <xar:else />
-            <input type="radio" name="use_fixed_title" id="use_fixed_title" value="0" checked tabindex="15" />
+            <input type="radio" name="use_fixed_title" id="use_fixed_title" value="0" checked="checked" tabindex="15" />
 
             <xar:mlstring>No</xar:mlstring>
             <input type="radio" name="use_fixed_title" id="use_fixed_title" value="1" tabindex="16" />
@@ -162,15 +163,15 @@
         <xar:mlstring>Auto resize window</xar:mlstring>
 
     </td>
-    <td NOWRAP>
+    <td nowrap="nowrap">
         <xar:if condition =" $auto_resize eq 1">
             <input type="radio" name="auto_resize" id="auto_resize" value="0"  tabindex="17" />
             <xar:mlstring>No</xar:mlstring>
-            <input type="radio" name="auto_resize" id="auto_resize" value="1" checked tabindex="18" />
+            <input type="radio" name="auto_resize" id="auto_resize" value="1" checked="checked" tabindex="18" />
             <xar:mlstring>Yes</xar:mlstring>
         <xar:else />
 
-            <input type="radio" name="auto_resize" id="auto_resize" value="0" checked tabindex="17" />
+            <input type="radio" name="auto_resize" id="auto_resize" value="0" checked="checked" tabindex="17" />
             <xar:mlstring>No</xar:mlstring>
             <input type="radio" name="auto_resize" id="auto_resize" value="1" tabindex="18" />
             <xar:mlstring>Yes</xar:mlstring>
@@ -198,8 +199,8 @@
 <input type="text" name="hsize" id="hsize" value="#$hsize#" size="4" maxlength="4" tabindex="20" />
     </td>
 </tr>
+</table>
 
 </form>
-</table>
 </div>
 </div>

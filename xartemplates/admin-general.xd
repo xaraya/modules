@@ -24,10 +24,10 @@
         <xar:if condition = "$allow_local_only eq 1">
                         <input type="radio" name="allow_local_only" id="allow_local_only" value="0" tabindex="1" />
                         <xar:mlstring>No</xar:mlstring>
-                        <input type="radio" name="allow_local_only" id="allow_local_only" value="1" checked tabindex="2" />
+                        <input type="radio" name="allow_local_only" id="allow_local_only" value="1" checked="checked" tabindex="2" />
                         <xar:mlstring>Yes</xar:mlstring>
                 <xar:else />
-                        <input type="radio" name="allow_local_only" id="allow_local_only" value="0" checked tabindex="1" />
+                        <input type="radio" name="allow_local_only" id="allow_local_only" value="0" checked="checked" tabindex="1" />
                         <xar:mlstring>No</xar:mlstring>
                         <input type="radio" name="allow_local_only" id="allow_local_only" value="1"  tabindex="2" />
                         <xar:mlstring>Yes</xar:mlstring>
@@ -42,10 +42,10 @@
         <xar:if condition = "$use_buffering eq 1">
                         <input type="radio" name="use_buffering" id="use_buffering" value="0" tabindex="3" />
                         <xar:mlstring>No</xar:mlstring>
-                        <input type="radio" name="use_buffering" id="use_buffering" value="1" checked tabindex="4" />
+                        <input type="radio" name="use_buffering" id="use_buffering" value="1" checked="checked" tabindex="4" />
                         <xar:mlstring>Yes</xar:mlstring>
                 <xar:else />
-                        <input type="radio" name="use_buffering" id="use_buffering" value="0" checked tabindex="3" />
+                        <input type="radio" name="use_buffering" id="use_buffering" value="0" checked="checked" tabindex="3" />
                         <xar:mlstring>No</xar:mlstring>
                         <input type="radio" name="use_buffering" id="use_buffering" value="1"  tabindex="4" />
                         <xar:mlstring>Yes</xar:mlstring>
@@ -60,10 +60,10 @@
         <xar:if condition = "$no_user_entry eq 1">
                         <input type="radio" name="no_user_entry" id="no_user_entry" value="0" tabindex="7" />
                         <xar:mlstring>No</xar:mlstring>
-                        <input type="radio" name="no_user_entry" id="no_user_entry" value="1" checked tabindex="8" />
+                        <input type="radio" name="no_user_entry" id="no_user_entry" value="1" checked="checked" tabindex="8" />
                         <xar:mlstring>Yes</xar:mlstring>
                 <xar:else />
-                        <input type="radio" name="no_user_entry" id="no_user_entry" value="0" checked tabindex="7" />
+                        <input type="radio" name="no_user_entry" id="no_user_entry" value="0" checked="checked" tabindex="7" />
                         <xar:mlstring>No</xar:mlstring>
                         <input type="radio" name="no_user_entry" id="no_user_entry" value="1" tabindex="8" />
                         <xar:mlstring>Yes</xar:mlstring>
@@ -78,10 +78,10 @@
         <xar:if condition = "$security eq 1">
                         <input type="radio" name="security" id="security" value="0" tabindex="9" />
                         <xar:mlstring>No</xar:mlstring>
-                        <input type="radio" name="security" id="security" value="1" checked tabindex="10" />
+                        <input type="radio" name="security" id="security" value="1" checked="checked" tabindex="10" />
                         <xar:mlstring>Yes</xar:mlstring>
                 <xar:else />
-                        <input type="radio" name="security" id="security" value="0" checked tabindex="9" />
+                        <input type="radio" name="security" id="security" value="0" checked="checked" tabindex="9" />
                         <xar:mlstring>No</xar:mlstring>
                         <input type="radio" name="security" id="security" value="1"  tabindex="10" />
                         <xar:mlstring>Yes</xar:mlstring>
@@ -96,10 +96,10 @@
         <xar:if condition = "$reg_user_only eq 1">
                         <input type="radio" name="reg_user_only" id="reg_user_only" value="0" tabindex="11" />
                         <xar:mlstring>No</xar:mlstring>
-                        <input type="radio" name="reg_user_only" id="reg_user_only" value="1" checked tabindex="12" />
+                        <input type="radio" name="reg_user_only" id="reg_user_only" value="1" checked="checked" tabindex="12" />
                         <xar:mlstring>Yes</xar:mlstring>
                 <xar:else />
-                        <input type="radio" name="reg_user_only" id="reg_user_only" value="0" checked tabindex="11" />
+                        <input type="radio" name="reg_user_only" id="reg_user_only" value="0" checked="checked" tabindex="11" />
                         <xar:mlstring>No</xar:mlstring>
                         <input type="radio" name="reg_user_only" id="reg_user_only" value="1" tabindex="12" />
                         <xar:mlstring>Yes</xar:mlstring>
@@ -114,10 +114,10 @@
         <xar:if condition = "$open_direct eq 1">
                         <input type="radio" name="open_direct" id="open_direct" value="0"  tabindex="13" />
                         <xar:mlstring>No</xar:mlstring>
-                        <input type="radio" name="open_direct" id="open_direct" value="1" checked  tabindex="14" />
+                        <input type="radio" name="open_direct" id="open_direct" value="1" checked="checked"  tabindex="14" />
                         <xar:mlstring>Yes</xar:mlstring>
                 <xar:else />
-                        <input type="radio" name="open_direct" id="open_direct" value="0" checked  tabindex="13" />
+                        <input type="radio" name="open_direct" id="open_direct" value="0" checked="checked"  tabindex="13" />
                         <xar:mlstring>No</xar:mlstring>
                         <input type="radio" name="open_direct" id="open_direct" value="1" tabindex="14" />
                         <xar:mlstring>Yes</xar:mlstring>
@@ -132,10 +132,10 @@
         <xar:if condition = "$use_fixed_title eq 1">
                         <input type="radio" name="use_fixed_title" id="use_fixed_title" value="0"  tabindex="15" />
                         <xar:mlstring>No</xar:mlstring>
-                        <input type="radio" name="use_fixed_title" id="use_fixed_title" value="1" checked tabindex="16" />
+                        <input type="radio" name="use_fixed_title" id="use_fixed_title" value="1" checked="checked" tabindex="16" />
                         <xar:mlstring>Yes</xar:mlstring>
                 <xar:else />
-                        <input type="radio" name="use_fixed_title" id="use_fixed_title" value="0" checked tabindex="15" />
+                        <input type="radio" name="use_fixed_title" id="use_fixed_title" value="0" checked="checked" tabindex="15" />
                         <xar:mlstring>No</xar:mlstring>
                         <input type="radio" name="use_fixed_title" id="use_fixed_title" value="1" tabindex="16" />
                         <xar:mlstring>Yes</xar:mlstring>
@@ -150,10 +150,10 @@
         <xar:if condition = "$auto_resize eq 1">
                         <input type="radio" name="auto_resize" id="auto_resize" value="0"  tabindex="17" />
                         <xar:mlstring>No</xar:mlstring>
-                        <input type="radio" name="auto_resize" id="auto_resize" value="1" checked tabindex="18" />
+                        <input type="radio" name="auto_resize" id="auto_resize" value="1" checked="checked" tabindex="18" />
                         <xar:mlstring>Yes</xar:mlstring>
                 <xar:else />
-                        <input type="radio" name="auto_resize" id="auto_resize" value="0" checked tabindex="17" />
+                        <input type="radio" name="auto_resize" id="auto_resize" value="0" checked="checked" tabindex="17" />
                         <xar:mlstring>No</xar:mlstring>
                         <input type="radio" name="auto_resize" id="auto_resize" value="1" tabindex="18" />
                         <xar:mlstring>Yes</xar:mlstring>
@@ -189,7 +189,7 @@
         <input type="submit" value="Save Changes"  tabindex="21" />
     </td>
 </tr>
-</form>
 </table>
+</form>
 </div>
 </div>
