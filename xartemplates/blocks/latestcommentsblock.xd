@@ -36,11 +36,13 @@
               <span class="xar-title">
                 <xar:if condition="$addobject ge 21">
                   <a href="#$comment['objurl']####$comment['xar_cid']#">
+                    #$comment['xar_title']#
+                  </a> 
                 <xar:else/>
                   <a href="#$comment['objurl']#">
+                    #$comment['xar_title']#
+                  </a> 
                 </xar:if>
-                #$comment['xar_title']#
-                </a> 
               </span>
             <xar:elseif condition="$addobject eq 1" /> 
               <xar:mlstring>in</xar:mlstring> 
@@ -53,11 +55,11 @@
               <br /><xar:mlstring>in</xar:mlstring> 
               <xar:if condition="$addmodule ge 2">
                 <a href="#$comment['modview']#">
-              </xar:if>
-              #$comment['modname']#
-              <xar:if condition="$addmodule ge 2">
+                  #$comment['modname']#
                 </a>
-              </xar:if>  
+              <xar:else/>
+                #$comment['modname']#
+              </xar:if>
             </span>
           </xar:if> 
           <span class="xar-normal">
@@ -67,10 +69,10 @@
               <xar:if condition="$comment['xar_postanon'] eq 0 or xarModGetVar('comments','AllowPostAsAnon') eq 0">
                 <xar:if condition="$addauthor ge 2">
                   <a href="#xarModURL('users','user','view')#">
-                </xar:if>
-                #$comment['xar_author']#
-               <xar:if condition="$addauthor ge 2">
+                    #$comment['xar_author']#
                   </a>
+                  <xar:else/>
+                  #$comment['xar_author']#
                 </xar:if>
               <xar:else />
                 <xar:mlstring>Anonymous</xar:mlstring>
