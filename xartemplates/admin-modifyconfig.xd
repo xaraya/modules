@@ -59,12 +59,11 @@
 </form>
 </div>
 <xar:comment>
-<div style="margin: auto;">
+  <div style="margin: auto;">
     <h2>
-        <xar:mlstring>Configure Hooks</xar:mlstring>
+      <xar:mlstring>Configure Hooks</xar:mlstring>
     </h2>
-<xar:set name="url">#xarModURL('hitcount','admin','modifyconfig')#</xar:set>
-<xar:module main="false" module="modules" type="admin" func="hooks" curhook="hitcount" return_url="$url" />
-</div>
-</div>
+    <xar:set name="url">#xarModURL('hitcount','admin','modifyconfig')#</xar:set>
+    <xar:module main="false" module="modules" type="admin" func="hooks" curhook="hitcount" return_url="$url" />
+  </div>
 </xar:comment>
