@@ -88,9 +88,10 @@
                 </xar:loop>
                 <tr>
                     <td colspan="6" class="xar-norm" align="center">
-<script language="JavaScript" type="text/javascript">
+<script language="JavaScript" type="text/javascript"><![CDATA[
     document.write("[ <a href=\"javascript:xar_base_checkall(document.forms['viewfiles'],true)\"><xar:mlstring>Check All</xar:mlstring></a> | ");
     document.write("<a href=\"javascript:xar_base_checkall(document.forms['viewfiles'],false)\"><xar:mlstring>Uncheck All</xar:mlstring></a> ]");
+]]>
 </script>
                         #$pager#
                     </td>

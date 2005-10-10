@@ -17,13 +17,8 @@
             <xar:else/>
                 <xar:set name="fileName">''</xar:set>
             </xar:if>
-            <xar:set name="fileLink">'style="cursor: pointer;" onClick="PropertiesDialog(\'' . xarModURL('uploads','user','file_properties', array('fileId' => $fileId)) . '\'); return false;"'</xar:set>
-            <xar:ml>
-                <xar:mlstring>For File <a #(1)>[#(2)] #(3)</a></xar:mlstring>
-                <xar:mlvar>#$fileLink#</xar:mlvar>
-                <xar:mlvar>#$fileId#</xar:mlvar>
-                <xar:mlvar>#$fileName#</xar:mlvar>
-            </xar:ml>
+            <xar:set name="fileLink">'PropertiesDialog(\'' . xarModURL('uploads','user','file_properties', array('fileId' => $fileId)) . '\'); return false;'</xar:set>
+            <xar:mlstring>For File</xar:mlstring> <a style="cursor:pointer;" onClick="#$fileLink#">[#$fileId#] #$fileName#</a>
         </h3>
     </xar:if>
 
