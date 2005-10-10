@@ -3,7 +3,7 @@
  * Surveys overview
  * 
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -16,12 +16,12 @@
  * Long Description [OPTIONAL one or more lines]
  *
  * @author     Jason Judge <jason.judge@academe.co.uk>
- * @author     Another Author <another@example.com>          [REQURIED]
- * @param string $arg1  the string used                      [OPTIONAL A REQURIED]
- * @param int    $arg2  an integer and use description
- *                      Identing long comments               [OPTIONAL A REQURIED]
+ * @author     MichelV <michelv@xarayahosting.nl>
+ * @param string $order  the string used                      [OPTIONAL A REQURIED]
+ * @param int    $changestatus
+ * @param newstatus, transfer, status, system_status,show_summary
  *
- * @return int  type and name returned                       [OPTIONAL A REQURIED]
+ * @return array usersurveys
  *
  * @throws      exceptionclass  [description]                [OPTIONAL A REQURIED]
  *

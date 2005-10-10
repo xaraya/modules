@@ -1,9 +1,9 @@
 <?php
 /**
- * Surveys table definitions function
+ * Surveys refresh (custom)
  * 
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -11,9 +11,9 @@
  * @author Surveys module development team 
  */
 /*
- * Short Description [REQUIRED one line description]
+ * Refresh surveys (custom command).
  *
- * Long Description [OPTIONAL one or more lines]
+ * Only in use for REMAS
  *
  * @author     Jason Judge <jason.judge@academe.co.uk>
  * @author     Another Author <another@example.com>          [REQURIED]
@@ -30,10 +30,7 @@
  * @link       link to a reference                           [OPTIONAL]
  * @see        anothersample(), someotherlinke [reference to other function, class] [OPTIONAL]
  * @since      [Date of first inclusion long date format ]   [REQURIED]
- * @deprecated Deprecated [release version here]             [AS REQUIRED]
- */
-/*
- * Refresh surveys (custom command).
+ * @deprecated Nov 2005
  */
 
 function surveys_admin_refreshsurveys() {

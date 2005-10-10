@@ -3,7 +3,7 @@
  * Surveys initialization functions
  * 
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -405,6 +405,11 @@ CREATE TABLE `xar_surveys_user_surveys` (
     $name = 'surveys.current_survey';
     xarModSetVar('surveys', $name, serialize(array()));
 
+    xarModSetVar('surveys', SendEventMails, 1); 
+    /*
+     * Instances
+     */
+
     // Set up database tables
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -469,7 +474,7 @@ CREATE TABLE `xar_surveys_user_surveys` (
     return true;
 }
 /**
- * upgrade the example module from an old version
+ * upgrade the surveys module from an old version
  * This function can be called multiple times
  */
 function surveys_upgrade($oldversion)
@@ -479,7 +484,7 @@ function surveys_upgrade($oldversion)
         case '0.1.0':
             return surveys_upgrade('0.1.1');
         case '0.1.1':
-        break;
+            break;
     }
     /* Update successful */
     return true;
@@ -514,8 +519,7 @@ function surveys_delete()
         xarModDelAlias($aliasname,'surveys');
     }
 
-    /* Delete any module variables 
- 
+    /* Delete any module variables
      */
 
     xarModDelAllVars('surveys');

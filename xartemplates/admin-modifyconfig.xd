@@ -14,34 +14,20 @@
     <xar:if condition="xarSessionGetVar('statusmsg') != ''">
         <p>#xarSessionGetVar('statusmsg')#</p>
     </xar:if>
-    <!-- the specific template for the current admin function comes here -->
-
-    <!-- Start form - note we do not use api functions to create the recipient URL of
-         this form, but entity instead.  All URLs should be generated this way to ensure
-         compatibility with future versions of Xaraya.
-    -->
 
     <form method="post" action="&xar-modurl-surveys-admin-updateconfig;" enctype="application/x-www-form-urlencoded">
-    <!--
-         Add an authorisation ID - this adds a hidden field in the form that
-         contains an authorisation ID.  The authorisation ID is very important in
-         preventing certain attacks on the website
-     -->
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
-
-
-        <!-- Use standard xaraya classes for form elements -->
         <fieldset>
         <legend><xar:mlstring>Display Options</xar:mlstring></legend>
 
             <div class="xar-form-input-wrapper">
-                <label for="bold" class="xar-form-label" help" title="#xarML('Use bold for example items.')#">
-                       <xar:mlstring>Display Example Items In Bold?</xar:mlstring>
+                <label for="SendEventMails" class="xar-form-label" help" title="#xarML('Use bold for example items.')#">
+                       <xar:mlstring>Send Event Email to admins?</xar:mlstring>
                 </label>
-                <xar:if condition="$boldchecked">
-                    <input type="checkbox" name="bold" id="bold" value="1" checked="checked"/>
+                <xar:if condition="$SendEventMailschecked">
+                    <input type="checkbox" name="SendEventMails" id="SendEventMails" value="1" checked="checked"/>
                 <xar:else/>
-                    <input type="checkbox" name="bold" id="bold" value="1" />
+                    <input type="checkbox" name="SendEventMails" id="SendEventMails" value="1" />
                 </xar:if>
             </div>
         

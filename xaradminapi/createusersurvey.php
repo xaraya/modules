@@ -1,9 +1,9 @@
 <?php
 /**
- * Surveys table definitions function
+ * Surveys create a new survey for on user
  * 
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -11,17 +11,17 @@
  * @author Surveys module development team 
  */
 /*
- * Short Description [REQUIRED one line description]
+ * Create a new user survey record.
  *
- * Long Description [OPTIONAL one or more lines]
+ * Called from user-startsurvey
  *
  * @author     Jason Judge <jason.judge@academe.co.uk>
  * @author     Another Author <another@example.com>          [REQURIED]
- * @param string $arg1  the string used                      [OPTIONAL A REQURIED]
+ * @param date $startdate OPTIONAL
  * @param int    $arg2  an integer and use description
  *                      Identing long comments               [OPTIONAL A REQURIED]
  *
- * @return int  type and name returned                       [OPTIONAL A REQURIED]
+ * @return id  $usid The user survey ID
  *
  * @throws      exceptionclass  [description]                [OPTIONAL A REQURIED]
  *
@@ -31,10 +31,6 @@
  * @see        anothersample(), someotherlinke [reference to other function, class] [OPTIONAL]
  * @since      [Date of first inclusion long date format ]   [REQURIED]
  * @deprecated Deprecated [release version here]             [AS REQUIRED]
- */
-
-/*
- * Create a new user survey record.
  */
 
 function surveys_adminapi_createusersurvey($args) {

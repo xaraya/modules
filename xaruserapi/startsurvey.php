@@ -3,7 +3,7 @@
  * Start a user survey.
  * 
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -13,15 +13,20 @@
 /*
  * Start a user survey.
  *
- * Long Description [OPTIONAL one or more lines]
+ * No checks are made at this point as to whether a user
+ * is permitted to start that survey - only that the survey
+ * exists.
+ * However - a survey of a given type can only be in progress
+ * once for each user.
+ * It does not matter if other surveys are in progress as
+ * a user can have several surveys on the go at a time.
  *
  * @author     Jason Judge <jason.judge@academe.co.uk>
  * @author     Another Author <another@example.com>          [REQURIED]
  * @param string $arg1  the string used                      [OPTIONAL A REQURIED]
- * @param int    $arg2  an integer and use description
- *                      Identing long comments               [OPTIONAL A REQURIED]
+ * @param id    $sid The Survey ID
  *
- * @return int  type and name returned                       [OPTIONAL A REQURIED]
+ * @return id $usid The User Survey ID
  *
  * @throws      exceptionclass  [description]                [OPTIONAL A REQURIED]
  *
@@ -30,21 +35,10 @@
  * @link       link to a reference                           [OPTIONAL]
  * @see        anothersample(), someotherlinke [reference to other function, class] [OPTIONAL]
  * @since      [Date of first inclusion long date format ]   [REQURIED]
- * @deprecated Deprecated [release version here]             [AS REQUIRED]
- */
-/*
- * Start a user survey.
- * No checks are made at this point as to whether a user
- * is permitted to start that survey - only that the survey
- * exists.
- * However - a survey of a given type can only be in progress
- * once for each user.
- * It does not matter if other surveys are in progress as
- * a user can have several surveys on the go at a time.
- * sid: the survey ID
  */
 
-function surveys_userapi_startsurvey($args) {
+function surveys_userapi_startsurvey($args) 
+{
     // Expand arguments
     extract($args);
 

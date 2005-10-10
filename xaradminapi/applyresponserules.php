@@ -1,9 +1,9 @@
 <?php
 /**
- * Surveys table definitions function
+ * Surveys apply rules for user survey
  * 
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -11,15 +11,15 @@
  * @author Surveys module development team 
  */
 /*
- * Short Description [REQUIRED one line description]
+ * Apply the response rules for a user survey.
  *
- * Long Description [OPTIONAL one or more lines]
+ * The results are written back to the database so that
+ * groups (and their responses) are physically disabled.
  *
  * @author     Jason Judge <jason.judge@academe.co.uk>
  * @author     Another Author <another@example.com>          [REQURIED]
  * @param string $arg1  the string used                      [OPTIONAL A REQURIED]
- * @param int    $arg2  an integer and use description
- *                      Identing long comments               [OPTIONAL A REQURIED]
+ * @param id    $usid  User Survey ID
  *
  * @return int  type and name returned                       [OPTIONAL A REQURIED]
  *
@@ -32,13 +32,9 @@
  * @since      [Date of first inclusion long date format ]   [REQURIED]
  * @deprecated Deprecated [release version here]             [AS REQUIRED]
  */
-/*
- * Apply the response rules for a user survey.
- * The results are written back to the database so that
- * groups (and their responses) are phyically disabled.
- */
 
-function surveys_adminapi_applyresponserules($args) {
+function surveys_adminapi_applyresponserules($args) 
+{
     // Expand arguments.
     extract($args);
 
@@ -49,13 +45,13 @@ function surveys_adminapi_applyresponserules($args) {
     // We want to get the ruleset, then apply the rules.
     // - disable user groups (and existing responses) where the group is NA
     //   - include all descendants.
-    // - enabld user groups (and existing responses) where the group is not NA
+    // - enable user groups (and existing responses) where the group is not NA
     //   - include all ancestors
     // - create user groups where a rule applies but those groups do not exist
     //   (i.e. where they have not been visited)
 
     // Get a list of all groups for this survey.
-    // We will us this to help negotiate the groups tree.
+    // We will use this to help negotiate the groups tree.
     $groups = xarModAPIfunc(
         'surveys', 'user', 'getgroups',
         array('gid' => $usersurvey['gid'])

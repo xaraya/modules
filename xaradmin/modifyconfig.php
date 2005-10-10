@@ -3,7 +3,7 @@
  * Modify module's configuration
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -21,7 +21,6 @@
  */
 function surveys_admin_modifyconfig()
 { 
-
     $data = array();
 
     /* common menu configuration */
@@ -36,8 +35,10 @@ function surveys_admin_modifyconfig()
     $data['authid'] = xarSecGenAuthKey();
 
     /* Specify some values for display */
-    $data['boldchecked'] = xarModGetVar('surveys', 'bold') ? true : false;
-    $data['itemsvalue'] = xarModGetVar('surveys', 'itemsperpage');
+    $data['SendEventMailsChecked'] = xarModGetVar('surveys', 'SendEventMails') ? true : false;
+    $data['itemsperpage'] = xarModGetVar('surveys', 'itemsperpage');
+
+
     /* Note : if you don't plan on providing encode/decode functions for
      * short URLs (see xaruserapi.php), you should remove this from your
      * admin-modifyconfig.xard template !
@@ -50,6 +51,7 @@ function surveys_admin_modifyconfig()
     $data['useAliasName'] = xarModGetVar('surveys', 'useModuleAlias');
     $data['aliasname ']= xarModGetVar('surveys','aliasname');
 
+    /* Take care of hooks like categories */
     $hooks = xarModCallHooks('module', 'modifyconfig', 'surveys',
                        array('module' => 'surveys'));
     if (empty($hooks)) {

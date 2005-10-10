@@ -3,7 +3,7 @@
  * Standard function to update module configuration parameters
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -21,7 +21,7 @@ function surveys_admin_updateconfig()
 {
     /* Get parameters from whatever input we need.
      */
-    if (!xarVarFetch('bold', 'checkbox', $bold, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('SendEventMails', 'checkbox', $SendEventMails, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('itemsperpage', 'int', $itemsperpage, 10, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('aliasname', 'str:1:', $aliasname, '', XARVAR_NOT_REQUIRED)) return;
@@ -34,7 +34,7 @@ function surveys_admin_updateconfig()
      * xarVarFetch when recieving the incoming values, so no extra processing
      * is needed when setting the variables here.
      */
-    xarModSetVar('surveys', 'bold', $bold);
+    xarModSetVar('surveys', 'SendEventMails', $SendEventMails);
     xarModSetVar('surveys', 'itemsperpage', $itemsperpage);
     xarModSetVar('surveys', 'SupportShortURLs', $shorturls);
     if (isset($aliasname) && trim($aliasname)<>'') {

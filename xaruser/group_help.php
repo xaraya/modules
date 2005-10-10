@@ -1,9 +1,9 @@
 <?php
 /**
- * Surveys table definitions function
+ * Surveys show help page
  * 
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -11,17 +11,18 @@
  * @author Surveys module development team 
  */
 /*
- * Short Description [REQUIRED one line description]
+ * Show help page
  *
- * Long Description [OPTIONAL one or more lines]
+ * Provide a help page, listing help details for the
+ * specified group name. Help pages are coming from articles and 
+ * can be specific for a language
  *
  * @author     Jason Judge <jason.judge@academe.co.uk>
  * @author     Another Author <another@example.com>          [REQURIED]
  * @param string $arg1  the string used                      [OPTIONAL A REQURIED]
- * @param int    $arg2  an integer and use description
- *                      Identing long comments               [OPTIONAL A REQURIED]
+ * @param id    $gid group ID
  *
- * @return int  type and name returned                       [OPTIONAL A REQURIED]
+ * @return array
  *
  * @throws      exceptionclass  [description]                [OPTIONAL A REQURIED]
  *
@@ -32,13 +33,10 @@
  * @since      [Date of first inclusion long date format ]   [REQURIED]
  * @deprecated Deprecated [release version here]             [AS REQUIRED]
  */
-/*
- * Provide a help page, listing help details for the
- * specified group name.
- */
 
-function surveys_user_group_help() {
-    xarVarFetch('gid', 'str', $gid, 0, XARVAR_NOT_REQUIRED);
+function surveys_user_group_help() 
+{
+    xarVarFetch('gid', 'id', $gid, 0, XARVAR_NOT_REQUIRED);
 
     $locale = xarLocaleGetInfo(xarMLSGetCurrentLocale());
     $lang = $locale['lang'];

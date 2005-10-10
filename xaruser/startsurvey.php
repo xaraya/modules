@@ -3,7 +3,7 @@
  * Surveys table definitions function
  * 
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -11,15 +11,14 @@
  * @author Surveys module development team 
  */
 /*
- * Short Description [REQUIRED one line description]
+ * Start a new survey, and take the user to the start of it.
  *
  * Long Description [OPTIONAL one or more lines]
  *
  * @author     Jason Judge <jason.judge@academe.co.uk>
  * @author     Another Author <another@example.com>          [REQURIED]
  * @param string $arg1  the string used                      [OPTIONAL A REQURIED]
- * @param int    $arg2  an integer and use description
- *                      Identing long comments               [OPTIONAL A REQURIED]
+ * @param id    $sid Survey ID?
  *
  * @return int  type and name returned                       [OPTIONAL A REQURIED]
  *
@@ -30,15 +29,13 @@
  * @link       link to a reference                           [OPTIONAL]
  * @see        anothersample(), someotherlinke [reference to other function, class] [OPTIONAL]
  * @since      [Date of first inclusion long date format ]   [REQURIED]
- * @deprecated Deprecated [release version here]             [AS REQUIRED]
- */
-/*
- * Start a new survey, and take the user to the start of it.
+ *
  */
 
-function surveys_user_startsurvey() {
+function surveys_user_startsurvey() 
+{
     // Need a sid.
-    if (!xarVarFetch('sid', 'int:1', $sid)) {return;}
+    if (!xarVarFetch('sid', 'id', $sid)) {return;}
 
     // Get the overview of surveys for this user.
     $overview = xarModAPIfunc('surveys', 'user', 'overview');
@@ -80,5 +77,4 @@ function surveys_user_startsurvey() {
     // Now go there.
     xarModFunc('surveys', 'user', 'gotosurvey', array('usid' => $usid));
 }
-
 ?>

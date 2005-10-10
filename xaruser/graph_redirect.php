@@ -1,9 +1,9 @@
 <?php
 /**
- * Surveys table definitions function
+ * Surveys Redirect to graphing module
  * 
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -11,7 +11,7 @@
  * @author Surveys module development team 
  */
 /*
- * Short Description [REQUIRED one line description]
+ * Redirect to the graphing module.
  *
  * Long Description [OPTIONAL one or more lines]
  *
@@ -31,9 +31,6 @@
  * @see        anothersample(), someotherlinke [reference to other function, class] [OPTIONAL]
  * @since      [Date of first inclusion long date format ]   [REQURIED]
  * @deprecated Deprecated [release version here]             [AS REQUIRED]
- */
-/*
- * Redirect to the graphing module.
  */
 
 function surveys_user_graph_redirect() {
@@ -71,5 +68,4 @@ function surveys_user_graph_redirect() {
         'password' => $password
     );
 }
-
 ?>

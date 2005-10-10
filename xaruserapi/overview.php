@@ -3,7 +3,7 @@
  * Surveys overview for user
  * 
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -21,7 +21,7 @@
  * @param int    $arg2  an integer and use description
  *                      Identing long comments               [OPTIONAL A REQURIED]
  *
- * @return int  type and name returned                       [OPTIONAL A REQURIED]
+ * @return array  with surveys for this user
  *
  * @throws      exceptionclass  [description]                [OPTIONAL A REQURIED]
  *
@@ -64,7 +64,7 @@ function surveys_userapi_overview($args) {
         'ACTIVE' => 0,
         'LOCKED' => 0,
         'CLOSED' => 0,
-        'TOTAL' => 0
+        'TOTAL'  => 0
     );
     $active = array();
     $locked = array();

@@ -3,7 +3,7 @@
  * Surveys table definitions function
  * 
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -11,51 +11,49 @@
  * @author Surveys module development team 
  */
 /*
- * Short Description [REQUIRED one line description]
+ * Privileges wizard for surveys.
  *
- * Long Description [OPTIONAL one or more lines]
+ * Use a wizard to define privileges for assessments
  *
  * @author     Jason Judge <jason.judge@academe.co.uk>
  * @author     Another Author <another@example.com>          [REQURIED]
  * @param string $arg1  the string used                      [OPTIONAL A REQURIED]
  * @param int    $arg2  an integer and use description
  *                      Identing long comments               [OPTIONAL A REQURIED]
+ * @param  $sid survey id
+ * @param  $system_status
+ * @param  $status
+ * @param  $uid User ID, take all users from roles
  *
- * @return int  type and name returned                       [OPTIONAL A REQURIED]
- *
- * @throws      exceptionclass  [description]                [OPTIONAL A REQURIED]
- *
- * @access      public                                       [OPTIONAL A REQURIED]
+ * @return array  the data for the template with dropdownlists.
+ * @access      private
  * @static                                                   [OPTIONAL]
  * @link       link to a reference                           [OPTIONAL]
  * @see        anothersample(), someotherlinke [reference to other function, class] [OPTIONAL]
- * @since      [Date of first inclusion long date format ]   [REQURIED]
- * @deprecated Deprecated [release version here]             [AS REQUIRED]
- */
-/*
- * Privileges wizard for surveys.
+ *
+ * @TODO MichelV: impose restriction on user group?
  */
 
 function surveys_admin_privileges($args) {
     extract($args);
 
     // Parameters passed by the privileges module.
-    if (!xarVarFetch('extpid', 'isset', $extpid, NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('extname', 'isset', $extname, NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('extrealm', 'isset', $extrealm, NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('extmodule', 'isset', $extmodule, NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('extcomponent', 'isset', $extcomponent, NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('extlevel', 'isset', $extlevel, NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('extinstance', 'isset', $extinstance, NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('extpid',      'isset', $extpid,       NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('extname',     'isset', $extname,      NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('extrealm',    'isset', $extrealm,     NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('extmodule',   'isset', $extmodule,    NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('extcomponent','isset', $extcomponent, NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('extlevel',    'isset', $extlevel,     NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('extinstance', 'isset', $extinstance,  NULL, XARVAR_DONT_SET)) {return;}
 
     // The user has asked for the details to be applied.
     if (!xarVarFetch('apply', 'isset', $apply, NULL, XARVAR_DONT_SET)) {return;}
 
     // Submitted values from the wizard form.
-    if (!xarVarFetch('sid', 'isset', $sid, NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('system_status', 'isset', $system_status, NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('status', 'isset', $status, NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('uid', 'isset', $uid, NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('sid',             'isset', $sid,           NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('system_status',   'isset', $system_status, NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('status',          'isset', $status,        NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('uid',             'isset', $uid,           NULL, XARVAR_DONT_SET)) {return;}
 
     // Get the current instance details (split up).
     // This would only get invoked on first being called up from the privileges
@@ -129,23 +127,23 @@ function surveys_admin_privileges($args) {
 
     $data = array(
         // Standard wizard variables:
-        'extpid' => $extpid,
-        'extname' => $extname,
-        'extrealm' => $extrealm,
-        'extmodule' => $extmodule,
-        'extcomponent' => $extcomponent,
-        'extlevel' => $extlevel,
-        'extinstance' => join(':', $newinstance),
+        'extpid'        => $extpid,
+        'extname'       => $extname,
+        'extrealm'      => $extrealm,
+        'extmodule'     => $extmodule,
+        'extcomponent'  => $extcomponent,
+        'extlevel'      => $extlevel,
+        'extinstance'   => join(':', $newinstance),
         // Wizard-specific:
-        'sid' => $sid,
+        'sid'           => $sid,
         'system_status' => $system_status,
-        'status' => $status,
-        'uid' => $uid,
+        'status'        => $status,
+        'uid'           => $uid,
         // Selection lists:
-        'surveys' => $surveys,
+        'surveys'       => $surveys,
         'system_statuses' => $system_statuses,
-        'statuses' => $statuses,
-        'users' => $users
+        'statuses'      => $statuses,
+        'users'         => $users
     );
 
     return $data;

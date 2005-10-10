@@ -3,7 +3,7 @@
  * The main administration function
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -31,11 +31,6 @@ function surveys_admin_main()
      * module, and allow the site admins to turn it on and off as they see fit.
      */
     if (xarModGetVar('adminpanels', 'overview') == 0) {
-        /* If you want to go directly to some default function, instead of
-         * having a separate main function, you can simply call it here, and
-         * use the same template for admin-main.xd as for admin-view.xd
-         * return xarModFunc('example','admin','view');
-         */
 
         /* Initialise the $data variable that will hold the data
          */

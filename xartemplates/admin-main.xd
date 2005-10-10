@@ -19,7 +19,7 @@
         <li><xar:mlstring>Providing documentation in the functions and template files for those that wish to learn about standard Xaraya Module development.</xar:mlstring></li>
 
     </ol>
-    <p><xar:mlstring>The example module demonstrates:</xar:mlstring>
+    <p><xar:mlstring>This module can help in taking large surveys:</xar:mlstring>
     </p>
     <ul>
         <li><xar:mlstring>examples of standard Xaraya functions commented in plain terms, and written with Xaraya coding standards.</xar:mlstring></li>
@@ -29,7 +29,7 @@
 
     <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
     <p>
-        <xar:mlstring>This module is intended as a reference for other modules to use.  Its output is just a basic non-usable output in many cases.</xar:mlstring>
+        <xar:mlstring>There will be a manual.</xar:mlstring>
     </p>
 
     <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>

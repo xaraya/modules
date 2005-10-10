@@ -73,4 +73,4 @@ Was already present. Changes added by MichelV
  -- adding groups
  -- dependancy rules etc.
  -- User inputs monitoring
- -- 
+ -- Creating rules for a survey
