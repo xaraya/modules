@@ -30,9 +30,10 @@ function censor_userapi_getall1($args)
                    xar_case_sensitive,
                    xar_match_case
             FROM $censortable
-            WHERE xar_locale LIKE ? ";
+            WHERE xar_locale LIKE ? 
+            OR xar_locale LIKE ?";
             
-    $bindvars = array("%".$local."%");    
+    $bindvars = array("%".$local."%", "%ALL%");    
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 

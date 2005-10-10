@@ -20,6 +20,7 @@ function censor_admin_view()
     
     // Specify some labels for display
     
+   
     $data['authid'] = xarSecGenAuthKey();
     
     // ftb -> where we can set this?
@@ -51,6 +52,7 @@ function censor_admin_view()
         return $data;
       
     } 
+
     // Check individual permissions for Edit / Delete
     $data['items'] = array();
     for ($i = 0; $i < count($censors); $i++) {
@@ -77,7 +79,9 @@ function censor_admin_view()
         } 
 
         $censors[$i]['locale'] = implode(", ", $censor['locale']);
-       
+        if ($censors[$i]['locale']== 'ALL') {
+            $censors[$i]['locale']= xarML('ALL');
+            }
     } 
     // Add the array of items to the template variables
     $data['items'] = $censors; 

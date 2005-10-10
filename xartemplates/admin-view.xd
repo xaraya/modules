@@ -1,32 +1,21 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:if condition="xarTplAddStyleLink('censor', 'forms')"></xar:if>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:mlstring>
-            Censor Administration
-        </xar:mlstring>
+        <xar:mlstring>Censor Administration</xar:mlstring>
     </span>
 </div>
 <div class="xar-mod-body">
     <h2>
-        <xar:mlstring>
-            View censored word
-        </xar:mlstring>
+        <xar:mlstring>View censored word</xar:mlstring>
     </h2>
-    <form class="xar-formwidget" name="post" id="post" action="&xar-modurl-censor-admin-settings;" method="post" enctype="application/x-www-form-urlencoded">
-        <fieldset class="formelements xar-norm">
+    <form name="post" id="post" action="&xar-modurl-censor-admin-settings;" method="post" enctype="application/x-www-form-urlencoded">
+        <fieldset>
             <legend>
-                <strong>
-                    <xar:mlstring>
-                        Select style
-                    </xar:mlstring>
-                </strong>
+                    <xar:mlstring>Select style</xar:mlstring>
             </legend>
-            <p class="param">
-                <label for="filter">
-                    <xar:mlstring>
-                        Style
-                    </xar:mlstring>
+            <div class="xar-form-input-wrapper">
+                <label for="selstyle">
+                    <xar:mlstring>Style</xar:mlstring>
                 </label>
                   <select name="selstyle" id="selstyle" onchange="this.form.submit()">
                     <xar:foreach in="$style" key="$key" value="$value">
@@ -37,30 +26,24 @@
                       </xar:if>
                     </xar:foreach>
                   </select>
-            </p>
+            </div>
         </fieldset>
-        <fieldset class="formelements xar-norm">
+        <fieldset>
             <legend>
-                <strong>
-                    <xar:mlstring>
-                        Censored words
-                    </xar:mlstring>
-                </strong>
+                <xar:mlstring>Censored words</xar:mlstring>
             </legend>
             <xar:if condition="!isset($items)">
-                <p class="param">
-                    <xar:mlstring>
-                        There are no censored words in database
-                    </xar:mlstring>
-                </p>
+                <div class="xar-form-input-wrapper">
+                    <xar:mlstring>There are no censored words in database</xar:mlstring>
+                </div>
             <xar:else/>
-        <xar:if condition="$selstyle eq 'compact'">
-            <xar:template file="compact" type="module"/>
-       <xar:elseif condition="$selstyle eq 'plain'"/>
-        <xar:template file="plain" type="module"/>
-    <xar:else/>
-        <xar:template file="icons" type="module"/>    
-    </xar:if>
+                <xar:if condition="$selstyle eq 'compact'">
+                    <xar:template file="compact" type="module"/>
+                <xar:elseif condition="$selstyle eq 'plain'"/>
+                    <xar:template file="plain" type="module"/>
+                <xar:else/>
+                    <xar:template file="icons" type="module"/>    
+                </xar:if>
             </xar:if>
         </fieldset>
     </form>

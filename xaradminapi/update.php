@@ -21,6 +21,7 @@ function censor_adminapi_update($args)
     // Get arguments from argument array
     extract($args);
     
+    
     // Argument check
     if ((!isset($cid)) ||
             (!isset($keyword))) {
@@ -40,6 +41,13 @@ function censor_adminapi_update($args)
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     } 
+   
+    if ($all == 0) {
+        $loc[] = 'ALL';
+       } else {
+        $loc = $locale;   
+        }
+   
     // Security Check
     if (!xarSecurityCheck('EditCensor')) return; 
     // Get datbase setup
@@ -54,7 +62,7 @@ function censor_adminapi_update($args)
                 xar_match_case      = ?,
                 xar_locale          = ?
             WHERE xar_cid           = ?";
-    $bindvars = array($keyword, $case, $matchcase, $locale, $cid);
+    $bindvars = array($keyword, $case, $matchcase, serialize($loc), $cid);
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
     // Let the calling process know that we have finished successfully

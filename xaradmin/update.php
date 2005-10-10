@@ -28,6 +28,7 @@ function censor_admin_update($args)
     if (!xarVarFetch('case', 'isset', $case, 0,XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('matchcase', 'isset', $matchcase, 0,XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('locale', 'array', $locale, '',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('all', 'int:0:1', $all, '',XARVAR_NOT_REQUIRED)) return;
     
     extract($args);
     
@@ -47,7 +48,8 @@ function censor_admin_update($args)
                              'keyword' => $keyword,
                              'case' => $case,
                              'matchcase' => $matchcase,
-                             'locale' => serialize($locale)))) return;
+                             'all' => $all,
+                             'locale' => $locale))) return;
                 
     xarResponseRedirect(xarModURL('censor', 'admin', 'view')); 
     // Return
