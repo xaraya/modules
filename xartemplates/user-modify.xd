@@ -45,7 +45,7 @@
         <div class="xar-form-input-wrapper">
             <label class="xar-form-label"><xar:mlstring>Status:</xar:mlstring></label>
             <select name="status" class="xar-form-textlong">
-            <option value="">
+            <option value=""/>
             <xar:loop name="$status">
                 <xar:if condition="$ticketdata['status'] eq $loop:item['status']">
                     <option value="#$loop:item['id']#" selected="selected">#$loop:item['status']#</option>

@@ -7,8 +7,8 @@
     <xar:mlstring>
         The ticket #(1) that you have submitted to our helpdesk system has been closed.
     </xar:mlstring>
-	<xar:mlvar>#$tid#</xar:mlvar>
-</xar:ml>	
+    <xar:mlvar>#$tid#</xar:mlvar>
+</xar:ml>   
 </p>
 
 
