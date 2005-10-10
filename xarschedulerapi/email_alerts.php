@@ -33,7 +33,7 @@ function julian_userapi_email_alerts($args)
     //get tomorrow's events
     $startdate = date("Y-m-d",strtotime("tomorrow"));
     // get events where to send alertmails for.
-	$events = array();
+    $events = array();
     // get all the events from tomorrow to tomorrow
     $events = xarModApiFunc('julian','user','getall', array('startdate'=>$startdate, 'enddate'=>$startdate));
     // get all subscriptions per user

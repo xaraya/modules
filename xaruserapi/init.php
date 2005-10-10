@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id$
- *
  * Create a valid link to a particluar week
  *
  * @package julian
@@ -148,3 +146,4 @@ function julian_userapi_init()
     define('CAL_SHARING_BUSY',         2);
     define('CAL_SHARING_GLOBAL',       3);
 }
+?>

@@ -38,7 +38,7 @@ function julian_userapi_get($args)
             new SystemException($msg));
         return;
     }
-	
+    
     // establish a db connection
     $dbconn =& xarDBGetConn();
     $xartable = xarDBGetTables();
@@ -46,45 +46,45 @@ function julian_userapi_get($args)
    
     // Get all the info for the event
     $query = "SELECT 
-			event_id,
-			calendar_id,
-			type,
-			organizer,
-			contact,
-			url,
-			summary,
-			description,
-			related_to,
-			reltype,
-			class,
-			share_uids,
-			priority,
-			status,
-			location,
-			street1,
-			street2,
-			city,
-			state,
-			zip,
-			phone,
-			email,
-			fee,
-			exdate,
-			categories,
-			rrule,
-			recur_freq,
-			recur_until,
-			recur_count,
-			recur_interval,
-			dtstart,
-			dtend,
-			duration,
-			isallday,
-			freebusy,
-			due,
-			transp,
-			created,
-			last_modified
+            event_id,
+            calendar_id,
+            type,
+            organizer,
+            contact,
+            url,
+            summary,
+            description,
+            related_to,
+            reltype,
+            class,
+            share_uids,
+            priority,
+            status,
+            location,
+            street1,
+            street2,
+            city,
+            state,
+            zip,
+            phone,
+            email,
+            fee,
+            exdate,
+            categories,
+            rrule,
+            recur_freq,
+            recur_until,
+            recur_count,
+            recur_interval,
+            dtstart,
+            dtend,
+            duration,
+            isallday,
+            freebusy,
+            due,
+            transp,
+            created,
+            last_modified
              FROM $event_table
              WHERE event_id =?";
     $result = &$dbconn->Execute($query, array($event_id));
@@ -100,61 +100,61 @@ function julian_userapi_get($args)
 
     // Extract fields
     list($event_id, $calendar_id,$type,$organizer,$contact,$url,$summary,
-			$description,$related_to,$reltype,$class,$share_uids,$priority,$status,$location,$street1,$street2,$city,$state,
-			$zip,$phone,$email,$fee,$exdate,$categories,$rrule,$recur_freq,$recur_until,
-			$recur_count,$recur_interval,$dtstart,$dtend,$duration,$isallday,$freebusy,$due,$transp,$created,$last_modified) = $result->fields;
+            $description,$related_to,$reltype,$class,$share_uids,$priority,$status,$location,$street1,$street2,$city,$state,
+            $zip,$phone,$email,$fee,$exdate,$categories,$rrule,$recur_freq,$recur_until,
+            $recur_count,$recur_interval,$dtstart,$dtend,$duration,$isallday,$freebusy,$due,$transp,$created,$last_modified) = $result->fields;
     $result->Close();
-	
+    
     // Security checks 
-	// TODO make these work
+    // TODO make these work
     // For this function, the user must *at least* have READ access to this item
     // if (!xarSecurityCheck('ReadJulian', 1, 'Item', "event_id:All:All")) {
     //    return;
     //    }
 
     $item = array(
-			'event_id'   	=>$event_id,
-			'calendar'   	=>$calendar_id,
-			'type'			=>$type,
-			'organizer'		=>$organizer,
-			'contact' 		=>$contact,
-			'url'			=>$url,
-			'summary'		=>$summary,
-			'description'	=>$description,
-			'related_to'	=>$related_to,
-			'reltype'		=>$reltype,
-			'class'			=>$class,
-			'share_uids'	=>$share_uids,
-			'priority'		=>$priority,
-			'status'		=>$status,
-			'location'		=>$location,
-			'street1'		=>$street1,
-			'street2'		=>$street2,
-			'city'			=>$city,
-			'state'			=>$state,
-			'zip'			=>$zip,
-			'phone'			=>$phone,
-			'email'			=>$email,
-			'fee'           =>$fee,
-			'exdate'        =>$exdate,
-			'categories'    =>$categories,
-			'rrule'         =>$rrule,
-			'recur_freq'    =>$recur_freq,
-			'recur_until'	=>$recur_until,
-			'recur_count'   =>$recur_count,
-			'recur_interval'=>$recur_interval,
-			'dtstart'		=>$dtstart,
-			'dtend'			=>$dtend,
-			'duration'		=>$duration,
-			'isallday'		=>$isallday,
-			'freebusy'		=>$freebusy,
-			'due'			=>$due,
-			'transp'		=>$transp,
-			'created'		=>$created,
-			'last_modified'	=>$last_modified);
-			
-		// get the event category color
-		$item['color'] = xarModAPIFunc('julian','user','getcolor',array('category'=>$categories));
+            'event_id'       =>$event_id,
+            'calendar'       =>$calendar_id,
+            'type'            =>$type,
+            'organizer'        =>$organizer,
+            'contact'         =>$contact,
+            'url'            =>$url,
+            'summary'        =>$summary,
+            'description'    =>$description,
+            'related_to'    =>$related_to,
+            'reltype'        =>$reltype,
+            'class'            =>$class,
+            'share_uids'    =>$share_uids,
+            'priority'        =>$priority,
+            'status'        =>$status,
+            'location'        =>$location,
+            'street1'        =>$street1,
+            'street2'        =>$street2,
+            'city'            =>$city,
+            'state'            =>$state,
+            'zip'            =>$zip,
+            'phone'            =>$phone,
+            'email'            =>$email,
+            'fee'           =>$fee,
+            'exdate'        =>$exdate,
+            'categories'    =>$categories,
+            'rrule'         =>$rrule,
+            'recur_freq'    =>$recur_freq,
+            'recur_until'    =>$recur_until,
+            'recur_count'   =>$recur_count,
+            'recur_interval'=>$recur_interval,
+            'dtstart'        =>$dtstart,
+            'dtend'            =>$dtend,
+            'duration'        =>$duration,
+            'isallday'        =>$isallday,
+            'freebusy'        =>$freebusy,
+            'due'            =>$due,
+            'transp'        =>$transp,
+            'created'        =>$created,
+            'last_modified'    =>$last_modified);
+            
+        // get the event category color
+        $item['color'] = xarModAPIFunc('julian','user','getcolor',array('category'=>$categories));
 
     // Return the item array
     return $item;

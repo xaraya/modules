@@ -28,8 +28,8 @@
 function julian_userapi_getYearLink($date=null)
 {
     if(!isset($date)) {
-	$date = date('Ymd');
-	}
+    $date = date('Ymd');
+    }
     $year = substr($date,0,4);
     $month = substr($date,4,2);
     $day = substr($date,6,2);
