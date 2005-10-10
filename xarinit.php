@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id$
- *
  * contains the module information
  *
  * @package modules
@@ -17,7 +15,8 @@
  * @author John Cox
  *
  */
-function trackback_init() {
+function trackback_init() 
+{
 
     // display hook
     if (!xarModRegisterHook('item', 'display', 'GUI', 'trackback', 'user', 'displayhook')) return false;
