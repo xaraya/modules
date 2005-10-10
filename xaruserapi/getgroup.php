@@ -3,7 +3,7 @@
  * Get a specific item
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -15,7 +15,7 @@
  * 
  * Standard function of a module to retrieve a specific item
  *
- * @author the Example module development team
+ * @author the Todolist module development team
  * @param  $args ['exid'] id of example item to get
  * @returns array
  * @return item array, or false on failure

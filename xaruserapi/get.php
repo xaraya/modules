@@ -3,7 +3,7 @@
  * Get a specific item
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -50,7 +50,7 @@ function todolist_userapi_get($args)
             xar_status
               FROM $todostable
               WHERE xar_todo_id = ?";
-    $result = &$dbconn->Execute($query,array($exid));
+    $result = &$dbconn->Execute($query,array($todo_id));
     /* Check for an error with the database code, adodb has already raised
      * the exception so we just return
      */

@@ -3,7 +3,7 @@
  * Todolist table definition functions
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -35,10 +35,10 @@ function todolist_xartables()
     $groupstable = xarDBGetSiteTablePrefix() . '_todolist_groups';
     $xarTables['todolist_groups'] = $todolist_groups;
 
-
+/* Notes are moved to comments
     $notestable = xarDBGetSiteTablePrefix() . '_todolist_notes';
     $xarTables['todolist_notes'] = $todolist_notes;
-
+*/
 
     $memberstable = xarDBGetSiteTablePrefix() . '_todolist_project_members';
     $xarTables['todolist_project_members'] = $todolist_project_members;

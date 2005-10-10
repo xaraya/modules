@@ -3,7 +3,7 @@
  * Display a todo
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -50,7 +50,7 @@ function todolist_user_display($args)
      * Security check 1 - the get() function will fail if the user does not
      * have at least READ access to this item (also see below).
      */
-    $item = xarModAPIFunc('example',
+    $item = xarModAPIFunc('todolist',
         'user',
         'get',
         array('todo_id' => $todo_id));
@@ -74,6 +74,14 @@ function todolist_user_display($args)
     $data['name_value'] = $item['name'];
     $data['number_value'] = $item['number'];
      */
+     
+   /* Get responsible persons
+    *
+    * $todolist_responsible_persons_column = &$pntable['todolist_responsible_persons_column'];
+    */
+    
+    $todolist_project_members_column = &$pntable['todolist_project_members_column'];
+     
     $data['todo_id'] = $todo_id;
     $data['item'] = $item;
     //$data['is_bold'] = xarModGetVar('example', 'bold');

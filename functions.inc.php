@@ -12,6 +12,7 @@
  * @param $user_id            int        the primary key of the group
  * @param $order_by            string    How should the table be ordered?
  * @param $selected_project    int        which project should be shown
+ * @deprecated okt 05 To user-display
  */
 function makeFrontQuery($order_by, $selected_project)
 {
@@ -25,7 +26,7 @@ function makeFrontQuery($order_by, $selected_project)
 
     $query="SELECT $pntable[todolist_todos].*, count(distinct($todolist_notes_column[note_id])) AS nr_notes 
         FROM $pntable[todolist_todos], $pntable[todolist_responsible_persons], $pntable[todolist_project_members]
-        LEFT JOIN $pntable[todolist_notes]
+        LEFT JOIN $pntable[todolist_notes]//Comments
         ON $todolist_todos_column[todo_id]=$todolist_notes_column[todo_id]
         WHERE $todolist_todos_column[status] < 6";
 

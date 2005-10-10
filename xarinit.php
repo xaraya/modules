@@ -3,7 +3,7 @@
  * Todolist initialization functions
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -58,7 +58,7 @@ function todolist_init()
     $result = $datadict->changeTable($groupstable, $fields);
     if (!$result) {return;}
     
-    /* Can't we do this with comments ??? */
+    /* Can't we do this with comments ??? 
     $notestable = $xartable['todolist_notes'];
     $fields = "xar_todo_id I unsigned NOTNULL default 0,
             xar_note_id I unsigned PRIMARY auto,
@@ -66,10 +66,10 @@ function todolist_init()
             xar_usernr I default NULL,
             xar_date I NOTNULL default 0
             "; // Shouldn't date be a datetype?
-    /* Create or alter the table as necessary */
+    // Create or alter the table as necessary 
     $result = $datadict->changeTable($notestable, $fields);
     if (!$result) {return;}
-
+*/
     $project_memberstable = $xartable['todolist_project_members'];
 
     $fields = "xar_project_id I PRIMARY default 0,

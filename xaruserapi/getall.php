@@ -3,17 +3,17 @@
  * Get all example items
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Example Module
+ * @subpackage Todolist Module
  */
 
 /**
- * Get all example items
+ * Get all todos
  * 
- * @author the Example module development team 
+ * @author the Todolist module development team 
  * @param numitems $ the number of items to retrieve (default -1 = all)
  * @param startnum $ start with this item number (default 1)
  * @returns array
@@ -63,7 +63,7 @@ function example_userapi_getall($args)
     /* Security check - important to do this as early on as possible to
      * avoid potential security holes or just too much wasted processing
      */
-    if (!xarSecurityCheck('ViewExample')) return;
+    if (!xarSecurityCheck('ViewTodolist')) return;
     /* Get database setup - note that both xarDBGetConn() and xarDBGetTables()
      * return arrays but we handle them differently.  For xarDBGetConn() we
      * currently just want the first item, which is the official database
