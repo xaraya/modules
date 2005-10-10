@@ -13,9 +13,9 @@
             <legend>
                 <xar:mlstring>Reset poll votes</xar:mlstring>
             </legend>
-            <input type="hidden" name="authid" value="#$authid#">
-            <input type="hidden" name="pid" value="#$pid#">
-            <input type="hidden" name="confirm" value="#$confirm#">
+            <input type="hidden" name="authid" value="#$authid#"/>
+            <input type="hidden" name="pid" value="#$pid#"/>
+            <input type="hidden" name="confirm" value="#$confirm#"/>
             <div class="xar-form-input-wrapper">
                 <xar:mlstring>Reset votes for poll: </xar:mlstring>
                 #$polltitle#
@@ -27,8 +27,8 @@
             </div>
         </fieldset>
         <div class="xar-form-input-wrapper-after">
-            <input type="submit" value="#$buttonlabel#">&nbsp;&nbsp;
-            <input type="button" value="#xarML('Cancel Reset')#" onclick="location.href='&xar-modurl-polls-admin-list;'">
+            <input type="submit" value="#$buttonlabel#"/>&nbsp;&nbsp;
+            <input type="button" value="#xarML('Cancel Reset')#" onclick="location.href='&xar-modurl-polls-admin-list;'"/>
         </div>
     </form>
 </div>

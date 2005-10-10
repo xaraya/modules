@@ -14,21 +14,21 @@
             <legend>
                 <xar:mlstring>Set main settings</xar:mlstring>
             </legend>
-            <input type="hidden" name="authid" value="#$authid#">
+            <input type="hidden" name="authid" value="#$authid#"/>
             <div class="xar-form-input-wrapper">
                 <label for="title" title="#xarML('The name of the new poll')#" class="xar-form-label">
                     <xar:mlstring>Poll title</xar:mlstring>
                 </label>
-                <input type="text" name="title" id="title" size="50" maxlength="100" value="">
+                <input type="text" name="title" id="title" size="50" maxlength="100" value=""/>
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="polltype" title="#xarML('The type of the new poll')#" class="xar-form-label">
                     <xar:mlstring>Poll type</xar:mlstring>
                 </label>
-                <input type="radio" id="polltype" name="polltype" value="single" checked="checked">
+                <input type="radio" id="polltype" name="polltype" value="single" checked="checked"/>
                 &nbsp;
                 <xar:mlstring>Single Choice</xar:mlstring>
-                <input type="radio" id="polltype" name="polltype" value="multi">
+                <input type="radio" id="polltype" name="polltype" value="multi"/>
                 &nbsp;
                 <xar:mlstring>Multiple Choice</xar:mlstring>
             </div>
@@ -55,13 +55,13 @@
             <legend>
                 <xar:mlstring>Please enter each available option into a single field</xar:mlstring>
             </legend>
-            <xar:for start="$i = 1" test="$i <= $optcount" iter="$i++">
+            <xar:for start="$i = 1" test="$i le $optcount" iter="$i++">
                 <div class="xar-form-input-wrapper">
                     <label for="option_#$i#" class="xar-form-label">
                         <xar:mlstring>Option</xar:mlstring>
                         #$i#
                     </label>
-                    <input type="text" id="option_#$i#" name="option_#$i#" value="" size="50" maxlength="50">
+                    <input type="text" id="option_#$i#" name="option_#$i#" value="" size="50" maxlength="50"/>
                 </div>
             </xar:for>
         </fieldset>

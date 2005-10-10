@@ -7,7 +7,7 @@
     <div class="xar-form-input-wrapper">
             <label for="poll_title" title="#xarML('The name of the  poll')#" class="xar-form-label">
                 <xar:mlstring>Poll title</xar:mlstring>:
-            </label><input type="text" name="poll[title]" id="poll_title" size="50" maxlength="100" value="#$poll['title']#">
+            </label><input type="text" name="poll[title]" id="poll_title" size="50" maxlength="100" value="#$poll['title']#"/>
     </div>
     <div class="xar-form-input-wrapper">
          <label for="polltype" title="#xarML('The type of the poll')#" class="xar-form-label">
@@ -40,13 +40,13 @@
             </xar:if>
     </div>
     </xar:comment>
-    <xar:for start="$i = 1" test="$i <= $optcount" iter="$i++">
+    <xar:for start="$i = 1" test="$i le $optcount" iter="$i++">
         <div class="xar-form-input-wrapper">
             <label for="poll_options_#$i#" class="xar-form-label">
                 <xar:mlstring>Poll Option</xar:mlstring>
                 #$i#
             </label>
-            <input type="text" name="poll[options][#$i#]" id="poll_options_#$i#" value="#$poll['options'][$i]#" size="50" maxlength="50">
+            <input type="text" name="poll[options][#$i#]" id="poll_options_#$i#" value="#$poll['options'][$i]#" size="50" maxlength="50"/>
         </div>
     </xar:for>
 </fieldset>

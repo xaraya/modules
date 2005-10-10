@@ -16,13 +16,13 @@
             <legend>
                 <xar:mlstring>Modify main poll settings</xar:mlstring>
             </legend>
-            <input type="hidden" name="authid" value="#$authid#">
-            <input type="hidden" name="pid" value="#$pid#">
+            <input type="hidden" name="authid" value="#$authid#"/>
+            <input type="hidden" name="pid" value="#$pid#"/>
             <div class="xar-form-input-wrapper">
                 <label for="title" title="#xarML('The name of the new poll')#" class="xar-form-label">
                     <xar:mlstring>Poll title</xar:mlstring>:
                 </label>
-                <input type="text" name="title" id="title" size="50" maxlength="100" value="#$polltitle#">
+                <input type="text" name="title" id="title" size="50" maxlength="100" value="#$polltitle#"/>
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="polltype" title="#xarML('The type of the new poll')#" class="xar-form-label">

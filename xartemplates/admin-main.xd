@@ -1,106 +1,107 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
-    <span class="xar-mod-title"><xar:mlstring>Polls Administration </xar:mlstring></span>
+  <span class="xar-mod-title"><xar:mlstring>Polls Administration </xar:mlstring></span>
 </div>
+
 <div class="xar-mod-body">
-    <img src="#xarTplGetImage('admin_generic.gif', 'base')#" alt="official icon" width="96" height="96" class="xar-module-icon" />
-    <h2>
-        <xar:mlstring>Overview</xar:mlstring>
-    </h2>
-    <h3>
-        <xar:mlstring>What is it?</xar:mlstring>
-    </h3>
-    <p>
-        <em>
-            <xar:mlstring>
-                Polls is a Xaraya Content Module.
-            </xar:mlstring>
-        </em>
+  <img src="#xarTplGetImage('admin_generic.gif', 'base')#" alt="official icon" width="96" height="96" class="xar-module-icon" />
+  <h2>
+    <xar:mlstring>Overview</xar:mlstring>
+  </h2>
+  <h3>
+    <xar:mlstring>What is it?</xar:mlstring>
+  </h3>
+  <p>
+    <em>
+      <xar:mlstring>
+        Polls is a Xaraya Content Module.
+      </xar:mlstring>
+    </em>
+    <xar:mlstring>
+      It is currently responsible for accomplishing these tasks:
+    </xar:mlstring>
+    <ul>
+      <li>
         <xar:mlstring>
-            It is currently responsible for accomplishing these tasks:
+          The Polls Module controls the configuration and management of simple vote questions.
         </xar:mlstring>
-           <ul>
-               <li>
-                   <xar:mlstring>
-                       The Polls Module controls the configuration and management of simple vote questions.
-                   </xar:mlstring>
-               </li>
-           </ul>
-   <p>
-   <h3>
-       <xar:mlstring>How to use it?</xar:mlstring>
-   </h3>
-   <p>
-           <xar:mlstring>
-               From the menu, you have four choices.
-           </xar:mlstring>
-           <ul>
-               <li>
-                   <xar:mlstring>
-                       Overview
-                   </xar:mlstring>
-                   :
-                   <xar:mlstring>
-                       This page
-                   </xar:mlstring>
-               </li>
-               <li>
-                   <xar:mlstring>
-                       New Poll
-                   </xar:mlstring>
-                   :
-                   <xar:mlstring>
-                       Add a Poll to your site
-                   </xar:mlstring>
-               </li>
-               <li>
-                   <xar:mlstring>
-                       List Polls
-                   </xar:mlstring>
-                   :
-                   <xar:mlstring>
-                       View a summary list of existing Polls
-                   </xar:mlstring>
-               </li>
-               <li>
-                   <xar:mlstring>
-                       Modify Config
-                   </xar:mlstring>
-                   :
-                   <xar:mlstring>
-                       Change the Polls module settings
-                   </xar:mlstring>
-               </li>
-           </ul>
-   </p>
-   <h3>
-       <xar:mlstring>Included Blocks</xar:mlstring>
-   </h3>
-   <p>
-           <xar:mlstring>
-               Poll blocks will display the current poll in block format.
-           </xar:mlstring>
-   </p>
-   <h3>
-       <xar:mlstring>Included Hooks</xar:mlstring>
-   </h3>
-    <p>
-        <ul>
-            <li>
-                <xar:mlstring>
-                     display -- Allows you to display a poll for a particular module item (e.g. an article, xarbb topic, ...)
-                </xar:mlstring>
-            </li>
-            <li>
-                <xar:mlstring>
-                    new/create/modify/update/delete -- Allows you to create/update a poll for a particular module item
-                </xar:mlstring>
-            </li>
-        </ul>
-    </p>
+      </li>
+    </ul>
+  </p>
+  <h3>
+    <xar:mlstring>How to use it?</xar:mlstring>
+  </h3>
+  <p>
+    <xar:mlstring>
+      From the menu, you have four choices.
+    </xar:mlstring>
+    <ul>
+      <li>
+        <xar:mlstring>
+          Overview
+        </xar:mlstring>
+        :
+        <xar:mlstring>
+          This page
+        </xar:mlstring>
+      </li>
+      <li>
+        <xar:mlstring>
+          New Poll
+        </xar:mlstring>
+        :
+        <xar:mlstring>
+          Add a Poll to your site
+        </xar:mlstring>
+      </li>
+      <li>
+        <xar:mlstring>
+          List Polls
+        </xar:mlstring>
+        :
+        <xar:mlstring>
+          View a summary list of existing Polls
+        </xar:mlstring>
+      </li>
+      <li>
+        <xar:mlstring>
+          Modify Config
+        </xar:mlstring>
+        :
+        <xar:mlstring>
+          Change the Polls module settings
+        </xar:mlstring>
+      </li>
+    </ul>
+  </p>
+  <h3>
+    <xar:mlstring>Included Blocks</xar:mlstring>
+  </h3>
+  <p>
+    <xar:mlstring>
+      Poll blocks will display the current poll in block format.
+    </xar:mlstring>
+  </p>
+  <h3>
+    <xar:mlstring>Included Hooks</xar:mlstring>
+  </h3>
+  <p>
+    <ul>
+      <li>
+        <xar:mlstring>
+          display -- Allows you to display a poll for a particular module item (e.g. an article, xarbb topic, ...)
+        </xar:mlstring>
+      </li>
+      <li>
+        <xar:mlstring>
+          new/create/modify/update/delete -- Allows you to create/update a poll for a particular module item
+        </xar:mlstring>
+      </li>
+    </ul>
+  </p>
 </div>
 <div class="xar-mod-foot xar-align-center xar-padding-thick">
-    <p>
-       <xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring>
-    </p>
+  <p>
+    <xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring>
+  </p>
 </div>

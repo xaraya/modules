@@ -6,7 +6,7 @@
             #$title#
         </div>
     <xar:else />
-        <form method="post" action="&xar-modurl-polls-user-vote;" method="post" enctype="application/x-www-form-urlencoded">
+        <form method="post" action="&xar-modurl-polls-user-vote;" enctype="application/x-www-form-urlencoded">
             <fieldset>
                 <legend>
                     #$title#
@@ -20,7 +20,7 @@
                         <xar:mlstring>This Poll is currently private.  Results will not be shown.</xar:mlstring>
                     </div>
                 </xar:if>
-                <xar:for start="$i = 1" test="$i <= count($options)" iter="$i++">
+                <xar:for start="$i = 1" test="$i le count($options)" iter="$i++">
                     <div class="xar-form-input-wrapper">
                         <label for="polloption_#$i#" class="xar-form-label">
                             #$options[$i]['name']#

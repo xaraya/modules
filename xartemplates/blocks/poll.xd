@@ -8,7 +8,7 @@
             <div style="text-align: center; font-weight: bold; text-transform: capitalize;">
                 #$title#
             </div>
-            <xar:for start="$i = 1" test="$i <= count($options)" iter="$i++">
+            <xar:for start="$i = 1" test="$i le count($options)" iter="$i++">
                 <div class="xar-form-input-wrapper">
                     <xar:if condition="$type eq 'single'">
                         <input type="radio" name="option" id="option_#$bid#_#$i#" value="#$i#" />
@@ -26,7 +26,7 @@
         </form>
     <xar:else />
         <div style="text-align: center; font-weight: bold; text-transform: capitalize; ">
-      <xar:comment><div class="xar-block-title-right"></xar:comment>
+          <!-- div class="xar-block-title-right"> -->
             #$title#
         </div>
         <xar:loop name="$options">
