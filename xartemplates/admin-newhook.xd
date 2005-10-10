@@ -8,7 +8,7 @@
                 <input type="text" name="keywords" id="keywords" value="#$keywords#" size="50" maxlength="254" />
             </div>
        <div class="xar-form-input-wrapper">
-            <label for"keywords" class="xar-form-label" title="#xarML('select the keywords for this item.')#">
+            <label for="keywords" class="xar-form-label" title="#xarML('select the keywords for this item.')#">
                 <xar:mlstring>Allowed delimiters</xar:mlstring>: 
             </label>
             #$delimiters#
