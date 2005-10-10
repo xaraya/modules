@@ -96,7 +96,7 @@
                         </xar:mlstring>
         </span>
                 </label>
-    <select multiple size="5" name="locale[]" id="locale">
+    <select multiple="multiple" size="5" name="locale[]" id="locale">
     <xar:loop name="$locales">
     <xar:if condition="$loop:item['check'] eq 1">
     <option value="#$loop:item['value']#" selected="selected">#$loop:item['name']#</option>
