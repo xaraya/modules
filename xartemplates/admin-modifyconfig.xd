@@ -2,122 +2,126 @@
 <!-- Formatting table to center the menu -->
 <div class="xar-mod-head"><span class="xar-mod-title">Authinvision2 Administration</span></div>
 <div class="xar-mod-body">
-<h2>Modify Configuration</h2>
+  <h2>Modify Configuration</h2>
 
-<!-- BL style form for authinvision2 configuration options -->
-<form method="post" action="#xarModURL('authinvision2','admin','updateconfig')#">
-<input type="hidden" name="authid" id="authid" value="#$authid#" />
-<fieldset>
-    <legend><strong>Invision Database Settings</strong></legend>
-    <div style="border: 1px solid rgb(187, 187, 187); margin: 2px; padding: 1px;">
+  <!-- BL style form for authinvision2 configuration options -->
+  <form method="post" action="#xarModURL('authinvision2','admin','updateconfig')#">
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+    <fieldset>
+      <legend><strong>Invision Database Settings</strong></legend>
+      <div style="border: 1px solid rgb(187, 187, 187); margin: 2px; padding: 1px;">
         <table border="0">
-            <tr align="left" valign="top">
-                <td>
-                    <strong>Server</strong>
-                </td>
-                <td>
-                    <input type="text" name="server" value="#$server#" />
-                </td>
-            </tr>
-            <tr align="left" valign="top">
-                <td>
-                    <strong>Database</strong>
-                </td>
-                <td>
-                    <input type="text" name="database" value="#$database#" />
-                 </td>
-            </tr>
-            <tr align="left" valign="top">
-                <td>
-                    <strong>Username</strong>
-                </td>
-                <td>
-                    <input type="text" name="username" value="#$username#" />
-                </td>
-            </tr>
-            <tr align="left" valign="top">
-                <td>
-                    <strong>Password</strong>
-                </td>
-                <td>
-                    <input type="password" name="password" value="#$password#" />
-                </td>
-            </tr>
-            <tr align="left" valign="top">
-                <td>
-                    <strong>Invision table prefix</strong>
-                </td>
-                <td>
-                    <input type="text" name="prefix" value="#$prefix#" />
-                </td>
-            </tr>
-            <tr align="left" valign="top">
-                <td colspan="2">
-                   <i>Please note that your invision table prefix does <strong>not</strong> include the underscore in the table name.  if your invision members table is ibf_members, the prefix is "ibf"</i>
-                </td>
-            </tr>
-            <tr align="left" valign="top">
-                <td>
-                    <strong>Invision Forum Root</strong>
-                </td>
-                <td>
-                    <input type="text" name="forumroot" value="#$forumroot#" />
-                </td>
-            </tr>
-            <tr align="left" valign="top">
-                <td colspan="2">
-                    <i>The Forum Root is the path to your IPB installation.  This is needed to include an IPB function located in $forumroot/sources/functions.php</i>.
-                </td>
-            </tr>
+          <tr align="left" valign="top">
+            <td>
+              <strong>Server</strong>
+            </td>
+            <td>
+              <input type="text" name="server" value="#$server#" />
+            </td>
+          </tr>
+          <tr align="left" valign="top">
+            <td>
+              <strong>Database</strong>
+            </td>
+            <td>
+              <input type="text" name="database" value="#$database#" />
+            </td>
+          </tr>
+          <tr align="left" valign="top">
+            <td>
+              <strong>Username</strong>
+            </td>
+            <td>
+              <input type="text" name="username" value="#$username#" />
+            </td>
+          </tr>
+          <tr align="left" valign="top">
+            <td>
+              <strong>Password</strong>
+            </td>
+            <td>
+              <input type="password" name="password" value="#$password#" />
+            </td>
+          </tr>
+          <tr align="left" valign="top">
+            <td>
+              <strong>Invision table prefix</strong>
+            </td>
+            <td>
+              <input type="text" name="prefix" value="#$prefix#" />
+            </td>
+          </tr>
+          <tr align="left" valign="top">
+            <td colspan="2">
+              <i>Please note that your invision table prefix does <strong>not</strong> include the underscore in the table name.  if your invision members table is ibf_members, the prefix is "ibf"</i>
+            </td>
+          </tr>
+          <tr align="left" valign="top">
+            <td>
+              <strong>Invision Forum Root</strong>
+            </td>
+            <td>
+              <input type="text" name="forumroot" value="#$forumroot#" />
+            </td>
+          </tr>
+          <tr align="left" valign="top">
+            <td colspan="2">
+              <i>The Forum Root is the path to your IPB installation.  This is needed to include an IPB function located in $forumroot/sources/functions.php</i>.
+            </td>
+          </tr>
         </table>
-    </div>
-</fieldset>
-<br>
-<fieldset>
-    <legend><strong>Xaraya Settings</strong></legend>
-    <div style="border: 1px solid rgb(187, 187, 187); margin: 2px; padding: 1px;">
+      </div>
+    </fieldset>
+    <br/>
+    <fieldset>
+      <legend><strong>Xaraya Settings</strong></legend>
+      <div style="border: 1px solid rgb(187, 187, 187); margin: 2px; padding: 1px;">
         <table border="0">
-            <tr align="left" valign="top">
-                <td>
-                    <strong>Default Xaraya Group</strong>
-                </td>
-                <td>
-                    <select name="defaultgroup" id="defaultgroup">
-                    <xar:loop name="$groups">
-                        <xar:if condition="$loop:item['name'] eq $defaultgroup">
-                            <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#" selected="selected">#$loop:item['name']#</option>
-                        <xar:else />
-                            <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#">#$loop:item['name']#</option>
-                        </xar:if>
-                    </xar:loop>
-                    </select>
-                </td>
-            <tr align="left" valign="top">
-                <td colspan="2">
-                    <i>Set the following to force only the authinvision2 module to be used for authentication.  Once set, it can not be unset (uninstall authinvision2 to restore authsystem).</i>
-                </td>
-            </tr>
-            <tr align="left" validn="top">
-                <td>
-                    <strong>Use Authinvision2 exclusively?</strong>
-                </td>
-                <td>
-                    <xar:if condition="$onlyauth eq TRUE">
-                        <input type="checkbox" disabled name="onlyauth" value="1" checked="on"/>
+          <tr align="left" valign="top">
+            <td>
+              <strong>Default Xaraya Group</strong>
+            </td>
+            <td>
+              <select name="defaultgroup" id="defaultgroup">
+                <xar:loop name="$groups">
+                  <xar:if condition="$loop:item['name'] eq $defaultgroup">
+                    <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#" selected="selected">#$loop:item['name']#</option>
                     <xar:else />
-                        <input type="checkbox" name="onlyauth" value="1" />
-                    </xar:if>
-                </td>
-            <tr align="left" valign="top">
-                <td>
-                    Submit Changes
-                </td>
-                <td>
-                    <!-- submit button -->
-                    <input type="submit" value="#$submitbutton#"  />
-                </td>
-            </tr>
-    </table>
-</fieldset>
-</form>
+                    <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#">#$loop:item['name']#</option>
+                  </xar:if>
+                </xar:loop>
+              </select>
+            </td>
+          </tr>
+          <tr align="left" valign="top">
+            <td colspan="2">
+              <i>Set the following to force only the authinvision2 module to be used for authentication.  Once set, it can not be unset (uninstall authinvision2 to restore authsystem).</i>
+            </td>
+          </tr>
+          <tr align="left" validn="top">
+            <td>
+              <strong>Use Authinvision2 exclusively?</strong>
+            </td>
+            <td>
+              <xar:if condition="$onlyauth eq TRUE">
+                <input type="checkbox" disabled="disabled" name="onlyauth" value="1" checked="on"/>
+                <xar:else />
+                <input type="checkbox" name="onlyauth" value="1" />
+              </xar:if>
+            </td>
+          </tr>
+          <tr align="left" valign="top">
+            <td>
+              Submit Changes
+            </td>
+            <td>
+              <!-- submit button -->
+              <input type="submit" value="#$submitbutton#"  />
+            </td>
+          </tr>
+        </table>
+      </div>
+    </fieldset>
+  </form>
 </div>
+  

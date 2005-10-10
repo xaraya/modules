@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id$
- *
  * Administrator update config
  *
  * @package authentication
@@ -15,22 +13,14 @@
 function authinvision2_admin_updateconfig()
 {
     // Get parameters
-    
-    list($server,
-        $database,
-        $username,
-        $password,
-        $prefix,
-        $forumroot,
-        $defaultgroup,
-        $onlyauth, ) = xarVarCleanFromInput('server',
-                                              'database', 
-                                              'username', 
-                                              'password', 
-                                              'prefix', 
-                                              'forumroot', 
-                                              'defaultgroup',
-                                              'onlyauth');
+    if(!xarVarFetch('server'      ,'str:1',$server      ,''  , XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('database'    ,'str:1',$database    ,''  , XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('username'    ,'str:1',$username    ,''  , XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('password'    ,'str:1',$password    ,''  , XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('prefix'      ,'str:1',$prefix      ,''  , XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('forumroot'   ,'str:1',$forumroot   ,''  , XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('defaultgroup','isset',$defaultgroup,NULL, XARVAR_DONT_SET     )) {return;}
+    if(!xarVarFetch('onlyauth'    ,'int:1',$onlyauth    ,0   , XARVAR_NOT_REQUIRED)) {return;}
 
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;
