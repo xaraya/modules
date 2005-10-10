@@ -115,7 +115,7 @@
                </select>
            </div>
            <div class="xar-form-input-wrapper-after">
-            <xar:mlstring>(You can also set installed editors in </xar:mlstring><a href="&xar-modurl-base-admin-modifyconfig&amp;tab=other" rel="ext"><xar:mlstring>Base Module - Modify Config - Other Tab</xar:mlstring></a>)
+            <xar:mlstring>(You can also set installed editors in </xar:mlstring><a href="&xar-modurl-base-admin-modifyconfig;&amp;tab=other" rel="ext"><xar:mlstring>Base Module - Modify Config - Other Tab</xar:mlstring></a>)
            </div>
          </fieldset>
         <fieldset class="formelements xar-norm">
@@ -270,7 +270,7 @@
                 <label for="tinyask" class="xar-form-label" title="#xarML('Ask user if they wish to use WYSIWYG for each text area?')#">
                     <xar:mlstring>Prompt to use WYSIWYG?</xar:mlstring>
                 </label>
-                <select name="tinyask" id="tinyask" size="1" onchange=submit();>
+                <select name="tinyask" id="tinyask" size="1" onchange="submit();">
                 <xar:if condition="$tinyask eq 'false'">
                     <option value="false" selected="selected"><xar:mlstring>No</xar:mlstring></option>
                     <option value="true"><xar:mlstring>Yes</xar:mlstring></option>
@@ -304,7 +304,7 @@
                 <label for="tinytilemap" class="xar-form-label" title="#xarML('Use tiled images instead of individual for faster loading.')#">
                     <xar:mlstring>Use icon map for faster loading?</xar:mlstring>
                 </label>
-                <select name="tinytilemap" id="tinytilemap" size="1" onchange=submit();>
+                <select name="tinytilemap" id="tinytilemap" size="1" onchange="submit();">
                 <xar:if condition="$tinytilemap ne 'true'">
                     <option value="false" selected="selected"><xar:mlstring>No</xar:mlstring></option>
                     <option value="true"><xar:mlstring>Yes</xar:mlstring></option>
@@ -466,7 +466,7 @@
                 <label for="tinyplugins" class="xar-form-label" title="#xarML('Add names of any extra plugins you wish to load here.')#">
                     <xar:mlstring>Names of plugins to load:</xar:mlstring>
                 </label>
-               <input type="text"name="tinyplugins" id="tinyplugins" value="#$tinyplugins#" size="65" maxlength="240" >
+               <input type="text" name="tinyplugins" id="tinyplugins" value="#$tinyplugins#" size="65" maxlength="240" />
             </div>
 
             <div class="xar-form-input-wrapper-after">
@@ -506,6 +506,7 @@
             at modules/tinymce/xartemplates/includes/ibrowserconfig.inc</a><xar:mlstring> for the IBrowser Plugin - then chmod 444
             for added security. </xar:mlstring>
             </li>
+            </ul>
          </div>
          </fieldset>
          <fieldset>
@@ -717,7 +718,6 @@
             <div class="xar-form-input-wrapper">
                 <label for="multiconfig" class="xar-form-label" title="#xarML('Enter additional individual custom config options here')#">
                         <xar:mlstring>Custom Config options:</xar:mlstring>
-                    </span>
                 </label>
                 <textarea class="mceNoEditor" name="multiconfig" id="multiconfig" cols="50" rows="10" >#$multiconfig#</textarea>
            </div>
