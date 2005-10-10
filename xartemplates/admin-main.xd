@@ -1,50 +1,50 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
-    <span class="xar-mod-title"><xar:mlstring>Translations Administration</xar:mlstring></span>
+  <span class="xar-mod-title"><xar:mlstring>Translations Administration</xar:mlstring></span>
 </div>
 <div class="xar-mod-body">
-   <img src="#xarTplGetImage('admin_generic.gif', 'base')#" alt="official icon" width="96" height="96" class="xar-module-icon" />
-    <h2>
-        <xar:mlstring>Overview</xar:mlstring>
-    </h2>
-    <h3>
-        <xar:mlstring>What is it?</xar:mlstring>
-    </h3>
-<p>
-  <xar:mlstring>The Xaraya MLS is a tool to automate the translation process for Xaraya.
-  The process roughly consists of two parts:</xar:mlstring>
-  <ol>
-    <li><xar:mlstring>Translating</xar:mlstring>
-    <li><xar:mlstring>Generating &amp; Packaging</xar:mlstring>
-  </ol>
-</p>
+  <img src="#xarTplGetImage('admin_generic.gif', 'base')#" alt="official icon" width="96" height="96" class="xar-module-icon" />
+  <h2>
+    <xar:mlstring>Overview</xar:mlstring>
+  </h2>
+  <h3>
+    <xar:mlstring>What is it?</xar:mlstring>
+  </h3>
+  <p>
+    <xar:mlstring>The Xaraya MLS is a tool to automate the translation process for Xaraya.
+      The process roughly consists of two parts:</xar:mlstring>
+    <ol>
+      <li><xar:mlstring>Translating</xar:mlstring></li>
+      <li><xar:mlstring>Generating &amp; Packaging</xar:mlstring></li>
+    </ol>
+  </p>
 
-<h4><xar:mlstring>The translating process</xar:mlstring></h4>
-<p>
-  <xar:mlstring>The translating proces consists of the following steps:</xar:mlstring>
-  <ol>
-    <li><xar:mlstring>Choosing the language (locale) to work on</xar:mlstring></li>
-    <li><xar:mlstring>Choosing what to translate</xar:mlstring></li>
-    <li><xar:mlstring>Generating / updating skeletons for the chosen locale and subsystem</xar:mlstring></li>
-    <li><xar:mlstring>Translating the terms found in the elements for the subsystem</xar:mlstring></li>
-  </ol>
-</p>
+  <h4><xar:mlstring>The translating process</xar:mlstring></h4>
+  <p>
+    <xar:mlstring>The translating proces consists of the following steps:</xar:mlstring>
+    <ol>
+      <li><xar:mlstring>Choosing the language (locale) to work on</xar:mlstring></li>
+      <li><xar:mlstring>Choosing what to translate</xar:mlstring></li>
+      <li><xar:mlstring>Generating / updating skeletons for the chosen locale and subsystem</xar:mlstring></li>
+      <li><xar:mlstring>Translating the terms found in the elements for the subsystem</xar:mlstring></li>
+    </ol>
+  </p>
 
-<h4><xar:mlstring>The generating &amp; packaging process</xar:mlstring></h4>
-<p>
-  <xar:mlstring>The generating and packaging process consists of the following steps:</xar:mlstring>
-  <ol>
-    <li><xar:mlstring>Generating the translation, giving an overview of the translated items</xar:mlstring></li>
-    <li><xar:mlstring>Packaging the generated translation in a downloadable archive</xar:mlstring></li>
-  </ol>
-</p>
+  <h4><xar:mlstring>The generating &amp; packaging process</xar:mlstring></h4>
+  <p>
+    <xar:mlstring>The generating and packaging process consists of the following steps:</xar:mlstring>
+    <ol>
+      <li><xar:mlstring>Generating the translation, giving an overview of the translated items</xar:mlstring></li>
+      <li><xar:mlstring>Packaging the generated translation in a downloadable archive</xar:mlstring></li>
+    </ol>
+  </p>
 
-<p>
-<a href="&xar-modurl-translations-admin-start;"><xar:mlstring>Start translating</xar:mlstring></a>
-</p>
- </div>
-        <div class="xar-mod-foot xar-align-center xar-padding-thick">
-    <p>
-        <xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring>
-    </p>
+  <p>
+    <a href="&xar-modurl-translations-admin-start;"><xar:mlstring>Start translating</xar:mlstring></a>
+  </p>
+</div>
+<div class="xar-mod-foot xar-align-center xar-padding-thick">
+  <p>
+    <xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring>
+  </p>
 </div>

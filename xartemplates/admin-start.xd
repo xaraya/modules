@@ -4,23 +4,24 @@
 <form name="workingLocaleForm" id="workingLocaleForm" action="#xarModURL('translations', 'admin', 'update_working_locale')#" method="post">
   <p>
     <xar:mlstring>While working inside the translations module, you always work on the translation of one particular
-    locale. You choose that locale below. It will activate the proper storage location for the translated
-    items while you are working on a translation.</xar:mlstring><br />
+      locale. You choose that locale below. It will activate the proper storage location for the translated
+      items while you are working on a translation.</xar:mlstring><br />
     <xar:mlstring>If you don't see the locale you want in the dropdown below, you will need to create it and activate it in the Modify Config page of the Base module.</xar:mlstring>
   </p>
   <p>
     <xar:mlstring>Choose the working locale</xar:mlstring>:
     <select name="locale" id="locale" onchange="document.workingLocaleForm.submit();">
-        <xar:for start="$i=0" test="$i lt count($locales)" iter="$i++">
-            <xar:if condition="$locales[$i] eq $working_locale">
-                <option value="#$locales[$i]#" selected="selected">#$locales[$i]#</option>
-            <xar:else />
-                <option value="#$locales[$i]#">#$locales[$i]#</option>
-            </xar:if>
-        </xar:for>
+      <xar:for start="$i=0" test="$i lt count($locales)" iter="$i++">
+        <xar:if condition="$locales[$i] eq $working_locale">
+          <option value="#$locales[$i]#" selected="selected">#$locales[$i]#</option>
+          <xar:else />
+          <option value="#$locales[$i]#">#$locales[$i]#</option>
+        </xar:if>
+      </xar:for>
     </select>
     <xar:set name="$select_locale"><xar:mlstring>Select this locale</xar:mlstring></xar:set>
     <input type="submit" value="#$select_locale#"/>
+  </p>
 </form>
 
 <h4><xar:mlstring>Translation jobs</xar:mlstring></h4>

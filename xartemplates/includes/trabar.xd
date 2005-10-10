@@ -4,19 +4,19 @@
   </p>
 
     <form method="post" action="&xar-modurl-translations-admin-translate_subtype;">
-    <input type="hidden" name="dnType" value="#$dnType#">
-    <input type="hidden" name="dnName" value="#$dnName#">
-    <input type="hidden" name="extid" value="#$extid#">
+    <input type="hidden" name="dnType" value="#$dnType#"/>
+    <input type="hidden" name="dnName" value="#$dnName#"/>
+    <input type="hidden" name="extid" value="#$extid#"/>
     <select name="defaultcontext" id="defaultcontext" size="1">
     <xar:for start="$i=0" test="$i lt count($subnames)" iter="$i++">
         <xar:if condition="($entrydata[$i]['numEmptyEntries'] + $entrydata[$i]['numEmptyKeyEntries']) eq 0">
-          <xar:set name="optcolor">'STYLE="color: black;"'</xar:set>
+          <xar:set name="optcolor">'color: black;'</xar:set>
         <xar:else />
-          <xar:set name="optcolor">'STYLE="color: red;"'</xar:set>
+          <xar:set name="optcolor">'color: red;'</xar:set>
         </xar:if>
         <xar:if condition="$subtypes[$i].':'.$subnames[$i] eq $selectedsubtype.':'.$selectedsubname">
-            <xar:set name="optcolor">'STYLE="color: blue;"'</xar:set>
-            <option #$optcolor# value="#$subtypes[$i]#:#$subnames[$i]#" selected="selected">
+            <xar:set name="optcolor">'color: blue;'</xar:set>
+            <option style="#$optcolor#" value="#$subtypes[$i]#:#$subnames[$i]#" selected="selected">
             <xar:ml>
             <xar:mlstring>#(1):#(2) (#(3) strings, #(4) keys; untranslated - #(5) strings, #(6) keys)</xar:mlstring>
             <xar:mlvar>#$subtypes[$i]#</xar:mlvar>
@@ -28,7 +28,7 @@
             </xar:ml>
             </option>
         <xar:else />
-            <option #$optcolor# value="#$subtypes[$i]#:#$subnames[$i]#">
+            <option style="#$optcolor#" value="#$subtypes[$i]#:#$subnames[$i]#">
             <xar:ml>
             <xar:mlstring>#(1):#(2) (#(3) strings, #(4) keys; untranslated - #(5) strings, #(6) keys)</xar:mlstring>
             <xar:mlvar>#$subtypes[$i]#</xar:mlvar>
