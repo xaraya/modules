@@ -214,9 +214,10 @@
                     <xar:if condition="!empty($pager)">
                         #$pager#
                     </xar:if>
-<script language="JavaScript" type="text/javascript">
+<script language="JavaScript" type="text/javascript"><![CDATA[
     document.write("[ <a href=\"javascript:xar_base_checkall(document.forms['viewimages'],true)\"><xar:mlstring>Check All</xar:mlstring></a> | ");
     document.write("<a href=\"javascript:xar_base_checkall(document.forms['viewimages'],false)\"><xar:mlstring>Uncheck All</xar:mlstring></a> ]");
+]]>
 </script>
                 </td>
             </tr>
