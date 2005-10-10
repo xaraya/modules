@@ -63,10 +63,10 @@ function julian_user_viewevent()
    $timeformat=xarModGetVar('julian', 'timeformat');  
    $dateformat_created="$dateformat $timeformat";
    
-	// Don't like this here
-	if (!isset($bl_data['recur_until']) || is_numeric($bl_data['recur_until']) || strrchr($bl_data['recur_until'], '0000')) {
-		$bl_data['recur_until'] = 'recur_until';
-	}
+    // Don't like this here
+    if (!isset($bl_data['recur_until']) || is_numeric($bl_data['recur_until']) || strrchr($bl_data['recur_until'], '0000')) {
+        $bl_data['recur_until'] = 'recur_until';
+    }
 
    $bl_data['id'] = $bl_data['event_id'];
    $bl_data['deletesummary'] = xarVarPrepForDisplay($bl_data['summary']);
@@ -125,7 +125,7 @@ function julian_user_viewevent()
          // this is for the 'on every' recurring event type
          $time .= "the ".$weektimes[$recur_interval] ." ".$day_array[$recur_count]." every ".$bl_data['recur_freq']." ". $intervals[$rrule] . $eff;
       }
-	  
+      
       
       //add the end date if one exists
       if (strcmp($bl_data['recur_until'],""))
@@ -133,7 +133,7 @@ function julian_user_viewevent()
      //if the duration has not been set and this is not an all day event, add the start time to the string
      $duration=strcmp($duration,"")?$duration:($bl_data['isallday']?'':' at '.date("g:i A",strtotime($bl_data['dtstart'])));
      $bl_data['time'] = $time.$duration .".";
-	 
+     
    //If there is no duration and this is not an all day event, show the time at the front.
    } else if (!$bl_data['isallday'] && !strcmp($duration,'')) {
       $bl_data['time'] = date("g:i A l, $dateformat",strtotime($bl_data['dtstart']));

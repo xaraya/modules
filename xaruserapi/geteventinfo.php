@@ -43,7 +43,7 @@ function julian_userapi_geteventinfo($args)
             $obj = $result->FetchObject(false);
             $event['summary'] = $obj->xar_title;
             $event['description'] = $obj->xar_summary;
-			$event['artstatus'] = $obj->xar_status;
+            $event['artstatus'] = $obj->xar_status;
             $event['viewURL'] = xarModURL('articles','user','display',array('aid'=>$iid));
         }
     }

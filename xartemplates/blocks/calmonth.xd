@@ -58,7 +58,7 @@ or:
                                 <xar:overlib-popup-close name="$olclose" />
                                 <xar:set name="$event">'
                                  onmouseover="return overlib(\''.$text.'\',CAPTION,\''.xarLocaleFormatDate('%m/%d/%Y',strtotime($date)).'\')" 
-								 onmouseout="return nd()"
+                                 onmouseout="return nd()"
                                  class="xar-julian-event"'</xar:set>
                             <xar:else />
                                 <xar:set name="$event">''</xar:set>

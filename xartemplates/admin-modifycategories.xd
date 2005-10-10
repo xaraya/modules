@@ -35,8 +35,8 @@
                             <td colspan="2">
                                 <input type="hidden" name="cid" value="#$cat_id#">
                                 <xar:mlstring>Category Name</xar:mlstring>:&nbsp;#$categories[$cat_id]['name']#&nbsp;&nbsp;<xar:mlstring>Color</xar:mlstring>:&nbsp;
-    							<xar:data-input name="color" type="tcolorpicker" value="$categories[$cat_id]['color']" defaultValue="$categories[$cat_id]['color']" readonly="readonly"/>
-    						</td>
+                                <xar:data-input name="color" type="tcolorpicker" value="$categories[$cat_id]['color']" defaultValue="$categories[$cat_id]['color']" readonly="readonly"/>
+                            </td>
                         </tr>
                         <tr bgcolor="#dbdad2">
                             <td align="left" colspan="2">
@@ -70,8 +70,8 @@
                         <xar:mlstring>Color:</xar:mlstring>
                     </span>
                 </label>
-				<xar:data-input name="color" type="tcolorpicker" readonly="readonly"/>
-			</div>
+                <xar:data-input name="color" type="tcolorpicker" readonly="readonly"/>
+            </div>
             <input name="addaction" type="submit" value="Add" />
             <input name="addaction" type="submit" value="Cancel" onclick="isCancel=true" />
         </fieldset>
