@@ -91,7 +91,7 @@ function polls_adminapi_create($args)
               xar_reset)
             VALUES (?,?,?,1,?,?,?,?,?,?,?,?)";
 
-    $bindvars = array((int)$nextId, $title, $polltype, $private, $votes, (int)$modid, $itemtype, $itemid, $start_date, $end_date, $time);
+    $bindvars = array($nextId, $title, $polltype, $private, $votes, (int)$modid, $itemtype, $itemid, $start_date, $end_date, $time);
     $result = $dbconn->Execute($sql, $bindvars);
 
 
