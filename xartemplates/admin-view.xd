@@ -1,39 +1,42 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
-<xar:style scope="module" file="lists" />
+<xar:style scope="module" module="lists" file="lists" />
 <xar:base-include-javascript module="base" filename="confirmlink.js" />
 
 <xar:if condition="empty($tid) and empty($lid)">
-    <xar:set name="title">xarML('All List Types')</xar:set>
+    <xar:set name="title"><xar:mlstring>All List Types</xar:mlstring></xar:set>
 </xar:if>
 <xar:if condition="!empty($tid) and empty($lid)">
-    <xar:set name="title">xarML('List Type')</xar:set>
+    <xar:set name="title"><xar:mlstring>List Type</xar:mlstring></xar:set>
 </xar:if>
 <xar:if condition="!empty($tid) and !empty($lid)">
-    <xar:set name="title">xarML('List')</xar:set>
+    <xar:set name="title"><xar:mlstring>List</xar:mlstring></xar:set>
 </xar:if>
 
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Lists Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Lists Overview</xar:mlstring> - #$title#</h2>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Lists Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Lists Overview</xar:mlstring> - #$title#</h2>
 <div class="xar-mod-lists-view" style="margin: auto;">
 
 <xar:comment><xar:set name="dummy">var_dump($alllists)</xar:set></xar:comment>
 
-<xar:set name="label_view_list_types">xarML('View list types')</xar:set>
-<xar:set name="label_view_lists">xarML('View lists')</xar:set>
-<xar:set name="label_view_list_items">xarML('View list items')</xar:set>
+<xar:set name="label_view_list_types"><xar:mlstring>View list types</xar:mlstring></xar:set>
+<xar:set name="label_view_lists"><xar:mlstring>View lists</xar:mlstring></xar:set>
+<xar:set name="label_view_list_items"><xar:mlstring>View list items</xar:mlstring></xar:set>
 
-<xar:set name="label_edit_list_type">xarML('Edit list type')</xar:set>
-<xar:set name="label_edit_list">xarML('Edit list')</xar:set>
-<xar:set name="label_edit_list_item">xarML('Edit list item')</xar:set>
+<xar:set name="label_edit_list_type"><xar:mlstring>Edit list type</xar:mlstring></xar:set>
+<xar:set name="label_edit_list"><xar:mlstring>Edit list</xar:mlstring></xar:set>
+<xar:set name="label_edit_list_item"><xar:mlstring>Edit list item</xar:mlstring></xar:set>
 
-<xar:set name="label_new_list_type">xarML('New list type')</xar:set>
-<xar:set name="label_new_list">xarML('New list')</xar:set>
-<xar:set name="label_new_list_item">xarML('New list item')</xar:set>
+<xar:set name="label_new_list_type"><xar:mlstring>New list type</xar:mlstring></xar:set>
+<xar:set name="label_new_list"><xar:mlstring>New list</xar:mlstring></xar:set>
+<xar:set name="label_new_list_item"><xar:mlstring>New list item</xar:mlstring></xar:set>
 
-<xar:set name="label_delete_list_type">xarML('Delete list type')</xar:set>
-<xar:set name="label_delete_list">xarML('Delete list')</xar:set>
-<xar:set name="label_delete_list_item">xarML('Delete list item')</xar:set>
+<xar:set name="label_delete_list_type"><xar:mlstring>Delete list type</xar:mlstring></xar:set>
+<xar:set name="label_delete_list"><xar:mlstring>Delete list</xar:mlstring></xar:set>
+<xar:set name="label_delete_list_item"><xar:mlstring>Delete list item</xar:mlstring></xar:set>
 
 
 
@@ -45,7 +48,7 @@
 </xar:comment>
 
 <p>
-    [<a href="#xarModURL('lists','admin','view')#">#$label_view_list_types#</a>]
+    [<a href="&xar-modurl-lists-admin-view;">#$label_view_list_types#</a>]
     [<a href="#$urlnew#" title="#$label_new_list_type#">#$label_new_list_type#</a>]
 </p>
 

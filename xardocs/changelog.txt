@@ -34,3 +34,13 @@ TODO:
 MichelV:
 - Headers done
 - Module name was registered. Changed ID
+
+jojodee 2005-10-12:
+- Overview redirect fix, also added overview function as per discussion, agreed for consistency now
+- File headers updated with link and author according to rfc 44
+- Win LF/CRs in all files to Unix
+- Add standard module icon in overview
+- Some php -> bl tag in templates
+- Add placeholders for modifyconfig/updateconfig and the template so we 
+  don't get errors on that function in the menu
+- Test/fix for xhtml compliancy for existing templates

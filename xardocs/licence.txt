@@ -1,5 +1,4 @@
 /**
- * File: $Id$
  *
  * Xaraya surveys module
  *

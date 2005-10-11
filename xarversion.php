@@ -1,14 +1,14 @@
 <?php
 /**
  * Lists initialization functions
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
- * 
+ *
  * @subpackage lists
- * @author Jason Judge 
+ * @author Jason Judge
  */
 $modversion['name']           = 'Lists';
 $modversion['id']             = '46'; //1705 originally here?
