@@ -113,7 +113,7 @@ function pop3gateway_admin_import()
         $article['title']   = $subject;
         $article['aid'] = 0;
         $article['ptid'] = $importpubtype;
-        $article['status'] = $defaultstatus;
+        $article['status'] = (int)$defaultstatus;
         xarModAPIFunc('articles', 'admin', 'create', $article);
 
         if(!$pop3->delete($i)) {

@@ -21,7 +21,7 @@ function pop3gateway_admin_updateconfig()
     if (!xarVarFetch('mailserverpass', 'str:1:', $mailserverpass, 'password')) return;
     if (!xarVarFetch('mailserverport', 'int:1:', $mailserverport, '110', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('importpubtype', 'id', $importpubtype, 1, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('defaultstatus', 'id', $defaultstatus, 1, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('defaultstatus', 'int::', $defaultstatus, 1, XARVAR_NOT_REQUIRED)) return;
     xarModSetVar('pop3gateway', 'mailserver', $mailserver);
     xarModSetVar('pop3gateway', 'mailserverlogin', $mailserverlogin);
     xarModSetVar('pop3gateway', 'mailserverpass', $mailserverpass);
