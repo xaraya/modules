@@ -1,17 +1,24 @@
 <?php
 /**
- * File: $Id$
- *
  * Xaraya POP3 Gateway
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
- * @link http://www.xaraya.org
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
  *
  * @subpackage pop3gateway
  * @author John Cox
-*/
+ */
+/**
+ * Modify module's configuration
+ *
+ * This is a standard function to modify the configuration parameters of the
+ * module
+ *
+ * @author John Cox
+ * @return bool true
+ */
 function pop3gateway_admin_updateconfig()
 {
     if (!xarSecConfirmAuthKey()) return;

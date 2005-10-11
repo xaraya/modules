@@ -1,4 +1,21 @@
 <?php
+/**
+ * Xaraya POP3 Gateway
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage pop3gateway Module
+ * @link http://xaraya.com/index.php/release/36.html
+ * @author John Cox
+ */
+/**
+ * Scheduler function for import
+ * 
+ * @author John Cox
+ */
 function pop3gateway_schedulerapi_import()
 {
     if(!xarSecurityCheck('AdminPOP3Gateway')) return;
@@ -110,7 +127,7 @@ function pop3gateway_schedulerapi_import()
         $article['summary'] = $content;
         $article['aid'] = 0;
         $article['ptid'] = $importpubtype;
-        $article['status'] = $defaultstatus;
+        $article['status'] = (int)$defaultstatus;
         xarModAPIFunc('articles', 'admin', 'create', $article);
 
         if(!$pop3->delete($i)) {

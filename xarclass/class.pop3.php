@@ -1,20 +1,31 @@
 <?php 
-
-   /**
-    * mail_fetch/setup.php
-    *
-    * Copyright (c) 1999-2002 The SquirrelMail Project Team
-    *
-    * Copyright (c) 1999 CDI (cdi@thewebmasters.net) All Rights Reserved
-    * Modified by Philippe Mingo 2001 mingo@rotedic.com
-    * An RFC 1939 compliant wrapper class for the POP3 protocol.
-    *
-    * Licensed under the GNU GPL. For full terms see the file COPYING.
-    *
-    * pop3 class
-    *
-    * $Id: class-pop3.php,v 1.2 2005/01/07 01:29:49 saxmatt Exp $
-    */
+/**
+ * Class pop3
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage pop3gateway Module
+ * @link http://xaraya.com/index.php/release/36.html
+ * @author John Cox
+ */
+/**
+ * mail_fetch/setup.php
+ *
+ * Copyright (c) 1999-2002 The SquirrelMail Project Team
+ *
+ * Copyright (c) 1999 CDI (cdi@thewebmasters.net) All Rights Reserved
+ * Modified by Philippe Mingo 2001 mingo@rotedic.com
+ * An RFC 1939 compliant wrapper class for the POP3 protocol.
+ *
+ * Licensed under the GNU GPL. For full terms see the file COPYING.
+ *
+ * pop3 class
+ *
+ * $Id: class-pop3.php,v 1.2 2005/01/07 01:29:49 saxmatt Exp $
+ */
 
 class POP3 {
     var $ERROR      = '';       //  Error string.
