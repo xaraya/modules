@@ -210,14 +210,15 @@ function example_init()
         );
     xarDefineInstance('example', 'Item', $instances);
     /* You can also use some external "wizard" function to specify instances :
-     *
-     * $instances = array(
-     * array('header' => 'external', // this keyword indicates an external "wizard"
-     * 'query'  => xarModURL('example','admin','privileges',array('foo' =>'bar')),
-     * 'limit'  => 0
-     * )
-     * );
-     * xarDefineInstance('example', 'Item', $instances);
+
+      $instances = array(
+          array('header' => 'external', // this keyword indicates an external "wizard"
+                'query'  => xarModURL('example','admin','privileges',array('foo' =>'bar')),
+                'limit'  => 0
+          )
+      );
+      xarDefineInstance('example', 'Item', $instances);
+     
      */
     $instancestable = $xartable['block_instances'];
     $typestable = $xartable['block_types'];
