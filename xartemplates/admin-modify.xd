@@ -88,7 +88,7 @@
                 <label for="locale" title="#xarML('This is the locale, for that when matched will be replaced.')#" class="xar-form-label">
                     <xar:mlstring>Locale</xar:mlstring>
                 </label>
-                <select multiple size="5" name="locale[]" id="locale">
+                <select multiple="multiple" size="5" name="locale[]" id="locale">
                     <xar:loop name="$locales">
                         <xar:if condition="$loop:item['check'] eq 1">
                             <option value="#$loop:item['value']#" selected="selected">#$loop:item['name']#</option>
