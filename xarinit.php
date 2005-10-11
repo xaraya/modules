@@ -17,7 +17,7 @@
  * This function is only ever called once during the lifetime of a particular
  * module instance
  *
- * @author Example module development team
+ * @author Example Module Development Team
  */
 function example_init()
 {
