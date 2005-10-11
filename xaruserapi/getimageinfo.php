@@ -33,8 +33,8 @@ function images_userapi_getimageinfo( $args )
 
     if (!empty($fileId) && is_numeric($fileId)) {
         // Get file information from the uploads module
-        $imageInfo = end(xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $fileId)));
-
+        $imageInfoArray = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $fileId));
+        $imageInfo = end($imageInfoArray );
         if (!empty($imageInfo)) {
             // Check the modified and writable
             if (file_exists($imageInfo['fileLocation'])) {
