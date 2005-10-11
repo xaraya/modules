@@ -33,7 +33,7 @@
         </tr>
         <tr>
             <td style="padding: 5px;">
-                <select name="statusfilter" onChange="javascript:document.options.submit();" class="xar-form-textmedium">
+                <select name="statusfilter" onChange="javascript:document.options.submit();" class="xar-form-textshort">
                 <option value=""></option>
                 <xar:loop name="$status">
                     <xar:if condition="$statusfilter eq $loop:item['id']">
