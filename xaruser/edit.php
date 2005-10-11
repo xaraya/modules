@@ -24,7 +24,7 @@
  * @param   int $event_id ID of the event to get
  * @return  array $item
  * @throws  BAD_PARAM list of exception identifiers which can be thrown
- * @todo    Michel V. <#> Clean-up and Implement in Julian.
+ * @todo    Michel V. <1> Clean up 
  */
 function julian_user_edit()
   {  
@@ -39,6 +39,8 @@ function julian_user_edit()
     if (!empty($objectid)) {
         $id = $objectid;
     }
+/*
+    
    //load the calendar class
    // TODO: get rid of this call
    $c = xarModAPIFunc('julian','user','factory','calendar');
@@ -69,11 +71,11 @@ function julian_user_edit()
    $bl_data['todays_month'] = $month;
    $bl_data['todays_year'] = $year;
    $bl_data['todays_day'] = $day;
-
+*/
    // Get event the decent way
    $item = xarModAPIFunc('julian', 'user', 'get', array('event_id' => $id));
  
-/* 
+ 
    // End date and time
    // determine the end date for a recurring event
    // TODO: With the new get.php this should be rewritten
@@ -132,11 +134,11 @@ function julian_user_edit()
     $data['event_dur_minutes'] = $dur_minutes;
 
     $data['location'] = xarVarPrepForDisplay($item['location']);
-    $data['street1'] = xarVarPrepForDisplay($item['street1'];
-    $data['street2'] = xarVarPrepForDisplay($item['street2'];
-    $data['city'] = xarVarPrepForDisplay($item['city'];
-    $data['state'] = xarVarPrepForDisplay($item['state'];
-    $data['postal'] = xarVarPrepForDisplay($item['zip'];
+    $data['street1'] = xarVarPrepForDisplay($item['street1']);
+    $data['street2'] = xarVarPrepForDisplay($item['street2']);
+    $data['city'] = xarVarPrepForDisplay($item['city']);
+    $data['state'] = xarVarPrepForDisplay($item['state']);
+    $data['postal'] = xarVarPrepForDisplay($item['zip']);
     $data['event_repeat'] = $event_repeat;
 
     // The phone fields
@@ -176,16 +178,21 @@ function julian_user_edit()
    
    //building share options
    $data['share_options'] = xarModAPIFunc('julian','user','getuseroptions',array('uids'=>$item['share_uids']));
+   $data['share_uids'] = $item['share_uids'];
+   $data['share_group'] = xarModGetVar('julian', 'share_group');
+   // Build the group name. Type 1 is a group
+   $group = xarModAPIFunc ('roles', 'user', 'get', array('uid'=> $data['share_group'], 'type' =>1));
+   $data['share_group_name'] = $group['name'];  
+
    
    //Determining which end date radio to check. 0 index indicates this event as an end date and 1 index means it does not
    $event_endtype_checked[0] = '';
    $event_endtype_checked[1] = 'checked';
-   if ($edit_obj->hasRecurDate)
-   {
+   if ($item['recur_until'] == 0000) {
      $event_endtype_checked[0] = 'checked';
      $event_endtype_checked[1] = '';
    }
-   $bl_data['event_endtype_checked'] = $event_endtype_checked;
+   $data['event_endtype_checked'] = $event_endtype_checked;
                  
    //Building start hour options
    $start_hour_options = '';
@@ -197,7 +204,7 @@ function julian_user_edit()
         $start_hour_options.= " SELECTED";
       $start_hour_options.='>'.$j.'</option>';
    }
-   $bl_data['start_hour_options'] = $start_hour_options;
+   $data['start_hour_options'] = $start_hour_options;
    
    //Building start minute options
    $start_minute_options = '';
@@ -209,7 +216,7 @@ function julian_user_edit()
        $start_minute_options.= " selected";
      $start_minute_options.='>'.$j.'</option>';
    }
-   $bl_data['start_minute_options'] = $start_minute_options;
+   $data['start_minute_options'] = $start_minute_options;
    
    //Building duration hour options
    $dur_hour_options = '';
@@ -221,7 +228,7 @@ function julian_user_edit()
         $dur_hour_options.= " selected";
      $dur_hour_options.='>'.$j.'</option>';
    }
-   $bl_data['dur_hour_options'] = $dur_hour_options;
+   $data['dur_hour_options'] = $dur_hour_options;
    
    //Building duration minute options
    $dur_minute_options = '';
@@ -233,56 +240,71 @@ function julian_user_edit()
         $dur_minute_options.= " selected";
      $dur_minute_options.='>'.$j.'</option>';
    }
-   $bl_data['dur_minute_options'] = $dur_minute_options;
+   $data['dur_minute_options'] = $dur_minute_options;
    
    //Setting event repeat selection
    for ($i = 0; $i < 3; $i++)
-     $bl_data['event_repeat_checked'][$i] = '';
-   $bl_data['event_repeat_checked'][$event_repeat] = "checked";
+     $data['event_repeat_checked'][$i] = '';
+   $data['event_repeat_checked'][$event_repeat] = "checked";
    
    //Setting freq type selection (days,weeks,months,years)
    for ($i = 1; $i < 5; $i++)
-     $bl_data['freq_type_selected'][$i] = '';
+     $data['freq_type_selected'][$i] = '';
      
    //Show rrule only if the first repeating option was selected (2nd radio button) - every
    if ($event_repeat == 1)
-     $bl_data['freq_type_selected'][$edit_obj->rrule] = 'selected';
+     $data['freq_type_selected'][rrule] = 'selected';
    
    //Setting repeat on num selection
    for ($i = 1; $i < 6; $i++)
-     $bl_data['repeat_on_num_selected'][$i] = '';
-   $bl_data['repeat_on_num_selected'][$edit_obj->recur_interval] = 'selected';
+     $data['repeat_on_num_selected'][$i] = '';
+   $data['repeat_on_num_selected'][] = 'selected';
    
    //Setting repeat on day selection
    for ($i = 1; $i < 8; $i++)
-     $bl_data['repeat_on_day_selection'][$i] = '';
-   $bl_data['repeat_on_day_selection'][$edit_obj->recur_count] = 'selected';
+     $data['repeat_on_day_selection'][$i] = '';
+   $data['repeat_on_day_selection'][] = 'selected';
 
 
    //Setting allday checked
-   $bl_data['allday_checked'][0] = '';
-   $bl_data['allday_checked'][1] = 'checked';
+   $data['allday_checked'][0] = '';
+   $data['allday_checked'][1] = 'checked';
    if ($item['isallday'] == 1) {
-     $bl_data['allday_checked'][0] = 'checked';
-     $bl_data['allday_checked'][1] = '';
+     $data['allday_checked'][0] = 'checked';
+     $data['allday_checked'][1] = '';
    } 
    // 0 = CAL_CLASS_PUBLIC
    // 1 = CAL_CLASS_PRIVATE
    //determine if this is a public or private event
-   $bl_data['class'][0] = 'checked';
-   $bl_data['class'][1] = '';
+   $data['class'][0] = 'checked ';
+   $data['class'][1] = '';
    if ($item['class'] == 1) {
-     $bl_data['class'][0] = '';
-     $bl_data['class'][1] = 'checked';
+     $data['class'][0] = '';
+     $data['class'][1] = 'checked ';
    } 
    //determine if this is there is an enddate present
-   $bl_data['enddatedisabled'] = 'disabled';
+   $data['enddatedisabled'] = 'disabled';
    if (isset($event_endmonth) || isset($event_endday) || isset($event_endyear)) {
-     $bl_data['enddatedisabled'] = '';
+     $data['enddatedisabled'] = '';
    }
    
-* 
-*/
+   $data['cal_date'] = $cal_date;
+   
+    // Get hook information for the event that we will edit.
+    // Build description for the item we want the hooks (i.e. category) for.
+    $item = array();
+    $item['module'] = 'julian';
+    $hooks = xarModCallHooks('item', 'modify', $id, $item);
+     
+    // Deal with no-hook scenario (the template then must get an empty hook-array)
+     if (empty($hooks)) {
+        $data['hooks'] = array();
+    } else {
+        $data['hooks'] = $hooks;
+    }
+   return $data;
+
+/*
 
 
    //If there is not a duration, set dur_hours and dur_minutes. Default for both is empty string.
@@ -511,5 +533,6 @@ function julian_user_edit()
         $bl_data['hooks'] = $hooks;
     }
    return $bl_data;
+*/
 }  
 ?>

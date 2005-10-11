@@ -235,9 +235,9 @@
                             <xar:mlstring>Event Duration</xar:mlstring>
                         </label>
                         <xar:mlstring>All day event</xar:mlstring> 
-                        <input type="radio" name="event_allday" value="1" #$allday_checked[0]# onclick="document.getElementById('p_event_startdur').style.visibility='hidden';" />
+                        <input type="radio" name="event_allday" value="1" #$allday_checked[0]# onClick="document.getElementById('p_event_startdur').style.visibility='hidden';" />
                         <xar:mlstring>Timed event</xar:mlstring>
-                        <input type="radio" name="event_allday" value="0" #$allday_checked[1]# onclick="document.getElementById('p_event_startdur').style.visibility='visible';" />
+                        <input type="radio" name="event_allday" value="0" #$allday_checked[1]# onClick="document.getElementById('p_event_startdur').style.visibility='visible';" />
                     </div>
                     <div id="p_event_startdur">
                     <div class="xar-form-input-wrapper">
@@ -319,14 +319,11 @@
                         <label for="recur" class="required xar-form-label" title="#xarML('Event Recurs.')#">
                             <xar:mlstring>Event Recurs:</xar:mlstring>
                         </label>
-                        <input type="radio" name="event_repeat" id="event_repeat1" value="0" #$event_repeat_checked[0]#
-                               onclick="processEventRepeat(this.form,this); document.getElementById('p_event_recurend').style.visibility='hidden';" />
+                        <input type="radio" name="event_repeat" id="event_repeat1" value="0" #$event_repeat_checked[0]# onClick="processEventRepeat(this.form,this,'button'); document.getElementById('p_event_recurend').style.visibility='hidden';" />
                         <xar:mlstring>Takes places once</xar:mlstring><br />
-
-                        <input type="radio" name="event_repeat" id="event_repeat2" value="1" #$event_repeat_checked[1]#
-                               onclick="processEventRepeat(this.form,this); document.getElementById('p_event_recurend').style.visibility='visible';" />
+                        <input type="radio" name="event_repeat" id="event_repeat2" value="1" #$event_repeat_checked[1]# onClick="processEventRepeat(this.form,this,'button'); document.getElementById('p_event_recurend').style.visibility='visible';" />
                         <xar:mlstring>Every (period)</xar:mlstring>
-                        <div class="xar-form-input-wrapper-after" id="p_event_recurend" style="visibility:hidden">
+                        <div class="xar-form-input-wrapper-after" id="p_event_recurend" style="visibility:hidden"><xar:comment></xar:comment>
                             <input type="text" name="event_repeat_freq" size="4" onkeyup="checkNumericy(this);" onfocus="document.cal_submit.event_repeat[1].checked = 'true';processEventRepeat(this.form,document.cal_submit.event_repeat[1])" />
                             <select name="event_repeat_freq_type" onchange="document.cal_submit.event_repeat[1].checked = 'true';processEventRepeat(this.form,document.cal_submit.event_repeat[1])">
                                 <option value="0"></option>

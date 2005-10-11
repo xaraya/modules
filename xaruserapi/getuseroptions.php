@@ -1,19 +1,28 @@
 <?php
-
 /**
-*
-* This function builds options for a select drop-down. These options contain
-* users from a certain group (user_id, name).
-*
-* @package Xaraya eXtensible Management System
-* @copyright (C) 2005 by Metrostat Technologies, Inc.
-* @license GPL {@link http://www.gnu.org/licenses/gpl.html}
-* @link http://www.metrostat.net
-*
-* @subpackage julian
-* initial template: Roger Raymond
-* @author Jodie Razdrh/John Kevlin/David St.Clair
-*/
+ * Julian Calendar
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 by Metrostat Technologies, Inc.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.metrostat.net
+ *
+ * @subpackage julian
+ * @author Jodie Razdrh/John Kevlin/David St.Clair
+ */
+/**
+ * Get data for a dropdown of users
+ *
+ * This function builds options for a select drop-down. These options contain
+ * users from a certain group (user_id, name).
+ *
+ * @author  Julian Development Team, <michelv@xarayahosting.nl>
+ * @author  initial template: Roger Raymond
+ * @access  private
+ * @param   uids 
+ * @return  $options
+ * @todo    MichelV. <#> Check this function and it functioning. Deprecate hopefully
+ */
 
 function julian_userapi_getuseroptions($args)
 {

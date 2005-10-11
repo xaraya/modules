@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id$
- *
  * Encode the short URLs for Julian
  *
  * @package unassigned
