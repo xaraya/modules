@@ -179,7 +179,7 @@
             <xar:mlstring>Disabled</xar:mlstring>
         </xar:if>
 
-<xar:comment> TODO
+<!-- TODO
       </td>
       <td valign="top">
 
@@ -257,8 +257,7 @@
         <xar:else/>
             <xar:mlstring>Disabled</xar:mlstring>
         </xar:if>
-</xar:comment>
-
+-->
       </td>
       <td valign="top">
 

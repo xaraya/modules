@@ -44,16 +44,22 @@
                     <option value="0"> No Sharing</option>
                     <xar:if condition="$userShared eq 1">
                         <option value="1" selected="selected">
-                    <xar:else />
+                          <xar:mlstring>Group Members</xar:mlstring>
+                        </option>
+                        <xar:else />
                         <option value="1">
+                          <xar:mlstring>Group Members</xar:mlstring>
+                        </option>
                     </xar:if>
-                    Group Members</option>
                     <xar:if condition="$userShared eq 2">
-                        <option value="2" selected="selected">
+                      <option value="2" selected="selected">
+                        <xar:mlstring>All Users</xar:mlstring>
+                      </option>
                     <xar:else />
-                        <option value="2">
+                      <option value="2">
+                        <xar:mlstring>All Users</xar:mlstring>
+                      </option>
                     </xar:if>
-                    All Users</option>
                 </select>
             </span>
         </p>
