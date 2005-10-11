@@ -1,4 +1,16 @@
 <?php
+/**
+    Helpdesk
+ 
+    @package Xaraya eXtensible Management System
+    @copyright (C) 2003-2004 by Envision Net, Inc.
+    @license GPL <http://www.gnu.org/licenses/gpl.html>
+    @link http://www.envisionnet.net/
+ 
+    @subpackage Helpdesk module
+    @author Brian McGilligan <brian@envisionnet.net>
+*/
+
 // Based On:
 /********************************************************/
 /* Dimensionquest Help Desk                             */
@@ -10,29 +22,6 @@
 /*                                                      */
 /* http://www.dimensionquest.net                           */
 /********************************************************/
-
-// ----------------------------------------------------------------------
-// helpdesk - helpdesk module
-// Copyright (C) 2003 By Brian McGilligan, Pensacola, Florida.
-// bmcgilligan@abrasiontechnology.com
-// http://www.abrasiontechnology.com/
-// ----------------------------------------------------------------------
-// LICENSE
-//
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License (GPL)
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WIthOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// To read the license please visit http://www.gnu.org/copyleft/gpl.html
-// ----------------------------------------------------------------------
-// Modified by: Brian McGilligan
-// --------+--------------------------------------------------------------
 
 /**
 * This function is called internally by the core whenever the module is
@@ -52,7 +41,7 @@ function helpdesk_xartables()
 
     // Set the column names.  Note that the array has been formatted
     // on-screen to be very easy to read by a user.
-    // Name for dq_helpdesk database entities
+    // Name for helpdesk database entities
     $coprefix = xarConfigGetVar('prefix') . '_helpdesk';
 
     $xartable['helpdesk_tickets'] = $coprefix.'_tickets';                

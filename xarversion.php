@@ -1,14 +1,14 @@
 <?php
 /**
-   File: $Id$
-
-   Helpdesk for Xaraya
-
-   @package Helpdesk
-   @copyright (C) 2003 Brian McGilligan.
-   @license GPL <http://www.gnu.org/licenses/gpl.html>
-   @link http://www.abrasiontechnology.com
-   @author Brian McGilligan
+    Helpdesk
+ 
+    @package Xaraya eXtensible Management System
+    @copyright (C) 2003-2004 by Envision Net, Inc.
+    @license GPL <http://www.gnu.org/licenses/gpl.html>
+    @link http://www.envisionnet.net/
+ 
+    @subpackage Helpdesk module
+    @author Brian McGilligan <brian@envisionnet.net>
 */
 
 // Is Based On:
@@ -34,7 +34,7 @@ $modversion['changelog'] = 'docs/changelog.txt';
 $modversion['license'] = 'docs/license.txt';
 $modversion['official'] = 0;
 $modversion['author'] = 'Brian McGilligan';
-$modversion['contact'] = 'bmcgilligan@abrasiontechonolgy.com';
+$modversion['contact'] = 'brian@envisionnet.net';
 $modversion['user'] = 1;
 $modversion['admin'] = 1;
 $modversion['securityschema'] = array('helpdesk::' => '::');

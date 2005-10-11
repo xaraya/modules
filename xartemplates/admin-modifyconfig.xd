@@ -3,8 +3,7 @@
         <xar:mlstring>Helpdesk Modify Configuration</xar:mlstring>
     </span>
 </div>
-<br />
-
+<div class="xar-mod-body">
 <form action="#xarModURL('helpdesk', 'admin', 'updateconfig')#" method="post">
 <div align="center">
     <table border="1" width="75%">
@@ -13,7 +12,7 @@
         </tr>
         <tr>
             <td><xar:mlstring>Module Website</xar:mlstring></td>
-            <td><a href="http://abrasiontechnology.com">Abrasion Technology</a></td>
+            <td><a href="http://www.envisionnet.net/">Envision Net, Inc.</a></td>
         </tr>
         <tr>
             <td><xar:mlstring>Enforce Form Authorization</xar:mlstring></td>
@@ -219,5 +218,6 @@
             </td>
         </tr>
     </table>        
+</div>
 </form> 
 </div>
