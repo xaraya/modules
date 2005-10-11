@@ -1,7 +1,7 @@
-<xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-#xarModAPIFunc('overlib','user','init')#
+<xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
+<xar:overlib-init />
 <xar:if condition="xarTplAddStyleLink('base', 'navtabs')"></xar:if>
-
+<xar:style scope="module" file="julian" />
 <script type="text/javascript" src="modules/julian/xarjavascript/utilities_lite.js"></script>
 <script type="text/javascript" src="modules/julian/xarjavascript/popupstyle.js"></script>
 <script type="text/javascript" src="modules/julian/xarjavascript/validateheader.js"></script>

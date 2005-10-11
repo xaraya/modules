@@ -1,7 +1,4 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-
-<xar:style scope="module" file="julian" />
-<xar:overlib-init />
 <div class="xar-julian xar-julian-user-month">
     <xar:template file="header" />
     
