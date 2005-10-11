@@ -48,12 +48,14 @@ function xarbb_user_deletetopic()
         // Was that a shadow reference?
         $topicoptions = unserialize($topic['toptions']);
         // OK, question of the day, is there anything in the $shadow var?
-        if (!empty($topicoptions['shadow'])){
+        if (!empty($topicoptions['shadow'])) {
             // Kill that shadow as well.
+            // $topic options is an array, the shadow element within that also (see movetopic.php around line 138)
+            // so we need to pass tids instead of tid (NOTE the s -> see also bug 4047)
             if (!xarModAPIFunc('xarbb',
                                'admin',
                                'deletetopics',
-                                array('tid' => $topicoptions['shadow']))) return;
+                                array('tids' => $topicoptions['shadow']))) return;
         }
     }
     // Blee, Blee, no more shadow, continue with processing.
