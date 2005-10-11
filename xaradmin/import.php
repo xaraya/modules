@@ -133,13 +133,15 @@ function pop3gateway_admin_import()
         $article['ptid'] = $importpubtype;
         $article['status'] = (int)$defaultstatus;
         xarModAPIFunc('articles', 'admin', 'create', $article);
-
-        if(!$pop3->delete($i)) {
-            $msg = xarML('Invalid #(1)', $pop3->ERROR);
-            xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-            $pop3->reset();
-            return;
-        } 
+        // Delete mail
+        if(xarModGetVar('pop3gateway', 'DeleteMailAfter')) {
+            if(!$pop3->delete($i)) {
+                $msg = xarML('Invalid #(1)', $pop3->ERROR);
+                xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+                $pop3->reset();
+                return;
+            }
+        }
     }
     $pop3->quit();
     xarResponseRedirect(xarModURL('articles', 'admin', 'view'));

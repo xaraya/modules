@@ -29,12 +29,17 @@ function pop3gateway_admin_updateconfig()
     if (!xarVarFetch('mailserverport', 'int:1:', $mailserverport, '110', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('importpubtype', 'id', $importpubtype, 1, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('defaultstatus', 'int::', $defaultstatus, 1, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('DeleteMailAfter', 'checkbox', $DeleteMailAfter, 0, XARVAR_NOT_REQUIRED)) return;
+
+    
     xarModSetVar('pop3gateway', 'mailserver', $mailserver);
     xarModSetVar('pop3gateway', 'mailserverlogin', $mailserverlogin);
     xarModSetVar('pop3gateway', 'mailserverpass', $mailserverpass);
     xarModSetVar('pop3gateway', 'mailserverport', $mailserverport);
     xarModSetVar('pop3gateway', 'importpubtype', $importpubtype);
     xarModSetVar('pop3gateway', 'defaultstatus', $defaultstatus);
+    xarModSetVar('pop3gateway', 'DeleteMailAfter', $DeleteMailAfter);
+    
     xarModCallHooks('module','updateconfig','pop3gateway', array('module' => 'pop3gateway'));
     xarResponseRedirect(xarModURL('pop3gateway', 'admin', 'modifyconfig'));
     return true;
