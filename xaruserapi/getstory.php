@@ -1,7 +1,5 @@
 <?php
 /*
- * File: $Id: $
- *
  * Newsletter 
  *
  * @package Xaraya eXtensible Management System
@@ -161,11 +159,12 @@ function newsletter_userapi_getstory($args)
     if (!empty($story['articleid'])){
         // retrieve the article 
         
-        $_article  = current(xarModAPIFunc('articles','user','getAll',
+        $_article  = xarModAPIFunc('articles','user','getAll',
                 array('aids'=>array($story['articleid']),
                       'extra'=>array('dynamicdata')
                       )
-                 ));
+                 );
+        $_article = current($_article);
 
         // put all the article info in an array w/ the story array
         /*

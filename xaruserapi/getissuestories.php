@@ -1,7 +1,5 @@
 <?php
 /*
- * File: $Id: $
- *
  * Newsletter 
  *
  * @package Xaraya eXtensible Management System
@@ -195,11 +193,12 @@ function newsletter_userapi_getissuestories($args)
         
         // if there is an article ID, get the article title
         if (!empty($articleid)){
-            $_article  = current(xarModAPIFunc('articles','user','getAll',
+            $_article  = xarModAPIFunc('articles','user','getAll',
             array('aids'=>array($articleid),
                   'extra'=>array('dynamicdata')
                   )
-             ));
+             );
+            $_article = current($_article);
 
         }
         

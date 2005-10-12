@@ -1,7 +1,5 @@
 <?php
 /*
- * File: $Id: $
- *
  * Newsletter 
  *
  * @package Xaraya eXtensible Management System
@@ -104,11 +102,12 @@ function newsletter_admin_updatestory()
 
     // If the title is empty, then set the title from the article
     if (empty($title)) {
-        $_article  = current(xarModAPIFunc('articles',
+        $_article  = xarModAPIFunc('articles',
                                            'user',
                                            'getAll',
                                            array('aids'=>array($articleid),
-                                                 'extra'=>array('dynamicdata'))));
+                                                 'extra'=>array('dynamicdata')));
+        $_article = current($_article);
         $title = $_article['title'];
     }
 
