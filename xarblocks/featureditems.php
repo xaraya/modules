@@ -107,16 +107,6 @@ function articles_featureditemsblock_display(& $blockinfo)
             xarVarSetCached('Hooks.uploads','ishooked',1);
         }
 
-        /* $featuredart = array();
-        if ($featuredart = current(xarModAPIFunc(
-            'articles','user','getall',
-            array(
-                'aids' => array($featuredaid),
-                'extra' => array('cids','dynamicdata')
-            )
-        ))) {*/
-
-
           if($featart = xarModAPIFunc(
             'articles','user','getall',
             array(
