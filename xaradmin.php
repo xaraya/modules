@@ -191,12 +191,14 @@ function &translations_create_druidbar($currentStep, $dnType, $dnName, $extid)
         }
         break;
     }
+    $steps=array();
 
-    return array(
+    $steps= array(
         'stepLabels'=>$stepLabels,
         'stepURLs'=>$stepURLs,
         'currentStep'=>$currentStep,
         'stepCount'=>$stepCount);
+    return $steps;
 }
 
 function &translations_create_opbar($currentOp, $dnType, $dnName, $extid)
@@ -245,7 +247,9 @@ function &translations_create_opbar($currentOp, $dnType, $dnName, $extid)
             $enabledOps[RELEASE] = false;
         }
     }
-    return array('opLabels'=>$opLabels, 'opURLs'=>$opURLs, 'enabledOps'=>$enabledOps, 'currentOp'=>$currentOp);
+    $opsData =array();
+    $opsData = array('opLabels'=>$opLabels, 'opURLs'=>$opURLs, 'enabledOps'=>$enabledOps, 'currentOp'=>$currentOp);
+    return $opsData;
 }
 
 function translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname, $backend=NULL)
@@ -374,12 +378,14 @@ function translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname
         }
         break;
     }
+    $subData = array();
 
-    return array('subtypes'=>$subtypes,
+    $subData = array('subtypes'=>$subtypes,
                  'subnames'=>$subnames,
                  'entrydata'=>$entrydata,
                  'selectedsubtype'=>$selectedsubtype,
                  'selectedsubname'=>$selectedsubname);
+    return $subData;
 }
 
 function translations_working_locale($locale = NULL)
