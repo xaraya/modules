@@ -1,15 +1,14 @@
 <?php
-
 /**
- * File: $Id$
- *
  * init file for installing/upgrading Comments module
  *
  * @package modules
- * @copyright (C) 2002 by the Xaraya Development Team.
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage comments
+ * @link http://xaraya.com/index.php/release/14.html
  * @author Carl P. Corliss <rabbitt@xaraya.com>
 */
 
@@ -136,6 +135,7 @@ function comments_init()
     if (!$result) return;
 
     // Create blacklist tables
+
     $btable = $xartable['blacklist'];
     $bbtable = &$xartable['blacklist_column'];
 
@@ -159,7 +159,7 @@ function comments_init()
     xarModSetVar('comments','AuthorizeComments',0);
     xarModSetVar('comments','AllowCollapsableThreads',1);
     xarModSetVar('comments','CollapsedBranches',serialize(array()));
-    xarModSetVar('comments','editstamp',1);  
+    xarModSetVar('comments','editstamp',1);
     // TODO: add delete hook
 
     // display hook
@@ -270,13 +270,8 @@ function comments_delete()
         return;
 
     // Delete module variables
-    xarModDelVar('comments','render');
-    xarModDelVar('comments','sortby');
-    xarModDelVar('comments','order');
-    xarModDelVar('comments','depth');
-    xarModDelVar('comments','AllowPostAsAnon');
-    xarModDelVar('comments','AuthorizeComments');
-
+    xarModDeAllVars('comments');
+ 
     if (!xarModUnregisterHook('item', 'display', 'GUI',
                             'comments', 'user', 'display')) {
         return false;

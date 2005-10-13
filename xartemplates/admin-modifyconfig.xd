@@ -242,6 +242,7 @@
                 <xar:set name="$rssnumitems">#xarModGetVar('comments','rssnumitems')#</xar:set>
                 <input type="text" name="rssnumitems" id="rssnumitems" size="4" maxlength="4" value="#$rssnumitems#" />
             </p>
+            <xar:comment> Black list not available
             <p class="param">
                 <label for="xar_useblacklist">
                     <span class="help" title="#xarML('Use comment blacklist for comment spam checking.')#">
@@ -257,6 +258,7 @@
                     <input type="checkbox" name="xar_useblacklist" id="xar_useblacklist" />
                 </xar:if>
             </p>
+            </xar:comment>
         </fieldset>
         <xar:if condition="!empty($hooks)">
             <xar:foreach in="$hooks" key="$module" value="$output">

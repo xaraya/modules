@@ -1,4 +1,16 @@
 <?php
+/**
+ * Update comment module configuration
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage comments
+ * @link http://xaraya.com/index.php/release/14.html
+ * @author Carl P. Corliss <rabbitt@xaraya.com>
+*/
 include_once('modules/comments/xarincludes/defines.php');
 /**
  * This is a standard function to update the configuration parameters of the
@@ -23,10 +35,6 @@ function comments_admin_updateconfig()
     if (!xarVarFetch('xar_order', 'str:1:', $xar_order, _COM_SORT_ASC, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('xar_authorize', 'checkbox', $xar_authorize, false, XARVAR_NOT_REQUIRED)) return;
 
-    if ($xar_useblacklist == true){
-        if (!xarModAPIFunc('comments', 'admin', 'import_blacklist')) return;
-    }
-
     xarModSetVar('comments', 'AllowPostAsAnon', $xar_postanon);
     xarModSetVar('comments', 'AuthorizeComments', $xar_authorize);
     xarModSetVar('comments', 'depth', $xar_depth);
@@ -41,6 +49,12 @@ function comments_admin_updateconfig()
     xarModSetVar('comments', 'showoptions', $showoptions);
     xarModSetVar('comments', 'useblacklist', $xar_useblacklist);
     xarModCallHooks('module', 'updateconfig', 'comments', array('module' => 'comments'));
+    /* Blacklist feed unavailable
+    xarModSetVar('comments', 'useblacklist', $xar_useblacklist);
+    if ($xar_useblacklist == true){
+        if (!xarModAPIFunc('comments', 'admin', 'import_blacklist')) return;
+    }
+    */
     xarResponseRedirect(xarModURL('comments', 'admin', 'modifyconfig'));
     return true;
 }
