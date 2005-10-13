@@ -101,7 +101,7 @@ function xarpages_menublock_display($blockinfo)
     // It could be set (fixed) for the block, passed in
     // via the page cache, or simply not present.
     $pid = 0;
-    if (empty($vars['current_source']) || $vars['current_source'] == 'AUTO') {
+    if (empty($vars['current_source']) || $vars['current_source'] == 'AUTO' || $vars['current_source'] == 'AUTODEFAULT') {
         // Automatic: that means look at the page cache.
         if (xarVarIsCached('Blocks.xarpages', 'current_pid')) {
             $cached_pid = xarVarGetCached('Blocks.xarpages', 'current_pid');
@@ -143,7 +143,15 @@ function xarpages_menublock_display($blockinfo)
     // of the allowed root pids.
     if (!empty($root_pids)) {
         if (!xarModAPIfunc('xarpages', 'user', 'pageintrees', array('pid' => $pid, 'tree_roots' => $root_pids))) {
-            return;
+            // Not under a root.
+            // If the mode is AUTO then leave the menu blank.
+            if ($vars['current_source'] == 'AUTO' || $vars['current_source'] == 'DEFAULT' || empty($vars['default_pid'])) {
+                return;
+            } else {
+                // Use the default page instead.
+                $pid = $vars['default_pid'];
+                $pagedata = array();
+            }
         }
     }
 

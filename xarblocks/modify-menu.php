@@ -97,7 +97,8 @@ function xarpages_menublock_update($blockinfo)
 
     // AUTO: the block picks up the page from cache Blocks.xarpages/current_pid.
     // DEFAULT: the block always uses the default page.
-    if (xarVarFetch('current_source', 'pre:upper:passthru:enum:AUTO:DEFAULT', $current_source, 'AUTO', XARVAR_NOT_REQUIRED)) {
+    // AUTODEFAULT: same as AUTO, but use the default page rather than NULL if outside and root page
+    if (xarVarFetch('current_source', 'pre:upper:passthru:enum:AUTO:DEFAULT:AUTODEFAULT', $current_source, 'AUTO', XARVAR_NOT_REQUIRED)) {
         $vars['current_source'] = $current_source;
     }
 
