@@ -26,7 +26,7 @@ function xarpages_admin_updatepage()
         if (!xarVarFetch('pid', 'id', $pid)) return;
     }
 
-    if (!xarVarFetch('name', 'pre:lower:ftoken:str:1:100', $name)) return;
+    if (!xarVarFetch('name', 'pre:lower:ftoken:str:1:100', $name, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('desc', 'str:0:255', $desc)) return;
     if (!xarVarFetch('theme', 'str:0:100', $theme)) return;
 
