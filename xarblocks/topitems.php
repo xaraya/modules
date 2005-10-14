@@ -1,16 +1,20 @@
 <?php
-// File: $Id: topitems.php 1.34 03/11/20 19:12:15-08:00 jbeames@lxwdev-1.schwabfoundation.org $
-// ----------------------------------------------------------------------
-// Xaraya eXtensible Management System
-// Copyright (C) 2002 by the Xaraya Development Team.
-// http://www.xaraya.org
-// ----------------------------------------------------------------------
-// Original Author of file: Jim McDonald
-// Purpose of file: Articles Block
-// ----------------------------------------------------------------------
-
+/**
+ * Top Items Block
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Articles Module
+ * @link http://xaraya.com/index.php/release/151.html
+ * @author mikespub
+ *
+ */
 /**
  * initialise block
+ * @author Jim McDonald
  */
 function articles_topitemsblock_init()
 {
@@ -56,6 +60,7 @@ function articles_topitemsblock_info()
 
 /**
  * display block
+ * @author Jim McDonald
  */
 function articles_topitemsblock_display($blockinfo)
 {

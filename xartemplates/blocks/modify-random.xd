@@ -112,23 +112,21 @@
 <div class="xar-form-input-wrapper">
     <label class="help xar-form-label" title="#xarML('If you wish to give the article an alternative title to be displayed as a featured item, enter the name here.')#" for="alttitle#$blockid#"> 
         <xar:mlstring>
-            Alternate Title: 
+            Alternate Block Title: 
         </xar:mlstring>
-    </label> <input type="text" name="alttitle" id="alttitle#$blockid#" value="#$alttitle#" size="24" maxlength="62" /> 
+    </label> <input type="text" name="alttitle" id="alttitle#$blockid#" value="#$alttitle#" size="24" maxlength="62" />
 </div>
 <div class="xar-form-input-wrapper">
-    <label class="help xar-form-label" title="#xarML('If you wish to give the article an alternative summary to be displayed as a featured item, enter the summary here.')#" for="altsummary#$blockid#"> 
+    <label class="help xar-form-label" title="#xarML('If you wish to give the article an alternative summary to be displayed as a featured item, enter the summary here.')#" for="altsummary#$blockid#">
         <xar:mlstring>
-            Alternate Summary: 
+            Alternate Block Summary:
         </xar:mlstring>
-    </label> 
-    <textarea name="altsummary" rows="5" cols="50" id="altsummary#$blockid#">
-        #$altsummary# 
-    </textarea>
+    </label>
+    <textarea name="altsummary" rows="5" cols="50" id="altsummary#$blockid#">#$altsummary#</textarea>
 </div>
 <div class="xar-form-input-wrapper-after">
     <xar:if condition="empty($showtitle)">
-        <input type="checkbox" name="showtitle" id="showtitle#$blockid#" value="1" /> 
+        <input type="checkbox" name="showtitle" id="showtitle#$blockid#" value="1" />
         <xar:else />
         <input type="checkbox" name="showtitle" id="showtitle#$blockid#" value="1" checked="checked" /> 
     </xar:if>

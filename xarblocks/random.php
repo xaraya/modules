@@ -3,15 +3,19 @@
  * Random Block
  *
  * @package modules
- * @copyright (C) 2005 by the Xaraya Development Team.
- * @license GPL { @link http://www.gnu.org/licenses/gpl.html }
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
- * @subpackage articles
- * @author Roger Keays <r.keays@ninthave.net>
+ *
+ * @subpackage Articles Module
+ * @link http://xaraya.com/index.php/release/151.html
+ * @author mikespub
+ *
  */
 
 /**
  * initialise block
+ * @author Roger Keays
  */
 function articles_randomblock_init()
 {

@@ -1,19 +1,21 @@
 <?php
-
-// File: modify-random.php
-// ----------------------------------------------------------------------
-// Xaraya eXtensible Management System
-// Copyright (C) 2002 by the Xaraya Development Team.
-// http://www.xaraya.org
-// ----------------------------------------------------------------------
-// Author: Roger Keays <r.keays@ninthave.net>
-//   based on featureitems.php
-//
-// Purpose of file: Random Articles Block
-// ----------------------------------------------------------------------
+/**
+ * Modify Random Block
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Articles Module
+ * @link http://xaraya.com/index.php/release/151.html
+ * @author mikespub
+ *
+ */
 
 /**
  * modify block settings
+ * @author Roger Keays
  */
 
 function articles_randomblock_modify($blockinfo)
