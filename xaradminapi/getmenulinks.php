@@ -1,5 +1,17 @@
 <?php
 /**
+ * Utility function used in Admin Menu generation
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Images Module
+ * @link http://xaraya.com/index.php/release/152.html
+ * @author Images Module Development Team
+ */
+/**
  * utility function pass individual menu items to the main menu
  *
  * @returns array
@@ -10,7 +22,7 @@ function images_adminapi_getmenulinks()
     if (xarSecurityCheck('AdminImages')) {
         $menulinks[] = Array('url'   => xarModURL('images',
                                                   'admin',
-                                                  'main'),
+                                                  'overview'),
                              'title' => xarML('Images Module Overview'),
                              'label' => xarML('Overview'));
         if (xarModIsAvailable('uploads') && xarSecurityCheck('AdminUploads',0)) {

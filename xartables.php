@@ -1,13 +1,16 @@
-<?php 
-// File: $Id: s.xartables.php 1.6 02/11/28 20:00:49-05:00 John.Cox@mcnabb. $ 
-// ---------------------------------------------------------------------- 
-// Xaraya eXtensible Management System 
-// Copyright (C) 2002 by the Xaraya Development Team. 
-// http://www.xaraya.org 
-// ---------------------------------------------------------------------- 
-// Original Author of file: Carl P. corliss
-// Purpose of file:  Table information for images module 
-// ---------------------------------------------------------------------- 
+<?php
+/**
+ * Tables setup
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Images Module
+ * @link http://xaraya.com/index.php/release/152.html
+ * @author Carl P. Corliss <carl.corliss@xaraya.com>
+*/
  
 /** 
  * This function is called internally by the core whenever the module is 

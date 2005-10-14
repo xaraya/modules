@@ -1,7 +1,20 @@
 <?php
 /**
+ * Get the list of derivative images
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Images Module
+ * @link http://xaraya.com/index.php/release/152.html
+ * @author Images Module Development Team
+ */
+/**
  * get the list of derivative images (thumbnails and resized)
  *
+ * @author mikespub 
  * @param   mixed   $fileId    (optional) The file id(s) of the image(s) we're looking for
  * @param   string  $fileName  (optional) The name of the image we're getting derivatives for
  * @param   string  $thumbsdir (optional) The directory where derivative images are stored

@@ -1,8 +1,20 @@
 <?php
-
 /**
  * Process an image using phpThumb
  *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Images Module
+ * @link http://xaraya.com/index.php/release/152.html
+ * @author Images Module Development Team
+ */
+/**
+ * Process an image using phpThumb
+ *
+ * @author mikespub
  * @param   array   $image    The image info array (e.g. coming from getimageinfo or getimages/getuploads/getderivatives)
  * @param   integer $saveas   How to save the processed image (0 = derivative, 1 = [image]_new.[ext], 2 = replace, 3 = output)
  * @param   string  $setting  The predefined setting to use, or

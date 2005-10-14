@@ -1,8 +1,20 @@
 <?php
-
 /**
  * Resizes an image to the given dimensions
  *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Images Module
+ * @link http://xaraya.com/index.php/release/152.html
+ * @author Images Module Development Team
+ */
+/**
+ * Resizes an image to the given dimensions
+ *
+ * @author mikespub
  * @param   integer $fileId        The (uploads) file id of the image to load, or
  * @param   string  $fileLocation  The file location of the image to load
  * @param   string  $height     The new height (in pixels or percent) ([0-9]+)(px|%)
