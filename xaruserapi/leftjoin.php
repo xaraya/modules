@@ -83,9 +83,12 @@ function security_userapi_leftjoin($args)
     //Check Groups
     $roles = new xarRoles();
     $user = $roles->getRole($currentUserId);
-    $parents = $user->getParents();
+    $tmp = $user->getParents();
+    $parents = array();
+    foreach( $tmp as $u ){ $parents[] = $u->uid; }
+    if( !empty($limit_gids) and is_array($limit_gids) ){ $parents = array_merge($parents, $limit_gids); } 
     foreach( $parents as $parent )
-        $secCheck[] = " ( $secGroupLevelTable.xar_gid = $parent->uid AND xar_level & $level ) ";
+        $secCheck[] = " ( $secGroupLevelTable.xar_gid = $parent AND xar_level & $level ) ";
     
     // Check for world    
     $secCheck[] = " ( $secTable.xar_worldlevel & $level ) ";
@@ -96,10 +99,8 @@ function security_userapi_leftjoin($args)
               exclude params like the $limit_gids var
     */
     if( xarSecurityCheck('AdminPanel', 0) ){ $secCheck[] = " ( 'TRUE' = 'TRUE' ) "; }
-    //if( xarSecurityCheck('AdminPanel', 0) ){ return array(); }
     
     $where[] = " ( " . join(" OR ", $secCheck) . " ) ";
-    
     if( isset($limit_gids) && count($limit_gids) > 0 )
     {
         $where[] = " $secGroupLevelTable.xar_gid IN ( " . join(', ', $limit_gids) . " ) ";
