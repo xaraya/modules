@@ -140,9 +140,7 @@
             Alternate Summary 
         </xar:mlstring>
     </label> 
-    <textarea name="altsummary" rows="5" cols="50" id="altsummary#$blockid#">
-        #$altsummary# 
-    </textarea>
+    <textarea name="altsummary" rows="5" cols="50" id="altsummary#$blockid#">#$altsummary#</textarea>
 </div>
 <div class="xar-form-input-wrapper">
     <label class="help xar-form-label" title="#xarML('Choose additional headlines to display.')#" for="moreitems"> 

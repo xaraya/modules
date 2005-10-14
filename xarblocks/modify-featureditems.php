@@ -1,21 +1,20 @@
 <?php
-
-// File: featureditems.php
-// ----------------------------------------------------------------------
-// Xaraya eXtensible Management System
-// Copyright (C) 2002 by the Xaraya Development Team.
-// http://www.xaraya.org
-// ----------------------------------------------------------------------
-// Original Author of file: Err, well, this file was created by
-// Jonn Beames, but it consist almost exlusively of code originally by
-// Jim McDonald, MikeC, and Mike(of mikespub fame) taken from the
-// topitems.php block of the articles module.  And Richard Cave gave me
-// help with the multiselect box.
-// Purpose of file: Featured Articles Block
-// ----------------------------------------------------------------------
-
+/**
+ * Featured items
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Articles Module
+ * @link http://xaraya.com/index.php/release/151.html
+ * @author mikespub
+ *
+ */
 /**
  * modify block settings
+ * @author Jonn Beames et al
  */
 
 function articles_featureditemsblock_modify($blockinfo)

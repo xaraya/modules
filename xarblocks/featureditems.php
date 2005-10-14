@@ -1,20 +1,22 @@
 <?php
-// File: featureditems.php
-// ----------------------------------------------------------------------
-// Xaraya eXtensible Management System
-// Copyright (C) 2002 by the Xaraya Development Team.
-// http://www.xaraya.org
-// ----------------------------------------------------------------------
-// Original Author of file: Err, well, this file was created by
-// Jonn Beames, but it consist almost exlusively of code originally by
-// Jim McDonald, MikeC, and Mike(of mikespub fame) taken from the
-// topitems.php block of the articles module.  And Richard Cave gave me
-// help with the multiselect box.
-// Purpose of file: Featured Articles Block
-// ----------------------------------------------------------------------
-
 /**
- * initialise block
+ * Featured items
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Articles Module
+ * @link http://xaraya.com/index.php/release/151.html
+ * @author mikespub
+ *
+ */
+/**
+ * Featured initialise block
+ *
+ * @author Jonn Beams (based on code from TopItems block)
+ *
  */
 
 function articles_featureditemsblock_init()
@@ -39,11 +41,9 @@ function articles_featureditemsblock_init()
     );
 }
 
-
 /**
  * get information on block
  */
-
 function articles_featureditemsblock_info()
 {
     // Details of block.
@@ -61,7 +61,6 @@ function articles_featureditemsblock_info()
 /**
  * display block
  */
-
 function articles_featureditemsblock_display(& $blockinfo)
 {
     // Security check
@@ -143,7 +142,7 @@ function articles_featureditemsblock_display(& $blockinfo)
                 'featuredaid'       => $featuredart['aid'],
                 'featureddate'      => $featuredart['pubdate']
             );
-
+var_dump($feature);
             // Get rid of the default fields so all we have left are the DD ones
             foreach ($fieldlist as $field) {
                 if (isset($featuredart[$field])) {
@@ -265,7 +264,6 @@ function articles_featureditemsblock_display(& $blockinfo)
 /**
  * built-in block help/information system.
  */
-
 function articles_featureditemsblock_help()
 {
     // No information yet.
