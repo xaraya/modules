@@ -1,0 +1,2 @@
+Carl P. Corliss    - Author, Comments API
+John Cox		   - Originally added this functionality to comments module
