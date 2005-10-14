@@ -11,7 +11,7 @@
             <xar:mlstring>
                 Publication Type 
             </xar:mlstring>
-        </label> <select name="pubtypeid" id="pubtypeid#$blockid#"> 
+        </label> <select name="pubtypeid" id="pubtypeid#$blockid#">
             <option value="0">
                 <xar:mlstring>
                     Default / Current 
@@ -148,7 +148,9 @@
                 </option>
             </xar:if>
         </xar:foreach>
-    </select> 
+    </select>
+    <xar:mlstring>Hook Hitcount or Ratings to Articles to use these sort types</xar:mlstring>
+
 </div>
 <div class="xar-form-input-wrapper-after">
     <xar:if condition="empty($showvalue)">
@@ -166,14 +168,14 @@
     <xar:if condition="empty($showsummary)">
         <input type="checkbox" name="showsummary" id="showsummary#$blockid#" value="1" /> 
         <xar:else />
-        <input type="checkbox" name="showsummary" id="showsummary#$blockid#" value="1" checked="checked" /> 
+        <input type="checkbox" name="showsummary" id="showsummary#$blockid#" value="1" checked="checked" />
     </xar:if>
     <label class="help" title="#xarML('Select this if you wish to show the summary of the individual item.')#" for="showsummary#$blockid#"> 
         <xar:mlstring>
             Show summary 
         </xar:mlstring>
     </label> 
-</div>
+</div> 
 <div class="xar-form-input-wrapper">
     <label class="xar-form-label help" title="#xarML('Choose the status (e.g. Approved, Front Page) for the featured items.')#" for="status#$blockid#"> 
         <xar:mlstring>
@@ -191,9 +193,9 @@
                 </option>
             </xar:if>
         </xar:foreach>
-    </select> 
+    </select>
 </div>
-<xar:if condition="xarModIsHooked('dynamicdata','articles')">
+<xar:if condition="xarModIsHooked('dynamicdata','articles',$pubtypeid)">
     <div class="xar-form-input-wrapper-after">
         <xar:if condition="empty($showdynamic)">
             <input type="checkbox" name="showdynamic" id="showdynamic#$blockid#" value="1" /> 
@@ -205,5 +207,9 @@
                 Include dynamic data 
             </xar:mlstring>
         </label> 
+    </div>
+<xar:else />
+    <div class="xar-form-input-wrapper-after">
+    <xar:mlstring>Hook Dynamic Data to articles or itemtypes for Dynamic Data option</xar:mlstring>
     </div>
 </xar:if>

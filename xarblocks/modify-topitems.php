@@ -51,14 +51,13 @@ function articles_topitemsblock_modify($blockinfo)
     );                                       
 
     $vars['blockid'] = $blockinfo['bid'];
-
     // Return output
     return $vars;
 }
 
 /**
  * update block settings
- * @author Jim McDonald 
+ * @author Jim McDonald
  */
 function articles_topitemsblock_update($blockinfo)
 {
@@ -76,7 +75,7 @@ function articles_topitemsblock_update($blockinfo)
     if (!xarVarFetch('showdynamic', 'checkbox', $vars['showdynamic'], false, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('showvalue', 'checkbox', $vars['showvalue'], false, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('status', 'strlist:,:int:1:4', $vars['status'])) {return;}
-    
+
     if ($vars['nopublimit'] == true) {
         $vars['pubtypeid'] = 0;
     }

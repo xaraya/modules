@@ -196,10 +196,10 @@ function articles_topitemsblock_display($blockinfo)
 
     // get cids for security check in getall
     $fields = array('aid', 'title', 'pubtypeid', 'cids');
-    if ($vars['toptype'] == 'rating') {
+    if ($vars['toptype'] == 'rating' && xarModIsHooked('ratings', 'articles', $ptid)) {
         array_push($fields, 'rating');
         $sort = 'rating';
-    } elseif ($vars['toptype'] == 'hits') {
+    } elseif ($vars['toptype'] == 'hits' && xarModIsHooked('hitcount', 'articles', $ptid)) {
         array_push($fields, 'counter');
         $sort = 'hits';
     } else {
@@ -210,8 +210,7 @@ function articles_topitemsblock_display($blockinfo)
     if (!empty($vars['showsummary'])) {
         array_push($fields, 'summary');
     }
-
-    if (!empty($vars['showdynamic']) && xarModIsHooked('dynamicdata', 'articles')) {
+    if (!empty($vars['showdynamic']) && xarModIsHooked('dynamicdata', 'articles', $ptid)) {
         array_push($fields, 'dynamicdata');
     }
 
@@ -228,6 +227,7 @@ function articles_topitemsblock_display($blockinfo)
             'numitems' => $vars['numitems']
         )
     );
+
     if (!isset($articles) || !is_array($articles) || count($articles) == 0) {
        return;
     }
@@ -251,9 +251,17 @@ function articles_topitemsblock_display($blockinfo)
 
         if (!empty($vars['showvalue'])) {
             if ($vars['toptype'] == 'rating') {
-                $article['value'] = intval($article['rating']);
+                if (!empty($article['rating'])) {
+                  $article['value'] = intval($article['rating']);
+                }else {
+                    $article['value']=0;
+                }
             } elseif ($vars['toptype'] == 'hits') {
-                $article['value'] = $article['counter'];
+                if (!empty($article['counter'])) {
+                    $article['value'] = $article['counter'];
+                } else {
+                    $article['value'] = 0;
+                }
             } else {
                 // TODO: make user-dependent
                 if (!empty($article['pubdate'])) {
