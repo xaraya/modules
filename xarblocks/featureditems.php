@@ -142,7 +142,7 @@ function articles_featureditemsblock_display(& $blockinfo)
                 'featuredaid'       => $featuredart['aid'],
                 'featureddate'      => $featuredart['pubdate']
             );
-var_dump($feature);
+
             // Get rid of the default fields so all we have left are the DD ones
             foreach ($fieldlist as $field) {
                 if (isset($featuredart[$field])) {
