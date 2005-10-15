@@ -63,7 +63,7 @@ function subitems_admin_ddobjectlink_edit($args)
     }
     
     // get the Dynamic Object defined for this module (and itemtype, if relevant)
-    $subobject =& xarModAPIFunc('dynamicdata','user','getobject',
+    $subobject = xarModAPIFunc('dynamicdata','user','getobject',
                              array('objectid' => $subobjectid,
                                      'status' => 1));
     if (!isset($subobject)) return;

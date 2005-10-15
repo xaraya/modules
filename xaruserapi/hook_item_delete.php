@@ -25,7 +25,7 @@ function subitems_userapi_hook_item_delete($args)
     $objectid = $ddobjectlink['objectid'];
 
     // get the Dynamic Object defined for this module (and itemtype, if relevant)
-    $object =& xarModAPIFunc('dynamicdata','user','getobject',
+    $object = xarModAPIFunc('dynamicdata','user','getobject',
                              array('objectid' => $objectid,
                                      'status' => 1));
     if (!isset($object)) return $extrainfo;

@@ -18,7 +18,7 @@ function subitems_admin_item_modify($args)
     if(!xarVarFetch('confirm','str:1',$confirm,'',XARVAR_NOT_REQUIRED)) return;
 
     // get the Dynamic Object defined for this module (and itemtype, if relevant)
-    $subobject =& xarModAPIFunc('dynamicdata','user','getobject',
+    $subobject = xarModAPIFunc('dynamicdata','user','getobject',
                              array('objectid' => $subobjectid,
                                    'itemid' => $ddid));
     if (!isset($subobject)) return;
