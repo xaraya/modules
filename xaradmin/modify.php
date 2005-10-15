@@ -23,7 +23,7 @@ function keywords_admin_modify($args)
     if (!xarSecurityCheck('AdminKeywords')) return;
 
     $data = array();
-    $data['object'] =& xarModAPIFunc('dynamicdata','user','getobject',
+    $data['object'] = xarModAPIFunc('dynamicdata','user','getobject',
                                      array('module' => 'keywords'));
     if (!isset($data['object'])) return;
 
