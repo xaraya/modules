@@ -173,7 +173,7 @@ function categories_userapi_getancestors($args)
         // in the reverse of that order. The array is reversed,
         // preserving the keys.
 
-        $info =& array_reverse($info, true);
+        $info = array_reverse($info, true);
     }
 
     //echo "<pre>"; var_dump($info); echo "</pre><br/>";
