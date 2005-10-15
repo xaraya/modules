@@ -141,7 +141,7 @@ function articles_userapi_get($args)
 
 /*
     if (xarModIsHooked('dynamicdata','articles')) {
-        $values =& xarModAPIFunc('dynamicdata','user','getitem',
+        $values = xarModAPIFunc('dynamicdata','user','getitem',
                                  array('module'   => 'articles',
                                        'itemtype' => $pubtypeid,
                                        'itemid'   => $aid));
