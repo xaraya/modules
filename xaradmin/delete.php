@@ -13,7 +13,7 @@ function messages_admin_delete( $args )
     extract($args);
 
     // Retrieve the object
-    $object =& xarModAPIFunc(
+    $object = xarModAPIFunc(
         'messages'
         ,'user'
         ,'get'
@@ -65,7 +65,7 @@ function messages_admin_confirmdelete( $args )
     extract($args);
 
     // Retrieve the object
-    $object =& xarModAPIFunc(
+    $object = xarModAPIFunc(
         'messages'
         ,'user'
         ,'get'

@@ -12,7 +12,7 @@ function messages_userapi_get( $args )
         return;
     }
 
-    $list =& xarModAPIFunc('comments',
+    $list = xarModAPIFunc('comments',
                            'user',
                            'get_one',
                             array('cid' => $mid));

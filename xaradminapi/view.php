@@ -31,7 +31,7 @@ function messages_adminapi_view( $args )
             ,'itemsperpage.' . $itemtype );
 
     $uid = xarUserGetVar('uid');
-    $objects =& xarModAPIFunc(
+    $objects = xarModAPIFunc(
         'messages'
         ,'user'
         ,'getall'
@@ -73,7 +73,7 @@ function messages_adminapi_view( $args )
                 ,'itemtype' => $itemtype ))
         ,$itemsperpage );
 
-        $numitems =& xarModAPIFunc(
+        $numitems = xarModAPIFunc(
         'messages'
         ,'user'
         ,'counttotal'
@@ -83,7 +83,7 @@ function messages_adminapi_view( $args )
         ));
          $data['totalin'] = $numitems;
 
-         $numitems =& xarModAPIFunc(
+         $numitems = xarModAPIFunc(
         'messages'
         ,'user'
         ,'counttotalout'
@@ -93,7 +93,7 @@ function messages_adminapi_view( $args )
         ));
 
          $data['totalout'] =$numitems;
-         $numitems =& xarModAPIFunc(
+         $numitems = xarModAPIFunc(
         'messages'
         ,'user'
         ,'countunread'

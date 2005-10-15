@@ -14,7 +14,7 @@ function messages_adminapi_modify( $args )
     extract( $args );
 
     // Retrieve the object
-    $object =& xarModAPIFunc(
+    $object = xarModAPIFunc(
         'messages'
         ,'user'
         ,'get'

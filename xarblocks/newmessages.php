@@ -46,7 +46,7 @@ function messages_newmessagesblock_display($blockinfo)
     $uid = xarUserGetVar('uid');
 
     // Count total Messages
-     $numitems =& xarModAPIFunc(
+     $numitems = xarModAPIFunc(
         'messages'
         ,'user'
         ,'count_total'
@@ -57,7 +57,7 @@ function messages_newmessagesblock_display($blockinfo)
      $data['totalin'] = $numitems;
     // Count Unread Messages
 
-   $numitems =& xarModAPIFunc(
+   $numitems = xarModAPIFunc(
         'messages'
         ,'user'
         ,'count_unread'

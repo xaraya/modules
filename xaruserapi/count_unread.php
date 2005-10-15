@@ -2,7 +2,7 @@
 function messages_userapi_count_unread()
 {
 
-    $total =& xarModAPIFunc('comments',
+    $total = xarModAPIFunc('comments',
                             'user',
                             'get_count',
                              array('modid'      => xarModGetIDFromName('messages'),
