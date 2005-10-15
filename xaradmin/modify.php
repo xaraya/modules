@@ -39,7 +39,7 @@ function mailbag_admin_modify($args)
     if (!xarSecurityCheck('editmailbag',1,'item',$itemid)) return;    
     
     // get the Dynamic Object defined for this module (and itemtype, if relevant)
-    $object =& xarModAPIFunc('dynamicdata','user','getobject',
+    $object = xarModAPIFunc('dynamicdata','user','getobject',
                              array('module' => 'mailbag',
                                    'itemtype' => $itemtype,
                                    'itemid' => $itemid));

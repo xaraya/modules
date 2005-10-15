@@ -33,7 +33,7 @@ function mailbag_admin_new($args)
     $data = xarModAPIFunc('mailbag','admin','menu');    
 
     // get the Dynamic Object defined for this module (and itemtype, if relevant)
-    $data['object'] =& xarModAPIFunc('dynamicdata','user','getobject',
+    $data['object'] = xarModAPIFunc('dynamicdata','user','getobject',
                                      array('module'   => 'mailbag',
                                            'itemtype' => $itemtype )
                                     );
