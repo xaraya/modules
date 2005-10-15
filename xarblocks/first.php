@@ -1,16 +1,15 @@
 <?php
 /**
- * File: $Id: first.php 1.24 04/01/28 12:16:10+00:00 dudleyc@pint.(none) $
- * 
- * Dynamic Example Block
- * 
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * Dynamic Data Example Block
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage dyn_example
- * @author Example module development team 
+ * @subpackage Dynamic Data Example Module
+ * @link http://xaraya.com/index.php/release/66.html
+ * @author mikespub <mikespub@xaraya.com>
  */
 
 /**

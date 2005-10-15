@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Delete an item
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Dynamic Data Example Module
+ * @link http://xaraya.com/index.php/release/66.html
+ * @author mikespub <mikespub@xaraya.com>
+ */
 /**
  * delete an item
  * @param 'itemid' the id of the item to be deleted
@@ -30,7 +41,7 @@ function dyn_example_admin_delete($args)
     }
 
     // get the Dynamic Object defined for this module (and itemtype, if relevant)
-    $object =& xarModAPIFunc('dynamicdata','user','getobject',
+    $object = xarModAPIFunc('dynamicdata','user','getobject',
                              array('module' => 'dyn_example',
                                    'itemid' => $itemid));
     if (!isset($object)) return;

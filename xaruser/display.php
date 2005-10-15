@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Display an Item
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Dynamic Data Example Module
+ * @link http://xaraya.com/index.php/release/66.html
+ * @author mikespub <mikespub@xaraya.com>
+ */
 /**
  * display an item
  * This is a standard function to provide detailed informtion on a single item
@@ -40,7 +51,7 @@ function dyn_example_user_display($args)
 
 /* start APPROACH # 3 : getting the object via API */
     // get the Dynamic Object defined for this module (and itemtype, if relevant)
-    $object =& xarModAPIFunc('dynamicdata','user','getobject',
+    $object = xarModAPIFunc('dynamicdata','user','getobject',
                              array('module' => 'dyn_example',
                                    'itemid' => $itemid));
     if (!isset($object)) return;
@@ -70,7 +81,7 @@ function dyn_example_user_display($args)
 
 
 /* start APPROACH # 4 : getting only the raw item values via API */
-    $values =& xarModAPIFunc('dynamicdata','user','getitem',
+    $values = xarModAPIFunc('dynamicdata','user','getitem',
                              array('module' => 'dyn_example',
                                    'itemid' => $itemid));
     $data['labels'] = array();

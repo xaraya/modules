@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Get menu links
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Dynamic Data Example Module
+ * @link http://xaraya.com/index.php/release/66.html
+ * @author mikespub <mikespub@xaraya.com>
+ */
 /**
  * utility function pass individual menu items to the main menu
  *
@@ -10,6 +21,16 @@
 function dyn_example_adminapi_getmenulinks()
 {
     $menulinks = array();
+    if (xarSecurityCheck('AdminDynExample',0)) {
+
+        $menulinks[] = Array('url'   => xarModURL('dyn_example',
+                                                   'admin',
+                                                   'overview'),
+                              // In order to display the tool tips and label in any language,
+                              // we must encapsulate the calls in the xarML in the API.
+                              'title' => xarML('Overview'),
+                              'label' => xarML('Overview'));
+    }
 
     if (xarSecurityCheck('AddDynExample',0)) {
 

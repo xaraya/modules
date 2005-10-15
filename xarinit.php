@@ -1,16 +1,15 @@
 <?php
 /**
- * File: $Id: s.xarinit.php 1.17 03/03/18 02:35:04-05:00 johnny@falling.local.lan $
+ * Dynamic Data Example Module - documented module template
  *
- * Dynamic Example initialization functions
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage dyn_example
- * @author Example module development team 
+ * @subpackage Dynamic Data Example Module
+ * @link http://xaraya.com/index.php/release/66.html
+ * @author mikespub <mikespub@xaraya.com>
  */
 
 /**

@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Display the user menu
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Dynamic Data Example Module
+ * @link http://xaraya.com/index.php/release/66.html
+ * @author mikespub <mikespub@xaraya.com>
+ */
 /**
  * display the user menu hook
  * This is a standard function to provide a link in the "Your Account Page"

@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * View a list of items
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Dynamic Data Example Module
+ * @link http://xaraya.com/index.php/release/66.html
+ * @author mikespub <mikespub@xaraya.com>
+ */
 /**
  * view a list of items
  * This is a standard function to provide an overview of all of the items
@@ -25,7 +36,7 @@ function dyn_example_user_view()
 /* end APPROACH # 1 and # 2 : retrieve the items directly in the template */
 
 /* start APPROACH # 3 : getting the object list via API */
-    $mylist =& xarModAPIFunc('dynamicdata','user','getitems',
+    $mylist = xarModAPIFunc('dynamicdata','user','getitems',
                              array('module'    => 'dyn_example',
                                    'itemtype'  => 0,
                                    'catid'     => $data['catid'],
@@ -43,7 +54,7 @@ function dyn_example_user_view()
 /* end APPROACH # 3 : getting the object list via API */
 
 /* start APPROACH # 4 : getting only the raw item values via API */
-    $values =& xarModAPIFunc('dynamicdata','user','getitems',
+    $values = xarModAPIFunc('dynamicdata','user','getitems',
                              array('module'   => 'dyn_example',
                                    'itemtype' => 0,
                                    'catid'    => $data['catid'],

@@ -1,13 +1,16 @@
-<?php 
-// File: $Id$
-// ----------------------------------------------------------------------
-// Xaraya eXtensible Management System
-// Copyright (C) 2002 by the Xaraya Development Team.
-// http://www.xaraya.org
-// ----------------------------------------------------------------------
-// Original Author of file: mikespub
-// Purpose of file:  Table information for dyn_example module
-// ----------------------------------------------------------------------
+<?php
+/**
+ * Dynamic Data Example Module  Table Creation
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Dynamic Data Example Module
+ * @link http://xaraya.com/index.php/release/66.html
+ * @author mikespub <mikespub@xaraya.com>
+ */
 
 /**
  * This function is called internally by the core whenever the module is
