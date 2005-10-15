@@ -20,7 +20,7 @@ function timezone_userapi_findrules($args=array())
         if (empty($timezone)) {
             $timezone = 'Etc/UTC';
         }
-        $zone =& xarModAPIFunc('timezone','user','findzone',
+        $zone = xarModAPIFunc('timezone','user','findzone',
                                array('timezone'  => $timezone,
                                      'timestamp' => $timestamp));
         if (empty($zone)) {

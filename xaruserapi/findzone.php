@@ -18,7 +18,7 @@ function &timezone_userapi_findzone($args=array())
         $timestamp = time();
     }
 
-    $timezoneData =& xarModAPIFunc('timezone','user','gettimezonedata',
+    $timezoneData = xarModAPIFunc('timezone','user','gettimezonedata',
                                    array('timezone' => $timezone));
 
     $year = gmdate('Y',$timestamp);

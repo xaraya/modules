@@ -18,7 +18,7 @@ function timezone_userapi_tzinfo($args=array())
         $timestamp = time();
     }
     
-    $zone =& xarModAPIFunc('timezone','user','findzone',
+    $zone = xarModAPIFunc('timezone','user','findzone',
                            array('timezone'  => $timezone,
                                  'timestamp' => $timestamp));
     if (!isset($zone)) {

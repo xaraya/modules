@@ -4,7 +4,7 @@ function timezone_user_list()
 {
     xarVarFetch('timezone','str::',$selected_tz,'',XARVAR_NOT_REQUIRED);
     xarVarFetch('year','str::',$year,'',XARVAR_NOT_REQUIRED);
-    $timezones =& xarModAPIFunc('timezone','user','getTimezoneNames');
+    $timezones = xarModAPIFunc('timezone','user','getTimezoneNames');
     // return the sorted array for display
     return array(
         'timezones'=>$timezones,
