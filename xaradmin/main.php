@@ -9,8 +9,9 @@ function comments_admin_main()
     }
     // we only really need to show the default view (overview in this case)
     if (xarModGetVar('adminpanels', 'overview') == 0){
-        return array();
-        //xarResponseRedirect(xarModURL('comments', 'admin', 'view'));
+        $data = array();
+        return $data;
+
     } else {
         xarResponseRedirect(xarModURL('comments', 'admin', 'stats'));
     }

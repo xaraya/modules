@@ -29,7 +29,7 @@ function comments_admin_overview()
      * else just call the main function that usually displays the overview 
      */
 
-    return xarTplModule('comments', 'admin', 'main', $data,'main');
+    return xarTplModule('comments', 'admin', 'main', $data, 'main');
 }
 
 ?>

@@ -21,7 +21,7 @@ function comments_adminapi_getmenulinks()
 {
     $menulinks[] = Array('url'   => xarModURL('comments',
                                               'admin',
-                                              'main'),
+                                              'overview'),
                           'title' => xarML('An Overview of the Comments Module'),
                           'label' => xarML('Overview'));
 
