@@ -34,7 +34,7 @@ function dyn_example_admin_update($args)
     }
 
     // get the Dynamic Object defined for this module (and itemtype, if relevant)
-    $object =& xarModAPIFunc('dynamicdata','user','getobject',
+    $object = xarModAPIFunc('dynamicdata','user','getobject',
                              array('module' => 'dyn_example',
                                    'itemid' => $itemid));
     if (!isset($object)) return;
@@ -80,5 +80,4 @@ function dyn_example_admin_update($args)
     // Return
     return true;
 }
-
 ?>
