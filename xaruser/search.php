@@ -3,7 +3,7 @@ function weather_user_search()
 {
     // grab the location we're searching for
     xarVarFetch('loc','str::',$loc,null,XARVAR_NOT_REQUIRED);
-    $w =& xarModAPIFunc('weather','user','factory');
+    $w = xarModAPIFunc('weather','user','factory');
     //$w->setExtraParams();
     // perform the search
     $matches=null;

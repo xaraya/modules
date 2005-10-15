@@ -19,7 +19,7 @@ function weather_currentblock_display($blockinfo)
     
     // Get variables from content block
     $vars = unserialize($blockinfo['content']);
-    $w =& xarModAPIFunc('weather','user','factory');
+    $w = xarModAPIFunc('weather','user','factory');
     $blockinfo['content'] = xarTplBlock('weather', 'currentconditions', array('wData'=>$w->ccData()));
     return $blockinfo;
 }
