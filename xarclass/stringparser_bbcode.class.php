@@ -976,7 +976,7 @@ class StringParser_BBCode extends StringParser
      */
     function _modifyTree () {
         // first pass: try to do newline handling
-        $nodes =& $this->_root->getNodesByCriterium ('needsTextNodeModification', true);
+        $nodes = $this->_root->getNodesByCriterium ('needsTextNodeModification', true);
         $nodes_count = count ($nodes);
         for ($i = 0; $i < $nodes_count; $i++) {
             $v = $nodes[$i]->getFlag ('opentag.before.newline', 'integer', BBCODE_NEWLINE_PARSE);
@@ -1023,7 +1023,7 @@ class StringParser_BBCode extends StringParser
         
         // second pass b: do paragraph handling on other elements
         unset ($nodes);
-        $nodes =& $this->_root->getNodesByCriterium ('flag:paragraphs', true);
+        $nodes = $this->_root->getNodesByCriterium ('flag:paragraphs', true);
         $nodes_count = count ($nodes);
         for ($i = 0; $i < $nodes_count; $i++) {
             $res = $this->_handleParagraphs ($nodes[$i]);
@@ -1034,7 +1034,7 @@ class StringParser_BBCode extends StringParser
         
         // second pass c: search for empty paragraph nodes and remove them
         unset ($nodes);
-        $nodes =& $this->_root->getNodesByCriterium ('empty', true);
+        $nodes = $this->_root->getNodesByCriterium ('empty', true);
         $nodes_count = count ($nodes);
         if (isset ($parent)) {
             unset ($parent); $parent = null;
