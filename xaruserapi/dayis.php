@@ -19,7 +19,7 @@ function julian_userapi_dayIs($args)
     if(!xarVarValidate('int::',$date)) {
         return;
     }
-    $c =& xarModAPIFunc('julian','user','factory','calendar');
+    $c = xarModAPIFunc('julian','user','factory','calendar');
     return $c->dayIs($day,$date);
 }
 

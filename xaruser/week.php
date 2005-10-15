@@ -1,8 +1,5 @@
 <?php
-
 /**
-* File: $Id: week.php,v 1.5 2005/04/01 12:15:19 michelv01 Exp $
-*
 * Displays a week of events.
 *
 * @package Xaraya eXtensible Management System
@@ -27,7 +24,7 @@ function julian_user_week($args)
     //get post/get vars
     $cal_sdow = xarModGetVar('julian','startDayOfWeek');
     //load the calendar class 
-    $c =& xarModAPIFunc('julian','user','factory','calendar');
+    $c = xarModAPIFunc('julian','user','factory','calendar');
     // set the selected date parts,timestamp, and cal_date in the data array
     $bl_data = xarModAPIFunc('julian','user','getUserDateTimeInfo');
     // Week is an array with an index of 0 - 6 indicating the days of the week. (starting with Sunday = 0) The values are the dates in the

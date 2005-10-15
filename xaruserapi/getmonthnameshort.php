@@ -36,7 +36,7 @@ function julian_userapi_getMonthNameShort($args)
     if(!xarVarValidate('int:1:12',$month)) {
         return;
     }
-    $c =& xarModAPIFunc('julian','user','factory','julian');
+    $c = xarModAPIFunc('julian','user','factory','julian');
     return $c->MonthShort($month);
 }
 

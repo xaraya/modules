@@ -1,6 +1,5 @@
 <?php
 /**
-  * File: $Id$
   *
   * Class to gather data for a specific calendar view
   *
@@ -103,7 +102,7 @@ class Calendar
      */
     function &getCalendarWeek($d=null)
     {
-        if(!isset($d)) $d =& xarModAPIFunc('julian','user','createUserDateTime','Ymd');
+        if(!isset($d)) $d = xarModAPIFunc('julian','user','createUserDateTime','Ymd');
         $year = substr($d,0,4);
         $month = substr($d,4,2);
         $day = substr($d,6,2);
@@ -126,7 +125,7 @@ class Calendar
      */
     function &getCalendarMonth($d=null)
     {
-        if(!isset($d)) $d =& xarModAPIFunc('julian','user','createUserDateTime','Ym');
+        if(!isset($d)) $d = xarModAPIFunc('julian','user','createUserDateTime','Ym');
         $year  = substr($d,0,4);
         $month = substr($d,4,2);
         
@@ -174,7 +173,7 @@ class Calendar
      */
     function &getCalendarYear($y=null)
     {
-        if(!isset($y)) $y =& xarModAPIFunc('julian','user','createUserDateTime','Y');
+        if(!isset($y)) $y = xarModAPIFunc('julian','user','createUserDateTime','Y');
         
         $year_array = array();
         // year month loops
@@ -191,7 +190,7 @@ class Calendar
      */
     function dayIs($dow=0,$date=null)
     {
-        if(!isset($date)) $date =& xarModAPIFunc('julian','user','createUserDateTime','Ymd');
+        if(!isset($date)) $date = xarModAPIFunc('julian','user','createUserDateTime','Ymd');
         $year = substr($date,0,4);
         $month = substr($date,4,2);
         $day = substr($date,6,2);

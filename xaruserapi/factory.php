@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id$
- *
  * Factory method that allows the creation of new objects
  *
  * @package julian
@@ -30,7 +28,7 @@ function &julian_userapi_factory($class)
     static $modinfo;
     
     if(!isset($modinfo)) {
-        $modInfo =& xarModGetInfo(xarModGetIDFromName('julian'));
+        $modInfo = xarModGetInfo(xarModGetIDFromName('julian'));
     }
     
     switch(strtolower($class)) {

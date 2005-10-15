@@ -23,7 +23,7 @@ function julian_userapi_getMonthNameLong($args)
     if(!xarVarValidate('int:1:12',$month)) {
         return;
     }
-    $c =& xarModAPIFunc('julian','user','factory','calendar');
+    $c = xarModAPIFunc('julian','user','factory','calendar');
     return $c->MonthLong($month);   
 }
 

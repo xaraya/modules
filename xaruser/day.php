@@ -29,7 +29,7 @@ function julian_user_day()
     xarVarFetch('cal_sdow','int:0:6',$cal_sdow,xarModGetVar('julian','startDayOfWeek'));
     
     //load the calendar class
-    $c =& xarModAPIFunc('julian','user','factory','calendar');
+    $c = xarModAPIFunc('julian','user','factory','calendar');
     //set the selected date parts, timestamp, and cal_date in the data array
     $bl_data = xarModAPIFunc('julian','user','getUserDateTimeInfo');
     $bl_data['month'] = $c->getCalendarMonth($bl_data['selected_year'].$bl_data['selected_month']);
