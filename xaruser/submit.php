@@ -6,7 +6,7 @@ function calendar_user_submit()
     xarVarFetch('cal_sdow','int:0:6',$cal_sdow,0);
     xarVarFetch('cal_date','int::',$cal_date,0);
     
-    $c =& xarModAPIFunc('calendar','user','factory','calendar');
+    $c = xarModAPIFunc('calendar','user','factory','calendar');
     $c->setStartDayOfWeek($cal_sdow);
     
     $bl_data = xarModAPIFunc('calendar','user','getUserDateTimeInfo');
@@ -18,7 +18,7 @@ function calendar_user_submit()
     
     // return the event data
     xarVarFetch('event_id','int::',$event_id,0);
-    $e =& xarModAPIFunc('calendar','user','factory','event');
+    $e = xarModAPIFunc('calendar','user','factory','event');
     $e->buildEvent($event_id);
     // remember to pass in the existing array so it can be appended too
     $e->getEventDataForBL($bl_data);

@@ -7,7 +7,7 @@ function calendar_user_test()
 include_once('Benchmark/Timer.php');
 $t =& new Benchmark_Timer;
 $t->start();
-    $ical =& xarModAPIFunc('icalendar','user','factory','ical_parser');
+    $ical = xarModAPIFunc('icalendar','user','factory','ical_parser');
 $t->setMarker('Class Instantiated');    
     xarVarFetch('file','str::',$file);
 $t->setMarker('File Var Fetched');    
