@@ -50,7 +50,7 @@ function courses_admin_update($args)
     }
 
     // get the Dynamic Object defined for this module (and itemtype, if relevant)
-    $object =& xarModAPIFunc('dynamicdata','user','getobject',
+    $object = xarModAPIFunc('dynamicdata','user','getobject',
                              array('module'   => 'courses',
                                    'itemtype' => $itemtype,
                                    'itemid'   => $itemid));

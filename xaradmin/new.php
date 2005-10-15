@@ -37,7 +37,7 @@ function courses_admin_new($args)
     
     // Generate a one-time authorisation code for this operation
     $data['authid'] = xarSecGenAuthKey();
-    $data['object'] =& xarModAPIFunc('dynamicdata','user','getobject',
+    $data['object'] = xarModAPIFunc('dynamicdata','user','getobject',
                                      array('module'   => 'courses',
                                            'itemtype' => $itemtype )
                                     );

@@ -52,7 +52,7 @@ function courses_admin_modify($args)
     if (!xarSecurityCheck('EditCourses',1)) return;
 
     // get the Dynamic Object defined for this module (and itemtype, if relevant)
-    $object =& xarModAPIFunc('dynamicdata','user','getobject',
+    $object = xarModAPIFunc('dynamicdata','user','getobject',
                              array('module' => 'courses',
                                    'itemtype' => $itemtype,
                                    'itemid' => $itemid));
