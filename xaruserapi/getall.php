@@ -2,7 +2,7 @@
 function messages_userapi_getall( $args ) 
 {
 
-    $list =& xarModAPIFunc('comments',
+    $list = xarModAPIFunc('comments',
                            'user',
                            'get_multiple',
                             array('modid'       => xarModGetIDFromName('messages'),
