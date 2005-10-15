@@ -59,7 +59,7 @@ function xlink_admin_updateconfig()
     // update the list of valid basenames
     $objectid = xarModGetVar('xlink','objectid');
     if (!empty($objectid)) {
-        $object =& xarModAPIFunc('dynamicdata','user','getobject',
+        $object = xarModAPIFunc('dynamicdata','user','getobject',
                                  array('objectid' => $objectid));
         if (isset($object->properties['basename'])) {
             $property = $object->properties['basename'];

@@ -12,7 +12,7 @@ function xlink_admin_new($args)
     if (!xarSecurityCheck('AdminXLink')) return;
 
     $data = array();
-    $data['object'] =& xarModAPIFunc('dynamicdata','user','getobject',
+    $data['object'] = xarModAPIFunc('dynamicdata','user','getobject',
                                      array('module' => 'xlink'));
     if (!isset($data['object'])) return;
 
