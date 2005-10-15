@@ -36,7 +36,7 @@ function articles_admin_create()
             if (!isset($value['validation'])) {
                 $value['validation'] = '';
             }
-            $properties[$field] =& xarModAPIFunc('dynamicdata','user','getproperty',
+            $properties[$field] = xarModAPIFunc('dynamicdata','user','getproperty',
                                                  array('name' => $field,
                                                        'type' => $value['format'],
                                                        'validation' => $value['validation']));

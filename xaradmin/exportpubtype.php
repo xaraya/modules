@@ -111,7 +111,7 @@ function articles_admin_exportpubtype($args)
     }
 
     // Retrieve any dynamic object for this pubtype, or create a dummy one
-    $object =& xarModAPIFunc('dynamicdata','user','getobject',
+    $object = xarModAPIFunc('dynamicdata','user','getobject',
                              array('name'     => $pubtype['name'],
                                    'label'    => $pubtype['descr'],
                                    'moduleid' => xarModGetIDFromName('articles'),
