@@ -11,7 +11,7 @@ function logconfig_adminapi_produceconfig()
     $loggers_i = 0;
     for ($i=1; $i <= $itemsnum; $i++) {
         
-        $mylist =& xarModAPIFunc('dynamicdata','user','getitems',
+        $mylist = xarModAPIFunc('dynamicdata','user','getitems',
                               array('module'    => 'logconfig',
                                        'itemtype'  => $i,
                                        'getobject' => 1));    // get back the object list

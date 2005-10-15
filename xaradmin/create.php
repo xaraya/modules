@@ -12,7 +12,7 @@ function logconfig_admin_create($args)
     if (!xarSecConfirmAuthKey()) return; // throw back
 
     // get the Dynamic Object defined for this module (and itemtype, if relevant)
-    $object =& xarModAPIFunc('dynamicdata','user','getobject',
+    $object = xarModAPIFunc('dynamicdata','user','getobject',
                              array('module' => 'logconfig',
                                       'itemtype' => $itemtype));
     if (!isset($object)) return;

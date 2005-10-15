@@ -11,7 +11,7 @@ function logconfig_admin_new()
     if (!xarSecurityCheck('AdminLogConfig')) return;
 
     // get the Dynamic Object defined for this module (and itemtype, if relevant)
-    $data['object'] =& xarModAPIFunc('dynamicdata','user','getobject',
+    $data['object'] = xarModAPIFunc('dynamicdata','user','getobject',
                                      array('module' => 'logconfig',
                                               'itemtype' => $itemtype));
      $data['itemtype'] = $itemtype;

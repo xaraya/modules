@@ -15,7 +15,7 @@ function logconfig_admin_newloggers()
     $data['objects'] = array();
     for ($itemtype = 1; $itemtype <= $itemsnum; $itemtype++)
     {
-        $object =& xarModAPIFunc('dynamicdata','user','getobjectlist',
+        $object = xarModAPIFunc('dynamicdata','user','getobjectlist',
                                          array('module' => 'logconfig',
                                                   'itemtype' => $itemtype));
          $data['objects'][$itemtype] = array ('type' => $object->properties['loggerType']->default,

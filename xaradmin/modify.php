@@ -26,7 +26,7 @@ function logconfig_admin_modify($args)
     }
 
     // get the Dynamic Object defined for this module (and itemtype, if relevant)
-    $object =& xarModAPIFunc('dynamicdata','user','getobject',
+    $object = xarModAPIFunc('dynamicdata','user','getobject',
                              array('module' => 'logconfig',
                                    'itemid' => $itemid,
                                    'itemtype' => $itemtype));
