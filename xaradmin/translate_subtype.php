@@ -48,6 +48,20 @@ function translations_admin_translate_subtype()
     $args['subname'] = $subname;
     $entries = xarModAPIFunc('translations','admin','getcontextentries',$args);
 
+    $args = array();
+    $args['dntype'] = $dnType;
+    $args['dnname'] = $dnName;
+    $args['subtype'] = 'modules:';
+    $args['subname'] = 'fuzzy';
+    $fuzzyEntries = xarModAPIFunc('translations','admin','getcontextentries',$args);
+
+    $entries['fuzzyEntries'] = $fuzzyEntries['entries'];
+    $entries['fuzzyNumEntries'] = $fuzzyEntries['numEntries'];
+    $entries['fuzzyNumEmptyEntries'] = $fuzzyEntries['numEmptyEntries'];
+    $entries['fuzzyKeyEntries'] = $fuzzyEntries['keyEntries'];
+    $entries['fuzzyNumKeyEntries'] = $fuzzyEntries['numKeyEntries'];
+    $entries['fuzzyNumEmptyKeyEntries'] = $fuzzyEntries['numEmptyKeyEntries'];
+
     $tplData = $entries;
     $action = xarModURL('translations', 'admin', 'translate_update', array('subtype'=>$subtype, 'subname'=>$subname, 'numEntries'=>$entries['numEntries'], 'numKeyEntries'=>$entries['numKeyEntries'], 'numEmptyEntries'=>$entries['numEmptyEntries'], 'numEmptyKeyEntries'=>$entries['numEmptyKeyEntries']));
     $tplData['action'] = $action;

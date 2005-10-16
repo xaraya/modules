@@ -171,6 +171,7 @@ function translations_adminapi_generate_module_skels($args)
                 $statistics[$subname]['entries']++;
                 // Get previous translation, it's void if not yet translated
                 $translation = $backend->translate($string);
+                $marked = $backend->markEntry($string);
 
                 if (!$fileAlreadyOpen) {
                     if (!$gen->create('modules:'.$ctxtype1,$ctxname1)) return;
@@ -190,6 +191,7 @@ function translations_adminapi_generate_module_skels($args)
             $statistics[$subname]['keyEntries']++;
             // Get previous translation, it's void if not yet translated
             $translation = $backend->translateByKey($key);
+            $marked = $backend->markEntryByKey($key);
             // Get the original translation made by developer if any
             if (!$translation && isset($KEYS[$key])) $translation = $KEYS[$key];
 
@@ -203,8 +205,22 @@ function translations_adminapi_generate_module_skels($args)
 
         if ($fileAlreadyOpen) {
             $gen->close();
+        } else {
+            $gen->deleteIfExists('modules:'.$ctxtype1,$ctxname1);
         }
     }
+    if (!$gen->open('modules:','fuzzy')) return;
+    $fuzzyEntries = $backend->getFuzzyEntries();
+    foreach ($fuzzyEntries as $ind => $fuzzyEntry) {
+        // Add entry
+        $gen->addEntry($fuzzyEntry['string'], $fuzzyEntry['references'], $fuzzyEntry['translation']);
+    }
+    $fuzzyKeys = $backend->getFuzzyEntriesByKey();
+    foreach ($fuzzyKeys as $ind => $fuzzyKey) {
+        // Add entry
+        $gen->addKeyEntry($fuzzyKey['string'], $fuzzyKey['references'], $fuzzyKey['translation']);
+    }
+    $gen->close();
 
     $time = explode(' ', microtime());
     $endTime = $time[1] + $time[0];

@@ -1,0 +1,16 @@
+<table width="100%">
+ <tr>
+  <td class="xar-alt">
+    <xar:if condition="strlen($translation) eq 0">
+      <span class="xar-error">#$string#</span>
+    <xar:else />
+      #$string#
+    </xar:if>
+  </td>
+ </tr>
+ <tr>
+   <td>
+    #$translation#
+   </td>
+ </tr>
+</table>

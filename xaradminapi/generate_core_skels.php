@@ -78,6 +78,7 @@ function translations_adminapi_generate_core_skels($args)
         $statistics['core']['entries']++;
         // Get previous translation, it's void if not yet translated
         $translation = $core_backend->translate($string);
+        $marked = $core_backend->markEntry($string);
         $gen->addEntry($string, $references, $translation);
     }
     //    }
@@ -86,9 +87,23 @@ function translations_adminapi_generate_core_skels($args)
         $statistics['core']['keyEntries']++;
         // Get previous translation, it's void if not yet translated
         $translation = $core_backend->translateByKey($key);
+        $marked = $core_backend->markEntryByKey($key);
         $gen->addKeyEntry($key, $references, $translation);
     }
 
+    $gen->close();
+
+    if (!$gen->open('core:','fuzzy')) return;
+    $fuzzyEntries = $core_backend->getFuzzyEntries();
+    foreach ($fuzzyEntries as $ind => $fuzzyEntry) {
+        // Add entry
+        $gen->addEntry($fuzzyEntry['string'], $fuzzyEntry['references'], $fuzzyEntry['translation']);
+    }
+    $fuzzyKeys = $core_backend->getFuzzyEntriesByKey();
+    foreach ($fuzzyKeys as $ind => $fuzzyKey) {
+        // Add entry
+        $gen->addKeyEntry($fuzzyKey['string'], $fuzzyKey['references'], $fuzzyKey['translation']);
+    }
     $gen->close();
 
     $time = explode(' ', microtime());

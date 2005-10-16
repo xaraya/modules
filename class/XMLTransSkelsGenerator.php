@@ -144,6 +144,35 @@ class XMLTranslationsSkelsGenerator
         return true;
     }
 
+    function open($ctxType, $ctxName)
+    {
+        assert('!empty($this->baseDir)');
+        $this->fileName = $this->baseDir;
+
+        if (!ereg("^[a-z]+:$", $ctxType)) {
+           list($prefix,$directory) = explode(':',$ctxType);
+           if ($directory != "") $this->fileName .= $directory . "/";
+        }
+        $this->fileName .= $ctxName . ".xml";
+
+        if (file_exists($this->fileName)) {
+            $lines = file($this->fileName);
+            $this->fp = fopen($this->fileName.'.swp', 'w');
+            foreach ($lines as $line_num => $line) {
+                if (!strncmp($line, '</translations>', 15)) continue;
+                fwrite($this->fp, $line);
+            }
+        } else {
+            $this->fp = fopen($this->fileName.'.swp', 'w');
+            // Translations XML files are always encoded in utf-8
+            fwrite($this->fp, "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
+            // FXIME: <marco> Add schema reference
+            fwrite($this->fp, "<translations xmlns=\"http://xaraya.com/2002/ns/translations\" locale=\"{$this->locale}\">\n");
+        }
+
+        return true;
+    }
+
     function close()
     {
         fwrite($this->fp, "</translations>\n");
@@ -152,6 +181,20 @@ class XMLTranslationsSkelsGenerator
         // rename($this->fileName.'.swp', $this->fileName);
         copy($this->fileName.'.swp', $this->fileName);
         unlink($this->fileName.'.swp');
+        return true;
+    }
+
+    function deleteIfExists($ctxType, $ctxName)
+    {
+        assert('!empty($this->baseDir)');
+        $this->fileName = $this->baseDir;
+
+        if (!ereg("^[a-z]+:$", $ctxType)) {
+           list($prefix,$directory) = explode(':',$ctxType);
+           if ($directory != "") $this->fileName .= $directory . "/";
+        }
+        $this->fileName .= $ctxName . ".xml";
+        if (file_exists($this->fileName)) unlink($this->fileName);
         return true;
     }
 

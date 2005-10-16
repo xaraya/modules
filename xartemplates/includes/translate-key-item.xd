@@ -2,7 +2,7 @@
     <tr>
       <td class="xar-alt">
         #$key#<br /><br />
-        <span class="xar-accented">
+        <span class="xar-accent">
           <xar:if condition="strlen($translation) eq 0">
             <label for="key#$key#"><span class="xar-error">#$en_translation#</span></label>
           <xar:else />
@@ -33,7 +33,7 @@
               </td>
               <td class="#$loop:index % 2 ? 'xar-norm-outline':'xar-alt-outline'#">
                 #$loop:item['source']['pre']#
-                <span class="xar-accented">#$loop:item['source']['code']#</span>
+                <span class="xar-accent">#$loop:item['source']['code']#</span>
                 #$loop:item['source']['post']#
               </td>
             </tr>

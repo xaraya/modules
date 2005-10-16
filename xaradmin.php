@@ -11,22 +11,6 @@
  * @author Marcel van der Boom <marcel@xaraya.com>
 */
 
-// druidbar (upper)
-define('CHOOSE', 0);
-define('INFO', 1);
-define('GENSKELS', 2);
-define('TRAN', 3);
-define('GENTRANS', 4);
-define('REL', 5);
-define('DOWNLOAD', 6);
-
-// opbar (lower)
-define('OVERVIEW', 0);
-define('GEN_SKELS', 1);
-define('TRANSLATE', 2);
-define('GEN_TRANS', 3);
-define('RELEASE', 4);
-
 /* EVENT */function translations_adminevt_OnModLoad($args)
 {
     if (xarMLSGetMode() != XARMLS_UNBOXED_MULTI_LANGUAGE_MODE) {
@@ -40,6 +24,16 @@ define('RELEASE', 4);
 
 // PRIVATE STUFF
 
+// druidbar (upper)
+define('CHOOSE', 0);
+define('INFO', 1);
+define('GENSKELS', 2);
+define('TRAN', 3);
+define('DELFUZZY', 4);
+define('GENTRANS', 5);
+define('REL', 6);
+define('DOWNLOAD', 7);
+
 // TODO make code more elegant (waiting for full features realization)
 function &translations_create_druidbar($currentStep, $dnType, $dnName, $extid)
 {
@@ -52,143 +46,63 @@ function &translations_create_druidbar($currentStep, $dnType, $dnName, $extid)
         $stepLabels[INFO] = xarML('Overview');
         $stepLabels[GENSKELS] = xarML('Skel. Generation');
         $stepLabels[TRAN] = xarML('Translate');
+        $stepLabels[DELFUZZY] = xarML('Delete fuzzy');
         $stepLabels[GENTRANS] = xarML('Trans. Generation');
         $stepLabels[REL] = xarML('Release');
         $stepLabels[DOWNLOAD] = xarML('Download');
-        switch ($currentStep) {
-        case GENSKELS:
-            $stepURLs[CHOOSE] = xarModURL('translations', 'admin', 'core_overview', $urlarray);
-            $stepURLs[INFO] = xarModURL('translations', 'admin', 'core_overview', $urlarray);
-            $stepURLs[GENSKELS] = NULL;
-            $stepCount = 3;
-            break;
-        case TRAN:
-            $stepURLs[CHOOSE] = xarModURL('translations', 'admin', 'core_overview', $urlarray);
-            $stepURLs[INFO] = xarModURL('translations', 'admin', 'core_overview', $urlarray);
-            $stepURLs[GENSKELS] = xarModURL('translations','admin','generate_skels_info', $urlarray);
-            $stepURLs[TRAN] = NULL;
-            $stepCount = 4;
-            break;
-        case GENTRANS:
-            $stepURLs[CHOOSE] = xarModURL('translations', 'admin', 'core_overview', $urlarray);
-            $stepURLs[INFO] = xarModURL('translations', 'admin', 'core_overview', $urlarray);
-            $stepURLs[GENSKELS] = xarModURL('translations','admin','generate_skels_info', $urlarray);
-            $stepURLs[TRAN] = xarModURL('translations', 'admin', 'translate', $urlarray);
-            $stepURLs[GENTRANS] = NULL;
-            $stepCount = 5;
-            break;
-        case REL:
-            $stepURLs[CHOOSE] = xarModURL('translations', 'admin', 'core_overview', $urlarray);
-            $stepURLs[INFO] = xarModURL('translations', 'admin', 'core_overview', $urlarray);
-            $stepURLs[GENSKELS] = xarModURL('translations','admin','generate_skels_info', $urlarray);
-            $stepURLs[TRAN] = xarModURL('translations', 'admin', 'translate', $urlarray);
-            $stepURLs[GENTRANS] = xarModURL('translations', 'admin', 'generate_trans_info', $urlarray);
-            $stepURLs[REL] = NULL;
-            $stepCount = 6;
-            //$stepURLs[REL] = xarModURL('translations', 'admin', 'release_info', $urlarray);
-            break;
-        }
+
+        $stepURLs[CHOOSE] = xarModURL('translations', 'admin', 'core_overview', $urlarray);
+        $stepURLs[INFO] = xarModURL('translations', 'admin', 'core_overview', $urlarray);
+        $stepURLs[GENSKELS] = xarModURL('translations','admin','generate_skels_info', $urlarray);
+        $stepURLs[TRAN] = xarModURL('translations', 'admin', 'translate', $urlarray);
+        $stepURLs[DELFUZZY] = xarModURL('translations','admin','delete_fuzzy', $urlarray);
+        $stepURLs[GENTRANS] = xarModURL('translations', 'admin', 'generate_trans_info', $urlarray);
+        $stepURLs[REL] = xarModURL('translations', 'admin', 'release_info', $urlarray);
+
+        $stepCount = $currentStep + 1;
+
         break;
     case XARMLS_DNTYPE_MODULE:
         $stepLabels[CHOOSE] = xarML('Choose a module');
         $stepLabels[INFO] = xarML('Overview');
         $stepLabels[GENSKELS] = xarML('Skel. Generation');
         $stepLabels[TRAN] = xarML('Translate');
+        $stepLabels[DELFUZZY] = xarML('Delete fuzzy');
         $stepLabels[GENTRANS] = xarML('Trans. Generation');
         $stepLabels[REL] = xarML('Release');
         $stepLabels[DOWNLOAD] = xarML('Download');
-        switch ($currentStep) {
-        case CHOOSE:
-            $stepURLs[CHOOSE] = xarModURL('translations', 'admin', 'choose_a_module');
-            $stepCount = 1;
-            break;
-        case INFO:
-            $stepURLs[CHOOSE] = xarModURL('translations', 'admin', 'choose_a_module');
-            $stepURLs[INFO] = NULL;
-            $stepCount = 2;
-            break;
-        case GENSKELS:
-            $stepURLs[CHOOSE] = xarModURL('translations', 'admin', 'choose_a_module');
-            $stepURLs[INFO] = xarModURL('translations', 'admin', 'module_overview', $urlarray);
-            $stepURLs[GENSKELS] = NULL;
-            $stepCount = 3;
-            break;
-        case TRAN:
-            $stepURLs[CHOOSE] = xarModURL('translations', 'admin', 'choose_a_module');
-            $stepURLs[INFO] = xarModURL('translations', 'admin', 'module_overview', $urlarray);
-            $stepURLs[GENSKELS] = xarModURL('translations','admin','generate_skels_info', $urlarray);
-            $stepURLs[TRAN] = NULL;
-            $stepCount = 4;
-            break;
-        case GENTRANS:
-            $stepURLs[CHOOSE] = xarModURL('translations', 'admin', 'choose_a_module');
-            $stepURLs[INFO] = xarModURL('translations', 'admin', 'module_overview', $urlarray);
-            $stepURLs[GENSKELS] = xarModURL('translations','admin','generate_skels_info', $urlarray);
-            $stepURLs[TRAN] = xarModURL('translations','admin','translate', $urlarray);
-            $stepURLs[GENTRANS] = NULL;
-            $stepCount = 5;
-            break;
-        case REL:
-            $stepURLs[CHOOSE] = xarModURL('translations', 'admin', 'choose_a_module');
-            $stepURLs[INFO] = xarModURL('translations', 'admin', 'module_overview', $urlarray);
-            $stepURLs[GENSKELS] = xarModURL('translations','admin','generate_skels_info', $urlarray);
-            $stepURLs[TRAN] = xarModURL('translations','admin','translate', $urlarray);
-            $stepURLs[GENTRANS] = xarModURL('translations', 'admin', 'generate_trans_info', $urlarray);
-            $stepURLs[REL] = NULL;
-            $stepCount = 6;
-            break;
-        }
+
+        $stepURLs[CHOOSE] = xarModURL('translations', 'admin', 'choose_a_module');
+        $stepURLs[INFO] = xarModURL('translations', 'admin', 'module_overview', $urlarray);
+        $stepURLs[GENSKELS] = xarModURL('translations','admin','generate_skels_info', $urlarray);
+        $stepURLs[TRAN] = xarModURL('translations','admin','translate', $urlarray);
+        $stepURLs[DELFUZZY] = xarModURL('translations','admin','delete_fuzzy', $urlarray);
+        $stepURLs[GENTRANS] = xarModURL('translations', 'admin', 'generate_trans_info', $urlarray);
+        $stepURLs[REL] = xarModURL('translations', 'admin', 'release_info', $urlarray);
+
+        $stepCount = $currentStep + 1;
+
         break;
     case XARMLS_DNTYPE_THEME:
         $stepLabels[CHOOSE] = xarML('Choose a theme');
         $stepLabels[INFO] = xarML('Overview');
         $stepLabels[GENSKELS] = xarML('Skel. Generation');
         $stepLabels[TRAN] = xarML('Translate');
+        $stepLabels[DELFUZZY] = xarML('Delete fuzzy');
         $stepLabels[GENTRANS] = xarML('Trans. Generation');
         $stepLabels[REL] = xarML('Release');
         $stepLabels[DOWNLOAD] = xarML('Download');
-        switch ($currentStep) {
-        case CHOOSE:
-            $stepURLs[CHOOSE] = xarModURL('translations', 'admin', 'choose_a_theme');
-            $stepCount = 1;
-            break;
-        case INFO:
-            $stepURLs[CHOOSE] = xarModURL('translations', 'admin', 'choose_a_theme');
-            $stepURLs[INFO] = NULL;
-            $stepCount = 2;
-            break;
-        case GENSKELS:
-            $stepURLs[CHOOSE] = xarModURL('translations', 'admin', 'choose_a_theme');
-            $stepURLs[INFO] = xarModURL('translations', 'admin', 'theme_overview', $urlarray);
-            $stepURLs[GENSKELS] = NULL;
-            $stepCount = 3;
-            break;
-        case TRAN:
-            $stepURLs[CHOOSE] = xarModURL('translations', 'admin', 'choose_a_theme');
-            $stepURLs[INFO] = xarModURL('translations', 'admin', 'theme_overview', $urlarray);
-            $stepURLs[GENSKELS] = xarModURL('translations','admin','generate_skels_info', $urlarray);
-            $stepURLs[TRAN] = NULL;
-            $stepCount = 4;
-            break;
-        case GENTRANS:
-            $stepURLs[CHOOSE] = xarModURL('translations', 'admin', 'choose_a_theme');
-            $stepURLs[INFO] = xarModURL('translations', 'admin', 'theme_overview', $urlarray);
-            $stepURLs[GENSKELS] = xarModURL('translations','admin','generate_skels_info', $urlarray);
-            $stepURLs[TRAN] = xarModURL('translations', 'admin', 'translate', $urlarray);
-            $stepURLs[GENTRANS] = NULL;
-            $stepCount = 5;
-            break;
-        case REL:
-            $stepURLs[CHOOSE] = xarModURL('translations', 'admin', 'choose_a_theme');
-            $stepURLs[INFO] = xarModURL('translations', 'admin', 'theme_overview', $urlarray);
-            $stepURLs[GENSKELS] = xarModURL('translations','admin','generate_skels_info', $urlarray);
-            $stepURLs[TRAN] = xarModURL('translations', 'admin', 'translate', $urlarray);
-            $stepURLs[GENTRANS] = xarModURL('translations', 'admin', 'generate_trans_info', $urlarray);
-            $stepURLs[REL] = NULL;
-            $stepCount = 6;
-            //$stepURLs[REL] = xarModURL('translations', 'admin', 'release_info', $urlarray);
-            break;
-        }
+
+        $stepURLs[CHOOSE] = xarModURL('translations', 'admin', 'choose_a_theme');
+        $stepURLs[INFO] = xarModURL('translations', 'admin', 'theme_overview', $urlarray);
+        $stepURLs[GENSKELS] = xarModURL('translations','admin','generate_skels_info', $urlarray);
+        $stepURLs[TRAN] = xarModURL('translations', 'admin', 'translate', $urlarray);
+        $stepURLs[DELFUZZY] = xarModURL('translations','admin','delete_fuzzy', $urlarray);
+        $stepURLs[GENTRANS] = xarModURL('translations', 'admin', 'generate_trans_info', $urlarray);
+        $stepURLs[REL] = xarModURL('translations', 'admin', 'release_info', $urlarray);
+
+        $stepCount = $currentStep + 1;
+
         break;
     }
     $steps=array();
@@ -201,10 +115,18 @@ function &translations_create_druidbar($currentStep, $dnType, $dnName, $extid)
     return $steps;
 }
 
+// opbar (lower)
+define('OVERVIEW', 0);
+define('GEN_SKELS', 1);
+define('TRANSLATE', 2);
+define('DEL_FUZZY', 3);
+define('GEN_TRANS', 4);
+define('RELEASE', 5);
+
 function &translations_create_opbar($currentOp, $dnType, $dnName, $extid)
 {
     $urlarray = array('dnType'=>$dnType, 'dnName'=>$dnName, 'extid'=>$extid);
-    // Overview | Generate skels | Translate | Generate translations | Release translations package
+    // Overview | Generate skels | Translate | Delete fuzzy | Generate translations | Release package
     $opLabels[OVERVIEW] = xarML('Overview');
     switch ($dnType) {
         case XARMLS_DNTYPE_CORE:
@@ -221,9 +143,11 @@ function &translations_create_opbar($currentOp, $dnType, $dnName, $extid)
     $opURLs[GEN_SKELS] = xarModURL('translations', 'admin', 'generate_skels_info', $urlarray);
     $opLabels[TRANSLATE] = xarML('Translate');
     $opURLs[TRANSLATE] = xarModURL('translations', 'admin', 'translate', $urlarray);
+    $opLabels[DEL_FUZZY] = xarML('Delete fuzzy');
+    $opURLs[DEL_FUZZY] = xarModURL('translations', 'admin', 'delete_fuzzy', $urlarray);
     $opLabels[GEN_TRANS] = xarML('Generate translations');
     $opURLs[GEN_TRANS] = xarModURL('translations', 'admin', 'generate_trans_info', $urlarray);
-    $opLabels[RELEASE] = xarML('Release translations package');
+    $opLabels[RELEASE] = xarML('Release package');
     $opURLs[RELEASE] = xarModURL('translations', 'admin', 'release_info', $urlarray);
 
     // Enables See module details & Generate translations skels
@@ -237,6 +161,7 @@ function &translations_create_opbar($currentOp, $dnType, $dnName, $extid)
 
     if ($backend->bindDomain($dnType, $dnName)) {
         $enabledOps[TRANSLATE] = true; // Enables Translate
+        $enabledOps[DEL_FUZZY] = true; // Enables Translate
         $enabledOps[GEN_TRANS] = false; // Enables Generate translations
         $args['interface'] = 'TranslationsBackend';
         $args['locale'] = $locale;

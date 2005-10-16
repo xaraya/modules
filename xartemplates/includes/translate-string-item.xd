@@ -36,7 +36,7 @@
           </xar:loop>
           <xar:if condition="$otherReferences">
             <tr>
-              <td colspan="2" class="xar-norm-outline'">
+              <td colspan="2" class="xar-norm-outline">
                 <xar:ml>
                   <xar:mlstring>Other #(1) references are not shown.</xar:mlstring>
                   <xar:mlvar>#$numOtherReferences#</xar:mlvar>

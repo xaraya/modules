@@ -1,0 +1,19 @@
+<table width="100%">
+    <tr>
+      <td class="xar-alt">
+        #$key#<br /><br />
+        <span class="xar-accented">
+          <xar:if condition="strlen($translation) eq 0">
+            <span class="xar-error">#$en_translation#</span>
+          <xar:else />
+            #$en_translation#
+          </xar:if>
+        </span>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        #$translation#
+      </td>
+    </tr>
+</table>

@@ -22,13 +22,22 @@ function translations_adminapi_get_module_dirs($args)
     assert('isset($moddir)');
 
     $names = array();
+    $dropit = array(
+        'xardocs',
+        'xarimages',
+        'xarclass',
+        'xardata',
+        'xarwidgets',
+        'xartests',
+        'xarjava',
+        'xarjavascript',
+        'xarstyles');
     if (file_exists("modules/$moddir")) {
         $dd = opendir("modules/$moddir");
         while ($filename = readdir($dd)) {
             if (!is_dir("modules/$moddir/$filename")) continue;
             if (substr($filename,0,3) != "xar") continue;
-            if ($filename == 'xardocs') continue;
-            if ($filename == 'xarimages') continue;
+            if (in_array($filename, $dropit)) continue;
             $names[] = ereg_replace("^xar","",$filename);
         }
         closedir($dd);
