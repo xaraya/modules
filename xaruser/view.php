@@ -1,5 +1,16 @@
 <?php
-
+/* 
+ * Main User View function for site link banners
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage xarlinkme
+ * @link http://xaraya.com/index.php/release/889.html
+ * @author jojodee <jojodee@xaraya.com>
+ */
 /**
  * view a list of banners with link text
   */
@@ -14,9 +25,9 @@ function xarlinkme_user_view()
     // Specify some other variables used in the blocklayout template
 
     $data['siteurl']   = xarServerGetBaseURL();
-    $data['sitename']  = xarModGetVar('themes','sitename');
-    $data['slogan']    = xarModGetVar('themes','siteslogan');
-    $data['alttxt']    = $data['sitename'].((empty($data['sitename'])) or (empty($data['slogan'])))."::".$data['slogan'];
+    $data['sitename']  = xarModGetVar('themes','SiteName');
+    $data['slogan']    = xarModGetVar('themes','SiteSlogan');
+    $data['alttxt']    = $data['sitename']."::".$data['slogan'];
     $data['imgpath']   = xarServerGetBaseURL().xarModGetVar('xarlinkme','imagedir');
     $data['linkme1']   = xarModGetVar('themes','sitename')."&nbsp;".xarML(xarModGetVar('xarlinkme','pagetitle'));
     $data['linkme2']   = xarML(xarModGetVar('xarlinkme','instructions'));
@@ -33,7 +44,7 @@ function xarlinkme_user_view()
     asort($filelist);
     foreach($filelist as $key => $file) {
        if ($file == "." || $file == ".." || $file == "index.htm"  || $file == "index.html" 
-           || $file == "SCCS" || $file == "Thumbs.db" ) {
+           || $file == "SCCS" || $file == "Thumbs.db"  || $file == "MT" ) {
        } else {
            $links[]=$filelist[$key];
          }

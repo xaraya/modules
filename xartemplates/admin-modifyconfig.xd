@@ -1,41 +1,217 @@
-<!-- common admin menu for this module - remove link to the current function -->
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xarLinkMe Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Modify Configuration</xar:mlstring></h2><br />
-<div style="margin: auto;">
-
-<table width="98%" border="0" >
-
-<form method="post" action="&xar-modurl-xarlinkme-admin-updateconfig;">
-    <input type="hidden" name="authid" id="authid" value="#$authid#" />
-
-   <tr><td><label for="itemsperpage">#$itemsperpagelabel#</label></td>
-        <td><input type="text" name="itemsperpage" id="itemsperpage" size="3"  maxlength="3" value="#$itemsperpage#" />/ Not functional atm</td>
-   </tr>
-   <tr><td><label for="imagedir">#$imagedirlabel#</label></td>
-       <td><input type="text" name="imagedir" id="imagedir" size="40"  maxlength="128" value="#$imagedir#" /></td>
-   </tr>
-   <tr><td><label for="pagetitle">#$pagetitlelabel#</label></td>
-       <td><input type="text" name="pagetitle" id="pagetitle" size="40"  maxlength="40" value="#$pagetitle#" /></td>
-   </tr>
-   <tr><td><label for="pagetitle">#$instructionslabel#</label></td>
-       <td><textarea name="instructions" rows="4" cols="40">#$instructions#</textarea></td>
-   </tr>
-   <tr><td><label for="instructions2">#$instructions2label#</label></td>
-       <td><textarea name="instructions2" rows="3" cols="40">#$instructions2#</textarea></td>
-   </tr>
-   <tr><td><label for="txtintro">#$txtintrolabel#</label></td>
-       <td><input type="text" name="txtintro" id="txtintro" value="#$txtintro#" size="40"  maxlength="60" /></td>
-   </tr>
-   <tr><td><label for="txtadlead">#$txtadleadlabel#</label></td>
-       <td><input type="text" name="txtadlead" id="txtadlead" size="40"  maxlength="40" value="#$txtadlead#" /><br />#$sitename#</td>
-   </tr>
-     <tr><td colspan="2">
-    #$hooks#
-   </td></tr>
-   <tr><td colspan="2" align="center">
-    <input type="submit" value="#$updatebutton#" /></td></tr>
-</form>
-</table>
-<br />
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:comment> ************************ Setup Tabs************************</xar:comment>
+<xar:set name="updatebutton"><xar:mlstring>Update Config</xar:mlstring></xar:set>
+<xar:style scope="module" module="base" file="navtabs" />
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>XarLinkMe Banner Administration</xar:mlstring>
+    </span>
 </div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Modify XarLinkMe Configuration</xar:mlstring></h2>
+   <dl class="xar-tabs">
+        <dt class="help" title="Choose a set of configuration options"><xar:mlstring>Actions</xar:mlstring> :</dt>
+        <xar:if condition="$tab eq 'basicconfig'">
+            <dd class="active"><a href="&xar-modurl-xarlinkme-admin-modifyconfig;&amp;tab=basicconfig" class="active">
+                    <xar:mlstring>General Configuration</xar:mlstring>
+                </a>
+            </dd>
+        <xar:else />
+            <dd>
+                <a href="&xar-modurl-xarlinkme-admin-modifyconfig;&amp;tab=basicconfig">
+                    <xar:mlstring>General Configuration</xar:mlstring>
+                </a>
+            </dd>
+        </xar:if>
+       <xar:if condition="$tab eq 'clientconfig'">
+            <dd class="active">
+                <a href="&xar-modurl-xarlinkme-admin-modifyconfig;&amp;tab=clientconfig" class="active">
+                    <xar:mlstring>Client Banner Config</xar:mlstring>
+                </a>
+            </dd>
+        <xar:else />
+            <dd>
+                <a href="&xar-modurl-xarlinkme-admin-modifyconfig;&amp;tab=clientconfig">
+                    <xar:mlstring>Client Banner Config</xar:mlstring>
+                </a>
+            </dd>
+        </xar:if>
+        <xar:if condition="$tab eq 'siteconfig'">
+            <dd class="active">
+                <a href="&xar-modurl-xarlinkme-admin-modifyconfig;&amp;tab=siteconfig" class="active">
+                    <xar:mlstring>Site Links Config</xar:mlstring>
+                </a>
+            </dd>
+        <xar:else />
+            <dd>
+                <a href="&xar-modurl-xarlinkme-admin-modifyconfig;&amp;tab=siteconfig">
+                    <xar:mlstring>Site Links Config</xar:mlstring>
+                </a>
+            </dd>
+        </xar:if>
+   </dl>
+
+<xar:comment> ************************ Begin General Banner Config ************************</xar:comment>
+    <xar:if condition="$tab eq 'basicconfig'">
+        <form action="&xar-modurl-xarlinkme-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded" >
+        <fieldset>
+            <legend><xar:mlstring>General Banner Options</xar:mlstring></legend>
+            <div class="xar-form-input-wrapper">
+                <label for="shorturls" class="xar-form-label" title="#xarML('Use short URLS for xarlinkme?')#">
+                    <xar:mlstring>Support Short URLs</xar:mlstring>
+                </label>
+                <xar:if condition="xarModGetVar('xarlinkme', 'SupportShortURLs')">
+                    <input type="checkbox" name="shorturls" id="shorturls" value="1" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="shorturls" id="shorturls" value="1" />
+                </xar:if>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="itemsperpage" class="xar-form-label" title="#xarML('Number of banner items per page')#">
+                    <xar:mlstring>Banner Items Per Page:</xar:mlstring>
+                </label>
+                <input type="text" name="itemsperpage" id="itemsperpage" value="#$itemsvalue#" maxlength="3" class="xar-form-textshort" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for = "modulealias" class="xar-form-label" title="#xarML('Use an alias instead of the module name')#">
+                   <xar:mlstring>Use a module alias</xar:mlstring>
+                </label>
+               <xar:if condition="xarModGetVar('xarlinkme', 'useModuleAlias')">
+                   <input type="checkbox" name="modulealias" id="modulealias" value="1" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="modulealias" id="modulealias" value="1" />
+                </xar:if>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="aliasname" class="xar-form-label" title="#xarML('The name of module alias to be used.')#">
+                    <xar:mlstring>Module Alias Name</xar:mlstring>
+                </label>
+                <input type="text" name="aliasname" id="aliasname" value="#xarModGetVar('xarlinkme', 'aliasname')#" size="32" maxlength="100" />
+             </div>
+       </fieldset>
+       <fieldset>
+           <legend><xar:mlstring>Enabled Hooks</xar:mlstring></legend>
+               <xar:if condition="!empty($hooks)">
+                   <xar:foreach in="$hooks" key="$hookmodule">
+                      #$hooks[$hookmodule]#
+                   </xar:foreach>
+               </xar:if>
+       </fieldset>
+       <fieldset>
+          <div class="xar-form-input-wrapper-after">
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="hidden" name="tab" id="tab" value="#$tab#" />
+            <input type="submit" value="#$updatebutton#" />
+          </div>
+      </fieldset>
+    </form>
+ <xar:comment> ************************ Begin Site Banner Config ************************</xar:comment>
+ <xar:elseif condition="$tab eq 'siteconfig'" />
+    <form action="&xar-modurl-xarlinkme-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded" >
+        <fieldset>
+            <legend><xar:mlstring>Site Linking Options</xar:mlstring></legend>
+
+            <div class="xar-form-input-wrapper">
+                <label for="imagedir" class="xar-form-label" title="#xarML('Label for the directory where images are stored')#">
+                    <xar:mlstring>Directory for banner images(no trailing slash):</xar:mlstring>
+                </label>
+                <input type="text" name="imagedir" id="imagedir" size="40"  maxlength="128" value="#$imagedir#" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="pagetitle" class="xar-form-label" title="#xarML('Title for your LinkMe Page')#">
+                    <xar:mlstring>Title for your Link Me Page:</xar:mlstring>
+                </label>
+                <input type="text" name="pagetitle" id="pagetitle" size="40"  maxlength="40" value="#$pagetitle#" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="nstructions" class="xar-form-label" title="#xarML('Title for your LinkMe Page')#">
+                    <xar:mlstring>Instructions for using the links:</xar:mlstring>
+                </label>
+                <textarea name="instructions" rows="4" cols="40">#$instructions#</textarea>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="instructions2" class="xar-form-label" title="#xarML('Additional instructions')#">
+                    <xar:mlstring>Additional instructions:</xar:mlstring>
+                </label>
+               <textarea name="instructions2" rows="3" cols="40">#$instructions2#</textarea>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="txtintro" class="xar-form-label" title="#xarML('Special instructions for a text ad')#">
+                    <xar:mlstring>Instruction for text ad:</xar:mlstring>
+                </label>
+               <input type="text" name="txtintro" id="txtintro" value="#$txtintro#" size="50"  maxlength="60" />
+            </div>
+
+             <div class="xar-form-input-wrapper">
+                <label for="txtadlead" class="xar-form-label" title="#xarML('Special instructions for a text ad')#">
+                    <xar:mlstring>Lead in text:</xar:mlstring>
+                </label>
+               <input type="text" name="txtadlead" id="txtadlead" size="50"  maxlength="50" value="#$txtadlead#" /> #$sitename#
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="linkdirect" class="xar-form-label" title="#xarML('Allow linking to your site, or use copy to local site?')#">
+                    <xar:mlstring>Allow direct linking?</xar:mlstring>
+                </label>
+                <xar:if condition="xarModGetVar('xarlinkme', 'allowlinking')">
+                    <input type="checkbox" name="linkdirect" id="linkdirect" value="1" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="linkdirect" id="linkdirect" value="1" />
+                </xar:if>
+                <xar:mlstring>Check to display banner code for copy and paste.</xar:mlstring>
+            </div>
+
+        </fieldset>
+
+       <fieldset>
+           <div class="xar-form-input-wrapper-after">
+               <input type="hidden" name="authid" id="authid" value="#$authid#" />
+               <input type="hidden" name="tab" id="tab" value="#$tab#" />
+               <input type="submit" value="#$updatebutton#" />
+           </div>
+       </fieldset>
+    </form>
+<xar:comment> ************************ BeginClient Banner Config ************************</xar:comment>
+    <xar:elseif condition="$tab eq 'clientconfig'" />
+        <form action="&xar-modurl-xarlinkme-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded" >
+        <fieldset>
+            <legend><xar:mlstring>Client Banner Program Config</xar:mlstring></legend>
+            <div class="xar-form-input-wrapper-after">
+            <p> IN PROGRESS - NOT YET OPERATIONAL</p>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="usebanners" class="xar-form-label" title="#xarML('Use short URLS for xarlinkme?')#">
+                    <xar:mlstring>Activate Client Banners?</xar:mlstring>
+                </label>
+                <xar:if condition="xarModGetVar('xarlinkme', 'activebanners')">
+                    <input type="checkbox" name="usebanners" id="shorturls" value="1" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="usebanners" id="shorturls" value="1" />
+                </xar:if>
+            </div>
+            <div class="xar-form-input-wrapper">
+                 <label for="excludedips" title="#xarML('IPs excluded from counting as a Hit for client banners')#" class="xar-form-label">
+                        <xar:mlstring>
+                            Exluded IP Addresses:
+                        </xar:mlstring>
+                  </label>
+                  <div class="xar-form-container-after">
+                        <textarea name="excludedips" id="excludedips" class="xar-form-textareamedium">#$excludedips# </textarea>
+                  </div>
+                  <p class="xar-form-container-after">
+                        <xar:mlstring>
+                            Note: These IPs will not be counted as banner hits. Enter each IP on a single line. Do not separate with comma or other.
+                        </xar:mlstring>
+                   </p>
+            </div>
+       </fieldset>
+
+       <fieldset>
+           <div class="xar-form-input-wrapper-after">
+               <input type="hidden" name="authid" id="authid" value="#$authid#" />
+               <input type="hidden" name="tab" id="tab" value="#$tab#" />
+               <input type="submit" value="#$updatebutton#" />
+           </div>
+       </fieldset>
+    </form>
+    </xar:if>
 </div>

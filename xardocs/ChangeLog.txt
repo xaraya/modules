@@ -1,4 +1,14 @@
 ChangeLog
+Version 0.2.0
+ * 2005-08-10 jojodee:
+     udpated to current template standards - added config options
+     added extra mod vars for turning on/off
+     short urls, alias
+ * 2005-10-12
+     Added some extra menuing for later  
+      Start on client banners and site linking configs
+      Setup initial tables/blocks  - comment out for now
+
 Version 0.0.1
  * 2003-07-29 jojodee: Initial version.
  * 2003-07-30 jojodee: Added admin modify configuration screen.

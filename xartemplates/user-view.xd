@@ -1,52 +1,49 @@
-
-<!-- the specific template for the current function comes here -->
-
-<xar:blockgroup name="topnav" id="topnav" />
-
-<!-- some status given by the function using this template -->
-
 <xar:if condition="!empty($status)">
     <strong>#$status#</strong>
 </xar:if>
+
 <div style="margin-left: 1em; margin-right: 1em; text-align:center;">
         <div class="xar-mod-head"><span class="xar-mod-title">
             #$linkme1# </span>
         </div>
         <div style="margin-left: 1em; margin-right: 1em; text-align:center;">
-        <br /><br />
-          #$linkme2#
-        <br /><br />
-            #$linkme3#<br /><br />
+            <p>
+                 #$linkme2#
+            </p>
+            <p>
+                #$linkme3#
+            </p>
         </div>
 
-    <!-- Loop over all the items given by the function. Since $data['items']
-         is preset to an empty array, we don't need to use an if/else
-         structure like we do in user-display.xd -->
-
     <xar:foreach in="$items" value="$item" key="$key">
-          <div style="margin-left: 1em; margin-right: 1em; text-align:center;">
+          <div class="xar-standard-box-padding">
              <!-- we only show a link if the item link variable is not empty -->
              <xar:if condition="empty($item)">
              <xar:else />
-               <p align="center">#$item#</p>
-               <p align="center"><img alt="#$alttxt#" src="#$imgpath#/#$item#" border="0" valign="middle" /></p>
-               <p align="center">
-                <textarea rows="6" name="L1" cols="60"><!-- begin link --><a href="#$siteurl#" target="_blank"><img alt="#$alttxt#" src="#$imgpath#/#$item#" border="0" valign="middle" /></a><!-- end link --></textarea>
-               </p>
-            </xar:if><hr />
+               <p class="xar-align-center">#$item#</p>
+               <p class="xar-align-center"><img alt="#$alttxt#" src="#$imgpath#/#$item#" border="0" valign="middle" /></p>
+               <xar:comment>Only show linking code if you allow direct linking</xar:comment>
+               <xar:if condition="xarModGetVar('xarlinkme','allowlinking') eq true">
+                   <p class="xar-align-center">
+                        <textarea class="mceNoEditor" rows="6" name="L1" cols="60">&lt;!-- begin link --&gt;&lt;a href="#$siteurl#"  rel="external" title="#$alttxt#" &gt;&lt;img alt="#$alttxt#" src="#$imgpath#/#$item#" border="0" /&gt;&lt;/a&gt;&lt;!-- end link --&gt;</textarea>
+                   </p>
+               </xar:if>
+            </xar:if>
+            <hr />
          </div>
     </xar:foreach>
-         <div style="margin-left: 1em; margin-right: 1em; text-align:center;">
-             #$textlink#<br/><br/>
+          <div class="xar-standard-box-padding">
+             <p class="xar-align-center">#$textlink#</p>
          </div>
-         <div style="margin-left: 1em; margin-right: 1em; text-align:center;">
-           <a href="#$siteurl#" target="_blank">#$go# #$sitename#</a><br />
-            <p align="center">
-            <textarea rows="6" name="L2" cols="60"><!-- begin link --><a href="#$siteurl#" target="_blank">#$go# #$sitename#</a><!-- end link --></textarea></p>
+         <div class="xar-standard-box-padding">
+           <a href="#$siteurl#" rel="external">#$go# #$sitename#</a><br />
+            <p class="xar-align-center">
+            <textarea class="mceNoEditor" rows="6" name="L2" cols="60">&lt;!-- begin link --&gt;&lt;a href="#$siteurl#" rel="external" title="#$alttxt#" &gt;#$go# #$sitename#&lt;&gt;/a&gt;&lt;!-- end link --&gt;</textarea></p>
             <hr />
           </div>
 
 </div>
-<br />
+<p>
 <!-- add the pager here -->
 #$pager#
+</p>
