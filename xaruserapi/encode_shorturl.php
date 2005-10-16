@@ -19,15 +19,10 @@
  * path back to the original module parameters.
  *
  * The result is that people (and search engines) can use URLs like :
- *
  * - http://mysite.com/index.php/xarlinkme/ (main function)
- *
  * in addition to the 'normal' Xaraya URLs that look like :
- *
  * - http://mysite.com/index.php?module=xarlinkme&func=display&bnid=123
- *
  * You can also combine the two, e.g. for less frequently-used parameters :
- *
  * - http://mysite.com/index.php/xarlinkme/list.html?startnum=21
  */
 

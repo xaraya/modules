@@ -17,25 +17,6 @@ function xarlinkme_userapi_clickbanner()
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
-    $bid = pnVarCleanFromInput('bid');
-
-    $xarlinkmebannertable = $xartable['banners'];
-
-	$sql = "SELECT $bannerColumn[clickurl]
-			FROM $bannerTable
-			WHERE $bannerColumn[bid]='".(int)pnVarPrepForStore($bid)."'";
-
-    $bresult =& $dbconn->Execute($sql);
-	
-    list($clickurl) = $bresult->fields;
-    $bresult->Close();
-
-	$sql = "UPDATE $bannerTable
-			SET $bannerColumn[clicks]=$bannerColumn[clicks]+1
-			WHERE $bannerColumn[bid]='".(int)pnVarPrepForStore($bid)."'";
-
-    $dbconn->Execute($sql);
-    Header('HTTP/1.1 301 Moved Permanently'); 
-    Header("Location: $clickurl");
+  
 }
 ?>

@@ -14,6 +14,7 @@
           <em><xar:mlstring>xarLinkMe</xar:mlstring></em><xar:mlstring> is a script to display your site's banners, and allow others to link to
             your site with them. Currently the implementation is rudimentary but useful for those that want a page with links to 'official' site banners.</xar:mlstring>
       </p>
+      <br />
       <ul>
           <li><xar:mlstring>Displays each of your site's 'official' banners with optional display of banner and link HTML code for users (optional config).</xar:mlstring></li>
          <li><xar:mlstring>Simple client banner management options are currently in progress/TODO.</xar:mlstring></li>
