@@ -22,7 +22,7 @@
              <xar:if condition="empty($item)">
              <xar:else />
                <p class="xar-align-center">#$item#</p>
-               <p class="xar-align-center"><img alt="#$alttxt#" src="#$imgpath#/#$item#" border="0" valign="middle" /></p>
+               <p class="xar-align-center"><img alt="#$alttxt#" src="#$imgpath#/#$item#" /></p>
                <xar:comment>Only show linking code if you allow direct linking</xar:comment>
                <xar:if condition="xarModGetVar('xarlinkme','allowlinking') eq true">
                    <p class="xar-align-center">
@@ -39,7 +39,7 @@
          <div class="xar-standard-box-padding">
            <a href="#$siteurl#" rel="external">#$go# #$sitename#</a><br />
             <p class="xar-align-center">
-            <textarea class="mceNoEditor" rows="6" name="L2" cols="60">&lt;!-- begin link --&gt;&lt;a href="#$siteurl#" rel="external" title="#$alttxt#" &gt;#$go# #$sitename#&lt;&gt;/a&gt;&lt;!-- end link --&gt;</textarea></p>
+            <textarea class="mceNoEditor" rows="6" name="L2" cols="60">&lt;!-- begin link --&gt;&lt;a href="#$siteurl#" rel="external" title="#$alttxt#" &gt;#$go# #$sitename#&lt;/a&gt;&lt;!-- end link --&gt;</textarea></p>
             <hr />
           </div>
 
