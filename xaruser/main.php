@@ -31,7 +31,9 @@ function courses_user_main()
     // better search results from the spiders.
     xarTplSetPageTitle(xarVarPrepForDisplay(xarML('Welcome')));
     // Return the template variables defined in this function
-    return $data;
+    //return $data;
+    /* redirect to the main user page */
+     xarResponseRedirect(xarModURL('courses', 'user', 'view'));
 
 }
 
