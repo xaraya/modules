@@ -15,6 +15,12 @@ function xarcachemanager_admin_modifyhook($args)
     
     if (!xarSecurityCheck('AdminXarCache', 0)) { return ''; }
 
+    // If we are disabled, nothing to do here
+    $varCacheDir = xarCoreGetVarDirPath() . '/cache';
+    $outputCacheDir = $varCacheDir . '/output';
+    if (!file_exists($outputCacheDir.'/cache.touch')) {return '';}
+
+
     if (!isset($extrainfo)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'extrainfo', 'admin', 'modifyhook', 'changelog');
