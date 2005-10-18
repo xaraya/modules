@@ -12,7 +12,7 @@
    <dl class="xar-tabs">
         <dt class="help" title="Choose a set of configuration options"><xar:mlstring>Actions</xar:mlstring> :</dt>
         <xar:if condition="$tab eq 'basicconfig'">
-            <dd class="active"><a href="&xar-modurl-xarlinkme-admin-modifyconfig;&amp;tab=basicconfig" class="active">
+            <dd class="active"><a href="&xar-modurl-xarlinkme-admin-modifyconfig;&amp;tab=basicconfig">
                     <xar:mlstring>General Configuration</xar:mlstring>
                 </a>
             </dd>
@@ -25,7 +25,7 @@
         </xar:if>
        <xar:if condition="$tab eq 'clientconfig'">
             <dd class="active">
-                <a href="&xar-modurl-xarlinkme-admin-modifyconfig;&amp;tab=clientconfig" class="active">
+                <a href="&xar-modurl-xarlinkme-admin-modifyconfig;&amp;tab=clientconfig">
                     <xar:mlstring>Client Banner Config</xar:mlstring>
                 </a>
             </dd>
@@ -38,7 +38,7 @@
         </xar:if>
         <xar:if condition="$tab eq 'siteconfig'">
             <dd class="active">
-                <a href="&xar-modurl-xarlinkme-admin-modifyconfig;&amp;tab=siteconfig" class="active">
+                <a href="&xar-modurl-xarlinkme-admin-modifyconfig;&amp;tab=siteconfig">
                     <xar:mlstring>Site Links Config</xar:mlstring>
                 </a>
             </dd>
