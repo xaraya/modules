@@ -1,7 +1,7 @@
-<div class="xar-norm">
+<div>
     <p class="xar-cm-note xar-sub">
         <xar:mlstring>
-            Note: Comments are owned by the poster. We are not responsible for their content..
+            Note: Comments are owned by the poster. We are not responsible for their content.
         </xar:mlstring>
     </p>
     <xar:set name="$showoptions">#xarModGetVar('comments','showoptions')#</xar:set>
@@ -22,9 +22,9 @@
     <h4>
         <xar:mlstring>
             Comments Settings 
-        </xar:mlstring>        
+        </xar:mlstring>
     </h4>
-    <div class="xar-cm-wrapper  xar-accent xar-norm-outline">
+    <div class="xar-cm-wrapper xar-accent xar-norm-outline">
         <form action="#$receipt['returnurl']['decoded']#" method="post">
             <div class="xar-cm-settings">
                 <label for="depth">

@@ -3,6 +3,7 @@
 
 .xar-cm-wrapper {
     height: 3.5em;
+    padding-bottom:10px;
     margin-bottom: 5px;
 }
 
@@ -12,7 +13,7 @@
     font-size: 90%;
     font-weight: bold;
     text-align: center;
-    padding-top: 2px;
+    padding: 0px;
 }
 
 .xar-cm-note {
@@ -67,7 +68,7 @@ form.xar-cm-actions > input {
 }
 
 input.xar-ib-field, textarea.xar-ib-fieldtext {
-    width:100%;
+    width:97%;
 /*     text-align:left; */
 }
 
@@ -145,6 +146,7 @@ input.xar-ib-field, textarea.xar-ib-fieldtext {
 /* } */
 
 .xar-tr-title {
+    clear:left;
     float: left;
     width: 50%;
     height: 21px;
