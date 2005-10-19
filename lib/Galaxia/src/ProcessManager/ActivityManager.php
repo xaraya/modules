@@ -367,7 +367,7 @@ class ActivityManager extends BaseManager {
         $procname= $this->getOne("select normalized_name from ".GALAXIA_TABLE_PREFIX."processes where pId=$pid");
         
         $query = "select * from ".GALAXIA_TABLE_PREFIX."activities where pId=?";
-        $result = $this->query($query, array($pId));
+        $result = $this->query($query, array($pid));
         while($res = $result->fetchRow()) {          
             $actname = $res['normalized_name'];
             $source = GALAXIA_PROCESSES."/$procname/code/activities/$actname".'.php';
