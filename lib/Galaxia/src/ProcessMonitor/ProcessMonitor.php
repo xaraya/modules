@@ -120,6 +120,7 @@ class ProcessMonitor extends Base {
       return $retval;
     }
     // get number of instances and timing statistics per process and status
+    // TODO: reformulate with bindvars
     $query = "select pId, status, count(*) as num_instances,
               min(ended - started) as min_time, avg(ended - started) as avg_time, max(ended - started) as max_time
               from ".GALAXIA_TABLE_PREFIX."instances where pId in (" . join(', ', array_keys($ret)) . ") group by pId, status";
@@ -148,6 +149,7 @@ class ProcessMonitor extends Base {
       }
     }
     // get number of activities per process
+    // TODO: reformulate with bindvars
     $query = "select pId, count(*) as num_activities
               from ".GALAXIA_TABLE_PREFIX."activities
               where pId in (" . join(', ', array_keys($ret)) . ")
@@ -193,13 +195,13 @@ class ProcessMonitor extends Base {
     while($res = $result->fetchRow()) {
       // Number of active instances
       $aid = $res['activityId'];
-      $res['active_instances']=$this->getOne("select count(gi.instanceId) from ".GALAXIA_TABLE_PREFIX."instances gi,".GALAXIA_TABLE_PREFIX."instance_activities gia where gi.instanceId=gia.instanceId and gia.activitYId=$aid and gi.status='active' and pId=".$res['pId']);
+      $res['active_instances']=$this->getOne("select count(gi.instanceId) from ".GALAXIA_TABLE_PREFIX."instances gi,".GALAXIA_TABLE_PREFIX."instance_activities gia where gi.instanceId=gia.instanceId and gia.activitYId=$aid and gi.status='active' and pId=?",array($res['pId']));
     // activities of completed instances are all removed from the instance_activities table for some reason, so we need to look at workitems
-      $res['completed_instances']=$this->getOne("select count(distinct gi.instanceId) from ".GALAXIA_TABLE_PREFIX."instances gi,".GALAXIA_TABLE_PREFIX."workitems gw where gi.instanceId=gw.instanceId and gw.activityId=$aid and gi.status='completed' and pId=".$res['pId']);
+      $res['completed_instances']=$this->getOne("select count(distinct gi.instanceId) from ".GALAXIA_TABLE_PREFIX."instances gi,".GALAXIA_TABLE_PREFIX."workitems gw where gi.instanceId=gw.instanceId and gw.activityId=$aid and gi.status='completed' and pId=?",array($res['pId']));
     // activities of aborted instances are all removed from the instance_activities table for some reason, so we need to look at workitems
-      $res['aborted_instances']=$this->getOne("select count(distinct gi.instanceId) from ".GALAXIA_TABLE_PREFIX."instances gi,".GALAXIA_TABLE_PREFIX."workitems gw where gi.instanceId=gw.instanceId and gw.activityId=$aid and gi.status='aborted' and pId=".$res['pId']);
-      $res['exception_instances']=$this->getOne("select count(gi.instanceId) from ".GALAXIA_TABLE_PREFIX."instances gi,".GALAXIA_TABLE_PREFIX."instance_activities gia where gi.instanceId=gia.instanceId and gia.activityId=$aid and gi.status='exception' and pId=".$res['pId']);
-    $res['act_running_instances']=$this->getOne("select count(gi.instanceId) from ".GALAXIA_TABLE_PREFIX."instances gi,".GALAXIA_TABLE_PREFIX."instance_activities gia where gi.instanceId=gia.instanceId and gia.activityId=$aid and gia.status='running' and pId=".$res['pId']);
+      $res['aborted_instances']=$this->getOne("select count(distinct gi.instanceId) from ".GALAXIA_TABLE_PREFIX."instances gi,".GALAXIA_TABLE_PREFIX."workitems gw where gi.instanceId=gw.instanceId and gw.activityId=$aid and gi.status='aborted' and pId=?",array($res['pId']));
+      $res['exception_instances']=$this->getOne("select count(gi.instanceId) from ".GALAXIA_TABLE_PREFIX."instances gi,".GALAXIA_TABLE_PREFIX."instance_activities gia where gi.instanceId=gia.instanceId and gia.activityId=$aid and gi.status='exception' and pId=?",array($res['pId']));
+      $res['act_running_instances']=$this->getOne("select count(gi.instanceId) from ".GALAXIA_TABLE_PREFIX."instances gi,".GALAXIA_TABLE_PREFIX."instance_activities gia where gi.instanceId=gia.instanceId and gia.activityId=$aid and gia.status='running' and pId=?",array($res['pId']));
     // completed activities are removed from the instance_activities table unless they're part of a split for some reason, so this won't work
     //  $res['act_completed_instances']=$this->getOne("select count(gi.instanceId) from ".GALAXIA_TABLE_PREFIX."instances gi,".GALAXIA_TABLE_PREFIX."instance_activities gia where gi.instanceId=gia.instanceId and gia.activityId=$aid and gia.status='completed' and pId=".$res['pId']);
       $res['act_completed_instances'] = 0;
@@ -211,6 +213,7 @@ class ProcessMonitor extends Base {
       $retval["cant"] = $cant;
       return $retval;
     }
+    // TODO: reformulate with bindvars
     $query = "select activityId, count(distinct instanceId) as num_instances, min(ended - started) as min_time, avg(ended - started) as avg_time, max(ended - started) as max_time
               from ".GALAXIA_TABLE_PREFIX."workitems
               where activityId in (" . join(', ', array_keys($ret)) . ")

@@ -39,33 +39,32 @@ class InstanceManager extends BaseManager {
     $query = "select * from ".GALAXIA_TABLE_PREFIX."instances gi where instanceId=?";
     $result = $this->query($query, array($iid));
     $res = $result->fetchRow();
-    $res['workitems']=$this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."workitems where instanceId=$iid");
+    $res['workitems']=$this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."workitems where instanceId=?",array($iid));
     return $res;
   }
 
   function get_instance_properties($iid)
   {
-    $prop = unserialize($this->getOne("select properties from ".GALAXIA_TABLE_PREFIX."instances gi where instanceId=$iid"));
+      $prop = unserialize($this->getOne("select properties from ".GALAXIA_TABLE_PREFIX."instances gi where instanceId=?",array($iid)));
     return $prop;
   }
   
   function set_instance_properties($iid,&$prop)
   {
-    $props = addslashes(serialize($prop));
-    $query = "update ".GALAXIA_TABLE_PREFIX."instances set properties='$props' where instanceId=?";
-    $this->query($query, array($iid));
+    $query = "update ".GALAXIA_TABLE_PREFIX."instances set properties=? where instanceId=?";
+    $this->query($query, array($props,$iid));
   }
   
   function set_instance_owner($iid,$owner)
   {
-    $query = "update ".GALAXIA_TABLE_PREFIX."instances set owner='$owner' where instanceId=?";
-    $this->query($query, array($iid));
+    $query = "update ".GALAXIA_TABLE_PREFIX."instances set owner=? where instanceId=?";
+    $this->query($query, array($owner, $iid));
   }
   
   function set_instance_status($iid,$status)
   {
-    $query = "update ".GALAXIA_TABLE_PREFIX."instances set status='$status' where instanceId=?";
-    $this->query($query, array($iid)); 
+    $query = "update ".GALAXIA_TABLE_PREFIX."instances set status=? where instanceId=?";
+    $this->query($query, array($status, $iid)); 
   }
   
   function set_instance_destination($iid,$activityId)
@@ -78,8 +77,8 @@ class InstanceManager extends BaseManager {
   
   function set_instance_user($iid,$activityId,$user)
   {
-    $query = "update ".GALAXIA_TABLE_PREFIX."instance_activities set user='$user', status='running' where instanceId=? and activityId=?";
-    $this->query($query, array($iid, $activityId));  
+    $query = "update ".GALAXIA_TABLE_PREFIX."instance_activities set user=?, status=? where instanceId=? and activityId=?";
+    $this->query($query, array($user, 'running', $iid, $activityId));  
   }
 
 }    

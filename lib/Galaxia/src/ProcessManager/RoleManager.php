@@ -30,8 +30,7 @@ class RoleManager extends BaseManager {
   
   function get_role_id($pid,$name)
   {
-    $name = addslashes($name);
-    return ($this->getOne("select roleId from ".GALAXIA_TABLE_PREFIX."roles where name='$name' and pId=$pid"));
+    return ($this->getOne("select roleId from ".GALAXIA_TABLE_PREFIX."roles where name=? and pId=?",array($name,$pid)));
   }
   
   /*!
@@ -39,10 +38,10 @@ class RoleManager extends BaseManager {
   */
   function get_role($pId, $roleId)
   {
-    $query = "select * from `".GALAXIA_TABLE_PREFIX."roles` where `pId`=? and `roleId`=?";
-  $result = $this->query($query,array($pId, $roleId));
-  $res = $result->fetchRow();
-  return $res;
+      $query = "select * from `".GALAXIA_TABLE_PREFIX."roles` where `pId`=? and `roleId`=?";
+      $result = $this->query($query,array($pId, $roleId));
+      $res = $result->fetchRow();
+      return $res;
   }
   
   /*!
@@ -50,8 +49,7 @@ class RoleManager extends BaseManager {
   */
   function role_name_exists($pid,$name)
   {
-    $name = addslashes($name);
-    return ($this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."roles where pId=$pid and name='$name'"));
+    return ($this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."roles where pId=? and name=?",array($pid,$name)));
   }
   
   /*!
@@ -162,26 +160,23 @@ class RoleManager extends BaseManager {
     $vars['lastModif']=$now;
     $vars['pId']=$pId;
     
-    foreach($vars as $key=>$value)
-    {
-      $vars[$key]=addslashes($value);
-    }
-  
     if($roleId) {
       // update mode
       $first = true;
       $query ="update $TABLE_NAME set";
+      $bindvars = array();
       foreach($vars as $key=>$value) {
         if(!$first) $query.= ',';
-        if(!is_numeric($value)) $value="'".$value."'";
-        $query.= " $key=$value ";
+        $query.= " $key=? ";
+        $bindvars[] = $value;
         $first = false;
       }
-      $query .= " where pId=$pId and roleId=$roleId ";
-      $this->query($query);
+      $query .= " where pId=? and roleId=? ";
+      $bindvars[] = $pid; $bindvars[] = $roleId;
+      $this->query($query,$bindvars);
     } else {
       $name = $vars['name'];
-      if ($this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."roles where pId=$pId and name='$name'")) {
+      if ($this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."roles where pId=? and name=?",array($pId,$name))) {
         return false;
       }
       unset($vars['roleId']);
@@ -195,15 +190,16 @@ class RoleManager extends BaseManager {
       } 
       $query .=") values(";
       $first = true;
+      $bindvars = array();
       foreach(array_values($vars) as $value) {
         if(!$first) $query.= ','; 
-        if(!is_numeric($value)) $value="'".$value."'";
-        $query.= "$value";
+        $query.= "?";
+        $bindvars[] = $value;
         $first = false;
       } 
       $query .=")";
-      $this->query($query);
-      $roleId = $this->getOne("select max(roleId) from $TABLE_NAME where pId=$pId and lastModif=$now"); 
+      $this->query($query,$bindvars);
+      $roleId = $this->getOne("select max(roleId) from $TABLE_NAME where pId=? and lastModif=?",array($pId,$now)); 
     }
     // Get the id
     return $roleId;

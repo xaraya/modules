@@ -23,7 +23,7 @@ function workflow_userapi_findinstances($args)
 
     $where = '';
     $wheres = array();
-
+    // TODO: reformulate this with bindvars
     if (!empty($status)) {
         $wheres[] = "gi.status='" . $status . "'";
     }
