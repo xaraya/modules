@@ -172,7 +172,7 @@ if (isset($action)) {
                 if(!xarVarFetch('products_price',    'float',  $products_price, NULL, XARVAR_DONT_SET)) {return;}
                 if(!xarVarFetch('products_date_available',    'str',  $products_date_available, NULL, XARVAR_DONT_SET)) {return;}
 
-                // START IN-SOLUTION Zurückberechung des Nettopreises falls der Bruttopreis übergeben wurde
+                // START IN-SOLUTION Zurï¿½ckberechung des Nettopreises falls der Bruttopreis ï¿½bergeben wurde
                 if (PRICE_IS_BRUTTO=='true' && $products_price){
                     $tax_query = new xenQuery("select tax_rate from " . TABLE_TAX_RATES . " where tax_class_id = '".$products_tax_class_id."' ");
                     $q = new xenQuery();
@@ -576,17 +576,14 @@ if (isset($action)) {
             'cPath' => $cPath,
             'cID' => $cID)));
     //----- new_category_preview (active when ALLOW_CATEGORY_DESCRIPTIONS is 'true') -----
-    }
-    elseif ($action == 'new_category_preview') {
+    } elseif ($action == 'new_category_preview') {
     // removed
-    }
-    elseif ($action == 'new_product') {
+    } elseif ($action == 'new_product') {
         xarResponseRedirect(xarModURL('products','admin','product_screen', array('cPath' => $data['cPath'])));
-    }
-    elseif ($action == 'new_product_preview') {
+    } elseif ($action == 'new_product_preview') {
     // preview removed
-    }
-    else {
+    } else {
+        // from view to screen
         return xarTplModule('products','admin', 'categories_view',$data);
     }
 }
