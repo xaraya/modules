@@ -16,9 +16,9 @@
               names. This means that other apis cannot use the "system" prefix for their registered
               methods.</xar:mlstring>
             </p>
-            <p><xar:mlstring>In Xaraya the webservices module is responsible for providing the xmlrpc transport
+            <p><xar:mlstring>In Xaraya the xmlrpcserver module is responsible for providing the xmlrpc transport
               needed for this API functionality. This module will not function without
-              the webservices module activated.</xar:mlstring>
+              the xmlrpcserver module activated.</xar:mlstring>
             </p>
 
             <p>
