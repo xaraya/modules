@@ -162,13 +162,7 @@ function xarbb_userapi_encode_shorturl($args)
     } elseif ($func == 'newtopic') {
         // check for required parameters
         if (isset($fid) && is_numeric($fid)) {
-           if (isset($phase) && $redirect == 'edit'&& isset($tid) && is_numeric($tid)) {
-                if (($module == $alias) && ($usealias)){
-                       $path = '/' . $aliasname . '/newtopic/'.$tid.'/edit/';
-                } else {
-                      $path = '/' . $module . '/newtopic/'.$tid.'/edit/';
-                }
-           }elseif (isset($phase) && $phase == 'quote' && isset($tid) && is_numeric($tid)){
+            if (isset($phase) && $phase == 'quote' && isset($tid) && is_numeric($tid)){
                 if (($module == $alias) && ($usealias)){
                        $path = '/' . $aliasname . '/newreply/'.$tid.'/quote/';
                 } else {
@@ -181,7 +175,12 @@ function xarbb_userapi_encode_shorturl($args)
                       $path = '/' . $module . '/newtopic/' . $fid;
                 }
             }
-
+       } elseif (isset($tid) && is_numeric($tid)) {
+              if (($module == $alias) && ($usealias)){
+                       $path = '/' . $aliasname . '/newtopic/'.$tid.'/edit/';
+                } else {
+                      $path = '/' . $module . '/newtopic/'.$tid.'/edit/';
+                }
         } else {
         }
    } elseif ($func == 'newreply') {
@@ -198,6 +197,12 @@ function xarbb_userapi_encode_shorturl($args)
                        $path = '/' . $aliasname . '/newreply/'.$tid.'/quote/' . $cid;
                 } else {
                      $path = '/' . $module . '/newreply/'.$tid.'/quote/' . $cid;
+                }
+            }elseif (isset($phase) && $phase == 'quote') {
+               if (($module == $alias) && ($usealias)){
+                       $path = '/' . $aliasname . '/newreply/'.$tid.'/quote/';
+                } else {
+                     $path = '/' . $module . '/newreply/'.$tid.'/quote/';
                 }
             } else {
                 if (($module == $alias) && ($usealias)){

@@ -101,7 +101,10 @@ function xarbb_userapi_decode_shorturl($params)
         }elseif (!empty($params[2]) && preg_match('/^quote/i',$params[2])&& isset($cid)) {
              $args['phase'] = 'quote';
              $args['cid'] = $cid;
+        }elseif (!empty($params[2]) && preg_match('/^quote/i',$params[2]) ) {
+             $args['phase'] = 'quote';
         }
+
             $args['tid'] = $id;
             $func = 'newreply';
     }
