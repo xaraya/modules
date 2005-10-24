@@ -15,9 +15,9 @@
               on conformance to the specification. It implements the necessary methods on the server
               so test clients can validate whether the server conforms to the specification.</xar:mlstring>
             </p>
-            <p><xar:mlstring>In Xaraya the webservices module is responsible for providing the xmlrpc transport
+            <p><xar:mlstring>In Xaraya the xmlrpcserver module is responsible for providing the xmlrpc transport
               needed for this API functionality. This module will not function without
-              the webservices module activated.</xar:mlstring>
+              the xmlrpcserver module activated.</xar:mlstring>
             </p>
 
             <p>
