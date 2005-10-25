@@ -90,8 +90,8 @@ function window_init()
     //Set security checkinkg for URL
     xarModSetVar('window', 'security', "1");          // 0 = NO check with DB, 1 = check with DB) 1*
 
-    xarRegisterMask('AdminWindow','All','All','All','All','ACCESS_ADMIN');
-    xarRegisterMask('ReadWindow','All','All','All','All','ACCESS_READ');
+    xarRegisterMask('AdminWindow','All','window','All','All','ACCESS_ADMIN');
+    xarRegisterMask('ReadWindow','All','window','All','All','ACCESS_READ');
 
     // Initialisation successful
     return true;
