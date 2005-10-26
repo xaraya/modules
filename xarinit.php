@@ -1,13 +1,12 @@
 <?php
 /**
- * File: $Id: xarinit.php,v 1.1 2005/06/21 13:25:04 root Exp root $
  *
  * AuthLDAP Initialisation
  *
- * @package authentication
- * @copyright (C) 2002 by the Xaraya Development Team.
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
- * @link http://www.xaraya.org
+ * @link http://www.xaraya.com
  *
  * @subpackage authldap
  * @author Chris Dudley <miko@xaraya.com> | Richard Cave <rcave@xaraya.com>

@@ -1,5 +1,11 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-standard-box-padding ">
 <xar:if condition="$success">
-Groups successfully synchronized. [<a href="#xarModURL('roles', 'admin', 'showusers')#">See the groups</a>]
+        <xar:ml>
+            <xar:mlstring>Groups successfully synchronized. [<a href="#(1)">See the groups</a>]</xar:mlstring>
+            <xar:mlvar>#xarModURL('roles', 'admin', 'showusers')#</xar:mlvar>
+        </xar:ml>
 <xar:else />
-Error during group synchronization.
+        <xar:mlstring>Error during group synchronization.</xar:mlstring>
 </xar:if>
+</div>

@@ -1,11 +1,10 @@
 <?php
 /**
- * File: $Id: syncgroups.php,v 1.7 2005/06/23 05:51:29 root Exp root $
  *
  * AuthLDAP Administrative Display Functions
  * 
- * @package authentication
- * @copyright (C) 2002 by the Xaraya Development Team.
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *

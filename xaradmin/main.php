@@ -1,11 +1,10 @@
 <?php
 /**
- * File: $Id$
  *
  * AuthLDAP Administrative Display Functions
  * 
- * @package authentication
- * @copyright (C) 2002 by the Xaraya Development Team.
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
