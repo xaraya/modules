@@ -194,7 +194,7 @@ function translations_adminapi_generate_theme_skels($args)
     $fuzzyKeys = $backend->getFuzzyEntriesByKey();
     foreach ($fuzzyKeys as $ind => $fuzzyKey) {
         // Add entry
-        $gen->addKeyEntry($fuzzyKey['string'], $fuzzyKey['references'], $fuzzyKey['translation']);
+        $gen->addKeyEntry($fuzzyKey['key'], $fuzzyKey['references'], $fuzzyKey['translation']);
     }
     $gen->close();
 

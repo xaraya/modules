@@ -102,7 +102,7 @@ function translations_adminapi_generate_core_skels($args)
     $fuzzyKeys = $core_backend->getFuzzyEntriesByKey();
     foreach ($fuzzyKeys as $ind => $fuzzyKey) {
         // Add entry
-        $gen->addKeyEntry($fuzzyKey['string'], $fuzzyKey['references'], $fuzzyKey['translation']);
+        $gen->addKeyEntry($fuzzyKey['key'], $fuzzyKey['references'], $fuzzyKey['translation']);
     }
     $gen->close();
 
