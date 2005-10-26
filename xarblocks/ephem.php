@@ -35,7 +35,7 @@ function ephemerids_ephemblock_display($blockinfo)
     if(!xarSecurityCheck('ReadEphemerids', 0)) return;
 
     // Database information
-    xarModDBInfoLoad('Ephemerids');
+    xarModDBInfoLoad('ephemerids');
     $dbconn =& xarDBGetConn();
 
     $xartable =& xarDBGetTables();

@@ -55,12 +55,12 @@ function ephemerids_init()
                              'blockType'=> 'ephem'))) return;
 
     // Register Masks
-    xarRegisterMask('OverviewEphemerids','All','emphemerids','All','All','ACCESS_OVERVIEW');
-    xarRegisterMask('ReadEphemerids','All','emphemerids','All','All','ACCESS_READ');
-    xarRegisterMask('EditEphemerids','All','emphemerids','All','All','ACCESS_EDIT');
-    xarRegisterMask('AddEphemerids','All','emphemerids','All','All','ACCESS_ADD');
-    xarRegisterMask('DeleteEphemerids','All','emphemerids','All','All','ACCESS_DELETE');
-    xarRegisterMask('AdminEphemerids','All','emphemerids','All','All','ACCESS_ADMIN');
+    xarRegisterMask('OverviewEphemerids','All','ephemerids','All','All','ACCESS_OVERVIEW');
+    xarRegisterMask('ReadEphemerids','All','ephemerids','All','All','ACCESS_READ');
+    xarRegisterMask('EditEphemerids','All','ephemerids','All','All','ACCESS_EDIT');
+    xarRegisterMask('AddEphemerids','All','ephemerids','All','All','ACCESS_ADD');
+    xarRegisterMask('DeleteEphemerids','All','ephemerids','All','All','ACCESS_DELETE');
+    xarRegisterMask('AdminEphemerids','All','ephemerids','All','All','ACCESS_ADMIN');
 
     // Initialisation successful
     return true;
@@ -84,8 +84,8 @@ function ephemerids_upgrade($oldversion)
         case '1.4.0':
             // Code to upgrade from version 1.3 goes here
             xarModSetVar('ephemerids', 'itemsperpage', 20);
-            xarModDelVar('Ephemerids', 'detail');
-            xarModDelVar('Ephemerids', 'table');
+            xarModDelVar('ephemerids', 'detail');
+            xarModDelVar('ephemerids', 'table');
         case '1.4.1':
             // Code to upgrade from version 1.4 goes here
             $changes = array('command'     => 'add', 
