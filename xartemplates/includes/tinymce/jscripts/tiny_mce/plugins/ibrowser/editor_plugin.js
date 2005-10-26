@@ -41,7 +41,6 @@
 
 	//document.getElementsByTagName('head')[0].appendChild(js) ;
     //Xaraya fix for IE bug caused by above line: ew very very ugly - but works. Silly IE bug
-    //causes a dot on the end of the URL so IE can't get to the URL - Operation Aborted!
 
      document.write('<sc'+'ript language="javascript" type="text/javascript" src="' + js.src + '"></script>');
 
