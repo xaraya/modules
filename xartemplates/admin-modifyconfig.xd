@@ -1,118 +1,94 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>XarLDAP Administration</xar:mlstring></span></div>
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>XarLDAP Administration</xar:mlstring>
+    </span>
+</div>
 <div class="xar-mod-body">
-    <div style="padding: 1px;" class="xar-norm-outline">
-    <form method="post" action="&xar-modurl-xarldap-admin-updateconfig;">
-    <input type="hidden" name="authid" id="authid" value="#$authid#" />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>LDAP Server Configuration</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <table border="0" width="100%" cellpadding="4">
-                <tr align="left" valign="top">
-                    <td colspan="2">
-                        <xar:ml>
-                            <xar:mlstring>If you are configuring Xaraya to use LDAP for user authentication, you should configure the LDAP server within the <a href="#(1)">authldap module</a>.</xar:mlstring>
-                            <xar:mlvar>#xarModURL('authldap', 'admin', 'modifyconfig')#</xar:mlvar>
-                        </xar:ml>
-                    </td>
-                </tr>
-                <tr align="left" valign="top">
-                    <td>
-                        <xar:mlstring>LDAP Server Name or IP</xar:mlstring>
-                    </td>
-                    <td>
-                        <input type="text" name="ldapserver" value="#$ldapservervalue#" />
-                    </td>
-                </tr>
-                <tr align="left" valign="top">
-                    <td>
-                        <xar:mlstring>LDAP Server Port Number</xar:mlstring>
-                    </td>
-                    <td>
-                        <input type="text" name="portnumber" value="#$portnumbervalue#" />
-                    </td>
-                </tr>
-                <tr align="left" valign="top">
-                    <td colspan="2">
-                        <b><xar:mlstring>Note: </xar:mlstring></b><xar:mlstring>If the server name contains "ldap://" or "ldaps://", then the port number is ignored.  Instead, append the port number to the server name as in "ldaps://server:port".</xar:mlstring>
-                    </td>
-                </tr>
-                <tr align="left" valign="top">
-                    <td>
-                        <xar:mlstring>Anonymously Bind to Server</xar:mlstring>
-                    </td>
-                    <td>
-                        <xar:if condition="$anonymousbindvalue eq 'true'">
-                            <input type="checkbox" name="anonymousbind" value="1" checked="checked"/>
-                        <xar:else/>
-                            <input type="checkbox" name="anonymousbind" value="1" />
-                        </xar:if>
-                    </td>
-                </tr>
-                <tr align="left" valign="top">
-                    <td>
-                        <xar:mlstring>LDAP bind DN</xar:mlstring>
-                    </td>
-                    <td>
-                        <input type="text" name="binddn" value="#$binddnvalue#" />
-                    </td>
-                </tr>
-                <tr align="left" valign="top">
-                    <td>
-                        <xar:mlstring>LDAP UserID Field Name</xar:mlstring>
-                    </td>
-                    <td>
-                        <input type="text" name="uidfield" value="#$uidfieldvalue#" />
-                    </td>
-                </tr>
-                <tr align="left" valign="top">
-                    <td>
+    <form name="post" id="post" action="&xar-modurl-xarldap-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded">
+        <fieldset>
+            <legend>
+                    <xar:mlstring>LDAP Server Configuration</xar:mlstring>
+            </legend>
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <div class="xar-standard-box-padding ">
+                <xar:ml>
+                    <xar:mlstring>If you are configuring Xaraya to use LDAP for user authentication, you should configure the LDAP server within the <a href="#(1)">authldap module</a>.</xar:mlstring>
+                    <xar:mlvar>#xarModURL('authldap', 'admin', 'modifyconfig')#</xar:mlvar>
+                </xar:ml>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="ldapserver" title="#xarML('LDAP Server Name or IP')#" class="xar-form-label">
+                    <xar:mlstring>LDAP Server Name or IP</xar:mlstring>
+                </label>
+                <input type="text" id="ldapserver" name="ldapserver" value="#$ldapservervalue#" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="portnumber" title="#xarML('LDAP Server Port Number')#" class="xar-form-label">
+                    <xar:mlstring>LDAP Server Port Number</xar:mlstring>
+                </label>
+                <input type="text" id="portnumber" name="portnumber" value="#$portnumbervalue#" />
+            </div>
+            <div class="xar-standard-box-padding">
+                <b><xar:mlstring>Note: </xar:mlstring></b><xar:mlstring>If the server name contains "ldap://" or "ldaps://", then the port number is ignored.  Instead, append the port number to the server name as in "ldaps://server:port".</xar:mlstring>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="anonymousbindvalue" title="#xarML('Anonymously Bind to Server')#" class="xar-form-label">
+                    <xar:mlstring>Anonymously Bind to Server</xar:mlstring>
+                </label>
+                <xar:if condition="$anonymousbindvalue eq 'true'">
+                    <input type="checkbox" id="anonymousbind" name="anonymousbind" value="1" checked="checked"/>
+                <xar:else/>
+                    <input type="checkbox" id="anonymousbind" name="anonymousbind" value="1" />
+                </xar:if>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="binddn" title="#xarML('LDAP bind DN')#" class="xar-form-label">
+                    <xar:mlstring>LDAP bind DN</xar:mlstring>
+                </label>
+                <input type="text" id="binddn" name="binddn" value="#$binddnvalue#" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="uidfield" title="#xarML('LDAP UserID Field Name')#" class="xar-form-label">
+                    <xar:mlstring>LDAP UserID Field Name</xar:mlstring>
+                </label>
+                <input type="text" id="uidfield" name="uidfield" value="#$uidfieldvalue#" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="uidfield" title="#xarML('Search User DN')#" class="xar-form-label">
                         <xar:mlstring>Search User DN</xar:mlstring>
-                    </td>
-                    <td>
-                        <xar:if condition="$searchuserdnvalue eq 'true'">
-                            <input type="checkbox" name="searchuserdn" value="1" checked="checked"/>
-                        <xar:else/>
-                            <input type="checkbox" name="searchuserdn" value="1" />
-                        </xar:if>
-                    </td>
-                </tr>
-                <tr align="left" valign="top">
-                    <td>
-                        <xar:mlstring>LDAP Admin ID</xar:mlstring>
-                    </td>
-                    <td>
-                        <input type="text" name="adminid" value="#$adminidvalue#" />
-                    </td>
-                </tr>
-                <tr align="left" valign="top">
-                    <td>
-                        <xar:mlstring>LDAP Admin Password</xar:mlstring>
-                    </td>
-                    <td>
-                        <input type="password" name="adminpasswd" value="#$adminpasswdvalue#" />
-                    </td>
-                </tr>
-                <tr align="left" valign="top">
-                    <td>
-                        <xar:mlstring>Use TLS (LDAP Protocol 3 only)</xar:mlstring>
-                    </td>
-                    <td>
-                        <xar:if condition="$tls eq 'true'">
-                            <input type="checkbox" name="tls" value="1" checked="checked"/>
-                        <xar:else/>
-                            <input type="checkbox" name="tls" value="1" />
-                        </xar:if>
-                    </td>
-                </tr>
-                <tr align="left" valign="top">
-                    <td colspan="2">
-                        <input type="submit" value="#xarML('Save configuration')#" />
-                    </td>
-                </tr>
-            </table>
+                </label>
+                <xar:if condition="$searchuserdnvalue eq 'true'">
+                    <input type="checkbox" id="searchuserdn" name="searchuserdn" value="1" checked="checked"/>
+                <xar:else/>
+                    <input type="checkbox" id="searchuserdn" name="searchuserdn" value="1" />
+                </xar:if>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="adminid" title="#xarML('LDAP Admin ID')#" class="xar-form-label">
+                    <xar:mlstring>LDAP Admin ID</xar:mlstring>
+                </label>
+                <input type="text" id="adminid" name="adminid" value="#$adminidvalue#" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="adminpasswd" title="#xarML('LDAP Admin Password')#" class="xar-form-label">
+                    <xar:mlstring>LDAP Admin Password</xar:mlstring>
+                </label>
+                <input type="password" id="adminpasswd" name="adminpasswd" value="#$adminpasswdvalue#" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="tls" title="#xarML('LDAP Admin Password')#" class="xar-form-label">
+                    <xar:mlstring>Use TLS (LDAP Protocol 3 only)</xar:mlstring>
+                </label>
+                <xar:if condition="$tls eq 'true'">
+                    <input type="checkbox" id="tls" name="tls" value="1" checked="checked"/>
+                <xar:else/>
+                    <input type="checkbox" id="tls" name="tls" value="1" />
+                </xar:if>
+            </div>
+        </fieldset>
+        <div class="xar-form-input-wrapper-after">
+            <input type="submit" value="#xarML('Save configuration')#" />
         </div>
     </form>
-    </div>
 </div>

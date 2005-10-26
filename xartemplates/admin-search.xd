@@ -1,38 +1,47 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>XarLDAP Administration</xar:mlstring></span></div>
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>XarLDAP Administration</xar:mlstring>
+    </span>
+</div>
 <div class="xar-mod-body">
-    <div style="padding: 1px;" class="xar-norm-outline">
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+    <fieldset>
+        <legend>
             #$title#
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:if condition="$result">
-                <br />
+        </legend>  
+        <xar:if condition="$result">
+            <div class="xar-standard-box-padding ">
                 <h3><xar:mlstring>Success!</xar:mlstring></h3>
-                <br />
                 <xar:if condition="$search eq 'user'">
-                    <xar:mlstring>Found user</xar:mlstring>
-                    &nbsp;#$value#
-                    <br /><br />
-                    <a href="#xarModURL('xarldap', 'admin', 'usersearch')#">Search for another user.</a>
+                    <xar:mlstring>Found user</xar:mlstring>:
+                    &nbsp;<strong>#$value#</strong>
+            <xar:comment>       #$dn#
+                   #$mail#</xar:comment>
+
+
                 </xar:if>
-                <br /><br />
-                <xar:mlstring>Search results:</xar:mlstring>
-                <br />
-                #$result#
-                <br />
-            <xar:else />
-                <br />
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>
+                <xar:mlstring>Details</xar:mlstring>:
+            </legend>  
+            <div class="xar-standard-box-padding ">
+                <p>#$result#</p>
+            </div>
+        <xar:else />
+            <div class="xar-standard-box-padding ">
                 <h3><xar:mlstring>Failure!</xar:mlstring></h3>
-                <br />
-                <xar:if condition="$search eq 'user'">
-                    <xar:mlstring>Could not find user</xar:mlstring>
-                    &nbsp;#$value#
-                    <br /><br />
-                    <a href="#xarModURL('xarldap', 'admin', 'usersearch')#">Search for another user.</a>
-                </xar:if>
-                <br /><br />
-            </xar:if>
-        </div>
+                    <xar:if condition="$search eq 'user'">
+                        <xar:mlstring>Could not find user</xar:mlstring>:
+                        &nbsp;<strong>#$value#</strong>
+                    </xar:if>            
+            </div>
+        </xar:if>
+    </fieldset>
+    <div class="xar-form-input-wrapper-after">
+        <a href="#xarModURL('xarldap', 'admin', 'usersearch')#">
+            Search for another user.
+        </a>  
     </div>
 </div>

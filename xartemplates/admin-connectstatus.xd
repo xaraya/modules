@@ -1,33 +1,35 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>XarLDAP Administration</xar:mlstring></span></div>
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+<span class="xar-mod-title">
+<xar:mlstring>XarLDAP Administration</xar:mlstring>
+</span>
+</div>
 <div class="xar-mod-body">
-    <div style="padding: 1px;" class="xar-norm-outline">
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+    <fieldset>
+        <legend>
             <xar:mlstring>LDAP Server Connection Status</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:if condition="$result eq true">
-                <br />
+        </legend>
+        <xar:if condition="$result eq true">
+            <div class="xar-standard-box-padding ">
                 <h3><xar:mlstring>Success!</xar:mlstring></h3>
-                <br />
-                <xar:mlstring>You successfully connected to the LDAP server</xar:mlstring>
-                <br />
-                #$server#
-                <br /><br />
-            <xar:else />
-                <br />
+                <xar:mlstring>You successfully connected to the LDAP server</xar:mlstring>:
+            </div>
+            <div class="xar-standard-box-padding ">
+                <strong>#$server#</strong>
+            </div>
+        <xar:else />
+            <div class="xar-standard-box-padding ">
                 <h3><xar:mlstring>Failure!</xar:mlstring></h3>
-                <br />
-                <xar:mlstring>Could not connect to server</xar:mlstring>
-                <br />
+                <xar:mlstring>Could not connect to the LDAP server</xar:mlstring>:
+            </div>
+            <div class="xar-standard-box-padding ">
                 #$server#
-                <br />
+            </div>
+            <div class="xar-standard-box-padding ">
                 <xar:mlstring>The LDAP configuration is not set correctly.</xar:mlstring>
-                <br />
-                <a href="#xarModURL('xarldap', 'admin', 'modifyconfig')#"><xar:mlstring>Modify your configuration.</xar:mlstring></a>
-                <br /><br />
-
-            </xar:if>
-        </div>
-    </div>
+                <a href="#xarModURL('xarldap', 'admin', 'modifyconfig')#">
+                <xar:mlstring>Modify your configuration.</xar:mlstring></a>
+            </div>
+        </xar:if>
+    </fieldset>
 </div>

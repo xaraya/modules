@@ -1,95 +1,74 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>XarLDAP Administration</xar:mlstring></span></div>
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>XarLDAP Administration</xar:mlstring>
+    </span>
+</div>
 <div class="xar-mod-body">
-    <div style="padding: 1px;" class="xar-norm-outline">
-    <form method="post" action="&xar-modurl-xarldap-admin-connectstatus;">
-    <input type="hidden" name="authid" id="authid" value="#$authid#" />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>Test Connection to LDAP Server</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <table border="0" width="100%" cellpadding="4">
-                <tr align="left" valign="top">
-                    <td>
-                        <xar:mlstring>LDAP Server Name or IP</xar:mlstring>
-                    </td>
-                    <td>
-                        #$ldapservervalue#
-                    </td>
-                </tr>
-                <tr align="left" valign="top">
-                    <td>
-                        <xar:mlstring>LDAP Server Port Number</xar:mlstring>
-                    </td>
-                    <td>
-                        #$portnumbervalue#
-                    </td>
-                </tr>
-                <tr align="left" valign="top">
-                    <td>
-                        <xar:mlstring>Anonymously Bind to Server</xar:mlstring>
-                    </td>
-                    <td>
-                        #$anonymousbindvalue#
-                    </td>
-                </tr>
-                <tr align="left" valign="top">
-                    <td>
-                        <xar:mlstring>LDAP bind DN</xar:mlstring>
-                    </td>
-                    <td>
-                        #$binddnvalue#
-                    </td>
-                </tr>
-                <tr align="left" valign="top">
-                    <td>
-                        <xar:mlstring>LDAP UserID Field Name</xar:mlstring>
-                    </td>
-                    <td>
-                        #$uidfieldvalue#
-                    </td>
-                </tr>
-                <tr align="left" valign="top">
-                    <td>
-                        <xar:mlstring>Search User DN</xar:mlstring>
-                    </td>
-                    <td>
-                        #$searchuserdnvalue#
-                    </td>
-                </tr>
-                <tr align="left" valign="top">
-                    <td>
-                        <xar:mlstring>LDAP Admin ID</xar:mlstring>
-                    </td>
-                    <td>
-                        #$adminidvalue#
-                    </td>
-                </tr>
-                <tr align="left" valign="top">
-                    <td>
-                        <xar:mlstring>LDAP Admin Password</xar:mlstring>
-                    </td>
-                    <td>
-                        <input disabled="disabled" type="password" name="adminpasswd" value="#$adminpasswdvalue#" />
-                    </td>
-                </tr>
-                <tr align="left" valign="top">
-                    <td>
-                        <xar:mlstring>Use TLS (LDAP Protocol 3 only)</xar:mlstring>
-                    </td>
-                    <td>
-                        #$tls#
-                    </td>
-                </tr>
-                <tr align="center">
-                    <td colspan="2">
-                        <br />
-                        <input type="submit" value="Test Connection"  />
-                        <br />
-                    </td>
-                </tr>
-            </table>
+    <form name="post" id="post" action="&xar-modurl-xarldap-admin-connectstatus;" method="post" enctype="application/x-www-form-urlencoded">
+        <fieldset>
+            <legend>
+                    <xar:mlstring>Test Connection to LDAP Server</xar:mlstring>
+            </legend>
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <div class="xar-form-input-wrapper">
+                <label for="ldapserver" title="#xarML('LDAP Admin Password')#" class="xar-form-label">
+                    <xar:mlstring>LDAP Server Name or IP</xar:mlstring>
+                </label>
+                <input type="text" disabled="disabled" id="ldapserver" name="ldapserver" value="#$ldapservervalue#" />            
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="portnumber" title="#xarML('LDAP Server Port Number')#" class="xar-form-label">
+                    <xar:mlstring>LDAP Server Port Number</xar:mlstring>
+                </label>
+                <input type="text" disabled="disabled" id="portnumber" name="portnumber" value="#$portnumbervalue#" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="anonymousbind" title="#xarML('Anonymously Bind to Server')#" class="xar-form-label">
+                    <xar:mlstring>Anonymously Bind to Server</xar:mlstring>
+                </label>
+                <input type="text" disabled="disabled" id="anonymousbind" name="anonymousbind" value="#$anonymousbindvalue#" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="binddn" title="#xarML('LDAP bind DN')#" class="xar-form-label">
+                    <xar:mlstring>LDAP bind DN</xar:mlstring>
+                </label>
+                 <input type="text" disabled="disabled" id="binddn" name="binddn" value="#$binddnvalue#" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="uidfield" title="#xarML('LDAP UserID Field Name')#" class="xar-form-label">
+                    <xar:mlstring>LDAP UserID Field Name</xar:mlstring>
+                </label>
+                <input type="text" disabled="disabled" id="uidfield" name="uidfield" value="#$uidfieldvalue#" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="searchuserdn" title="#xarML('Search User DN')#" class="xar-form-label">
+                    <xar:mlstring>Search User DN</xar:mlstring>
+                </label>
+                <input type="text" disabled="disabled" id="searchuserdn" name="searchuserdn" value="#$searchuserdnvalue#" />               
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="adminid" title="#xarML('LDAP Admin ID')#" class="xar-form-label">
+                    <xar:mlstring>LDAP Admin ID</xar:mlstring>
+                </label>
+                <input type="text" disabled="disabled" id="adminid" name="adminid" value="#$adminidvalue#" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="adminpasswd" title="#xarML('LDAP Admin Password')#" class="xar-form-label">
+                    <xar:mlstring>LDAP Admin Password</xar:mlstring>
+                </label>
+                <input disabled="disabled" type="password" id="adminpasswd" name="adminpasswd" value="#$adminpasswdvalue#" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="tls" title="#xarML('Use TLS - LDAP Protocol 3 only')#" class="xar-form-label">
+                    <xar:mlstring>Use TLS (LDAP Protocol 3 only)</xar:mlstring>
+                </label>
+                <input type="text" disabled="disabled" id="tls" name="tls" value="#$tls#" />
+                
+            </div>
+        </fieldset>
+        <div class="xar-form-input-wrapper-after">
+            <input type="submit" value="#xarML('Test Connection')#" />
         </div>
     </form>
-    </div>
 </div>

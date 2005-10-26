@@ -1,45 +1,48 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>XarLDAP Administration</xar:mlstring></span></div>
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>XarLDAP Administration</xar:mlstring>
+    </span>
+</div>
 <div class="xar-mod-body">
-    <h2><xar:mlstring>Overview</xar:mlstring></h2>
-        <div style="padding: 1px;" class="xar-norm-outline">
-        <div style="float:right;padding:10px;">
-        <xar:if condition="file_exists('modules/xarldap/xarimages/admin.gif')" >
-            <img src="modules/xarldap/xarimages/admin.gif" alt="official icon" width="96" height="96" />
-        <xar:else />
-            <img src="modules/base/xarimages/admin_generic.gif" alt="official icon" width="96" height="96" />
-        </xar:if>
-        </div>
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>What is it?</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>The XarLDAP module allows you to configure an LDAP server that Xaraya will use for authentication or searching.</xar:mlstring>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>How to use it?</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+    <img src="#xarTplGetImage('admin_generic.gif', 'base')#" alt="official icon" width="96" height="96" class="xar-module-icon" />
+    <h2>
+        <xar:mlstring>Overview</xar:mlstring>
+    </h2>
+    <h3>
+        <xar:mlstring>What is it?</xar:mlstring>
+    </h3>
+    <p>
+        <xar:mlstring>The XarLDAP module allows you to configure an LDAP server that Xaraya will use for authentication or searching.</xar:mlstring>
+    </p>
+    <h3>
+        <xar:mlstring>How to use it?</xar:mlstring>
+    </h3>
+        <p>
             <xar:mlstring>You must configure XarLDAP before you can successfully authenticate a user with the AuthLDAP module or search the LDAP server.</xar:mlstring>
-            <br /><br />
-            <xar:mlstring>
-            From the menu, you have the following choices:. 
-            </xar:mlstring>
+        </p>
+        <p>
+            <xar:mlstring>From the menu, you have the following choices:.</xar:mlstring>
             <ul>
                 <li><xar:mlstring>Modify Config -- From here, you can configure the LDAP server.</xar:mlstring></li>
                 <li><xar:mlstring>Test Connnection -- Test the connection the LDAP server.</xar:mlstring></li>
             </ul>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+        </p>
+        <h3>
             <xar:mlstring>Included Blocks</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+        </h3>
+        <p>
             <xar:mlstring>There are no included blocks with the XarLDAP Module</xar:mlstring>
+        </p>
+        <h3>
+            <xar:mlstring>Included Hooks</xar:mlstring>
+        </h3>
+        <p>
+            <xar:mlstring>The AuthSSO module has no hooks included at this time.</xar:mlstring>
+        </p>
         </div>
-        <br />
-    </div>
-</div>
+       <div class="xar-mod-foot xar-align-center xar-padding-thick">
+           <p>
+               <xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring>
+           </p>
+       </div>
