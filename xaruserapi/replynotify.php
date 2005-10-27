@@ -29,10 +29,15 @@ function xarbb_userapi_replynotify($args)
     } else {
         return true;
     }
-    $subscribers = $topicoptions['subscribers'];
+    if (isset($topicoptions['subscribers'])) {
+      $subscribers = $topicoptions['subscribers'];
+    } else {
+      return true; /* No subscribers */
+    }
+
     // Our subscribers are in the array $topicoption['subscribers']
     // We just need to run through a loop and send an email.
-    // Is there any real reason to template this email?  
+    // Is there any real reason to template this email?
     // I don't see any right now, but lets see the feature request rack up.
     // Close one, and get 15 more...
     $sitename       = xarModGetVar('themes', 'SiteName');
@@ -45,6 +50,7 @@ function xarbb_userapi_replynotify($args)
     $message        .= xarML('Topic Link: #(1)', $link);
     $htmlmessage    = xarML('A topic that you subscribed to at #(1) has a reply.', $sitename);
     $htmlmessage    .= '<p><a href="'. $link .'">'. $data['ttitle'] .'</a>';
+    
     foreach($subscribers as $subscriber){
         // Send Mail
         // Gots ta gets the topic info
@@ -62,6 +68,7 @@ function xarbb_userapi_replynotify($args)
                                  'message'      => $message,
                                  'htmlmessage'  => $htmlmessage))) return;
     }
+
     // Blee da Blee, that's all folks.
     return true;
 }
