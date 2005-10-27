@@ -15,17 +15,17 @@ function images_userapi_getimagesize( $args )
     extract($args);
 
     if (empty($fileId) && empty($fileLocation)) {
-        $mesg = xarML('Invalid parameter \'#(1)\' to API function \'#(2)\' in module \'#(3)\'', 
+        $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'", 
                       '', 'getimagesize', 'images');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($mesg));
         return;
     } elseif (!empty($fileId) && !is_numeric($fileId)) {
-        $mesg = xarML('Invalid parameter \'#(1)\' to API function \'#(2)\' in module \'#(3)\'', 
+        $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'", 
                       'fileId', 'getimagesize', 'images');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($mesg));
         return;
     } elseif (!empty($fileLocation) && !is_string($fileLocation)) {
-        $mesg = xarML('Invalid parameter \'#(1)\' to API function \'#(2)\' in module \'#(3)\'', 
+        $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'", 
                       'fileLocation', 'getimagesize', 'images');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($mesg));
         return;

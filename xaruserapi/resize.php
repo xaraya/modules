@@ -22,28 +22,28 @@ function images_userapi_resize($args)
     extract($args);
 
     if (!isset($src) || empty($src)) {
-        $msg = xarML('Required parameter \'#(1)\' is missing or empty.', 'src');
+        $msg = xarML("Required parameter '#(1)' is missing or empty.", 'src');
         xarErrorSet(XAR_USER_EXCEPTION, xarML('Invalid Parameter'), new DefaultUserException($msg));
         return FALSE;
     }
 
     if (!isset($label) || empty($label)) {
-        $msg = xarML('Required parameter \'#(1)\' is missing or empty.', 'label');
+        $msg = xarML("Required parameter '#(1)' is missing or empty.", 'label');
         xarErrorSet(XAR_USER_EXCEPTION, xarML('Invalid Parameter'), new DefaultUserException($msg));
         return FALSE;
     }
 
     if (!isset($width) && !isset($height) && !isset($setting) && !isset($params)) {
-        $msg = xarML('Required parameters \'#(1)\', \'#(2)\', \'#(3)\' or \'#(4)\' for tag <xar:image> are missing. See tag documentation.',
+        $msg = xarML("Required parameters '#(1)', '#(2)', '#(3)' or '#(4)' for tag <xar:image> are missing. See tag documentation.",
                      'width', 'height', 'setting', 'params');
         xarErrorSet(XAR_USER_EXCEPTION, xarML('Missing Parameters'), new DefaultUserException($msg));
         return FALSE;
     } elseif (isset($height) && !xarVarValidate('regexp:/[0-9]+(px|%)/:', $height)) {
-        $msg = xarML('\'#(1)\' parameter is incorrectly formatted.', 'height');
+        $msg = xarML("'#(1)' parameter is incorrectly formatted.", 'height');
         xarErrorSet(XAR_USER_EXCEPTION, xarML('Invalid Parameter'), new DefaultUserException($msg));
         return FALSE;
     } elseif (isset($width) && !xarVarValidate('regexp:/[0-9]+(px|%)/:', $width)) {
-        $msg = xarML('\'#(1)\' parameter is incorrectly formatted.', 'width');
+        $msg = xarML("'#(1)' parameter is incorrectly formatted.", 'width');
         xarErrorSet(XAR_USER_EXCEPTION, xarML('Invalid Parameter'), new DefaultUserException($msg));
         return FALSE;
     }
@@ -255,7 +255,7 @@ function images_userapi_resize($args)
                 return sprintf('<img src="%s" alt="%s" %s />', '', $msg, $attribs);
             }
         } else {
-            $msg = xarML('Unable to resize image \'#(1)\'!', $image->fileLocation);
+            $msg = xarML("Unable to resize image '#(1)'!", $image->fileLocation);
             return sprintf('<img src="%s" alt="%s" %s />', '', $msg, $attribs);
         }
     }

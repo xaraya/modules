@@ -32,32 +32,32 @@ function images_adminapi_resize_image($args)
     extract($args);
 
     if (empty($fileId) && empty($fileLocation)) {
-        $mesg = xarML('Invalid parameter \'#(1)\' to API function \'#(2)\' in module \'#(3)\'', 
+        $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'", 
                       '', 'resize_image', 'images');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($mesg));
         return;
     } elseif (!empty($fileId) && !is_numeric($fileId)) {
-        $mesg = xarML('Invalid parameter \'#(1)\' to API function \'#(2)\' in module \'#(3)\'', 
+        $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'", 
                       'fileId', 'resize_image', 'images');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($mesg));
         return;
     } elseif (!empty($fileLocation) && !is_string($fileLocation)) {
-        $mesg = xarML('Invalid parameter \'#(1)\' to API function \'#(2)\' in module \'#(3)\'', 
+        $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'", 
                       'fileLocation', 'resize_image', 'images');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($mesg));
         return;
     }
 
     if (!isset($width) && !isset($height)) {
-        $msg = xarML('Required parameters \'#(1)\' and \'#(2)\' are missing.', 'width', 'height');
+        $msg = xarML("Required parameters '#(1)' and '#(2)' are missing.", 'width', 'height');
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new DefaultUserException($msg));
         return;
     } elseif (!isset($width) && !xarVarValidate('regexp:/[0-9]+(px|%)/:', $height)) {
-        $msg = xarML('\'#(1)\' parameter is incorrectly formatted.', 'height');
+        $msg = xarML("'#(1)' parameter is incorrectly formatted.", 'height');
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new DefaultUserException($msg));
         return;
     } elseif (!isset($height) && !xarVarValidate('regexp:/[0-9]+(px|%)/:', $width)) {
-        $msg = xarML('\'#(1)\' parameter is incorrectly formatted.', 'width');
+        $msg = xarML("'#(1)' parameter is incorrectly formatted.", 'width');
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new DefaultUserException($msg));
         return;
     }
@@ -191,7 +191,7 @@ function images_adminapi_resize_image($args)
                 return;
             }
         } else {
-            $msg = xarML('Unable to resize image \'#(1)\'!', $image->fileLocation);
+            $msg = xarML("Unable to resize image '#(1)'!", $image->fileLocation);
             xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new DefaultUserException($msg));
             return;
         }
