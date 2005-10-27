@@ -1,17 +1,16 @@
 <?php
 /**
- * File: $Id$
- *
  * Xaraya HTML Module
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
- * @link http://www.xaraya.org
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
  *
  * @subpackage HTML Module
+ * @link http://xaraya.com/index.php/release/779.html
  * @author John Cox
-*/
+ */
 
 $modversion['name'] = 'HTML';
 $modversion['id'] = '779';
@@ -28,7 +27,10 @@ $modversion['author'] = 'John Cox';
 $modversion['contact'] = 'admin@dinerminor.com';
 $modversion['admin'] = 1;
 $modversion['user'] = 0;
-$modversion['securityschema'] = array();
 $modversion['class'] = 'Admin';
 $modversion['category'] = 'Global';
+/* This module depends on the bbcode module
+ * for string parser class for line break parsing 
+ */
+$modversion['dependency']  = array(778);
 ?>
