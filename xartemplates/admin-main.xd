@@ -1,38 +1,27 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>BBCode Administration</xar:mlstring></span></div>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>BBCode Administration</xar:mlstring></span>
+</div>
 <div class="xar-mod-body">
+    <img src="modules/bbcode/xarimages/admin.gif" class="xar-module-icon" alt="official icon" width="96" height="96" />
     <h2><xar:mlstring>Overview</xar:mlstring></h2>
-    <div style="padding: 1px;" class="xar-norm-outline">
-        <div style="float:right;padding:10px;">
-            <xar:if condition="file_exists('modules/mail/xarimages/admin.gif')" >
-                <img src="modules/mail/xarimages/admin.gif" alt="official icon" width="96" height="96" />
-            <xar:else />
-                <img src="modules/mail/xarimages/admin_generic.gif" alt="official icon" width="96" height="96" />
-            </xar:if>
-        </div>
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <p><xar:mlstring>What is it?</xar:mlstring></p>
-        </div>
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <p><xar:mlstring>The BBCode module allows you to use BBCode style mark-up in your content instead of, or with, HTML mark-up.</xar:mlstring></p>
-        </div>
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <p><xar:mlstring>Adding custom bb-code is available.  This is a three step process.  First, you will need to add the tag to the system via the "add" function in your admin.  Secondly, you will need to add the corresponding API function to html/modules/bbcode/xaruserapi folder.  Examples are included.  Finally, you will need to add a template for this function in the html/modules/bbcode/xartemplates or to your theme directly.  This can be resource intensive.  If you do not want to use the advanced bb-code, turn the option off in the modify configuration section.  The advance bbcode can also be used to create custom functions to your content, by which you have the ability to place blocks, etc, into your content.  This functionality is advanced, but an example has been provided via the [you] tag which transform to the reader's name.</xar:mlstring></p>
-        </div>
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <p><xar:mlstring>Included Blocks</xar:mlstring></p>
-        </div>
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <p><xar:mlstring>The BBCode Module has no blocks included at this time.</xar:mlstring></p>
-        </div>
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <p><xar:mlstring>Included Hooks</xar:mlstring></p>
-        </div>
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <p><xar:mlstring>The BBCode has transform hooks on the output, and form control hooks on the input to allow insertion of BBCode in content.</xar:mlstring></p>
-        </div>
-        <div class="xar-norm-outline xar-accent" style="text-align: center; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
-            <p><xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring></p>
-        </div>
-    </div>
+    <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+        <p><xar:mlstring>The BBCode module allows you to use BBCode style mark-up in your content instead of, or with, HTML mark-up.</xar:mlstring></p>
+        <p><xar:mlstring>Adding custom bb-code is available.  This is a three step process.  First, you will need to add the tag to the system via the "add" function in your admin.  Secondly, you will need to add the corresponding API function to html/modules/bbcode/xaruserapi folder.  Examples are included.  Finally, you will need to add a template for this function in the html/modules/bbcode/xartemplates or to your theme directly.  This can be resource intensive.  If you do not want to use the advanced bb-code, turn the option off in the modify configuration section.  The advance bbcode can also be used to create custom functions to your content, by which you have the ability to place blocks, etc, into your content.  This functionality is advanced, but an example has been provided via the [you] tag which transform to the reader's name.</xar:mlstring></p>
+    <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
+        <p><xar:mlstring>The BBCode Module has no blocks included at this time.</xar:mlstring></p>
+    <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
+        <p><xar:mlstring>The BBCode has transform hooks on the output, and form control hooks on the input to allow insertion of BBCode in content.</xar:mlstring></p>
+    <h3><xar:mlstring>Further Information</xar:mlstring></h3>
+        <p><xar:mlstring>Further information on the BBCode module can be found at</xar:mlstring></p>
+            <ul>
+                <li><xar:mlstring>BBCode Extension page at</xar:mlstring> <a title="#xarML('BBCode Module - Xaraya Extension 778')#" href="http://www.xaraya.com/index.php/release/778.html">Xaraya Extension and Releases</a>.
+                    <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+                </li>
+                <li><xar:mlstring>Related tutorials and documentation on BBCode found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/bbcode/" title="#xarML('Related documentation on BBCode')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+                </li>
+            </ul>
+       <p class="xar-sub">
+           <strong>&nbsp;<xar:mlstring>BBCode Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 2.0.0&nbsp; 2005-10-28
+       </p>
 </div>

@@ -1,6 +1,18 @@
 <?php
 /**
- * create a new smilies
+ * Xaraya BBCode
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage BBCode Module
+ * @link http://xaraya.com/index.php/release/778.html
+ * @author John Cox
+*/
+/**
+ * create new
  * @param $args['code'] code of the item
  * @param $args['description'] used for the description of the bbcode
  * @param $args['transform'] used to test the item.

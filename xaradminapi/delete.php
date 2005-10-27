@@ -1,5 +1,17 @@
 <?php
 /**
+ * Xaraya BBCode
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage BBCode Module
+ * @link http://xaraya.com/index.php/release/778.html
+ * @author John Cox
+*/
+/**
  * delete
  * @param $args['id'] ID of the bbcode
  * @returns bool

@@ -1,6 +1,22 @@
 <?php
 /**
- * update a smilies
+ * Xaraya BBCode
+ *
+ * Based on pnBBCode Hook from larsneo 
+ * http://www.pncommunity.de
+ * Converted to Xaraya by John Cox
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage BBCode Module
+ * @link http://xaraya.com/index.php/release/778.html
+ * @author John Cox
+*/
+/**
+ * update 
  * @param $args['id'] the ID of the code
  * @param $args['code'] the new code of the code
  * @param $args['name'] long name of the code
