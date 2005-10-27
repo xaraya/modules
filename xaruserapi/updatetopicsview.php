@@ -62,13 +62,17 @@ function xarbb_userapi_updatetopicsview($args)
                                         'startnum' => $treplies,
                                         'numitems' => 1));
         $totalcomments=count($comments);
-        $isanon=$comments[$totalcomments-1]['xar_postanon'];
+        $isanon=0;
+        if ($totalcomments >0) {
+            $isanon=$comments[$totalcomments-1]['xar_postanon'];
+            $time = $comments[$totalcomments-1]['xar_datetime'];
+        }
         if ($isanon==1) {
             $treplier = $anonuid;
-        } else {
+        } elseif ($totalcomments >0) {
             $treplier = $comments[$totalcomments-1]['xar_uid'];
         }
-        $time = $comments[$totalcomments-1]['xar_datetime'];
+
     }
 
     $param = array(
