@@ -4,8 +4,8 @@
 <xar:comment>
     using css-driven template, avoiding excess tables for layout, especially nested ones 
 </xar:comment>
-<xar:if condition="xarTplAddStyleLink('xarbb', 'xarbb-layout')">
-</xar:if>
+<xar:style module="xarbb" scope="module" file="xarbb-layout" />
+<xar:base-include-javascript filename="confirmlink.js" module="base" position="head"/>
 <xar:if condition="$post ne '1'">
     <div class="xarbb-noteswrapper">
         <xar:categories-navigation layout="trails" showchildren="1" module="xarbb" itemtype="1" func="main" catid="$catid" />
@@ -216,37 +216,27 @@
                                     <xar:sec mask="PostxarBB" catch="false">
                                         <xar:if condition="(isset($allowbbcode) and ($allowbbcode eq 'true')) or (isset($allowhtml) and ($allowhtml eq 'true'))">
 <!-- <xar:if condition="xarModIsAvailable('bbcode')"> -->
-                                            <a href="#xarModUrl('xarbb', 'user', 'newreply', array('tid' => $tid, 'phase' => 'quote'))#">
-                                                #$quoteimg# 
-                                            </a>
+                                            <a href="#xarModUrl('xarbb', 'user', 'newreply', array('tid' => $tid, 'phase' => 'quote'))#" title="#xarML('Quote')#">#$quoteimg#</a>
                                         </xar:if>
                                     </xar:sec>
                                     <xar:if condition="xarUserGetVar('uid') eq $tposter">
-                                        <a href="#xarModURL('xarbb','user','newtopic',array('tid' => $tid,'redirect' => 'topic'))#">
-                                            #$editimg# 
-                                        </a>
-                                        <xar:else />
+                                        <a href="#xarModURL('xarbb','user','newtopic',array('tid' => $tid,'redirect' => 'topic'))#" title="#xarML('Edit')#">#$editimg#</a>
+                                    <xar:else />
                                         <xar:sec mask="ModxarBB" catch="false">
-                                            <a href="#xarModURL('xarbb','user','newtopic',array('tid' => $tid,'redirect' => 'topic'))#">
-                                                #$editimg# 
-                                            </a>
+                                            <a href="#xarModURL('xarbb','user','newtopic',array('tid' => $tid,'redirect' => 'topic'))#" title="#xarML('Edit')#">#$editimg#</a>
                                         </xar:sec>
                                     </xar:if>
                                 </xar:if>
                                 <xar:sec mask="DeletexarBB" catch="false">
-                                    <a href="#xarModUrl('xarbb', 'user', 'deletetopic', array('tid' => $tid, 'confirmation' => 1, 'authid' => $authid))#" onclick="return xar_base_confirmLink(this, '#xarML('Delete this topic?').' '.xarVarPrepfordisplay($ttitle)#?')">
-                                        #$deleteimg# 
-                                    </a>
+                                    <a href="#xarModUrl('xarbb', 'user', 'deletetopic', array('tid' => $tid, 'confirmation' => 1, 'authid' => $authid))#" onclick="return xar_base_confirmLink(this, '#xarML('Delete this topic?').' '.xarVarPrepfordisplay($ttitle)#?')" title="#xarML('Delete')#">#$deleteimg#</a>
                                 </xar:sec>
                                 <xar:sec mask="AdminxarBB" catch="false">
-                                    <a href="#xarModUrl('xarbb', 'admin', 'checkip', array('ip' => $thostname))#">
-                                        #$ipimg# 
-                                    </a>
+                                    <a href="#xarModUrl('xarbb', 'admin', 'checkip', array('ip' => $thostname))#" title="#xarML('Check IP')#">#$ipimg#</a>
                                 </xar:sec>
                             </xar:if>
                         </div>
                         <xar:comment>
-                            Placement of subject for full width of message containing div 
+                            Placement of subject for full width of message containing div
                         </xar:comment>
                         <div style="float:left;">
                             <strong class="xar-sub">
@@ -436,32 +426,22 @@
                                     <xar:sec mask="PostxarBB" catch="false">
                                         <xar:if condition="(isset($allowbbcode) and ($allowbbcode eq 'true')) or (isset($allowhtml) and ($allowhtml eq 'true'))">
 <!-- <xar:if condition="xarModIsAvailable('bbcode')"> -->
-                                            <a href="#xarModUrl('xarbb', 'user', 'newreply', array('cid' => $item['xar_cid'], 'tid' => $tid, 'phase' => 'quote'))#">
-                                                #$quoteimg# 
-                                            </a>
+                                            <a href="#xarModUrl('xarbb', 'user', 'newreply', array('cid' => $item['xar_cid'], 'tid' => $tid, 'phase' => 'quote'))#" title="#xarML('Quote')#">#$quoteimg#</a>
                                         </xar:if>
                                     </xar:sec>
                                     <xar:if condition="xarUserGetVar('uid') eq $item['xar_uid']">
-                                        <a href="#xarModUrl('xarbb', 'user', 'newreply', array('cid' => $item['xar_cid'], 'tid' => $tid, 'phase' => 'edit'))#">
-                                            #$editimg# 
-                                        </a>
+                                        <a href="#xarModUrl('xarbb', 'user', 'newreply', array('cid' => $item['xar_cid'], 'tid' => $tid, 'phase' => 'edit'))#" title="#xarML('Edit')#">#$editimg#</a>
                                         <xar:else />
                                         <xar:sec mask="ModxarBB" catch="false">
-                                            <a href="#xarModUrl('xarbb', 'user', 'newreply', array('cid' => $item['xar_cid'], 'tid' => $tid, 'phase' => 'edit'))#">
-                                                #$editimg# 
-                                            </a>
+                                            <a href="#xarModUrl('xarbb', 'user', 'newreply', array('cid' => $item['xar_cid'], 'tid' => $tid, 'phase' => 'edit'))#" title="#xarML('Edit')#">#$editimg#</a>
                                         </xar:sec>
                                     </xar:if>
                                 </xar:if>
                                 <xar:sec mask="DeletexarBB" catch="false">
-                                    <a href="#xarModUrl('xarbb', 'user', 'deletereply', array('cid' => $item['xar_cid'], 'confirmation' => 1, 'authid' => $authid))#" onclick="return xar_base_confirmLink(this, '#xarML('Delete this reply?').' '.xarVarPrepfordisplay($item['xar_title'])#?')">
-                                        #$deleteimg# 
-                                    </a>
+                                    <a href="#xarModUrl('xarbb', 'user', 'deletereply', array('cid' => $item['xar_cid'], 'confirmation' => 1, 'authid' => $authid))#" onclick="return xar_base_confirmLink(this, '#xarML('Delete this reply?').' '.xarVarPrepfordisplay($item['xar_title'])#?')" title="#xarML('Delete')#">#$deleteimg#</a>
                                 </xar:sec>
                                 <xar:sec mask="AdminxarBB" catch="false">
-                                    <a href="#xarModUrl('xarbb', 'admin', 'checkip', array('ip' => $item['xar_hostname']))#">
-                                        #$ipimg# 
-                                    </a>
+                                    <a href="#xarModUrl('xarbb', 'admin', 'checkip', array('ip' => $item['xar_hostname']))#" title="#xarML('Check IP')#">#$ipimg#</a>
                                 </xar:sec>
                             </xar:if>
                         </div>
@@ -624,40 +604,30 @@
         <div style="clear:left;">
             <xar:if condition="$tstatus ne 3">
                 <xar:if condition="$tstatus eq 0">
-                    <a href="#xarModUrl('xarbb', 'user', 'locktopic', array('tstatus' => 3, 'tid' => $tid))#">
-                        <img src="#xarTplGetImage('new/topic_lock.gif')#" alt="#xarML('Lock Topic')#" />
-                    </a>
-                    <xar:else />
-                    <a href="#xarModUrl('xarbb', 'user', 'locktopic', array('tstatus' => 3, 'options' => 1, 'tid' => $tid))#">
-                        <img src="#xarTplGetImage('new/topic_lock.gif')#" alt="#xarML('Lock Topic')#" />
-                    </a>
+                    <a href="#xarModUrl('xarbb', 'user', 'locktopic', array('tstatus' => 3, 'tid' => $tid))#" title="#xarML('Lock topic')#"><img src="#xarTplGetImage('new/topic_lock.gif')#" alt="#xarML('Lock Topic')#" /></a>
+                <xar:else />
+                    <a href="#xarModUrl('xarbb', 'user', 'locktopic', array('tstatus' => 3, 'options' => 1, 'tid' => $tid))#" title="#xarML('Lock topic')#"><img src="#xarTplGetImage('new/topic_lock.gif')#" alt="#xarML('Lock Topic')#" /></a>
                 </xar:if>
                 <xar:else />
-                <a href="#xarModUrl('xarbb', 'user', 'locktopic', array('tstatus' => 0, 'tid' => $tid))#">
-                    <img src="#xarTplGetImage('new/topic_unlock.gif')#" alt="#xarML('Unlock Topic')#" />
-                </a>
+                <a href="#xarModUrl('xarbb', 'user', 'locktopic', array('tstatus' => 0, 'tid' => $tid))#" title="#xarML('Lock topic')#"><img src="#xarTplGetImage('new/topic_unlock.gif')#" alt="#xarML('Unlock Topic')#" /></a>
             </xar:if>
             <xar:sec mask="DeletexarBB" catch="false">
-                <a href="#xarModUrl('xarbb', 'user', 'deletetopic', array('tid' => $tid, 'confirmation' => 1, 'authid' => $authid))#" onclick="return xar_base_confirmLink(this, '#xarML('Delete this topic?').' '.xarVarPrepfordisplay($ttitle)#?')">
-                    #$deleteimg# 
-                </a>
+                <a href="#xarModUrl('xarbb', 'user', 'deletetopic', array('tid' => $tid, 'confirmation' => 1, 'authid' => $authid))#" onclick="return xar_base_confirmLink(this, '#xarML('Delete this topic?').' '.xarVarPrepfordisplay($ttitle)#?')" title="#xarML('Delete topic')#">#$deleteimg#</a>
             </xar:sec>
-            <a href="#xarModUrl('xarbb', 'user', 'movetopic', array('tid' => $tid))#">
-                <img src="#xarTplGetImage('new/topic_move.gif')#" alt="#xarML('Move Topic')#" />
-            </a>
+            <a href="#xarModUrl('xarbb', 'user', 'movetopic', array('tid' => $tid))#" title="#xarML('Move topic')#"><img src="#xarTplGetImage('new/topic_move.gif')#" alt="#xarML('Move Topic')#" /></a>
         </div>
     </xar:sec>
 </xar:if>
 <xar:if condition="$tstatus ne 3">
     <xar:if condition="$post ne '1'">
         <xar:sec mask="PostxarBB" catch="false">
-            <form action="#xarModUrl('xarbb', 'user', 'quickreply', array('tid' => $tid))#" method="post" name="post" id="post">
+            <form action="#xarModUrl('xarbb', 'user', 'quickreply', array('tid' => $tid))#" method="post" id="post">
                 <p>
                     <div class="xar-sub">
                         <xar:mlstring>
-                            Quick Reply 
+                            Quick Reply
                         </xar:mlstring>
-                        : 
+                        :
                     </div>
                     <textarea name='text' rows='4' cols='60' wrap='virtual' id="text" tabindex="2"></textarea>
                     <input type="hidden" name="title" id="title" value="#xarVarPrepForDisplay($ttitle)#" />
@@ -674,13 +644,13 @@
 <xar:if condition="!empty($hooks) and count($hooks) gt 0">
     <xar:foreach in="$hooks" key="$hookmodule">
         <xar:comment>
-            xarbb already deals with comments directly via API, using itemtype 0 (for now ?) 
+            xarbb already deals with comments directly via API, using itemtype 0 (for now ?)
         </xar:comment>
         <xar:comment>
-            and polls are already inserted at the top for a nicer display 
+            and polls are already inserted at the top for a nicer display
         </xar:comment>
         <xar:if condition="$hookmodule ne 'comments' and $hookmodule ne 'polls'">
-            #$hooks[$hookmodule]# 
+            #$hooks[$hookmodule]#
         </xar:if>
     </xar:foreach>
 </xar:if>
