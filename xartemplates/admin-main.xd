@@ -76,8 +76,4 @@
     <strong>&nbsp;<xar:mlstring>Example Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.3&nbsp; 2005-09-28
   </p>
 </div>
-<div class="xar-mod-foot xar-align-center xar-padding-thick">
-  <p>
-    <xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring>
-  </p>
-</div>
+
