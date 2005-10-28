@@ -36,7 +36,7 @@ function &julian_userapi_factory($class)
         case 'calendar':
             if(!isset($calobject)) {
                 require_once("modules/$modInfo[osdirectory]/class.calendar.php");
-                $calobject =& new Calendar;
+                $calobject = new Calendar;
             }
             return $calobject;
             break;
@@ -44,7 +44,7 @@ function &julian_userapi_factory($class)
         case 'ical_parser':
             if(!isset($icalobject)) {
                 require_once("modules/$modInfo[osdirectory]/class.ical_parser.php");
-                $icalobject =& new iCal_Parser;
+                $icalobject = new iCal_Parser;
             }
             return $icalobject;
             break;
@@ -52,7 +52,7 @@ function &julian_userapi_factory($class)
         case 'event':
             if(!isset($eventobject)) {
                 require_once("modules/$modInfo[osdirectory]/class.event.php");
-                $eventobject =& new Event;
+                $eventobject = new Event;
             }
             return $eventobject;
             break;

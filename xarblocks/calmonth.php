@@ -72,7 +72,7 @@ function julian_calmonthblock_display($blockinfo)
     //set the selected date parts, timestamp, and cal_date in the data array
     $args = xarModAPIFunc('julian','user','getUserDateTimeInfo');
     //load the calendar class
-    $c =& xarModAPIFunc('julian','user','factory','calendar');
+    $c = xarModAPIFunc('julian','user','factory','calendar');
     $args['month2'] = $c->getCalendarMonth(date("Ym"));
     $args['cal_sdow'] = xarModGetVar('julian','startDayOfWeek'); //$c->getStartDayOfWeek();
     $args['shortDayNames'] = $c->getShortDayNames($args['cal_sdow']);
