@@ -44,7 +44,7 @@ function security_admin_enablemodulesecurity($args)
         $cols = $dict->getColumns($table);
         foreach( $cols as $col )
         {
-            if( $col->primary_key && $col->type == 'int' )
+            if( $col->primary_key && substr_count($col->type, 'int') > 0 )
             {
                 $itemIdCol = $col->name;
                 break;

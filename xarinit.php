@@ -19,6 +19,7 @@
     it and put it in the base module for now. I really need to sent this
     upstream.
 */
+//require_once( "xaradodb/adodb-xmlschema.inc.php" );
 require_once( "modules/base/xarclass/adodb-xmlschema.inc.php" );
 
 /**

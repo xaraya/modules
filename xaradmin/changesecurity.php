@@ -16,7 +16,7 @@ function security_admin_changesecurity($args)
     if( !empty($extrainfo['module']) )
         $modid = xarModGetIdFromName($extrainfo['module']);
 
-    $itemtype = '';
+    $itemtype = 0;
     if( !empty($extrainfo['itemtype']) )
         $itemtype = $extrainfo['itemtype'];
         
@@ -36,6 +36,7 @@ function security_admin_changesecurity($args)
         If user has SECURITY_ADMIN level or is a site admin let them 
         modify security otherwise don't
     */
+    xarModAPILoad('security');
     $has_admin_security = xarModAPIFunc('security', 'user', 'check',
         array(
             'modid'    => $modid, 
