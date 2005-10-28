@@ -1,4 +1,4 @@
-<xar:if condition="xarTplAddStyleLink('bbcode', 'SyntaxHighlighter')"></xar:if>
+<xar:style module="bbcode" file="SyntaxHighlighter" scope="module" />
 <xar:base-include-javascript position="head" module="bbcode" filename="shCore.js" />
 <xar:base-include-javascript position="head" module="bbcode" filename="shBrushPhp.js" />
 <xar:base-include-javascript position="head" module="bbcode" filename="shBrushXml.js" />

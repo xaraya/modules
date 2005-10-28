@@ -1,5 +1,7 @@
-<xar:set name="$stylesheet">xarTplAddStyleLink('bbcode', 'bbcode')</xar:set>
-<script type="text/javascript" src="modules/bbcode/xartemplates/bbcode.js"></script> 
+<!-- New xaraya style link tag <xar:set name="$stylesheet">xarTplAddStyleLink('bbcode', 'bbcode')</xar:set> -->
+<xar:style module="bbcode" file="bbcode" scope="module" />
+
+<xar:base-include-javascript filename="bbcode.js" module="bbcode" position="head" />
 <span>
     <input type="button" accesskey="z" name="addbbcode18" value=" p " onclick="bbstyle(18)" onmouseover="document.post.helpbox.value='#xarML("Paragraph: [p]text[/p]  (alt+z)")#'; return true" />
     <input type="button" accesskey="b" name="addbbcode0" value=" b " style="font-weight:bold;" onclick="bbstyle(0)" onmouseover="document.post.helpbox.value='#xarML("Bold text: [b]text[/b]  (alt+b)")#'; return true" />
@@ -122,7 +124,7 @@
     </option>
     <option value="24" class="xar-bbcode-genmed">
         <xar:mlstring>
-            Huge 
+            Huge
         </xar:mlstring>
     </option>
 </select>

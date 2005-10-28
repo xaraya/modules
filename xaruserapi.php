@@ -58,8 +58,8 @@ function bbcode_transform($text)
     // yyyy is anything up to the first space, newline, comma, double quote or < 
     $text = preg_replace("#(^|[\n ])([\w]+?://[^ \"\n\r\t<]*)#is", "\\1<a href=\"\\2\" target=\"_blank\">\\2</a>", $text); 
 
-    // matches a "www|ftp.xxxx.yyyy[/zzzz]" kinda lazy URL thing 
-    // Must contain at least 2 dots. xxxx contains either alphanum, or "-" 
+    // matches a "www|ftp.xxxx.yyyy[/zzzz]" kinda lazy URL thing
+    // Must contain at least 2 dots. xxxx contains either alphanum, or "-"
     // zzzz is optional.. will contain everything up to the first space, newline, 
     // comma, double quote or <. 
     $text = preg_replace("#(^|[\n ])((www|ftp)\.[^ \"\t\n\r<]*)#is", "\\1<a href=\"http://\\2\" target=\"_blank\">\\2</a>", $text); 
@@ -76,6 +76,8 @@ function bbcode_transform($text)
     $bbcode->addCode ('b', 'callback_replace', 'do_bbcode_bold', array (),
                       'inline', array ('listitem', 'block', 'inline', 'link'), array());
     $bbcode->addCode ('i', 'callback_replace', 'do_bbcode_italics', array (),
+                      'inline', array ('listitem', 'block', 'inline', 'link'), array());
+    $bbcode->addCode ('u', 'callback_replace', 'do_bbcode_underline', array (),
                       'inline', array ('listitem', 'block', 'inline', 'link'), array());
     $bbcode->addCode ('dictionary', 'callback_replace', 'do_bbcode_dictionary', array (),
                       'inline', array ('listitem', 'block', 'inline'), array());
