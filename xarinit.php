@@ -409,6 +409,7 @@ function helpdesk_upgrade($oldversion)
             xarModAPIFunc('modules','admin','enablehooks',
                   array('callerModName' => 'helpdesk', 'hookModName' => 'security'));
                             
+        case '0.7.0':
         
         default:
             break;  
