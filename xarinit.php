@@ -11,36 +11,54 @@
     @subpackage Security module
 */
 
-/*
-    NOTE: We are using the adodb XML Schema package to manage the
-    db tables. It makes it a bit easier to maintain and upgrades
-    become a snap. But the bundled version that comes with adodb 
-    does not work, there is a bug of some sorts in it. So I've patched
-    it and put it in the base module for now. I really need to sent this
-    upstream.
-*/
-//require_once( "xaradodb/adodb-xmlschema.inc.php" );
-require_once( "modules/base/xarclass/adodb-xmlschema.inc.php" );
-
 /**
- * Initialize the module
- */
+    Initialize the module
+*/
 function security_init()
 {
-    $dbconn =& xarDBGetConn();
+    $dbconn   =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-    $schemaFile = 'modules/security/xardata/tables.xml';
-    $schema = new adoSchema( $dbconn );
-    $schema->setPrefix( xarDBGetSiteTablePrefix() . '_' );
-    $sql = $schema->ParseSchema( $schemaFile );
-    $result = $schema->ExecuteSchema();  
-    /*
-        When adodb XMLschema tries to detects the current schema and nothing exists
-        xaraya exception are set. So we just want to get rid of them for now, till
-        I can figure out a better solution like not having the exceptions set in the 
-        first place
-    */
-    xarErrorFree();
+    $prefix   =  xarDBGetSiteTablePrefix();
+    
+    /* Get a data dictionary object with all the item create methods in it */
+    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+
+    $sec_fields = "
+		xar_modid      I NotNull DEFAULT 0,
+		xar_itemtype   I NotNull DEFAULT 0,
+		xar_itemid     I NotNull DEFAULT 0,
+		xar_userlevel  I NotNull DEFAULT 0,
+		xar_grouplevel I NotNull DEFAULT 0,
+		xar_worldlevel I NotNull DEFAULT 0
+    ";
+    /* Create or alter the table as necessary */
+    $result = $datadict->changeTable($xartable['security'], $sec_fields);
+    if (!$result) {return;}
+
+    $result = $datadict->createIndex(
+        "i_{$prefix}_security_combo",
+        $xartable['security'],
+        array('xar_modid', 'xar_itemtype', 'xar_itemid')
+    );
+    if (!$result) {return;}
+	
+	$sec_group_fields = "
+        xar_modid    I NotNull DEFAULT 0,
+        xar_itemtype I NotNull DEFAULT 0,
+        xar_itemid   I NotNull DEFAULT 0,
+        xar_gid      I NotNull DEFAULT 0,
+        xar_level    I NotNull DEFAULT 0
+    ";
+    /* Create or alter the table as necessary */
+    $result = $datadict->changeTable($xartable['security_group_levels'], $sec_group_fields);
+    if (!$result) {return;}
+
+    $result = $datadict->createIndex(
+        "i_{$prefix}_security_group_levels_combo",
+        $xartable['security_group_levels'],
+        array('xar_modid', 'xar_itemtype', 'xar_itemid')
+    );
+    if (!$result) {return;}
 
     /*
         Register all the modules hooks
@@ -81,18 +99,13 @@ function security_upgrade($oldversion)
 {
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-    $schemaFile = 'modules/security/xardata/tables.xml';
     
     // Upgrade dependent on old version number
     switch($oldversion) {
         case '0.1.0':
         case '0.1.1':
         case '0.5.0':
-            $schema = new adoSchema( $dbconn );
-            $schema->setPrefix( xarDBGetSiteTablePrefix() . '_' );
-            $sql = $schema->ParseSchema( $schemaFile );
-            $result = $schema->ExecuteSchema();  
-            xarErrorFree();
+        case '0.8.0':
 
             break;
 
@@ -114,13 +127,34 @@ function security_delete()
     // Get datbase setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-    $schemaFile = 'modules/security/xardata/tables.xml';
-    $schema = new adoSchema( $dbconn );
-    $sql = $schema->RemoveSchema( $schemaFile );
-    $result = $schema->ExecuteSchema();  
+    
+    /* Get a data dictionary object with item create and delete methods */
+    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+    
+    /* Drop the security tables */
+    $result = $datadict->dropTable($xartable['security']);
+    if( !$result ){ return false; }
+    $result = $datadict->dropTable($xartable['security_group_levels']);
+    if( !$result ){ return false; }
     
     // cleans up the module vars
     xarModDelAllVars('security');
+
+    /* Unregister each of the hooks that have been created */
+    $result = xarModUnregisterHook('item', 'display', 'GUI', 'security', 'admin', 'changesecurity');
+    if( !$result ){ return false; }
+    $result = xarModUnregisterHook('item', 'modify', 'GUI', 'security', 'admin', 'changesecurity');
+    if( !$result ){ return false; }
+
+    $result = xarModUnregisterHook('item', 'create', 'API', 'security', 'admin', 'createhook');
+    if( !$result ){ return false; }
+
+    $result = xarModUnregisterHook('item', 'update', 'API', 'security', 'admin', 'updatehook');
+    if( !$result ){ return false; }
+
+    // Removes and privileges that may have been created
+    xarRemoveMasks('security');
+    xarRemoveInstances('security');
 
     // Deletion successful
     return true;
