@@ -15,6 +15,7 @@
 	<p>
 	On 25 May 2005, this plugin was modified by speednet: IE now pastes directly into the editor, bypassing the extra steps of opening the Insert box, selecting options, and clicking Insert. Speednet also added the Select All command, which highlights all the content in the editor when the user clicks the toolbar button (Other miscellaneous cleanup also).
 	</p>
+	<p>On 28 October 2005, this plugin was modified by monkeybrain: Added the paste_strip_class_attributes option.</p>
 	<h3>Installation Instructions</h3>
 	<p>
 	<ul>
@@ -70,6 +71,16 @@ tinyMCE.init({
 	<tr>
 		<td>[paste_convert_headers_to_strong]</td>
 		<td>This feature converts H1-6 elements to strong elements on paste, this is feature is disabled by default.</td>
+	</tr>
+	<tr>
+		<td>[paste_strip_class_attributes]</td>
+		<td>This feature allows you to control whether or not class attributes are stripped when using pasteword.  Valid values are:
+			<ul>
+				<li>all - will strip all class attributes from the pasted content.  This is the default value.</li>
+				<li>none - will not strip any class attributes from the pasted content.</li>
+				<li>mso - will strip out all of the class attribute values that start with "Mso", but retain all others.</li>
+			</ul>
+		</td>
 	</tr>
 	</table>
 	</p>

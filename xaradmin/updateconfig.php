@@ -35,7 +35,7 @@ function tinymce_admin_updateconfig()
              * This one: treats the string as a comma-separeted list of tokens. Each token
              * is lower-cased, trimmed and compared to a list of allowed browsers.
              */
-            if (!xarVarFetch('tinybrowsers', 'strlist:,:pre:lower:trim:passthru:enum:msie:gecko:safari', $tinybrowsers, 'msie,gecko,safari', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('tinybrowsers', 'strlist:,:pre:lower:trim:passthru:enum:msie:gecko:safari:opera', $tinybrowsers, 'msie,gecko,safari', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('usebutton','str:1:',$usebutton,'false',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinyundolevel','int:1:3',$tinyundolevel,'',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinydirection','str:1:3',$tinydirection,'ltr',XARVAR_NOT_REQUIRED)) return;
@@ -78,6 +78,7 @@ function tinymce_admin_updateconfig()
             if (!xarVarFetch('tinyinvalid', 'str:1:', $tinyinvalid, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('useibrowser','int:1:',$useibrowser,0,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('editorcss','str:1:',$editorcss,'',XARVAR_NOT_REQUIRED)) return;
+
                  xarModSetVar('tinymce', 'tinyextended', $tinyextended);
                 xarModSetVar('tinymce', 'tinyinlinestyle',$tinyinlinestyle);
                 xarModSetVar('tinymce','tinyencode', $tinyencode); /* not used at this stage */
@@ -259,7 +260,11 @@ function tinymce_admin_updateconfig()
         }
 
         if (trim(xarModGetVar('tinymce','tinyextended')) <> '') {
-            $jstext .='extended_valid_elements : "'.xarModGetVar('tinymce','tinyextended').'", ';
+           /* get rid of all white space first */
+           $extended = xarModGetVar('tinymce','tinyextended');
+           $extended = preg_replace('/\s\s+/','',$extended);
+            //$jstext .='extended_valid_elements : "'.xarModGetVar('tinymce','tinyextended').'", ';
+            $jstext .='extended_valid_elements : "'.$extended.'", ';
         }
    }
 

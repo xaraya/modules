@@ -207,11 +207,11 @@
                 <strong><xar:mlstring>Basic Configurations options</xar:mlstring></strong>
             </legend>
            <div class="xar-form-input-wrapper">
-                <label for="tinybrowsers" class="xar-form-label" title="#xarML('Select which browsers to use WYSIWYG - msie,gecko,safari')#">
+                <label for="tinybrowsers" class="xar-form-label" title="#xarML('Select which browsers to use WYSIWYG - msie,gecko,opera,safari')#">
                        <xar:mlstring>Use for browsers:</xar:mlstring>
                 </label>
                 <input type="text" name="tinybrowsers" id="tinybrowsers" value="#$tinybrowsers#" size="20" maxlength="20" />
-                No spaces eg msie,gecko,safari. Defaults to all.
+                No spaces eg msie,gecko,opera,safari. Defaults to all.
             </div>
            <div class="xar-form-input-wrapper">
                 <label for="tinylang" class="xar-form-label" title="#xarML('Select default language for TinyMCE')#">
@@ -422,19 +422,21 @@
                 <label for="tinyextended" class="xar-form-label" title="#xarML('Additional html tags, forced or alternate attributes and so on, separated by commas')#">
                     <xar:mlstring>Additional tags or attributes:</xar:mlstring>
                 </label>
-                <input type="text" name="tinyextended" id="tinyextended" value="#$tinyextended#" size="70" maxlength="240" />
+                <!--<input type="text" name="tinyextended" id="tinyextended" value="#$tinyextended#" size="70" maxlength="250" />-->
+                <textarea class="mceNoEditor" name="tinyextended" id="tinyextended" cols="50" rows="3" >#$tinyextended#</textarea>
             </div>
               <div class="xar-form-input-wrapper-after">
-               <xar:mlstring>Make sure you have 'style' and 'class' as allowed attributes in img or a tags if you need them.
-                *[*] allows all tags and attributes. Use with disallowed tags below. Your HTML module settings will
-                finally filter all tags (but not attributes).</xar:mlstring>
+               <xar:mlstring>Regex for allowed tags and attributes. Separate each tag with a comma. 
+                 Ensure you have 'style' and 'class' as allowed attributes in img or a tags if you need them.
+                 *[*] allows all tags and attributes. Use with disallowed tags below. Your HTML module settings will
+                 finally filter all tags (but not attributes).</xar:mlstring>
             </div>
 
             <div class="xar-form-input-wrapper">
                 <label for="tinyinvalid" class="xar-form-label" title="#xarML('List of html tags that are not allowed, separated by commas. These will be stripped from the textarea.')#">
                     <xar:mlstring>Tags that are NOT allowed:</xar:mlstring>
                 </label>
-                <input type="text" name="tinyinvalid" id="tinyinvalid" value="#$tinyinvalid#" size="70" maxlength="240" />
+                <input type="text" name="tinyinvalid" id="tinyinvalid" value="#$tinyinvalid#" size="70" maxlength="250" />
             </div>
 
             <div class="xar-form-input-wrapper">

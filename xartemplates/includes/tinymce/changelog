@@ -1,3 +1,90 @@
+Version 2.0RC4 (2005-10-xx)
+	Fixed bug with font face/size/color wasn't working correctly in Firefox 1.5b1.
+	Fixed bug where all actions where dispatching the onbeforeunload event.
+	Fixed bug where buttons in fullscreen mode wasn't working in MSIE.
+	Fixed bug where style removal with drop list wasn't working correctly.
+	Fixed bug where element path list or return key some times didn't scroll to the right location.
+	Fixed bug where return key in Firefox/Mozilla some times produced a error.
+	Fixed bug where MSIE was presenting a alert box about insecure items when running TinyMCE over HTTPS.
+	Fixed bug where TR/TD elements width/height attributes produced a JS error on cleanup.
+	Fixed bug where Polish Ctrl+Alt+Z executed the undo function instead of inserting national character.
+	Fixed bug where editor couldn't be initialized if no rows or height where specified on a textarea.
+	Fixed bug where comments sometimes got removed from HTML code.
+	Fixed bug with advimage not inserting onmouseover attribute correctly.
+	Fixed bug where anchors with child nodes messed up list elements.
+	Fixed bug where apply_source_formatting option wasn't working when used together with remove_linebreaks.
+	Fixed bug where empty paragraphs where invisible in Firefox. These are now padded with a &nbsp;.
+	Fixed bug where tables without a border attribute didn't get visual aid borders until cleanup.
+	Fixed bug with URL convertion, absolute URLs to the same domain without trailing slash produced incorrect results.
+	Fixed bug with URL convertion of urls like this somedir/?id=3 produced somedir?id=3.
+	Fixed bug with weird cursor movement when pressing return/enter in a list when running on Firefox/Mozilla.
+	Fixed bug where contents where deleted sometimes when user pressed return/enter running on Firefox/Mozilla.
+	Fixed bug where style elements what generated empty in MSIE, but using style tags is not recommended.
+	Fixed bug with not beeing able to have absolute urls in the external_link_list_url and simmilar.
+	Fixed bug with bold, italic, underline, strikethrough buttons not beeing selected correctly.
+	Fixed bug with font size and font face select list not beeing selected correctly.
+	Fixed bug where document anchors was incorrectly converted if document_base_url was defined.
+	Fixed some compatiblity issues with call to createStyleSheet and event.target setup.
+	Fixed more compatiblity issues with scripts extending core JS logic such as the Array class.
+	Fixed issue where paragraphs wasn't generated if user pressed returned inside a H1-H6 running on Firefox/Mozilla.
+	Fixed issue with context menu plugin messing up some onclick events.
+	Fixed issue with missing </tbody> HTML in advanced theme.
+	Fixed issue with Finnish language pack, it wasn't working at all.
+	Fixed issue where button control styles needed to be overriden in default editor_ui.css.
+	Fixed issue with a broken link in the documentation to the theme_advanced_resize_horizontal option.
+	Fixed issue with missing var declaration of a buttons variable in the advanced theme.
+	Fixed issue with missing block elements in block element regexp.
+	Fixed issue where advhr plugin didn't produce valid attribute for noshade.
+	Fixed issue with misslabeled option, plaintext_create_paragraphs is renamed to paste_create_paragraphs.
+	Fixed issues with dialogs being to small if large class names where added. Made sure they can grow.
+	Fixed missing HEAD element in fullscreen.htm file, contributed by monkeybrain.
+	Fixed some HTML issues with the advhr plugin, contributed by monkeybrain.
+	Fixed some small issues with the span element rule of the XHTML rule set in valid_elements documentation.
+	Fixed issue with convert_fonts_to_styles, it now defaults to false since it had lots of compatiblity issues.
+	Added new Opera 9 support, most of the functions is working in the prerelease of Opera 9.
+	Added new paste_strip_class_attributes option to paste plugin, contributed by monkeybrain.
+	Added new merge_styles_invalid_parents option, allows users to control what elements gets styles.
+	Added new theme_advanced_resizing_use_cookie option, this enables you to disable the cookie used by resize.
+	Added new function that converts all font elements to span elements when the editor loads.
+	Added new force_hex_style_colors option, enables you to control the color format of CSS styles.
+	Added trim_span_elements back again, this option removes unneeded span elements.
+	Added documentation of the apply_source_formatting option.
+	Added updated Danish language pack, contributed by Jan Moelgaard.
+	Added updated Hebrew language pack, contributed by Liron Newman.
+	Added updated Russian language pack, contributed by Vladimir Vitkovsky.
+	Added updated Finnish language pack, contributed by Tuomo Aura.
+	Added updated Spanish language pack, contributed by Adolfo Sanz De Diego.
+	Added updated Italian language pack, contributed by grueff.
+	Added updated Icelandic language pack, contributed by Johannes Birgir Jensson.
+Version 2.0RC3 (2005-09-26)
+	Fixed bug where colorpicker in table plugin wasn't working in Mozilla/Firefox.
+	Fixed bug where closed anchors produced strange results. Anchors are now forced open.
+	Fixed bug where the font style/color functions wasn't producing correct results.
+	Fixed bug where buttons not working if a target was defined in head element.
+	Fixed bug where paragraphs wasn't generated when pressing return/enter in a floating div.
+	Fixed bug where anchor contents was getting lost, contents of anchors are now placed behind them.
+	Fixed bug where style info such font size/face/color was removing parent elements such as LI.
+	Fixed bug where %I wasn't inserting correct hour in the insertdatetime plugin.
+	Fixed bug where MSIE sometimes doesn't output attributes correctly, contributed by Luke Bennett.
+	Fixed bug where images was lost if the user pressed return after a image in a TD on FF.
+	Fixed bug where empty non block elements where produced when hitting return in Gecko browsers.
+	Fixed bug where it was impossible to update tables.
+	Fixed various bugs and issues with removeformatting function it will now remove classes and styles.
+	Fixed compatiblity issues with prototype.js and other scripts that modifies the Object.prototype.
+	Fixed issue where a unnecessary dir and style attribute was generated on the blockquote command in MSIE.
+	Fixed issue with access denied error if page contained iframes with external URLs.
+	Fixed issue where the plugin links in about dialog was linking to blank.
+	Fixed issue with useCSS command not working in Deer park beta.
+	Fixed XHTML table compatiblity issues. Placed bordercolor and height in styles instead of attributes.
+	Fixed issue with tables getting empty summary attribute in MSIE.
+	Fixes so the insert custom character dialog is accessible through keyboard.
+	Removed _self as the default target for links inorder to produce more XHTML compliant code.
+	Removed bordercolor field from table row properties dialog since this is not a valid attribute.
+	Added accessibility warnings to image and table plugin. These can be disabled by the accessibility_warnings option.
+	Added updated Danish language pack, contributed by Jan Moelgaard.
+	Added updated Hebrew language pack, contributed by Liron Newman.
+	Added updated Norwegian language pack, contributed by Knut B. Jacobsen.
+	Added updated German language pack, contributed by salzbermat.
 Version 2.0RC2 (2005-09-12)
 	Fixed bug with plugin tab in about dialog not working in MSIE 5.01.
 	Fixed bug issues with paste and noneditable plugin in MSIE 5.01.

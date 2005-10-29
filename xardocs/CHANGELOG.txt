@@ -1,4 +1,10 @@
-* Version 0.9.x
+* Version 1.0.0 x Nov 05
+- Many many bug fixes and integrating tinymce 2.0RC4
+- New ibrowser - please update your ibrowser config file
+- Updated language packs
+- Support for Opera, and improved support for Safari
+
+* Version 0.9.4
 - Allow a space to act to remove line totall in custom adv theme row building
 
 * Version 0.9.2b 12 Sept 05

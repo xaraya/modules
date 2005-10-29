@@ -15,9 +15,26 @@
 
 	<div class="separator"></div>
 
+	<h2>TinyMCE is broken, what should I do?</h2>
+	<div class="section">
+		<p>There are a few things you should check before posting questions about your problem at the forum or sourceforge.</p>
+		<p>
+			<ul>
+				<li>Does TinyMCE work on the <a href="http://tinymce.moxiecode.com/example_full.php?example=true">TinyMCE website</a>. Then you know that TinyMCE works with your browser.</li>
+				<li>Try to disable any other JavaScripts on the page, some scripts interfere with internal functions that TinyMCE uses. Those scripts are probably poorly written.</li>
+				<li>Check that you havn't missed removing the last , character in your initialization code and that all the other rows have a trailing , character.</li>
+				<li>Verify that the path/URL to TinyMCE is correct, you can use the excellent tool <a href="http://www.fiddlertool.com/fiddler/">Fiddler</a> for this and other HTTP debugging.</li>
+				<li>Do not cross domain load TinyMCE or any other script unless you really really must, since this will invoke various browser security features. In other words, try placing everything on the same server.</li>
+				<li>Don't place textareas within paragraph elements since this is not valid HTML and it will break MSIE and TinyMCE.</li>
+			</ul>
+		</p>
+	</div>
+
+	<div class="separator"></div>
+
 	<h2>Why does TinyMCE strip aways attributes or tags from my source?</h2>
 	<div class="section">
-		<p>You need to check out the "<a href="option_valid_elements.html">valid_elements</a>" and "<a href="option_extended_valid_elements.html">extended_valid_elements</a>" option in the configuration. By default, TinyMCE only allows certain tags and attributes. TinyMCE also tries to follow the XHTML specification as much as possible (and so should you), this can cause some unexpected source changes, there are however configuration options to battle this issue, study the configuration options in details.</p>
+		<p>You need to check out the &quot;<a href="option_valid_elements.html">valid_elements</a>&quot; and &quot;<a href="option_extended_valid_elements.html">extended_valid_elements</a>&quot; option in the configuration. By default, TinyMCE only allows certain tags and attributes. TinyMCE also tries to follow the XHTML specification as much as possible (and so should you), this can cause some unexpected source changes, there are however configuration options to battle this issue, study the configuration options in details.</p>
 	</div>
 
 	<div class="separator"></div>
@@ -31,6 +48,21 @@
 
 	<div class="separator"></div>
 
+	<h2>Why does my HTML output include lots of \&quot; like &lt;a href=\&quot;mylink.htm\&quot;&gt;link&lt;/a&gt;?</h2>
+	<div class="section">
+		<p>This is probably becurse you are using PHP and it has a feature that's called magic quotes that is enabled by default. You can read more about this at the <a href="http://se2.php.net/magic_quotes/">PHP website</a> or use the <a href="http://www.php.net/manual/en/function.stripslashes.php">stripslashes</a> function.</p>
+	</div>
+
+	<div class="separator"></div>
+
+<!--
+	<h2>What happened to my font tags, they are replaced with spans?</h2>
+	<div class="section">
+		<p>Since font tags isn't valid XHTML in other words deprectaded they get replaced with span elements by default in TinyMCE. But you can disable this feature by using the <a href="option_convert_fonts_to_styles.html">convert_fonts_to_styles</a> option. This is not recommended since we should all strive towards W3C compatible pages.</p>
+	</div>
+
+	<div class="separator"></div>
+-->
 	<h2>TinyMCE takes ages to load, is there a way to make it load quicker?</h2>
 	<div class="section">
 		<p>
