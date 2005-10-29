@@ -42,7 +42,7 @@ function helpdesk_xartables()
     // Set the column names.  Note that the array has been formatted
     // on-screen to be very easy to read by a user.
     // Name for helpdesk database entities
-    $coprefix = xarConfigGetVar('prefix') . '_helpdesk';
+    $coprefix = xarDBGetSiteTablePrefix() . '_helpdesk';
 
     $xartable['helpdesk_tickets'] = $coprefix.'_tickets';                
     $xartable['helpdesk_status'] = $coprefix . '_status';
