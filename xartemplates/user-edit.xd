@@ -508,18 +508,18 @@
                             </span>
                         </label>
                         <xar:if condition="xarModGetVar('Julian','TelFieldType') eq 'US'">
-                           <input type="text" name="phone1" id="phone1" value="" size="3" maxlength="3" onkeyup="checkNumericy(this);checkNumberLen(this,3,this.form.phone2)" /> - 
-                           <input type="text" name="phone2" id="phone2" value="" size="3" maxlength="3" onkeyup="checkNumericy(this);checkNumberLen(this,3,this.form.phone3)" /> - 
-                           <input type="text" name="phone3" id="phone3" value="" size="4" maxlength="4" onkeyup="checkNumericy(this)" />
+                           <input type="text" name="phone1" id="phone1" value="#phone1#" size="3" maxlength="3" onkeyup="checkNumericy(this);checkNumberLen(this,3,this.form.phone2)" /> - 
+                           <input type="text" name="phone2" id="phone2" value="#phone2#" size="3" maxlength="3" onkeyup="checkNumericy(this);checkNumberLen(this,3,this.form.phone3)" /> - 
+                           <input type="text" name="phone3" id="phone3" value="#phone3#" size="4" maxlength="4" onkeyup="checkNumericy(this)" />
                         <xar:elseif condition="xarModGetVar('Julian','TelFieldType') eq 'EU'"/>
-                           <input type="text" name="phone1" id="phone1" value="" size="3" maxlength="3" onkeyup="checkNumericy(this);checkNumberLen(this,3,this.form.phone2)" /> - 
-                           <input type="text" name="phone2" id="phone2" value="" size="3" maxlength="3" onkeyup="checkNumericy(this);checkNumberLen(this,3,this.form.phone3)" /> - 
-                           <input type="text" name="phone3" id="phone3" value="" size="10" maxlength="10" onkeyup="checkNumericy(this)" />
+                           <input type="text" name="phone1" id="phone1" value="#phone1#" size="3" maxlength="3" onkeyup="checkNumericy(this);checkNumberLen(this,3,this.form.phone2)" /> - 
+                           <input type="text" name="phone2" id="phone2" value="#phone2#" size="3" maxlength="3" onkeyup="checkNumericy(this);checkNumberLen(this,3,this.form.phone3)" /> - 
+                           <input type="text" name="phone3" id="phone3" value="#phone3#" size="10" maxlength="10" onkeyup="checkNumericy(this)" />
                         <xar:elseif condition="xarModGetVar('Julian','TelFieldType') eq 'EUC'"/>
-                           <input type="text" name="phone1" id="phone1" value="" size="4" maxlength="4" onkeyup="checkNumericy(this);checkNumberLen(this,4,this.form.phone2)" /> - 
-                           <input type="text" name="phone2" id="phone2" value="" size="10" maxlength="10" onkeyup="checkNumericy(this)" />
+                           <input type="text" name="phone1" id="phone1" value="#$phone1#" size="4" maxlength="4" onkeyup="checkNumericy(this);checkNumberLen(this,4,this.form.phone2)" /> - 
+                           <input type="text" name="phone2" id="phone2" value="#$phone2#" size="10" maxlength="10" onkeyup="checkNumericy(this)" />
                         <xar:elseif condition="xarModGetVar('Julian','TelFieldType') eq 'OPEN'"/>
-                           <input type="text" name="phone1" id="phone1" value="" size="25" maxlength="25" />
+                           <input type="text" name="phone1" id="phone1" value="#phone1#" size="25" maxlength="25" />
                         </xar:if>
                     </div>
                     <div class="xar-form-input-wrapper">
@@ -528,7 +528,7 @@
                                 <xar:mlstring>Email:</xar:mlstring>
                             </span>
                         </label>
-                        <input type="text" name="email" id="email" maxlength="255" class="xar-form-textmedium" />
+                        <input type="text" name="email" id="email" value=#$email# maxlength="255" class="xar-form-textmedium" />
                     </div>
                     <div class="xar-form-input-wrapper">
                         <label for="website" class="xar-form-label">
@@ -536,7 +536,7 @@
                                 <xar:mlstring>Event Website:</xar:mlstring>
                             </span>
                         </label>
-                        <input type="text" name="website" id="website" maxlength="255" class="xar-form-textmedium" />
+                        <input type="text" name="website" id="website" value=#$website# maxlength="255" class="xar-form-textmedium" />
                     </div>
                     <div class="xar-form-input-wrapper">
                         <label for="fee" class="xar-form-label">
@@ -544,7 +544,7 @@
                                 <xar:mlstring>Event Fee:</xar:mlstring>
                             </span>
                         </label>
-                        <input type="text" name="fee" id="fee" onkeyup="checkNumericy(this);" maxlength="255" class="xar-form-textmedium" />
+                        <input type="text" name="fee" id="fee" value=#$fee# onkeyup="checkNumericy(this);" maxlength="255" class="xar-form-textmedium" />
                     </div>
                 </fieldset>
             <div class="xar-form-input-wrapper-after">
