@@ -12,8 +12,7 @@
  * @author Example Module Development Team
  */
 /**
- * Example initialization functions
- * Initialise the example module
+ * Initialise the module
  * This function is only ever called once during the lifetime of a particular
  * module instance
  *
@@ -250,7 +249,8 @@ function example_init()
 }
 
 /**
- * upgrade the example module from an old version
+ * Upgrade the module from an old version
+ *
  * This function can be called multiple times
  */
 function example_upgrade($oldversion)
@@ -311,7 +311,8 @@ function example_upgrade($oldversion)
 }
 
 /**
- * delete the example module
+ * Delete the module
+ *
  * This function is only ever called once during the lifetime of a particular
  * module instance
  */
@@ -340,26 +341,9 @@ function example_delete()
         xarModDelAlias($aliasname,'example');
     }
 
-    /* Delete any module variables 
-     * You can do this one at a time
-     * or delete all of them if you want
-     * with one command 
+    /* Delete any module variables */
+    xarModDelAllVars('example');
 
-        xarModDelAllVars('example');
-
-     * Using one command ensures all modvars for the module are deleted
-     */
-    xarModDelVar('example', 'itemsperpage');
-    xarModDelVar('example', 'bold');
-    xarModDelVar('example', 'SupportShortURLs');
-    xarModDelVar('example', 'useModuleAlias');
-    xarModDelVar('example','aliasname');
-
-    if (xarModIsAvailable('categories')) {
-        xarModDelVar('example', 'number_of_categories');
-        xarModDelVar('example', 'mastercids');
-    }
-    xarModDelVar('example', 'SupportShortURLs');
     /* UnRegister all blocks that the module uses*/
     if (!xarModAPIFunc('blocks',
             'admin',
