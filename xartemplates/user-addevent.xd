@@ -386,7 +386,7 @@
                         </div>
                     </div>
                     <div class="xar-form-input-wrapper">
-                        <label for="access" class="xar-form-label" title="#xarML('Share you event (only) with:')#">
+                        <label for="access" class="xar-form-label" title="#xarML('Share your event (only) with:')#">
                             <xar:mlstring>Access:</xar:mlstring>
                         </label>
                         <input type="radio" name="class" id="class1" value="0" checked="checked"
@@ -402,7 +402,7 @@
                     </div>
                     <div class="xar-form-input-wrapper" id="share" style="visibility:hidden;">
                           <label for="share_uids" class="xar-form-label">
-                              <span class="help" title="#xarML('Share.')#">
+                              <span class="help" title="#xarML('Share')#">
                                   <xar:mlstring>Share:</xar:mlstring>
                               </span>
                           </label>
@@ -417,7 +417,7 @@
                     </legend>
                     <div class="xar-form-input-wrapper">
                         <label for="location" class="xar-form-label">
-                            <span class="help" title="#xarML('Event Location.')#">
+                            <span class="help" title="#xarML('Event Location')#">
                                 <xar:mlstring>Event Location:</xar:mlstring>
                             </span>
                         </label>
@@ -425,7 +425,7 @@
                     </div>
                     <div class="xar-form-input-wrapper">
                         <label for="street1" class="xar-form-label">
-                            <span class="help" title="#xarML('Street.')#">
+                            <span class="help" title="#xarML('Street')#">
                                 <xar:mlstring>Street:</xar:mlstring>
                             </span>
                         </label>
@@ -444,7 +444,7 @@
                     </div>
                     <div class="xar-form-input-wrapper">
                         <label for="state" class="xar-form-label">
-                            <span class="help" title="#xarML('State.')#">
+                            <span class="help" title="#xarML('State')#">
                                 <xar:mlstring>State:</xar:mlstring>
                             </span>
                         </label>
@@ -452,7 +452,7 @@
                     </div>
                     <div class="xar-form-input-wrapper">
                         <label for="postal" class="xar-form-label">
-                            <span class="help" title="#xarML('Postal/Providence.')#">
+                            <span class="help" title="#xarML('Postal/Providence')#">
                                 <xar:mlstring>Postal/Providence:</xar:mlstring>
                             </span>
                         </label>
@@ -460,7 +460,7 @@
                     </div>
                     <div class="xar-form-input-wrapper">
                         <label for="contact" class="xar-form-label">
-                            <span class="help" title="#xarML('Contact.')#">
+                            <span class="help" title="#xarML('Contact')#">
                                 <xar:mlstring>Contact:</xar:mlstring>
                             </span>
                         </label>
@@ -468,7 +468,7 @@
                     </div>
                     <div class="xar-form-input-wrapper">
                         <label for="phone1" class="xar-form-label">
-                            <span class="help" title="#xarML('Phone.')#">
+                            <span class="help" title="#xarML('Phone')#">
                                 <xar:mlstring>Phone:</xar:mlstring>
                             </span>
                         </label>
@@ -489,7 +489,7 @@
                     </div>
                     <div class="xar-form-input-wrapper">
                         <label for="email" class="xar-form-label">
-                            <span class="help" title="#xarML('Email.')#">
+                            <span class="help" title="#xarML('Email')#">
                                 <xar:mlstring>Email:</xar:mlstring>
                             </span>
                         </label>
@@ -497,15 +497,16 @@
                     </div>
                     <div class="xar-form-input-wrapper">
                         <label for="website" class="xar-form-label">
-                            <span class="help" title="#xarML('Event Website.')#">
+                            <span class="help" title="#xarML('Event Website')#">
                                 <xar:mlstring>Event Website:</xar:mlstring>
                             </span>
                         </label>
+                        <!--<xar:data-input name="website" id="website" type="urltitle" value="#$website#" />-->
                         <input type="text" name="website" id="website" maxlength="255" class="xar-form-textmedium" />
                     </div>
                     <div class="xar-form-input-wrapper">
                         <label for="fee" class="xar-form-label">
-                            <span class="help" title="#xarML('Event Fee.')#">
+                            <span class="help" title="#xarML('Event Fee')#">
                                 <xar:mlstring>Event Fee:</xar:mlstring>
                             </span>
                         </label>

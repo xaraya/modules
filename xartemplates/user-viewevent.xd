@@ -98,7 +98,7 @@
                             <xar:if condition="!$hasContact">
                                  <xar:mlstring>None</xar:mlstring><br />
                             </xar:if>
-                            <font style="font-size: 11pt"><b><xar:mlstring>Fee:</xar:mlstring></b></font><br />#$fee#
+                            <font style="font-size: 11pt"><strong><xar:mlstring>Fee:</xar:mlstring></strong></font><br />#$fee#
                      </td>
                 </tr>
                 <tr>
