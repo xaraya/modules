@@ -1,7 +1,7 @@
 <?php
 /**
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -18,6 +18,7 @@ function tinymce_admin_updateconfig()
 {
     if (!xarSecConfirmAuthKey()) return;
     if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'basic', XARVAR_NOT_REQUIRED)) return;
+
     switch ($data['tab']) {
         case 'basic':
             if (!xarVarFetch('defaulteditor','str:1:',$defaulteditor,'',XARVAR_NOT_REQUIRED)) return;
@@ -64,8 +65,15 @@ function tinymce_admin_updateconfig()
                xarModSetVar('tinymce', 'usebutton', $usebutton);
                xarModSetVar('tinymce', 'tinybrowsers', $tinybrowsers);
                xarModSetVar('tinymce', 'tinytilemap', $tinytilemap);
-               xarModSetVar('tinymce', 'tinyeditorselector', $tinyeditorselector);               
+               $tinyeditorselector = trim($tinyeditorselector);
+               if ($tinyeditorselector ==''){
+                   xarModSetVar('tinymce','tinyeditorselector','mceEditor');
+               } else {
+                   xarModSetVar('tinymce','tinyeditorselector',$tinyeditorselector);
+               }
+               $tinyeditordeselector = trim($tinyeditordeselector);
                xarModSetVar('tinymce', 'tinyeditordeselector', $tinyeditordeselector);
+
             break;
         case 'cssplug':
             if (!xarVarFetch('tinyextended','str:1:',$tinyextended,'code,pre,blockquote/quote',XARVAR_NOT_REQUIRED)) return;
@@ -137,9 +145,7 @@ function tinymce_admin_updateconfig()
     if ($tinymode=='textareas'){
           xarModSetVar('tinymce','usebutton',0);
     }
-    if (trim(xarModGetVar('tinymce','tinyeditorselector'))==''){
-          xarModSetVar('tinymce','tinyeditorselector','mceEditor');
-    }
+
     $xarbaseurl=xarServerGetBaseURL();
     $tinybasepath="'.$xarbaseurl.'modules/tinymce/xartemplates/includes/tinymce/jscripts/tiny_mce/tiny_mce.js";
 
@@ -149,9 +155,20 @@ function tinymce_admin_updateconfig()
      */
 
     /* start building the string */
-    $jstext = 'mode : "'.xarModGetVar('tinymce','tinymode').'",';
+    $tinymode = xarModGetVar('tinymce','tinymode');
+    $jstext = 'mode : "'.$tinymode.'",';
     $jstext .='theme : "'.xarModGetVar('tinymce','tinytheme').'",';
     $jstext .='document_base_url : "'.xarServerGetBaseURL().'",';
+    
+    $tinyeditorselector = xarModGetVar('tinymce','tinyeditorselector');
+
+    $tinyeditorselector=isset($tinyeditorselector) ? $tinyeditorselector: 'mceEditor';
+
+    if (($tinymode == 'specific_textareas') &&  empty($tinyeditorselector)) {
+        $jstext .='editor_selector : "mceEditor",';
+    } elseif (($tinymode == 'specific_textareas') && !empty($tinyeditorselector)){
+        $jstext .='editor_selector : "'.$tinyeditorselector.'",';
+    }
     if (trim(xarModGetVar('tinymce','tinycsslist')) <> '') {
            $jstext .='content_css : "'.$xarbaseurl.xarModGetVar('tinymce','tinycsslist').'",';
         }
@@ -252,6 +269,7 @@ function tinymce_admin_updateconfig()
         if (xarModGetVar('tinymce','tinybuild3') <> '') {
           $jstext .='theme_advanced_buttons3 : "'.xarModGetVar('tinymce','tinybuild3').'",';
         }
+
        /*  Uncomment to get a debug popup dialog showing paths used
          $jstext .= 'debug : "true",';
        */

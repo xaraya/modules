@@ -247,9 +247,9 @@ function TinyMCE_advanced_execCommand(editor_id, element, command, user_interfac
 			var template = new Array();
 
 			template['file'] = 'charmap.htm';
-			template['width'] = 550;
+			template['width'] = 550 + (tinyMCE.isOpera ? 40 : 0);
 			template['height'] = 250;
-	
+
 			template['width'] += tinyMCE.getLang('lang_theme_advanced_charmap_delta_width', 0);
 			template['height'] += tinyMCE.getLang('lang_theme_advanced_charmap_delta_height', 0);
 
@@ -262,7 +262,7 @@ function TinyMCE_advanced_execCommand(editor_id, element, command, user_interfac
 
 			template['file'] = 'anchor.htm';
 			template['width'] = 320;
-			template['height'] = 90;
+			template['height'] = 90 + (tinyMCE.isNS7 ? 30 : 0);
 
 			template['width'] += tinyMCE.getLang('lang_theme_advanced_anchor_delta_width', 0);
 			template['height'] += tinyMCE.getLang('lang_theme_advanced_anchor_delta_height', 0);
@@ -331,12 +331,10 @@ function TinyMCE_advanced_getEditorTemplate(settings, editorId)
 
 	// Setup style select options -- MOVED UP FOR EXTERNAL TOOLBAR COMPATABILITY!
 	var styleSelectHTML = '<option value="">{$lang_theme_style_select}</option>';
-	if (settings['theme_advanced_styles'])
-	{
+	if (settings['theme_advanced_styles']) {
 		var stylesAr = settings['theme_advanced_styles'].split(';');
 		
-		for (var i=0; i<stylesAr.length; i++)
-		{
+		for (var i=0; i<stylesAr.length; i++) {
 			var key, value;
 
 			key = stylesAr[i].split('=')[0];
@@ -348,8 +346,7 @@ function TinyMCE_advanced_getEditorTemplate(settings, editorId)
 		TinyMCE_advanced_autoImportCSSClasses = false;
 	}
 
-	switch(layoutManager)
-	{
+	switch(layoutManager) {
 		case "SimpleLayout" : //the default TinyMCE Layout (for backwards compatibility)...
 			var toolbarHTML = "";
 			var toolbarLocation = tinyMCE.getParam("theme_advanced_toolbar_location", "bottom");
@@ -812,7 +809,7 @@ function TinyMCE_advanced_handleNodeChange (editor_id, node, undo_index, undo_le
 		var parentNode = node;
 		var path = new Array();
 		
-		while (parentNode) {
+		while (parentNode != null) {
 			if (parentNode.nodeName.toUpperCase() == "BODY") {
 				break;
 			}
@@ -839,6 +836,35 @@ function TinyMCE_advanced_handleNodeChange (editor_id, node, undo_index, undo_le
 				nodeName = "em";
 			}
 
+			if (nodeName == "span") {
+				var cn = tinyMCE.getAttrib(path[i], "class");
+				if (cn != "" && cn.indexOf('mceItem') == -1)
+					nodeData += "class: " + cn + " ";
+
+				var st = tinyMCE.getAttrib(path[i], "style");
+				if (st != "") {
+					st = tinyMCE.serializeStyle(tinyMCE.parseStyle(st));
+					nodeData += "style: " + st + " ";
+				}
+			}
+
+			if (nodeName == "font") {
+				if (tinyMCE.getParam("convert_fonts_to_spans"))
+					nodeName = "span";
+
+				var face = tinyMCE.getAttrib(path[i], "face");
+				if (face != "")
+					nodeData += "font: " + face + " ";
+
+				var size = tinyMCE.getAttrib(path[i], "size");
+				if (size != "")
+					nodeData += "size: " + size + " ";
+
+				var color = tinyMCE.getAttrib(path[i], "color");
+				if (color != "")
+					nodeData += "color: " + color + " ";
+			}
+
 			if (getAttrib(path[i], 'id') != "") {
 				nodeData += "id: " + path[i].getAttribute('id') + " ";
 			}
@@ -847,8 +873,7 @@ function TinyMCE_advanced_handleNodeChange (editor_id, node, undo_index, undo_le
 			if (className != "" && className.indexOf('mceItem') == -1)
 				nodeData += "class: " + className + " ";
 
-			if (getAttrib(path[i], 'src') != "")
-			{
+			if (getAttrib(path[i], 'src') != "") {
 				nodeData += "src: " + path[i].getAttribute('src') + " ";
 			}
 
@@ -858,7 +883,7 @@ function TinyMCE_advanced_handleNodeChange (editor_id, node, undo_index, undo_le
 
 			if (nodeName == "img" && tinyMCE.getAttrib(path[i], "class").indexOf('mceItemFlash') != -1) {
 				nodeName = "flash";
-				nodeData = "";
+				nodeData = "src: " + path[i].getAttribute('title');
 			}
 
 			if (nodeName == "a" && (anchor = tinyMCE.getAttrib(path[i], "name")) != "") {
@@ -969,7 +994,7 @@ function TinyMCE_advanced_handleNodeChange (editor_id, node, undo_index, undo_le
 					}
 				}
 			}
-		} while (!breakOut && classNode != null && (classNode = classNode.parentNode));
+		} while (!breakOut && classNode != null && (classNode = classNode.parentNode) != null);
 
 		selectElm.selectedIndex = index;
 	}
@@ -1077,7 +1102,7 @@ function TinyMCE_advanced_handleNodeChange (editor_id, node, undo_index, undo_le
 				breakOut = true;
 			break;
 		}
-	} while (!breakOut && (alignNode = alignNode.parentNode));
+	} while (!breakOut && (alignNode = alignNode.parentNode) != null);
 
 	// Div justification
 	var div = tinyMCE.getParentElement(node, "div");
@@ -1087,7 +1112,7 @@ function TinyMCE_advanced_handleNodeChange (editor_id, node, undo_index, undo_le
 	// Do special text
 	if (!setup_content) {
 		// , "JustifyLeft", "_justifyleft", "JustifyCenter", "justifycenter", "JustifyRight", "justifyright", "JustifyFull", "justifyfull", "InsertUnorderedList", "bullist", "InsertOrderedList", "numlist", "InsertUnorderedList", "bullist", "Outdent", "outdent", "Indent", "indent", "subscript", "sub"
-		var ar = new Array("Bold", "_bold", "Italic", "_italic", "Strikethrough", "_strikethrough");
+		var ar = new Array("Bold", "_bold", "Italic", "_italic", "Strikethrough", "_strikethrough", "superscript", "_sup", "subscript", "_sub");
 		for (var i=0; i<ar.length; i+=2) {
 			if (doc.queryCommandState(ar[i]))
 				tinyMCE.switchClassSticky(editor_id + ar[i+1], 'mceButtonSelected');
@@ -1127,14 +1152,6 @@ function TinyMCE_advanced_handleNodeChange (editor_id, node, undo_index, undo_le
 				tinyMCE.switchClassSticky(editor_id + '_numlist', 'mceButtonSelected');
 			break;
 
-			case "SUB":
-				tinyMCE.switchClassSticky(editor_id + '_sub', 'mceButtonSelected');
-			break;
-
-			case "SUP":
-				tinyMCE.switchClassSticky(editor_id + '_sup', 'mceButtonSelected');
-			break;
-
 			case "HR":
 				 tinyMCE.switchClassSticky(editor_id + '_hr', 'mceButtonSelected');
 			break;
@@ -1145,7 +1162,7 @@ function TinyMCE_advanced_handleNodeChange (editor_id, node, undo_index, undo_le
 			}
 			break;
 		}
-	} while ((node = node.parentNode));
+	} while ((node = node.parentNode) != null);
 };
 
 // This function auto imports CSS classes into the class selection droplist

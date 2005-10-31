@@ -48,8 +48,8 @@ function TinyMCE_preview_execCommand(editor_id, element, command, user_interface
 				var win = window.open("", "mcePreview", "menubar=no,toolbar=no,scrollbars=yes,resizable=yes,left=20,top=20,width=" + previewWidth + ",height="  + previewHeight);
 				var html = "";
 
-				html += '<!doctype html public "-//w3c//dtd html 4.0 transitional//en">';
-				html += '<html>';
+				html += tinyMCE.getParam('doctype');
+				html += '<html xmlns="http://www.w3.org/1999/xhtml">';
 				html += '<head>';
 				html += '<title>' + tinyMCE.getLang('lang_preview_desc') + '</title>';
 				html += '<base href="' + tinyMCE.getParam("document_base_url") + '">';

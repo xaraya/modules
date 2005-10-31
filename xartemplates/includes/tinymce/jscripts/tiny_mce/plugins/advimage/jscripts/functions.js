@@ -146,6 +146,8 @@ function init() {
 		else
 			selectByValue(formObj, 'align', getStyle(elm, 'align', 'cssFloat'));
 
+		addClassesToList('classlist', 'advimage_styles');
+
 		selectByValue(formObj, 'classlist', tinyMCE.getAttrib(elm, 'class'));
 		selectByValue(formObj, 'imagelistsrc', src);
 		selectByValue(formObj, 'imagelistover', onmouseoversrc);
@@ -156,9 +158,8 @@ function init() {
 		changeAppearance();
 
 		window.focus();
-	}
-
-	addClassesToList('classlist', 'advimage_styles');
+	} else
+		addClassesToList('classlist', 'advimage_styles');
 
 	// If option enabled default contrain proportions to checked
 	if (tinyMCE.getParam("advimage_constrain_proportions", true))
@@ -333,6 +334,7 @@ function insertAction() {
 		tinyMCEPopup.execCommand("mceInsertContent", false, html);
 	}
 
+	tinyMCE._setEventsEnabled(inst.getBody(), false);
 	tinyMCEPopup.close();
 }
 

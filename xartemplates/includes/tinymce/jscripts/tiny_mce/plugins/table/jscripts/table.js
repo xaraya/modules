@@ -262,12 +262,30 @@ function changedBackgroundImage() {
 	formObj.style.value = tinyMCE.serializeStyle(st);
 }
 
+function changedBorder() {
+	var formObj = document.forms[0];
+	var st = tinyMCE.parseStyle(formObj.style.value);
+
+	// Update border width if the element has a color
+	if (formObj.border.value != "" && formObj.bordercolor.value != "")
+		st['border-width'] = formObj.border.value + "px";
+
+	formObj.style.value = tinyMCE.serializeStyle(st);
+}
+
 function changedColor() {
 	var formObj = document.forms[0];
 	var st = tinyMCE.parseStyle(formObj.style.value);
 
 	st['background-color'] = formObj.bgcolor.value;
-	st['border-color'] = formObj.bordercolor.value;
+
+	if (formObj.bordercolor.value != "") {
+		st['border-color'] = formObj.bordercolor.value;
+
+		// Add border-width if it's missing
+		if (!st['border-width'])
+			st['border-width'] = formObj.border.value == "" ? "1px" : formObj.border.value + "px";
+	}
 
 	formObj.style.value = tinyMCE.serializeStyle(st);
 }

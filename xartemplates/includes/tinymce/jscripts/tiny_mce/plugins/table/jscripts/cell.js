@@ -82,7 +82,7 @@ function updateAction() {
 
 			do {
 				cell = updateCell(cell, true);
-			} while ((cell = nextCell(cell)));
+			} while ((cell = nextCell(cell)) != null);
 
 			break;
 
@@ -94,7 +94,7 @@ function updateAction() {
 
 				do {
 					cell = updateCell(cell, true);
-				} while ((cell = nextCell(cell)));
+				} while ((cell = nextCell(cell)) != null);
 			}
 
 			break;
@@ -107,7 +107,7 @@ function updateAction() {
 }
 
 function nextCell(elm) {
-	while ((elm = elm.nextSibling)) {
+	while ((elm = elm.nextSibling) != null) {
 		if (elm.nodeName == "TD" || elm.nodeName == "TH")
 			return elm;
 	}

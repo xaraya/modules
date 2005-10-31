@@ -1,4 +1,28 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
+<xar:comment>Set some classes for xhtml compliant rows and columns</xar:comment>
+<xar:if condition="!empty($class)">
+<xar:elseif condition="empty($rows)"/>
+    <xar:set name="class">'xar-form-textareamedium'</xar:set>
+<xar:elseif condition="$rows gt 15"/>
+    <xar:set name="class">'xar-form-textarealarge'</xar:set>
+<xar:elseif condition="$rows lt 5"/>
+    <xar:set name="class">'xar-form-textareasmall'</xar:set>
+<xar:else/>
+    <xar:set name="class">'xar-form-textareamedium'</xar:set>
+    <xar:set name="rows">15</xar:set>
+</xar:if>
+
+<xar:set name="textareasource">'
+<!--
+textarea#'.$id.' {
+    max-width: 99%;
+    width: '. $cols.'em;
+    height: '. ($rows * 1.6) .'em;
+}
+-->
+'</xar:set>
+
+
 <xar:set name="buttonon">
     <xar:mlstring>Turn On</xar:mlstring>
 </xar:set>
@@ -17,12 +41,13 @@
         <xar:set name="usewysiwyg">1</xar:set>
     </xar:if>
 </xar:foreach>
+
 <xar:if condition="xarModGetVar('base','editor') eq 'tinymce' and xarModIsAvailable('tinymce')">
     <xar:template file="tinymce_insert" module="tinymce" type="module" />
 </xar:if>
 <xar:if condition="xarModGetVar('tinymce','usebutton') eq 'true' and ($usewysiwyg eq 1)">
 <div class="xar-form-container-after">
-    <textarea class="xar-form-textareaxlarge" rows="#$rows#" cols="#$cols#" id="#$id#" name="#$name#" tabindex="#$tabindex#">#$value#</textarea>
+    <textarea class="#$class#" rows="#$rows#" cols="#$cols#" id="#$id#" name="#$name#" tabindex="#$tabindex#">#$value#</textarea>
     </div>
     <div class="xar-form-input-wrapper">
         <label class="xar-form-label">#$wysiwygprompt#</label>
@@ -30,7 +55,7 @@
     </div>
 <xar:elseif condition="$usewysiwyg eq 1" />
     <div class="xar-form-container-after">
-    <textarea mce_editable="true" class="mceEditor" rows="#$rows#" cols="#$cols#" id="#$id#" name="#$name#" tabindex="#$tabindex#">#$value#</textarea>
+    <textarea mce_editable="true" class="mceEditor #$class#" rows="#$rows#" cols="#$cols#" id="#$id#" name="#$name#" tabindex="#$tabindex#">#$value#</textarea>
     </div>
 <xar:else />
     <div class="xar-form-container-after">

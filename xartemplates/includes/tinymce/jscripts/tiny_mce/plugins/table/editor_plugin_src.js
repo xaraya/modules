@@ -770,7 +770,7 @@ function TinyMCE_table_doExecCommand(editor_id, element, command, user_interface
 
 							template['file'] = '../../plugins/table/merge_cells.htm';
 							template['width'] = 250;
-							template['height'] = 105;
+							template['height'] = 105 + (tinyMCE.isNS7 ? 25 : 0);
 
 							// Language specific width and height addons
 							template['width'] += tinyMCE.getLang('lang_table_merge_cells_delta_width', 0);

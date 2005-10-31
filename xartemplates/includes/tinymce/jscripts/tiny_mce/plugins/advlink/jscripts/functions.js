@@ -72,8 +72,6 @@ function init() {
 		href = convertURL(href, elm, true);
 
 		var onclick = tinyMCE.cleanupEventStr(tinyMCE.getAttrib(elm, 'onclick'));
-		if (onclick == null || onclick == "")
-			onclick = tinyMCE.cleanupEventStr(tinyMCE.getAttrib(elm, 'mce_onclick'));
 
 		// Setup form data
 		setFormValue('href', href);
@@ -119,11 +117,12 @@ function init() {
 		if (href.charAt(0) == '#')
 			selectByValue(formObj, 'anchorlist', href);
 
+		addClassesToList('classlist', 'advlink_styles');
+
 		selectByValue(formObj, 'classlist', tinyMCE.getAttrib(elm, 'class'), true);
 		selectByValue(formObj, 'targetlist', tinyMCE.getAttrib(elm, 'target'), true);
-	}
-
-	addClassesToList('classlist', 'advlink_styles');
+	} else
+		addClassesToList('classlist', 'advlink_styles');
 
 	window.focus();
 }
@@ -439,6 +438,7 @@ function insertAction() {
 	} else
 		setAllAttribs(elm);
 
+	tinyMCE._setEventsEnabled(inst.getBody(), false);
 	tinyMCEPopup.execCommand("mceEndUndoLevel");
 	tinyMCEPopup.close();
 }

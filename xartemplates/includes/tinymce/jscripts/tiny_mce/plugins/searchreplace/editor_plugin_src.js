@@ -95,13 +95,13 @@ function TinyMCE_searchreplace_execCommand(editor_id, element, command,	user_int
 				if (value['replacestring'] != null) {
 					template['file'] = '../../plugins/searchreplace/replace.htm'; // Relative to theme
 					template['width'] = 320;
-					template['height'] = 120;
+					template['height'] = 120 + (tinyMCE.isNS7 ? 20 : 0);
 					template['width'] += tinyMCE.getLang('lang_searchreplace_replace_delta_width', 0);
 					template['height'] += tinyMCE.getLang('lang_searchreplace_replace_delta_height', 0);
 				} else {
 					template['file'] = '../../plugins/searchreplace/search.htm'; // Relative to theme
 					template['width'] = 310;
-					template['height'] = 105;
+					template['height'] = 105 + (tinyMCE.isNS7 ? 25 : 0);
 					template['width'] += tinyMCE.getLang('lang_searchreplace_search_delta_width', 0);
 					template['height'] += tinyMCE.getLang('lang_searchreplace_replace_delta_height', 0);
 				}
@@ -138,6 +138,11 @@ function TinyMCE_searchreplace_execCommand(editor_id, element, command,	user_int
 
 					if (value['casesensitive'])
 						flags = flags | 4;
+
+					if (!rng.findText) {
+						alert('This operation is currently not supported by this browser.');
+						return true;
+					}
 
 					// Handle replace all mode
 					if (value['replacemode'] == "all") {

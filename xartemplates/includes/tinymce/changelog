@@ -1,4 +1,4 @@
-Version 2.0RC4 (2005-10-xx)
+Version 2.0RC4 (2005-10-30)
 	Fixed bug with font face/size/color wasn't working correctly in Firefox 1.5b1.
 	Fixed bug where all actions where dispatching the onbeforeunload event.
 	Fixed bug where buttons in fullscreen mode wasn't working in MSIE.
@@ -24,6 +24,14 @@ Version 2.0RC4 (2005-10-xx)
 	Fixed bug with bold, italic, underline, strikethrough buttons not beeing selected correctly.
 	Fixed bug with font size and font face select list not beeing selected correctly.
 	Fixed bug where document anchors was incorrectly converted if document_base_url was defined.
+	Fixed bug where changing border width/color of a table didn't update CSS styles correcty.
+	Fixed bug where emotions plugin didn't insert a new smiley the second time you insert one.
+	Fixed bug with blockquote command produced javascript error when used on lists in MSIE.
+	Fixed bug with cleanup converting flash elements to images.
+	Fixed bug where class wasn't selected in drop list of advlink/advimage dialogs when editing links/images.
+	Fixed bug where cellpadding/cellspacing/scope wasn't correctly handled in MSIE 5.5SP2.
+	Fixed bug where hreflang,charset and type attributes wasn't returned correctly in MSIE 5.5SP2.
+	Fixed bug with broken image URLs when user clicked the cleanup button in Firefox 1.5b2.
 	Fixed some compatiblity issues with call to createStyleSheet and event.target setup.
 	Fixed more compatiblity issues with scripts extending core JS logic such as the Array class.
 	Fixed issue where paragraphs wasn't generated if user pressed returned inside a H1-H6 running on Firefox/Mozilla.
@@ -36,17 +44,25 @@ Version 2.0RC4 (2005-10-xx)
 	Fixed issue with missing block elements in block element regexp.
 	Fixed issue where advhr plugin didn't produce valid attribute for noshade.
 	Fixed issue with misslabeled option, plaintext_create_paragraphs is renamed to paste_create_paragraphs.
+	Fixed issue where remove_script_host and relative_urls where treated as true if they where specified as strings.
+	Fixed issue with charmap, made it easier to select/click characters.
+	Fixed issue with search/replace dialogs not being refocused in MSIE.
 	Fixed issues with dialogs being to small if large class names where added. Made sure they can grow.
+	Fixed issues with some dialogs being to small in NS 7.2 and not working correctly in NS 7.1.
 	Fixed missing HEAD element in fullscreen.htm file, contributed by monkeybrain.
 	Fixed some HTML issues with the advhr plugin, contributed by monkeybrain.
 	Fixed some small issues with the span element rule of the XHTML rule set in valid_elements documentation.
-	Fixed issue with convert_fonts_to_styles, it now defaults to false since it had lots of compatiblity issues.
 	Added new Opera 9 support, most of the functions is working in the prerelease of Opera 9.
 	Added new paste_strip_class_attributes option to paste plugin, contributed by monkeybrain.
 	Added new merge_styles_invalid_parents option, allows users to control what elements gets styles.
 	Added new theme_advanced_resizing_use_cookie option, this enables you to disable the cookie used by resize.
 	Added new function that converts all font elements to span elements when the editor loads.
 	Added new force_hex_style_colors option, enables you to control the color format of CSS styles.
+	Added new convert_fonts_to_spans option, this option converts fonts to span elements.
+	Added new font_size_classes option, this option is used together with convert_fonts_to_spans.
+	Added new doctype option, enables you to control the internal doctype declaration.
+	Added new event_elements option contributed by happy_noodle_boy.
+	Added new path tooltips for font, span and flash elements such as color, font-family, src and so forth.
 	Added trim_span_elements back again, this option removes unneeded span elements.
 	Added documentation of the apply_source_formatting option.
 	Added updated Danish language pack, contributed by Jan Moelgaard.
@@ -56,6 +72,7 @@ Version 2.0RC4 (2005-10-xx)
 	Added updated Spanish language pack, contributed by Adolfo Sanz De Diego.
 	Added updated Italian language pack, contributed by grueff.
 	Added updated Icelandic language pack, contributed by Johannes Birgir Jensson.
+	Removed option convert_fonts_to_styles due to various compatiblity issues. Use convert_fonts_to_spans instead.
 Version 2.0RC3 (2005-09-26)
 	Fixed bug where colorpicker in table plugin wasn't working in Mozilla/Firefox.
 	Fixed bug where closed anchors produced strange results. Anchors are now forced open.

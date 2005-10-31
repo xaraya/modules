@@ -5,7 +5,6 @@
     </xar:if>
 
 <xar:set name="tinybrowsers">explode(',',xarModGetVar('tinymce','tinybrowsers'))</xar:set>
-<xar:set name="usewysiwyg">0</xar:set>
 
 <xar:set name="useragent">getenv('HTTP_USER_AGENT');</xar:set>
     <xar:foreach in="$tinybrowsers" value="$browsername">
@@ -15,9 +14,10 @@
     </xar:if>
     </xar:foreach>
 
+
     <xar:comment>Include the dynamic JavaScript, if not already included.</xar:comment>
     <xar:set name="tinyloaded">xarTplGetJavaScript('head', 'tinymce')</xar:set>
- 
+
     <xar:if condition="empty($tinyloaded)">
         <xar:comment>Include the static JavaScript</xar:comment>
         <xar:base-include-javascript position="head" module="tinymce" filename="tinymce/jscripts/tiny_mce/tiny_mce.js" />

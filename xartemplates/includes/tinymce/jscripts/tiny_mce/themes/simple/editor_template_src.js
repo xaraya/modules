@@ -66,5 +66,5 @@ function TinyMCE_simple_handleNodeChange(editor_id, node) {
 				tinyMCE.switchClassSticky(editor_id + '_numlist', 'mceButtonSelected');
 			break;
 		}
-	} while ((node = node.parentNode));
+	} while ((node = node.parentNode) != null);
 }

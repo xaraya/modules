@@ -29,7 +29,7 @@ To INSTALL and get started:
    - Set TinyMCE as the default editor
    - Set the Mode: Optimal method is to use "Specifically labelled text areas"
      and xarTinymce GUI DD property to replace your text areas
-   - Set the mode to Manual with DD properties
+   - Set the mode to Manual if you are using specially labelled text areas or with DD properties
 
 Please read the Overview Documentation in the TinyMCE administration area for more detail.
 

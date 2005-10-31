@@ -111,6 +111,8 @@
 
 .mceToolbarTop, .mceToolbarBottom {
 	background: #F0F0EE;
+	line-height: 1px;
+	font-size: 1px;
 }
 
 .mceToolbarTop {

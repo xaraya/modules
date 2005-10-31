@@ -1,7 +1,7 @@
 /**
  * $RCSfile: tiny_mce_popup.js,v $
- * $Revision: 1.17 $
- * $Date: 2005/10/24 19:49:46 $
+ * $Revision: 1.18 $
+ * $Date: 2005/10/29 19:13:20 $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004, Moxiecode Systems AB, All rights reserved.
@@ -81,7 +81,7 @@ TinyMCEPopup.prototype.onLoad = function() {
 	if (body.style.display == 'none')
 		body.style.display = 'block';
 
-	// Execute real onload
+	// Execute real onload (Opera fix)
 	if (tinyMCEPopup.onLoadEval != "") {
 		eval(tinyMCEPopup.onLoadEval);
 	}
@@ -95,6 +95,12 @@ TinyMCEPopup.prototype.executeOnLoad = function(str) {
 };
 
 TinyMCEPopup.prototype.resizeToInnerSize = function() {
+	// Netscape 7.1 workaround
+	if (this.isWindow && tinyMCE.isNS71) {
+		window.resizeBy(0, 10);
+		return;
+	}
+
 	if (this.isWindow) {
 		var doc = document;
 		var body = doc.body;

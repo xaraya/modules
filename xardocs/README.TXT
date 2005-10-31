@@ -29,7 +29,7 @@ To INSTALL and get started:
    - Set TinyMCE as the default editor
    - Set the Mode: Optimal method is to use "Specifically labelled text areas"
      and xarTinymce GUI DD property to replace your text areas
-   - Set the mode to Manual with DD properties
+   - Set the mode to Manual if you are using specially labelled text areas or with DD properties
 
 Please read the Overview Documentation in the TinyMCE administration area for more detail.
 
@@ -91,7 +91,7 @@ modified the file, to chmod the ibrowserconfig.inc file chmod 444 so it is not w
 Using the ibrowser also means that the path to your images will be available to those
 browsing your site.
 
-For added security, turn of Upload ability in the IBrowser and use the Uploads and Images module.
+For added security, turn off Upload ability in the IBrowser and use the Uploads and Images module.
 Point your Image library to the Image module's directory or trusted directory of Uploads.
 
 An alternative to using the IBrowser is to install the Images and Uploads modules.

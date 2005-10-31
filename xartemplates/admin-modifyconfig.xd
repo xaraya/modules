@@ -98,7 +98,7 @@
         </fieldset>
         <fieldset>
             <legend>
-               <strong><xar:mlstring>2. Set default editor</xar:mlstring></strong>
+               <strong><xar:mlstring>2. Set default editor and Flush DD Cache</xar:mlstring></strong>
             </legend>
 
            <div class="xar-form-input-wrapper">
@@ -118,6 +118,12 @@
            <div class="xar-form-input-wrapper-after">
             <xar:mlstring>(You can also set installed editors in </xar:mlstring><a href="&xar-modurl-base-admin-modifyconfig;&amp;tab=other" rel="ext"><xar:mlstring>Base Module - Modify Config - Other Tab</xar:mlstring></a>)
            </div>
+           <div class="xar-form-input-wrapper-before">
+            <p>
+            <xar:mlstring>To ensure the tinymce DD Property is available, flush the DD property cache at </xar:mlstring><a href="&xar-modurl-dynamicdata-admin-modifyconfig;" rel="external"><xar:mlstring>Dynamicdata - Property Types - Flush Property Cache</xar:mlstring></a>)
+            </p>
+           </div>
+
          </fieldset>
         <fieldset class="formelements xar-norm">
             <legend>
@@ -145,10 +151,19 @@
 
         <ol style="list-style-type:lower-alpha; ">
           <li>
-                <xar:mlstring><strong>All Text Areas Mode</strong>: every textarea will be WYSIWYG enabled. Best used with a Prompt for WYSIWYG usage, or turn off WYSIWYG in a specific textarea by adding the special reserved class <strong><code>class="mceNoEditor"</code></strong> to the textarea. This acts as a marker that tells xartinymce NOT to activate WYSIWYG for this textarea.</xar:mlstring>
+                <xar:mlstring><strong>All Text Areas Mode</strong>: every textarea will be WYSIWYG enabled. 
+                Best used with a Prompt for WYSIWYG usage, or turn off WYSIWYG in a specific textarea by adding 
+                the special reserved class <strong><code>class="mceNoEditor"</code></strong> to the textarea.
+                This acts as a marker that tells xartinymce NOT to activate WYSIWYG for this textarea.</xar:mlstring><br /><br />
           </li>
-          <li><xar:mlstring><strong>Special Labelled Only</strong>: Only textareas that are specially labelled with the specific trigger class eg <strong><code>class="mceEditor"</code></strong> are activated. You can do this manually by adding the attribute to any textarea in your templates, or add a  <strong>xarTinyMCE GUI Dynamic Data Property field</strong> to your Article pubtypes or xarPages Page Type, or anywhere else you need a WYSIWYG input area.
-            This DD Property automatically marks the div or textarea of the field with the special trigger class <strong><code>class="mceEditor"</code></strong> that acts as the marker for the WYSIWYG conversion.
+          <li><xar:mlstring><strong>Special Labelled Only</strong>: Only textareas that are specially labelled with the 
+              specific trigger class eg <strong><code>class="mceEditor"</code></strong>
+              (or older method with <strong><code>mce_editable="true"</code></strong> are activated. 
+              You can do this manually by adding the attribute to any textarea in your templates,
+              or add a  <strong>xarTinyMCE GUI Dynamic Data Property field</strong> to your Article pubtypes or 
+              xarPages Page Type, or anywhere else you need a WYSIWYG input area.
+            This DD Property automatically marks the div or textarea of the field with the special trigger 
+            class <strong><code>class="mceEditor"</code></strong> that acts as the marker for the WYSIWYG conversion.
             You can set row height and column width in the DD validation field. eg 20:80 for 20 rows high, 80 columns wide.
             If you can't see the xarTinyMCE GUI DD property in your DD list </xar:mlstring>
           <a href="#$ddflushurl#"><xar:mlstring>flush the Property Cache</xar:mlstring></a>
@@ -175,11 +190,12 @@
         </div>
        <ol style="list-style-type:lower-alpha;">
          <li class="xar-norm" >
-             <xar:mlstring><strong>Automatic</strong>: xarTinyMce is automatically activated when mode is set to All TextAreas without the need to add any template snippets. </xar:mlstring>
+             <xar:mlstring><strong>Automatic</strong>: xarTinyMce is automatically activated when mode is 
+             set to All TextAreas without the need to use tinymce DD properties or configure anything further. The disadvantage is that tinymce is loaded on every page. </xar:mlstring><br /><br />
          </li>
          <li class="xar-norm" ><xar:mlstring><strong>Manual Override</strong>: turns off automatic activation (xarTinyMCE DD properties are still active). You can then manually override the loading of the WYSIWYG by adding your specific template snippet code, as below, to your page or other specific templates.
-           All textareas contained or included in the template where you have the XarTinymce tags are converted to WYSIWYG according to the "All Text Area" or "Special Labelled Only" setting above.
-           Alternatively, replace the variable "jstring" in an override template for the <code>tinymce_insert.xd</code> template with your own tinymce variables.</xar:mlstring>
+           All textareas contained or included in the template where you have the XarTinymce tags are converted to WYSIWYG according to the "All Text Area" or "Special Labelled Only" setting above. Advantages are that tinymce is only loaded when required rather than every page or in every textarea.
+           </xar:mlstring>
          </li>
       </ol>
       <pre>
@@ -187,6 +203,13 @@
              &lt;xar:template file="tinymce_insert" module="tinymce" type="module" /&gt;
         &lt;/xar:if&gt;
      </pre>
+     <p><xar:mlstring><strong>HINT:</strong> Copy <code>modules/tinymce/xartemplates/properties/showinput-tinymce.xd</code>
+        to your own theme's <code>themes/yourtheme/modules/base/properties/showinput-textarea.xt</code> as a DD textarea override 
+        and set Specially Labelled and Manual loading mode. This way you can have all
+        your pubtype or xarpages or other DD property textarea fields
+        automatically converted to wysiwyg with or without button prompt, and tinymce is loaded on a page only when needed.</code>
+     </xar:mlstring>
+     </p>
       </fieldset>
        <fieldset>
            <div class="xar-form-input-wrapper-after">
