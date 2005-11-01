@@ -115,12 +115,12 @@ function courses_admin_updatecourse($args)
                                 'coursetype' => $coursetype,
                                 'level' => $level,
                                 'shortdesc' => $shortdesc,
-                                'language' => $language,
                                 'freq' => $freq,
                                 'contact' => $contact,
                                 'contactuid' => $contactuid,
                                 'hidecourse' => $hidecourse,
                                 'last_modified' => $last_modified,
+                                'intendedcredits' => $intendedcredits,
                                 'invalid' => $invalid));
     }
 
@@ -135,12 +135,12 @@ function courses_admin_updatecourse($args)
                              'coursetype' => $coursetype,
                              'level' => $level,
                              'shortdesc' => $shortdesc,
-                             'language' => $language,
                              'freq' => $freq,
                              'contact' => $contact,
                              'contactuid' => $contactuid,
                              'hidecourse' => $hidecourse,
-                             'last_modified' => $last_modified))) {
+                             'last_modified' => $last_modified,
+                             'intendedcredits' => $intendedcredits))) {
         return false; // throw back
     } 
     // TODO: how to remove previous statusmsg?
