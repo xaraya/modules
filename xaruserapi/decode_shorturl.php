@@ -24,6 +24,19 @@ function courses_userapi_decode_shorturl($params)
 {
     // Initialise the argument list we will return
     $args = array();
+    $module = 'courses';
+    /* Check and see if we have a module alias */
+    $aliasisset = xarModGetVar('courses', 'useModuleAlias');
+    $aliasname = xarModGetVar('courses','aliasname');
+    if (($aliasisset) && isset($aliasname)) {
+        $usealias   = true;
+    } else{
+        $usealias = false;
+    }
+    if ($params[0] != $module) { // it's possibly some type of alias
+        $aliasname = xarModGetVar('courses','aliasname');
+    }
+    
     // Analyse the different parts of the virtual path
     // $params[1] contains the first part after index.php/example
     // In general, you should be strict in encoding URLs, but as liberal

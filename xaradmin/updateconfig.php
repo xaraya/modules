@@ -24,7 +24,9 @@ function courses_admin_updateconfig()
     if (!xarVarFetch('AlwaysNotify', 'str::', $AlwaysNotify, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('hideplanningmsg', 'str::', $hideplanningmsg, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('ShowShortDesc', 'checkbox', $ShowShortDesc, false, XARVAR_NOT_REQUIRED)) return;
-
+    if (!xarVarFetch('aliasname',    'str:1:',   $aliasname, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('modulealias',  'checkbox', $modulealias,false,XARVAR_NOT_REQUIRED)) return;
+    
     // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) return;
     // Update module variables.
@@ -34,7 +36,35 @@ function courses_admin_updateconfig()
     xarModSetVar('courses', 'hidecoursemsg', $hidecoursemsg);
     xarModSetVar('courses', 'hideplanningmsg', $hideplanningmsg);
     xarModSetVar('courses', 'AlwaysNotify', $AlwaysNotify);
-    xarModSetVar('courses', 'ShowShortDesc', $ShowShortDesc);    
+    xarModSetVar('courses', 'ShowShortDesc', $ShowShortDesc);
+    // Alias name
+    if (isset($aliasname) && trim($aliasname)<>'') {
+        xarModSetVar('courses', 'useModuleAlias', $modulealias);
+    } else{
+         xarModSetVar('courses', 'useModuleAlias', 0);
+    }
+    $currentalias = xarModGetVar('courses','aliasname');
+    $newalias = trim($aliasname);
+    /* Get rid of the spaces if any, it's easier here and use that as the alias*/
+    if ( strpos($newalias,'_') === FALSE )
+    {
+        $newalias = str_replace(' ','_',$newalias);
+    }
+    $hasalias= xarModGetAlias($currentalias);
+    $useAliasName= xarModGetVar('courses','useModuleAlias');
+
+    if (($useAliasName==1) && !empty($newalias)){
+        /* we want to use an aliasname */
+        /* First check for old alias and delete it */
+        if (isset($hasalias) && ($hasalias =='courses')){
+            xarModDelAlias($currentalias,'courses');
+        }
+        /* now set the new alias if it's a new one */
+          xarModSetAlias($newalias,'courses');
+    }
+    /* now set the alias modvar */
+    xarModSetVar('courses', 'aliasname', $newalias);
+    // Call hooks
     xarModCallHooks('module','updateconfig','courses',
                    array('module' => 'courses'));
 

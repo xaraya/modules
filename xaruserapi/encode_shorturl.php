@@ -27,6 +27,16 @@ function courses_userapi_encode_shorturl($args)
     if (!isset($func)) {
         return;
     }
+    
+    /* Check if we have module alias set or not */
+    $aliasisset = xarModGetVar('courses', 'useModuleAlias');
+    $aliasname = xarModGetVar('courses','aliasname');
+    if (($aliasisset) && isset($aliasname)) {
+        $usealias   = true;
+    } else{
+        $usealias = false;
+    }
+    
     // Note : make sure you don't pass the following variables as arguments in
     // your module too - adapt here if necessary
     // default path is empty -> no short URL
@@ -35,13 +45,22 @@ function courses_userapi_encode_shorturl($args)
     $join = '?';
     // we can't rely on xarModGetName() here -> you must specify the modname !
     $module = 'courses';
+    $alias = xarModGetAlias($module);
     // specify some short URLs relevant to your module
     if ($func == 'main') {
-        $path = '/' . $module . '/';
+        if (($module == $alias) && ($usealias)){
+            $path = '/' . $aliasname . '/';
+        } else {
+            $path = '/' . $module . '/';
+        }
         // Note : if your main function calls some other function by default,
         // you should set the path directly to that other function
     } elseif ($func == 'view') {
-        $path = '/' . $module . '/list.html';
+      if (($module == $alias) && ($usealias)){
+            $path = '/' . $aliasname . '/list.html';
+        } else {
+            $path = '/' . $module . '/list.html';
+        }
         // we'll add the optional $startnum parameter below, as a regular
         // URL parameter
         // you might have some additional parameter that you want to use to
@@ -76,7 +95,11 @@ function courses_userapi_encode_shorturl($args)
     } elseif ($func == 'display') {
         // check for required parameters
         if (isset($courseid) && is_numeric($courseid)) {
-            $path = '/' . $module . '/' . $courseid . '.html';
+            if (($module == $alias) && ($usealias)){
+                $path = '/' . $aliasname . '/'. $courseid . '.html';
+            } else {
+                $path = '/' . $module . '/' . $courseid . '.html';
+            }
             // you might have some additional parameter that you want to use to
             // create different virtual paths here - for example a category name
             // See above for an example...
