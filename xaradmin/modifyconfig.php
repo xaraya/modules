@@ -46,7 +46,7 @@ function example_admin_modifyconfig()
     $data['itemsvalue'] = xarModGetVar('example', 'itemsperpage');
     /* Note : if you don't plan on providing encode/decode functions for
      * short URLs (see xaruserapi.php), you should remove this from your
-     * admin-modifyconfig.xard template !
+     * admin-modifyconfig.xd template.
      */
     $data['shorturlschecked'] = xarModGetVar('example', 'SupportShortURLs') ? true : false;
 
