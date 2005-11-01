@@ -81,7 +81,7 @@ function todolist_init()
 
     $projectstable = $xartable['todolist_projects'];
 
-    $fields = "xar_id I UNSIGNED PRIMARY auto,
+    $fields = "xar_project_id I UNSIGNED PRIMARY auto,
             xar_project_name C(30) default NULL,
             xar_description C(200) default NULL,
             xar_project_leader I NOTNULL default 0

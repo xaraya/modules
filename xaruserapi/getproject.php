@@ -37,14 +37,13 @@ function todolist_userapi_getproject($args)
     $xartable =& xarDBGetTables();
 
     $projectstable = $xartable['todolist_projects'];
-    /* Get item
-     */
 
+    // Get item
     $query = "SELECT xar_project_name,
-                xar_description,
-                xar_project_leader
+                     xar_description,
+                     xar_project_leader
               FROM $projectstable
-              WHERE xar_id = ?";
+              WHERE xar_project_id = ?";
     $result = &$dbconn->Execute($query,array($project_id));
     /* Check for an error with the database code, adodb has already raised
      * the exception so we just return
