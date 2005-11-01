@@ -1,0 +1,12 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-form-input-wrapper">
+    <label for="CatAware#$blockid#" title="#xarML('Make this block category aware?')#" class="xar-form-label">
+        <xar:mlstring>Use Categories:</xar:mlstring>
+    </label>
+    <xar:if condition="empty($CatAware)">
+        <input type="checkbox" name="CatAware" id="CatAware#$blockid#" value="1" /> 
+        <xar:else />
+        <input type="checkbox" name="CatAware" id="CatAware#$blockid#" value="1" checked="checked" /> 
+    </xar:if>
+</div>
+
