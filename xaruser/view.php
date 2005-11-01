@@ -2,27 +2,34 @@
 /**
  * View a list of items
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Example Module
+ * @link http://xaraya.com/index.php/release/36.html
+ * @author Example Module Development Team
  */
 
 /**
- * View a list of items
+ * View a list of todos and tasks
  *
  * This is a standard function to provide an overview of all of the items
  * available from the module.
  *
  * @author the Todolist module development team
+ * @TODO MichelV Apply filtering
+ *               Define what to view
  */
 function todolist_user_view()
 { 
-    if (!xarVarFetch('startnum', 'int:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('startnum', 'str:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
+    /* Initialise the $data variable that will hold the data to be used in
+     * the blocklayout template, and get the common menu configuration
+     */
 
-    $data = xarModAPIFunc('example', 'user', 'menu');
+    $data = xarModAPIFunc('todolist', 'user', 'menu');
     /* Prepare the variable that will hold some status message if necessary */
     $data['status'] = '';
     /* Prepare the array variable that will hold all items for display */
@@ -35,15 +42,14 @@ function todolist_user_view()
     if (!xarSecurityCheck('ViewTodolist')) return;
     /* Lets get the UID of the current user to check for overridden defaults */
     $uid = xarUserGetVar('uid');
-    /* Get the todos themselves
+    /* Get all Todos.
+     * Later build in more specific filters here
      */
     $items = xarModAPIFunc('todolist',
         'user',
         'getall',
         array('startnum' => $startnum,
-            'numitems' => xarModGetUserVar('todolist',
-                'itemsperpage',
-                $uid)));
+              'numitems' => xarModGetUserVar('todolist','itemsperpage', $uid)));
     if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     /* 
@@ -56,8 +62,8 @@ function todolist_user_view()
          * in the display() function.
          * 
          */
-        if (xarSecurityCheck('ReadTodolist', 0, 'Item', "All:All:All")) { // TODO
-            $item['link'] = xarModURL('example',
+        if (xarSecurityCheck('ReadTodolist', 0, 'Item', "All:All:All")) {//Todo
+            $item['link'] = xarModURL('todolist',
                 'user',
                 'display',
                 array('todo_id' => $item['todo_id']));
@@ -89,24 +95,15 @@ function todolist_user_view()
      * table so that the pager function can do its job properly
      */
     $data['pager'] = xarTplGetPager($startnum,
-        xarModAPIFunc('example', 'user', 'countitems'),
-        xarModURL('example', 'user', 'view', array('startnum' => '%%')),
-        xarModGetUserVar('example', 'itemsperpage', $uid));
+        xarModAPIFunc('todolist', 'user', 'countitems'),
+        xarModURL('todolist', 'user', 'view', array('startnum' => '%%')),
+        xarModGetUserVar('todolist', 'itemsperpage', $uid));
 
     /* Same as above.  We are changing the name of the page to raise
      * better search engine compatibility.
      */
-    xarTplSetPageTitle(xarVarPrepForDisplay(xarML('View Examples')));
+    xarTplSetPageTitle(xarVarPrepForDisplay(xarML('View Todos')));
     /* Return the template variables defined in this function */
     return $data;
-
-    /* Note : instead of using the $data variable, you could also specify
-     * the different template variables directly in your return statement :
-     *
-     * return array('menu' => ...,
-     * 'items' => ...,
-     * 'pager' => ...,
-     * ... => ...);
-     */
 }
 ?>

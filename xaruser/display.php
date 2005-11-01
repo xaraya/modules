@@ -2,7 +2,7 @@
 /**
  * Display a todo
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -19,7 +19,7 @@
  * @author the Todolist module development team
  * @param  $args an array of arguments (if called by other modules)
  * @param  $args ['objectid'] a generic object id (if called by other modules)
- * @param  $args ['exid'] the item id used for this example module
+ * @param  $args ['todo_id'] the item id to display
  */
 function todolist_user_display($args)
 { 
@@ -45,23 +45,14 @@ function todolist_user_display($args)
     $data = xarModAPIFunc('todolist', 'user', 'menu');
     /* Prepare the variable that will hold some status message if necessary */
     $data['status'] = '';
-    /* The API function is called.  The arguments to the function are passed in
-     * as their own arguments array.
-     * Security check 1 - the get() function will fail if the user does not
-     * have at least READ access to this item (also see below).
-     */
+    // Get the Item
     $item = xarModAPIFunc('todolist',
         'user',
         'get',
         array('todo_id' => $todo_id));
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; /* throw back */
 
-    /* Do we need to set itemtypes?
-     * $item['itemtype'] = 0;
-     */
-
-    /* Get the project this todo belongs to */
-    /* Get the resonsible people */
+    /* Get the responsible people */
 
     /* Let any transformation hooks know that we want to transform some text.
      */
@@ -70,18 +61,18 @@ function todolist_user_display($args)
         'transform',
         $todo_id,
         $item);
-    /* Fill in the details of the item.
-    $data['name_value'] = $item['name'];
-    $data['number_value'] = $item['number'];
-     */
-     
-   /* Get responsible persons
-    *
+    /* Fill in the details of the item.*/
+    // The project
+    $project = xarModAPIFunc('todolist', 'user', 'getproject', array('project_id' => $item['project_id']));
+    $data['project_name'] = $project['project_name'];        
+
+    $data['created_by'] = xarUserGetVar(name, $item['created_by']);
+    $data['changed_by'] = xarUserGetVar(name, $item['changed_by']);
     * $todolist_responsible_persons_column = &$pntable['todolist_responsible_persons_column'];
     */
     
     $todolist_project_members_column = &$pntable['todolist_project_members_column'];
-     
+
     $data['todo_id'] = $todo_id;
     $data['item'] = $item;
     //$data['is_bold'] = xarModGetVar('example', 'bold');
@@ -112,7 +103,7 @@ function todolist_user_display($args)
     /* Once again, we are changing the name of the title for better
      * Search engine capability.
      */
-    xarTplSetPageTitle(xarVarPrepForDisplay($item['name']));
+    xarTplSetPageTitle(xarVarPrepForDisplay(xarML('Due on:') $item['due_date']));
     /* Return the template variables defined in this function */
     return $data;
 }
