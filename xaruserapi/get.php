@@ -16,7 +16,7 @@
  * Standard function of a module to retrieve a specific item
  *
  * @author the Todolist module development team
- * @param  $args ['todo_id'] id of example item to get
+ * @param  $args ['todo_id'] id of item to get
  * @returns array
  * @return item array, or false on failure
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
@@ -65,15 +65,15 @@ function todolist_userapi_get($args)
     }
     /* Obtain the item information from the result set */
     list($project_id,
-            $todo_text,
-            $todo_priority,
-            $percentage_completed,
-            $created_by,
-            $due_date,
-            $date_created,
-            $date_changed,
-            $changed_by,
-            $status) = $result->fields;
+         $todo_text,
+         $todo_priority,
+         $percentage_completed,
+         $created_by,
+         $due_date,
+         $date_created,
+         $date_changed,
+         $changed_by,
+         $status) = $result->fields;
     /* All successful database queries produce a result set, and that result
      * set should be closed when it has been finished with
      */

@@ -96,7 +96,7 @@ function todolist_userapi_getall($args)
             $date_changed,
             $changed_by,
             $status) = $result->fields;
-        if (xarSecurityCheck('ViewTodolist', 0, 'Item', "All:All:All")) {
+        if (xarSecurityCheck('ViewTodolist', 0, 'Item', "All:All:All")) { // TODO
             $items[] = array('todo_id'      => $todo_id,
                   'project_id'              => $project_id,
                   'todo_text'               => $todo_text,

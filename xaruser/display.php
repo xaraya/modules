@@ -41,7 +41,9 @@ function todolist_user_display($args)
     if (!empty($objectid)) {
         $todo_id = $objectid;
     } 
-    /* Get menu */
+    /* Get menu 
+     * This menu should allow for interactive sorting and selecting
+     */
     $data = xarModAPIFunc('todolist', 'user', 'menu');
     /* Prepare the variable that will hold some status message if necessary */
     $data['status'] = '';
@@ -68,10 +70,6 @@ function todolist_user_display($args)
 
     $data['created_by'] = xarUserGetVar(name, $item['created_by']);
     $data['changed_by'] = xarUserGetVar(name, $item['changed_by']);
-    * $todolist_responsible_persons_column = &$pntable['todolist_responsible_persons_column'];
-    */
-    
-    $todolist_project_members_column = &$pntable['todolist_project_members_column'];
 
     $data['todo_id'] = $todo_id;
     $data['item'] = $item;

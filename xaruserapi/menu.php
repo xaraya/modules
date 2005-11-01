@@ -7,13 +7,13 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Example Module
+ * @subpackage Todolist Module
  */
 
 /**
  * Generate the common menu configuration
  *
- * @author the Example module development team
+ * @author the Todolist module development team
  */
 function example_userapi_menu()
 { 
@@ -21,11 +21,11 @@ function example_userapi_menu()
     $menu = array(); 
 
     /* Specify the menu title to be used in your blocklayout template */
-    $menu['menutitle'] = xarML('Example');
+    $menu['menutitle'] = xarML('Todolist');
  
     /* Specify the menu items to be used in your blocklayout template */
-    $menu['menulabel_view'] = xarML('View example items');
-    $menu['menulink_view'] = xarModURL('example', 'user', 'view');
+    $menu['menulabel_view'] = xarML('View your todo items');
+    $menu['menulink_view'] = xarModURL('todolist', 'user', 'view');
 
     /* Specify the labels/links for more menu items if relevant */
     /* $menu['menulabel_other'] = xarML('Some other menu item');
