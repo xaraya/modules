@@ -166,7 +166,8 @@ function xarbb_init()
     // be able to turn it on or off in your module administration
     xarModSetVar('xarbb', 'SupportShortURLs', 0);
     // xarModSetVar('xarbb', 'allowhtml', 1);
-
+    xarModSetVar('xarbb', 'useModuleAlias',false);
+    xarModSetVar('xarbb','aliasname','');
     // default settings for xarbb
     $settings = array();
     $settings['postsperpage']       = 20;
@@ -185,7 +186,7 @@ function xarbb_init()
                         Array('name' => 'xarbb',
                               'description' => 'XarBB Categories',
                               'parent_id' => 0));
-    // Assign category to item type 1 (= forums) - <jojodee> NO this is outdated
+
     // Note: you can have more than 1 mastercid (cfr. articles module)
     xarModSetVar('xarbb', 'number_of_categories', 1);
     xarModSetVar('xarbb', 'mastercids', $xarbbcid);

@@ -119,7 +119,7 @@ function xarbb_admin_modifyconfig()
            {
                $newalias = str_replace(' ','_',$newalias);
            }
-           $hasalias= xarModGetAlias('xarbb');
+           $hasalias= xarModGetAlias($currentalias);
            $useAliasName= xarModGetVar('xarbb','useModuleAlias');
 
            if (($useAliasName==1) && !empty($newalias)){
