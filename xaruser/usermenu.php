@@ -53,7 +53,7 @@ function example_user_usermenu($args)
              */
             $authid = xarSecGenAuthKey('example');
             /* Lets get the value that we want to override from the preferences. Notice that we are
-             * xarModUserGetMod and not xarModGetVar so we can grab the overridden value.  You do
+             * xarModUserGetVar and not xarModGetVar so we can grab the overridden value.  You do
              * not have to use a user variable for every module var that the module posses, just
              * the variables that you want to override.
              */
