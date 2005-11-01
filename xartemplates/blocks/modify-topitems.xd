@@ -9,9 +9,10 @@
     <div class="xar-form-input-wrapper">
         <label class="xar-form-label help" title="#xarML('Choose the publication type you want to display with top items.')#" for="pubtypeid#$blockid#"> 
             <xar:mlstring>
-                Publication Type 
+                Publication Type
             </xar:mlstring>
-        </label> <select name="pubtypeid" id="pubtypeid#$blockid#">
+        </label> 
+        <select name="pubtypeid" id="pubtypeid#$blockid#">
             <option value="0">
                 <xar:mlstring>
                     Default / Current 

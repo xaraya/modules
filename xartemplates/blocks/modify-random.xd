@@ -1,16 +1,17 @@
 <div class="xar-form-input-wrapper">
-    <label class="xar-form-label help" title="#xarML('Enter the number of items that you wish to display.')#" for="numitems#$blockid#"> 
+    <label class="xar-form-label help" title="#xarML('Enter the number of items that you wish to display.')#" for="numitems#$blockid#">
         <xar:mlstring>
             Number of items 
         </xar:mlstring>
     </label> <input type="text" name="numitems" id="numitems#$blockid#" value="#$numitems#" size="5" maxlength="5" /> 
 </div>
 <div class="xar-form-input-wrapper">
-    <label class="help xar-form-label" for="pubtypeid#$blockid#" title="#xarML('Choose the publication type for the featured items.')#"> 
+    <label class="help xar-form-label" for="pubtypeid#$blockid#" title="#xarML('Choose the publication type for the featured items.')#">
         <xar:mlstring>
-            Publication Type 
+            Publication Type
         </xar:mlstring>
-    </label><select name="pubtypeid" id="pubtypeid#$blockid#"> 
+    </label>
+    <select name="pubtypeid" id="pubtypeid#$blockid#">
         <option value="0">
             <xar:mlstring>
                 All 
@@ -27,14 +28,15 @@
                 </option>
             </xar:if>
         </xar:foreach>
-    </select> 
+    </select>
 </div>
 <div class="xar-form-input-wrapper">
     <label class="help xar-form-label" title="#xarML('Choose the category for the featured items.')#" for="catfilter#$blockid#"> 
         <xar:mlstring>
             Category 
         </xar:mlstring>
-    </label><select name="catfilter" id="catfilter#$blockid#"> 
+    </label>
+    <select name="catfilter" id="catfilter#$blockid#">
         <option value="0">
             <xar:mlstring>
                 All / Current 
@@ -58,7 +60,8 @@
         <xar:mlstring>
             Status 
         </xar:mlstring>
-    </label><select name="status" id="status#$blockid#" size="1"> 
+    </label>
+    <select name="status" id="status#$blockid#" size="1">
         <xar:foreach in="$statusoptions" value="$statusoption">
             <xar:if condition="!empty($status) and $status eq $statusoption['id']">
                 <option value="#$statusoption['id']#" selected="selected">
@@ -77,7 +80,8 @@
         <xar:mlstring>
             Locale 
         </xar:mlstring>
-    </label><select name="language" id="language#$blockid#" size="1"> 
+    </label>
+    <select name="language" id="language#$blockid#" size="1">
         <option value="">
             <xar:mlstring>
                 All 
@@ -114,7 +118,8 @@
         <xar:mlstring>
             Alternate Block Title: 
         </xar:mlstring>
-    </label> <input type="text" name="alttitle" id="alttitle#$blockid#" value="#$alttitle#" size="24" maxlength="62" />
+    </label> 
+    <input type="text" name="alttitle" id="alttitle#$blockid#" value="#$alttitle#" size="24" maxlength="62" />
 </div>
 <div class="xar-form-input-wrapper">
     <label class="help xar-form-label" title="#xarML('If you wish to give the article an alternative summary to be displayed as a featured item, enter the summary here.')#" for="altsummary#$blockid#">
@@ -160,13 +165,13 @@
         </xar:mlstring>
     </label> 
 </div>
-<div class="xar-form-input-wrapperafter">
+<div class="xar-form-input-wrapper-after">
     <xar:if condition="empty($showpubdate)">
         <input type="checkbox" name="showpubdate" id="showpubdate#$blockid#" value="1" /> 
         <xar:else />
         <input type="checkbox" name="showpubdate" id="showpubdate#$blockid#" value="1" checked="checked" /> 
     </xar:if>
-    <label class="help" title="#xarML('If you wish to show the publication date for the article check this box.')#" for="showpubdate#$blockid#"> 
+    <label class="help" title="#xarML('If you wish to show the publication date for the article check this box.')#" for="showpubdate#$blockid#">
         <xar:mlstring>
             Show publication date 
         </xar:mlstring>
@@ -185,7 +190,7 @@
     </label> 
 </div>
 <xar:if condition="xarModIsHooked('dynamicdata','articles',$pubtypeid)">
-    <div class="xar-form-input-wrapper">
+    <div class="xar-form-input-wrapper-after">
         <xar:if condition="empty($showdynamic)">
             <input type="checkbox" name="showdynamic" id="showdynamic#$blockid#" value="1" /> 
             <xar:else />
@@ -198,7 +203,7 @@
         </label> 
     </div>
 </xar:if>
-<div class="xar-form-input-wrapper">
+<div class="xar-form-input-wrapper-after">
     <xar:if condition="empty($linkpubtype)">
         <input type="checkbox" name="linkpubtype" id="linkpubtype#$blockid#" value="1" /> 
         <xar:else />
