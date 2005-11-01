@@ -1,15 +1,22 @@
 <?php
-xarModAPILoad('overlib');
 /**
- * 
+ * Month Block  - standard Initialization function
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Julian Module
+ * @link http://xaraya.com/index.php/release/319.html
+ * @author Julian Module Development Team
+ */
+
+/**
+ * This module:
  * Metrostat Calendar
  * 
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2004 by Metrostat Technologies, Inc.
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.metrostat.net
- *
- * @subpackage julian
  * initial template: Roger Raymond
  * @author Jodie Razdrh/John Kevlin/David St.Clair
  */
@@ -65,32 +72,54 @@ function julian_calmonthblock_display($blockinfo)
 { 
     // Security Check
     if (!xarSecurityCheck('Viewjulian', 0)) return;
+    // See if this helps
+    xarModAPILoad('overlib');
+    /* Get variables from content block.
+     * Content is a serialized array for legacy support, but will be
+     * an array (not serialized) once all blocks have been converted.
+     */
+    if (!is_array($blockinfo['content'])) {
+        $vars = @unserialize($blockinfo['content']);
+    } else {
+        $vars = $blockinfo['content'];
+    }
     
     if (empty($blockinfo['title'])) {
         $blockinfo['title'] = xarML('Calendar');
     }
-    //set the selected date parts, timestamp, and cal_date in the data array
+    // Set the selected date parts, timestamp, and cal_date in the data array
     $args = xarModAPIFunc('julian','user','getUserDateTimeInfo');
-    //load the calendar class
+    // Load the calendar class
     $c = xarModAPIFunc('julian','user','factory','calendar');
     $args['month2'] = $c->getCalendarMonth(date("Ym"));
     $args['cal_sdow'] = xarModGetVar('julian','startDayOfWeek'); //$c->getStartDayOfWeek();
     $args['shortDayNames'] = $c->getShortDayNames($args['cal_sdow']);
     $args['calendar'] =& $c;
-    //determine today and the month that today is in. The current month is the month that will be displayed
+    // Determine today and the month that today is in. The current month is the month that will be displayed
     $args['todays_timestamp'] = strtotime("today");
     $args['todays_month']=$month = date("m");
-    //set the current year
+    // Set the current year
     $year=date("Y");
-    //set the start date to the first day of the selected month
+    // Set the start date to the first day of the selected month
     $startdate = $year."-".$month."-01";
-    //determine the number of days in the selected month
+    // Ddetermine the number of days in the selected month
     $numdays=date('t',strtotime("today"));
-    //set the end date to the last day of the selected month
+    // Set the end date to the last day of the selected month
     $enddate = $year."-".$month."-".$numdays;
-    //get the events for the current month
-    $args['event_array']= xarModApiFunc('julian','user','getall', array('startdate'=>$startdate, 'enddate'=>$enddate));
-        
+    
+    $CatAware = $vars['CatAware'];
+    $args['CatAware'] = $CatAware; // Needed?
+    /* If we don't want to have this block use categories, set the array empty
+     * Bug 5115
+     */
+    if ($CatAware == 0 ) {
+        // Get the events for the current month and set catid empty
+        $args['event_array']= xarModApiFunc('julian','user','getall', array('startdate'=>$startdate, 'enddate'=>$enddate, 'catid' => ''));
+    } else {    
+        // Get the events for the current month
+        $args['event_array']= xarModApiFunc('julian','user','getall', array('startdate'=>$startdate, 'enddate'=>$enddate));
+    }
+
     if (empty($blockinfo['template'])) {
         $template = 'calmonth';
     } else {

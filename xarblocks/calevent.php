@@ -53,7 +53,7 @@ function julian_caleventblock_info()
 /**
  * display calevent block
  * 
- * @author David St.Clair 
+ * @author David St.Clair, MichelV
  * @access public 
  * @param none $ 
  * @return data array on success or void on failure
@@ -62,89 +62,59 @@ function julian_caleventblock_info()
  */
 function julian_caleventblock_display($blockinfo)
 { 
-   // Security Check
-   if (!xarSecurityCheck('Viewjulian', 0)) return;
-   
+    // Security Check
+    if (!xarSecurityCheck('Viewjulian', 0)) return;
+    
     // Break out options from our content field
     if (!is_array($blockinfo['content'])) {
         $vars = unserialize($blockinfo['content']);
     } else {
         $vars = $blockinfo['content'];
     }
+    
+    //set the selected date parts, timestamp, and cal_date in the data array
+    $args = xarModAPIFunc('julian','user','getUserDateTimeInfo');
+    //load calendar class
+    $c =& xarModAPIFunc('julian','user','factory','calendar');
+    //determine the current user
+    $args['name'] = xarUserGetVar('name');
+    $args['blockid'] = $blockinfo['bid'];
+    //set dates for determining which events to show for the upcoming events
+    $EventBlockDays = $vars['EventBlockDays'];
+    $args['EventBlockDays'] = $EventBlockDays;
+    $today=date('Y-m-d');
+    $tomorrow=date("Y-m-d",strtotime("tomorrow"));
+    $endweek=date("Y-m-d",strtotime("+$EventBlockDays days"));
+    
+    $CatAware = $vars['CatAware'];
+    /* If we don't want to have this block use categories, set the array empty
+     * Bug 5115
+     */
+    if ($CatAware == 0 ) {
+        // Set the catid empty
+        // Get today's events: start and enddate are the same  
+        $args['todaysevents']= xarModApiFunc('julian','user','getall', array('startdate'=>$today, 'enddate'=>$today, 'catid' => ''));
+        // Get the events for the next $EventBlockDays days
+        $args['upcomingevents'] = xarModApiFunc('julian','user','getall', array('startdate'=>$tomorrow, 'enddate'=>$endweek, 'catid' => ''));
+    } else {    
+        // Get today's events: start and enddate are the same  
+        $args['todaysevents']= xarModApiFunc('julian','user','getall', array('startdate'=>$today, 'enddate'=>$today));
+        // Get the events for the next $EventBlockDays days
+        $args['upcomingevents'] = xarModApiFunc('julian','user','getall', array('startdate'=>$tomorrow, 'enddate'=>$endweek));
+    }
 
-   //set the selected date parts, timestamp, and cal_date in the data array
-   $args = xarModAPIFunc('julian','user','getUserDateTimeInfo');
-   //load calendar class
-   $c =& xarModAPIFunc('julian','user','factory','calendar');
-   //determine the current user
-   $args['name'] = xarUserGetVar('name');
-   $args['blockid'] = $blockinfo['bid'];
-   //set dates for determining which events to show for the upcoming events
-   $EventBlockDays = $vars['EventBlockDays'];
-   $args['EventBlockDays'] = $EventBlockDays;
-   $today=date('Y-m-d');
-   $tomorrow=date("Y-m-d",strtotime("tomorrow"));
-   $endweek=date("Y-m-d",strtotime("+$EventBlockDays days"));
-   // get today's events: start and enddate are the same
-   
-   $args['todaysevents']= xarModApiFunc('julian','user','getall', array('startdate'=>$today, 'enddate'=>$today));
-   //get the events for the next $EventBlockDays days
-   $args['upcomingevents'] = xarModApiFunc('julian','user','getall', array('startdate'=>$tomorrow, 'enddate'=>$endweek));
-   //set the required block data
-   if (empty($blockinfo['title'])) {
+    //set the required block data
+    if (empty($blockinfo['title'])) {
        $blockinfo['title'] = xarML('Events');
-   } 
-   if (empty($blockinfo['template'])) {
+    } 
+    if (empty($blockinfo['template'])) {
         $template = 'calevent';
-   } else {
+    } else {
         $template = $blockinfo['template'];
-   }
-   $args['Bullet'] = '&'.xarModGetVar('julian', 'BulletForm').';';
-   $blockinfo['content'] = xarTplBlock('julian', $template, $args);
-
-   return $blockinfo;
-}
-
-/**
- * modify block settings
- *
- * @access  public
- * @param   $blockinfo
- * @return  $blockinfo data array
-*/
-function julian_caleventblock_modify($blockinfo)
-{
-    // Break out options from our content field
-    if (!is_array($blockinfo['content'])) {
-        $vars = unserialize($blockinfo['content']);
-    } else {
-        $vars = $blockinfo['content'];
     }
-
-    // Defaults
-    if (!isset($vars['EventBlockDays'])) {
-        $vars['EventBlockDays'] = 7;
-    }
-
-    return $vars;
-}
-
-/**
- * Updates the Block settings
- */
-function julian_caleventblock_update($blockinfo)
-{
-    if (!is_array($blockinfo['content'])) {
-        $vars = unserialize($blockinfo['content']);
-    } else {
-        $vars = $blockinfo['content'];
-    }
-
-    if (!xarVarFetch('EventBlockDays', 'int', $EventBlockDays, 0, XARVAR_NOT_REQUIRED)) {return;}
-    $vars['EventBlockDays'] = $EventBlockDays;
-
-    $blockinfo['content'] = $vars;
-
+    $args['Bullet'] = '&'.xarModGetVar('julian', 'BulletForm').';';
+    $blockinfo['content'] = xarTplBlock('julian', $template, $args);
+    
     return $blockinfo;
 }
 ?>

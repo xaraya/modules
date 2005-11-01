@@ -34,7 +34,13 @@ function julian_admin_modifyconfig()
     $data['from_name']  = xarModGetVar('julian','from_name');
     $data['from_email'] = xarModGetVar('julian','from_email');
 
-    /* Generate a one-time authorisation code for this operation */
+    /* If you plan to use alias names for you module then you should use the next two alias vars
+     * You must also use short URLS for aliases, and provide appropriate encode/decode functions.
+     */
+    $data['useAliasName'] = xarModGetVar('julian', 'useModuleAlias');
+    $data['aliasname ']= xarModGetVar('julian','aliasname');
+
+    // Generate a one-time authorisation code for this operation
     $data['authid'] = xarSecGenAuthKey();
 
     // Call hooks

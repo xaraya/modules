@@ -8,3 +8,13 @@
     </label>
     <input type="text" name="EventBlockDays" id="EventBlockDays" value="#$EventBlockDays#" size="2" />
 </div>
+<div class="xar-form-input-wrapper">
+    <label for="CatAware#$blockid#" title="#xarML('Make this block category aware?')#" class="xar-form-label">
+        <xar:mlstring>Use Categories:</xar:mlstring>
+    </label>
+    <xar:if condition="empty($CatAware)">
+        <input type="checkbox" name="CatAware" id="CatAware#$blockid#" value="1" /> 
+        <xar:else />
+        <input type="checkbox" name="CatAware" id="CatAware#$blockid#" value="1" checked="checked" /> 
+    </xar:if>
+</div>
