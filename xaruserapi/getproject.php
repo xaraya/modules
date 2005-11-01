@@ -27,7 +27,7 @@ function todolist_userapi_getproject($args)
 
     if (!isset($project_id) || !is_numeric($project_id)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-            'item ID', 'user', 'get', 'Example');
+            'item ID', 'user', 'get', 'Todolist');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException($msg));
         return;
@@ -37,14 +37,10 @@ function todolist_userapi_getproject($args)
     $xartable =& xarDBGetTables();
 
     $projectstable = $xartable['todolist_projects'];
-    /* Get item - the formatting here is not mandatory, but it does make the
-     * SQL statement relatively easy to read.  Also, separating out the sql
-     * statement from the Execute() command allows for simpler debug operation
-     * if it is ever needed
+    /* Get item
      */
 
-    $query = "SELECT 
-                xar_project_name,
+    $query = "SELECT xar_project_name,
                 xar_description,
                 xar_project_leader
               FROM $projectstable

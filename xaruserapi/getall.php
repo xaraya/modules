@@ -1,13 +1,15 @@
 <?php
 /**
- * Get all example items
+ * Get all todo items
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Example Module
+ * @subpackage Todolist Module
+ * @link http://xaraya.com/index.php/release/67.html
+ * @author Todolist Module Development Team
  */
 
 /**
@@ -20,30 +22,18 @@
  * @return array of items, or false on failure
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
-function example_userapi_getall($args)
+function todolist_userapi_getall($args)
 { 
-    /* Get arguments from argument array - all arguments to this function
-     * should be obtained from the $args array, getting them from other places
-     * such as the environment is not allowed, as that makes assumptions that
-     * will not hold in future versions of Xaraya
-     */
     extract($args);
     /* Optional arguments.
-     * FIXME: (!isset($startnum)) was ignoring $startnum as it contained a null value
-     * replaced it with ($startnum == "") (thanks for the talk through Jim S.) NukeGeek 9/3/02
-     * if (!isset($startnum)) { */
+     */
     if (!isset($startnum)) {
         $startnum = 1;
     }
     if (!isset($numitems)) {
         $numitems = -1;
     }
-    /* Argument check - make sure that all required arguments are present and
-     * in the right format, if not then set an appropriate error message
-     * and return
-     * Note : since we have several arguments we want to check here, we'll
-     * report all those that are invalid at the same time...
-     */
+    // Argument check
     $invalid = array();
     if (!isset($startnum) || !is_numeric($startnum)) {
         $invalid[] = 'startnum';
@@ -53,7 +43,7 @@ function example_userapi_getall($args)
     }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-            join(', ', $invalid), 'user', 'getall', 'Example');
+            join(', ', $invalid), 'user', 'getall', 'Todolist');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException($msg));
         return;
@@ -63,30 +53,31 @@ function example_userapi_getall($args)
     /* Security check - important to do this as early on as possible to
      * avoid potential security holes or just too much wasted processing
      */
-    if (!xarSecurityCheck('ViewExample')) return;
-    /* Get database setup - note that both xarDBGetConn() and xarDBGetTables()
-     * return arrays but we handle them differently.  For xarDBGetConn() we
-     * currently just want the first item, which is the official database
-     * handle.  For xarDBGetTables() we want to keep the entire tables array
-     * together for easy reference later on
-     */
+    if (!xarSecurityCheck('ViewTodolist')) return;
+
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-    /* It's good practice to name the table definitions you are
-     * using - $table doesn't cut it in more complex modules
-     */
-    $exampletable = $xartable['example'];
+    $todostable = $xartable['todolist_todos'];
+    
     /* TODO: how to select by cat ids (automatically) when needed ???
      * Get items - the formatting here is not mandatory, but it does make the
      * SQL statement relatively easy to read.  Also, separating out the sql
      * statement from the SelectLimit() command allows for simpler debug
      * operation if it is ever needed
      */
-    $query = "SELECT xar_exid,
-                     xar_name,
-                     xar_number
-              FROM $exampletable
-              ORDER BY xar_name";
+    $query = "SELECT xar_todo_id,
+                    xar_project_id,
+                    xar_todo_text,
+                    xar_todo_priority,
+                    xar_percentage_completed,
+                    xar_created_by,
+                    xar_due_date,
+                    xar_date_created,
+                    xar_date_changed,
+                    xar_changed_by,
+                    xar_status
+              FROM $todostable
+              ORDER BY xar_todo_id";
     /* SelectLimit also supports bind variable, they get to be put in
      * as the last parameter in the function below. In this case we have no
      * bind variables, so we left the parameter out. We could have passed in an
@@ -104,11 +95,29 @@ function example_userapi_getall($args)
      * the details of the item, this *must* be verified by your function.
      */
     for (; !$result->EOF; $result->MoveNext()) {
-        list($exid, $name, $number) = $result->fields;
-        if (xarSecurityCheck('ViewExample', 0, 'Item', "$name:All:$exid")) {
-            $items[] = array('exid'   => $exid,
-                             'name'   => $name,
-                             'number' => $number);
+        list($todo_id,
+            $project_id,
+            $todo_text,
+            $todo_priority,
+            $percentage_completed,
+            $created_by,
+            $due_date,
+            $date_created,
+            $date_changed,
+            $changed_by,
+            $status) = $result->fields;
+        if (xarSecurityCheck('ViewTodolist', 0, 'Item', "All:All:All")) { //TODO
+            $items[] = array('todo_id' => $todo_id,
+                            'project_id' => $project_id,
+                            'todo_text' => $todo_text,
+                            'todo_priority' => $todo_priority,
+                            'percentage_completed' => $percentage_completed,
+                            'created_by' => $created_by,
+                            'due_date' => $due_date,
+                            'date_created' => $date_created,
+                            'date_changed' => $date_changed,
+                            'changed_by' => $changed_by,
+                            'status' => $status);
         }
     }
     /* All successful database queries produce a result set, and that result
