@@ -46,11 +46,11 @@ function example_admin_modifyconfig()
     $data['itemsvalue'] = xarModGetVar('example', 'itemsperpage');
     /* Note : if you don't plan on providing encode/decode functions for
      * short URLs (see xaruserapi.php), you should remove this from your
-     * admin-modifyconfig.xard template !
+     * admin-modifyconfig.xd template !
      */
     $data['shorturlschecked'] = xarModGetVar('example', 'SupportShortURLs') ? true : false;
 
-    /* If you plan to use alias names for you module then you should use the next two alias vars
+    /* If you plan to use alias names for you module then you can use the next two alias vars
      * You must also use short URLS for aliases, and provide appropriate encode/decode functions.
      */
     $data['useAliasName'] = xarModGetVar('example', 'useModuleAlias');
