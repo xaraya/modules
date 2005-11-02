@@ -1,0 +1,21 @@
+<?php
+/**
+    Gets the default security levesl for a modules / itemtype pair
+    If there are no module/ itemtype pairs matching it will return 
+    defaults to use instead.
+    
+    @param $args['modid']
+    @param $args['itemtype'] (optional)
+    
+    @return array The default security levels    
+*/
+function security_userapi_get_default_levels($args)
+{
+    extract($args);
+
+    $settings = xarModAPIFunc('security', 'user', 'get_default_settings', $args);
+    if( !$settings ){ return false; }    
+    
+    return $settings['levels'];
+}
+?>
