@@ -1,3 +1,4 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
   <span class="xar-mod-title">
     <xar:mlstring>Newsletter</xar:mlstring>
@@ -8,7 +9,7 @@
 <div class="xar-mod-body">
   <div class="contentBorder">
     <xar:if condition="!empty($users)">
-      <form action="#xarModURL('newsletter', 'admin', 'viewusers')#" method="post" enctype="application/x-www-form-urlencoded" >
+      <form action="&xar-modurl-newsletter-admin-viewusers;" method="post" enctype="application/x-www-form-urlencoded" >
         <input type="hidden" name="sortby" id="sortby" value="#$sortby#" />
         <input type="hidden" name="startnum" id="startnum" value="1" />
         <table width="100%" border="1" cellspacing="0" cellpadding="4">
