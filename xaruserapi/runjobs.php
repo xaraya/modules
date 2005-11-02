@@ -20,7 +20,17 @@ function scheduler_userapi_runjobs($args = array())
     foreach ($jobs as $id => $job) {
         $log .= "\n" . $job['module'] . ' ' . $job['type'] . ' ' . $job['func'] . ' ';
         $lastrun = $job['lastrun'];
-        if (!empty($lastrun)) {
+
+        // if the interval is 'never', always skip this job
+        if ($job['interval'] == '0t') {
+            $log .= xarML('skipped');
+            continue;
+
+        // if this is the first time we run this job
+        } elseif (empty($lastrun)) {
+
+        // if the job already ran, check if we need to run it again
+        } else {
             if (!preg_match('/(\d+)(\w)/',$job['interval'],$matches)) {
                 $log .= xarML('invalid interval');
                 continue;
