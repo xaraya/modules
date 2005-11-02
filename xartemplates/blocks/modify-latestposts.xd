@@ -25,7 +25,7 @@
 </div>
 
 <div class="xar-form-input-wrapper">
-    <label for="atestpost" title="#xarML('Show only last reply per topic?')#" class="xar-form-label">
+    <label for="latestpost" title="#xarML('Show only last reply per topic?')#" class="xar-form-label">
         <xar:mlstring>Show only last reply per topic?</xar:mlstring>
     </label>
         <xar:if condition="$latestpost eq 'on'">
@@ -44,7 +44,7 @@
 
 
 <div class="xar-form-input-wrapper">
-    <label for="howmany" title="#xarML('Truncate long titles to no more than how many characters?')#" class="xar-form-label">
+    <label for="truncate" title="#xarML('Truncate long titles to no more than how many characters?')#" class="xar-form-label">
         <xar:mlstring>Truncate titles to (chars):</xar:mlstring>
     </label>
         <input type="text" name="truncate" value="#$truncate#" size="3" maxlength="3" tabindex="5" />
