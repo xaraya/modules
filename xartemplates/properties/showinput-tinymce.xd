@@ -55,7 +55,7 @@ textarea#'.$id.' {
     </div>
 <xar:elseif condition="$usewysiwyg eq 1" />
     <div class="xar-form-container-after">
-    <textarea mce_editable="true" class="mceEditor #$class#" rows="#$rows#" cols="#$cols#" id="#$id#" name="#$name#" tabindex="#$tabindex#">#$value#</textarea>
+    <textarea class="mceEditor #$class#" rows="#$rows#" cols="#$cols#" id="#$id#" name="#$name#" tabindex="#$tabindex#">#$value#</textarea>
     </div>
 <xar:else />
     <div class="xar-form-container-after">

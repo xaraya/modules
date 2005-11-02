@@ -149,7 +149,7 @@ tinyMCE.init({
     });
                 </pre>
                 <xar:mlstring>To activate your custom configuration, add the textarea trigger class to a textarea eg </xar:mlstring><strong><code>class="mceEditor2"</code></strong><br />
-                <xar:mlstring><strong>DO NOT</strong> use <strong>mceEditor</strong> as the class attribute trigger as it is reserved.</xar:mlstring><br /></li>
+                <xar:mlstring><strong>DO NOT</strong> use <strong>mceEditor</strong> as the class attribute trigger as it is reserved.</xar:mlstring><br /><br /></li>
 
                 <li><xar:mlstring><strong>Custom Configuration</strong> now allows you to add your own custom configuration values to the <strong>existing</strong> default tinymce configuration. Make sure you check your resulting tinymce code in the displayed final configuration code on this page before using.</xar:mlstring></li>
             </ol>
@@ -179,13 +179,4 @@ tinyMCE.init({
              </ul>
             <p style="font-size:smaller;"><strong>&nbsp;<xar:mlstring>xarTinyMCE WYSIWYG Editor - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 2.9&nbsp; 2005-08-21 jojodee
             </p>
-        <h3>
-            <xar:mlstring>And more.. [for module developers]</xar:mlstring>
-        </h3>
-        <p>
-        <xar:mlstring>This is a work in progress. Any bugs reports and feature requests are most appreciated. </xar:mlstring>
-        </p>
-   </div>
-   <div class="xar-mod-foot xar-align-center xar-padding-thick">
-       <xar:mlstring>Extended information about this module can be found here. </xar:mlstring>[<a href="http://xaraya.athomeandabout.com">http://xaraya.athomeandabout.com</a>]
    </div>

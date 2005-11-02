@@ -67,7 +67,7 @@ function insertTable() {
 		if (bordercolor != "") {
 			elm.style.borderColor = bordercolor;
 			elm.style.borderStyle = elm.style.borderStyle == "" ? "solid" : elm.style.borderStyle;
-			elm.style.borderWidth = elm.style.borderWidth == "" ? "1px" : elm.style.borderWidth;
+			elm.style.borderWidth = border == "" ? "1px" : border;
 		} else
 			elm.style.borderColor = '';
 

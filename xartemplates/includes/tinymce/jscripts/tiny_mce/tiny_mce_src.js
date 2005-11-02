@@ -1,7 +1,7 @@
 /**
  * $RCSfile: tiny_mce_src.js,v $
- * $Revision: 1.249 $
- * $Date: 2005/10/30 16:06:57 $
+ * $Revision: 1.251 $
+ * $Date: 2005/11/01 19:28:05 $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004, Moxiecode Systems AB, All rights reserved.
@@ -1360,6 +1360,8 @@ TinyMCE.prototype.onLoad = function() {
 
 					if (selector != '' && tinyMCE.getAttrib(elm, "class").indexOf(selector) == -1)
 						continue;
+					else
+						trigger = selector != "" ? "true" : "";
 
 					if (tinyMCE.getAttrib(elm, "class").indexOf(deselector) != -1)
 						continue;
@@ -1888,7 +1890,7 @@ TinyMCE.prototype.serializeStyle = function(ar) {
 
 			// Force HEX colors
 			if (tinyMCE.getParam("force_hex_style_colors"))
-				val = tinyMCE.convertRGBToHex(val);
+				val = tinyMCE.convertRGBToHex(val, true);
 
 			if (val != "url('')")
 				str += key.toLowerCase() + ": " + val + "; ";
@@ -1901,21 +1903,33 @@ TinyMCE.prototype.serializeStyle = function(ar) {
 	return str;
 };
 
-TinyMCE.prototype.convertRGBToHex = function(s) {
+TinyMCE.prototype.convertRGBToHex = function(s, k) {
 	if (s.toLowerCase().indexOf('rgb') != -1) {
-		var re = new RegExp("rgb\\s*\\(\\s*([0-9]+).*,\\s*([0-9]+).*,\\s*([0-9]+).*\\)", "gi");
-		var rgb = s.replace(re, "$1,$2,$3").split(',');
-		if (rgb.length == 3) {
-			r = parseInt(rgb[0]).toString(16);
-			g = parseInt(rgb[1]).toString(16);
-			b = parseInt(rgb[2]).toString(16);
+		var re = new RegExp("(.*?)rgb\\s*?\\(\\s*?([0-9]+).*?,\\s*?([0-9]+).*?,\\s*?([0-9]+).*?\\)(.*?)", "gi");
+		var rgb = s.replace(re, "$1,$2,$3,$4,$5").split(',');
+		if (rgb.length == 5) {
+			r = parseInt(rgb[1]).toString(16);
+			g = parseInt(rgb[2]).toString(16);
+			b = parseInt(rgb[3]).toString(16);
 
 			r = r.length == 1 ? '0' + r : r;
 			g = g.length == 1 ? '0' + g : g;
 			b = b.length == 1 ? '0' + b : b;
 
 			s = "#" + r + g + b;
+
+			if (k)
+				s = rgb[0] + s + rgb[4];
 		}
+	}
+
+	return s;
+};
+
+TinyMCE.prototype.convertHexToRGB = function(s) {
+	if (s.indexOf('#') != -1) {
+		s = s.replace(new RegExp('[^0-9A-F]', 'gi'), '');
+		return "rgb(" + parseInt(s.substring(0, 2), 16) + "," + parseInt(s.substring(2, 4), 16) + "," + parseInt(s.substring(4, 6), 16) + ")";
 	}
 
 	return s;

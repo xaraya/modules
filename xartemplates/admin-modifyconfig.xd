@@ -156,13 +156,12 @@
                 the special reserved class <strong><code>class="mceNoEditor"</code></strong> to the textarea.
                 This acts as a marker that tells xartinymce NOT to activate WYSIWYG for this textarea.</xar:mlstring><br /><br />
           </li>
-          <li><xar:mlstring><strong>Special Labelled Only</strong>: Only textareas that are specially labelled with the 
-              specific trigger class eg <strong><code>class="mceEditor"</code></strong>
-              (or older method with <strong><code>mce_editable="true"</code></strong> are activated. 
+          <li><xar:mlstring><strong>Special Labelled Only</strong>: Only textareas that are specially labelled with the
+              specific trigger class eg <strong><code>class="mceEditor"</code></strong> are activated.
               You can do this manually by adding the attribute to any textarea in your templates,
-              or add a  <strong>xarTinyMCE GUI Dynamic Data Property field</strong> to your Article pubtypes or 
+              or add a  <strong>xarTinyMCE GUI Dynamic Data Property field</strong> to your Article pubtypes or
               xarPages Page Type, or anywhere else you need a WYSIWYG input area.
-            This DD Property automatically marks the div or textarea of the field with the special trigger 
+            This DD Property automatically marks the div or textarea of the field with the special trigger
             class <strong><code>class="mceEditor"</code></strong> that acts as the marker for the WYSIWYG conversion.
             You can set row height and column width in the DD validation field. eg 20:80 for 20 rows high, 80 columns wide.
             If you can't see the xarTinyMCE GUI DD property in your DD list </xar:mlstring>
