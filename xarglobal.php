@@ -176,9 +176,9 @@ define('_AB_UPDATE_ERROR',  xarML('An Error ocurred. The Address Book Entry coul
 define('_AB_UPDATE_RECORD',  xarML("Update"));
 
 define('_AB_ERRMSG_MISFIELDS_NAME_TAB', xarML('An Address Book Entry must contain data in at least one field of the Name tab!'));
-define('_AB_ERRMSG_FALSENUM_CUST_TAB',  xarML('There is a false numeric value in the '.xarModGetVar(__ADDRESSBOOK__,'custom_tab').' tab.'));
-define('_AB_ERRMSG_INVALNUM_CUST_TAB',  xarML('In the '.xarModGetVar(__ADDRESSBOOK__,'custom_tab').' tab there are characters in a digit-only field.'));
-define('_AB_ERRMSG_INVALDATE_CUST_TAB', xarML('In the '.xarModGetVar(__ADDRESSBOOK__,'custom_tab').' tab there is a false date format.'));
+define('_AB_ERRMSG_FALSENUM_CUST_TAB',  xarML('There is a false numeric value in the #(1) tab.', xarModGetVar(__ADDRESSBOOK__,'custom_tab')));
+define('_AB_ERRMSG_INVALNUM_CUST_TAB',  xarML('In the #(1) tab there are characters in a digit-only field.', xarModGetVar(__ADDRESSBOOK__,'custom_tab')));
+define('_AB_ERRMSG_INVALDATE_CUST_TAB', xarML('In the #(1) tab there is a false date format.', xarModGetVar(__ADDRESSBOOK__,'custom_tab')));
 
 
 
