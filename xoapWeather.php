@@ -2,6 +2,19 @@
 /**
  * Class to grab XML weather feeds from weather.com
  *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Weather Module
+ * @link http://xaraya.com/index.php/release/662.html
+ * @author Weather Module Development Team
+ */
+ 
+/**
+ * Class to grab XML weather feeds from weather.com
+ *
  * Implements the weather.com SDK and is derived from :
  * xoapWeather - Copyright (C) 2003 Brian Paulson <spectre013@spectre013.com>
  *
