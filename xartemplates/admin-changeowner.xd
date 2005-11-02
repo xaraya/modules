@@ -1,0 +1,5 @@
+<fieldset>
+    <legend>Change Owner</legend>
+    
+    <xar:var name="owner.name" />
+</fieldset>
