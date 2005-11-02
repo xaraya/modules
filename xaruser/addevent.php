@@ -42,17 +42,60 @@ function julian_user_addevent($args)
      
     // Deal with no-hook scenario (the template then must get an empty hook-array)
      if (empty($hooks)) {
-        $bl_data['hooks'] = array();
+        $data['hooks'] = array();
     } else {
-        $bl_data['hooks'] = $hooks;
+        $data['hooks'] = $hooks;
     }
      
-    $bl_data['todays_month'] = date("n",strtotime($cal_date));
-    $bl_data['todays_year'] = date("Y",strtotime($cal_date));
-    $bl_data['todays_day'] = date("d",strtotime($cal_date));  
+    $data['todays_month'] = date("n",strtotime($cal_date));
+    $data['todays_year'] = date("Y",strtotime($cal_date));
+    $data['todays_day'] = date("d",strtotime($cal_date));  
     //building share options
-    $bl_data['share_options'] = xarModAPIFunc('julian','user','getuseroptions',array('uids'=>''));  
-    $bl_data['cal_date']=$cal_date;
-    return $bl_data;
+    $data['share_options'] = xarModAPIFunc('julian','user','getuseroptions',array('uids'=>''));  
+    $data['cal_date']=$cal_date;
+
+    // Building duration minute options
+    // Get the interval
+    $StartMinInterval = xarModGetVar('julian', 'StartMinInterval');
+    if ($StartMinInterval == 1) {
+        $sminend = 60;
+    } elseif ($StartMinInterval == 5) {
+        $sminend = 56;
+    } elseif ($StartMinInterval == 10) {
+        $sminend = 51;
+    } elseif ($StartMinInterval == 15) {
+        $sminend = 46;
+    }
+
+    $start_minute_options = '';
+    for($i = 0;$i < $sminend; $i = $i + $StartMinInterval) {
+        $j = str_pad($i,2,"0",STR_PAD_LEFT);
+        $start_minute_options.='<option value="'.$j.'"';
+        $start_minute_options.='>'.$j.'</option>';
+    }
+    $data['start_minute_options'] = $start_minute_options;
+
+    // Building duration minute options
+    // Get the interval
+    $DurMinInterval = xarModGetVar('julian', 'DurMinInterval');
+    if ($DurMinInterval == 1) {
+        $minend = 60;
+    } elseif ($DurMinInterval == 5) {
+        $minend = 56;
+    } elseif ($DurMinInterval == 10) {
+        $minend = 51;
+    } elseif ($DurMinInterval == 15) {
+        $minend = 46;
+    }
+
+    $dur_minute_options = '';
+    for($i = 0;$i < $minend; $i = $i + $DurMinInterval) {
+        $j = str_pad($i,2,"0",STR_PAD_LEFT);
+        $dur_minute_options.='<option value="'.$j.'"';
+        $dur_minute_options.='>'.$j.'</option>';
+    }
+    $data['dur_minute_options'] = $dur_minute_options;
+    
+    return $data;
 }
 ?>

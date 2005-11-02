@@ -16,3 +16,8 @@
 -starting to create userapi and adminapi functions Xaraya-wise
 -userapi/getcatoptions deprecated
 + Included catid as option for views.
+0.2.3
+Changed state size to allow for internationalisation
+0.2.4
+Added minute interval option
+Added option for module alias

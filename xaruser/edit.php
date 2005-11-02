@@ -176,34 +176,33 @@ function julian_user_edit()
     $data['event_repeat_on_day'] = $item['recur_count'];
     $data['event_repeat_on_num'] = $item['recur_interval'];
    
-   //building share options
-   $data['share_options'] = xarModAPIFunc('julian','user','getuseroptions',array('uids'=>$item['share_uids']));
-   $data['share_uids'] = $item['share_uids'];
-   $data['share_group'] = xarModGetVar('julian', 'share_group');
-   // Build the group name. Type 1 is a group
-   $group = xarModAPIFunc ('roles', 'user', 'get', array('uid'=> $data['share_group'], 'type' =>1));
-   $data['share_group_name'] = $group['name'];  
+    //building share options
+    $data['share_options'] = xarModAPIFunc('julian','user','getuseroptions',array('uids'=>$item['share_uids']));
+    $data['share_uids'] = $item['share_uids'];
+    $data['share_group'] = xarModGetVar('julian', 'share_group');
+    // Build the group name. Type 1 is a group
+    $group = xarModAPIFunc ('roles', 'user', 'get', array('uid'=> $data['share_group'], 'type' =>1));
+    $data['share_group_name'] = $group['name'];  
 
    
-   //Determining which end date radio to check. 0 index indicates this event as an end date and 1 index means it does not
-   $event_endtype_checked[0] = '';
-   $event_endtype_checked[1] = 'checked';
-   if ($item['recur_until'] == 0000) {
-     $event_endtype_checked[0] = 'checked';
-     $event_endtype_checked[1] = '';
-   }
-   $data['event_endtype_checked'] = $event_endtype_checked;
+    //Determining which end date radio to check. 0 index indicates this event as an end date and 1 index means it does not
+    $event_endtype_checked[0] = '';
+    $event_endtype_checked[1] = 'checked';
+    if ($item['recur_until'] == 0000) {
+        $event_endtype_checked[0] = 'checked';
+        $event_endtype_checked[1] = '';
+    }
+    $data['event_endtype_checked'] = $event_endtype_checked;
                  
-   //Building start hour options
-   $start_hour_options = '';
-   for($i = 1;$i <= 12; $i++)
-   {
-     $j = str_pad($i,2,"0",STR_PAD_LEFT);
-     $start_hour_options.='<option value="'.$i.'"';
-     if ($i == $hour)
-        $start_hour_options.= " SELECTED";
-      $start_hour_options.='>'.$j.'</option>';
-   }
+    //Building start hour options
+    $start_hour_options = '';
+    for($i = 1;$i <= 12; $i++) {
+        $j = str_pad($i,2,"0",STR_PAD_LEFT);
+        $start_hour_options.='<option value="'.$i.'"';
+        if ($i == $hour)
+            $start_hour_options.= " SELECTED";
+        $start_hour_options.='>'.$j.'</option>';
+    }
    $data['start_hour_options'] = $start_hour_options;
    
    //Building start minute options
@@ -230,17 +229,30 @@ function julian_user_edit()
    }
    $data['dur_hour_options'] = $dur_hour_options;
    
-   //Building duration minute options
-   $dur_minute_options = '';
-   for($i = 0;$i < 46; $i = $i + 15)
-   {
-     $j = str_pad($i,2,"0",STR_PAD_LEFT);
-     $dur_minute_options.='<option value="'.$j.'"';
-     if ($i == $dur_minutes)
+    // Building duration minute options
+    // Get the interval
+    $DurMinInterval = xarModGetVar('julian', 'DurMinInterval');
+    if ($DurMinInterval == 1) {
+        $minend = 60;
+    } elseif ($DurMinInterval == 5) {
+        $minend = 56;
+    } elseif ($DurMinInterval == 10) {
+        $minend = 51;
+    } elseif ($DurMinInterval == 15) {
+        $minend = 46;
+    }
+
+    $dur_minute_options = '';
+    //for($i = 0;$i < 46; $i = $i + 15)
+    for($i = 0;$i < $minend; $i = $i + $DurMinInterval) {
+        $j = str_pad($i,2,"0",STR_PAD_LEFT);
+        $dur_minute_options.='<option value="'.$j.'"';
+        if ($i == $dur_minutes) {
         $dur_minute_options.= " selected";
+        }
      $dur_minute_options.='>'.$j.'</option>';
-   }
-   $data['dur_minute_options'] = $dur_minute_options;
+    }
+    $data['dur_minute_options'] = $dur_minute_options;
    
    //Setting event repeat selection
    for ($i = 0; $i < 3; $i++)
@@ -252,9 +264,10 @@ function julian_user_edit()
      $data['freq_type_selected'][$i] = '';
      
    //Show rrule only if the first repeating option was selected (2nd radio button) - every
-   if ($event_repeat == 1)
+   if ($event_repeat == 1) {
      $data['freq_type_selected'][rrule] = 'selected';
-   
+   }
+
    //Setting repeat on num selection
    for ($i = 1; $i < 6; $i++)
      $data['repeat_on_num_selected'][$i] = '';
@@ -264,7 +277,6 @@ function julian_user_edit()
    for ($i = 1; $i < 8; $i++)
      $data['repeat_on_day_selection'][$i] = '';
    $data['repeat_on_day_selection'][] = 'selected';
-
 
    //Setting allday checked
    $data['allday_checked'][0] = '';
@@ -302,7 +314,7 @@ function julian_user_edit()
     } else {
         $data['hooks'] = $hooks;
     }
-   return $data;
+    return $data;
 
 /*
 

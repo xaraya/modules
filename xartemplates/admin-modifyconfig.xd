@@ -133,6 +133,70 @@
                     </xar:if>
                 </select>
             </div>
+            <div class="xar-form-input-wrapper">
+                <label for="StartMinInterval" class="xar-form-label">
+                    <span class="help" title="#xarML('Choose the interval that will be used for the minutes in the starttime')#">
+                        <xar:mlstring>
+                            Starttime interval (minutes):
+                        </xar:mlstring>
+                    </span>
+                </label>
+                <select name="StartMinInterval" id="StartMinInterval">
+                    <xar:if condition="$StartMinInterval == 1">
+                         <option value="1" selected="selected">1</option>
+                         <option value="5">5</option>
+                         <option value="10">10</option>
+                         <option value="15">15</option>
+                    <xar:elseif condition="$StartMinInterval == 5" />
+                         <option value="1" >1</option>
+                         <option value="5" selected="selected">5</option>
+                         <option value="10">10</option>
+                         <option value="15">15</option>
+                    <xar:elseif condition="$StartMinInterval == 10" />
+                         <option value="1">1</option>
+                         <option value="5">5</option>
+                         <option value="10" selected="selected">10</option>
+                         <option value="15">15</option>
+                    <xar:elseif condition="$StartMinInterval == 15" />
+                         <option value="1">1</option>
+                         <option value="5">5</option>
+                         <option value="10">10</option>
+                         <option value="15" selected="selected">15</option>
+                    </xar:if>
+                </select>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="DurMinInterval" class="xar-form-label">
+                    <span class="help" title="#xarML('Choose the interval that will be used for the minutes in an event with a duration')#">
+                        <xar:mlstring>
+                            Duration interval (minutes):
+                        </xar:mlstring>
+                    </span>
+                </label>
+                <select name="DurMinInterval" id="DurMinInterval">
+                    <xar:if condition="$DurMinInterval == 1">
+                         <option value="1" selected="selected">1</option>
+                         <option value="5">5</option>
+                         <option value="10">10</option>
+                         <option value="15">15</option>
+                    <xar:elseif condition="$DurMinInterval == 5" />
+                         <option value="1" >1</option>
+                         <option value="5" selected="selected">5</option>
+                         <option value="10">10</option>
+                         <option value="15">15</option>
+                    <xar:elseif condition="$DurMinInterval == 10" />
+                         <option value="1">1</option>
+                         <option value="5">5</option>
+                         <option value="10" selected="selected">10</option>
+                         <option value="15">15</option>
+                    <xar:elseif condition="$DurMinInterval == 15" />
+                         <option value="1">1</option>
+                         <option value="5">5</option>
+                         <option value="10">10</option>
+                         <option value="15" selected="selected">15</option>
+                    </xar:if>
+                </select>
+            </div>
         </fieldset>            
         <fieldset>
             <legend>

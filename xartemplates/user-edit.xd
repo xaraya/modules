@@ -241,35 +241,26 @@
                     </div>
                     <div id="p_event_startdur">
                     <div class="xar-form-input-wrapper">
-                            <label for="event_starttimeh" class="xar-form-label">
-                                <span class="help" title="#xarML('Time event starts.')#">
-                                    <xar:mlstring>Start Time:</xar:mlstring>
-                                </span>
-                            </label>
-                            <select name="event_starttimeh" id="event_starttimeh" size="1" tabindex="7">
-                                <option value="1">01</option>
-                                <option value="2">02</option>
-                                <option value="3">03</option>
-                                <option value="4">04</option>
-                                <option value="5">05</option>
-                                <option value="6">06</option>
-                                <option value="7">07</option>
-                                <option value="8">08</option>
-                                <option value="9">09</option>
-                                <option value="10">10</option>
-                                <option value="11">11</option>
-                                <option value="12">12</option>
-                            </select> 
-                            <select name="event_starttimem" id="event_starttimem" size="1" tabindex="8">
-                                <option value="0">00</option>
-                                <option value="15">15</option>
-                                <option value="30">30</option>
-                                <option value="45">45</option>
-                            </select>
-                            <select name="event_startampm" id="event_startampm" size="1" tabindex="9">
-                                <option value="1">AM</option>
+                        <label for="event_starttimeh" class="xar-form-label">
+                            <span class="help" title="#xarML('Time event starts.')#">
+                                <xar:mlstring>Start Time:</xar:mlstring>
+                            </span>
+                        </label>
+                        <select name="event_starttimeh" id="event_starttimeh" size="1" tabindex="7">
+                            #$start_hour_options#
+                        </select> 
+                        <select name="event_starttimem" id="event_starttimem" size="1" tabindex="8">
+                            #$start_minute_options#
+                        </select>
+                        <select name="event_startampm" id="event_startampm" size="1" tabindex="9">
+                            <xar:if condition="$event_startampm">
+                                <option value="1" >AM</option>
                                 <option value="2" selected>PM</option>
-                            </select>
+                            <xar:else />
+                                <option value="1" selected>AM</option>
+                                <option value="2" >PM</option>
+                          </xar:if>
+                        </select>
                     </div>
                     <div class="xar-form-input-wrapper">
                             <label for="event_dur_hours" class="xar-form-label">
@@ -278,38 +269,11 @@
                                 </span>
                             </label>
                             <select name="event_dur_hours" id="event_dur_hours">
-                                <option value="0" selected>00</option>
-                                <option value="1" >01</option>
-                                <option value="2" >02</option>
-                                <option value="3" >03</option>
-                                <option value="4" >04</option>
-                                <option value="5" >05</option>
-                                <option value="6" >06</option>
-                                <option value="7" >07</option>
-                                <option value="8" >08</option>
-                                <option value="9" >09</option>
-                                <option value="10" >10</option>
-                                <option value="11" >11</option>
-                                <option value="12" >12</option>
-                                <option value="13" >13</option>
-                                <option value="14" >14</option>
-                                <option value="15" >15</option>
-                                <option value="16" >16</option>
-                                <option value="17" >17</option>
-                                <option value="18" >18</option>
-                                <option value="19" >19</option>
-                                <option value="20" >20</option>
-                                <option value="21" >21</option>
-                                <option value="22" >22</option>
-                                <option value="23" >23</option>
-                                <option value="24" >24</option>
+                                #$dur_hour_options#
                             </select>
                             <xar:mlstring>Hours</xar:mlstring>
                             <select name="event_dur_minutes">
-                                <option value="00" selected>00</option>
-                                <option value="15" >15</option>
-                                <option value="30" >30</option>
-                                <option value="45" >45</option>
+                                #$dur_minute_options#
                             </select>
                             <xar:mlstring>Minutes</xar:mlstring>
                     </div>
@@ -323,14 +287,14 @@
                         <xar:mlstring>Takes places once</xar:mlstring><br />
                         <input type="radio" name="event_repeat" id="event_repeat2" value="1" #$event_repeat_checked[1]# onClick="processEventRepeat(this.form,this,'button'); document.getElementById('p_event_recurend').style.visibility='visible';" />
                         <xar:mlstring>Every (period)</xar:mlstring>
-                        <div class="xar-form-input-wrapper-after" id="p_event_recurend" style="visibility:hidden"><xar:comment></xar:comment>
+                        <div class="xar-form-input-wrapper-after" id="p_event_recurend" style="visibility:hidden">
                             <input type="text" name="event_repeat_freq" size="4" onkeyup="checkNumericy(this);" onfocus="document.cal_submit.event_repeat[1].checked = 'true';processEventRepeat(this.form,document.cal_submit.event_repeat[1])" />
                             <select name="event_repeat_freq_type" onchange="document.cal_submit.event_repeat[1].checked = 'true';processEventRepeat(this.form,document.cal_submit.event_repeat[1])">
                                 <option value="0"></option>
-                                <option value="1" ><xar:mlstring>Day(s)</xar:mlstring></option>
-                                <option value="2" ><xar:mlstring>Week(s)</xar:mlstring></option>
-                                <option value="3" ><xar:mlstring>Month(s)</xar:mlstring></option>
-                                <option value="4" ><xar:mlstring>Year(s)</xar:mlstring></option>
+                                <option value="1" #$freq_type_selected[1]#><xar:mlstring>Day(s)</xar:mlstring></option>
+                                <option value="2" #$freq_type_selected[2]#><xar:mlstring>Week(s)</xar:mlstring></option>
+                                <option value="3" #$freq_type_selected[3]#><xar:mlstring>Month(s)</xar:mlstring></option>
+                                <option value="4" #$freq_type_selected[4]#><xar:mlstring>Year(s)</xar:mlstring></option>
                             </select><br />
                             <xar:mlstring>or every</xar:mlstring>
                             <input type="radio" name="event_repeat" id="event_repeat3" value="2" #$event_repeat_checked[2]#
@@ -340,22 +304,22 @@
                             
                             <select name="event_repeat_on_num" onchange="document.cal_submit.event_repeat[2].checked = 'true';processEventRepeat(this.form,document.cal_submit.event_repeat[2])">
                                 <option value="0"></option>
-                                <option value="1" ><xar:mlstring>First</xar:mlstring></option>
-                                <option value="2" ><xar:mlstring>Second</xar:mlstring></option>
-                                <option value="3" ><xar:mlstring>Third</xar:mlstring></option>
-                                <option value="4" ><xar:mlstring>Fourth</xar:mlstring></option>
-                                <option value="5" ><xar:mlstring>Last</xar:mlstring></option>
+                                <option value="1" #$repeat_on_num_selected[1]#><xar:mlstring>First</xar:mlstring></option>
+                                <option value="2" #$repeat_on_num_selected[2]#><xar:mlstring>Second</xar:mlstring></option>
+                                <option value="3" #$repeat_on_num_selected[3]#><xar:mlstring>Third</xar:mlstring></option>
+                                <option value="4" #$repeat_on_num_selected[4]#><xar:mlstring>Fourth</xar:mlstring></option>
+                                <option value="5" #$repeat_on_num_selected[5]#><xar:mlstring>Last</xar:mlstring></option>
                             </select>
 
                             <select name="event_repeat_on_day" onchange="document.cal_submit.event_repeat[2].checked = 'true';processEventRepeat(this.form,document.cal_submit.event_repeat[2])">
                                 <option value=""></option>
-                                <option value="1" ><xar:mlstring>Sun</xar:mlstring></option>
-                                <option value="2" ><xar:mlstring>Mon</xar:mlstring></option>
-                                <option value="3" ><xar:mlstring>Tue</xar:mlstring></option>
-                                <option value="4" ><xar:mlstring>Wed</xar:mlstring></option>
-                                <option value="5" ><xar:mlstring>Thu</xar:mlstring></option>
-                                <option value="6" ><xar:mlstring>Fri</xar:mlstring></option>
-                                <option value="7" ><xar:mlstring>Sat</xar:mlstring></option>
+                                <option value="1" #$repeat_on_day_selection[1]#><xar:mlstring>Sun</xar:mlstring></option>
+                                <option value="2" #$repeat_on_day_selection[2]#><xar:mlstring>Mon</xar:mlstring></option>
+                                <option value="3" #$repeat_on_day_selection[3]#><xar:mlstring>Tue</xar:mlstring></option>
+                                <option value="4" #$repeat_on_day_selection[4]#><xar:mlstring>Wed</xar:mlstring></option>
+                                <option value="5" #$repeat_on_day_selection[5]#><xar:mlstring>Thu</xar:mlstring></option>
+                                <option value="6" #$repeat_on_day_selection[6]#><xar:mlstring>Fri</xar:mlstring></option>
+                                <option value="7" #$repeat_on_day_selection[7]#><xar:mlstring>Sat</xar:mlstring></option>
                             </select> 
                             </p>
                             <xar:mlstring>every</xar:mlstring> 
@@ -528,7 +492,7 @@
                                 <xar:mlstring>Email:</xar:mlstring>
                             </span>
                         </label>
-                        <input type="text" name="email" id="email" value=#$email# maxlength="255" class="xar-form-textmedium" />
+                        <input type="text" name="email" id="email" value="#$email#" maxlength="255" class="xar-form-textmedium" />
                     </div>
                     <div class="xar-form-input-wrapper">
                         <label for="website" class="xar-form-label">
@@ -536,7 +500,7 @@
                                 <xar:mlstring>Event Website:</xar:mlstring>
                             </span>
                         </label>
-                        <input type="text" name="website" id="website" value=#$website# maxlength="255" class="xar-form-textmedium" />
+                        <input type="text" name="website" id="website" value="#$website#" maxlength="255" class="xar-form-textmedium" />
                     </div>
                     <div class="xar-form-input-wrapper">
                         <label for="fee" class="xar-form-label">
@@ -544,7 +508,7 @@
                                 <xar:mlstring>Event Fee:</xar:mlstring>
                             </span>
                         </label>
-                        <input type="text" name="fee" id="fee" value=#$fee# onkeyup="checkNumericy(this);" maxlength="255" class="xar-form-textmedium" />
+                        <input type="text" name="fee" id="fee" value="#$fee#" onkeyup="checkNumericy(this);" maxlength="255" class="xar-form-textmedium" />
                     </div>
                 </fieldset>
             <div class="xar-form-input-wrapper-after">

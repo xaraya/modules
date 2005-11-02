@@ -457,8 +457,14 @@ function julian_init()
     xarModSetVar('julian','alerts','a:0:{}');
     //default number of items per page
     xarModSetVar('julian','numitems','10');
-
-
+    // Duration minute interval
+    xarModSetVar('julian', 'DurMinInterval', 15);
+    // Starttime minute interval
+    xarModSetVar('julian', 'StartMinInterval', 15);
+    // Alias
+    xarModSetVar('julian', 'useModuleAlias',false);
+    xarModSetVar('julian','aliasname','');
+    
 //TODO::Figure out all the permissions stuff
 // Should be based in event id , catid, and class? For cat_id we will probably need a wizard.
 
@@ -765,9 +771,18 @@ function julian_upgrade($oldversion)
             if (!$result) return;
             return julian_upgrade('0.2.4');
         case '0.2.4':
-        /* Nothing yet
-         * Remove masks and make new ones...?
-         */
+            /* Nothing yet
+             * Remove masks and make new ones...?
+             */
+            // Duration minute interval
+            xarModSetVar('julian', 'DurMinInterval', 15);
+            // Starttime minute interval
+            xarModSetVar('julian', 'StartMinInterval', 15);
+            // Alias
+            xarModSetVar('julian', 'useModuleAlias',false);
+            xarModSetVar('julian','aliasname','');
+            return julian_upgrade('0.2.5');
+        case '0.2.5':
             break;
         case '1.0.0':
             // Code to upgrade from version 1.0 goes here

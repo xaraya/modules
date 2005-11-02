@@ -233,10 +233,7 @@
                                 <option value="12">12</option>
                             </select> 
                             <select name="event_starttimem" id="event_starttimem" size="1" tabindex="8">
-                                <option value="0">00</option>
-                                <option value="15">15</option>
-                                <option value="30">30</option>
-                                <option value="45">45</option>
+                                #$start_minute_options#
                             </select>
                             <select name="event_startampm" id="event_startampm" size="1" tabindex="9">
                                 <option value="1">AM</option>
@@ -278,10 +275,7 @@
                             </select>
                             <xar:mlstring>Hours</xar:mlstring>
                             <select name="event_dur_minutes">
-                                <option value="00" selected>00</option>
-                                <option value="15" >15</option>
-                                <option value="30" >30</option>
-                                <option value="45" >45</option>
+                                #$dur_minute_options#
                             </select>
                             <xar:mlstring>Minutes</xar:mlstring>
                     </div>

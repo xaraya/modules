@@ -1,6 +1,6 @@
 <?php
 /**
- * Standard function to update module configuration parameters
+ * Update module configuration parameters
  *
  * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
@@ -47,7 +47,9 @@ function julian_admin_updateconfig($args)
     if (!xarVarFetch('numitems',        'int::', $numitems,         10, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('aliasname',       'str:1:',   $aliasname,     '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('modulealias',     'checkbox', $modulealias,   false,XARVAR_NOT_REQUIRED)) return;
-
+    if (!xarVarFetch('DurMinInterval',  'int:1:15', $DurMinInterval,15, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('StartMinInterval','int:1:15', $StartMinInterval,15, XARVAR_NOT_REQUIRED)) return;
+    
     if (!xarSecConfirmAuthKey()) return;
     
     xarModSetVar('julian','ical_links',$ical_links);
@@ -60,6 +62,10 @@ function julian_admin_updateconfig($args)
     xarModSetVar('julian','dateformat',$dateformat);
     xarModSetVar('julian','timeform',$timeform);
     xarModSetVar('julian','numitems',$numitems);
+    // Duration minute interval
+    xarModSetVar('julian', 'DurMinInterval', $DurMinInterval);
+    // Starttime Minute interval
+    xarModSetVar('julian', 'StartMinInterval', $StartMinInterval);
     // Module Alias
     if (isset($aliasname) && trim($aliasname)<>'') {
         xarModSetVar('julian', 'useModuleAlias', $modulealias);
