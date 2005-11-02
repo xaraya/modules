@@ -107,7 +107,11 @@ function julian_calmonthblock_display($blockinfo)
     // Set the end date to the last day of the selected month
     $enddate = $year."-".$month."-".$numdays;
     
-    $CatAware = $vars['CatAware'];
+    if (isset ($vars['CatAware'])) {
+        $CatAware = $vars['CatAware'];
+    } else {
+        $CatAware = 0;
+    }
     $args['CatAware'] = $CatAware; // Needed?
     /* If we don't want to have this block use categories, set the array empty
      * Bug 5115

@@ -86,23 +86,26 @@ function julian_caleventblock_display($blockinfo)
     $tomorrow=date("Y-m-d",strtotime("tomorrow"));
     $endweek=date("Y-m-d",strtotime("+$EventBlockDays days"));
     
-    $CatAware = $vars['CatAware'];
-    /* If we don't want to have this block use categories, set the array empty
-     * Bug 5115
-     */
+    if (isset ($vars['CatAware'])) {
+        $CatAware = $vars['CatAware'];
+    } else {
+        $CatAware = 0;
+    }
+    
+    // Bug 5115 If we don't want to have this block use categories, set the array empty
     if ($CatAware == 0 ) {
         // Set the catid empty
         // Get today's events: start and enddate are the same  
         $args['todaysevents']= xarModApiFunc('julian','user','getall', array('startdate'=>$today, 'enddate'=>$today, 'catid' => ''));
         // Get the events for the next $EventBlockDays days
         $args['upcomingevents'] = xarModApiFunc('julian','user','getall', array('startdate'=>$tomorrow, 'enddate'=>$endweek, 'catid' => ''));
-    } else {    
+    } else {
         // Get today's events: start and enddate are the same  
         $args['todaysevents']= xarModApiFunc('julian','user','getall', array('startdate'=>$today, 'enddate'=>$today));
         // Get the events for the next $EventBlockDays days
         $args['upcomingevents'] = xarModApiFunc('julian','user','getall', array('startdate'=>$tomorrow, 'enddate'=>$endweek));
     }
-
+   
     //set the required block data
     if (empty($blockinfo['title'])) {
        $blockinfo['title'] = xarML('Events');
