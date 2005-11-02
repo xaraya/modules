@@ -30,17 +30,14 @@ function newsletter_admin_modifyconfig()
 
     // Specify buttons
     $data['updatebutton'] = xarVarPrepForDisplay(xarML('Update Configuration'));
-
-    // Set hooks
-    $hooks = xarModCallHooks('module', 
-                             'modifyconfig', 
-                             'newsletter',
-                             array('module' => 'newsletter'));
-
-    if (empty($hooks) || !is_string($hooks)) {
-        $data['hooks'] = '';
+    // Hooks
+    $hooks = xarModCallHooks('module', 'modifyconfig', 'newsletter',
+                       array('module' => 'newsletter'));
+    if (empty($hooks)) {
+        $data['hooks'] = array();
     } else {
         $data['hooks'] = $hooks;
+        $data['hookoutput'] = $hooks;
     }
 
     // Provide encode/decode functions forshort URLs 

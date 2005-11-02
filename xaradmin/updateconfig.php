@@ -10,7 +10,6 @@
  * @author Richard Cave <rcave@xaraya.com>
 */
 
-
 /**
  * Update Newsletter admin configuration
  *
