@@ -1,5 +1,16 @@
-<?php
-
+<?php 
+/**
+ * Purpose of File
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Uploads Module
+ * @link http://xaraya.com/index.php/release/666.html
+ * @author Uploads Module Development Team
+ */
 /**
  * update file associations for an item - hook for ('item','update','API')
  * Note: this will only be called if uploads is hooked to that module (e.g.

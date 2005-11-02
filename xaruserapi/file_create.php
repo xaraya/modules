@@ -1,5 +1,16 @@
-<?php
-
+<?php 
+/**
+ * Purpose of File
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Uploads Module
+ * @link http://xaraya.com/index.php/release/666.html
+ * @author Uploads Module Development Team
+ */
 /**
  *  Creates a file on the filesystem in the specified location with
  *  the specified contents.and adds an entry to the new file in the

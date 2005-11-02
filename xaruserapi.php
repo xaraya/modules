@@ -1,14 +1,19 @@
-<?php
-
-/* File: $Id
- * ----------------------------------------------------------------------
- * Xaraya eXtensible Management System
- * Copyright (C) 2002 by the Xaraya Development Team.
- * http://www.xaraya.org
- * ----------------------------------------------------------------------
+<?php 
+/**
+ * Uploads user API
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Uploads Module
+ * @link http://xaraya.com/index.php/release/666.html
+ * @author Uploads Module Development Team
+ */
+ 
+/*
  * Original Author of file: Marie Altobelli (Ladyofdragons)
- * Purpose of file:  uploads user API
- * ----------------------------------------------------------------------
  */
 
 define('_UPLOADS_STORE_DB_ENTRY',     1<<0);

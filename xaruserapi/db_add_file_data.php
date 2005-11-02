@@ -1,5 +1,16 @@
-<?php
-
+<?php 
+/**
+ * Purpose of File
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Uploads Module
+ * @link http://xaraya.com/index.php/release/666.html
+ * @author Uploads Module Development Team
+ */
 /**
  *  Adds a file's  contents to the database. This only takes 4K (4096 bytes) blocks.
  *  So a file's data could potentially be contained amongst many records. This is done to
