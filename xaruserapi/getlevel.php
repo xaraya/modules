@@ -1,10 +1,22 @@
 <?php
 /**
-  Gets items of a DynamicData object
-  @author Brian McGilligan
-  @param $args['itemtype'] - Item type
-  @returns list of items of the item type
-*/
+ * Utility function to get DD item for level
+ * 
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage courses
+ * @author Courses module development team 
+ */
+/**
+ * Gets items of a DynamicData object 'level'
+ *
+ * @author Brian McGilligan
+ * @param $args['itemtype'] - Item type
+ * @returns list of items of the item type
+ */
 function courses_userapi_getlevel($args)
 {
     extract($args);
