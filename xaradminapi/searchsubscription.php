@@ -3,7 +3,7 @@
  * Newsletter 
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003-2004 by the Xaraya Development Team
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @link http://www.xaraya.com
  *
  * @subpackage newsletter module
