@@ -1,6 +1,6 @@
 <?php
 /**
- * Surveys table definitions function
+ * Set the current survey vars for a user.
  * 
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
@@ -11,9 +11,9 @@
  * @author Surveys module development team 
  */
 /*
- * Short Description [REQUIRED one line description]
+ * Set the current survey vars for a user.
  *
- * Long Description [OPTIONAL one or more lines]
+ * Sets the details in the module user var or the session, as appropriate.
  *
  * @author     Jason Judge <jason.judge@academe.co.uk>
  * @author     Another Author <another@example.com>          [REQURIED]
@@ -32,10 +32,6 @@
  * @since      [Date of first inclusion long date format ]   [REQURIED]
  * @deprecated Deprecated [release version here]             [AS REQUIRED]
  */
-/*
- * Set the current survey vars for a user.
- * Sets the details in the module user var or the session, as appropriate.
- */
 
 function surveys_userapi_setcurrentsurveyvars($args) {
     // Variable name.
@@ -53,5 +49,4 @@ function surveys_userapi_setcurrentsurveyvars($args) {
 
     return true;
 }
-
 ?>

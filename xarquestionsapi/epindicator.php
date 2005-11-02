@@ -37,7 +37,7 @@
  * @link       link to a reference                           [OPTIONAL]
  * @see        anothersample(), someotherlinke [reference to other function, class] [OPTIONAL]
  * @since      [Date of first inclusion long date format ]   [REQURIED]
- * @deprecated Deprecated [release version here]             [AS REQUIRED]
+ * @deprecated Nov 2005. Too specific for one user
  */
 
 function surveys_questionsapi_epindicator($args) {

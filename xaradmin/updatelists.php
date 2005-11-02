@@ -11,9 +11,9 @@
  * @author Surveys module development team 
  */
 /*
- * Short Description [REQUIRED one line description]
+ * Update the internal lists, based on the imported EP data.
  *
- * Long Description [OPTIONAL one or more lines]
+ * Very specific function, not needed in module probably
  *
  * @author     Jason Judge <jason.judge@academe.co.uk>
  * @author     Another Author <another@example.com>          [REQURIED]
@@ -30,10 +30,7 @@
  * @link       link to a reference                           [OPTIONAL]
  * @see        anothersample(), someotherlinke [reference to other function, class] [OPTIONAL]
  * @since      [Date of first inclusion long date format ]   [REQURIED]
- * @deprecated Deprecated [release version here]             [AS REQUIRED]
- */
-/*
- * Update the internal lists, based on the imported EP data.
+ * @deprecated Nov 2005? To be determined. 
  */
 
 require_once "modules/surveys/convert/ConvertCharset.class.php";

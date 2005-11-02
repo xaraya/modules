@@ -1,6 +1,6 @@
 <?php
 /**
- * Surveys table definitions function
+ * Class Question type 'subsector'
  * 
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
@@ -11,9 +11,16 @@
  * @author Surveys module development team 
  */
 /*
- * Short Description [REQUIRED one line description]
+ * Question type 'subsector'
  *
- * Long Description [OPTIONAL one or more lines]
+ * Data definition:
+ *  listname = list name ('lists' module)
+ *  desc = question text (default language)
+ *  desc_{lang} = question text (alt languages)
+ * Options from the list:
+ *  x = option value
+ *  x = option text (default language)
+ *  x_{lang} = option text (alt languages)
  *
  * @author     Jason Judge <jason.judge@academe.co.uk>
  * @author     Another Author <another@example.com>          [REQURIED]
@@ -31,18 +38,6 @@
  * @see        anothersample(), someotherlinke [reference to other function, class] [OPTIONAL]
  * @since      [Date of first inclusion long date format ]   [REQURIED]
  * @deprecated Deprecated [release version here]             [AS REQUIRED]
- */
-/*
- * Question type 'subsector'
- *
- * Data definition:
- *  listname = list name ('lists' module)
- *  desc = question text (default language)
- *  desc_{lang} = question text (alt languages)
- * Options from the list:
- *  x = option value
- *  x = option text (default language)
- *  x_{lang} = option text (alt languages)
  */
 
 function surveys_questionsapi_subsector($args) {

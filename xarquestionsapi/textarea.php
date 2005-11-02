@@ -1,6 +1,6 @@
 <?php
 /**
- * Surveys table definitions function
+ * Question type 'textarea'
  * 
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
@@ -11,9 +11,16 @@
  * @author Surveys module development team 
  */
 /*
- * Short Description [REQUIRED one line description]
+ * Question type 'textarea'
  *
- * Long Description [OPTIONAL one or more lines]
+ * Data definition:
+ *  listname = list name ('lists' module)
+ *  desc = question text (default language)
+ *  desc_{lang} = question text (alt languages)
+ * Options from the list:
+ *  x = option value
+ *  x = option text (default language)
+ *  x_{lang} = option text (alt languages)
  *
  * @author     Jason Judge <jason.judge@academe.co.uk>
  * @author     Another Author <another@example.com>          [REQURIED]
@@ -31,18 +38,6 @@
  * @see        anothersample(), someotherlinke [reference to other function, class] [OPTIONAL]
  * @since      [Date of first inclusion long date format ]   [REQURIED]
  * @deprecated Deprecated [release version here]             [AS REQUIRED]
- */
-/*
- * Question type 'textarea'
- *
- * Data definition:
- *  listname = list name ('lists' module)
- *  desc = question text (default language)
- *  desc_{lang} = question text (alt languages)
- * Options from the list:
- *  x = option value
- *  x = option text (default language)
- *  x_{lang} = option text (alt languages)
  */
 
 function surveys_questionsapi_textarea($args) {
@@ -86,13 +81,14 @@ class surveys_questionsapi_textarea extends surveys_questionsapi_default
         }
     }
 
-    // Render the question.
-    // Render target are:
-    // - input (for an input/data entry form)
-    // - output (for a report)
-    // Templates are:
-    // - {target}-{typename}[-{custom}]
-    // e.g. input-multichoicelist.xt, output-checkbox-special.xt
+    /* Render the question.
+     * Render target are:
+     * - input (for an input/data entry form)
+     * - output (for a report)
+     * Templates are:
+     * - {target}-{typename}[-{custom}]
+     * e.g. input-multichoicelist.xt, output-checkbox-special.xt
+     */
     function render($args) {
         // Handle the parameters.
         surveys_questionsapi_default::render($args);
@@ -175,9 +171,10 @@ class surveys_questionsapi_textarea extends surveys_questionsapi_default
     }
 
 
-    // Initialise the question type. Includes:
-    // - Question and response types if they do not exist
-    // - DD object and properties
+    /* Initialise the question type. Includes:
+     * - Question and response types if they do not exist
+     * - DD object and properties
+     */
     function init_question_type() {
         // Get and/or create the question type (and optional response type).
         $type = $this->_get_create_question_types();
@@ -217,5 +214,4 @@ class surveys_questionsapi_textarea extends surveys_questionsapi_default
         return true;
     }
 }
-
 ?>

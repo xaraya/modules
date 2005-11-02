@@ -10,8 +10,9 @@
  * @subpackage Surveys
  * @author Surveys module development team 
  */
+ 
 /*
- * Short Description [REQUIRED one line description]
+ * Utility function to retrieve the list of item types of this module.
  *
  * Long Description [OPTIONAL one or more lines]
  *
@@ -21,7 +22,8 @@
  * @param int    $arg2  an integer and use description
  *                      Identing long comments               [OPTIONAL A REQURIED]
  *
- * @return int  type and name returned                       [OPTIONAL A REQURIED]
+ * @return array
+ * @return array containing the item types and their description
  *
  * @throws      exceptionclass  [description]                [OPTIONAL A REQURIED]
  *
@@ -30,15 +32,9 @@
  * @link       link to a reference                           [OPTIONAL]
  * @see        anothersample(), someotherlinke [reference to other function, class] [OPTIONAL]
  * @since      [Date of first inclusion long date format ]   [REQURIED]
- * @deprecated Deprecated [release version here]             [AS REQUIRED]
- */
-/**
- * Utility function to retrieve the list of item types of this module.
- *
- * @returns array
- * @return array containing the item types and their description
  * @ TODO Michelv: this function returns error for Dynamic Data when no types are defined.
  */
+
 function surveys_userapi_getitemtypes($args)
 {
     $itemtypes = array();

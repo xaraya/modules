@@ -1,6 +1,6 @@
 <?php
 /**
- * Surveys table definitions function
+ * Extract the result from a remas form POST.
  * 
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
@@ -11,9 +11,14 @@
  * @author Surveys module development team 
  */
 /*
- * Short Description [REQUIRED one line description]
+ * Extract the result from a remas form POST.
  *
- * Long Description [OPTIONAL one or more lines]
+ * IN:-
+ *  data: return data to process
+ * OUT:-
+ *  status: the overall status
+ *  message: the short message
+ *  detail: long message lines
  *
  * @author     Jason Judge <jason.judge@academe.co.uk>
  * @author     Another Author <another@example.com>          [REQURIED]
@@ -30,16 +35,7 @@
  * @link       link to a reference                           [OPTIONAL]
  * @see        anothersample(), someotherlinke [reference to other function, class] [OPTIONAL]
  * @since      [Date of first inclusion long date format ]   [REQURIED]
- * @deprecated Deprecated [release version here]             [AS REQUIRED]
- */
-/*
- * Extract the result from a remas form POST.
- * IN:-
- *  data: return data to process
- * OUT:-
- *  status: the overall status
- *  message: the short message
- *  detail: long message lines
+ * @deprecated Soon 2005 Specific to one case
  */
 
 function surveys_userapi_remas_submit_result($args) {
