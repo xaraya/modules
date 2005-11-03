@@ -46,7 +46,19 @@ function headlines_user_main()
                                   array('feedfile' => $feedfile));
         }
 
-        if (!empty($links[$i]['warning'])){
+        if (!isset($links[$i])) {
+            // Catch any exceptions.
+            if (xarCurrentErrorType() <> XAR_NO_EXCEPTION) {
+                // 'text' rendering returns the exception as an array.
+                $errorstack = xarErrorGet();
+                $errorstack = array_shift($errorstack);
+                $links[$i] = array('chantitle' => $errorstack['short'],
+                                   'chandesc'  => $errorstack['long']);
+                // Clear the errors since we are handling it locally.
+                xarErrorHandled();
+            }
+            continue;
+        } elseif (!empty($links[$i]['warning'])){
             $msg = xarML('There is a problem with this feed : #(1)', $links[$i]['warning']);
             xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
             return;
