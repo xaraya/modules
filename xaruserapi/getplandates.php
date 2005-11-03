@@ -66,7 +66,8 @@ function courses_userapi_getplandates($args)
                    xar_info,
                    xar_program,
                    xar_hideplanning,
-                   xar_last_modified
+                   xar_last_modified,
+                   xar_closedate
             FROM $planningtable
             WHERE xar_courseid = $courseid AND xar_hideplanning in ($where)
             ORDER BY xar_startdate";
@@ -78,7 +79,7 @@ function courses_userapi_getplandates($args)
     for (; !$result->EOF; $result->MoveNext()) {
         list($planningid, $courseid, $credits, $creditsmin, $creditsmax, $courseyear, $startdate, $enddate,
          $prerequisites, $aim, $method, $language, $longdesc, $costs, $committee, $coordinators, $lecturers,
-          $location, $material, $info, $program, $hideplanning, $last_modified) = $result->fields;
+          $location, $material, $info, $program, $hideplanning, $last_modified, $closedate) = $result->fields;
         if (xarSecurityCheck('ReadCourses', 0, 'Course', "$courseid:$planningid:All")) {
             $items[] = array(
             'planningid' => $planningid,
@@ -102,7 +103,8 @@ function courses_userapi_getplandates($args)
             'info'       => $info,
             'program'    => $program,
             'hideplanning' => $hideplanning,
-            'last_modified' => $last_modified);
+            'last_modified' => $last_modified,
+            'closedate' => $closedate);
         }
     }
     // All successful database queries produce a result set, and that result

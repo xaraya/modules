@@ -70,7 +70,7 @@
                         </span>
                     </div>
                     <div class="xar-form-input-wrapper">
-                        <label for="intendedcredits">
+                        <label for="intendedcredits" class="xar-form-label">
                             <span class="help" title="#xarML('The credits that in general will be given for this course.')#">
                             #$intendedcreditslabel#
                             </span>

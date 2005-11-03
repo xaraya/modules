@@ -34,6 +34,7 @@ function courses_user_display($args)
     // Initialise the $data variable
     $data = xarModAPIFunc('courses', 'user', 'menu');
     // Prepare the variable that will hold some status message if necessary
+    // Replace this by statusmsg
     $data['status'] = '';
     // The API function is called to get the course.
     $item = xarModAPIFunc('courses',
@@ -43,12 +44,13 @@ function courses_user_display($args)
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     // Let any transformation hooks know that we want to transform some text.
-    $item['transform'] = array('name');
+    $item['transform'] = array('name', 'location', 'shortdesc');
     $item = xarModCallHooks('item',
         'transform',
         $courseid,
         $item);
     // Fill in the details of the item.
+    // TODO move these to template
     $data['namelabel'] = xarVarPrepForDisplay(xarML('Course Name'));
     $data['numberlabel'] = xarVarPrepForDisplay(xarML('Course Number'));
     $data['coursetypelabel'] = xarVarPrepForDisplay(xarML('Course Type (Category)'));
@@ -120,27 +122,38 @@ function courses_user_display($args)
         $items[$i]['participantstitle'] = xarML('Participants');
         
         if (xarSecurityCheck('ReadCourses', 0, 'Course', "$courseid:All:All")) {
-
-            // Add check for already enrolled
-            $enrolled = xarModAPIFunc('courses',
-                          'user',
-                          'check_enrolled',
-                          array('uid' => $uid,
-                                'planningid' => $planningid));
-            if (count($enrolled)!=0) {
-            $items[$i]['enrolltitle'] = xarML('Enrolled');
-            // When enrolled, redirect to details page instead
-            $items[$i]['enrollurl'] = xarModURL('courses',
-                                      'user',
-                                      'displayplanned',
-                                       array('planningid' => $planningid));; 
+            // See if the date for enrollment is surpassed
+            $closedate = $planitem['closedate'];
+            $timenow = time();
+            $closetime = strtotime($closedate);
+            if((int)$closetime < (int)$timenow) {
+                // Add check for already enrolled
+                $enrolled = xarModAPIFunc('courses',
+                              'user',
+                              'check_enrolled',
+                              array('uid' => $uid,
+                                    'planningid' => $planningid));
+                if (count($enrolled)!=0) {
+                    $items[$i]['enrolltitle'] = xarML('Enrolled');
+                    // When enrolled, redirect to details page instead
+                    $items[$i]['enrollurl'] = xarModURL('courses',
+                                              'user',
+                                              'displayplanned',
+                                               array('planningid' => $planningid));
+                } else {
+                    $items[$i]['enrolltitle'] = xarML('Enroll');
+                    $items[$i]['enrollurl'] = xarModURL('courses',
+                        'user',
+                        'enroll',
+                        array('planningid' => $planningid));
+                }
             } else {
-            $items[$i]['enrolltitle'] = xarML('Enroll');
-            $items[$i]['enrollurl'] = xarModURL('courses',
-                'user',
-                'enroll',
-                array('planningid' => $planningid));
-            }
+                $items[$i]['enrolltitle'] = xarML('Registration Closed');
+                $items[$i]['enrollurl'] = xarModURL('courses',
+                                                  'user',
+                                                  'displayplanned',
+                                                   array('planningid' => $planningid));
+            } 
         }
        
         if (xarSecurityCheck('ReadCourses', 0, 'Course', "$courseid:$planningid:All")) {
