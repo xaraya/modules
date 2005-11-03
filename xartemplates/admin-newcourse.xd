@@ -22,7 +22,7 @@
 <div class="xar-courses-contents">
 
 <form method="post" class="xar-form"
-      action="#xarModUrl('courses', 'admin', 'createcourse')#" 
+      action="&xar-modurl-courses-admin-createcourse;" 
       onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
 
       <fieldset class="xar-norm">

@@ -6,7 +6,7 @@ These are the participants enrolled in planned course #$planningid#<br>
 <xar:if condition="!empty($status)">
     Statusmsg: #$status#
 </xar:if>
-    <form method="post" name="participants" id="participants" action="#xarModURL('courses','admin','updatestatus')#">
+    <form method="post" name="participants" id="participants" action="&xar-modurl-courses-admin-updatestatus;">
     <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
     <input type="hidden" name="planningid" id="planningid" value="#$planningid#" />
         <table width="100%" border="1" cellspacing="0" cellpadding="4">

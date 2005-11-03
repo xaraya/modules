@@ -83,6 +83,7 @@ function courses_admin_teachers()
     }
     
     // Add the array of items to the template variables
+    $data['authid'] = xarSecGenAuthKey();
     $data['items'] = $items;
     $data['planningid'] = $planningid;
     // Specify some labels for display
