@@ -215,6 +215,8 @@ function xarbb_user_newtopic()
             $data = xarTplModule('xarbb','user', 'return', array('forumreturn'     => $forumreturn,
                                                                  'topicreturn'     => $topicreturn,
                                                                  'xarbbtitle'      => $xarbbtitle));
+            //bug 5123
+            return $data;
 
 
             break;
