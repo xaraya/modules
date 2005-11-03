@@ -46,7 +46,7 @@ function articles_userapi_leftjoin($args)
     extract($args);
 
     // Optional argument
-    if (!isset($aids)) {
+    if (empty($aids) || !is_array($aids)) {
         $aids = array();
     }
 
