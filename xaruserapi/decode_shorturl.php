@@ -14,6 +14,7 @@ function articles_userapi_decode_shorturl($params)
 
     $module = 'articles';
 
+    $foundalias = 0;
     
     // Check if we're dealing with an alias here
     if ($params[0] != $module) {
@@ -23,6 +24,7 @@ function articles_userapi_decode_shorturl($params)
             $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
             foreach ($pubtypes as $id => $pubtype) {
                 if ($params[0] == $pubtype['name']) {
+                    $foundalias = 1;
                     $args['ptid'] = $id;
                     break;
                 }
@@ -114,6 +116,11 @@ function articles_userapi_decode_shorturl($params)
         // perhaps someday...
 
     } else {
+
+        // normalize $params to articles/pubtype/... for title decoding
+        if ($foundalias) {
+            array_unshift($params, $module);
+        }
 
         $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
         foreach ($pubtypes as $id => $pubtype) {
@@ -222,7 +229,7 @@ function articles_decodeAIDUsingTitle( $params, $ptid = '', $decodeUsingTitle = 
 
     if( isset($ptid) && !empty($ptid) ) 
     {
-        $searchArgs['pubtypeid'] = $ptid;
+        $searchArgs['ptid'] = $ptid;
         $paramidx = 2;
     } else {
         $paramidx = 1;

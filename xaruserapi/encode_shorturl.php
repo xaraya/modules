@@ -156,7 +156,7 @@ function articles_userapi_encode_shorturl($args)
             // Check to see if we want to encode using Title
             if( $encodeUsingTitle )
             {
-                $path .= articles_encodeUsingTitle($aid, $encodeUsingTitle);
+                $path .= articles_encodeUsingTitle($aid, $encodeUsingTitle, $ptid);
             } else {
                 $path .= $aid;
             }
@@ -167,7 +167,7 @@ function articles_userapi_encode_shorturl($args)
             // Check to see if we want to encode using Title
             if( $encodeUsingTitle )
             {
-                $path .= articles_encodeUsingTitle($aid, $encodeUsingTitle);
+                $path .= articles_encodeUsingTitle($aid, $encodeUsingTitle, '');
             } else {
                 $path .= "$aid";
             }
@@ -308,7 +308,7 @@ function articles_userapi_encode_shorturl($args)
     return $path;
 }
 
-function articles_encodeUsingTitle( $aid, $encodeUsingTitle = 1 )
+function articles_encodeUsingTitle( $aid, $encodeUsingTitle = 1, $ptid = '' )
 {
     $searchArgs['aid'] = $aid;
     $article = xarModAPIFunc('articles','user','get', $searchArgs);
@@ -341,6 +341,10 @@ function articles_encodeUsingTitle( $aid, $encodeUsingTitle = 1 )
         $searchArgs['search'] = $article['title'];
         $searchArgs['searchfields'] = array('title');
         $searchArgs['searchtype'] = 'equal whole string';
+        // if $ptid is set, it will be part of the URL so we can use it to refine the search
+        if (!empty($ptid)) {
+            $searchArgs['ptid'] = $article['pubtypeid'];
+        }
 
         $articles = xarModAPIFunc('articles', 'user', 'getall', $searchArgs);
     }
