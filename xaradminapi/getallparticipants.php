@@ -7,13 +7,16 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage courses
+ * @subpackage Courses Module
+ * @link http://xaraya.com/index.php/release/179.html
  * @author Courses module development team 
  */
+
 /**
  * get all participants for a planned course
  * 
  * @author the Courses module development team 
+ * @author MichelV <michelv@xarayahosting.nl>
  * @param numitems $ the number of items to retrieve (default -1 = all)
  * @param startnum $ start with this item number (default 1)
  * @returns array
@@ -33,7 +36,7 @@ function courses_adminapi_getallparticipants($args)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $studentstable = $xartable['courses_students'];
-    // TODO: how to select by cat ids (automatically) when needed ???
+
     // Get items
     $query = "SELECT xar_sid,
                      xar_userid,

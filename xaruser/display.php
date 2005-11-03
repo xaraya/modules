@@ -7,7 +7,8 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage courses
+ * @subpackage Courses Module
+ * @link http://xaraya.com/index.php/release/179.html
  * @author XarayaGeek , Michel V.
  */
 
@@ -24,8 +25,8 @@
 function courses_user_display($args)
 {
     extract($args);
-    if (!xarVarFetch('courseid', 'int:1:', $courseid)) return;
-    if (!xarVarFetch('objectid', 'int:1:', $objectid, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('courseid', 'id', $courseid)) return;
+    if (!xarVarFetch('objectid', 'id', $objectid, '', XARVAR_NOT_REQUIRED)) return;
 
     if (!empty($objectid)) {
         $courseid = $objectid;
@@ -170,7 +171,7 @@ function courses_user_display($args)
         $courseid,
         $item);
     if (empty($hooks)) {
-        $data['hookoutput'] = '';
+        $data['hookoutput'] = array();
     } else {
         // You can use the output from individual hooks in your template too, e.g. with
         // $hookoutput['comments'], $hookoutput['hitcount'], $hookoutput['ratings'] etc.
@@ -182,5 +183,4 @@ function courses_user_display($args)
     // Return the template variables defined in this function
     return $data;
 }
-
 ?>

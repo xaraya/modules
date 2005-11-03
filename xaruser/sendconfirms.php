@@ -7,7 +7,8 @@
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.org
  *
- * @subpackage Courses
+ * @subpackage Courses Module
+ * @link http://xaraya.com/index.php/release/179.html
  * @author Courses Development team
 */
 /**

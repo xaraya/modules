@@ -1,10 +1,13 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:style scope="module" />
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Courses Administration</xar:mlstring></span></div>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Courses Administration</xar:mlstring></span>
+</div>
 <div class="xar-mod-body"><h2>#$menutitle#</h2><br />
-<div style="margin: auto;">
 
-	<div class="xar-mod-statusmsg">#xarSessionGetVar('statusmsg')#</div>
+    <xar:if condition="xarSessionGetVar('statusmsg') ne ''">
+        <div class="xar-mod-statusmsg">#xarSessionGetVar('statusmsg')#</div>
+    </xar:if>
 	
 	<table width="100%" border="1" cellspacing="0" cellpadding="4">
 		<tr>
@@ -63,5 +66,5 @@
 	
 	<!-- add the pager here -->
 	#$pager#
-	</div>
+
 </div>

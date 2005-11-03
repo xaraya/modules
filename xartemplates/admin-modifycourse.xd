@@ -1,5 +1,4 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<!--<xar:style scope="module" file="xarform" />-->
 <xar:style scope="module" />
 <!-- This Javascript will check for required fields before the form is submitted. -->
 <xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
@@ -20,7 +19,9 @@
     <div class="xar-mod-body">
         <h2>#$menutitle#</h2>
         <br />
-    
+        <xar:if condition="xarSessionGetVar('statusmsg') ne ''">
+            <p>#xarSessionGetVar('statusmsg')#</p>
+        </xar:if>
         <div class="xar-courses-contents">
         
             <form method="post"
@@ -79,7 +80,7 @@
                           </select>
                         </div>
                    </fieldset>
-                   <fieldset class="formelements xar-norm">
+                   <fieldset>
                         <legend>
                             <strong><xar:mlstring>Additional information</xar:mlstring></strong>
                         </legend>
@@ -145,19 +146,20 @@
                         </div>
                    </fieldset>
                 <xar:if condition="!empty($hooks)">
-                 <fieldset>
-                    <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
-                        <xar:foreach in="$hooks" key="$hookmodule">
-                        #$hooks[$hookmodule]#
-                        </xar:foreach>
+                <fieldset>
+                <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
+                    <xar:foreach in="$hooks" key="$hookmodule">
+                    #$hooks[$hookmodule]#
+                    </xar:foreach>
                 </fieldset>
                 </xar:if>
-                <div style="clear: both; padding-top: 10px;">
+                <div class="xar-form-input-wrapper-after">
                     <input type="hidden" name="courseid" id="courseid" value="#$courseid#" />
                     <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                    <span style="float: left; width: 30%; text-align: right;"><input type="submit" value="#$updatebutton#" /></span>
+                    <input type="submit" value="#$updatebutton#" />
                 </div>
             </form>
         </div>
    </div>
 </div>
+<xar:if condition="xarSessionSetVar('statusmsg', '')"></xar:if>

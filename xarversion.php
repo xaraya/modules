@@ -1,15 +1,17 @@
 <?php
 /**
- * Courses initialization functions
+ * Courses information file
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage courses
- * @author courses module development team
+ * @subpackage Courses Module
+ * @link http://xaraya.com/index.php/release/179.html
+ * @author Courses module development team
  */
+
 $modversion['name']           = 'courses';
 $modversion['id']             = '179';
 $modversion['version']        = '0.1.2';

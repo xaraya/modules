@@ -7,7 +7,8 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage courses
+ * @subpackage Courses Module
+ * @link http://xaraya.com/index.php/release/179.html
  * @author Courses module development team 
  */
 /**
@@ -24,19 +25,19 @@ function courses_admin_updatecourse($args)
     extract($args);
 
     // Get parameters from whatever input we need.
-    if (!xarVarFetch('courseid', 'id', $courseid)) return;
-    if (!xarVarFetch('objectid', 'id', $objectid, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('name', 'str:1:', $name)) return;
-    if (!xarVarFetch('number', 'str:1:', $number)) return;
-    if (!xarVarFetch('coursetype', 'str:1:', $coursetype, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('level', 'int:1:', $level, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('shortdesc', 'str:1:', $shortdesc, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('courseid',        'id', $courseid)) return;
+    if (!xarVarFetch('objectid',        'id', $objectid, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('name',            'str:1:', $name)) return;
+    if (!xarVarFetch('number',          'str:1:', $number)) return;
+    if (!xarVarFetch('coursetype',      'str:1:', $coursetype, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('level',           'int:1:', $level, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('shortdesc',       'str:1:', $shortdesc, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('intendedcredits', 'str:1:30', $intendedcredits, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('freq', 'str:1:', $freq, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('contact', 'str:1:', $contact, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('contactuid', 'int:1:', $contactuid,'', XARVAR_NOT_REQUIRED)) return;    
-    if (!xarVarFetch('hidecourse', 'int:1:', $hidecourse, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('last_modified', 'str:1:', $last_modified, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('freq',            'str:1:', $freq, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('contact',         'str:1:', $contact, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('contactuid',      'int:1:', $contactuid,'', XARVAR_NOT_REQUIRED)) return;    
+    if (!xarVarFetch('hidecourse',      'int:1:', $hidecourse, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('last_modified',   'str:1:', $last_modified, '', XARVAR_NOT_REQUIRED)) return;
     // At this stage we check to see if we have been passed $objectid, the
     // generic item identifier.
     if (!empty($objectid)) {
