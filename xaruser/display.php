@@ -126,7 +126,7 @@ function courses_user_display($args)
             $closedate = $planitem['closedate'];
             $timenow = time();
             $closetime = strtotime($closedate);
-            if((int)$closetime < (int)$timenow) {
+            if((int)$closetime > (int)$timenow) {
                 // Add check for already enrolled
                 $enrolled = xarModAPIFunc('courses',
                               'user',
