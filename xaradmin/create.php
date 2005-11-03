@@ -68,8 +68,7 @@ function example_admin_create($args)
     } 
 
     if (!empty($name) && $item['name'] == $name) {
-        $invalid['duplicatename'] = 1;
-        $duplicatename = '';
+        $invalid['duplicate'] = 1;
     } 
     // check if we have any errors
     if (count($invalid) > 0) {
