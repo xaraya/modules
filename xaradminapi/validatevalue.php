@@ -46,7 +46,7 @@ function uploads_adminapi_validatevalue($args)
         $multiple = true;
     }
     if (empty($maxsize)) {
-        $maxsize = 1000000;
+        $maxsize = xarModGetVar('uploads', 'file.maxsize');
     }
     if (empty($methods)) {
         $methods = null;
