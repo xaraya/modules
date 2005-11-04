@@ -337,6 +337,18 @@ function images_admin_phpthumb($args)
             }
 
             xarModAPIFunc('images','admin','setsettings',$data['settings']);
+
+            // Note: processed images are named md5(filelocation)-[setting].[ext] - see process_image() function
+            $add = xarVarPrepForOs($setting);
+            $add = strtr($add, array(' ' => ''));
+            $affected = xarModAPIFunc('images','admin','getderivatives',
+                                      array('filematch' => '^\w+-' . $add));
+            // Delete any derivative image using this setting earlier
+            if (!empty($affected)) {
+                foreach ($affected as $info) {
+                    @unlink($info['fileLocation']);
+                }
+            }
         }
     }
 
