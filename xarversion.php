@@ -13,7 +13,7 @@
  */
     $modversion['name'] = 'Images';
     $modversion['id'] = '152';
-    $modversion['version'] = '1.0.0';
+    $modversion['version'] = '1.1.0';
     $modversion['displayname']    = xarML('Images');
     $modversion['description'] = 'Handles basic image manipulation - resizing/croping/scaling/rotating';
     $modversion['credits'] = 'docs/credits.txt';

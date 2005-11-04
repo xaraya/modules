@@ -251,8 +251,10 @@ class Image_Properties
     {
         if (!empty($this->_tmpFile) && file_exists($this->_tmpFile) && filesize($this->_tmpFile)) {
             if (@copy($this->_tmpFile, $this->fileLocation)) {
+                @unlink($this->_tmpFile);
                 return TRUE;
             } else {
+                @unlink($this->_tmpFile);
                 return FALSE;
             }
         }
@@ -263,17 +265,13 @@ class Image_Properties
     {
         if (!empty($this->_tmpFile) && file_exists($this->_tmpFile) && filesize($this->_tmpFile)) {
             if (empty($fileName)) {
-                // remove any file name extension from the file name 
-                $fileParts = explode('.', $this->fileName);
-                if (count($fileParts) > 1) {
-                    array_pop($fileParts);
-                    if (count($fileParts) > 1) {
-                        $fileName = implode('.', $fileParts);
-                    } else {
-                        $fileName = $fileParts[0];
-                    }
-                }  else {
-                    $fileName = $this->fileName;
+                // the image is stored in the database, i.e. no valid file location
+                if (!file_exists($this->fileLocation) && !empty($this->_fileId)) {
+                    // Use file id here
+                    $fileName = $this->_fileId;
+                } else {
+                    // Use MD5 hash of file location here
+                    $fileName = md5($this->fileLocation);
                 }
                 $derivName = $this->_thumbsdir . '/' . $fileName . "-{$this->width}x{$this->height}.jpg";
             } else {
@@ -281,8 +279,10 @@ class Image_Properties
             }
 
             if (@copy($this->_tmpFile, $derivName)) {
+                @unlink($this->_tmpFile);
                 return $derivName;
             } else {
+                @unlink($this->_tmpFile);
                 return NULL;
             }                
         } else {
@@ -293,24 +293,19 @@ class Image_Properties
     function getDerivative($fileName = '') 
     {
         if (empty($fileName)) {
-            // remove any file name extension from the file name 
-            $fileParts = explode('.', $this->fileName);
-            if (count($fileParts) > 1) {
-                array_pop($fileParts);
-                if (count($fileParts) > 1) {
-                    $fileName = implode('.', $fileParts);
-                } else {
-                    $fileName = $fileParts[0];
-                }
-            } else {
-                $fileName = $this->fileName;
-            }
             if ($this->width == $this->_owidth && $this->height == $this->_oheight) {
                 // return the file location "as is" - could be in the database
                 return $this->fileLocation;
-            } else {
-                $derivName = $this->_thumbsdir . '/' . $fileName . "-{$this->width}x{$this->height}.jpg";
             }
+            // the image is stored in the database, i.e. no valid file location
+            if (!file_exists($this->fileLocation) && !empty($this->_fileId)) {
+                // Use file id here
+                $fileName = $this->_fileId;
+            } else {
+                // Use MD5 hash of file location here
+                $fileName = md5($this->fileLocation);
+            }
+            $derivName = $this->_thumbsdir . '/' . $fileName . "-{$this->width}x{$this->height}.jpg";
         } else {
             $derivName = $fileName;
         }

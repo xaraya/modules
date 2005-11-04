@@ -97,11 +97,12 @@ function images_adminapi_process_image($args)
             case 0: // derivative
             default:
                 $thumbsdir = xarModGetVar('images', 'path.derivative-store');
-                $save = realpath($thumbsdir) . '/' . basename($image['fileName']);
+                // Use MD5 hash of file location here
+                $save = realpath($thumbsdir) . '/' . md5($image['fileLocation']);
                 // Add the setting to the filename
                 $add = xarVarPrepForOs($setting);
                 $add = strtr($add, array(' ' => ''));
-                $save = preg_replace('/\.\w+$/',"-$add.$ext",$save);
+                $save .= "-$add.$ext";
                 break;
         }
         // Check if we can use a cached file
@@ -140,11 +141,12 @@ function images_adminapi_process_image($args)
             case 0: // derivative
             default:
                 $thumbsdir = xarModGetVar('images', 'path.derivative-store');
-                $save = realpath($thumbsdir) . '/' . $image['fileName'];
+                // Use file id here
+                $save = realpath($thumbsdir) . '/' . $image['fileId'];
                 // Add the setting to the filename
                 $add = xarVarPrepForOs($setting);
                 $add = strtr($add, array(' ' => ''));
-                $save = preg_replace('/\.\w+$/',"-$add.$ext",$save);
+                $save .= "-$add.$ext";
                 break;
         }
         // Check if we can use a cached file

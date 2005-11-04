@@ -52,6 +52,13 @@
                         &lt;xar:image-resize src="23" width="92px" constrain="1" label="my logo" /&gt;
                     </p>
                 </xar:mlstring>
+                <xar:mlstring>
+                    <p>
+                        Apply some pre-defined image processing (e.g. watermark):<br />
+                        <br />
+                        &lt;xar:image-resize src="test/image.jpg" setting="JPEG 800 x 600" label="my image" /&gt;
+                    </p>
+                </xar:mlstring>
             </p>
         </div>
         <br />
@@ -70,5 +77,15 @@
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
             .. To be filled in ..
         </div>
+        <xar:if condition="xarModGetVar('images','upgrade-1.0.0')">
+        <br />
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>Upgrade from version 1.0.0</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <xar:mlstring>The naming convention for derivative images has changed since version 1.0.0. So you can delete the old derivative images, and new derivative images will be created as needed in the same directory...</xar:mlstring>
+        </div>
+        </xar:if>
     </div>
 </div>

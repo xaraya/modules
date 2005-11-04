@@ -17,6 +17,7 @@
  * @author mikespub 
  * @param   mixed   $fileId    (optional) The file id(s) of the image(s) we're looking for
  * @param   string  $fileName  (optional) The name of the image we're getting derivatives for
+ * @param   string  $fileLocation (optional) The location of the image we're getting derivatives for
  * @param   string  $thumbsdir (optional) The directory where derivative images are stored
  * @param   string  $filematch (optional) Specific file match for derivative images
  * @param   integer $cacheExpire (optional) Cache the result for a number of seconds
@@ -37,9 +38,15 @@ function images_adminapi_getderivatives($args)
         $filematch = '';
         if (!empty($fileName)) {
             // Note: resized images are named [filename]-[width]x[height].jpg - see resize() method
-            //$filematch = '^' . $fileName . '-\d+x\d+';
             // Note: processed images are named [filename]-[setting].[ext] - see process_image() function
             $filematch = '^' . $fileName . '-.+';
+        } elseif (!empty($fileLocation)) {
+            // Note: resized images are named md5(filelocation)-[width]x[height].jpg - see resize() method
+            // Note: processed images are named md5(filelocation)-[setting].[ext] - see process_image() function
+            if (!is_numeric($fileLocation)) {
+                $fileLocation = md5($fileLocation);
+            }
+            $filematch = '^' . $fileLocation . '-.+';
         }
     }
     if (empty($filetype)) {
@@ -125,28 +132,21 @@ function images_adminapi_getderivatives($args)
 
         if (empty($fileName) && xarModIsAvailable('uploads')) {
 
-            if (xarModGetVar('uploads', 'file.obfuscate-on-import') ||
-                xarModGetVar('uploads', 'file.obfuscate-on-upload')) {
-                $obfuscated = true;
-            } else {
-                $obfuscated = false;
-            }
-
             $fileinfo = array();
             foreach (array_keys($filenames) as $file) {
             // CHECKME: verify this once derivatives can be created in sub-directories of thumbsdir
-                // this is probably an obfuscated hash for some uploaded/imported file
-                if ($obfuscated && preg_match('/^(.*\/)?[0-9a-f]{8}\d+$/i',$file)) {
+                // this is probably the file id for some uploaded/imported file stored in the database
+                if (preg_match('/^(.*\/)?(\d+)$/',$file,$matches)) {
 
                     $fileinfo[$file] = xarModAPIFunc('uploads','user','db_get_file',
-                                                     array('fileHash' => $file));
+                                                     array('fileId' => $matches[2]));
 
-                // this is probably the filename without extension for some uploaded/imported file
-                } elseif (preg_match('/^(.*\/)?\w+$/i',$file)) {
+                // this may be the md5 hash of the file location for some uploaded/imported file
+                } elseif (preg_match('/^(.*\/)?([0-9a-f]{32})$/i',$file,$matches)) {
 
                 // CHECKME: watch out for duplicates here too
                     $fileinfo[$file] = xarModAPIFunc('uploads','user','db_get_file',
-                                                     array('fileName' => $file . '.%'));
+                                                     array('fileLocationMD5' => $matches[2]));
                 }
             }
             if (count($fileinfo) > 0) {

@@ -63,7 +63,6 @@ function images_admin_browse()
     if (!empty($fileId)) {
         $data['images'] = xarModAPIFunc('images','admin','getimages',
                                         $data);
-
     } else {
         $params = $data;
         if (!isset($numitems)) {
@@ -136,6 +135,11 @@ function images_admin_browse()
         // if we're dealing with an individual fileId, get some additional information
         } elseif (is_string($fileId) && !empty($data['images'][$fileId])) {
             $found = $data['images'][$fileId];
+            // Get derivative images for this image
+            if (file_exists($found['fileLocation'])) {
+                $found['derivatives'] = xarModAPIFunc('images','admin','getderivatives',
+                                                      array('fileLocation' => $found['fileLocation']));
+            }
         }
     }
 

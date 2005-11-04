@@ -113,18 +113,14 @@ function images_admin_uploads($args)
             $found = $data['images'][$fileId];
             // Get derivative images for this image
             if (!empty($found['fileHash'])) {
-                $pos = strpos($found['fileName'],'.');
-                if ($pos) {
-                    $base = substr($found['fileName'],0,$pos);
-                    // find derivative images starting either with the hash
-                    // or with the filename without extension
-                    $findfile = '('.$found['fileHash'].'|'.$base.')';
+                if (file_exists($found['fileLocation'])) {
+                    $found['derivatives'] = xarModAPIFunc('images','admin','getderivatives',
+                                                          array('fileLocation' => $found['fileLocation']));
                 } else {
-                    // find derivative images starting with the hash
-                    $findfile = $found['fileHash'];
+                    // the file is probably stored in the database, so we pass the fileId here
+                    $found['derivatives'] = xarModAPIFunc('images','admin','getderivatives',
+                                                          array('fileLocation' => $found['fileId']));
                 }
-                $found['derivatives'] = xarModAPIFunc('images','admin','getderivatives',
-                                                      array('fileName' => $findfile));
             }
             // Get known associations for this image (currently unused)
             $found['associations'] = xarModAPIFunc('uploads','user','db_get_associations',

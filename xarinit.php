@@ -68,12 +68,28 @@ function images_upgrade($oldversion)
     switch($oldversion) {
         case '1.0.0':
             // Code to upgrade from version 1.0.0 goes here
-            break;
-        case '2.0':
+            $thumbsdir = xarModGetVar('images', 'path.derivative-store');
+            if (!empty($thumbsdir) && is_dir($thumbsdir)) {
+                xarModSetVar('images','upgrade-1.0.0',1);
+                // remove all old-style derivatives
+            /* skip this - too risky depending on site config
+                $images = xarModAPIFunc('images','admin','getderivatives');
+                if (!empty($images)) {
+                    foreach ($images as $image) {
+                        @unlink($image['fileLocation']);
+                    }
+                }
+            */
+            }
+            // Fall through to next upgrade
+
+        case '1.1.0':
+            // Code to upgrade from version 1.1.0 goes here
+
+            // Fall through to next upgrade
+
+        case '2.0.0':
             // Code to upgrade from version 2.0.0 goes here
-            break;
-        case '2.5':
-            // Code to upgrade from version 2.5.0 goes here
             break;
     }
     

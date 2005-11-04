@@ -60,6 +60,17 @@
         <xar:mlstring>Height</xar:mlstring> : #$selimage['height']#<br/>
         <xar:mlstring>Size</xar:mlstring> : #$selimage['fileSize']#<br/>
         <xar:mlstring>Modified</xar:mlstring> : #xarLocaleGetFormattedDate('short',$selimage['fileModified'])#<br/>
+        <xar:if condition="!empty($selimage['derivatives'])">
+            <xar:mlstring>Derivatives</xar:mlstring> : 
+            <xar:foreach in="$selimage['derivatives']" value="$derivimage">
+                <xar:if condition="!empty($derivimage['fileSetting'])">
+                    <a href="#xarModURL('images','admin','derivatives',array('action' => 'view', 'fileId' => $derivimage['fileId']))#">#$derivimage['fileSetting']#</a>
+                <xar:else/>
+                    <a href="#xarModURL('images','admin','derivatives',array('action' => 'view', 'fileId' => $derivimage['fileId']))#">#$derivimage['width']# x #$derivimage['height']#</a>
+                </xar:if>
+            </xar:foreach>
+            <br/>
+        </xar:if>
 
     </div>
     </xar:if>
