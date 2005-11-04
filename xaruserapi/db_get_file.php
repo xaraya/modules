@@ -44,7 +44,7 @@ function uploads_userapi_db_get_file( $args )
 
     if (!isset($fileId) && !isset($fileName) && !isset($fileStatus) && !isset($fileLocation) &&
         !isset($userId)  && !isset($fileType) && !isset($store_type) && !isset($fileHash) &&
-        empty($getnext) && empty($getprev)) {
+        !isset($fileLocationMD5) && empty($getnext) && empty($getprev)) {
         $msg = xarML('Missing parameters for function [#(1)] in module [#(2)]', 'db_get_file', 'uploads');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
@@ -109,6 +109,16 @@ function uploads_userapi_db_get_file( $args )
     // Note: the fileHash is the last part of the location
     if (isset($fileHash) && !empty($fileHash)) {
         $where[] = '(xar_location LIKE ' . $dbconn->qstr("%/$fileHash") . ')';
+    }
+
+    // Note: the MD5 hash of the file location is used by derivatives in the images module
+    if (isset($fileLocationMD5) && !empty($fileLocationMD5)) {
+        if ($dbconn->databaseType == 'sqlite') {
+        // CHECKME: verify this syntax for SQLite !
+            $where[] = "(php('md5',xar_location) = " . $dbconn->qstr($fileLocationMD5) . ')';
+        } else {
+            $where[] = '(md5(xar_location) = ' . $dbconn->qstr($fileLocationMD5) . ')';
+        }
     }
 
     if (!empty($getnext)) {
