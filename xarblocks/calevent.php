@@ -1,22 +1,26 @@
 <?php
 /**
- * 
- * Metrostat Calendar of Events
- * 
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2004 by Metrostat Technologies, Inc.
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.metrostat.net
+ * @link http://www.xaraya.com
  *
- * @subpackage julian
- * initial template: Roger Raymond
- * @author Jodie Razdrh/John Kevlin/David St.Clair
+ * @subpackage Julian Module
  */
 
 /**
  * initialise block
+ * Metrostat Calendar of Events
  * 
- * @author David St.Clair 
+ * This module:
+ * @copyright (C) 2004 by Metrostat Technologies, Inc.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.metrostat.net
+ *
+ * initial template: Roger Raymond
+ * @author Jodie Razdrh/John Kevlin/David St.Clair
+ * @author MichelV michelv@xarayahosting.nl
+ *
  * @access public 
  * @param none $ 
  * @return nothing 
@@ -75,7 +79,7 @@ function julian_caleventblock_display($blockinfo)
     //set the selected date parts, timestamp, and cal_date in the data array
     $args = xarModAPIFunc('julian','user','getUserDateTimeInfo');
     //load calendar class
-    $c = xarModAPIFunc('julian','user','factory','calendar');
+    $c =& xarModAPIFunc('julian','user','factory','calendar');
     //determine the current user
     $args['name'] = xarUserGetVar('name');
     $args['blockid'] = $blockinfo['bid'];

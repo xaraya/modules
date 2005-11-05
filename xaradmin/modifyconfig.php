@@ -7,15 +7,18 @@
  *
  * @subpackage Julian Module
  */
+
 /**
  * 
  * Function that allows modification of configurable variables for the julian calendar
  *
+ * This module:
  * @copyright (C) 2004 by Metrostat Technologies, Inc.
  * @link http://www.metrostat.net
  *
  * initial template: Roger Raymond
  * @author Jodie Razdrh/John Kevlin/David St.Clair
+ * @author Michelv <MichelV@xarayahosting.nl>
  */
 
 function julian_admin_modifyconfig()
