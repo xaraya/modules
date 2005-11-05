@@ -27,8 +27,6 @@ function julian_userapi_email_alerts($args)
 {
     extract ($args);
     
-    //load the calendar class
-    //$c =& xarModAPIFunc('julian','user','factory','calendar');
     // TODO possibility to configure when alerts are send (1 day before?, 1 week?)
     //get tomorrow's events
     $startdate = date("Y-m-d",strtotime("tomorrow"));
