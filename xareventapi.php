@@ -23,8 +23,8 @@ function ie7_eventapi_OnServerRequest()
         $browser == 'Microsoft Internet Explorer') {
 
         /* load the required javascript */
-        xarTplAddJavaScript('head', 'src', 
-                'modules/ie7/xarincludes/ie7/ie7-standard.js');
+        xarTplAddJavaScript('head', 'src',
+                'modules/ie7/xarincludes/ie7/ie7-standard-p.js');
 
         /* other config options */
         if (xarModGetVar('ie7', 'css3')) {

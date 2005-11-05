@@ -1,114 +1,159 @@
 /*
-    W3C compliance for Microsoft Internet Explorer
-
-    this module forms part of IE7
-    IE7 version 0.7.2 (alpha) 2004/08/22
-    by Dean Edwards, 2004
+	IE7, version 0.9 (alpha) (2005-08-19)
+	Copyright: 2004-2005, Dean Edwards (http://dean.edwards.name/)
+	License: http://creativecommons.org/licenses/LGPL/2.1/
 */
 
-/* other fixes may be loaded by external modules in the format:
+IE7.addModule("ie7-html4", function() {
 
-  if (HTMLFixes) HTMLFixes.add(selector, fix);
+// don't bother with this for XML documents
+if (!isHTML) return;
 
-  where:
-  selector: string used to match a set of elements
-  fix: function that receives the element to to be fixed as its only parameter
-*/
-if (window.IE7) IE7.addModule("ie7-html4", function() {
-if (isHTML) HTMLFixes = new function() {
-    var fixes = []; // private
+// -----------------------------------------------------------------------
+// HTML Header
+// -----------------------------------------------------------------------
 
-    function fix(element) {
-        // remove the broken tags and replace with <HTML:tagName/>
-        var fixedElement = document.createElement("<HTML:" + element.outerHTML.slice(1));
-    //# fixedElement.mergeAttributes(element, false);
-        if (element.outerHTML.slice(-2) != "/>") {
-            // remove child nodes and copy them to the new element
-            var endTag = "</"+ element.tagName + ">", nextSibling;
-            while ((nextSibling = element.nextSibling) && nextSibling.outerHTML != endTag) {
-                element.parentNode.removeChild(nextSibling);
-                fixedElement.appendChild(nextSibling);
-            }
-            // remove the closing tag
-            if (nextSibling) element.parentNode.removeChild(nextSibling);
-        }
-        // replace the broken tag with the namespaced version
-        element.parentNode.replaceChild(fixedElement, element);
-        return fixedElement;
-    };
+// create default font-sizes
+HEADER += "h1{font-size:2em}h2{font-size:1.5em;}h3{font-size:1.17em;}" +
+	"h4{font-size:1em}h5{font-size:.83em}h6{font-size:.67em}";
 
-    this.add = function() {
-        push(fixes, arguments);
-    };
+// -----------------------------------------------------------------------
+// IE7 HTML Factory
+// -----------------------------------------------------------------------
 
-    this.apply = function() {
-    try {
-        // create the namespace used to declare our fixed <abbr/> tag.
-        //  strangely, this throws an error if there is no <abbr/> tag present!?
-        if (appVersion > 5) document.namespaces.add("HTML", "http://www.w3.org/1999/xhtml");
+var _fixed = {};
 
-    } catch (ignore) {
-        // explorer confuses me.
-        // we can create a namespace when the <abbr/>
-        //  tag is present, otherwise error!
-        //  this kind of suits me but it's still weird.
-    } finally {
-        // apply all fixes
-        for (var i = 0; i < fixes.length; i++) {
-            var elements = cssQuery(fixes[i][0]);
-            for (var j = 0; j < elements.length; j++) fixes[i][1](elements[j]);
-        }
-    }};
+ie7HTML = new (Fix.specialize({ // single instance
+	init: DUMMY,
+	// fixes are a one-off, they are applied when the document is loaded
+	addFix: function() {
+		this.fixes.push(arguments);
+	},
+	apply: function() {
+		for (var i = 0; i < this.fixes.length; i++) {
+			var $match = cssQuery(this.fixes[i][0]);
+			var $fix = this.fixes[i][1] || _fixElement;
+			for (var j = 0; j < $match.length; j++) $fix($match[j]);
+		}
+	},
+	// recalcs occur whenever the document is refreshed using document.recalc()
+	addRecalc: function() {
+		this.recalcs.push(arguments);
+	},
+	recalc: function() {
+		// loop through the fixes
+		for (var i = 0; i < this.recalcs.length; i++) {
+			var $match = cssQuery(this.recalcs[i][0]);
+			var $recalc = this.recalcs[i][1], $element;
+			var $key = Math.pow(2, i);
+			for (var j = 0; ($element = $match[j]); j++) {
+				var $uniqueID = $element.uniqueID;
+				if ((_fixed[$uniqueID] & $key) == 0) {
+					$element = $recalc($element) || $element;
+					_fixed[$uniqueID] |= $key;
+				}
+			}
+		}
+	}
+})); // ie7HTML
 
-    // associate <label> elements with an input element
-    this.add("label", function(element) {
-        if (!element.htmlFor) {
-            var input = element.getElementsByTagName("input")[0];
-            if (input) {
-                if (!input.id) input.id = input.uniqueID;
-                element.htmlFor = input.id;
-            }
-        }
-    });
+// -----------------------------------------------------------------------
+// <abbr>
+// -----------------------------------------------------------------------
 
-    // provide support for the <abbr> tag for html documents
-    //  this is a proper fix, it preserves the dom structure and
-    //  <abbr> elements report the correct tagName & namespace prefix
-    this.add("abbr", function(element) {
-        fix(element);
-        // don't cache broken <abbr> tags
-        delete cssCache[" abbr"];
-    });
+// provide support for the <abbr> tag.
+//  this is a proper fix, it preserves the DOM structure and
+//  <abbr> elements report the correct tagName & namespace prefix
+ie7HTML.addFix("abbr");
 
-    // a couple of <button> fixes
-    this.add("button,input", function(element) {
-        if (element.tagName == "BUTTON") {
-            // IE bug means that innerText is submitted instead of "value"
-            var match = element.outerHTML.match(/ value="([^"]*)"/i);
-            element.runtimeStyle.value = (match) ? match[1] : "";
-        }
-        // flag the button/input that was used to submit the form
-        if (element.type == "submit") {
-            addEventHandler(element, "onclick", function() {
-                element.runtimeStyle.clicked = true;
-                setTimeout("document.all." + element.uniqueID + ".runtimeStyle.clicked=false", 1);
-            });
-        }
-    });
+// -----------------------------------------------------------------------
+// <label>
+// -----------------------------------------------------------------------
 
-    // only submit successful controls
-    this.add("form", function(element) {
-        var UNSUCCESSFUL = /^(submit|reset|button)$/;
-        addEventHandler(element, "onsubmit", function() {
-            for (var i = 0; i < element.length; i++) {
-                if (UNSUCCESSFUL.test(element[i].type) && !element[i].disabled && !element[i].runtimeStyle.clicked) {
-                    element[i].disabled = true;
-                    setTimeout("document.all." + element[i].uniqueID + ".disabled=false", 1);
-                } else if (element[i].tagName == "BUTTON" && element[i].type == "submit") {
-                    setTimeout("document.all." + element[i].uniqueID + ".value='" + element[i].value + "'", 1);
-                    element[i].value = element[i].runtimeStyle.value;
-                }
-            }
-        });
-    });
-}}, true);
+// bind to the first child control
+ie7HTML.addRecalc("label", function($element) {
+	if (!$element.htmlFor) {
+		var $firstChildControl = cssQuery("input,textarea", $element)[0];
+		if ($firstChildControl) {
+			addEventHandler($element, "onclick", function() {
+				$firstChildControl.click();
+			});
+		}
+	}
+});
+
+// -----------------------------------------------------------------------
+// <button>
+// -----------------------------------------------------------------------
+
+// IE bug means that innerText is submitted instead of "value"
+ie7HTML.addRecalc("button,input", function($element) {
+	if ($element.tagName == "BUTTON") {
+		var $match = $element.outerHTML.match(/ value="([^"]*)"/i);
+		$element.runtimeStyle.value = ($match) ? $match[1] : "";
+	}
+	// flag the button/input that was used to submit the form
+	if ($element.type == "submit") {
+		addEventHandler($element, "onclick", function() {
+			$element.runtimeStyle.clicked = true;
+			setTimeout("document.all." + $element.uniqueID + ".runtimeStyle.clicked=false", 1);
+		});
+	}
+});
+
+// -----------------------------------------------------------------------
+// <form>
+// -----------------------------------------------------------------------
+
+// only submit "successful controls
+var $UNSUCCESSFUL = /^(submit|reset|button)$/;
+ie7HTML.addRecalc("form", function($element) {
+	addEventHandler($element, "onsubmit", function() {
+		for (var i = 0; i < $element.length; i++) {
+			if (_unsuccessful($element[i])) {
+				$element[i].disabled = true;
+				setTimeout("document.all." + $element[i].uniqueID + ".disabled=false", 1);
+			} else if ($element[i].tagName == "BUTTON" && $element[i].type == "submit") {
+				setTimeout("document.all." + $element[i].uniqueID + ".value='" +
+					$element[i].value + "'", 1);
+				$element[i].value = $element[i].runtimeStyle.value;
+			}
+		}
+	});
+});
+function _unsuccessful($element) {
+	return $UNSUCCESSFUL.test($element.type) && !$element.disabled &&
+		!$element.runtimeStyle.clicked;
+};
+
+// -----------------------------------------------------------------------
+// <img>
+// -----------------------------------------------------------------------
+
+// get rid of the spurious tooltip produced by the alt attribute on images
+ie7HTML.addRecalc("img", function($element) {
+	if ($element.alt && !$element.title) $element.title = "";
+});
+
+// -----------------------------------------------------------------------
+// Fix broken elements
+// -----------------------------------------------------------------------
+
+var $PREFIX = (appVersion < 5.5) ? "HTML:" : "";
+function _fixElement($element) {
+	var $fixedElement = document.createElement("<" + $PREFIX +
+		$element.outerHTML.slice(1));
+	if ($element.outerHTML.slice(-2) != "/>") {
+		// remove child nodes and copy them to the new $element
+		var $$endTag = "</"+ $element.tagName + ">", $nextSibling;
+		while (($nextSibling = $element.nextSibling) && $nextSibling.outerHTML != $$endTag) {
+			$fixedElement.appendChild($nextSibling);
+		}
+		// remove the closing tag
+		if ($nextSibling) $nextSibling.removeNode();
+	}
+	// replace the broken tag with the namespaced version
+	$element.parentNode.replaceChild($fixedElement, $element);
+};
+
+}); // addModule

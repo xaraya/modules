@@ -20,9 +20,15 @@ Follow these simple instructions to get IE7 working immediately on your server:
 
  * the page should now be IE7 enabled.
 
+ * if you are using the PNG solution then be aware that it operates on files
+   names "something-trans.png"
+
+ * see this page for more configuration and usage options:
+   http://dean.edwards.name/IE7/usage/
+
 You may extract the contents of the ZIP file to your hard disk if you do not have access to a web server.
 
 
 Enjoy ;-)
 
-Dean Edwards, 17th August 2004
+Dean Edwards, 23rd May 2005

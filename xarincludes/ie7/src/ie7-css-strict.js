@@ -1,84 +1,71 @@
 /*
-    W3C compliance for Microsoft Internet Explorer
-
-    this module forms part of IE7
-    IE7 version 0.7.2 (alpha) 2004/08/22
-    by Dean Edwards, 2004
+	IE7, version 0.9 (alpha) (2005-08-19)
+	Copyright: 2004-2005, Dean Edwards (http://dean.edwards.name/)
+	License: http://creativecommons.org/licenses/LGPL/2.1/
 */
-if (window.IE7) IE7.addModule("ie7-strict", function() {
+
+IE7.addModule("ie7-css-strict", function() {
 
 // requires another module
-if (!modules["ie7-css2"]) return;
-
-// constants
-var NONE = [], ID = /#/g, CLASS = /[:@\.]/g, TAG = /^\w|[\s>+~]\w/g;
-
-IE7.parser.parse = function(cssText) {
-    var DYNAMIC = new RegExp("(.*):(" + dynamicPseudoClasses + ")(.*)");
-    function addRule(selector, cssText) {
-        var match = selector.match(DYNAMIC);
-        // dynamic style (hover/active/focus)
-        if (match) new DynamicRule(selector, match[1], match[2], match[3], cssText);
-        // static style
-        else new Rule(selector, cssText);
-    };
-
-    // anonymous content
-    cssText = cssText.replace(IE7.PseudoElement.ALL, IE7.PseudoElement.ID);
-
-    // convert all selectors to ie7 classes
-    var RULE = /([^\{]+)\{(\d+)\}/g, match;
-    while (match = RULE.exec(cssText)) {
-        addRule(match[1], match[2]);
-        // fix for IE5.0
-        if (appVersion < 5.5) cssText = cssText.slice(match.lastIndex);
-    }
-
-    // sort the classes by specificity
-    IE7.classes.sort(Rule.compare);
-
-    // return the new style sheet text
-    return IE7.classes.join("\n");
-};
+if (!modules["ie7-css2-selectors"]) return;
 
 // -----------------------------------------------------------------------
-// IE7 rules (strict)
+//  IE7 StyleSheet class
+// -----------------------------------------------------------------------
+StyleSheet.prototype.specialize({
+	// override the createRule method - ALL rules are now IE7 rules
+	parse: function() {
+		this.inherit();
+		// there is no decoding as such any more as all rules are IE7 rules.
+		//  we'll sort the rules and build a new style sheet
+		var $rules = [].concat(this.rules);
+		$rules.sort(ie7CSS.Rule.compare);
+		this.cssText = $rules.join("\n");
+	},
+	// override the createRule method - ALL rules are now IE7 rules
+	createRule: function($selector, $cssText) {
+		var $match;
+		if ($match = $selector.match(ie7CSS.PseudoElement.MATCH))
+			return new ie7CSS.PseudoElement($match[1], $match[2], $cssText);
+		else if ($match = $selector.match(ie7CSS.DynamicRule.MATCH))
+			return new ie7CSS.DynamicRule($selector, $match[1], $match[2], $match[3], $cssText);
+		else
+			return new ie7CSS.Rule($selector, $cssText);
+	}
+});
+
+// -----------------------------------------------------------------------
+//  IE7 CSS
 // -----------------------------------------------------------------------
 
-// constructor
-function Rule(selector, cssText) {
-    // initialise object properties
-    this.cssText = cssText;
-    this.specificity = Rule.score(selector);
-    // inheritance
-    this.inherit = IE7.Class;
-    this.inherit(selector);
-};
-// inheritance
-Rule.prototype = new IE7.Class.ancestor;
-Rule.prototype.toString = function() {
-    return "." + this.name + "{" + this.cssText + "}";
-};
-// class methods
-Rule.score = function(selector) {
-    return (selector.match(ID)||NONE).length * 10000 +
-           (selector.match(CLASS)||NONE).length * 100 +
-           (selector.match(TAG)||NONE).length;
-};
-Rule.compare = function(rule1, rule2) {
-    return rule1.specificity - rule2.specificity;
+ie7CSS.specialize({
+	apply: function() {
+		this.inherit();
+		this.Rule.MATCH = /([^{}]+)(\{[^{}]*\})/g;
+	}
+});
+
+// sort function
+ie7CSS.Rule.compare = function($rule1, $rule2) {
+	return $rule1.specificity - $rule2.specificity;
 };
 
-// constructor
-function DynamicRule(selector, attach, dynamicPseudoClass, target, cssText) {
-    // initialise object properties
-    this.cssText = cssText;
-    this.specificity = Rule.score(selector);
-    // inheritance
-    this.inherit = IE7.DynamicStyle;
-    this.inherit(selector, attach, dynamicPseudoClass, target);
+// calculate specificity for a given selector
+var $NONE = [], $ID = /#/g, $CLASS = /[.:\[]/g, $TAG = /^\w|[\s>+~]\w/g;
+ie7CSS.Rule.score = function($selector) {
+	return ($selector.match($ID)||$NONE).length * 10000 +
+		($selector.match($CLASS)||$NONE).length * 100 +
+		($selector.match($TAG)||$NONE).length;
 };
-// inheritance
-DynamicRule.prototype = new IE7.DynamicStyle.ancestor;
-DynamicRule.prototype.toString = Rule.prototype.toString;
+
+ie7CSS.Rule.simple = function() {return ""};
+
+ie7CSS.Rule.prototype.specialize({
+	specificity: 0,
+	init: function() {
+		// calculate specificity (rules are sorted on this value)
+		this.specificity = ie7CSS.Rule.score(this.selector);
+	}
+});
+
 });
