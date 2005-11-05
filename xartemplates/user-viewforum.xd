@@ -4,8 +4,7 @@
 <xar:comment>
     minimum use of tables for layout - a css-driven template 
 </xar:comment>
-<xar:if condition="xarTplAddStyleLink('xarbb', 'xarbb-layout')">
-</xar:if>
+<xar:style module="xarbb" scope="module" file="xarbb-layout" />
 <xar:if condition="isset($catid)">
     <div class="xarbb-noteswrapper">
         <xar:categories-navigation layout="trails" showchildren="1" module="xarbb" itemtype="1" func="main" catid="$catid" />
