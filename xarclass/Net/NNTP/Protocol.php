@@ -748,7 +748,9 @@ class Net_NNTP_Protocol extends PEAR
             // XXX Use the splitHeaders() algorithm for supporting
             //     multiline headers?
             foreach ($data as $line) {
-                $line = current(explode(':', trim($line)));
+                /* xaraya fix for return by reference error */
+                $thisline=explode(':', trim($line));
+                $line = current($thisline);
                 $format[] = $line;
             }
             return $format;
