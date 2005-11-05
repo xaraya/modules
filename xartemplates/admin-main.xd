@@ -17,22 +17,24 @@
             <xar:mlstring>
             xarBB allows users to post Topics and reply posts to those topics. There are a number of options available from the administration menu.
             </xar:mlstring>
+        </p>
             <ul>
                <li><xar:mlstring>Add Forums -- Allows you to add new forums to your system. Each forum has a number of configuration options.</xar:mlstring></li>
                <li><xar:mlstring>View Forums -- Allows you to view the forums that you have configured on your system.</xar:mlstring></li>
                <li><xar:mlstring>Modify Configuration -- Allows you to set certain master configuration routines for forums.</xar:mlstring></li>
                 <li><xar:mlstring>Reorder Forums -- Allows you to reorder your existing forums</xar:mlstring></li>
             </ul>
-        </p>
+
         <p>
             <xar:mlstring>You can add additional functionality to xarBB forums as you require it.</xar:mlstring>
+        </p>
             <ul>
                <li><xar:mlstring>Hook BBCode or HTML to allow formatted user input and also the option to supply linebreaks for plain text.</xar:mlstring></li>
                <li><xar:mlstring>Turn off modify 'stamps' in topics and posts and hook Changelog module to allow enhanced changelog management of posts and topics</xar:mlstring></li>
                <li><xar:mlstring>If you have imported the extra default User dynamic data such as avatars, msn, irc and so on, to your user roles, then these attributes will automatically be displayed in xarbb topics and posts.</xar:mlstring></li>
                <li><xar:mlstring>Set privilges for Comments module and xarBB to allow or disallow viewing, posting of topics and replies, editing of their own posts by users, and setup of moderator groups.</xar:mlstring></li>
             </ul>
-        </p>
+
         <p><xar:mlstring>Administrators and moderators have additional functionality including deleting posts, marking posts as announcements or sticky topics, moving posts, and locking topics from further postings.</xar:mlstring>
         </p>
         <p>
@@ -65,9 +67,4 @@
          <p class="xar-sub">
              <strong>&nbsp;<xar:mlstring>xarBB Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2005-09-25
          </p>
-</div>
-<div class="xar-mod-foot xar-align-center xar-padding-thick">
-    <p>
-        <xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring>
-    </p>
 </div>
