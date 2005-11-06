@@ -1,5 +1,5 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:if condition="xarTplAddStyleLink('blacklist', 'forms')"></xar:if>
+
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:mlstring>
@@ -14,27 +14,24 @@
         </xar:mlstring>
     </h2>
     <form class="xar-formwidget" method="post" action="#xarModUrl('blacklist', 'admin', 'updateconfig')#">
-        <fieldset class="formelements xar-norm">
+        <fieldset>
             <legend>
-                <strong>
                     <xar:mlstring>
                         BlackList Settings
                     </xar:mlstring>
-                </strong>
             </legend>
 
             <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-            <p class="param">
-                <label for="numitems">
-                    <span class="help" title="#xarML('Domain Patterns Paging total.')#">
+
+            <div class="xar-form-input-wrapper">
+                <label for="numitems" class="xar-form-label" title="#xarML('Domain Patterns Paging total.')#">
                         <xar:mlstring>
                             Number of Domain Patterns to display per page
                         </xar:mlstring>
-                    </span>
                 </label>
                 <xar:set name="$numitems">#xarModGetVar('blacklist','paging.numitems')#</xar:set>
                 <input type="text" name="numitems" id="numitems" size="4" maxlength="4" value="#$numitems#" />
-            </p>
+            </div>
         </fieldset>
     </form>
 </div>

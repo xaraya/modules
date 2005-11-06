@@ -1,12 +1,9 @@
 <?php
-
 /**
- * File: $Id$
- *
  * init file for installing/upgrading BlackList module
  *
  * @package Modules
- * @copyright (C) 2002 by The Digital Development Foundation
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -36,7 +33,7 @@ function blacklist_init()
 
 	// Check to see if the table already exists, if 
 	// it does, then we'll just use what's already there
-	$sql = "SELECT COUNT(id) AS total 
+	$sql = "SELECT COUNT(0) AS total 
 			  FROM $xartable[blacklist]";
 
 	$result =& $dbconn->Execute($sql);
