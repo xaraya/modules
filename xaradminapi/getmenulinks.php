@@ -1,17 +1,16 @@
 <?php
 /**
- * File: $Id$
- *
  * Xaraya HTML Module
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
- * @link http://www.xaraya.org
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
  *
  * @subpackage HTML Module
+ * @link http://xaraya.com/index.php/release/779.html
  * @author John Cox
-*/
+ */
 
 /**
  * Utility function pass individual menu items to the main menu
@@ -32,12 +31,6 @@ function html_adminapi_getmenulinks()
                                                   'new'),
                               'title' => xarML('Add a new tag.'),
                               'label' => xarML('Add Tag'));
-
-        $menulinks[] = Array('url'   => xarModURL('html',
-                                                  'admin',
-                                                  'newtype'),
-                              'title' => xarML('Add a new tag type for use on your site.'),
-                              'label' => xarML('Add Tag Type'));
     }
     if (xarSecurityCheck('AdminHTML')) {
         $menulinks[] = Array('url'   => xarModURL('html',
@@ -45,11 +38,14 @@ function html_adminapi_getmenulinks()
                                                   'set'),
                               'title' => xarML('Set the allowed tags for use on your site'),
                               'label' => xarML('Set Tags'));
+    }
+
+    if (xarSecurityCheck('AddHTML')) {
         $menulinks[] = Array('url'   => xarModURL('html',
                                                   'admin',
-                                                  'modifyconfig'),
-                              'title' => xarML('Modify the configuration of the HTML Module'),
-                              'label' => xarML('Modify Config'));
+                                                  'newtype'),
+                              'title' => xarML('Add a new tag type for use on your site.'),
+                              'label' => xarML('Add Tag Type'));
     }
     if (xarSecurityCheck('ReadHTML')) {
         $menulinks[] = Array('url'   => xarModURL('html',
@@ -57,6 +53,13 @@ function html_adminapi_getmenulinks()
                                                   'viewtypes'),
                               'title' => xarML('View and edit tag types.'),
                               'label' => xarML('View Tag Types'));
+    }
+    if (xarSecurityCheck('AdminHTML')) {
+        $menulinks[] = Array('url'   => xarModURL('html',
+                                                  'admin',
+                                                  'modifyconfig'),
+                              'title' => xarML('Modify the configuration of the HTML Module'),
+                              'label' => xarML('Modify Config'));
     }
     if (empty($menulinks)){
         $menulinks = '';
