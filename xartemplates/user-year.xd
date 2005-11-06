@@ -5,20 +5,20 @@
     Define our navigation elements.
     TODO: Make a nice API Function for creating the valid URLS
 
-<xar:set name="$prevYearTitle"><xar:mlstring>Previous Year</xar:mlstring></xar:set>
-<xar:set name="$prevYear">#xarLocaleFormatDate('%Y'.$Year->thisYear(),$Year->prevYear('timestamp'))#</xar:set>
-<xar:set name="$prevYearURL">#xarModURL('calendar','user','year',array('cal_sdow'=>$cal_sdow,'cal_date'=>$prevYear))#</xar:set>
+<xar:set name="prevYearTitle"><xar:mlstring>Previous Year</xar:mlstring></xar:set>
+<xar:set name="prevYear">#xarLocaleFormatDate('%Y'.$Year->thisYear(),$Year->prevYear('timestamp'))#</xar:set>
+<xar:set name="prevYearURL">#xarModURL('calendar','user','year',array('cal_sdow'=>$cal_sdow,'cal_date'=>$prevYear))#</xar:set>
 
-<xar:set name="$nextYearTitle"><xar:mlstring>Next Year</xar:mlstring></xar:set>
-<xar:set name="$nextYear">#xarLocaleFormatDate('%Y%m%d',$Year->nextYear('timestamp'))#</xar:set>
-<xar:set name="$nextYearURL">#xarModURL('calendar','user','year',array('cal_sdow'=>$cal_sdow,'cal_date'=>$nextYear))#</xar:set>
+<xar:set name="nextYearTitle"><xar:mlstring>Next Year</xar:mlstring></xar:set>
+<xar:set name="nextYear">#xarLocaleFormatDate('%Y%m%d',$Year->nextYear('timestamp'))#</xar:set>
+<xar:set name="nextYearURL">#xarModURL('calendar','user','year',array('cal_sdow'=>$cal_sdow,'cal_date'=>$nextYear))#</xar:set>
 </xar:comment>
 <xar:calendar-decorator object="$Year" decorator="Xaraya" name="$YearURI" />
-<xar:set name="$prevYearTitle"><xar:mlstring>Previous Year</xar:mlstring></xar:set>
-<xar:set name="$prevYearURL">#$YearURI->prev('year')#</xar:set>
+<xar:set name="prevYearTitle"><xar:mlstring>Previous Year</xar:mlstring></xar:set>
+<xar:set name="prevYearURL">#$YearURI->prev('year')#</xar:set>
 
-<xar:set name="$nextYearTitle"><xar:mlstring>Next Year</xar:mlstring></xar:set>
-<xar:set name="$nextYearURL">#$YearURI->next('year')#</xar:set>
+<xar:set name="nextYearTitle"><xar:mlstring>Next Year</xar:mlstring></xar:set>
+<xar:set name="nextYearURL">#$YearURI->next('year')#</xar:set>
 
 <table id="cal-calendar">
     <tr>
@@ -32,8 +32,8 @@
 
 <xar:set name="today">xarLocaleFormatDate('%Y%m%d')</xar:set>
 
-<xar:set name="$i">0</xar:set>
-<xar:set name="$Month">& $Year->fetch()</xar:set>
+<xar:set name="i">0</xar:set>
+<xar:set name="Month">$Year->fetch()</xar:set>
 <table id="cal-calendar">
     <tr>
     <xar:while condition="$Month">
@@ -47,7 +47,7 @@
         <xar:calendar-decorator object="$Month" decorator="Textual" name="$MonthText" />
 
         <xar:comment> make a new row for when necessary </xar:comment>
-        <xar:if condition="!($i % 2) && $i ne 0">
+        <xar:if condition="!($i % 2) and $i ne 0">
             </tr><tr>
         </xar:if>
                 <td class="cal-container">
@@ -60,15 +60,15 @@
                     <!-- blocklayout tag to allow building an object -->
                     <xar:comment>#$Year->build()#</xar:comment>
                     <xar:comment>xar:calendar-build object="$Year" /</xar:comment>
-                    <xar:set name="$null">& $Month->build()</xar:set>
+                    <xar:set name="dummy">$Month->build()</xar:set>
                     <tr>
                         <th class="cal-week-title"><xar:mlstring>wk</xar:mlstring></th>
-                        <xar:set name="$weekdays">$MonthText->orderedWeekdays('one')</xar:set>
+                        <xar:set name="weekdays">$MonthText->orderedWeekdays('one')</xar:set>
                         <xar:foreach in="$weekdays" value="$dayName">
                             <th class="cal-day-title">#$dayName#</th>
                         </xar:foreach>
                     </tr>
-                    <xar:set name="$Day">& $Month->fetch()</xar:set>
+                    <xar:set name="Day">$Month->fetch()</xar:set>
                     <xar:while condition="$Day">
                         <xar:comment>
                             we want to create a new Year object with Xaraya specifics
@@ -99,17 +99,17 @@
                             &nbsp;
                         </xar:if>
                         </td>
-                        <xar:set name="$isLast">xarModAPIFunc('calendar','user','isLast',$Day)</xar:set>
+                        <xar:set name="isLast">xarModAPIFunc('calendar','user','isLast',$Day)</xar:set>
                         <xar:if condition="(bool)$isLast">
                         <xar:comment> close out the row </xar:comment>
                         </tr>
                         </xar:if>
-                        <xar:set name="$Day">& $Month->fetch()</xar:set>
+                        <xar:set name="Day">$Month->fetch()</xar:set>
                     </xar:while>
                     </table>
                 </td>
-        <xar:set name="$i">$i + 1</xar:set>
-        <xar:set name="$Month">& $Year->fetch()</xar:set>
+        <xar:set name="i">$i + 1</xar:set>
+        <xar:set name="Month">$Year->fetch()</xar:set>
         <xar:comment> check for this being the last Year to close out the table row </xar:comment>
     </xar:while>
     </tr>

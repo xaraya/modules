@@ -1,12 +1,12 @@
 <xar:comment>
 
-<xar:set name="$navDayUrl">#xarModURL('calendar','user','day',array('cal_date'=>$cal_date,'cal_sdow'=>$cal_sdow))#</xar:set>
-<xar:set name="$navWeekUrl">#xarModURL('calendar','user','week',array('cal_date'=>$cal_date,'cal_sdow'=>$cal_sdow))#</xar:set>
-<xar:set name="$navMonthUrl">#xarModURL('calendar','user','month',array('cal_date'=>$cal_date,'cal_sdow'=>$cal_sdow))#</xar:set>
-<xar:set name="$navYearUrl">#xarModURL('calendar','user','year',array('cal_date'=>$cal_date,'cal_sdow'=>$cal_sdow))#</xar:set>
-<xar:set name="$navSubmitUrl">#xarModURL('calendar','user','submit',array('cal_date'=>$cal_date,'cal_sdow'=>$cal_sdow))#</xar:set>
+<xar:set name="navDayUrl">#xarModURL('calendar','user','day',array('cal_date'=>$cal_date,'cal_sdow'=>$cal_sdow))#</xar:set>
+<xar:set name="navWeekUrl">#xarModURL('calendar','user','week',array('cal_date'=>$cal_date,'cal_sdow'=>$cal_sdow))#</xar:set>
+<xar:set name="navMonthUrl">#xarModURL('calendar','user','month',array('cal_date'=>$cal_date,'cal_sdow'=>$cal_sdow))#</xar:set>
+<xar:set name="navYearUrl">#xarModURL('calendar','user','year',array('cal_date'=>$cal_date,'cal_sdow'=>$cal_sdow))#</xar:set>
+<xar:set name="navSubmitUrl">#xarModURL('calendar','user','submit',array('cal_date'=>$cal_date,'cal_sdow'=>$cal_sdow))#</xar:set>
 
-<xar:set name="$null">#xarVarFetch('func','str:1:',$whatFunc)#</xar:set>
+<xar:set name="null">#xarVarFetch('func','str:1:',$whatFunc)#</xar:set>
 <ul>
     <xar:if condition="$whatFunc eq 'day'">
         <li><a class="active" href="#$navDayUrl#">Day</a></li>
