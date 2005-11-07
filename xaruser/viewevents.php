@@ -29,6 +29,7 @@ function julian_user_viewevents($args)
     if (!xarVarFetch('endday','str',$endday, '')) return;
     if (!xarVarFetch('endyear','str',$endyear, '')) return;
     if (!xarVarFetch('cal_date','str',$caldate, '')) return;
+    if (!xarVarFetch('catid', 'int:1:', $catid, '', XARVAR_NOT_REQUIRED)) return;
 
     // Security check. - Important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing.
@@ -38,19 +39,19 @@ function julian_user_viewevents($args)
     $cal_sdow = xarModGetVar('julian','startDayOfWeek');
     // Load the calendar class
     $c = xarModAPIFunc('julian','user','factory','calendar');
-    //$c->setStartDayOfWeek($cal_sdow);
+
     // Set the selected date parts,timestamp, and cal_date in the data array.
     $bl_data = xarModAPIFunc('julian','user','getUserDateTimeInfo');
-    $bl_data['year'] =& $c->getCalendarYear($bl_data['selected_year']);
-    $bl_data['shortDayNames'] =& $c->getShortDayNames($cal_sdow);//$c->getStartDayOfWeek());
-    $bl_data['calendar'] =& $c;
+    $bl_data['year'] = $c->getCalendarYear($bl_data['selected_year']);
+    $bl_data['shortDayNames'] = $c->getShortDayNames($cal_sdow);//$c->getStartDayOfWeek());
+    $bl_data['calendar'] = $c;
     // Set the start day to the first month and day of the selected year.
     $startdate=$bl_data['selected_year']."-01-01";
     // Set the end date to the last month and last day of the selected year.
     $enddate=$bl_data['selected_year']."-12-31";
     // Get the events for the selected year.
-    //$bl_data['event_array']=$c->getEvents($startdate,$enddate);
-    $bl_data['event_array']=xarModApiFunc('julian','user','getall', array('startdate'=>$startdate, 'enddate'=>$enddate));
+
+    $bl_data['event_array']=xarModApiFunc('julian','user','getall', array('startdate'=>$startdate, 'enddate'=>$enddate, 'catid' = $catid));
     // Set the url to this page in session as the last page viewed.
     $lastview=xarModURL('julian','user','year',array('cal_date'=>$bl_data['cal_date']));
     xarSessionSetVar('lastview',$lastview);
@@ -105,10 +106,10 @@ function julian_user_viewevents($args)
                             array('startnum' => $startnum,
                                   'numitems' => xarModGetVar('julian',
                                                              'itemsperpage'),
-                                  'sortby' => $sortby,
-                                  'orderby' => $orderby,
+                                  'sortby'   => $sortby,
+                                  'orderby'  => $orderby,
                                   'startdate' => $startdate,
-                                  'enddate' => $enddate,
+                                  'enddate'  => $enddate,
                                   'event_id' => $event_id));
 
     // Check for exceptions.
@@ -127,7 +128,8 @@ function julian_user_viewevents($args)
                                            'viewevents',
                                            array('startnum' => 1,
                                                  'sortby' => 'eventDate',
-                                                 'event_id' => $event_id));
+                                                 'event_id' => $event_id,
+                                                 'catid' => $catid));
     } else {
         $bl_data['eventdateurl'] = '';
     }
@@ -138,7 +140,8 @@ function julian_user_viewevents($args)
                                            'viewevents',
                                            array('startnum' => 1,
                                                  'sortby' => 'eventName',
-                                                 'event_id' => $event_id));
+                                                 'event_id' => $event_id,
+                                                 'catid' => $catid));
     } else {
         $bl_data['eventnameurl'] = '';
     }
@@ -149,7 +152,8 @@ function julian_user_viewevents($args)
                                            'viewevents',
                                            array('startnum' => 1,
                                                  'sortby' => 'eventDesc',
-                                                 'event_id' => $event_id));
+                                                 'event_id' => $event_id,
+                                                 'catid' => $catid));
     } else {
         $bl_data['eventdescurl'] = '';
     }
@@ -160,7 +164,8 @@ function julian_user_viewevents($args)
                                            'viewevents',
                                            array('startnum' => 1,
                                                  'sortby' => 'eventLocn',
-                                                 'event_id' => $event_id));
+                                                 'event_id' => $event_id,
+                                                 'catid' => $catid));
     } else {
         $bl_data['eventlocnurl'] = '';
     }
@@ -171,7 +176,8 @@ function julian_user_viewevents($args)
                                            'viewevents',
                                            array('startnum' => 1,
                                                  'sortby' => 'eventCont',
-                                                 'event_id' => $event_id));
+                                                 'event_id' => $event_id,
+                                                 'catid' => $catid));
     } else {
         $bl_data['eventconturl'] = '';
     }
@@ -182,7 +188,8 @@ function julian_user_viewevents($args)
                                            'viewevents',
                                            array('startnum' => 1,
                                                  'sortby' => 'eventFee',
-                                                 'event_id' => $event_id));
+                                                 'event_id' => $event_id,
+                                                 'catid' => $catid));
     } else {
         $bl_data['eventfeeurl'] = '';
     }
@@ -192,13 +199,15 @@ function julian_user_viewevents($args)
                                     xarModAPIFunc('julian', 
                                                   'user', 
                                                   'countevents', 
-                                                  array('event_id' => $event_id)),
+                                                  array('event_id' => $event_id,
+                                                        'catid' => $catid)),
                                     xarModURL('julian', 
                                               'user', 
                                               'viewevents', 
                                               array('startnum' => '%%',
-                                                   'sortby' => $sortby,
-                                                   'event_id' => $event_id)),
+                                                    'sortby' => $sortby,
+                                                    'event_id' => $event_id,
+                                                    'catid' => $catid)),
                                     xarModGetVar('julian', 'itemsperpage'));
 
     // Return the template variables defined in this function.
