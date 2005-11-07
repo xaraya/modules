@@ -1,21 +1,34 @@
 <?php
 /**
-* Displays a week of events.
-*
-* @package Xaraya eXtensible Management System
-* @copyright (C) 2004 by Metrostat Technologies, Inc.
-* @license GPL {@link http://www.gnu.org/licenses/gpl.html}
-* @link http://www.metrostat.net
-*
-* @subpackage julian
-* initial template: Roger Raymond
-* @author Jodie Razdrh/John Kevlin/David St.Clair
-*/
+ * View one week
+ * 
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Julian Module
+ * @link http://xaraya.com/index.php/release/319.html
+ * @author Julian Module Development Team
+ */
+ 
+/**
+ * Displays a week of events.
+ *
+ * This module:
+ * @copyright (C) 2004 by Metrostat Technologies, Inc.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.metrostat.net
+ *
+ * initial template: Roger Raymond
+ * @author Jodie Razdrh/John Kevlin/David St.Clair
+ * @param int catid ID of the category to filter for
+ */
 
 function julian_user_week($args)
 {
     extract ($args);
-    
+    // Get the category id
     if (!xarVarFetch('catid', 'int:1:', $catid, '', XARVAR_NOT_REQUIRED)) return;
  
     // Security check
@@ -43,7 +56,7 @@ function julian_user_week($args)
     $bl_data['Bullet'] = '&'.xarModGetVar('julian', 'BulletForm').';';   
     
     //set the url to this page in session as the last page viewed
-    $lastview=xarModURL('julian','user','week',array('cal_date'=>$bl_data['cal_date']));
+    $lastview=xarModURL('julian','user','week',array('cal_date'=>$bl_data['cal_date'], 'catid'=> $catid));
     xarSessionSetVar('lastview',$lastview);
     
     return $bl_data;

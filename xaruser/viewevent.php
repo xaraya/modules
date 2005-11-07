@@ -1,20 +1,22 @@
 <?php
 /**
- * Views an event.
+ * Displays an event
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage julian
- * initial template: Roger Raymond
- * @link http://www.metrostat.net 
- * 
+ * @subpackage Julian Module
+ * @link http://xaraya.com/index.php/release/319.html
+ * @author Julian Module Development Team
  */
+ 
 /**
  * View an event
  *
+ * initial template: Roger Raymond
+ * @link http://www.metrostat.net 
  * @copyright (C) 2005 by Metrostat Technologies, Inc.
  * @author  Jodie Razdrh/John Kevlin/David St.Clair
  * @author  Julian Development Team, MichelV. <michelv@xarayahosting.nl>
@@ -134,14 +136,14 @@ function julian_user_viewevent()
      $duration=strcmp($duration,"")?$duration:($bl_data['isallday']?'':' at '.date("g:i A",strtotime($bl_data['dtstart'])));
      $bl_data['time'] = $time.$duration .".";
      
-   //If there is no duration and this is not an all day event, show the time at the front.
+   // If there is no duration and this is not an all day event, show the time at the front.
    } else if (!$bl_data['isallday'] && !strcmp($duration,'')) {
       $bl_data['time'] = date("g:i A l, $dateformat",strtotime($bl_data['dtstart']));
    } else {
       $bl_data['time'] = date("l, $dateformat",strtotime($bl_data['dtstart'])).$duration;
    }
    $bl_data['cal_date']=$cal_date;
-   //set the url to this page in session as the last page viewed
+   // Set the url to this page in session as the last page viewed
    $lastview=xarModURL('julian','user','viewevent',array('cal_date'=>$cal_date,'event_id'=>$event_id));
    xarSessionSetVar('lastview',$lastview);
    return $bl_data;

@@ -1,19 +1,31 @@
 <?php
-
 /**
-* File: $Id: month.php,v 1.5 2005/04/01 12:15:19 michelv01 Exp $
-*
-* This function gets the events for a particular month.
-*
-* @package Xaraya eXtensible Management System
-* @copyright (C) 2004 by Metrostat Technologies, Inc.
-* @license GPL {@link http://www.gnu.org/licenses/gpl.html}
-* @link http://www.metrostat.net
-*
-* @subpackage julian
-* initial template: Roger Raymond
-* @author Jodie Razdrh/John Kevlin/David St.Clair
-*/
+ * View one month
+ * 
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Julian Module
+ * @link http://xaraya.com/index.php/release/319.html
+ * @author Julian Module Development Team
+ */
+/**
+ *
+ * This function gets the events for a particular month.
+ *
+ * This module:
+ * @copyright (C) 2004 by Metrostat Technologies, Inc.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.metrostat.net
+ *
+ * initial template: Roger Raymond
+ * @author Jodie Razdrh/John Kevlin/David St.Clair
+ * @author MichelV
+ *
+ * @param int catid The ID of the category to filter for
+ */
 function julian_user_month($args)
 {
     extract ($args);
@@ -22,8 +34,6 @@ function julian_user_month($args)
     
     // Security check
     if (!xarSecurityCheck('Viewjulian')) return; 
-    
-    
     
     //get post/get vars
     $cal_sdow = xarModGetVar('julian','startDayOfWeek');
@@ -46,7 +56,7 @@ function julian_user_month($args)
     $bl_data['calendar']=$c;
     $bl_data['Bullet'] = '&'.xarModGetVar('julian', 'BulletForm').';';
     //set the url to this page in session as the last page viewed
-    $lastview=xarModURL('julian','user','month',array('cal_date'=>$bl_data['cal_date']));
+    $lastview=xarModURL('julian','user','month',array('cal_date'=>$bl_data['cal_date'], 'catid' => $catid));
     xarSessionSetVar('lastview',$lastview);
     return $bl_data;
 }
