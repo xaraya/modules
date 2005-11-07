@@ -142,7 +142,7 @@ function julian_user_updateevent()
     
     // TODO: move this to API
     // Load up database
-    $dbconn =& xarDBGetConn();
+    $dbconn = xarDBGetConn();
     //get db tables
     $xartable = xarDBGetTables();
     //set events table

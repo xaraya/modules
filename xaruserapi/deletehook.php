@@ -62,11 +62,11 @@ function julian_userapi_deletehook($args)
     }
 
     // Delete the links to the specified object + itemtype + module.
-   $dbconn =& xarDBGetConn();
+   $dbconn = xarDBGetConn();
    $xartable = xarDBGetTables();
    $event_linkage_table = $xartable['julian_events_linkage'];
    $query = "DELETE FROM $event_linkage_table WHERE (`hook_modid`=$modid AND `hook_itemtype`=$itemtype AND `hook_iid`=$objectid)";
-   $result =& $dbconn->Execute($query);
+   $result = $dbconn->Execute($query);
      
    return $extrainfo;
 }

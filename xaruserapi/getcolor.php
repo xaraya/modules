@@ -18,7 +18,7 @@ function julian_userapi_getcolor($args)
   if (!xarVarFetch('category','isset',$category)) return;
 
   //Setup DB connection
-  $dbconn =& xarDBGetConn();
+  $dbconn = xarDBGetConn();
   //get db tables
   $xartable = xarDBGetTables();
   //set events table

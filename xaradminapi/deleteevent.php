@@ -34,7 +34,7 @@ function julian_adminapi_deleteevent($args)
     if (!xarVarFetch('event_id','isset',$event_id)) return;
     
     // establish db connection  
-    $dbconn =& xarDBGetConn();
+    $dbconn = xarDBGetConn();
     $xartable = xarDBGetTables();
     $event_table = $xartable['julian_events'];
     

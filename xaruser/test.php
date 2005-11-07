@@ -5,7 +5,7 @@ function julian_user_test()
 {
 // some timing for now to see how fast|slow the parser is
 include_once('Benchmark/Timer.php');
-$t =& new Benchmark_Timer;
+$t = new Benchmark_Timer;
 $t->start();
     $ical = xarModAPIFunc('icalendar','user','factory','ical_parser');
 $t->setMarker('Class Instantiated');    

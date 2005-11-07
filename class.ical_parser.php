@@ -44,7 +44,7 @@ class iCal_Parser
     function iCal_Parser($file=null)
     {
         if(isset($filename)) {
-            $this->file =& $file;
+            $this->file = $file;
             $this->parse();
         }
     }
@@ -56,7 +56,7 @@ class iCal_Parser
      */
     function setFile($file) 
     {
-        $this->file =& $file;
+        $this->file = $file;
     }
     
     /**
@@ -66,7 +66,7 @@ class iCal_Parser
      */
     function setContent($content)
     {
-        $this->content =& $content;
+        $this->content = $content;
     }
 
 
@@ -94,17 +94,17 @@ class iCal_Parser
         if(!isset($this->file)) {
             // we need to return an exception here
             // we need a file!
-            $this->error =& xarML('iCal_Parser Fatal Error::There is no file to parse');
+            $this->error = xarML('iCal_Parser Fatal Error::There is no file to parse');
             return false;
         } elseif(!file_exists($this->file)) {
             // we need to return an exception here
             // we need a file!
-            $this->error =& xarML('iCal_Parser Fatal Error::File does not exist');
+            $this->error = xarML('iCal_Parser Fatal Error::File does not exist');
             return false;
         }
         $this->file_mtime = filemtime($this->file);
         $fd = fopen($this->file, 'r');
-        $this->content =& trim(fread($fd, filesize($this->file)));
+        $this->content = trim(fread($fd, filesize($this->file)));
         fclose($fd);  
     }*/
 
@@ -118,12 +118,12 @@ class iCal_Parser
         if(!isset($this->file)) {
             // we need to return an exception here
             // we need a file!
-            $this->error =& xarML('iCal_Parser Fatal Error::There is no file to parse');
+            $this->error = xarML('iCal_Parser Fatal Error::There is no file to parse');
             return false;
         } elseif(!file_exists($this->file)) {
             // we need to return an exception here
             // we need a file!
-            $this->error =& xarML('iCal_Parser Fatal Error::File does not exist');
+            $this->error = xarML('iCal_Parser Fatal Error::File does not exist');
             return false;
         }
         // we need the actual file date for icalendar compliance
@@ -133,7 +133,7 @@ class iCal_Parser
         $this->ifile = fopen($this->file, 'r');
         $nextline = fgets($this->ifile, 1024);
         if(trim($nextline) != 'BEGIN:VCALENDAR') {
-            $this->error =& xarML('iCal_Parser Error::File is not a valid iCalendar file');
+            $this->error = xarML('iCal_Parser Error::File is not a valid iCalendar file');
             return false;
         } 
         
@@ -148,7 +148,7 @@ class iCal_Parser
                 $nextline = fgets($this->ifile, 1024);
                 $nextline = preg_replace('/[\r\n]/', '', $nextline);
             }
-            $this->line =& trim($this->line);
+            $this->line = trim($this->line);
             
             switch($this->line) {
                 
@@ -272,9 +272,9 @@ class iCal_Parser
     {
         unset($field, $data, $prop_pos, $property);
         preg_match("/([^:]+):(.*)/i", $this->line, $line);
-        $this->field =& $line[1];
-        $this->data =& $line[2];
-        $property =& $this->field;
+        $this->field = $line[1];
+        $this->data = $line[2];
+        $property = $this->field;
         $prop_pos = strpos($property,';');
         if ($prop_pos !== false) $property = substr($property,0,$prop_pos);
         $this->property = strtoupper($property);
@@ -293,11 +293,11 @@ class iCal_Parser
     {
         // what object are we assigning data to?
         if((bool)$this->tz_standard) {
-            $el =& $this->vcalendar[$this->vcal_pos]['vtimezone'][$this->tz_pos]['standard'][$this->tz_spos];
+            $el = $this->vcalendar[$this->vcal_pos]['vtimezone'][$this->tz_pos]['standard'][$this->tz_spos];
         } elseif((bool)$this->tz_daylight) {
-            $el =& $this->vcalendar[$this->vcal_pos]['vtimezone'][$this->tz_pos]['daylight'][$this->tz_dpos];
+            $el = $this->vcalendar[$this->vcal_pos]['vtimezone'][$this->tz_pos]['daylight'][$this->tz_dpos];
         } else {
-            $el =& $this->vcalendar[$this->vcal_pos]['vtimezone'][$this->tz_pos];
+            $el = $this->vcalendar[$this->vcal_pos]['vtimezone'][$this->tz_pos];
         }
         
         switch ($this->property) {

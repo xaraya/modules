@@ -40,7 +40,7 @@ function julian_admin_modifycategories()
     $data['edit_cond'] = $cid;
     
     // establish a db connection
-    $dbconn =& xarDBGetConn();
+    $dbconn = xarDBGetConn();
     //get db tables
     $xartable = xarDBGetTables();
     $category_properties_table = $xartable['julian_category_properties'];

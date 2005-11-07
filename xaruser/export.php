@@ -20,7 +20,7 @@ function julian_user_export()
   if (!xarVarFetch('event_id','str', $event_id)) return;
   
   // Load up database
-  $dbconn =& xarDBGetConn();
+  $dbconn = xarDBGetConn();
   //get db tables
   $xartable = xarDBGetTables();
   //set events table

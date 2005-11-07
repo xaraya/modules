@@ -31,7 +31,7 @@ class Calendar
         // TODO::Make this an Admin/User Setting
         $this->startDayOfWeek = xarModGetVar('julian','startDayOfWeek');
         // load the locale date
-        $localeData =& xarMLSLoadLocaleData();
+        $localeData = xarMLSLoadLocaleData();
         // long month names from locale.xml
         $this->monthNamesLong = array(
             $localeData["/dateSymbols/months/1/full"],

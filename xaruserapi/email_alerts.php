@@ -106,7 +106,7 @@ function julian_userapi_email_alerts()
     
     /*//replacement above
     //establish a db connection
-    $dbconn =& xarDBGetConn();
+    $dbconn = xarDBGetConn();
     //get db tables
     $xartable = xarDBGetTables();
     $roles_table  = $xartable['roles'];

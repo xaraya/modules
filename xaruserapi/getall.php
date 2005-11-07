@@ -68,7 +68,7 @@ function julian_userapi_getall($args)
         $enddate = $yearend . date('md');
     }
 
-  $dbconn =& xarDBGetConn();
+  $dbconn = xarDBGetConn();
   $xartable = xarDBGetTables();
   $event_table = $xartable['julian_events'];
   // load the event class

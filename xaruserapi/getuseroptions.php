@@ -33,7 +33,7 @@ function julian_userapi_getuseroptions($args)
       $users=split(",",$uids);
 
    //build an array of users who belong to the specified group
-   $dbconn =& xarDBGetConn();
+   $dbconn = xarDBGetConn();
    //get db tables
    $xartable = xarDBGetTables();
    //set roles table

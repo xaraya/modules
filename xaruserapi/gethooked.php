@@ -49,13 +49,13 @@ function julian_userapi_gethooked($args)
         return;
     }
    // Load up database
-   $dbconn =& xarDBGetConn();
+   $dbconn = xarDBGetConn();
    $xartable = xarDBGetTables();
    $event_linkage_table = $xartable['julian_events_linkage'];
 
     // Try to find the link for the current module, item type and item id.
    $query = "SELECT * FROM " .  $event_linkage_table . " WHERE (`hook_modid`=$modid AND `hook_itemtype`=$itemtype AND `hook_iid`=$objectid)";
-   $result =& $dbconn->Execute($query);
+   $result = $dbconn->Execute($query);
    if (!empty($result)) {
         if (!$result->EOF) {
             $edit_obj = $result->FetchObject(false);

@@ -27,7 +27,7 @@ function julian_init()
     }
 
     xarDBLoadTableMaintenanceAPI();
-    $dbconn =& xarDBGetConn();
+    $dbconn = xarDBGetConn();
     $xartable = xarDBGetTables();
 
     // draw up the design for the events table
@@ -497,10 +497,10 @@ function julian_upgrade($oldversion)
             // Version 0.1.0 (0.1.1) had a smaller email field, we need to upgrade to VARCHAR(70)
             // in version 0.1.2
 
-            $dbconn =& xarDBGetConn();
-            $xartable =& xarDBGetTables();
+            $dbconn = xarDBGetConn();
+            $xartable = xarDBGetTables();
                         // Using the Datadict method to be up to date ;)
-                        $datadict =& xarDBNewDataDict($dbconn, 'CREATE');
+                        $datadict = xarDBNewDataDict($dbconn, 'CREATE');
 
                         $juliantable = xarDBgetSiteTablePrefix() . '_julian_events';
             // Apply changes
@@ -515,10 +515,10 @@ function julian_upgrade($oldversion)
                         
         case '0.1.1':
                         // Same as for version 0.1.0
-            $dbconn =& xarDBGetConn();
-            $xartable =& xarDBGetTables();
+            $dbconn = xarDBGetConn();
+            $xartable = xarDBGetTables();
                         // Using the Datadict method to be up to date ;)
-                        $datadict =& xarDBNewDataDict($dbconn, 'CREATE');
+                        $datadict = xarDBNewDataDict($dbconn, 'CREATE');
                         $juliantable = xarDBgetSiteTablePrefix() . '_julian_events';
             // Apply changes
                         xarDBLoadTableMaintenanceAPI();
@@ -536,10 +536,10 @@ function julian_upgrade($oldversion)
 
         case '0.1.4':
                 //should upgrade the telephone field here to 25
-                        $dbconn =& xarDBGetConn();
-                        $xartable =& xarDBGetTables();
+                        $dbconn = xarDBGetConn();
+                        $xartable = xarDBGetTables();
                         // Using the Datadict method to be up to date ;)
-                        $datadict =& xarDBNewDataDict($dbconn, 'CREATE');
+                        $datadict = xarDBNewDataDict($dbconn, 'CREATE');
                         $juliantable = xarDBgetSiteTablePrefix() . '_julian_events';
                         // Apply changes
                         xarDBLoadTableMaintenanceAPI();
@@ -583,8 +583,8 @@ function julian_upgrade($oldversion)
             xarModAPIFunc('modules','admin','enablehooks', array('callerModName' => 'julian', 'hookModName' => 'categories'));
 
             xarDBLoadTableMaintenanceAPI();
-            $dbconn =& xarDBGetConn();
-            $xartable =& xarDBGetTables();
+            $dbconn = xarDBGetConn();
+            $xartable = xarDBGetTables();
 
             // Create new table for category-to-color linkage
             $category_properties_table = $xartable['julian_category_properties'];
@@ -607,7 +607,7 @@ function julian_upgrade($oldversion)
 
             // Get existing categories.
             $query = "SELECT `cat_id`,`cat_name`,`color` FROM " . $categories_table;
-            $result =& $dbconn->Execute($query);
+            $result = $dbconn->Execute($query);
             if (!$result) return;
                      
             // Migrate exisiting categories to new categories in the 'categories' module.
@@ -622,14 +622,14 @@ function julian_upgrade($oldversion)
 
                 // Link existing color to newly migrated category.
                 $query = "INSERT INTO $category_properties_table (`cid`,`color`) VALUES ($newcid,'$color')";
-                $result_catprop =& $dbconn->Execute($query);
+                $result_catprop = $dbconn->Execute($query);
                 if (!$result_catprop) {
                     return;
                 }
 
                 // Get ids of the events that belong to this category.
                 $query_events = "SELECT `event_id` FROM $events_table WHERE `categories`='$oldcid'";
-                $result_events =& $dbconn->Execute($query_events);
+                $result_events = $dbconn->Execute($query_events);
                 if (!$result_events) return;
               
                 // Make links between migrated category and associated events.
@@ -663,8 +663,8 @@ function julian_upgrade($oldversion)
                             
             // Drop superfluous alerts table.                
             xarDBLoadTableMaintenanceAPI();
-            $dbconn =& xarDBGetConn();
-            $xartable =& xarDBGetTables();
+            $dbconn = xarDBGetConn();
+            $xartable = xarDBGetTables();
                             
             $query = xarDBDropTable($xartable['julian_alerts']);
             if(empty($query)) return; //throw back
@@ -687,8 +687,8 @@ function julian_upgrade($oldversion)
             if (!xarModRegisterHook('item', 'display','GUI', 'julian', 'user', 'displayhook')) return false;
 
             xarDBLoadTableMaintenanceAPI();
-            $dbconn =& xarDBGetConn();
-            $xartable =& xarDBGetTables();
+            $dbconn = xarDBGetConn();
+            $xartable = xarDBGetTables();
 
              // Create separate table to store event information (date, time, etc.) for external (hooked) items.
              $event_linkage_table = $xartable['julian_events_linkage'];
@@ -761,9 +761,9 @@ function julian_upgrade($oldversion)
              * STATE::enlarge and change type from char(2)
              * 'state'=>array('type'=>'varchar','size'=>'50','null'=>TRUE)
              */
-            $dbconn =& xarDBGetConn();
-            $xartable =& xarDBGetTables();
-            $datadict =& xarDBNewDataDict($dbconn, 'CREATE');
+            $dbconn = xarDBGetConn();
+            $xartable = xarDBGetTables();
+            $datadict = xarDBNewDataDict($dbconn, 'CREATE');
             $juliantable = xarDBgetSiteTablePrefix() . '_julian_events';
             // Apply changes
             xarDBLoadTableMaintenanceAPI();
@@ -799,7 +799,7 @@ function julian_upgrade($oldversion)
 function julian_delete()
 {
     xarDBLoadTableMaintenanceAPI();
-    $dbconn =& xarDBGetConn();
+    $dbconn = xarDBGetConn();
     $xartable = xarDBGetTables();
 
     $query = xarDBDropTable($xartable['julian_events']);

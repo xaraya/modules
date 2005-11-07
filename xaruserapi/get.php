@@ -40,7 +40,7 @@ function julian_userapi_get($args)
     }
     
     // establish a db connection
-    $dbconn =& xarDBGetConn();
+    $dbconn = xarDBGetConn();
     $xartable = xarDBGetTables();
     $event_table = $xartable['julian_events'];
    

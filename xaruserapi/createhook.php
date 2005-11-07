@@ -51,13 +51,13 @@ function julian_userapi_createhook($args)
     }
 
    // Load up database, get event linkage table.
-   $dbconn =& xarDBGetConn();
+   $dbconn = xarDBGetConn();
    $xartable = xarDBGetTables();
    $event_linkage_table = $xartable['julian_events_linkage'];
     
     // Try to find the link for the current module, item type and item id.
    $query = "SELECT `event_id` FROM $event_linkage_table WHERE (`hook_modid`=$modid AND `hook_itemtype`=$itemtype AND `hook_iid`=$objectid)";
-   $result =& $dbconn->Execute($query);
+   $result = $dbconn->Execute($query);
     $id = "";
    if (!empty($result)) {
         if (!$result->EOF) $id=$result->fields[0];

@@ -43,7 +43,7 @@ function julian_userapi_countevents($args)
 */
 
     // Establish a db connection.
-    $dbconn =& xarDBGetConn();
+    $dbconn = xarDBGetConn();
     // Get db tables.
     $xartable = xarDBGetTables();
     // Set Events Table.
@@ -71,7 +71,7 @@ function julian_userapi_countevents($args)
     }
 */
 
-    $result =& $dbconn->Execute($query, $bindvars);
+    $result = $dbconn->Execute($query, $bindvars);
     $noresult = 0;
     // Check for an error
     if (!$result) return $noresult;

@@ -16,7 +16,7 @@
 function julian_userapi_getcategories()
 {
     // establish a db connection
-    $dbconn =& xarDBGetConn();
+    $dbconn = xarDBGetConn();
     //get db tables
     $xartable = xarDBGetTables();
     $category_properties_table = $xartable['julian_category_properties'];

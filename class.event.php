@@ -92,12 +92,12 @@ class Event
 
       if (!empty($links) && is_array($links) && count($links) > 0) {
             // One or more categories are coupled to this event; try to find corresponding colors.
-            $dbconn =& xarDBGetConn();
-            $xartable =& xarDBGetTables();
+            $dbconn = xarDBGetConn();
+            $xartable = xarDBGetTables();
             $julian_category_properties = $xartable['julian_category_properties'];
             $cids = implode(",", array_keys($links)); // The category-ids we want colors for.
              $query_color = "SELECT `color` FROM $julian_category_properties WHERE `cid` IN ($cids)";
-               $result_color =& $dbconn->Execute($query_color);
+               $result_color = $dbconn->Execute($query_color);
             if ($result_color && !$result_color->EOF)    $color = $result_color->fields[0];    // we found at least one color; use it.
       }
 
@@ -180,22 +180,22 @@ class Event
      
     function setStartTime($time)
     {
-        $this->starttime =& $time;
+        $this->starttime = $time;
     }
 
     function setEndTime($time)
     {
-        $this->endtime =& $time;
+        $this->endtime = $time;
     }
     
     function setStartDate($date)
     {
-        $this->startdate =& $date;
+        $this->startdate = $date;
     }
     
     function setEndDate($date)
     {
-        $this->enddate =& $date;
+        $this->enddate = $date;
     }
     
     function setDuration($days,$hours,$minutes)
@@ -203,32 +203,32 @@ class Event
         $seconds = (int) ($days * 24 * 60 * 60) ;
         $seconds += (int) ($hours * 60 * 60) ;
         $seconds += (int) ($minutes * 60) ;
-        $this->duration =& $seconds;
+        $this->duration = $seconds;
     }
     
     function setRepeat($repeat)
     {
-        $this->repeat =& $repeat;
+        $this->repeat = $repeat;
     }
     
     function setRepeatFreq($freq)
     {
-        $this->repeatfreq =& $freq;
+        $this->repeatfreq = $freq;
     }
     
     function setRepeatType($type)
     {
-        $this->repeattype =& $type;
+        $this->repeattype = $type;
     }
     
     function setRepeatOnNum($on)
     {
-        $this->repeatonnum =& $on;
+        $this->repeatonnum = $on;
     }
     
     function setRepeatOnDay($day)
     {
-        $this->repeatonday =& $day;
+        $this->repeatonday = $day;
     }
     /*This function determines the start date of a recurring event based on the selected start date by the user and
        the recurring information. The start date is returned as a string in the format of YYYY-mm-dd*/

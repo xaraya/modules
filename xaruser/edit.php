@@ -49,7 +49,7 @@ function julian_user_edit()
    
    // TODO: make sure we don't need this
    // establish db connection      
-   $dbconn =& xarDBGetConn();
+   $dbconn = xarDBGetConn();
    //get db tables
    $xartable = xarDBGetTables();
    //set events table

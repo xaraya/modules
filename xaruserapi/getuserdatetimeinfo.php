@@ -31,7 +31,7 @@ function julian_userapi_getUserDateTimeInfo()
     xarVarFetch('cal_date', 'str:4:8', $cal_date, xarLocaleFormatDate('%Y%m%d'));
 
     $bl_data = array();
-    $bl_data['cal_date'] =& $cal_date;
+    $bl_data['cal_date'] = $cal_date;
     
     if(!preg_match('/([0-9]{4,4})([0-9]{2,2})?([0-9]{2,2})?/',$cal_date,$match)) {
         $year = gmdate('Y');

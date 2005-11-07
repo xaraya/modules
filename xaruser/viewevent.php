@@ -36,7 +36,7 @@ function julian_user_viewevent()
     if (!xarSecurityCheck('ViewJulian')) return; 
     // TODO: make this an API for linked event
     // establish a db connection
-    $dbconn =& xarDBGetConn();
+    $dbconn = xarDBGetConn();
     // get db tables
     $xartable = xarDBGetTables();
    

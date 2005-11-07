@@ -79,7 +79,7 @@ function julian_caleventblock_display($blockinfo)
     //set the selected date parts, timestamp, and cal_date in the data array
     $args = xarModAPIFunc('julian','user','getUserDateTimeInfo');
     //load calendar class
-    $c =& xarModAPIFunc('julian','user','factory','calendar');
+    $c = xarModAPIFunc('julian','user','factory','calendar');
     //determine the current user
     $args['name'] = xarUserGetVar('name');
     $args['blockid'] = $blockinfo['bid'];

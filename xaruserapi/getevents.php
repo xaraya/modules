@@ -87,9 +87,9 @@ function julian_userapi_getevents($args)
     }
 
     // Get database setup.
-    $dbconn =& xarDBGetConn();
+    $dbconn = xarDBGetConn();
     // Get database tables.
-    $xartable =& xarDBGetTables();
+    $xartable = xarDBGetTables();
     // Set Events Table and Column definitions.
     $event_table = $xartable['julian_events'];
 

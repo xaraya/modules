@@ -17,8 +17,8 @@
 function julian_userapi_getallsubscriptions()
 {
     // TODO is there no function for all this? something like xarModGetAllUserVars()
-    $dbconn =& xarDBGetConn();
-    $tables =& xarDBGetTables();
+    $dbconn = xarDBGetConn();
+    $tables = xarDBGetTables();
 
     $modBaseInfo = xarMod_getBaseInfo('julian', 'module');
     if (!isset($modBaseInfo)) {
@@ -39,7 +39,7 @@ function julian_userapi_getallsubscriptions()
               FROM   $module_uservarstable
               WHERE  xar_mvid = ?";
 
-    $result =& $dbconn->Execute($query, array((int)$modvarid));
+    $result = $dbconn->Execute($query, array((int)$modvarid));
     $subscriptions = array();
     while(!$result->EOF) {
         // uid => subscriptions_array
