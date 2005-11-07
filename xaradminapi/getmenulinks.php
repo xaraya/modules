@@ -14,6 +14,12 @@ function opentracker_adminapi_getmenulinks()
     if (xarSecurityCheck('AdminOpentracker', 0)) {
         $menulinks[] = Array('url' => xarModURL('opentracker',
                                                 'admin',
+                                                'reports'),
+                             'title' => xarML('View Opentracker reports'),
+                             'label' => xarML('View Reports'));
+
+        $menulinks[] = Array('url' => xarModURL('opentracker',
+                                                'admin',
                                                 'modifyconfig'),
                              'title' => xarML('Modify the configuration for the Opentracker module'),
                              'label' => xarML('Modify Config'));

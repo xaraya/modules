@@ -1,0 +1,35 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Opentracker Administration</xar:mlstring></span></div>
+<div class="xar-mod-body">
+
+<xar:set name="objectid">#$object:objectid#</xar:set>
+<xar:if condition="empty($objectid)">
+  <h2><xar:mlstring>Delete Object</xar:mlstring></h2>
+
+<xar:else/>
+  <h2><xar:ml><xar:mlstring>Delete #(1)</xar:mlstring><xar:mlvar>#$object:label#</xar:mlvar></xar:ml></h2>
+
+  <table width="100%" border="1" cellspacing="0" cellpadding="4">
+    <tr>
+      <td align="center">
+        <xar:data-display object="$object" tplmodule="dynamicdata" />
+      </td>
+    </tr>
+  </table>
+
+  <xar:set name="objectname">#$object:name#</xar:set>
+  <xar:set name="itemid">#$object:itemid#</xar:set>
+
+  <form method="post" action="#xarModURL('opentracker', 'admin', 'reports',array('method' => 'delete', 'itemid' => $itemid))#">
+  <div>
+    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+    <input type="hidden" name="return_url" value="&xar-modurl-opentracker-admin-reports;" />
+
+    <input type="submit" name="confirm" value=" #xarML('Yes')# " />
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <input type="submit" name="cancel" value="  #xarML('No')#  " />
+  </div>
+  </form>
+
+</xar:if>
+</div>

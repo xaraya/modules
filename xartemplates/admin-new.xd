@@ -1,0 +1,65 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Opentracker Administration</xar:mlstring></span></div>
+<div class="xar-mod-body">
+
+<xar:set name="objectid">#$object:objectid#</xar:set>
+<xar:if condition="empty($objectid)">
+  <h2><xar:mlstring>New Object</xar:mlstring></h2>
+
+<xar:else/>
+  <h2><xar:ml><xar:mlstring>New #(1)</xar:mlstring><xar:mlvar>#$object:label#</xar:mlvar></xar:ml></h2>
+
+  <xar:if condition="!empty($preview)">
+    <table width="100%" border="1" cellspacing="0" cellpadding="4">
+      <tr>
+        <td align="center">
+          <xar:mlstring>Preview</xar:mlstring>
+        </td>
+      </tr>
+      <tr>
+        <td align="center">
+          <xar:data-display object="$object" tplmodule="dynamicdata" />
+        </td>
+      </tr>
+    </table>
+  </xar:if>
+
+  <xar:set name="isupload">#$object:upload#</xar:set>
+  <xar:if condition="!empty($isupload)">
+    <xar:set name="enc_type">'multipart/form-data'</xar:set>
+  <xar:else/> 
+    <xar:set name="enc_type">'application/x-www-form-urlencoded'</xar:set>
+  </xar:if>
+  <xar:set name="objectname">#$object:name#</xar:set>
+
+  <form method="post" action="#xarModURL('opentracker', 'admin', 'reports',array('method' => 'new'))#" enctype="#$enc_type#">
+  <div>
+    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+    <table width="100%" border="0" cellpadding="4" cellspacing="0">
+
+      <xar:data-form object="$object" tplmodule="dynamicdata" />
+
+      <xar:if condition="!empty($hookoutput)">
+        <tr><td colspan="2>
+          <xar:foreach in="$hookoutput" key="$hookmodule">
+            #$hookoutput[$hookmodule]#
+            <br />
+          </xar:foreach>
+        </td></tr>
+      </xar:if>
+
+      <tr>
+        <td colspan="2" align="center">
+          <input type="hidden" name="return_url" value="&xar-modurl-opentracker-admin-reports;" />
+          <input type="submit" name="preview" value="#xarML('Preview')#" />
+          &nbsp;&nbsp;&nbsp;
+          <input type="submit" name="confirm" value="#xarML('Create')#" />
+        </td>
+      </tr>
+    </table>
+  </div>
+  </form>
+
+  <a href="http://www.phpopentracker.de/docs/en/" target="pot_doc"><xar:mlstring>See the phpOpenTracker manual for details on the different API calls</xar:mlstring></a>
+</xar:if>
+</div>

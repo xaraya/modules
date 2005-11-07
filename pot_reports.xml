@@ -1,0 +1,107 @@
+<object name="pot_reports">
+  <objectid>42</objectid>
+  <label>Opentracker Reports</label>
+  <moduleid>55555</moduleid>
+  <itemtype>1</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+    <property name="id">
+      <id>253</id>
+      <label>ID</label>
+      <type>itemid</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="name">
+      <id>254</id>
+      <label>Name</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+    <property name="description">
+      <id>255</id>
+      <label>Description</label>
+      <type>textarea_small</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>2</status>
+      <order>3</order>
+      <validation></validation>
+    </property>
+    <property name="api_call">
+      <id>256</id>
+      <label>API Call</label>
+      <type>dropdown</type>
+      <default>top_paths</default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>4</order>
+      <validation>all_paths;top_paths;longest_paths;shortest_paths;individual_clickpath;num_visitors_online;page_impressions;returning_visitors;search_engines;top;visitors;visits;visitors_online;xarmod_top;plot_access_statistics;plot_top</validation>
+    </property>
+    <property name="result_format">
+      <id>257</id>
+      <label>Result Format</label>
+      <type>dropdown</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>5</order>
+      <validation>;array;clickpath;csv;graphviz;graphviz_object;SQL;xml;xml_object</validation>
+    </property>
+    <property name="extra">
+      <id>258</id>
+      <label>Extra Arguments</label>
+      <type>array</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>2</status>
+      <order>6</order>
+      <validation>range;start;end;interval;limit;what;from;to;constraints</validation>
+    </property>
+  </properties>
+</object>
+<items>
+  <pot_reports itemid="1">
+    <api_call>top</api_call>
+    <result_format>array</result_format>
+    <extra>a:7:{s:5:&quot;range&quot;;s:13:&quot;current_month&quot;;s:5:&quot;start&quot;;s:0:&quot;&quot;;s:3:&quot;end&quot;;s:0:&quot;&quot;;s:8:&quot;interval&quot;;s:0:&quot;&quot;;s:5:&quot;limit&quot;;s:2:&quot;10&quot;;s:4:&quot;what&quot;;s:8:&quot;document&quot;;s:11:&quot;constraints&quot;;s:0:&quot;&quot;;}</extra>
+    <name>Top Pages Table</name>
+    <description></description>
+    <id>1</id>
+  </pot_reports>
+  <pot_reports itemid="2">
+    <api_call>plot_top</api_call>
+    <result_format></result_format>
+    <extra>a:7:{s:5:&quot;range&quot;;s:13:&quot;current_month&quot;;s:5:&quot;start&quot;;s:0:&quot;&quot;;s:3:&quot;end&quot;;s:0:&quot;&quot;;s:8:&quot;interval&quot;;s:0:&quot;&quot;;s:5:&quot;limit&quot;;s:2:&quot;10&quot;;s:4:&quot;what&quot;;s:8:&quot;document&quot;;s:11:&quot;constraints&quot;;s:0:&quot;&quot;;}</extra>
+    <name>Top Pages Chart</name>
+    <description></description>
+    <id>2</id>
+  </pot_reports>
+  <pot_reports itemid="3">
+    <api_call>plot_access_statistics</api_call>
+    <result_format></result_format>
+    <extra>a:7:{s:5:&quot;range&quot;;s:13:&quot;current_month&quot;;s:5:&quot;start&quot;;s:0:&quot;&quot;;s:3:&quot;end&quot;;s:0:&quot;&quot;;s:8:&quot;interval&quot;;s:3:&quot;day&quot;;s:5:&quot;limit&quot;;s:0:&quot;&quot;;s:4:&quot;what&quot;;s:0:&quot;&quot;;s:11:&quot;constraints&quot;;s:0:&quot;&quot;;}</extra>
+    <name>Daily Statistics Chart</name>
+    <description></description>
+    <id>3</id>
+  </pot_reports>
+  <pot_reports itemid="4">
+    <api_call>top_paths</api_call>
+    <result_format>graphviz_object</result_format>
+    <extra>a:7:{s:5:&quot;range&quot;;s:13:&quot;current_month&quot;;s:5:&quot;start&quot;;s:0:&quot;&quot;;s:3:&quot;end&quot;;s:0:&quot;&quot;;s:8:&quot;interval&quot;;s:0:&quot;&quot;;s:5:&quot;limit&quot;;s:2:&quot;10&quot;;s:4:&quot;what&quot;;s:0:&quot;&quot;;s:11:&quot;constraints&quot;;s:0:&quot;&quot;;}</extra>
+    <name>Top Paths Graph</name>
+    <description>Note: make sure the 'dot' and 'neato' executables from GraphViz are in your current PATH</description>
+    <id>4</id>
+  </pot_reports>
+</items>
+
