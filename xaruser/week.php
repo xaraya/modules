@@ -43,7 +43,7 @@ function julian_user_week($args)
     // Week is an array with an index of 0 - 6 indicating the days of the week. (starting with Sunday = 0) The values are the dates in the
     // format of YYYYMMDD
     $bl_data['week'] = $c->getCalendarWeek($bl_data['selected_year'].$bl_data['selected_month'].$bl_data['selected_day']);  
-    $bl_data['longDayNames'] = $c->getLongDayNames($cal_sdow);//$c->getStartDayOfWeek());
+    $bl_data['longDayNames'] = $c->getLongDayNames($cal_sdow);
     $bl_data['calendar'] = $c;   
     
     //set the start date to the first day of this week

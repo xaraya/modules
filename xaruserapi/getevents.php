@@ -1,6 +1,5 @@
 <?php
 /**
-* File: $Id: getevents.php,v 1.1 2005/06/24 11:26:01 michelv01 Exp $
 *
 * Get all events.
 *

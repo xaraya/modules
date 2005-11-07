@@ -1,17 +1,15 @@
 <?php
 /**
- * File: $Id$
+ * Get information on a linked event from articles
  *
- * Decode the short URLs for Julian
- *
- * @package julian
- * @copyright (C) 2005 by the Xaraya Development Team.
+ * @package modules
+ * @copyright (C) 2002-2005 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Julian
- * @link  link to information for the subpackage
- * @author Julian development Team 
+ * @subpackage Julian Module
+ * @link http://xaraya.com/index.php/release/319.html
+ * @author Julian Module Development Team
  */
 
 /**
@@ -30,14 +28,14 @@ function julian_userapi_geteventinfo($args)
     extract($args);
 
     // Load up database
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDBGetConn();
+    $xartable = xarDBGetTables();
     $sitePrefix = xarDBGetSiteTablePrefix();
     // Name for articles database entities
     $articlestable = $sitePrefix . '_articles';
     // Try to find the link for the current module, item type and item id.
     $query = "SELECT xar_title, xar_summary, xar_status FROM $articlestable WHERE xar_aid=$iid"; //Only select approved and frontpage articles
-    $result =& $dbconn->Execute($query);
+    $result = $dbconn->Execute($query);
     if (!empty($result)) {
         if (!$result->EOF) {
             $obj = $result->FetchObject(false);
@@ -50,5 +48,4 @@ function julian_userapi_geteventinfo($args)
  
     return $event;
 }
-
 ?>
