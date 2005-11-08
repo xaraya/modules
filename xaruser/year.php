@@ -31,7 +31,7 @@
 function julian_user_year($args)
 {
     extract ($args);
-
+    // Get the category id
     if (!xarVarFetch('catid', 'int:1:', $catid, '', XARVAR_NOT_REQUIRED)) return;
 
     // Security check

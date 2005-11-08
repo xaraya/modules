@@ -30,7 +30,7 @@ function julian_user_day()
 {
     // Security check
     if (!xarSecurityCheck('Viewjulian')) return; 
-    
+    if (!xarVarFetch('catid', 'int:1:', $catid, '', XARVAR_NOT_REQUIRED)) return;    
     //get post/get vars
     xarVarFetch('cal_sdow','int:0:6',$cal_sdow,xarModGetVar('julian','startDayOfWeek'));
     
