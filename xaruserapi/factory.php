@@ -2,12 +2,12 @@
 /**
  * Factory method that allows the creation of new objects
  *
- * @package julian
- * @copyright (C) 2005 by the Xaraya Development Team.
+ * @package modules
+ * @copyright (C) 2002-2005 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Julian
+ * @subpackage Julian Module
  * @link  link to information for the subpackage
  * @author Julian development Team 
  */

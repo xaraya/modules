@@ -1,6 +1,5 @@
 <?php
 /**
-  *
   * Class to gather data for a specific calendar view
   *
   * @package Xaraya eXtensible Management System
@@ -27,8 +26,7 @@ class Calendar
      */
     function Calendar()
     {
-        // default start day of week = sunday
-        // TODO::Make this an Admin/User Setting
+        // Set the first day of the week
         $this->startDayOfWeek = xarModGetVar('julian','startDayOfWeek');
         // load the locale date
         $localeData = xarMLSLoadLocaleData();
@@ -325,8 +323,9 @@ class Calendar
         $year = sprintf("%02d",$year);
         return(gmdate('Ymd',gmmktime(0,0,0,$month,$day,$century.$year)));
     }
-   /*determines if the current day is a Saturday or Sunday. Returns true or false
-     The day param is expected to be a string date (i.e. YYYY-mm-dd, etc.)*/
+   /* Determines if the current day is a Saturday or Sunday. Returns true or false
+    * The day param is expected to be a string date (i.e. YYYY-mm-dd, etc.)
+    */
    function isWeekend($day)
    {
       //convert day to a timestamp

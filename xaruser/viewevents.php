@@ -1,16 +1,28 @@
 <?php
 /**
-* Views all events.
-*
-* @package Xaraya eXtensible Management System
-* @copyright (C) 2004 by Metrostat Technologies, Inc.
-* @license GPL {@link http://www.gnu.org/licenses/gpl.html}
-* @link http://www.metrostat.net
-*
-* @subpackage julian
-* initial template: Roger Raymond
-* @author Jodie Razdrh/John Kevlin/David St.Clair
-*/
+ * Factory method that allows the creation of new objects
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Julian Module
+ * @link  link to information for the subpackage
+ * @author Julian development Team 
+ */
+ 
+/**
+ * Views all events.
+ *
+ * This Module:
+ * @copyright (C) 2004 by Metrostat Technologies, Inc.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.metrostat.net
+ *
+ * initial template: Roger Raymond
+ * @author 
+ */
 
 function julian_user_viewevents($args)
 {
@@ -34,7 +46,8 @@ function julian_user_viewevents($args)
     // Security check. - Important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing.
     if (!xarSecurityCheck('Viewjulian')) return; 
-    
+    /* Do we need the following section?
+    */    
     // Get the Start Day Of Week value.
     $cal_sdow = xarModGetVar('julian','startDayOfWeek');
     // Load the calendar class
@@ -43,7 +56,7 @@ function julian_user_viewevents($args)
     // Set the selected date parts,timestamp, and cal_date in the data array.
     $bl_data = xarModAPIFunc('julian','user','getUserDateTimeInfo');
     $bl_data['year'] = $c->getCalendarYear($bl_data['selected_year']);
-    $bl_data['shortDayNames'] = $c->getShortDayNames($cal_sdow);//$c->getStartDayOfWeek());
+    $bl_data['shortDayNames'] = $c->getShortDayNames($cal_sdow);
     $bl_data['calendar'] = $c;
     // Set the start day to the first month and day of the selected year.
     $startdate=$bl_data['selected_year']."-01-01";

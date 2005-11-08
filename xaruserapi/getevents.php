@@ -1,17 +1,16 @@
 <?php
 /**
-*
-* Get all events.
-*
-* @package Xaraya eXtensible Management System
-* @copyright (C) 2004 by Metrostat Technologies, Inc.
-* @license GPL {@link http://www.gnu.org/licenses/gpl.html}
-* @link http://www.metrostat.net
-*
-* @subpackage julian
-* initial template: Roger Raymond
-* @author Jodie Razdrh/John Kevlin/David St.Clair
-*/
+ * Get all events.
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2004 by Metrostat Technologies, Inc.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.metrostat.net
+ *
+ * @subpackage Julian
+ * initial template: Roger Raymond
+ * @author Jodie Razdrh/John Kevlin/David St.Clair
+ */
 
 
 /**
@@ -117,11 +116,9 @@ function julian_userapi_getevents($args)
                      $event_table.fee
               FROM   $event_table";
 
-/*
-    if ((isset($startdate))&& (isset($enddate))){
+    if ((!empty($startdate))&& (!empty($enddate))){
         $query .= " WHERE DATE_FORMAT($event_table.dtstart,'%Y%m%d') >= $startdate AND DATE_FORMAT($event_table.dtstart,'%Y%m%d') <= $enddate";
     }
-*/
 
     if (isset($sortby)) {
         switch ($sortby) {

@@ -3,7 +3,7 @@
  * Format a date for a user
  *
  * @package julian
- * @copyright (C) 2005 by the Xaraya Development Team.
+ * @copyright (C) 2002-2005 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -59,5 +59,4 @@ function julian_userapi_getUserDateTimeInfo()
     
     return $bl_data;
 }
-
 ?>

@@ -29,7 +29,7 @@
 function julian_user_viewevent()
 {
     //get post/get vars
-    if (!xarVarFetch('event_id','str',$event_id)) return; // INT here?
+    if (!xarVarFetch('event_id','id',$event_id)) return; 
     if (!xarVarFetch('cal_date','int',$cal_date)) return; // str here?
     
     // Security check
@@ -97,7 +97,6 @@ function julian_user_viewevent()
     } else {
         $bl_data['zip'] ='';
     }
-
 
    //if there was a duration set for this event, format a string indicating the from and to times
    $duration='';
