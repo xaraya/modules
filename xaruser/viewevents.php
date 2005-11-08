@@ -1,6 +1,6 @@
 <?php
 /**
- * Factory method that allows the creation of new objects
+ * View all events in a list
  *
  * @package modules
  * @copyright (C) 2002-2005 by the Xaraya Development Team.
@@ -22,6 +22,7 @@
  *
  * initial template: Roger Raymond
  * @author 
+ * @TODO MichelV: include the linked events here
  */
 
 function julian_user_viewevents($args)
@@ -52,18 +53,22 @@ function julian_user_viewevents($args)
     $cal_sdow = xarModGetVar('julian','startDayOfWeek');
     // Load the calendar class
     $c = xarModAPIFunc('julian','user','factory','calendar');
-
+    $bl_data = array();
     // Set the selected date parts,timestamp, and cal_date in the data array.
     $bl_data = xarModAPIFunc('julian','user','getUserDateTimeInfo');
     $bl_data['year'] = $c->getCalendarYear($bl_data['selected_year']);
-    $bl_data['shortDayNames'] = $c->getShortDayNames($cal_sdow);
-    $bl_data['calendar'] = $c;
-    // Set the start day to the first month and day of the selected year.
-    $startdate=$bl_data['selected_year']."-01-01";
-    // Set the end date to the last month and last day of the selected year.
-    $enddate=$bl_data['selected_year']."-12-31";
+    //$bl_data['shortDayNames'] = $c->getShortDayNames($cal_sdow);
+    //$bl_data['calendar'] = $c;
+    if (empty($startday)) {
+        // Set the start day to the first month and day of the selected year.
+        $startdate=$bl_data['selected_year']."-01-01";
+    }
+    if (empty($enddate)) {
+        // Set the end date to the last month and last day of the selected year.
+        $enddate=$bl_data['selected_year']."-12-31";
+    }
+    
     // Get the events for the selected year.
-
     $bl_data['event_array'] = xarModAPIFunc('julian','user','getall', array('startdate'=>$startdate, 'enddate'=>$enddate, 'catid' => $catid));
     // Set the url to this page in session as the last page viewed.
     $lastview=xarModURL('julian','user','year',array('cal_date'=>$bl_data['cal_date']));
