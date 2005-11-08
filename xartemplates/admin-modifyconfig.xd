@@ -56,7 +56,7 @@
         <div class="xar-clear-both xar-align-center">
             <input type="submit" value="#xarML('Save config')#" />
         </div>
-</form>
+    </form>
 </div>
 <xar:comment>
   <div style="margin: auto;">
