@@ -1,5 +1,17 @@
 <?php
-// $Id: s.xarversion.php 1.6 03/01/25 20:48:07-05:00 John.Cox@mcnabb. $
+/**
+ * Hitcount
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Hitcount Module
+ * @link http://xaraya.com/index.php/release/177.html
+ * @author Hitcount Module Development Team
+ */
+ 
 $modversion['name'] = 'Hitcount';
 $modversion['id'] = '177';
 $modversion['version'] = '1.2.2';
@@ -15,7 +27,6 @@ $modversion['author'] = 'Jim McDonald';
 $modversion['contact'] = 'http://www.mcdee.net/';
 $modversion['admin'] = 1;
 $modversion['user'] = 1;
-$modversion['securityschema'] = array('Hitcount::' => 'Module name:Item Type:Item ID');
 $modversion['class'] = 'Utility';
 $modversion['category'] = 'Content';
 ?>

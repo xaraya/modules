@@ -1,5 +1,17 @@
 <?php
-
+/**
+ * Hitcount
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Hitcount Module
+ * @link http://xaraya.com/index.php/release/177.html
+ * @author Hitcount Module Development Team
+ */
+ 
 /**
  * the main user function (nothing interesting here - might be removed)
  */
@@ -11,7 +23,7 @@ function hitcount_user_main()
     // Load API
     if (!xarModAPILoad('hitcount', 'user')) return;
 
-    $data['title'] = "Modules we're currently counting display hits for : (test)";
+    $data['title'] = xarML('Modules we are currently counting display hits for : (test)');
     $data['moditems'] = array();
     $moduleList = array();
 

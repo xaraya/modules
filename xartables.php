@@ -1,14 +1,22 @@
 <?php 
-// File: $Id: s.xartables.php 1.5 02/11/28 18:37:07-06:00 strat@stratagem.com $
-// ----------------------------------------------------------------------
-// Xaraya eXtensible Management System
-// Copyright (C) 2002 by the Xaraya Development Team.
-// http://www.xaraya.org
-// ----------------------------------------------------------------------
-// Original Author of file: Jim McDonald
-// Purpose of file:  Table information for hitcount module
-// ----------------------------------------------------------------------
-
+/**
+ * Hitcount
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Hitcount Module
+ * @link http://xaraya.com/index.php/release/177.html
+ * @author Hitcount Module Development Team
+ */
+ 
+/*
+ * Table information for hitcount module
+ *
+ * Original Author of file: Jim McDonald
+ */
 function hitcount_xartables()
 {
     // Initialise table array

@@ -1,22 +1,21 @@
 <?php
 /**
- * File: $Id$
+ * Hitcount
  *
- * Dynamic Hit Count Property
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage dynamicdata properties
- * @author mikespub <mikespub@xaraya.com>
-*/
+ * @subpackage Hitcount Module
+ * @link http://xaraya.com/index.php/release/177.html
+ * @author Hitcount Module Development Team
+ */
+ 
 /**
- * handle static text property
- *
- * @package dynamicdata
- *
+ * Handle the hitcount property
+ * @author mikespub <mikespub@xaraya.com>
+ * 
  */
 include_once "modules/dynamicdata/class/properties.php";
 
