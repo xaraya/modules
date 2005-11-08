@@ -227,7 +227,7 @@ function julian_user_viewevents($args)
                                                     'event_id' => $event_id,
                                                     'catid' => $catid)),
                                     xarModGetVar('julian', 'itemsperpage'));
-
+    $bl_data['catid'] = $catid;
     // Return the template variables defined in this function.
     return $bl_data;
 }

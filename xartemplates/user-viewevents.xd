@@ -1,7 +1,7 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <!--- The Julian Module - User Event List Page. --->
 #xarModAPIFunc('overlib','user','init')#
-<xar:if condition="xarTplAddStyleLink('julian', 'julian')"></xar:if>
+
   <div class="xar-julian xar-julian-user-viewevents">
     <xar:template file="header" />
       <div class="xar-julian-contents">
@@ -123,6 +123,13 @@
         <br />
         -->
         ********** End of the Hide the Date Range selection process. **********
+        </xar:comment>
+        
+        <xar:comment> Add the category browser to play with
+        <xar:if condition="xarModIsHooked('categories','julian')">
+            <xar:categories-navigation layout="trails" showchildren="1" 
+            module="julian" catid="$catid" func="viewevents" sortby="$sortby"/>
+        </xar:if>
         </xar:comment>
         <table width="100%" border="1" cellspacing="0" cellpadding="4">
           <tr>
