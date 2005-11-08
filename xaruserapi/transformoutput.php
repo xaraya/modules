@@ -63,6 +63,10 @@ function html_userapi_transformoutput($args)
  */
 function html_userapitransformoutput($text)
 {
+    /* TODO: are there any extension plans here?, otherwise this code can be replaced with something which
+     * does NOT depend on the bbcode module, nor the (big) class. From casual inspection it looks as if this does
+     * only nl2br on the $text?
+     */
     include_once 'modules/bbcode/xarclass/stringparser_bbcode.class.php';
     $bbcode = new StringParser_BBCode();
     $dotransform = xarModGetVar('html', 'dolinebreak');
