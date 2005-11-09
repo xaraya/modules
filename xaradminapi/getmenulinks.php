@@ -46,14 +46,14 @@ function sitetools_adminapi_getmenulinks()
         $menulinks[] = Array('url' => xarModURL('sitetools',
                 'admin',
                 'cacheview'),
-            'title' => xarML('Browse cache files'),
-            'label' => xarML('Browse cache files'));
+            'title' => xarML('Browse template cache files'),
+            'label' => xarML('Browse template cache'));
 
         $menulinks[] = Array('url' => xarModURL('sitetools',
                 'admin',
                 'deletecache'),
-            'title' => xarML('Clear cache files'),
-            'label' => xarML('Clear cache files'));
+            'title' => xarML('Clear template, rss and adodb cache files'),
+            'label' => xarML('Flush template cache'));
 
         $menulinks[] = Array('url' => xarModURL('sitetools',
                 'admin',

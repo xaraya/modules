@@ -6,7 +6,7 @@
 </div>
 <div class="xar-mod-body">
     <h2>
-        <xar:mlstring>View Cache Files</xar:mlstring>
+        <xar:mlstring>View Template Cache Files</xar:mlstring>
     </h2>
     <xar:set name="goback"><xar:mlstring>Go back</xar:mlstring></xar:set>
     <xar:set name="$cacheurltxt"><xar:mlstring>Click to browse this file</xar:mlstring></xar:set>
