@@ -1,13 +1,16 @@
 <?php
 /**
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * Admin Main Menu link
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage xartinymce
+ * @subpackage xartinymce module
+ * @link http://xaraya.com/index.php/release/63.html
  * @author Jo Dalle Nogare <jojodee@xaraya.com>
- *
+ */
 /**
  * Utility function pass individual menu items to the main menu
  *

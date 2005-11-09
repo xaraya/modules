@@ -118,7 +118,7 @@
            <div class="xar-form-input-wrapper-after">
             <xar:mlstring>(You can also set installed editors in </xar:mlstring><a href="&xar-modurl-base-admin-modifyconfig;&amp;tab=other" rel="ext"><xar:mlstring>Base Module - Modify Config - Other Tab</xar:mlstring></a>)
            </div>
-           <div class="xar-form-input-wrapper-before">
+           <div class="xar-form-input-wrapper-after">
             <p>
             <xar:mlstring>To ensure the tinymce DD Property is available, flush the DD property cache at </xar:mlstring><a href="&xar-modurl-dynamicdata-admin-modifyconfig;" rel="external"><xar:mlstring>Dynamicdata - Property Types - Flush Property Cache</xar:mlstring></a>)
             </p>
