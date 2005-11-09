@@ -13,7 +13,7 @@
  */
 
 /**
- * initialise the example module
+ * initialise the sitetools module
  * This function is only ever called once during the lifetime of a particular
  * module instance
  */
