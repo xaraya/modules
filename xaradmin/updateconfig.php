@@ -245,6 +245,7 @@ function tinymce_admin_updateconfig()
 
 
         }
+
         if (trim(xarModGetVar('tinymce','tinyplugins')) <> '') {
             $jstext .='plugins : "'.xarModGetVar('tinymce','tinyplugins').'", ';
         }

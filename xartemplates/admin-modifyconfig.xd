@@ -489,9 +489,10 @@
 
             <div class="xar-form-input-wrapper">
                 <label for="tinyplugins" class="xar-form-label" title="#xarML('Add names of any extra plugins you wish to load here.')#">
-                    <xar:mlstring>Names of plugins to load:</xar:mlstring>
+                    <xar:mlstring>Names of plugins to load (separated by commas):</xar:mlstring>
                 </label>
                <input type="text" name="tinyplugins" id="tinyplugins" value="#$tinyplugins#" size="65" maxlength="240" />
+
             </div>
 
             <div class="xar-form-input-wrapper-after">
