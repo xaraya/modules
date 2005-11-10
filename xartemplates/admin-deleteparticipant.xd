@@ -1,48 +1,47 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:style scope="module" file="xarform" />
 <xar:style scope="module" />
-
 <div class="xar-mod-head">
    <span class="xar-mod-title"><xar:mlstring>Courses Administration</xar:mlstring></span>
 </div>
 <div class="xar-mod-body"><h2>#$menutitle#</h2><br />
-<form method="post" class="xar-form" action="&xar-modurl-courses-admin-deleteparticipant;">
-    <input type="hidden" name="authid" id="authid" value="#$authid#" />
-    <input type="hidden" name="confirm" id="confirm" value="true" />
-    <input type="hidden" name="sid" id="sid" value="#$sid#" />
-    <input type="hidden" name="planningid" id="planningid" value="#$item['planningid']#" />
-
-      <fieldset class="xar-norm">
-           <fieldset class="formelements xar-norm">
-                <legend>
-                    <strong>#$confirmtext#</strong>
-                </legend>
-                <p class="param">
-                    <label for="uname">
-                        <span class="help" title="#xarML('The name of the participant.')#">
-                        #$namelabel#
-                        </span>
-                    </label>
-                    <xar:data-input name="name" type="1" value="$namevalue" />
-                </p>
-                <p class="param">
-                    <label for="sid">
-                        <span class="help" title="#xarML('The ID of the participant.')#">
-                        #$itemid#
-                        </span>
-                    </label>
-                    <xar:data-input name="sid" type="1" value="$sid" />
-                </p>
-                <p class="param">
-                    <label for="planningid">
-                        <span class="help" title="#xarML('The ID of this occurence of the course.')#">
-                        #$planningidlabel#
-                        </span>
-                    </label>
-                    <xar:data-input name="planningid" type="1" value="$item['planningid']" />
-                </p>
-           </fieldset>
-      </fieldset>
-<input type="submit" value="#$confirmbutton#"  />
-</form>
+    <form method="post" class="xar-form" action="&xar-modurl-courses-admin-deleteparticipant;">
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <input type="hidden" name="confirm" id="confirm" value="true" />
+        <input type="hidden" name="sid" id="sid" value="#$sid#" />
+        <input type="hidden" name="planningid" id="planningid" value="#$item['planningid']#" />
+        <fieldset>
+            <legend>
+                <strong>#$confirmtext#</strong>
+            </legend>
+            <div class="xar-form-input-wrapper">
+                <label for="uname" class="xar-form-label">
+                    <span class="help" title="#xarML('The name of the participant.')#">
+                    #$namelabel#
+                    </span>
+                </label>
+                <xar:data-input name="name" type="1" value="$namevalue" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="sid" class="xar-form-label">
+                    <span class="help" title="#xarML('The ID of the participant.')#">
+                    #$itemid#
+                    </span>
+                </label>
+                <xar:data-input name="sid" type="1" value="$sid" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="planningid" class="xar-form-label">
+                    <span class="help" title="#xarML('The ID of this occurence of the course.')#">
+                    #$planningidlabel#
+                    </span>
+                </label>
+                <xar:data-input name="planningid" type="1" value="$item['planningid']" />
+            </div>
+        </fieldset>
+        <fieldset>
+        <div class="xar-form-input-wrapper-after">
+            <input type="submit" value="#$confirmbutton#"  />
+        </div>
+        </fieldset>
+    </form>
 </div>

@@ -1,6 +1,6 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:style scope="module" file="xarform" />
 <xar:style scope="module" />
+
 <!-- This Javascript will check for required fields before the form is submitted. -->
 <xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
 
@@ -13,53 +13,45 @@
 //-->
 </script>
 
-<!-- common admin menu for this module - remove link to the current function -->
-<!-- the variables used in this menu come from example_admin_menu() -->
-<div class="xar-courses xar-courses-addplanning">
 <div class="xar-courses-head">
     <span class="xar-mod-title">#$menutitle#</span>
 </div>
-<div class="xar-courses-contents">
+<div class="xar-mod-body">
     <h2>#$coursedata['number']# #$coursedata['name']#</h2><br />
 
-
-<!-- the specific template for the current admin function comes here -->
-
-<form method="post" class="xar-form"
-      action="#xarModUrl('courses', 'admin', 'createplanning')#"
-      onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
-      
-      <fieldset class="xar-norm">
-           <fieldset class="formelements xar-norm">
+    <form method="post"
+          action="&xar-modurl-courses-admin-createplanning;"
+          onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
+           <fieldset>
                 <legend>
-                    <strong><xar:mlstring>Plan an occurence</xar:mlstring></strong>
+                    <xar:mlstring>Plan an occurence</xar:mlstring>
                 </legend>
-                <p class="param">
-                    <label for="name" class="required">
+                <div class="xar-form-input-wrapper">
+                    <label for="name" class="required xar-form-label">
                         <span class="help" title="#xarML('The name of this course.')#">
                         #$namelabel#
                         </span>
                     </label>
                     <xar:data-input name="name" type="1" value="$coursedata['name']" />
-                </p>
-                <p class="param">
-                    <label for="number" class="required">
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="number" class="required xar-form-label">
                         <span class="help" title="#xarML('The code/number of this course.')#">
                         #$numberlabel#
                         </span>
                     </label>
                     <xar:data-input name="number" type="1" value="$coursedata['number']" />
-                </p>
-                <p class="param">
-                    <label for="freq" class="required">
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="freq" class="required xar-form-label">
                         <span class="help" title="#xarML('The Frequency of this course.')#">
                         #$freqlabel#
                         </span>
                     </label>
                     <xar:data-input name="freq" type="1" value="$coursedata['freq']" />
-                </p>
-                <p class="param">
-                    <label for="year" class="required">
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="year" class="required xar-form-label">
                         <span class="help" title="#xarML('Choose the course year or period for this occurence.')#">
                         #$yearlabel#
                         </span>
@@ -69,39 +61,39 @@
                             <option value="#$loop:item['yearid']#">#$loop:item['year']#</option>
                         </xar:loop>
                         </select>
-                </p>
-                <p class="param">
-                    <label for="startdate" class="required">
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="startdate" class="required xar-form-label">
                         <span class="help" title="#xarML('The date this course will start.')#">
                         #$startdatelabel#
                         </span>
                     </label>
                     <xar:data-input name="startdate" type="8" validation="date" value="$startdate" />
-                </p>
-                <p class="param">
-                    <label for="enddate" class="required">
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="enddate" class="required xar-form-label">
                         <span class="help" title="#xarML('The date this course will end.')#">
                         #$enddatelabel#
                         </span>
                     </label>
                     <xar:data-input name="enddate" type="8" value="$enddate" />
-                </p>
-                <p class="param">
-                    <label for="closedate" class="required">
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="closedate" class="required xar-form-label">
                         <span class="help" title="#xarML('The date registration for this course will end.')#">
                         #$closedatelabel#
                         </span>
                     </label>
                     <xar:data-input name="closedate" type="8" value="$closedate" />
-                </p>
+                </div>
                 
            </fieldset>
            <fieldset class="formelements xar-norm">
                 <legend>
                     <strong><xar:mlstring>Course credits</xar:mlstring></strong>
                 </legend>
-                <p class="param">
-                    <label for="credits" class="required">
+                <div class="xar-form-input-wrapper">
+                    <label for="credits" class="required xar-form-label">
                         <span class="help" title="#xarML('Enter the number of credits for this course.')#">
                         #$creditslabel#
                         </span>
@@ -110,9 +102,9 @@
                     <xar:if condition="!empty($invalid['credits'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid amount of credits</xar:mlstring></span>
                     </xar:if>
-                </p>
-                <p class="param">
-                    <label for="creditsmin">
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="creditsmin" class="xar-form-label">
                         <span class="help" title="#xarML('Enter the minimum amount of credits for this course.')#">
                         #$creditsminlabel#
                         </span>
@@ -121,9 +113,9 @@
                     <xar:if condition="!empty($invalid['creditsmin'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid amount of minimum credits</xar:mlstring></span>
                     </xar:if>
-                </p>
-                <p class="param">
-                    <label for="creditsmax">
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="creditsmax" class="xar-form-label">
                         <span class="help" title="#xarML('Enter the maximum amount of credits for this course.')#">
                         #$creditsmaxlabel#
                         </span>
@@ -132,268 +124,239 @@
                     <xar:if condition="!empty($invalid['creditsmax'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid amount of maximum credits</xar:mlstring></span>
                     </xar:if>
-                </p>
+                </div>
            </fieldset>
-           <fieldset class="formelements xar-norm">
+           <fieldset>
                 <legend>
-                    <strong><xar:mlstring>Course contents</xar:mlstring></strong>
+                    <xar:mlstring>Course contents</xar:mlstring>
                 </legend>
-                <p class="param">
-                    <label for="prerequisites">
+                <div class="xar-form-input-wrapper">
+                    <label for="prerequisites" class="xar-form-label">
                         <span class="help" title="#xarML('Enter the prerequisites (Like another course to fulfill before a student can enroll into this one) for this course.')#">
                         #$prereqlabel#
                         </span>
                     </label>
-                    <span class="fullright">
-                            <textarea class="fullright" name="prerequisites" id="prerequisites" wrap="virtual" rows="10" cols="40"></textarea>
-                    </span>
+                    <textarea class="fullright" name="prerequisites" id="prerequisites" wrap="virtual" rows="10" cols="40"></textarea>
                     <xar:if condition="!empty($invalid['prerequisites'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a prerequisites type</xar:mlstring></span>
                     </xar:if>
-                </p>
-                <p class="param">
-                    <label for="aim">
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="aim" class="xar-form-label">
                         <span class="help" title="#xarML('Enter the aim of this course.')#">
                         #$aimlabel#
                         </span>
                     </label>
-                    <span class="fullright">
-                        <textarea class="fullright" name="aim" id="aim" wrap="virtual" rows="10" cols="40"></textarea>
-                    </span>
+                    <textarea class="fullright" name="aim" id="aim" wrap="virtual" rows="10" cols="40"></textarea>
                     <xar:if condition="!empty($invalid['aim'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid aim type</xar:mlstring></span>
                     </xar:if>
-                </p>
-                <p class="param">
-                    <label for="longdesc">
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="longdesc" class="xar-form-label">
                         <span class="help" title="#xarML('Enter a complete description for this course, supplementing the short description.')#">
                         #$longdesclabel#
                         </span>
                     </label>
-                    <span class="fullright">
-                        <textarea class="fullright" name="longdesc" id="longdesc" wrap="virtual" rows="10" cols="40"></textarea>
-                    </span>
+                    <textarea class="fullright" name="longdesc" id="longdesc" wrap="virtual" rows="10" cols="40"></textarea>
                     <xar:if condition="!empty($invalid['shortdesc'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid long decription</xar:mlstring></span>
                     </xar:if>
-                </p>
-                <p class="param">
-                    <label for="program">
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="program" class="xar-form-label">
                         <span class="help" title="#xarML('The programme of this course.')#">
                         #$programlabel#
                         </span>
                     </label>
-                    <span class="fullright">
-                        <textarea class="fullright" name="program" id="program" wrap="virtual" rows="10" cols="40"></textarea>
-                    </span>
+                    <textarea class="fullright" name="program" id="program" wrap="virtual" rows="10" cols="40"></textarea>
                     <xar:if condition="!empty($invalid['program'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid programme description</xar:mlstring></span>
                     </xar:if>
-                </p>
-                <p class="param">
-                    <label for="method">
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="method" class="xar-form-label">
                         <span class="help" title="#xarML('Describe the methods used in this course.')#">
                         #$methodlabel#
                         </span>
                     </label>
-                    <span class="fullright">
-                        <textarea class="fullright" name="method" id="method" wrap="virtual" rows="10" cols="40"></textarea>
-                    </span>
+                    <textarea class="fullright" name="method" id="method" wrap="virtual" rows="10" cols="40"></textarea>
                     <xar:if condition="!empty($invalid['method'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid method description</xar:mlstring></span>
                     </xar:if>
-                </p>
-                <p class="param">
-                    <label for="lecturers">
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="lecturers" class="xar-form-label">
                         <span class="help" title="#xarML('The lecturers for this course.')#">
                         #$lecturerslabel#
                         </span>
                     </label>
-                    <span class="fullright">
-                        <textarea class="fullright" name="lecturers" id="lecturers" wrap="virtual" rows="10" cols="40"></textarea>
-                    </span>
+                    <textarea class="fullright" name="lecturers" id="lecturers" wrap="virtual" rows="10" cols="40"></textarea>
                     <xar:if condition="!empty($invalid['lecturers'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid lecturers description</xar:mlstring></span>
                     </xar:if>
-                </p>
+                </div>
            </fieldset>
-           <fieldset class="formelements xar-norm">
+           <fieldset>
                 <legend>
-                    <strong><xar:mlstring>Course conditions</xar:mlstring></strong>
+                    <xar:mlstring>Course conditions</xar:mlstring>
                 </legend>
-                <p class="param">
-                    <label for="costs">
+                <div class="xar-form-input-wrapper">
+                    <label for="costs" class="xar-form-label">
                         <span class="help" title="#xarML('The costs to enroll into this course.')#">
                         #$costslabel#
                         </span>
                     </label>
-                    <span class="fullright">
-                      <xar:data-input name="costs" type="2" value="$costs" />
-                    </span>
+                    <xar:data-input name="costs" type="2" value="$costs" />
                     <xar:if condition="!empty($invalid['costs'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid cost</xar:mlstring></span>
                     </xar:if>
-                </p>
-                <p class="param">
-                    <label for="minpart">
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="minpart" class="xar-form-label">
                         <span class="help" title="#xarML('The minimum amount of students that should enroll in this course.')#">
                         #$minpartlabel#
                         </span>
                     </label>
-                    <span class="fullright">
-                      <xar:data-input name="minparticipants" type="15" value="$minparticipants" />
-                    </span>
+                    <xar:data-input name="minparticipants" type="15" value="$minparticipants" />
                     <xar:if condition="!empty($invalid['minparticipants'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid amount of minimum participants</xar:mlstring></span>
                     </xar:if>
-                </p>
-                <p class="param">
-                    <label for="maxpart">
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="maxpart" class="xar-form-label">
                         <span class="help" title="#xarML('The maximum amount of students that can enroll in this course.')#">
                         #$maxpartlabel#
                         </span>
                     </label>
-                    <span class="fullright">
-                      <xar:data-input name="maxparticipants" type="15" value="$maxparticipants" />
-                    </span>
+                    <xar:data-input name="maxparticipants" type="15" value="$maxparticipants" />
                     <xar:if condition="!empty($invalid['maxparticipants'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid amount of maximum participants</xar:mlstring></span>
                     </xar:if>
-                </p>
-                <p class="param">
-                    <label for="material">
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="material" class="xar-form-label">
                         <span class="help" title="#xarML('The material used in this course.')#">
                         #$materiallabel#
                         </span>
                     </label>
-                    <span class="fullright">
-                        <textarea class="fullright" name="material" id="material" wrap="virtual" rows="10" cols="40"></textarea>
-                    </span>
+                    <textarea class="fullright" name="material" id="material" wrap="virtual" rows="10" cols="40"></textarea>
                     <xar:if condition="!empty($invalid['material'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid material description</xar:mlstring></span>
                     </xar:if>
-                </p>
-                <p class="param">
-                    <label for="location">
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="location" class="xar-form-label">
                         <span class="help" title="#xarML('The location of this course.')#">
                         #$locationlabel#
                         </span>
                     </label>
-                    <span class="fullright">
-                        <textarea class="fullright" name="location" id="location" wrap="virtual" rows="10" cols="40"></textarea>
-                    </span>
+                    <textarea class="fullright" name="location" id="location" wrap="virtual" rows="10" cols="40"></textarea>
                     <xar:if condition="!empty($invalid['location'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid location</xar:mlstring></span>
                     </xar:if>
-                </p>
-                <p class="param">
-                    <label for="coordinators">
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="coordinators" class="xar-form-label">
                         <span class="help" title="#xarML('The coordinators for this course.')#">
                         #$coordinatorslabel#
                         </span>
                     </label>
-                    <span class="fullright">
-                        <textarea class="fullright" name="coordinators" id="coordinators" wrap="virtual" rows="10" cols="40"></textarea>
-                    </span>
+                    <textarea class="fullright" name="coordinators" id="coordinators" wrap="virtual" rows="10" cols="40"></textarea>
                     <xar:if condition="!empty($invalid['coordinators'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid coordinators description</xar:mlstring></span>
                     </xar:if>
-                </p>
-                <p class="param">
-                    <label for="committee">
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="committee" class="xar-form-label">
                         <span class="help" title="#xarML('The organising committee for this course.')#">
                         #$committeelabel#
                         </span>
                     </label>
-                    <span class="fullright">
-                        <textarea class="fullright" name="committee" id="committee" wrap="virtual" rows="10" cols="40"></textarea>
-                    </span>
+                    <textarea class="fullright" name="committee" id="committee" wrap="virtual" rows="10" cols="40"></textarea>
                     <xar:if condition="!empty($invalid['committee'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid committee description</xar:mlstring></span>
                     </xar:if>
-                </p>
+                </div>
            </fieldset>
-           <fieldset class="formelements xar-norm">
+           <fieldset>
                 <legend>
-                    <strong><xar:mlstring>Others</xar:mlstring></strong>
+                    <xar:mlstring>Others</xar:mlstring>
                 </legend>
-                <p class="param">
-                    <label for="info">
+                <div class="xar-form-input-wrapper">
+                    <label for="info" class="xar-form-label">
                         <span class="help" title="#xarML('Other info on this course.')#">
                         #$infolabel#
                         </span>
                     </label>
-                    <span class="fullright">
-                        <textarea class="fullright" name="info" id="info" wrap="virtual" rows="10" cols="40"></textarea>
-                    </span>
+                    <textarea class="fullright" name="info" id="info" wrap="virtual" rows="10" cols="40"></textarea>
                     <xar:if condition="!empty($invalid['info'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid info description</xar:mlstring></span>
                     </xar:if>
-                </p>
-                <p class="param">
-                    <label for="hideplanning">
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="hideplanning" class="xar-form-label">
                         <span class="help" title="#xarML('Hide this planning from being viewed by site users.')#">
                         #$hideplanninglabel#
                         </span>
                     </label>
-                    <span class="fullright">
-                      <xar:data-input name="hideplanning" type="14" value="$hideplanning" />
-                    </span>
-                </p>
+                    <xar:data-input name="hideplanning" type="14" value="$hideplanning" />
+                </div>
            </fieldset>
-      </fieldset>
-      
-<xar:comment>
-
-<xar:if condition="!isset($contact)">
-    <div style="clear: both; padding-top: 10px;">
-    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-    <span style="float: left; width: 20%; text-align: right;">
-        <span class="help" title="#xarML('Enter detailed contact information for this course.')#"><label for="contact">#$contactlabel#</label>:</span>
-    </span>
-    <span style="float: right; width: 78%; text-align: left;">
-     <xar:data-input name="contact" type="3" value="$contact" />
-
-    <xar:if condition="!empty($invalid['contact'])">
-            <span style="color: red"><xar:mlstring>ERROR! This is not a valid contact</xar:mlstring></span>
+          
+            <xar:comment>
+            
+            <xar:if condition="!isset($contact)">
+                <div style="clear: both; padding-top: 10px;">
+                <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                <span style="float: left; width: 20%; text-align: right;">
+                    <span class="help" title="#xarML('Enter detailed contact information for this course.')#"><label for="contact">#$contactlabel#</label>:</span>
+                </span>
+                <span style="float: right; width: 78%; text-align: left;">
+                 <xar:data-input name="contact" type="3" value="$contact" />
+            
+                <xar:if condition="!empty($invalid['contact'])">
+                        <span style="color: red"><xar:mlstring>ERROR! This is not a valid contact</xar:mlstring></span>
+                    </xar:if>
+                </span>
+                </div>
+            
+            <xar:else />
+            
+                <div style="clear: both; padding-top: 10px;">
+                <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                <span style="float: left; width: 20%; text-align: right;">
+                    <span class="help" title="#xarML('Enter detailed contact information for this course.')#"><label for="contact">#$contactlabel#</label>:</span>
+                </span>
+                <span style="float: right; width: 78%; text-align: left;">
+                 <xar:data-input name="contact" type="3" value="$item['contact']" />
+            
+                    <xar:if condition="!empty($invalid['contact'])">
+                        <span style="color: red"><xar:mlstring>ERROR! This is not a valid contact</xar:mlstring></span>
+                    </xar:if>
+                </span>
+                </div>
+            
+            </xar:if>
+            
+            </xar:comment>
+        <xar:if condition="!empty($hookoutput)">
+         <fieldset>
+            <xar:comment> Show hooked items, like keywords here</xar:comment>
+            <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
+                <xar:foreach in="$hookoutput" key="$hookmodule">
+                <xar:if condition="!($hookmodule eq 'categories') and !empty($hookmodule)">
+                    #$hookoutput[$hookmodule]#
+                </xar:if>
+                </xar:foreach>
+          </fieldset>
         </xar:if>
-    </span>
-    </div>
-
-<xar:else />
-
-    <div style="clear: both; padding-top: 10px;">
-    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-    <span style="float: left; width: 20%; text-align: right;">
-        <span class="help" title="#xarML('Enter detailed contact information for this course.')#"><label for="contact">#$contactlabel#</label>:</span>
-    </span>
-    <span style="float: right; width: 78%; text-align: left;">
-     <xar:data-input name="contact" type="3" value="$item['contact']" />
-
-        <xar:if condition="!empty($invalid['contact'])">
-            <span style="color: red"><xar:mlstring>ERROR! This is not a valid contact</xar:mlstring></span>
-        </xar:if>
-    </span>
-    </div>
-
-</xar:if>
-
-</xar:comment>
-
-    #$hooks#
-    <div style="clear: both; padding-top: 10px;">
-    <!--
-        // Add an authorisation ID - this adds a hidden field in the form that
-        // contains an authorisation ID.  The authorisation ID is very important in
-        // preventing certain attacks on the website
-    -->
-        <input type="hidden" name="courseid" id="courseid" value="#$coursedata['courseid']#" />
-        <input type="hidden" name="authid" id="authid" value="#$authid#" />
-        <span style="float: left; width: 30%; text-align: right;"><input type="submit" value="#$addplanningbutton#" /></span>
-    </div>
-
-</form>
-
-<br />
-</div>
+            <fieldset>
+                <div class="xar-form-input-wrapper-after">        
+                    <input type="hidden" name="courseid" id="courseid" value="#$coursedata['courseid']#" />
+                    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                    <input type="submit" value="#$addplanningbutton#" />
+                </div>
+            </fieldset>
+    </form>
 </div>
