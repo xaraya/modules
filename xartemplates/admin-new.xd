@@ -75,7 +75,7 @@
                 </xar:if>
             </div>
         </fieldset>
-        <xar:if condition="!empty($hooks)">
+        <xar:if condition="!empty($hookoutput)">
          <fieldset>
             <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
                 <xar:foreach in="$hookoutput" key="$hookmodule">
