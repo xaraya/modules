@@ -263,7 +263,7 @@
                             </span>
                         </label>
                         <span class="fullright">
-                            #$item['location']#
+                            #$item.location#
                         </span>
                     </div>
                 </xar:if>
@@ -274,9 +274,7 @@
                             #$coordinatorslabel#
                             </span>
                         </label>
-                        <span class="fullright">
-                            #$item['coordinators']#
-                        </span>
+                        #$item.coordinators#
                     </div>
                 </xar:if>
                 <xar:if condition="!empty($item['committee']) OR $HideEmptyFields == '0'">
@@ -286,9 +284,7 @@
                             #$committeelabel#
                             </span>
                         </label>
-                        <span class="fullright">
-                            #$item['committee']#
-                        </span>
+                        #$item.committee#
                     </div>
                 </xar:if>
                </fieldset>
@@ -302,9 +298,9 @@
                             #$infolabel#
                             </span>
                         </label>
-                        <span class="fullright">
-                            #$item['info']#
-                        </span>
+                        <div class="xar-form-input-wrapper-after">
+                            #$item.info#
+                        </div>
                     </div>
                     <div class="xar-form-input-wrapper">
                         <label for="last_modified" class="xar-form-label">
@@ -312,7 +308,7 @@
                             #$lastmodilabel#
                             </span>
                         </label>
-                            #$item['last_modified']#
+                            #$item.last_modified#
                     </div>
                </fieldset>
                <fieldset>
