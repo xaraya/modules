@@ -70,7 +70,7 @@ function example_init()
        I4: 4-byte integer
        I8: 8-byte integer
        F:  Floating point number
-       N:  Numeric or decimal numbe
+       N:  Numeric or decimal number
     */
     /*
        AUTO          For autoincrement numbers and sets NOTNULL also.
