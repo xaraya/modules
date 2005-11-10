@@ -59,16 +59,16 @@ function courses_admin_newcourse($args)
     // Call hooks 
     $item = array();
     $item['module'] = 'courses';
-    $item['multiple'] = false;
     $item['returnurl'] = xarModURL('courses', 'admin', 'newcourse');
     $hooks = xarModCallHooks('item', 'new', '', $item);    
     if (empty($hooks)) {
-        $data['hookoutput'] = '';
+        $data['hookoutput'] = array();
     } else {
         // You can use the output from individual hooks in your template too, e.g. with
         // $hookoutput['categories'], $hookoutput['dynamicdata'], $hookoutput['keywords'] etc.
         $data['hookoutput'] = $hooks;
     }
+    $data['hooks'] = '';
     // For E_ALL purposes, we need to check to make sure the vars are set.
     // If they are not set, then we need to set them empty to surpress errors
     if (empty($name)) {

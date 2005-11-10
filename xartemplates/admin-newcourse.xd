@@ -148,21 +148,14 @@
                     </xar:if>
                 </div>
            </fieldset>
-
-        <xar:if condition="!empty($hooks)">
+        <xar:if condition="!empty($hookoutput)">
          <fieldset>
+            <xar:comment> Show hooked items, like keywords here</xar:comment>
             <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
-                <xar:foreach in="$hooks" key="$hookmodule">
-              <!--
-                You can display individual hooks if you want using xar:if statements
-    
-                <xar:if condition="($hookmodule eq 'categories') and !empty($hookmodule)">
-                    #$hooks['categories']#
+                <xar:foreach in="$hookoutput" key="$hookmodule">
+                <xar:if condition="!($hookmodule eq 'categories') and !empty($hookmodule)">
+                    #$hookoutput[$hookmodule]#
                 </xar:if>
-    
-                or display them all with one command as follows
-                -->
-                #$hooks[$hookmodule]#
                 </xar:foreach>
           </fieldset>
         </xar:if>
