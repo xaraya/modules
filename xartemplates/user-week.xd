@@ -73,13 +73,24 @@
                                         <xar:if condition="!$event_array[$dbdate][$index]['isallday']">
                                             <span class="xar-julian-sub">#$event_array[$dbdate][$index]['time']#</span> 
                                         </xar:if>
+                                        <xar:comment>                                           
+	<a href="#xarModURL('julian','user','viewevent',array('cal_date'=>$date,'event_id'=>$event_array[$dbdate][$index]['event_id']))#"
+       class="xar-julian-event">
+		<span class="xar-julian-tooltip">
+			<span>#$event_array[$dbdate][$index]['summary']#</span>
+		</span>
+	</a>
+                                        </xar:comment>                                   
+
+                                     
                                         <a href="#xarModURL('julian','user','viewevent',array('cal_date'=>$date,'event_id'=>$event_array[$dbdate][$index]['event_id']))#"
                                            onmouseover="return overlib('#$event_array[$dbdate][$index]['singlepopover']#',CAPTION,'#$event_array[$dbdate][$index]['singlepopovercaption']#')"
                                            onmouseout="return nd()"
                                            class="xar-julian-event">
-                                            
+                                        
                                             #$event_array[$dbdate][$index]['summary']# 
                                         </a><br>
+     
                                     </div>
                                 </li>
                                 </xar:foreach>
