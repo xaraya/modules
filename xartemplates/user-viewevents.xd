@@ -125,12 +125,12 @@
         ********** End of the Hide the Date Range selection process. **********
         </xar:comment>
         
-        <xar:comment> Add the category browser to play with
+        <xar:comment> Add the category browser to play with</xar:comment>
         <xar:if condition="xarModIsHooked('categories','julian')">
             <xar:categories-navigation layout="trails" showchildren="1" 
             module="julian" catid="$catid" func="viewevents" sortby="$sortby"/>
         </xar:if>
-        </xar:comment>
+        
         <table width="100%" border="1" cellspacing="0" cellpadding="4">
           <tr>
             <xar:if condition="$eventdateurl != ''">

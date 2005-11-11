@@ -86,9 +86,9 @@ function julian_userapi_getevents($args)
     }
 
     // Get database setup.
-    $dbconn = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     // Get database tables.
-    $xartable = xarDBGetTables();
+    $xartable =& xarDBGetTables();
     // Set Events Table and Column definitions.
     $event_table = $xartable['julian_events'];
 
@@ -113,8 +113,28 @@ function julian_userapi_getevents($args)
                      $event_table.duration,
                      $event_table.rrule,
                      $event_table.isallday,
-                     $event_table.fee
-              FROM   $event_table";
+                     $event_table.fee";
+              
+              
+    // Select on categories
+    if (xarModIsHooked('categories','julian')) {
+        // Get the LEFT JOIN ... ON ...  and WHERE parts from categories
+        $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
+                                       array('modid' => 
+                                              xarModGetIDFromName('julian'),
+                                             'catid' => $catid));
+        $query .= " FROM  ( $event_table
+                  LEFT JOIN $categoriesdef[table]
+                  ON $categoriesdef[field] = event_id )
+                  $categoriesdef[more]
+                  WHERE $categoriesdef[where] ";
+    } else {
+        $query .= " FROM $event_table "; 
+    }
+    
+    if (xarModIsHooked('categories','julian') && (!empty($startdate))&& (!empty($enddate))) {
+        $query .= " AND ";
+    }
 
     if ((!empty($startdate))&& (!empty($enddate))){
         $query .= " WHERE DATE_FORMAT($event_table.dtstart,'%Y%m%d') >= $startdate AND DATE_FORMAT($event_table.dtstart,'%Y%m%d') <= $enddate";
@@ -143,7 +163,7 @@ function julian_userapi_getevents($args)
         }
     }
 
-    $result = $dbconn->SelectLimit($query, $numitems, $startnum-1);
+    $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1);
 
     // Check for an error.
     if (!$result) return;

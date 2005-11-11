@@ -109,9 +109,7 @@ function julian_userapi_getall($args)
     			   if(isallday,'',DATE_FORMAT(dtstart,'%l:%i %p')) as fStartTime,
     			   DATE_FORMAT(dtstart,'%Y-%m-%d') as fStartDate";
     			   
-    
-    // TODO: how to select by cat ids (automatically) when needed ???
-    // My try at it...
+    // Select on categories
     if (!empty($catid) && xarModIsHooked('categories','julian')) {
         // Get the LEFT JOIN ... ON ...  and WHERE parts from categories
         $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
