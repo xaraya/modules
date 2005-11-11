@@ -1,29 +1,29 @@
 <?php
-
 /**
-* File: $Id:$
-*
-* Administration menu links.
-*
-* @package Xaraya eXtensible Management System
-* @copyright (C) 2005 by Metrostat Technologies, Inc.
-* @license GPL {@link http://www.gnu.org/licenses/gpl.html}
-* @link http://www.metrostat.net
-*
-* @subpackage julian
-* initial template: Roger Raymond
-* @author Jodie Razdrh/John Kevlin/David St.Clair/ Michel V.
-*/
+ * Administration menu links.
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Julian Module
+ * @link http://xaraya.com/index.php/release/319.html
+ * @author Julian Module Development Team
+ */
+
 /**
  * Retreive admin links
  *
- * standard function
+ * This function return the menu links for the admin section in Xaraya.
  *
- * @author  Julian Development Team, MichelV. <michelv@xarayahosting.nl>
+ * @author Jodie Razdrh/John Kevlin/David St.Clair/ Michel V.
  * @access  private 
  * @param   
  * @return  array $menulinks
  * @todo    MichelV. <#> 
+ * @copyright (C) 2005 by Metrostat Technologies, Inc.
+ * initial template: Roger Raymond
  */
 
 
