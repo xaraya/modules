@@ -249,7 +249,117 @@ function julian_userapi_getevents($args)
                           'eIsallday' => $eIsallday,
                           'eFee' => $eFee,);
     }
+/*
+    // TODO: include linked events
+    // Get the linked events
+    
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+    $event_linkage_table = $xartable['julian_events_linkage'];
+    $query_linked = "SELECT event_id,
+    					 hook_modid,
+    					 hook_itemtype,
+    					 hook_iid,
+    					 dtstart,
+    					 duration,
+    					 isallday,
+    					 rrule,
+    					 recur_freq,
+    					 recur_count,
+    					 recur_until,
+    					 if(recur_until LIKE '0000%','',recur_until) as fRecurUntil,
+    					 recur_interval,
+    					 if(isallday,'',DATE_FORMAT(dtstart,'%l:%i %p')) as fStartTime,
+    					 DATE_FORMAT(dtstart,'%Y-%m-%d') as fStartDate
+    			 FROM $event_linkage_table 
+    			 WHERE (1) ".$condition."
+    			 ORDER BY dtstart ASC;";
+    $result_linked =& $dbconn->Execute($query_linked);
+    if (!$result_linked) return;
 
+    // Check for no rows found.
+    if ($result->EOF) {
+        $result->Close();
+        return;
+    }
+
+    // Put items into result array
+    for (; !$result->EOF; $result->MoveNext()) {
+        list($eID, 
+        //     $eName,
+        //     $eDescription,
+        //     $eStreet1, 
+        //     $eStreet2,
+        //     $eCity,
+        //     $eState,
+        //     $eZip,
+        //     $eEmail,
+        //     $ePhone,
+        //     $eLocation,
+        //     $eUrl,
+        //     $eContact,
+        //     $eOrganizer,
+             $hook_modid,
+             $hook_itemtype,
+             $hook_iid,
+             $eStart['timestamp'],
+             $eDuration,
+             $eIsallday,
+             $eRrule,
+             $eRecurFreq,
+             $eRecurCount,
+             $eRecurUntil
+             ) = $result->fields;
+
+          // Change date formats from UNIX timestamp to something readable.
+          if ($eStart['timestamp'] == 0) {
+              $eStart['mon'] = "";
+              $eStart['day'] = "";
+              $eStart['year'] = "";
+          } else {
+              $eStart['linkdate'] = date("Ymd",strtotime($eStart['timestamp']));
+              $eStart['viewdate'] = date("m-d-Y",strtotime($eStart['timestamp']));
+          }
+          if ($eRecur['timestamp'] == 0) {
+              $eRecur['mon'] = "";
+              $eRecur['day'] = "";
+              $eRecur['year'] = "";
+          } else {
+              $eRecur['linkdate'] = date("Ymd",strtotime($eDue['timestamp']));
+              $eRecur['viewdate'] = date("m-d-Y",strtotime($eDue['timestamp']));
+          }
+          if ($eDue['timestamp'] == 0) {
+              $eDue['mon'] = "";
+              $eDue['day'] = "";
+              $eDue['year'] = "";
+          } else {
+              $eDue['linkdate'] = date("Ymd",strtotime($eDue['timestamp']));
+              $eDue['viewdate'] = date("m-d-Y",strtotime($eDue['timestamp']));
+          }
+
+         $items[] = array('eID' => $eID,
+                          'eName' => $eName,
+                          'eDescription' => $eDescription,
+                          'eStreet1' => $eStreet1,
+                          'eStreet2' => $eStreet2,
+                          'eCity' => $eCity,
+                          'eState' => $eState,
+                          'eZip' => $eZip,
+                          'eEmail' => $eEmail,
+                          'ePhone' => $ePhone,
+                          'eLocation' => $eLocation,
+                          'eUrl' => $eUrl,
+                          'eContact' => $eContact,
+                          'eOrganizer' => $eOrganizer,
+                          'eStart' => $eStart,
+                          'eRecur' => $eRecur,
+                          'eDue' => $eDue,
+                          'eDuration' => $eDuration,
+                          'eRrule' => $eRrule,
+                          'eIsallday' => $eIsallday,
+                          'eFee' => $eFee,);
+    }
+*/
     // Close result set
     $result->Close();
 

@@ -186,8 +186,11 @@ function julian_userapi_getall($args)
 }
     $result->Close();
  
-    $dbconn = xarDBGetConn();
-    $xartable = xarDBGetTables();
+
+    // Get the linked events
+    
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $event_linkage_table = $xartable['julian_events_linkage'];
     $query_linked = "SELECT event_id,
     					 hook_modid,
@@ -207,7 +210,7 @@ function julian_userapi_getall($args)
     			 FROM $event_linkage_table 
     			 WHERE (1) ".$condition."
     			 ORDER BY dtstart ASC;";
-    $result_linked = $dbconn->Execute($query_linked);
+    $result_linked =& $dbconn->Execute($query_linked);
     if (!$result_linked) return;
         
     while(!$result_linked->EOF) {
