@@ -204,15 +204,28 @@ function julian_user_edit()
         $start_hour_options.='>'.$j.'</option>';
     }
    $data['start_hour_options'] = $start_hour_options;
-   
+
+    // Building duration minute options
+    // Get the interval
+    $StartMinInterval = xarModGetVar('julian', 'StartMinInterval');
+    if ($StartMinInterval == 1) {
+        $sminend = 60;
+    } elseif ($StartMinInterval == 5) {
+        $sminend = 56;
+    } elseif ($StartMinInterval == 10) {
+        $sminend = 51;
+    } elseif ($StartMinInterval == 15) {
+        $sminend = 46;
+    }
+
    //Building start minute options
    $start_minute_options = '';
-   for($i = 0;$i < 46; $i = $i + 15)
-   {
+   for($i = 0;$i < $sminend; $i = $i + $StartMinInterval) {
      $j = str_pad($i,2,"0",STR_PAD_LEFT);
      $start_minute_options.='<option value="'.$i.'"';
-     if ($i == $minute)
+     if ($i == $minute) {
        $start_minute_options.= " selected";
+    }
      $start_minute_options.='>'.$j.'</option>';
    }
    $data['start_minute_options'] = $start_minute_options;
