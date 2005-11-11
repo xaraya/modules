@@ -128,7 +128,8 @@ function julian_user_viewevents($args)
                                   'orderby'  => $orderby,
                                   'startdate' => $startdate,
                                   'enddate'  => $enddate,
-                                  'event_id' => $event_id));
+                                  'event_id' => $event_id,
+                                  'catid'    => $catid));
 
     // Check for exceptions.
     if (!isset($events) && xarCurrentErrorType() != XAR_NO_EXCEPTION) {
