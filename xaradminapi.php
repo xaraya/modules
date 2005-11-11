@@ -27,63 +27,7 @@
 // ----------------------------------------------------------------------
 
 
-function todolist_adminapi_updateproject($args)
-{
-    extract($args);
-    
-   if ((!isset($project_id)) && (!isset($project_name)) && (!isset($project_description)) && (!isset($project_leader))) {
-        pnSessionSetVar('errormsg', xarML('Error in API arguments'));
-        return false;
-    }
 
-    if (!pnSecAuthAction(0, 'todolist::', "::", ACCESS_EDIT)) {
-        pnSessionSetVar('errormsg', xarML('Not authorised to access Todolist module'));
-        return false;
-    }
-
-    $dbconn =& xarDBGetConn();;
-    $pntable =& xarDBGetTables();
-
-    $todolist_projects_column = &$pntable['todolist_projects_column'];
-    $query = "UPDATE $pntable[todolist_projects] SET
-                     $todolist_projects_column[project_name]='$project_name',
-                     $todolist_projects_column[description]='$project_description',
-                     $todolist_projects_column[project_leader]=$project_leader
-                     WHERE $todolist_projects_column[id] = $project_id";
-    $result = $dbconn->Execute($query);
-    if ($result === false) {
-        pnSessionSetVar('errormsg', xarML('Update error occured'));
-        return false;
-    }
-    // update project-members... Is there a more elegant way to do this?
-    // do we have to delete the tasks where someone is assigned who is no longer
-    // member of the project?
-    $todolist_project_members_column = &$pntable['todolist_project_members_column'];
-    $query = "DELETE FROM $pntable[todolist_project_members]
-              WHERE $todolist_project_members_column[project_id] = $project_id";
-    $result = $dbconn->Execute($query);
-    if ($result === false) {
-        pnSessionSetVar('errormsg', xarML('Delete error occured'));
-        return false;
-    }
-    if (sizeof($project_members) > 0) {
-        $query="INSERT INTO $pntable[todolist_project_members] VALUES ";
-         
-        while ($member_id=array_pop($project_members)){
-            $query .= "($project_id, $member_id)";
-            if (sizeof($project_members) > 0)
-                $query .= ',';
-        }
-    }
-    $result = $dbconn->Execute("$query");
-    if ($result === false) {
-        pnSessionSetVar('errormsg', xarML('Insert error occured'));
-        return false;
-    }
-  
-    pnSessionSetVar('errormsg', xarML('Project was updated'));
-    return true;
-}
 
 // Deletes a whole project. A mail-notify is not generated!
 // @param $project_id    int    the primary key of the project
