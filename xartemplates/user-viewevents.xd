@@ -1,7 +1,5 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <!--- The Julian Module - User Event List Page. --->
-#xarModAPIFunc('overlib','user','init')#
-
   <div class="xar-julian xar-julian-user-viewevents">
     <xar:template file="header" />
       <div class="xar-julian-contents">

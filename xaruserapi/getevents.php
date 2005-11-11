@@ -12,9 +12,12 @@
  * @author Jodie Razdrh/John Kevlin/David St.Clair
  */
 
-
 /**
  * Get all Julian Calendar Event items.
+ *
+ * This functions returns an array with a listing of events. The events
+ * are not formatted for display. When a calendar oriented listing is needed, 
+ * use xaruser-getall.php
  *
  * @param $args an array of arguments
  * @param $args['startnum'] start with this item number (default 1)
@@ -22,6 +25,7 @@
  * @param $args['sortby'] sort by 'date', 'eventName', 'eventCat', 'eventLocn', 'eventCont' or 'eventFee'
  * @param $args['external'] retrieve events marked external (1=true, 0=false) - ToDo:
  * @param $args['orderby'] order by 'ASC' or 'DESC' (default = ASC)
+ * @param $args['catid'] int Category ID
  * @return array of items, or false on failure
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
@@ -67,7 +71,7 @@ function julian_userapi_getevents($args)
 
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    join(', ',$invalid), 'userapi', 'getall', 'julian');
+                    join(', ',$invalid), 'userapi', 'getevents', 'julian');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
@@ -115,7 +119,6 @@ function julian_userapi_getevents($args)
                      $event_table.isallday,
                      $event_table.fee";
               
-              
     // Select on categories
     if (xarModIsHooked('categories','julian')) {
         // Get the LEFT JOIN ... ON ...  and WHERE parts from categories
@@ -123,7 +126,7 @@ function julian_userapi_getevents($args)
                                        array('modid' => 
                                               xarModGetIDFromName('julian'),
                                              'catid' => $catid));
-        $query .= " FROM  ( $event_table
+        $query .= " FROM ( $event_table
                   LEFT JOIN $categoriesdef[table]
                   ON $categoriesdef[field] = event_id )
                   $categoriesdef[more]
@@ -253,5 +256,4 @@ function julian_userapi_getevents($args)
     // Return the items
     return $items;
 }
-
 ?>
