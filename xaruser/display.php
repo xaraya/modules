@@ -13,8 +13,9 @@
 /**
  * Display a todo
  *
- * This is a standard function to provide detailed informtion on a single item
- * available from the module.
+ * This is the function to provide detailed informtion on a single todo
+ * available from this module. The same page contains a form from which the todo can be modified.
+ * This depends on privileges set for that todo.
  * 
  * @author the Todolist module development team
  * @param  $args an array of arguments (if called by other modules)
@@ -67,12 +68,42 @@ function todolist_user_display($args)
     // The project
     $project = xarModAPIFunc('todolist', 'user', 'getproject', array('project_id' => $item['project_id']));
     $data['project_name'] = $project['project_name'];        
-
+    $data['project'] = $project;
+    
     $data['created_by'] = xarUserGetVar(name, $item['created_by']);
     $data['changed_by'] = xarUserGetVar(name, $item['changed_by']);
 
     $data['todo_id'] = $todo_id;
     $data['item'] = $item;
+    
+    /* Build array with percentages
+    */
+    $perc_compl = $item['percentage_completed'];
+    $perc_compl_options = '';
+    for($i = 0;$i <= 91; $i+ 10) {
+        $j = str_pad($i,2,"0",STR_PAD_LEFT);
+        $perc_compl_options.='<option value="'.$i.'"';
+        if ($i == $perc_compl) {
+            $perc_compl_options .= " selected";
+        }
+        $perc_compl_options.='>'.$j.'</option>';
+    }
+    $data['perc_compl_options'] = $perc_compl_options;
+    
+    $priority = $item['priority'];
+    /* Build array with priorities
+    */
+    $prio_options = '';
+    for($i = 0;$i <= 9; $i++) {
+        $j = str_pad($i,2,"0",STR_PAD_LEFT);
+        $prio_options.='<option value="'.$i.'"';
+        if ($i == $priority) {
+            $prio_options .= " selected";
+        }
+        $prio_options.='>'.$j.'</option>';
+    }
+    $data['prio_options'] = $prio_options;
+    
     //$data['is_bold'] = xarModGetVar('example', 'bold');
     /* Note : module variables can also be specified directly in the
      * blocklayout template by using &xar-mod-<modname>-<varname>;
@@ -94,7 +125,7 @@ function todolist_user_display($args)
         $todo_id,
         $item);
     if (empty($hooks)) {
-        $data['hookoutput'] = '';
+        $data['hookoutput'] = array();
     } else {
         $data['hookoutput'] = $hooks;
     }

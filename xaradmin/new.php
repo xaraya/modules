@@ -1,8 +1,8 @@
 <?php
 /**
- * Add new item
+ * Add new todo
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -19,14 +19,15 @@
  *
  * @param $due_date        string    the due date
  * @param $priority
- * @param $project
- * @param $percentage_completed
+ * @param $project id
+ * @param $percentage_completed int
  * @param $text
  * @param $responsible_persons
- * @param $note_text
+ * @param $note_text depr, now in comments
  *
  * @author Todolist module development team
  * @return array
+ * @TODO MichelV <1> Add privs
  */
 function todolist_admin_new($args)
 { 
@@ -84,15 +85,9 @@ function add_todo($due_date,$priority,$project,$percentage_completed,$text,$resp
      */
     extract($args);
 
-    /* Get parameters from whatever input we need.  All arguments to this
-     * function should be obtained from xarVarFetch(). xarVarFetch allows
-     * the checking of the input variables as well as setting default
-     * values if needed.  Getting vars from other places such as the
-     * environment is not allowed, as that makes assumptions that will
-     * not hold in future versions of Xaraya
-     */
     if (!xarVarFetch('number',  'str:1:', $number,  $number,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('name',    'str:1:', $name,    $name,    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('project_id',  'id', $project_id,  $project_id,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('invalid', 'array',  $invalid, $invalid, XARVAR_NOT_REQUIRED)) return;
     /* Initialise the $data variable that will hold the data to be used in
      * the blocklayout template, and get the common menu configuration - it
@@ -103,7 +98,30 @@ function add_todo($due_date,$priority,$project,$percentage_completed,$text,$resp
     /* Security check - important to do this as early as possible to avoid
      * potential security holes or just too much wasted processing
      */
-    if (!xarSecurityCheck('AddExample')) return;
+    if (!xarSecurityCheck('AddTodolist')) return; // TODO
+
+    // Get the possible groups for this new todo
+    // Get the possible project
+    // Get the possible percentage complete
+    /* Build array with percentages
+    */
+    $perc_compl_options = '';
+    for($i = 0;$i <= 91; $i+ 10) {
+        $j = str_pad($i,2,"0",STR_PAD_LEFT);
+        $perc_compl_options.='<option value="'.$i.'"';
+        $perc_compl_options.='>'.$j.'</option>';
+    }
+    $data['perc_compl_options'] = $perc_compl_options;
+    
+    /* Build array with priorities
+    */
+    $prio_options = '';
+    for($i = 0;$i <= 9; $i++) {
+        $j = str_pad($i,2,"0",STR_PAD_LEFT);
+        $prio_options.='<option value="'.$i.'"';
+        $prio_options.='>'.$j.'</option>';
+    }
+    $data['prio_options'] = $prio_options;
 
     /* Generate a one-time authorisation code for this operation */
     $data['authid'] = xarSecGenAuthKey();
