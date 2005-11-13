@@ -1,0 +1,54 @@
+<xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
+<xar:if condition="xarTplAddStyleLink('base', 'navtabs')"></xar:if>
+
+<script type="text/javascript" src="modules/maxercalls/xarjavascript/utilities_lite.js"></script>
+
+<xar:set name="$navViewUrl">#xarModURL('maxercalls','user','view')#</xar:set>
+<xar:set name="$navNewUrl">#xarModURL('maxercalls','user','new')#</xar:set>
+<xar:set name="$navAdminAllUrl">#xarModURL('maxercalls','admin','viewcalls')#</xar:set>
+<xar:comment>
+<xar:set name="$navYearUrl">#xarModURL('julian','user','year',array('cal_date'=>$cal_date))#</xar:set>
+<xar:set name="$navAlertsUrl">#xarModURL('julian','user','alerts',array('cal_date'=>$cal_date))#</xar:set>
+<xar:set name="$navCategoriesUrl">#xarModURL('julian','user','addcat',array('cal_date'=>$cal_date))#</xar:set>
+</xar:comment>
+
+<div class="xar-maxercalls-header">
+    <xar:set name="$null">#xarVarFetch('func','str:1:',$whatFunc, 'view')#</xar:set>
+    <dl class="xar-tabs">
+        <dt class="help"><xar:mlstring>Your choices</xar:mlstring>:</dt>
+        <xar:if condition="$whatFunc eq 'view'">
+            <dd class="active"><a href="#$navViewUrl#"><xar:mlstring>View your calls</xar:mlstring></a></dd>
+        <xar:else />
+            <dd><a href="#$navViewUrl#"><xar:mlstring>View your calls</xar:mlstring></a></dd>
+        </xar:if>
+        <xar:if condition="$whatFunc eq 'new'">
+            <dd class="active"><a href="#$navNewUrl#"><xar:mlstring>Add a call</xar:mlstring></a></dd>
+        <xar:else />
+            <dd><a href="#$navNewUrl#"><xar:mlstring>Add a call</xar:mlstring></a></dd>
+        </xar:if>
+		<xar:sec mask="DeleteMaxercalls" catch="false">
+        <xar:if condition="$whatFunc eq 'viewcalls'">
+            <dd class="active"><a href="#$navAdminAllUrl#"><xar:mlstring>View All Calls</xar:mlstring></a></dd>
+        <xar:else />
+            <dd><a href="#$navAdminAllUrl#"><xar:mlstring>View All Calls</xar:mlstring></a></dd>
+        </xar:if>
+		</xar:sec>
+		<xar:comment>		
+        <xar:if condition="$whatFunc eq 'year'">
+            <dd class="active"><a href="#$navYearUrl#"><xar:mlstring>Year</xar:mlstring></a></dd>
+        <xar:else />
+            <dd><a href="#$navYearUrl#"><xar:mlstring>Year</xar:mlstring></a></dd>
+        </xar:if>
+    
+        <xar:if condition="xarUserIsLoggedIn()">
+            <xar:if condition="$whatFunc eq 'alerts'">
+                <dd class="active"><a href="#$navAlertsUrl#"><xar:mlstring>Alerts</xar:mlstring></a></dd>
+            <xar:else />
+                <dd><a href="#$navAlertsUrl#"><xar:mlstring>Alerts</xar:mlstring></a></dd>
+            </xar:if>
+        </xar:if>
+		</xar:comment>
+    </dl>
+
+</div>
+

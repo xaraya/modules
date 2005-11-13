@@ -1,0 +1,43 @@
+<object name="maxercalls_types">
+  <objectid>23</objectid>
+  <label>Maxercalls types</label>
+  <moduleid>247</moduleid>
+  <itemtype>3</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>3</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+    <property name="typeid">
+      <id>86</id>
+      <label>Typeid</label>
+      <type>itemid</type>
+      <default></default>
+      <source>xar_maxercalls_types.xar_typeid</source>
+      <status>1</status>
+      <order>1</order>
+      <validation>int (11)</validation>
+    </property>
+    <property name="calltext">
+      <id>87</id>
+      <label>Calltext</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_maxercalls_types.xar_calltext</source>
+      <status>1</status>
+      <order>2</order>
+      <validation>0:150</validation>
+    </property>
+    <property name="color">
+      <id>88</id>
+      <label>Color</label>
+      <type>tcolorpicker</type>
+      <default></default>
+      <source>xar_maxercalls_types.xar_color</source>
+      <status>1</status>
+      <order>3</order>
+      <validation>0:10</validation>
+    </property>
+  </properties>
+</object>
+

@@ -1,0 +1,42 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<div class="xar-mod-head">
+  <span class="xar-mod-title">
+    <xar:mlstring>Maxercalls Administration</xar:mlstring>
+  </span>
+</div>
+<div class="xar-mod-body"><h2>#$menutitle#</h2><br />
+<div style="margin: auto;">
+
+<!-- the specific template for the current admin function comes here -->
+
+<table width="100%" border="0" cellspacing="1" cellpadding="8">
+
+<form method="post" action="&xar-modurl-maxercalls-admin-updateconfig;">
+
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+
+
+<tr><td><label for="itemsperpage">#$itemslabel#</label></td>
+<td><input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#$itemsvalue#" /></td></tr>
+
+<tr><td><label for="shorturls">#$shorturlslabel#</label></td>
+<td><input type="checkbox" name="shorturls" id="shorturls" value="1" #$shorturlschecked# /></td></tr>
+
+
+<tr><td colspan="2">
+#$hooks#
+</td></tr>
+
+<tr><td colspan="2" align="center">
+    <input type="submit" value="#$updatebutton#" /></td></tr>
+</form>
+
+</table>
+<br />
+
+Modify the call types here
+<a href="#xarModURL('dynamicdata','admin','modifyprop',array('modid' => 247))#"><xar:mlstring>Modify the Dynamic call types</xar:mlstring></a> 
+</div>
+
+</div>

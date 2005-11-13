@@ -1,0 +1,56 @@
+<xar:if condition="xarTplAddStyleLink('maxercalls', 'style')"></xar:if>
+<div class="xar-mod-body">
+
+	<div class="xar-maxercalls xar-maxercalls-user-view">
+		
+		<xar:template file="header" />
+		
+		<h3><xar:mlstring>Callmaxer Administration - View Maxercalls</xar:mlstring></h3>
+		<xar:if condition="!empty($status)">
+			#$status#</b>
+		</xar:if>
+		<xar:if condition="xarModIsHooked('categories','maxercalls')">
+		  <xar:categories-navigation layout="trails" showchildren="1" module="maxercalls" func="viewcalls" type="admin" catid="$catid" />
+		</xar:if>
+		
+		<div class="xar-maxercalls-contents">
+			<table width="100%" border="1" cellspacing="0" cellpadding="4">
+				<tr>
+					<th>#$calldatelabel#</th>
+					<th>#$calltimelabel#</th>
+					<th>#$ownerlabel#</th>
+					<th>#$calltextlabel#</th>
+					<th>#$remarkslabel#</th>
+					<th>#$entertslabel#</th>
+					<th>#$optionslabel#</th>
+				</tr>
+				<xar:foreach in="$items" value="$item">
+				<tr>
+					<td>#$item['calldate']#</td>
+					<td>#$item['calltime']#</td>
+					<td>#$item['owner']#</td>
+					<td>#$item['calltext']#</td>
+					<td>#$item['remarks']#</td>
+					<td>#$item['enterts']#</td>
+					<td>
+					   <xar:if condition="empty($item['editurl'])">
+						   #$item['edittitle']#
+					   <xar:else />
+						   <a href="#$item['editurl']#">#$item['edittitle']#</a>
+					   </xar:if>
+					   |
+					   <xar:if condition="empty($item['deleteurl'])">
+						   #$item['deletetitle']#
+					   <xar:else />
+						   <a href="#$item['deleteurl']#">#$item['deletetitle']#</a>
+					   </xar:if>
+					</td>
+				</tr>
+				</xar:foreach>
+			</table>
+
+			<!-- add the pager here -->
+			#$pager#
+		</div>
+	</div>
+</div>

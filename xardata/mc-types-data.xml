@@ -1,0 +1,18 @@
+<items>
+  <maxercalls_types itemid="1">
+    <typeid>1</typeid>
+    <calltext>First call type</calltext>
+    <color>#0099FF</color>
+  </maxercalls_types>
+  <maxercalls_types itemid="2">
+    <typeid>2</typeid>
+    <calltext>Second call type</calltext>
+    <color>#663300</color>
+  </maxercalls_types>
+  <maxercalls_types itemid="3">
+    <typeid>3</typeid>
+    <calltext>Third Call type</calltext>
+    <color>#FFFF99</color>
+  </maxercalls_types>
+</items>
+

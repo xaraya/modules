@@ -1,0 +1,110 @@
+<xar:if condition="xarTplAddStyleLink('maxercalls', 'xarform')"></xar:if>
+<xar:if condition="xarTplAddStyleLink('maxercalls', 'style')"></xar:if>
+
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Maxercalls</xar:mlstring></span></div>
+<div class="xar-mod-body">
+
+<div class="xar-maxercalls xar-maxercalls-user-display">
+
+    <xar:template file="header" />
+		<div class="xar-maxercalls-contents">
+	
+			<form class="xar-form"
+				  action=#xarModUrl('maxercalls', 'user', 'view')#
+				  method="post"
+				  enctype="application/x-www-form-urlencoded">
+				<fieldset class="xar-norm">
+					<fieldset class="formelements xar-norm">
+						<legend>
+							<strong><xar:mlstring>View the details for this call</xar:mlstring></strong>
+						</legend>
+                        <p class="param">
+                            <label for="calltime"  class="required">
+                                <span class="help" title="#xarML('Time the call occured.')#">
+                                    #$calltimelabel#
+                                </span>
+                            </label>
+							<span class="fullright">
+							#$calltime_value#
+							</span>
+                        </p>
+						<p class="param">
+                        <label for="date" class="required">
+                            <span class="help" title="#xarML('Date of the call.')#">
+                                #$calldatelabel#
+                            </span>
+                        </label>
+							<span class="fullright">
+							#$calldate_value#
+							</span>
+						</p>
+						<p class="param">
+							<label for="calltext">
+								<span class="help" title="#xarML('The text of this call, in a generalised form.')#">
+									#$calltextlabel#
+								</span>
+							</label>
+							<span class="fullright">
+							#$calltext#
+							</span>
+						</p>
+					    <p class="param">
+							<label for="remarks">
+								<span class="help" title="#xarML('Any remark on this call, eg a different calltext.')#">
+									#$remarkslabel#
+								</span>
+							</label>
+								<span class="fullright">
+									#$remarks_value#
+								</span>
+						</p>
+					</fieldset>
+					<fieldset class="formelements xar-norm">
+						<legend>
+							<strong><xar:mlstring>Category of the call and other data</xar:mlstring></strong>
+						</legend>
+						<p class="param">
+							<label for="enteredby">
+								<span class="help" title="#xarML('This call was entered by')#">
+									#$enteredbylabel#
+								</span>
+							</label>
+							<span class="fullright">
+							#$enteredby_value#
+						</span>
+						</p>
+						<p class="param">
+							<label for="enteredby">
+								<span class="help" title="#xarML('This call was entered on')#">
+									#$entertslabel#
+								</span>
+							</label>
+							<span class="fullright">
+							#$enterts_value#
+						</span>
+						</p>
+						<xar:if condition="!empty($hookoutput)">
+						<br />
+						<xar:foreach in="$hookoutput" key="$hookmodule">
+							#$hookoutput[$hookmodule]#
+						</xar:foreach>
+						</xar:if>
+					</fieldset>
+			</fieldset>
+
+				<input type="submit" value="#$returnbutton#" />
+	       </form>
+	   </div>
+	</div>
+</div>
+<xar:if condition="xarModIsHooked('dynamicdata')">
+    <xar:data-getitem name="$properties" module="maxercalls" itemid="$callid" />
+    <xar:if condition="isset($properties) and count($properties) gt 0">
+    <xar:foreach in="$properties" key="$name">
+    <tr>
+        <td align="right"><xar:data-label property="$properties[$name]" /> : </td>
+        <td><xar:data-output property="$properties[$name]" /></td>
+    </tr>
+    </xar:foreach>
+    </xar:if>
+</xar:if>

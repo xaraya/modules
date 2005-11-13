@@ -1,0 +1,228 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:style scope="module" />
+<script language="Javascript" src="modules/maxercalls/xarjavascript/utilities_lite.js"></script>
+<xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
+<script type="text/javascript">
+<!--
+    // Enter name of mandatory fields
+    var fieldRequired = Array("calltime","calldate");
+    // Enter field description to appear in the dialog box
+    var fieldDescription = Array("Time of the call","Date of the call");
+//-->
+</script>
+
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Maxercalls</xar:mlstring></span></div>
+<div class="xar-mod-body">
+
+<div class="xar-maxercalls xar-maxercalls-user-new">
+
+    <xar:template file="header" />
+        <div class="xar-maxercalls-contents">
+    
+            <form action="&xar-modurl-maxercalls-user-create;"
+                  onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);"
+                  method="post"
+                  enctype="application/x-www-form-urlencoded">
+                    <fieldset>
+                        <legend>
+                            <xar:mlstring>Add a maxercall for your own maxer</xar:mlstring>
+                        </legend>
+                        <div class="xar-form-input-wrapper">
+                            <label for="calltime"  class="required xar-form-label">
+                                <span class="help" title="#xarML('Time the call occured.')#">
+                                    #$calltimelabel#
+                                </span>
+                            </label>
+                            <select name="callhours" id="callhours">
+                                <option value="0" selected>00</option>
+                                <option value="1" >01</option>
+                                <option value="2" >02</option>
+                                <option value="3" >03</option>
+                                <option value="4" >04</option>
+                                <option value="5" >05</option>
+                                <option value="6" >06</option>
+                                <option value="7" >07</option>
+                                <option value="8" >08</option>
+                                <option value="9" >09</option>
+                                <option value="10" >10</option>
+                                <option value="11" >11</option>
+                                <option value="12" >12</option>
+                                <option value="13" >13</option>
+                                <option value="14" >14</option>
+                                <option value="15" >15</option>
+                                <option value="16" >16</option>
+                                <option value="17" >17</option>
+                                <option value="18" >18</option>
+                                <option value="19" >19</option>
+                                <option value="20" >20</option>
+                                <option value="21" >21</option>
+                                <option value="22" >22</option>
+                                <option value="23" >23</option>
+                                <option value="24" >24</option>
+                            </select>
+                            <xar:mlstring>Hours</xar:mlstring>
+                            <select name="callminutes" id="callminutes">
+                                <option value="00" selected>00</option>
+                                <option value="01" >01</option>
+                                <option value="02" >02</option>
+                                <option value="03" >03</option>
+                                <option value="04" >04</option>
+                                <option value="05" >05</option>
+                                <option value="06" >06</option>
+                                <option value="07" >07</option>
+                                <option value="08" >08</option>
+                                <option value="09" >09</option>
+                                <option value="10" >10</option>
+                                <option value="11" >11</option>
+                                <option value="12" >12</option>
+                                <option value="13" >13</option>
+                                <option value="14" >14</option>
+                                <option value="15" >15</option>
+                                <option value="16" >16</option>
+                                <option value="17" >17</option>
+                                <option value="18" >18</option>
+                                <option value="19" >19</option>
+                                <option value="20" >20</option>
+                                <option value="21" >21</option>
+                                <option value="22" >22</option>
+                                <option value="23" >23</option>
+                                <option value="24" >24</option>
+                                <option value="25" >25</option>
+                                <option value="26" >26</option>
+                                <option value="27" >27</option>
+                                <option value="28" >28</option>
+                                <option value="29" >29</option>
+                                <option value="30" >30</option>
+                                <option value="31" >31</option>
+                                <option value="32" >32</option>
+                                <option value="33" >33</option>
+                                <option value="34" >34</option>
+                                <option value="35" >35</option>
+                                <option value="36" >36</option>
+                                <option value="37" >37</option>
+                                <option value="38" >38</option>
+                                <option value="39" >39</option>
+                                <option value="40" >40</option>
+                                <option value="41" >41</option>
+                                <option value="42" >42</option>
+                                <option value="43" >43</option>
+                                <option value="44" >44</option>
+                                <option value="45" >45</option>
+                                <option value="46" >46</option>
+                                <option value="47" >47</option>
+                                <option value="48" >48</option>
+                                <option value="49" >49</option>
+                                <option value="50" >50</option>
+                                <option value="51" >51</option>
+                                <option value="52" >52</option>
+                                <option value="53" >53</option>
+                                <option value="54" >54</option>
+                                <option value="55" >55</option>
+                                <option value="56" >56</option>
+                                <option value="57" >57</option>
+                                <option value="58" >58</option>
+                                <option value="59" >59</option>
+                            </select>
+                            <xar:mlstring>Minutes</xar:mlstring>
+                        </div>
+                        <div class="xar-form-input-wrapper">
+                        <label for="date" class="required xar-form-label">
+                            <span class="help" title="#xarML('Date of the call.')#">
+                                #$calldatelabel#
+                            </span>
+                        </label>
+                        <select name="callday" title="Day the call occured">
+                            <option value=""></option>
+                        <xar:for start="$i = 1" test="$i le 31" iter="$i++">
+                            <xar:if condition="$i lt 10">
+                                <xar:set name="$currDay">str_pad($i,2,'0',STR_PAD_LEFT)</xar:set>
+                            <xar:else />
+                                <xar:set name="$currDay">#$i#</xar:set>
+                            </xar:if>
+                            <xar:set name="$daySelected">""</xar:set>
+                            <xar:if condition="$todays_day eq $currDay">
+                                <xar:set name="$daySelected">'selected="selected"'</xar:set>
+                            </xar:if>
+                            <option value="#$currDay#" #$daySelected#>#$currDay#</option>
+                        </xar:for>
+                        </select>
+                        <select name="callmonth" title="Month the call occured" onchange="populateSelect(this, this.form.day, this.form.event_year)">
+                            <option value=""></option>
+                        <xar:for start="$i = 1" test="$i le 12" iter="$i++">
+                            <xar:if condition="$i lt 10">
+                                <xar:set name="$currMonth">str_pad($i,2,'0',STR_PAD_LEFT)</xar:set>                                    
+                            <xar:else />
+                                <xar:set name="$currMonth">#$i#</xar:set>
+                            </xar:if>
+                            <xar:set name="$currMonth_long">date("F",mktime(0,0,0,$currMonth,1,2000))</xar:set>
+                            <xar:set name="$monthSelected">""</xar:set>
+                            <xar:if condition="$todays_month eq $currMonth">
+                                <xar:set name="$monthSelected">'selected="selected"'</xar:set>
+                            </xar:if>
+                            <option value="#$currMonth#" #$monthSelected#>#$currMonth_long#</option>
+                        </xar:for>
+                        </select>
+                        <select name="callyear" title="Year the call occured" onchange="populateSelect(this.form.month, this.form.day, this)">
+                            <option value=""></option>
+                        <xar:for start="$i = date('Y')+10" test="$i ge date('Y')-10" iter="$i--">
+                            <xar:set name="$yearSelected">""</xar:set>
+                            <xar:if condition="$todays_year eq $i">
+                                <xar:set name="$yearSelected">'selected="selected"'</xar:set>
+                            </xar:if>
+                            <option value="#$i#" #$yearSelected#>#$i#</option>
+                        </xar:for>
+                        </select>
+                        </div>
+                        <xar:if condition="xarSecurityCheck('AdminMaxercalls',0)">
+                        <div class="xar-form-input-wrapper">
+                            <label for="owner" class="required xar-form-label">
+                                <span class="help" title="#xarML('The carrier of the maxer you are entering a call for.')#">
+                                    #$ownerlabel#
+                                </span>
+                            </label>
+                            <span class="fullright">
+                               <xar:data-input name="owner" type="37" value="$owner" />
+                            </span>
+                        </div>
+                        <xar:else />
+                        <input type="hidden" name="owner" id="owner" value="#xarUserGetVar('uid')#" />
+                        </xar:if>
+                        <div class="xar-form-input-wrapper">
+                            <label for="calltext" class="xar-form-label">
+                                <span class="help" title="#xarML('The text of this call, in a generalised form.')#">
+                                    #$calltextlabel#
+                                </span>
+                            </label>
+                        <span class="field">
+                            <select name="calltext">
+                            <option value=""></option>
+                            <xar:loop name="$calltext">
+                                <option value="#$loop:item['typeid']#">#$loop:item['calltext']#</option>
+                            </xar:loop>
+                            </select>
+                        </span>
+                        <div class="xar-form-input-wrapper">
+                            <label for="remarks" class="xar-form-label">
+                                <span class="help" title="#xarML('Any remark on this call, eg a different calltext.')#">
+                                    #$remarkslabel#
+                                </span>
+                            </label>
+                            <span class="fullright">
+                                <textarea class="fullright" name="remarks" id="remarks" wrap="virtual" rows="5" cols="40"></textarea>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>
+                            <strong><xar:mlstring>Category of the call</xar:mlstring></strong>
+                        </legend>
+                        #$hookoutput['categories']# 
+                    </fieldset>
+                    <div class="xar-form-input-wrapper-after">
+                        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                        <input type="submit" value="#$addbutton#" />
+                    </div>
+            </fieldset>
+           </form>
+       </div>
+    </div>
+</div>

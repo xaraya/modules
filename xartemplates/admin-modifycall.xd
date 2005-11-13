@@ -1,0 +1,105 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:if condition="xarTplAddStyleLink('maxercalls', 'xarform')"></xar:if>
+<!-- This Javascript will check for required fields before the form is submitted. -->
+<xar:base-include-javascript module="base" filename="" position="head" />
+<script type="text/javascript">
+<!--
+    // Enter name of mandatory fields
+    var fieldRequired = Array("calldate", "calltime", "owner");
+    // Enter field description to appear in the dialog box
+    var fieldDescription = Array("Date of the call","Time of the call","Owner of the maxer");
+//-->
+</script>
+
+<!-- common admin menu for this module - remove link to the current function -->
+<!-- the variables used in this menu come from maxercalls_admin_menu() -->
+<div class="xar-mod-head">
+   <span class="xar-mod-title">
+      <xar:mlstring>Maxercalls Administration</xar:mlstring>
+   </span>
+</div>
+<div class="xar-mod-body">
+   <h2><xar:mlstring>Modify call</xar:mlstring></h2><br />
+  <div style="margin: auto;">
+
+<!-- the specific template for the current admin function comes here -->
+
+<!--
+    // Start form - note the use of xarModURL() to create the recipient URL of
+    // this form.  All URLs should be generated through xarModURL() to ensure
+    // compatibility with future versions of Xaraya
+-->
+	<div class="xar-maxercalls xar-maxercalls-admin-modify">
+	<!--    <xar:template file="header" /> -->
+		<div class="xar-maxercalls-contents">
+			<form class="xar-form"
+				  action=#xarModUrl('maxercalls', 'admin', 'updatecall')#
+				  onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);"
+				  method="post"
+				  enctype="application/x-www-form-urlencoded">
+				<fieldset class="xar-norm">
+					<fieldset class="formelements xar-norm">
+						<legend>
+							<strong><xar:mlstring>Modify an existing maxercall for other users</xar:mlstring></strong>
+						</legend>
+						<p class="param">
+							<label for="calldate" class="required">
+								<span class="help" title="#xarML('Each maxercall requires a date.')#">
+									#$calldatelabel#
+								</span>
+							</label>
+							<xar:data-input name="calldate" type="2" value="$item['calldate']" />
+						</p>
+						<p class="param">
+							<label for="calltime" class="required">
+								<span class="help" title="#xarML('Each maxercall requires a time.')#">
+									#$calltimelabel#
+								</span>
+							</label>
+							<xar:data-input name="calltime" type="2" value="$item['calltime']" />
+						</p>
+						<p class="param">
+							<label for="owner" class="required">
+								<span class="help" title="#xarML('The carrier of the maxer you are entering a call for.')#">
+									#$ownerlabel#
+								</span>
+							</label>
+							<span class="fullright">
+							<!--<input type="text" name="owner" id="owner" maxlength="80" />-->
+							   <xar:data-input name="owner" type="37" value="$item['owner']" />
+							</span>
+						</p>
+						<p class="param">
+							<label for="remarks">
+								<span class="help" title="#xarML('Any remark on this call, eg a different calltext.')#">
+									#$remarkslabel#
+								</span>
+							</label>
+							<span class="fullright">
+								<textarea class="fullright"  name="remarks" id="remarks" wrap="virtual" rows="5" cols="40">#$item['remarks']#</textarea>
+							</span>
+						</p>
+					</fieldset>
+					<fieldset class="formelements xar-norm">
+						<legend>
+							<strong><xar:mlstring>Categories</xar:mlstring></strong>
+						</legend>
+						#$hooks# 
+					</fieldset>
+						<!-- <div style="clear: both; padding-top: 10px;"> -->
+						<!--
+							// Add an authorisation ID - this adds a hidden field in the form that
+							// contains an authorisation ID.  The authorisation ID is very important in
+							// preventing certain attacks on the website
+						-->
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <input type="hidden" name="callid" id="callid" value="#$item['callid']#" />
+        <input type="hidden" name="enterts" id="enterts" value="#$item['enterts']#" />
+        <span style="float: left; width: 30%; text-align: right;"><input type="submit" value="#$updatebutton#" /></span>
+    </div>
+
+</form>
+  </div>
+<br />
+</div>
+</div>
