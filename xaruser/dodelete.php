@@ -42,15 +42,15 @@ function addressbook_user_dodelete()
     //if (!pnSecAuthAction(0, 'AddressBook::', '::', ACCESS_READ)) {
     if (!xarSecConfirmAuthKey()) {
         $output = array();
-        $output['infoMsg'] = xarML(_ADDRESSBOOK_NOAUTH);
-        $output['backToListTEXT'] = xarML(_AB_GOBACK);
+        $output['infoMsg'] = xarML('Not authorised to access the AddressBook module.');
+        $output['backToListTEXT'] = xarML('Back to list');
         return $output;
     }
 
     if(!xarModAPIFunc(__ADDRESSBOOK__,'user','deleterecord',array('id'=>$id))) {
         $output = array();
-        $output['infoMsg'] = xarML(_AB_DELETENOSUCCESS);
-        $output['backToListTEXT'] = xarML(_AB_GOBACK);
+        $output['infoMsg'] = xarML('Deletion of this record failed. Please contact your administrator!');
+        $output['backToListTEXT'] = xarML('Back to list');
         return $output;
     }
 

@@ -89,9 +89,9 @@ function addressbook_user_insertedit()
             if (xarModAPIFunc(__ADDRESSBOOK__,'user','checksubmitvalues',$output)) {
                 if (xarModAPIFunc(__ADDRESSBOOK__,'user','insertrecord',$output)) {
                     $output['insertStatus'] = TRUE;
-                    $output['insertSuccess'] = xarML(_AB_INSERT_AB_SUCCESS);
-                    $output['newAddrLinkTEXT'] = xarML(_AB_MENU_ADD);
-                    $output['backToListTEXT'] = xarML(_AB_GOBACK);
+                    $output['insertSuccess'] = xarML('Address Book Entry saved!');
+                    $output['newAddrLinkTEXT'] = xarML('Add new address');
+                    $output['backToListTEXT'] = xarML('Back to list');
 
                     return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
 
@@ -103,10 +103,10 @@ function addressbook_user_insertedit()
                     $output->Text(addressbook_themetable('start'));
                     $output->Linebreak(1);
                     $output->Text('<div align="center">');
-                    $output->Text(xarVarPrepHTMLDisplay('<b>'._AB_INSERT_AB_SUCCESS.'</b>'));
-                    $addTXT = xarVarPrepHTMLDisplay(_AB_MENU_ADD);
+                    $output->Text(xarVarPrepHTMLDisplay('<b>'.xarML('Address Book Entry saved!').'</b>'));
+                    $addTXT = xarML('Add new address');
                     $addURL = xarModURL(__ADDRESSBOOK__,'user','insertedit',$output['menuValues']);
-                    $backTXT = xarVarPrepHTMLDisplay('['._AB_GOBACK.']');
+                    $backTXT = xarVarPrepHTMLDisplay('['.xarML('Back to list').']');
                     $backURL = xarModURL(__ADDRESSBOOK__,'user','viewall',$output['menuValues']);
                     $output->Linebreak(2);
                     if(xarModAPIFunc(__ADDRESSBOOK__,'user','checkaccesslevel',array('option'=>'create'))) {
@@ -188,7 +188,7 @@ function addressbook_user_insertedit()
                 if (xarModGetVar(__ADDRESSBOOK__,'use_img') && xarSecurityCheck('ReadAddressBook',0)) {
                     $modInfo = xarModGetInfo(xarModGetIDFromName(__ADDRESSBOOK__));
                     $handle = @opendir("modules/".$modInfo['directory']."/xarimages");
-                    $output['imgFiles'][] = array('id'=>'','name'=>_AB_NOIMAGE);
+                    $output['imgFiles'][] = array('id'=>'','name'=>xarML('No Image'));
                     while ($file = @readdir ($handle)) {
                         if (eregi("^\.{1,2}$",$file)) {
                             continue;

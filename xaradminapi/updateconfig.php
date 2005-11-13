@@ -19,8 +19,11 @@
  *
  * @param passed in from modifyconfig api
  * @return redirects back to modifyconfig page
- * @raise _AB_GLOBALPROTECTERROR, _AB_GRANTERROR, _AB_SORTERROR_1,
- *        _AB_SORTERROR_2, _AB_SPECIAL_CHARS_ERROR
+ * @raise GLOBALPROTECTERROR
+ *        GRANTERROR
+ *        SORTERROR_1
+ *        SORTERROR_2
+ *        SPECIAL_CHARS_ERROR
  */
 function addressbook_adminapi_updateconfig($args) 
 {
@@ -53,14 +56,14 @@ function addressbook_adminapi_updateconfig($args)
             $usermode = 7;
             xarErrorSet(XAR_USER_EXCEPTION,
                         _AB_ERR_WARN,
-                        new abUserException(_AB_GLOBALPROTECTERROR));
+                        new abUserException(xarML('Corrected: In personal address book mode guests have no and registered user have full access rights!!!')));
         }
     }
     if ($guestmode > $usermode) {
         $usermode = $guestmode;
         xarErrorSet(XAR_USER_EXCEPTION,
                     _AB_ERR_WARN,
-                    new abUserException(_AB_GRANTERROR));
+                    new abUserException(xarML('Corrected: The access rights of guest were higher than for registered users!!!')));
     }
 
     xarModSetVar(__ADDRESSBOOK__, 'guestmode',       $guestmode);
@@ -71,7 +74,7 @@ function addressbook_adminapi_updateconfig($args)
     if ($sortdata_1 == $sortdata_2) {
         xarErrorSet(XAR_USER_EXCEPTION,
                     _AB_ERR_WARN,
-                    new abUserException(_AB_SORTERROR_1));
+                    new abUserException(xarML('Equal columns selected / Default sort order was not changed!')));
     }
     else {
         $s_1 = $sortdata_1.','.$sortdata_2;
@@ -80,7 +83,7 @@ function addressbook_adminapi_updateconfig($args)
     if ($sortdata_3 == $sortdata_4) {
         xarErrorSet(XAR_USER_EXCEPTION,
                     _AB_ERR_WARN,
-                    new abUserException(_AB_SORTERROR_2));
+                    new abUserException(xarML('Equal columns selected / Alternate sort order was not changed!')));
     }
     else {
         $s_2 = $sortdata_3.','.$sortdata_4;
@@ -92,7 +95,7 @@ function addressbook_adminapi_updateconfig($args)
     if (strlen($special_chars_1) != strlen($special_chars_2)) {
         xarErrorSet(XAR_USER_EXCEPTION,
                     _AB_ERR_WARN,
-                    new abUserException(_AB_SPECIAL_CHARS_ERROR));
+                    new abUserException(xarML('Both fields must contain the same number of characters - Special character replacement was NOT saved!')));
     }
     else {
         xarModSetVar(__ADDRESSBOOK__, 'special_chars_1', $special_chars_1);
@@ -136,7 +139,7 @@ function addressbook_adminapi_updateconfig($args)
 //    if (isset($error)) { $msg .= ' - '.$error; }
     xarErrorSet(XAR_USER_EXCEPTION,
                 _AB_ERR_INFO,
-                new abUserException(_AB_CONF_AB_SUCCESS));
+                new abUserException(xarML('Configuration saved!')));
 // END FIXME
 
     // Return

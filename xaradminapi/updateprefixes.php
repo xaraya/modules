@@ -83,7 +83,7 @@ function addressbook_adminapi_updateprefixes($args)
     if(xarModAPIFunc(__ADDRESSBOOK__,'admin','updateitems',array('tablename'=>'prefixes','updates'=>$updates))) {
         xarErrorSet(XAR_USER_EXCEPTION,
                     _AB_ERR_INFO,
-                    new abUserException('UPDATE - '._AB_SUCCESS));
+                    new abUserException('UPDATE - '.xarML('successful')));
     }
 
     if(!empty($dels)) {
@@ -91,7 +91,7 @@ function addressbook_adminapi_updateprefixes($args)
         if(xarModAPIFunc(__ADDRESSBOOK__,'admin','deleteitems',array('tablename'=>'prefixes','delete'=>$delete))) {
         xarErrorSet(XAR_USER_EXCEPTION,
                     _AB_ERR_INFO,
-                    new abUserException('DELETE - '._AB_SUCCESS));
+                    new abUserException('DELETE - '.xarML('successful')));
         }
     }
 
@@ -99,7 +99,7 @@ function addressbook_adminapi_updateprefixes($args)
         if(xarModAPIFunc(__ADDRESSBOOK__,'admin','additems',array('tablename'=>'prefixes','name'=>$newname))) {
         xarErrorSet(XAR_USER_EXCEPTION,
                     _AB_ERR_INFO,
-                    new abUserException('INSERT - '._AB_SUCCESS));
+                    new abUserException('INSERT - '.xarML('successful')));
         }
     }
 

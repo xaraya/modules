@@ -89,7 +89,7 @@ function addressbook_userapi_getMenu($args)
                              ,'all'=> $output['all']
                              ,'char'=>$output['char']);
 
-                $output['viewPrivateTEXT'] = xarML(_AB_VIEWPRIVATE);
+                $output['viewPrivateTEXT'] = xarML('Show private contacts only');
                 if ($output['menuprivate']) {
                     $output['privateIndicator'] = 'X';
                 } else {
@@ -100,8 +100,8 @@ function addressbook_userapi_getMenu($args)
             }
             // end private
 
-            $output['azMenuTEXT'] = xarML(_AB_MENU_AZ);
-            $output['allMenuTEXT'] = xarML(_AB_MENU_ALL);
+            $output['azMenuTEXT'] = xarML('Show A - Z');
+            $output['allMenuTEXT'] = xarML('Show all records');
 
             // Start A-Z/All
             if ($output['all'] == 1) {
@@ -145,7 +145,7 @@ function addressbook_userapi_getMenu($args)
                                         'char'=>$output['char'],
                                         'total'=>$output['total']);
 
-            $output['newAddrLinkTEXT'] = xarVarPrepHTMLDisplay (xarML(_AB_MENU_ADD));
+            $output['newAddrLinkTEXT'] = xarML('Add new address');
 
             // Set our flag / template uses to determine if it should display the link
             $output['addNewAddress'] = xarModAPIFunc(__ADDRESSBOOK__,'user','checkaccesslevel',array('option'=>'create'));

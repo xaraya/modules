@@ -95,13 +95,13 @@ function addressbook_init()
     /**
      * insert default values for Label table
      */
-    $insertRows = array(_AB_WORK
-                       ,_AB_FAX
-                       ,_AB_MOBILE
-                       ,_AB_HOME
-                       ,_AB_EMAIL
-                       ,_AB_URL
-                       ,_AB_OTHER
+    $insertRows = array(xarML('Work')
+                       ,xarML('Fax')
+                       ,xarML('Mobile')
+                       ,xarML('Home')
+                       ,xarML('E-Mail')
+                       ,xarML('URL')
+                       ,xarML('Other')
                    );
     foreach ($insertRows as $row) {
         $nextId = $dbconn->GenId($abLabelsTable);
@@ -129,9 +129,9 @@ function addressbook_init()
     /**
      * insert default values
      */
-    $insertRows = array(_AB_BUSINESS
-                       ,_AB_PERSONAL
-                       ,_AB_QUICKLIST
+    $insertRows = array(xarML('Business')
+                       ,xarML('Personal')
+                       ,xarML('Quicklist')
                        );
 
     foreach ($insertRows as $row) {
@@ -166,10 +166,10 @@ function addressbook_init()
      * intentionally numbered from 1 to 4 as they cannot be removed from
      * the application.
      */
-    $insertRows = array(_AB_CUSTOM_1
-                       ,_AB_CUSTOM_2
-                       ,_AB_CUSTOM_3
-                       ,_AB_CUSTOM_4
+    $insertRows = array(xarML('Custom Label 1')
+                       ,xarML('Custom Label 2')
+                       ,xarML('Custom Label 3')
+                       ,xarML('Custom Label 4')
                        );
 
     $nextId = 1;
@@ -199,8 +199,8 @@ function addressbook_init()
     /**
      * insert default values
      */
-    $insertRows = array(_AB_MR
-                       ,_AB_MRS
+    $insertRows = array(xarML('Mr.')
+                       ,xarML('Mrs.')
                    );
 
     foreach ($insertRows as $row) {

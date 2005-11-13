@@ -47,9 +47,9 @@ function addressbook_user_confirmdelete()
 
     $output['authid'] = xarSecGenAuthKey();
     $output['id'] = $output['id'];
-    $output['confirmDeleteTEXT'] = xarML(_AB_CONFIRMDELETE);
-    $output['buttonDelete'] = xarML(_AB_DELETE);
-    $output['buttonCancel'] = xarML(_AB_CANCEL);
+    $output['confirmDeleteTEXT'] = xarML('Delete this Address Book item?');
+    $output['buttonDelete'] = xarML('Delete');
+    $output['buttonCancel'] = xarML('Cancel');
 
     return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
 

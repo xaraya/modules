@@ -175,7 +175,7 @@ function addressbook_userapi_getAddressList($args)
     }
 
     if (!$output['total']) {
-        xarErrorSet(XAR_USER_EXCEPTION, _AB_ERR_INFO, new abUserException(_AB_NORECORDS)); //gehDEBUG
+        xarErrorSet(XAR_USER_EXCEPTION, _AB_ERR_INFO, new abUserException(xarML('There are no records to show in this view'))); //gehDEBUG
     }
 
     $items = xarModGetVar(__ADDRESSBOOK__, 'itemsperpage');
@@ -537,11 +537,11 @@ function addressbook_userapi_getAddressList($args)
         $output['displayRows'][] = array ('displayRow' => $displayRow
                                          ,'user'    => $user
                                        ,'detailURL' => xarModURL(__ADDRESSBOOK__,'user','viewdetail',$detailargs)
-                                       ,'detailTXT' => xarVarPrepHTMLDisplay(_AB_LABEL_SHOWDETAIL)
+                                       ,'detailTXT' => xarML('Details')
                                        ,'deleteURL' => xarModURL(__ADDRESSBOOK__,'user','confirmdelete',$detailargs)
-                                       ,'deleteTXT' => xarVarPrepHTMLDisplay(_AB_LABEL_DELETE)
+                                       ,'deleteTXT' => xarML('Delete')
                                        ,'editURL'   => xarModURL(__ADDRESSBOOK__,'user','insertedit',$detailargs)
-                                       ,'editTXT'   => xarVarPrepHTMLDisplay(_AB_LABEL_EDIT)
+                                       ,'editTXT'   => xarML('Edit')
                                        ,'accessLevel'=> array('option'=>'edit')
                                         );
     } // END for $results

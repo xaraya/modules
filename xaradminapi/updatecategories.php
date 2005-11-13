@@ -84,7 +84,7 @@ function addressbook_adminapi_updatecategories($args)
     if(xarModAPIFunc(__ADDRESSBOOK__,'admin','updateitems',array('tablename'=>'categories','updates'=>$updates))) {
         xarErrorSet(XAR_USER_EXCEPTION,
                     _AB_ERR_INFO,
-                    new abUserException('UPDATE - '._AB_SUCCESS));
+                    new abUserException('UPDATE - '.xarML('successful')));
     }
 
     if(!empty($dels)) {
@@ -92,7 +92,7 @@ function addressbook_adminapi_updatecategories($args)
         if(xarModAPIFunc(__ADDRESSBOOK__,'admin','deleteitems',array('tablename'=>'categories','delete'=>$delete))) {
             xarErrorSet(XAR_USER_EXCEPTION,
                         _AB_ERR_INFO,
-                        new abUserException('DELETE - '._AB_SUCCESS));
+                        new abUserException('DELETE - '.xarML('successful')));
         }
     }
 
@@ -100,7 +100,7 @@ function addressbook_adminapi_updatecategories($args)
         if(xarModAPIFunc(__ADDRESSBOOK__,'admin','additems',array('tablename'=>'categories','name'=>$newname))) {
             xarErrorSet(XAR_USER_EXCEPTION,
                         _AB_ERR_INFO,
-                        new abUserException('INSERT - '._AB_SUCCESS));
+                        new abUserException('INSERT - '.xarML('successful')));
         }
     }
 

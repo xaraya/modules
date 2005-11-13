@@ -34,7 +34,7 @@ function addressbook_userapi_getCompanies()
     if($dbconn->ErrorNo() != 0) { return array(); }
     if(!isset($result)) { return array(); }
 
-    $companies[] = array('id'=>'0','name'=>xarVarPrepHTMLDisplay(_AB_ALLCOMPANIES));
+    $companies[] = array('id'=>'0','name'=>xarML('Enter new company name or select a company...'));
     for($i=1; !$result->EOF; $result->MoveNext()) {
         list($company) = $result->fields;
         $companies[]     = array('id'=>$company,'name'=>$company);

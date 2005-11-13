@@ -25,13 +25,13 @@ function addressbook_utilapi_getsortoptions()
 
     $sortOptions = array();
 
-    $sortOptions[] = array('id'=>'sortname',   'name'=>xarML(_AB_NAME));
-    $sortOptions[] = array('id'=>'title',      'name'=>xarML(_AB_TITLE));
-    $sortOptions[] = array('id'=>'sortcompany','name'=>xarML(_AB_COMPANY));
-    $sortOptions[] = array('id'=>'zip',        'name'=>xarML(_AB_ZIP));
-    $sortOptions[] = array('id'=>'city',       'name'=>xarML(_AB_CITY));
-    $sortOptions[] = array('id'=>'state',      'name'=>xarML(_AB_STATE));
-    $sortOptions[] = array('id'=>'country',    'name'=>xarML(_AB_COUNTRY));
+    $sortOptions[] = array('id'=>'sortname',   'name'=>xarML('Name'));
+    $sortOptions[] = array('id'=>'title',      'name'=>xarML('Title'));
+    $sortOptions[] = array('id'=>'sortcompany','name'=>xarML('Company'));
+    $sortOptions[] = array('id'=>'zip',        'name'=>xarML('Zip'));
+    $sortOptions[] = array('id'=>'city',       'name'=>xarML('City'));
+    $sortOptions[] = array('id'=>'state',      'name'=>xarML('State'));
+    $sortOptions[] = array('id'=>'country',    'name'=>xarML('Country'));
 
     return $sortOptions;
 

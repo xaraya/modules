@@ -102,7 +102,7 @@ function addressbook_admin_modifycustomfields()
         $output['authid'] = xarSecGenAuthKey();
 
         // Submit button
-        $output['btnCommitText'] = xarVarPrepHTMLDisplay(xarML(_AB_ADDRESSBOOKUPDATE));
+        $output['btnCommitText'] = xarML('Commit Changes');
 
     } else {
         return xarTplModule(__ADDRESSBOOK__,'user','noauth');

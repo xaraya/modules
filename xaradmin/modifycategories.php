@@ -58,7 +58,7 @@ function addressbook_admin_modifycategories()
         $output['authid'] = xarSecGenAuthKey();
 
         // Submit button
-        $output['btnCommitText'] = xarVarPrepHTMLDisplay(xarML(_AB_ADDRESSBOOKUPDATE));
+        $output['btnCommitText'] = xarVarPrepHTMLDisplay(xarML('Commit Changes'));
 
     } else {
         return xarTplModule(__ADDRESSBOOK__,'user','noauth');

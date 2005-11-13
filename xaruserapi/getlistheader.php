@@ -35,25 +35,25 @@ function addressbook_userapi_getListHeader($args)
     for ($i=0;$i<2;$i++) {
         switch ($sortCols[$i]) {
             case 'sortname':
-                $returnArray[$i] = array('header'=> strtoupper(_AB_LABEL_NAME));
+                $returnArray[$i] = array('header'=> strtoupper(xarML('NAME')));
                 break;
             case 'title':
-                $returnArray[$i] = array('header'=> strtoupper(_AB_TITLE));
+                $returnArray[$i] = array('header'=> strtoupper(xarML('Title')));
                 break;
             case 'sortcompany':
-                $returnArray[$i] = array('header'=> strtoupper(_AB_COMPANY));
+                $returnArray[$i] = array('header'=> strtoupper(xarML('Company')));
                 break;
             case 'zip':
-                $returnArray[$i] = array('header'=> strtoupper(_AB_ZIP));
+                $returnArray[$i] = array('header'=> strtoupper(xarML('Zip')));
                 break;
             case 'city':
-                $returnArray[$i] = array('header'=> strtoupper(_AB_CITY));
+                $returnArray[$i] = array('header'=> strtoupper(xarML('City')));
                 break;
             case 'state':
-                $returnArray[$i] = array('header'=> strtoupper(_AB_STATE));
+                $returnArray[$i] = array('header'=> strtoupper(xarML('State')));
                 break;
             case 'country':
-                $returnArray[$i] = array('header'=> strtoupper(_AB_COUNTRY));
+                $returnArray[$i] = array('header'=> strtoupper(xarML('Country')));
                 break;
             default:
                 // do nothing

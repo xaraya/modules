@@ -48,18 +48,18 @@ function addressbook_user_viewdetail()
 
     // General information
     // headline
-    $output['info'] = xarVarPrepHTMLDisplay(_AB_CATEGORY.': '._AB_UNFILED);
+    $output['info'] = xarML('Category') . ': ' . xarML('Unfiled');
     if ($output['cat_id'] > 0) {
         $cats = xarModAPIFunc(__ADDRESSBOOK__,'util','getitems',array('tablename'=>'categories'));
         foreach ($cats as $cat) {
             if ($output['cat_id'] == $cat['id']) {
-                $output['info'] = xarVarPrepHTMLDisplay(_AB_CATEGORY.': '.$cat['name']);
+                $output['info'] = xarML('Category') . ': ' . xarVarPrepHTMLDisplay($cat['name']);
             }
         }
     }
 
     if ($output['last_updt'] > 0) {
-        $output['info'] .= ' | '.xarVarPrepHTMLDisplay(_AB_LASTCHANGED).": "
+        $output['info'] .= ' | '.xarML('Last changed ').": "
                                .xarLocaleGetFormattedDate ('long',$output['last_updt']);
     }
 
@@ -117,7 +117,7 @@ function addressbook_user_viewdetail()
     if (!empty($output['note'])) {
 
         // headline
-        $output['noteHeading'] = xarVarPrepHTMLDisplay(_AB_NOTETAB);
+        $output['noteHeading'] = xarML('Note');
 
         $output['note'] = xarVarPrepHTMLDisplay(nl2br($output['note']));
     }
@@ -148,10 +148,10 @@ function addressbook_user_viewdetail()
             if (!empty($output['country'])) {$clip.=$output['country'].'\n'; }
         }
         $output['clip'] = $clip;
-        $output['copy2clipboard'] = xarVarPrepHTMLDisplay(_AB_COPY);
+        $output['copy2clipboard'] = xarML('Copy to clipboard');
     }
 
-    $output['goBack'] = xarVarPrepHTMLDisplay(_AB_GOBACK);
+    $output['goBack'] = xarML('Back to list');
 
     return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
 

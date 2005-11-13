@@ -19,8 +19,11 @@
  *
  * @param passed in from modifycustomfields api
  * @return bool
- * @raise _AB_GLOBALPROTECTERROR, _AB_GRANTERROR, _AB_SORTERROR_1,
- *        _AB_SORTERROR_2, _AB_SPECIAL_CHARS_ERROR
+ * @raise GLOBALPROTECTERROR
+ *        GRANTERROR
+ *        SORTERROR_1
+ *        SORTERROR_2
+ *        SPECIAL_CHARS_ERROR
  */
 function addressbook_adminapi_updatecustomfields($args)
 {
@@ -124,7 +127,7 @@ function addressbook_adminapi_updatecustomfields($args)
         if(xarModAPIFunc(__ADDRESSBOOK__,'admin','updateitems',array('tablename'=>'customfields','updates'=>$updates))) {
             xarErrorSet(XAR_USER_EXCEPTION,
                         _AB_ERR_INFO,
-                        new abUserException('UPDATE - '._AB_SUCCESS));
+                        new abUserException('UPDATE - '.xarML('successful')));
         } else {
             return FALSE;
         }
@@ -133,7 +136,7 @@ function addressbook_adminapi_updatecustomfields($args)
             if(xarModAPIFunc(__ADDRESSBOOK__,'admin','deletecustomfields',array('modDel'=>$modDel,'modDelType'=>$modDelType))) {
                 xarErrorSet(XAR_USER_EXCEPTION,
                             _AB_ERR_INFO,
-                            new abUserException('DELETE - '._AB_SUCCESS));
+                            new abUserException('DELETE - '.xarML('successful')));
                 if (!xarModAPIFunc(__ADDRESSBOOK__,'admin','resequencecustomfields')) {
                     return FALSE;
                 }
@@ -167,7 +170,7 @@ function addressbook_adminapi_updatecustomfields($args)
             if(xarModAPIFunc(__ADDRESSBOOK__,'admin','addcustomfields',array('inserts'=>$inserts))) {
                 xarErrorSet(XAR_USER_EXCEPTION,
                             _AB_ERR_INFO,
-                            new abUserException('INSERT - '._AB_SUCCESS));
+                            new abUserException('INSERT - '.xarML('successful')));
                 if (!xarModAPIFunc(__ADDRESSBOOK__,'admin','resequencecustomfields')) {
                     return FALSE;
                 }

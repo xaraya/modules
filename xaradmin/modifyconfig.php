@@ -132,8 +132,8 @@ function addressbook_admin_modifyconfig()
         //////////// End build sortOptions /////////////////////
 
         // Name display in list view & sort order
-        $temp1 = xarVarPrepHTMLDisplay(_AB_SO_LASTNAME).', '.xarVarPrepHTMLDisplay(_AB_SO_FIRSTNAME);
-        $temp2 = xarVarPrepHTMLDisplay(_AB_SO_FIRSTNAME).' '.xarVarPrepHTMLDisplay(_AB_SO_LASTNAME);
+        $temp1 = xarML('Last name').', '.xarML('First name');
+        $temp2 = xarML('First name').' '.xarML('Last name');
         $output['name_order'][] = array('id'=>0, 'name'=>$temp1);
         $output['name_order'][] = array('id'=>1, 'name'=>$temp2);
         $output['name_order_selected'] = xarModGetVar(__ADDRESSBOOK__, 'name_order');
@@ -148,9 +148,9 @@ function addressbook_admin_modifyconfig()
         $output['use_img']          = xarModGetVar(__ADDRESSBOOK__, 'use_img');
 
         // Disable / enable menu options
-        $output['menu_off'][] = array('id'=>0, 'name'=>xarVarPrepHTMLDisplay(_AB_HIDENOTHING));
-        $output['menu_off'][] = array('id'=>1, 'name'=>xarVarPrepHTMLDisplay(_AB_HIDEALL));
-        $output['menu_off'][] = array('id'=>2, 'name'=>xarVarPrepHTMLDisplay(_AB_HIDEGUESTS));
+        $output['menu_off'][] = array('id'=>0, 'name'=>xarML('Enabled for all'));
+        $output['menu_off'][] = array('id'=>1, 'name'=>xarML('Disabled for all'));
+        $output['menu_off'][] = array('id'=>2, 'name'=>xarML('Disabled only for guests'));
         $output['menu_off_selected'] = (int) xarModGetVar(__ADDRESSBOOK__, 'menu_off');
 
         $output['menu_semi']        = xarModGetVar(__ADDRESSBOOK__, 'menu_semi');
@@ -177,7 +177,7 @@ function addressbook_admin_modifyconfig()
         $output['authid'] = xarSecGenAuthKey();
 
         // Submit button
-        $output['btnCommitText'] = xarVarPrepHTMLDisplay(_AB_ADDRESSBOOKUPDATE);
+        $output['btnCommitText'] = xarML('Commit Changes');
 
     } else {
         return xarTplModule(__ADDRESSBOOK__,'user','noauth');

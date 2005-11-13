@@ -89,12 +89,12 @@
             </td>
             <td style="text-align:center; padding:.25em;">
             <xar:if condition="$cf['position'] eq 1">
-              <a href="javascript:document.modcustfield.submit();" onclick="javascript:document.modcustfield.decID.value=#$cf['nr']#;"><img src="modules/#$modInfo['directory']#/xarimages/down.gif" alt="#xarVarPrepHTMLDisplay(_AB_DOWN)#" border="0" hspace="4" /></a>
+              <a href="javascript:document.modcustfield.submit();" onclick="javascript:document.modcustfield.decID.value=#$cf['nr']#;"><img src="modules/#$modInfo['directory']#/xarimages/down.gif" alt="#xarML('down')#" border="0" hspace="4" /></a>
             <xar:else />
               <xar:if condition="$cf['position'] eq sizeof($custfields)">
-              <a href="javascript:document.modcustfield.submit();" onclick="javascript:document.modcustfield.incID.value=#$cf['nr']#;"><img src="modules/#$modInfo['directory']#/xarimages/up.gif" alt="#xarVarPrepHTMLDisplay(_AB_UP)#" border="0" hspace="4" /></a>
+              <a href="javascript:document.modcustfield.submit();" onclick="javascript:document.modcustfield.incID.value=#$cf['nr']#;"><img src="modules/#$modInfo['directory']#/xarimages/up.gif" alt="#xarML('up')#" border="0" hspace="4" /></a>
               <xar:else />
-              <a href="javascript:document.modcustfield.submit();" onclick="javascript:document.modcustfield.incID.value=#$cf['nr']#;"><img src="modules/#$modInfo['directory']#/xarimages/up.gif" alt="#xarVarPrepHTMLDisplay(_AB_UP)#" border="0" hspace="4" /></a><a href="javascript:document.modcustfield.submit();" onclick="javascript:document.modcustfield.decID.value=#$cf['nr']#;"><img src="modules/#$modInfo['directory']#/xarimages/down.gif" alt="#xarVarPrepHTMLDisplay(_AB_DOWN)#" border="0" hspace="4" /></a>
+              <a href="javascript:document.modcustfield.submit();" onclick="javascript:document.modcustfield.incID.value=#$cf['nr']#;"><img src="modules/#$modInfo['directory']#/xarimages/up.gif" alt="#xarML('up')#" border="0" hspace="4" /></a><a href="javascript:document.modcustfield.submit();" onclick="javascript:document.modcustfield.decID.value=#$cf['nr']#;"><img src="modules/#$modInfo['directory']#/xarimages/down.gif" alt="#xarML('down')#" border="0" hspace="4" /></a>
               </xar:if>
             </xar:if>
             </td>

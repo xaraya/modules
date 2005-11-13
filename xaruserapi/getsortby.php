@@ -34,25 +34,25 @@ function addressbook_userapi_getSortBy($args)
     for ($i=0;$i<2;$i++) {
         switch ($sortCols[$i]) {
             case 'sortname':
-                $returnArray[$i] = _AB_NAME;
+                $returnArray[$i] = xarML('Name');
                 break;
             case 'title':
-                $returnArray[$i] = _AB_TITLE;
+                $returnArray[$i] = xarML('Title');
                 break;
             case 'sortcompany':
-                $returnArray[$i] = _AB_COMPANY;
+                $returnArray[$i] = xarML('Company');
                 break;
             case 'zip':
-                $returnArray[$i] = _AB_ZIP;
+                $returnArray[$i] = xarML('Zip');
                 break;
             case 'city':
-                $returnArray[$i] = _AB_CITY;
+                $returnArray[$i] = xarML('City');
                 break;
             case 'state':
-                $returnArray[$i] = _AB_STATE;
+                $returnArray[$i] = xarML('State');
                 break;
             case 'country':
-                $returnArray[$i] = _AB_COUNTRY;
+                $returnArray[$i] = xarML('Country');
                 break;
         }
         $custom_tab = xarModGetVar(__ADDRESSBOOK__,'custom_tab');

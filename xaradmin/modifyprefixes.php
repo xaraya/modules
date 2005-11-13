@@ -63,7 +63,7 @@ function addressbook_admin_modifyprefixes($args)
         $output['authid'] = xarSecGenAuthKey();
 
         // Submit button
-        $output['btnCommitText'] = xarVarPrepHTMLDisplay(xarML(_AB_ADDRESSBOOKUPDATE));
+        $output['btnCommitText'] = xarML('Commit Changes');
 
     } else {
         return xarTplModule(__ADDRESSBOOK__,'user','noauth');
