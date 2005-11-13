@@ -1,6 +1,6 @@
 <?php
 /**
- * Create a new item
+ * Create a new question
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
@@ -11,7 +11,7 @@
  */
 
 /**
- * Create a new item
+ * Create a new question
  * 
  * Standard function to create a new item
  * This is a standard function that is called with the results of the
@@ -27,11 +27,11 @@ function surveys_admin_create($args)
 
     if (!xarVarFetch('objectid',    'int:1:',       $objectid, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('invalid',     'str:1:',       $invalid,  '', XARVAR_NOT_REQUIRED)) return; 
-    if (!xarVarFetch('qid',         'id',           $qid,  NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('name',        'str:1:100',    $name,  NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('desc',        'str',          $desc,  '', XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('mandatory',   'enum:Y:N:y:n', $mandatory,  'N', XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('default',     'str:0:200',    $default,  NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('qid',         'id',           $qid,  NULL, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('name',        'str:1:100',    $name,  NULL, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('desc',        'str',          $desc,  '', XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('mandatory',   'enum:Y:N:y:n', $mandatory,  'N', XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('default',     'str:0:200',    $default,  NULL, XARVAR_DONT_SET)) return;
     /* Argument check 
      * TODO
      
@@ -42,7 +42,7 @@ function surveys_admin_create($args)
 */
     // Argument check
     $invalid = array();
-    if (empty($mandatory) || !is_numeric($mandatory)) {
+    if (empty($mandatory) || !is_string($mandatory)) {
         $invalid['mandatory'] = 1;
         $number = '';
     } 

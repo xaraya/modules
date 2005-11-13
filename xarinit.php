@@ -167,7 +167,7 @@ CREATE TABLE `xar_surveys_questions` (
   KEY `xar_type_id` (`xar_type_id`)
 ) TYPE=MyISAM AUTO_INCREMENT=162 ;
 */
-
+// MichelV: Don't like the C(1) here for a bool
 
     $fields = " xar_qid         I AUTO PRIMARY,
                 xar_type_id     I NOTNULL default 0,

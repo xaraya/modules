@@ -16,7 +16,7 @@
  * This is a standard function that is called whenever an administrator
  * wishes to create a new module item
  *
- * @author Example module development team
+ * @author Surveys module development team
  * @return array
  */
 function surveys_admin_newquestion($args)
