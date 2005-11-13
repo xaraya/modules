@@ -108,7 +108,7 @@ function release_user_search()
     }
     $search['q']=$q;
     $seach['modid']= xarModGetIDFromName('release');
-    // Search course information
+    /* Search for release information */
     $data['release'] = xarModAPIFunc('release','user','search',$search);
 
     if (empty($data['release'])){

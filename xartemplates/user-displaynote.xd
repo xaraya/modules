@@ -1,4 +1,8 @@
-<xar:comment><div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Xaraya Web Application Framework</xar:mlstring></span></div></xar:comment>
+<xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Xaraya Web Application Framework</xar:mlstring></span>
+</div>
+</xar:comment>
 <!-- common admin menu for this module - remove link to the current function -->
 <xar:set name="extlisturl">xarModURL('release','user','view')</xar:set>
 <xar:set name="extreleaseurl">xarModURL('release','user','viewnotes')</xar:set>
@@ -8,7 +12,7 @@
 <xar:set name="extname">ucfirst($regname)</xar:set>
 <div class="xar-mod-body">
 <h1><xar:mlstring>Extension Release Details</xar:mlstring></h1>
-<div class="docs-article-wrapper" ">
+<div class="docs-article-wrapper">
 
               <h2 style="float: left; width: 20%; text-align:left;">
                       <xar:if condition="$type eq '0'">
