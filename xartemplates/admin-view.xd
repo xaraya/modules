@@ -1,0 +1,53 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<!-- common admin menu for this module - remove link to the current function -->
+<!-- the variables used in this menu come from example_admin_menu() -->
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>SIGMA Personnel Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2>#$menutitle#</h2><br />
+	<div style="margin: auto;">
+	
+	<xar:if condition="!empty($menu)">
+	#$menu#
+	</xar:if>
+	
+	<xar:data-getitems name="$properties" value="$values" module="sigmapersonnel" itemtype="$itemtype" numitems="$itemsperpage" startnum="$startnum" />
+	
+		<div class="tborder">
+			<table width="100%" border="0" cellspacing="1" cellpadding="4">
+				<tr>
+					<xar:foreach in="$properties" key="$name">
+						<th align="center"><xar:data-label property="$properties[$name]" /></th>
+					</xar:foreach>
+					<th align="center"><xar:mlstring>Options</xar:mlstring></th>
+				</tr>
+				<xar:set name="$class">'xar-norm'</xar:set>
+				<xar:foreach in="$values" key="$itemid" value="$fields">
+				<tr class="#$class#">
+					<xar:foreach in="$properties" key="$name">
+						<xar:if condition="!empty($fields[$name])">
+						<td><xar:data-output property="$properties[$name]" value="$fields[$name]" /></td>
+						<xar:else />
+						<td>&nbsp;</td>
+						</xar:if>
+					</xar:foreach>
+					<td>
+						<a href="#xarModURL('sigmapersonnel','admin','display',array('itemid' => $itemid, 'itemtype' => $itemtype))#"><xar:mlstring>Display</xar:mlstring></a> |
+						<a href="#xarModURL('sigmapersonnel','admin','modify', array('itemid' => $itemid, 'itemtype' => $itemtype))#"><xar:mlstring>Modify</xar:mlstring></a> |
+						<a href="#xarModURL('sigmapersonnel','admin','delete', array('itemid' => $itemid, 'itemtype' => $itemtype))#"><xar:mlstring>Delete</xar:mlstring></a>
+					</td>
+				</tr>
+				<xar:if condition="$class eq 'xar-norm'">
+					<xar:set name="$class">'xar-accent'</xar:set>
+				<xar:else />
+					<xar:set name="$class">'xar-norm'</xar:set>
+				</xar:if>
+				</xar:foreach>
+				<tr>
+					<xar:foreach in="$properties" key="$name">
+						<td>&nbsp;</td>
+					</xar:foreach>
+					<td><a href="#xarModURL('sigmapersonnel','admin','new', array('itemtype' => $itemtype))#"><xar:mlstring>New</xar:mlstring></a></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>

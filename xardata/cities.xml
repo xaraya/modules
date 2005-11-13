@@ -1,0 +1,32 @@
+<object name="sigmapersonnel_cities">
+  <objectid>12</objectid>
+  <label>Cities</label>
+  <moduleid>418</moduleid>
+  <itemtype>4</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+    <property name="cityid">
+      <id>50</id>
+      <label>Cityid</label>
+      <type>itemid</type>
+      <default></default>
+      <source>xar_sigmapersonnel_cities.xar_cityid</source>
+      <status>1</status>
+      <order>1</order>
+      <validation>int (11)</validation>
+    </property>
+    <property name="city">
+      <id>51</id>
+      <label>City</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_sigmapersonnel_cities.xar_city</source>
+      <status>1</status>
+      <order>2</order>
+      <validation>0:100</validation>
+    </property>
+  </properties>
+</object>

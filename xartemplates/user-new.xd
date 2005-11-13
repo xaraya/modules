@@ -1,0 +1,84 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
+<script type="text/javascript">
+<!--
+    // Enter name of mandatory fields
+    var fieldRequired = Array("start", "end");
+    // Enter field description to appear in the dialog box
+    var fieldDescription = Array("Start date", "End date");
+// -->
+</script>
+
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Entry for a absence</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="header" />
+
+    <h2></h2>
+
+    <form method="post" 
+          action="&xar-modurl-sigmapersonnel-user-create;" 
+          onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
+        <fieldset>
+        <legend>
+            <xar:mlstring>New Absence</xar:mlstring>
+        </legend>
+        <div class="xar-form-input-wrapper">
+            <label for="start" title="#xarML('The date this absence starts.')#" class="xar-form-label">
+                <xar:mlstring>Start date:</xar:mlstring>
+            </label>
+            <xar:if condition="isset($start)">
+                <xar:data-input name="start" type="calendar" value="$start" validation="date" />
+            <xar:else />
+                <xar:data-input name="start" type="calendar" value="$item.start" validation="date" />
+            </xar:if>
+            <xar:if condition="!empty($invalid['start'])">
+                <p class="xar-error">
+                    <xar:mlstring>ERROR! This is not a valid date</xar:mlstring>
+                </p>
+            </xar:if>
+        </div>
+
+        <div class="xar-form-input-wrapper">
+            <label for="end" class="xar-form-label" title="#xarML('The date the absence ends.')#">
+                <xar:mlstring>End date:</xar:mlstring>
+            </label>
+            <xar:if condition="isset($end)">
+                <xar:data-input name="end" type="calendar" value="$end" validation="date" />
+            <xar:else />
+                <xar:data-input name="end" type="calendar" value="$item.end" validation="date" />
+            </xar:if>
+            <xar:if condition="!empty($invalid['end'])">
+                <p class="xar-error">
+                    <xar:mlstring>ERROR! This is not a valid date</xar:mlstring>
+                </p>
+            </xar:if>
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label for="types" class="xar-form-label" title="#xarML('Choose the type of presence.')#">
+                <xar:mlstring>Type:</xar:mlstring>
+            </label>
+            <select name="typeid">
+            <xar:loop name="$types">
+                <option value="#$loop:item['typeid']#">#$loop:item['type']#</option>
+            </xar:loop>
+            </select>
+        </div>
+        
+        <xar:if condition="!empty($hookoutput['keywords'])" >
+            <div class="xar-form-input-wrapper">
+                #$hookoutput['keywords']#
+            </div>
+        </xar:if>
+        <div class="xar-form-input-wrapper">
+            <div class="xar-form-input-wrapper-after">
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <input type="hidden" name="personid" id="personid" value="#$personid#" />
+                <input type="submit" value="#xarML('Add Presence')#" />
+            </div>
+        </div>
+        </fieldset>
+    </form>
+</div>

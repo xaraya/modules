@@ -1,0 +1,137 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<h2>#$name# <xar:mlstring>Your SIGMA Information</xar:mlstring></h2>
+<form action="&xar-modurl-sigmapersonnel-user-usermenu;" 
+      method="post" 
+      enctype="application/x-www-form-urlencoded">
+      
+      <xar:if condition="!empty($persondata)">
+        <fieldset>
+            <legend>
+                <xar:mlstring>Name and address</xar:mlstring>
+            </legend>
+            <div class="xar-form-input-wrapper">
+                <label for="firstname" class="xar-form-label required">
+                    <span class="help" title="#xarML('Your first Name.')#">
+                    <xar:mlstring>First Name</xar:mlstring>
+                    </span>
+                </label>
+                <xar:data-input name="firstname" type="2" value="$persondata.firstname" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="lastname" class="xar-form-label required">
+                    <span class="help" title="#xarML('Enter the Last Name for this person.')#">
+                    <xar:mlstring>Last Name</xar:mlstring>
+                    </span>
+                </label>
+                <xar:data-input name="lastname" type="2" value="$persondata.lastname" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="tussenvgsl" class="xar-form-label">
+                    <span class="help" title="#xarML('Enter the tussenvoegsel of this person.')#">
+                    <xar:mlstring>Tussenvoegsel</xar:mlstring>
+                    </span>
+                </label>
+                <xar:data-input name="tussenvgsl" type="2" value="$persondata.tussenvgsl" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="initials" class="xar-form-label">
+                    <span class="help" title="#xarML('Enter the initials of this person.')#">
+                    <xar:mlstring>Initials</xar:mlstring>
+                    </span>
+                </label>
+                <xar:data-input name="initials" type="2" value="$persondata.initials" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="sex" class="xar-form-label">
+                    <span class="help" title="#xarML('Enter the sex of this person.')#">
+                    <xar:mlstring>Sexe</xar:mlstring>
+                    </span>
+                </label>
+                <xar:data-input name="sex" type="2" value="$persondata.sex" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="title" class="xar-form-label">
+                    <span class="help" title="#xarML('Enter the title of this person.')#">
+                    <xar:mlstring>Title</xar:mlstring>
+                    </span>
+                </label>
+                <xar:data-input name="title" type="2" value="$persondata.title" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="street" class="xar-form-label">
+                    <span class="help" title="#xarML('Enter the street of this person.')#">
+                    <xar:mlstring>Street</xar:mlstring>
+                    </span>
+                </label>
+                <xar:data-input name="street" type="2" value="$persondata.street" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="zip" class="xar-form-label">
+                    <span class="help" title="#xarML('Enter the zip of this person.')#">
+                    <xar:mlstring>Zip</xar:mlstring>
+                    </span>
+                </label>
+                <xar:data-input name="zip" type="2" value="$persondata.zip" />
+            </div>
+            <div class="xar-form-input-wrapper">
+              <label for="cityid" class="xar-form-label">
+                 <span class="help" title="#xarML('Choose the city/town')#">
+                    <xar:mlstring>City</xar:mlstring>
+                 </span>
+              </label>
+                <select name="cityid">
+                <xar:loop name="$cities">
+                    <option value="#$loop:item['cityid']#">#$loop:item['city']#</option>
+                </xar:loop>
+                </select>
+            </div>
+        
+            <div class="xar-form-input-wrapper">
+                <label for="phonehome" class="xar-form-label">
+                    <span class="help" title="#xarML('Enter the phonenumber at home of this person.')#">
+                    <xar:mlstring>Phone number at home</xar:mlstring>
+                    </span>
+                </label>
+                <xar:data-input name="phonehome" type="2" value="$persondata.phonehome" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="mobile" class="xar-form-label">
+                    <span class="help" title="#xarML('Enter the mobile phonenumber of this person.')#">
+                    <xar:mlstring>Mobile phone number</xar:mlstring>
+                    </span>
+                </label>
+                <xar:data-input name="mobile" type="2" value="$persondata.mobile" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="phonework" class="xar-form-label">
+                    <span class="help" title="#xarML('Enter the phonenumber at work of this person.')#">
+                    <xar:mlstring>Phone at work</xar:mlstring>
+                    </span>
+                </label>
+                <xar:data-input name="phonework" type="2" value="$persondata.phonework" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="email" class="xar-form-label">
+                    <span class="help" title="#xarML('Enter the email address of this person.')#">
+                    <xar:mlstring>Email address</xar:mlstring>
+                    </span>
+                </label>
+                <xar:data-input name="email" type="2" value="$persondata.email" />
+            </div>
+        </fieldset>
+    </xar:if>
+    <fieldset>
+        <div class="xar-form-input-wrapper">
+            <label for="itemsperpage" class="xar-form-label">
+                <span class="help" title="#xarML('The number of items per page you will see.')#">
+                <xar:mlstring>Items per page</xar:mlstring>
+                </span>
+            </label>
+            <input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#$itemsperpage#" />
+        </div>
+    </fieldset>
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />    
+    <input type="hidden" name="uid" id="uid" value="#$uid#" />    
+    <input type="hidden" name="phase" id="phase" value="update" />
+    <input type="submit" value="Modify Your Information"  tabindex="2" />
+</form>

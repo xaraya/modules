@@ -1,0 +1,32 @@
+<object name="sigmapersonnel_status">
+  <objectid>14</objectid>
+  <label>Person Status</label>
+  <moduleid>418</moduleid>
+  <itemtype>6</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+    <property name="statusid">
+      <id>54</id>
+      <label>Statusid</label>
+      <type>itemid</type>
+      <default></default>
+      <source>xar_sigmapersonnel_status.xar_statusid</source>
+      <status>1</status>
+      <order>1</order>
+      <validation>int (11)</validation>
+    </property>
+    <property name="statustype">
+      <id>55</id>
+      <label>Statustype</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_sigmapersonnel_status.xar_statustype</source>
+      <status>1</status>
+      <order>2</order>
+      <validation>0:100</validation>
+    </property>
+  </properties>
+</object>

@@ -1,0 +1,32 @@
+<object name="sigmapersonnel_districts">
+  <objectid>11</objectid>
+  <label>Districts</label>
+  <moduleid>418</moduleid>
+  <itemtype>3</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+    <property name="districtid">
+      <id>48</id>
+      <label>Districtid</label>
+      <type>itemid</type>
+      <default></default>
+      <source>xar_sigmapersonnel_districts.xar_districtid</source>
+      <status>1</status>
+      <order>1</order>
+      <validation>int (11)</validation>
+    </property>
+    <property name="district">
+      <id>49</id>
+      <label>District</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_sigmapersonnel_districts.xar_district</source>
+      <status>1</status>
+      <order>2</order>
+      <validation>0:100</validation>
+    </property>
+  </properties>
+</object>

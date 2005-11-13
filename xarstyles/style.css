@@ -1,0 +1,6 @@
+/* Required in forms */
+
+form label.required span:before {
+    content: " * ";
+    color: red;
+}

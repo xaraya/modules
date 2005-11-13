@@ -1,0 +1,32 @@
+<object name="sigmapersonnel_presencetypes">
+  <objectid>13</objectid>
+  <label>Presencetypes</label>
+  <moduleid>418</moduleid>
+  <itemtype>5</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+    <property name="typeid">
+      <id>52</id>
+      <label>Typeid</label>
+      <type>itemid</type>
+      <default></default>
+      <source>xar_sigmapersonnel_presencetypes.xar_typeid</source>
+      <status>1</status>
+      <order>1</order>
+      <validation>int (11)</validation>
+    </property>
+    <property name="type">
+      <id>53</id>
+      <label>Type</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_sigmapersonnel_presencetypes.xar_type</source>
+      <status>1</status>
+      <order>2</order>
+      <validation>0:100</validation>
+    </property>
+  </properties>
+</object>

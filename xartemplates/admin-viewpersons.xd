@@ -1,0 +1,53 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>SIGMAPersonnel Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>People</xar:mlstring></h2>
+
+    <xar:if condition="xarSessionGetVar('statusmsg') != ''">
+        <p>#xarSessionGetVar('statusmsg')#</p>
+    </xar:if>
+    
+    <xar:if condition="xarModIsHooked('categories','sigmapersonnel')">
+        <xar:categories-navigation layout="trails" showchildren="1" 
+        module="sigmapersonnel" func="viewpersons" type="admin" catid="$catid" />
+    </xar:if>
+    <table class="xar-fullwidth">
+        <tr>
+            <th>#xarML('First Name')#</th>
+            <th>#xarML('Last Name')#</th>
+            <th>#xarML('SIGMA Number')#</th>
+            <th>#xarML('Options')#</th>
+        </tr>
+        <xar:foreach in="$items" value="$item">
+        <tr>
+            <td>#$item['firstname']#</td>
+            <td>#$item['lastname']#</td>
+            <td>#$item['pnumber']#</td>
+            <td>
+               <xar:if condition="empty($item['editurl'])">
+                   #$item['edittitle']#
+               <xar:else />
+                   <a href="#$item['editurl']#">#$item['edittitle']#</a>
+               </xar:if>
+               |
+               <xar:if condition="empty($item['deleteurl'])">
+                   #$item['deletetitle']#
+               <xar:else />
+                   <a href="#$item['deleteurl']#">#$item['deletetitle']#</a>
+               </xar:if>
+            </td>
+        </tr>
+        </xar:foreach>
+    </table>
+    <br />
+
+    <div class="xar-align-center xar-padding-thick">
+        <!-- add the pager here -->
+        #$pager#
+    </div>
+</div>
+
+<xar:if condition="xarSessionSetVar('statusmsg', '')"></xar:if>

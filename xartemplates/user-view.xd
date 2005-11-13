@@ -1,0 +1,54 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>SIGMA Personnel</xar:mlstring></span>
+</div>
+<div class="xar-mod-body xar-border-thin">
+
+    <xar:template type="module" file="header" />
+
+    <h2><xar:mlstring>SIGMA personnel</xar:mlstring></h2>
+
+    <xar:if condition="!empty($status)">
+        <strong>#$status#</strong>
+    </xar:if>
+    <table>
+        <tr>
+            <th><xar:mlstring>SIGMA Personnel Number</xar:mlstring></th>
+            <th><xar:mlstring>First Name</xar:mlstring></th>
+            <th><xar:mlstring>Last Name</xar:mlstring></th>
+        </tr>
+
+        <xar:foreach in="$items" value="$item">
+        <tr>
+            <td>
+                    #$item.personid#
+            </td>
+            <td>
+                <xar:if condition="empty($item.link)">
+                    #$item.number#
+                <xar:else />
+                    <a href="#$item.link#">#$item.number#</a>
+                </xar:if>
+            </td>
+            <td>
+
+                <!-- we only show a link if the item link variable is not empty -->
+
+                <xar:if condition="empty($item.link)">
+                    #$item.lastname#
+                <xar:else />
+                    <a href="#$item.link#">#$item.lastname#</a>
+                </xar:if>
+    
+            </td>
+        </tr>
+        </xar:foreach>
+    
+    </table>
+        
+    <div class="xar-align-center xar-padding-thick">
+        <!-- add the pager here -->
+        #$pager#
+    </div>
+</div>
