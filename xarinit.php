@@ -8,6 +8,7 @@
  * @link http://www.xaraya.com
  *
  * @subpackage Surveys
+ * @author Jason Judge
  */
 /*
  * Initialise the surveys module.
@@ -74,6 +75,9 @@ function surveys_init()
 
 
     $groupstable = $xartable['surveys_groups'];
+    /*
+     * This table describes the groups that will contain the questions
+     */
     
 /*
 CREATE TABLE `xar_surveys_groups` (
@@ -120,6 +124,10 @@ CREATE TABLE `xar_surveys_groups` (
 
 
     $question_groupstable = $xartable['surveys_question_groups'];
+    /*
+     * This table couples the questions to groups.
+     * Groups are described in $groupstable
+     */    
 /*
 CREATE TABLE `xar_surveys_question_groups` (
   `xar_qgid` int(11) NOT NULL auto_increment,
@@ -307,6 +315,10 @@ CREATE TABLE `xar_surveys_user_groups` (
 
 
     $user_responsestable = $xartable['surveys_user_responses'];
+    /*
+     * This table holds all user responses
+     * It gets filled with dummy answers when a group of questions is loaded by a user
+     */
 
 /*
 CREATE TABLE `xar_surveys_user_responses` (
