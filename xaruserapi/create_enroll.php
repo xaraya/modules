@@ -66,7 +66,7 @@ function courses_userapi_create_enroll($args)
               xar_status,
               xar_regdate)
             VALUES (?,?,?,?,?)";
-    $bindvars = array((int)$nextId, (int)$uid, (int)$planningid, $studstatus, $regdate);
+    $bindvars = array($nextId, (int)$uid, (int)$planningid, $studstatus, $regdate);
     $result = &$dbconn->Execute($query, $bindvars);
     if (!$result) return;
     // Get the ID of the item that we inserted.
