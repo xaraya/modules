@@ -1,42 +1,92 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
 <div class="xar-mod-head">
-  <span class="xar-mod-title">
-    <xar:mlstring>Maxercalls Administration</xar:mlstring>
-  </span>
+  <span class="xar-mod-title"><xar:mlstring>Maxercalls Administration</xar:mlstring></span>
 </div>
-<div class="xar-mod-body"><h2>#$menutitle#</h2><br />
-<div style="margin: auto;">
-
-<!-- the specific template for the current admin function comes here -->
-
-<table width="100%" border="0" cellspacing="1" cellpadding="8">
-
-<form method="post" action="&xar-modurl-maxercalls-admin-updateconfig;">
-
-    <input type="hidden" name="authid" id="authid" value="#$authid#" />
-
-
-<tr><td><label for="itemsperpage">#$itemslabel#</label></td>
-<td><input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#$itemsvalue#" /></td></tr>
-
-<tr><td><label for="shorturls">#$shorturlslabel#</label></td>
-<td><input type="checkbox" name="shorturls" id="shorturls" value="1" #$shorturlschecked# /></td></tr>
+<div class="xar-mod-body">
+  <h2><xar:mlstring>Modify Config</xar:mlstring></h2>
+  <!--
+      display a status message to the user if an action has been
+      taken on an item
+    -->
+  <xar:if condition="xarSessionGetVar('statusmsg') != ''">
+    <p>#xarSessionGetVar('statusmsg')#</p>
+  </xar:if>
+  <!-- the specific template for the current admin function comes here -->
 
 
-<tr><td colspan="2">
-#$hooks#
-</td></tr>
+    <form method="post" id="post" action="&xar-modurl-maxercalls-admin-updateconfig;" enctype="application/x-www-form-urlencoded">
 
-<tr><td colspan="2" align="center">
-    <input type="submit" value="#$updatebutton#" /></td></tr>
-</form>
-
-</table>
-<br />
-
-Modify the call types here
-<a href="#xarModURL('dynamicdata','admin','modifyprop',array('modid' => 247))#"><xar:mlstring>Modify the Dynamic call types</xar:mlstring></a> 
+    <fieldset>
+      <legend><xar:mlstring>Display Options</xar:mlstring></legend>
+      
+      <div class="xar-form-input-wrapper">
+        <label for="itemsperpage" class="xar-form-label" title="#xarML('Number of maxercalls items per page')#">
+          <xar:mlstring>maxercalls Items Per Page:</xar:mlstring>
+        </label>
+        <input type="text" name="itemsperpage" id="itemsperpage" value="#$itemsvalue#" maxlength="3" class="xar-form-textshort" />
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend><xar:mlstring>System Options</xar:mlstring></legend>
+      <div class="xar-form-input-wrapper">
+        <label for="shorturls" class="xar-form-label" title="#xarML('Enable short URLS?')#">
+          <xar:mlstring>Enable short URLs?</xar:mlstring>
+        </label>
+        <xar:if condition="$shorturlschecked">
+          <input type="checkbox" name="shorturls" id="shorturls" value="1" checked="checked" />
+          <xar:else/>
+          <input type="checkbox" name="shorturls" id="shorturls" value="1" />
+        </xar:if>
+      </div>
+      
+      <div class="xar-form-input-wrapper">
+        <label for = "modulealias" class="xar-form-label" title="#xarML('Use an alias instead of the module name')#">
+          <xar:mlstring>
+            Use a module alias
+          </xar:mlstring>
+        </label>
+        <xar:if condition="xarModGetVar('maxercalls', 'useModuleAlias')">
+          <input type="checkbox" name="modulealias" id="modulealias" value="1" checked="checked" />
+          <xar:else />
+          <input type="checkbox" name="modulealias" id="modulealias" value="1" />
+        </xar:if>
+        
+      </div>
+      <div class="xar-form-input-wrapper">
+        <label for="aliasname" class="xar-form-label" title="#xarML('The name of module alias to be used.')#">
+          <xar:mlstring>
+            Module Alias Name
+          </xar:mlstring>
+        </label>
+        <input type="text" name="aliasname" id="aliasname" value="#xarModGetVar('maxercalls', 'aliasname')#" size="32" maxlength="100" />
+      </div>
+      
+    </fieldset>
+    
+    <fieldset>
+      <legend><xar:mlstring>Enabled Hooks</xar:mlstring></legend>
+      <xar:if condition="!empty($hooks)">
+        <xar:foreach in="$hooks" key="$hookmodule">
+          <!--
+              You can display individual hooks if you want using xar:if statements
+              
+              <xar:if condition="($hookmodule eq 'categories') and !empty($hookmodule)">
+                #$hooks['categories']#
+              </xar:if>
+              
+              or display them all with one command as follows
+              -->
+          #$hooks[$hookmodule]#
+        </xar:foreach>
+      </xar:if>
+    </fieldset>
+    
+    <div class="xar-form-input-wrapper-after">
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <input type="submit" value="#xarML('Update Configuration')#" />
+    </div>
+    
+  </form>
 </div>
-
-</div>
+<xar:if condition="xarSessionSetVar('statusmsg', '')"></xar:if>

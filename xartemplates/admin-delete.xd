@@ -18,7 +18,7 @@
 <xar:data-display object="$object" />
 
 <div align="center">
-<form method="post" action="#xarModURL('maxercalls', 'admin', 'delete')#">
+<form method="post" action="&xar-modurl-maxercalls-admin-delete;">
     <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
     <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
     <input type="hidden" name="itemtype" id="itemtype" value="#$itemtype#" />

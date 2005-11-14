@@ -10,9 +10,14 @@
  * @subpackage maxercalls
  * @author maxercalls module development team 
  */
+
 /**
+ * Modify the module settings
+ *
  * This is a standard function to modify the configuration parameters of the
  * module
+ *
+ * @author MichelV
  */
 function maxercalls_admin_modifyconfig()
 { 
@@ -30,10 +35,14 @@ function maxercalls_admin_modifyconfig()
     // short URLs (see xaruserapi.php), you should remove these from your
     // admin-modifyconfig.xard template !
     $data['shorturlslabel'] = xarML('Enable short URLs?');
-    $data['shorturlschecked'] = xarModGetVar('maxercalls', 'SupportShortURLs') ?
-    'checked' : '';
+    $data['shorturlschecked'] = xarModGetVar('maxercalls', 'SupportShortURLs') ? 'checked' : '';
+    /* If you plan to use alias names for you module then you should use the next two alias vars
+     * You must also use short URLS for aliases, and provide appropriate encode/decode functions.
+     */
+    $data['useAliasName'] = xarModGetVar('maxercalls', 'useModuleAlias');
+    $data['aliasname ']= xarModGetVar('maxercalls','aliasname');
 
-   $hooks = xarModCallHooks('module', 'modifyconfig', 'maxercalls',
+    $hooks = xarModCallHooks('module', 'modifyconfig', 'maxercalls',
                        array('module' => 'maxercalls'));
     if (empty($hooks)) {
         $data['hooks'] = array('categories' => xarML('You can assign base categories by enabling the categories hooks for example module'));
