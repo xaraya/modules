@@ -1,4 +1,4 @@
-<?php // $Id: s.calendar.php 1.3 03/02/17 19:37:17-06:00 Dracos@numenor. $
+<?php 
 
 echo '<html><head>
 <style type="text/css">

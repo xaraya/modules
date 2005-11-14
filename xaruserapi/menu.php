@@ -11,11 +11,17 @@
  */
 
 /**
- * Generate the common menu configuration
+ * Generate the common user menu configuration
+ *
+ * This function show a menu with the following items:
+ *      Selector for all, allmine
+ *      Selector for status
+ *      Selector for groups/projects
  *
  * @author the Todolist module development team
+ *
  */
-function example_userapi_menu()
+function todolist_userapi_menu()
 { 
     /* Initialise the array that will hold the menu configuration */
     $menu = array(); 

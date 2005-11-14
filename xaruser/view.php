@@ -7,9 +7,9 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Example Module
+ * @subpackage Todolist Module
  * @link http://xaraya.com/index.php/release/36.html
- * @author Example Module Development Team
+ * @author Todolist Module Development Team
  */
 
 /**
@@ -83,10 +83,6 @@ function todolist_user_view()
         /* Add this item to the list of items to be displayed */
         $data['items'][] = $item;
     }
-    /* TODO: how to integrate cat ids in pager (automatically) when needed ???
-     * Get the UID so we can see if there are any overridden defaults.
-     */
-    $uid = xarUserGetVar('uid');
     /* Call the xarTPL helper function to produce a pager in case of there
      * being many items to display.
      *

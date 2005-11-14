@@ -28,12 +28,6 @@ function todolist_init()
     /* Get a data dictionary object with all the item create methods in it */
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
 
-    /* Define the table structure in a string, each field and it's description
-     * separated by a comma. The key for the element is the physical field name.  
-     * Each field descripton contains other data specifying the
-     * data type and associated parameters
-     */
-
     /* It's good practice to name the table definitions you
      * are using - $table doesn't cut it in more complex modules
      */
@@ -242,7 +236,7 @@ function todolist_delete()
     /* Get a data dictionary object with item create and delete methods */
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
 
-    /* Drop the example tables */
+    /* Drop the tables */
      $result = $datadict->dropTable($group_memberstable);
      $result = $datadict->dropTable($groupstable);
      $result = $datadict->dropTable($notestable);  
@@ -251,7 +245,6 @@ function todolist_delete()
      $result = $datadict->dropTable($responsible_groupstable);
      $result = $datadict->dropTable($responsible_personstable);
      $result = $datadict->dropTable($todostable);
-       
 
     // Delete any module variables
     xarModDelAllVars('todolist');

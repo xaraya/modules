@@ -15,7 +15,7 @@
  * @author the Example module development team
  * @return array containing the item types and their description
  */
-function example_userapi_getitemtypes($args)
+function todolist_userapi_getitemtypes($args)
 {
     $itemtypes = array();
 

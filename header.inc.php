@@ -1,4 +1,4 @@
-<?php // $Id 
+<?php
 
 /**
  * generates the header of every page

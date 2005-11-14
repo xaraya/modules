@@ -1,10 +1,8 @@
-<?php // $Id: s.functions.inc.php 1.4 02/07/03 09:50:19-00:00 mikespub $
+<?php
+
 /**
  * Functions library
  */
-
-
-
 
 /**
  * creates the SQL-Query to retrieve the main todo-table
@@ -469,6 +467,8 @@ function userDialog()
  * @param $emty_choice        Boolean    Should an emty-entry be created? [1,0,true,false]
  * @param $multiple            Boolean    Allow multiple selects? [1,0,true,false]
  * @return HTML containing the dropdownbox
+ *
+ * Deprec Nov 2005. Replaced with the dyn property. How to select users that are in this module?
  */
 function makeUserDropdown($myname,$selected_names,$selected_project, $emty_choice, $multiple)
 {
