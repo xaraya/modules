@@ -1,8 +1,6 @@
 <?php
 /**
- * File: $Id: s.xartables.php 1.7 03/03/18 02:35:04-05:00 johnny@falling.local.lan $
- * 
- * maxercalls table definitions function
+ * Maxercalls table definitions function
  * 
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
@@ -29,8 +27,8 @@ function maxercalls_xartables()
     // Set the table name
     $xarTables['maxercalls'] = xarDBGetSiteTablePrefix() . '_maxercalls';
     $xarTables['maxercalls_types'] = xarDBGetSiteTablePrefix() . '_maxercalls_types';
+    $xarTables['maxercalls_maxers'] = xarDBGetSiteTablePrefix() . '_maxercalls_maxers';
     // Return the table information
     return $xarTables;
 } 
-
 ?>

@@ -59,7 +59,23 @@ function maxercalls_init()
     // Pass the Table Create DDL to adodb to create the table and send exception if unsuccessful
     $result = &$dbconn->Execute($query);
     if (!$result) return;
-	
+    $maxerstable = $xartable['maxercalls_maxers'];
+    // Create table to hold the maxers themselves
+    /* Get a data dictionary object with all the item create methods in it */
+    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+    $fields = "xar_maxerid      I  AUTO    PRIMARY,
+               xar_personid     I  NOTNULL DEFAULT 0,
+               xar_ric          I  NOTNULL DEFAULT 0,
+               xar_maxernumber  I4 NOTNUll DEFAULT 0,
+               xar_function     I  NOTNULL DEFAULT 0,
+               xar_program      C(200)  NOTNULL DEFAULT '',
+               xar_maxerstatus  I  NOTNULL DEFAULT 0,
+               xar_remark       X  NOTNULL DEFAULT ''
+              ";
+    /* Create or alter the table as necessary */
+    $result = $datadict->changeTable($maxerstable, $fields);
+    if (!$result) {return;}
+
     // If Categories API loaded and available, generate proprietary
     // module master category cid and child subcids
 	// Do I want this?? Wouldn't it be better to have the call take a category... not systemwide?
@@ -92,23 +108,11 @@ function maxercalls_init()
         }
     }
     // Set up an initial value for a module variable.
-    xarModSetVar('maxercalls', 'bold', 0);
     xarModSetVar('maxercalls', 'itemsperpage', 10);
     // If your module supports short URLs, the website administrator should
     // be able to turn it on or off in your module administration
     xarModSetVar('maxercalls', 'SupportShortURLs', 0);
-    // Register Block types (this *should* happen at activation/deactivation)
-    if (!xarModAPIFunc('blocks',
-            'admin',
-            'register_block_type',
-            array('modName' => 'maxercalls',
-                'blockType' => 'others'))) return;
-    // Register blocks
-    if (!xarModAPIFunc('blocks',
-            'admin',
-            'register_block_type',
-            array('modName' => 'maxercalls',
-                'blockType' => 'first'))) return;
+
     // Register our hooks that we are providing to other modules.  The maxercalls
     // module shows an maxercalls hook in the form of the user menu.
     if (!xarModRegisterHook('item', 'usermenu', 'GUI',
@@ -130,14 +134,6 @@ function maxercalls_init()
         ,'enablehooks'
         ,array(
             'hookModName'       => 'search'
-            ,'callerModName'    => 'maxercalls'));
-    // Hook for module comments
-    xarModAPIFunc(
-        'modules'
-        ,'admin'
-        ,'enablehooks'
-        ,array(
-            'hookModName'       => 'comments'
             ,'callerModName'    => 'maxercalls'));
      // Hook for Categories
     xarModAPIFunc(
@@ -214,6 +210,7 @@ function maxercalls_init()
     // )
     // );
     // xarDefineInstance('maxercalls', 'Item', $instances);
+    
     $instancestable = $xartable['block_instances'];
     $typestable = $xartable['block_types'];
     $query = "SELECT DISTINCT i.xar_title FROM $instancestable i, $typestable t WHERE t.xar_id = i.xar_type_id AND t.xar_module = 'maxercalls'";
@@ -248,6 +245,29 @@ function maxercalls_init()
  */
 function maxercalls_upgrade($oldversion)
 {
+    /* Upgrade dependent on old version number */
+    switch ($oldversion) {
+        case '0.1.5':
+            $maxerstable = $xartable['maxercalls_maxers'];
+            // Create table to hold the maxers themselves
+            /* Get a data dictionary object with all the item create methods in it */
+            $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+            $fields = "xar_maxerid      I  AUTO    PRIMARY,
+                       xar_personid     I  NOTNULL DEFAULT 0,
+                       xar_ric          I  NOTNULL DEFAULT 0,
+                       xar_maxernumber  I4 NOTNUll DEFAULT 0,
+                       xar_function     I  NOTNULL DEFAULT 0,
+                       xar_program      C(200)  NOTNULL DEFAULT '',
+                       xar_maxerstatus  I  NOTNULL DEFAULT 0,
+                       xar_remark       X  NOTNULL DEFAULT ''
+                      ";
+            /* Create or alter the table as necessary */
+            $result = $datadict->changeTable($maxerstable, $fields);
+            if (!$result) {return;}
+            return maxercalls_upgrade('0.1.6');
+        case '0.1.6':
+            break;
+    }
     return true;
 }
 
@@ -275,7 +295,14 @@ function maxercalls_delete()
     // Drop the table and send exception if returns false.
     $result = $dbconn->Execute($query);
     if (!$result) return;
-	
+    
+    $query = xarDBDropTable($xartable['maxercalls_maxers']);
+    if (empty($query)) return; // throw back
+
+    // Drop the table and send exception if returns false.
+    $result = $dbconn->Execute($query);
+    if (!$result) return;
+    
     $objectid = xarModGetVar('maxercalls','calltypeid');
     if (!empty($objectid)) {
         xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
