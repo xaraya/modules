@@ -145,6 +145,19 @@
                 <img src="modules/messages/xarimages/newpm.gif" border="0"/>
             </a>
         </div>
+    <hr/>
+    <xar:if condition="empty($away_message)">
+        <span class="xar-mod-title"><xar:mlstring>Away Message - OFF</xar:mlstring></span>
+    <xar:else/>
+        <span class="xar-mod-title"><xar:mlstring>Away Message - ON</xar:mlstring></span>
+    </xar:if>
+    <form method="POST" action="&xar-modurl-messages-user-display;">
+    <div class="xar-norm">
+        <textarea cols="57" rows="4" name="away" id="away">#xarVarPrepForDisplay($away_message)#</textarea>
+        <br/>
+        <input type="submit" value="#xarML('Update')#" />
+    </div>
+    </form>
 <xar:else />
     <br />
     <div class="xar-norm">

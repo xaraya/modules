@@ -43,7 +43,15 @@ function messages_user_send()
                            array('subject' => $subject,
                                  'body'  => $body,
                                  'receipient'    => $receipient));
+            // see if the recipient has set an away message
+            $isaway = xarModGetUserVar('messages','away_message',$receipient);
+            if (!empty($isaway)) {
+                $data['receipient'] = $receipient;
+                $data['away_message'] = $isaway;
+                return xarTplModule('messages','user','away',$data);
+            }
             xarResponseRedirect(xarModURL('messages','user','display'));
+            return true;
             break;
 
         case "reply":

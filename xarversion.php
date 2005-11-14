@@ -2,7 +2,7 @@
 // $Id: xarversion.php,v 1.8 2002/12/01 11:48:51 XarayaGeek Exp $
 $modversion['name'] = 'Xaraya Messages';
 $modversion['id'] = '6';
-$modversion['version'] = '1.8.0';
+$modversion['version'] = '1.8.1';
 $modversion['displayname']    = xarML('Messages');
 $modversion['description'] = 'Xaraya Messages module';
 $modversion['credits'] = 'docs/credits.txt';

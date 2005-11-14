@@ -32,6 +32,7 @@ function messages_init()
     // it will store the message id of each message that
     // the user has seen
     xarModSetVar('messages', 'read_messages', serialize(array()));
+    xarModSetVar('messages', 'away_message', '');
 
     /*
      * REGISTER BLOCKS
@@ -123,7 +124,10 @@ function messages_upgrade($oldversion)
             // Code to upgrade from version 1.0 goes here
             break;
         case '1.8':
+        case '1.8.0':
             // compatability upgrade
+            xarModSetVar('messages', 'away_message', '');
+
         case '2.0.0':
             // Code to upgrade from version 2.0 goes here
             break;

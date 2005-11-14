@@ -32,6 +32,16 @@ function messages_user_display( )
         $list = array();
     }
 
+    if (xarUserIsLoggedIn()) {
+        if (!xarVarFetch('away','str',$away,null,XARVAR_NOT_REQUIRED)) return;
+        if (isset($away)) {
+            xarModSetUserVar('messages','away_message',$away);
+        }
+        $data['away_message'] = xarModGetUserVar('messages','away_message');
+    } else {
+        $data['away_message'] = '';
+    }
+
     return $data;
 }
 
