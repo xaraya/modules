@@ -112,7 +112,12 @@ function maxercalls_init()
     // If your module supports short URLs, the website administrator should
     // be able to turn it on or off in your module administration
     xarModSetVar('maxercalls', 'SupportShortURLs', 0);
-
+    /* If you provide short URL encoding functions you might want to also
+     * provide module aliases and have them set in the module's administration.
+     * Use the standard module var names for useModuleAlias and aliasname.
+     */
+    xarModSetVar('example', 'useModuleAlias',false);
+    xarModSetVar('example','aliasname','');
     // Register our hooks that we are providing to other modules.  The maxercalls
     // module shows an maxercalls hook in the form of the user menu.
     if (!xarModRegisterHook('item', 'usermenu', 'GUI',
@@ -264,6 +269,9 @@ function maxercalls_upgrade($oldversion)
             /* Create or alter the table as necessary */
             $result = $datadict->changeTable($maxerstable, $fields);
             if (!$result) {return;}
+
+            xarModSetVar('example', 'useModuleAlias',false);
+            xarModSetVar('example','aliasname','');
             return maxercalls_upgrade('0.1.6');
         case '0.1.6':
             break;

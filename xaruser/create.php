@@ -30,6 +30,7 @@ function maxercalls_user_create($args)
     if (!xarVarFetch('callyear', 'int:1:', $callyear)) return; 
     if (!xarVarFetch('calltext', 'int:1:', $calltext)) return; 
     if (!xarVarFetch('owner', 'int::', $owner, $owner, XARVAR_GET_OR_POST)) return; 
+    if (!xarVarFetch('itemtype', 'int:1:', $itemtype, 1,XARVAR_NOT_REQUIRED )) return; 
 	// Argument check - make sure that all required arguments are present
     // and in the right format, if not then return to the add form with the
     // values that are there and a message with a session var.  If you perform
@@ -106,13 +107,8 @@ function maxercalls_user_create($args)
     $calldate=date('Y-m-d',strtotime($calldatefull));
 	//Put the time together
 	$calltime = $callhours.":".$callminutes.":"."00";
-    // Notable by its absence there is no security check here.  This is because
-    // the security check is carried out within the API function and as such we
-    // do not duplicate the work here
-    // The API function is called.  Note that the name of the API function and
-    // the name of this function are identical, this helps a lot when
-    // programming more complex modules.  The arguments to the function are
-    // passed in as their own arguments array
+
+    // The API function is called.
     $callid = xarModAPIFunc('maxercalls', 'admin', 'create',
                           array('enteruid' => $enteruid,
 						        'owner' => $owner,
@@ -120,11 +116,9 @@ function maxercalls_user_create($args)
 								'calldate' => $calldate,
 								'calltime' => $calltime,
 								'calltext' => $calltext,
-								'enterts' => $enterts)); 
-    // The return value of the function is checked here, and if the function
-    // succeeded then an appropriate message is posted.  Note that if the
-    // function did not succeed then the API function should have already
-    // posted a failure message so no action is required
+								'enterts' => $enterts,
+								'itemtype' => $itemtype)); 
+
     if (!isset($callid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     // This function generated no output, and so now it is complete we redirect
     // the user to an appropriate page for them to carry on their work

@@ -84,6 +84,7 @@ function maxercalls_adminapi_create($args)
     $item = $args;
     $item['module'] = 'maxercalls';
     $item['itemid'] = $callid;
+    //$item['itemtype'] = $itemtype; // This is set in $args
     xarModCallHooks('item', 'create', $callid, $item); 
     // Return the id of the newly created item to the calling process
     return $callid;
