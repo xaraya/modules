@@ -10,6 +10,7 @@
  * @subpackage maxercalls
  * @author Example module development team 
  */
+ 
 /**
  * utility function to count the number of items for one owner
  * 
@@ -26,7 +27,7 @@ function maxercalls_userapi_countitems()
     // It's good practice to name the table and column definitions you are
     // getting - $table and $column don't cut it in more complex modules
     $maxercallstable = $xartable['maxercalls']; 
-	$owner = xarUserGetVar('uid');
+	  $owner = xarUserGetVar('uid');
     $query = "SELECT COUNT(*)
             FROM $maxercallstable
 			WHERE xar_owner = $owner";

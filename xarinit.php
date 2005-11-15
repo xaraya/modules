@@ -8,7 +8,7 @@
  * @link http://www.xaraya.com
  *
  * @subpackage maxercalls
- * @Michel V. maxercalls module development team 
+ * @author Michel V. maxercalls module development team 
  */
 
 /**
