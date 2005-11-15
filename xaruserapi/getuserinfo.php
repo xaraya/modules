@@ -1,8 +1,6 @@
 <?php
 
 /**
- * File: $Id$
- *
  * Get info about a blogging user
  *
  * @package modules
@@ -52,6 +50,7 @@ function bloggerapi_userapi_getuserinfo($args)
         $data['userid'] = $userinfo['uid'];
         $data['email'] = $userinfo['email'];
         $data['lastname'] = $userinfo['name'];
+        $data['url'] =''; // TODO: fill this in.
         $data['firstname'] = '';
         
         $output = xarModAPIFunc('xmlrpcserver','user','createresponse',

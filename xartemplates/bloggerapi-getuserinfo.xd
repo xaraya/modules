@@ -23,6 +23,10 @@
             <name>firstname</name>
             <value><string>#$firstname#</string></value>
           </member>
+          <member>
+            <name>url</name>
+            <value><string>#$url#</string></value>
+          </member>
         </struct>
       </value>
     </param>
