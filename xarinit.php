@@ -206,7 +206,12 @@ function courses_init()
             'register_block_type',
             array('modName' => 'courses',
                 'blockType' => 'new'))) return;
-    
+    // Register blocks
+    if (!xarModAPIFunc('blocks',
+            'admin',
+            'register_block_type',
+            array('modName' => 'courses',
+                'blockType' => 'upcoming'))) return;
     // Register our hooks that we are providing to other modules.  The course
     // module shows ahook in the form of the user menu that shows the user the courses
     // he or she is enrolled in.
@@ -589,6 +594,15 @@ function courses_upgrade($oldversion)
             return courses_upgrade('0.1.2');
 
         case '0.1.2':
+            // Register blocks
+            if (!xarModAPIFunc('blocks',
+                               'admin',
+                               'register_block_type',
+                               array('modName' => 'courses',
+                                     'blockType' => 'upcoming'))) return;
+            return courses_upgrade('0.1.3');
+
+        case '0.1.3':
             break;
     }
     // Update successful

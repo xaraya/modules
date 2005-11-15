@@ -23,7 +23,7 @@ function courses_admin_viewallplanned()
     if (!xarVarFetch('startnum', 'int:1:', $startnum,  '1',            XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('catid',    'isset',  $catid,     NULL,           XARVAR_DONT_SET))     return;
     if (!xarVarFetch('sortby',   'str:1:', $sortby,    'planningid',         XARVAR_NOT_REQUIRED)) return; 
-    if (!xarVarFetch('sortorder','enum:DESC:ASC:', $sortorder,'DESC',  XARVAR_NOT_REQUIRED)) return;        
+    if (!xarVarFetch('sortorder','enum:DESC:ASC:', $sortorder,'DESC',  XARVAR_NOT_REQUIRED)) return;
 
     // Initialise the $data variable
     $data = xarModAPIFunc('courses', 'admin', 'menu');
@@ -61,7 +61,7 @@ function courses_admin_viewallplanned()
     for ($i = 0; $i < count($items); $i++) {
         $item = $items[$i];
         $planningid = $item['planningid'];
-		$hideplanning = $item['hideplanning'];
+        $hideplanning = $item['hideplanning'];
         if (xarSecurityCheck('EditCourses', 0, 'Course',"All:$planningid:All")) { 
             $items[$i]['editurl'] = xarModURL('courses',
                 'admin',
