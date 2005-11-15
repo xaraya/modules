@@ -57,7 +57,6 @@ function courses_admin_modifyplanned($args)
     } elseif (is_array($hooks)) {
         $hooks = join('', $hooks);
     }
-    $data['levels']         = xarModAPIFunc('courses', 'user', 'gets', array('itemtype' => 3));
     $data['invalid']        = $invalid;
     $data['planningid']     = $planningid;
     $data['coursedata']     = $coursedata;
@@ -98,7 +97,7 @@ function courses_admin_modifyplanned($args)
                                       array('itemtype' => 5));
     $data['authid']         = xarSecGenAuthKey();
     $data['menutitle']      = xarVarPrepForDisplay(xarML('Edit a planned course'));
-    $data['updatebutton']   = xarVarPrepForDisplay(xarML('Update Course'));
+    $data['updatebutton']   = xarVarPrepForDisplay(xarML('Update Planned Course'));
     $data['hooks']          = $hooks;
     $data['planneddata']    = $planneddata;
 
