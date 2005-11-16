@@ -1,5 +1,18 @@
 <?php
 /**
+ * Hitcount
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Hitcount Module
+ * @link http://xaraya.com/index.php/release/177.html
+ * @author Hitcount Module Development Team
+ */
+ 
+/**
  * utility function pass individual menu items to the admin panels
  * 
  * @author the Example module development team 
