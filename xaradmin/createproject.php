@@ -25,8 +25,8 @@ function todolist_admin_createproject($args)
 { 
     extract($args);
 
-    if (!xarVarFetch('exid',     'int:1:', $exid,     '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('objectid', 'int:1:', $objectid, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('projectid',     'id', $projectid,     '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('objectid', 'id', $objectid, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('invalid',  'str:1:', $invalid,  '', XARVAR_NOT_REQUIRED)) return; 
     if (!xarVarFetch('project_name',   'str:1:', $project_name,   '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('project_description',     'str:1:', $project_description,     '', XARVAR_NOT_REQUIRED)) return;
@@ -41,18 +41,13 @@ function todolist_admin_createproject($args)
 */
     // Argument check
     $invalid = array();
-    if (empty($number) || !is_numeric($number)) {
-        $invalid['number'] = 1;
+    if (empty($project_leader) || !is_numeric($project_leader)) {
+        $invalid['project_leader'] = 1;
         $number = '';
     } 
-    if (empty($name) || !is_string($name)) {
-        $invalid['name'] = 1;
+    if (empty($project_name) || !is_string($project_name)) {
+        $invalid['project_name'] = 1;
         $name = '';
-    } 
-
-    if (!empty($name) && $item['name'] == $name) {
-        $invalid['duplicatename'] = 1;
-        $duplicatename = '';
     } 
     // check if we have any errors
     if (count($invalid) > 0) {
@@ -60,9 +55,10 @@ function todolist_admin_createproject($args)
          * Send the user back to the admin_new form
          * call the admin_new function and return the template vars
          */
-        return xarModFunc('example', 'admin', 'new',
-                          array('name' => $name,
-                                'number' => $number,
+        return xarModFunc('todolist', 'admin', 'newproject',
+                          array('project_name' => $project_name,
+                                'project_leader' => $project_leader,
+                                'project_description' => $project_description,
                                 'invalid' => $invalid));
     } 
     /* Confirm authorisation code.  This checks that the form had a valid
