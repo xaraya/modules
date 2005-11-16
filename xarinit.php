@@ -270,7 +270,7 @@ function comments_delete()
         return;
 
     // Delete module variables
-    xarModDeAllVars('comments');
+    xarModDelAllVars('comments');
  
     if (!xarModUnregisterHook('item', 'display', 'GUI',
                             'comments', 'user', 'display')) {
