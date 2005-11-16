@@ -106,6 +106,24 @@
                         </xar:if>
                     </select> 
                 </div>
+                <xar:if condition="xarDBGetType() eq 'mysql'">
+                <div class="xar-form-input-wrapper-after">
+                    <xar:set name="fulltext">xarModGetVar('articles', 'fulltextsearch')</xar:set>
+                <xar:comment>
+                    You can adapt the field list here if you want e.g. to ignore the notes field for full-text search
+                </xar:comment>
+                    <xar:if condition="!empty($fulltext)">
+                        <input type="checkbox" name="fulltext" id="fulltext" value="title,summary,body,notes" checked="checked" /> 
+                        <xar:else />
+                        <input type="checkbox" name="fulltext" id="fulltext" value="title,summary,body,notes" /> 
+                    </xar:if>
+                    <label class="help" for="fulltext" title="#xarML('Enable full-text search in MySQL')#"> 
+                        <xar:mlstring>
+                            Enable full-text search in MySQL
+                        </xar:mlstring>
+                    </label> 
+                </div>
+                </xar:if>
             </fieldset>
         </xar:if>
         <fieldset class="xar-norm">

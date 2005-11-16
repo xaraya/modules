@@ -1,5 +1,10 @@
 <h2><xar:mlstring>Search in Articles</xar:mlstring></h2>
 
+<xar:set name="fulltext">xarModGetVar('articles', 'fulltextsearch')</xar:set>
+<xar:if condition="!empty($fulltext)">
+    <xar:set name="fulltextfields">explode(',',$fulltext)</xar:set>
+</xar:if>
+
 <table border="0" cellpadding="4" cellspacing="0">
   <xar:if condition="empty($ishooked)">
     <form method="post" action="&xar-modurl-articles-user-search;">
@@ -33,6 +38,19 @@
                 <option value="eq" selected="selected"><xar:mlstring>equal to</xar:mlstring></option>
                 <xar:else/>
                 <option value="eq"><xar:mlstring>equal to</xar:mlstring></option>
+              </xar:if>
+              <xar:comment> Use MySQL full-text search </xar:comment>
+              <xar:if condition="!empty($fulltext)">
+                <xar:if condition="!empty($searchtype) and $searchtype eq 'fulltext'">
+                  <option value="fulltext" selected="selected"><xar:mlstring>full-text</xar:mlstring></option>
+                  <xar:else/>
+                  <option value="fulltext"><xar:mlstring>full-text</xar:mlstring></option>
+                </xar:if>
+                <xar:if condition="!empty($searchtype) and $searchtype eq 'fulltext boolean'">
+                  <option value="fulltext boolean" selected="selected"><xar:mlstring>full-text boolean</xar:mlstring></option>
+                  <xar:else/>
+                  <option value="fulltext boolean"><xar:mlstring>full-text boolean</xar:mlstring></option>
+                </xar:if>
               </xar:if>
             </select>
           </td>
@@ -74,7 +92,9 @@
     <tr>
       <td><xar:mlstring>Fields</xar:mlstring></td>
       <td><xar:foreach in="$fieldlist" value="$item">
-          <xar:if condition="$item['checked']">
+          <xar:if condition="!empty($fulltextfields) and in_array($item['id'],$fulltextfields)">
+            <input type="checkbox" name="articles_fields[#$item['id']#]" id="articles_fields_#$item['id']#" value="1" checked="checked" disabled="disabled" />
+            <xar:elseif condition="$item['checked']"/>
             <input type="checkbox" name="articles_fields[#$item['id']#]" id="articles_fields_#$item['id']#" value="1" checked="checked" />
             <xar:else/>
             <input type="checkbox" name="articles_fields[#$item['id']#]" id="articles_fields_#$item['id']#" value="1" />
@@ -128,6 +148,12 @@
           </xar:foreach> ]
         </xar:if>
         <a href="#$item['link']#">#$item['title']#</a> <xar:if condition="!empty($item['pubdate'])">#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $item['pubdate'])#</xar:if>
+<xar:comment> Show relevance for MySQL full-text search (see $getfields in search.php)
+        <xar:if condition="isset($item['relevance'])">
+          <xar:set name="relevance">sprintf('%.2f',$item['relevance'])</xar:set>
+          [#$relevance#]
+        </xar:if>
+</xar:comment>
       </li>
     </xar:foreach>
   </ul>

@@ -50,13 +50,6 @@ function articles_userapi_getall($args)
     if (!isset($andcids)) {
         $andcids = false;
     }
-    if (empty($sort)) {
-        $sortlist = array('pubdate');
-    } elseif (is_array($sort)) {
-        $sortlist = $sort;
-    } else {
-        $sortlist = explode(',',$sort);
-    }
     if (empty($ptid)) {
         $ptid = null;
     }
@@ -71,13 +64,32 @@ function articles_userapi_getall($args)
     // + 'counter' = number of times this article was displayed (hitcount)
     // + 'rating' = rating for this article (ratings)
     // + 'dynamicdata' = dynamic data fields for this article (dynamicdata)
-    // $optional = array('cids','author','counter','rating','dynamicdata');
+    // + 'relevance' = relevance for this article (MySQL full-text search only)
+    // $optional = array('cids','author','counter','rating','dynamicdata','relevance');
 
     if (!isset($fields)) {
         $fields = $columns;
     }
     if (isset($extra) && is_array($extra) && count($extra) > 0) {
         $fields = array_merge($fields,$extra);
+    }
+
+    if (empty($sort)) {
+        if (!empty($search) && !empty($searchtype) && substr($searchtype,0,8) == 'fulltext') {
+            if ($searchtype == 'fulltext boolean' && !in_array('relevance',$fields)) {
+                // add the relevance to the field list for sorting
+                $fields[] = 'relevance';
+            }
+            // let the database sort by relevance (= default for fulltext)
+            $sortlist = array();
+        } else {
+            // default sort by pubdate
+            $sortlist = array('pubdate');
+        }
+    } elseif (is_array($sort)) {
+        $sortlist = $sort;
+    } else {
+        $sortlist = explode(',',$sort);
     }
 
     $articles = array();
@@ -289,6 +301,8 @@ function articles_userapi_getall($args)
                 $sortparts[] = $ratingsdef['rating'] . ' ' . (!empty($sortorder) ? $sortorder : 'DESC');
             } elseif ($criteria == 'author' && !empty($usersdef['name'])) {
                 $sortparts[] = $usersdef['name'] . ' ' . (!empty($sortorder) ? $sortorder : 'ASC');
+            } elseif ($criteria == 'relevance' && !empty($articlesdef['relevance'])) {
+                $sortparts[] = 'relevance' . ' ' . (!empty($sortorder) ? $sortorder : 'DESC');
             } elseif ($criteria == 'aid') {
                 $sortparts[] = $articlesdef['aid'] . ' ' . (!empty($sortorder) ? $sortorder : 'ASC');
                 $seenaid = 1;
@@ -304,6 +318,15 @@ function articles_userapi_getall($args)
             $sortparts[] = $articlesdef['aid'] . ' DESC';
         }
         $query .= ' ORDER BY ' . join(', ',$sortparts);
+
+    } elseif (!empty($search) && !empty($searchtype) && substr($searchtype,0,8) == 'fulltext') {
+        // For fulltext, let the database return the articles by relevance here (= default)
+
+        // For fulltext in boolean mode, add MATCH () ... AS relevance ... ORDER BY relevance DESC (cfr. leftjoin)
+        if (!empty($required['relevance']) && $searchtype == 'fulltext boolean') {
+            $query .= ' ORDER BY relevance DESC, ' . $articlesdef['pubdate'] . ' DESC, ' . $articlesdef['aid'] . ' DESC';
+        }
+
     } else { // default is 'pubdate'
         $query .= ' ORDER BY ' . $articlesdef['pubdate'] . ' DESC, ' . $articlesdef['aid'] . ' DESC';
     }

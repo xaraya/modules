@@ -247,6 +247,9 @@ function articles_init()
     // Set default publication type
     xarModSetVar('articles', 'defaultpubtype', $defaultpubtype);
 
+    // Enable/disable full-text search with MySQL (for all pubtypes and all text fields)
+    xarModSetVar('articles', 'fulltextsearch', '');
+
     // Register blocks
     if (!xarModAPIFunc('blocks',
                        'admin',
@@ -421,6 +424,9 @@ function articles_upgrade($oldversion)
         case '1.5.1':
             // Code to upgrade from version 1.5.1 goes here
 
+            // Enable/disable full-text search with MySQL (for all pubtypes and all text fields)
+            xarModSetVar('articles', 'fulltextsearch', '');
+
 /* skip for now...
             // Get database information
             $dbconn =& xarDBGetConn();
@@ -440,6 +446,9 @@ function articles_upgrade($oldversion)
             $result =& $dbconn->Execute($query);
             if (!$result) return;
 */
+
+        case '1.5.2':
+            // Code to upgrade from version 1.5.2 goes here
 
         case '2.0.0':
             // Code to upgrade from version 2.0 goes here

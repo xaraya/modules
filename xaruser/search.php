@@ -219,6 +219,16 @@ function articles_user_search($args)
         }
     }
 
+    // Set default searchtype to 'fulltext' if necessary
+    $fulltext = xarModGetVar('articles', 'fulltextsearch');
+    if (!isset($searchtype) && !empty($fulltext)) {
+        $searchtype = 'fulltext';
+    }
+// FIXME: fulltext only supports searching in all configured text fields !
+    if (empty($fields) && !empty($fulltext) && !empty($searchtype) && $searchtype == 'fulltext') {
+        $fieldlist = explode(',', $fulltext);
+    }
+
     $data = array();
     $data['results'] = array();
     $data['status'] = '';
@@ -321,6 +331,11 @@ function articles_user_search($args)
     }
 
     if (!empty($q) || (!empty($author) && isset($authorid)) || !empty($search) || !empty($ptid) || !empty($startdate) || $enddate != $now || !empty($catid)) {
+        $getfields = array('aid','title', 'pubdate','pubtypeid','cids');
+        // Return the relevance when using MySQL full-text search
+        //if (!empty($search) && !empty($searchtype) && substr($searchtype,0,8) == 'fulltext') {
+        //    $getfields[] = 'relevance';
+        //}
         $count = 0;
         // TODO: allow combination of searches ?
         foreach ($ptids as $curptid) {
@@ -340,8 +355,7 @@ function articles_user_search($args)
                                            'searchfields' => $fieldlist,
                                            'searchtype' => $searchtype,
                                            'search' => $q,
-                                           'fields' => array('aid','title',
-                                                      'pubdate','pubtypeid','cids')
+                                           'fields' => $getfields
                                           )
                                     );
         // TODO: re-use article output code from elsewhere (view / archive / admin)
@@ -449,6 +463,7 @@ function articles_user_search($args)
                                      'link' => $link,
                                      'date' => $date,
                                      'pubdate' => $pubdate,
+                                     'relevance' => isset($article['relevance']) ? $article['relevance'] : null,
                                      'categories' => $categories);
                 }
                 unset($articles);

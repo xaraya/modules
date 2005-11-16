@@ -212,11 +212,16 @@ function articles_userapi_leftjoin($args)
         }
     }
 
+    if (empty($searchfields)) {
+        $searchfields = array('title','summary','body');
+    }
+
     if (!empty($search)) 
     {
         // TODO : improve + make use of full-text indexing for recent MySQL versions ?
 
         $normal = array();
+        $find = array();
 
         // 0. Check for "'equal whole string' searchType"
         if (!empty($searchtype) && $searchtype == 'equal whole string')
@@ -225,8 +230,43 @@ function articles_userapi_leftjoin($args)
             $search   = "";
             $searchtype = 'eq';
         }
-        
-        
+
+        // 0. Check for fulltext or fulltext boolean searchtypes (MySQL only)
+    // CHECKME: switch to other search type if $search is less than min. length ?
+        if (!empty($searchtype) && substr($searchtype,0,8) == 'fulltext') {
+            $fulltext = xarModGetVar('articles', 'fulltextsearch');
+            if (!empty($fulltext)) {
+                $fulltextfields = explode(',',$fulltext);
+            } else {
+                $fulltextfields = array();
+            }
+            $matchfields = array();
+            foreach ($fulltextfields as $field) {
+                if (empty($leftjoin[$field])) continue;
+                $matchfields[] = $leftjoin[$field];
+            }
+        // TODO: switch mode automatically if + - etc. are detected ?
+            $matchmode = '';
+            if ($searchtype == 'fulltext boolean') {
+                $matchmode = ' IN BOOLEAN MODE';
+            }
+            $find[] = 'MATCH (' . join(', ',$matchfields) . ') AGAINST (' . $dbconn->qstr($search) . $matchmode . ')';
+            // Add this to field list too when sorting by relevance in boolean mode (cfr. getall() sort)
+            $leftjoin['relevance'] = 'MATCH (' . join(', ',$matchfields) . ') AGAINST (' . $dbconn->qstr($search) . $matchmode . ') AS relevance';
+
+            // check if we have any other fields to search in
+            $morefields = array_diff($searchfields, $fulltextfields);
+            if (!empty($morefields)) {
+            // FIXME: sort order may not be by relevance if we mix fulltext with other searches
+                $searchfields = $morefields;
+                $searchtype = '';
+            } else {
+                // we're done here
+                $searchfields = array();
+                $search = '';
+            }
+        }
+
         // 1. find quoted text
         if (preg_match_all('#"(.*?)"#',$search,$matches)) {
             foreach ($matches[1] as $match) {
@@ -243,17 +283,11 @@ function articles_userapi_leftjoin($args)
             }
         }
 
-
         // 2. find mandatory +text to include
         // 3. find mandatory -text to exclude
         // 4. find normal text
         $more = preg_split('/\s+/',$search,-1,PREG_SPLIT_NO_EMPTY);
         $normal = array_merge($normal,$more);
-
-        if (empty($searchfields)) {
-            $searchfields = array('title','summary','body');
-        }
-        $find = array();
 
         foreach ($normal as $text) {
             // TODO: use XARADODB to escape wildcards (and use portable ones) ??
