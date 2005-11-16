@@ -19,39 +19,39 @@
 <div class="xar-mod-body">
     <h2><xar:mlstring>Lists Overview</xar:mlstring> - #$title#</h2>
     <div class="xar-mod-lists-view" style="margin: auto;">
-    
+
         <xar:comment><xar:set name="dummy">var_dump($alllists)</xar:set></xar:comment>
-        
+
         <xar:set name="label_view_list_types"><xar:mlstring>View list types</xar:mlstring></xar:set>
         <xar:set name="label_view_lists"><xar:mlstring>View lists</xar:mlstring></xar:set>
         <xar:set name="label_view_list_items"><xar:mlstring>View list items</xar:mlstring></xar:set>
-        
+
         <xar:set name="label_edit_list_type"><xar:mlstring>Edit list type</xar:mlstring></xar:set>
         <xar:set name="label_edit_list"><xar:mlstring>Edit list</xar:mlstring></xar:set>
         <xar:set name="label_edit_list_item"><xar:mlstring>Edit list item</xar:mlstring></xar:set>
-        
+
         <xar:set name="label_new_list_type"><xar:mlstring>New list type</xar:mlstring></xar:set>
         <xar:set name="label_new_list"><xar:mlstring>New list</xar:mlstring></xar:set>
         <xar:set name="label_new_list_item"><xar:mlstring>New list item</xar:mlstring></xar:set>
-        
+
         <xar:set name="label_delete_list_type"><xar:mlstring>Delete list type</xar:mlstring></xar:set>
         <xar:set name="label_delete_list"><xar:mlstring>Delete list</xar:mlstring></xar:set>
         <xar:set name="label_delete_list_item"><xar:mlstring>Delete list item</xar:mlstring></xar:set>
-        
-        
-        
+
+
+
         <xar:comment>
             Top level: no tid and no lid
             In here a user can:
             a) view an overview of the list types;
             b) create a new list type;
         </xar:comment>
-        
+
         <p>
             [<a href="&xar-modurl-lists-admin-view;">#$label_view_list_types#</a>]
             [<a href="#$urlnew#" title="#$label_new_list_type#">#$label_new_list_type#</a>]
         </p>
-        
+
         <xar:if condition="empty($tid)">
             <xar:if condition="$mode ne 'view'">
                 <xar:if condition="$mode eq 'new' or $mode eq 'create'">
@@ -59,6 +59,7 @@
                     <ul class="new"><li><div class="xar-title">#$label_new_list_type#</div>
                     <form method="post" action="#xarModURL('lists','admin','view',array('mode'=>'create'))#" enctype="application/x-www-form-urlencoded">
                         <fieldset>
+                            <legend><xar:mlstring>Create a new List Type</xar:mlstring></legend>
                             <xar:template file="form_type" />
                         </fieldset>
                         <div><input type="submit" value="#xarML('Submit')#" /></div>
@@ -83,9 +84,9 @@
                 </xar:if>
             </xar:if>
         </xar:if>
-        
-        
-        
+
+
+
         <xar:comment>
             Second level: a tid and no lid.
             In here a user can View the details of a list type, and one of:
@@ -93,7 +94,7 @@
             b) create a new list for the type;
             c) edit an existing list type.
         </xar:comment>
-        
+
         <xar:if condition="!empty($tid) and empty($lid)">
             <ul class="list-type">
                 <li>
@@ -110,9 +111,10 @@
                             <ul class="edit"><li><div class="xar-title">#$label_edit_list_type#</div>
                             <form method="post" action="#xarModURL('lists','admin','view',array('mode'=>'update','tid'=>$type.tid))#" enctype="application/x-www-form-urlencoded">
                                 <fieldset>
+                                    <legend><xar:mlstring>Edit existing List Type</xar:mlstring></legend>
                                     <xar:template file="form_type" />
                                 </fieldset>
-                                <div>
+                                <div class="xar-form-input-wrapper">
                                     <xar:if condition="$type.typehooks eq 'list'">
                                         [<a href="#xarServerGetCurrentURL(array('typehooks'=&gt;'item'))#"><xar:mlstring>Hooks for items</xar:mlstring></a>]
                                         | [<xar:mlstring>Hooks for lists</xar:mlstring>]
@@ -126,7 +128,7 @@
                                         #$loop:item#
                                     </xar:loop>
                                 </xar:if>
-                                <div><input type="submit" value="#xarML('Submit')#" /></div>
+                                <div class="xar-form-input-wrapper-after"><input type="submit" value="#xarML('Submit')#" /></div>
                             </form>
                             </li><ul>
                         </xar:if>
@@ -135,6 +137,7 @@
                             <ul class="new"><li><div class="xar-title">#$label_new_list#</div>
                             <form method="post" action="#xarModURL('lists','admin','view',array('tid'=>$tid,'mode'=>'create'))#" enctype="application/x-www-form-urlencoded">
                                 <fieldset>
+                                    <legend><xar:mlstring>Create new List</xar:mlstring></legend>
                                     <xar:template file="form_list" />
                                     <xar:if condition="!empty($hooks_new_dd)">
                                         #$hooks_new_dd#
@@ -171,8 +174,8 @@
                 </li>
             </ul>
         </xar:if>
-        
-        
+
+
         <xar:comment>
             Third level: a tid and lid
             In here a user can view the details of a list, and one of:
@@ -180,7 +183,7 @@
             b) create a new item for the list;
             c) edit an existing list.
         </xar:comment>
-        
+
         <xar:if condition="!empty($tid) and !empty($lid) and empty($iid)">
             <ul>
                 <li>
@@ -206,6 +209,7 @@
                                     <ul class="edit"><li><div class="xar-title">#$label_edit_list#</div>
                                     <form method="post" action="#xarModURL('lists','admin','view',array('lid'=>$lid,'mode'=>'update'))#" enctype="application/x-www-form-urlencoded">
                                         <fieldset>
+                                            <legend><xar:mlstring>Edit existing List</xar:mlstring></legend>
                                             <xar:template file="form_list" />
                                             <xar:if condition="!empty($hooks_modify_dd)">
                                                 #$hooks_modify_dd#
@@ -271,15 +275,15 @@
                 </li>
             </ul>
         </xar:if>
-        
-        
+
+
         <xar:comment>
             Forth level: a tid, a lid and an iid
             In here a user can:
             a) view the details of a list item; or
             b) edit an existing list item.
         </xar:comment>
-        
+
         <xar:if condition="!empty($tid) and !empty($lid) and !empty($iid)">
             <ul>
                 <li>
@@ -311,7 +315,7 @@
                                 <xar:if condition="!empty($item.item_desc)">
                                     <br /><em>#xarVarPrepForDisplay($item.item_desc)#</em>
                                 </xar:if>
-            
+
                                 <xar:if condition="$mode ne 'view'">
                                     <xar:if condition="$mode eq 'modify' or $mode eq 'update'">
                                         <xar:comment>Edit form for the list item</xar:comment>
@@ -319,6 +323,7 @@
                                             <li><div class="xar-title">#$label_edit_list_item#</div>
                                             <form method="post" action="#xarModURL('lists','admin','view',array('iid'=>$iid,'mode'=>'update'))#" enctype="application/x-www-form-urlencoded">
                                                 <fieldset>
+                                                    <legend><xar:mlstring>Edit existing List item</xar:mlstring></legend>
                                                     <xar:template file="form_item" />
                                                     <xar:if condition="!empty($hooks_modify_dd)">
                                                         #$hooks_modify_dd#
@@ -348,8 +353,8 @@
                 </li>
             </ul>
         </xar:if>
-        
-        
+
+
         <!-- add the pager here -->
         <xar:comment>#$pager#</xar:comment>
     </div>

@@ -21,7 +21,7 @@ TODO:
 - Display error messages on forms when incorrect
 - Implement auth codes for security
 - Full menu system
-- Admin overview (main)
+- Admin overview (main) [in progress]
 - Register ID and module name [done]
 - Extend DD hooks so they are transparent to the update APIs.
 - Extend DD hooks so they are transparent to the create APIs.
@@ -41,6 +41,6 @@ jojodee 2005-10-12:
 - Win LF/CRs in all files to Unix
 - Add standard module icon in overview
 - Some php -> bl tag in templates
-- Add placeholders for modifyconfig/updateconfig and the template so we 
+- Add placeholders for modifyconfig/updateconfig and the template so we
   don't get errors on that function in the menu
 - Test/fix for xhtml compliancy for existing templates

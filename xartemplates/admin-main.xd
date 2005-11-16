@@ -46,6 +46,12 @@
 
     </ul>
 
+    <h3><xar:mlstring>Creating lists</xar:mlstring></h3>
+    <ul>
+        <li><xar:mlstring>The process of creating lists is two fold [extend]</xar:mlstring></li>
+
+    </ul>
+
     <h3><xar:mlstring>Included Dynamic Data Properties</xar:mlstring></h3>
     <ul>
         <li><xar:mlstring>None</xar:mlstring></li>

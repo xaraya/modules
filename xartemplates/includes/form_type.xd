@@ -1,3 +1,5 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
 <div class="xar-form-input-wrapper">
     <label for="type_name" class="xar-form-label" title=""><xar:mlstring>List type name</xar:mlstring></label>
     <input type="text" name="type_name" id="type_name" value="#$type.type_name#" size="40" maxlength="100"/>

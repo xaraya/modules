@@ -12,7 +12,7 @@
  * @author Jason Judge
  */
  
-/*
+/**
  * Main user function
  *
  * This function gets the present list items and dumps them.
