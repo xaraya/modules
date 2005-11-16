@@ -7,7 +7,7 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Example Module
+ * @subpackage Todolist Module
  */
 /*
  * Support for short URLs (user functions)
@@ -53,12 +53,12 @@
 /**
  * return the path for a short URL to xarModURL for this module
  * 
- * @author the Example module development team 
+ * @author the Todolist module development team 
  * @param  $args the function and arguments passed to xarModURL
  * @returns string
  * @return path to be added to index.php for a short URL, or empty if failed
  */
-function example_userapi_encode_shorturl($args)
+function todolist_userapi_encode_shorturl($args)
 { 
     /* Get arguments from argument array */
     extract($args);
@@ -69,8 +69,8 @@ function example_userapi_encode_shorturl($args)
     }
     
     /* Check if we have module alias set or not */
-    $aliasisset = xarModGetVar('example', 'useModuleAlias');
-    $aliasname = xarModGetVar('example','aliasname');
+    $aliasisset = xarModGetVar('todolist', 'useModuleAlias');
+    $aliasname = xarModGetVar('todolist','aliasname');
     if (($aliasisset) && isset($aliasname)) {
         $usealias   = true;
     } else{
@@ -87,7 +87,7 @@ function example_userapi_encode_shorturl($args)
     $join = '?';
     
     /* we can't rely on xarModGetName() here -> you must specify the modname ! */
-    $module = 'example';
+    $module = 'todolist';
     $alias = xarModGetAlias($module);
     /* specify some short URLs relevant to your module 
      * If you have a module alias make provision for it
