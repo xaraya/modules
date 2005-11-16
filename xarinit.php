@@ -93,6 +93,10 @@ function lists_init()
      * Define instances for this module
      * Format is
      * setInstance(Module,Type,ModuleTable,IDField,NameField,ApplicationVar,LevelTable,ChildIDField,ParentIDField)
+     *
+     * TODO MichelV: What to place privileges on?
+     *      List types
+     *      Lists
      */
 
 /*

@@ -2,7 +2,6 @@
 /**
  * Modify module's configuration
  *
-*
  * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -17,10 +16,11 @@
  * Modify module's configuration
  *
  * This is a standard function to modify the configuration parameters of the
- * module
+ * module. There isn't much in lists to configure at the moment.
  *
  * @author Lists module development team
  * @return array
+ * @todo MichelV: What is needed here?
  */
 function lists_admin_modifyconfig()
 { 
@@ -38,7 +38,7 @@ function lists_admin_modifyconfig()
     $data['authid'] = xarSecGenAuthKey();
 
     /* Specify some values for display */
-    $data['boldchecked'] = xarModGetVar('lists', 'bold') ? true : false;
+    //$data['boldchecked'] = xarModGetVar('lists', 'bold') ? true : false;
     $data['itemsvalue'] = xarModGetVar('lists', 'itemsperpage');
     /* Note : if you don't plan on providing encode/decode functions for
      * short URLs (see xaruserapi.php), you should remove this from your

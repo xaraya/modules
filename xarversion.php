@@ -11,7 +11,7 @@
  * @author Jason Judge
  */
 $modversion['name']           = 'Lists';
-$modversion['id']             = '46'; //1705 originally here?
+$modversion['id']             = '46';
 $modversion['version']        = '0.1.0';
 $modversion['description']    = 'Manage lists of values';
 $modversion['credits']        = 'xardocs/credits.txt';

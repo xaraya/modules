@@ -1,7 +1,7 @@
 
 TODO:
 - File headers [done]
-- Privileges throughout
+- Privileges throughout [proposal in xarinit]
 - Remove 'value' and 'validation' table columns
 - Better 'view' formatting
 - Pager functionality
@@ -22,7 +22,7 @@ TODO:
 - Implement auth codes for security
 - Full menu system
 - Admin overview (main)
-- Register ID and module name
+- Register ID and module name [done]
 - Extend DD hooks so they are transparent to the update APIs.
 - Extend DD hooks so they are transparent to the create APIs.
 - Support where-conditions on list items, so sub-selections can be retrieved from a single list ('code' especially and other fields; = < > *)

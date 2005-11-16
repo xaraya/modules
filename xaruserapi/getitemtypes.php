@@ -11,8 +11,12 @@
  * @link http://xaraya.com/index.php/release/46.html
  * @author Jason Judge
  */
+
 /**
  * Utility function to retrieve the list of item types of this module.
+ *
+ * Itemtypes in Lists Module are based on each list type available
+ * List types can be configured in the admin interface
  *
  * @returns array
  * @return array containing the item types and their description
@@ -30,7 +34,7 @@ function lists_userapi_getitemtypes($args)
             'label' => xarVarPrepForDisplay($listtype['type_name']),
             'title' => xarVarPrepForDisplay(xarML('View #(1)', $listtype['type_name'])),
             'url'   => xarModURL('lists', 'admin', 'view', array('tid' => $tid))
-        );
+            );
     }
 
     return $itemtypes;

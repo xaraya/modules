@@ -13,7 +13,8 @@
  */
 /**
  * Get lists of values for a list.
- * @returns array
+ *
+ * @author Lists Module Development Team
  * @param $args['lid'] list ID (optional)
  * @param $args['list_name'] list name (optional)
  * @param $args['tid'] list type ID (optional)
@@ -216,9 +217,10 @@ function lists_userapi_getlistitems($args)
         return $lists;
     }
 }
-
-// This function will sort an array by any columns, named in a CSV list, with +/-
-// indicating whether sorting should be ascending or descending.
+/*
+ * This function will sort an array by any columns, named in a CSV list, with +/-
+ * indicating whether sorting should be ascending or descending.
+ */
 function _lists_userapi_getitems_uasort($a, $b, $c) {
     // Sorting is case-insensitive.
     // Loop for each field to compare.

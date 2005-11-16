@@ -11,8 +11,12 @@
  * @link http://xaraya.com/index.php/release/46.html
  * @author Jason Judge
  */
+
 /**
- * Get list types.
+ * Get the list types.
+ *
+ * List types are configured in the module itself
+ *
  * @returns array
  * @param $args['tid'] type id (optional)
  * @param $args['type_name'] type name (optional)

@@ -29,7 +29,7 @@
 function lists_admin_main()
 { 
 
-    //if (!xarSecurityCheck('EditExample')) return;
+    //if (!xarSecurityCheck('EditLists')) return;
     /* The admin system looks for a var to be set to skip the introduction
      * page altogether.  This allows you to add sparse documentation about the
      * module, and allow the site admins to turn it on and off as they see fit.

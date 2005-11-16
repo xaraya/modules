@@ -5,19 +5,10 @@
 </div>
 <div class="xar-mod-body">
   <h2><xar:mlstring>Modify Config</xar:mlstring></h2>
-  <!-- the specific template for the current admin function comes here -->
-  
-  <!-- Start form - note we do not use api functions to create the recipient URL of
-       this form, but entity instead.  All URLs should be generated this way to ensure
-       compatibility with future versions of Xaraya.
-    -->
-
     <form method="post" id="post" action="&xar-modurl-lists-admin-updateconfig;" enctype="application/x-www-form-urlencoded">
-
-    <!-- Use standard xaraya classes for form elements -->
     <fieldset>
       <legend><xar:mlstring>Display Options</xar:mlstring></legend>
-
+      <xar:comment>
       <div class="xar-form-input-wrapper">
         <label for="bold" class="xar-form-label" title="#xarML('Use bold for lists items.')#">
           <xar:mlstring>Display List Items In Bold?</xar:mlstring>
@@ -28,7 +19,7 @@
           <input type="checkbox" name="bold" id="bold" value="1" />
         </xar:if>
       </div>
-
+      </xar:comment>
       <div class="xar-form-input-wrapper">
         <label for="itemsperpage" class="xar-form-label" title="#xarML('Number of list items per page')#">
           <xar:mlstring>List Items Per Page:</xar:mlstring>

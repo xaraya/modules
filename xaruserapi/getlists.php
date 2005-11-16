@@ -11,8 +11,10 @@
  * @link http://xaraya.com/index.php/release/46.html
  * @author Jason Judge
  */
+
 /**
- * Get lists.
+ * Get all lists.
+ *
  * @returns array
  * @param $args['lid'] list ID (optional)
  * @param $args['list_name'] list name (optional)
@@ -20,7 +22,7 @@
  * @param $args['type_name'] list type name (optional)
  * @param $args['listkey'] key for list array [id]|name|index (optional)
  * @param $args['column'] return a single column as the value (optional)
- * @return array of links, or false on failure
+ * @return array of links, or false on failure (?)
  */
 function lists_userapi_getlists($args)
 {
