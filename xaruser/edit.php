@@ -278,7 +278,7 @@ function julian_user_edit()
 
    //Show rrule only if the first repeating option was selected (2nd radio button) - every
    if ($event_repeat == 1) {
-     $data['freq_type_selected'][rrule] = 'selected';
+     $data['freq_type_selected']['rrule'] = 'selected';
    }
 
    //Setting repeat on num selection
