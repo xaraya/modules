@@ -11,16 +11,16 @@
  * @link http://xaraya.com/index.php/release/319.html
  * @author Julian Module Development Team
  */
- 
+
 /**
  * View an event
  *
  * initial template: Roger Raymond
- * @link http://www.metrostat.net 
+ * @link http://www.metrostat.net
  * @copyright (C) 2005 by Metrostat Technologies, Inc.
  * @author  Jodie Razdrh/John Kevlin/David St.Clair
  * @author  Julian Development Team, MichelV. <michelv@xarayahosting.nl>
- * @access  public 
+ * @access  public
  * @param   ID $event_id for the event to display
  * @param   $cal_date
  * @return  array
@@ -29,17 +29,17 @@
 function julian_user_viewevent()
 {
     //get post/get vars
-    if (!xarVarFetch('event_id','id',$event_id)) return; 
+    if (!xarVarFetch('event_id','isset',$event_id)) return;
     if (!xarVarFetch('cal_date','int',$cal_date)) return; // str here?
-    
+
     // Security check
-    if (!xarSecurityCheck('ViewJulian')) return; 
+    if (!xarSecurityCheck('ViewJulian')) return;
     // TODO: make this an API for linked event
     // establish a db connection
     $dbconn = xarDBGetConn();
     // get db tables
     $xartable = xarDBGetTables();
-   
+
     $matches = array();
     if (preg_match("/^(\d+)_link$/",$event_id,$matches)) {
         $linkid = $matches[1];
@@ -56,15 +56,15 @@ function julian_user_viewevent()
 
    // Get the event, as it is not in the linked table
    // We use event_id here
-   
+
    $bl_data = array();
    $bl_data = xarModAPIFunc('julian','user','get',array('event_id'=>$event_id));
-   
+
    // Make an admin adjustable time format
    $dateformat=xarModGetVar('julian', 'dateformat');
-   $timeformat=xarModGetVar('julian', 'timeformat');  
+   $timeformat=xarModGetVar('julian', 'timeformat');
    $dateformat_created="$dateformat $timeformat";
-   
+
     // Don't like this here
     if (!isset($bl_data['recur_until']) || is_numeric($bl_data['recur_until']) || strrchr($bl_data['recur_until'], '0000')) {
         $bl_data['recur_until'] = 'recur_until';
@@ -79,16 +79,16 @@ function julian_user_viewevent()
    $bl_data['authid'] = xarSecGenAuthKey();
    // Add obfuscator: for later Bug 4971
    // $bl_data['email'] = xarModAPIFunc('sitecontact', 'user', 'obfuemail', array('email'=>$bl_data['email']));
-   
+
    /* Get rid of the NULLs */
-   
+
     if (isset($bl_data['phone'])) {
         $bl_data['phone'] = xarVarPrepForDisplay($bl_data['phone']);
     } else {
         $bl_data['phone'] ='';
     }
-    if (!is_null($bl_data['url'])) {  
-        $bl_data['URL'] = xarVarPrepForDisplay($bl_data['url']); // TODO: Get rid of this   
+    if (!is_null($bl_data['url'])) {
+        $bl_data['URL'] = xarVarPrepForDisplay($bl_data['url']); // TODO: Get rid of this
     } else {
         $bl_data['URL'] ='';
     }
@@ -126,15 +126,15 @@ function julian_user_viewevent()
          // this is for the 'on every' recurring event type
          $time .= "the ".$weektimes[$recur_interval] ." ".$day_array[$recur_count]." every ".$bl_data['recur_freq']." ". $intervals[$rrule] . $eff;
       }
-      
-      
+
+
       //add the end date if one exists
       if (strcmp($bl_data['recur_until'],""))
          $time .= " until ".date("$dateformat",strtotime($bl_data['recur_until']));
      //if the duration has not been set and this is not an all day event, add the start time to the string
      $duration=strcmp($duration,"")?$duration:($bl_data['isallday']?'':' at '.date("g:i A",strtotime($bl_data['dtstart'])));
      $bl_data['time'] = $time.$duration .".";
-     
+
    // If there is no duration and this is not an all day event, show the time at the front.
    } else if (!$bl_data['isallday'] && !strcmp($duration,'')) {
       $bl_data['time'] = date("g:i A l, $dateformat",strtotime($bl_data['dtstart']));
