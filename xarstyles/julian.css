@@ -218,11 +218,9 @@ ul.xar-julian-eventlist li {
 
 /* block element inside li to overrule color */
 div.xar-julian-list-contents a.xar-julian-event {
-
 }
 
 div.xar-julian-block-calevent div.xar-julian-list-contents a.xar-julian-event {
-    color: #FFF;
     text-decoration: underline;
 }
 
