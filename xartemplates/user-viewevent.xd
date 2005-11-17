@@ -1,11 +1,9 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:style scope="module" file="julian" />
-
 <div class="xar-julian xar-julian-user-viewevent">
     <xar:template file="header" />
 
     <div class="xar-julian-contents">
-        
+
         <div class="xar-julian-contents-icons">
         <xar:sec id="unique1" mask="Editjulian" catch="false">
             <a href="#xarModURL('julian','user','edit',array('cal_date'=>$cal_date,'id'=> $id, 'authid' => $authid))#">
@@ -15,7 +13,7 @@
                onclick="answer=confirm('#$deletesummary#\n#xarML('Are you sure you want to delete this event?')#');if(!answer) return false;">
                 <xar:mlstring>Delete</xar:mlstring>
             </a>
-        </xar:sec> 
+        </xar:sec>
         </div>
 
         <h2>#$summary#</h2>
@@ -31,7 +29,7 @@
                         </xar:if>
                     </div>
                     <xar:if condition="!$isallday">
-                         #$time# 
+                         #$time#
                     <xar:else />
                         #$time# <xar:mlstring>All Day Event</xar:mlstring>
                     </xar:if>
@@ -45,7 +43,7 @@
                      <td width="60%" valign="top">
                          <strong><xar:mlstring>Description:</xar:mlstring></strong><br />#$description#
                      </td>
-                     <td valign="top"> 
+                     <td valign="top">
                             <strong><xar:mlstring>Location:</xar:mlstring></strong><br />
                             <xar:set name="$hasLocation">0</xar:set>
                             <xar:if condition="strcmp($location,'')">
@@ -61,7 +59,7 @@
                                 <xar:set name="$hasLocation">1</xar:set>
                             </xar:if>
                             #$city#
-                            <xar:if condition="strcmp($state,'')&&strcmp($city,'')">                                        
+                            <xar:if condition="strcmp($state,'')&&strcmp($city,'')">
                                  ,&nbsp;
                             </xar:if>
                             <xar:if condition="strcmp($state,'')">

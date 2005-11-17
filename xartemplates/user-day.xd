@@ -1,8 +1,9 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
 <div class="xar-julian xar-julian-user-day">
+<xar:comment> Include the header file which also loads the css for Julian</xar:comment>
     <xar:template file="header" />
-    
+
     <div class="xar-julian-calendar">
         <div class="xar-julian-calendar-nav">
             <div class="xar-julian-calendar-nav-prev">
@@ -17,7 +18,7 @@
                 #xarLocaleGetFormattedDate('long',$selected_timestamp)#
             </div>
         </div>
-        
+
         <div class="xar-julian-calendar-tables">
             <table class="xar-julian-calendar-month">
                 <tr class="xar-julian-calendar-week">
@@ -62,7 +63,7 @@
                                                     <xar:comment>Show popup when mouse over event name. Don't show the time if event is all day.</xar:comment>
                                                       <font size="3" color="#$event_array[$dbdate][$index]['color']#">#$Bullet#</font>
                                                     <xar:if condition="!$event_array[$dbdate][$index]['isallday']">
-                                                        <span class="xar-julian-sub">#$event_array[$dbdate][$index]['time']#</span> 
+                                                        <span class="xar-julian-sub">#$event_array[$dbdate][$index]['time']#</span>
                                                     </xar:if>
                                                     <a href="#xarModURL('julian','user','viewevent',array('cal_date'=>$cal_date,'event_id'=>$event_array[$dbdate][$index]['event_id']))#"
                                                        onmouseover="return overlib('#$event_array[$dbdate][$index]['singlepopover']#',CAPTION,'#$event_array[$dbdate][$index]['singlepopovercaption']#')"
@@ -86,7 +87,7 @@
             </table>
         </div>
     </div>
-    
+
     <xar:comment>include the calendar footer</xar:comment>
     <xar:template file="footer" />
 </div>

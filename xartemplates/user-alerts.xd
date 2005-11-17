@@ -4,8 +4,8 @@
     <xar:template file="header" />
 
     <div class="xar-julian-contents">
-        <form action="#xarModURL('julian','user','alerts')#" method="post" enctype="application/x-www-form-urlencoded">
-            <fieldset class="formelements xar-norm">
+        <form action="&xar-modurl-julian-user-alerts;" method="post" enctype="application/x-www-form-urlencoded">
+            <fieldset>
                 <legend>
                     <xar:mlstring>
                         Select the categories you wish to receive email alerts for.

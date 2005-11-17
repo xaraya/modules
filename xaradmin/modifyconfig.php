@@ -6,10 +6,11 @@
  * @link http://www.xaraya.com
  *
  * @subpackage Julian Module
+ * @author Julian Module Developers Team
  */
 
 /**
- * 
+ *
  * Function that allows modification of configurable variables for the julian calendar
  *
  * This module:
@@ -22,7 +23,7 @@
  */
 
 function julian_admin_modifyconfig()
-{ 
+{
     // Security Check
     if (!xarSecurityCheck('Adminjulian')) return;
 
@@ -30,7 +31,7 @@ function julian_admin_modifyconfig()
     $data['share_group'] = xarModGetVar('julian','share_group');
     $data['dateformat']  = xarModGetVar('julian','dateformat');
     //$data['timeform']  = xarModGetVar('julian','timeform');
-    // The form of the bullet in lists    
+    // The form of the bullet in lists
     $data['BulletForm'] = xarModGetVar('julian', 'BulletForm');
     // Number of items per page
     $data['numitems']   = xarModGetVar('julian','numitems');
@@ -41,7 +42,7 @@ function julian_admin_modifyconfig()
     $data['DurMinInterval'] = xarModGetVar('julian', 'DurMinInterval');
     // Starttime minute interval
     $data['StartMinInterval'] = xarModGetVar('julian', 'StartMinInterval');
-    
+
     /* If you plan to use alias names for you module then you should use the next two alias vars
      * You must also use short URLS for aliases, and provide appropriate encode/decode functions.
      */
@@ -59,6 +60,6 @@ function julian_admin_modifyconfig()
         $data['hooks'] = $hooks;
     }
     return $data;
-} 
+}
 
 ?>

@@ -14,8 +14,8 @@
 
 /**
  * Get a hooked item
- * 
- * The data for this hook is stored inside Julian in a seperate table. 
+ *
+ * The data for this hook is stored inside Julian in a seperate table.
  * In the long run, Julian should hook to itself
  * This all has only been tested with Articles
  *
@@ -40,7 +40,7 @@ function julian_userapi_gethooked($args)
             new SystemException($msg));
         return;
     }
-    
+
     if (!isset($objectid) || !is_numeric($objectid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
             'item ID', 'user', 'gethooked', 'Julian');
@@ -49,8 +49,8 @@ function julian_userapi_gethooked($args)
         return;
     }
    // Load up database
-   $dbconn = xarDBGetConn();
-   $xartable = xarDBGetTables();
+   $dbconn =& xarDBGetConn();
+   $xartable =& xarDBGetTables();
    $event_linkage_table = $xartable['julian_events_linkage'];
 
     // Try to find the link for the current module, item type and item id.
@@ -59,15 +59,15 @@ function julian_userapi_gethooked($args)
    if (!empty($result)) {
         if (!$result->EOF) {
             $edit_obj = $result->FetchObject(false);
-            
+
             // Start/end date (and time)
             $event_startdate = strtotime($edit_obj->dtstart);
             $event_enddate   = strtotime($edit_obj->recur_until);
-            
+
             $item['event_startdate'] = date("F j, Y",$event_startdate);
             $item['event_starttime'] = date("g:i A",$event_startdate);
             $item['event_enddate'] = strcmp($event_enddate,'')==0 ? '' : date("F j, Y",$event_enddate);
-            
+
             // All day or not
             $item['event_allday'] = ($edit_obj->isallday==1);
 
@@ -77,12 +77,13 @@ function julian_userapi_gethooked($args)
             }
 
             //Checking to see which repeating rule was used so the event_repeat can be set.
-            if ($edit_obj->rrule==3 && $edit_obj->recur_count && $edit_obj->recur_interval && $edit_obj->recur_freq)
+            if ($edit_obj->rrule==3 && $edit_obj->recur_count && $edit_obj->recur_interval && $edit_obj->recur_freq) {
                 $item['event_repeat'] = 2;
-            else if ($edit_obj->rrule && $edit_obj->recur_freq) 
+            } else if ($edit_obj->rrule && $edit_obj->recur_freq) {
                $item['event_repeat'] = 1;
-            else
+            } else {
                 $item['event_repeat'] = 0;
+            }
 
             //Depending on which recurrence rule was used, set the appropriate form fields.
             switch ($item['event_repeat']) {
@@ -96,21 +97,19 @@ function julian_userapi_gethooked($args)
                     $item['event_repeat_on_freq'] = $edit_obj->recur_freq;       // every n months
                     break;
             }
-            
+
             $result->Close();
-        }
-        else {
+        } else {
             return xarML('There is no event hooked to this item.');
         }
-    }
-    else {
+    } else {
         return xarML('There is no event hooked to this item.');
-    }    
+    }
 
     if (!xarSecurityCheck('ViewJulian')) { // TODO
         return;
     }
-    // Return the item array 
+    // Return the item array
     return $item;
 }
 ?>

@@ -1,16 +1,18 @@
 <?php
 /**
  * Hook for create Julian
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Julian Module
+ * @author Julian Module Development Team
  */
 /**
  * process date/time for the new item - hook for ('item','create','API')
+ * @author JornB
  */
 function julian_userapi_createhook($args)
 {
@@ -42,7 +44,7 @@ function julian_userapi_createhook($args)
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
-     
+
     // Get item type.
      if (isset($extrainfo['itemtype']) && is_numeric($extrainfo['itemtype'])) {
         $itemtype = $extrainfo['itemtype'];
@@ -54,7 +56,7 @@ function julian_userapi_createhook($args)
    $dbconn = xarDBGetConn();
    $xartable = xarDBGetTables();
    $event_linkage_table = $xartable['julian_events_linkage'];
-    
+
     // Try to find the link for the current module, item type and item id.
    $query = "SELECT `event_id` FROM $event_linkage_table WHERE (`hook_modid`=$modid AND `hook_itemtype`=$itemtype AND `hook_iid`=$objectid)";
    $result = $dbconn->Execute($query);
@@ -62,8 +64,8 @@ function julian_userapi_createhook($args)
    if (!empty($result)) {
         if (!$result->EOF) $id=$result->fields[0];
         $result->Close();
-    }
-   
+   }
+
     // start date
    if (!xarVarFetch('event_month','str',$event_month,'')) return;
    if (!xarVarFetch('event_day',  'int',$event_day,  '')) return;
@@ -92,46 +94,48 @@ function julian_userapi_createhook($args)
    if (!xarVarFetch('event_repeat_on_day', 'int', $event_repeat_on_day,  0)) return; // database field: recur_count
    if (!xarVarFetch('event_repeat_on_num', 'int', $event_repeat_on_num,  0)) return; // database field: recur_interval
    if (!xarVarFetch('event_repeat_on_freq','int', $event_repeat_on_freq, 0)) return; // database field: recur_freq
-    
+
     // end of recurrence type: 1=end date known, 0=open ended
    if (!xarVarFetch('event_endtype','int', $event_endtype,0)) return;
-    
+
     // end date
    if (!xarVarFetch('event_endmonth','int', $event_endmonth,0)) return;
    if (!xarVarFetch('event_endday',  'int', $event_endday,  0)) return;
-   if (!xarVarFetch('event_endyear', 'int', $event_endyear, 0)) return;   
-    
+   if (!xarVarFetch('event_endyear', 'int', $event_endyear, 0)) return;
+
    $event_startdate = $event_year."-".$event_month."-".$event_day;
-    
+
    // if this is a event recurring on specific days of the week, determine the start date based on the recur type and the
     // selected start date by the user. Otherwise, the start date is the one selected by the user.
-   if($event_repeat==2)
-   {
+   if($event_repeat==2) {
       //load the event class
       $e = xarModAPIFunc('julian','user','factory','event');
       //set the start date for this recurring event
-      $event_startdate = $e->setRecurEventStartDate($event_startdate,$event_repeat_on_day,$event_repeat_on_num,$event_repeat_on_freq); 
+      $event_startdate = $e->setRecurEventStartDate($event_startdate,$event_repeat_on_day,$event_repeat_on_num,$event_repeat_on_freq);
    }
-      
+
    // End date (if available)
    $event_enddate = '';
    if ($event_repeat!=0 && $event_endtype!=0) $event_enddate = $event_endyear."-".$event_endmonth."-".$event_endday;
-      
+
    // If not an all day event, eventstartdate gets a time and duration.
    $event_duration = '';
-   if (!$event_allday)
-   {
+   if (!$event_allday) {
         // Add date to event start.
       $ampm = $event_startampm==1?"AM":"PM";    // AM=1, PM=2
       $event_startdate =  date("Y-m-d H:i:s",strtotime($event_startdate." ".$event_starttimeh.":".$event_starttimem.":00 ".$ampm));
-        
+
         // Create duration string (hh:mm)
-      if (strcmp($event_dur_hours.':'.$event_dur_minutes,'0:00')!=0) $event_duration = $event_dur_hours.':'.$event_dur_minutes;
-   } 
-          
-   // Checking which event_repeat rule is being used and setting the recur_freq to the right reoccuring frequency
-   // Using this because the frequence value is being written to the same place in the database, for both 'every'
-    // and 'on' recurrence.
+        if (strcmp($event_dur_hours.':'.$event_dur_minutes,'0:00')!=0) {
+            $event_duration = $event_dur_hours.':'.$event_dur_minutes;
+        }
+   }
+
+   /**
+    * Checking which event_repeat rule is being used and setting the recur_freq to the right reoccuring frequency
+    * Using this because the frequence value is being written to the same place in the database, for both 'every'
+    * and 'on' recurrence.
+    */
     $recur_freq = 0;
     switch($event_repeat) {
         case 0:
@@ -150,65 +154,62 @@ function julian_userapi_createhook($args)
             break;
     }
 
-   if(strcmp($id,"")!=0)
-      {
+   if(strcmp($id,"")!=0) {
         // Link already exists; update it.
       $query = "UPDATE " .  $event_linkage_table . "
                 SET hook_modid=?,
                      hook_itemtype=?,
                      hook_iid=?,
                      dtstart=?,
-                duration=?,
+                     duration=?,
                      isallday=?,
                      rrule=?,
-                recur_freq=?,
-                recur_count=?,
+                     recur_freq=?,
+                     recur_count=?,
                      recur_interval=?,
                      recur_until=?
                 WHERE event_id=$id";
                 $bindvars = array ($modid,                            // hooking module id
-                                         $itemtype,                        // hooking module item type
-                                         $objectid,                        // hooking module item id
+                                         $itemtype,                   // hooking module item type
+                                         $objectid,                   // hooking module item id
                                          $event_startdate,            // event start date/time
-                                         $event_duration,                // event duration (hh:mm)
-                                         $event_allday,                // event takes all day (0 = false, 1 = true)
+                                         $event_duration,             // event duration (hh:mm)
+                                         $event_allday,               // event takes all day (0 = false, 1 = true)
                                          $event_repeat_every_type,    // unit of repetition frequency (day, week, month, year)
-                                         $recur_freq,                    // repetition frequency
+                                         $recur_freq,                 // repetition frequency
                                          $event_repeat_on_day,        // day of the week
                                          $event_repeat_on_num,        // month-based instance of weekday (1st, 2nd, ..., last=5)
-                                         $event_enddate);                // event end date (may be '')
+                                         $event_enddate);             // event end date (may be '')
              $result = $dbconn->Execute($query, $bindvars);
-   }
-   else
-   {
+   } else {
         // Link does not yet exist; create it.
-      $query = "INSERT INTO " .  $event_linkage_table . " 
+      $query = "INSERT INTO " .  $event_linkage_table . "
                 SET hook_modid=?,
                      hook_itemtype=?,
                      hook_iid=?,
                      dtstart=?,
-                duration=?,
+                     duration=?,
                      isallday=?,
                      rrule=?,
-                recur_freq=?,
-                recur_count=?,
+                     recur_freq=?,
+                     recur_count=?,
                      recur_interval=?,
                      recur_until=?";
                 $bindvars = array ($modid,                            // hooking module id
-                                         $itemtype,                        // hooking module item type
-                                         $objectid,                        // hooking module item id
+                                         $itemtype,                   // hooking module item type
+                                         $objectid,                   // hooking module item id
                                          $event_startdate,            // event start date/time
-                                         $event_duration,                // event duration (hh:mm)
-                                         $event_allday,                // event takes all day (0 = false, 1 = true)
+                                         $event_duration,             // event duration (hh:mm)
+                                         $event_allday,               // event takes all day (0 = false, 1 = true)
                                          $event_repeat_every_type,    // unit of repetition frequency (day, week, month, year)
-                                         $recur_freq,                    // repetition frequency
+                                         $recur_freq,                 // repetition frequency
                                          $event_repeat_on_day,        // day of the week
                                          $event_repeat_on_num,        // month-based instance of weekday (1st, 2nd, ..., last=5)
-                                         $event_enddate);                // event end date (may be '')
+                                         $event_enddate);             // event end date (may be '')
                 $result = $dbconn->Execute($query, $bindvars);
             $id = $dbconn->Insert_ID();
-   }   
-     
+   }
+
     return $extrainfo;
 }
 

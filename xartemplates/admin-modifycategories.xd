@@ -1,6 +1,5 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
-<xar:style scope="module" file="julian" />
 <xar:set name="$modifylabel"><xar:mlstring>Modify</xar:mlstring></xar:set>
 <xar:set name="$addlabel"><xar:mlstring>Add</xar:mlstring></xar:set>
 <div class="xar-julian xar-julian-admin-modifycategories">
@@ -9,7 +8,7 @@
     <div class="xar-julian-contents">
     <h2>
         <xar:mlstring>
-            Modify Categories 
+            Modify Categories
         </xar:mlstring>
     </h2>
 
@@ -25,8 +24,8 @@
                             <td width="85%"><font size="3" color="#$categories[$cat_id]['color']#">#$BulletForm#</font>&nbsp;#$categories[$cat_id]['name']#</td>
                             <td align="right">
                                   <xar:set name="$deletecat">addslashes($categories[$cat_id]['name'])</xar:set>
-                                        
-                                  <a href="#xarModURL('julian','admin','modifycategories',array('cid'=>$cat_id,'action' => 'Delete'))#" onclick="answer = confirm('Are you sure you want to delete: #$deletecat# ?');if(!answer) return false;">Delete</a> 
+
+                                  <a href="#xarModURL('julian','admin','modifycategories',array('cid'=>$cat_id,'action' => 'Delete'))#" onclick="answer = confirm('Are you sure you want to delete: #$deletecat# ?');if(!answer) return false;">Delete</a>
                                   <a href="#xarModURL('julian','admin','modifycategories',array('cid'=>$cat_id,'action' => 'Edit'))#"><xar:mlstring>Edit</xar:mlstring></a>
                             </td>
                         <xar:if condition="$edit_cond == $cat_id">
@@ -50,7 +49,7 @@
             </div>
         </fieldset>
     </form>
-            
+
     <form name="cat_add" action="&xar-modurl-julian-admin-modifycategories;" onSubmit="if(!isCancel){return validate2(this)}" method="post" enctype="application/x-www-form-urlencoded">
         <fieldset>
             <legend>

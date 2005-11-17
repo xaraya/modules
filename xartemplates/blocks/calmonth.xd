@@ -1,26 +1,5 @@
-<xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:comment>
-These calls don't seem to work:
-#xarModAPIFunc('overlib','user','init')#
-<xar:overlib-init />
-When bug (3868 and others) for not calling AddStyleLink is fixed in xarblocks this call can be implemented:
 <xar:if condition="xarTplAddStyleLink('julian', 'julian')"></xar:if>
-or:
-<xar:style scope="block" file="julian" />
-</xar:comment>
-
-<link type="text/css" rel="stylesheet" href="modules/julian/xarstyles/julian.css">
-
-<script type="text/javascript" src="modules/julian/xarjavascript/popupstyle.js"></script>
-
-
-<xar:comment>Direct call to the java-script, normally performed by the overlib tag</xar:comment>
-<script type="text/javascript" src="modules/overlib/config.inc.js"></script>
-<div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
-<script src="modules/overlib/overlib_mini.js" type="text/javascript"></script>
-
 <div class="xar-julian xar-julian-block-calmonth">
-
     <div class="xar-julian-calendar">
         <div class="xar-julian-calendar-tables">
             <table class="xar-julian-calendar-month">
@@ -48,29 +27,28 @@ or:
                     <xar:if condition="substr($date,4,2) eq $todays_month">
                         <td class="xar-julian-calendar-day xar-julian-days-#$daycolor#">
                             <xar:set name="dateconverted">date("Y-m-d",strtotime($date))</xar:set>
-                            <xar:comment>If overlib is loaded, add pop-over with event information</xar:comment>
+                            <xar:comment>Add pop-over with event information</xar:comment>
                             <xar:if condition="isset($event_array[$dateconverted])">
-                                <xar:set name="$text">'<ul class=xar-julian-eventlist>'</xar:set>
+                                <xar:set name="$text">'<span class="xar-julian-tooltip">'</xar:set>
                                 <xar:foreach in="$event_array[$dateconverted]" key="$index">
-                                    <xar:set name="$text">$text.'<li style=color:'.$event_array[$dateconverted][$index]['color'].';><div class=xar-julian-list-contents>'.$event_array[$dateconverted][$index]['multipopover'].'</div></li>'</xar:set>
+                                    <xar:set name="$text">$text.'<span>'.$event_array[$dateconverted][$index]['singlepopovercaption'].'</span>'</xar:set>
                                 </xar:foreach>
-                                <xar:set name="$text">$text.'</ul>'</xar:set>
-                                <xar:overlib-popup-close name="$olclose" />
+                                <xar:set name="$text">$text.'</span>'</xar:set>
                                 <xar:set name="$event">'
-                                 onmouseover="return overlib(\''.$text.'\',CAPTION,\''.xarLocaleFormatDate('%m/%d/%Y',strtotime($date)).'\')" 
-                                 onmouseout="return nd()"
                                  class="xar-julian-event"'</xar:set>
                             <xar:else />
+                                <xar:set name="$text">''</xar:set>
                                 <xar:set name="$event">''</xar:set>
                             </xar:if>
                             <a href="#xarModURL('julian','user','day',array('cal_date'=>$date))#" #$event#>
+                                #$text#
                                 <xar:set name="$displayDay">substr($date,-2)</xar:set>
-                                #$displayDay# 
+                                #$displayDay#
                             </a>
                         </td>
                     <xar:else />
                         <td class="xar-julian-calendar-day xar-julian-days-#$daycolor# xar-julian-days-empty">&nbsp;
-                             
+
                         </td>
                     </xar:if>
                     </xar:foreach>

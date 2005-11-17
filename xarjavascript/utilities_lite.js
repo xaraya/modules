@@ -1,6 +1,7 @@
-/*this function determines whether to give another field focus based on whether
-  the current field has reached its max length (i.e phone number part 1 has
-  reached max length of 3 so focus is given to phone number part 2, etc.
+/**
+ * this function determines whether to give another field focus based on whether
+ * the current field has reached its max length (i.e phone number part 1 has
+ * reached max length of 3 so focus is given to phone number part 2, etc.
  *
  * TODO: Michel V: keep this
  */
@@ -26,25 +27,25 @@ function checkNumericy(field) {
 
 /*
  * Returns true if all elements on the arg form are filled except
- * the ones in the array exceptionFields. The parameter fieldNames 
- * is an array that is filled with the names of the elements not 
- * completed. This function is overloaded such that the third 
+ * the ones in the array exceptionFields. The parameter fieldNames
+ * is an array that is filled with the names of the elements not
+ * completed. This function is overloaded such that the third
  * parameter is not neccessary if you do not want the field names
- * of the fields not filled out. 
+ * of the fields not filled out.
  *
  * This function uses two methods to attain the names to populate
  * the fieldNames array with:
  *
  *    1. The form elements title attribute.
- * 
+ *
  *    2. The fieldMap array.
  *
  * If you (do not)/(can not) set an elements title attribute you must
  * build the fieldMap associative array to obtain the proper name
- * in the fieldNames array. The fieldMap array is a mapping from 
- * an elements name attribute to the verbose description of 
- * the field that you would like the fieldNames array to be 
- * populated with. Use the buildFieldMap function to build the 
+ * in the fieldNames array. The fieldMap array is a mapping from
+ * an elements name attribute to the verbose description of
+ * the field that you would like the fieldNames array to be
+ * populated with. Use the buildFieldMap function to build the
  * fieldMap.
  *
  * @deprec MichelV: can be replaced by base java function
@@ -64,7 +65,7 @@ function isFilledExcept(form, exceptionFields, fieldNames) {
       }
       if (fieldNames.length > 0)
          return false;
-      
+
       return true;
    } else {
       for (var i = 0; i < form.elements.length; i++) {
@@ -79,7 +80,7 @@ function isFilledExcept(form, exceptionFields, fieldNames) {
 }
 
 /*
- * Returns true if elementObj is checked or set in some way as 
+ * Returns true if elementObj is checked or set in some way as
  * defined by the the type of object it is. Note that this function
  * does not check hiddens, submits, or buttons.
  */
@@ -143,11 +144,11 @@ function inArray(string, array) {
 
 function buildFieldMap(fieldNames, fieldDescriptions) {
    if (fieldNames.length != fieldDescriptions.length)
-      alert("Could not build fieldMap array\nfieldNames.length != fieldDescriptions.length"); 
-   
+      alert("Could not build fieldMap array\nfieldNames.length != fieldDescriptions.length");
+
    for (var i = 0; i < fieldNames.length; i++) {
       fieldMap[fieldNames[i]] = fieldDescriptions[i];
-   }  
+   }
 }
 
 /*
@@ -158,15 +159,15 @@ function errorHandler(condition){
   var output = "";
   if(!condition)
   {
-    for (var i = 0; i < fieldNames.length; i++) 
+    for (var i = 0; i < fieldNames.length; i++)
       output = output + "\n" + fieldNames[i];
     alert("The following fields must be filled in: " + output);
   }
   else
   {
-    return true;   
+    return true;
   }
-  //Clearing Variables 
+  //Clearing Variables
   output = "";
   fieldNames = new Array();
   return false;
@@ -190,41 +191,41 @@ function populateSelect(monthSelect, daySelect, yearObject) {
    // 31 day months: January, March, May, July, August, October, December
    // 30 day months: April, June, September, November
    // [29|28] day month: February
-  
+
    var months31 = new RegExp("01|03|05|07|08|10|12");
    var months30 = new RegExp("04|06|09|11");
-   
-   // i always set one more options than the number of days 
+
+   // i always set one more options than the number of days
    // to account for the empty option
-   if (months31.test(monthSelect.value)) {  
+   if (months31.test(monthSelect.value)) {
       if (daySelect.length != 32) {
-         write2DigitNumToSelect(daySelect, 32);  
+         write2DigitNumToSelect(daySelect, 32);
       }
-     
+
    } else if (months30.test(monthSelect.value)) {
       if (daySelect.length != 31)
-         write2DigitNumToSelect(daySelect, 31);  
-     
+         write2DigitNumToSelect(daySelect, 31);
+
    } else {
       if (yearObject.value != "" && isLeapYear(parseInt(yearObject.value))) {
          if (daySelect.length != 30)
-            write2DigitNumToSelect(daySelect, 30);  
+            write2DigitNumToSelect(daySelect, 30);
       } else if (daySelect.length != 29)
          write2DigitNumToSelect(daySelect, 29);
    }
 }
 
 /*
- * This is a helper function to the populateSelect that clears options 
- * out of the select object passed in and writes numOptionsSet two digit 
- * numbers back into it. This function ensures an empty string is 
+ * This is a helper function to the populateSelect that clears options
+ * out of the select object passed in and writes numOptionsSet two digit
+ * numbers back into it. This function ensures an empty string is
  * written to the first position.
  */
 function write2DigitNumToSelect(selectObj, numOptionsToSet) {
    // clear old values
    var numOptions = selectObj.length;
    for (var i = 0; i < numOptions; i++) {
-      selectObj.options[0] = null; 
+      selectObj.options[0] = null;
    }
    // set new ones
    for (var i = 0; i < numOptionsToSet; i++) {
@@ -232,14 +233,14 @@ function write2DigitNumToSelect(selectObj, numOptionsToSet) {
       element.text = element.value = (i < 10) ? '0' + i : i;
       selectObj.options.add(element);
    }
-   selectObj.options[0].text = "";   
+   selectObj.options[0].text = "";
 }
 
 /*
  * This algorithm was obtained from: http://www.mitre.org/research/y2k/docs/PROB.html#Leap
- * 
+ *
  * It follows the following logic:
- * 
+ *
  * 1. Years divisible by four are leap years, unless...
  *
  * 2. Years also divisible by 100 are not leap years, except...
@@ -271,11 +272,11 @@ function getSelectedRadio(buttonGroup) {
    }
    // if we get to this point, no radio button is selected
    return -1;
-} 
+}
 
 /*
  * Code from http://www.breakingpar.com/bkp/home.nsf/Doc?OpenNavigator&U=CA99375CC06FB52687256AFB0013E5E9
- */ 
+ */
 function getSelectedRadioValue(buttonGroup) {
    // returns the value of the selected radio button or "" if no button is selected
    var i = getSelectedRadio(buttonGroup);
@@ -307,5 +308,3 @@ function isEmailAddr(email)
   }
   return result;
 }
-
-

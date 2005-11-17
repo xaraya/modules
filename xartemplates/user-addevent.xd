@@ -1,9 +1,9 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:style scope="module" file="julian" />
+
 <script language="Javascript" src="modules/julian/xarjavascript/utilities_lite.js"></script>
 <script language="Javascript">
     var isCancel = 0
-    
+
     function validate2(form)
     {
         var error_msg = ''
@@ -21,7 +21,7 @@
             error_msg += "Event Month field must be filled in\n"
         if (form.event_year.value == '')
             error_msg += "Event Year field must be filled in\n"
-            
+
         //If the top radio button is checked, check these fields
         if (document.cal_submit.event_endtype[0].checked)
         {
@@ -40,14 +40,14 @@
         //    error_msg += "Invalid Phone Number\n"
         var selectedRadioVal=getSelectedRadioValue(form.event_repeat);
         if (selectedRadioVal == 1 && (form.event_repeat_freq.value == '' || form.event_repeat_freq_type.selectedIndex == 0))
-            error_msg += "'Every' must be completely filled in\n"        
+            error_msg += "'Every' must be completely filled in\n"
         if (selectedRadioVal == 2 && (form.event_repeat_on_num.selectedIndex == 0 || form.event_repeat_on_day.selectedIndex == 0 || form.event_repeat_on_freq.value == ''))
-            error_msg += "'On every month' must be completely filled in\n"            
+            error_msg += "'On every month' must be completely filled in\n"
         if (selectedRadioVal == 1 && form.event_repeat_freq.value == '0')
             error_msg += "'Every' can not be 0\n"
         if (selectedRadioVal == 2 && form.event_repeat_on_freq.value == '0')
             error_msg += "'On every month' can not be 0\n"
-        
+
         if (!isEmailAddr(form.email.value) && (form.email.value != ""))
             error_msg += "Please enter a complete email address in the form: yourname@yourdomain.com"
         if (error_msg != '')
@@ -58,18 +58,18 @@
         }
         return true;
     }
-    
+
     //this function resets the repeating events values for each associated repeating type.
     function processEventRepeat(f,obj)
-    {    
+    {
         var buttonArray=f.elements[obj.name];
-     
+
         f.event_endtype[0].disabled = false
         f.event_endtype[1].disabled = false
         f.event_endmonth.disabled = false
         f.event_endday.disabled = false
         f.event_endyear.disabled = false
-        
+
         if (f.event_repeat[0].checked)
         {
             f.event_endtype[1].checked = true
@@ -80,12 +80,12 @@
             f.event_endtype[1].disabled = true
             f.event_endmonth.disabled = true
             f.event_endday.disabled = true
-            f.event_endyear.disabled = true 
-            f.event_repeat_freq.value='' 
+            f.event_endyear.disabled = true
+            f.event_repeat_freq.value=''
             f.event_repeat_on_day.selectedIndex='0'
             f.event_repeat_on_num.selectedIndex='0'
-            f.event_repeat_on_freq.value=''    
-            f.event_repeat_freq_type.selectedIndex='0'        
+            f.event_repeat_on_freq.value=''
+            f.event_repeat_freq_type.selectedIndex='0'
         }
         if (buttonArray[1].checked) //repeats every
         {
@@ -105,7 +105,7 @@
                  f.event_repeat_on_day.selectedIndex='1'
             if(f.event_repeat_on_freq.value=='')
                  f.event_repeat_on_freq.value='1'
-            f.event_repeat_freq.value='' 
+            f.event_repeat_freq.value=''
             f.event_repeat_freq_type.selectedIndex='0'
         }
     }
@@ -117,7 +117,7 @@
     <div class="xar-julian-contents">
 
         <form name="cal_submit"
-              action="&xar-modurl-julian-user-updateevent;" 
+              action="&xar-modurl-julian-user-updateevent;"
               onsubmit="if (!isCancel){return validate2(this)}"
               method="post"
               enctype="application/x-www-form-urlencoded">
@@ -154,7 +154,7 @@
                             <option value=""></option>
                         <xar:for start="$i = 1" test="$i le 12" iter="$i++">
                             <xar:if condition="$i lt 10">
-                                <xar:set name="$currMonth">str_pad($i,2,'0',STR_PAD_LEFT)</xar:set>                                    
+                                <xar:set name="$currMonth">str_pad($i,2,'0',STR_PAD_LEFT)</xar:set>
                             <xar:else />
                                 <xar:set name="$currMonth">#$i#</xar:set>
                             </xar:if>
@@ -203,7 +203,7 @@
                             <xar:mlstring>Event Duration</xar:mlstring>
                         </label>
 
-                            <xar:mlstring>All day event</xar:mlstring> 
+                            <xar:mlstring>All day event</xar:mlstring>
                             <input type="radio" name="event_allday" id="event_allday1" value="1"
                                    onclick="document.getElementById('p_event_startdur').style.visibility='hidden';" />
                             <xar:mlstring>Timed event</xar:mlstring>
@@ -231,7 +231,7 @@
                                 <option value="10">10</option>
                                 <option value="11">11</option>
                                 <option value="12">12</option>
-                            </select> 
+                            </select>
                             <select name="event_starttimem" id="event_starttimem" size="1" tabindex="8">
                                 #$start_minute_options#
                             </select>
@@ -280,7 +280,7 @@
                             <xar:mlstring>Minutes</xar:mlstring>
                     </div>
                     </div>
-                    
+
                     <div class="xar-form-input-wrapper">
                         <label for="recur" class="required xar-form-label" title="#xarML('Event Recurs.')#">
                             <xar:mlstring>Event Recurs:</xar:mlstring>
@@ -306,7 +306,7 @@
                                    onclick="processEventRepeat(this.form,this); document.getElementById('p_event_recurend').style.visibility='visible';" />
                             <p>
                             <xar:mlstring>On</xar:mlstring>
-                            
+
                             <select name="event_repeat_on_num" onchange="document.cal_submit.event_repeat[2].checked = 'true';processEventRepeat(this.form,document.cal_submit.event_repeat[2])">
                                 <option value="0"></option>
                                 <option value="1" ><xar:mlstring>First</xar:mlstring></option>
@@ -325,9 +325,9 @@
                                 <option value="5" ><xar:mlstring>Thu</xar:mlstring></option>
                                 <option value="6" ><xar:mlstring>Fri</xar:mlstring></option>
                                 <option value="7" ><xar:mlstring>Sat</xar:mlstring></option>
-                            </select> 
+                            </select>
                             </p>
-                            <xar:mlstring>every</xar:mlstring> 
+                            <xar:mlstring>every</xar:mlstring>
                             <input type="text" name="event_repeat_on_freq" size="4" onkeyup="checkNumericy(this);"
                                    onfocus="document.cal_submit.event_repeat[2].checked = 'true';processEventRepeat(this.form,document.cal_submit.event_repeat[2])" />
                             <xar:mlstring>month(s)</xar:mlstring>.
@@ -348,7 +348,7 @@
                                     <xar:set name="$currMonth">#$i#</xar:set>
                                 </xar:if>
                                 <xar:set name="$currMonth_long">date("F",mktime(0,0,0,$currMonth,1,2000))</xar:set>
-                                <xar:set name="$monthSelected">""</xar:set>                            
+                                <xar:set name="$monthSelected">""</xar:set>
                                 <option value="#$currMonth#" #$monthSelected#>#$currMonth_long#</option>
                             </xar:for>
                             </select>
@@ -401,7 +401,7 @@
                               </span>
                           </label>
                           <select name="share_uids[]" id="share_uids" multiple="multiple" style="width:150px;height:100px;">
-                            <option value=""></option>#$share_options# 
+                            <option value=""></option>#$share_options#
                           </select>
                     </div>
                 </fieldset>
@@ -467,15 +467,15 @@
                             </span>
                         </label>
                         <xar:if condition="xarModGetVar('Julian','TelFieldType') eq 'US'">
-                           <input type="text" name="phone1" id="phone1" value="" size="3" maxlength="3" onkeyup="checkNumericy(this);checkNumberLen(this,3,this.form.phone2)" /> - 
-                           <input type="text" name="phone2" id="phone2" value="" size="3" maxlength="3" onkeyup="checkNumericy(this);checkNumberLen(this,3,this.form.phone3)" /> - 
+                           <input type="text" name="phone1" id="phone1" value="" size="3" maxlength="3" onkeyup="checkNumericy(this);checkNumberLen(this,3,this.form.phone2)" /> -
+                           <input type="text" name="phone2" id="phone2" value="" size="3" maxlength="3" onkeyup="checkNumericy(this);checkNumberLen(this,3,this.form.phone3)" /> -
                            <input type="text" name="phone3" id="phone3" value="" size="4" maxlength="4" onkeyup="checkNumericy(this)" />
                         <xar:elseif condition="xarModGetVar('Julian','TelFieldType') eq 'EU'"/>
-                           <input type="text" name="phone1" id="phone1" value="" size="3" maxlength="3" onkeyup="checkNumericy(this);checkNumberLen(this,3,this.form.phone2)" /> - 
-                           <input type="text" name="phone2" id="phone2" value="" size="3" maxlength="3" onkeyup="checkNumericy(this);checkNumberLen(this,3,this.form.phone3)" /> - 
+                           <input type="text" name="phone1" id="phone1" value="" size="3" maxlength="3" onkeyup="checkNumericy(this);checkNumberLen(this,3,this.form.phone2)" /> -
+                           <input type="text" name="phone2" id="phone2" value="" size="3" maxlength="3" onkeyup="checkNumericy(this);checkNumberLen(this,3,this.form.phone3)" /> -
                            <input type="text" name="phone3" id="phone3" value="" size="10" maxlength="10" onkeyup="checkNumericy(this)" />
                         <xar:elseif condition="xarModGetVar('Julian','TelFieldType') eq 'EUC'"/>
-                           <input type="text" name="phone1" id="phone1" value="" size="4" maxlength="4" onkeyup="checkNumericy(this);checkNumberLen(this,4,this.form.phone2)" /> - 
+                           <input type="text" name="phone1" id="phone1" value="" size="4" maxlength="4" onkeyup="checkNumericy(this);checkNumberLen(this,4,this.form.phone2)" /> -
                            <input type="text" name="phone2" id="phone2" value="" size="10" maxlength="10" onkeyup="checkNumericy(this)" />
                         <xar:elseif condition="xarModGetVar('Julian','TelFieldType') eq 'OPEN'"/>
                            <input type="text" name="phone1" id="phone1" value="" size="25" maxlength="25" />
@@ -512,7 +512,7 @@
                 <input type="hidden" name="pc_event_id" value="" />
                 <input type="hidden" name="data_loaded" value="1" />
                 <input type="submit" name="submit" value="#xarML('Update')#">
-                <input type="submit" name="cancel" value="#xarML('Cancel')#" onclick="isCancel=1" /> 
+                <input type="submit" name="cancel" value="#xarML('Cancel')#" onclick="isCancel=1" />
             </div>
         </form>
     </div>

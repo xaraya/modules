@@ -7,7 +7,7 @@
 * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
 * @link http://www.metrostat.net
 *
-* @subpackage julian
+* @subpackage Julian Module
 * initial template: Roger Raymond
 * @author Jodie Razdrh/John Kevlin/David St.Clair
 */
@@ -16,12 +16,14 @@
 /**
  * Utility function to count the number of Events in the Calendar.
  *
+ *
  * @param $args an array of arguments
  * @param $args['event_id'] The ID of the Event
  * @param $args['external'] retrieve events marked external (1=true, 0=false) - ToDo:
  * @returns integer
  * @return number of items
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
+ * @todo MichelV: Include count of linked items
  */
 function julian_userapi_countevents($args)
 {
@@ -55,7 +57,7 @@ function julian_userapi_countevents($args)
         // Get the list of Events.
         $query = "SELECT COUNT(1)
                   FROM  $event_table
-                  WHERE $event_table.event_id = ? 
+                  WHERE $event_table.event_id = ?
                   AND   $event_table.event_id != 0";
         $bindvars[] = array((int) $event_id);
     } else {
@@ -80,7 +82,7 @@ function julian_userapi_countevents($args)
     list($numitems) = $result->fields;
     // Close result set
     $result->Close();
-    // bug 4833: Turn result into Integer 
+    // bug 4833: Turn result into Integer
     $numitems = (INT)$numitems;
     // Return the number of items
     return $numitems;

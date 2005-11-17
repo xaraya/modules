@@ -1,7 +1,8 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-julian xar-julian-user-month">
+<xar:comment> Include the header file which also loads the css for Julian</xar:comment>
     <xar:template file="header" />
-    
+
     <div class="xar-julian-calendar">
         <div class="xar-julian-calendar-nav">
             <div class="xar-julian-calendar-nav-prev">
@@ -12,12 +13,12 @@
             </div>
             <div class="xar-julian-calendar-nav-next">
                 <a href="#xarModAPIFunc('julian','user','next',array('cal_type'=>'month','cal_date'=>$cal_date))#"
-                   title="#xarML('Next Month')#" class="xar-julian-arrow">&gt;</a>                     
+                   title="#xarML('Next Month')#" class="xar-julian-arrow">&gt;</a>
                 <a href="#xarModAPIFunc('julian','user','next',array('cal_type'=>'year','cal_date'=>$cal_date))#"
                    title="#xarML('Next Year')#" class="xar-julian-arrow">&gt;&gt;</a>
             </div>
             <div class="xar-julian-calendar-nav-current">
-                #xarLocaleFormatDate('%B %Y',$selected_timestamp)# 
+                #xarLocaleFormatDate('%B %Y',$selected_timestamp)#
             </div>
         </div>
 
@@ -38,7 +39,7 @@
                         <a href="#$WeekUrl#" title="#xarML('Go to week')#" class="xar-julian-arrow">&gt;</a>
                     </td>
                     <xar:comment>START :: LOOP THROUGH EACH DAY OF THE WEEK</xar:comment>
-                    <xar:foreach in="$week" value="$date"> 
+                    <xar:foreach in="$week" value="$date">
                     <xar:set name="$yr">substr($date,0,4)</xar:set>
                     <xar:set name="$mon">substr($date,-4,-2)</xar:set>
                     <xar:set name="$day">substr($date,-2)</xar:set>
@@ -79,16 +80,23 @@
                                             </div>
                                             <xar:comment>Show a bullet with the color of the event category.</xar:comment>
                                                 <font size="3" color="#$event_array[$dbdate][$index]['color']#">#$Bullet#</font>
-                                            <xar:comment>Show popup when mouse over event name. If event is all day, don't show the time</xar:comment>                                                                                
+                                            <xar:comment>Show popup when mouse over event name. If event is all day, don't show the time</xar:comment>
                                                 <xar:if condition="!$event_array[$dbdate][$index]['isallday']">
-                                                    <span class="xar-julian-sub">#$event_array[$dbdate][$index]['time']#</span> 
+                                                    <span class="xar-julian-sub">#$event_array[$dbdate][$index]['time']#</span>
                                                 </xar:if>
+                                            <a href="#xarModURL('julian','user','viewevent',array('cal_date'=>$date,'event_id'=>$event_array[$dbdate][$index]['event_id']))#"
+                                               class="xar-julian-event">
+                                               <span class="xar-julian-tooltip">#$event_array[$dbdate][$index]['singlepopover']#</span>
+                                                    #$event_array[$dbdate][$index]['summary']#</a>
+                                                    <br />
+                                            <xar:comment>
                                             <a href="#xarModURL('julian','user','viewevent',array('cal_date'=>$date,'event_id'=>$event_array[$dbdate][$index]['event_id']))#"
                                                onmouseover="return overlib('#$event_array[$dbdate][$index]['singlepopover']#',CAPTION,'#$event_array[$dbdate][$index]['singlepopovercaption']#')"
                                                onmouseout="return nd()"
                                                class="xar-julian-event">
-                                                #$event_array[$dbdate][$index]['summary']# 
+                                                #$event_array[$dbdate][$index]['summary']#
                                             </a><br>
+                                            </xar:comment>
                                         </div>
                                     </li>
                                 </xar:foreach>
@@ -97,7 +105,7 @@
                         </td>
                     <xar:else />
                         <td class="xar-julian-calendar-day xar-julian-days-#$daycolor# xar-julian-days-empty">&nbsp;
-                            
+
                         </td>
                     </xar:if>
                     </xar:foreach>
@@ -108,7 +116,7 @@
             </table>
         </div>
     </div>
-    
+
     <xar:comment>include the calendar footer</xar:comment>
     <xar:template file="footer" />
 </div>

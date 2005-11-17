@@ -1,9 +1,8 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
-<xar:overlib-init />
+
 <xar:if condition="xarTplAddStyleLink('base', 'navtabs')"></xar:if>
 <xar:style scope="module" file="julian" />
 <script type="text/javascript" src="modules/julian/xarjavascript/utilities_lite.js"></script>
-<script type="text/javascript" src="modules/julian/xarjavascript/popupstyle.js"></script>
 <script type="text/javascript" src="modules/julian/xarjavascript/validateheader.js"></script>
 <xar:comment>
 This makes sure we have a valid month and day.    If not, we use today's month and day
@@ -12,7 +11,7 @@ would look something like this: 200400 instead of 20040618. The 00 is from the d
 being set to blank.
 </xar:comment>
 <xar:if condition="strlen($cal_date) < 8">
-    <xar:set name="$cal_date">date("Ymd")</xar:set>    
+    <xar:set name="$cal_date">date("Ymd")</xar:set>
 </xar:if>
 <xar:set name="$navDayUrl">#xarModURL('julian','user','day',array('cal_date'=>$cal_date))#</xar:set>
 <xar:set name="$navWeekUrl">#xarModURL('julian','user','week',array('cal_date'=>$cal_date))#</xar:set>
@@ -51,7 +50,7 @@ being set to blank.
         <xar:else />
           <dd><a href="#$navEventsUrl#"><xar:mlstring>Events</xar:mlstring></a></dd>
         </xar:if>
-   
+
         <xar:if condition="xarUserIsLoggedIn()">
             <xar:if condition="$whatFunc eq 'alerts'">
                 <dd class="active"><a href="#$navAlertsUrl#"><xar:mlstring>Alerts</xar:mlstring></a></dd>
@@ -60,7 +59,7 @@ being set to blank.
             </xar:if>
         </xar:if>
     </dl>
-    
+
     <form name="jump_to_page" method="post" action="#xarModURL('julian','user','jump')#" onsubmit="return validate(this)">
         <div>
             <input type="submit" name="submit" value="Jump to" />
@@ -68,7 +67,7 @@ being set to blank.
                 <option value=""></option>
                 <xar:for start="$i = 1" test="$i le 12" iter="$i++">
                     <xar:if condition="$i lt 10">
-                        <xar:set name="$currMonth">str_pad($i,2,'0',STR_PAD_LEFT)</xar:set>                                    
+                        <xar:set name="$currMonth">str_pad($i,2,'0',STR_PAD_LEFT)</xar:set>
                     <xar:else />
                         <xar:set name="$currMonth">#$i#</xar:set>
                     </xar:if>
@@ -121,7 +120,7 @@ being set to blank.
                <xar:set name="$key">$key."<font color=" .$info['color']. ">&bull;</font>&nbsp;&nbsp;" . addslashes($info['name']) . "<br />"</xar:set>
             </xar:foreach>
             <xar:set name="$caption">'<center>'.xarML('LEGEND').'</center>'</xar:set>
- 
+
             <a href="javascript:void(0)"
                onmouseover="return overlib('#$key#',CAPTION,'#$caption#',WIDTH,195)"
                onmouseout="return nd()">

@@ -1,23 +1,35 @@
 <?php
 /**
-*
-* This function manages the calendar categories.
-*
-* @package Xaraya eXtensible Management System
-* @copyright (C) 2004 by Metrostat Technologies, Inc.
-* @license GPL {@link http://www.gnu.org/licenses/gpl.html}
-* @link http://www.metrostat.net
-*
-* @subpackage julian
-* initial template: Roger Raymond
-* @author Jodie Razdrh/John Kevlin/David St.Clair/Michel Vorenhout/Jorn Bruggeman
-*/
+ * Manage the category use within Julian
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Julian Module
+ * @link http://xaraya.com/index.php/release/319.html
+ * @author Julian Module Development Team
+ */
+
+/**
+ *
+ * This function manages the calendar categories.
+ *
+ * This module:
+ * @copyright (C) 2004 by Metrostat Technologies, Inc.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.metrostat.net
+ *
+ * initial template: Roger Raymond
+ * @author Jodie Razdrh/John Kevlin/David St.Clair/MichelV/Jorn Bruggeman
+ */
 
 function julian_admin_modifycategories()
 {
     // Security Check
     if (!xarSecurityCheck('Adminjulian')) return;
-    
+
     //get post/get vars
     if (!xarVarFetch('cal_date','int:0:8',$cal_date,date("Ymd"))) return;
     if (!xarVarFetch('color','str',$color,'')) return;
@@ -38,11 +50,11 @@ function julian_admin_modifycategories()
         $cid = $cids[0];
      }
     $data['edit_cond'] = $cid;
-    
+
     // establish a db connection
-    $dbconn = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     //get db tables
-    $xartable = xarDBGetTables();
+    $xartable =& xarDBGetTables();
     $category_properties_table = $xartable['julian_category_properties'];
 
     //add and add cancel actions
@@ -55,7 +67,7 @@ function julian_admin_modifycategories()
             xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', $msg);
             return;
         }
-    
+
         $query = "INSERT INTO " . $category_properties_table . " (`cid`,`color`) VALUES (?,?)";
         $bindvars = array($cid,$color);
         $result = $dbconn->Execute($query, $bindvars);
@@ -67,13 +79,13 @@ function julian_admin_modifycategories()
         $back_link=xarSessionGetVar('lastview');
         xarResponseRedirect($back_link);
     }
-    
+
     else if (!strcmp($action,"Delete"))
     {
         $query = "DELETE FROM ".$category_properties_table." WHERE `cid` = '".$cid."'";
         $result = $dbconn->Execute($query);
         xarResponseRedirect(xarModURL('julian', 'admin', 'modifycategories'));
-    }    
+    }
     //Cancel and Modify edit actions
     else if (!strcmp($editaction,"Cancel"))
     {
@@ -87,7 +99,7 @@ function julian_admin_modifycategories()
         $data['edit_cond'] = '';
         xarResponseRedirect(xarModURL('julian', 'admin', 'modifycategories'));
     }
-    
+
     // get categories
     $categories = xarModAPIFunc('julian','user','getcategories');
     $js_names  = '';
@@ -108,7 +120,7 @@ function julian_admin_modifycategories()
                                                             'return_itself' => true,
                                                             'select_itself' => true));
 //                                                            'values' => &$seencid));
-    
+
     return $data;
 }
 ?>
