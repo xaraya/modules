@@ -16,7 +16,7 @@
 </div>
 <div class="xar-mod-body"><h2>#$menutitle#</h2><br />
     <form method="post"
-          action="&xar-modurl-courses-admin-createcourse;" 
+          action="&xar-modurl-courses-admin-createcourse;"
           onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
            <fieldset>
                 <legend>
@@ -54,7 +54,7 @@
                   #$hookoutput['categories']#
                 </div>
                 <div class="xar-form-input-wrapper">
-                  <label for="number" class="xar-form-label">
+                  <label for="coursetype" class="xar-form-label">
                      <span class="help" title="#xarML('Enter the type of course.')#">
                         #$coursetypelabel#
                      </span>
