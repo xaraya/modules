@@ -16,13 +16,13 @@
  * This is the function to provide detailed informtion on a single todo
  * available from this module. The same page contains a form from which the todo can be modified.
  * This depends on privileges set for that todo.
- * 
+ *
  * @author the Todolist module development team
  * @param  $args an array of arguments (if called by other modules)
  * @param  $args ['objectid'] a generic object id (if called by other modules)
  * @param  $args ['todo_id'] the item id to display
  */
- 
+
 /*
  *
  * details page
@@ -93,7 +93,7 @@ function details_page($id){
 
     $todolist_todos_column = &$pntable['todolist_todos_column'];
     $todolist_projects_column = &$pntable['todolist_projects_column'];
-    
+
     if (!($result = $dbconn->Execute("SELECT $pntable[todolist_todos].*,$todolist_projects_column[project_name]
         FROM $pntable[todolist_todos], $pntable[todolist_projects]
                 WHERE $todolist_todos_column[todo_id]=$id
@@ -172,7 +172,7 @@ function details_page($id){
     //} else {
     //  $str .= "<option>".xarML('done')."</option>";
     //}
-    
+
 
     $str .= '</select></td></tr>';
     $str .= '
@@ -231,7 +231,7 @@ function details_page($id){
               WHERE $todolist_notes_column[todo_id]=$id
               AND $todolist_notes_column[usernr]=xar_uid");
     $anzahl = $result->PO_RecordCount();
-  
+
     $i = 0;
 
     if ($anzahl > 0){
@@ -270,17 +270,17 @@ function details_page($id){
     $str .= "</tr></table>";
     $str .= "</form>";
     return $str;
-} 
+}
  */
- 
+
 function todolist_user_display($args)
-{ 
+{
     extract($args);
 
     if (!xarVarFetch('todo_id', 'id', $todo_id)) return;
     if (!xarVarFetch('objectid', 'id', $objectid, '', XARVAR_NOT_REQUIRED)) return;
     /*if (!xarVarFetch('todo_text', 'str::', $todo_text, '', XARVAR_NOT_REQUIRED)) return;
-    
+
     if (!xarVarFetch('todo_priority', 'int::', $todo_priority, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('percentage_completed', 'int::', $percentage_completed, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('created_by', 'int', $created_by, '', XARVAR_NOT_REQUIRED)) return;
@@ -292,8 +292,8 @@ function todolist_user_display($args)
     */
     if (!empty($objectid)) {
         $todo_id = $objectid;
-    } 
-    /* Get menu 
+    }
+    /* Get menu
      * This menu should allow for interactive sorting and selecting
      */
     $data = xarModAPIFunc('todolist', 'user', 'menu');
@@ -307,7 +307,7 @@ function todolist_user_display($args)
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; /* throw back */
 
     /* Get the responsible people */
-
+    $responsibles = xarModAPIFunc('todolist', 'user', 'getallresponsible', array('todo_id' => $todo_id));
     /* Let any transformation hooks know that we want to transform some text.
      */
     $item['transform'] = array('todo_text','date_created','date_changed');
@@ -318,15 +318,15 @@ function todolist_user_display($args)
     /* Fill in the details of the item.*/
     // The project
     $project = xarModAPIFunc('todolist', 'user', 'getproject', array('project_id' => $item['project_id']));
-    $data['project_name'] = $project['project_name'];        
+    $data['project_name'] = $project['project_name'];
     $data['project'] = $project;
-    
+
     $data['created_by'] = xarUserGetVar(name, $item['created_by']);
     $data['changed_by'] = xarUserGetVar(name, $item['changed_by']);
 
     $data['todo_id'] = $todo_id;
     $data['item'] = $item;
-    
+
     /* Build array with percentages
     */
     $perc_compl = $item['percentage_completed'];
@@ -340,7 +340,7 @@ function todolist_user_display($args)
         $perc_compl_options.='>'.$j.'</option>';
     }
     $data['perc_compl_options'] = $perc_compl_options;
-    
+
     $priority = $item['priority'];
     /* Build array with priorities
     */
@@ -354,7 +354,7 @@ function todolist_user_display($args)
         $prio_options.='>'.$j.'</option>';
     }
     $data['prio_options'] = $prio_options;
-    
+
     //$data['is_bold'] = xarModGetVar('example', 'bold');
     /* Note : module variables can also be specified directly in the
      * blocklayout template by using &xar-mod-<modname>-<varname>;

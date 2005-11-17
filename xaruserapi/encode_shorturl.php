@@ -16,38 +16,6 @@
  * virtual path that will be added to index.php, and decode a virtual
  * path back to the original module parameters.
  *
- * The result is that people (and search engines) can use URLs like :
- *
- * - http://mysite.com/index.php/example/ (main function)
- * - http://mysite.com/index.php/example/list.html (view function)
- * - http://mysite.com/index.php/example/123.html (display function)
- *
- * in addition to the 'normal' Xaraya URLs that look like :
- *
- * - http://mysite.com/index.php?module=example&func=display&exid=123
- *
- * You can also combine the two, e.g. for less frequently-used parameters :
- *
- * - http://mysite.com/index.php/example/list.html?startnum=21
- *
- *
- * Module developers who wish to support this feature are strongly
- * recommended to create virtual paths that are 'semantically meaningful',
- * so that people navigating in your module can understand at a glance what
- * the short URLs mean, and how they could e.g. display item 234 simply
- * by changing the 123.html into 234.html.
- *
- * For older modules with many different optional parameters and functions,
- * this generally implies re-thinking which parameters could easily be set
- * to some default to cover the most frequently-used cases, and rethinking
- * how each function could be represented inside some "virtual directory
- * structure". E.g. .../archive/2002/05/, .../forums/12/345.html, ../recent.html
- * or .../<categoryname>/123.html
- *
- * The same kind of encoding/decoding can be done for admin functions as well,
- * except that by default, the URLs will start with index.php/admin/example.
- * The encode/decode functions for admin functions are in xaradminapi.php.
- *
  */
 
 /**
@@ -144,11 +112,11 @@ function todolist_userapi_encode_shorturl($args)
          */
     } elseif ($func == 'display') {
          /* check for required parameters */
-        if (isset($exid) && is_numeric($exid)) {
+        if (isset($todoid) && is_numeric($todoid)) {
             if (($module == $alias) && ($usealias)){
-                $path = '/' . $aliasname . '/'. $exid . '.html';
+                $path = '/' . $aliasname . '/'. $todoid . '.html';
             } else {
-                $path = '/' . $module . '/' . $exid . '.html';
+                $path = '/' . $module . '/' . $todoid . '.html';
             }
             /* you might have some additional parameter that you want to use to
              * create different virtual paths here - for example a category name

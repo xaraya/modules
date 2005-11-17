@@ -7,24 +7,24 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Example Module
+ * @subpackage Todolist Module
  */
 
 /**
  * Display the user menu hook
  * This is a standard function to provide a link in the "Your Account Page"
  *
- * @author the Example module development team
+ * @author the Todolist module development team
  * @param  $phase is the which part of the loop you are on
  */
-function example_user_usermenu($args)
+function todolist_user_usermenu($args)
 {
     extract($args);
     /* Security check  - if the user has read access to the menu, show a
      * link to display the details of the item
      */
-    if (!xarSecurityCheck('ViewExample')) return;
-    
+    if (!xarSecurityCheck('ViewTodolist')) return;
+
     /* First, lets find out where we are in our logic.  If the phase
      * variable is set, we will load the correct page in the loop.
      */
@@ -36,7 +36,7 @@ function example_user_usermenu($args)
             $icon = 'modules/example/xarimages/preferences.gif';
 
             /* Now lets send the data to the template which name we choose here. */
-            $data = xarTplModule('example', 'user', 'usermenu_icon', array('iconbasic' => $icon));
+            $data = xarTplModule('todolist', 'user', 'usermenu_icon', array('iconbasic' => $icon));
 
             break;
 
@@ -49,13 +49,13 @@ function example_user_usermenu($args)
             /* We also need to set the SecAuthKey, in order to stop hackers from setting user
              * vars off site.
              */
-            $authid = xarSecGenAuthKey('example');
+            $authid = xarSecGenAuthKey('todolist');
             /* Lets get the value that we want to override from the preferences. Notice that we are
              * xarModUserGetMod and not xarModGetVar so we can grab the overridden value.  You do
              * not have to use a user variable for every module var that the module posses, just
              * the variables that you want to override.
              */
-            $value = xarModGetUserVar('example', 'itemsperpage', $uid);
+            $value = xarModGetUserVar('todolist', 'itemsperpage', $uid);
             /* if (empty($value)){
              * $value = xarModGetVar('example', 'itemsperpage');
              * }
@@ -75,11 +75,11 @@ function example_user_usermenu($args)
             if (!xarVarFetch('uid', 'int:1:', $uid)) return;
             if (!xarVarFetch('itemsperpage', 'str:1:100', $itemsperpage, '20', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('name', 'str:1:100', $name, '', XARVAR_NOT_REQUIRED)) return;
-            
+
             /* Confirm authorisation code. */
             if (!xarSecConfirmAuthKey()) return;
 
-            xarModSetUserVar('example', 'itemsperpage', $itemsperpage, $uid);
+            xarModSetUserVar('todolist', 'itemsperpage', $itemsperpage, $uid);
             /* Redirect back to the account page.  We could also redirect back to our form page as
              * well by adding the phase variable to the array.
              */

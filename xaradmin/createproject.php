@@ -25,12 +25,12 @@ function todolist_admin_createproject($args)
 { 
     extract($args);
 
-    if (!xarVarFetch('projectid',     'id', $projectid,     '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('objectid', 'id', $objectid, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('invalid',  'str:1:', $invalid,  '', XARVAR_NOT_REQUIRED)) return; 
-    if (!xarVarFetch('project_name',   'str:1:', $project_name,   '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('project_description',     'str:1:', $project_description,     '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('project_leader',     'str:1:', $project_leader,     '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('projectid',            'id', $projectid,     '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('objectid',             'id', $objectid, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('invalid',              'str:1:', $invalid,  '', XARVAR_NOT_REQUIRED)) return; 
+    if (!xarVarFetch('project_name',         'str:1:', $project_name,   '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('project_description',  'str:1:', $project_description,     '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('project_leader',       'int:1:', $project_leader,     '', XARVAR_NOT_REQUIRED)) return;
 
 
     /* Argument check
