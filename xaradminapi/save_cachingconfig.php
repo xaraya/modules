@@ -38,10 +38,12 @@ function xarcachemanager_adminapi_save_cachingconfig($args)
             $cachingConfig = preg_replace('/\[\'' . $configKey . '\'\]\s*=\s*(|\")(.*)\\1;/', "['$configKey'] = $configValue;", $cachingConfig);
         } elseif (is_array($configValue)) {
             xarModSetVar('xarcachemanager', $configKey, 'array-' . serialize($configValue));
+            $configValue = str_replace("'","\\'",$configValue);
             $configValue = "'" . join("','",$configValue) . "'";
             $cachingConfig = preg_replace('/\[\'' . $configKey . '\'\]\s*=\s*array\s*\((.*)\)\s*;/i', "['$configKey'] = array($configValue);", $cachingConfig);
         } else {
             xarModSetVar('xarcachemanager', $configKey, $configValue);
+            $configValue = str_replace("'","\\'",$configValue);
             $cachingConfig = preg_replace('/\[\'' . $configKey . '\'\]\s*=\s*(\'|\")(.*)\\1;/', "['$configKey'] = '$configValue';", $cachingConfig);
         }
     }
