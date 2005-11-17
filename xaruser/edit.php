@@ -7,29 +7,29 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.metrostat.net
  *
- * @subpackage julian
- * @author Julian development Team 
+ * @subpackage Julian module
+ * @author Julian development Team
  * initial template: Roger Raymond
  */
-  
+
 /**
  * Edit a single event
  *
- * Get a single event from the events table 
+ * Get a single event from the events table
  * Then offer a form that will allow the user to edit the event
- *  
+ *
  * @author Jodie Razdrh/John Kevlin/David St.Clair
  * @author  MichelV (Michelv@xarayahosting.nl)
  * @access  public
  * @param   int $event_id ID of the event to get
  * @return  array $item
  * @throws  BAD_PARAM list of exception identifiers which can be thrown
- * @todo    Michel V. <1> Clean up 
+ * @todo    Michel V. <1> Clean up
  */
 function julian_user_edit()
-  {  
+  {
     //This prevents users from viewing something they are not suppose to.
-    if (!xarSecurityCheck('Editjulian')) return;  
+    if (!xarSecurityCheck('Editjulian')) return;
 
     if (!xarVarFetch('id',      'id',    $id)) return;
     if (!xarVarFetch('objectid', 'id',   $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
@@ -40,15 +40,15 @@ function julian_user_edit()
         $id = $objectid;
     }
 /*
-    
+
    //load the calendar class
    // TODO: get rid of this call
    $c = xarModAPIFunc('julian','user','factory','calendar');
     //set the selected date parts and timestamp in the data array
    $bl_data = xarModAPIFunc('julian','user','getUserDateTimeInfo');
-   
+
    // TODO: make sure we don't need this
-   // establish db connection      
+   // establish db connection
    $dbconn = xarDBGetConn();
    //get db tables
    $xartable = xarDBGetTables();
@@ -61,7 +61,7 @@ function julian_user_edit()
    // determine the end date for a recurring event
    // TODO: With the new get.php this should be rewritten
    list($event_endyear,$event_endmonth,$event_endday) = explode("-",$edit_obj->recur_until);
-   
+
    //setting start date time variables
    $hour = date("h",strtotime($edit_obj->dtstart)); //12 hour format
    $ampm = !strcmp(date("a",strtotime($edit_obj->dtstart)),"am")?0:1;
@@ -74,8 +74,8 @@ function julian_user_edit()
 */
    // Get event the decent way
    $item = xarModAPIFunc('julian', 'user', 'get', array('event_id' => $id));
- 
- 
+
+
    // End date and time
    // determine the end date for a recurring event
    // TODO: With the new get.php this should be rewritten
@@ -92,8 +92,8 @@ function julian_user_edit()
     $data['todays_year'] = $year;
     $data['todays_day'] = $day;
 
-   
-    // If there is not a duration, set dur_hours and dur_minutes. 
+
+    // If there is not a duration, set dur_hours and dur_minutes.
     // Default for both is empty string.
     if (strcmp($item['duration'],'')) {
         list($dur_hours,$dur_minutes) = explode(":",$item['duration']);
@@ -101,7 +101,7 @@ function julian_user_edit()
         $dur_hours = '';
         $dur_minutes = '';
     }
-    
+
     //Checking to see which repeating rule was used so the event_repeat can be set.
     if ($item['recur_count'] && $item['recur_freq']) {
         $event_repeat = 2;
@@ -110,7 +110,7 @@ function julian_user_edit()
     } else {
         $event_repeat = 0;
     }
-    
+
     //Depending on which rule was used, set the appropriate frequency field to the db value.
     $data['event_repeat_on_freq'] = '';
     $data['event_repeat_freq'] = '';
@@ -175,16 +175,16 @@ function julian_user_edit()
     $data['event_endyear'] = $event_endyear;
     $data['event_repeat_on_day'] = $item['recur_count'];
     $data['event_repeat_on_num'] = $item['recur_interval'];
-   
+
     //building share options
     $data['share_options'] = xarModAPIFunc('julian','user','getuseroptions',array('uids'=>$item['share_uids']));
     $data['share_uids'] = $item['share_uids'];
     $data['share_group'] = xarModGetVar('julian', 'share_group');
     // Build the group name. Type 1 is a group
     $group = xarModAPIFunc ('roles', 'user', 'get', array('uid'=> $data['share_group'], 'type' =>1));
-    $data['share_group_name'] = $group['name'];  
+    $data['share_group_name'] = $group['name'];
 
-   
+
     //Determining which end date radio to check. 0 index indicates this event as an end date and 1 index means it does not
     $event_endtype_checked[0] = '';
     $event_endtype_checked[1] = 'checked';
@@ -193,7 +193,7 @@ function julian_user_edit()
         $event_endtype_checked[1] = '';
     }
     $data['event_endtype_checked'] = $event_endtype_checked;
-                 
+
     //Building start hour options
     $start_hour_options = '';
     for($i = 1;$i <= 12; $i++) {
@@ -229,7 +229,7 @@ function julian_user_edit()
      $start_minute_options.='>'.$j.'</option>';
    }
    $data['start_minute_options'] = $start_minute_options;
-   
+
    //Building duration hour options
    $dur_hour_options = '';
    for($i = 0;$i <= 24; $i++)
@@ -241,7 +241,7 @@ function julian_user_edit()
      $dur_hour_options.='>'.$j.'</option>';
    }
    $data['dur_hour_options'] = $dur_hour_options;
-   
+
     // Building duration minute options
     // Get the interval
     $DurMinInterval = xarModGetVar('julian', 'DurMinInterval');
@@ -266,16 +266,16 @@ function julian_user_edit()
      $dur_minute_options.='>'.$j.'</option>';
     }
     $data['dur_minute_options'] = $dur_minute_options;
-   
+
    //Setting event repeat selection
    for ($i = 0; $i < 3; $i++)
      $data['event_repeat_checked'][$i] = '';
    $data['event_repeat_checked'][$event_repeat] = "checked";
-   
+
    //Setting freq type selection (days,weeks,months,years)
    for ($i = 1; $i < 5; $i++)
      $data['freq_type_selected'][$i] = '';
-     
+
    //Show rrule only if the first repeating option was selected (2nd radio button) - every
    if ($event_repeat == 1) {
      $data['freq_type_selected'][rrule] = 'selected';
@@ -285,7 +285,7 @@ function julian_user_edit()
    for ($i = 1; $i < 6; $i++)
      $data['repeat_on_num_selected'][$i] = '';
    $data['repeat_on_num_selected'][] = 'selected';
-   
+
    //Setting repeat on day selection
    for ($i = 1; $i < 8; $i++)
      $data['repeat_on_day_selection'][$i] = '';
@@ -297,7 +297,7 @@ function julian_user_edit()
    if ($item['isallday'] == 1) {
      $data['allday_checked'][0] = 'checked';
      $data['allday_checked'][1] = '';
-   } 
+   }
    // 0 = CAL_CLASS_PUBLIC
    // 1 = CAL_CLASS_PRIVATE
    //determine if this is a public or private event
@@ -306,21 +306,21 @@ function julian_user_edit()
    if ($item['class'] == 1) {
      $data['class'][0] = '';
      $data['class'][1] = 'checked ';
-   } 
+   }
    //determine if this is there is an enddate present
    $data['enddatedisabled'] = 'disabled';
    if (isset($event_endmonth) || isset($event_endday) || isset($event_endyear)) {
      $data['enddatedisabled'] = '';
    }
-   
+
    $data['cal_date'] = $cal_date;
-   
+
     // Get hook information for the event that we will edit.
     // Build description for the item we want the hooks (i.e. category) for.
     $item = array();
     $item['module'] = 'julian';
     $hooks = xarModCallHooks('item', 'modify', $id, $item);
-     
+
     // Deal with no-hook scenario (the template then must get an empty hook-array)
      if (empty($hooks)) {
         $data['hooks'] = array();
@@ -337,12 +337,12 @@ function julian_user_edit()
    $dur_minutes = '';
    if (strcmp($edit_obj->duration,''))
      list($dur_hours,$dur_minutes) = explode(":",$edit_obj->duration);
-   
+
    //Checking to see which repeating rule was used so the event_repeat can be set.
    $event_repeat=0;
    if ($edit_obj->recur_count && $edit_obj->recur_freq)
       $event_repeat = 2;
-   elseif (!$edit_obj->recur_count && $edit_obj->recur_freq) 
+   elseif (!$edit_obj->recur_count && $edit_obj->recur_freq)
      $event_repeat = 1;
    //Depending on which rule was used, set the appropriate frequency field to the db value.
    $bl_data['event_repeat_on_freq'] = '';
@@ -351,7 +351,7 @@ function julian_user_edit()
       $bl_data['event_repeat_freq'] = $edit_obj->recur_freq;
    elseif ($event_repeat == 2) // event repeats on
       $bl_data['event_repeat_on_freq'] = $edit_obj->recur_freq;
-   
+
    $bl_data['event_id'] = $edit_obj->event_id;
    $bl_data['title'] = $edit_obj->summary;
    $bl_data['month'] =  $month;
@@ -372,8 +372,8 @@ function julian_user_edit()
    $bl_data['state'] = $edit_obj->state;
    $bl_data['postal'] = $edit_obj->zip;
    $bl_data['event_repeat'] = $event_repeat;
-   
-   
+
+
    $bl_data['phone1'] = '';
    $bl_data['phone2'] = '';
    $bl_data['phone3'] = '';
@@ -411,14 +411,14 @@ function julian_user_edit()
    $bl_data['event_endyear'] = $event_endyear;
    $bl_data['event_repeat_on_day'] = $edit_obj->recur_count;
    $bl_data['event_repeat_on_num'] = $edit_obj->recur_interval;
-   
+
    //building share options
    $bl_data['share_options'] = xarModAPIFunc('julian','user','getuseroptions',array('uids'=>$edit_obj->share_uids));
    $bl_data['share_uids'] = $item['share_uids'];
    $bl_data['share_group'] = xarModGetVar('julian', 'share_group');
    // Build the group name. Type 1 is a group
    $group = xarModAPIFunc ('roles', 'user', 'get', array('uid'=> $bl_data['share_group'], 'type' =>1));
-   $bl_data['share_group_name'] = $group['name'];  
+   $bl_data['share_group_name'] = $group['name'];
 
    //Determining which end date radio to check. 0 index indicates this event as an end date and 1 index means it does not
    $event_endtype_checked[0] = '';
@@ -429,7 +429,7 @@ function julian_user_edit()
      $event_endtype_checked[1] = '';
    }
    $bl_data['event_endtype_checked'] = $event_endtype_checked;
-                 
+
    //Building start hour options
    $start_hour_options = '';
    for($i = 1;$i <= 12; $i++)
@@ -441,7 +441,7 @@ function julian_user_edit()
       $start_hour_options.='>'.$j.'</option>';
    }
    $bl_data['start_hour_options'] = $start_hour_options;
-   
+
    //Building start minute options
    $start_minute_options = '';
    for($i = 0;$i < 46; $i = $i + 15)
@@ -453,7 +453,7 @@ function julian_user_edit()
      $start_minute_options.='>'.$j.'</option>';
    }
    $bl_data['start_minute_options'] = $start_minute_options;
-   
+
    //Building duration hour options
    $dur_hour_options = '';
    for($i = 0;$i <= 24; $i++)
@@ -465,7 +465,7 @@ function julian_user_edit()
      $dur_hour_options.='>'.$j.'</option>';
    }
    $bl_data['dur_hour_options'] = $dur_hour_options;
-   
+
    //Building duration minute options
    $dur_minute_options = '';
    for($i = 0;$i < 46; $i = $i + 15)
@@ -477,25 +477,25 @@ function julian_user_edit()
      $dur_minute_options.='>'.$j.'</option>';
    }
    $bl_data['dur_minute_options'] = $dur_minute_options;
-   
+
    //Setting event repeat selection
    for ($i = 0; $i < 3; $i++)
      $bl_data['event_repeat_checked'][$i] = '';
    $bl_data['event_repeat_checked'][$event_repeat] = "checked";
-   
+
    //Setting freq type selection (days,weeks,months,years)
    for ($i = 1; $i < 5; $i++)
      $bl_data['freq_type_selected'][$i] = '';
-     
+
    //Show rrule only if the first repeating option was selected (2nd radio button) - every
    if ($event_repeat == 1)
      $bl_data['freq_type_selected'][$edit_obj->rrule] = 'selected';
-   
+
    //Setting repeat on num selection
    for ($i = 1; $i < 6; $i++)
      $bl_data['repeat_on_num_selected'][$i] = '';
    $bl_data['repeat_on_num_selected'][$edit_obj->recur_interval] = 'selected';
-   
+
    //Setting repeat on day selection
    for ($i = 1; $i < 8; $i++)
      $bl_data['repeat_on_day_selection'][$i] = '';
@@ -508,15 +508,15 @@ function julian_user_edit()
    if ($item['isallday'] == 1) {
      $bl_data['allday_checked'][0] = 'checked';
      $bl_data['allday_checked'][1] = '';
-   } 
+   }
    //determine if this is a public or private event
    $bl_data['class'][0] = 'checked';
    $bl_data['class'][1] = '';
    if ($edit_obj->class) {
      $bl_data['class'][0] = '';
      $bl_data['class'][1] = 'checked';
-   } 
-   
+   }
+
    // 0 = CAL_CLASS_PUBLIC
    // 1 = CAL_CLASS_PRIVATE
    //determine if this is a public or private event
@@ -526,13 +526,13 @@ function julian_user_edit()
      $bl_data['class'][0] = '';
      $bl_data['class'][1] = 'checked ';
    }
-   
+
    //determine if this is there is an enddate present
    $bl_data['enddatedisabled'] = 'disabled';
    if (isset($event_endmonth) || isset($event_endday) || isset($event_endyear)) {
      $bl_data['enddatedisabled'] = '';
    }
-   
+
     // Get hook information for the event that we will edit.
     // Build description for the item we want the hooks (i.e. category) for.
     $item = array();
@@ -540,7 +540,7 @@ function julian_user_edit()
     $item['multiple'] = false;    // Doesn't function yet, requires change in  categories_admin_newhook
      //$item['itemtype'] = empty, because no item type is needed (we have on one type of object;
      //     module variable number_of_categories.itemtype should be made if we set itemtype)
-     
+
      // Get the hooks for this item.
      //    xarModCallHooks parameters:
      //        hookObject (string) - what object are we working on
@@ -550,7 +550,7 @@ function julian_user_edit()
      //       callerModName (string) - name of the calling module (deprecated, specify in extraInfo instead)
      //        callerItemType (string) - the type of item (deprecated, specify in extraInfo instead)
     $hooks = xarModCallHooks('item', 'modify', $id, $item);
-     
+
     // Deal with no-hook scenario (the template then must get an empty hook-array)
      if (empty($hooks)) {
         $bl_data['hooks'] = array();
@@ -559,5 +559,5 @@ function julian_user_edit()
     }
    return $bl_data;
 */
-}  
+}
 ?>

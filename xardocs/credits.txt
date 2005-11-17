@@ -1,0 +1,15 @@
+/**
+ * Credits file
+ */
+
+John Kevlin
+Jodie Razdrh
+David St.Clair
+Roger Raymond (xarCalendar)
+digger
+razcal
+MichelV.
+JornB (hooks)
+caseygeene (some retemplating)
+
+And all other that have contributed in some way.
