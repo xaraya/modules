@@ -1,22 +1,31 @@
 <?php
 /**
-   Add new item
-   This is a standard function that is called whenever an administrator
-   wishes to create a new module item
+ * Delete a call from the database
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Maxercalls
+ * @author Maxercalls module development team
+ */
 
-   @param itemtype - number specifing the type of the object (required)
-   @return template data
-*/
+/**
+ * Add new dynamic data item
+ *
+ * This is a standard function that is called whenever an administrator
+ * wishes to create a new item in this module's configuration. The dynamic
+ * data is used to provide lists in the module.
+ *
+ * @param itemtype - number specifing the type of the object (required)
+ * @return template data
+ */
 function maxercalls_admin_new($args)
 {
     // Security check
     if (!xarSecurityCheck('addmaxercalls')) return;
 
-    // Admin functions of this type can be called by other modules.  If this
-    // happens then the calling module will be able to pass in arguments to
-    // this function through the $args parameter.  Hence we extract these
-    // arguments *before* we have obtained any form-based input through
-    // xarVarFetch().
     extract($args);
 
     // Get parameters from whatever input we need.

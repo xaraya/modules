@@ -18,7 +18,7 @@
 
     <xar:template file="header" />
         <div class="xar-maxercalls-contents">
-    
+
             <form action="&xar-modurl-maxercalls-user-create;"
                   onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);"
                   method="post"
@@ -150,7 +150,7 @@
                             <option value=""></option>
                         <xar:for start="$i = 1" test="$i le 12" iter="$i++">
                             <xar:if condition="$i lt 10">
-                                <xar:set name="$currMonth">str_pad($i,2,'0',STR_PAD_LEFT)</xar:set>                                    
+                                <xar:set name="$currMonth">str_pad($i,2,'0',STR_PAD_LEFT)</xar:set>
                             <xar:else />
                                 <xar:set name="$currMonth">#$i#</xar:set>
                             </xar:if>
@@ -207,15 +207,14 @@
                                     #$remarkslabel#
                                 </span>
                             </label>
-                            <span class="fullright">
-                                <textarea class="fullright" name="remarks" id="remarks" wrap="virtual" rows="5" cols="40"></textarea>
+                            <textarea name="remarks" id="remarks" wrap="virtual" rows="5" cols="40"></textarea>
                         </div>
                     </fieldset>
                     <fieldset>
                         <legend>
                             <strong><xar:mlstring>Category of the call</xar:mlstring></strong>
                         </legend>
-                        #$hookoutput['categories']# 
+                        #$hookoutput['categories']#
                     </fieldset>
                     <div class="xar-form-input-wrapper-after">
                         <input type="hidden" name="authid" id="authid" value="#$authid#" />

@@ -25,14 +25,14 @@ function maxercalls_init()
     $maxercallstable = $xartable['maxercalls'];
     xarDBLoadTableMaintenanceAPI();
     $fields = array(
-	 'xar_callid' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
-     'xar_enteruid'=>array('null'=>FALSE, 'type'=>'integer','size'=>'small',  'default'=>'0'),
-     'xar_owner'=>array('null'=>FALSE, 'type'=>'integer','size'=>'small',  'default'=>'0'),
-     'xar_calltext'=>array('null'=>FALSE, 'type'=>'integer','size'=>'small',  'default'=>'0'),
-     'xar_remarks'=>array('null'=>TRUE,  'type'=>'varchar','size'=>100,  'default'=>'NULL'),
-     'xar_calldate'=>array('null'=>FALSE, 'type'=>'date'),//,'default'=>array('year'=>2005,'month'=>01,'day'=>17,'hour'=>'12','minute'=>59,'second'=>0)),
-     'xar_calltime'=>array('null'=>FALSE, 'type'=>'time', 'size'=>'HHMM'),
-     'xar_enterts'=>array('type'=>'timestamp')
+    'xar_callid' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
+    'xar_enteruid'=>array('null'=>FALSE, 'type'=>'integer','size'=>'small',  'default'=>'0'),
+    'xar_owner'=>array('null'=>FALSE, 'type'=>'integer','size'=>'small',  'default'=>'0'),
+    'xar_calltext'=>array('null'=>FALSE, 'type'=>'integer','size'=>'small',  'default'=>'0'),
+    'xar_remarks'=>array('null'=>TRUE,  'type'=>'varchar','size'=>100,  'default'=>'NULL'),
+    'xar_calldate'=>array('null'=>FALSE, 'type'=>'date'),//,'default'=>array('year'=>2005,'month'=>01,'day'=>17,'hour'=>'12','minute'=>59,'second'=>0)),
+    'xar_calltime'=>array('null'=>FALSE, 'type'=>'time', 'size'=>'HHMM'),
+    'xar_enterts'=>array('type'=>'timestamp')
 
 	);
     // Create the Table - the function will return the SQL is successful or
