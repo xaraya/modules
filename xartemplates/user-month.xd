@@ -89,7 +89,7 @@
                                                <span class="xar-julian-tooltip">#$event_array[$dbdate][$index]['singlepopover']#</span>
                                                     #$event_array[$dbdate][$index]['summary']#</a>
                                                     <br />
-                                            <xar:comment>
+                                            <xar:comment> deprecated method with OverLib, here for reference only
                                             <a href="#xarModURL('julian','user','viewevent',array('cal_date'=>$date,'event_id'=>$event_array[$dbdate][$index]['event_id']))#"
                                                onmouseover="return overlib('#$event_array[$dbdate][$index]['singlepopover']#',CAPTION,'#$event_array[$dbdate][$index]['singlepopovercaption']#')"
                                                onmouseout="return nd()"

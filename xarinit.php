@@ -8,7 +8,7 @@
  * @link http://www.xaraya.com
  *
  * @subpackage Julian Module
-
+ * @link http://xaraya.com/index.php/release/319.html
  * @author Julian Module development team
  */
 
@@ -30,8 +30,8 @@ function julian_init()
     }
 
     xarDBLoadTableMaintenanceAPI();
-    $dbconn = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     // draw up the design for the events table
     // this table will hold the required event information
@@ -784,11 +784,8 @@ function julian_upgrade($oldversion)
             // Alias
             xarModSetVar('julian', 'useModuleAlias',false);
             xarModSetVar('julian','aliasname','');
-            return julian_upgrade('0.2.5');
-        case '0.2.5':
-            break;
-        case '1.0.0':
-            // Code to upgrade from version 1.0 goes here
+            return julian_upgrade('0.2.6');
+        case '0.2.6':
             break;
     }
     // Update successful

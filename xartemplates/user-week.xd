@@ -80,7 +80,7 @@
                                             #$event_array[$dbdate][$index]['summary']#
                                         </a><br/>
 
-                                     <xar:comment> Old method with overlib
+                                     <xar:comment> Old method with overlib. Here for reference only
                                         <a href="#xarModURL('julian','user','viewevent',array('cal_date'=>$date,'event_id'=>$event_array[$dbdate][$index]['event_id']))#"
                                            onmouseover="return overlib('#$event_array[$dbdate][$index]['singlepopover']#',CAPTION,'#$event_array[$dbdate][$index]['singlepopovercaption']#')"
                                            onmouseout="return nd()"

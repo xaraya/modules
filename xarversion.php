@@ -13,7 +13,7 @@
 
 $modversion['name']           = 'Julian';
 $modversion['id']             = '319';
-$modversion['version']        = '0.2.5';
+$modversion['version']        = '0.2.6';
 $modversion['description']    = 'Event Calendar for keeping track of events';
 $modversion['credits']        = 'xardocs/credits.txt';
 $modversion['help']           = 'xardocs/help.txt';
@@ -21,11 +21,11 @@ $modversion['changelog']      = 'xardocs/changelog.txt';
 $modversion['license']        = 'xardocs/license.txt';
 $modversion['official']       = 0;
 $modversion['author']         = 'Michel V., John Kevlin, Jodie Razdrh, David St.Clair, Roger Raymond (xarCalendar)';
-$modversion['contact']        = 'http://sourceforge.net/projects/julian/';
+$modversion['contact']        = 'http://www.xaraya.com/';
 $modversion['admin']          = 1;
 $modversion['user']           = 1;
 $modversion['class']          = 'Complete';
 $modversion['category']       = 'Content';
-$modversion['dependency']     = array(4, 147); //Making overlib and categories module required
+$modversion['dependency']     = array(147); // Categories module required
 
 ?>
