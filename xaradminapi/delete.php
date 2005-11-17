@@ -41,10 +41,15 @@ function hitcount_adminapi_delete($args)
         }
         $itemid = $objectid;
 
-        // When called via hooks, modname wil be empty, but we get it from the
-        // current module
-        if (empty($modname)) {
-            $modname = xarModGetName();
+        // When called via hooks, modname will be empty, but we get it from the
+        // extrainfo or from the current module
+        if (empty($modname) || !is_string($modname)) {
+            if (isset($extrainfo) && is_array($extrainfo) &&
+                isset($extrainfo['module']) && is_string($extrainfo['module'])) {
+                $modname = $extrainfo['module'];
+            } else {
+                $modname = xarModGetName();
+            }
         }
         $modid = xarModGetIDFromName($modname);
         if (empty($modid)) {
