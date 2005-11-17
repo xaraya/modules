@@ -1,7 +1,7 @@
 /*There's a bug with IE on the date border where border-bottom doesn't display.
     It has something to do with the height of the weekend, which we can't take out
     or the calendar looks "squished".
-    Credits Gary
+    Tooltips: Gary Sedgwick
     */
 
 div.xar-julian a {
@@ -89,7 +89,8 @@ tr.xar-julian-calendar-week a:hover.xar-julian-arrow {
 .xar-julian-calendar-tables {
     clear: both;
 }
-
+/*
+ The visual effect is made out of a table with cells per day */
 table.xar-julian-calendar-month {
     width: 100%;
     border-collapse: collapse;
@@ -192,7 +193,8 @@ td.xar-julian-days-currentday a {
 .xar-julian-days-empty {
     background-color: #bbb;
 }
-
+/*
+ The block: eventlist */
 ul.xar-julian-eventlist li,
 ul.xar-julian-catlist li {
     clear: both;
@@ -219,7 +221,7 @@ ul.xar-julian-eventlist li {
 
 /* block element inside li to overrule color */
 div.xar-julian-list-contents a.xar-julian-event {
-color:#000000;
+    color:#000000;
 }
 
 div.xar-julian-block-calevent div.xar-julian-list-contents a.xar-julian-event {
@@ -230,18 +232,17 @@ div.xar-julian-block-calevent div.xar-julian-list-contents a:hover.xar-julian-ev
     color: #FF00FF;
 }
 
-/* hyperlink to event with overlib layer */
+/* hyperlink to event with a tooltip */
 a.xar-julian-event {
     position: relative;
-	z-index:24;
 }
 
-/*color the day in the month block that has an event*/
+/* color the day in the month block that has an event*/
 .xar-julian-calendar-month a.xar-julian-event {
     color:#FF0000;
     text-decoration: none;
 }
-
+/* Create the tooltip from here */
 a.xar-julian-event span.xar-julian-tooltip {
     display: none;
 }
@@ -254,7 +255,7 @@ a.xar-julian-event:hover {
     z-index: 999;
 }
 /*
-Set width of your tooltip here */
+Set width of your tooltip here. The width might be interfering with display */
 a.xar-julian-event:hover span.xar-julian-tooltip {
     top:0px;
     left: -200px;
@@ -265,8 +266,9 @@ a.xar-julian-event:hover span.xar-julian-tooltip {
     font-weight:bold;
     background:#fff;
     color:#000;
-    padding:5px;
+    padding: 5px;
     border: 1px solid #aaa;
+
 }
 
 a.xar-julian-event:hover span.xar-julian-tooltip span {
@@ -287,15 +289,15 @@ a.xar-julian-event:hover span.xar-julian-tooltip span {
     font-size: 10px;
 }
 
-.xar-julian-block-calevent ul.xar-julian-eventlist li{
+.xar-julian-block-calevent ul.xar-julian-eventlist li {
     margin-left: 0.5em;
 }
 
-.xar-julian-calevent-upcoming ul.xar-julian-eventlist li{
+.xar-julian-calevent-upcoming ul.xar-julian-eventlist li {
     margin-left:0.5em;
 }
 
-.xar-julian-eventlist .xar-sub a{
+.xar-julian-eventlist .xar-sub a {
     margin-left:0.5em;
 }
 
@@ -313,7 +315,8 @@ div.xar-julian-view-header {
     font-size: 1.5em;
     font-weight: bold;
 }
-
+/*
+ Needed for IE type of browsers */
 div.xar-julian a:hover span {
     filter: alpha(opacity=100);
 }

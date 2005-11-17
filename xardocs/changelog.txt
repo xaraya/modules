@@ -1,4 +1,4 @@
-0.2.0 
+0.2.0
 -Replaced own categories with a hook to Xaraya categories. An upgrade function is included
 -Allow the admin to choose a date format
 -Completely rewrite of templates to be more Xaraya compliant
@@ -21,3 +21,6 @@ Changed state size to allow for internationalisation
 0.2.4
 Added minute interval option
 Added option for module alias
+0.2.6
+Bug 5115 (and 5039, 4975)
+Added tooltips and removed the need for OverLib
