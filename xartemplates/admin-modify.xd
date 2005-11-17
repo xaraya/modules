@@ -38,7 +38,7 @@
             </legend>
 
             <div class="xar-form-input-wrapper">
-                <label for="name"  class="xar-form-label" title="#xarML('This is the tool tip help for this item.')#">
+                <label for="name" class="xar-form-label" title="#xarML('This is the tool tip help for this item.')#">
                        <xar:mlstring>Example Name:</xar:mlstring>
                 </label>
                 <xar:if condition="isset($name)">
@@ -56,7 +56,7 @@
 
 
             <div class="xar-form-input-wrapper">
-                <label for="number"  class="xar-form-label" title="#xarML('This is the tool tip help for this item.')#">
+                <label for="number" class="xar-form-label" title="#xarML('This is the tool tip help for this item.')#">
                        <xar:mlstring>Example Number:</xar:mlstring>
                 </label>
                 <xar:if condition="isset($number)">

@@ -2,11 +2,11 @@
 
 <xar:comment>
     This tag will add the module specific style sheet to this template (empty for the moment)
-    This file is located in /xarstyles and is -as a standard- called styles.css 
+    This file is located in /xarstyles and is -as a standard- called styles.css
     You can add other files by adding files="filename without extension" to the tag eg
     <xar:style scope="module" file="forms" /> for forms.css in example/xarstyles
 </xar:comment>
-<xar:style scope="module" /> 
+<xar:style scope="module" />
 
 <!-- This Javascript will check for required fields before the form is submitted. -->
 <xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
@@ -39,7 +39,7 @@
             <legend><xar:mlstring>Creating a new item</xar:mlstring></legend>
 
             <div class="xar-form-input-wrapper">
-                 <label for="itemid"  class="xar-form-label" title="#xarML('This is the item name')#">
+                 <label for="name" class="xar-form-label" title="#xarML('This is the item name')#">
                         <xar:mlstring>Example Name:</xar:mlstring>
                  </label>
              <xar:if condition="isset($name)">
@@ -59,7 +59,7 @@
             </div>
 
             <div class="xar-form-input-wrapper">
-                 <label for="itemid"  class="xar-form-label" title="#xarML('This is the item number')#">
+                 <label for="number" class="xar-form-label" title="#xarML('This is the item number')#">
                          <xar:mlstring>Example Number:</xar:mlstring>
                 </label>
 
