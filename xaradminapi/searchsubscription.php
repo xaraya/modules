@@ -116,7 +116,10 @@ function newsletter_adminapi_searchsubscription($args)
                     $query .= " AND ($nwsltrAltSubTable.xar_name LIKE '%" . $searchname . "%' OR $nwsltrAltSubTable.xar_email LIKE  '%" . $searchname . "%')";
                 }
 
+                /* Bug 5194
                 $query .= " ORDER BY $nwsltrAltSubTable.xar_pid";
+                */
+                $query .= " ORDER BY xar_pid";
    
             } else {
             
@@ -164,7 +167,10 @@ function newsletter_adminapi_searchsubscription($args)
                     $query .= " AND ($nwsltrAltSubTable.xar_name LIKE '%" . $searchname . "%' OR $nwsltrAltSubTable.xar_email LIKE  '%" . $searchname . "%')";
                 }
    
-                $query .= " ORDER BY $nwsltrAltSubTable.xar_pid";
+                /* Bug 5194
+                    $query .= " ORDER BY $nwsltrAltSubTable.xar_pid";
+                */
+                $query .= " ORDER BY xar_pid";
             }
 
             break;
@@ -207,9 +213,10 @@ function newsletter_adminapi_searchsubscription($args)
             if (!empty($searchname)) {
                 $query .= " AND $nwsltrAltSubTable.xar_email LIKE  '%" . $searchname . "%'";
             }
-
-            $query .= " ORDER BY $nwsltrAltSubTable.xar_email";
-
+            /* Bug 5194
+                $query .= " ORDER BY $nwsltrAltSubTable.xar_email";
+             */
+            $query .= " ORDER BY xar_email";
             break;
 
         case 'name':
@@ -255,7 +262,10 @@ function newsletter_adminapi_searchsubscription($args)
                 $query .= " AND $nwsltrAltSubTable.xar_name LIKE  '%" . $searchname . "%'";
             }
 
-            $query .= " ORDER BY $nwsltrAltSubTable.xar_name";
+            /* Bug 5194
+                $query .= " ORDER BY $nwsltrAltSubTable.xar_name";
+            */
+            $query .= " ORDER BY xar_name";
 
             break;
     }
