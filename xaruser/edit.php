@@ -184,8 +184,7 @@ function julian_user_edit()
     $group = xarModAPIFunc ('roles', 'user', 'get', array('uid'=> $data['share_group'], 'type' =>1));
     $data['share_group_name'] = $group['name'];
 
-
-    //Determining which end date radio to check. 0 index indicates this event as an end date and 1 index means it does not
+    //Determining which end date radio to check. 0 index indicates this event has an end date and 1 index means it does not
     $event_endtype_checked[0] = '';
     $event_endtype_checked[1] = 'checked';
     if ($item['recur_until'] == 0000) {

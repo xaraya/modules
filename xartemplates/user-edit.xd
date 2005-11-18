@@ -286,7 +286,11 @@
                         <xar:mlstring>Takes places once</xar:mlstring><br />
                         <input type="radio" name="event_repeat" id="event_repeat2" value="1" #$event_repeat_checked[1]# onClick="processEventRepeat(this.form,this,'button'); document.getElementById('p_event_recurend').style.visibility='visible';" />
                         <xar:mlstring>Every (period)</xar:mlstring>
+                        <xar:if condition ="!$event_repeat == 1">
                         <div class="xar-form-input-wrapper-after" id="p_event_recurend" style="visibility:hidden">
+                        <xar:else />
+                        <div class="xar-form-input-wrapper-after" id="p_event_recurend">
+                        </xar:if>
                             <input type="text" name="event_repeat_freq" size="4" onkeyup="checkNumericy(this);" onfocus="document.cal_submit.event_repeat[1].checked = 'true';processEventRepeat(this.form,document.cal_submit.event_repeat[1])" />
                             <select name="event_repeat_freq_type" onchange="document.cal_submit.event_repeat[1].checked = 'true';processEventRepeat(this.form,document.cal_submit.event_repeat[1])">
                                 <option value="0"></option>
@@ -471,18 +475,18 @@
                             </span>
                         </label>
                         <xar:if condition="xarModGetVar('Julian','TelFieldType') eq 'US'">
-                           <input type="text" name="phone1" id="phone1" value="#phone1#" size="3" maxlength="3" onkeyup="checkNumericy(this);checkNumberLen(this,3,this.form.phone2)" /> -
-                           <input type="text" name="phone2" id="phone2" value="#phone2#" size="3" maxlength="3" onkeyup="checkNumericy(this);checkNumberLen(this,3,this.form.phone3)" /> -
-                           <input type="text" name="phone3" id="phone3" value="#phone3#" size="4" maxlength="4" onkeyup="checkNumericy(this)" />
+                           <input type="text" name="phone1" id="phone1" value="#$phone1#" size="3" maxlength="3" onkeyup="checkNumericy(this);checkNumberLen(this,3,this.form.phone2)" /> -
+                           <input type="text" name="phone2" id="phone2" value="#$phone2#" size="3" maxlength="3" onkeyup="checkNumericy(this);checkNumberLen(this,3,this.form.phone3)" /> -
+                           <input type="text" name="phone3" id="phone3" value="#$phone3#" size="4" maxlength="4" onkeyup="checkNumericy(this)" />
                         <xar:elseif condition="xarModGetVar('Julian','TelFieldType') eq 'EU'"/>
-                           <input type="text" name="phone1" id="phone1" value="#phone1#" size="3" maxlength="3" onkeyup="checkNumericy(this);checkNumberLen(this,3,this.form.phone2)" /> -
-                           <input type="text" name="phone2" id="phone2" value="#phone2#" size="3" maxlength="3" onkeyup="checkNumericy(this);checkNumberLen(this,3,this.form.phone3)" /> -
-                           <input type="text" name="phone3" id="phone3" value="#phone3#" size="10" maxlength="10" onkeyup="checkNumericy(this)" />
+                           <input type="text" name="phone1" id="phone1" value="#$phone1#" size="3" maxlength="3" onkeyup="checkNumericy(this);checkNumberLen(this,3,this.form.phone2)" /> -
+                           <input type="text" name="phone2" id="phone2" value="#$phone2#" size="3" maxlength="3" onkeyup="checkNumericy(this);checkNumberLen(this,3,this.form.phone3)" /> -
+                           <input type="text" name="phone3" id="phone3" value="#$phone3#" size="10" maxlength="10" onkeyup="checkNumericy(this)" />
                         <xar:elseif condition="xarModGetVar('Julian','TelFieldType') eq 'EUC'"/>
                            <input type="text" name="phone1" id="phone1" value="#$phone1#" size="4" maxlength="4" onkeyup="checkNumericy(this);checkNumberLen(this,4,this.form.phone2)" /> -
                            <input type="text" name="phone2" id="phone2" value="#$phone2#" size="10" maxlength="10" onkeyup="checkNumericy(this)" />
                         <xar:elseif condition="xarModGetVar('Julian','TelFieldType') eq 'OPEN'"/>
-                           <input type="text" name="phone1" id="phone1" value="#phone1#" size="25" maxlength="25" />
+                           <input type="text" name="phone1" id="phone1" value="#$phone1#" size="25" maxlength="25" />
                         </xar:if>
                     </div>
                     <div class="xar-form-input-wrapper">
