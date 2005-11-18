@@ -15,7 +15,7 @@
 /**
  * This module:
  * Metrostat Calendar
- * 
+ *
  * @link http://www.metrostat.net
  * initial template: Roger Raymond
  * @author Jodie Razdrh/John Kevlin/David St.Clair
@@ -23,31 +23,31 @@
 
 /**
  * initialise block
- * 
- * @author David St.Clair 
- * @access public 
- * @param none $ 
- * @return nothing 
+ *
+ * @author David St.Clair
+ * @access public
+ * @param none $
+ * @return nothing
  * @throws no exceptions
  * @todo nothing
  */
 function julian_calmonthblock_init()
 {
     return true;
-} 
+}
 
 /**
  * get information on block
- * 
- * @author David St.Clair 
- * @access public 
- * @param none $ 
+ *
+ * @author David St.Clair
+ * @access public
+ * @param none $
  * @return data array
  * @throws no exceptions
  * @todo nothing
  */
 function julian_calmonthblock_info()
-{ 
+{
     // Values
     return array('text_type'        => 'Calendar',
         'module'                    => 'julian',
@@ -56,24 +56,24 @@ function julian_calmonthblock_info()
         'form_content'              => false,
         'form_refresh'              => false,
         'show_preview'              => true);
-} 
+}
 
 /**
  * display calmonth block - this displays the current month
- * 
- * @author David St.Clair 
- * @access public 
- * @param none $ 
+ *
+ * @author David St.Clair, MichelV
+ * @access public
+ * @param array $blockinfo
  * @return data array on success or void on failure
  * @throws no exceptions
  * @todo implement centre menu position
  */
 function julian_calmonthblock_display($blockinfo)
-{ 
+{
     // Security Check
     if (!xarSecurityCheck('Viewjulian', 0)) return;
-    // See if this helps
-    xarModAPILoad('overlib');
+    // Enable this to see if this helps when using OverLib for template and having troubles with it.
+    // xarModAPILoad('overlib');
     /* Get variables from content block.
      * Content is a serialized array for legacy support, but will be
      * an array (not serialized) once all blocks have been converted.
@@ -83,7 +83,7 @@ function julian_calmonthblock_display($blockinfo)
     } else {
         $vars = $blockinfo['content'];
     }
-    
+
     if (empty($blockinfo['title'])) {
         $blockinfo['title'] = xarML('Calendar');
     }
@@ -106,7 +106,7 @@ function julian_calmonthblock_display($blockinfo)
     $numdays=date('t',strtotime("today"));
     // Set the end date to the last day of the selected month
     $enddate = $year."-".$month."-".$numdays;
-    
+
     if (isset ($vars['CatAware'])) {
         $CatAware = $vars['CatAware'];
     } else {
@@ -119,7 +119,7 @@ function julian_calmonthblock_display($blockinfo)
     if ($CatAware == 0 ) {
         // Get the events for the current month and set catid empty
         $args['event_array']= xarModApiFunc('julian','user','getall', array('startdate'=>$startdate, 'enddate'=>$enddate, 'catid' => ''));
-    } else {    
+    } else {
         // Get the events for the current month
         $args['event_array']= xarModApiFunc('julian','user','getall', array('startdate'=>$startdate, 'enddate'=>$enddate));
     }
@@ -131,5 +131,5 @@ function julian_calmonthblock_display($blockinfo)
     }
     $blockinfo['content'] = xarTplBlock('julian', $template, $args);
     return $blockinfo;
-} 
+}
 ?>
