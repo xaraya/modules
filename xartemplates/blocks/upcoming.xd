@@ -1,6 +1,6 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <strong>
-   <xar:mlstring>Upcoming Courses </xar:mlstring>
+   <xar:mlstring>Current and upcoming Courses </xar:mlstring>
    <xar:ml>
    <xar:mlstring>for the next #(1) days</xar:mlstring>
    <xar:mlvar>#$BlockDays#</xar:mlvar>

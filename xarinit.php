@@ -32,7 +32,7 @@ function courses_init()
         'xar_type' => array('type' => 'varchar', 'size' => 10, 'default' => 'NULL'),
         'xar_level' => array('type' => 'varchar', 'size' => 20, 'default' => 'NULL'),
         'xar_shortdesc'=>array('null'=>FALSE, 'type'=>'text'),
-        'xar_intendedcredits' => array('type' => 'integer', 'size' => 30, 'default' => 'NULL'),     
+        'xar_intendedcredits' => array('type' => 'integer', 'size' => 30, 'default' => 'NULL'),
 //        'xar_language'=>array('null'=>TRUE, 'type'=>'text'),
         'xar_freq' =>array('null'=>TRUE, 'type' => 'varchar', 'size' => 20, 'default' => 'NULL'),
         'xar_contactuid' => array('type' => 'integer', 'size' => 'medium', 'null' => true, 'default' => 'NULL'),
@@ -101,7 +101,7 @@ function courses_init()
     // Pass the Table Create DDL to adodb to create the table and send exception if unsuccessful
     $result = &$dbconn->Execute($query);
     if (!$result) return;
-    
+
     $courses_teachers = $xartable['courses_teachers'];
 
     $fields = array('xar_tid' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
@@ -116,8 +116,8 @@ function courses_init()
     // Pass the Table Create DDL to adodb to create the table and send exception if unsuccessful
     $result = &$dbconn->Execute($query);
     if (!$result) return;
-    
-    
+
+
     //Table for Course levels
     //This will be taken to dyn data.
     $courses_levels = $xartable['courses_levels'];
@@ -130,7 +130,7 @@ function courses_init()
 
     $result = &$dbconn->Execute($query);
     if (!$result) return;
-    
+
     //Table for Student status
     //This will be taken to dyn data.
     $courses_studstatus = $xartable['courses_studstatus'];
@@ -143,7 +143,7 @@ function courses_init()
 
     $result = &$dbconn->Execute($query);
     if (!$result) return;
-    
+
     //Table for Course years
     //This will be taken to dyn data.
     $courses_years = $xartable['courses_years'];
@@ -156,7 +156,7 @@ function courses_init()
 
     $result = &$dbconn->Execute($query);
     if (!$result) return;
-    
+
     // If Categories API loaded and available, generate proprietary
     // module master category cid and child subcids
     if (xarModIsAvailable('categories')) {
@@ -193,7 +193,8 @@ function courses_init()
     // If your module supports short URLs, the website administrator should
     // be able to turn it on or off in your module administration
     xarModSetVar('courses', 'SupportShortURLs', 0);
-    
+    xarModSetVar('courses', 'BlockDays', 7);
+
     // Register Block types (this *should* happen at activation/deactivation)
     if (!xarModAPIFunc('blocks',
             'admin',
@@ -241,7 +242,7 @@ function courses_init()
         ,array(
             'hookModName'       => 'search'
             ,'callerModName'    => 'courses'));
-            
+
      // Hook for Categories
     xarModAPIFunc(
         'modules'
@@ -262,14 +263,14 @@ function courses_init()
     /* FIXME: does generate errors
      *
      * REGISTER THE TABLES AT DYNAMICDATA
-     
+
     $path = "modules/courses/xardata/";
-     
+
     $objectid = xarModAPIFunc('dynamicdata','util','import',array('file'  => $path . '/courses_levels.xml'));
 
     if (empty($objectid)) return;
     xarModSetVar('courses','levelsobjectid',$objectid);
-    
+
     $objectid = xarModAPIFunc('dynamicdata','util','import',array('file'  => $path . '/courses_levels_data.xml'));
 
     if (empty($objectid)) return;
@@ -302,7 +303,7 @@ function courses_init()
             )
         );
     xarDefineInstance('Courses', 'Course', $instances);
-    
+
     //Blocks
     $instancestable = $xartable['block_instances'];
     $typestable = $xartable['block_types'];
@@ -342,7 +343,7 @@ function courses_upgrade($oldversion)
     // Upgrade dependent on old version number
     switch ($oldversion) {
         case '0.0.1':
-        
+
     // Get database setup and make tables
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -360,7 +361,7 @@ function courses_upgrade($oldversion)
     $result = &$dbconn->Execute($query);
     if (!$result) return;
             return courses_upgrade('0.0.2');
-            
+
         case '0.0.2':
     // Create table for teachers
     $dbconn =& xarDBGetConn();
@@ -379,16 +380,16 @@ function courses_upgrade($oldversion)
     // Pass the Table Create DDL to adodb to create the table and send exception if unsuccessful
     $result = &$dbconn->Execute($query);
     if (!$result) return;
-    
+
             return courses_upgrade('0.0.3');
-        
+
         case '0.0.3':
         // Upgrade instances
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $courses_teachers = $xartable['courses_teachers'];
     $courses_planning = $xartable['courses_planning'];
-        
+
     //For the planning of courses
     $query1 = "SELECT DISTINCT xar_planningid FROM " . $courses_planning;
     $query2 = "SELECT DISTINCT xar_userid FROM " . $courses_teachers;
@@ -414,7 +415,7 @@ function courses_upgrade($oldversion)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $datadict =& xarDBNewDataDict($dbconn, 'CREATE');
-    
+
     // xarDBLoadTableMaintenanceAPI();
     $courses_planning = $xartable['courses_planning'];
         $fields = "xar_minparticipants SMALLINT NOTNULL default 0,
@@ -425,16 +426,16 @@ function courses_upgrade($oldversion)
         $result = $datadict->addColumn($courses_planning, $fields);
 
         if (!$result) return;
-    
+
         // Apply changes
         xarDBLoadTableMaintenanceAPI();
         if (!$result) return;
-            
+
             return courses_upgrade('0.0.5');
-            
+
        case '0.0.5':
          xarModSetVar('courses', 'HideEmptyFields', 0);
-       
+
             return courses_upgrade('0.0.6');
        case '0.0.6':
             if (!xarModRegisterHook('item', 'search', 'GUI',
@@ -443,7 +444,7 @@ function courses_upgrade($oldversion)
             }
             return courses_upgrade('0.0.7');
        case '0.0.7':
-            // Add last modified column to coursestable 
+            // Add last modified column to coursestable
             $dbconn =& xarDBGetConn();
             $xartable =& xarDBGetTables();
             $datadict =& xarDBNewDataDict($dbconn, 'CREATE');
@@ -452,8 +453,8 @@ function courses_upgrade($oldversion)
             xarDBLoadTableMaintenanceAPI();
             $result = $datadict->addColumn($coursestable, 'xar_last_modified datetime');
             if (!$result) return;
-            
-            // Add last modified column to planningtable 
+
+            // Add last modified column to planningtable
             $dbconn =& xarDBGetConn();
             $xartable =& xarDBGetTables();
             $datadict =& xarDBNewDataDict($dbconn, 'CREATE');
@@ -462,8 +463,8 @@ function courses_upgrade($oldversion)
             xarDBLoadTableMaintenanceAPI();
             $result = $datadict->addColumn($planningtable, 'xar_last_modified datetime');
             if (!$result) return;
-            
-            // Add last modified column to studentstable 
+
+            // Add last modified column to studentstable
             $dbconn =& xarDBGetConn();
             $xartable =& xarDBGetTables();
             $datadict =& xarDBNewDataDict($dbconn, 'CREATE');
@@ -472,10 +473,10 @@ function courses_upgrade($oldversion)
             xarDBLoadTableMaintenanceAPI();
             $result = $datadict->addColumn($studentstable, 'xar_regdate datetime');
             if (!$result) return;
-            
+
             // Privilege for teachers
             xarRegisterPrivilege('PlanningForTeacher','All','courses','Planning','All','ACCESS_EDIT',xarML('Teacher access'));
-            
+
             return courses_upgrade('0.0.8');
        case '0.0.8':
             // Set the always receive e-mail
@@ -523,7 +524,7 @@ function courses_upgrade($oldversion)
             xarRegisterMask('AdminCourses', 'All', 'courses', 'Course', 'All:All:All', 'ACCESS_ADMIN');
 
        //Change table layout
-            // Add contactuid to coursestable 
+            // Add contactuid to coursestable
             $dbconn =& xarDBGetConn();
             $xartable =& xarDBGetTables();
             $datadict =& xarDBNewDataDict($dbconn, 'CREATE');
@@ -542,10 +543,10 @@ function courses_upgrade($oldversion)
             xarDBLoadTableMaintenanceAPI();
             $result = $datadict->alterColumn($coursestable, 'xar_name varchar(100) NOTNUll');
             if (!$result) return;
-            
+
             return courses_upgrade('0.0.9');
        case '0.0.9':
-            
+
             $dbconn =& xarDBGetConn();
             $xartable =& xarDBGetTables();
             // Using the Datadict method to be up to date ;)
@@ -558,7 +559,7 @@ function courses_upgrade($oldversion)
 
             $result = $datadict->alterColumn($planningtable, 'xar_enddate date NOTNULL 00-00-0000');
             if (!$result) return;
-            
+
             return courses_upgrade('0.1.0');
         case '0.1.0':
             // Add language to planningtable
@@ -570,7 +571,7 @@ function courses_upgrade($oldversion)
             xarDBLoadTableMaintenanceAPI();
             $result = $datadict->addColumn($planningtable, 'xar_language varchar(100) null default(NULL)');
             if (!$result) return;
-    
+
             // Using the Datadict method to be up to date ;)
             $datadict =& xarDBNewDataDict($dbconn, 'CREATE');
             $coursestable = $xartable['courses'];
@@ -578,7 +579,7 @@ function courses_upgrade($oldversion)
             xarDBLoadTableMaintenanceAPI();
             $result = $datadict->dropColumn($coursestable, 'xar_language');
             if (!$result) return;
-            
+
             return courses_upgrade('0.1.1');
         case '0.1.1':
             $dbconn =& xarDBGetConn();
@@ -590,7 +591,7 @@ function courses_upgrade($oldversion)
             xarDBLoadTableMaintenanceAPI();
             $result = $datadict->addColumn($coursestable, 'xar_intendedcredits varchar(30) null default(NULL)');
             if (!$result) return;
-            
+
             return courses_upgrade('0.1.2');
 
         case '0.1.2':
@@ -600,6 +601,7 @@ function courses_upgrade($oldversion)
                                'register_block_type',
                                array('modName' => 'courses',
                                      'blockType' => 'upcoming'))) return;
+            xarModSetVar('courses', 'BlockDays', 7);
             return courses_upgrade('0.1.3');
 
         case '0.1.3':
@@ -634,17 +636,17 @@ function courses_delete()
     // Drop the table and send exception if returns false.
     $result = &$dbconn->Execute($query);
     if (!$result) return;
-    
+
     $query = xarDBDropTable($xartable['courses_planning']);
     if (empty($query)) return; // throw back
 
     // Drop the table and send exception if returns false.
     $result = &$dbconn->Execute($query);
     if (!$result) return;
-    
+
     // Delete any module variables
     xarModDelAllVars('courses');
-    
+
     // UnRegister blocks
     if (!xarModAPIFunc('blocks',
             'admin',
@@ -657,7 +659,7 @@ function courses_delete()
             'unregister_block_type',
             array('modName' => 'courses',
                 'blockType' => 'others'))) return;
-                
+
     // Remove module hooks
     if (!xarModUnregisterHook('item', 'usermenu', 'GUI',
             'courses', 'user', 'usermenu')) {

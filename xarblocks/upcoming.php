@@ -1,14 +1,14 @@
 <?php
 /**
  * Upcoming courses block initialisation
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Courses
- * @author Courses module development team 
+ * @author Courses module development team
  */
 
 /**
@@ -63,7 +63,15 @@ function courses_upcomingblock_display($blockinfo)
     if (empty($vars['numitems'])) {
         $vars['numitems'] = 5;
     }
-		$BlockDays = 7; // TODO replace these in settings
+
+    //set dates for determining which events to show for the upcoming events
+    if (!empty($vars['BlockDays'])) {
+        $BlockDays = $vars['BlockDays'];
+    } else {
+        $BlockDays = 7;
+    }
+    $args['BlockDays'] = $BlockDays;
+    //	$BlockDays = 7; // TODO replace these in settings
     $today=date("Y-m-d");
     $tomorrow=date("Y-m-d",strtotime("tomorrow"));
     $endblockdate=date("Y-m-d",strtotime("+$BlockDays days"));
@@ -80,11 +88,11 @@ function courses_upcomingblock_display($blockinfo)
                    xar_startdate,
                    xar_enddate
             FROM $courses_planning
-            WHERE  (xar_startdate <'". $today ."' AND xar_enddate > '".$today."')  
-				      OR (xar_startdate > '" . $today . "' AND xar_enddate < '" .$endblockdate ."')
+            WHERE  (xar_startdate <'". $today ."' AND xar_enddate > '".$today."')
+                      OR (xar_startdate > '" . $today . "' AND xar_enddate < '" .$endblockdate ."')
             ORDER by xar_startdate ASC ";
     $result = $dbconn->SelectLimit($sql, $vars['numitems'], $startnum-1 );
- 
+
     if ($dbconn->ErrorNo() != 0) {
         return;
     }
@@ -108,12 +116,12 @@ function courses_upcomingblock_display($blockinfo)
                                           array('planningid' => $planningid));
             }
             $item['startdate'] = $startdate;
-				$item['enddate'] = $enddate;
+                $item['enddate'] = $enddate;
             $coursename = xarModAPIFunc('courses', 'user', 'getcoursename', array('courseid'=>$courseid));
             $item['coursename'] = $coursename['name'];
-        } 
+        }
         $items[] = $item;
-    } 
+    }
 
     $blockinfo['content'] = array('items' => $items,'BlockDays'=> $BlockDays);
 
