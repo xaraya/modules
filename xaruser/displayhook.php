@@ -9,24 +9,25 @@
  *
  * @subpackage Julian
  * @link  link to information for the subpackage
- * @author Julian development Team 
+ * @author Julian development Team
  */
 /**
  * Display hook
  *
  * show date/time/schedule for an item - hook for ('item','display','GUI')
  *
- * @author  Julian Development Team, Jorn MichelV. <michelv@xarayahosting.nl>
- * @access  public 
+ * @author  Julian Development Team
+ * @author  JornB, MichelV. <michelv@xarayahosting.nl>
+ * @access  public
  * @param   id $objectid
  * @param   array $extrainfo
  * @return  array
- * @todo    MichelV. <#> Split into queries
+ * @todo    nothing
  */
 function julian_user_displayhook($args)
 {
     extract($args);
-    
+
      // extra info as supplied by the hooking module.
     if (!isset($extrainfo) || !is_array($extrainfo)) {
         $extrainfo = array();
@@ -53,7 +54,7 @@ function julian_user_displayhook($args)
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
-     
+
     // Get item type.
     if (isset($extrainfo['itemtype']) && is_numeric($extrainfo['itemtype'])) {
         $itemtype = $extrainfo['itemtype'];

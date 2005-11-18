@@ -25,6 +25,7 @@
  * @returns array
  * @return item array, or false on failure
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
+ * @TODO MichelV: <1> Extend so this hook doesn't only work for articles
  */
 function julian_userapi_gethooked($args)
 {
@@ -54,6 +55,7 @@ function julian_userapi_gethooked($args)
    $event_linkage_table = $xartable['julian_events_linkage'];
 
     // Try to find the link for the current module, item type and item id.
+    // TODO: make this a cleaner call
    $query = "SELECT * FROM " .  $event_linkage_table . " WHERE (`hook_modid`=$modid AND `hook_itemtype`=$itemtype AND `hook_iid`=$objectid)";
    $result = $dbconn->Execute($query);
    if (!empty($result)) {
