@@ -31,15 +31,15 @@ function recommend_userapi_rendersendtofriend($args)
         $aid= xarVarGetCached('Blocks.articles','aid');
     }
     if (!isset($aid)) {
-        return false;
+        $out='';
+        return $out;
     }
-    if (empty($type)) {$type = '';}
+    if (empty($type)) {$type = 'icon';}
 
-    //TODO: <jojodee> make easier with text configurable, along with text for email itself.
     $linktext=xarML("Send to a friend");
     $alttext = xarML('Send this article to a friend');
 
-    $link=xarModURL('recommend','user','sendtofriend',array('aid'=>$aid));
+    $link=xarModURL('recommend','user','sendtofriend',array('aid'=>'$aid'));
 
     $sendimg = xarTplGetImage('sendtofriend.gif', 'recommend');
     if ($type=='text') {
