@@ -291,7 +291,7 @@
                         <xar:else />
                         <div class="xar-form-input-wrapper-after" id="p_event_recurend">
                         </xar:if>
-                            <input type="text" name="event_repeat_freq" size="4" onkeyup="checkNumericy(this);" onfocus="document.cal_submit.event_repeat[1].checked = 'true';processEventRepeat(this.form,document.cal_submit.event_repeat[1])" />
+                            <input type="text" name="event_repeat_freq" size="4" value="#$event_repeat_freq#" onkeyup="checkNumericy(this);" onfocus="document.cal_submit.event_repeat[1].checked = 'true';processEventRepeat(this.form,document.cal_submit.event_repeat[1])" />
                             <select name="event_repeat_freq_type" onchange="document.cal_submit.event_repeat[1].checked = 'true';processEventRepeat(this.form,document.cal_submit.event_repeat[1])">
                                 <option value="0"></option>
                                 <option value="1" #$freq_type_selected[1]#><xar:mlstring>Day(s)</xar:mlstring></option>
@@ -300,8 +300,7 @@
                                 <option value="4" #$freq_type_selected[4]#><xar:mlstring>Year(s)</xar:mlstring></option>
                             </select><br />
                             <xar:mlstring>or every</xar:mlstring>
-                            <input type="radio" name="event_repeat" id="event_repeat3" value="2" #$event_repeat_checked[2]#
-                                   onclick="processEventRepeat(this.form,this); document.getElementById('p_event_recurend').style.visibility='visible';" />
+                            <input type="radio" name="event_repeat" id="event_repeat3" value="2" #$event_repeat_checked[2]# onclick="processEventRepeat(this.form,this); document.getElementById('p_event_recurend').style.visibility='visible';" />
                             <p>
                             <xar:mlstring>On</xar:mlstring>
 
@@ -326,8 +325,7 @@
                             </select>
                             </p>
                             <xar:mlstring>every</xar:mlstring>
-                            <input type="text" name="event_repeat_on_freq" size="4" onkeyup="checkNumericy(this);"
-                                   onfocus="document.cal_submit.event_repeat[2].checked = 'true';processEventRepeat(this.form,document.cal_submit.event_repeat[2])" />
+                            <input type="text" name="event_repeat_on_freq" size="4" value="#$event_repeat_on_freq#" onkeyup="checkNumericy(this);" onfocus="document.cal_submit.event_repeat[2].checked = 'true';processEventRepeat(this.form,document.cal_submit.event_repeat[2])" />
                             <xar:mlstring>month(s)</xar:mlstring>.
                          </div>
                     </div>
@@ -336,7 +334,7 @@
                             <label for="enddate" class="xar-form-label" title="#xarML('Recurring End Date.')#">
                                 <xar:mlstring>Recurring End Date:</xar:mlstring>
                             </label>
-                            <input type="radio" name="event_endtype" id="event_endtype1" value="1" #$event_endtype_checked[0]# #$event_endtype_checked[0]# #$enddatedisabled#/>
+                            <input type="radio" name="event_endtype" id="event_endtype1" value="1" #$event_endtype_checked[0]# #$enddatedisabled#/>
                             <select name="event_endmonth" #$enddatedisabled# onchange="populateSelect(this, this.form.event_endday, this.form.event_endyear);document.cal_submit.event_endtype[0].checked = true;if (document.cal_submit.event_endmonth.value == ''){document.cal_submit.event_endday.value='';document.cal_submit.event_endyear.value='';document.cal_submit.event_endtype[1].checked = true}">
                                 <option value=""></option>
                             <xar:for start="$i = 1" test="$i le 12" iter="$i++">
@@ -347,6 +345,10 @@
                                 </xar:if>
                                 <xar:set name="$currMonth_long">date("F",mktime(0,0,0,$currMonth,1,2000))</xar:set>
                                 <xar:set name="$monthSelected">""</xar:set>
+                                <xar:if condition="$event_endmonth eq $currMonth">
+                                    <xar:set name="$currMonth_long">date("F",mktime(0,0,0,$event_endmonth,1,2000))</xar:set>
+                                    <xar:set name="$monthSelected">"SELECTED"</xar:set>
+                                </xar:if>
                                 <option value="#$currMonth#" #$monthSelected#>#$currMonth_long#</option>
                             </xar:for>
                             </select>
@@ -359,6 +361,10 @@
                                     <xar:set name="$currDay">#$i#</xar:set>
                                 </xar:if>
                                 <xar:set name="$daySelected">""</xar:set>
+                                <xar:if condition="$event_endday eq $i">
+                                   <xar:set name="$daySelected">$event_endday</xar:set>
+                                   <xar:set name="$daySelected">"SELECTED"</xar:set>
+                                </xar:if>
                                 <option value="#$currDay#" #$daySelected#>#$currDay#</option>
                             </xar:for>
                             </select>
@@ -378,7 +384,8 @@
                             <label for="noenddate" class="xar-form-label" title="#xarML('Has no Recurrence End Date.')#">
                                 <xar:mlstring>No End Date:</xar:mlstring>
                             </label>
-                                <input type="radio" name="event_endtype" id="event_endtype2" value="0" disabled="disabled" onclick="document.cal_submit.event_endmonth.value = document.cal_submit.event_endday.value = document.cal_submit.event_endyear.value = ''" checked="checked" />
+                            <xar:comment>Replace: disabled="disabled"</xar:comment>
+                            <input type="radio" name="event_endtype" id="event_endtype2" value="0"  onclick="document.cal_submit.event_endmonth.value = document.cal_submit.event_endday.value = document.cal_submit.event_endyear.value = ''" />
                         </div>
                     </div>
                     <div class="xar-form-input-wrapper">

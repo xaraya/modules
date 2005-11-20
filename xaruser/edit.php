@@ -187,7 +187,8 @@ function julian_user_edit()
     //Determining which end date radio to check. 0 index indicates this event has an end date and 1 index means it does not
     $event_endtype_checked[0] = '';
     $event_endtype_checked[1] = 'checked';
-    if ($item['recur_until'] == 0000) {
+    if (strrchr($item['recur_until'], '0000') !== false) {
+    //if ($item['recur_until'] == 0000) {
         $event_endtype_checked[0] = 'checked';
         $event_endtype_checked[1] = '';
     }
@@ -272,8 +273,12 @@ function julian_user_edit()
    $data['event_repeat_checked'][$event_repeat] = "checked";
 
    //Setting freq type selection (days,weeks,months,years)
-   for ($i = 1; $i < 5; $i++)
+   for ($i = 1; $i < 5; $i++) {
      $data['freq_type_selected'][$i] = '';
+     if ($item['rrule'] == $i) {
+         $data['freq_type_selected'][$i] = 'selected';
+     }
+   }
 
    //Show rrule only if the first repeating option was selected (2nd radio button) - every
    if ($event_repeat == 1) {
@@ -281,14 +286,20 @@ function julian_user_edit()
    }
 
    //Setting repeat on num selection
-   for ($i = 1; $i < 6; $i++)
+   for ($i = 1; $i < 6; $i++) {
      $data['repeat_on_num_selected'][$i] = '';
-   $data['repeat_on_num_selected'][] = 'selected';
+     if ($item['recur_interval'] == $i) {
+         $data['repeat_on_num_selected'][$i] = 'selected';
+     }
+   }
 
    //Setting repeat on day selection
-   for ($i = 1; $i < 8; $i++)
+   for ($i = 1; $i < 8; $i++) {
      $data['repeat_on_day_selection'][$i] = '';
-   $data['repeat_on_day_selection'][] = 'selected';
+     if ($item['recur_count'] == $i) {
+         $data['repeat_on_day_selection'][$i] = 'selected';
+     }
+   }
 
    //Setting allday checked
    $data['allday_checked'][0] = '';
