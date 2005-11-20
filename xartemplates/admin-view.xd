@@ -5,17 +5,15 @@
   <tr>
     <th><xar:mlstring>Name</xar:mlstring></th>
     <th><xar:mlstring>Path</xar:mlstring></th>
-    <th><xar:mlstring>Branch</xar:mlstring></th>
     <th><xar:mlstring>Type</xar:mlstring></th>
     <th><xar:mlstring>Identification</xar:mlstring></th>
     <th><xar:mlstring>Options</xar:mlstring></th>
   </tr>
   
   <xar:loop name="$items">
-    <tr >
+    <tr>
       <td >#$loop:item.reponame#</td>
       <td >#$loop:item.repopath#</td>
-      <td >#$loop:item.repobranch#"</td>
       <td >
         <xar:if condition="$loop:item.repotype == 1">
             <xar:mlstring>BitKeeper</xar:mlstring>

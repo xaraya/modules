@@ -13,21 +13,6 @@
         <label for="repopath" class="xar-form-label"><xar:mlstring>Database</xar:mlstring></label>
         <input type="text" name="repopath" id="repopath" value="#$repopath#" size="60"/>
     </div>
-    <div class="xar-form-input-wrapper">
-        <label for="mtbranch" class="xar-form-label"><xar:mlstring>Branch</xar:mlstring></label>
-        <select name="mtbranch" id="mtbranch">
-            <xar:if condition="empty($branches)">
-                <option><xar:mlstring>None found</xar:mlstring></option>
-            <xar:elseif condition="is_string($branches)"/>
-                <option>#$branches#</option>
-            <xar:else/>
-                <xar:foreach in="$branches" key="$key" value="$value">
-                    <option value="#$key#">#$value#</option>
-                </xar:foreach>
-            </xar:if>
-        </select>
-        <input type="submit" name="mtfetch" value="#xarML('Fetch from database')#"/>
-    </div>
 </fieldset>
 
 <div>

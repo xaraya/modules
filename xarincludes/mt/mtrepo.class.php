@@ -7,28 +7,39 @@ class mtRepo extends scmRepo
     var $_branch;   // Which branch from this repository are we interested in.
     var $_dbconn;   // Connection to the sqlite database for this repository.
     
-    // NOTES:
-    // getting a list of branches:
-    // --> select distict base64_decode(value) from revision_certs where name='branch'
-    
     function mtRepo($root='',$branch='')
     {
-        if($root!='' && file_exists($root) && $branch!='') {
+        if($root!='' && file_exists($root)) {
             $this->_root   = $root;
             $this->_branch = $branch;
-            $args = array(
-                'databaseType' => 'sqlite',
-                'databaseHost' => dirname($this->_root),
-                'databaseName' => basename($this->_root),
-                'userName'     => 'dummy',
-                'password'     => 'dummy');
-            $this->_dbconn =& xarDBNewConn($args);
-            return $this;           
-        } else {
-            $this = false;
-            return false;
-        }
+            $this->_basecmd= "monotone --root=/ -d $root ";
+        } 
     }
+
+    // FIXME: protect this somehow, so no arbitrary commands can be run.
+    function &_run($cmd='echo "No command given.."', $asis = false) 
+    {
+        if(function_exists('xarLogMessage')) {
+            xarLogMessage("MT: $cmd", XARLOG_LEVEL_DEBUG);
+        }
+        // Save the current directory
+        $savedir = getcwd();
+        chdir(dirname($this->_root));
+        
+        $out=array();$retval='';
+        $out = shell_exec($this->_basecmd . $cmd);
+
+        if(!$asis) {
+            $out = str_replace("\r\n","\n",$out);
+            $out = explode("\n", $out);
+            $out = array_filter($out,'notempty');
+        }
+        chdir($savedir);
+        // We need to do this here, because this class changes the cwd secretly and we dont 
+        // know what kind of effect this has on the environment
+        return $out;
+    }
+
     
     function GetStats($user='') 
     {
@@ -40,26 +51,22 @@ class mtRepo extends scmRepo
         // select id, value from revision_certs where name='date'
         // that gets the revid + its date (base64) for the revisions.
         $stats = array();
-        $sql = "SELECT authors.id, authors.value, dates.value
-                FROM revision_certs AS authors, revision_certs AS dates
-                WHERE authors.id = dates.id AND authors.name=? AND dates.name=?";
-        $result =& $this->_dbconn->execute($sql, array('author','date'));
-        while(!$result->EOF)
+        // This needs to be on one line
+        $sql = "SELECT a.id, unbase64(a.value), unbase64(d.value) FROM revision_certs AS a, revision_certs AS d  WHERE a.id = d.id AND a.name='author' AND d.name='date'";
+        $result = $this->_run("db execute \"$sql\"");
+        array_shift($result); // Pop off the first result and reindex 
+        foreach($result as $index => $line)
         {
-            list($revid, $author, $timestamp) = $result->fields;
-            // Value fields are base64 encoded
-            $author = base64_decode($author); 
-            $timestamp = base64_decode($timestamp);
-            $timestamp = $this->iso8601_To_Utc($timestamp);
+            list($revid, $author, $timestamp) = explode('|',$line);
             // Make a timestamp out of the iso format
+            $timestamp = $this->iso8601_To_Utc($timestamp);
             if($user != '') {
                 // Only add if matched
-                if($user == $author) $stats[$timestamp] = $author;
+                if($user == trim($author)) $stats[trim($timestamp)] = trim($author);
             } else {
                 // No user specified, add always
-                $stats[$timestamp] = $author;
+                $stats[trim($timestamp)] = trim($author);
             }
-            $result->MoveNext();
         }
         krsort($stats);
         return $stats;
@@ -71,23 +78,28 @@ class mtRepo extends scmRepo
         // 2005-06-29T13:00:21 -> 20050629130021
         return str_replace(array('-','T',':'),'', $isodate);
     }
+    function utc_to_iso8601($utcdate)
+    {
+        // 20050629130021 -> 2005-06-29T13:00:21
+        return substr($utcdate,0,4).'-'.substr($utcdate,4,2).'-'.substr($utcdate,6,2).'T'.substr($utcdate,8,2).':'.substr($utcdate,10,2).':'.substr($utcdate,12,2);
 
-    function GetChangeSets($range='', $merge=false, $user='')
+    }
+
+    function &GetChangeSets($range='', $merge=false, $user='')
     {
         // Only getting revision id's as output
         // TODO: take $user into account
         // TODO: take $merge into account
         // TODO: take $range into account
         $utcpoints = scmRepo::RangeToUtcPoints($range);
-        
-        $sql = "SELECT id FROM revision_certs ";
-        $result =& $this->_dbconn->execute($sql);
-        while(!$result->EOF) {
-            list($revid) = $result->fields;
-            $revs[] = $revid;
-            $result->MoveNext();
-        }
-        return $revs;
+        $begin = $this->utc_to_iso8601($utcpoints['start']);
+        $end = $this->utc_to_iso8601($utcpoints['end']);
+        $selector = "l:".$begin."/e:".$end;
+
+        $cmd = "automate select $selector";;
+        $result =& $this->_run($cmd);
+        array_shift($result);
+        return $result;
     }
     
     function getChangeSet($rev)
@@ -115,77 +127,83 @@ class mtRepo extends scmRepo
         
     }
     
-    function ChangeSets($user, $range='',$flags = 0)
+    function certs($revid)
+    {
+        $certlines = $this->_run("automate certs $revid");
+        $certs=array();
+        foreach($certlines as $line) {
+            $name = trim(substr($line,0,9));
+            switch($name) {
+            case 'key':
+            case 'signature':
+            case 'name':
+            case 'value':
+                $tmpcert[$name] = substr(trim($line),strlen($name)+2,-1);
+                continue;
+            case 'trust':
+                // end of current cert
+                $tmpcert[$name]= substr(trim($line),strlen($name)+2,-1);
+                $certs[] = $tmpcert;
+                break;
+            default:
+                // Assuming continuation of value
+                $tmpcert['value'] .= ' ' .trim($line);
+            }
+        }
+        return $certs;
+    }
+
+    function &ChangeSets($user, $range='',$flags = 0)
     {
         // Need to get:
         // tag, age, author, rev id, utc timestamp, comments
         
         // Get the boundaries of what to get
         $utcpoints = scmRepo::RangeToUtcPoints($range);
-
-        if($flags & SCM_FLAG_TAGGEDONLY) {
-            // Get only revisions which are tagged
-            $sql = "SELECT authors.id, authors.value, dates.value, comments.value, tags.value
-                FROM revision_certs as authors, 
-                     revision_certs as dates,
-                     revision_certs as comments,
-                     revision_certs as tags
-                WHERE authors.id = dates.id AND
-                      dates.id = comments.id AND
-                      comments.id = tags.id AND
-                      authors.name = ? AND
-                      dates.name = ? AND
-                      comments.name = ? AND
-                      tags.name = ?";
-            $bindvars = array('author','date','changelog','tag');
-        } else {
-            $sql = "SELECT authors.id, authors.value, dates.value, comments.value
-                FROM revision_certs as authors, 
-                     revision_certs as dates,
-                     revision_certs as comments
-                WHERE authors.id = dates.id AND
-                      dates.id = comments.id AND
-                      authors.name = ? AND
-                      dates.name = ? AND
-                      comments.name = ?";
-            $bindvars = array('author','date','changelog');
-        }
-        $result =& $this->_dbconn->execute($sql, $bindvars);
+        $begin = $this->utc_to_iso8601($utcpoints['start']);
+        $end = $this->utc_to_iso8601($utcpoints['end']);
+        
+        $cmd = "automate select l:".$begin."/e:".$end;
+        $revs = $this->_run($cmd);
+        
         $csets = array(); $tags = array();
-        while(!$result->EOF) {
-            //var_dump($result->fields); die();
-            if($flags & SCM_FLAG_TAGGEDONLY) {
-                list($revid, $author, $date, $comment,$tag) = $result->fields;
-            } else {
-                list($revid, $author, $date, $comment) = $result->fields;
-            }
+        foreach($revs as $index => $revid) {
+            $certs = $this->certs($revid);
             
             $add = false;
             // No user specified, add it
-            if($user == '') $add=true;
-            // if user has a value and it matches, add it
-            if($user!='' && base64_decode($author) == $user) $add=true;
-            // Check the range
-            $date = $this->iso8601_to_utc(base64_decode($date));
-            if($date > $utcpoints['start'] && $date < $utcpoints['end']) {
-                $add = true;
+            if($user == '') {
+                $add=true;
             } else {
-                $add = false;
+                // User is specified, need to check the certs
+                $add=true;
             }
             if($add) {
                 $cset = (object) null;
                 $cset->file ='ChangeSet';
-                $cset->tag = isset($tag) ? base64_decode($tag) : '';
-                $cset->age = 'TBD';
-                $cset->author = base64_decode($author);
                 $cset->rev = $revid;
+                $cset->tag = '';
+                $cset->age = 'TBD';
                 $cset->checkedout = false;
-                $cset->comments = nl2br(base64_decode($comment));
+
+                foreach($certs as $index => $cert) {
+                    switch($cert['name']) {
+                    case 'tag':
+                        $cset->tag = $cert['value'];
+                        break;
+                    case 'author':
+                        $cset->author = $cert['value'];
+                        break;
+                    case 'changelog':
+                        $cset->comments = $cert['value'];
+                        break;
+                    }
+                }
                 // Add it to the collection
                 $csets[$revid] = $cset;
             }
-            $result->MoveNext();
         }
+        
         return $csets;
     }
     
@@ -232,6 +250,14 @@ class mtRepo extends scmRepo
         return $graph;
     }
 
+}
+/**
+* callback function for the array_filter on line 39
+ *
+ */
+function notempty($item) 
+{
+    return (strlen($item)!=0);
 }
 
 ?>
