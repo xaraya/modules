@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id$
- *
  * Decode the short URLs for Julian
  *
  * @package julian
@@ -11,46 +9,46 @@
  *
  * @subpackage Julian
  * @link  link to information for the subpackage
- * @author Julian development Team 
+ * @author Julian development Team
  */
 
 /**
  * utility function pass individual menu items to the main menu
- * 
- * @author the mstDNS module development team 
+ *
+ * @author the mstDNS module development team
  * @returns array
  * @return array containing the menulinks for the main menu items.
  */
 function julian_userapi_getmenulinks()
-{ 
+{
     // First we need to do a security check to ensure that we only return menu items
     // that we are suppose to see.
 
     if (xarSecurityCheck('Viewjulian', 0)) {
         $menulinks[] = Array('url' => xarModURL('julian',
                 'user',
-                'day'), 
+                'day'),
             'title' => xarML('Day view'),
             'label' => xarML('Day'));
     }
     if (xarSecurityCheck('Viewjulian', 0)) {
         $menulinks[] = Array('url' => xarModURL('julian',
                 'user',
-                'week'), 
+                'week'),
             'title' => xarML('Week view'),
             'label' => xarML('Week'));
     }
     if (xarSecurityCheck('Viewjulian', 0)) {
         $menulinks[] = Array('url' => xarModURL('julian',
                 'user',
-                'month'), 
+                'month'),
             'title' => xarML('Month view'),
             'label' => xarML('Month'));
     }
     if (xarSecurityCheck('Viewjulian', 0)) {
         $menulinks[] = Array('url' => xarModURL('julian',
                 'user',
-                'year'), 
+                'year'),
             'title' => xarML('Year view'),
             'label' => xarML('Year'));
     }
@@ -58,10 +56,10 @@ function julian_userapi_getmenulinks()
     // E_ALL error.
     if (empty($menulinks)) {
         $menulinks = '';
-    } 
+    }
     // The final thing that we need to do in this function is return the values back
     // to the main menu for display.
     return $menulinks;
-} 
+}
 
 ?>

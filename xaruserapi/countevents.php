@@ -45,9 +45,9 @@ function julian_userapi_countevents($args)
 */
 
     // Establish a db connection.
-    $dbconn = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     // Get db tables.
-    $xartable = xarDBGetTables();
+    $xartable =& xarDBGetTables();
     // Set Events Table.
     $event_table = $xartable['julian_events'];
 
@@ -59,7 +59,7 @@ function julian_userapi_countevents($args)
                   FROM  $event_table
                   WHERE $event_table.event_id = ?
                   AND   $event_table.event_id != 0";
-        $bindvars[] = array((int) $event_id);
+        $bindvars[] = array($event_id);
     } else {
         // Get all Events
         $query = "SELECT COUNT(1) FROM $event_table

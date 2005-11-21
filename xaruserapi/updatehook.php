@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id$
- *
  * process date/time for the modified item - hook for ('item','update','API')
  *
  * @package julian
@@ -11,10 +9,10 @@
  *
  * @subpackage Julian
  * @link  link to information for the subpackage
- * @author Julian development Team 
+ * @author Julian development Team
  */
 /**
- * 
+ *
  * process date/time for the modified item - hook for ('item','update','API')
  *
  * @author Jorn

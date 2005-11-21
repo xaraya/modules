@@ -1,7 +1,7 @@
 <?php
 /**
  * Let user add an event
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -11,7 +11,7 @@
  */
 
 /**
- * 
+ *
  * Generates a form for adding an event.
  *
  * @copyright (C) 2004 by Metrostat Technologies, Inc.
@@ -26,34 +26,35 @@
 function julian_user_addevent($args)
 {
     extract ($args);
-    
+
     //This prevents users from viewing something they are not suppose to.
     if (!xarSecurityCheck('Editjulian')) return;
-    
+
     if (!xarVarFetch('cal_date','int::',$cal_date)) return;
 
     // Build description for the item we want the hooks (i.e. category) for.
     $item = array();
     $item['module'] = 'julian';
     $item['multiple'] = false;
-     
+
     // Get the hooks for this item.
     $hooks = xarModCallHooks('item', 'new', '', $item);
-     
+
     // Deal with no-hook scenario (the template then must get an empty hook-array)
      if (empty($hooks)) {
         $data['hooks'] = array();
     } else {
         $data['hooks'] = $hooks;
     }
-     
+
     $data['todays_month'] = date("n",strtotime($cal_date));
     $data['todays_year'] = date("Y",strtotime($cal_date));
-    $data['todays_day'] = date("d",strtotime($cal_date));  
+    $data['todays_day'] = date("d",strtotime($cal_date));
     //building share options
-    $data['share_options'] = xarModAPIFunc('julian','user','getuseroptions',array('uids'=>''));  
+    $data['share_options'] = xarModAPIFunc('julian','user','getuseroptions',array('uids'=>''));
     $data['cal_date']=$cal_date;
 
+    // TODO Turn these into API functions.
     // Building duration minute options
     // Get the interval
     $StartMinInterval = xarModGetVar('julian', 'StartMinInterval');
@@ -95,7 +96,7 @@ function julian_user_addevent($args)
         $dur_minute_options.='>'.$j.'</option>';
     }
     $data['dur_minute_options'] = $dur_minute_options;
-    
+
     return $data;
 }
 ?>

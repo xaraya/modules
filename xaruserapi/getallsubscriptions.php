@@ -1,6 +1,6 @@
 <?php
-/*
- * Get the configuration of all users which categories the user wants to 
+/**
+ * Get the configuration of all users which categories the user wants to
  * recieve alerts for.
  *
  * @package Xaraya eXtensible Management System
@@ -17,8 +17,8 @@
 function julian_userapi_getallsubscriptions()
 {
     // TODO is there no function for all this? something like xarModGetAllUserVars()
-    $dbconn = xarDBGetConn();
-    $tables = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $tables =& xarDBGetTables();
 
     $modBaseInfo = xarMod_getBaseInfo('julian', 'module');
     if (!isset($modBaseInfo)) {
@@ -35,7 +35,7 @@ function julian_userapi_getallsubscriptions()
 
     // it's all about this query
     $query = "SELECT xar_uid,
-                     xar_value 
+                     xar_value
               FROM   $module_uservarstable
               WHERE  xar_mvid = ?";
 

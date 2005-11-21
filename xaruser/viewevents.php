@@ -9,9 +9,9 @@
  *
  * @subpackage Julian Module
  * @link  link to information for the subpackage
- * @author Julian development Team 
+ * @author Julian development Team
  */
- 
+
 /**
  * Views all events.
  *
@@ -21,7 +21,7 @@
  * @link http://www.metrostat.net
  *
  * initial template: Roger Raymond
- * @author 
+ * @author
  * @TODO MichelV: include the linked events here
  */
 
@@ -46,9 +46,9 @@ function julian_user_viewevents($args)
 
     // Security check. - Important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing.
-    if (!xarSecurityCheck('Viewjulian')) return; 
+    if (!xarSecurityCheck('Viewjulian')) return;
     /* Do we need the following section?
-    */    
+    */
     // Get the Start Day Of Week value.
     $cal_sdow = xarModGetVar('julian','startDayOfWeek');
     // Load the calendar class
@@ -67,7 +67,7 @@ function julian_user_viewevents($args)
         // Set the end date to the last month and last day of the selected year.
         $enddate=$bl_data['selected_year']."-12-31";
     }
-    
+
     // Get the events for the selected year.
     $bl_data['event_array'] = xarModAPIFunc('julian','user','getall', array('startdate'=>$startdate, 'enddate'=>$enddate, 'catid' => $catid));
     // Set the url to this page in session as the last page viewed.
@@ -86,7 +86,7 @@ function julian_user_viewevents($args)
         if (!isset($event) && xarCurrentErrorType() != XAR_NO_EXCEPTION) {
             return; // throw back
         }
-        
+
         $bl_data['eventName'] = $event['eName'];
     }
 
@@ -100,8 +100,7 @@ function julian_user_viewevents($args)
     $bl_data['sortby'] = $sortby;
 
     // Define the Start and End Dates.
-    if ($caldate != '')
-    {
+    if ($caldate != '') {
         $startdate = $caldate;
     } else {
         $startdate = ($startyear . $startmonth . $startday);
@@ -112,8 +111,7 @@ function julian_user_viewevents($args)
 
     // If sorting by Event date, then sort in descending order,
     // so that the latest Event is first.
-    if ($sortby == 'eventDate')
-    {
+    if ($sortby == 'eventDate') {
         $orderby = 'DESC';
     }
 
@@ -122,8 +120,7 @@ function julian_user_viewevents($args)
                             'user',
                             'getevents',
                             array('startnum' => $startnum,
-                                  'numitems' => xarModGetVar('julian',
-                                                             'itemsperpage'),
+                                  'numitems' => xarModGetVar('julian','itemsperpage'),
                                   'sortby'   => $sortby,
                                   'orderby'  => $orderby,
                                   'startdate' => $startdate,
@@ -215,14 +212,14 @@ function julian_user_viewevents($args)
 
     // Create Pagination.
     $bl_data['pager'] = xarTplGetPager($startnum,
-                                    xarModAPIFunc('julian', 
-                                                  'user', 
-                                                  'countevents', 
+                                    xarModAPIFunc('julian',
+                                                  'user',
+                                                  'countevents',
                                                   array('event_id' => $event_id,
                                                         'catid' => $catid)),
-                                    xarModURL('julian', 
-                                              'user', 
-                                              'viewevents', 
+                                    xarModURL('julian',
+                                              'user',
+                                              'viewevents',
                                               array('startnum' => '%%',
                                                     'sortby' => $sortby,
                                                     'event_id' => $event_id,
