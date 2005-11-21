@@ -119,16 +119,11 @@ being set to blank.
             <xar:foreach in="$cats" key="$cid" value="$info">
                <xar:set name="$key">$key."<font color=" .$info['color']. ">&bull;</font>&nbsp;&nbsp;" . addslashes($info['name']) . "<br />"</xar:set>
             </xar:foreach>
-            <xar:set name="$caption">'<center>'.xarML('LEGEND').'</center>'</xar:set>
-
-            <a href="javascript:void(0)"
-               onmouseover="return overlib('#$key#',CAPTION,'#$caption#',WIDTH,195)"
-               onmouseout="return nd()">
-              <img src="#xarTplGetImage('key.gif')#" alt="#xarML('Legend')#" align="middle" />
+            <xar:set name="$caption">xarML('Category Legend')</xar:set>
+            <a href="javascript:void(0)" class="xar-julian-event">
+               <span class="xar-julian-tooltip">#$caption# #$key#</span>
+              <img src="#xarTplGetImage('key.gif')#" alt="#xarML('Category Legend')#" align="middle" />
             </a>
-
         </div>
     </form>
-
 </div>
-
