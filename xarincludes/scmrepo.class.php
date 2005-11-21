@@ -58,6 +58,11 @@ class scmRepo
         return $out;
     }
 
+    function getBranches()
+    {
+        return array();
+    }
+
     function map($id)
     {
         if(!isset($id)) return;

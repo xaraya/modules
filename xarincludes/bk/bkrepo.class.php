@@ -42,7 +42,7 @@ class bkRepo extends scmRepo
     function _getconfig() 
     {
         // Read configuration of this repository and store in properties
-        $config=$this->_root."/BitKeeper/etc/config";
+        $config=dirname($this->_root)."/BitKeeper/etc/config";
         $cmd = "get -qS $config";
         $this->_run($cmd);
         if (!file_exists($config)) {
@@ -425,6 +425,7 @@ class bkRepo extends scmRepo
     }
 }
 
+// TODO: move this
 function __fileproper($file) 
 {
     if(substr($file,0,1) == "/") {
