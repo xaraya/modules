@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Class to model a bitkeeper delta 
  *
@@ -37,7 +36,7 @@ class bkDelta extends scmDelta
         $abspath =  $repo->_root . '/' . $this->file;
         $this->checkedout = file_exists($abspath);
         
-        $cmd ="bk prs -hvn -r$rev -d':D:|:T:|:AGE:|:P:|:DOMAIN:|\$each(:C:){(:C:)".BK_NEWLINE_MARKER."}' $file";
+        $cmd ="prs -hvn -r$rev -d':D:|:T:|:AGE:|:P:|:DOMAIN:|\$each(:C:){(:C:)".BK_NEWLINE_MARKER."}' $file";
         
         $info = $this->repo->_run($cmd);
         list($date,$time,$age, $author,$domain, $comments) = explode('|',$info[0]);
@@ -51,13 +50,13 @@ class bkDelta extends scmDelta
     
     function Diffs() 
    {
-        $cmd="bk diffs -hu -R".$this->rev." ".$this->file;
+        $cmd="diffs -hu -R".$this->rev." ".$this->file;
         return $this->repo->_run($cmd);
    }
     
     function Annotate() 
    {
-        $cmd="bk annotate -aum -r".$this->rev." ".$this->file;
+        $cmd="annotate -aum -r".$this->rev." ".$this->file;
         return $this->repo->_run($cmd);
    }
 }

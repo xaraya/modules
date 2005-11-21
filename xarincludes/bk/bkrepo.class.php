@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Class to model a bitkeeper repository 
  *
@@ -25,10 +24,12 @@ class bkRepo extends scmRepo
     // Constructor
     function bkRepo($root='') 
     {
+        $this->_basecmd = 'bk ';
+
         if ($root!='' && file_exists($root)) {
-            $this->_root=$root;
+            $this->_root=$root.'/ChangeSet';
             $this->_getconfig();
-            $cmd="bk changes -t -d':REV:\n'";
+            $cmd="changes -t -d':REV:\n'";
             $this->_tagcsets = $this->_run($cmd);
             return $this;
         } else {
@@ -37,35 +38,12 @@ class bkRepo extends scmRepo
         }
     }
     
-    // FIXME: protect this somehow, so no arbitrary commands can be run.
-    function _run($cmd='echo "No command given.."') 
-    {
-        // Save the current directory
-        $savedir = getcwd();
-        chdir($this->_root);
-        
-        $out=array();$retval='';
-        $out = shell_exec($cmd);
-
-        $out = str_replace("\r\n","\n",$out);
-        $out = explode("\n", $out);
-        $out = array_filter($out,'notempty');
-
-        chdir($savedir);
-        // We need to do this here, because this class changes the cwd secretly and we dont 
-        // know what kind of effect this has on the environment
-        if(function_exists('xarLogMessage')) {
-            xarLogMessage("BK: $cmd", XARLOG_LEVEL_DEBUG);
-        }
-        return $out;
-    }
-    
     // Private method
     function _getconfig() 
     {
         // Read configuration of this repository and store in properties
         $config=$this->_root."/BitKeeper/etc/config";
-        $cmd = "bk get -qS $config";
+        $cmd = "get -qS $config";
         $this->_run($cmd);
         if (!file_exists($config)) {
             return false;
@@ -99,7 +77,7 @@ class bkRepo extends scmRepo
     {
         if($file == 'ChangeSet') return $rev;
         $file = __fileproper($file);
-        $cmd="bk r2c -r".$rev." ".$file;
+        $cmd="r2c -r".$rev." ".$file;
         $cset = $this->_run($cmd);
         return $cset[0];
     } 
@@ -128,7 +106,7 @@ class bkRepo extends scmRepo
         } else {
             $params .= " -d'\$unless(:MERGE:){:REV:}\\n'";
         }
-        $cmd = "bk changes $params";
+        $cmd = "changes $params";
         return $this->_run($cmd);
 
     }
@@ -138,7 +116,7 @@ class bkRepo extends scmRepo
     {
         $lines=0;
         foreach ($csets as $cset) {
-            $cmd="bk prs -r$cset -d\":LI:\"";
+            $cmd="prs -r$cset -d\":LI:\"";
             $out = $this->_run($cmd);
             unset($out[0]);
             foreach ($out as $output_line) {
@@ -185,7 +163,7 @@ class bkRepo extends scmRepo
         if ($user!='') $params.='-u'.$user.' ';
 
         $params.="-d$dspec";
-        $cmd="bk changes $params";
+        $cmd="changes $params";
         //echo "<pre>$cmd"."</pre><br/>";
         $csetlist = $this->_run($cmd);
 
@@ -214,7 +192,7 @@ class bkRepo extends scmRepo
     
     function GetUsers() 
     {
-        $cmd="bk users";
+        $cmd="users";
 
         //Although bk treats users only by the username, which is present
         //before the '@', it prints all know e-mails as different users
@@ -262,7 +240,7 @@ class bkRepo extends scmRepo
     
     function FileList($dir='/') 
     {
-        $cmd="bk prs -hn -r+ -d':TAG:|:GFILE:|:REV:|:AGE:|:P:|\$each(:C:){(:C:)".BK_NEWLINE_MARKER."}' ".$this->_root."/".$dir;
+        $cmd="prs -hn -r+ -d':TAG:|:GFILE:|:REV:|:AGE:|:P:|\$each(:C:){(:C:)".BK_NEWLINE_MARKER."}' ".$this->_root."/".$dir;
         $filelist = $this->_run($cmd);
         asort($filelist);
         return $filelist;
@@ -271,9 +249,9 @@ class bkRepo extends scmRepo
     function GetId($type='package') 
     {
         if($type =='package') {
-            $cmd="bk id";
+            $cmd="id";
         } else {
-            $cmd="bk id -r";
+            $cmd="id -r";
         }
         $package_id = $this->_run($cmd);
         return $package_id;
@@ -284,14 +262,14 @@ class bkRepo extends scmRepo
         $result = array();
         switch($what_to_search) {
         case BK_SEARCH_CSET:
-            $cmd = "bk changes -nm -d'\$each(:C:){:I:|(:C:)}' -/".$term."/i";
+            $cmd = "changes -nm -d'\$each(:C:){:I:|(:C:)}' -/".$term."/i";
             break;
         case BK_SEARCH_DELTAS:
             // FIXME: the grep should only be on the comments of the delta, not on the rest
-            $cmd = "bk sfind -U | prs -h -d'\$each(:C:){:GFILE:|:I:|(:C:)}\n' - | grep '$term'";
+            $cmd = "sfind -U | prs -h -d'\$each(:C:){:GFILE:|:I:|(:C:)}\n' - | grep '$term'";
             break;
         case BK_SEARCH_FILE:
-            $cmd = "bk sfind -U | bk grep -a -r+ -fm '$term' -";
+            $cmd = "sfind -U | bk grep -a -r+ -fm '$term' -";
             break;
         default: 
             return array();
@@ -308,9 +286,8 @@ class bkRepo extends scmRepo
         }
 
         // Get all stats info at once, we can sort out later
-        $cmd = "bk changes $params -d'\$if(:Li: -gt 0){:USER:|:UTC:}\n'";
+        $cmd = "changes $params -d'\$if(:Li: -gt 0){:USER:|:UTC:}\n'";
         $rawresults = $this->_run($cmd);
-        
         // Construct a slightly more friendly array to return
         foreach($rawresults as $rawresult) {
             list($user,$timestamp) = explode("|",$rawresult);
@@ -327,19 +304,19 @@ class bkRepo extends scmRepo
     {
         if(!trim($end)) $end="+";
         // First, translate the ranges to revisions
-        $cmd = "bk prs -fhr$start -nd':REV:|:DS:' $file";
+        $cmd = "prs -fhr$start -nd':REV:|:DS:' $file";
         $revs = $this->_run($cmd);
         if(empty($revs)) 
         {
             // Nothing in the range, take the last rev, which will be earlier
             // than the range specified
-            $cmd = "bk prs -fhr+ -nd':REV:|:DS:' $file";
+            $cmd = "prs -fhr+ -nd':REV:|:DS:' $file";
             $revs = $this->_run($cmd);
         }
         list($startRev,$startSerial) = explode('|',$revs[0]);
         
         // Do the same for the endmarker
-        $cmd = "bk prs -fhr$end -nd':REV:|:DS:' $file";
+        $cmd = "prs -fhr$end -nd':REV:|:DS:' $file";
         $revs = $this->_run($cmd);
         if(empty($revs)) {
             $endRev = $startRev;
@@ -365,7 +342,7 @@ class bkRepo extends scmRepo
             $graph['nodes'][] = array('rev' => xarML('Too many/few\nchanges (#(1))\nin range',$nrOfChanges), 'author' => 'Graph Error', 'tags' => '','date'=>'TBD');
             return $graph;
         }
-        $cmd = "bk prs -hr$startRev..$endRev -nd':TAGS:|:REV:|:KIDS:|:DS:|:P:' $file";
+        $cmd = "prs -hr$startRev..$endRev -nd':TAGS:|:REV:|:KIDS:|:DS:|:P:' $file";
         $rawdata = $this->_run($cmd); $tags = array();
         foreach($rawdata as $primeLine) {
             if(substr($primeLine,0,1) != '|') {

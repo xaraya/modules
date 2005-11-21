@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Class to model a file in a bitkeeper repository 
  *
@@ -50,7 +49,7 @@ class bkFile extends scmFile
         if($user != '') $formatstring .= "}";
         $formatstring .= "'";
         
-        $cmd="bk prs -nh -d$formatstring ".$this->_file;
+        $cmd="prs -nh -d$formatstring ".$this->_file;
         $history = $this->_repo->_run($cmd);
             
         while (list(,$row) = each($history)) {
@@ -72,7 +71,7 @@ class bkFile extends scmFile
         if(!empty($this->_csets)) return $this->_csets;
         
         // First get the cset revs for this file
-        $cmd="bk f2csets $this->_file";
+        $cmd="f2csets $this->_file";
         $csetrevs = $this->_repo->_run($cmd);
 
         // Make it suitable for bk cmd
@@ -89,7 +88,7 @@ class bkFile extends scmFile
    {
         // Return the corresponding cset for the specified delta
         if($this->_file == 'ChangeSet') return $rev;
-        $cmd = "bk r2c -r$rev " . $this->_file;
+        $cmd = "r2c -r$rev " . $this->_file;
         $cset = $this->_repo->_run($cmd);
         return $cset[0];
    }
@@ -102,7 +101,7 @@ class bkFile extends scmFile
             //if(array_key_exists($rev,$this->_tagrevs)) {
             // This revision is mentioned in the tagrev array
             // get the tagname
-            $cmd = "bk changes -r`bk r2c -r$rev ". $this->_file ."`  -d':TAG:\n'";
+            $cmd = "changes -r`bk r2c -r$rev ". $this->_file ."`  -d':TAG:\n'";
             $tag = $this->_repo->_run($cmd);
             if (count($tag)) {
                 // FIXME: remove the br, it assumes browser output

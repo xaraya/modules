@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Class to model a bitkeeper changeset 
  *
@@ -35,7 +34,7 @@ class bkChangeSet extends bkDelta // A changeset is, in bk, basically a delta on
     // Private function to initialize delta array
     function DeltaList() 
    {
-        $cmd="bk changes -vn -r".$this->rev." -d':GFILE:|:REV:'";
+        $cmd="changes -vn -r".$this->rev." -d':GFILE:|:REV:'";
         $tmp = $this->repo->_run($cmd);
         $deltas = array();
         while (list(,$did) = each($tmp)) {
@@ -49,7 +48,7 @@ class bkChangeSet extends bkDelta // A changeset is, in bk, basically a delta on
     
     function Deltas($formatstring="':GFILE:|:REV:'") 
    {
-        $cmd="bk changes -vn -r".$this->rev." -d$formatstring";
+        $cmd="changes -vn -r".$this->rev." -d$formatstring";
         return $this->repo->_run($cmd);
    }
     
@@ -60,7 +59,7 @@ class bkChangeSet extends bkDelta // A changeset is, in bk, basically a delta on
     
     function GetKey()
    {
-        $cmd = "bk changes -n -r" . $this->rev . " -d':KEY:'";
+        $cmd = "changes -n -r" . $this->rev . " -d':KEY:'";
         $key = $this->repo->_run($cmd);
         if(!empty($key)) {
             return $key[0];
@@ -71,7 +70,7 @@ class bkChangeSet extends bkDelta // A changeset is, in bk, basically a delta on
     
     function GetTag()
    {
-        $cmd = "bk changes -t -r" . $this->rev . " -d':TAGS:'";
+        $cmd = "changes -t -r" . $this->rev . " -d':TAGS:'";
         $tags = $this->repo->_run($cmd);
         if(!empty($tags)) {
             return str_replace('S ', '',implode(',', $tags));

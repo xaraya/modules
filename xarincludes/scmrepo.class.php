@@ -1,8 +1,22 @@
 <?php
 
+  // TODO: guess ;-)
+define('BK_SEARCH_REPO',   8);
+define('BK_SEARCH_FILE',   4);
+define('BK_SEARCH_CSET',   1);
+define('BK_SEARCH_DELTAS', 2);
+define('BK_FIELD_MARKER','|');
+define('BK_NEWLINE_MARKER','<nl/>');
+
+define('BK_FLAG_FORWARD'   ,  1);
+define('BK_FLAG_SHOWMERGE' , 2);
+define('BK_FLAG_TAGGEDONLY', 4);
+define('BK_FLAG_NORANGEREVS', 8);
+
 class scmRepo
 {
     var $_root;     // what is the root location of the repository
+    var $_basecmd;  // base command to prefix the running of commands
     
     /**
      * Construct a repository object 
@@ -20,6 +34,30 @@ class scmRepo
         }
     }
     
+    // FIXME: protect this somehow, so no arbitrary commands can be run.
+    function &_run($cmd='echo "No command given.."', $asis = false) 
+    {
+        if(function_exists('xarLogMessage')) {
+            xarLogMessage("MT: ".$this->_basecmd. $cmd, XARLOG_LEVEL_DEBUG);
+        }
+        // Save the current directory
+        $savedir = getcwd();
+        chdir(dirname($this->_root));
+        
+        $out=array();$retval='';
+        $out = shell_exec($this->_basecmd . $cmd);
+
+        if(!$asis) {
+            $out = str_replace("\r\n","\n",$out);
+            $out = explode("\n", $out);
+            $out = array_filter($out,'notempty');
+        }
+        chdir($savedir);
+        // We need to do this here, because this class changes the cwd secretly and we dont 
+        // know what kind of effect this has on the environment
+        return $out;
+    }
+
     function map($id)
     {
         if(!isset($id)) return;

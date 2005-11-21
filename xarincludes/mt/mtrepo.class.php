@@ -15,31 +15,6 @@ class mtRepo extends scmRepo
             $this->_basecmd= "monotone --root=/ -d $root ";
         } 
     }
-
-    // FIXME: protect this somehow, so no arbitrary commands can be run.
-    function &_run($cmd='echo "No command given.."', $asis = false) 
-    {
-        if(function_exists('xarLogMessage')) {
-            xarLogMessage("MT: $cmd", XARLOG_LEVEL_DEBUG);
-        }
-        // Save the current directory
-        $savedir = getcwd();
-        chdir(dirname($this->_root));
-        
-        $out=array();$retval='';
-        $out = shell_exec($this->_basecmd . $cmd);
-
-        if(!$asis) {
-            $out = str_replace("\r\n","\n",$out);
-            $out = explode("\n", $out);
-            $out = array_filter($out,'notempty');
-        }
-        chdir($savedir);
-        // We need to do this here, because this class changes the cwd secretly and we dont 
-        // know what kind of effect this has on the environment
-        return $out;
-    }
-
     
     function GetStats($user='',$branch='') 
     {
