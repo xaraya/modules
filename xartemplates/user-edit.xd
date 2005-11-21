@@ -385,7 +385,7 @@
                                 <xar:mlstring>No End Date:</xar:mlstring>
                             </label>
                             <xar:comment>Replace: disabled="disabled"</xar:comment>
-                            <input type="radio" name="event_endtype" id="event_endtype2" value="0"  onclick="document.cal_submit.event_endmonth.value = document.cal_submit.event_endday.value = document.cal_submit.event_endyear.value = ''" />
+                            <input type="radio" name="event_endtype" id="event_endtype2" value="0" onclick="document.cal_submit.event_endmonth.value = document.cal_submit.event_endday.value = document.cal_submit.event_endyear.value = ''" />
                         </div>
                     </div>
                     <div class="xar-form-input-wrapper">

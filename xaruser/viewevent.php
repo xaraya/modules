@@ -13,7 +13,10 @@
  */
 
 /**
- * View an event
+ * Display an event
+ *
+ * This function prepares a single event to be displayed. When the event is hooked,
+ * the user is directed to the hooked event and no preparation is performed.
  *
  * initial template: Roger Raymond
  * @link http://www.metrostat.net
@@ -29,16 +32,16 @@
 function julian_user_viewevent()
 {
     //get post/get vars
-    if (!xarVarFetch('event_id','isset',$event_id)) return;
+    if (!xarVarFetch('event_id','isset',$event_id)) return; // can't be id, because of _link
     if (!xarVarFetch('cal_date','int',$cal_date)) return; // str here?
 
     // Security check
     if (!xarSecurityCheck('ViewJulian')) return;
     // TODO: make this an API for linked event
     // establish a db connection
-    $dbconn = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     // get db tables
-    $xartable = xarDBGetTables();
+    $xartable =& xarDBGetTables();
 
     $matches = array();
     if (preg_match("/^(\d+)_link$/",$event_id,$matches)) {
@@ -66,15 +69,18 @@ function julian_user_viewevent()
    $dateformat_created="$dateformat $timeformat";
 
     // Don't like this here
-    if (!isset($bl_data['recur_until']) || is_numeric($bl_data['recur_until']) || strrchr($bl_data['recur_until'], '0000')) {
+    if (!isset($bl_data['recur_until']) || is_numeric($bl_data['recur_until']) || strpos($bl_data['recur_until'], '0000')!== false) {
         $bl_data['recur_until'] = 'recur_until';
     }
 
    $bl_data['id'] = $bl_data['event_id'];
    $bl_data['deletesummary'] = xarVarPrepForDisplay($bl_data['summary']);
-
    $bl_data['organizer'] = xarUserGetVar('name',$bl_data['organizer']);
+   // TODO MichelV: improve ML settings here
+   // created = yyyy-mm-dd hh:mm:ss
+   //$bl_data['datecreated'] = xarLocaleGetFormattedDate($bl_data['created']);
    $bl_data['datecreated'] = date("$dateformat_created",strtotime($bl_data['created']));
+   $bl_data['datecreated'] = xarLocaleFormatDate($bl_data['datecreated'], $dateformat_created);
    $bl_data['fee'] = strcmp($bl_data['fee'],"")?xarLocaleFormatCurrency($bl_data['fee']):xarML('Unknown');
    $bl_data['authid'] = xarSecGenAuthKey();
    // Add obfuscator: for later Bug 4971
@@ -103,36 +109,37 @@ function julian_user_viewevent()
    if(strcmp($bl_data['duration'],""))
    {
      list($hours,$minutes) = explode(":",$bl_data['duration']);
-     $duration=" from ".date("g:i A",strtotime($bl_data['dtstart']))." to ".date("g:i A",strtotime("+".$hours." hours ".$minutes." minutes",strtotime($bl_data['dtstart'])));
+     $duration="&#160;".xarML('from')."&#160;".date("g:i A",strtotime($bl_data['dtstart']))."&#160;".xarML('to')."&#160;".date("g:i A",strtotime("+".$hours." hours ".$minutes." minutes",strtotime($bl_data['dtstart'])));
    }
    //Checking if we are viewing a reoccuring event
    if ($bl_data['recur_freq']) {
       $recur_count = $bl_data['recur_count'];
       $rrule = $bl_data['rrule'];
       $recur_interval = $bl_data['recur_interval'];
-      $intervals = array("1"=>"Day(s)","2"=>"Week(s)","3"=>"Month(s)","4"=>"Year(s)");
-      $day_array = array("1"=>"Sunday","2"=>"Monday","3"=>"Tuesday","4"=>"Wednesday","5"=>"Thursday","6"=>"Friday","7"=>"Saturday");
+      $intervals = array("1"=>xarML('Day(s)'),"2"=>xarML('Week(s)'),"3"=>xarML('Month(s)'),"4"=>xarML('Year(s)'));
+      $day_array = array("1"=>xarML('Sunday'),"2"=>xarML('Monday'),"3"=>xarML('Tuesday'),"4"=>xarML('Wednesday'),"5"=>xarML('Thursday'),"6"=>xarML('Friday'),"7"=>xarML('Saturday'));
       //build the effective date string
-      $eff = " effective ".date("$dateformat",strtotime($bl_data['dtstart']));
+      $eff ="&#160;".xarML('effective')."&#160;".date("$dateformat",strtotime($bl_data['dtstart']));
       //start the time string
       $time = xarML('Occurs ');
       //Build the strings to describe the repeating event.
       if (!$bl_data['recur_count']) {
          //this is for the 'every' recurring event type
-         $time .= "every ".$bl_data['recur_freq']." ".$intervals[$rrule] . " on " . date('l',strtotime($bl_data['dtstart'])) . $eff;
+         $time .= xarML('every')."&#160;".$bl_data['recur_freq']." ".$intervals[$rrule]."&#160;".xarML('on')."&#160;".date('l',strtotime($bl_data['dtstart'])) . $eff;
       } else {
          // build a day array
-         $weektimes = array("1"=>"First","2"=>"Second","3"=>"Third","4"=>"Fourth","5"=>"Last");
+         $weektimes = array("1"=>xarML('First'),"2"=>xarML('Second'),"3"=>xarML('Third'),"4"=>xarML('Fourth'),"5"=>xarML('Last'));
          // this is for the 'on every' recurring event type
-         $time .= "the ".$weektimes[$recur_interval] ." ".$day_array[$recur_count]." every ".$bl_data['recur_freq']." ". $intervals[$rrule] . $eff;
+         $time .= xarML('the')."&#160;".$weektimes[$recur_interval] ."&#160;".$day_array[$recur_count]."&#160;".xarML('every')."&#160;".$bl_data['recur_freq']." ". $intervals[$rrule] . $eff;
       }
 
-
       //add the end date if one exists
-      if (strcmp($bl_data['recur_until'],""))
-         $time .= " until ".date("$dateformat",strtotime($bl_data['recur_until']));
+      //TODO: MichelV move this to template
+      if (strcmp($bl_data['recur_until'],"") && strcmp($bl_data['recur_until'],"recur_until")){
+         $time .= "&#160;".xarML('until ')."&#160;".date("$dateformat",strtotime($bl_data['recur_until']));
+      }
      //if the duration has not been set and this is not an all day event, add the start time to the string
-     $duration=strcmp($duration,"")?$duration:($bl_data['isallday']?'':' at '.date("g:i A",strtotime($bl_data['dtstart'])));
+     $duration=strcmp($duration,"")?$duration:($bl_data['isallday']?'':"&#160;".xarML('at')."&#160;".date("g:i A",strtotime($bl_data['dtstart'])));
      $bl_data['time'] = $time.$duration .".";
 
    // If there is no duration and this is not an all day event, show the time at the front.
