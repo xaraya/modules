@@ -143,11 +143,12 @@ class mtRepo extends scmRepo
             case 'trust':
                 // end of current cert
                 $tmpcert[$name]= substr(trim($line),strlen($name)+2,-1);
-                $certs[] = $tmpcert;
+                $certs[] = $tmpcert; $tmpcert = array();
                 break;
             default:
+                xarLogMessage("MT: found unknown certname '$name'". var_export($line,true)."");
                 // Assuming continuation of value
-                $tmpcert['value'] .= ' ' .trim($line);
+                $tmpcert['value'] .= "<br/>" .trim($line);
             }
         }
         return $certs;
@@ -157,57 +158,59 @@ class mtRepo extends scmRepo
     {
         // Need to get:
         // tag, age, author, rev id, utc timestamp, comments
-        
-        // Get the boundaries of what to get
+
+        $selector=array();
+        // Range selector
         $utcpoints = scmRepo::RangeToUtcPoints($range);
         $begin = $this->utc_to_iso8601($utcpoints['start']);
         $end = $this->utc_to_iso8601($utcpoints['end']);
+        $selector[] = 'l:'.$begin.'/e:'.$end;
         
-        $cmd = "automate select l:".$begin."/e:".$end;
+        // Author selector
+        if($user != '') $selector[] .= 'a:'.$user;
+      
+        // Tag selector
+        if($flags & SCM_FLAG_TAGGEDONLY) $selector[] = "c:tag";
+
+        // Consolidate selector conditions
+        $selector = join('/',$selector);
+
+        // Get the selected revisions
+        $cmd = "automate select $selector";
         $revs = $this->_run($cmd);
         
         $csets = array(); $tags = array();
         foreach($revs as $index => $revid) {
+            // Retrieve the certificates
             $certs = $this->certs($revid);
             
-            $add = false;
-            // No user specified, add it
-            if($user == '') {
-                $add=true;
-            } else {
-                // User is specified, need to check the certs
-                $add=true;
-            }
-            if($add) {
-                $cset = (object) null;
-                $cset->file ='ChangeSet';
-                $cset->rev = $revid;
-                $cset->tag = '';
-                $cset->age = 'TBD';
-                $cset->checkedout = false;
+            $cset = (object) null;
+            $cset->file ='ChangeSet';
+            $cset->rev = $revid;
+            $cset->tag = '';
+            $cset->age = 'TBD';
+            $cset->checkedout = false;
 
-                foreach($certs as $index => $cert) {
-                    switch($cert['name']) {
-                    case 'tag':
-                        $cset->tag = $cert['value'];
-                        break;
-                    case 'author':
-                        $cset->author = $cert['value'];
-                        break;
-                    case 'changelog':
-                        $cset->comments = $cert['value'];
-                        break;
-                    }
+            foreach($certs as $index => $cert) {
+                switch($cert['name']) {
+                case 'tag':
+                    $cset->tag = $cert['value'];
+                    break;
+                case 'author':
+                    $cset->author = $cert['value'];
+                    break;
+                case 'changelog':
+                    $cset->comments = $cert['value'];
+                    break;
                 }
-                // Add it to the collection
-                $csets[$revid] = $cset;
             }
+                // Add it to the collection
+            $csets[$revid] = $cset;
         }
-        
         return $csets;
     }
     
-    function GetGraphData($start='-3d', $end, $file)
+    function &GetGraphData($start='-3d', $end, $file)
     {
         // First get the revisions in the rang
         $revs = $this->ChangeSets('',$start);
@@ -216,11 +219,12 @@ class mtRepo extends scmRepo
         $graph = array('nodes' => $nodes, 'edges' => $edges,'pastconnectors' => $lateMergeNodes, 'startRev' => $startRev, 'endRev' => $endRev);
         
         foreach($revs as $revid => $revdetail) {
-            $sql = "SELECT parent, child FROM revision_ancestry WHERE parent = ? or child = ?";
-            $result =& $this->_dbconn->Execute($sql,array($revid,$revid));
-            if(!$result) return;
-            while(!$result->EOF) {
-                list($parent, $child) = $result->fields;
+            $cmd = "db execute \"SELECT parent, child FROM revision_ancestry WHERE parent ='$revid' or child ='$revid';\"";
+            $result =& $this->_run($cmd);
+            array_shift($result);
+            foreach($result as $trans) {
+                $node = explode('|', $trans);
+                $parent = trim($node[0]); $child = trim($node[1]);
                 if($parent == $revid) {
                     $edges[] = array($parent => $child);
                     $nodes[] = array('rev' => $parent, 'author' => $revdetail->author, 'tags' => $revdetail->tag);
@@ -234,7 +238,6 @@ class mtRepo extends scmRepo
                     $nodes[] = array('rev' => $parent, 'author' => 'TBD', 'tags' => $parenttag);
                     $nodes[] = array('rev' => $child, 'author' => 'TBD', 'tags' => $childtag);
                 }
-                $result->MoveNext();
             }
         }
         // Limit the thing a bit
@@ -250,14 +253,6 @@ class mtRepo extends scmRepo
         return $graph;
     }
 
-}
-/**
-* callback function for the array_filter on line 39
- *
- */
-function notempty($item) 
-{
-    return (strlen($item)!=0);
 }
 
 ?>

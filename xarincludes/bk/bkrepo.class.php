@@ -154,7 +154,7 @@ class bkRepo extends scmRepo
     }
     
     // Get changesets
-    function ChangeSets($user, $range,$flags = 0)
+    function &ChangeSets($user, $range,$flags = 0)
     {
         $params='-n '; $dspec = "'";
         
@@ -446,15 +446,6 @@ class bkRepo extends scmRepo
         }
         return $ageCode;
     }
-}
-
-/**
-* callback function for the array_filter on line 39
- *
- */
-function notempty($item) 
-{
-    return (strlen($item)!=0);
 }
 
 function __fileproper($file) 

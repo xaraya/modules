@@ -82,7 +82,7 @@ class scmRepo
     function RangeToUtcPoints($range = '')
     {
         $utcpoints = array(
-                    'start' => '00000000000000',
+                    'start' => '19700000000000',
                     'end'   => date('YmdHis'));
         if($range == '') return $utcpoints;
         
@@ -122,6 +122,27 @@ class scmRepo
         $out = $this->GetChangeSets($range,$merge,$user);
         return count($out);
     }
+}
+
+/**
+* callback function for the array_filter
+ *
+ */
+function notempty($item) 
+{
+    return (strlen($item)!=0);
+}
+
+function colour_from_string($str){
+    // PHP4 doesnt have raw output, let's roll our own
+    $hash = sha1($str);
+    // We need the binary equivalent of this
+    $hashval = pack("H" . strlen($hash), $hash);
+ 
+    $hue = (ord($hashval[5]) / 256.0) * 1.00 + 0.00; 
+    $li  = (ord($hashval[1]) / 256.0) * 0.15 + 0.75; 
+    $sat = (ord($hashval[2]) / 256.0) * 0.50 + 0.60;
+    return "$hue $li $sat";
 }
 
 ?>

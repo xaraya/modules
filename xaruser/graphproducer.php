@@ -34,14 +34,13 @@ function bkview_user_graphproducer($args)
         {
             $attributes = array('href' => xarModUrl('bkview','user','deltaview', array('repoid' => $repoid, 'rev' => $node['rev'])),
                                 'tooltip' => xarML('Show details for revision #(1) by #(2)',$node['rev'],$node['author']),
-                                'label' => $node['author'].'\n'.$node['rev'].'\n'.$node['tags']);
+                                'label' => $node['author'].'\n'.substr($node['rev'],0,8).'...'.'\n'.$node['tags'],
+                                'fontname' => 'Windsor', 'fontsize' => '8.0');
             
             if($node['rev'] == $graphdata['startRev'] || $node['rev'] == $graphdata['endRev']) $attributes['color'] ='red';
-            if(!empty($node['tags'])) {
-                $attributes['style'] ='filled';
-                $attributes['fillcolor'] = 'gray';
-            }
-            
+            $attributes['fillcolor'] = colour_from_string($node['author']);
+            $attributes['style'] ='filled';
+
             if(!in_array($node['rev'], $graphdata['pastconnectors']))
             {
                 // Normal node
