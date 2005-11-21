@@ -16,20 +16,27 @@
  * Get information on linked event. Currently assumes linking module = articles
  *
  * @author Jorn, MichelV. michelv@xarayahosting.nl
- * arguments:
  *
- *   iid:      id of hooked item (in hooking module, e.g. an article id)
- *   itemtype: type of hooked item
- *   modid:    id of hooking module
- *   event:    current event data
+ * @param id  iid id of hooked item (in hooking module, e.g. an article id)
+ * @param itemtype: type of hooked item
+ * @param modid:    id of hooking module
+ * @param event:    current event data
  */
 function julian_userapi_geteventinfo($args)
 {
     extract($args);
 
+    if (!isset($iid) || !is_numeric($iid)) {
+        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
+            'item ID', 'user', 'geteventinfo', 'Julian');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+            new SystemException($msg));
+        return;
+    }
+
     // Load up database
-    $dbconn = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $sitePrefix = xarDBGetSiteTablePrefix();
     // Name for articles database entities
     $articlestable = $sitePrefix . '_articles';
@@ -45,7 +52,7 @@ function julian_userapi_geteventinfo($args)
             $event['viewURL'] = xarModURL('articles','user','display',array('aid'=>$iid));
         }
     }
- 
+
     return $event;
 }
 ?>

@@ -15,9 +15,9 @@
 /**
  * Get a single event
  *
- * Get a single event from the events table 
+ * Get a single event from the events table
  * Later we will look in the linked events table
- *  
+ *
  * @author Julian package development team
  * @author  MichelV (Michelv@xarayahosting.nl)
  * @access  public
@@ -38,14 +38,14 @@ function julian_userapi_get($args)
             new SystemException($msg));
         return;
     }
-    
+
     // establish a db connection
-    $dbconn = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $event_table = $xartable['julian_events'];
-   
+
     // Get all the info for the event
-    $query = "SELECT 
+    $query = "SELECT
             event_id,
             calendar_id,
             type,
@@ -104,8 +104,8 @@ function julian_userapi_get($args)
             $zip,$phone,$email,$fee,$exdate,$categories,$rrule,$recur_freq,$recur_until,
             $recur_count,$recur_interval,$dtstart,$dtend,$duration,$isallday,$freebusy,$due,$transp,$created,$last_modified) = $result->fields;
     $result->Close();
-    
-    // Security checks 
+
+    // Security checks
     // TODO make these work
     // For this function, the user must *at least* have READ access to this item
     // if (!xarSecurityCheck('ReadJulian', 1, 'Item', "event_id:All:All")) {
@@ -152,7 +152,7 @@ function julian_userapi_get($args)
             'transp'        =>$transp,
             'created'       =>$created,
             'last_modified' =>$last_modified);
-            
+
         // get the event category color
         $item['color'] = xarModAPIFunc('julian','user','getcolor',array('category'=>$categories));
 

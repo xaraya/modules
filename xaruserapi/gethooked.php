@@ -102,10 +102,12 @@ function julian_userapi_gethooked($args)
 
             $result->Close();
         } else {
-            return xarML('There is no event hooked to this item.');
+            return false;
+            //return xarML('There is no event hooked to this item.'); // Bug 5189, the return should be an array or false
         }
     } else {
-        return xarML('There is no event hooked to this item.');
+        return false;
+        //return xarML('There is no event hooked to this item.');
     }
 
     if (!xarSecurityCheck('ViewJulian')) { // TODO

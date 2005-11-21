@@ -46,20 +46,45 @@ function julian_user_viewevent()
     $matches = array();
     if (preg_match("/^(\d+)_link$/",$event_id,$matches)) {
         $linkid = $matches[1];
-        $query = "SELECT `hook_modid`,`hook_itemtype`,`hook_iid` FROM `".$xartable['julian_events_linkage']."` WHERE `event_id`='$linkid'";
-        $result = $dbconn->Execute($query);
-        $event_obj = $result->FetchObject(false);
-        $event = array();
-        $event = xarModAPIFunc('julian', 'user', 'geteventinfo', array('event'=>$event,
-                                                                       'modid'=>$event_obj->hook_modid,
-                                                                       'iid'=>$event_obj->hook_iid,
-                                                                       'itemtype'=>$event_obj->hook_itemtype));
-        return xarResponseRedirect($event['viewURL']);
+        $query = "SELECT `hook_modid`,`hook_itemtype`,`hook_iid` FROM `".$xartable['julian_events_linkage']."` WHERE event_id=?";
+        $result = &$dbconn->Execute($query,array($linkid));
+/*
+        'event_id'=>array('type'=>'integer','size'=>'medium','unsigned'=>TRUE,'null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+        'hook_modid'   =>array('type'=>'integer','null'=>FALSE,'default'=>'0'),
+        'hook_itemtype'=>array('type'=>'integer','null'=>FALSE,'default'=>'0'),
+        'hook_iid'     =>array('type'=>'integer','null'=>FALSE,'default'=>'0'),
+        'dtstart'=>array('type'=>'datetime','size'=>'','null'=>FALSE),// Bug 4942 removed ,'default'=>''
+        'duration'=>array('type'=>'varchar','size'=>'50','null'=>TRUE),
+        'isallday'=>array('type'=>'integer','size'=>'tiny','default'=>'0'),
+        'rrule'=>array('type'=>'text','null'=>TRUE),
+        'recur_freq'=>array('type'=>'integer','null'=>TRUE,'default'=>'0'),
+        'recur_count'=>array('type'=>'integer','null'=>TRUE,'default'=>'0'),
+        'recur_interval'=>array('type'=>'integer','null'=>TRUE,'default'=>'0'),
+        'recur_until'=>array('type'=>'datetime','size'=>'','null'=>FALSE),// Bug 4942 removed ,'default'=>''
+
+*/
+        if (!$result) return;
+        /* Check for no rows found, and if so, close the result set and return an exception */
+        if ($result->EOF) {
+            $result->Close();
+            $msg = xarML('This item does not exist');
+            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'ID_NOT_EXIST',
+                new SystemException(__FILE__ . '(' . __LINE__ . '): ' . $msg));
+            return;
+        } else {
+            list($hook_modid, $hook_itemtype, $hook_iid) = $result->fields;
+            $result->Close();
+            $event = array();
+            $event = xarModAPIFunc('julian', 'user', 'geteventinfo', array('event'=>$event,
+                                                                           'modid'=>$hook_modid,
+                                                                           'iid'=>$hook_iid,
+                                                                           'itemtype'=>$hook_itemtype));
+            return xarResponseRedirect($event['viewURL']);
+        }
     }
 
    // Get the event, as it is not in the linked table
    // We use event_id here
-
    $bl_data = array();
    $bl_data = xarModAPIFunc('julian','user','get',array('event_id'=>$event_id));
 
