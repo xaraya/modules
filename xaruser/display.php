@@ -1,8 +1,5 @@
 <?php
-
 /**
- * File: $Id$
- *
  * display function for bkview
  *
  * @package modules
@@ -27,6 +24,7 @@ function bkview_user_display($args)
     if(!xarVarFetch('repoid','id',$repoid,null, XARVAR_NOT_REQUIRED)) return;
     if(!xarVarFetch('itemid','id',$repoid)) return;
     if(!xarVarFetch('user','str::',$user,'',XARVAR_NOT_REQUIRED)) return;
+    if(!xarVarFetch('branch','str::',$branch,'',XARVAR_NOT_REQUIRED)) return;
     extract($args);
 
     // Prepare the variable that will hold some status message if necessary
@@ -34,6 +32,10 @@ function bkview_user_display($args)
     
     $item = xarModAPIFunc('bkview', 'user','get', array('repoid' => $repoid));
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+    if($item['repotype'] = 2 && $branch=='') {
+        // Monotone needs a branch argument
+        xarResponseRedirect(xarModUrl('bkview','user','branchview',array('repoid' => $repoid)));
+    }
     
     $data['name_value'] = $item['reponame'];
     $data['repoid'] = xarVarPrepForDisplay($repoid);
@@ -62,7 +64,7 @@ function bkview_user_display($args)
                  );
 
     // Get a time sorted array of all csets
-    $stats = $repo->GetStats($user);
+    $stats = $repo->GetStats($user,$branch);
 
     // The total number of csets is easy, just count
     $allsets = array_sum(array_count_values($stats))-1;
@@ -92,15 +94,15 @@ function bkview_user_display($args)
     // Call the generic item search hook (this page is the overall search page)
     $data['hooks'] = xarModCallHooks('item','search',$repoid,array());
     
-    if($user == '') {
-        $data['pageinfo']=xarML("Changeset activity ");
-    } else {
-        $data['pageinfo']=xarML("Changeset activity for #(1)",$user);
-    }
+    $data['pageinfo']=xarML("Changeset activity ");
+    if($user != '' && $branch=='') $data['pageinfo']=xarML("Changeset activity for #(1)",$user);
+    if($user == '' && $branch!='') $data['pageinfo']=xarML("Changeset activity on branch #(1)",$branch);
+    if($user != '' && $branch!='') $data['pageinfo']=xarML("Changeset activity for #(1) on branch #(2)",$user, $branch);
     $data['user']      = $user;
     $data['rangetext'] = $rangetext;
     $data['allsets']   = $allsets;
     $data['mrgsets']   = $mrgsets;
+    $data['branch']    = $branch;
     return $data;
 }
 

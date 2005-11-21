@@ -1,9 +1,5 @@
 <?php
-
-
 /**
- * File: $Id$
- *
  * history view for bkview module
  *
  * @package modules
@@ -37,6 +33,7 @@ function bkview_user_historyview($args)
     $icon = xarModAPIFunc('bkview','user','geticon', array('file' => $the_file->AbsoluteName()));
     // Get an array of delta's
     $history= $the_file->History($user);
+    $histlist = array();
     foreach($history as $rev => $delta) {
         $delta->repoid = $repoid;
         $delta->icon = $icon;

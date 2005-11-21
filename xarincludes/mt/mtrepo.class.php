@@ -41,7 +41,7 @@ class mtRepo extends scmRepo
     }
 
     
-    function GetStats($user='') 
+    function GetStats($user='',$branch='') 
     {
         // Need to get:
         // - author identification
@@ -52,21 +52,26 @@ class mtRepo extends scmRepo
         // that gets the revid + its date (base64) for the revisions.
         $stats = array();
         // This needs to be on one line
-        $sql = "SELECT a.id, unbase64(a.value), unbase64(d.value) FROM revision_certs AS a, revision_certs AS d  WHERE a.id = d.id AND a.name='author' AND d.name='date'";
+        // a -> authors
+        // d -> dates
+        // b -> branches
+        $sql = "SELECT a.id, unbase64(a.value), unbase64(d.value), unbase64(b.value) as bvalue ";
+        $sql.= "FROM revision_certs AS a, revision_certs AS d, revision_certs AS b ";
+        $sql.= "WHERE a.id=d.id AND d.id=b.id AND a.name='author' AND d.name='date' AND b.name='branch' ";
+        if($user != '') {
+            $sql.= "AND unbase64(a.value) like '$user'";
+        }
+        if($branch != '') {
+            $sql.= "AND unbase64(b.value) like '$branch'";
+        }
         $result = $this->_run("db execute \"$sql\"");
         array_shift($result); // Pop off the first result and reindex 
         foreach($result as $index => $line)
         {
-            list($revid, $author, $timestamp) = explode('|',$line);
+            list($revid, $author, $timestamp,$lod) = explode('|',$line);
             // Make a timestamp out of the iso format
             $timestamp = $this->iso8601_To_Utc($timestamp);
-            if($user != '') {
-                // Only add if matched
-                if($user == trim($author)) $stats[trim($timestamp)] = trim($author);
-            } else {
-                // No user specified, add always
-                $stats[trim($timestamp)] = trim($author);
-            }
+            $stats[trim($timestamp)] = trim($author);
         }
         krsort($stats);
         return $stats;
@@ -154,7 +159,7 @@ class mtRepo extends scmRepo
         return $certs;
     }
 
-    function &ChangeSets($user, $range='',$flags = 0)
+    function &ChangeSets($user, $range='',$flags = 0,$branch='')
     {
         // Need to get:
         // tag, age, author, rev id, utc timestamp, comments
@@ -167,10 +172,13 @@ class mtRepo extends scmRepo
         $selector[] = 'l:'.$begin.'/e:'.$end;
         
         // Author selector
-        if($user != '') $selector[] .= 'a:'.$user;
+        if($user != '') $selector[] = 'a:'.$user;
       
         // Tag selector
         if($flags & SCM_FLAG_TAGGEDONLY) $selector[] = "c:tag";
+        
+        // Branch selector
+        if($branch != '') $selector[] = 'b:'.$branch;
 
         // Consolidate selector conditions
         $selector = join('/',$selector);
@@ -189,6 +197,7 @@ class mtRepo extends scmRepo
             $cset->rev = $revid;
             $cset->tag = '';
             $cset->age = 'TBD';
+            $cset->branch = $branch;
             $cset->checkedout = false;
 
             foreach($certs as $index => $cert) {
@@ -212,7 +221,7 @@ class mtRepo extends scmRepo
     
     function &GetGraphData($start='-3d', $end, $file)
     {
-        // First get the revisions in the rang
+        // First get the revisions in the range
         $revs = $this->ChangeSets('',$start);
         $nodes = array(); $edges = array(); $inEdges = array();
         $lateMergeNodes = array(); $startRev=0; $endRev=0;$nrOfChanges=0;
@@ -253,6 +262,12 @@ class mtRepo extends scmRepo
         return $graph;
     }
 
+    function getBranches()
+    {
+        $cmd = 'ls branches';
+        $result = $this->_run($cmd);
+        return $result;
+    }
 }
 
 ?>

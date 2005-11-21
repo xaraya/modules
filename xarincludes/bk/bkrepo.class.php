@@ -300,7 +300,7 @@ class bkRepo extends scmRepo
         return $result;
     }
     
-    function GetStats($user='') 
+    function GetStats($user='',$branch='') 
     {
         $params = '';
         if($user!='') {
@@ -323,7 +323,7 @@ class bkRepo extends scmRepo
         return $results;
     }
     
-    function GetGraphData($start = '-3d', $end = '+', $file ='ChangeSet')
+    function &GetGraphData($start = '-3d', $end = '+', $file ='ChangeSet')
     {
         if(!trim($end)) $end="+";
         // First, translate the ranges to revisions

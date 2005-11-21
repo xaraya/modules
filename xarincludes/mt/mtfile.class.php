@@ -18,12 +18,15 @@ class mtFile extends scmFile
     
     function History($user='')
     {
-        // We have to get:
-        // - age
-        // - author
-        // - revision
-        // - comments
+        // We have: the filename
+        // We need:
+        // - list of changes to that file and for each change:
+        //   - age
+        //   - author
+        //   - revision
+        //   - comments
         // But how do we get from the filename to an ID without a working copy?
+        return array();
     }
 }
 

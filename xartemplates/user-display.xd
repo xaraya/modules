@@ -4,10 +4,10 @@
     <div style="float:left; margin-top: 1em;">
         <dl>
           <xar:while condition="list($range,$text)= each($rangetext)">
-            <dt><a href="&xar-modurl-bkview-user-csetview;&amp;range=-#$range#&amp;repoid=#$repoid#&amp;user=#$user#" onclick="return loadContent(this.href, 'bkview-modbody-id');">#$text#</a></dt>
+            <dt><a href="&xar-modurl-bkview-user-csetview;&amp;range=-#$range#&amp;repoid=#$repoid#&amp;user=#$user#&amp;branch=#$branch#" onclick="return loadContent(this.href, 'bkview-modbody-id');">#$text#</a></dt>
           </xar:while>
           <dt>
-            <a href="&xar-modurl-bkview-user-csetview;&amp;showmerge=1&amp;repoid=#$repoid#&amp;user=#$user#" onclick="return loadContent(this.href, 'bkview-modbody-id');">
+            <a href="&xar-modurl-bkview-user-csetview;&amp;showmerge=1&amp;repoid=#$repoid#&amp;user=#$user#&amp;branch=#$branch#" onclick="return loadContent(this.href, 'bkview-modbody-id');">
               <xar:ml>
                 <xar:mlstring>All #(1) Changesets ( #(2) empty merges)</xar:mlstring>
                 <xar:mlvar>#$allsets#</xar:mlvar>

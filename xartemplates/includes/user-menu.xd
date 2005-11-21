@@ -11,6 +11,9 @@
     <xar:set name="curr_bkview">xarServerGetCurrentURL(array('pageName' => ''),true)</xar:set>
     <xar:set name="dummy">xarSessionSetVar('bkview.previous.url',$curr_bkview)</xar:set>  
 </xar:if>
+<xar:if condition="!isset($branch)">
+    <xar:set name="branch">''</xar:set>
+</xar:if>
 
 <div class="xar-mod-head">
     <span class="xar-mod-title">
@@ -32,7 +35,8 @@
         <xar:set name="classstring">'active'</xar:set>
     </xar:if>
     <dd class="#$classstring#" >
-        <a href="&xar-modurl-bkview-user-main;" onclick="return loadContent(this.href, 'bkview-modbody-id');">
+        <a href="&xar-modurl-bkview-user-main;" 
+           onclick="return loadContent(this.href, 'bkview-modbody-id');">
             <img src="#xarTplGetImage('bkindex.gif')#" alt="#xarML('Index')#" />
             <xar:mlstring>Index</xar:mlstring>
         </a>
@@ -40,11 +44,23 @@
     
     <xar:if condition="!empty($repoid)">
         <xar:set name="classstring">''</xar:set>
+        <xar:if condition="$_bl_module_func eq 'branchview'">
+            <xar:set name="classstring">'active'</xar:set>
+        </xar:if>
+        <dd class="#$classstring#" >
+            <a href="&xar-modurl-bkview-user-branchview;&amp;repoid=#$repoid#" 
+               onclick="return loadContent(this.href, 'bkview-modbody-id');">
+                <xar:mlstring>Branches</xar:mlstring>
+            </a>
+        </dd>
+
+        <xar:set name="classstring">''</xar:set>
         <xar:if condition="$_bl_module_func eq 'display'">
             <xar:set name="classstring">'active'</xar:set>
         </xar:if>
         <dd class="#$classstring#" >
-            <a href="&xar-modurl-bkview-user-display;&amp;repoid=#$repoid#" onclick="return loadContent(this.href, 'bkview-modbody-id');">
+            <a href="&xar-modurl-bkview-user-display;&amp;repoid=#$repoid#&amp;branch=#$branch#" 
+               onclick="return loadContent(this.href, 'bkview-modbody-id');">
                 <img src="#xarTplGetImage('bkcset.gif')#" alt="#xarML('Changeset activity')#" />
                 <xar:mlstring>Changeset activity</xar:mlstring>
             </a>
@@ -55,7 +71,8 @@
             <xar:set name="classstring">'active'</xar:set>
         </xar:if>
         <dd class="#$classstring#" >
-            <a href="&xar-modurl-bkview-user-csetview;&amp;taggedonly=1&amp;repoid=#$repoid#&amp;showmerge=1" onclick="return loadContent(this.href, 'bkview-modbody-id');">
+            <a href="&xar-modurl-bkview-user-csetview;&amp;taggedonly=1&amp;repoid=#$repoid#&amp;showmerge=1&amp;branch=#$branch#" 
+               onclick="return loadContent(this.href, 'bkview-modbody-id');">
                 <img src="#xarTplGetImage('bktags.gif')#" alt="#xarML('Tags')#" />
                 <xar:mlstring>Tags</xar:mlstring>
             </a>
@@ -66,7 +83,8 @@
             <xar:set name="classstring">'active'</xar:set>
         </xar:if>
         <dd class="#$classstring#" >
-            <a href="&xar-modurl-bkview-user-browseview;&amp;repoid=#$repoid#" onclick="return loadContent(this.href, 'bkview-modbody-id');">
+            <a href="&xar-modurl-bkview-user-browseview;&amp;repoid=#$repoid#&amp;branch=#$branch#" 
+               onclick="return loadContent(this.href, 'bkview-modbody-id');">
                 <img src="#xarTplGetImage('bktree.gif')#" alt="#xarML('Browse source tree')#" />
                 <xar:mlstring>Browse source tree</xar:mlstring>
             </a>
@@ -77,7 +95,8 @@
             <xar:set name="classstring">'active'</xar:set>
         </xar:if>
         <dd class="#$classstring#" >
-            <a href="&xar-modurl-bkview-user-graphview;&amp;repoid=#$repoid#" onclick="return loadContent(this.href, 'bkview-modbody-id');">
+            <a href="&xar-modurl-bkview-user-graphview;&amp;repoid=#$repoid#&amp;branch=#$branch#" 
+               onclick="return loadContent(this.href, 'bkview-modbody-id');">
                 <img src="#xarTplGetImage('graph.gif')#" alt="#xarML('Show history graph')#" />
                 <xar:mlstring>History graph</xar:mlstring>
             </a>
@@ -88,7 +107,8 @@
             <xar:set name="classstring">'active'</xar:set>
         </xar:if>
         <dd class="#$classstring#" >
-            <a href="&xar-modurl-bkview-user-statsview;&amp;repoid=#$repoid#" onclick="return loadContent(this.href, 'bkview-modbody-id');">
+            <a href="&xar-modurl-bkview-user-statsview;&amp;repoid=#$repoid#&amp;branch=#$branch#" 
+               onclick="return loadContent(this.href, 'bkview-modbody-id');">
                 <img src="#xarTplGetImage('bkstats.gif')#" alt="#xarML('User statistics')#" />
                 <xar:mlstring>User statistics</xar:mlstring>
             </a>

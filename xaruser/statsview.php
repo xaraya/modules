@@ -19,15 +19,17 @@ function bkview_user_statsview($args)
 {
     if(!xarVarFetch('repoid','id',$repoid)) return;
     if(!xarVarFetch('user','str::',$user,'',XARVAR_NOT_REQUIRED)) return;
-
+    if(!xarVarFetch('branch','str::',$branch,'',XARVAR_NOT_REQUIRED)) return;
     extract($args);
 
     $item = xarModAPIFunc('bkview','user','get',array('repoid' => $repoid));
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+    // Normally we would test for a branch here, but for statistics, it's not required
+
     $repo=& $item['repo'];
     
     // Get a sorted array of timestamp=>user combo's
-    $stats = $repo->GetStats($user);
+    $stats = $repo->GetStats($user,$branch);
    
     // :UTC: is like 20021003152103 
     //               yyyymmddhhmmss
@@ -60,9 +62,13 @@ function bkview_user_statsview($args)
 
     $results = array_csort($results,'allcsets',SORT_DESC);
     $data['pageinfo']   = xarML("User statistics");
+    if($branch !='') {
+        $data['pageinfo'] = xarML("User statistics for branch #(1)",$branch);
+    }
     $data['repoid']     = $repoid;
     $data['name_value'] = $item['reponame'];
     $data['users']      = $results;
+    $data['branch']     = $branch;
     return $data;
 }
 
