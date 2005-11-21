@@ -1,12 +1,13 @@
 <div id="bkview-modbody-id" class="xar-mod-body" >
     <xar:template file="user-menu" />
 
-    <a href="&xar-modurl-bkview-user-graphproducer;&amp;repoid=#$repoid#&amp;start=#$start#&amp;end=#$end#&amp;file=#$file#&amp;spc=#$spc#">
+    <a href="&xar-modurl-bkview-user-graphproducer;&amp;repoid=#$repoid#&amp;start=#$start#&amp;end=#$end#&amp;file=#$file#&amp;spc=#$spc#&amp;branch=#$branch#">
         Image only (debug)
     </a>
     <form action="&xar-modurl-bkview-user-graphview;&amp;repoid=#$repoid#" method="post">
         <input type="hidden" name="file" value="#$file#"/>
         <input type="hidden" name="end" value="#$end#"/>
+        <input type="hidden" name="branch" value="#$branch#"/>
         <label for="bkgraph_startrange"><xar:mlstring>Start graph at:</xar:mlstring></label>
         <input id="bkgraph_startrange" type="text" name="start" value="#$start#"/>
         <label for="bkgraph_endrange"><xar:mlstring>End graph at:</xar:mlstring></label>
@@ -21,7 +22,8 @@
         <input type="submit" value="Show"/>
     </form>
     <div style="text-align: center; border: thin solid black; overflow: auto; height: 400pt;">
-        <img usemap="#G" border="1" src="&xar-modurl-bkview-user-graphproducer;&amp;repoid=#$repoid#&amp;start=#$start#&amp;end=#$end#&amp;file=#$file#&amp;spc=#$spc#"/>
-        <xar:module main="false" module="bkview" func="graphproducer" format="cmapx" repoid="$repoid" file="$file" start="$start" end="$end" spc="$spc"/>
+        <img usemap="#G" border="1" 
+             src="&xar-modurl-bkview-user-graphproducer;&amp;repoid=#$repoid#&amp;start=#$start#&amp;end=#$end#&amp;file=#$file#&amp;spc=#$spc#&amp;branch=#$branch#"/>
+        <xar:module main="false" module="bkview" func="graphproducer" format="cmapx" repoid="$repoid" file="$file" start="$start" end="$end" spc="$spc" branch="$branch"/>
     </div>
 </div>

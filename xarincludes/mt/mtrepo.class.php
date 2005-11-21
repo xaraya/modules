@@ -151,7 +151,7 @@ class mtRepo extends scmRepo
                 $certs[] = $tmpcert; $tmpcert = array();
                 break;
             default:
-                xarLogMessage("MT: found unknown certname '$name'". var_export($line,true)."");
+                //xarLogMessage("MT: found unknown certname '$name'". var_export($line,true)."");
                 // Assuming continuation of value
                 $tmpcert['value'] .= "<br/>" .trim($line);
             }
@@ -161,6 +161,7 @@ class mtRepo extends scmRepo
 
     function &ChangeSets($user, $range='',$flags = 0,$branch='')
     {
+        xarLogMessage("MT: repo:ChangeSets($user,$range,$flags,$branch)");
         // Need to get:
         // tag, age, author, rev id, utc timestamp, comments
 
@@ -179,9 +180,9 @@ class mtRepo extends scmRepo
         
         // Branch selector
         if($branch != '') $selector[] = 'b:'.$branch;
-
         // Consolidate selector conditions
         $selector = join('/',$selector);
+        xarLogMessage("MT: total selector in repo->ChangeSets ($branch) $selector");
 
         // Get the selected revisions
         $cmd = "automate select $selector";
@@ -208,6 +209,9 @@ class mtRepo extends scmRepo
                 case 'author':
                     $cset->author = $cert['value'];
                     break;
+                case 'date':
+                    $cset->date = $cert['value'];
+                    break;
                 case 'changelog':
                     $cset->comments = $cert['value'];
                     break;
@@ -219,16 +223,17 @@ class mtRepo extends scmRepo
         return $csets;
     }
     
-    function &GetGraphData($start='-3d', $end, $file)
+    function &GetGraphData($start='-3d', $end, $file, $branch='')
     {
+        xarLogMessage("MT: repo:GetGraphData($start,$end,$branch)");
         // First get the revisions in the range
-        $revs = $this->ChangeSets('',$start);
+        $revs = $this->ChangeSets('',$start,0,$branch);
         $nodes = array(); $edges = array(); $inEdges = array();
         $lateMergeNodes = array(); $startRev=0; $endRev=0;$nrOfChanges=0;
         $graph = array('nodes' => $nodes, 'edges' => $edges,'pastconnectors' => $lateMergeNodes, 'startRev' => $startRev, 'endRev' => $endRev);
         
         foreach($revs as $revid => $revdetail) {
-            $cmd = "db execute \"SELECT parent, child FROM revision_ancestry WHERE parent ='$revid' or child ='$revid';\"";
+            $cmd = "db execute \"SELECT child, parent FROM revision_ancestry WHERE parent ='$revid' or child ='$revid';\"";
             $result =& $this->_run($cmd);
             array_shift($result);
             foreach($result as $trans) {
@@ -236,12 +241,12 @@ class mtRepo extends scmRepo
                 $parent = trim($node[0]); $child = trim($node[1]);
                 if($parent == $revid) {
                     $edges[] = array($parent => $child);
-                    $nodes[] = array('rev' => $parent, 'author' => $revdetail->author, 'tags' => $revdetail->tag);
+                    $nodes[] = array('rev' => $parent, 'author' => $revdetail->author, 'tags' => $revdetail->tag, 'date' => $revdetail->date);
                 } elseif ($child == $revid) {
                     $inEdges[$child][] = $parent;
                     $childtag = $revdetail->tag;
                     $childauthor= $revdetail->author;
-                    $nodes[] = array('rev' => $child, 'author' => $revdetail->author, 'tags' => $revdetail->tag);
+                    $nodes[] = array('rev' => $child, 'author' => $revdetail->author, 'tags' => $revdetail->tag, 'date' => $revdetail->date);
 
                 } else {
                     $nodes[] = array('rev' => $parent, 'author' => 'TBD', 'tags' => $parenttag);

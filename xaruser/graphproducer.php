@@ -10,6 +10,7 @@ function bkview_user_graphproducer($args)
     if(!xarVarFetch('file','str::', $file, 'ChangeSet', XARVAR_NOT_REQUIRED)) return;
     if(!xarVarFetch('format','str::',$format,'png', XARVAR_NOT_REQUIRED)) return;
     if(!xarVarFetch('spc','checkbox:',$spc,true,XARVAR_NOT_REQUIRED)) return;
+    if(!xarVarFetch('branch','str::',$branch,'',XARVAR_NOT_REQUIRED)) return;
     extract($args);
     
     if(is_null($graph)) 
@@ -19,45 +20,46 @@ function bkview_user_graphproducer($args)
         if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
         
         $repo =& $item['repo'];
-        //xarLogMessage("BK: passing start=$start,end=$end,file=$file");
-        $graphdata =& $repo->GetGraphData($start, $end, $file);
+        xarLogMessage("MT: passing start=$start,end=$end,file=$file,branch=$branch");
+        $graphdata =& $repo->GetGraphData($start, $end, $file,$branch);
         if($format =='debug') {
             echo "<pre>".var_export($graphdata,true)."</pre>"; 
             die();
         }
         include_once "modules/bkview/xarincludes/GraphViz.php";
         
-        $graph = new Image_GraphViz();
+        $graphattrs = array('ratio'=>'compress');
+        $graph = new Image_GraphViz(true,$graphattrs);
         
-
+        // Common attributes
+        // TODO: make the dot file a BL job (i.e. template it)
+        $nodeattrs = array('spline'=>true,'fontname'=>'Windsor','fontsize'=>'8.0','nodesep'=>'0.1','ranksep'=>'0.2','height'=>'0.3','shape'=>'box');
         foreach($graphdata['nodes'] as $node)
         {
-            $attributes = array('href' => xarModUrl('bkview','user','deltaview', array('repoid' => $repoid, 'rev' => $node['rev'])),
-                                'tooltip' => xarML('Show details for revision #(1) by #(2)',$node['rev'],$node['author']),
-                                'label' => $node['author'].'\n'.substr($node['rev'],0,8).'...'.'\n'.$node['tags'],
-                                'fontname' => 'Windsor', 'fontsize' => '8.0');
+            $nodeattrs['href']    = xarModUrl('bkview','user','deltaview', array('repoid'=>$repoid,'rev'=>$node['rev'],'branch'=>$branch));
+            $nodeattrs['tooltip'] = xarML('Show details for revision #(1) by #(2)',$node['rev'],$node['author']);
+            $nodeattrs['label']   = substr($node['rev'],0,8).'... on '.substr($node['date'],0,10).'\n'.$node['author'].'\n'.$node['tags'];
             
-            if($node['rev'] == $graphdata['startRev'] || $node['rev'] == $graphdata['endRev']) $attributes['color'] ='red';
-            $attributes['fillcolor'] = colour_from_string($node['author']);
-            $attributes['style'] ='filled';
+            if($node['rev'] == $graphdata['startRev'] || $node['rev'] == $graphdata['endRev']) $nodeattrs['color'] ='red';
+            $nodeattrs['fillcolor'] = colour_from_string($node['author']);
+            $nodeattrs['style'] ='filled';
 
             if(!in_array($node['rev'], $graphdata['pastconnectors']))
             {
                 // Normal node
-                $attributes['shape'] = 'box';
-                $graph->addNode($node['rev'], $attributes);
+                $graph->addNode($node['rev'], $nodeattrs);
             } elseif($spc) {
                 // Past connector node
-                $attributes['shape'] = 'ellipse';
-                $attributes['style'] = 'dashed';
-                $graph->addNode($node['rev'], $attributes);
+                $graph->addNode($node['rev'], $nodeattrs);
             }
         }
+        $edgeattrs = array('fontsize'=>'8.0','fontname'=>'Windsor','dir'=>'back','label'=>'diff','fontcolor'=>'cornflowerblue');
         foreach($graphdata['edges'] as $edge) 
         {
-            if(!in_array(key($edge),$graphdata['pastconnectors']) || $spc)
-            {
-                $graph->addEdge($edge,array('fontsize' => 9.0, 'fontname' => 'Helvetica'));
+            if(!in_array(key($edge),$graphdata['pastconnectors']) || $spc) {
+                $params = array('repoid'=>$repoid,'branch'=>$branch);
+                $edgeattrs['href'] = xarModUrl('bkview','user','patchview',$params);
+                $graph->addEdge($edge,$edgeattrs);
             }
         }
     }

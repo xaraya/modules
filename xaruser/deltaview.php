@@ -1,8 +1,5 @@
 <?php
-
 /**
- * File: $Id$
- *
  * delta view function for bkview
  *
  * @package modules
