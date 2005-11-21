@@ -32,7 +32,7 @@ function bkview_user_display($args)
     
     $item = xarModAPIFunc('bkview', 'user','get', array('repoid' => $repoid));
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-    if($item['repotype'] = 2 && $branch=='') {
+    if($item['repotype'] == 2 && $branch=='') {
         // Monotone needs a branch argument
         xarResponseRedirect(xarModUrl('bkview','user','branchview',array('repoid' => $repoid)));
     }

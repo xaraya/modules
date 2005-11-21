@@ -362,7 +362,7 @@ class bkRepo extends scmRepo
         $nrOfChanges = abs($endSerial - $startSerial);
         xarLogMessage("BK: trying to graph $nrOfChanges changes");
         if($nrOfChanges > 500 | $nrOfChanges == 0) {
-            $graph['nodes'][] = array('rev' => xarML('Too many/few\nchanges (#(1))\nin range',$nrOfChanges), 'author' => 'Graph Error', 'tags' => '');
+            $graph['nodes'][] = array('rev' => xarML('Too many/few\nchanges (#(1))\nin range',$nrOfChanges), 'author' => 'Graph Error', 'tags' => '','date'=>'TBD');
             return $graph;
         }
         $cmd = "bk prs -hr$startRev..$endRev -nd':TAGS:|:REV:|:KIDS:|:DS:|:P:' $file";
@@ -377,7 +377,7 @@ class bkRepo extends scmRepo
             
             if(!empty($kids)) $kids = explode(' ',$kids); else $kids = array();
             $nodeIndex[$serial] = $rev;
-            $nodes[$serial] = array('rev' => $rev,'author' => $author, 'tags' => implode(',',$tags));
+            $nodes[$serial] = array('rev' => $rev,'author' => $author, 'tags' => implode(',',$tags),'date'=>'TBD');
             $tags = array(); // reset
             foreach($kids as $next) {
                 if($rev != $next && $next != $startRev && $rev != $endRev) 
