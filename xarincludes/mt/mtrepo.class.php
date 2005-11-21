@@ -222,7 +222,88 @@ class mtRepo extends scmRepo
         }
         return $csets;
     }
+
+    function &manifest($manifest_id)
+    {
+        static $manifests = array();
+        
+        if(!isset($manifests[$manifest_id])) {
+            $cmd = "automate get_manifest $manifest_id";
+            $result = $this->_run($cmd);
+            $manifests[$manifest_id] = $result;
+        }
+        return $manifests[$manifest_id];
+    }
+
+    function DirList($dir="/",$rev='',$branch='')
+    {
+        // Determine the revision
+        if($rev=='') {
+            $cmd = "automate heads $branch";
+            $result = $this->_run($cmd);
+            $rev = $result[0];
+        }
+        
+        // Determine the manifest
+        $cmd = "automate get_revision $rev";
+        $result = $this->_run($cmd);
+        // CHECKME: seems ok, check stdio for relevance of spacing
+        $manifest_id = substr($result[0],14,40);
+        
+        // Retrieve the manifest
+        $result =& $this->manifest($manifest_id);
+
+        $ret = array();
+        foreach($result as $index => $line) {
+            $ident = explode('  ',$line);
+            $file = '/'.trim($ident[1]);
+            $part = strstr($file, $dir);
+            if($part) {
+                // $part contains everything after $dir including $dir itself
+                $part = substr($part, strlen($dir));
+                if($firstslash = strpos($part,'/')) {
+                    // Get the part until the slash
+                    $part = substr($part,0,$firstslash);
+                } 
+                $ret[$part] = $part;
+            }
+        }
+        return $ret;
+    }
     
+    function FileList($dir='/',$rev='',$branch)
+    {
+        // Determine the revision
+        if($rev=='') {
+            $cmd = "automate heads $branch";
+            $result = $this->_run($cmd);
+            $rev = $result[0];
+        }
+        
+        // Determine the manifest
+        $cmd = "automate get_revision $rev";
+        $result = $this->_run($cmd);
+        // CHECKME: seems ok, check stdio for relevance of spacing
+        $manifest_id = substr($result[0],14,40);
+        
+        // Retrieve the manifest
+        $result =& $this->manifest($manifest_id);
+        $ret = array();
+        foreach($result as $index => $line) {
+            $ident = explode('  ',$line);
+            $file = '/'.trim($ident[1]);
+            $part = strstr($file, $dir);
+            if($part) {
+                $part = substr($part, strlen($dir)+1);
+                $firstslash = strpos($part, '/');
+                if(!$firstslash) {
+                    $ret[] = "tag|$part|".$ident[0]."|age|author|comments\n";
+                }
+            }
+        }
+        return $ret;
+    }
+
     function &GetGraphData($start='-3d', $end, $file, $branch='')
     {
         xarLogMessage("MT: repo:GetGraphData($start,$end,$branch)");

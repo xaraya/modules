@@ -1,8 +1,5 @@
 <?php
-
 /**
- * File: $Id$
- *
  * browse view for bkview module
  *
  * @package modules
@@ -17,13 +14,17 @@ function bkview_user_browseview($args)
 {
     if(!xarVarFetch('repoid','id',$repoid)) return;
     if(!xarVarFetch('dir','str::',$dir,'/')) return;
+    if(!xarVarFetch('branch','str::',$branch,'',XARVAR_NOT_REQUIRED)) return;
     extract($args);
     
     $item = xarModAPIFunc('bkview','user','get',array('repoid' => $repoid));
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+    if($item['repotype']==2 && $branch=='') {
+        xarResponseRedirect(xarModUrl('bkview','user','branchview'));
+    }
     $repo =& $item['repo'];
     
-    $dirlist=$repo->DirList($dir);
+    $dirlist=$repo->DirList($dir,'',$branch);
     asort($dirlist);
    
     $data['dirlist']=array();
@@ -43,7 +44,7 @@ function bkview_user_browseview($args)
         $counter++;
     }
     $data['maxlen'] = 0.8 * $maxlen;
-    $filelist=$repo->FileList($dir);
+    $filelist=$repo->FileList($dir,'',$branch);
     $data['files']=array();
     $files=array();
     $counter=1;
