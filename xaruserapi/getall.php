@@ -92,7 +92,7 @@ function julian_userapi_getall($args)
     // the date range specified.
     // TODO Bug 5190 rewrite the if clause in here
     $current_user=xarUserGetVar('uid');
-    $query = "SELECT event_id,
+    $query = "SELECT DISTINCT event_id,
                    created,
                    dtstart,
                    organizer,
@@ -193,7 +193,7 @@ function julian_userapi_getall($args)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $event_linkage_table = $xartable['julian_events_linkage'];
-    $query_linked = "SELECT event_id,
+    $query_linked = "SELECT DISTINCT event_id,
                          hook_modid,
                          hook_itemtype,
                          hook_iid,

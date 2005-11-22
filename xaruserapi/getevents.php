@@ -97,7 +97,7 @@ function julian_userapi_getevents($args)
     $event_table = $xartable['julian_events'];
 
     // Get items.
-    $query = "SELECT $event_table.event_id,
+    $query = "SELECT DISTINCT $event_table.event_id,
                      $event_table.summary,
                      $event_table.description,
                      $event_table.street1,
@@ -256,7 +256,7 @@ function julian_userapi_getevents($args)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $event_linkage_table = $xartable['julian_events_linkage'];
-    $query_linked = "SELECT event_id,
+    $query_linked = "SELECT DISTINCT event_id,
     					 hook_modid,
     					 hook_itemtype,
     					 hook_iid,
