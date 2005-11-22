@@ -30,7 +30,7 @@
  * @TODO MichelV <1> Add privs
  */
 function todolist_admin_new($args)
-{ 
+{
 /*
 function add_todo($due_date,$priority,$project,$percentage_completed,$text,$responsible_person,$note_text)
 {
@@ -85,24 +85,25 @@ function add_todo($due_date,$priority,$project,$percentage_completed,$text,$resp
      */
     extract($args);
 
-    if (!xarVarFetch('number',  'str:1:', $number,  $number,  XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('name',    'str:1:', $name,    $name,    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('text',  'str:1:', $text,  $text,  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('priority',    'int:1:10', $priority,    $priority,    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('percentage_completed',    'int:1:100', $percentage_completed,    $percentage_completed,    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('due_date',  'str:1:', $due_date,  $due_date,  XARVAR_NOT_REQUIRED)) return; //Date validation?
     if (!xarVarFetch('project_id',  'id', $project_id,  $project_id,  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('todostatus',  'int:1:', $todostatus,  $todostatus,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('invalid', 'array',  $invalid, $invalid, XARVAR_NOT_REQUIRED)) return;
-    /* Initialise the $data variable that will hold the data to be used in
-     * the blocklayout template, and get the common menu configuration - it
-     * helps if all of the module pages have a standard menu at the top to
-     * support easy navigation
-     */
-    $data = xarModAPIFunc('example', 'admin', 'menu');
+    /* Initialise the $data variable that will hold the data to be used in */
+    $data = xarModAPIFunc('todolist', 'admin', 'menu');
     /* Security check - important to do this as early as possible to avoid
      * potential security holes or just too much wasted processing
      */
     if (!xarSecurityCheck('AddTodolist')) return; // TODO
 
     // Get the possible groups for this new todo
+
+
     // Get the possible project
-    // Get the possible percentage complete
+
     /* Build array with percentages
     */
     $perc_compl_options = '';
@@ -112,7 +113,7 @@ function add_todo($due_date,$priority,$project,$percentage_completed,$text,$resp
         $perc_compl_options.='>'.$j.'</option>';
     }
     $data['perc_compl_options'] = $perc_compl_options;
-    
+
     /* Build array with priorities
     */
     $prio_options = '';
@@ -128,11 +129,11 @@ function add_todo($due_date,$priority,$project,$percentage_completed,$text,$resp
     $data['invalid'] = $invalid;
 
     $item = array();
-    $item['module'] = 'example';
+    $item['module'] = 'todolist';
     $hooks = xarModCallHooks('item', 'new', '', $item);
 
     if (empty($hooks)) {
-        $data['hookoutput'] = '';
+        $data['hookoutput'] = array();
     } else {
         /* You can use the output from individual hooks in your template too, e.g. with
          * $hookoutput['categories'], $hookoutput['dynamicdata'], $hookoutput['keywords'] etc.
@@ -144,15 +145,15 @@ function add_todo($due_date,$priority,$project,$percentage_completed,$text,$resp
      * If they are not set, then we need to set them empty to surpress errors
      */
     if (empty($name)) {
-        $data['name'] = '';
+        $data['text'] = '';
     } else {
-        $data['name'] = $name;
+        $data['text'] = $text;
     }
 
-    if (empty($number)) {
-        $data['number'] = '';
+    if (empty($due_date)) {
+        $data['due_date'] = '';
     } else {
-        $data['number'] = $number;
+        $data['due_date'] = $due_date;
     }
     /* Return the template variables defined in this function */
     return $data;

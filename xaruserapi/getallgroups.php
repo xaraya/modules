@@ -11,9 +11,9 @@
  */
 
 /**
- * Get all example items
- * 
- * @author the Example module development team 
+ * Get all groups
+ *
+ * @author the Example module development team
  * @param numitems $ the number of items to retrieve (default -1 = all)
  * @param startnum $ start with this item number (default 1)
  * @returns array
@@ -21,55 +21,7 @@
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function todolist_userapi_getallgroups($args)
-{ 
-    /* Get arguments from argument array - all arguments to this function
-
-/**
- * get all groups
- * @returns array
- * @return array of items, or false on failure
-
-    extract($args);
-
-    if (!isset($startnum)) {
-        $startnum = 1;
-    }
-    if (!isset($numitems)) {
-        $numitems = -1;
-    }
-
-    if ((!isset($startnum)) || (!isset($numitems))) {
-        pnSessionSetVar('errormsg', xarML('Error in API arguments'));
-        return false;
-    }
-
-
-    $todolist_groups_column = &$pntable['todolist_groups_column'];
-
-    $sql = "SELECT $todolist_groups_column[id],$todolist_groups_column[group_name], 
-         $todolist_groups_column[description],$todolist_groups_column[group_leader]
-         FROM $pntable[todolist_groups] ORDER BY $todolist_groups_column[group_name]";
-
-    $result = $dbconn->SelectLimit($sql, $numitems, $startnum-1);
-
-    if ($dbconn->ErrorNo() != 0) {
-        pnSessionSetVar('errormsg', xarML('Items load failed'));
-        return false;
-    }
-
-    for (; !$result->EOF; $result->MoveNext()) {
-        list($gid, $gname, $gdescription,$gleader) = $result->fields;
-        if (pnSecAuthAction(0, 'todolist::', "$gname::$gid", ACCESS_READ)) {
-            $items[] = array('group_id' => $gid,
-                             'group_name' => $gname,
-                             'group_description' => $gdescription,
-                             'group_leader' => $gleader);
-        }
-    }
-
-    $result->Close();
-
-     */
+{
     extract($args);
     /* Optional arguments.
      * FIXME: (!isset($startnum)) was ignoring $startnum as it contained a null value
@@ -96,7 +48,7 @@ function todolist_userapi_getallgroups($args)
     }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-            join(', ', $invalid), 'user', 'getall', 'Example');
+            join(', ', $invalid), 'user', 'getallgroups', 'Todolist');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException($msg));
         return;
@@ -106,30 +58,21 @@ function todolist_userapi_getallgroups($args)
     /* Security check - important to do this as early on as possible to
      * avoid potential security holes or just too much wasted processing
      */
-    if (!xarSecurityCheck('ViewExample')) return;
-    /* Get database setup - note that both xarDBGetConn() and xarDBGetTables()
-     * return arrays but we handle them differently.  For xarDBGetConn() we
-     * currently just want the first item, which is the official database
-     * handle.  For xarDBGetTables() we want to keep the entire tables array
-     * together for easy reference later on
-     */
+    if (!xarSecurityCheck('ViewTodolist')) return;
+
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     /* It's good practice to name the table definitions you are
      * using - $table doesn't cut it in more complex modules
      */
-    $exampletable = $xartable['example'];
-    /* TODO: how to select by cat ids (automatically) when needed ???
-     * Get items - the formatting here is not mandatory, but it does make the
-     * SQL statement relatively easy to read.  Also, separating out the sql
-     * statement from the SelectLimit() command allows for simpler debug
-     * operation if it is ever needed
-     */
-    $query = "SELECT xar_exid,
-                     xar_name,
-                     xar_number
-              FROM $exampletable
-              ORDER BY xar_name";
+    $groupstable = $xartable['todolist_groups'];
+
+    $query = "SELECT xar_id,
+               xar_group_name,
+               xar_description,
+               xar_group_leader
+              FROM $groupstable
+              ORDER BY xar_group_name";
     /* SelectLimit also supports bind variable, they get to be put in
      * as the last parameter in the function below. In this case we have no
      * bind variables, so we left the parameter out. We could have passed in an
@@ -140,25 +83,22 @@ function todolist_userapi_getallgroups($args)
      * the exception so we just return
      */
     if (!$result) return;
-    /* Put items into result array.  Note that each item is checked
-     * individually to ensure that the user is allowed *at least* OVERVIEW
-     * access to it before it is added to the results array.
-     * If more severe restrictions apply, e.g. for READ access to display
-     * the details of the item, this *must* be verified by your function.
+    /* Put items into result array.
      */
     for (; !$result->EOF; $result->MoveNext()) {
-        list($exid, $name, $number) = $result->fields;
-        if (xarSecurityCheck('ViewExample', 0, 'Item', "$name:All:$exid")) {
-            $items[] = array('exid'   => $exid,
-                             'name'   => $name,
-                             'number' => $number);
+        list($groupid,$group_name,$description,$group_leader) = $result->fields;
+        if (xarSecurityCheck('ViewTodolist', 0, 'Item', "All:All:All")) { // TODO
+            $items[] = array('groupid' =>$groupid,
+                             'group_name' => $group_name,
+                             'description' => $description,
+                             'group_leader' => $group_leader);
         }
     }
     /* All successful database queries produce a result set, and that result
      * set should be closed when it has been finished with
      */
-    $result->Close(); 
+    $result->Close();
     /* Return the items */
     return $items;
-} 
+}
 ?>
