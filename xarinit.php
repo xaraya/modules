@@ -62,7 +62,7 @@ function courses_init()
         'xar_method'=>array('null'=>TRUE, 'type'=>'text'),
         'xar_language'=>array('null'=>TRUE, 'type'=>'varchar', 'size'=>100),
         'xar_longdesc'=>array('null'=>FALSE, 'type'=>'text'),
-        'xar_costs'=>array('null'=>FALSE, 'type'=>'varchar','size'=>100, 'default'=>'0'),
+        'xar_costs'=>array('null'=>FALSE, 'type'=>'varchar','size'=>255, 'default'=>''),
         'xar_committee'=>array('null'=>TRUE, 'type'=>'text',),
         'xar_coordinators'=>array('null'=>TRUE, 'type'=>'text'),
         'xar_lecturers'=>array('null'=>TRUE, 'type'=>'text'),
@@ -605,6 +605,17 @@ function courses_upgrade($oldversion)
             return courses_upgrade('0.1.3');
 
         case '0.1.3':
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+            // Using the Datadict method to be up to date ;)
+            $datadict =& xarDBNewDataDict($dbconn, 'CREATE');
+            $planningtable = $xartable['courses_planning'];
+            // Apply changes
+            xarDBLoadTableMaintenanceAPI();
+            $result = $datadict->alterColumn($planningtable, "xar_costs C(255) NOTNULL Default '' ");
+            if (!$result) return;
+            return courses_upgrade('0.1.4');
+        case '0.1.4':
             break;
     }
     // Update successful

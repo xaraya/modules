@@ -98,7 +98,7 @@ function courses_upcomingblock_display($blockinfo)
     }
 
     if ($result->EOF) {
-        echo "empty";
+    //    echo "empty";
         return;
     }
 
