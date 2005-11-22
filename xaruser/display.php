@@ -203,6 +203,17 @@ function xarpages_user_display($args)
     // Add remaining values to the tree.
     $data['pid'] = $pid;
 
+    // Set the theme.
+    // Set it *before* calling up any custom functions, since those custom
+    // functions may need access to templates.
+    // Use rolled-up page here so the theme is inherited.
+    // The special case theme name 'default' will disable this feature
+    // and just use the default theme.
+    xarVarFetch('theme', 'enum:rss:print:', $theme_override, '', XARVAR_NOT_REQUIRED);
+    if (!empty($inherited['theme']) && $inherited['theme'] != 'default' && empty($theme_override)) {
+        xarTplSetThemeName($inherited['theme']);
+    }
+
     // Call up a custom function to do any further manipulation or
     // checking, before invoking the rendering template.
     // The function may check page parameters, fetch data etc.
@@ -242,14 +253,6 @@ function xarpages_user_display($args)
             // remains open to use other values for specific purposes.
             // Carry on processing any further functions.
         }
-    }
-
-    // Set the theme.
-    // Use rolled-up page here so the theme is inherited.
-    // The special case theme name 'default' will disable this feature
-    // and just use the default theme.
-    if (!empty($inherited['theme']) && $inherited['theme'] != 'default') {
-        xarTplSetThemeName($inherited['theme']);
     }
 
     // Set the page template.
