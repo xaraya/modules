@@ -1,9 +1,5 @@
 <?php
-
-
 /**
- * File: $Id$
- *
  * Tag handler for <xar:reports-dataset/> tag.
  *
  * This is the handler for the 'render' method for the tag.
@@ -30,7 +26,7 @@ function reports_userapi_datasettag($args)
     // specific tag spec.
     $code ='';
     $code = '&$_bl_repres;'."\n";
-    $code .= '$_bl_repconn =& xarModApiFunc(\'reports\',\'user\',\'getconnectionobject\',array(\'conn_id\' => $connection));'."\n";
+    $code .= '$_bl_repconn = xarModApiFunc(\'reports\',\'user\',\'getconnectionobject\',array(\'conn_id\' => $connection));'."\n";
     $code .= '$_bl_repconn->SetFetchMode(ADODB_FETCH_ASSOC);'."\n";
     $code .= '$_bl_repres  = $_bl_repconn->Execute('.$sql.','.$vars.')'."\n";
     return $code;
