@@ -5,7 +5,7 @@ function comments_admin_module_stats( )
     // Security Check
     if(!xarSecurityCheck('Comments-Admin')) return;
     if (!xarVarFetch('modid','int:1',$modid)) return;
-    if (!xarVarFetch('itemtype','int:1',$itemtype)) return;
+    if (!xarVarFetch('itemtype','int:0',$itemtype,0,XARVAR_NOT_REQUIRED)) return;
 
     if (!isset($modid) || empty($modid)) {
         $msg = xarML('Invalid or Missing Parameter \'modid\'');
