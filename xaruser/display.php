@@ -176,6 +176,10 @@ function comments_user_display($args)
     $package['name']                  = xarUserGetVar('name');
     $package['new_title']             = xarVarPrepForDisplay(xarVarGetCached('Comments.title', 'title'));
 
+    // Let's honour the phpdoc entry at the top :-)
+    if(isset($args['returnurl'])) {
+        $receipt['returnurl']['raw'] = $args['returnurl'];
+    }
     if (empty($ishooked) && empty($receipt['returnurl'])) {
         // get the title and link of the original object
         $modinfo = xarModGetInfo($header['modid']);
