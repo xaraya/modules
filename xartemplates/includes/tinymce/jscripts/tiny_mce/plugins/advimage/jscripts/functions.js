@@ -108,12 +108,16 @@ function init() {
 		var onmouseoversrc = getImageSrc(tinyMCE.cleanupEventStr(tinyMCE.getAttrib(elm, 'onmouseover')));
 		var onmouseoutsrc = getImageSrc(tinyMCE.cleanupEventStr(tinyMCE.getAttrib(elm, 'onmouseout')));
 
-		// Fix for drag-drop/copy paste bug in Mozilla
-		mceRealSrc = tinyMCE.getAttrib(elm, 'mce_real_src');
-		if (mceRealSrc != "")
+		src = convertURL(src, elm, true);
+
+		// Use mce_src if found
+		var mceRealSrc = tinyMCE.getAttrib(elm, 'mce_src');
+		if (mceRealSrc != "") {
 			src = mceRealSrc;
 
-		src = convertURL(src, elm, true);
+			if (tinyMCE.getParam('convert_urls'))
+				src = convertURL(src, elm, true);
+		}
 
 		if (onmouseoversrc != "")
 			onmouseoversrc = convertURL(onmouseoversrc, elm, true);
@@ -273,9 +277,6 @@ function insertAction() {
 			return;
 	}
 
-	// Fix output URLs
-	src = convertURL(src, tinyMCE.imgElement);
-
 	if (onmouseoversrc && onmouseoversrc != "")
 		onmouseoversrc = "this.src='" + convertURL(onmouseoversrc, tinyMCE.imgElement) + "';";
 
@@ -283,8 +284,8 @@ function insertAction() {
 		onmouseoutsrc = "this.src='" + convertURL(onmouseoutsrc, tinyMCE.imgElement) + "';";
 
 	if (elm != null && elm.nodeName == "IMG") {
-		setAttrib(elm, 'src', src);
-		setAttrib(elm, 'mce_real_src', src);
+		setAttrib(elm, 'src', convertURL(src, tinyMCE.imgElement));
+		setAttrib(elm, 'mce_src', src);
 		setAttrib(elm, 'alt');
 		setAttrib(elm, 'title');
 		setAttrib(elm, 'border');
@@ -311,7 +312,8 @@ function insertAction() {
 	} else {
 		var html = "<img";
 
-		html += makeAttrib('src', src);
+		html += makeAttrib('src', convertURL(src, tinyMCE.imgElement));
+		html += makeAttrib('mce_src', src);
 		html += makeAttrib('alt');
 		html += makeAttrib('title');
 		html += makeAttrib('border');

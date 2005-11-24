@@ -10,10 +10,10 @@ var TinyMCE_advanced_buttons = [
 	['italic', '{$lang_italic_img}', '{$lang_italic_desc}', 'Italic'],
 	['underline', '{$lang_underline_img}', '{$lang_underline_desc}', 'Underline'],
 	['strikethrough', 'strikethrough.gif', '{$lang_striketrough_desc}', 'Strikethrough'],
-	['justifyleft', 'left.gif', '{$lang_justifyleft_desc}', 'JustifyLeft'],
-	['justifycenter', 'center.gif', '{$lang_justifycenter_desc}', 'JustifyCenter'],
-	['justifyright', 'right.gif', '{$lang_justifyright_desc}', 'JustifyRight'],
-	['justifyfull', 'full.gif', '{$lang_justifyfull_desc}', 'JustifyFull'],
+	['justifyleft', 'justifyleft.gif', '{$lang_justifyleft_desc}', 'JustifyLeft'],
+	['justifycenter', 'justifycenter.gif', '{$lang_justifycenter_desc}', 'JustifyCenter'],
+	['justifyright', 'justifyright.gif', '{$lang_justifyright_desc}', 'JustifyRight'],
+	['justifyfull', 'justifyfull.gif', '{$lang_justifyfull_desc}', 'JustifyFull'],
 	['bullist', 'bullist.gif', '{$lang_bullist_desc}', 'InsertUnorderedList'],
 	['numlist', 'numlist.gif', '{$lang_numlist_desc}', 'InsertOrderedList'],
 	['outdent', 'outdent.gif', '{$lang_outdent_desc}', 'Outdent'],
@@ -46,12 +46,12 @@ var TinyMCE_advanced_buttons = [
  */
 function TinyMCE_advanced_getControlHTML(button_name)
 {
-	var buttonTileMap = new Array('anchor.gif','backcolor.gif','bullist.gif','center.gif',
+	var buttonTileMap = new Array('anchor.gif','backcolor.gif','bullist.gif','justifycenter.gif',
 											'charmap.gif','cleanup.gif','code.gif','copy.gif','custom_1.gif',
-											'cut.gif','forecolor.gif','full.gif','help.gif','hr.gif',
-											'image.gif','indent.gif','left.gif','link.gif','numlist.gif',
+											'cut.gif','forecolor.gif','justifyfull.gif','help.gif','hr.gif',
+											'image.gif','indent.gif','justifyleft.gif','link.gif','numlist.gif',
 											'outdent.gif','paste.gif','redo.gif','removeformat.gif',
-											'right.gif','strikethrough.gif','sub.gif','sup.gif','undo.gif',
+											'justifyright.gif','strikethrough.gif','sub.gif','sup.gif','undo.gif',
 											'unlink.gif','visualaid.gif');
 
 	// Lookup button in button list
@@ -526,7 +526,9 @@ function TinyMCE_advanced_getEditorTemplate(settings, editorId)
 		break;
 	}
 
-	template['html'] += '<div id="{$editor_id}_resize_box" class="mceResizeBox"></div>';
+	if (resizing)
+		template['html'] += '<span id="{$editor_id}_resize_box" class="mceResizeBox"></span>';
+
 	template['html'] = tinyMCE.replaceVar(template['html'], 'style_select_options', styleSelectHTML);
 	template['delta_width'] = 0;
 	template['delta_height'] = deltaHeight;
@@ -655,6 +657,9 @@ function TinyMCE_advanced_resizeTo(inst, w, h, set_w) {
 	var dx = w - tableElm.clientWidth;
 	var dy = h - tableElm.clientHeight;
 
+	w = w < 1 ? 30 : w;
+	h = h < 1 ? 30 : h;
+
 	if (set_w)
 		tableElm.style.width = w + "px";
 
@@ -662,6 +667,9 @@ function TinyMCE_advanced_resizeTo(inst, w, h, set_w) {
 
 	iw = iframe.clientWidth + dx;
 	ih = iframe.clientHeight + dy;
+
+	iw = iw < 1 ? 30 : iw;
+	ih = ih < 1 ? 30 : ih;
 
 	if (tinyMCE.isGecko) {
 		iw -= 2;
@@ -704,10 +712,18 @@ function TinyMCE_advanced_resizeEventHandler(e) {
 
 	switch (e.type) {
 		case "mousemove":
-			if (resizer.horizontal)
-				resizeBox.style.width = (resizer.width + dx) + "px";
+			var w, h;
 
-			resizeBox.style.height = (resizer.height + dy) + "px";
+			w = resizer.width + dx;
+			h = resizer.height + dy;
+
+			w = w < 1 ? 1 : w;
+			h = h < 1 ? 1 : h;
+
+			if (resizer.horizontal)
+				resizeBox.style.width = w + "px";
+
+			resizeBox.style.height = h + "px";
 			break;
 
 		case "mouseup":
@@ -766,7 +782,7 @@ function TinyMCE_advanced_getInsertImageTemplate()
 /**
  * Node change handler.
  */
-function TinyMCE_advanced_handleNodeChange (editor_id, node, undo_index, undo_levels, visual_aid, any_selection, setup_content) {
+function TinyMCE_advanced_handleNodeChange(editor_id, node, undo_index, undo_levels, visual_aid, any_selection, setup_content) {
 	function selectByValue(select_elm, value, first_index) {
 		first_index = typeof(first_index) == "undefined" ? false : true;
 
@@ -874,11 +890,11 @@ function TinyMCE_advanced_handleNodeChange (editor_id, node, undo_index, undo_le
 				nodeData += "class: " + className + " ";
 
 			if (getAttrib(path[i], 'src') != "") {
-				nodeData += "src: " + path[i].getAttribute('src') + " ";
+				nodeData += "src: " + tinyMCE.getAttrib(path[i], "src") + " ";
 			}
 
 			if (getAttrib(path[i], 'href') != "") {
-				nodeData += "href: " + path[i].getAttribute('href') + " ";
+				nodeData += "href: " + tinyMCE.getAttrib(path[i], "href") + " ";
 			}
 
 			if (nodeName == "img" && tinyMCE.getAttrib(path[i], "class").indexOf('mceItemFlash') != -1) {

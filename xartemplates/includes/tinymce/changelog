@@ -1,3 +1,40 @@
+Version 2.0 (2005-11-xx)
+	Added new paste_replace_list option to the paste plugin, this replaces some MS specific characters into normal characters.
+	Added new convert_urls option, this was required to address some issues with Firefox 1.5RC2.
+	Added new paste_create_linebreaks option to paste plugin contributed by Kevin Rodgers.
+	Added updated simplified Chinese language pack contributed by Wang Yang (tom_cat).
+	Added updated Durch language pack contributed by Mark van der Sanden.
+	Added updated French language pack contributed by Normand Lamoureux.
+	Added updated Polish language pack contributed by Wooya.
+	Added new Traditional Chinese language pack contributed by Twapweb.
+	Added new Slovak language pack contributed by Vladimir VASIL.
+	Fixed bug where getting init settings in handleNodeChange callback wasn't working correctly when multiple configs where used.
+	Fixed bug with urls being converted into incorrect values in Firefox 1.5RC2.
+	Fixed bug where editor and cursor was flickering when TinyMCE was placed in a hidden div in Firefox 1.5RC2.
+	Fixed bug with missing parenthesis in a MSIE setInnerHTML call.
+	Fixed bug where MSIE was producing a "Invalid source HTML for this operation" javascript error when placed in P tags.
+	Fixed bug where some styles with RGB values was parsed/serialized incorrectly in Firefox/Mozilla.
+	Fixed bug where reset form action didn't reset all editor instances to their original values.
+	Fixed bug where a javascript exception whas thrown when the editor was resized to a negative value in MSIE.
+	Fixed bug where inserting custom characters or date/time within a font element removed formatting in Firefox/Mozilla.
+	Fixed bug where image urls was inserted incorrectly if relative_urls was set to false due to issues with inserthtml command.
+	Fixed bug where encoding option wasn't working correctly becurse the entities list wasn't initialized.
+	Fixed bug where MSIE removed the first comment from the HTML of a mceInsertContent call.
+	Fixed bug where update all cells in table/row wasn't working on some tables with lots of whitespace.
+	Fixed bug with td background attribute when inline_styles option was set to true in MSIE.
+	Fixed bug where forms submitted with accesskey or return produced a JS error in Firefox 1.5RC2.
+	Fixed bug with URL convertion logic not converting paths correctly to relative/absolute URLs.
+	Fixed issue where TDs was created instead of TH elements when inserting a column on a row with TH elements.
+	Fixed issue with editor_selector/editor_deselector options couldn't be used when mode was specific_textareas.
+	Fixed issue where font selection produced null face attributes in MSIE.
+	Fixed issue where document local anchors where prefixed with the document name.
+	Fixed so the CSS select list gets hidden in the link dialog in advanced theme if there isn't any CSS classes.
+	Fixed so that the onsubmit handler of a form was processed correctly when posting using the save plugin.
+	Fixed so TinyMCE makes some very simple cleanups even if cleanup option is set to false.
+	Fixed so alignment button gifs have the justify prefix, such as justifyleft, for compatiblity with Drupal.
+	Fixed compatiblity issues with the .NET version of TinyMCE Compressor.
+	Fixed performance issue with fullscreen plugin, it switches back to normal view a lot faster now.
+	Fixed issues with mceSelectList class in advanced theme and compressed it some.
 Version 2.0RC4 (2005-10-30)
 	Fixed bug with font face/size/color wasn't working correctly in Firefox 1.5b1.
 	Fixed bug where all actions where dispatching the onbeforeunload event.

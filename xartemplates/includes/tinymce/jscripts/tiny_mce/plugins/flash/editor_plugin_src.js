@@ -1,5 +1,5 @@
 /* Import plugin specific language pack */
-tinyMCE.importPluginLanguagePack('flash', 'en,de,sv,zh_cn,cs,fa,fr_ca,fr,pl,pt_br,nl,da,he,no,hu,ru,ru_KOI8-R,ru_UTF-8,es,cy,is');
+tinyMCE.importPluginLanguagePack('flash', 'en,de,sv,zh_cn,cs,fa,fr_ca,fr,pl,pt_br,nl,da,he,no,hu,ru,ru_KOI8-R,ru_UTF-8,es,cy,is,zh_tw,zh_tw_utf8,sk');
 
 function TinyMCE_flash_getInfo() {
 	return {

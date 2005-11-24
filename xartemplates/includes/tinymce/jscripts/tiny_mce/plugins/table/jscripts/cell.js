@@ -80,6 +80,9 @@ function updateAction() {
 		case "row":
 			var cell = trElm.firstChild;
 
+			if (cell.nodeName != "TD" && cell.nodeName != "TH")
+				cell = nextCell(cell);
+
 			do {
 				cell = updateCell(cell, true);
 			} while ((cell = nextCell(cell)) != null);
@@ -91,6 +94,9 @@ function updateAction() {
 
 			for (var i=0; i<rows.length; i++) {
 				var cell = rows[i].firstChild;
+
+				if (cell.nodeName != "TD" && cell.nodeName != "TH")
+					cell = nextCell(cell);
 
 				do {
 					cell = updateCell(cell, true);
@@ -161,9 +167,8 @@ function updateCell(td, skip_id) {
 		// changing to a different node type
 		var newCell = doc.createElement(celltype);
 
-		for (var c=0; c<td.childNodes.length; c++) {
+		for (var c=0; c<td.childNodes.length; c++)
 			newCell.appendChild(td.childNodes[c].cloneNode(1));
-		}
 
 		for (var a=0; a<td.attributes.length; a++) {
 			var attr = td.attributes[a];
@@ -172,8 +177,6 @@ function updateCell(td, skip_id) {
 
 		td.parentNode.replaceChild(newCell, td);
 		td = newCell;
-
-		return newCell;
 	}
 
 	return td;

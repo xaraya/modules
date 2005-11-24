@@ -118,11 +118,11 @@ div.headerDiv {
 div.colLeft {		
 	float: left;
 	width: 300px;	
-	margin-right: 10px;	
+	margin-right: 20px;
 }
 div.colRight {	
-	margin-left: 310px;
-	width: 176px;	
+	margin-left: 10px;
+	width: 176px;
 }
 * html div.colLeft {
 	margin-right: 7px;
@@ -133,7 +133,7 @@ div.colRight {
 /* float wrap */
 div.floatWrap {
 	display: inline-block;
-	margin-bottom: 10px;	
+	margin-bottom: 30px;	
 }
 /* IE Win only Hack \*/
 * html div.floatWrap {
@@ -217,7 +217,7 @@ fieldset {
 }
 div.rowDiv {
 	clear: left;
-	float: none;		
+	float: none;
 }
 div.rowDiv label, div.rowDiv input, div.rowDiv select, span.frmText {
 	display: block;
@@ -228,12 +228,14 @@ div.rowDiv label {
 	width: 100px;
 	margin-right: 5px;
 	padding-top: 3px;
-	padding-bottom: 3px;	
+	padding-bottom: 3px;
+		clear: left;
 }
 div.rowDiv label span.title {
 	color: #666666;
 	background-color:transparent;
 	font-weight: bold;
+	display:block;
 }
 div.rowDiv input, div.rowDiv select {
 	border: 1px solid #cccccc;

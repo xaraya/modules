@@ -1,5 +1,16 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
 <xar:comment>Set some classes for xhtml compliant rows and columns</xar:comment>
+<xar:if condition="!empty($class)">
+<xar:elseif condition="empty($rows)"/>
+    <xar:set name="class">'xar-form-textareamedium'</xar:set>
+    <xar:set name="rows">10</xar:set>
+<xar:elseif condition="$rows gt 15"/>
+    <xar:set name="class">'xar-form-textarealarge'</xar:set>
+<xar:elseif condition="$rows lt 5"/>
+    <xar:set name="class">'xar-form-textareasmall'</xar:set>
+<xar:else/>
+    <xar:set name="class">'xar-form-textareamedium'</xar:set>
+</xar:if>
 
 <xar:set name="textareasource">'
 <!--

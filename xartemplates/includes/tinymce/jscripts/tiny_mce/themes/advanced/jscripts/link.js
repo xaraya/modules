@@ -28,6 +28,12 @@ function init() {
 	addClassesToList('styleSelect', 'theme_advanced_link_styles');
 	selectByValue(formObj, 'styleSelect', tinyMCE.getWindowArg('className'), true);
 
+	// Hide css select row if no CSS classes
+	if (formObj.styleSelect && formObj.styleSelect.options.length <= 1) {
+		document.getElementById('styleSelectRow').style.display = 'none';
+		window.resizeBy(0, -20);
+	}
+
 	// Handle file browser
 	if (isVisible('hrefbrowser'))
 		document.getElementById('href').style.width = '180px';

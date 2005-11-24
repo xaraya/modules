@@ -8,6 +8,7 @@
 	border: 0px; margin: 0px; padding: 0px; background: transparent;
 	margin-top: 1px;
 	margin-left: 1px;
+	padding: 0px;
 }
 
 .mceButtonNormal {
@@ -16,20 +17,19 @@
 }
 
 .mceButtonOver {
-	border: 1px solid #0A246A;
+	border: 1px solid #0A246A !important;
 	cursor: arrow;
 	background-color: #B6BDD2;
 }
 
 .mceButtonDown {
 	cursor: arrow;
-	border: 1px solid #0A246A;
+	border: 1px solid #0A246A !important;
 	background-color: #8592B5;
 }
 
 .mceButtonSelected {
-	border: 1px solid;
-	border-color: #C0C0BB;
+	border: 1px solid #C0C0BB !important;
 	cursor: arrow;
 }
 

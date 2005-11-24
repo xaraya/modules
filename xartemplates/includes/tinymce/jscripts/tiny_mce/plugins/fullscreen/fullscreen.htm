@@ -58,7 +58,7 @@
 	}
 
 	function unloadHandler(e) {
-		window.opener.tinyMCE.execInstanceCommand(tinyMCE.getParam('fullscreen_editor_id'), 'mceSetContent', false, tinyMCE.getContent("mce_editor_0"));
+		tinyMCE.setInnerHTML(tinyMCE.selectedInstance.getBody(), document.getElementsByTagName("iframe").contentDocument.body.innerHTML);
 	}
 
 	// Add onunload
@@ -66,8 +66,6 @@
 </script>
 </head>
 <body style="margin: 0px; overflow: hidden; height: 100%" scrolling="no" scroll="no">
-
 <textarea id="fullscreenarea" style="width: 100%; height: 100%"></textarea>
-
 </body>
 </html>

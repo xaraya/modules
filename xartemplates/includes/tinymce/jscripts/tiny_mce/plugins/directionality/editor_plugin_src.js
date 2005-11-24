@@ -1,5 +1,5 @@
 /* Import plugin specific language pack */
-tinyMCE.importPluginLanguagePack('directionality', 'en,sv,fr_ca,zh_cn,cs,da,he,no,de,hu,ru,ru_KOI8-R,ru_UTF-8,es,cy,is,pl');
+tinyMCE.importPluginLanguagePack('directionality', 'en,sv,fr_ca,zh_cn,cs,da,he,no,de,hu,ru,ru_KOI8-R,ru_UTF-8,es,cy,is,pl,nl,fr');
 
 function TinyMCE_directionality_getInfo() {
 	return {
