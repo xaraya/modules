@@ -473,6 +473,19 @@ class phpthumb {
 	}
 
 	//////////////////////////////////////////////////////////////////////
+    /* xaraya addition - fix slashes courtesy Looooooka  */
+    function fixslashes($unc) {
+        $unc = str_replace( "\\", "/", $unc) ;
+        $unc = str_replace( "//", "/", $unc) ;
+        $check=strpos($unc, "//");
+        if($check==false) {
+            return($unc);
+        }
+        else {
+            fixslashes($unc);
+       }
+
+    }
 
 	function ResolveSource() {
 		if (is_resource($this->gdimg_source)) {
@@ -480,6 +493,9 @@ class phpthumb {
 		}
 		if (!$this->sourceFilename && !$this->rawImageData) {
 			$this->sourceFilename = $this->ResolveFilenameToAbsolute($this->src);
+			if ($this->sourceFilename=="" OR $this->sourceFilename==null) {
+                $this->sourceFilename=$this->fixslashes($this->src);
+            }
 		}
 		return true;
 	}
