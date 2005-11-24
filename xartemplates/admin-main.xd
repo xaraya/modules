@@ -31,7 +31,7 @@
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
             <ol>
             <li><xar:mlstring>Install the module (done by now, as you are seeing this page)</xar:mlstring> </li>
-            <li><xar:mlstring>Go to Admin > DynamicData > View Objects > </xar:mlstring><a href="/index.php?module=dynamicdata&amp;type=admin&amp;func=new"><xar:mlstring>Create New </xar:mlstring></a>. <xar:mlstring>There, create a new dynamic data object 
+            <li><xar:mlstring>Go to Admin > DynamicData > View Objects > </xar:mlstring><a href="&xar-modurl-dynamicdata-admin-new;"><xar:mlstring>Create New </xar:mlstring></a>. <xar:mlstring>There, create a new dynamic data object 
             , which should hold the subitem information.</xar:mlstring> </li>
             <li><xar:mlstring>Go to Dynamic Data > View Objects > Edit [YOUR OBJECT] > Modify Dynamic Properties and add properties (fields). You must have at least one field with a chosen label, Property Type of ItemID, default of 0 and Status of Display Only. </xar:mlstring></li>
             <li><xar:mlstring>Go to Admin > Subitems module (admin area) > Add link. There, choose the object you have just created, the module and the itemtype that you will attach this property to.</xar:mlstring></li>
