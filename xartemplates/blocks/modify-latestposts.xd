@@ -75,11 +75,6 @@
         <xar:mlstring>Topic title</xar:mlstring>
     </label>
         <select tabindex="5" name="addlink">
-            <xar:if condition="$addlink eq '0'">
-                <option value="0" selected="selected"><xar:mlstring>Don't show</xar:mlstring></option>
-            <xar:else/>
-                <option value="0"><xar:mlstring>Don't show</xar:mlstring></option>
-            </xar:if>
             <xar:if condition="$addlink eq '1'">
                 <option value="1" selected="selected"><xar:mlstring>Show without a link</xar:mlstring></option>
             <xar:else/>
