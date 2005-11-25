@@ -5,19 +5,19 @@
         <xar:mlstring>Add a poll to this item</xar:mlstring>
     </legend>
     <div class="xar-form-input-wrapper">
-        <label for="title" title="#xarML('The name of the new poll')#" class="xar-form-label">
+        <label for="poll_title" title="#xarML('The name of the new poll')#" class="xar-form-label">
             <xar:mlstring>Poll title</xar:mlstring>
         </label>
-        <input type="text" name="title" id="title" size="50" maxlength="100" value=""/>
+        <input type="text" name="poll[title]" id="poll_title" size="50" maxlength="100" value=""/>
     </div>
     <div class="xar-form-input-wrapper">
         <label for="polltype" title="#xarML('The type of the new poll')#" class="xar-form-label">
             <xar:mlstring>Poll type</xar:mlstring>
         </label>
-        <input type="radio" id="polltype" name="polltype" value="single" checked="checked"/>
+        <input type="radio" id="polltype" name="poll[type]" value="single" checked="checked"/>
         &nbsp;
         <xar:mlstring>Single Choice</xar:mlstring>
-        <input type="radio" id="polltype" name="polltype" value="multi"/>
+        <input type="radio" id="polltype" name="poll[type]" value="multi"/>
         &nbsp;
         <xar:mlstring>Multiple Choice</xar:mlstring>
     </div>
@@ -26,16 +26,16 @@
         <label for="private" title="#xarML('who can view the new poll')#" class="xar-form-label">
             <xar:mlstring>Private</xar:mlstring>
         </label>
-        <input type="checkbox" name="private" id="private" value="1" />
+        <input type="checkbox" name="poll[private]" id="private" value="1" />
     </div>
     </xar:comment>
     <xar:for start="$i = 1" test="$i le $optcount" iter="$i++">
         <div class="xar-form-input-wrapper">
             <label for="option_#$i#" class="xar-form-label">
-                <xar:mlstring>Option</xar:mlstring>
+                <xar:mlstring>Options</xar:mlstring>
                 #$i#
             </label>
-            <input type="text" id="option_#$i#" name="option_#$i#" value="" size="50" maxlength="50"/>
+            <input type="text" id="option_#$i#" name="poll[options][#$i#]" value="" size="50" maxlength="50"/>
         </div>
     </xar:for>
 </fieldset>

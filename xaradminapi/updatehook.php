@@ -113,14 +113,14 @@ function polls_adminapi_updatehook($args)
         } else {
             $poll['private'] = 1;
         }
-    }
+//    }
     if (empty($poll['start_date'])) {
         $poll['start_date'] = time();
             }
     if (empty($poll['end_date'])) {
         $poll['end_date'] = 0;
             }
-
+ }
     // get the current poll for this item
     $oldpoll = xarModAPIFunc('polls','user','gethooked',
                              array('modname' => $modname,
