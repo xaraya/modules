@@ -468,7 +468,7 @@ function julian_init()
     xarModSetVar('julian', 'useModuleAlias',false);
     xarModSetVar('julian','aliasname','');
 
-//TODO::Figure out all the permissions stuff
+// TODO Figure out all the permissions stuff
 // Should be based in event id , catid, and class? For cat_id we will probably need a wizard.
 
     // allow users to see the calendar w/ events
@@ -764,8 +764,8 @@ function julian_upgrade($oldversion)
              * STATE::enlarge and change type from char(2)
              * 'state'=>array('type'=>'varchar','size'=>'50','null'=>TRUE)
              */
-            $dbconn = xarDBGetConn();
-            $xartable = xarDBGetTables();
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
             $datadict = xarDBNewDataDict($dbconn, 'CREATE');
             $juliantable = xarDBgetSiteTablePrefix() . '_julian_events';
             // Apply changes
@@ -799,8 +799,8 @@ function julian_upgrade($oldversion)
 function julian_delete()
 {
     xarDBLoadTableMaintenanceAPI();
-    $dbconn = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $query = xarDBDropTable($xartable['julian_events']);
     if(empty($query)) return; // throw back
