@@ -1,6 +1,6 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
-    <span class="xar-mod-title"><xar:mlstring>Refer Administration</xar:mlstring></span>
+    <span class="xar-mod-title"><xar:mlstring>Referer Administration</xar:mlstring></span>
         </div>
 <div class="xar-mod-body">
     <img src="#xarTplGetImage('admin_generic.gif', 'base')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
@@ -16,7 +16,7 @@
             <ul>
                 <li><xar:mlstring>Tracking where your incoming traffic originates</xar:mlstring></li>
             </ul>
-            <xar:mlstring>When logged in as administrator, you have the option of viewing the referers or configuring the module.  Currently you can set the number of referers to be listed.</xar:mlstring>
+            <xar:mlstring>When logged in as administrator, you have the option of viewing the referers or configuring the module. Currently you can set the number of referers to be listed.</xar:mlstring>
     </p>
     <h3>
             <xar:mlstring>How to use it?</xar:mlstring>

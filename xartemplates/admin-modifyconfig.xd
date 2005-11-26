@@ -1,5 +1,4 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:if condition="xarTplAddStyleLink('referer', 'forms')"></xar:if>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:mlstring>
@@ -13,8 +12,8 @@
             Modify Configuration
         </xar:mlstring>
     </h2>
-    <form class="xar-formwidget" action="#xarModUrl('referer', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded">
-        <fieldset class="formelements xar-norm">
+    <form action="&xar-modurl-referer-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded">
+        <fieldset>
             <legend>
                 <strong>
                     <xar:mlstring>
@@ -22,9 +21,8 @@
                     </xar:mlstring>
                 </strong>
             </legend>
-            <input type="hidden" name="authid" id="authid" value="#$authid#" />
-            <p class="param">
-                <label for="itemsperpage">
+            <div class="xar-form-input-wrapper">
+                <label for="itemsperpage" class="xar-form-label">
                     <span class="help" title="#xarML('Enter the number of referers to display per page')#">
                         <xar:mlstring>
                             Referers Per Page
@@ -32,10 +30,11 @@
                     </span>
                 </label>
                 <input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#xarModGetVar('referer', 'itemsperpage')#" />
-            </p>
-            <p class="param">
+            </div>
+            <div class="xar-form-input-wrapper-after">
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
                 <input type="submit" value="#xarML('Submit')#" />
-            </p>
+            </div>
         </fieldset>
     </form>
 </div>
