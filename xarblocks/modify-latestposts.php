@@ -103,9 +103,9 @@ function xarbb_latestpostsblock_update($blockinfo)
     if (!xarVarFetch('howmany', 'int:1:', $vars['howmany'], '10', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('truncate', 'int:1:', $vars['truncate'], '20', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('forumid','isset', $vars['forumid'],'all',XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('addauthor', 'int:1:2', $vars['addauthor'], '0',XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('addlink', 'int:0:2', $vars['addlink'], '2',XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('forumlink', 'int:0:', $vars['forumlink'], '2',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('addauthor', 'int:0:2', $vars['addauthor'], '0',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('addlink', 'int:1:2', $vars['addlink'], '2',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('forumlink', 'int:0:2', $vars['forumlink'], '2',XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('adddate', 'checkbox', $vars['adddate'], false, XARVAR_NOT_REQUIRED)) return;
 
     $blockinfo['content'] = serialize($vars);
