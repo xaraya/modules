@@ -1,6 +1,18 @@
 <?php
 /**
- * delete
+ * Xaraya MyBookMarks
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage MyBookmarks Module
+ * @author John Cox et al.
+ */
+/**
+ * delete a bookmark
+ *
  * @param $args['id'] ID of the link
  * @returns bool
  * @return true on success, false on failure
@@ -17,7 +29,7 @@ function mybookmarks_userapi_delete($args)
     }
     // Security Check
     if(!xarSecurityCheck('Viewmybookmarks')) return;
-    // Get datbase setup
+    // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $table = $xartable['mybookmarks'];

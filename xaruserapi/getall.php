@@ -1,5 +1,16 @@
 <?php
 /**
+ * Xaraya MyBookMarks
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage MyBookmarks Module
+ * @author John Cox et al.
+ */
+/**
  * get all bookmarks
  * @returns array
  * @return array of links, or false on failure

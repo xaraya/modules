@@ -1,5 +1,16 @@
 <?php
 /**
+ * MyBookMarks Module
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage  MyBookMarks Module
+ * @author John Cox
+ */
+/**
  * create a new bookmark
  * @param $args['url'] url of the item
  * @param $args['name'] name of the item
@@ -24,7 +35,7 @@ function mybookmarks_userapi_create($args)
     // Security Check
     if(!xarSecurityCheck('Viewmybookmarks')) return;
 
-    // Get datbase setup
+    // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $table = $xartable['mybookmarks'];

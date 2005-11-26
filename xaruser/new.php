@@ -1,12 +1,25 @@
 <?php
+/**
+ * MyBookMarks Module
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage  MyBookMarks Module
+ * @author John Cox
+ */
+/**
+ * new bookmark
+ */
 function mybookmarks_user_new()
 {
-    // Security Check
-    if(!xarSecurityCheck('Viewmybookmarks')) return;
-    if (!xarVarFetch('url','str',$url, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('phase', 'str:1:100', $phase, 'form', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+    if (!xarVarFetch('url',       'str',$url, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('phase',     'str:1:100', $phase, 'form', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
     if (!xarVarFetch('submitted', 'int', $data['submitted'], 0, XARVAR_NOT_REQUIRED)) return;
-    if (!xarSecurityCheck('Viewmybookmarks')) return; 
+
+    if (!xarSecurityCheck('Viewmybookmarks')) return;
     if (!xarUserIsLoggedIn()) return;
     $uid = xarUserGetVar('uid');
     switch(strtolower($phase)) {

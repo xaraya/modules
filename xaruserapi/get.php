@@ -1,7 +1,18 @@
 <?php
 /**
+ * Xaraya MyBookMarks
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage MyBookmarks Module
+ * @author John Cox et al.
+ */
+/**
  * get a specific link
- * @poaram $args['id'] id of link to get
+ * @param $args['id'] id of link to get
  * @returns array
  * @return link array, or false on failure
  */

@@ -1,34 +1,32 @@
 <?php
 /**
- * File: $Id: s.xarinit.php 1.11 03/01/18 11:39:31-05:00 John.Cox@mcnabb. $
- * 
  * Xaraya MyBookMarks
- * 
+ *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
- * @link http://www.xaraya.org
- * @subpackage Referer Module
- * @author John Cox et al. 
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage MyBookmarks Module
+ * @author John Cox et al.
  */
-
 /**
  * delete item
- * 
+ *
  * @param  $ 'id' the id of the item to be deleted
  * @param  $ 'confirm' confirm that this item can be deleted
  */
 function mybookmarks_user_delete($args)
-{ 
+{
     // Get parameters from whatever input we need.
-    if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return; 
-    if (!xarVarFetch('url','str',$url, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('id', 'int', $id)) return; 
+    if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('url',     'str',    $url, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('id',      'int',    $id)) return;
     // Security Check
-    if (!xarSecurityCheck('Viewmybookmarks')) return; 
+    if (!xarSecurityCheck('Viewmybookmarks')) return;
     if (!xarUserIsLoggedIn()) return;
     // Confirm authorisation code.
-    if (!xarSecConfirmAuthKey()) return; 
+    if (!xarSecConfirmAuthKey()) return;
     // The API function is called.
     $uid = xarUserGetVar('uid');
     if (!xarModAPIFunc('mybookmarks',
@@ -37,8 +35,8 @@ function mybookmarks_user_delete($args)
                        array('id' => $id,
                              'uid'=> $uid))) {
         return;
-    } 
-    xarResponseRedirect($url); 
+    }
+    xarResponseRedirect($url);
     return true;
-} 
+}
 ?>
