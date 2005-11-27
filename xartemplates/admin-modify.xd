@@ -28,7 +28,7 @@
 
     <!--
         // Start form - note we do not use api functions like xarModURL() to create the recipient URL of
-        // this form.  All URLs should be generated through the entity  equivalent of xarModURL to ensure
+        // this form. All URLs should be generated through the entity  equivalent of xarModURL to ensure
         // compatibility with future versions of Xaraya
     -->
     <form method="post" action="&xar-modurl-example-admin-update;" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
@@ -96,7 +96,7 @@
             <div class="xar-form-input-wrapper-after">
         <!--
             * Add an authorisation ID - this adds a hidden field in the form that
-            * contains an authorisation ID.  The authorisation ID is very important in
+            * contains an authorisation ID. The authorisation ID is very important in
             * preventing certain attacks on the website
         -->
                <input type="hidden" name="authid" id="authid" value="#$authid#" />

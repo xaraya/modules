@@ -25,7 +25,7 @@
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function example_adminapi_create($args)
-{ 
+{
     /* Get arguments from argument array - all arguments to this function
      * should be obtained from the $args array, getting them from other
      * places such as the environment is not allowed, as that makes
@@ -57,11 +57,11 @@ function example_adminapi_create($args)
      */
     if (!xarSecurityCheck('AddExample', 1, 'Item', "$name:All:All")) {
         return;
-    } 
+    }
     /* Get database setup - note that both xarDBGetConn() and xarDBGetTables()
-     * return arrays but we handle them differently.  For xarDBGetConn()
+     * return arrays but we handle them differently. For xarDBGetConn()
      * we currently just want the first item, which is the official
-     * database handle.  For xarDBGetTables() we want to keep the entire
+     * database handle. For xarDBGetTables() we want to keep the entire
      * tables array together for easy reference later on
      */
     $dbconn =& xarDBGetConn();
@@ -77,7 +77,7 @@ function example_adminapi_create($args)
      */
     $nextId = $dbconn->GenId($exampletable);
     /* Add item - the formatting here is not mandatory, but it does make
-     * the SQL statement relatively easy to read.  Also, separating out
+     * the SQL statement relatively easy to read. Also, separating out
      * the sql statement from the Execute() command allows for simpler
      * debug operation if it is ever needed
      */
@@ -101,14 +101,14 @@ function example_adminapi_create($args)
      * the exception so we just return
      */
     if (!$result) return;
-    
-    /* Get the ID of the item that we inserted.  It is possible, depending
+
+    /* Get the ID of the item that we inserted. It is possible, depending
      * on your database, that this is different from $nextId as obtained
      * above, so it is better to be safe than sorry in this situation
      */
     $exid = $dbconn->PO_Insert_ID($exampletable, 'xar_exid');
-    
-    /* Let any hooks know that we have created a new item.  As this is a
+
+    /* Let any hooks know that we have created a new item. As this is a
      * create hook we're passing 'exid' as the extra info, which is the
      * argument that all of the other functions use to reference this
      * item

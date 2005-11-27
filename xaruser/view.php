@@ -21,11 +21,11 @@
  * @author the Example module development team
  */
 function example_user_view()
-{ 
-    /* Get parameters from whatever input we need.  All arguments to this
+{
+    /* Get parameters from whatever input we need. All arguments to this
      * function should be obtained from xarVarFetch(). xarVarFetch allows
      * the checking of the input variables as well as setting default
-     * values if needed.  Getting vars from other places such as the
+     * values if needed. Getting vars from other places such as the
      * environment is not allowed, as that makes assumptions that will
      * not hold in future versions of Xaraya
      */
@@ -48,7 +48,7 @@ function example_user_view()
     if (!xarSecurityCheck('ViewExample')) return;
     /* Lets get the UID of the current user to check for overridden defaults */
     $uid = xarUserGetVar('uid');
-    /* The API function is called.  The arguments to the function are passed in
+    /* The API function is called. The arguments to the function are passed in
      * as their own arguments array.
      * Security check 1 - the getall() function only returns items for which the
      * the user has at least OVERVIEW access.
@@ -103,7 +103,7 @@ function example_user_view()
     /* Call the xarTPL helper function to produce a pager in case of there
      * being many items to display.
      *
-     * Note that this function includes another user API function.  The
+     * Note that this function includes another user API function. The
      * function returns a simple count of the total number of items in the item
      * table so that the pager function can do its job properly
      */
@@ -112,7 +112,7 @@ function example_user_view()
         xarModURL('example', 'user', 'view', array('startnum' => '%%')),
         xarModGetUserVar('example', 'itemsperpage', $uid));
 
-    /* Same as above.  We are changing the name of the page to raise
+    /* Same as above. We are changing the name of the page to raise
      * better search engine compatibility.
      */
     xarTplSetPageTitle(xarVarPrepForDisplay(xarML('View Examples')));

@@ -32,7 +32,7 @@ function example_firstblock_init()
  * Get information on block
  */
 function example_firstblock_info()
-{ 
+{
     /* Values */
     return array(
         'text_type' => 'First',
@@ -43,13 +43,13 @@ function example_firstblock_info()
         'form_refresh' => false,
         'show_preview' => true
     );
-} 
+}
 
 /**
  * Display block
  */
 function example_firstblock_display($blockinfo)
-{ 
+{
     /* Security check */
     if (!xarSecurityCheck('ReadExampleBlock', 0, 'Block', $blockinfo['title'])) {return;}
 
@@ -68,7 +68,7 @@ function example_firstblock_display($blockinfo)
         $vars['numitems'] = 5;
     }
 
-    /* The API function is called.  The arguments to the function are passed in
+    /* The API function is called. The arguments to the function are passed in
      * as their own arguments array.
      * Security check 1 - the getall() function only returns items for which the
      * the user has at least OVERVIEW access.
@@ -103,7 +103,7 @@ function example_firstblock_display($blockinfo)
                 $item['link'] = xarModURL(
                     'example', 'user', 'display',
                     array('exid' => $item['exid'])
-                ); 
+                );
                 /* Security check 2 - else only display the item name (or whatever is
                  * appropriate for your module)
                  */
@@ -123,5 +123,5 @@ function example_firstblock_display($blockinfo)
     $blockinfo['content'] = $data;
 
     return $blockinfo;
-} 
+}
 ?>

@@ -14,8 +14,8 @@
 
 /**
  * Get all example items
- * 
- * @author the Example module development team 
+ *
+ * @author the Example module development team
  * @param numitems $ the number of items to retrieve (default -1 = all)
  * @param startnum $ start with this item number (default 1)
  * @returns array
@@ -23,7 +23,7 @@
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function example_userapi_getall($args)
-{ 
+{
     /* Get arguments from argument array - all arguments to this function
      * should be obtained from the $args array, getting them from other places
      * such as the environment is not allowed, as that makes assumptions that
@@ -39,6 +39,9 @@ function example_userapi_getall($args)
     }
     if (!isset($numitems)) {
         $numitems = -1;
+    }
+    if (!isset($catid)) {
+        $catid = 0;
     }
     /* Argument check - make sure that all required arguments are present and
      * in the right format, if not then set an appropriate error message
@@ -67,9 +70,9 @@ function example_userapi_getall($args)
      */
     if (!xarSecurityCheck('ViewExample')) return;
     /* Get database setup - note that both xarDBGetConn() and xarDBGetTables()
-     * return arrays but we handle them differently.  For xarDBGetConn() we
+     * return arrays but we handle them differently. For xarDBGetConn() we
      * currently just want the first item, which is the official database
-     * handle.  For xarDBGetTables() we want to keep the entire tables array
+     * handle. For xarDBGetTables() we want to keep the entire tables array
      * together for easy reference later on
      */
     $dbconn =& xarDBGetConn();
@@ -78,9 +81,9 @@ function example_userapi_getall($args)
      * using - $table doesn't cut it in more complex modules
      */
     $exampletable = $xartable['example'];
-    /* TODO: how to select by cat ids (automatically) when needed ???
-     * Get items - the formatting here is not mandatory, but it does make the
-     * SQL statement relatively easy to read.  Also, separating out the sql
+
+    /* Get items - the formatting here is not mandatory, but it does make the
+     * SQL statement relatively easy to read. Also, separating out the sql
      * statement from the SelectLimit() command allows for simpler debug
      * operation if it is ever needed
      */
@@ -89,6 +92,36 @@ function example_userapi_getall($args)
                      xar_number
               FROM $exampletable
               ORDER BY xar_name";
+    /* We can also select on a part of the data. When the categories module is present,
+     * you can use it to select a group of items based on the category they are in.
+     * Then replace the query above with the query below, and make sure you pass the catid in your templates.
+     */
+
+    /* We do not use any itemtype in this module, so set the itemtype to NULL
+    $thistype= NULL;
+    if (xarModIsHooked('categories','example',$thistype)) {
+       // Get the LEFT JOIN ... ON ...  and WHERE parts from categories
+       $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
+                                       array('modid'    => xarModGetIDFromName('example'),
+                                             'itemtype' => $thistype,
+                                             'catid'    => $catid));
+       $query = "SELECT xar_exid,
+                        xar_name,
+                        xar_number
+                 FROM ( $exampletable
+                 LEFT JOIN $categoriesdef[table]
+                 ON $categoriesdef[field] = xar_exid )
+                 $categoriesdef[more]
+                 WHERE $categoriesdef[where]
+                 ORDER BY xar_name";
+    } else {
+       $query = "SELECT xar_exid,
+                        xar_name,
+                        xar_number
+                 FROM $exampletable
+                 ORDER BY xar_name";
+    }
+    */
     /* SelectLimit also supports bind variable, they get to be put in
      * as the last parameter in the function below. In this case we have no
      * bind variables, so we left the parameter out. We could have passed in an
@@ -99,7 +132,7 @@ function example_userapi_getall($args)
      * the exception so we just return
      */
     if (!$result) return;
-    /* Put items into result array.  Note that each item is checked
+    /* Put items into result array. Note that each item is checked
      * individually to ensure that the user is allowed *at least* OVERVIEW
      * access to it before it is added to the results array.
      * If more severe restrictions apply, e.g. for READ access to display
@@ -116,8 +149,8 @@ function example_userapi_getall($args)
     /* All successful database queries produce a result set, and that result
      * set should be closed when it has been finished with
      */
-    $result->Close(); 
+    $result->Close();
     /* Return the items */
     return $items;
-} 
+}
 ?>

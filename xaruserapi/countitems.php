@@ -14,18 +14,18 @@
 
 /**
  * Utility function to count the number of items held by this module
- * 
- * @author the Example module development team 
+ *
+ * @author the Example module development team
  * @returns integer
  * @return number of items held by this module
  * @raise DATABASE_ERROR
  */
 function example_userapi_countitems()
-{ 
+{
     /* Get database setup - note that both xarDBGetConn() and xarDBGetTables()
-     * return arrays but we handle them differently.  For xarDBGetConn() we
+     * return arrays but we handle them differently. For xarDBGetConn() we
      * currently just want the first item, which is the official database
-     * handle.  For xarDBGetTables() we want to keep the entire tables array
+     * handle. For xarDBGetTables() we want to keep the entire tables array
      * together for easy reference later on
      */
     $dbconn =& xarDBGetConn();
@@ -35,7 +35,7 @@ function example_userapi_countitems()
      */
     $exampletable = $xartable['example'];
     /* Get item - the formatting here is not mandatory, but it does make the
-     * SQL statement relatively easy to read.  Also, separating out the sql
+     * SQL statement relatively easy to read. Also, separating out the sql
      * statement from the Execute() command allows for simpler debug operation
      * if it is ever needed
      */

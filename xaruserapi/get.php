@@ -14,7 +14,7 @@
 
 /**
  * Get a specific item
- * 
+ *
  * Standard function of a module to retrieve a specific item
  *
  * @author the Example module development team
@@ -43,9 +43,9 @@ function example_userapi_get($args)
         return;
     }
     /* Get database setup - note that both xarDBGetConn() and xarDBGetTables()
-     * return arrays but we handle them differently.  For xarDBGetConn() we
+     * return arrays but we handle them differently. For xarDBGetConn() we
      * currently just want the first item, which is the official database
-     * handle.  For xarDBGetTables() we want to keep the entire tables array
+     * handle. For xarDBGetTables() we want to keep the entire tables array
      * together for easy reference later on
      */
     $dbconn =& xarDBGetConn();
@@ -55,7 +55,7 @@ function example_userapi_get($args)
      */
     $exampletable = $xartable['example'];
     /* Get item - the formatting here is not mandatory, but it does make the
-     * SQL statement relatively easy to read.  Also, separating out the sql
+     * SQL statement relatively easy to read. Also, separating out the sql
      * statement from the Execute() command allows for simpler debug operation
      * if it is ever needed
      */
@@ -83,7 +83,7 @@ function example_userapi_get($args)
      */
     $result->Close();
     /* Security check - important to do this as early on as possible to avoid
-     * potential security holes or just too much wasted processing.  Although
+     * potential security holes or just too much wasted processing. Although
      * this one is a bit late in the function it is as early as we can do it as
      * this is the first time we have the relevant information.
      * For this function, the user must *at least* have READ access to this item

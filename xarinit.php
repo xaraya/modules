@@ -21,9 +21,9 @@
 function example_init()
 {
     /* Get database setup - note that both xarDBGetConn() and xarDBGetTables()
-     * return arrays but we handle them differently.  For xarDBGetConn()
+     * return arrays but we handle them differently. For xarDBGetConn()
      * we currently just want the first item, which is the official
-     * database handle.  For xarDBGetTables() we want to keep the entire
+     * database handle. For xarDBGetTables() we want to keep the entire
      * tables array together for easy reference later on
      */
     $dbconn =& xarDBGetConn();
@@ -32,12 +32,12 @@ function example_init()
      * are using - $table doesn't cut it in more complex modules
      */
     $exampletable = $xartable['example'];
-    
+
     /* Get a data dictionary object with all the item create methods in it */
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
 
     /* Define the table structure in a string, each field and it's description
-     * separated by a comma. The key for the element is the physical field name.  
+     * separated by a comma. The key for the element is the physical field name.
      * Each field descripton contains other data specifying the
      * data type and associated parameters
      */
@@ -129,7 +129,7 @@ function example_init()
                     'parent_id' => $examplecid));
         }
     }
-    /* Set up an initial value for a module variable.  Note that all module
+    /* Set up an initial value for a module variable. Note that all module
      * variables should be initialised with some value in this way rather
      * than just left blank, this helps the user-side code and means that
      * there doesn't need to be a check to see if the variable is set in
@@ -161,7 +161,7 @@ function example_init()
             'register_block_type',
             array('modName' => 'example',
                 'blockType' => 'first'))) return;
-    /* Register our hooks that we are providing to other modules.  The example
+    /* Register our hooks that we are providing to other modules. The example
      * module shows an example hook in the form of the user menu.
      */
     if (!xarModRegisterHook('item', 'usermenu', 'GUI',
@@ -217,7 +217,7 @@ function example_init()
           )
       );
       xarDefineInstance('example', 'Item', $instances);
-     
+
      */
     $instancestable = $xartable['block_instances'];
     $typestable = $xartable['block_types'];
@@ -261,9 +261,9 @@ function example_upgrade($oldversion)
             /* Version 0.5 didn't have a 'number' field, it was added
              * in version 1.0
              * Get datbase setup - note that both xarDBGetConn() and xarDBGetTables()
-             * return arrays but we handle them differently.  For xarDBGetConn()
+             * return arrays but we handle them differently. For xarDBGetConn()
              * we currently just want the first item, which is the official
-             * database handle.  For xarDBGetTables() we want to keep the entire
+             * database handle. For xarDBGetTables() we want to keep the entire
              * tables array together for easy reference later on
              * This code could be moved outside of the switch statement if
              * multiple upgrades need it
@@ -284,7 +284,7 @@ function example_upgrade($oldversion)
             if (!$result) return;
             /* At the end of the successful completion of this function we
              * recurse the upgrade to handle any other upgrades that need
-             * to be done.  This allows us to upgrade from any version to
+             * to be done. This allows us to upgrade from any version to
              * the current version with ease
              */
             return example_upgrade('1.0');
@@ -319,9 +319,9 @@ function example_upgrade($oldversion)
 function example_delete()
 {
     /* Get database setup - note that both xarDBGetConn() and xarDBGetTables()
-     * return arrays but we handle them differently.  For xarDBGetConn()
+     * return arrays but we handle them differently. For xarDBGetConn()
      * we currently just want the first item, which is the official
-     * database handle.  For xarDBGetTables() we want to keep the entire
+     * database handle. For xarDBGetTables() we want to keep the entire
      * tables array together for easy reference later on
      */
     $dbconn =& xarDBGetConn();

@@ -22,9 +22,9 @@
 function example_adminapi_getmenulinks()
 {
     /* First we need to do a security check to ensure that we only return menu items
-     * that we are suppose to see.  It will be important to add for each menu item that
-     * you want to filter.  No sense in someone seeing a menu link that they have no access
-     * to edit.  Notice that we are checking to see that the user has permissions, and
+     * that we are suppose to see. It will be important to add for each menu item that
+     * you want to filter. No sense in someone seeing a menu link that they have no access
+     * to edit. Notice that we are checking to see that the user has permissions, and
      * not that he/she doesn't.
      * Security Check
      */
@@ -35,7 +35,7 @@ function example_adminapi_getmenulinks()
      * module url, in order to keep the label short, and finally the exact label for the
      * function that we are displaying.
      */
-    
+
     /* We usually display the menu links in a standard order
      * An optional Overview link -
      *  - overview shows by default immediately admin chooses the module with overviews switched on
@@ -54,7 +54,7 @@ function example_adminapi_getmenulinks()
             'title' => xarML('Example Overview'),
             'label' => xarML('Overview'));
     }
-   
+
     if (xarSecurityCheck('AddExample', 0)) {
 
         $menulinks[] = Array('url' => xarModURL('example','admin','new'),
@@ -67,7 +67,7 @@ function example_adminapi_getmenulinks()
     /* Security Check */
     if (xarSecurityCheck('EditExample', 0)) {
         /* We do the same for each new menu item that we want to add to our admin panels.
-         * This creates the tree view for each item.  Obviously, we don't need to add every
+         * This creates the tree view for each item. Obviously, we don't need to add every
          * function, but we do need to have a way to navigate through the module.
          */
         $menulinks[] = Array('url' => xarModURL('example','admin','view'),
@@ -80,7 +80,7 @@ function example_adminapi_getmenulinks()
     /* Security Check */
     if (xarSecurityCheck('AdminExample', 0)) {
         /* We do the same for each new menu item that we want to add to our admin panels.
-         * This creates the tree view for each item.  Obviously, we don't need to add every
+         * This creates the tree view for each item. Obviously, we don't need to add every
          * function, but we do need to have a way to navigate through the module.
          */
         $menulinks[] = Array('url' => xarModURL('example','admin','modifyconfig'),

@@ -16,27 +16,27 @@
  *
  * This is a standard function to provide detailed informtion on a single item
  * available from the module.
- * 
+ *
  * @author the Example module development team
  * @param  $args an array of arguments (if called by other modules)
  * @param  $args ['objectid'] a generic object id (if called by other modules)
  * @param  $args ['exid'] the item id used for this example module
  */
 function example_user_display($args)
-{ 
-    /* User functions of this type can be called by other modules.  If this
+{
+    /* User functions of this type can be called by other modules. If this
      * happens then the calling module will be able to pass in arguments to
-     * this function through the $args parameter.  Hence we extract these
+     * this function through the $args parameter. Hence we extract these
      * arguments *before* we have obtained any form-based input through
      * xarVarFetch(), so that parameters passed by the modules can also be
      * checked by a certain validation.
      */
     extract($args);
 
-    /* Get parameters from whatever input we need.  All arguments to this
+    /* Get parameters from whatever input we need. All arguments to this
      * function should be obtained from xarVarFetch(). xarVarFetch allows
      * the checking of the input variables as well as setting default
-     * values if needed.  Getting vars from other places such as the
+     * values if needed. Getting vars from other places such as the
      * environment is not allowed, as that makes assumptions that will
      * not hold in future versions of Xaraya
      */
@@ -44,18 +44,18 @@ function example_user_display($args)
     if (!xarVarFetch('objectid', 'id', $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
 
     /* At this stage we check to see if we have been passed $objectid, the
-     * generic item identifier.  This could have been passed in by a hook or
+     * generic item identifier. This could have been passed in by a hook or
      * through some other function calling this as part of a larger module, but
      * if it exists it overrides $exid
 
      * Note that this module could just use $objectid everywhere to avoid all
      * of this munging of variables, but then the resultant code is less
-     * descriptive, especially where multiple objects are being used.  The
+     * descriptive, especially where multiple objects are being used. The
      * decision of which of these ways to go is up to the module developer
      */
     if (!empty($objectid)) {
         $exid = $objectid;
-    } 
+    }
     /* Initialise the $data variable that will hold the data to be used in
      * the blocklayout template, and get the common menu configuration - it
      * helps if all of the module pages have a standard menu at the top to
@@ -64,7 +64,7 @@ function example_user_display($args)
     $data = xarModAPIFunc('example', 'user', 'menu');
     /* Prepare the variable that will hold some status message if necessary */
     $data['status'] = '';
-    /* The API function is called.  The arguments to the function are passed in
+    /* The API function is called. The arguments to the function are passed in
      * as their own arguments array.
      * Security check 1 - the get() function will fail if the user does not
      * have at least READ access to this item (also see below).
@@ -99,7 +99,7 @@ function example_user_display($args)
         'transform',
         $exid,
         $item);
-    /* Fill in the details of the item.  Note that a module variable is used here to determine
+    /* Fill in the details of the item. Note that a module variable is used here to determine
      * whether or not parts of the item information should be displayed in
      * bold type or not
      */
@@ -121,9 +121,9 @@ function example_user_display($args)
      * information available elsewhere in the processing of this page request
      */
     xarVarSetCached('Blocks.example', 'exid', $exid);
-    /* Let any hooks know that we are displaying an item.  As this is a display
+    /* Let any hooks know that we are displaying an item. As this is a display
      * hook we're passing a return URL in the item info, which is the URL that any
-     * hooks will show after they have finished their own work.  It is normal
+     * hooks will show after they have finished their own work. It is normal
      * for that URL to bring the user back to this function
      */
     $item['returnurl'] = xarModURL('example',

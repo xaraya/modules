@@ -96,7 +96,7 @@
             <div class="xar-form-input-wrapper-after">
         <!--
             // Add an authorisation ID - this adds a hidden field in the form that
-            // contains an authorisation ID.  The authorisation ID is very important in
+            // contains an authorisation ID. The authorisation ID is very important in
             // preventing certain attacks on the website
         -->
                 <input type="hidden" name="authid" id="authid" value="#$authid#" />

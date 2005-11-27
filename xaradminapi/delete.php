@@ -16,14 +16,14 @@
  *
  * Standard function to delete a module item
  *
- * @author the Example module development team 
+ * @author the Example module development team
  * @param  $args ['exid'] ID of the item
  * @returns bool
  * @return true on success, false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function example_adminapi_delete($args)
-{ 
+{
     /* Get arguments from argument array - all arguments to this function
      * should be obtained from the $args array, getting them from other
      * places such as the environment is not allowed, as that makes
@@ -41,9 +41,9 @@ function example_adminapi_delete($args)
             new SystemException($msg));
         return;
     }
-    /* The user API function is called.  This takes the item ID which
+    /* The user API function is called. This takes the item ID which
      * we obtained from the input and gets us the information on the
-     * appropriate item.  If the item does not exist we post an appropriate
+     * appropriate item. If the item does not exist we post an appropriate
      * message and return
      */
     $item = xarModAPIFunc('example',
@@ -63,9 +63,9 @@ function example_adminapi_delete($args)
         return;
     }
     /* Get database setup - note that both xarDBGetConn() and xarDBGetTables()
-     * return arrays but we handle them differently.  For xarDBGetConn()
+     * return arrays but we handle them differently. For xarDBGetConn()
      * we currently just want the first item, which is the official
-     * database handle.  For xarDBGetTables() we want to keep the entire
+     * database handle. For xarDBGetTables() we want to keep the entire
      * tables array together for easy reference later on
      */
     $dbconn =& xarDBGetConn();
@@ -76,7 +76,7 @@ function example_adminapi_delete($args)
      */
     $exampletable = $xartable['example'];
     /* Delete the item - the formatting here is not mandatory, but it does
-     * make the SQL statement relatively easy to read.  Also, separating
+     * make the SQL statement relatively easy to read. Also, separating
      * out the sql statement from the Execute() command allows for simpler
      * debug operation if it is ever needed
      */
@@ -84,19 +84,19 @@ function example_adminapi_delete($args)
 
     /* The bind variable $exid is directly put in as a parameter. */
     $result = &$dbconn->Execute($query,array($exid));
-    
+
     /* Check for an error with the database code, adodb has already raised
      * the exception so we just return
      */
     if (!$result) return;
-    /* Let any hooks know that we have deleted an item.  As this is a
+    /* Let any hooks know that we have deleted an item. As this is a
      * delete hook we're not passing any extra info
      * xarModCallHooks('item', 'delete', $exid, '');
      */
     $item['module'] = 'example';
     $item['itemid'] = $exid;
     xarModCallHooks('item', 'delete', $exid, $item);
-    
+
     /* Let the calling process know that we have finished successfully */
     return true;
 }
