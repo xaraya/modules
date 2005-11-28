@@ -21,13 +21,15 @@ $tmp = new xarTestSuite('Example Suite');
  *
  * @package example
  * @author Roger Keays <r.keays@ninthave.net>
+ * @todo <1> Extend the documentation of this file
+ *       <2> replace link to bitkeeper suite
  */
-class testExample extends xarTestCase 
+class testExample extends xarTestCase
 {
     /**
      * Initialize the Xaraya core.
      */
-    function setup() 
+    function setup()
     {
         $GLOBALS['xarDebug'] = false;
 
@@ -38,10 +40,10 @@ class testExample extends xarTestCase
         include_once 'includes/xarException.php';
         xarErrorFree();
     }
-    
+
     /**
      * Here is an example of a test which is expected to pass. As well as
-     * assertSame, we also have: 
+     * assertSame, we also have:
      *    assertEquals($actual, $expected, $delta, $msg)
      *    assertNonNull($object, $msg)
      *    assertNull($object, $msg)
@@ -51,10 +53,10 @@ class testExample extends xarTestCase
      *    assertFalse($condition, $msg)
      *    assertRegExp($actual, $expected, $msg)
      *    assertEmpty($actual, $msg)  // for arrays only
-     * 
+     *
      * @see BitKeeper/custom/unittest/xarUnitTest.php
      */
-    function testSame() 
+    function testSame()
     {
         $in = "EXAMPLE";
         $expected = "example";
@@ -64,7 +66,7 @@ class testExample extends xarTestCase
 }
 
 /* add the tests to the suite */
-$tmp->AddTestCase('testExample', 'Tests for the exmple module');
+$tmp->AddTestCase('testExample', 'Tests for the example module');
 
 /* add this suite to the list */
 $suites[] = $tmp;
