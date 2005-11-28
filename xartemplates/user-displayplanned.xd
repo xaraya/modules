@@ -303,16 +303,20 @@
                </fieldset>
                <fieldset>
                <div class="xar-form-input-wrapper-after">
-                   <xar:if condition="$enrolled == 0">
-                       <input type="hidden" name="planningid" id="planningid" value="#$planningid#" />
-                       <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                       <input type="submit" value="#$enrollbutton#" />
+                   <xar:if condition="!$closed">
+                       <xar:if condition="$enrolled == 0">
+                           <input type="hidden" name="planningid" id="planningid" value="#$planningid#" />
+                           <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                           <input type="submit" value="#$enrollbutton#" />
+                       <xar:else />
+                           <h3>#$enrollbutton#</h3>
+                       </xar:if>
                    <xar:else />
-                       <h3>#$enrollbutton#</h3>
+                       <xar:mlstring>Registration Closed</xar:mlstring>
                    </xar:if>
                </div>
               </fieldset>
-            
+
             <H2>#xarML('Other occurences of this course')#</H2>
             <table width="100%" border="1" cellspacing="0" cellpadding="4">
                 <tr>
@@ -350,10 +354,10 @@
                 </tr>
                 </xar:foreach>
             </table>
-            
+
             </form>
             <br />
-            
+
             <!-- add the output from the different display hooks here -->
             <xar:if condition="!empty($hookoutput)">
             <xar:foreach in="$hookoutput" key="$hookmodule">

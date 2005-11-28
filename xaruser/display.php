@@ -1,7 +1,7 @@
 <?php
 /**
- * Display an course item
- * 
+ * Display a course
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -13,11 +13,12 @@
  */
 
 /**
- * display a course
- * This is the function to provide detailed information on a single course
- * and show the details of all planned occurences
+ * Display a single course
  *
- * @author MichelV. 
+ * This is the function to provide detailed information on a single course
+ * and show the details of all planned occurences for this course
+ *
+ * @author MichelV.
  * @param  $args an array of arguments (if called by other modules)
  * @param  $args ['objectid'] a generic object id (if called by other modules)
  * @param  $args ['courseid'] the ID of the course
@@ -37,10 +38,8 @@ function courses_user_display($args)
     // Replace this by statusmsg
     $data['status'] = '';
     // The API function is called to get the course.
-    $item = xarModAPIFunc('courses',
-        'user',
-        'get',
-        array('courseid' => $courseid));
+    $item = xarModAPIFunc('courses','user','get',
+                          array('courseid' => $courseid));
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     // Let any transformation hooks know that we want to transform some text.
@@ -50,37 +49,6 @@ function courses_user_display($args)
         $courseid,
         $item);
     // Fill in the details of the item.
-    // TODO move these to template
-    $data['namelabel'] = xarVarPrepForDisplay(xarML('Course Name'));
-    $data['numberlabel'] = xarVarPrepForDisplay(xarML('Course Number'));
-    $data['coursetypelabel'] = xarVarPrepForDisplay(xarML('Course Type (Category)'));
-    $data['levellabel'] = xarVarPrepForDisplay(xarML('Course Level'));
-    $data['creditslabel'] = xarVarPrepForDisplay(xarML('Course Credits'));
-    $data['startdatelabel'] = xarVarPrepForDisplay(xarML('Start date'));
-    $data['enddatelabel'] = xarVarPrepForDisplay(xarML('End date'));
-    $data['costslabel'] = xarVarPrepForDisplay(xarML('Course Fee'));
-    $data['materiallabel'] = xarVarPrepForDisplay(xarML('Course materials'));
-    $data['creditsminlabel'] = xarVarPrepForDisplay(xarML('Course Minimum Credits'));
-    $data['creditsmaxlabel'] = xarVarPrepForDisplay(xarML('Course Maximum Credits'));
-    $data['prereqlabel'] = xarVarPrepForDisplay(xarML('Course Prerequisites'));
-    $data['aimlabel'] = xarVarPrepForDisplay(xarML('Course Aim'));
-    $data['coordinatorslabel'] = xarVarPrepForDisplay(xarML('Course coordinators'));
-    $data['committeelabel'] = xarVarPrepForDisplay(xarML('Course committee'));
-    $data['lecturerslabel'] = xarVarPrepForDisplay(xarML('Course lecturers'));
-    $data['locationlabel'] = xarVarPrepForDisplay(xarML('Course location'));
-    $data['programlabel'] = xarVarPrepForDisplay(xarML('Course Programme'));
-    $data['shortdesclabel'] = xarVarPrepForDisplay(xarML('Course Description'));
-    $data['methodlabel'] = xarVarPrepForDisplay(xarML('Course Method'));
-    $data['languagelabel'] = xarVarPrepForDisplay(xarML('Course Language'));
-    $data['intendedcreditslabel'] = xarVarPrepForDisplay(xarML('Intended credits for this course'));    
-    $data['freqlabel'] = xarVarPrepForDisplay(xarML('Course Frequency'));
-    $data['contactlabel'] = xarVarPrepForDisplay(xarML('Course Contact details'));
-    $data['contactuidlabel'] = xarVarPrepForDisplay(xarML('Contact'));
-    $data['hideplanninglabel'] = xarVarPrepForDisplay(xarML('Hide this occurence'));
-    $data['infolabel'] = xarVarPrepForDisplay(xarML('Other Course info'));
-    $data['enrollbutton'] = xarVarPrepForDisplay(xarML('Enroll'));
-    $data['optionslabel'] = xarVarPrepForDisplay(xarML('Options'));
-    //$data['enrolled'] = xarVarPrepForDisplay(xarML('You are currently enrolled in this course'));
     $data['courseid'] = $courseid;
     $data['item'] = $item;
     $data['HideEmptyFields'] = xarModGetVar('courses', 'HideEmptyFields');
@@ -120,8 +88,8 @@ function courses_user_display($args)
             $items[$i]['participantsurl'] = '';
         }
         $items[$i]['participantstitle'] = xarML('Participants');
-        
-        if (xarSecurityCheck('ReadCourses', 0, 'Course', "$courseid:All:All")) {
+
+        if (xarSecurityCheck('ReadCourses', 0, 'Course', "$courseid:$planningid:All")) {
             // See if the date for enrollment is surpassed
             $closedate = $planitem['closedate'];
             $timenow = time();
@@ -153,9 +121,9 @@ function courses_user_display($args)
                                                   'user',
                                                   'displayplanned',
                                                    array('planningid' => $planningid));
-            } 
+            }
         }
-       
+
         if (xarSecurityCheck('ReadCourses', 0, 'Course', "$courseid:$planningid:All")) {
             $items[$i]['detailsurl'] = xarModURL('courses',
                 'user',
@@ -165,12 +133,12 @@ function courses_user_display($args)
             $items[$i]['detailsurl'] = '';
         }
         $items[$i]['detailstitle'] = xarML('Details');
-        
+
     }
-    
+
     // Add the array of items to the template variables
-    $data['items'] = $items;    
-  
+    $data['items'] = $items;
+
     // Save the currently displayed item ID in a temporary variable cache
     // for any blocks that might be interested (e.g. the Others block)
     xarVarSetCached('Blocks.courses', 'courseid', $courseid);

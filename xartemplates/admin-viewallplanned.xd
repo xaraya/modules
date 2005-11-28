@@ -8,63 +8,63 @@
     <xar:if condition="xarSessionGetVar('statusmsg') ne ''">
         <div class="xar-mod-statusmsg">#xarSessionGetVar('statusmsg')#</div>
     </xar:if>
-	
-	<table width="100%" border="1" cellspacing="0" cellpadding="4">
-		<tr>
-			<th>#$namelabel#</th>
-			<th>#$startdatelabel#</th>
-			<th>#$enddatelabel#</th>
-			<th>#$minmaxparticipantslabel#</th>
-			<th>#$participantslabel#</th>
-			<th>#$optionslabel#</th>
-		</tr>
-		<xar:foreach in="$items" value="$item">
-		<tr>
-			<td>
-			   <xar:if condition="empty($item['displayurl'])">
-				   #$item['name']#
-			   <xar:else />
-				   <a href="#$item['displayurl']#">#$item['name']#</a>
-			   </xar:if>
-			</td>
-			<xar:if condition="$item['hideplanning'] eq 1">
-			<td class="coursehidden"> 
-			<xar:else />
-			<td>			
-			</xar:if>
-			#$item['startdate']#</td>
-			<td>#$item['enddate']#</td>
-			<td>#$item['minparticipants']#&#32;&#47;&#32;#$item['maxparticipants']#</td>
-			<td>
-			   <xar:set name="$minpart">#$item['minparticipants']#</xar:set>
-			   <xar:set name="$part">#$item['participants']#</xar:set>
-			   <xar:if condition="empty($item['participantsurl'])">
-				   #$item['participants']#
-			   <xar:elseif condition="$part gt $minpart" />
-					<a href="#$item['participantsurl']#" style="color:#006600; ">#$item['participants']#</a>
-			   <xar:elseif condition="$part lt $minpart" />
-					<a href="#$item['participantsurl']#" style="color:#FF0000; ">#$item['participants']#</a>
-			   </xar:if>
-			</td>   
-			<td>
-			   <xar:if condition="empty($item['editurl'])">
-				   #$item['edittitle']#
-			   <xar:else />
-				   <a href="#$item['editurl']#">#$item['edittitle']#</a>
-			   </xar:if>
-			   |
-			   <xar:if condition="empty($item['teachersurl'])">
-				   #$item['teacherstitle']#
-			   <xar:else />
-				   <a href="#$item['teachersurl']#">#$item['teacherstitle']#</a>
-			   </xar:if>
-			</td>
-		</tr>
-		</xar:foreach>
-	</table>
-	<br />
-	
-	<!-- add the pager here -->
-	#$pager#
+
+    <table>
+        <tr>
+            <th>#$namelabel#</th>
+            <th>#$startdatelabel#</th>
+            <th>#$enddatelabel#</th>
+            <th>#$minmaxparticipantslabel#</th>
+            <th>#$participantslabel#</th>
+            <th>#$optionslabel#</th>
+        </tr>
+        <xar:foreach in="$items" value="$item">
+        <tr>
+            <td>
+               <xar:if condition="empty($item['displayurl'])">
+                   #$item['name']#
+               <xar:else />
+                   <a href="#$item['displayurl']#">#$item['name']#</a>
+               </xar:if>
+            </td>
+            <xar:if condition="$item['hideplanning'] eq 1">
+            <td class="coursehidden">
+            <xar:else />
+            <td>
+            </xar:if>
+            #$item['startdate']#</td>
+            <td>#$item['enddate']#</td>
+            <td>#$item['minparticipants']#&#32;&#47;&#32;#$item['maxparticipants']#</td>
+            <td>
+               <xar:set name="$minpart">#$item['minparticipants']#</xar:set>
+               <xar:set name="$part">#$item['participants']#</xar:set>
+               <xar:if condition="empty($item['participantsurl'])">
+                   #$item['participants']#
+               <xar:elseif condition="$part gt $minpart" />
+                    <a href="#$item['participantsurl']#" style="color:#006600; ">#$item['participants']#</a>
+               <xar:elseif condition="$part lt $minpart" />
+                    <a href="#$item['participantsurl']#" style="color:#FF0000; ">#$item['participants']#</a>
+               </xar:if>
+            </td>
+            <td>
+               <xar:if condition="empty($item['editurl'])">
+                   #$item['edittitle']#
+               <xar:else />
+                   <a href="#$item['editurl']#">#$item['edittitle']#</a>
+               </xar:if>
+               |
+               <xar:if condition="empty($item['teachersurl'])">
+                   #$item['teacherstitle']#
+               <xar:else />
+                   <a href="#$item['teachersurl']#">#$item['teacherstitle']#</a>
+               </xar:if>
+            </td>
+        </tr>
+        </xar:foreach>
+    </table>
+    <br />
+
+    <!-- add the pager here -->
+    #$pager#
 
 </div>

@@ -7,7 +7,6 @@
 </div>
 <div class="xar-mod-body"><h2>#$menutitle#</h2>
     <div class="xar-courses-contents">
-    
         <xar:if condition="xarSessionGetVar('statusmsg') != ''">
             <p>#xarSessionGetVar('statusmsg')#</p>
         </xar:if>
@@ -25,7 +24,7 @@
                     <div class="xar-form-input-wrapper">
                         <label for="name" class="xar-form-label">
                             <span class="help" title="#xarML('The name of this course.')#">
-                            #$namelabel#
+                            <xar:mlstring>Name</xar:mlstring>
                             </span>
                         </label>
                         #$item['name']#
@@ -33,7 +32,7 @@
                     <div class="xar-form-input-wrapper">
                         <label for="number" class="xar-form-label">
                             <span class="help" title="#xarML('The code/number of this course.')#">
-                            #$numberlabel#
+                            <xar:mlstring>Number</xar:mlstring>
                             </span>
                         </label>
                         #$item['number']#
@@ -41,7 +40,7 @@
                     <div class="xar-form-input-wrapper">
                         <label for="freq" class="xar-form-label">
                             <span class="help" title="#xarML('The Frequency of this course.')#">
-                            #$freqlabel#
+                            <xar:mlstring>Frequency</xar:mlstring>
                             </span>
                         </label>
                         #$item['freq']#
@@ -54,15 +53,15 @@
                     <div class="xar-form-input-wrapper">
                         <label for="shortdesc" class="xar-form-label">
                             <span class="help" title="#xarML('The short description for this course. Full details can be found at the planned courses page.')#">
-                            #$shortdesclabel#
+                            <xar:mlstring>Description</xar:mlstring>
                             </span>
                         </label>
-                        #$item['shortdesc']#
+                        #$item.shortdesc#
                     </div>
                     <div class="xar-form-input-wrapper">
                         <label for="level" class="xar-form-label">
                             <span class="help" title="#xarML('The level of this course')#">
-                            #$levellabel#
+                            <xar:mlstring>Level</xar:mlstring>
                             </span>
                         </label>
                         <span class="fullright">
@@ -72,27 +71,27 @@
                     <div class="xar-form-input-wrapper">
                         <label for="intendedcredits" class="xar-form-label">
                             <span class="help" title="#xarML('The credits that in general will be given for this course.')#">
-                            #$intendedcreditslabel#
+                            <xar:mlstring>Intended credits</xar:mlstring>
                             </span>
                         </label>
-                        #$item['intendedcredits']#
+                        #$item.intendedcredits#
                     </div>
                </fieldset>
-            
-            <H3>This course has been scheduled for the following periods:</H3>
-            
+
+            <H3><xar:mlstring>This course has been scheduled for the following periods</xar:mlstring>:</H3>
+
             <table width="100%" border="1" cellspacing="0" cellpadding="4">
                 <tr>
-                    <th>#$startdatelabel#</th>
-                    <th>#$locationlabel#</th>
-                    <th>#$creditslabel#</th>
-                    <th>#$optionslabel#</th>
+                    <th><xar:mlstring>Start date</xar:mlstring></th>
+                    <th><xar:mlstring>Course location</xar:mlstring></th>
+                    <th><xar:mlstring>Course Credits</xar:mlstring></th>
+                    <th><xar:mlstring>Options</xar:mlstring></th>
                 </tr>
                 <xar:foreach in="$items" value="$item">
                 <tr>
-                    <td>#$item['startdate']#</td>
-                    <td>#$item['location']#</td>
-                    <td>#$item['credits']#</td>
+                    <td>#$item.startdate#</td>
+                    <td>#$item.location#</td>
+                    <td>#$item.credits#</td>
                     <td>
                        <xar:if condition="!empty($item['enrollurl'])">
                            <a href="#$item['enrollurl']#">#$item['enrolltitle']#</a>
@@ -114,7 +113,7 @@
                 </xar:foreach>
             </table>
             </form>
-            
+
             <xar:comment>Add the output from the different display hooks here </xar:comment>
             <xar:if condition="!empty($hookoutput)">
                 <xar:foreach in="$hookoutput" key="$hookmodule">

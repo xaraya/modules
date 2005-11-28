@@ -28,5 +28,5 @@ $modversion['admin']          = 1;
 $modversion['user']           = 1;
 $modversion['class']          = 'Complete';
 $modversion['category']       = 'Content';
-$modversion['dependency']     = array(147, 182, 771);
+$modversion['dependency']     = array(147, 182, 771); //Categories; Dynamic Data; Mail module
 ?>

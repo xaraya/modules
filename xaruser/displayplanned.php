@@ -1,7 +1,7 @@
 <?php
 /**
  * Display an planned course
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -9,7 +9,7 @@
  *
  * @subpackage Courses Module
  * @link http://xaraya.com/index.php/release/179.html
- * @author XarayaGeek , Michel V.
+ * @author XarayaGeek, Michel V.
  */
 
 /**
@@ -18,9 +18,9 @@
  * and show the details of all planned occurences
  *
  * @author MichelV.
- * 
+ *
  * @param id $objectid A generic object id (if called by other modules)
- * @param id $planningid The ID of the course
+ * @param id $planningid The ID of the planned course
  */
 function courses_user_displayplanned($args)
 {
@@ -41,11 +41,11 @@ function courses_user_displayplanned($args)
         'getplanned',
         array('planningid' => $planningid));
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-    
+    $courseid = $item['courseid'];
     $course = xarModAPIFunc('courses',
         'user',
         'get',
-        array('courseid' => $item['courseid']));
+        array('courseid' => $courseid));
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     // Let any transformation hooks know that we want to transform some text.
@@ -60,25 +60,9 @@ function courses_user_displayplanned($args)
     $data['coursetypelabel'] = xarVarPrepForDisplay(xarML('Course Type (Category)'));
     $data['levellabel'] = xarVarPrepForDisplay(xarML('Course Level'));
     $data['creditslabel'] = xarVarPrepForDisplay(xarML('Course Credits'));
-    $data['startdatelabel'] = xarVarPrepForDisplay(xarML(''));
-    $data['enddatelabel'] = xarVarPrepForDisplay(xarML(''));
-    $data['costslabel'] = xarVarPrepForDisplay(xarML(''));
-    $data['materiallabel'] = xarVarPrepForDisplay(xarML(''));
-    $data['creditsminlabel'] = xarVarPrepForDisplay(xarML(''));
-    $data['creditsmaxlabel'] = xarVarPrepForDisplay(xarML(''));
-    $data['prereqlabel'] = xarVarPrepForDisplay(xarML(''));
-    $data['aimlabel'] = xarVarPrepForDisplay(xarML(''));
-    $data['coordinatorslabel'] = xarVarPrepForDisplay(xarML(''));
-    $data['committeelabel'] = xarVarPrepForDisplay(xarML(''));
-    $data['lecturerslabel'] = xarVarPrepForDisplay(xarML(''));
-    $data['locationlabel'] = xarVarPrepForDisplay(xarML(''));
-    $data['programlabel'] = xarVarPrepForDisplay(xarML(''));
-    $data['shortdesclabel'] = xarVarPrepForDisplay(xarML(''));
-    $data['longdesclabel'] = xarVarPrepForDisplay(xarML(''));
     $data['methodlabel'] = xarVarPrepForDisplay(xarML('Course Method'));
     $data['intendedcreditslabel'] = xarVarPrepForDisplay(xarML('Intended credits for this course'));
     $data['languagelabel'] = xarVarPrepForDisplay(xarML('Course Language'));
-    $data['freqlabel'] = xarVarPrepForDisplay(xarML(''));
     $data['contactlabel'] = xarVarPrepForDisplay(xarML('Course Contact details'));
     $data['hideplanninglabel'] = xarVarPrepForDisplay(xarML('Hide this occurence'));
     $data['infolabel'] = xarVarPrepForDisplay(xarML('Other Course info'));
@@ -93,25 +77,36 @@ function courses_user_displayplanned($args)
     $data['course'] = $course;
      // Get the username so we can pass it to the enrollment function
     $uid = xarUserGetVar('uid');
-    // See if student is already enrolled 
-    $enrolled = xarModAPIFunc('courses',
-                              'user',
-                              'check_enrolled',
-                               array('uid' => $uid,
-                                     'planningid' => $planningid));
-                                
-    if (count($enrolled)!=0) {
-        $data['enrolled'] = 1;
-        $data['enrollbutton'] = xarVarPrepForDisplay(xarML('You are enrolled in this course'));
-        $data['action'] = "xarModUrl('courses', 'user', 'viewstatus')";
+
+    if (xarSecurityCheck('ReadCourses', 0, 'Course', "$courseid:$planningid:All")) {
+        // See if the date for enrollment is surpassed
+        $closedate = $item['closedate'];
+        $timenow = time();
+        $closetime = strtotime($closedate);
+        if((int)$closetime > (int)$timenow) {
+            // See if student is already enrolled
+            $enrolled = xarModAPIFunc('courses',
+                                      'user',
+                                      'check_enrolled',
+                                       array('uid' => $uid,
+                                             'planningid' => $planningid));
+
+            if (count($enrolled)!=0) {
+                $data['enrolled'] = 1;
+                $data['enrollbutton'] = xarVarPrepForDisplay(xarML('You are enrolled in this course'));
+                $data['action'] = "xarModUrl('courses', 'user', 'viewstatus')";
+            }
+            else {
+                $data['enrolled'] = 0;
+                $data['enrollbutton'] = xarVarPrepForDisplay(xarML('Enroll'));
+                $data['action'] = "xarModUrl('courses', 'user', 'enroll')";
+
+            }
+        } else {
+            $data['closed'] = true;
+        }
     }
-    else {
-        $data['enrolled'] = 0;
-        $data['enrollbutton'] = xarVarPrepForDisplay(xarML('Enroll'));
-        $data['action'] = "xarModUrl('courses', 'user', 'enroll')";
-        
-    }
-    $courseid = $item['courseid'];
+
     $data['levelname'] = xarModAPIFunc('courses', 'user', 'getlevel',
                                       array('level' => $course['level']));
     $items = xarModAPIFunc('courses',
@@ -136,30 +131,42 @@ function courses_user_displayplanned($args)
             $items[$i]['participantsurl'] = '';
         }
         $items[$i]['participantstitle'] = xarML('Participants');
-        
+
         if (xarSecurityCheck('ReadCourses', 0, 'Course', "$courseid:$planningid:All")) {
-            // Add check for already enrolled
-            $enrolled = xarModAPIFunc('courses',
-                          'user',
-                          'check_enrolled',
-                          array('uid' => $uid,
-                                'planningid' => $planningid));
-            if (count($enrolled)!=0) {
-            $items[$i]['enrolltitle'] = xarML('Enrolled');
-            // When enrolled, redirect to details page instead
-            $items[$i]['enrollurl'] = xarModURL('courses',
-                                      'user',
-                                      'displayplanned',
-                                       array('planningid' => $planningid));; 
+            // See if the date for enrollment is surpassed
+            $closedate = $planitem['closedate'];
+            $timenow = time();
+            $closetime = strtotime($closedate);
+            if((int)$closetime > (int)$timenow) {
+                // Add check for already enrolled
+                $enrolled = xarModAPIFunc('courses',
+                              'user',
+                              'check_enrolled',
+                              array('uid' => $uid,
+                                    'planningid' => $planningid));
+                if (count($enrolled)!=0) {
+                    $items[$i]['enrolltitle'] = xarML('Enrolled');
+                    // When enrolled, redirect to details page instead
+                    $items[$i]['enrollurl'] = xarModURL('courses',
+                                              'user',
+                                              'displayplanned',
+                                               array('planningid' => $planningid));
+                } else {
+                    $items[$i]['enrolltitle'] = xarML('Enroll');
+                    $items[$i]['enrollurl'] = xarModURL('courses',
+                        'user',
+                        'enroll',
+                        array('planningid' => $planningid));
+                }
             } else {
-            $items[$i]['enrolltitle'] = xarML('Enroll');
-            $items[$i]['enrollurl'] = xarModURL('courses',
-                'user',
-                'enroll',
-                array('planningid' => $planningid));
+                $items[$i]['enrolltitle'] = xarML('Registration Closed');
+                $items[$i]['enrollurl'] = xarModURL('courses',
+                                                  'user',
+                                                  'displayplanned',
+                                                   array('planningid' => $planningid));
             }
         }
-        
+
         if (xarSecurityCheck('EditCourses', 0, 'Course', "$courseid:$planningid:All")) {
             $items[$i]['deleteurl'] = xarModURL('courses',
                 'admin',
@@ -170,10 +177,10 @@ function courses_user_displayplanned($args)
         }
         $items[$i]['statustitle'] = xarML('Status');
     }
-    
+
     // Add the array of items to the template variables
-    $data['items'] = $items;    
-    
+    $data['items'] = $items;
+
     // Save the currently displayed item ID in a temporary variable cache
     // for any blocks that might be interested (e.g. the Others block)
     // You should use this -instead of globals- if you want to make
