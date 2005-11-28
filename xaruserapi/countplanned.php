@@ -1,7 +1,7 @@
 <?php
 /**
  * Utility function counts number planned courses
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -9,12 +9,12 @@
  *
  * @subpackage Courses Module
  * @link http://xaraya.com/index.php/release/179.html
- * @author Courses module development team 
+ * @author Courses module development team
  */
 /**
  * utility function to count the number of planned courses
- * 
- * @author the Courses module development team 
+ *
+ * @author the Courses module development team
  * @param $catid Category id.
  * @returns integer
  * @return number of items held by this module
@@ -28,7 +28,7 @@ function courses_userapi_countplanned($args)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $planningtable = $xartable['courses_planning'];
-    
+
     // Set to be able to see all courses or only non-hidden ones
     if (xarSecurityCheck('AdminCourses', 0)) {
     $where = "0, 1";
@@ -37,8 +37,8 @@ function courses_userapi_countplanned($args)
     }
 
     $query = "SELECT COUNT(*) ";
-    // Include category navigation possibility            
-    if (!empty($catid) && xarModIsHooked('categories','courses')) {
+    // Include category navigation possibility
+    if (!empty($catid) && xarModIsHooked('categories','courses', 2)) {
         // Get the LEFT JOIN ... ON ...  and WHERE parts from categories
         $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
                                        array('modid' => xarModGetIDFromName('courses'),
@@ -48,17 +48,17 @@ function courses_userapi_countplanned($args)
                         LEFT JOIN $categoriesdef[table]
                         ON $categoriesdef[field] = xar_planningid )
                         $categoriesdef[more]
-                        WHERE $categoriesdef[where] 
+                        WHERE $categoriesdef[where]
                         AND xar_hideplanning in ($where)";
             } else {
-                $query .= " FROM $planningtable 
+                $query .= " FROM $planningtable
                             WHERE xar_hideplanning in ($where)";
             }
      } else {
-        $query .= " FROM $planningtable 
+        $query .= " FROM $planningtable
                     WHERE xar_hideplanning in ($where)";
      }
-            
+
     $result = &$dbconn->Execute($query);
     if (!$result) return;
 

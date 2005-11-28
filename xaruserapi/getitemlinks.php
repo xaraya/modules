@@ -1,7 +1,7 @@
 <?php
-/** 
- * Utility function to pass individual item links 
- * 
+/**
+ * Utility function to pass individual item links
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -9,15 +9,16 @@
  *
  * @subpackage Courses Module
  * @link http://xaraya.com/index.php/release/179.html
- * @author Courses module development team 
+ * @author Courses module development team
  */
 /**
  * utility function to pass individual item links to whoever
- * 
- * @param  $args ['itemtype'] item type (optional)
- * @param  $args ['itemids'] array of item ids to get
+ *
+ * @param  int $args ['itemtype'] item type (optional) 1=course, 2=planned course
+ * @param  array $args ['itemids'] array of item ids to get
  * @returns array
  * @return array containing the itemlink(s) for the item(s).
+ * @todo implement this function for planned courses and courses themselves
  */
 function courses_userapi_getitemlinks($args)
 {
@@ -37,5 +38,4 @@ function courses_userapi_getitemlinks($args)
     }
     return $itemlinks;
 }
-
 ?>

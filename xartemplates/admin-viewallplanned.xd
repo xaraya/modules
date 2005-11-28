@@ -11,12 +11,12 @@
 
     <table>
         <tr>
-            <th>#$namelabel#</th>
-            <th>#$startdatelabel#</th>
-            <th>#$enddatelabel#</th>
-            <th>#$minmaxparticipantslabel#</th>
-            <th>#$participantslabel#</th>
-            <th>#$optionslabel#</th>
+            <th><xar:mlstring>Name</xar:mlstring></th>
+            <th><xar:mlstring>Startdate</xar:mlstring></th>
+            <th><xar:mlstring>Enddate</xar:mlstring></th>
+            <th><xar:mlstring>Min/Max Participants</xar:mlstring></th>
+            <th><xar:mlstring>Participants</xar:mlstring></th>
+            <th><xar:mlstring>Options</xar:mlstring></th>
         </tr>
         <xar:foreach in="$items" value="$item">
         <tr>

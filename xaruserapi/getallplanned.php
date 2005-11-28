@@ -1,7 +1,7 @@
 <?php
 /**
  * Get all planned courses
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -9,16 +9,17 @@
  *
  * @subpackage Courses Module
  * @link http://xaraya.com/index.php/release/179.html
- * @author Courses module development team 
+ * @author Courses module development team
  */
 /**
  * get all planned courses
- * 
- * @author the Courses module development team 
- * @param numitems $ the number of items to retrieve (default -1 = all)
- * @param startnum $ start with this item number (default 1)
- * @param sortby $ what to sort by (default planningid)
- * @param sortorder $how to sort (default DESC)
+ *
+ * @author the Courses module development team
+ * @param int numitems $ the number of items to retrieve (default -1 = all)
+ * @param int startnum $ start with this item number (default 1)
+ * @param int catid $ category id for this planned course
+ * @param str sortby $ what to sort by (default planningid)
+ * @param str sortorder $how to sort (default DESC)
  * @returns array
  * @return array of items, or false on failure
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
@@ -28,13 +29,14 @@ function courses_userapi_getallplanned($args)
     extract($args);
     if (!xarVarFetch('startnum', 'int:1:',         $startnum,  1,           XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('numitems', 'int:1:',         $numitems, -1,           XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('sortby',   'str:1:',         $sortby,   'planningid',  XARVAR_NOT_REQUIRED)) return; 
-    if (!xarVarFetch('sortorder','enum:DESC:ASC:', $sortorder,'DESC',       XARVAR_NOT_REQUIRED)) return;        
+    if (!xarVarFetch('sortby',   'str:1:',         $sortby,   'planningid', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('sortorder','enum:DESC:ASC:', $sortorder,'DESC',       XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('catid',    'int:1:',         $catid,    '',           XARVAR_DONT_SET)) return;
 
     $items = array();
     // Security check
     if (!xarSecurityCheck('ReadCourses')) return;
-    
+
     // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -47,8 +49,8 @@ function courses_userapi_getallplanned($args)
     } else {
     $where = "0";
     }
-        
-    // Get items 
+
+    // Get items
     $query = "SELECT xar_planningid,
                    xar_courseid,
                    xar_credits,
@@ -76,10 +78,10 @@ function courses_userapi_getallplanned($args)
                    xar_closedate,
                    xar_hideplanning,
                    xar_last_modified";
-            
+
     // TODO: how to select by cat ids (automatically) when needed ???
-    // My try at it...
-    if (!empty($catid) && xarModIsHooked('categories','courses')) {
+    // 2=planned courses
+    if (!empty($catid) && xarModIsHooked('categories','courses', 2)) {
         // Get the LEFT JOIN ... ON ...  and WHERE parts from categories
         $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
                                        array('modid' => xarModGetIDFromName('courses'),
@@ -89,20 +91,20 @@ function courses_userapi_getallplanned($args)
                         LEFT JOIN $categoriesdef[table]
                         ON $categoriesdef[field] = xar_planningid )
                         $categoriesdef[more]
-                        WHERE $categoriesdef[where] 
+                        WHERE $categoriesdef[where]
                         AND xar_hideplanning in ($where)";
             } else {
-                $query .= " FROM $planningtable 
+                $query .= " FROM $planningtable
                             WHERE xar_hideplanning in ($where)";
             }
      } else {
-        $query .= " FROM $planningtable 
+        $query .= " FROM $planningtable
                     WHERE xar_hideplanning in ($where)";
      }
 
     $query .= " ORDER BY $planningtable.xar_" . $sortby ;
     $query .= " $sortorder";
-            
+
     $result = $dbconn->SelectLimit($query, $numitems, $startnum-1);
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return

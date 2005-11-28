@@ -5,6 +5,10 @@
     <span class="xar-mod-title">#$menutitle#</span>
 </div>
 
+<xar:if condition="!empty($editlink)">
+    <a href="#$editlink#"><xar:mlstring>Edit this planned course</xar:mlstring></a>
+</xar:if>
+
 <div class="xar-mod-body">
     <div class="xar-courses-contents">
         <xar:if condition="$item['hideplanning'] eq 1">
@@ -87,7 +91,7 @@
                     <div class="xar-form-input-wrapper">
                         <label for="level" class="xar-form-label">
                             <span class="help" title="#xarML('The level of this course')#">
-                            #$levellabel#
+                            <xar:mlstring>Course Level</xar:mlstring>
                             </span>
                         </label>
                         <span class="fullright">
@@ -98,7 +102,7 @@
                     <div class="xar-form-input-wrapper">
                         <label for="language" class="xar-form-label">
                             <span class="help" title="#xarML('The language that will be used in this course.')#">
-                            #$languagelabel#
+                            <xar:mlstring>Course Language</xar:mlstring>
                             </span>
                         </label>
                         #$item.language#
@@ -108,7 +112,7 @@
                     <div class="xar-form-input-wrapper">
                         <label for="credits" class="xar-form-label">
                             <span class="help" title="#xarML('The credits for this course.')#">
-                            #$creditslabel#
+                            <xar:mlstring>Course Credits</xar:mlstring>
                             </span>
                         </label>
                         #$item.credits#
@@ -174,7 +178,7 @@
                     <div class="xar-form-input-wrapper">
                         <label for="method" class="xar-form-label">
                             <span class="help" title="#xarML('Describes the methods used in this course.')#">
-                            #$methodlabel#
+                            <xar:mlstring>Course Method</xar:mlstring>
                             </span>
                         </label>
                         #$item.method#
@@ -201,7 +205,7 @@
                     <div class="xar-form-input-wrapper">
                         <label for="minpart" class="xar-form-label">
                             <span class="help" title="#xarML('The minimum of registered participants needed.')#">
-                            #$minpartlabel#
+                            <xar:mlstring>Minimum Participants</xar:mlstring>
                             </span>
                         </label>
                         #$item.minparticipants#
@@ -211,7 +215,7 @@
                     <div class="xar-form-input-wrapper">
                         <label for="maxpart" class="xar-form-label">
                             <span class="help" title="#xarML('The maximum of registered participants possible.')#">
-                            #$maxpartlabel#
+                            <xar:mlstring>Maximum Participants</xar:mlstring>
                             </span>
                         </label>
                         #$item.maxparticipants#
@@ -221,7 +225,7 @@
                     <div class="xar-form-input-wrapper">
                         <label for="closedate" class="xar-form-label">
                             <span class="help" title="#xarML('The last date you can register for this course.')#">
-                            #$closedatelabel#
+                            <xar:mlstring>Closing date for registration</xar:mlstring>
                             </span>
                         </label>
                         #$item.closedate#
@@ -285,7 +289,7 @@
                     <div class="xar-form-input-wrapper">
                         <label for="info" class="xar-form-label">
                             <span class="help" title="#xarML('Other info on this course.')#">
-                            #$infolabel#
+                            <xar:mlstring>Other Course info</xar:mlstring>
                             </span>
                         </label>
                         <div class="xar-form-input-wrapper-after">
@@ -295,7 +299,7 @@
                     <div class="xar-form-input-wrapper">
                         <label for="last_modified" class="xar-form-label">
                             <span class="help" title="#xarML('Date the information on this course was last modified.')#">
-                            #$lastmodilabel#
+                            <xar:mlstring>Date last modified</xar:mlstring>
                             </span>
                         </label>
                         #$item.last_modified#
@@ -322,8 +326,8 @@
                 <tr>
                     <th><xar:mlstring>Starts</xar:mlstring></th>
                     <th><xar:mlstring>Location</xar:mlstring></th>
-                    <th>#$creditslabel#</th>
-                    <th>#$optionslabel#</th>
+                    <th><xar:mlstring>Credits</xar:mlstring></th>
+                    <th><xar:mlstring>Options</xar:mlstring></th>
                 </tr>
                 <xar:foreach in="$items" value="$item">
                 <tr>

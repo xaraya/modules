@@ -25,7 +25,7 @@
                 <div class="xar-form-input-wrapper">
                     <label for="name" class="xar-form-label">
                         <span class="help" title="#xarML('Enter the name for this course.')#">
-                        #$namelabel#
+                        <xar:mlstring>Course Name</xar:mlstring>
                         </span>
                     </label>
                     <xar:data-input name="name" type="2" value="$name" />
@@ -39,7 +39,7 @@
                 <div class="xar-form-input-wrapper">
                     <label for="number" class="xar-form-label">
                         <span class="help" title="#xarML('The code/number of this course.')#">
-                        #$numberlabel#
+                        <xar:mlstring>Code Number</xar:mlstring>
                         </span>
                     </label>
                     <xar:data-input name="number" type="2" value="$number" />
@@ -56,7 +56,7 @@
                 <div class="xar-form-input-wrapper">
                   <label for="coursetype" class="xar-form-label">
                      <span class="help" title="#xarML('Enter the type of course.')#">
-                        #$coursetypelabel#
+                        <xar:mlstring>Course Type</xar:mlstring>
                      </span>
                   </label>
                   <xar:data-input name="coursetype" type="2" value="$coursetype" />
@@ -67,7 +67,7 @@
                 <div class="xar-form-input-wrapper">
                     <label for="level" class="xar-form-label">
                          <span class="help" title="#xarML('Enter the level of this course.')#">
-                       #$levellabel#
+                       <xar:mlstring>Level</xar:mlstring>
                        </span>
                     </label>
                     <select name="level">
@@ -84,7 +84,7 @@
                 <div class="xar-form-input-wrapper">
                     <label for="shortdesc" class="xar-form-label">
                         <span class="help" title="#xarML('Enter short description for this course.')#">
-                        #$shortdesclabel#
+                        <xar:mlstring>Short Course Description</xar:mlstring>
                         </span>
                     </label>
                     <xar:data-input name="shortdesc" type="4" value="$shortdesc" />
@@ -94,8 +94,8 @@
                 </div>
                 <div class="xar-form-input-wrapper">
                     <label for="language" class="xar-form-label">
-                        <span class="help" title="#xarML('The intended credits for this course.')#">
-                        #$intendedcreditslabel#
+                        <span class="help" title="#xarML('The credits that in general will be given for this course.')#">
+                        <xar:mlstring>The intended credits for this course</xar:mlstring>
                         </span>
                     </label>
                     <xar:data-input name="intendedcredits" type="2" value="$intendedcredits" />
@@ -106,7 +106,7 @@
                 <div class="xar-form-input-wrapper">
                     <label for="freq" class="xar-form-label">
                         <span class="help" title="#xarML('Enter the frequency for this course.')#">
-                        #$freqlabel#
+                        <xar:mlstring>Frequency</xar:mlstring>
                         </span>
                     </label>
                     <xar:data-input name="freq" type="2" value="$freq" />
@@ -117,7 +117,7 @@
                 <div class="xar-form-input-wrapper">
                     <label for="contact" class="xar-form-label">
                         <span class="help" title="#xarML('Enter detailed contact information for this course.')#">
-                        #$contactlabel#
+                        <xar:mlstring>Contact details</xar:mlstring>
                         </span>
                     </label>
                     <xar:data-input name="contact" type="4" value="$contact" />
@@ -128,7 +128,7 @@
                 <div class="xar-form-input-wrapper">
                     <label for="contactuid" class="xar-form-label">
                         <span class="help" title="#xarML('Enter the user that will serve as the main contact for this course like the coordinator.')#">
-                        #$contactuidlabel#
+                        <xar:mlstring>User or role to serve as contact for course</xar:mlstring>
                         </span>
                     </label>
                     <xar:data-input name="contactuid" type="37" value="$contactuid" />
@@ -139,7 +139,7 @@
                 <div class="xar-form-input-wrapper">
                     <label for="hidecourse" class="xar-form-label">
                         <span class="help" title="#xarML('Hide this course from being viewed by site users.')#">
-                        #$hidecourselabel#
+                        <xar:mlstring>Hide Course</xar:mlstring>
                         </span>
                     </label>
                     <xar:data-input name="hidecourse" type="14" value="$hidecourse" />
