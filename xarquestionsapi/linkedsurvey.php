@@ -1,32 +1,30 @@
 <?php
 /**
  * Question type 'linkedsurvey'
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Surveys
- * @author Surveys module development team 
+ * @author Surveys module development team
  */
-/*
+/**
  * Question type 'linkedsurvey'
  *
- * Data definition:
- *  listname = list name ('lists' module)
- *  desc = question text (default language)
- *  desc_{lang} = question text (alt languages)
  * Options from the list:
  *  x = option value
  *  x = option text (default language)
  *  x_{lang} = option text (alt languages)
  *
  * @author     Jason Judge <jason.judge@academe.co.uk>
- * @author     Another Author <another@example.com>          [REQURIED]
  * @param string $arg1  the string used                      [OPTIONAL A REQURIED]
  * @param int    $arg2  an integer and use description
  *                      Identing long comments               [OPTIONAL A REQURIED]
+ *  listname = list name ('lists' module)
+ *  desc = question text (default language)
+ *  desc_{lang} = question text (alt languages)
  *
  * @return int  type and name returned                       [OPTIONAL A REQURIED]
  *
@@ -124,7 +122,7 @@ class surveys_questionsapi_linkedsurvey extends surveys_questionsapi_default
             );
 
             // Get the value of the selected question (to identify each survey).
-            
+
             foreach($user_surveys as $key => $user_survey) {
                 if (!empty($this->questionname)) {
                     $response = xarModAPIfunc(

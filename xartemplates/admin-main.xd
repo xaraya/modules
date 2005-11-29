@@ -1,8 +1,7 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<!-- This is a standard template for the module overview  -->
-<!-- Each Module Should have an overview explaining exactly what it does, and giving an overview of the blocks and hooks that it includes or accepts. -->
+
 <div class="xar-mod-head">
-    <span class="xar-mod-title"><xar:mlstring>Example Administration</xar:mlstring></span>
+    <span class="xar-mod-title"><xar:mlstring>Surveys Administration</xar:mlstring></span>
 </div>
 <div class="xar-mod-body">
     <img src="modules/adminpanels/xarimages/admin.gif" class="xar-module-icon" alt="official icon" width="96" height="96" />
@@ -22,20 +21,26 @@
     <p><xar:mlstring>This module can help in taking large surveys:</xar:mlstring>
     </p>
     <ul>
-        <li><xar:mlstring>examples of standard Xaraya functions commented in plain terms, and written with Xaraya coding standards.</xar:mlstring></li>
-        <li><xar:mlstring>templates with standard style classes, layouts and template requirements to meet Xaraya Block Layout coding standards.</xar:mlstring></li>
-        <li><xar:mlstring>examples of hooks, blocks, dynamic data properties, and event handlers.</xar:mlstring></li>
+        <li><xar:mlstring>It has a great database setup with full flexibility</xar:mlstring></li>
+        <li><xar:mlstring>It has built in many usefull question types</xar:mlstring></li>
     </ul>
 
     <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
     <p>
         <xar:mlstring>There will be a manual.</xar:mlstring>
+        <ol>
+            <li><xar:mlstring>Creating a new survey</xar:mlstring></li>
+            <li><xar:mlstring>Creating questions</xar:mlstring></li>
+            <li><xar:mlstring>Connecting answers via the lists module</xar:mlstring></li>
+            <li><xar:mlstring>Inviting users to take your survey</xar:mlstring></li>
+            <li><xar:mlstring>Monitoring the progress</xar:mlstring></li>
+            <li><xar:mlstring>Reporting results</xar:mlstring></li>
+        </ol>
     </p>
 
     <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
     <ul>
-        <li><xar:mlstring>first</xar:mlstring></li>
-        <li><xar:mlstring>example</xar:mlstring></li>
+        <li><xar:mlstring>None at the moment</xar:mlstring></li>
     </ul>
 
     <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
@@ -43,37 +48,27 @@
         <li><xar:mlstring>Usermenu -- Allows interface with the Roles "My Account Page"</xar:mlstring></li>
         <li><xar:mlstring>Search -- Allows interface with the Search Module.</xar:mlstring></li>
     </ul>
-    <p>
-        <xar:mlstring>
-        In these cases, the Example module provides the hook functionality.
-        To activate the hooks go to </xar:mlstring>
-        <a href="&xar-modurl-modules-admin-hooks;&amp;hook=example"><xar:mlstring>Modules - Configure Hooks - Example Module</xar:mlstring></a>.
-        <xar:mlstring> From there click on the checkbox in either Roles or
-        the Search module to activate the respective hooks.
-        </xar:mlstring>
-    </p>
 
     <h3><xar:mlstring>Included Dynamic Data Properties</xar:mlstring></h3>
     <ul>
-        <li><xar:mlstring>Example -- Provides example code and templates for an Example property</xar:mlstring></li>
-
+        <li><xar:mlstring>None at the moment</xar:mlstring></li>
     </ul>
 
     <h3>
         <xar:mlstring>Further Information</xar:mlstring>
     </h3>
     <p>
-        <xar:mlstring>Further information on the Example module can be found at</xar:mlstring>
+        <xar:mlstring>Further information on the Surveys module can be found at</xar:mlstring>
     </p>
        <ul>
-              <li><xar:mlstring>Example Extension page at</xar:mlstring> <a title="#xarML('Surveys Module - Xaraya Extension 45')#" href="http://xaraya.com/index.php/release/45.html">Xaraya Extension and Releases</a>.
+              <li><xar:mlstring>Surveys Extension page at</xar:mlstring> <a title="#xarML('Surveys Module - Xaraya Extension 45')#" href="http://xaraya.com/index.php/release/45.html">Xaraya Extension and Releases</a>.
               <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
               </li>
-              <li><xar:mlstring>Related tutorials and documentation on Example found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/example/" title="#xarML('Related documentation on Example')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+              <li><xar:mlstring>Related tutorials and documentation on Surveys are to be found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/surveys/" title="#xarML('Related documentation on Surveys')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
               </li>
          </ul>
          <p class="xar-sub">
-             <strong>&nbsp;<xar:mlstring>Example Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.3&nbsp; 2005-09-28
+             <strong>&nbsp;<xar:mlstring>Surveys Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.2&nbsp; 2005-11-28
          </p>
       </div>
 </div>

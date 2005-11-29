@@ -1,4 +1,4 @@
-
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:comment>User main page - custom surveys screen for the project</xar:comment>
 
 <xar:style scope="module" file="general" />
@@ -63,7 +63,7 @@
                         <div style="margin-top: 1em;">
                             <div><a href="#xarModURL('surveys','user','review',array('usid'=&gt;$survey.usid))#" class="continue-survey"><img src="#xarTplGetImage('view1.gif')#" alt="Magnifying glass" style="vertical-align: middle; margin: 0 8px;"/><xar:mlstring>View your responses</xar:mlstring></a></div>
 
-                            <xar:if condition="$survey.status eq 'COMPLETE' or $survey.status eq 'SUBMITTED' or $survey.status eq 'INSPECTOR' or $survey.status eq 'VERIFIED'"> 
+                            <xar:if condition="$survey.status eq 'COMPLETE' or $survey.status eq 'SUBMITTED' or $survey.status eq 'INSPECTOR' or $survey.status eq 'VERIFIED'">
                             <div><a href="#xarModURL('surveys','user','graph_redirect',array('usid'=&gt;$survey.usid))#" class="continue-survey" target="charts"><img src="#xarTplGetImage('bar-graph.gif')#" alt="Bar graph" style="vertical-align: middle"><xar:mlstring>View your charts</xar:mlstring></a></div>
                             </xar:if>
 

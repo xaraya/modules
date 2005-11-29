@@ -1,18 +1,17 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Question Group Administration</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>Delete Group</xar:mlstring></h2><br />
-<div style="margin: auto;">
-<form action="#xarModURL('surveys','admin','deletegroup')#" method="post">
+    <form action="&xar-modurl-surveys-admin-deletegroup;" method="post">
 
-    <xar:ml>
-        <xar:mlstring>Are you sure you want to delete group '#(1)'?</xar:mlstring>
-        <xar:mlvar>#$name#</xar:mlvar>
-    </xar:ml>
-<br /><br />
+        <xar:ml>
+            <xar:mlstring>Are you sure you want to delete group '#(1)'?</xar:mlstring>
+            <xar:mlvar>#$name#</xar:mlvar>
+        </xar:ml>
+    <br /><br />
 
-<input type="hidden" name="ok" id="ok" value="1" />
-<input type="hidden" name="gid" id="gid" value="#$gid#" />
-<input type="hidden" name="authid" id="authid" value="#$authkey#" />
-    <input type="submit" name="confirm" id="confirmyes" value="#$yeslabel#" />
-</form>
-</div>
+    <input type="hidden" name="ok" id="ok" value="1" />
+    <input type="hidden" name="gid" id="gid" value="#$gid#" />
+    <input type="hidden" name="authid" id="authid" value="#$authkey#" />
+        <input type="submit" name="confirm" id="confirmyes" value="#$yeslabel#" />
+    </form>
 </div>

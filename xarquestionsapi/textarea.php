@@ -1,16 +1,16 @@
 <?php
 /**
  * Question type 'textarea'
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Surveys
- * @author Surveys module development team 
+ * @author Surveys module development team
  */
-/*
+/**
  * Question type 'textarea'
  *
  * Data definition:

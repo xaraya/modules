@@ -1,3 +1,4 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:base-include-javascript filename="setproperty.js" />
 
 <xar:comment>Hidden field indicates that the question has been submitted</xar:comment>

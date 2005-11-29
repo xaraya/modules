@@ -6,6 +6,9 @@
 
 /* Error message, when a question fails validation */
 .surveys-question .error {
+    background-image: url(../xarimages/warning-small.gif);
+    background-repeat: no-repeat;
+    background-position: left top;
 }
 
 /* Make checkboxes and radio buttons a tad bigger */
@@ -57,6 +60,9 @@ div.showgroup h2 {
 }
 
 div.message-submittable {
+    background-repeat: no-repeat;
+    background-position: 1em 1em;
+    background-image: url(../xarimages/tick-16.gif);
 }
 
 span.survey-summary {

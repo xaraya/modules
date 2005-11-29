@@ -1,25 +1,26 @@
 <?php
 /**
- * Surveys create a new survey for on user
- * 
+ * Surveys create a new survey for one user
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Surveys
- * @author Surveys module development team 
+ * @author Surveys module development team
  */
-/*
+/**
  * Create a new user survey record.
  *
- * Called from user-startsurvey
+ * Called from user-startsurvey. This function records when a user has
+ * started a new survey. It creates the link between the user and the survey
  *
  * @author     Jason Judge <jason.judge@academe.co.uk>
  * @author     Another Author <another@example.com>          [REQURIED]
  * @param date $startdate OPTIONAL
- * @param int    $arg2  an integer and use description
- *                      Identing long comments               [OPTIONAL A REQURIED]
+ * @param id    $sid  survey id
+ * @param id    $uid The userid that starts this survey
  *
  * @return id  $usid The user survey ID
  *
@@ -30,13 +31,27 @@
  * @link       link to a reference                           [OPTIONAL]
  * @see        anothersample(), someotherlinke [reference to other function, class] [OPTIONAL]
  * @since      [Date of first inclusion long date format ]   [REQURIED]
- * @deprecated Deprecated [release version here]             [AS REQUIRED]
  */
 
 function surveys_adminapi_createusersurvey($args) {
     extract($args);
 
-    // TODO: validate arguments (sid, uid)
+    // TODO: check validate arguments (sid, uid)
+    // Validation
+    $invalid = array();
+    if (!isset($sid) || !is_numeric($sid)) {
+        $invalid[] = 'sid';
+    }
+    if (!isset($uid) || !is_numeric($uid)) {
+        $invalid[] = 'uid';
+    }
+    if (count($invalid) > 0) {
+        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
+            join(', ', $invalid), 'admin', 'createusersurvey', 'Surveys');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+            new SystemException($msg));
+        return;
+    }
 
     $xartable =& xarDBGetTables();
     $dbconn =& xarDBGetConn();

@@ -1,27 +1,27 @@
 <?php
 /**
- * Surveys table definitions function
- * 
+ * Surveys Update the status of a user response group
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Surveys
- * @author Surveys module development team 
+ * @author Surveys module development team
  */
-/*
- * Short Description [REQUIRED one line description]
+/**
+ * Update the status of a user response group
  *
- * Long Description [OPTIONAL one or more lines]
+ * Update the status of a user response group, according
+ * to the statuses of the questions that it contains.
+
  *
  * @author     Jason Judge <jason.judge@academe.co.uk>
  * @author     Another Author <another@example.com>          [REQURIED]
- * @param string $arg1  the string used                      [OPTIONAL A REQURIED]
- * @param int    $arg2  an integer and use description
- *                      Identing long comments               [OPTIONAL A REQURIED]
+ * @param  args: usid/sid/uid and gid
  *
- * @return int  type and name returned                       [OPTIONAL A REQURIED]
+ * @return bool
  *
  * @throws      exceptionclass  [description]                [OPTIONAL A REQURIED]
  *
@@ -30,12 +30,6 @@
  * @link       link to a reference                           [OPTIONAL]
  * @see        anothersample(), someotherlinke [reference to other function, class] [OPTIONAL]
  * @since      [Date of first inclusion long date format ]   [REQURIED]
- * @deprecated Deprecated [release version here]             [AS REQUIRED]
- */
-/*
- * Update the status of a user response group, according
- * to the statuses of the questions that it contains.
- * args: usid/sid/uid and gid
  */
 
 function surveys_adminapi_updateusergroupstatus($args) {
@@ -197,5 +191,4 @@ function surveys_adminapi_updateusergroupstatus($args) {
 
     return true;
 }
-
 ?>

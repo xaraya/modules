@@ -1,19 +1,31 @@
 <?php
 /**
  * Surveys table definitions function
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Surveys
- * @author Surveys module development team 
+ * @author Surveys module development team
  */
-/*
- * Short Description [REQUIRED one line description]
+/**
+ * Group rule 'complete'.
  *
- * Long Description [OPTIONAL one or more lines]
+ * Validates a question that has been completed and validated.
+ * Note, 'NA' is counted as 'COMPLETE' as it is as complete as it can be.
+ * 'NA' will include those questions that do not require a response, as
+ * well as groups that have been disabled though other rules.
+ * Rule parameters ('params'):
+ * 1: question name
+ * Standard parameters:
+ *   sid: survey ID
+ *   uid: user ID
+ *   usid: user survey ID
+ *
+ * Rule format:
+ *  'response:{question-name}'
  *
  * @author     Jason Judge <jason.judge@academe.co.uk>
  * @author     Another Author <another@example.com>          [REQURIED]
@@ -30,25 +42,7 @@
  * @link       link to a reference                           [OPTIONAL]
  * @see        anothersample(), someotherlinke [reference to other function, class] [OPTIONAL]
  * @since      [Date of first inclusion long date format ]   [REQURIED]
- * @deprecated Deprecated [release version here]             [AS REQUIRED]
  */
-/*
- * Group rule 'complete'.
- * Validates a question that has been completed and validated.
- * Note, 'NA' is counted as 'COMPLETE' as it is as complete as it can be.
- * 'NA' will include those questions that do not require a response, as
- * well as groups that have been disabled though other rules.
- * Rule parameters ('params'):
- * 1: question name
- * Standard parameters:
- *   sid: survey ID
- *   uid: user ID
- *   usid: user survey ID
- *
- * Rule format:
- *  'response:{question-name}'
- */
-
 function surveys_rulesapi_complete($args) {
     // Expand arguments
     extract($args);
@@ -68,7 +62,7 @@ function surveys_rulesapi_complete($args) {
         // Error while fetching the results.
         return -1;
     }
-    
+
     if ($response != array() && ($response['status'] == 'COMPLETE' || $response['status'] == 'NA')) {
         return true;
     } else {

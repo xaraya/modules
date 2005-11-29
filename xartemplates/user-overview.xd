@@ -1,4 +1,4 @@
-
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:comment>User overview page - look at all surveys for a user</xar:comment>
 
 <xar:style scope="module" file="general" />

@@ -1,1 +1,7 @@
-<div class="surveys-boilerplate"><div class="question-name">#$question_name#</div>#$question_text#</div>
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="surveys-boilerplate">
+    <div class="question-name">
+        #$question_name#
+    </div>
+    #$question_text#
+</div>

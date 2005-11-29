@@ -1,8 +1,8 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Question Group Administration</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>View Groups</xar:mlstring></h2>
-<div style="margin: auto;">
 
-<div><a href="#xarModURL('surveys','admin','modifygroup')#"><xar:mlstring>Add Group</xar:mlstring></a></div>
+<div><a href="&xar-modurl-surveys-admin-modifygroup;"><xar:mlstring>Add Group</xar:mlstring></a></div>
 
 <table border="0" width="100%" cellspacing="0" cellpadding="0">
     <tr>
@@ -38,6 +38,5 @@
     </xar:loop>
 </table>
 
-<br />
 </div>
-</div>
+

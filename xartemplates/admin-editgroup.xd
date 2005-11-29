@@ -1,3 +1,4 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Question Groups Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
 <h2>
@@ -9,7 +10,7 @@
 </h2>
 
 <div style="margin: auto;">
-    <form action="#xarModURL('surveys','admin','updategroup',array())#" method="post">
+    <form action="&xar-modurl-surveys-admin-updategroup;" method="post">
         <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
         <xar:for iter="$i++" start="$i=0" test="$i lt $repeat">
             <h3><xar:mlstring>Group</xar:mlstring> #$i+1#</h3>
@@ -40,7 +41,7 @@
                         <input type="submit" value="#$modifylabel#" />
                         <input type="hidden" name="creating" id="creating" value="false">
                     <xar:else />
-                        <input type="submit" value="#$addlabel#"  />
+                        <input type="submit" value="#$addlabel#" />
                         <input type="hidden" name="creating" id="creating" value="true">
                     </xar:if>
                     <br />&nbsp;

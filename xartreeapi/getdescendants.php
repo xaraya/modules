@@ -1,16 +1,16 @@
 <?php
 /**
- * Surveys table definitions function
- * 
+ * Surveys Get a tree of items from an hierarchical table.
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Surveys
- * @author Surveys module development team 
+ * @author Surveys module development team
  */
-/*
+/**
  * Get a tree of items from an hierarchical table.
  *
  * Long Description [OPTIONAL one or more lines]
@@ -31,9 +31,6 @@
  * @see        anothersample(), someotherlinke [reference to other function, class] [OPTIONAL]
  * @since      [Date of first inclusion long date format ]   [REQURIED]
  * @deprecated Deprecated [release version here]             [AS REQUIRED]
- */
-/*
- * 
  * id: start id
  * tablename: name of the table to fetch from
  * idname: name of the ID column ('index' or 'id')
@@ -99,7 +96,7 @@ function surveys_treeapi_getdescendants($args) {
     $stack = array();
     $index = 0;
     while (!$result->EOF) {
-        // If we are fetching all lists, then create the virtual root node 
+        // If we are fetching all lists, then create the virtual root node
         // on the first iteration, rather than fetching from the database.
         if ($id == 0 && empty($items)) {
             $row = array(
@@ -134,7 +131,7 @@ function surveys_treeapi_getdescendants($args) {
 
         // Keep a note of the details for DD later.
         $dd_ids[$row[$idname]] = $index;
-        
+
         if ($group_key == 'index') {
             $index += 1;
         }

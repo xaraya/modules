@@ -1,20 +1,29 @@
 <?php
 /**
- * Surveys table definitions function
- * 
+ * Surveys Group rule 'lt'.
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Surveys
- * @author Surveys module development team 
+ * @author Surveys module development team
  */
-/*
- * Short Description [REQUIRED one line description]
+/**
+ * Group rule 'lt'.
  *
- * Long Description [OPTIONAL one or more lines]
- *
+ * Validates a question value is set *less than* a specified value.
+ * Rule parameters ('params'):
+ * 1: question name
+ * Standard parameters:
+ *   sid: survey ID
+ *   uid: user ID
+ *   usid: user survey ID
+ * rule format:
+ *  'eq:{question-name}:{value}:[{value-number}]'
+ * the value number is 1, 2 or 3, defaulting to 1. it determines
+ * which of the three value fields will be compared.
  * @author     Jason Judge <jason.judge@academe.co.uk>
  * @author     Another Author <another@example.com>          [REQURIED]
  * @param string $arg1  the string used                      [OPTIONAL A REQURIED]
@@ -30,22 +39,6 @@
  * @link       link to a reference                           [OPTIONAL]
  * @see        anothersample(), someotherlinke [reference to other function, class] [OPTIONAL]
  * @since      [Date of first inclusion long date format ]   [REQURIED]
- * @deprecated Deprecated [release version here]             [AS REQUIRED]
- */
-/*
- * Group rule 'lt'.
- * Validates a question value is set *less than* a specified value.
- * Rule parameters ('params'):
- * 1: question name
- * Standard parameters:
- *   sid: survey ID
- *   uid: user ID
- *   usid: user survey ID
- *
- * Rule format:
- *  'eq:{question-name}:{value}:[{value-number}]'
- * The value number is 1, 2 or 3, defaulting to 1. It determines
- * which of the three value fields will be compared.
  */
 
 function surveys_rulesapi_lt($args) {
