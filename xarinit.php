@@ -141,13 +141,13 @@ CREATE TABLE `xar_surveys_question_groups` (
 */
 
     $fields = "
-  xar_qgid          I auto primary,
-  xar_question_id   I NOTNULL default 0,
-  xar_group_id      I NOTNULL default 0,
-  xar_order         C(20) default NULL,
-  xar_template      C(30) default NULL,
-  xar_readonly      C(1) NOTNULL default N
-  ";
+              xar_qgid          I auto primary,
+              xar_question_id   I NOTNULL default 0,
+              xar_group_id      I NOTNULL default 0,
+              xar_order         C(20) default NULL,
+              xar_template      C(30) default NULL,
+              xar_readonly      C(1) NOTNULL default N
+              ";
     // Create or alter the table as necessary.
     $result = $datadict->changeTable($question_groupstable, $fields);
     if (!$result) {return;}
@@ -396,17 +396,19 @@ CREATE TABLE `xar_surveys_user_surveys` (
     // Create or alter the table as necessary.
     $result = $datadict->changeTable($user_surveystable, $fields);
     if (!$result) {return;}
-     // Create indexes.
+    // Create indexes.
+    // Bug 5222. Double entries in index table Lets turn off this index for a moment
+    /*
     $result = $datadict->createIndex(
         'i_' . xarDBGetSiteTablePrefix() . '_surveys_xar_user_id',
         $user_surveystable,
         array('xar_survey_id','xar_usid')
     );
-
-/*
- * Variables
- * and Others
- */
+    */
+    /*
+     * Variables
+     * and Others
+     */
 
     // Create a module variable for storing the current
     // user survey flags against.
@@ -420,7 +422,6 @@ CREATE TABLE `xar_surveys_user_surveys` (
      */
     xarModSetVar('surveys', 'useModuleAlias',false);
     xarModSetVar('surveys','aliasname','');
-
 
     /*
      * Instances
