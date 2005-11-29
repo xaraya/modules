@@ -65,29 +65,31 @@
                     </xar:mlstring>
                 </xar:if>
             </div>
-            <xar:if condition="xarThemeIsAvailable('print')">
+
                 <div>
+                    <xar:if condition="xarThemeIsAvailable('print')">
                     <a href="#xarModUrl('xarbb', 'user', 'printtopic', array('tid' => $tid, 'theme' => 'print'))#">
                         <xar:mlstring>
-                            Print this topic 
+                            Print this topic
                         </xar:mlstring>
                     </a>
-                    :: 
+                    ::
+                    </xar:if>
                     <xar:if condition="!empty($tsubscribed)">
                         <a href="#xarModUrl('xarbb', 'user', 'unsubscribe', array('tid' => $tid))#">
                             <xar:mlstring>
-                                Unsubscribe from topic 
+                                Unsubscribe from topic
                             </xar:mlstring>
                         </a>
                     <xar:else/>
                         <a href="#xarModUrl('xarbb', 'user', 'subscribe', array('tid' => $tid))#">
                             <xar:mlstring>
-                                Subscribe to topic 
+                                Subscribe to topic
                             </xar:mlstring>
                         </a>
                     </xar:if>
                 </div>
-            </xar:if>
+
         </div>
     </div>
     <div id="top">
