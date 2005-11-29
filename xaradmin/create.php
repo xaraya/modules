@@ -47,9 +47,9 @@ function helpdesk_admin_create($args)
         // Get ready for a preview
         $data['menu']      = xarModFunc('helpdesk','admin','menu');
         $data['menutitle'] = xarModAPIFunc('helpdesk','admin','menu');
-        $data['itemtype'] = $itemtype;
-        $data['object'] =& $object;
-        $data['preview'] = $preview;
+        $data['itemtype']  = $itemtype;
+        $data['object']    =& $object;
+        $data['preview']   = $preview;
 
         // Deal with the Hooks
         $item = array();
