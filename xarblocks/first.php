@@ -56,7 +56,7 @@ function example_firstblock_display($blockinfo)
 
     // Database information
     xarModDBInfoLoad('example');
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     $xartable =xarDBGetTables();
     $exampletable = $xartable['example'];
 

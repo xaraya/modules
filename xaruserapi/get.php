@@ -12,7 +12,7 @@ function xproject_userapi_get($args)
         return;
     }
 
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     $xartable = xarDBGetTables();
 
     $xprojecttable = $xartable['xproject'];

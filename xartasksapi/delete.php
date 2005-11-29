@@ -28,14 +28,14 @@ function xproject_tasksapi_delete($args)
         return;
     }
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $taskstable = $xartable['xproject_tasks'];
 
     // does it have children ?
     $sql = "DELETE FROM $taskstable
-            WHERE xar_taskid = " . xarVarPrepForStore($taskid);
+            WHERE xar_taskid = $taskid";
     $result = $dbconn->Execute($sql);
 
     if ($dbconn->ErrorNo() != 0) {

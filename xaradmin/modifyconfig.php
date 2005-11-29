@@ -5,11 +5,7 @@ function xproject_admin_modifyconfig()
 	xarModLoad('xproject','user');
 	$data = xarModAPIFunc('xproject','user','menu');
 	
-    if (!xarSecAuthAction(0, 'xproject::', '::', ACCESS_ADMIN)) {
-        $msg = xarML('Not authorized to modify #(1) configuration settings',
-                               'xproject');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
-                       new SystemException($msg));
+    if (xarSecurityCheck('AdminXProject', 0)) {
         return;
     }
 	

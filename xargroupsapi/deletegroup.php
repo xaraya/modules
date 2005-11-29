@@ -12,7 +12,7 @@ function xproject_groupsapi_deletegroup($args)
 	xarSessionSetVar('errormsg', _GROUPSNOAUTH);
         return false;
     }
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     $xartable = xarDBGetTables();
 
     $groupstable = $xartable['groups'];

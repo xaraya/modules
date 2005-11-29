@@ -8,7 +8,7 @@ function xproject_groupsapi_addgroup($args)
 	xarSessionSetVar('errormsg', _MODARGSERROR);
 	return false;
     }
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     $xartable = xarDBGetTables();
 
     $groupstable = $xartable['groups'];

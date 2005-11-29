@@ -8,7 +8,7 @@ function xproject_groupsapi_insertuser($args)
 		xarSessionSetVar('errormsg', _MODARGSERROR);
 		return false;
     }
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     $xartable = xarDBGetTables();
 
     $groupmembership = $xartable['group_membership'];

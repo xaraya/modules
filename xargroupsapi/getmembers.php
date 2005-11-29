@@ -10,7 +10,7 @@ function xproject_groupsapi_getmembers($args)
         return false;
     }
 
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     $xartable = xarDBGetTables();
 
     $userstable = $xartable['users'];

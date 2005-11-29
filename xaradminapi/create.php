@@ -39,7 +39,7 @@ function xproject_adminapi_create($args)
         return;
     }
 
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     $xartable = xarDBGetTables();
 
     $xprojecttable = $xartable['xproject'];

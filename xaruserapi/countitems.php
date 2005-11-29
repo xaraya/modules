@@ -6,7 +6,7 @@ function xproject_userapi_countitems($args)
 	
 	if(empty($parentid)) $parentid = 0;
 	
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     $xartable = xarDBGetTables();
 
     $xprojecttable = $xartable['xproject'];

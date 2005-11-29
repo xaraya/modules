@@ -2,17 +2,14 @@
 
 function xproject_user_display($args)
 {
-    list($projectid,
-         $startnum,
-         $taskid,
-         $filter,
-         $objectid) = xarVarCleanFromInput('projectid',
-                                          'startnum',
-                                          'taskid',
-                                          'filter',
-                                          'objectid');
-
     extract($args);
+    if (!xarVarFetch('projectid', 'id', $projectid)) return;
+    if (!xarVarFetch('objectid', 'id', $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('startnum', 'int', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('taskid', 'id', $taskid, $taskid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('filter', 'isset', $filter, $filter, XARVAR_NOT_REQUIRED)) return;//TODO: what is this?
+    //if (!xarVarFetch('taskid', 'id', $taskid, $taskid, XARVAR_NOT_REQUIRED)) return;
+
     if (!empty($objectid)) {
         $projectid = $objectid;
     }
@@ -53,12 +50,14 @@ function xproject_user_display($args)
         $data['taskname'] = $task['name'];
         $data['taskdescription'] = $task['description'];
         
-        if (xarSecAuthAction(0, 'xproject::Tasks', '$task[name]::$taskid', ACCESS_EDIT)) {
+        //if (xarSecAuthAction(0, 'xproject::Tasks', '$task[name]::$taskid', ACCESS_EDIT)) {
+        if (xarSecurityCheck('EditXProject', 0, 'Item', "All:All:All")) {//TODO: security
             $data['curtask_editurl'] = xarModURL('xproject', 'tasks', 'modify', array('taskid' => $taskid));
         } else {
             $data['curtask_editurl'] = "";
         }
-        if (xarSecAuthAction(0, 'xproject::Tasks', '$task[name]::$taskid', ACCESS_DELETE)) {
+        if (xarSecurityCheck('DeleteXProject', 0, 'Item', "All:All:All")) {//TODO: security
+        //if (xarSecAuthAction(0, 'xproject::Tasks', '$task[name]::$taskid', ACCESS_DELETE)) {
             $data['curtask_deleteurl'] = xarModURL('xproject', 'tasks', 'delete', array('taskid' => $taskid));
         } else {
             $data['curtask_deleteurl'] = "";
@@ -96,7 +95,8 @@ function xproject_user_display($args)
     }
 
     // BUILD TASK ADD FORM
-    if (xarSecAuthAction(0, 'xproject::Projects', '$project[name]::$project[projectid]', ACCESS_MODERATE)) {
+    if (xarSecurityCheck('EditXProject', 0, 'Item', "All:All:All")) {//TODO: security
+    //if (xarSecAuthAction(0, 'xproject::Projects', '$project[name]::$project[projectid]', ACCESS_MODERATE)) {
         $data['authid'] = xarSecGenAuthKey();
 
         $data['projectid'] = $project['projectid'];
@@ -120,13 +120,14 @@ function xproject_user_display($args)
         $item = array();
         $item['module'] = 'xproject';
         $hooks = xarModCallHooks('item','new','',$item);
-                if (empty($hooks)) {
-                    $data['hooks'] = '';
-                } elseif (is_array($hooks)) {
-                    $data['hooks'] = join('',$hooks);
-                } else {
-                    $data['hooks'] = $hooks;
-                }
+            if (empty($hooks)) {
+                $data['hookoutput'] = array();
+            } else {
+                /* You can use the output from individual hooks in your template too, e.g. with
+                 * $hookoutput['categories'], $hookoutput['dynamicdata'], $hookoutput['keywords'] etc.
+                 */
+                $data['hookoutput'] = $hooks;
+            }
     }
     
     $filteroptions = array(xarML('default'),
@@ -194,5 +195,4 @@ function xproject_user_display($args)
 
     return $data;
 }
-
 ?>

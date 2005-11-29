@@ -1,8 +1,9 @@
 <?php
-// $Id: xarversion.php,v 1.2 2002/03/09 08:24:24 jgm Exp $
+
+
 $modversion['name'] = 'xproject';
 $modversion['id'] = '665';
-$modversion['version'] = '0.1.0';
+$modversion['version'] = '0.1.1';
 $modversion['description'] = 'Basic Task/Project Manager';
 $modversion['credits'] = 'docs/credits.txt';
 $modversion['help'] = 'docs/help.txt';
@@ -13,8 +14,6 @@ $modversion['author'] = 'Chad Kraeft';
 $modversion['contact'] = 'http://www.ivory-tower.net/';
 $modversion['admin'] = 1;
 $modversion['user'] = 1;
-$modversion['securityschema'] = array('xproject::Projects' => 'Project name::Project ID');
-									// LOOK AT GROUP LEVEL INSTEAD?
 $modversion['class'] = 'Complete';
 $modversion['category'] = 'Content';
 ?>

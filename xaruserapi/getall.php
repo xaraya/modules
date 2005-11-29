@@ -46,7 +46,7 @@ function xproject_userapi_getall($args)
 	
     $tasks = array();
 
-    if (!xarSecAuthAction(0, 'xproject::', '::', ACCESS_OVERVIEW)) {
+    if (xarSecurityCheck('ViewXProject', 0, 'Item', "All:All:All")) {//TODO: security
         $msg = xarML('Not authorized to access #(1) items',
                     'xproject');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
@@ -54,7 +54,7 @@ function xproject_userapi_getall($args)
         return;
     }
 
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     $xartable = xarDBGetTables();
 
     $xprojecttable = $xartable['xproject'];

@@ -10,7 +10,7 @@
  */
 function xproject_groupsapi_countitems()
 {
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     $xartable = xarDBGetTables();
 
     $groupstable = $xartable['groups'];

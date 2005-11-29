@@ -28,7 +28,7 @@ function xproject_adminapi_delete($args)
         return;
     }
 
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     $xartable = xarDBGetTables();
 
     $xprojecttable = $xartable['xproject'];

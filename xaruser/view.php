@@ -2,17 +2,14 @@
 
 function xproject_user_view($args)
 {
-    $startnum = xarVarCleanFromInput('startnum');
+    extract($args);
+    if (!xarVarFetch('startnum',   'int:1:', $startnum,   1, XARVAR_NOT_REQUIRED)) return;
 
     $data = xarModAPIFunc('xproject','user','menu');
 
 	$data['items'] = array();
 
-    if (!xarSecAuthAction(0, 'xproject::', '::', ACCESS_OVERVIEW)) {
-        $msg = xarML('Not authorized to access to #(1)',
-                    'xproject');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+    if (xarSecurityCheck('ViewXProject')) {
         return;
     }
 
@@ -20,19 +17,21 @@ function xproject_user_view($args)
                           'user',
                           'getall',
                           array('startnum' => $startnum,
-                                'numitems' => 10));
+                                'numitems' => 10));//TODO: numitems
 
 	if (!isset($xprojects) && xarExceptionMajor() != XAR_NO_EXCEPTION) return;
 	
     for ($i = 0; $i < count($xprojects); $i++) {
         $project = $xprojects[$i];
-		if (xarSecAuthAction(0, 'xproject::Projects', "$project[name]::$project[projectid]", ACCESS_READ)) {
+//		if (xarSecAuthAction(0, 'xproject::Projects', "$project[name]::$project[projectid]", ACCESS_READ)) {
+        if (xarSecurityCheck('ReadXProject', 0, 'Item', "All:All:All")) {//TODO: security
 			$xprojects[$i]['link'] = xarModURL('xproject',
 											   'user',
 											   'display',
 											   array('projectid' => $project['projectid']));
 		}
-		if (xarSecAuthAction(0, 'xproject::Projects', "$project[name]::$project[projectid]", ACCESS_EDIT)) {
+		//if (xarSecAuthAction(0, 'xproject::Projects', "$project[name]::$project[projectid]", ACCESS_EDIT)) {
+		if (xarSecurityCheck('editXProject', 0, 'Item', "All:All:All")) {//TODO: security
 			$xprojects[$i]['editurl'] = xarModURL('xproject',
 											   'admin',
 											   'modify',

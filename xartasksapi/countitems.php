@@ -4,8 +4,9 @@ function xproject_tasksapi_countitems($args)
 {
 	extract($args);
 	
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+
 
     $xprojecttable = $xartable['xproject_tasks'];
 
@@ -34,8 +35,9 @@ function makeSearchQuery($wildcards,$priority, $status, $project, $responsible_p
 {
     global $abfrage;
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+
     /* Generate the SQL-Statement */
     $xproject_todos_column = &$xartable['xproject_todos_column'];
     $xproject_responsible_persons_column = &$xartable['xproject_responsible_persons_column'];

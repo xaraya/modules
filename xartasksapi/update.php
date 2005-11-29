@@ -44,8 +44,8 @@ function xproject_tasksapi_update($args)
         return;
     }
 		
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $taskstable = $xartable['xproject_tasks'];
 

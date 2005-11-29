@@ -3,14 +3,14 @@
 /**
  * utility function pass individual menu items to the main menu
  *
- * @author the Example module development team
+ * @author the XProject module development team
  * @returns array
  * @return array containing the menulinks for the main menu items.
  */
 function xproject_adminapi_getmenulinks()
 {
 
-    if (xarSecAuthAction(0, 'xproject::', '::', ACCESS_OVERVIEW)) {
+    if (xarSecurityCheck('ViewXProject', 0)) {
 
         $menulinks[] = Array('url'   => xarModURL('xproject',
                                                    'admin',
@@ -19,7 +19,7 @@ function xproject_adminapi_getmenulinks()
                               'label' => xarML('Overview'));
     }
 
-    if (xarSecAuthAction(0, 'xproject::', '::', ACCESS_ADD)) {
+    if (xarSecurityCheck('AddXProject', 0)) {
 
         $menulinks[] = Array('url'   => xarModURL('xproject',
                                                    'admin',
@@ -28,8 +28,7 @@ function xproject_adminapi_getmenulinks()
                               'label' => xarML('New Project'));
     }
 
-    if (xarSecAuthAction(0, 'xproject::', '::', ACCESS_READ)) {
-
+    if (xarSecurityCheck('ReadXProject', 0)) {
         $menulinks[] = Array('url'   => xarModURL('xproject',
                                                    'user',
                                                    'view'),
@@ -43,12 +42,12 @@ function xproject_adminapi_getmenulinks()
                               'label' => xarML('Search Projects'));
     }
 
-    if (xarSecAuthAction(0, 'xproject::', '::', ACCESS_ADMIN)) {
+    if (xarSecurityCheck('AdminXProject', 0)) {
 
         $menulinks[] = Array('url'   => xarModURL('xproject',
                                                    'admin',
                                                    'modifyconfig'),
-                              'title' => xarML('Modify the configuration for the Admin Panels'),
+                              'title' => xarML('Modify the configuration for XProject'),
                               'label' => xarML('Modify Config'));
     }
 

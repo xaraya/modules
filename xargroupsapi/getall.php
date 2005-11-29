@@ -7,7 +7,7 @@
  */
 function xproject_groupsapi_getall()
 {
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     $xartable = xarDBGetTables();
 
     $groupstable = $xartable['groups'];

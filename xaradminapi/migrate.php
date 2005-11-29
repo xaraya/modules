@@ -22,7 +22,7 @@ function xproject_adminapi_migrate($args)
         return;
     }
 
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     $xartable = xarDBGetTables();
 
     $taskstable = $xartable['xproject_tasks'];

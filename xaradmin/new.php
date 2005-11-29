@@ -5,11 +5,7 @@ function xproject_admin_new()
     xarModLoad('xproject','user');
     $data = xarModAPIFunc('xproject','user','menu');
 
-    if (!xarSecAuthAction(0, 'xproject::', '::', ACCESS_ADD)) {
-        $msg = xarML('Not authorized to access to #(1)',
-                    'xproject');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
-                       new SystemException($msg));
+    if (xarSecurityCheck('AddXProject')) {
         return;
     }
 

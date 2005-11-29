@@ -26,7 +26,7 @@ function generateMail($id,$action)
     if (!xarModGetVar('xproject', 'SEND_MAILS'))
         return;
 
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     $xartable = xarDBGetTables();
     $message_headers="From: ToDo-List <webmaster@$SERVER_NAME>\n";
     $message_headers.="MIME-Version: 1.0\n";
@@ -193,7 +193,7 @@ function printToDoTable($xquery, $xis_search, $page) {
     global $abfrage, $order_by;
     global $priority, $responsible_person, $search_project, $wildcards;
 
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     $xartable = xarDBGetTables();
     $stati = array (
             0    => _XPROJECT_STATUS_OPEN,
@@ -602,7 +602,7 @@ function details_page($id){
 
     global $detail_project;
 
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     $xartable = xarDBGetTables();
     $str = "";
 

@@ -1,25 +1,16 @@
 <?php
-// File: $Id$
-// ----------------------------------------------------------------------
-// Xaraya eXtensible Management System
-// Copyright (C) 2002 by the Xaraya Development Team.
-// http://www.xaraya.org
-// ----------------------------------------------------------------------
-// Original Author of file: Jim McDonald
-// Purpose of file:  Initialisation functions for example
-// ----------------------------------------------------------------------
 
 /**
- * initialise the example module
+ * initialise the xproject module
  * This function is only ever called once during the lifetime of a particular
  * module instance
  */
 function xproject_init()
 {
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
-    include ('includes/xarTableDDL.php');
+    xarDBLoadTableMaintenanceAPI();
 
     $xprojecttable = $xartable['xproject'];
 
@@ -142,11 +133,11 @@ function xproject_init()
         foreach($statuslistcategories as $status)
         {
             $statusid = xarModAPIFunc('categories',
-                                                                   'admin',
-                                                                   'create',
-                                                                   Array('name' => $status['name'],
-                                                                                 'description' => $status['description'],
-                                                                                 'parent_id' => $statuslistcid));
+                                       'admin',
+                                       'create',
+                                       Array('name' => $status['name'],
+                                                     'description' => $status['description'],
+                                                     'parent_id' => $statuslistcid));
         }
     }
 /*
@@ -195,8 +186,30 @@ function xproject_init()
     xarModSetVar('xproject', 'ITEMS_PER_PAGE', 20);
     xarModSetVar('xproject', 'prioritymax', 10);
 
+    xarModSetVar('xproject', 'SupportShortURLs', 0);
+    /* If you provide short URL encoding functions you might want to also
+     * provide module aliases and have them set in the module's administration.
+     * Use the standard module var names for useModuleAlias and aliasname.
+     */
+    xarModSetVar('xproject', 'useModuleAlias',false);
+    xarModSetVar('xproject','aliasname','');
+
 //    xarBlockTypeRegister('xproject', 'first');
 //    xarBlockTypeRegister('xproject', 'others');
+
+    /**
+     * Register the module components that are privileges objects
+     * Format is
+     * xarregisterMask(Name,Realm,Module,Component,Instance,Level,Description)
+     */
+
+   // xarRegisterMask('ReadExampleBlock', 'All', 'example', 'Block', 'All', 'ACCESS_OVERVIEW');
+    xarRegisterMask('ViewXProject', 'All', 'xproject', 'Item', 'All:All:All', 'ACCESS_OVERVIEW');
+    xarRegisterMask('ReadXProject', 'All', 'xproject', 'Item', 'All:All:All', 'ACCESS_READ');
+    xarRegisterMask('EditXProject', 'All', 'xproject', 'Item', 'All:All:All', 'ACCESS_EDIT');
+    xarRegisterMask('AddXProject', 'All', 'xproject', 'Item', 'All:All:All', 'ACCESS_ADD');
+    xarRegisterMask('DeleteXProject', 'All', 'xproject', 'Item', 'All:All:All', 'ACCESS_DELETE');
+    xarRegisterMask('AdminXProject', 'All', 'xproject', 'Item', 'All:All:All', 'ACCESS_ADMIN');
 
     return true;
 }
@@ -204,13 +217,38 @@ function xproject_init()
 function xproject_upgrade($oldversion)
 {
     switch($oldversion) {
-        case 0.1:
+
         case '0.1.0':
+    xarModSetVar('xproject', 'SupportShortURLs', 0);
+    /* If you provide short URL encoding functions you might want to also
+     * provide module aliases and have them set in the module's administration.
+     * Use the standard module var names for useModuleAlias and aliasname.
+     */
+    xarModSetVar('xproject', 'useModuleAlias',false);
+    xarModSetVar('xproject','aliasname','');
+
+//    xarBlockTypeRegister('xproject', 'first');
+//    xarBlockTypeRegister('xproject', 'others');
+
+    /**
+     * Register the module components that are privileges objects
+     * Format is
+     * xarregisterMask(Name,Realm,Module,Component,Instance,Level,Description)
+     */
+
+   // xarRegisterMask('ReadExampleBlock', 'All', 'example', 'Block', 'All', 'ACCESS_OVERVIEW');
+    xarRegisterMask('ViewXProject', 'All', 'xproject', 'Item', 'All:All:All', 'ACCESS_OVERVIEW');
+    xarRegisterMask('ReadXProject', 'All', 'xproject', 'Item', 'All:All:All', 'ACCESS_READ');
+    xarRegisterMask('EditXProject', 'All', 'xproject', 'Item', 'All:All:All', 'ACCESS_EDIT');
+    xarRegisterMask('AddXProject', 'All', 'xproject', 'Item', 'All:All:All', 'ACCESS_ADD');
+    xarRegisterMask('DeleteXProject', 'All', 'xproject', 'Item', 'All:All:All', 'ACCESS_DELETE');
+    xarRegisterMask('AdminXProject', 'All', 'xproject', 'Item', 'All:All:All', 'ACCESS_ADMIN');
+
+
             break;
         case 1.0:
             break;
-        case 2.0:
-            break;
+
     }
 
     return true;
@@ -218,11 +256,10 @@ function xproject_upgrade($oldversion)
 
 function xproject_delete()
 {
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
-        include ('includes/xarTableDDL.php');
-
+    xarDBLoadTableMaintenanceAPI();
     $sql = xarDBDropTable($xartable['xproject']);
     if (empty($sql)) return; // throw back
 
@@ -236,35 +273,27 @@ function xproject_delete()
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
-
+     /* Remove any module aliases before deleting module vars */
+    /* Assumes one module alias in this case */
+    $aliasname =xarModGetVar('xproject','aliasname');
+    $isalias = xarModGetAlias($aliasname);
+    if (isset($isalias) && ($isalias =='xproject')){
+        xarModDelAlias($aliasname,'xproject');
+    }
+    
     xarModAPIFunc('categories', 'admin', 'deletecat', array('cid' => xarModGetVar('xproject', 'mastercid')));
-    xarModDelVar('xproject', 'mastercid');
-    xarModDelVar('xproject', 'statuslistcid');
-    xarModDelVar('xproject', 'projectmastercid');
-    xarModDelVar('xproject', 'private');
-    xarModDelVar('xproject', 'public');
-    xarModDelVar('xproject', 'admin');
-
-    xarModDelVar('xproject', 'display_dates');
-    xarModDelVar('xproject', 'display_hours');
-    xarModDelVar('xproject', 'display_frequency');
-    xarModDelVar('xproject', 'ACCESS_RESTRICTED');
-    xarModDelVar('xproject', 'DATEFORMAT');
-    xarModDelVar('xproject', 'MAX_DONE');
-    xarModDelVar('xproject', 'MOST_IMPORTANT_DAYS');
-    xarModDelVar('xproject', 'REFRESH_MAIN');
-    xarModDelVar('xproject', 'SEND_MAILS');
-    xarModDelVar('xproject', 'SHOW_EXTRA_ASTERISK');
-    xarModDelVar('xproject', 'SHOW_LINE_NUMBERS');
-    xarModDelVar('xproject', 'SHOW_PERCENTAGE_IN_TABLE');
-    xarModDelVar('xproject', 'SHOW_PRIORITY_IN_TABLE');
-    xarModDelVar('xproject', 'TODO_HEADING');
-    xarModDelVar('xproject', 'VERY_IMPORTANT_DAYS');
-    xarModDelVar('xproject', 'ITEMS_PER_PAGE');
-        xarModDelVar('xproject', 'prioritymax');
+    /* Delete any module variables */
+    xarModDelAllVars('xproject');
 
     //xarBlockTypeUnregister('xproject', 'first');
     //xarBlockTypeUnregister('xproject', 'others');
+
+    /* Remove Masks and Instances
+     * these functions remove all the registered masks and instances of a module
+     * from the database. This is not strictly necessary, but it's good housekeeping.
+     */
+    xarRemoveMasks('xproject');
+    xarRemoveInstances('xproject');
 
     return true;
 }
