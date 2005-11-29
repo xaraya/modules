@@ -32,12 +32,21 @@ function polls_admin_update()
     if($private != 1){
         $private = 0;
     }
-    if ($start_date != "") {
-                $start_date = strtotime($start_date);
-       }
-    if ($end_date != "") {
-                $end_date = strtotime($end_date);
-       }
+
+    if (!empty($start_date)) {
+        $start_date .= ' GMT';
+        $start_date = strtotime($start_date);
+        // adjust for the user's timezone offset
+        $start_date -= xarMLS_userOffset() * 3600;
+        }
+        
+        
+    if (!empty($end_date)) {
+        $end_date .= ' GMT';
+        $end_date = strtotime($end_date);
+        // adjust for the user's timezone offset
+        $end_date -= xarMLS_userOffset() * 3600;
+    }
 
     // Get poll info
     $poll = xarModAPIFunc('polls', 'user', 'get', array('pid' => $pid));
