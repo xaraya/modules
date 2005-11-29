@@ -8,6 +8,10 @@
             If those templates do not exist when you try to preview or display a new article, 
             you'll get this warning :-)
         </xar:mlstring>
+        <xar:mlstring>
+            Please place your own templates in in themes/<em>yourtheme</em>/articles
+            The templates will get the extension .xt there.
+        </xar:mlstring>
     </p>
 </div>
 <div class="xar-norm xar-standard-box-padding">
