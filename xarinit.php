@@ -1,18 +1,18 @@
 <?php
 /**
  * Surveys initialization functions
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Surveys
+ * @subpackage Surveys module
  * @author Jason Judge
  */
-/*
+/**
  * Initialise the surveys module.
- * @author Surveys module development team  
+ * @author Surveys module development team
  * @author MichelV <michelv@xarayahosting.nl>
  */
 
@@ -26,7 +26,6 @@ function surveys_init()
     $xartable =& xarDBGetTables();
 
     $group_rulestable = $xartable['surveys_group_rules'];
-
 
     // Get a data dictionary object with item create methods.
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
@@ -51,10 +50,10 @@ function surveys_init()
                 ";
 
     // Create or alter the table as necessary.
-    $result = $datadict->changeTable($group_rulestable, $fields);    
+    $result = $datadict->changeTable($group_rulestable, $fields);
     if (!$result) {return;}
 
-    
+
 // function CreateIndexSQL($idxname, $tabname, $flds, $idxoptions = false)
 
     // Create indexes.
@@ -64,21 +63,21 @@ function surveys_init()
         array('xar_survey_id','xar_group_id')
     );
     if (!$result) {return;}
-    
+
      // Create indexes.
     $result = $datadict->createIndex(
         'i_' . xarDBGetSiteTablePrefix() . '_surveys_group_id',
         $group_rulestable,
         'xar_group_id'
     );
-    if (!$result) {return;}   
+    if (!$result) {return;}
 
 
     $groupstable = $xartable['surveys_groups'];
     /*
      * This table describes the groups that will contain the questions
      */
-    
+
 /*
 CREATE TABLE `xar_surveys_groups` (
   `xar_gid` int(11) NOT NULL auto_increment,
@@ -100,9 +99,9 @@ CREATE TABLE `xar_surveys_groups` (
                 xar_name    C(100) default NULL,
                 xar_desc    text";
     // Create or alter the table as necessary.
-    $result = $datadict->changeTable($groupstable, $fields);    
+    $result = $datadict->changeTable($groupstable, $fields);
     if (!$result) {return;}
-  
+
 /*
   KEY `xar_left` (`xar_left`),
   KEY `xar_right` (`xar_right`)
@@ -113,21 +112,21 @@ CREATE TABLE `xar_surveys_groups` (
         $groupstable,
         'xar_left'
     );
-    if (!$result) {return;} 
+    if (!$result) {return;}
      // Create indexes.
     $result = $datadict->createIndex(
         'i_' . xarDBGetSiteTablePrefix() . '_surveys_xar_right',
         $groupstable,
         'xar_right'
     );
-    if (!$result) {return;} 
+    if (!$result) {return;}
 
 
     $question_groupstable = $xartable['surveys_question_groups'];
     /*
      * This table couples the questions to groups.
      * Groups are described in $groupstable
-     */    
+     */
 /*
 CREATE TABLE `xar_surveys_question_groups` (
   `xar_qgid` int(11) NOT NULL auto_increment,
@@ -150,9 +149,9 @@ CREATE TABLE `xar_surveys_question_groups` (
   xar_readonly      C(1) NOTNULL default N
   ";
     // Create or alter the table as necessary.
-    $result = $datadict->changeTable($question_groupstable, $fields);    
+    $result = $datadict->changeTable($question_groupstable, $fields);
     if (!$result) {return;}
-    
+
     // Create indexes.
     $result = $datadict->createIndex(
         'i_' . xarDBGetSiteTablePrefix() . '_surveys_groups_id',
@@ -160,7 +159,7 @@ CREATE TABLE `xar_surveys_question_groups` (
         array('xar_qgid','xar_question_id')
     );
     if (!$result) {return;}
-    
+
 
     $questionstable = $xartable['surveys_questions'];
 /*
@@ -185,16 +184,16 @@ CREATE TABLE `xar_surveys_questions` (
                 xar_default     C(200) default NULL
             ";
     // Create or alter the table as necessary.
-    $result = $datadict->changeTable($questionstable, $fields);    
+    $result = $datadict->changeTable($questionstable, $fields);
     if (!$result) {return;}
-    
+
      // Create indexes.
     $result = $datadict->createIndex(
         'i_' . xarDBGetSiteTablePrefix() . '_surveys_xar_type_id',
         $questionstable,
         'xar_type_id'
     );
-    
+
 
     $statustable = $xartable['surveys_status'];
 /*
@@ -209,7 +208,7 @@ CREATE TABLE `xar_surveys_status` (
   KEY `xar_type` (`xar_type`)
 ) TYPE=MyISAM AUTO_INCREMENT=16 ;
 */
-    $fields = " 
+    $fields = "
               xar_ssid I NOTNULL auto PRIMARY,
               xar_type C(30) NOTNULL default '',
               xar_status C(30) NOTNULL default '',
@@ -217,11 +216,11 @@ CREATE TABLE `xar_surveys_status` (
               xar_short_name C(100) default NULL,
               xar_desc text
               ";
-              
+
     // Create or alter the table as necessary.
-    $result = $datadict->changeTable($statustable, $fields);    
+    $result = $datadict->changeTable($statustable, $fields);
     if (!$result) {return;}
-    
+
      // Create indexes.
     $result = $datadict->createIndex(
         'i_' . xarDBGetSiteTablePrefix() . '_surveys_xar_type',
@@ -244,7 +243,7 @@ CREATE TABLE `xar_surveys_surveys` (
   PRIMARY KEY  (`xar_sid`)
 ) TYPE=MyISAM AUTO_INCREMENT=4 ;
 */
-    $fields = " 
+    $fields = "
               xar_sid               I NOTNULL auto PRIMARY,
               xar_name              C(100) NOTNULL default '',
               xar_desc              text,
@@ -255,7 +254,7 @@ CREATE TABLE `xar_surveys_surveys` (
               xar_anonymous         C(1) NOTNULL default Y
               ";
     // Create or alter the table as necessary.
-    $result = $datadict->changeTable($surveystable, $fields);    
+    $result = $datadict->changeTable($surveystable, $fields);
     if (!$result) {return;}
 
     $surveys_typestable = $xartable['surveys_types'];
@@ -269,7 +268,7 @@ CREATE TABLE `xar_surveys_types` (
   PRIMARY KEY  (`xar_tid`)
 ) TYPE=MyISAM AUTO_INCREMENT=26 ;
 */
-    $fields = " 
+    $fields = "
               xar_tid I NOTNULL auto PRIMARY,
               xar_type C(1) NOTNULL default S,
               xar_name C(100) default NULL,
@@ -277,7 +276,7 @@ CREATE TABLE `xar_surveys_types` (
               xar_object_name C(100) default NULL
               ";
     // Create or alter the table as necessary.
-    $result = $datadict->changeTable($surveys_typestable, $fields);    
+    $result = $datadict->changeTable($surveys_typestable, $fields);
     if (!$result) {return;}
 
     $user_groupstable = $xartable['surveys_user_groups'];
@@ -293,15 +292,15 @@ CREATE TABLE `xar_surveys_user_groups` (
 ) TYPE=MyISAM AUTO_INCREMENT=69448 ;
 */
 
-    $fields = " 
+    $fields = "
               xar_ugid I NOT NULL auto PRIMARY,
               xar_user_survey_id I NOTNULL default 0,
               xar_group_id I NOTNULL default 0,
               xar_status C(20) NOTNULL default NORESPONSE
               ";
     // Create or alter the table as necessary.
-    $result = $datadict->changeTable($user_groupstable, $fields);    
-    if (!$result) {return;}              
+    $result = $datadict->changeTable($user_groupstable, $fields);
+    if (!$result) {return;}
 
     // Create indexes.
     $result = $datadict->createIndex(
@@ -335,7 +334,7 @@ CREATE TABLE `xar_surveys_user_responses` (
   KEY `xar_user_survey_id_2` (`xar_user_survey_id`,`xar_question_id`)
 ) TYPE=MyISAM AUTO_INCREMENT=60562 ;
 */
-    $fields = " 
+    $fields = "
               xar_rid I auto PRIMARY,
               xar_user_survey_id I NOTNULL default 0,
               xar_question_id I NOTNULL default 0,
@@ -345,9 +344,9 @@ CREATE TABLE `xar_surveys_user_responses` (
               xar_value3 text
               ";
     // Create or alter the table as necessary.
-    $result = $datadict->changeTable($user_responsestable, $fields);    
+    $result = $datadict->changeTable($user_responsestable, $fields);
     if (!$result) {return;}
-  
+
      // Create indexes.
     $result = $datadict->createIndex(
         'i_' . xarDBGetSiteTablePrefix() . '_surveys_xar_user_survey_id',
@@ -366,10 +365,7 @@ CREATE TABLE `xar_surveys_user_responses` (
         $user_responsestable,
         array('xar_user_survey_id','xar_question_id')
     );
-    
-    
-    
-    
+
     $user_surveystable = $xartable['surveys_user_surveys'];
 
 /*
@@ -387,7 +383,7 @@ CREATE TABLE `xar_surveys_user_surveys` (
 ) TYPE=MyISAM AUTO_INCREMENT=675 ;
 
 */
-    $fields = " 
+    $fields = "
               xar_usid          I       auto    PRIMARY,
               xar_user_id       C(60)   NOTNULL default 0,
               xar_survey_id     I       NOTNULL default 0,
@@ -398,7 +394,7 @@ CREATE TABLE `xar_surveys_user_surveys` (
               xar_last_updated  I       NOTNULL default 0
               ";
     // Create or alter the table as necessary.
-    $result = $datadict->changeTable($user_surveystable, $fields);    
+    $result = $datadict->changeTable($user_surveystable, $fields);
     if (!$result) {return;}
      // Create indexes.
     $result = $datadict->createIndex(
@@ -407,17 +403,25 @@ CREATE TABLE `xar_surveys_user_surveys` (
         array('xar_survey_id','xar_usid')
     );
 
-/* 
+/*
  * Variables
  * and Others
  */
- 
+
     // Create a module variable for storing the current
     // user survey flags against.
     $name = 'surveys.current_survey';
     xarModSetVar('surveys', $name, serialize(array()));
 
-    xarModSetVar('surveys', SendEventMails, 1); 
+    xarModSetVar('surveys', 'SendEventMails', 1);
+    xarModSetVar('surveys', 'SupportShortURLs', 0);
+    /* Alias
+     * TODO: everything else on short urls and aliases
+     */
+    xarModSetVar('surveys', 'useModuleAlias',false);
+    xarModSetVar('surveys','aliasname','');
+
+
     /*
      * Instances
      */
@@ -522,7 +526,7 @@ function surveys_delete()
     /* Drop the tables */
      $result = $datadict->dropTable($xartable[$basename . '_' . $table]);
     }
-    
+
     /* Remove any module aliases before deleting module vars */
     /* Assumes one module alias in this case */
     $aliasname =xarModGetVar('surveys','aliasname');
@@ -537,7 +541,7 @@ function surveys_delete()
     xarModDelAllVars('surveys');
 
 
-    /* Unregister each of the hooks that have been created 
+    /* Unregister each of the hooks that have been created
      * Will create the user GUI hook later
      *
     if (!xarModUnregisterHook('item', 'usermenu', 'GUI',
@@ -555,6 +559,6 @@ function surveys_delete()
     /* Deletion successful*/
     return true;
 }
- 
+
 
 ?>
