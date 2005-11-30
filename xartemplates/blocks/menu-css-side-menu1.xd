@@ -7,7 +7,7 @@
     In addition, this stylesheet link will probably have to be linked directly
     from your page template, until setting stylesheets from blocks is supported.
 </xar:comment>
-<xar:set name="dummy">xarTplAddStyleLink('xarpages', 'block_side_menu1', 'php')</xar:set>
+<xar:style file="block_side_menu1" scope="block" fileext="php" />
 
 <xar:comment>
     This simple menu template formats the pages tree into a nested-list menu.
@@ -21,8 +21,6 @@
 
     Menu titles can be set with a DD field on each page called 'menu_title'.
 </xar:comment>
-
-<xar:set name="dummy">xarTplAddStyleLink('xarpages', 'block-side-menu1')</xar:set>
 
 <xar:if condition="empty($max_level)">
     <xar:set name="max_level">0</xar:set>
