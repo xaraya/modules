@@ -1,7 +1,7 @@
 <?php
 /**
- * Manage privileges
- * 
+ * Manage privileges for SIGMAPersonnel
+ *
  * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -9,12 +9,14 @@
  *
  * @subpackage Sigmapersonnel Module
  * @link http://xaraya.com/index.php/release/418.html
- * @author Michel V. 
+ * @author MichelV.
  */
- 
+
 /**
- * Manage definition of instances for privileges (unfinished)
- * @TODO everything
+ * Manage definition of instances for privileges for personnel
+ *
+ * This wizardfunction shows a nice lay-out in completing a privilege
+ * @TODO clean-up
  */
 function sigmapersonnel_admin_privileges($args)
 {
@@ -25,7 +27,7 @@ function sigmapersonnel_admin_privileges($args)
     if (!xarVarFetch('cid',          'isset', $cid,          NULL, XARVAR_DONT_SET)) {return;}
     // Multiple categories
     if (!xarVarFetch('cids',         'isset', $cids,         NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('uid',          'isset', $uid,          NULL, XARVAR_DONT_SET)) {return;}
+//    if (!xarVarFetch('uid',          'isset', $uid,          NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('persstatus',   'isset', $persstatus,   NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('personid',     'isset', $personid,     NULL, XARVAR_DONT_SET)) {return;}
 
@@ -60,7 +62,7 @@ function sigmapersonnel_admin_privileges($args)
     if (empty($cid) || $cid == 'All' || !is_numeric($cid)) {
         $cid = 0;
     }
-    
+
     // Need this?
     if (empty($cid) && isset($cids) && is_array($cids)) {
         foreach ($cids as $catid) {
@@ -100,12 +102,12 @@ function sigmapersonnel_admin_privileges($args)
             $title = $article['title'];
         }*/
     }
-
+/*
 // TODO: figure out how to handle groups of users and/or the current user (later)
     if (empty($uid) || $uid == 'All' || !is_numeric($uid)) {
         $uid = 0;
-    }   
-/*        if (!empty($author)) {
+    }
+        if (!empty($author)) {
             $user = xarModAPIFunc('roles', 'user', 'get',
                                   array('name' => $author));
             if (!empty($user) && !empty($user['uid'])) {
@@ -130,8 +132,8 @@ function sigmapersonnel_admin_privileges($args)
     $newinstance = array();
     $newinstance[] = empty($personid) ? 'All' : $personid;
     $newinstance[] = empty($cid) ? 'All' : $cid;
-    $newinstance[] = empty($uid) ? 'All' : $uid;
-    $newinstance[] = empty($persstatusid) ? 'All' : $persstatusid;
+//    $newinstance[] = empty($uid) ? 'All' : $uid;
+    $newinstance[] = empty($persstatus) ? 'All' : $persstatus;
 
     if (!empty($apply)) {
         // create/update the privilege
@@ -145,33 +147,30 @@ function sigmapersonnel_admin_privileges($args)
                                       array('pid' => $pid)));
         return true;
     }
-    
-    $persstatusses = xarModAPIFunc('sigmapersonnel', 'user', 'gets',
-                                      array('itemtype' => 6));
-/*
-    // get the list of current authors
-    $authorlist =  xarModAPIFunc('articles','user','getauthors',
-                                 array('ptid' => $ptid,
-                                       'cids' => empty($cid) ? array() : array($cid)));
-    if (!empty($author) && isset($authorlist[$uid])) {
-        $author = '';
-    }
 
+    $statuslist = xarModAPIFunc('sigmapersonnel', 'user', 'gets',
+                                      array('itemtype' => 6));
+
+/*
+    if (!empty($persstatus) && isset($statuslist[$persstatus])) {
+        $persstatus = 0;
+    }
+*/
     if (empty($personid)) {
         $numitems = xarModAPIFunc('articles','user','countitems',
-                                  array('ptid' => $ptid,
-                                        'cids' => empty($cid) ? array() : array($cid),
-                                        'authorid' => $uid));
+                                  array('catid' => $cid,
+                                        'persstatus' => $persstatus));
     } else {
       $numitems = 1;
     }
-*/  
+
     $data = array(
             //      'ptid'         => $ptid,
                   'cid'          => $cid,
-                  'uid'          => $uid,
+//                  'uid'          => $uid,
             //      'author'       => xarVarPrepForDisplay($author),
-                  'persstatusses'   => $persstatusses,
+                  'statuslist'   => $statuslist,
+                  'persstatus'   => $persstatus,
                   'personid'          => $personid,
             //      'title'        => xarVarPrepForDisplay($title),
                   'numitems'     => 2,//$numitems,
@@ -196,7 +195,7 @@ function sigmapersonnel_admin_privileges($args)
         }
 /*
     if (!empty($ptid)) {
-        
+
         if (empty($data['pubtypes'][$ptid]['config']['authorid']['label'])) {
             $data['showauthor'] = 0;
         } else {
