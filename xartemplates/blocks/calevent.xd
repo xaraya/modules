@@ -1,7 +1,7 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <!--When bug (3868 and others) for not calling AddStyleLink is fixed in xarblocks this call can be implemented:
-<xar:if condition="xarTplAddStyleLink('julian', 'julian')"></xar:if>-->
-<link type="text/css" rel="stylesheet" href="modules/julian/xarstyles/julian.css">
+<!--<xar:style module="julian" scope="block" file="julian" /> -->
+ <link type="text/css" rel="stylesheet" href="modules/julian/xarstyles/julian.css" />
 
 <div class="xar-julian xar-julian-block-calevent">
     <div class="xar-julian-calevent-today">
@@ -31,7 +31,7 @@
         </xar:if>
         </ul>
     </div>
-    
+
     <xar:if condition="$EventBlockDays gt 0">
         <div class="xar-julian-calevent-upcoming">
             <strong>
@@ -47,7 +47,7 @@
                 <xar:foreach in="$upcomingevents[$key]" key="$key2" value="$val2">
                    <xar:comment><xar:mlstring>Only show events that are Approved or FrontPage</xar:mlstring></xar:comment>
                    <xar:if condition="(!isset($val2['artstatus']) OR (isset($val2['artstatus']) AND(($val2['artstatus']==2) OR ($val2['artstatus']==3))))">
-                        <li style="color: #$val2['color']#;">               
+                        <li style="color: #$val2['color']#;">
                             <div class="xar-julian-list-contents">
                                   <xar:comment>Show a bullet with the color of the event category.</xar:comment>
                                   <font size="3" color="#$val2['color']#">#$Bullet#</font>
