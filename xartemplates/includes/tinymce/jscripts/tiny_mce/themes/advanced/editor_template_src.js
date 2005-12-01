@@ -752,7 +752,7 @@ function TinyMCE_advanced_getInsertLinkTemplate()
 
 	template['file'] = 'link.htm';
 	template['width'] = 330;
-	template['height'] = 170;
+	template['height'] = 170 + (tinyMCE.isMSIE ? 25 : 0);
 
 	// Language specific width and height addons
 	template['width'] += tinyMCE.getLang('lang_insert_link_delta_width', 0);
@@ -764,13 +764,12 @@ function TinyMCE_advanced_getInsertLinkTemplate()
 /**
  * Insert image template function.
  */
-function TinyMCE_advanced_getInsertImageTemplate()
-{
+function TinyMCE_advanced_getInsertImageTemplate() {
 	var template = new Array();
 
 	template['file'] = 'image.htm?src={$src}';
 	template['width'] = 340;
-	template['height'] = 245;
+	template['height'] = 250 + (tinyMCE.isMSIE ? 25 : 0);
 
 	// Language specific width and height addons
 	template['width'] += tinyMCE.getLang('lang_insert_image_delta_width', 0);
@@ -890,11 +889,21 @@ function TinyMCE_advanced_handleNodeChange(editor_id, node, undo_index, undo_lev
 				nodeData += "class: " + className + " ";
 
 			if (getAttrib(path[i], 'src') != "") {
-				nodeData += "src: " + tinyMCE.getAttrib(path[i], "src") + " ";
+				var src = tinyMCE.getAttrib(path[i], "mce_src");
+
+				if (src == "")
+					 src = tinyMCE.getAttrib(path[i], "src");
+
+				nodeData += "src: " + src + " ";
 			}
 
 			if (getAttrib(path[i], 'href') != "") {
-				nodeData += "href: " + tinyMCE.getAttrib(path[i], "href") + " ";
+				var href = tinyMCE.getAttrib(path[i], "mce_href");
+
+				if (href == "")
+					 href = tinyMCE.getAttrib(path[i], "href");
+
+				nodeData += "href: " + href + " ";
 			}
 
 			if (nodeName == "img" && tinyMCE.getAttrib(path[i], "class").indexOf('mceItemFlash') != -1) {
@@ -1017,26 +1026,20 @@ function TinyMCE_advanced_handleNodeChange(editor_id, node, undo_index, undo_lev
 
 	// Select formatblock
 	var selectElm = document.getElementById(editor_id + "_formatSelect");
-	
-	if (selectElm)
-	{
+	if (selectElm) {
 		var elm = tinyMCE.getParentElement(node, "p,div,h1,h2,h3,h4,h5,h6,pre,address");
-		
+
 		if (elm)
-		{
 			selectByValue(selectElm, "<" + elm.nodeName.toLowerCase() + ">");
-		}
 		else
-		{
 			selectByValue(selectElm, "");
-		}
 	}
 
 	// Select fontselect
 	var selectElm = document.getElementById(editor_id + "_fontNameSelect");
 	if (selectElm) {
 		if (!tinyMCE.isSafari && !(tinyMCE.isMSIE && !tinyMCE.isOpera)) {
-			var face = doc.queryCommandValue('FontName');
+			var face = inst.queryCommandValue('FontName');
 
 			face = face == null || face == "" ? "" : face;
 
@@ -1061,7 +1064,7 @@ function TinyMCE_advanced_handleNodeChange(editor_id, node, undo_index, undo_lev
 	var selectElm = document.getElementById(editor_id + "_fontSizeSelect");
 	if (selectElm) {
 		if (!tinyMCE.isSafari && !tinyMCE.isOpera) {
-			var size = doc.queryCommandValue('FontSize');
+			var size = inst.queryCommandValue('FontSize');
 			selectByValue(selectElm, size == null || size == "" ? "0" : size);
 		} else {
 			var elm = tinyMCE.getParentElement(node, "font", "size");
@@ -1130,11 +1133,11 @@ function TinyMCE_advanced_handleNodeChange(editor_id, node, undo_index, undo_lev
 		// , "JustifyLeft", "_justifyleft", "JustifyCenter", "justifycenter", "JustifyRight", "justifyright", "JustifyFull", "justifyfull", "InsertUnorderedList", "bullist", "InsertOrderedList", "numlist", "InsertUnorderedList", "bullist", "Outdent", "outdent", "Indent", "indent", "subscript", "sub"
 		var ar = new Array("Bold", "_bold", "Italic", "_italic", "Strikethrough", "_strikethrough", "superscript", "_sup", "subscript", "_sub");
 		for (var i=0; i<ar.length; i+=2) {
-			if (doc.queryCommandState(ar[i]))
+			if (inst.queryCommandState(ar[i]))
 				tinyMCE.switchClassSticky(editor_id + ar[i+1], 'mceButtonSelected');
 		}
 
-		if (doc.queryCommandState("Underline") && (node.parentNode == null || node.parentNode.nodeName != "A")) {
+		if (inst.queryCommandState("Underline") && (node.parentNode == null || node.parentNode.nodeName != "A")) {
 			tinyMCE.switchClassSticky(editor_id + '_underline', 'mceButtonSelected');
 		}
 	}

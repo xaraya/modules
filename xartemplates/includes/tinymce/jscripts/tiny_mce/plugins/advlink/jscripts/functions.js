@@ -155,9 +155,13 @@ function parseWindowOpen(onclick) {
 		setPopupControlsDisabled(false);
 
 		var onClickWindowOptions = parseOptions(onClickData['options']);
+		var url = onClickData['url'];
+
+		if (tinyMCE.getParam('convert_urls'))
+			url = convertURL(url, null, true);
 
 		formObj.popupname.value = onClickData['target'];
-		formObj.popupurl.value = onClickData['url'];
+		formObj.popupurl.value = url;
 		formObj.popupwidth.value = getOption(onClickWindowOptions, 'width');
 		formObj.popupheight.value = getOption(onClickWindowOptions, 'height');
 
@@ -177,6 +181,8 @@ function parseWindowOpen(onclick) {
 		formObj.popuptoolbar.checked = getOption(onClickWindowOptions, 'toolbar') == "yes";
 		formObj.popupstatus.checked = getOption(onClickWindowOptions, 'status') == "yes";
 		formObj.popupdependent.checked = getOption(onClickWindowOptions, 'dependent') == "yes";
+
+		buildOnClick();
 	}
 }
 
@@ -289,8 +295,12 @@ function buildOnClick() {
 	}
 
 	var onclick = "window.open('";
+	var url = formObj.popupurl.value;
 
-	onclick += formObj.popupurl.value + "','";
+	if (tinyMCE.getParam('convert_urls'))
+		url = convertURL(url, null, true);
+
+	onclick += url + "','";
 	onclick += formObj.popupname.value + "','";
 
 	if (formObj.popuplocation.checked)

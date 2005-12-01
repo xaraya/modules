@@ -51,6 +51,8 @@ function init() {
 }
 
 function updateAction() {
+	tinyMCEPopup.restoreSelection();
+
 	var inst = tinyMCE.selectedInstance;
 	var tdElm = tinyMCE.getParentElement(inst.getFocusElement(), "td,th");
 	var trElm = tinyMCE.getParentElement(inst.getFocusElement(), "tr");

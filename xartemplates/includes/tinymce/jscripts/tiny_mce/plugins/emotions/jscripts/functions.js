@@ -5,6 +5,9 @@ function init() {
 function insertEmotion(file_name, title) {
 	title = tinyMCE.getLang(title);
 
+	if (title == null)
+		title = "";
+
 	// XML encode
 	title = title.replace(/&/g, '&amp;');
 	title = title.replace(/\"/g, '&quot;');

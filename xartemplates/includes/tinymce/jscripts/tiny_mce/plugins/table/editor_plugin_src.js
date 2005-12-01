@@ -1,5 +1,5 @@
 /* Import plugin specific language pack */
-tinyMCE.importPluginLanguagePack('table', 'en,ar,cs,da,de,el,es,fi,fr_ca,hu,it,ja,ko,nl,no,pl,pt,sv,tw,zh_cn,fr,de,he,no,ru,ru_KOI8-R,ru_UTF-8,cy,is,zh_tw,zh_tw_utf8,sk');
+tinyMCE.importPluginLanguagePack('table', 'en,ar,cs,da,de,el,es,fi,fr_ca,hu,it,ja,ko,nl,nb,pl,pt,pt_br,sv,tw,zh_cn,fr,de,he,nb,ru,ru_KOI8-R,ru_UTF-8,nn,cy,is,zh_tw,zh_tw_utf8,sk');
 
 function TinyMCE_table_getInfo() {
 	return {
@@ -14,15 +14,7 @@ function TinyMCE_table_getInfo() {
 function TinyMCE_table_initInstance(inst) {
 	if (tinyMCE.isGecko) {
 		var doc = inst.getDoc();
-
 		tinyMCE.addEvent(doc, "mouseup", TinyMCE_table_mouseDownHandler);
-
-		try {
-			// For future FF versions
-			doc.execCommand('enableInlineTableEditing', false, false);
-		} catch (e) {
-			// Ignore
-		}
 	}
 
 	inst.tableRowClipboard = null;

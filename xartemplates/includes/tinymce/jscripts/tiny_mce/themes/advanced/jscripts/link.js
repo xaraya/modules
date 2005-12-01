@@ -50,21 +50,20 @@ function init() {
 }
 
 function insertLink() {
-	if (window.opener) {
-		var href = document.forms[0].href.value;
-		var target = document.forms[0].target.options[document.forms[0].target.selectedIndex].value;
-		var title = document.forms[0].linktitle.value;
-		var style_class = document.forms[0].styleSelect.value;
-		var dummy;
+	var href = document.forms[0].href.value;
+	var target = document.forms[0].target.options[document.forms[0].target.selectedIndex].value;
+	var title = document.forms[0].linktitle.value;
+	var style_class = document.forms[0].styleSelect.value;
+	var dummy;
 
-		// Make anchors absolute
-		if (href.charAt(0) == '#')
-			href = tinyMCE.settings['document_base_url'] + href;
+	// Make anchors absolute
+	if (href.charAt(0) == '#')
+		href = tinyMCE.settings['document_base_url'] + href;
 
-		if (target == '_self')
-			target = '';
+	if (target == '_self')
+		target = '';
 
-		window.opener.tinyMCE.insertLink(href, target, title, dummy, style_class);
-		tinyMCEPopup.close();
-	}
+	tinyMCEPopup.restoreSelection();
+	tinyMCE.insertLink(href, target, title, dummy, style_class);
+	tinyMCEPopup.close();
 }

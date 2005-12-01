@@ -1,5 +1,5 @@
-* Version 1.0.0 x Nov 05
-- Many many bug fixes and integrating tinymce 2.0RC4
+* Version 1.0.0 1 Dec 05
+- Many many bug fixes and integrating tinymce 2.0RC4 and changes to 1 Dec
 - New ibrowser - please update your ibrowser config file
 - Updated language packs
 - Support for Opera, and improved support for Safari

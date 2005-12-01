@@ -222,6 +222,9 @@ function tinymce_upgrade($oldversion)
         break;
 
     case '0.9.2':
+            return tinymce_upgrade('1.0.0');
+        break;
+    case '1.0.0': //current version
         break;
     }
     return true;
