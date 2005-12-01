@@ -38,10 +38,14 @@ function maxercalls_admin_newmaxer($args)
      * support easy navigation
      */
     $data = xarModAPIFunc('maxercalls', 'admin', 'menu');
-    /* Security check - important to do this as early as possible to avoid
-     * potential security holes or just too much wasted processing
+    /* Security check. - Will need some improvements. Extra type?
      */
-    if (!xarSecurityCheck('EditMaxercalls')) return;
+    if (!xarSecurityCheck('DeleteMaxercalls')) return;
+
+    // Get all personids
+    // TODO: This should be a nice API function, or DDProperty
+    $persons = xarModAPIFunc('sigmapersonnel','user','getall');
+
 
     /* Generate a one-time authorisation code for this operation */
     $data['authid'] = xarSecGenAuthKey();
@@ -63,16 +67,16 @@ function maxercalls_admin_newmaxer($args)
     /* For E_ALL purposes, we need to check to make sure the vars are set.
      * If they are not set, then we need to set them empty to surpress errors
      */
-    if (empty($name)) {
-        $data['name'] = '';
+    if (empty($remark)) {
+        $data['remark'] = '';
     } else {
-        $data['name'] = $name;
+        $data['remark'] = $remark;
     }
 
-    if (empty($number)) {
-        $data['number'] = '';
+    if (empty($program)) {
+        $data['program'] = '';
     } else {
-        $data['number'] = $number;
+        $data['program'] = $program;
     }
     /* Return the template variables defined in this function */
     return $data;
