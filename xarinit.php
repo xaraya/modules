@@ -7,8 +7,8 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage maxercalls
- * @author Michel V. maxercalls module development team 
+ * @subpackage Maxercalls module
+ * @author Michel V. maxercalls module development team
  */
 
 /**
@@ -21,7 +21,7 @@ function maxercalls_init()
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
-	//Main table
+    //Main table
     $maxercallstable = $xartable['maxercalls'];
     xarDBLoadTableMaintenanceAPI();
     $fields = array(
@@ -34,7 +34,7 @@ function maxercalls_init()
     'xar_calltime'=>array('null'=>FALSE, 'type'=>'time', 'size'=>'HHMM'),
     'xar_enterts'=>array('type'=>'timestamp')
 
-	);
+    );
     // Create the Table - the function will return the SQL is successful or
     // raise an exception if it fails, in this case $query is empty
     $query = xarDBCreateTable($maxercallstable, $fields);
@@ -42,15 +42,15 @@ function maxercalls_init()
 
     $result = $dbconn->Execute($query);
     if (!$result) return;
-	
-    //The call types table. This one will be organised by dyn data.	
+
+    //The call types table. This one will be organised by dyn data.
     $maxercallstypeTable = $xartable['maxercalls_types'];
     xarDBLoadTableMaintenanceAPI();
     $fields = array(
-	 'xar_typeid' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
+     'xar_typeid' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
      'xar_calltext'=>array('null'=>FALSE, 'type'=>'varchar','size'=>150),
      'xar_color'=>array('null'=>FALSE, 'type'=>'varchar','size'=>10)
-	);
+    );
     // Create the Table - the function will return the SQL is successful or
     // raise an exception if it fails, in this case $query is empty
     $query = xarDBCreateTable($maxercallstypeTable, $fields);
@@ -78,7 +78,7 @@ function maxercalls_init()
 
     // If Categories API loaded and available, generate proprietary
     // module master category cid and child subcids
-	// Do I want this?? Wouldn't it be better to have the call take a category... not systemwide?
+    // Do I want this?? Wouldn't it be better to have the call take a category... not systemwide?
     if (xarModIsAvailable('categories')) {
         $maxercallscid = xarModAPIFunc('categories',
             'admin',
@@ -89,7 +89,7 @@ function maxercalls_init()
         // Note: you can have more than 1 mastercid (cfr. articles module)
         xarModSetVar('maxercalls', 'number_of_categories', 1);
         xarModSetVar('maxercalls', 'mastercids', $maxercallscid);
-		
+
         $maxercallscategories = array();
         $maxercallscategories[] = array('name' => "call type one",
             'description' => "call type one");
@@ -116,8 +116,8 @@ function maxercalls_init()
      * provide module aliases and have them set in the module's administration.
      * Use the standard module var names for useModuleAlias and aliasname.
      */
-    xarModSetVar('example', 'useModuleAlias',false);
-    xarModSetVar('example','aliasname','');
+    xarModSetVar('maxercalls', 'useModuleAlias',false);
+    xarModSetVar('maxercalls','aliasname','');
     // Register our hooks that we are providing to other modules.  The maxercalls
     // module shows an maxercalls hook in the form of the user menu.
     if (!xarModRegisterHook('item', 'usermenu', 'GUI',
@@ -156,18 +156,18 @@ function maxercalls_init()
         ,array(
             'hookModName'       => 'dynamicdata'
             ,'callerModName'    => 'maxercalls'));
-	
+
     /*
     * The Calltype Object
-    
+
     $path = "modules/maxercalls/xardata/";
-	
+
     $objectid = xarModAPIFunc('dynamicdata','util','import',
                               array('file' => $path . 'mc_types.xml'));
     if (empty($objectid)) return;
     // save the object id for later
     xarModSetVar('maxercalls','calltypeid',$objectid);
-	//This doesn't work well
+    //This doesn't work well
     //$objectid = xarModAPIFunc('dynamicdata','util','import',
     //                          array('file' => $path . 'mc_types.data.xml'));
     //if (empty($objectid)) return;
@@ -215,7 +215,7 @@ function maxercalls_init()
     // )
     // );
     // xarDefineInstance('maxercalls', 'Item', $instances);
-    
+
     $instancestable = $xartable['block_instances'];
     $typestable = $xartable['block_types'];
     $query = "SELECT DISTINCT i.xar_title FROM $instancestable i, $typestable t WHERE t.xar_id = i.xar_type_id AND t.xar_module = 'maxercalls'";
@@ -270,8 +270,8 @@ function maxercalls_upgrade($oldversion)
             $result = $datadict->changeTable($maxerstable, $fields);
             if (!$result) {return;}
 
-            xarModSetVar('example', 'useModuleAlias',false);
-            xarModSetVar('example','aliasname','');
+            xarModSetVar('maxercalls', 'useModuleAlias',false);
+            xarModSetVar('maxercalls','aliasname','');
             return maxercalls_upgrade('0.1.6');
         case '0.1.6':
             break;
@@ -296,26 +296,26 @@ function maxercalls_delete()
     // Drop the table and send exception if returns false.
     $result = $dbconn->Execute($query);
     if (!$result) return;
-	
+
     $query = xarDBDropTable($xartable['maxercalls_types']);
     if (empty($query)) return; // throw back
 
     // Drop the table and send exception if returns false.
     $result = $dbconn->Execute($query);
     if (!$result) return;
-    
+
     $query = xarDBDropTable($xartable['maxercalls_maxers']);
     if (empty($query)) return; // throw back
 
     // Drop the table and send exception if returns false.
     $result = $dbconn->Execute($query);
     if (!$result) return;
-    
+
     $objectid = xarModGetVar('maxercalls','calltypeid');
     if (!empty($objectid)) {
         xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
     }
-	
+
     // Delete any module variables
     if (xarModIsAvailable('categories')) {
         xarModDelVar('maxercalls', 'number_of_categories');

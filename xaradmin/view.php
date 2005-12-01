@@ -1,16 +1,16 @@
 <?php
 /**
  * Standard function to view dyn data for this module
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage maxercalls
- * @author Maxercalls module development team 
+ * @subpackage Maxercalls module
+ * @author Maxercalls module development team
  */
- 
+
 /**
  * view dynamic data for maxercalls
  */
@@ -19,7 +19,7 @@ function maxercalls_admin_view($args)
     extract($args);
     if (!xarVarFetch('itemtype', 'int', $itemtype,  3, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('startnum', 'int:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
-//    if (!xarVarFetch('catid', 'int:1:', $catid, '', XARVAR_NOT_REQUIRED)) return; 
+//    if (!xarVarFetch('catid', 'int:1:', $catid, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarSecurityCheck('AdminMaxercalls')) return;
 
     $data['items'] = array();
@@ -36,10 +36,10 @@ function maxercalls_admin_view($args)
 
     $data['itemsperpage'] = xarModGetVar('maxercalls','itemsperpage');
     $data['itemtype'] = $itemtype;
-	$data['startnum'] = $startnum;
-	// The Generic Menu
+    $data['startnum'] = $startnum;
+    // The Generic Menu
     //$data['menu']      = xarModFunc('maxercalls','admin','menu');
-	$data['menutitle'] = xarVarPrepForDisplay(xarML('View the hooked dynamic data options'));
+    $data['menutitle'] = xarVarPrepForDisplay(xarML('View the hooked dynamic data options'));
 
     if (empty($data['itemtype'])){
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',

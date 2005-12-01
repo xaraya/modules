@@ -24,7 +24,7 @@
 function maxercalls_admin_new($args)
 {
     // Security check
-    if (!xarSecurityCheck('addmaxercalls')) return;
+    if (!xarSecurityCheck('AdminMaxercalls')) return;
 
     extract($args);
 

@@ -1,27 +1,27 @@
 <?php
  /**
  * Display an item
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage maxercalls
- * @author Michel Vorenhout 
+ * @subpackage Maxercalls module
+ * @author Michel Vorenhout
  */
 
 /**
  * display an item
  * This is a standard function to provide detailed informtion on a single item
  * available from the module.
- * 
+ *
  * @param  $args an array of arguments (if called by other modules)
  * @param  $args ['objectid'] a generic object id (if called by other modules)
  * @param  $args ['callid'] the item id used for this maxercalls module
  */
 function maxercalls_user_display($args)
-{ 
+{
     extract($args);
 
     if (!xarVarFetch('callid', 'int:1:', $callid)) return;
@@ -29,11 +29,11 @@ function maxercalls_user_display($args)
 
     if (!empty($objectid)) {
         $callid = $objectid;
-    } 
+    }
     // Initialise the $data variable
-    $data = xarModAPIFunc('maxercalls', 'user', 'menu'); 
+    $data = xarModAPIFunc('maxercalls', 'user', 'menu');
     // Prepare the variable that will hold some status message if necessary
-    $data['status'] = ''; 
+    $data['status'] = '';
     // The API function is called.  The arguments to the function are passed in
     // as their own arguments array.
     // Security check 1 - the get() function will fail if the user does not
@@ -43,12 +43,12 @@ function maxercalls_user_display($args)
         'get',
         array('callid' => $callid));
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-     
+
     $item['transform'] = array('name');
     $item = xarModCallHooks('item',
         'transform',
         $callid,
-        $item); 
+        $item);
     // Fill in the details of the item.  Note that a module variable is used here to determine
     // whether or not parts of the item information should be displayed in
     // bold type or not
@@ -67,7 +67,7 @@ function maxercalls_user_display($args)
     $data['callid'] = $callid;
     $data['returnbutton'] = xarVarPrepForDisplay(xarML('Return to view'));
     $data['calltext'] = xarModAPIFunc('dynamicdata','user','getfield',
-                    array ('module' => 'maxercalls', 
+                    array ('module' => 'maxercalls',
                            'itemtype' => 3,
                            'itemid' => $item['calltext'],
                            'name' => 'calltext'));
@@ -82,7 +82,7 @@ function maxercalls_user_display($args)
 
     // You should use this -instead of globals- if you want to make
     // information available elsewhere in the processing of this page request
-    xarVarSetCached('Blocks.maxercalls', 'callid', $callid); 
+    xarVarSetCached('Blocks.maxercalls', 'callid', $callid);
     // Let any hooks know that we are displaying an item.  As this is a display
     // hook we're passing a return URL in the item info, which is the URL that any
     // hooks will show after they have finished their own work.  It is normal
@@ -102,11 +102,11 @@ function maxercalls_user_display($args)
         // You can use the output from individual hooks in your template too, e.g. with
         // $hookoutput['comments'], $hookoutput['hitcount'], $hookoutput['ratings'] etc.
         $data['hookoutput'] = $hooks;
-    } 
+    }
     // Once again, we are changing the name of the title for better
     // Search engine capability.
-    xarTplSetPageTitle(xarVarPrepForDisplay($item['calldate'])); 
+    xarTplSetPageTitle(xarVarPrepForDisplay($item['calldate']));
     // Return the template variables defined in this function
-    return $data; 
-} 
+    return $data;
+}
 ?>

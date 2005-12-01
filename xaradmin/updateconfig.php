@@ -1,14 +1,14 @@
 <?php
 /**
  * Update configuration parameters of the module with information passed back by the modification form
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage maxercalls
- * @author Maxercalls module development team 
+ * @subpackage Maxercalls module
+ * @author Maxercalls module development team
  */
 
 /**
@@ -23,11 +23,11 @@
 function maxercalls_admin_updateconfig()
 {
 
-    if (!xarVarFetch('itemsperpage', 'int', $itemsperpage, 10, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('itemsperpage', 'int',      $itemsperpage, 10, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('shorturls',    'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('aliasname',    'str:1:',   $aliasname, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('modulealias',  'checkbox', $modulealias,false,XARVAR_NOT_REQUIRED)) return;
-    
+
     // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) return;
     // Update module variables.

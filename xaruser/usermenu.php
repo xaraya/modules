@@ -9,7 +9,7 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage maxercalls
+ * @subpackage Maxercalls module
  * @author Maxercalls module development team
  */
 /**

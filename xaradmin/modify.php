@@ -1,5 +1,16 @@
 <?php
 /**
+ * Standard function to modify a dynamic item in Maxercalls
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Maxercalls module
+ * @author Maxercalls module development team
+ */
+/**
    Modify an item of the itemtype specified
 
    @param $itemtype - type of item that is being created (required)
@@ -48,9 +59,6 @@ function maxercalls_admin_modify($args)
     // get the values for this item
     $newid = $object->getItem();
     if (!isset($newid) || $newid != $itemid) return;
-
-    //$data['menu']      = xarModFunc('maxercalls','admin','menu');
-    //$data['menutitle'] = xarModAPIFunc('maxercalls','admin','menu');
 
     // Get data ready for the template
     $data['itemid']   = $itemid;
