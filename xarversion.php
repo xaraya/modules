@@ -1,14 +1,16 @@
 <?php
 /**
- * Helpdesk for Xaraya
+ * Helpdesk Module
  *
- * @package Helpdesk
- * @copyright (C) 2003 Brian McGilligan.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
- * @link http://www.abrasiontechnology.com
- * @author Brian McGilligan
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Helpdesk Module
+ * @link http://www.envisionnet.net/home/products/helpdesk/
+ * @author Brian McGilligan <brian@envisionnet.net>
  */
-
 // Is Based On:
 /********************************************************/
 /* Dimensionquest Help Desk                             */
@@ -23,7 +25,7 @@
 
 $modversion['id'] = '910';
 $modversion['name'] = 'helpdesk';
-$modversion['version'] = '0.7.0';
+$modversion['version'] = '0.7.1';
 $modversion['displayname']    = xarML('HelpDesk');
 $modversion['description'] = 'HelpDesk Module';
 $modversion['credits'] = 'docs/credits.txt';
@@ -32,14 +34,16 @@ $modversion['changelog'] = 'docs/changelog.txt';
 $modversion['license'] = 'docs/license.txt';
 $modversion['official'] = 0;
 $modversion['author'] = 'Brian McGilligan';
-$modversion['contact'] = 'bmcgilligan@abrasiontechonolgy.com';
+$modversion['contact'] = 'brian@envisionnet.net';
 $modversion['user'] = 1;
 $modversion['admin'] = 1;
+$modversion['securityschema'] = array('helpdesk::' => '::');
 $modversion['class'] = 'Complete';
 $modversion['category'] = 'Content';
-$modversion['dependency'] = array(14, 147, 182, 269, 270);
+
 /*
     269 - Owner Module
     270 - Security Module
 */
+$modversion['dependency'] = array(14, 147, 182, 269, 270);
 ?>

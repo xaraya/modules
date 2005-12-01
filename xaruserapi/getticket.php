@@ -41,6 +41,7 @@ function helpdesk_userapi_getticket($args)
         'xar_phone'
     );
     $tables = array($db_table);
+    $left_join = array();
     $where = array('xar_id = ?');
     $bindvars = array($tid);
     
@@ -51,18 +52,18 @@ function helpdesk_userapi_getticket($args)
     {
         $security_def = xarModAPIFunc('security', 'user', 'leftjoin', 
             array(
-                'modid' => xarModGetIdFromName('helpdesk'),
+                'modid'    => xarModGetIdFromName('helpdesk'),
                 'itemtype' => 1,
-                'level' => isset($security_level) ? $security_level : null,
+                'itemid'   => "xar_id",
+                'level' => isset($level) ? $level : null,
                 // This exception insures that the tech assigned to the ticket can see it.
                 'exception' => 'xar_assignedto = ' . $dbconn->qstr(xarUserGetVar('uid'))
             )
         );        
         if( count($security_def) > 0 )
         {
-            $tables[] = $security_def['table'];
+            $left_join[] = " {$security_def['left_join']} ";
             $where[] = "( {$security_def['where']} )";
-            $where[] = " {$security_def['iid']} = $db_table.xar_id";
         }
     }    
     
@@ -70,7 +71,8 @@ function helpdesk_userapi_getticket($args)
         Build the query
     */
     $sql  = 'SELECT ' . join(', ', $fields);
-    $sql .= ' FROM '  . join(', ', $tables);
+    $sql .= ' FROM '  . join(', ', $tables);    
+    if( count($left_join) > 0 ){ $sql .= join(' ', $left_join); }
     $sql .= ' WHERE ' . join(' AND ', $where);
 
     $results = $dbconn->Execute($sql, array($tid));

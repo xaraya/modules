@@ -1,11 +1,11 @@
 <div class="xar-padding-thick xar-norm-outline ">
 
     <div>
-    <xar:mlstring>Total Tickets in System</xar:mlstring>: <b>#$return_val#</b>
+        <xar:mlstring>Total Tickets in System</xar:mlstring>: <strong><xar:var name="total_tickets" /></strong>
     </div>
     <xar:if condition="$userisloggedin">
         <div>
-            <xar:mlstring>Ticket Stats for</xar:mlstring> #$username#
+            <xar:mlstring>Ticket Stats for</xar:mlstring> <xar:var name="username" />
         </div>
         <xar:if condition="$editaccess">
         <div>
@@ -35,9 +35,9 @@
     
         <div class="xar-align-center">
             <xar:if condition="$enablemystatshyperlink and $userstats['closed'] gt 0">
-                <a href="#xarModURL('helpdesk', 'user', 'view', array('selection'=>'MYCLOSED'))#" title="View your closed tickets"><xar:mlstring>Closed:</xar:mlstring> <b>#$userstats['closed']#</b></a>
+                <a href="#xarModURL('helpdesk', 'user', 'view', array('selection'=>'MYALL', 'statusfilter' => 3))#" title="View your closed tickets"><xar:mlstring>Closed:</xar:mlstring> <b>#$userstats['closed']#</b></a>
             <xar:else />    
-                <xar:mlstring>Closed:</xar:mlstring> <b>#$userstats['closed']#</b>            
+                <xar:mlstring>Closed:</xar:mlstring> <b>#$userstats['closed']#</b>
             </xar:if>
         </div>
     </xar:if>

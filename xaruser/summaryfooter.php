@@ -7,23 +7,20 @@
 function helpdesk_user_summaryfooter()
 {
     // Security check
-    if (!xarSecurityCheck('readhelpdesk')) return;
+    if( !xarSecurityCheck('readhelpdesk') ){ return; }
 
-    $data['return_val'] = xarModAPIFunc('helpdesk',
-                                        'user',
-                                        'getstats');
+    $data['total_tickets'] = xarModAPIFunc('helpdesk', 'user', 'getstats');
     
     $data['userisloggedin']  = xarUserIsLoggedIn();
     
-    if ($data['userisloggedin']) {
+    if ($data['userisloggedin']) 
+    {
+        $data['editaccess']  = xarSecurityCheck('edithelpdesk', 0);
         $data['username']    = xarUserGetVar('uname');
         $data['userid']      = xarUserGetVar('uid');
-        $data['userstats']   = xarModAPIFunc('helpdesk',
-                                             'user',
-                                             'getuserticketstats', 
-                                             array('userid' => $data['userid']));
-        
-        $data['editaccess']  = xarSecurityCheck('edithelpdesk', 0);
+        $data['userstats']   = xarModAPIFunc('helpdesk', 'user', 'getuserticketstats', 
+             array('userid' => $data['userid'])
+        );
         $data['enablemystatshyperlink'] = xarModGetVar('helpdesk', 'EnableMyStatsHyperLink');
     }
     

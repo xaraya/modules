@@ -83,6 +83,17 @@
       <label class="xar-form-label"><xar:mlstring>Subject:</xar:mlstring></label>
       <input name="subject" maxlength="255" class="xar-form-textlong" />(required)
     </div>
+    <xar:if condition="!empty($groups)">
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label"><xar:mlstring>Company:</xar:mlstring></label>
+        <select name="security_extra_groups[]" class="xar-form-textlong">
+        <option value="">
+        <xar:foreach in="$groups" value="$group">
+            <option value="#$group.uid#">#$group.name#</option>
+        </xar:foreach>
+        </select>
+    </div>    
+    </xar:if>
     <div class="xar-form-input-wrapper">
       #$hooks['categories']#
     </div>

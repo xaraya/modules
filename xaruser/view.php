@@ -18,9 +18,10 @@ function helpdesk_user_view($args)
     if( !xarVarFetch('order',        'str:1:',  $order,      'ASC',  XARVAR_NOT_REQUIRED) ){ return false; }
     if( !xarVarFetch('startnum',     'str:1:',  $startnum,    1,     XARVAR_NOT_REQUIRED) ){ return false; }
     if( !xarVarFetch('statusfilter', 'str:1:',  $statusfilter,null,  XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('company',      'str:1:',  $company,     null,  XARVAR_NOT_REQUIRED) ){ return false; }
     if( !xarVarFetch('catid',        'str',     $catid,       null,  XARVAR_NOT_REQUIRED) ){ return false; }
-     if( !xarVarFetch('search_fields','array',$search_fields, null,  XARVAR_NOT_REQUIRED) ){ return false; }
-     if( !xarVarFetch('keywords',    'str',     $keywords,    null,  XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('search_fields','array', $search_fields, null,  XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('keywords',     'str',     $keywords,    null,  XARVAR_NOT_REQUIRED) ){ return false; }
 
     $data = array();
     $data['menu']    = xarModFunc('helpdesk', 'user', 'menu');
@@ -42,6 +43,7 @@ function helpdesk_user_view($args)
             'order'        => $order,
             'startnum'     => $startnum,
             'statusfilter' => $statusfilter,
+            'company'      => $company,
             'search_fields'=> $search_fields,
             'keywords'     => $keywords
         )
@@ -58,6 +60,7 @@ function helpdesk_user_view($args)
             'order'        => $order,
             'startnum'     => $startnum,
             'statusfilter' => $statusfilter,
+            'company'      => $company,
             'search_fields'=> $search_fields,
             'keywords'     => $keywords
         )
@@ -71,6 +74,7 @@ function helpdesk_user_view($args)
         'sortorder'    => $sortorder,
         'order'        => $order,
         'statusfilter' => $statusfilter,
+        'company'      => $company,
         'search_fields'=> $search_fields,
         'keywords'     => $keywords,
         'startnum'     => '%%'
@@ -95,6 +99,8 @@ function helpdesk_user_view($args)
     $data['status']       = xarModAPIFunc('helpdesk', 'user', 'gets', 
         array('itemtype' => 3)
     );
+    $data['companies']    = xarModAPIFunc('helpdesk', 'user', 'get_companies');
+    $data['company']      = $company;
     
     // Get Column View preferences
     $data['showassignedtoinsummary']    = xarModGetVar('helpdesk', 'ShowAssignedToInSummary');

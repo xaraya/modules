@@ -16,14 +16,7 @@ function helpdesk_userapi_getuserticketstats($args)
             WHERE (xar_statusid = ? AND xar_openedby = ?)";
     $bindvars = array(3, $userid);
     $results = $dbconn->Execute($sql, $bindvars);
-    if (!$results) {
-        $msg = xarML('DB query failed for #(2) function #(3)() in module #(4)',
-                     'null', 'userapi', 'getuserticketstats', 'helpdesk');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        $results->Close();
-        return false;
-    }
+    if ( !$results ){ return false; }
     list($closedcount) = $results->fields;
     $results->Close();
     
@@ -33,14 +26,7 @@ function helpdesk_userapi_getuserticketstats($args)
             WHERE xar_openedby = ?";
     $bindvars = array($userid);
     $results = $dbconn->Execute($sql, $bindvars);
-    if (!$results) {
-        $msg = xarML('DB query failed for #(2) function #(3)() in module #(4)',
-                     'null', 'userapi', 'getuserticketstats', 'helpdesk');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        $results->Close();
-        return false;
-    }
+    if ( !$results ){ return false; }
     list($totalcount) = $results->fields;
     $results->Close();
     
@@ -50,14 +36,7 @@ function helpdesk_userapi_getuserticketstats($args)
             WHERE (xar_statusid <> ? AND xar_assignedto = ?)";
     $bindvars = array(3, $userid);
     $results = $dbconn->Execute($sql, $bindvars);
-    if (!$results) {
-        $msg = xarML('DB query failed for #(2) function #(3)() in module #(4)',
-                     'null', 'userapi', 'getuserticketstats', 'helpdesk');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        $results->Close();
-        return false;
-    }
+    if ( !$results ){ return false; }
     list($assignedopen) = $results->fields;
     $results->Close();
 

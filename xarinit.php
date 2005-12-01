@@ -1,15 +1,17 @@
 <?php
 /**
-   Helpdesk for Xaraya
-  
-   @package Helpdesk
-   @copyright (C) 2004 Brian McGilligan.
-   @license GPL <http://www.gnu.org/licenses/gpl.html>
-   @link http://www.abrasiontechnology.com
-   @author Brian McGilligan
+    Helpdesk
+ 
+    @package Xaraya eXtensible Management System
+    @copyright (C) 2003-2004 by Envision Net, Inc.
+    @license GPL <http://www.gnu.org/licenses/gpl.html>
+    @link http://www.envisionnet.net/
+ 
+    @subpackage Helpdesk module
+    @author Brian McGilligan <brian@envisionnet.net>
 */
 
-// Is Based On:
+// Helpdesk Is Based On:
 /********************************************************/
 /* Dimensionquest Help Desk                             */
 /*  Development by:                                     */
@@ -114,7 +116,7 @@ function helpdesk_init()
     if (!isset($result)) return;
     
     // Set up module variables
-    xarModSetVar('helpdesk', 'Website', 'http://www.abrasiontechnology.com');
+    xarModSetVar('helpdesk', 'Website', 'http://www.envisionnet.net/');
     xarModSetVar('helpdesk', 'Default rows per page', 20);
     xarModSetVar('helpdesk', 'Page Count Limit', 10);
     
@@ -128,7 +130,7 @@ function helpdesk_init()
     xarModSetVar('helpdesk', 'User can check status',1);
     xarModSetVar('helpdesk', 'Techs see all tickets', 1);
     xarModSetVar('helpdesk', 'EnforceAuthKey', 1);
-    xarModSetVar('helpdesk', 'Enable Images',1);
+    xarModSetVar('helpdesk', 'Enable Images',0);
     xarModSetVar('helpdesk', 'AllowCloseOnSubmit',1);
     xarModSetVar('helpdesk', 'ShowOpenedByInSummary',1);
     xarModSetVar('helpdesk', 'ShowAssignedToInSummary',1);
@@ -188,6 +190,14 @@ function helpdesk_init()
     // Enable comments hooks for helpdesk
     xarModAPIFunc('modules','admin','enablehooks',
           array('callerModName' => 'helpdesk', 'hookModName' => 'hitcount'));
+    
+    // Enable owner hooks for helpdesk
+    xarModAPIFunc('modules','admin','enablehooks',
+          array('callerModName' => 'helpdesk', 'hookModName' => 'owner'));
+    
+    // Enable security hooks for helpdesk
+    xarModAPIFunc('modules','admin','enablehooks',
+          array('callerModName' => 'helpdesk', 'hookModName' => 'security'));
     
     /**
     * Ok, Now lets create all of our dd objects
@@ -391,7 +401,15 @@ function helpdesk_upgrade($oldversion)
             
         case '0.5.1':
         case '0.5.6':
+            // Enable owner hooks for helpdesk
+            xarModAPIFunc('modules','admin','enablehooks',
+                  array('callerModName' => 'helpdesk', 'hookModName' => 'owner'));
+            
+            // Enable security hooks for helpdesk
+            xarModAPIFunc('modules','admin','enablehooks',
+                  array('callerModName' => 'helpdesk', 'hookModName' => 'security'));
                             
+        case '0.7.0':
         
         default:
             break;  

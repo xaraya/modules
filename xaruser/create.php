@@ -100,6 +100,18 @@ function helpdesk_user_create($args)
     }else{
         $data['return_val'] = $return_val;
     }
+    
+    /*
+        Lets create hooks
+        I have the hooks before the send mail because if there is a problem sending mail the hooks
+        were not executing which was very very bad. Hooks must execute if the ticket was created
+        otherwise users will not be able to see their ticket because of how the security module works
+        - Brian McGilligan
+    */
+    $item = array();
+    $item['module'] = 'helpdesk';
+    $item['itemtype'] = $itemtype;
+    $hooks = xarModCallHooks('item', 'create', $return_val, $item, 'helpdesk');
 
     /**
         Send an e-mail to user with details
@@ -176,44 +188,34 @@ function helpdesk_user_create($args)
     $itemid = $return_val; // id of ticket just created
     $itemtype = 1;
     $result = xarModAPIFunc('comments', 'user', 'add', 
-                            array('modid'    => $modid,
-                                  'objectid' => $itemid,
-                  'itemtype' => $itemtype,
-                                  'pid'      => $pid,
-                                  'title'    => $subject,
-                                  'comment'  => $issue,
-                                  'postanon' => 0,
-                                  'author'   => $userid                    
-                                 )
-                           );
+        array(
+            'modid'    => $modid,
+            'objectid' => $itemid,
+            'itemtype' => $itemtype,
+            'pid'      => $pid,
+            'title'    => $subject,
+            'comment'  => $issue,
+            'postanon' => 0,
+            'author'   => $userid                    
+        )
+    );
                                
-    if(!empty($notes)){
+    if( !empty($notes) )
+    {
         $result = xarModAPIFunc('comments', 'user', 'add', 
-                                array('modid'    => $modid,
-                                      'objectid' => $itemid,
-                      'itemtype' => $itemtype,
-                                      'pid'      => $result,
-                                      'title'    => $subject,
-                                      'comment'  => $notes,
-                                      'postanon' => 0,
-                                      'author'   =>  $userid
-                                    )
-                               );
+            array(
+                'modid'    => $modid,
+                'objectid' => $itemid,
+                'itemtype' => $itemtype,
+                'pid'      => $result,
+                'title'    => $subject,
+                'comment'  => $notes,
+                'postanon' => 0,
+                'author'   =>  $userid
+            )
+        );
     }                                                              
-   
-    
-    // Lets create hooks
-    $item = array();
-    $item['module'] = 'helpdesk';
-    $item['itemtype'] = $itemtype;
-    $item['returnurl'] = xarModURL('helpdesk', 'user', 'display', array('tid' => $return_val));
-    $hooks = xarModCallHooks('item', 'create', $return_val, $item, 'helpdesk');
-    if (empty($hooks)) {
-        $data['hooks'] = array();
-    } else {
-        $data['hooks'] = $hooks;
-    } 
-                 
+                      
     /*
         Get template ready to display message to user.
     */   
