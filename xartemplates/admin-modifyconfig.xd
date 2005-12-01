@@ -325,7 +325,7 @@
             </xar:if>
            <div class="xar-form-input-wrapper">
                 <label for="tinytilemap" class="xar-form-label" title="#xarML('Use tiled images instead of individual for faster loading.')#">
-                    <xar:mlstring>Use icon map for faster loading?</xar:mlstring>
+                    <xar:mlstring>Use icon map?</xar:mlstring>
                 </label>
                 <select name="tinytilemap" id="tinytilemap" size="1" onchange="submit();">
                 <xar:if condition="$tinytilemap ne 'true'">
@@ -336,26 +336,26 @@
                     <option value="true" selected="selected"><xar:mlstring>Yes</xar:mlstring></option>
                 </xar:if>
                 </select>
-                <xar:mlstring>May not work with some DOCTYPE declarations.</xar:mlstring>
+                <xar:mlstring>Faster loading. May not work with some DOCTYPE declarations.</xar:mlstring>
             </div>
            <div class="xar-form-input-wrapper">
                 <label for="tinywidth" class="xar-form-label" title="#xarML('Defaults to width of individual textareas if left blank')#">
-                    <xar:mlstring>Override width for all textareas:</xar:mlstring>
+                    <xar:mlstring>Override width:</xar:mlstring>
                 </label>
                 <input type="text" name="tinywidth" id="tinywidth" value="#$tinywidth#" size="8" maxlength="8" />
-                <xar:mlstring>Eg "110%" or "450" for px. </xar:mlstring>
+                <xar:mlstring>Affects all textareas. Eg "110%" or "450" for px. </xar:mlstring>
             </div>
            <div class="xar-form-input-wrapper">
                 <label for="tinyheight" class="xar-form-label" title="#xarML('Defaults to height of individual textareas if left blank')#">
-                    <xar:mlstring>Override height for all textareas:</xar:mlstring>
+                    <xar:mlstring>Override height:</xar:mlstring>
             </label>
                 <input type="text" name="tinyheight" id="tinyheigh" value="#$tinyheight#" size="8" maxlength="8" />
-                <xar:mlstring>Eg "110%" or "450" for px. </xar:mlstring>
+                <xar:mlstring>Affects all textareas Eg "110%" or "450" for px. </xar:mlstring>
            </div>
 
            <div class="xar-form-input-wrapper">
                 <label for="tinyundolevel" class="xar-form-label" title="#xarML('Defaults to unlimited undo levels if left blank')#">
-                    <xar:mlstring>Maximum number of undo levels :</xar:mlstring>
+                    <xar:mlstring>Max # of undo levels :</xar:mlstring>
                 </label>
                 <input type="integer" name="tinyundolevel" id="tinyundolevel" value="#$tinyundolevel#" size="3" maxlength="3" />
                 <xar:mlstring>Unlimited if blank</xar:mlstring>
@@ -427,7 +427,7 @@
             </legend>
            <div class="xar-form-input-wrapper">
                 <label for="tinyinlinestyle" class="xar-form-label" title="#xarML('Converts attributes like width, height, border, to inline styles eg style= ....')#">
-                    <xar:mlstring>Convert attributes to inline style?</xar:mlstring>
+                    <xar:mlstring>Attributes to inline style?</xar:mlstring>
                 </label>
                 <select name="tinyinlinestyle" id="tinyinlinestyle" size="1">
                 <xar:if condition="$tinyinlinestyle eq 'false'">
@@ -732,14 +732,14 @@
                     </xar:if>
             </div>
 
-            <div class="xar-form-input-wrapper">
+            <p>
                 <xar:mlstring>Enter code for multiple configuration instances of tinymce.
                 In each configuration you must have at least</xar:mlstring>
                 <br /><code>mode : "textareas",
                    editor_selector : "yourtriggerclassname",</code><br />
                    <xar:mlstring>The textarea trigger class can be any name but <strong>do not</strong> use the default <strong><code>class="mceEditor"</code></strong>. You can set multiple instances, but code will only take effect when the checkbox above is checked. To use a specific configuration add the trigger class name to your textarea eg</xar:mlstring> <strong><code>class="MyEditorConfig"</code></strong>
                    <xar:mlstring>Please <strong>check the final tinymce config code</strong> in the code display at the end of this screen before use!</xar:mlstring>
-            </div>
+            </p>
             <div class="xar-form-input-wrapper">
                 <label for="multiconfig" class="xar-form-label" title="#xarML('Enter additional individual custom config options here')#">
                         <xar:mlstring>Custom Config options:</xar:mlstring>
