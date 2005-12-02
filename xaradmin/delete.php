@@ -42,7 +42,7 @@ function xarcpshop_admin_delete($args)
         $data['storeid'] = $storeid;
         // Add some other data you'll want to display in the template
         $data['confirmtext'] = xarML('Please confirm deletion of this item ?');
-        $data['itemidlabel'] = xarML('Item ID');
+        $data['itemidlabel'] = xarML('Shop ID');
         $data['itemid'] = xarVarPrepForDisplay($item['storeid']);
         $data['namelabel'] = xarML('Cafe Press Shop ID');
         $data['namevalue'] = xarVarPrepForDisplay($item['name']);

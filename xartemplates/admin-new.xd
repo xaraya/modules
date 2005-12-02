@@ -3,74 +3,71 @@
 <script type="text/javascript">
 <!--
     // Enter name of mandatory fields
-    var fieldRequired = Array("nickname',"name", "toplevel");
+    var fieldRequired = Array("nickname","name", "toplevel");
     // Enter field description to appear in the dialog box
     var fieldDescription = Array("Nickname", "Store ID", "Top Level");
 //-->
 </script>
-<div style="margin: auto;padding-bottom:20px;">
-    <xar:template file="admin-menu" type="module"/>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Xaraya CafePress Shop Administration</xar:mlstring>
+    </span>
 </div>
+
 <div class="xar-mod-body">
+    <xar:template file="admin-menu" type="module"/>
+
     <h2><xar:mlstring>Add A Shop</xar:mlstring></h2>
-    <form method="post" action="#xarModUrl('xarcpshop', 'admin', 'create')#" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
+    <form method="post" action="&xar-modurl-xarcpshop-admin-create;" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
+        <fieldset>
+        <legend>
+            <xar:mlstring>Shop Details</xar:mlstring>
+        </legend>
+        <div class="xar-form-input-wrapper">
+            <label for="nickname"  class="xar-form-label"  title="#xarML('Shop description of nickname for easy identification')#">
+                <xar:mlstring>Description or nick:</xar:mlstring>
+            </label>
+            <input type="text" name="nickname" id="nickname" size="64" maxlength="64 value="#$nickname#" />
+            <xar:if condition="!empty($invalid['nickname'])">
+                <span style="color: red"><xar:mlstring>ERROR! This is not a valid shop ID</xar:mlstring>
+            </xar:if>
+        </div>
 
-    <div style="clear: both; padding-top: 10px;">
-    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-    <span style="float: left; width: 20%; text-align: right;">
-        <span class="help" title="#xarML('Shop description of nickname for easy identification')#">
-            <label for="nickname"><xar:mlstring>Description or nick:</xar:mlstring></label>:
-        </span>
-    </span>
-    <span style="float: right; width: 78%; text-align: left;">
-        <input type="text" name="nickname" id="nickname" size="64" maxlength="64 value="#$nickname#" />
-        <xar:if condition="!empty($invalid['nickname'])">
-            <span style="color: red"><xar:mlstring>ERROR! This is not a valid shop ID</xar:mlstring>
-        </xar:if>
-    </span>
-    </div>
-
-    <div style="clear: both; padding-top: 10px;">
-    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-    <span style="float: left; width: 20%; text-align: right;">
-        <span class="help" title="#xarML('The Cafe Press ID for the store')#">
-        <label for="name"><xar:mlstring>CafePress Shop ID</xar:mlstring></label>:
-        </span>
-    </span>
-    <span style="float: right; width: 78%; text-align: left;">
+        <div class="xar-form-input-wrapper">
+            <label for="name" class="xar-form-label"  title="#xarML('The Cafe Press ID for the store')#">
+                <xar:mlstring>CafePress Shop ID:</xar:mlstring>
+            </label>
         <input type="text" name="name" id="name" size="32" maxlength="32" value="#$name#" />
         <xar:if condition="!empty($invalid['name'])">
             <span style="color: red"><xar:mlstring>ERROR! This is not a valid shop name</xar:mlstring>
         </xar:if>
-                <xar:mlstring>Usually a descriptive ID such as 'xaraya'.</xar:mlstring>
-    </span>
-    </div>
+        <xar:mlstring>Usually a descriptive ID such as 'xaraya'.</xar:mlstring>
+        </div>
 
-    <div style="clear: both; padding-top: 10px;">
-    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-    <span style="float: left; width: 20%; text-align: right;">
-        <span class="help" title="#xarML('If a section or part of a Premium store add the section name here or leave blank')#">
-        <label for="toplevel"><xar:mlstring>Top Level Section</xar:mlstring></label>:
-        </span>
-    </span>
-    <span style="float: right; width: 78%; text-align: left;">
-        <input type="text" name="toplevel" id="toplevel" size="10" maxlength="10" value="#$toplevel#" />
-        <xar:if condition="!empty($invalid['toplevel'])">
-            <span style="color: red"><xar:mlstring>ERROR! This is not a valid shop name</xar:mlstring>
-        </xar:if>
-        <xar:mlstring>Leave blank if you only have a standard free store</xar:mlstring>
-    </span>
-    </div>
+        <div class="xar-form-input-wrapper">
 
+            <label for="toplevel" class="xar-form-label"  title="#xarML('If a section or part of a Premium store add the section name here or leave blank')#">
+                <xar:mlstring>Top Level Section</xar:mlstring>:
+            </label>
+            <input type="text" name="toplevel" id="toplevel" size="10" maxlength="10" value="#$toplevel#" />
+            <xar:if condition="!empty($invalid['toplevel'])">
+                <span style="color: red"><xar:mlstring>ERROR! This is not a valid shop name</xar:mlstring>
+            </xar:if>
+            <xar:mlstring>Leave blank if you only have a standard free store</xar:mlstring>
+        </div>
+       <fieldset>
+              <legend><xar:mlstring>Enabled Hooks</xar:mlstring></legend>
+              <xar:if condition="!empty($hooks)">                    
+                  <xar:foreach in="$hooks" key="$hookmodule">
 
-    #$hooks#
-
-    <div style="clear: both; padding-top: 10px;">
-        <input type="hidden" name="authid" id="authid" value="#$authid#" />
-        <span style="float: left; width: 30%; text-align: right;">
+                      #$hooks[$hookmodule]#
+                  </xar:foreach>
+              </xar:if>
+        </fieldset>
+        <div class="xar-form-input-wrapper-after">
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
             <input type="submit" value="#$addbutton#" />
-        </span>
-    </div>
+        </div>
 
 </form>
 </div>

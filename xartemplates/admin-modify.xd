@@ -1,10 +1,4 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<div style="margin: auto;padding-bottom:20px;">
-    <xar:template file="admin-menu" type="module"/>
-</div>
-
-<div class="xar-mod-body">
-    <h2><xar:mlstring>Modify Stores</xar:mlstring></h2>
 <!-- This Javascript will check for required fields before the form is submitted. -->
 <xar:base-include-javascript module="base" filename="" position="head" />
 <script type="text/javascript">
@@ -16,74 +10,70 @@
 //-->
 </script>
 
-
-<div style="margin: auto;">
-<form method="post" action="#xarModUrl('xarcpshop', 'admin', 'update')#" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
-    <div style="clear: both; padding-top: 10px;">
-    <span style="float: left; width: 20%; text-align: right;">
-        <label for="storeid"><xar:mlstring>ID:</xar:mlstring></label>:
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Xaraya CafePress Shop Administration</xar:mlstring>
     </span>
-    <span style="float: right; width: 78%; text-align: left;">
-    #$storeid#
-    </span>
-    </div>
-   <div style="clear: both; padding-top: 10px;">
-    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+</div>
 
-    <span style="float: left; width: 20%; text-align: right;">
-        <span class="help" title="#xarML('Please enter the Shop Nickname - a one word, easy to remember name')#">
-        <label for="nickname">#$nicklabel#</label>:</span>
-    </span>
-    <span style="float: right; width: 78%; text-align: left;">
-        <input type="text" name="nickname" id="nickname" size="32" maxlength="32" value="#$nickname#" /> 
-        <xar:if condition="!empty($invalid['nickname'])">
-            <span style="color: red"><xar:mlstring>ERROR! This is not a valid xarcpshop name</xar:mlstring>
-        </xar:if>
-    </span>
-    </div>
-    <div style="clear: both; padding-top: 10px;">
-    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+<div class="xar-mod-body">
+    <xar:template file="admin-menu" type="module"/>
+    <h2><xar:mlstring>Modify Stores</xar:mlstring></h2>
+    <form method="post" action="&xar-modurl-xarcpshop-admin-update;" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
+    <fieldset>
+        <legend><xar:mlstring>Display Options</xar:mlstring></legend>
+            <div class="xar-form-input-wrapper">
+                <label for="storeid" class="xar-form-label">
+                    <xar:mlstring>ID:</xar:mlstring>
+                </label>
+                #$storeid#
+            </div>
 
-    <span style="float: left; width: 20%; text-align: right;">
-        <span class="help" title="#xarML('The Cafe Press ID for the store')#">
-        <label for="name">#$namelabel#</label>:</span>
-    </span>
-    <span style="float: right; width: 78%; text-align: left;">
-        <input type="text" name="name" id="name" size="32" maxlength="32" value="#$name#" />
-        <xar:if condition="!empty($invalid['name'])">
-            <span style="color: red"><xar:mlstring>ERROR! This is not a valid xarcpshop storeid</xar:mlstring>
-        </xar:if>
-    </span>
-    </div>
+            <div class="xar-form-input-wrapper">
+                <label for="nickname" class="xar-form-label" title="#xarML('Please enter the Shop Nickname - a one word, easy to remember name')#">
+                     #$nicklabel#
+                </label>
+               <input type="text" name="nickname" id="nickname" size="32" maxlength="32" value="#$nickname#" />
+               <xar:if condition="!empty($invalid['nickname'])">
+                   <span style="color: red"><xar:mlstring>ERROR! This is not a valid xarcpshop name</xar:mlstring>
+               </xar:if>
+           </div>
 
+           <div class="xar-form-input-wrapper">
+                <label for="name" class="xar-form-label" title="#xarML('The Cafe Press ID for the store')#">
+                    #$namelabel#
+                </label>
+               <input type="text" name="name" id="name" size="32" maxlength="32" value="#$name#" />
+               <xar:if condition="!empty($invalid['name'])">
+                   <span style="color: red"><xar:mlstring>ERROR! This is not a valid xarcpshop storeid</xar:mlstring>
+               </xar:if>
+           </div>
+           <div class="xar-form-input-wrapper">
+               <label for="toplevel" class="xar-form-label" title="#xarML('If a section or part of a Premium store add the section name here or leave blank')#">
+                   #$levellabel#
+               </label>
+              <input type="text" name="toplevel" id="toplevel" size="10" maxlength="10" value="#$toplevel#" />
+              <xar:if condition="!empty($invalid['toplevel'])">
+                  <span style="color: red"><xar:mlstring>ERROR! This is not a valid xarcpshop name</xar:mlstring>
+              </xar:if>
+           </div>
+        </fieldset>
 
-    <div style="clear: both; padding-top: 10px;">
-    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+        <fieldset>
+              <legend><xar:mlstring>Enabled Hooks</xar:mlstring></legend>
+              <xar:if condition="!empty($hooks)">                    
+                  <xar:foreach in="$hooks" key="$hookmodule">
+                      #$hooks[$hookmodule]#
+                  </xar:foreach>
+              </xar:if>
+        </fieldset>
+       <div class="xar-form-input-wrapper-after">
 
-    <span style="float: left; width: 20%; text-align: right;">
-        <span class="help" title="#xarML('If a section or part of a Premium store add the section name here or leave blank')#">
-        <label for="toplevel">#$levellabel#</label>:</span>
-    </span>
-    <span style="float: right; width: 78%; text-align: left;">
-        <input type="text" name="toplevel" id="toplevel" size="10" maxlength="10" value="#$toplevel#" />
-        <xar:if condition="!empty($invalid['toplevel'])">
-            <span style="color: red"><xar:mlstring>ERROR! This is not a valid xarcpshop name</xar:mlstring>
-        </xar:if>
-    </span>
-    </div>
-
-
-    #$hooks#
-    <div style="clear: both; padding-top: 10px;">
-        <input type="hidden" name="authid" id="authid" value="#$authid#" />
-        <input type="hidden" name="storeid" id="storeid" value="#$storeid#" />
-        <span style="float: left; width: 30%; text-align: right;">
-            <input type="submit" value="#$updatebutton#" />
-        </span>
-    </div>
+           <input type="hidden" name="authid" id="authid" value="#$authid#" />
+           <input type="hidden" name="storeid" id="storeid" value="#$storeid#" />
+           <input type="submit" value="#$updatebutton#" />
+        </div>
 
 </form>
 
-<br />
-</div>
 </div>

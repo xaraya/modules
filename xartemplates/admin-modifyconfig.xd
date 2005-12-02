@@ -1,102 +1,94 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<div style="margin: auto;padding-bottom:20px;">
-    <xar:template file="admin-menu" type="module"/>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Xaraya CafePress Shop Administration</xar:mlstring>
+    </span>
 </div>
 <div class="xar-mod-body">
+<xar:template file="admin-menu" type="module"/>
     <h2><xar:mlstring>Modify Configuration</xar:mlstring></h2>
 
-        <table width="100%" border="0" cellspacing="1" cellpadding="8">
-        <form method="post" action="&xar-modurl-xarcpshop-admin-updateconfig;">
-        <input type="hidden" name="authid" id="authid" value="#$authid#" />
-            <tr>
-                <td>
-                    <label for="itemsperpage"><xar:mlstring>Stores per page</xar:mlstring></label>
-                </td>
-                <td>
-                    <input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#$itemsvalue#" />
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="shorturls">#$shorturlslabel#</label>
-                </td>
-                <td>
+    <form method="post" action="&xar-modurl-xarcpshop-admin-updateconfig;">
+        <fieldset>
+            <legend><xar:mlstring>Display Options</xar:mlstring></legend>
+                <div class="xar-form-input-wrapper">
+                    <label for="itemsperpage" class="xar-form-label" title="#xarML('Number of stores to display per page')#">
+                        <xar:mlstring>Stores per page</xar:mlstring>
+                     </label>
+                     <input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#$itemsvalue#" />
+                </div>
+                
+                <div class="xar-form-input-wrapper">
+                    <label for="shorturls" class="xar-form-label" title="#xarML('Use short URLS?')#">
+                        #$shorturlslabel#
+                    </label>
                     <input type="checkbox" name="shorturls" id="shorturls" value="1" #$shorturlschecked# />
-                </td>
-            </tr>
+                </div>
 
-            <tr>
-                <td>
-                    <label for="closed"><xar:mlstring>Store Closed?</xar:mlstring></label>
-                </td>
-                <td>
+                <div class="xar-form-input-wrapper">
+                    <label for="closed" class="xar-form-label" title="#xarML('Is this shop closed?')#">
+                        <xar:mlstring>Store Closed?</xar:mlstring>
+                    </label>
                     <input type="checkbox" name="closed" id="closed" value="1" #$closedchecked# />
-                </td>
-            </tr>
-    
-           <tr>
-                <td>
-                    <label for="breadcrumb"><xar:mlstring>Display breadcrump navigation?</xar:mlstring></label>
-                </td>
-                <td>
+                </div>
+
+                <div class="xar-form-input-wrapper">
+                    <label for="breadcrumb" class="xar-form-label" title="#xarML('Display breadcrump navigation?')#">
+                        <xar:mlstring>Breadcrump navigation?</xar:mlstring>
+                    </label>
                     <input type="checkbox" name="breadcrumb" id="breadcrumb" value="1" #$breadcrumbchecked# />
-                </td>
-            </tr>
+                </div>
+
 <xar:comment>TODO: later
-           <tr>
-                <td>
-                    <label for="cpdown"><xar:mlstring>Cafe Press Unavailable?</xar:mlstring></label>
-                </td>
-                <td>
+                <div class="xar-form-input-wrapper">
+                    <label for="cpdown">
+                        <xar:mlstring>Cafe Press Unavailable?</xar:mlstring>
+                    </label>
                     <input type="checkbox" name="cpdown" id="cpdown" value="1" #$cpdownchecked# />
-                </td>
-            </tr>
-           <tr>
-                <td>
-                    <label for="verbose"><xar:mlstring>Verbose debug mode?</xar:mlstring></label>
-                </td>
-                <td>
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="verbose">
+                        <xar:mlstring>Verbose debug mode?</xar:mlstring>
+                    </label>
                     <input type="checkbox" name="verbose" id="verbose" value="1" #$verbosechecked# />
-                </td>
-            </tr>
-           <tr>
-                <td>
-                    <label for="cart"><xar:mlstring>Use Shopping Cart (must have plug-in installed)?</xar:mlstring></label>
-                </td>
-                <td>
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="cart">
+                        <xar:mlstring>Use Shopping Cart (must have plug-in installed)?</xar:mlstring>
+                    </label>
                     <input type="text" name="cart" id="cart"   size="40" maxlength="128" value="#$cart#" />
-                </td>
-            </tr>
-           <tr>
+                </div>
 </xar:comment>
-                <td>
-                    <label for="defaultstore"><xar:mlstring>Default store?</xar:mlstring></label>
-                </td>
-                <td>
+                <div class="xar-form-input-wrapper">
+                    <label for="defaultstore"  class="xar-form-label" title="#xarML('Default store number?')#">
+                        <xar:mlstring>Default store number?</xar:mlstring>
+                    </label>
                     <input type="text" name="defaultstore" id="defaultstore"  size="3" maxlength="3" value="#$defaultstore#" />
-                </td>
-            </tr>
+                </div>
 <xar:comment> TODO: Later
-           <tr>
-                <td>
-                    <label for="localimages"><xar:mlstring>Local image directory?</xar:mlstring></label>
-                </td>
-                <td>
+                <div class="xar-form-input-wrapper">
+                    <label for="localimages">
+                        <xar:mlstring>Local image directory?</xar:mlstring>
+                    </label>
                     <input type="text" name="localimages" id="localimages"  size="40" maxlength="256" value="#$localimages#" />
-                </td>
-            </tr>
-            <tr>
+                </div>
 </xar:comment>
-                <td colspan="2">
-                    #$hooks#
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2" align="center">
-                    <input type="submit" value="#$updatebutton#" />
-                </td>
-            </tr>
+        </fieldset>
+
+        <fieldset>
+              <legend><xar:mlstring>Enabled Hooks</xar:mlstring></legend>
+              <xar:if condition="!empty($hooks)">                    
+                  <xar:foreach in="$hooks" key="$hookmodule">
+
+                      #$hooks[$hookmodule]#
+                  </xar:foreach>
+              </xar:if>
+        </fieldset>
+        <div class="xar-form-input-wrapper-after">
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="submit" value="#$updatebutton#" />
+        </div>
+
      </form>
-    </table>
 </div>
 

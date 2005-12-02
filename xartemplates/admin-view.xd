@@ -1,11 +1,14 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<div style="margin: auto;padding-bottom:20px;">
-    <xar:template file="admin-menu" type="module"/>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Xaraya CafePress Shop Administration</xar:mlstring>
+    </span>
 </div>
-<div class="xar-mod-body">
-    <h2><xar:mlstring>View Stores</xar:mlstring></h2>
-    <div style="margin: auto;">
 
+<div class="xar-mod-body">
+    <xar:template file="admin-menu" type="module"/>
+
+    <h2><xar:mlstring>View Stores</xar:mlstring></h2>
     <table width="100%" border="1" cellspacing="0" cellpadding="4">
     <tr>
         <th>#$nicklabel#</th>
@@ -37,4 +40,4 @@
 <!-- add the pager here -->
 #$pager#
 </div>
-</div>
+

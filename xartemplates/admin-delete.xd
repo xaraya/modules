@@ -1,43 +1,39 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<div style="margin: auto;padding-bottom:20px;">
-    <xar:template file="admin-menu" type="module"/>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Xaraya CafePress Shop Administration</xar:mlstring>
+    </span>
 </div>
+
 <div class="xar-mod-body">
-    <h2><xar:mlstring>Delete Stores</xar:mlstring></h2>
-<div style="margin: auto;">
+    <xar:template file="admin-menu" type="module"/>
 
-<!-- the specific template for the current admin function comes here -->
+    <h2><xar:mlstring>Delete Store</xar:mlstring></h2>
+    <form method="post" action="&xar-modurl-xarcpshop-admin-delete;">
+        <fieldset>
+            <legend><xar:mlstring>Shop Details</xar:mlstring></legend>
+                 <div class="xar-form-input-wrapper">
+                    <label for="storeid" class="xar-form-label">
+                         #$itemidlabel#:
+                    </label>
+                    <strong>#$storeid#</strong>
+                 </div>
+                 <div class="xar-form-input-wrapper">
+                    <label for="namelvalue" class="xar-form-label">
+                    #$namelabel#:
+                    </label>
+                    <strong>#$namevalue#</strong>
+                 </div>
 
+        </fieldset>
+                 <p class="xar-form-input-wrapper-after">#$confirmtext#</p>        
+        <div class="xar-form-input-wrapper-after">
 
-
-<form method="post" action="&xar-modurl-xarcpshop-admin-delete;">
-    <input type="hidden" name="authid" id="authid" value="#$authid#" />
-    <input type="hidden" name="confirm" id="confirm" value="true" />
-    <input type="hidden" name="storeid" id="storeid" value="#$storeid#" />
-
-    <table border="0" width="300">
-        <tr>
-            <td>
-                #$itemidlabel#:
-            </td>
-            <td>
-                <strong>#$storeid#</strong>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                #$namelabel#:
-            </td>
-            <td><strong>#$namevalue#</strong>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" align="center"><br />
-<div align="center">#$confirmtext#</div><br />
-                    <input type="submit" value="#$confirmbutton#"  />
-            </td>
-        </tr>
-    </table>
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="hidden" name="confirm" id="confirm" value="true" />
+            <input type="hidden" name="storeid" id="storeid" value="#$storeid#" />
+            <input type="submit" value="#$confirmbutton#"  />
+      </div>
 </form>
 </div>
-</div>
+
