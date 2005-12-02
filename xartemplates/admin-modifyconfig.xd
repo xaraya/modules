@@ -106,7 +106,7 @@
 
         <div class="xar-form-input-wrapper">
             <label for="allowcopy" class="xar-form-label" title="#xarML('Allow sending of copy to feedback sender')#">
-                 <xar:mlstring>Allow a copy of note to feedback sender?</xar:mlstring>
+                 <xar:mlstring>Allow copy to sender?</xar:mlstring>
             </label>
             <xar:if condition="xarModGetVar('sitecontact', 'allowcopy')">
                 <input type="checkbox" name="allowcopy" id="allowcopy" value="1" checked="checked" />

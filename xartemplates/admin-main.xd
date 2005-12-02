@@ -83,9 +83,5 @@
              <strong>&nbsp;<xar:mlstring>Sitecontact Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2005-09-24
          </p>
       </div>
-     <div class="xar-mod-foot xar-align-center xar-padding-thick">
-        <p>
-            <xar:mlstring>Extended information about this module can be found at&nbsp;</xar:mlstring><a href="http://xaraya.athomeandabout.com">http://xaraya.athomeandabout.com</a>
-        </p>
-    </div>
+
 
