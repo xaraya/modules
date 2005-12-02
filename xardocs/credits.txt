@@ -1,0 +1,6 @@
+Author:
+Curtis Farnham <curtis@farnham.com>
+
+Thanks to:
+Nigel McNie for making such an excellent syntax highlighting utility called GeSHi
+    (Generic Syntax Highlighter - http://qbnz.com/highlighter/)

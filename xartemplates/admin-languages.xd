@@ -1,0 +1,37 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Highlight Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Languages</xar:mlstring></h2>
+<div style="margin: auto;"><xar:template file="admin-menu" type="module" />
+
+<p><xar:mlstring>Here are the languages supported by this module.  Use the Attribute Value in your</xar:mlstring> <code>#xarModGetVar('highlight', 'string')#="..."</code> <xar:mlstring>identifiers</xar:mlstring>:</p>
+
+<table>
+<tr><td>
+
+    <table class="xar-border-thin">
+        <tr>
+            <th><xar:mlstring>Language</xar:mlstring></th>
+            <th><xar:mlstring>Attribute Value</xar:mlstring></th>
+        </tr>
+    <xar:loop name="$languages">
+        <tr><td>#$loop:item#</td><td>#$loop:key#</td></tr>
+
+        <xar:if condition="($loop:index+1) lt count($languages) and ($loop:index+1) % $rowpercol eq 0">
+                </table>
+            </td><td>
+                <table class="xar-border-thin">
+                    <tr>
+                        <th><xar:mlstring>Language</xar:mlstring></th>
+                        <th><xar:mlstring>Attribute Value</xar:mlstring></th>
+                    </tr>
+        </xar:if>
+    </xar:loop>
+    </table>
+</td></tr>
+</table>
+
+
+
+</div>
+</div>

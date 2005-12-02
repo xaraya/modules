@@ -1,0 +1,7 @@
+Version 0.4.0 2005-11-26
+    - API documentation
+    - Short URLs
+    - help page on user side
+
+Version 0.3.0 2005-11-10
+    - initial public release

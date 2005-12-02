@@ -1,0 +1,69 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Highlight Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Overview</xar:mlstring></h2>
+<div style="margin: auto;"><xar:template file="admin-menu" type="module" />
+
+    <img src="#xarTplGetImage('admin.gif')#" alt="#xarML('official icon')#" width="96" height="96" class="xar-module-icon" />
+
+    <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+
+    <p>
+        <xar:mlstring>The Highlight module is a syntax highlighting hook.  Highlighting is accomplished by the <a href="http://qbnz.com/highlighter/">GeSHi</a> utility.</xar:mlstring>
+    </p>
+
+    <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
+
+    <p>
+    <xar:ml>
+        <xar:mlstring>First, make sure to <a href="#(1)">enable the Highlight hook</a> wherever needed.</xar:mlstring>
+        <xar:mlvar>#xarModURL('modules', 'admin', 'hooks', array('hook' => 'highlight'))#</xar:mlvar>
+    </xar:ml>
+    </p>
+
+    <p>
+    <xar:ml>
+        <xar:mlstring>The Highlight hook will <b>only</b> transform portions of your content labeled with the attribute specified in <a href="#(1)">Modify Config</a>. The attribute's value identifies the coding language.  See the <a href="#(3)">Languages page</a> for a list of what is suppoted.  Your attribute name is currently set to <code>#(2)</code>.  Let's say you want to highlight some PHP code.  The segment in your article must be labeled with <code>#(2)="php"</code>, as follows:</xar:mlstring>
+        <xar:mlvar>#xarModURL('highlight', 'admin', 'modifyconfig')#</xar:mlvar>
+        <xar:mlvar>#$string#</xar:mlvar>
+        <xar:mlvar>#xarModURL('highlight', 'admin', 'languages')#</xar:mlvar>
+    </xar:ml>
+    </p>
+
+   <pre>#$htmlsample#</pre>
+
+       <p>
+              <xar:mlstring>When processed, your content will be rendered like:</xar:mlstring>
+       </p>
+
+       <blockquote>
+            #$transformsample#
+       </blockquote>
+<br />
+
+    <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
+
+    <p>
+        <xar:mlstring>The Highlight module has no blocks included at this time.</xar:mlstring>
+    </p>
+
+    <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
+
+    <ul>
+        <li><xar:mlstring>transform -- Performs syntax highlighting on embedded programming code</xar:mlstring></li>
+    </ul>
+
+   <h3><xar:mlstring>Further Information</xar:mlstring></h3>
+   <p>
+      <xar:mlstring>Further information on the Highlight module can be found at</xar:mlstring>
+   </p>
+   <ul style="list-style: disc;">
+      <li><a title="#xarML('Highlight Module - Xaraya Extension 559')#" href="http://www.xaraya.com/index.php/release/559.html" target="_blank">Xaraya Extension and Releases</a> - <xar:mlstring>Highlight module's extension page.  Click on the Version History tab at the bottom to get the latest release information.</xar:mlstring>
+      </li>
+      <li><a href="http://www.curtisfarnham.com/" target="_blank">www.curtisfarnham.com</a> - <xar:mlstring>Author's website</xar:mlstring>
+      </li>
+  </ul>
+  <p class="xar-sub">
+    <strong>&nbsp;<xar:mlstring>Highlight module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 0.3.0&nbsp; 2005-11-10
+  </p>
+</div>

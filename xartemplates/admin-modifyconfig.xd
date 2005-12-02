@@ -1,0 +1,45 @@
+<xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
+
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Highlight Transform Hooks Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Configure</xar:mlstring></h2><br />
+<div style="margin: auto;"><xar:template file="admin-menu" type="module" />
+
+
+<form method="post" action="&xar-modurl-highlight-admin-updateconfig;">
+
+    <fieldset>
+        <legend><xar:mlstring>Display Options</xar:mlstring></legend>
+
+        <div class="xar-form-input-wrapper">
+            <label for="string" class="xar-form-label" title="#xarML('Attribute name to look for when highlighting')#">
+                <xar:mlstring>Highlight attribute</xar:mlstring>
+            </label>
+            <input type="text" name="string" id="string" value="#$string#" class="xar-form-textmedium" />
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend><xar:mlstring>System Options</xar:mlstring></legend>
+
+        <div class="xar-form-input-wrapper">
+            <label for="supportshorturls" class="xar-form-label" title="#xarML('Enable short URLS?')#">
+                <xar:mlstring>Enable short URLs?</xar:mlstring>
+            </label>
+            <xar:if condition="$supportshorturls">
+                <input type="checkbox" name="supportshorturls" id="supportshorturls" value="1" checked="checked" />
+            <xar:else/>
+                <input type="checkbox" name="supportshorturls" id="supportshorturls" value="1" />
+            </xar:if>
+        </div>
+    </fieldset>
+
+    <div class="xar-form-input-wrapper-after">
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+
+        <input type="submit" value="#xarML('Update Configuration')#" />
+    </div>
+
+
+</form>
+</div>
+</div>

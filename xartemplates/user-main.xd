@@ -1,0 +1,67 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Syntax Highlighting</xar:mlstring></h2>
+<div style="margin: auto;"><xar:template file="user-menu" type="module" />
+
+    <img src="#xarTplGetImage('admin.gif')#" alt="#xarML('official icon')#" width="96" height="96" class="xar-module-icon" />
+
+    <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+
+    <p>
+        <xar:mlstring>This page explains how to add syntax-highlighting to sections of programming code in your comments, articles, forum postings, etc.</xar:mlstring>
+    </p>
+
+    <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
+
+    <p>
+    <xar:ml>
+        <xar:mlstring>Let's say you want to highlight some PHP code.  Enclose that segment within an HTML element that has an attribute of <code>#(1)="language"</code>, as follows.  See below for a list of all possible languages.</xar:mlstring>
+        <xar:mlvar>#$string#</xar:mlvar>
+    </xar:ml>
+    </p>
+
+   <pre>#$htmlsample#</pre>
+
+       <p>
+              <xar:mlstring>When processed, your content will be rendered like:</xar:mlstring>
+       </p>
+
+       <blockquote>
+            #$transformsample#
+       </blockquote>
+
+    <h3><xar:mlstring>Languages</xar:mlstring></h3>
+
+    <p><xar:mlstring>The language can be any of those listed under "Attribute Value" below.</xar:mlstring></p>
+
+    <table>
+    <tr><td>
+
+        <table class="xar-border-thin">
+            <tr>
+                <th><xar:mlstring>Language</xar:mlstring></th>
+                <th><xar:mlstring>Attribute Value</xar:mlstring></th>
+            </tr>
+        <xar:loop name="$languages">
+            <tr><td>#$loop:item#</td><td>#$loop:key#</td></tr>
+
+            <xar:if condition="($loop:index+1) lt count($languages) and ($loop:index+1) % $rowpercol eq 0">
+                    </table>
+                </td><td>
+                    <table class="xar-border-thin">
+                        <tr>
+                            <th><xar:mlstring>Language</xar:mlstring></th>
+                            <th><xar:mlstring>Attribute Value</xar:mlstring></th>
+                        </tr>
+            </xar:if>
+        </xar:loop>
+        </table>
+    </td></tr>
+    </table>
+
+
+
+
+
+</div>

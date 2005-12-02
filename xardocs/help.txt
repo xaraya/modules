@@ -1,0 +1,34 @@
+Description
+---------------
+The Highlight module houses a transform hook that performs syntax highlighting
+on programming code.  Highlighting is accomplished by the GeSHi utility (see
+credits.txt).  Code that is to be highlighted is marked by a special attribute
+in any block-level HTML tag (see Usage).
+
+
+Installation
+---------------
+This module is installed in the standard Xaraya way!
+1. Upload files to the modules directory
+2. Go to Modules Admin and initialize the module
+3. Go to Highlight Admin => Modify Config and enter an attribute name
+4. Enable Highlight hooks in whatever content is desired
+
+
+Usage
+---------------
+The Highlight hook will ONLY transform segments of your content that are
+contained in an HTML tag that has the attribute specified in Modify Config.
+The attribute's value must be a coding language listed on Highlight's 
+Admin => Languages page.  So, for example, say your attribute name is set to
+code' and you want to highlight some PHP code.  The segment in your article
+must be labeled:
+
+    <pre code="php">
+    if ($pears == "bartlett") {
+        echo "Yummy!";
+    }
+    </pre>
+
+---------------
+Curtis Farnham - http://www.curtisfarnham.com/
