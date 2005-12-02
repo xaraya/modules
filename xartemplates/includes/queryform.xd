@@ -1,0 +1,43 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<xar:base-include-javascript module="bible" filename="replace.js" position="head" />
+
+<xar:if condition="!isset($query)">
+    <xar:set name="$query">''</xar:set>
+</xar:if>
+<xar:if condition="!isset($queryrawwidth)">
+    <xar:set name="$queryrawwidth">32</xar:set>
+</xar:if>
+
+<br />
+
+<form action="#xarModURL('bible', 'user', 'query')#" method="post" onSubmit="str=this.queryraw.value;str=replace(str,' ','%20');str=replace(str,'+','%2B');this.query.value=str;">
+
+    <span class="xar-nowrap">
+    <xar:mlstring>Text</xar:mlstring>:
+    <select name="sname">
+        <xar:foreach in="$texts" value="$text">
+            <xar:set name="$value">urlencode($text['sname']);</xar:set>
+            <xar:if condition="!empty($sname) and $text['sname'] eq $sname">
+                <option value="#$value#" selected="selected">#$text['sname']# - #$text['lname']#</option>
+            <xar:else />
+                <option value="#$value#">#$text['sname']# - #$text['lname']#</option>
+            </xar:if>
+        </xar:foreach>
+    </select>
+    </span>
+
+    &nbsp;
+
+    <span class="xar-nowrap">
+    <xar:mlstring>Query</xar:mlstring>: <input type="text" name="queryraw" size="#$queryrawwidth#" value="#$query#" />
+    <input type="submit" value="#xarML('Go')#" />
+    </span>
+
+
+    <xar:if condition="!empty($results['nextlimits'])">
+        <input type="hidden" name="lastlimits" value="" />
+    </xar:if>
+    <input type="hidden" name="query" />
+
+</form>

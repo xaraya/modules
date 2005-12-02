@@ -1,0 +1,26 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Concordance</xar:mlstring></h2>
+<div style="margin: auto;">
+
+<xar:template file="menu" type="module" />
+
+<xar:set name="$queryrawwidth">16</xar:set>
+<xar:template file="queryform" type="module" />
+
+<xar:if condition="!empty($status)"><p class="xar-align-center xar-style-bold">#$status#</p></xar:if>
+
+<xar:if condition="!empty($texts)">
+<h2><xar:mlstring>Available Concordances</xar:mlstring></h2>
+
+    <ul>
+    <xar:foreach in="$texts" value="$text">
+        <li><a href="#xarModURL('bible', 'user', 'display', array('sname' => $text['sname']))#">#$text['lname']#</a></li>
+    </xar:foreach>
+    </ul>
+
+</xar:if>
+
+</div>
+</div>

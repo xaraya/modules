@@ -1,0 +1,130 @@
+Description
+---------------
+The Bible module for Xaraya aims to be a full-featured, high-quality
+searching and reference tool for the Bible.
+
+
+Background and History
+---------------
+This my latest of nearly a half-dozen CMS-based online Bible study tool
+implementations.  My goal has ever been to provide a high-quality search and
+lookup engine.  But as I was also learning PHP, deciding what CMS I would focus
+on, and struggling to obtain a stable source of Bible texts, I was from time to
+time inclined to do major rewrites, sometimes borrowing a few important
+functions, but usually scrapping 100% of it and beginning anew.
+
+The last implementation was phpBible, part of a joint project started by
+Eduard Wustenveld which he called OnlineBible (not to be confused with Online
+Bible, http://www.onlinebible.net/, written for the Windows desktop).  I was
+obliged to abandon phpBible in early 2003 due to time constraints, though by
+that point I had made one Xaraya release.
+
+Almost a year later, during Winter break 2003-04, I scrapped phpBible and wrote
+Bible for Xaraya. This release is superior to everything else I've written, for
+several reasons.  First, my PHP skills are (IMHO) much matured.  Second, I have
+found a stable set of Bible texts.  Third, Xaraya itself has stabilized (1.0
+came out very recently) and has all indications of being a top-notch CMS that
+is here to stay.  I have also incorporated some major architectural epiphanies
+I've had since writing phpBible.
+
+You might wonder why it took me almost 2 years to release Bible for Xaraya
+publicly.  (Has it really been that long?!?)  I always intended to release
+it, but as I am in Medical School now, it has taken me a long time to finish
+the "last 10%" that was needed.  Now, in time for the Winter 2005-2006 holiday
+season, and in the spirit of giving such as is embodied in the GPL and in my
+own spiritual persuasion, I have determined to release it.
+
+
+Dependencies
+---------------
+none
+
+
+Installation
+---------------
+Module installation begins in the standard Xaraya way:
+1. Upload files to the modules directory
+2. Go to Modules Admin and initialize the module
+
+But there's more:
+3. Configure the module by going to Bible Admin => Modify Config.  Set your
+   Bible text directory and make sure it is readable by the web server.  If you
+   want to store the Bible text tables in another database, you MUST configure
+   this before proceeding.
+4. Install Bible texts.  Upload them to your Bible text directory.  See below
+   for more information about texts.
+
+
+Bible Texts: Creating
+---------------------
+This module uses Bible texts in verse-per-line (VPL) format, such as:
+
+   Genesis 1:1 In the beginning <RB>God created the heavens and the earth.
+   Genesis 1:2 Now the earth was formless and empty. Darkness was on the surface of the deep. Gods Spirit was hovering over the surface of the waters.<CM>
+   Genesis 1:3 God said, Let there be light, and there was light.
+   Genesis 1:4 God saw the light, and saw that it was good. God divided the light from the darkness.
+   etc...
+
+However you can achieve that is fine, but the book names must correspond to
+what is used by The Sword Project (http://www.crosswire.org/sword/).  The
+easiest way is to install Sword and the texts you want on your computer, and
+export them.  You can use Sword's mod2vpl utility.
+
+Texts must have an extension of .vpl and may not be compressed.  However, they
+can be compressed or deleted from your filesystem after installing.  On a *nix
+command line, exporting can be done as follows, using the KJV Bible as an
+example:
+
+   /path/to/your/mod2vpl KJV 1 > kjv.vpl
+
+Note the number "1" after the text name.  This tells mod2vpl to export the
+reference as well as the text of the verse.  Google for "mod2vpl" and similar
+if you need help.  Or ask the nice Sword people about it.  (But DON'T ask them
+to export texts for you.  Bug me about it instead.)
+
+Texts can be enhanced by uploading the .conf file directly from your Sword
+installation directories.  This tells the Bible module more about the text
+and makes for a nicer Table of Contents page.  The .conf file may NOT be
+deleted after the text is installed.  Sword .conf files can be found in:
+
+   /path/to/your/sword/mods.d/
+
+Make sure your .vpl and your .conf file have the same base name, or the Bible
+module might not recognize that they're related.
+
+A limited number of texts are available at my website (see below for the URL.
+You're welcome to bug me about making additional versions available, but I
+cannot guarantee that I will have the time or the interest in exporting
+whatever odd Bible version you want.  I encourage you to export things on your
+own. Besides, you might learn something. :-)
+
+
+Bible Texts: Installing
+-----------------------
+Upload your .vpl and .conf files to your text directory (default is
+/var/bible/).  Then go to Bible Admin => View Texts, reload the page so it can
+detect those files.  Press "Install" next to the text you want, and confirm
+it.  If you server is slow, this might take a while.  But on my P4 laptop
+it takes less than 15 seconds for an average-sized text.
+
+
+Strong's Concordance
+--------------------
+This module supports Strong's Concordance.  Download it from Bible for Xaraya's
+homepage.  It integrates nicely with Sword's KJV Bible which has Strong's
+numbers embedded.  This makes words and phrases in the KJV click-able, which
+brings up Strong's definition for that number.  I don't know if other texts
+have Strong's numbers embedded, but if so, they should work the same way.
+
+
+Usage
+---------------
+There is a Help section in the User menu.  Please refer to it as needed.
+Basically, just enter your query and press "Go"!
+
+This module also includes a block for displaying random Bible verses.  See
+xardocs/randomblock.txt for important usage information.
+
+
+---------------
+Curtis Farnham - http://www.curtisfarnham.com/

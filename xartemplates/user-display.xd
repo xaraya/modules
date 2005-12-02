@@ -1,0 +1,144 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Passage Lookup</xar:mlstring></h2>
+<div style="margin: auto;">
+
+<xar:template file="menu" type="module" />
+
+<xar:set name="stylesheet">#xarTplAddStyleLink('bible', 'display')#</xar:set>
+<xar:template file="queryform" type="module" />
+
+<h2>
+    <xar:if condition="$parallel">
+        #$results[0]['ref']#
+        <xar:if condition="$results[0]['showcontext'] ne ''">&nbsp;
+            (<xar:mlstring>in context</xar:mlstring>)
+        </xar:if>
+    <xar:else />
+        #$text['lname']#
+    </xar:if>
+</h2>
+
+<xar:if condition="!empty($status)"><p class="xar-align-center xar-style-bold">#$status#</p></xar:if>
+
+    <xar:if condition="$parallel">
+        <div style="text-align: center; margin: 10px;">#$prevnext#</div>
+        <xar:if condition="!empty($pager)">
+            <div style="text-align: center;">#$pager#</div>
+        </xar:if>
+    </xar:if>
+
+    <xar:foreach in="$results" key="$resnum" value="$result">
+
+        <h3>
+            <xar:if condition="$parallel">
+                #$result['text']['lname']#
+            <xar:else />
+                #$result['ref']#
+                <xar:if condition="$result['showcontext'] ne ''">&nbsp;
+                    (<xar:mlstring>in context</xar:mlstring>)
+                </xar:if>
+            </xar:if>
+        </h3>
+
+        <xar:if condition="!empty($result['status'])">
+            <p>#$result['status']#</p>
+            <xar:continue />
+        </xar:if>
+
+        <xar:if condition="!$parallel">
+            <div style="text-align: center; margin: 10px;">#$prevnext#</div>
+            <xar:if condition="!empty($pager)">
+                <div style="text-align: center;">#$pager#</div>
+            </xar:if>
+        </xar:if>
+
+        <xar:if condition="$result['twocols']">
+            <xar:set name="$width">50</xar:set>
+        <xar:else />
+            <xar:set name="$width">100</xar:set>
+        </xar:if>
+
+        <table width="100%" cellspacing="15">
+        <tr><td valign="top" style="text-align: justify;" width="#$width#">
+
+        <xar:foreach in="$result['lines']" key="$index" value="$row">
+
+            <xar:comment>CHAPTER SUBTITLES LIKE IN THE PSALMS</xar:comment>
+            <xar:if condition="$row['verse'] eq '0'">
+                <xar:set name="$raw">strip_tags($row['text']);</xar:set>
+                <xar:if condition="!empty($raw)">
+                    <div class="bible-chapter-header">#$raw#</div>
+                </xar:if>
+
+            <xar:comment>NORMAL DISPLAY</xar:comment>
+            <xar:else />
+
+                <xar:if condition="$row['verse'] eq 1">
+                    <xar:set name="$refstring">'<div class="bible-chapter">'.$row['chapter'].'</div>';</xar:set>
+                <xar:else />
+                    <xar:set name="$refstring">'<span class="bible-verse">'.$row['verse'].'</span>';</xar:set>
+                </xar:if>
+
+                <xar:comment>SHOW CONTEXT</xar:comment>
+                <xar:if condition="$result['showcontext'] ne ''">
+
+                    <xar:if condition="$row['lid'] eq $result['showcontext']">
+
+                        <span class="bible-context-main">
+                             #$refstring# #$row['text']#
+                        </span>
+
+                    <xar:else />
+
+                        <span class="bible-context-context">
+                            #$refstring# #$row['text']#
+                        </span>
+
+                    </xar:if>
+
+                <xar:comment>NORMAL DISPLAY, NO CONTEXT</xar:comment>
+                <xar:else />
+                    <span class="bible-text">
+                        #$refstring# #$row['text']#
+                    </span>
+                </xar:if>
+                <br />
+            </xar:if>
+
+
+            <xar:if condition="$result['twocols'] and $result['halfway'] eq $index">
+                </td><td valign="top" width="50%" style="text-align: justify;">
+            </xar:if>
+
+        </xar:foreach>
+
+        <xar:comment>Do we need this?</xar:comment>
+        <xar:if condition="$result['twocols'] and $result['halfway'] eq ''">
+            </td><td valign="top" width="50%" style="text-align: justify;">
+        </xar:if>
+
+        </td></tr>
+        </table>
+
+        <xar:if condition="!$parallel">
+            <xar:if condition="!empty($pager)">
+                <div style="text-align: center;">#$pager#</div>
+            </xar:if>
+            <div style="text-align: center; margin: 10px;">#$prevnext#</div>
+        </xar:if>
+
+    <xar:comment>END DISPLAY PASSAGE</xar:comment>
+    </xar:foreach>
+
+    <xar:if condition="$parallel">
+        <xar:if condition="!empty($pager)">
+            <div style="text-align: center;">#$pager#</div>
+        </xar:if>
+        <div style="text-align: center; margin: 10px;">#$prevnext#</div>
+    </xar:if>
+
+</div>
+</div>
+

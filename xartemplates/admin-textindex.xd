@@ -1,0 +1,41 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<xar:template file="menu" type="module" />
+<div class="xar-mod-body"><h2>#$menutitle#</h2>
+<div style="margin: auto;"><xar:template file="menu" type="module" />
+
+<!-- the specific template for the current admin function comes here -->
+
+
+<div align="center">#$confirmtext#</div><br />
+<form method="post" action="&xar-modurl-bible-admin-textindex;">
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+    <input type="hidden" name="confirm" id="confirm" value="true" />
+    <input type="hidden" name="tid" id="tid" value="#$tid#" />
+
+    <table border="0" width="300">
+        <tr>
+            <td>
+                #$textid#:
+            </td>
+            <td>
+                #$tid#
+            </td>
+        </tr>
+        <tr>
+            <td>
+                #$snamelabel#:
+            </td>
+            <td>
+                #$snamevalue#
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center"><br />
+                    <input type="submit" value="#$confirmbutton#"  />
+            </td>
+        </tr>
+    </table>
+</form>
+</div>
+</div>

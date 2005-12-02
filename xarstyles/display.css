@@ -1,0 +1,89 @@
+.bible-chapter-header {
+    font-style: italic;
+    text-align: center;
+    margin: 8px;
+}
+
+.bible-chapter {
+    float: left;
+    font-size: 30px;
+    line-height: 28px;
+    margin-right: 3px;
+}
+
+.bible-verse {
+    font-size: smaller;
+}
+
+.bible-context-context {
+    font-family: serif;
+}
+.bible-context-main {
+    font-style: italic;
+    font-weight: bold;
+    font-family: serif;
+}
+.bible-text {
+    font-family: serif;
+}
+
+/* Strong's links */
+.bible-text a, .bible-text a:hover {
+    color: black;
+    text-decoration: underline;
+}
+/* Strong's links within Words of Jesus */
+.bible-text .bible-red a, .bible-text .bible-red a:hover, .bible-text .bible-words-Christ a, .bible-text .bible-words-Christ a:hover {
+    color: #890000;
+    text-decoration: underline;
+}
+
+.bible-divineName {}
+
+.bible-highlight {
+    background: yellow;
+}
+.bible-words-Christ {
+    color: #890000;
+}
+
+.bible-psalm-book-title {
+    font-weight: bold;
+    text-align: center;
+    margin: 10px;
+}
+.bible-hebrew-title {
+    text-align: center;
+    font-style: italic;
+    margin: 10px;
+}
+.bible-section-header {}
+.bible-book-title {}
+.bible-short-book-name {}
+.bible-vernacular-book-abbreviation {}
+.bible-preface {}
+
+.bible-bold {
+    font-weight: bold;
+}
+.bible-smallcaps {}
+.bible-italic {
+    font-style: italic;
+}
+.bible-old-testament-quote {}
+.bible-red {
+    color: #890000;
+}
+.bible-superscript {}
+.bible-underline {
+    text-decoration: underline;
+}
+.bible-subscript {}
+.bible-indented-quote {}
+.bible-poetry {}
+.bible-further-described {}
+.bible-link-to-footnote {}
+
+.bible-strongs-definition {
+    margin: 10px;
+}

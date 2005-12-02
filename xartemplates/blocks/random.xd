@@ -1,0 +1,24 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<xar:if condition="xarTplAddStyleLink('bible', 'display')"></xar:if>
+
+<xar:if condition="!empty($status)"><p>#$status#</p></xar:if>
+
+<xar:if condition="!empty($passage)">
+<div style="margin: 5px;">
+    <div style="margin-bottom: 5px;">
+        <xar:foreach in="$passage['lines']" key="$index" value="$row">
+            #$row['text']#
+        </xar:foreach>
+    </div>
+    <div style="font-size: smaller; text-align: right;">
+        #xarVarPrepForDisplay($passage['ref'])# (#$passage['text']['sname']#)
+    </div>
+    <xar:if condition="!empty($passage['comment'])">
+        <div style="font-style: italic;">
+            #$passage['comment']#
+        </div>
+    </xar:if>
+</div>
+</xar:if>
+<br />

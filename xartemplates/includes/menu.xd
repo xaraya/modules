@@ -1,0 +1,24 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<xar:comment>
+<xar:if condition="xarTplAddStyleLink('bible', 'navtabs')"></xar:if>
+<dl class="xar-tabs">
+    <dt class="help">
+        <xar:mlstring>Actions</xar:mlstring>:
+    </dt>
+
+    <xar:if condition="!empty($menulinks)">
+    <xar:foreach in="$menulinks" key="$action" value="$link">
+        <xar:if condition="$func eq $action">
+            <dd class="active"><a href="#$link[1]#">#$link[0]#</a></dd>
+        <xar:else />
+            <dd><a href="#$link[1]#">#$link[0]#</a></dd>
+        </xar:if>
+    </xar:foreach>
+    </xar:if>
+</dl>
+</xar:comment>
+
+<xar:if condition="!empty($statusmsg)">
+    <p class="xar-align-center xar-alt">#$statusmsg#</p>
+</xar:if>

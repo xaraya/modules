@@ -1,0 +1,10 @@
+Author:
+   Curtis Farnham <curtis@farnham.com>
+
+Thanks to:
+   The Sword Project, http://www.crosswire.org/sword/index.jsp
+      - A usable source of Bible texts
+
+   OSIS, GBF working groups
+      - Convenient ways to format texts inline
+

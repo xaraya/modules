@@ -1,0 +1,47 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Concordance</xar:mlstring></h2>
+<div style="margin: auto;">
+
+<xar:template file="menu" type="module" />
+
+<xar:set name="stylesheet">#xarTplAddStyleLink('bible', 'display')#</xar:set>
+<xar:template file="queryform" type="module" />
+
+<h2>#$text['lname']#</h2>
+
+<xar:if condition="!empty($status)"><p class="xar-align-center xar-style-bold">#$status#</p></xar:if>
+
+    <xar:comment>TABLE OF CONTENTS, if requested</xar:comment>
+    <xar:if condition="isset($results['type']) and $results['type'] eq 'toc'">
+
+        <xar:if condition="$text['config_exists']">
+            <xar:comment>DESCRIPTION, ABOUT, ETC.</xar:comment>
+            <xar:template file="about" type="module" />
+        </xar:if>
+
+    <xar:comment>DISPLAY PASSAGE</xar:comment>
+    <xar:elseif condition="!empty($results)" />
+
+        <xar:if condition="!empty($string)">
+            <h3>"#$string#"</h3>
+        </xar:if>
+
+        <h3>#$results['entry']['num']# - #$results['ref']#</h3>
+
+        <b><xar:mlstring>Pronunciation Key</xar:mlstring>:</b> #$results['entry']['pron']#
+        <br /><br />
+
+        <b><xar:mlstring>Definition</xar:mlstring>:</b><br />
+        <div class="bible-strongs-definition">
+            <xar:set name="def">nl2br($results['entry']['def']);</xar:set>
+            #$def#
+        </div>
+
+    </xar:if>
+    <xar:comment>END DISPLAY PASSAGE</xar:comment>
+
+</div>
+</div>
+

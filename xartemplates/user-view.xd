@@ -1,0 +1,42 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Keyword Search</xar:mlstring></h2>
+<div style="margin: auto;">
+
+<xar:template file="menu" type="module" />
+
+<xar:set name="stylesheet">#xarTplAddStyleLink('bible', 'display')#</xar:set>
+<xar:template file="queryform" type="module" />
+
+<h2>#$text['lname']#</h2>
+
+<xar:if condition="!empty($status)"><p class="xar-align-center xar-style-bold">#$status#</p></xar:if>
+
+<xar:if condition="!empty($results)">
+    <h3>#$results['ref']#</h3>
+
+    <div style="text-align: center">#$pager#</div>
+
+    <xar:foreach in="$results['lines']" value="$row">
+        <div style="margin: 15px;">
+            <div style="margin-bottom: 3px;">
+                <span style="font-weight: bold;">#$row['ref']#</span>
+                -
+                <xar:set name="$score">round($row['score'], 2);</xar:set>
+                <xar:mlstring>Score</xar:mlstring>: #$score#
+                -
+                <a href="#xarModURL('bible', 'user', 'display', array('sname' => $text['sname'], 'query' => $row['book'].' '.$row['chapter']))#"><xar:mlstring>Read This Chapter</xar:mlstring></a>
+                -
+                <a href="#xarModURL('bible', 'user', 'display', array('sname' => $text['sname'], 'query' => $row['ref'], 'showcontext' => true))#"><xar:mlstring>View Context</xar:mlstring></a>
+            </div>
+            <div style="margin-left: 10px;">
+                #$row['text']#
+            </div>
+        </div>
+    </xar:foreach>
+
+    <div style="text-align: center">#$pager#</div>
+</xar:if>
+</div>
+</div>

@@ -1,0 +1,10 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<xar:foreach in="$prevnext" key="$part" value="$row">
+    <xar:if condition="empty($row[2])">
+        #$row[0]#
+    <xar:else />
+        <a href="#$row[2]#" title="#$row[1]#">#$row[0]#</a>
+    </xar:if>
+    <xar:if condition="$part ne 'nextbook'"> | </xar:if>
+</xar:foreach>

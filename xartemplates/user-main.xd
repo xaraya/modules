@@ -1,0 +1,10 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Quick Search</xar:mlstring></h2>
+<div style="margin: auto;"><xar:template file="menu" type="module" />
+
+<xar:template file="queryform" type="module" />
+
+</div>
+</div>

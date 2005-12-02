@@ -1,0 +1,14 @@
+Version 0.9.6 2005-11-15
+   - sanity in random block (code review and overhaul)
+
+Version 0.9.5 2005-11-14
+   - first "public" release
+   - GUI overhaul and facelift
+   - documentation added
+   - Library separated from Quick Search page
+   - bugfix: random verse block error handling
+   - bugfix: keyword searching in query lines
+   - bugfix: wildcard truncation
+
+Version 0.9.3 2005-11-09
+   - first release

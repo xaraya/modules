@@ -1,0 +1,40 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>View Texts</xar:mlstring></h2>
+<div style="margin: auto;"><xar:template file="menu" type="module" />
+
+<table width="100%">
+    <tr>
+        <th><xar:mlstring>ID</xar:mlstring></th>
+        <th><xar:mlstring>Short Name</xar:mlstring></th>
+        <th><xar:mlstring>Long Name</xar:mlstring></th>
+        <th><xar:mlstring>State</xar:mlstring></th>
+        <th><xar:mlstring>Options</xar:mlstring></th>
+    </tr>
+
+    <xar:foreach in="$texts" value="$text">
+    <tr>
+        <td>#$text['tid']#</td>
+        <td>#$text['sname']#</td>
+        <td>#$text['lname']#</td>
+        <td>#$text['state']#</td>
+        <td>
+            <xar:for start="$i = 0" test="$i lt count($text['links'])" iter="$i++">
+                <xar:if condition="isset($text['links'][$i][1])">
+                   <a href="#$text['links'][$i][1]#">#$text['links'][$i][0]#</a>
+                <xar:else />
+                    #$text['links'][$i][0]#
+                </xar:if>
+                <xar:if condition="$i lt count($text['links'])-1">|</xar:if>
+            </xar:for>
+        </td>
+    </tr>
+    </xar:foreach>
+</table>
+<br />
+
+<!-- add the pager here -->
+<xar:if condition="!empty($text)">#$pager#</xar:if>
+</div>
+</div>

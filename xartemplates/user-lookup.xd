@@ -1,0 +1,61 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Passage Lookup</xar:mlstring></h2>
+<div style="margin: auto;">
+
+<xar:template file="menu" type="module" />
+
+<xar:if condition="!empty($status)"><p class="xar-align-center xar-style-bold">#$status#</p></xar:if>
+
+    <form action="#xarModURL('bible', 'user', 'validate')#" method="post" name="lookupform">
+
+    <input type="hidden" name="function" value="display" />
+
+    <table width="100%" cellspacing="8">
+    <tr><td valign="top"><b><xar:mlstring>Text</xar:mlstring>:</b></td>
+        <td>
+        <select name="sname">
+            <xar:foreach in="$texts" value="$text">
+                <xar:set name="$value">urlencode($text['sname']);</xar:set>
+                <xar:if condition="!empty($sname) and $text['sname'] eq $sname">
+                    <option value="#$value#" selected="selected">#$text['sname']# - #$text['lname']#</option>
+                <xar:else />
+                    <option value="#$value#">#$text['sname']# - #$text['lname']#</option>
+                </xar:if>
+            </xar:foreach>
+        </select>
+        </td>
+    </tr>
+    <tr><td valign="top"><b><xar:mlstring>Book</xar:mlstring>:</b></td>
+        <td>
+            <select name="refparts[]">
+                <xar:foreach in="$booknames" value="$book">
+                    <option value="#$book#">#$book#</option>
+                </xar:foreach>
+            </select>
+        </td>
+    </tr>
+    <tr><td valign="top"><b><xar:mlstring>Chapter</xar:mlstring>:</b></td>
+        <td><input type="text" name="refparts[]" size="4" /></td>
+    </tr>
+    <tr><td valign="top"><b><xar:mlstring>Starting Verse</xar:mlstring>:</b></td>
+        <td><input type="text" name="refparts[]" size="4" /></td>
+    </tr>
+    <tr><td valign="top"><b><xar:mlstring>Ending Verse</xar:mlstring>:</b></td>
+        <td><input type="text" name="refparts[]" size="4" /></td>
+    </tr>
+    <tr><td colspan="2"><br /></td></tr>
+    <tr><td valign="top"><b><xar:mlstring>Show Paralleled With</xar:mlstring>:</b></td>
+        <td>
+        <xar:foreach in="$texts" value="$text">
+            <input type="checkbox" name="parallel[]" id="parallel_#$text['sname']#" value="#$text['sname']#">
+            <label for="parallel_#$text['sname']#">#$text['sname']# - #$text['lname']#</label><br />
+        </xar:foreach>
+        </td>
+    </tr>
+    <tr><td colspan="2"><input type="submit" value="#xarML('Search')#" /></td></tr>
+    </table>
+
+</div>
+</div>

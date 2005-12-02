@@ -1,0 +1,33 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Install Text</xar:mlstring></h2>
+<div style="margin: auto;"><xar:template file="menu" type="module" />
+
+<div class="xar-align-center"><xar:mlstring>Are you sure you want to install this text? This may take several seconds.</xar:mlstring></div>
+<br />
+<form method="post" action="&xar-modurl-bible-admin-new;">
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+    <input type="hidden" name="confirm" id="confirm" value="true" />
+    <input type="hidden" name="tid" id="tid" value="#$tid#" />
+
+    <table border="0" width="300">
+        <tr>
+            <td><xar:mlstring>Text ID</xar:mlstring>:</td>
+            <td>#$tid#</td>
+        </tr>
+        <tr>
+            <td><xar:mlstring>Short Name</xar:mlstring>:</td>
+            <td>#$snamevalue#</td>
+        </tr>
+    </table>
+
+    <br />
+
+    <div class="xar-align-center">
+        <input type="submit" value="#xarML('Proceed')#"  />
+    </div>
+
+</form>
+</div>
+</div>

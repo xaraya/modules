@@ -1,0 +1,105 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Library</xar:mlstring></h2>
+<div style="margin: auto;">
+
+<xar:template file="menu" type="module" />
+
+<xar:if condition="!empty($status)"><p class="xar-align-center xar-style-bold">#$status#</p></xar:if>
+
+<xar:if condition="empty($sname)">
+
+    <h2><xar:mlstring>Bible Texts</xar:mlstring></h2>
+    <ul>
+    <xar:foreach in="$texts" value="$text">
+        <li><a href="#xarModURL('bible', 'user', 'library', array('sname' => $text['sname']))#">#$text['lname']#</a></li>
+    </xar:foreach>
+    </ul>
+
+    <xar:if condition="!empty($strongs)">
+        <h2><xar:mlstring>Strong's Concordance</xar:mlstring></h2>
+
+        <ul>
+        <xar:foreach in="$strongs" value="$text">
+            <li><a href="#xarModURL('bible', 'user', 'strongs', array('sname' => $text['sname']))#">#$text['lname']#</a></li>
+        </xar:foreach>
+        </ul>
+    </xar:if>
+
+<xar:else />
+
+    <xar:if condition="$text['config_exists']">
+        <xar:comment>DESCRIPTION, ABOUT, ETC.</xar:comment>
+
+            <h2>#$text['lname']#</h2>
+
+            <table width="100%" acellspacing="3">
+            <xar:if condition="!empty($text['description'])">
+                <tr>
+                    <td style="font-weight: bold;"><xar:mlstring>Description</xar:mlstring>:</td>
+                    <td>#$text['description']#</td>
+                </tr>
+            </xar:if>
+            <xar:if condition="!empty($text['lang'])">
+                <tr>
+                    <td style="font-weight: bold;"><xar:mlstring>Language</xar:mlstring>:</td>
+                    <td>#$text['lang']#</td>
+                </tr>
+            </xar:if>
+            <xar:if condition="!empty($text['about'])">
+                <xar:set name="$pretty_about">$text['about'];</xar:set>
+                <xar:set name="$pretty_about">str_replace('&#92;par', '<br />', $pretty_about);</xar:set>
+                <xar:set name="$pretty_about">preg_replace("/&#92;\w*/", '', $pretty_about);</xar:set>
+               <tr>
+                    <td valign="top" style="font-weight: bold;"><xar:mlstring>About</xar:mlstring>:</td>
+                    <td style="text-align: justify;">#$pretty_about#</td>
+               </tr>
+            </xar:if>
+            <xar:if condition="!empty($text['sourcetype'])">
+                <tr>
+                    <td style="font-weight: bold;"><xar:mlstring>Source&nbsp;Type</xar:mlstring>:</td>
+                    <td>#$text['sourcetype']#</td>
+                </tr>
+            </xar:if>
+            <xar:if condition="!empty($text['distributionlicense'])">
+                <tr>
+                    <td style="font-weight: bold;"><xar:mlstring>License</xar:mlstring>:</td>
+                    <td>#$text['distributionlicense']#</td>
+                </tr>
+            </xar:if>
+            <xar:if condition="!empty($text['encoding'])">
+                <tr>
+                    <td style="font-weight: bold;"><xar:mlstring>Encoding</xar:mlstring>:</td>
+                    <td>#$text['encoding']#</td>
+                </tr>
+            </xar:if>
+            <xar:if condition="!empty($text['lcsh'])">
+                <tr>
+                    <td style="font-weight: bold;"><xar:mlstring>LCSH</xar:mlstring>:</td>
+                    <td>#$text['lcsh']#</td>
+                </tr>
+            </xar:if>
+            </table>
+
+            <br /><br />
+
+    </xar:if>
+
+    <h3>#$toc['ref']#</h3>
+
+    <xar:foreach in="$toc['lines']" key="$display" value="$chapters">
+        <div style="margin: 3px;">
+            <div style="font-weight: bold; margin-bottom: 3px;"><a href="#xarModURL('bible', 'user', 'display', array('sname' => $toc['text']['sname'], 'query' => $display))#">#$display#</a></div>
+            <div style="margin-left: 8px;">
+            <xar:foreach in="$chapters" value="$chapter">
+                <a href="#xarModURL('bible', 'user', 'display', array('sname' => $toc['text']['sname'], 'query' => $display.' '.$chapter))#">#$chapter#</a>&nbsp;
+            </xar:foreach>
+            </div>
+        </div>
+    </xar:foreach>
+
+</xar:if>
+
+</div>
+</div>

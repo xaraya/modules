@@ -1,0 +1,55 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Modify Text</xar:mlstring></h2>
+<div style="margin: auto;"><xar:template file="menu" type="module" />
+
+
+<form method="post" action="#xarModUrl('bible', 'admin', 'update')#" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
+<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+
+<div style="clear: both; padding-top: 10px;">
+
+<span style="float: left; width: 20%; text-align: right;">
+    <span class="help" title="#xarML('Abbreviated name of this text')#"><label for="sname">#$snamelabel#</label>:</span>
+</span>
+<span style="float: right; width: 78%; text-align: left;">
+    <xar:if condition="preg_match('/^Strongs(Greek|Hebrew)$/', $sname)">
+        <input type="hidden" name="sname" valeu="#$sname#" /> #$sname#
+    <xar:else />
+        <input type="text" name="sname" id="sname" size="8" maxlength="32" value="#$sname#" /> <xar:if condition="!empty($invalid['sname'])">
+        <span style="color: red"><xar:mlstring>ERROR! This is not a valid text name</xar:mlstring>
+        </xar:if>
+    </xar:if>
+</span>
+</div>
+
+<div style="clear: both; padding-top: 10px;">
+
+<span style="float: left; width: 20%; text-align: right;">
+    <span class="help" title="#xarML('Descriptive name of this Bible text')#"><label for="lname">#$lnamelabel#</label>:</span>
+</span>
+<span style="float: right; width: 78%; text-align: left;">
+    <input type="text" name="lname" id="lname" size="48" maxlength="128" value="#$text['lname']#" />
+    <xar:if condition="!empty($invalid['lname'])">
+        <span style="color: red"><xar:mlstring>ERROR! This is not a valid text name</xar:mlstring>
+    </xar:if>
+</span>
+</div>
+
+
+    <div style="clear: both; padding-top: 10px;">
+    <!--
+        // Add an authorisation ID - this adds a hidden field in the form that
+        // contains an authorisation ID.  The authorisation ID is very important in
+        // preventing certain attacks on the website
+    -->
+        <input type="hidden" name="tid" id="tid" value="#$text['tid']#" />
+        <span style="float: left; width: 30%; text-align: right;"><input type="submit" value="#$updatebutton#" /></span>
+    </div>
+
+</form>
+
+<br />
+</div>
+</div>

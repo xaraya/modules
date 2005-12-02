@@ -1,0 +1,77 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Help</xar:mlstring></h2>
+<div style="margin: auto; text-align: justify;">
+
+<xar:template file="menu" type="module" />
+
+<xar:if condition="!empty($status)"><p class="xar-align-center xar-style-bold">#$status#</p></xar:if>
+
+    <img src="#xarTplGetImage('user.gif')#" alt="#xarML('official icon')#" width="96" height="96" class="xar-module-icon" />
+
+    <h3><xar:mlstring>Features</xar:mlstring></h3>
+
+    <ul>
+        <li><xar:mlstring><em>Passage Lookup</em> - including parallel viewing</xar:mlstring></li>
+        <li><xar:mlstring><em>Keyword Search</em> - includes filters, fuzzy searching, and sorting by relevance</xar:mlstring></li>
+        <li><xar:mlstring><em>Quick Search</em> - intelligent determination of query type</xar:mlstring></li>
+        <li><xar:mlstring><em>Table of Contents</em> - for each text</xar:mlstring></li>
+        <li><xar:mlstring><em>Strong's Concordance</em></xar:mlstring></li>
+    </ul>
+
+    <h3><xar:mlstring>Usage Notes</xar:mlstring></h3>
+
+        <h4><xar:mlstring>Query Syntax</xar:mlstring></h4>
+
+        <p>
+            <xar:mlstring>The search engine recognizes common abbreviations for Bible books, such as "jn" for the Gospel of John and "gen" for Genesis.  Wildcards are also supported.  An asterisk (*) after a word matches all endings of that word.  Capitalization is ignored.  <em>To learn more</em>, perform a Passage Lookup or Keyword Search, and look at the "Query" displayed at the top of the results page.</xar:mlstring>
+        </p>
+
+        <h4><xar:mlstring>Table of Contents</xar:mlstring></h4>
+
+        <p>
+            <xar:ml>
+                <xar:mlstring>Visit the <a href="#(1)">Library</a> for details about each text and a listing of all included books and chapters</xar:mlstring>
+                <xar:mlvar>#xarModURL('bible', 'user', 'library')#</xar:mlvar>
+            </xar:ml>
+        </p>
+
+        <h4><xar:mlstring>Quick Search</xar:mlstring></h4>
+
+        <p>
+            <xar:ml>
+                <xar:mlstring>Enter search words <em>or</em> a passage.  <a href="#(1)">Quick Search</a> will try to determine what you are looking for and give the most relevant results.</xar:mlstring>
+                <xar:mlvar>#xarModURL('bible', 'user', 'main')#</xar:mlvar>
+            </xar:ml>
+        </p>
+
+        <h4><xar:mlstring>Keyword Search</xar:mlstring></h4>
+
+        <p><xar:mlstring><a href="#(1)">Keyword Search</a> allows you to perform very specific searches.  Three types of searches are available:</xar:mlstring></p>
+
+        <ul>
+            <li><em>Normal</em> does a simple search with scored results in which all terms are considered optional.</li>
+            <li><em>Fuzzy</em> search looks for for words and phrases related to your search terms, in addition to the terms you enter.</li>
+            <li><em>Boolean</em> allows you to include or exclude search terms.</li>
+        </ul>
+
+        <p><xar:mlstring>Search results can be limited to sets of Bible books or categories of books such as the Gospels, the Epistles, and the Minor Prophets.</xar:mlstring></p>
+
+        <p><xar:mlstring><em>NOTE: Words that are very common or less than 4 characters long are ignored!!!</em></xar:mlstring></p>
+
+        <h4><xar:mlstring>Strong's Concordance</xar:mlstring></h4>
+
+        <p>
+            <xar:ml>
+                <xar:mlstring>If available, the <a href="#(1)">Concordance</a> section allows you to search by number, transliterated word, or pronunciation.</xar:mlstring>
+                <xar:mlvar>#xarModURL('bible', 'user', 'concordance')#</xar:mlvar>
+            </xar:ml>
+        </p>
+
+        </div>
+    </div>
+</div>
+
+</div>
+</div>

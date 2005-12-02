@@ -1,0 +1,35 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<input type="hidden" name="lastchange" value="#$lastchange#" />
+<input type="hidden" name="lastquery" value="#$lastquery#" />
+
+<div style="clear: both; padding-top: 10px;">
+    <span style="float: left; width: 20%; text-align: right;">
+        <span class="help" title="#xarML('Choose how often the passage is to change.')#"><label for="numitems#$blockid#"><xar:mlstring>Rotation</xar:mlstring></label>:</span>
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
+        <select name="rotation" id="rotation#$blockid#">
+            <xar:foreach in="$rotations" key="$value" value="$row">
+                <xar:if condition="isset($row[1])">
+                    <option value="#$value# selected="selected">#$row[0]#</option>
+                <xar:else />
+                    <option value="#$value#">#$row[0]#</option>
+                </xar:if>
+            </xar:foreach>
+        </select>
+    </span>
+</div>
+
+<div style="clear: both; padding-top: 10px;">
+    <span style="float: left; width: 20%; text-align: right;">
+        <span class="help" title="#xarML('Choose passages to pick from.')#"><label for="numitems#$blockid#"><xar:mlstring>Passages</xar:mlstring></label>:</span>
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
+        <xar:mlstring><em>See <a href="modules/bible/xardocs/randomblock.txt" target="_blank">modules/bible/xardocs/randomblock.txt</a> for important usage information.</em></xar:mlstring><br />
+        <textarea name="queries" id="queries#$bid#" style="width:300px;height:150px;">#xarVarPrepForDisplay($queries)#</textarea>
+    </span>
+</div>
+
+<xar:comment>
+<input type="text" name="numitems" id="numitems#$blockid#" value="5" size="5" maxlength="5" />
+</xar:comment>

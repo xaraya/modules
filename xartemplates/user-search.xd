@@ -1,0 +1,128 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Keyword Search</xar:mlstring></h2>
+<div style="margin: auto;">
+
+<xar:template file="menu" type="module" />
+
+<xar:base-include-javascript filename="booltoggle.js" position="head" />
+
+<xar:if condition="!empty($status)"><p class="xar-align-center xar-style-bold">#$status#</p></xar:if>
+
+    <form action="#xarModURL('bible', 'user', 'validate')#" method="post" name="searchform">
+
+    <input type="hidden" name="function" value="view" />
+
+    <table width="100%" cellspacing="8">
+    <tr><td colspan="2"><input type="submit" value="#xarML('Search')#" /></td></tr>
+    <tr><td valign="top"><b><xar:mlstring>Text</xar:mlstring>:</b></td>
+        <td>
+
+        <select name="sname">
+            <xar:foreach in="$texts" value="$text">
+                <xar:set name="$value">urlencode($text['sname']);</xar:set>
+                <xar:if condition="!empty($sname) and $text['sname'] eq $sname">
+                    <option value="#$value#" selected="selected">#$text['sname']# - #$text['lname']#</option>
+                <xar:else />
+                    <option value="#$value#">#$text['sname']# - #$text['lname']#</option>
+                </xar:if>
+            </xar:foreach>
+        </select>
+        </td>
+    </tr>
+    <tr>
+        <td><b><xar:mlstring>Search Type</xar:mlstring>:</b></td>
+        <td>
+            <select name="searchtype" id="type" onChange="boolToggle(this);">
+                <option value=""><xar:mlstring>Auto Detect</xar:mlstring></option>
+                <option value="normal"><xar:mlstring>Normal</xar:mlstring></option>
+                <option value="fuzzy"><xar:mlstring>Fuzzy</xar:mlstring></option>
+                <option value="boolean"><xar:mlstring>Boolean</xar:mlstring></option>
+            </select>
+        </td>
+    </tr>
+    <tr><td valign="top"><b><xar:mlstring>Search Terms</xar:mlstring>:</b></td>
+        <td>
+            <table width="100%">
+            <tr><td>
+                <input type="text" name="words[]" size="24" />
+                <select name="bools[]" id="bools[]" disabled="true" onChange="if(this.selectedIndex!=0)document.searchform.elements['type'].selectedIndex=3;">
+                    <option value=""><xar:mlstring>---</xar:mlstring></option>
+                    <option value=""><xar:mlstring>scored higher</xar:mlstring></option>
+                    <option value="+"><xar:mlstring>present</xar:mlstring></option>
+                    <option value="-"><xar:mlstring>not present</xar:mlstring></option>
+                    <option value="~"><xar:mlstring>scored lower</xar:mlstring></option>
+                </select>
+            </td></tr>
+            <tr><td>
+                <input type="text" name="words[]" size="24" />
+                <select name="bools[]" id="bools[]" disabled="true" onChange="if(this.selectedIndex!=0)document.searchform.elements['type'].selectedIndex=3;">
+                    <option value=""><xar:mlstring>---</xar:mlstring></option>
+                    <option value=""><xar:mlstring>scored higher</xar:mlstring></option>
+                    <option value="+"><xar:mlstring>present</xar:mlstring></option>
+                    <option value="-"><xar:mlstring>not present</xar:mlstring></option>
+                    <option value="~"><xar:mlstring>scored lower</xar:mlstring></option>
+                </select>
+            </td></tr>
+            <tr><td>
+                <input type="text" name="words[]" size="24" />
+                <select name="bools[]" id="bools[]" disabled="true" onChange="if(this.selectedIndex!=0)document.searchform.elements['type'].selectedIndex=3;">
+                    <option value=""><xar:mlstring>---</xar:mlstring></option>
+                    <option value=""><xar:mlstring>scored higher</xar:mlstring></option>
+                    <option value="+"><xar:mlstring>present</xar:mlstring></option>
+                    <option value="-"><xar:mlstring>not present</xar:mlstring></option>
+                    <option value="~"><xar:mlstring>scored lower</xar:mlstring></option>
+                </select>
+            </td></tr>
+            <tr><td>
+                <input type="text" name="words[]" size="24" />
+                <select name="bools[]" id="bools[]" disabled="true" onChange="if(this.selectedIndex!=0)document.searchform.elements['type'].selectedIndex=3;">
+                    <option value=""><xar:mlstring>---</xar:mlstring></option>
+                    <option value=""><xar:mlstring>scored higher</xar:mlstring></option>
+                    <option value="+"><xar:mlstring>present</xar:mlstring></option>
+                    <option value="-"><xar:mlstring>not present</xar:mlstring></option>
+                    <option value="~"><xar:mlstring>scored lower</xar:mlstring></option>
+                </select>
+            </td></tr>
+            </table>
+        </td>
+    </tr>
+    <tr><td colspan="2"><b><xar:mlstring>Search Limits</xar:mlstring>:</b></td></tr>
+    <tr><td colspan="2">
+        <div style="font-style: italic; margin: 10px;"><xar:mlstring>If no limits are specified, the entire text will be searched.</xar:mlstring></div>
+            <table width="100%">
+
+            <tr><td valign="top">
+                <xar:foreach in="$groupnames" key="$key" value="$value">
+                    <nobr><input type="checkbox" name="limits[]" id="limit_#$key#" value="#$key#" />
+                    <label for="limit_#$key#">#$value#</label></nobr><br />
+                </xar:foreach>
+
+            </td><td valign="top">
+                <xar:foreach in="$aliases" key="$index" value="$value">
+                    <xar:set name="$alias">preg_replace("/,.*\$/", '', $value[3]);</xar:set>
+                    <nobr><input type="checkbox" name="limits[]" id="limit_#$alias#" value="#$alias#" />
+                    <label for="limit_#$alias#">#$value[2]#</label></nobr><br />
+
+                    <xar:if condition="($index + 1) % 22 eq 0">
+                        </td><td valign="top">
+                    </xar:if>
+
+                </xar:foreach>
+            </td></tr>
+            </table>
+
+        </td>
+    </tr>
+    <tr><td colspan="2"><input type="submit" value="#xarML('Search')#" /></td></tr>
+</table>
+
+</form>
+
+<script type="text/javascript"><!--
+boolToggle(document.searchform.elements['type']);
+//--></script>
+
+</div>
+</div>

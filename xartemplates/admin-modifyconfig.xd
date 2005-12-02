@@ -1,0 +1,55 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Modify Configuration</xar:mlstring></h2>
+<div style="margin: auto;"><xar:template file="menu" type="module" />
+
+<table width="100%" border="0" cellspacing="1" cellpadding="3">
+
+<form method="post" action="&xar-modurl-bible-admin-updateconfig;">
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+
+<tr><td><label for="admin_textsperpage">#$textslabel#</label></td>
+<td><input type="text" name="admin_textsperpage" id="admin_textsperpage" size="3" maxlength="3" value="#$textsvalue#" /></td></tr>
+
+<tr><td><label for="user_searchversesperpage">#$searchverseslabel#</label></td>
+<td><input type="text" name="user_searchversesperpage" id="user_searchversesperpage" size="3" maxlength="3" value="#$searchversesvalue#" /></td></tr>
+
+<tr><td><label for="user_lookupversesperpage">#$lookupverseslabel#</label></td>
+<td><input type="text" name="user_lookupversesperpage" id="user_lookupversesperpage" size="4" maxlength="10" value="#$lookupversesvalue#" /></td></tr>
+
+<tr><td><label for="textdir">#$textdirlabel#</label></td>
+<td><input type="text" name="textdir" id="textdir" size="24" maxlength="128" value="#$textdirvalue#" /></td></tr>
+
+<tr><td><label for="shorturls">#$shorturlslabel#</label></td>
+<td><input type="checkbox" name="shorturls" id="shorturls" value="1" #$shorturlschecked# /></td></tr>
+<tr><td colspan="2"><br /></td></tr>
+<tr><td colspan="2"><span style="font-weight: bold;"><xar:mlstring>Alternate Database:</xar:mlstring></span>
+<br />
+<span style="font-size: smaller; font-style: italic;"><xar:mlstring>Database must be created manually</xar:mlstring></span>
+</td></tr>
+<tr><td><label for="altdb">#$altdblabel#</label></td>
+<td><input type="checkbox" name="altdb" id="altdb" value="1" #$altdbchecked# /></td></tr>
+<tr><td><label for="altdbtype">#$altdbtypelabel#</label></td>
+<td><input type="text" name="altdbtype" id="altdbtype" size="8" maxlength="12" value="#$altdbtypevalue#" /></td></tr>
+<tr><td><label for="altdbhost">#$altdbhostlabel#</label></td>
+<td><input type="text" name="altdbhost" id="altdbhost" size="16" maxlength="64" value="#$altdbhostvalue#" /></td></tr>
+<tr><td><label for="altdbname">#$altdbnamelabel#</label></td>
+<td><input type="text" name="altdbname" id="altdbname" size="16" maxlength="64" value="#$altdbnamevalue#" /></td></tr>
+<tr><td><label for="altdbname">#$altdbunamelabel#</label></td>
+<td><input type="text" name="altdbuname" id="altdbuname" size="16" maxlength="64" value="#$altdbunamevalue#" /></td></tr>
+<tr><td><label for="altdbpass">#$altdbpasslabel#</label></td>
+<td><input type="text" name="altdbpass" id="altdbpass" size="16" maxlength="64" value="#$altdbpassvalue#" /></td></tr>
+
+<tr><td colspan="2">
+#$hooks#
+</td></tr>
+
+<tr><td colspan="2" align="center">
+    <input type="submit" value="#$updatebutton#" /></td></tr>
+</form>
+
+</table>
+<br />
+</div>
+</div>
