@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id:
- * 
  * xarcpshop  user menu
  *
  * @copyright (C) 2004 by Jo Dalle Nogare
@@ -103,7 +101,7 @@ function xarcpshop_user_main()
      if ($content == false) {
         return;
     }
-    
+
     $content = $content[0];
     $js = "<script language=\"JavaScript1.1\" src=\"http://www.cafepress.com/commonscripts.js\"></script>
            <script>\n<!--\n
@@ -114,14 +112,15 @@ function xarcpshop_user_main()
             </script>\n";
     $content = eregi_replace('"/cp/' , '"http://www.cafepress.com/cp/', $content);
     $content = eregi_replace('\'/cp/','\'http://www.cafepress.com/cp/',$content);
+    $content = eregi_replace('\/content\/marketplace\/img\/','http://www.cafepress.com/content/marketplace/img/',$content);
     if ($shorturls ==1) {
         $content = eregi_replace('<a href="/',  '<a href="index.php/xarcpshop/', $content);
     } else {
         $content = eregi_replace('<a href="/',  '<a href="index.php?module=xarcpshop&id=', $content);
     }
     if ($breadcrumb == 0)   {
-        $content = eregi_replace('<p class="storesmallprint">','<p class=storesmallprint" style="visibility:hidden; font-size:0px;">', $content);
-    }
+       //$content = eregi_replace('<p class="storesmallprint">','<p class=storesmallprint" style="visibility:hidden; font-size:0px;">', $content);
+     }
     $content = eregi_replace('<form method="post" action="http://www.cafepress.com/cp/addtocart.aspx">', '<form method="post" name="cart" action="http://www.cafepress.com/cp/addtocart.aspx?keepshopping=javascript:self.close()" target="cartWin">', $content);
     $content = eregi_replace('<input type="submit"', "<input type=\"submit\" onClick=\"cartWin = window.open ('','cartWin','toolbar=yes,location=no,directories=no,status=yes,scrollbars=yes,resizable=yes,copyhistory=no,width=800,height=500'); cartWin.focus(); return true;\"", $content);
     if ($shorturls ==1) {
@@ -134,7 +133,7 @@ function xarcpshop_user_main()
     $content = eregi_replace("</head>" , '', $content);
     $content = eregi_replace("cellpadding=\"8\"", "cellpadding=\"4\" cellspacing=\"0\"", $content);
     $content = eregi_replace("<td align=\"center\" valign=\"top\">" , "<td align=\"center\" valign=\"top\" width=\"205\">", $content);
-    $content = eregi_replace("width=\"100%\"", '', $content);
+    //$content = eregi_replace("width=\"100%\"", '', $content);
 $data['js']=$js;
 $data['content']=$content;
 return $data;

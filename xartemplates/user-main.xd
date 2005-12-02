@@ -1,23 +1,26 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:set name="base">xarServerGetBaseURL()</xar:set>
-
-<div style="margin: auto;padding-bottom:20px;">
-    <xar:template file="user-menu" type="module"/>
+<xar:style scope="module" module="xarcpshop" file="cpshop" />
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Xaraya CafePress Support Shop</xar:mlstring>
+    </span>
 </div>
-
-<div style="margin: auto; width:98%;">
+<div class="xar-mod-body">
+    <xar:template file="user-menu" type="module"/>
     <xar:if condition="$closed eq '1'">
-    <p style="margin:auto; width:100%; text-align:center;">
-    <xar:mlstring>Our Cafe Press Shop is currently closed for maintenance. Please call back later.</xar:mlstring>
-    </p>
-    <p style="margin:auto; width:100%; text-align:center;">
-    <xar:mlstring>Thank you for your patience.</xar:mlstring>
-    </p>
+        <p class="xar-align-center xar-fullwidth">
+           <xar:mlstring>Our Cafe Press Shop is currently closed for maintenance. Please call back later.</xar:mlstring>
+        </p>
+        <p class="xar-align-center xar-fullwidth">
+            <xar:mlstring>Thank you for your patience.</xar:mlstring>
+       </p>
     <xar:else />
-    <div style="clear:both; width:98$;">
-        <p>#$js#</p>
- <p>    #$content#</p>
-    </div>
+            <div class="xar-clearleft xar-align-center xar-fullwidth">
+            #$js#
+
+            #$content#
+            </div>
     </xar:if>
 </div>
 
