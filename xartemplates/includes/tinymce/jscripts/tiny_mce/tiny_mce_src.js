@@ -1,7 +1,7 @@
 /**
  * $RCSfile: tiny_mce_src.js,v $
- * $Revision: 1.277 $
- * $Date: 2005/11/30 17:55:00 $
+ * $Revision: 1.281 $
+ * $Date: 2005/12/02 08:12:07 $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004, Moxiecode Systems AB, All rights reserved.
@@ -9,8 +9,8 @@
 
 function TinyMCE() {
 	this.majorVersion = "2";
-	this.minorVersion = "0RC5";
-	this.releaseDate = "2005-11-xx";
+	this.minorVersion = "0";
+	this.releaseDate = "2005-12-01";
 
 	this.instances = new Array();
 	this.stickyClassesLookup = new Array();
@@ -787,9 +787,9 @@ TinyMCE.prototype.setupContent = function(editor_id) {
 	// Setup element references
 	var parentElm = document.getElementById(inst.editorId + '_parent');
 	if (parentElm.lastChild.nodeName == "INPUT")
-		inst.formElement = parentElm.firstChild;
+		inst.formElement = tinyMCE.isGecko ? parentElm.firstChild : parentElm.lastChild;
 	else
-		inst.formElement = parentElm.previousSibling;
+		inst.formElement = tinyMCE.isGecko ? parentElm.previousSibling : parentElm.nextSibling;
 
 	tinyMCE.handleVisualAid(inst.getBody(), true, tinyMCE.settings['visual'], inst);
 	tinyMCE.executeCallback('setupcontent_callback', '_setupContent', 0, editor_id, inst.getBody(), inst.getDoc());
@@ -2091,6 +2091,7 @@ TinyMCE.prototype.cleanupNode = function(node) {
 
 				// Move attrib to style
 				if ((height = tinyMCE.getAttrib(node, "height")) != '') {
+					height = "" + height; // Force string
 					node.style.height = height.indexOf('%') != -1 ? height : height.replace(/[^0-9]/gi, '') + "px";
 					node.removeAttribute("height");
 				}
@@ -4122,7 +4123,7 @@ function TinyMCEControl(settings) {
 };
 
 TinyMCEControl.prototype.repaint = function() {
-	if (tinyMCE.isMSIE)
+	if (tinyMCE.isMSIE && !tinyMCE.isOpera)
 		return;
 
 	// Ugly mozilla hack to remove ghost resize handles
@@ -5957,8 +5958,11 @@ TinyMCEControl.prototype.onAdd = function(replace_element, form_element_name, ta
 			rng.setStartBefore(replace_element);
 
 			var fragment = rng.createContextualFragment(html);
-			//replace_element.parentNode.insertBefore(fragment, replace_element);
-			tinyMCE.insertAfter(fragment, replace_element);
+
+			if (tinyMCE.isGecko)
+				tinyMCE.insertAfter(fragment, replace_element);
+			else
+				replace_element.parentNode.insertBefore(fragment, replace_element);
 		} else
 			replace_element.insertAdjacentHTML("beforeBegin", html);
 	}

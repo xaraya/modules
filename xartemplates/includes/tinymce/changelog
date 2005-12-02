@@ -1,4 +1,6 @@
-Version 2.0 (2005-11-xx)
+Version 2.0.1 (2005-12-02)
+	Fixed critical bug in some MSIE versions when submiting content.
+Version 2.0 (2005-12-01)
 	Added new paste_replace_list option to the paste plugin, this replaces some MS specific characters into normal characters.
 	Added new convert_urls option, this was required to address some issues with Firefox 1.5.
 	Added new paste_create_linebreaks option to paste plugin contributed by Kevin Rodgers.
