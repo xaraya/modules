@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id:
- *
  * xarcpshop initialization functions
  *
  * @copyright (C) 2004 by Jo Dalle Nogare
@@ -190,10 +188,10 @@ function xarcpshop_upgrade($oldversion)
 {
     // Upgrade dependent on old version number
     switch ($oldversion) {
-        case '0.5':
-            return xarcpshop_upgrade('0.0.2');
-        case '0.0.2':
-            // Code to upgrade from version 2.0 goes here
+        case '0.0.1':
+            return xarcpshop_upgrade('0.1.0');
+        case '0.1.0':
+            // Code to upgrade from version 0.1.0 goes here
             break;
     }
     // Update successful

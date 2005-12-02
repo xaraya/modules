@@ -14,7 +14,7 @@
  */
 $modversion['name']           = 'xarcpshop';
 $modversion['id']             = '199';
-$modversion['version']        = '0.0.1';
+$modversion['version']        = '0.1.0';
 $modversion['displayname']    = xarML('Xaraya Cafe Press');
 $modversion['description']    = 'Simple integration of Cafe Press Shops in Xaraya';
 $modversion['credits']        = 'xardocs/credits.txt';
@@ -26,7 +26,6 @@ $modversion['author']         = 'jojodee';
 $modversion['contact']        = 'http://xaraya.athomeandabout.com/';
 $modversion['admin']          = 1;
 $modversion['user']           = 1;
-$modversion['securityschema'] = array('cpshop::name' => 'name::cpshopitem:shopid');
 $modversion['class']          = 'Complete';
 $modversion['category']       = 'Content';
 ?>

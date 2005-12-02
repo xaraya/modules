@@ -1,67 +1,63 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<!-- This is a standard template for the module overview  --><!-- Each Module Should have an overview explaining exactly what it does, and giving an overview of the blocks and hooks that it includes or accepts. -->
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Administration - xarCPShop</xar:mlstring></span></div>
-<div class="xar-mod-body" style="display: block;">
-    <h2><xar:mlstring>Overview</xar:mlstring></h2>
-    <div style="border: 1px solid rgb(179, 179, 179); padding: 1px;">
-        <div style="padding: 10px; float: right; display: block; background-color: rgb(255, 255, 255);">
-            <img  src="modules/adminpanels/xarimages/admin.gif" alt="official icon"  height="96" width="96" />
-        </div>
-        <div class="xar-mod-title"  style="border-style: none none dotted; border-color: rgb(179, 179, 179); border-width: 1px; margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto;">
-            <xar:mlstring>What is it?</xar:mlstring>
-        </div>
 
-        <div style="margin-left: 1em; margin-right: 1em; text-align: left;"> 
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Administration - xarCPShop</xar:mlstring>
+    </span>
+</div>
+<div class="xar-mod-body">
+  <img src="modules/xarcpshop/xarimages/admin.gif" class="xar-module-icon" alt="official icon" width="96" height="96" />
+
+    <h2><xar:mlstring>Overview</xar:mlstring></h2>
+
+
+    <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+        <p>
             <em><xar:mlstring>xarCPShop integrates one or more <a href="http://www.cafepress.com">Cafe Press Shops</a> into your Xaraya site.</xar:mlstring></em>
-                <xar:mlstring>It is based on code from a similar module for Postnuke by Ed Grosvener at <a  href="http://www.xarcpshop.com">http://www.xarcpshop.com</a>,
+                <xar:mlstring>It is based on code from a similar module for Postnuke by Ed Grosvener at <a  href="http://www.thecpschool.com">http://www.thecpschool.com</a>,
                               rewritten and updated to work with current Cafe Press Site and Xaraya. The module enables you to:</xar:mlstring>
-            <br /><br />
-            <ul>
-                <li><xar:mlstring>Add one or more Cafe Press Shops .</xar:mlstring></li>
-                <li><xar:mlstring>Grab the product pages from your Cafe Press Shops and displays them within Xaraya.</xar:mlstring></li>
-                <li><xar:mlstring>Have your users browse your products and product details while remaining on your Xaraya site.</xar:mlstring></li>
-            </ul>
-         </div>
-         <br />
-         <div class="xar-mod-title" style="border-style: none none dotted; border-color: rgb(179, 179, 179); border-width: 1px; margin-left: 1em; margin-right: 1em; width: auto;">
-             <xar:mlstring>How to use it?</xar:mlstring> 
-         </div>
-         <div style="margin-left: 1em; margin-right: 1em; text-align: left;">
-             <xar:mlstring>
+        </p>
+        <ul>
+            <li><xar:mlstring>Add one or more Cafe Press Shops .</xar:mlstring></li>
+            <li><xar:mlstring>Grab the product pages from your Cafe Press Shops and displays them within Xaraya.</xar:mlstring></li>
+            <li><xar:mlstring>Have your users browse your products and product details while remaining on your Xaraya site.</xar:mlstring></li>
+        </ul>
+    <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
+        <p>
+            <xar:mlstring>
                  This module is still in early develoment but the basics are quite functional. The module does a simple integration of your Cafe Press Shop by capturing the Cafe Press URL and presenting that information in a page on your Xaraya site. To use the module:
-             </xar:mlstring> <br /><br />
-             <ul>
-                 <li><xar:mlstring>Install and activate in the usual way through the module List View page</xar:mlstring></li>
-                 <li><xar:mlstring>In xarCPShop Administration, click on Add Shop</xar:mlstring></li>
-                 <li><xar:mlstring>Add a description for your shop, the actual Cafe Press Shop ID, and the top level of the shop if it is part of a Premium Shop. This latter field can be left blank</xar:mlstring></li>
-                 <li><xar:mlstring>Set any additional configuration variables in the Modify Config screen.</xar:mlstring></li>
-             </ul>
-         </div><br />
-         <div class="xar-mod-title"  style="border-style: none none dotted; border-color: rgb(179, 179, 179); border-width: 1px; margin-left: 1em; margin-right: 1em; width: auto;">
-             <xar:mlstring>Included Blocks</xar:mlstring>
-         </div>
-         <div style="margin-left: 1em; margin-right: 1em; text-align: left;">
+             </xar:mlstring>
+        </p>
+        <ul>
+            <li><xar:mlstring>Install and activate in the usual way through the module List View page</xar:mlstring></li>
+            <li><xar:mlstring>In xarCPShop Administration, click on Add Shop</xar:mlstring></li>
+            <li><xar:mlstring>Add a description for your shop, the actual Cafe Press Shop ID, and the top level of the shop if it is part of a Premium Shop. This latter field can be left blank</xar:mlstring></li>
+            <li><xar:mlstring>Set any additional configuration variables in the Modify Config screen.</xar:mlstring></li>
+        </ul>
+        <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
              <ul>
                  <li><xar:mlstring>Featured Product Block - Choose a single product from a specified store to feature. It is also best to cache this block which prevents errors should the Cafe Press web site be down. </xar:mlstring></li>
-                 <li><xar:mlstring>Random Product Block - Choose to display X number of products from a selected store in a 
+                 <li><xar:mlstring>Random Product Block - Choose to display X number of products from a selected store in a
                  random display block on your page.</xar:mlstring></li>
              </ul>
-         </div><br />
-         <div class="xar-mod-title" style="border-style: none none dotted; border-color: rgb(179, 179, 179); border-width: 1px; margin-left: 1em; margin-right: 1em; width: auto;">
-             <xar:mlstring>Included Hooks</xar:mlstring>
-        </div>
-        <div style="margin-left: 1em; margin-right: 1em; text-align: left;"> 
-            <xar:mlstring>No hooks are included</xar:mlstring><br />
+        <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
+        <p><xar:mlstring>No hooks are included</xar:mlstring></p>
 
-        </div><br />
-        <div class="xar-mod-title" style="border-style: none none dotted; border-color: rgb(179, 179, 179); border-width: 1px; margin-left: 1em; margin-right: 1em; width: auto;">
-            <xar:mlstring>And more.. [for module developers]</xar:mlstring> 
-        </div>
-        <div style="margin-left: 1em; margin-right: 1em; text-align: left;"> 
-        </div>
-        <div class="xar-accent"  style="border: 1px solid rgb(179, 179, 179); padding: 0.5em 1em; text-align: center; margin-top: 5px;">
-            <xar:mlstring>Extended information about this module can be found at <a  href="http://xaraya.athomeandabout.com">http://xaraya.athomeandabout.com</a></xar:mlstring>
-         </div>
-    </div>
+        <h3>
+            <xar:mlstring>Further Information</xar:mlstring>
+        </h3>
+        <p>
+           <xar:mlstring>Further information on the xarCPShop module can be found at</xar:mlstring>
+        </p>
+        <ul>
+            <li><xar:mlstring>xarCPShop Extension page at</xar:mlstring> <a title="#xarML('xarCPShop Module - Xaraya Extension 199')#" href="http://www.xaraya.com/index.php/release/199.html">Xaraya Extension and Releases</a>.
+                <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+            </li>
+            <li><xar:mlstring>Related tutorials and documentation on xarCPShop found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/xarcpshop/" title="#xarML('Related documentation on xarCPShop')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+            </li>
+        </ul>
+        <p class="xar-sub">
+            <strong>&nbsp;<xar:mlstring>xarCPShop Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.1&nbsp; 2004-09-22
+        </p>
 </div>
 
