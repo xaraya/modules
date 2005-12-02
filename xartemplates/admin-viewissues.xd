@@ -1,0 +1,82 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>View Issues</xar:mlstring></h2>
+<div style="margin: auto;"><xar:template file="statusmsg" type="module" />
+
+<xar:if condition="!empty($pubs)">
+    <form action="&xar-modurl-ebulletin-admin-newissue;" method="post">
+    <xar:mlstring>Create new issue for</xar:mlstring>:
+    <select name="pid">
+        <xar:foreach in="$pubs" key="$pid" value="$pub">
+            <option value="#$pid#">#$pub['name']#</option>
+        </xar:foreach>
+    </select>
+    <input type="submit" value="#xarML('Go')#" />
+    </form>
+</xar:if>
+
+#$pager#
+
+<table class="xar-fullwidth">
+    <tr>
+        <th><xar:mlstring>ID</xar:mlstring></th>
+        <th><xar:mlstring>Publication</xar:mlstring></th>
+        <th><xar:mlstring>Subject</xar:mlstring></th>
+        <th><xar:mlstring>Issue Date</xar:mlstring></th>
+        <th><xar:mlstring>Published?</xar:mlstring></th>
+        <th><xar:mlstring>Options</xar:mlstring></th>
+    </tr>
+    <xar:foreach in="$issues" value="$issue">
+    <tr>
+        <td>#$issue['id']#</td>
+        <td>#$issue['pubname']#</td>
+        <td>#$issue['subject']#</td>
+        <td>#$issue['issuedate']#</td>
+        <td>#$issue['published_string']#</td>
+        <td>
+           <xar:if condition="!empty($issue['viewurl'])">
+               <a href="#$issue['viewurl']#"><xar:mlstring>View</xar:mlstring></a>
+           </xar:if>
+            &nbsp;
+            <xar:if condition="!empty($issue['editurl'])">
+                <xar:if condition="$issue['published']">
+                    <a href="#$issue['editurl']#" onClick="return confirm('This issue has already been published.  Are you sure you want to edit it?');"><xar:mlstring>Edit</xar:mlstring></a>
+                <xar:else />
+                    <a href="#$issue['editurl']#"><xar:mlstring>Edit</xar:mlstring></a>
+                </xar:if>
+                &nbsp;
+            </xar:if>
+            <xar:if condition="!empty($issue['regenerateurl'])">
+                <xar:if condition="$issue['published']">
+                    <a href="#$issue['regenerateurl']#" onClick="return confirm('This issue has already been published.  Are you sure you want to regenerate it?');"><xar:mlstring>Regenerate</xar:mlstring></a>
+                <xar:else />
+                    <a href="#$issue['regenerateurl']#"><xar:mlstring>Regenerate</xar:mlstring></a>
+                </xar:if>
+                &nbsp;
+            </xar:if>
+           <xar:if condition="!empty($issue['deleteurl'])">
+                <xar:if condition="$issue['published']">
+                    <a href="#$issue['deleteurl']#" onClick="return confirm('This issue has already been published.  Are you sure you want to delete it?');"><xar:mlstring>Delete</xar:mlstring></a>
+                <xar:else />
+                    <a href="#$issue['deleteurl']#"><xar:mlstring>Delete</xar:mlstring></a>
+                </xar:if>
+                &nbsp;
+           </xar:if>
+            &nbsp;
+            <xar:if condition="!empty($issue['publishurl'])">
+                <xar:if condition="$issue['published']">
+                    <a href="#$issue['publishurl']#" onClick="return confirm('This issue has already been published.  Are you sure you want to publish it again?');"><xar:mlstring>Publish</xar:mlstring></a>
+                <xar:else />
+                    <a href="#$issue['publishurl']#"><xar:mlstring>Publish</xar:mlstring></a>
+                </xar:if>
+                &nbsp;
+            </xar:if>
+        </td>
+    </tr>
+    </xar:foreach>
+</table>
+
+#$pager#
+</div>
+</div>

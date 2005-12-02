@@ -1,0 +1,54 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>New Subscribers</xar:mlstring></h2>
+<div style="margin: auto;"><xar:template file="statusmsg" type="module" />
+
+<form method="post" action="&xar-modurl-ebulletin-admin-createsubscribers;">
+<fieldset>
+    <legend><xar:mlstring>Names Not Registered on this Site</xar:mlstring></legend>
+
+    <div class="xar-form-input-wrapper">
+        <label for="name"  class="xar-form-label" title="#xarML('Publication Name')#">
+            <xar:mlstring>Bulk Add:</xar:mlstring>
+        </label>
+        <div class="xar-form-input-wrapper">
+            <xar:mlstring>Enter or copy/paste one email per line.</xar:mlstring>
+            <textarea name="unregistered" rows="5" class="xar-form-input-textlong">#$unregistered#</textarea>
+            <br />
+            <span class="xar-sub">
+                <xar:mlstring>Accepted formats are as follows:<br />
+                Somebody's Name &lt;somebody@example.com&gt;<br />
+                Somebody's Name, somebody@example.com<br />
+                "Somebody's Name","somebody@example.com"
+                </xar:mlstring>
+            </span>
+        </div>
+    </div>
+
+    <div class="xar-form-input-wrapper">
+        <label for="name"  class="xar-form-label" title="#xarML('Publication Name')#">
+            <xar:mlstring>Subscribe to:</xar:mlstring>
+        </label>
+        <select name="pid" id="pid">
+            <xar:foreach in="$pubs" key="$key" value="$pub">
+                <xar:if condition="$pid eq $key">
+                    <option value="#$key#" selected="selected">#$pub['name']#</option>
+                <xar:else />
+                    <option value="#$key#">#$pub['name']#</option>
+                </xar:if>
+            </xar:foreach>
+        </select>
+    </div>
+</fieldset>
+
+<fieldset>
+    <div class="xar-form-input-wrapper-after">
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <input type="submit" value="#xarML('Add Subscribers')#" />
+    </div>
+</fieldset>
+</form>
+
+</div>
+</div>

@@ -1,0 +1,55 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<h2><xar:mlstring>Newsletter Information for</xar:mlstring> #$name#</h2>
+<xar:template file="statusmsg" type="module" module="ebulletin" />
+
+<form action="&xar-modurl-ebulletin-user-usermenu;" method="post">
+<input type="hidden" name="authid" id="authid" value="#$authid#" />
+<input type="hidden" name="uid" id="uid" value="#$uid#" />
+<input type="hidden" name="phase" id="phase" value="update" />
+
+<fieldset>
+    <legend><xar:mlstring>Subscription Options</xar:mlstring></legend>
+
+        <div class="xar-form-input-wrapper">
+            <span class="xar-form-label" title="#xarML('Publications to subscribe to')#">
+                <xar:mlstring>Please subscribe me to:</xar:mlstring>
+            </span><br />
+            <xar:if condition="empty($pubs)">
+                <xar:mlstring><em>Sorry, no publications are available at this time.</em></xar:mlstring>
+            <xar:else />
+                <div>
+                    <xar:foreach in="$pubs" value="$pub">
+                        <xar:if condition="!empty($pub['subscribed'])">
+                            <input type="checkbox" name="subscriptions[#$pub['id']#]" id="publication_#$pub['id']#" checked="checked" />
+                        <xar:else />
+                            <input type="checkbox" name="subscriptions[#$pub['id']#]" id="publication_#$pub['id']#" />
+                        </xar:if>
+                        <label for="publication_#$pub['id']#">
+                            #$pub['name']#
+                            <xar:if condition="!empty($pub['desc'])">
+                                - #$pub['desc']#
+                            </xar:if>
+                        </label><br />
+                    </xar:foreach>
+                </div>
+            </xar:if>
+       </div>
+</fieldset>
+
+<fieldset>
+        <div class="xar-form-input-wrapper-after">
+             <input type="submit" value="#xarML('Subscribe')#"  tabindex="2" />
+        </div>
+</fieldset>
+
+<xar:if condition="!empty($hidden)">
+    <xar:foreach in="$hidden" value="$pub">
+        <xar:if condition="!empty($pub['subscribed'])">
+            <input type="hidden" name="subscriptions[#$pub['id']#]" id="publication_#$pub['id']#" />
+        </xar:if>
+    </xar:foreach>
+</xar:if>
+
+
+</form>

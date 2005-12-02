@@ -1,0 +1,43 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<form action="&xar-modurl-ebulletin-user-subscribe;" method="post">
+<input type="hidden" name="authid" id="authid" value="#$authid#" />
+
+<p><xar:mlstring>Please subscribe me to:</xar:mlstring></p>
+
+<xar:if condition="empty($pubs)">
+    <xar:mlstring><em>No publications!</em></xar:mlstring>
+<xar:else />
+    <xar:foreach in="$pubs" value="$pub">
+        <xar:if condition="!empty($pub['subscribed'])">
+            <input type="checkbox" name="subscriptions[#$pub['id']#]" id="publication_#$pub['id']#" checked="checked" />
+        <xar:else />
+            <input type="checkbox" name="subscriptions[#$pub['id']#]" id="publication_#$pub['id']#" />
+        </xar:if>
+        <label for="publication_#$pub['id']#">
+            <em>#$pub['name']#</em>
+        </label><br />
+    </xar:foreach>
+</xar:if>
+<br />
+<xar:if condition="!$loggedin">
+    <xar:mlstring>Full Name:</xar:mlstring><br />
+    <input type="text" name="name" id="name" maxlength="255" class="xar-form-textlong" /><br />
+    <xar:mlstring>Email Address:</xar:mlstring><br />
+    <input type="text" name="email" id="email" maxlength="255" class="xar-form-textlong" /><br />
+    <br />
+</xar:if>
+
+<input type="submit" value="#xarML('Update')#" /> &nbsp; <a href="#$moreurl#">More Info...</a>
+
+
+
+<xar:if condition="!empty($hidden)">
+    <xar:foreach in="$hidden" value="$pub">
+        <xar:if condition="!empty($pub['subscribed'])">
+            <input type="hidden" name="subscriptions[#$pub['id']#]" id="publication_#$pub['id']#" />
+        </xar:if>
+    </xar:foreach>
+</xar:if>
+
+</form>

@@ -1,0 +1,48 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>View Subscribers</xar:mlstring></h2>
+<div style="margin: auto;"><xar:template file="statusmsg" type="module" />
+
+<xar:base-include-javascript module="ebulletin" filename="checkall.js" position="head" />
+
+<xar:if condition="$showaddlink">
+    <p>
+        <xar:mlstring>Batch subscribe:</xar:mlstring> &nbsp;
+        <a href="&xar-modurl-ebulletin-admin-newsubscribers_reg;"><xar:mlstring>Members of this website</xar:mlstring></a> &nbsp;
+        <a href="&xar-modurl-ebulletin-admin-newsubscribers_unreg;"><xar:mlstring>Non-members</xar:mlstring></a>
+    </p>
+</xar:if>
+
+<form method="post" action="&xar-modurl-ebulletin-admin-deletesubscribers;" name="ebulletin_form">
+
+<xar:if condition="!empty($pager)"><div class="xar-align-center xar-padding-thick">#$pager#</div></xar:if>
+
+<table class="xar-fullwidth">
+<tr>
+    <th><input type="checkbox" onClick="xar_ebulletin_checkall(document.forms['ebulletin_form'])" title="#xarML('Check or Uncheck all subscribers on this page')#" /></th>
+    <th><xar:mlstring>Name</xar:mlstring></th>
+    <th><xar:mlstring>Publication</xar:mlstring></th>
+    <th><xar:mlstring>Email</xar:mlstring></th>
+    <th><xar:mlstring>Site Member</xar:mlstring></th>
+</tr>
+<xar:loop name="$subscribers">
+    <tr>
+        <td><input type="checkbox" name="unsub[#$loop:item.id#]" id="unsub[#$loop:item.id#]" /></td>
+        <td>#$loop:item.name#</td>
+        <td>#$loop:item.pubname#</td>
+        <td>#$loop:item.email#</td>
+        <td>#$loop:item.reg_string#</td>
+    </tr>
+</xar:loop>
+</table>
+
+<xar:if condition="!empty($pager)"><div class="xar-align-center xar-padding-thick">#$pager#</div></xar:if>
+
+<p><xar:mlstring>With checked subscribers :</xar:mlstring> <input type="submit" value="#xarML('Unsubscribe')#" />
+&nbsp; <a href="javascript:void(0);" onClick="xar_ebulletin_checkall(document.forms['ebulletin_form'])" title="#xarML('Check or Uncheck all subscribers on this page')#"><xar:mlstring>Check/Uncheck All</xar:mlstring></a></p>
+
+</form>
+
+</div>
+</div>

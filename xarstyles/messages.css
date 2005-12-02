@@ -1,0 +1,14 @@
+.ebulletin-success {
+    color: green;
+    font-weight: bold;
+}
+.ebulletin-error {
+    color: red;
+    font-weight: bold;
+}
+.ebulletin-warn {
+    color: orange;
+    font-weight: bold;
+}
+
+

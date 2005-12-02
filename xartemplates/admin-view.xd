@@ -1,0 +1,39 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>View Publications</xar:mlstring></h2>
+<div style="margin: auto;"><xar:template file="statusmsg" type="module" />
+
+<xar:if condition="$showaddlink">
+    <p><a href="#xarModURL('ebulletin', 'admin', 'new')#"><xar:mlstring>New Publication</xar:mlstring></a></p>
+</xar:if>
+
+<table class="xar-fullwidth">
+    <tr>
+        <th><xar:mlstring>Name</xar:mlstring></th>
+        <th><xar:mlstring>Description</xar:mlstring></th>
+        <th><xar:mlstring>Options</xar:mlstring></th>
+    </tr>
+    <xar:foreach in="$pubs" value="$pub">
+    <tr>
+        <td>#$pub['name']#</td>
+        <td>#$pub['desc']#</td>
+        <td>
+           <xar:if condition="!empty($pub['editurl'])">
+               <a href="#$pub['editurl']#"><xar:mlstring>Edit</xar:mlstring></a>
+           </xar:if>
+           &nbsp;
+           <xar:if condition="!empty($pub['deleteurl'])">
+               <a href="#$pub['deleteurl']#"><xar:mlstring>Delete</xar:mlstring></a>
+           </xar:if>
+           &nbsp;
+           <xar:if condition="!empty($pub['issueurl'])">
+               <a href="#$pub['issueurl']#"><xar:mlstring>New Issue...</xar:mlstring></a>
+           </xar:if>
+        </td>
+    </tr>
+    </xar:foreach>
+</table>
+
+</div>
+</div>

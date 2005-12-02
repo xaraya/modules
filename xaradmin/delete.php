@@ -1,0 +1,79 @@
+<?php
+/**
+* Delete a publication
+*
+* @package unassigned
+* @copyright (C) 2002-2005 by The Digital Development Foundation
+* @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+* @link http://www.xaraya.com
+*
+* @subpackage ebulletin
+* @link http://xaraya.com/index.php/release/557.html
+* @author Curtis Farnham <curtis@farnham.com>
+*/
+/**
+ * delete item
+ * This is a standard function that is called whenever an administrator
+ * wishes to delete a current module item.  Note that this function is
+ * the equivalent of both of the modify() and update() functions above as
+ * it both creates a form and processes its output.  This is fine for
+ * simpler functions, but for more complex operations such as creation and
+ * modification it is generally easier to separate them into separate
+ * functions.  There is no requirement in the Xaraya MDG to do one or the
+ * other, so either or both can be used as seen appropriate by the module
+ * developer
+ *
+ * @param  $ 'id' the id of the item to be deleted
+ * @param  $ 'confirm' confirm that this item can be deleted
+ */
+function ebulletin_admin_delete($args)
+{
+    extract($args);
+
+    // get HTTP vars
+    if (!xarVarFetch('id', 'int:1:', $id)) return;
+    if (!xarVarFetch('objectid', 'str:1:', $objectid, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return;
+
+    // make sure we have an ID
+    if (!empty($objectid)) $id = $objectid;
+
+    // get publication
+    $pub = xarModAPIFunc('ebulletin', 'user', 'get', array('id' => $id));
+    if (empty($pub) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+
+    // security check
+    if (!xarSecurityCheck('DeleteeBulletin', 1, 'Publication', "$pub[name]:$id")) return;
+
+    // Check for confirmation.
+    if (empty($confirm)) {
+
+        // initialize template data
+        $data = xarModAPIFunc('ebulletin', 'admin', 'menu');
+
+        // get vars
+        $authid = xarSecGenAuthKey();
+
+        // set template data
+        $data['id'] = $id;
+        $data['pub'] = $pub;
+        $data['authid'] = $authid;
+
+        return $data;
+    }
+
+    // security check
+    if (!xarSecConfirmAuthKey()) return;
+
+    // call API function to do the deleting
+    if (!xarModAPIFunc('ebulletin', 'admin', 'delete', array('id' => $id))) return;
+
+    // set status message and return to view
+    xarSessionSetVar('statusmsg', xarML('Publication successfully deleted!'));
+    xarResponseRedirect(xarModURL('ebulletin', 'admin', 'view'));
+
+    // success
+    return true;
+}
+
+?>

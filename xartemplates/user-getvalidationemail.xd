@@ -1,0 +1,15 @@
+Dear #$name#,<br /><br />
+
+<p>There has been a request at #$sitename# (<a href="#$baseurl#">#$baseurl#</a>) to modify newsletter subscriptions belonging to this email address.  If this is NOT your desire, you may disregard and delete this message.</p>
+
+<p>To complete this request, you MUST visit the following web address:<br />
+<a href="#$validateurl#">#$validateurl#</a></p>
+
+<p>Depending on your email reader software, you might be able to just click the link above.  If not, try copying it and pasting it into your web browser.</p>
+
+Thank You,<br />
+#$adminname#<br /><br />
+
+#$sitename# Administrator<br />
+<a href="#$baseurl#">#$baseurl#</a>
+

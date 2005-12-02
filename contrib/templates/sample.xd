@@ -1,0 +1,122 @@
+<xar:comment>
+<!--
+
+eBulletin Templating: an Overview
+---------------------------------
+
+
+eBulletin is designed to give you the full power of Blocklayout, Xaraya's top-notch
+templating system.  Any Blocklayout tags can therefore be used in your eBulletin
+newsletter templates.
+
+
+Varibles Provided by eBulletin
+---------------------------------
+
+The following variables from eBulletin are available during template compilation:
+
+    $date - an array of dates, as follows:
+
+        $date.ymd        - the issue date in YYYY-MM-DD format
+        $date.unix       - the issue date in UNIX time (number of seconds since the last epoch)
+        $date.short      - the issue date in 'short' format as defined by your locale settings
+        $date.medium     - the issue date in 'medium' format as defined by your locale settings
+        $date.long       - the issue date in 'long' format as defined by your locale settings
+        $date.start_unix - the publication's starting interval, in UNIX time
+        $date.start_ymd  - the publication's starting interval, in YYYY-MM-DD format
+        $date.end_unix   - the publication's ending interval, in UNIX time
+        $date.end_ymd    - the publication's ending interval, in YYYY-MM-DD format
+
+    $subject - the subject to be used when sending the newsletter
+
+    $publication - full array of full details of the parent publication, which include:
+
+        $publication.name - name of publication
+        $publication.desc - description of publication
+
+        (browse the xar_ebulletin table or view modules/ebulletin/xarinit.php for a full list)
+
+    $sitename   - site name
+    $siteslogan - site slogan
+    $footer     - site footer
+    $copyright  - copyright notice
+    $adminname  - name of site admin
+    $adminemail - email address of site admin
+
+
+You can always use <xar:set ...>, #xarModGetVar()#, and the like to retrieve other system
+variables too.
+
+
+URL Shorthand
+---------------------------
+
+Don't forget about Blocklayout's shorthand for generating URL's.  For example, instead of:
+
+    #xarModURL('articles', 'user', 'view')#
+    #xarModURL()#
+
+You can do:
+
+    &xar-modurl-articles-user-view;
+    &xar-baseurl;
+
+
+
+Customized themes
+---------------------------
+
+It is possible to use a customized theme in the newsletters if your site's main theme
+is not suitable.   Create a special theme (perhaps based on the 'print' theme due to its
+simplicity) and go to eBulletin Admin => ModifyConfig to tell eBulletin about it.
+
+
+Alternate Templates
+---------------------------
+
+Just as in the GUI configurations for blocks, articles, etc. you can also specify
+alternate templates in your BlockLayout calls.  This may be very helpful to customize
+the display of a block or a module in your newsletter.  For example:
+
+    <xar:block instance="my_block" template=";alternate-template" />
+
+    <xar:module main="false" module="articles" type="user" func="view"
+        template="new-wrapper;new-block-template" />
+
+
+More Information
+-----------------------------
+
+See Blocklayout's documentation for full details:
+    http://www.xaraya.com/documentation/rfcs/rfc0010.html
+
+-->
+</xar:comment>
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>#$subject#</title>
+<base href="&xar-baseurl;index.php" />
+
+<xar:comment> Head Style Sheets</xar:comment>
+<xar:style scope="common" />
+<xar:style />
+<xar:additional-styles />
+
+</head>
+<body id="body">
+    <h1><a href="&xar-baseurl;">#$sitename#</a></h1>
+    <div id="content">
+        <xar:module main="false" module="articles" type="user" func="view" />
+    </div>
+    <div id="footer">
+        <p>#$copyright#
+        <xar:if condition="!empty($copyright) and !empty($footer)"> - </xar:if>
+        #$footer#
+        </p>
+    </div>
+</body>
+</html>
+

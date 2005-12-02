@@ -1,0 +1,47 @@
+Description
+---------------
+The eBulletin module is an increasingly robust email newsletter system that
+exclusively uses Blocklayout to generate newsletters using content that's
+already on your site.  This gives you the power of determining exactly what
+content is included and how it is formatted.
+
+
+Dependencies
+---------------
+mail (regid 771) - sending newsletters
+
+
+Upgrading
+---------------
+Many things changed in the 0.9.7 release.  There is unfortunately no upgrade
+option, and you will have to completely uninstall the old module BEFORE
+upgrading to the new.  When you have removed all of the prior version's
+database tables AND files (you can keep your custom templates, though), then
+follow the Installation instructions below.
+
+
+Installation
+---------------
+Module installation begins in the standard Xaraya way:
+1. Upload files to the modules directory
+2. Go to Modules Admin and initialize the module
+
+But there are few couple more things:
+3. Decide where you want to store your templates.  Make sure that folder exists
+   and is readable by the web server.
+4. Configure the module by going to Files Admin => Modify Config.  Enter
+   your preferred template directory.  This is where eBulletin will look
+   when it needs to give you a list of templates.
+5. Create templates for your newsletter(s) and if necessary a separate theme
+   to go along with it.  See contrib/sample.xd for an example.  This file
+   includes further description on template usage.
+
+
+Usage
+---------------
+See eBulletin Admin -> Overview for usage details.  See contrib/sample.xd for
+more template documentation.
+
+
+---------------
+Curtis Farnham - http://www.curtisfarnham.com/

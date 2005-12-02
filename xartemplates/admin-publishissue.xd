@@ -1,0 +1,145 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Publish Issue</xar:mlstring></h2>
+<div style="margin: auto;"><xar:template file="statusmsg" type="module" />
+
+<h3 class="xar-align-center"><xar:mlstring>Confirm publishing this issue?</xar:mlstring></h3>
+<form method="post" action="&xar-modurl-ebulletin-admin-publishissue;">
+
+        <fieldset>
+            <legend><xar:mlstring>Issue details</xar:mlstring></legend>
+
+            <div class="xar-form-input-wrapper">
+             <label for="itemid" class="xar-form-label" title="#xarML('Issue ID')#">
+                <xar:mlstring>ID:</xar:mlstring>
+             </label>
+              #$id#
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                <label for="itemname"  class="xar-form-label"  title="#xarML('Parent Publication')#">
+                    <xar:mlstring>Parent Publication:</xar:mlstring>
+                </label>
+                 #$issue['pubname']#
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                <label for="itemname"  class="xar-form-label"  title="#xarML('Issue Date')#">
+                    <xar:mlstring>Issue Date:</xar:mlstring>
+                </label>
+                 #$issue['issuedate']#
+            </div>
+
+        </fieldset>
+
+        <fieldset>
+            <legend><xar:mlstring>Recipients</xar:mlstring></legend>
+
+            <div class="xar-form-input-wrapper">
+                <label for="from"  class="xar-form-label"  title="#xarML('From')#">
+                    <xar:mlstring>From:</xar:mlstring>
+                </label>
+                #$pub['from']#
+                <xar:if condition="!empty($pub['fromname'])">&lt;#$pub['fromname']#&gt;</xar:if>
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                <label for="to"  class="xar-form-label"  title="#xarML('To')#">
+                    <xar:mlstring>To:</xar:mlstring>
+                </label>
+                #$pub['to']#
+                <xar:if condition="!empty($pub['toname'])">&lt;#$pub['toname']#&gt;</xar:if>
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                <label for="replyto"  class="xar-form-label"  title="#xarML('Reply To')#">
+                    <xar:mlstring>Reply To:</xar:mlstring>
+                </label>
+                <xar:if condition="empty($pub['replyto'])">
+                    <xar:mlstring>None</xar:mlstring>
+                <xar:else />
+                    #$pub['replyto']#
+                    <xar:if condition="!empty($pub['replytoname'])">&lt;#$pub['replytoname']#&gt;</xar:if>
+                </xar:if>
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                <label for="replyto"  class="xar-form-label"  title="#xarML('Reply To')#">
+                    <xar:mlstring>Subscribers:</xar:mlstring>
+                </label>
+                <xar:if condition="empty($subscribers)">
+                    <xar:mlstring>None</xar:mlstring>
+                <xar:else />
+                    <div class="xar-form-input-wrapper">
+                        <xar:if condition="count($subscribers) lt 5">
+                            <xar:foreach in="$subscribers" key="$email" value="$emailname">
+                                <xar:if condition="empty($emailname)">
+                                    #$email#
+                                <xar:else />
+                                    #$emailname# &lt;#$email#&gt;
+                                </xar:if><br />
+                            </xar:foreach>
+                        <xar:else />
+                                #$subscriberscount# <xar:mlstring>addresses</xar:mlstring>:<br />
+<textarea rows="5" cols="60"><xar:foreach in="$subscribers" key="$email" value="$emailname"><xar:if condition="empty($emailname)">#$email#<xar:else />#$emailname# &lt;#$email#&gt;
+</xar:if>
+</xar:foreach></textarea>
+                        </xar:if>
+                    </div>
+                </xar:if>
+            </div>
+
+        </fieldset>
+
+        <fieldset>
+            <legend><xar:mlstring>Message details</xar:mlstring></legend>
+
+            <div class="xar-form-input-wrapper">
+                <label for="itemname"  class="xar-form-label"  title="#xarML('Subject')#">
+                    <xar:mlstring>Subject:</xar:mlstring>
+                </label>
+                 #$issue['subject']#
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                <label for="body_html"  class="xar-form-label"  title="#xarML('HTML Body')#">
+                    <xar:mlstring>HTML Body:</xar:mlstring>
+                </label>
+                <xar:if condition="empty($issue['body_html'])">
+                    <xar:mlstring>None</xar:mlstring>
+                <xar:else />
+                    #$htmlsize#
+                </xar:if>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="body_txt"  class="xar-form-label"  title="#xarML('TXT Body')#">
+                    <xar:mlstring>TXT Body:</xar:mlstring>
+                </label>
+                <xar:if condition="empty($issue['body_txt'])">
+                    <xar:mlstring>None</xar:mlstring>
+                <xar:else />
+                    #$txtsize#
+                </xar:if>
+            </div>
+
+        </fieldset>
+
+        <fieldset>
+            <div class="xar-form-input-wrapper-after">
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <input type="hidden" name="confirm" id="confirm" value="true" />
+                <input type="hidden" name="id" id="id" value="#$id#" />
+                <input type="submit" value="#xarML('Send')#" />
+            </div>
+
+            <div class="xar-form-input-wrapper-before">
+             <a href="&xar-modurl-ebulletin-admin-viewissues;">
+                 <xar:mlstring>Cancel and Return</xar:mlstring>
+             </a>
+             </div>
+        </fieldset>
+
+</form>
+</div>
+</div>

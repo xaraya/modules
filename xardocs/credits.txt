@@ -1,0 +1,17 @@
+Author:
+Curtis Farnham <curtis@farnham.com>
+
+Thanks to:
+
+Advent HOPE Sabbath School
+    (The organization whose emailing needs got me thinking about newsletters
+    for Xaraya in the first place.)
+
+Web hosts Site5, IX Webhosting, Lunarpages, and others
+    (Whose half-baked mailing list configuration tools and limited options
+    drove me to seek a better solution)
+
+Richard Cave
+    (Who wrote the first Newsletter module for Xaraya.  My newsletter needs
+    necessitated a module with a whole different architecture, though I
+    borrowed a number of his ideas initially.)

@@ -1,0 +1,107 @@
+<xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
+
+<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Overview</xar:mlstring></h2>
+<div style="margin: auto;"><xar:template file="statusmsg" type="module" />
+
+    <img src="#xarTplGetImage('admin.gif')#" alt="#xarML('official icon')#" width="96" height="96" class="xar-module-icon" />
+
+    <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+    <p>
+        <xar:mlstring>The eBulletin module is an increasingly robust email newsletter system that
+        exclusively uses Blocklayout to generate newsletters using content that's
+        already on your site.  This gives you the power of determining exactly what
+        content is included and how it is formatted.</xar:mlstring>
+    </p>
+
+    <h3><xar:mlstring>Installation Notes</xar:mlstring></h3>
+    <p>
+        <xar:mlstring>After installing this module, be sure to set your desired template directory.
+        You will also have to create Blocklayout templates for your newsletters.  See <code>modules/ebulletin/contrib/templates/sample.xd</code> for a sample template with instructions.</xar:mlstring>
+    </p>
+    <p>
+        <xar:mlstring>eBulletin can also be configured to use an alternate theme when generating templates.  You might consider creating your own customized theme (perhaps starting with
+        the 'print' theme due to its simplicity).</xar:mlstring>
+    </p>
+
+    <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
+    <ol>
+        <li>
+            <xar:ml>
+                <xar:mlstring><em><a href="#(1)">Create publications</a> for as many diffent newsletters as you want to have.</em></xar:mlstring>
+                <xar:mlvar>&xar-modurl-ebulletin-admin-new;</xar:mlvar>
+            </xar:ml>
+            <p>
+                <xar:mlstring>When configurating a publication, you can set a starting and ending interval, which is the range of dates to select content from when creating an Issue.  These dates are provided to your templates, which you can then use in BlockLayout tags when calling blocks, modules, etc.  The intervals are based on the Issue Date which is specified at the time each issue is created.</xar:mlstring>
+            </p>
+            <p>
+                <xar:mlstring>You must define an email address to go in the <code>TO:</code> and <code>FROM:</code> fields of each issue when it is sent.  These will be seen by every recipient of your newsletter, so they should be easily recognizable and preferably real addresses.</xar:mlstring>
+            </p>
+            <p>
+                <xar:mlstring>Each publication can be assigned its own HTML and/or text template.  If you only want a text email, then leave the HTML template blank, or vice versa.  You can, of course, specify templates for each.  You can even assign the same template for both HTML and text versions of your newsletter.  eBulletin does some rudimentary conversions (a.k.a. <code>strip_tags()</code>) to make sure things look fairly decent in the absence of a specialized template.</xar:mlstring>
+            </p>
+        </li>
+        <li>
+            <xar:ml>
+                <xar:mlstring><em><a href="#(1)">Add subscribers</a> for each publication.</em></xar:mlstring>
+                <xar:mlvar>&xar-modurl-ebulletin-admin-viewsubscribers;</xar:mlvar>
+            </xar:ml>
+            <p>
+                <xar:mlstring>It is <em>not</em> necessary for a user to be registered on your website in order to subscribe.  Anonymous users are not allowed to subscribe using emails owned by the registered users of your site.  A name is required for each subscriber.  Also, eBulletin has a ModifyConfig option to require unregistered users to validate subscription changes through email.  <em>Important:</em> if you use this option, you must copy <code>modules/ebulletin/contrib/ebval.php</code> to the top level of your website (in the same folder as <code>index.php</code>).</xar:mlstring>
+            </p>
+            <p>
+                <xar:mlstring>A separate Batch interface is provided for subscribing registered and nonregistered users.  The non-registered interface can accept a list of names and emails, one per line, in several different formats.  Notably, it can take the contents of a standard CSV (comma-separated) file if you have a large list of people to subscribe.  See the example provided below the text box.</xar:mlstring>
+            </p>
+            <p>
+                <xar:mlstring>Users may subscribe themselves using one of several methods:</xar:mlstring>
+            </p>
+            <ul style="list-style: disc;">
+                <li><xar:mlstring>If the <code>usermenu</code> hook is enabled, by a "Newsletter" tab in their Account section.  Note that enabling this hook also enables eBulletin's <code>create</code> hook.  See below.</xar:mlstring></li>
+                <li><xar:mlstring>The <code>ebulletin/subscription</code> block</xar:mlstring></li>
+                <li><xar:mlstring>eBulletin's <code>main</code> user function</xar:mlstring></li>
+            </ul>
+            <p>
+                <xar:mlstring>Or, if you have a legitimate mailing list, you could put it in the publication's <code>TO:</code> field and use it as an external tool to manage subscriptions.  If you do this, you may want to make that publication private.  Otherwise, users may end up subscribed to both lists and therefore receive duplicate copies of every issue.</xar:mlstring>
+            </p>
+        </li>
+        <li>
+            <xar:ml>
+                <xar:mlstring><em><a href="#(1)">Create a new issue</a> for a given publication as often as desired, whenever you want to send something out to your subscribers.</em></xar:mlstring>
+                <xar:mlvar>&xar-modurl-ebulletin-admin-viewissues;</xar:mlvar>
+            </xar:ml>
+            <p>
+                <xar:mlstring>eBulletin will then use your templates to generate HTML and/or text versions of your newsletter.  You can view, edit, or even regenerate issues whenever you want, even after you've published them. (In that case, it asks you for a confirmation first.)  Note that by modifying the Issue Date and then regenerating, you can effectively change the entire issue.</xar:mlstring>
+            </p>
+            <p>
+                <xar:mlstring>Whenever you're ready, press the <code>Publish</code> link.  This will show you a summary of the issue, including the list of emails it will be sent to.  Press the <code>Send</code> button to actually send the newsletter out.</xar:mlstring>
+            </p>
+        </li>
+    </ol>
+
+    <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
+    <ul>
+        <li><xar:mlstring><code>ebulletin/subscription</code> - Allow users to subscribe or unsubscribe from a block instead of going to eBulletin's main page.</xar:mlstring></li>
+    </ul>
+
+    <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
+
+    <ul>
+        <li><xar:mlstring><code>usermenu</code> - adds a "Newsletter" tab to your users' Account pages for ease of managing one's subscriptions</xar:mlstring></li>
+        <li><xar:mlstring><code>create</code> - automatically subscribes users to all public newsletters when they register on your website</xar:mlstring></li>
+    </ul>
+
+   <h3><xar:mlstring>Further Information</xar:mlstring></h3>
+   <p>
+      <xar:mlstring>Further information on the eBulletin module can be found at</xar:mlstring>
+   </p>
+   <ul style="list-style: disc;">
+      <li><a title="#xarML('eBulletin Module - Xaraya Extension 557')#" href="http://www.xaraya.com/index.php/release/557.html" target="_blank">Xaraya Extension and Releases</a> - <xar:mlstring>eBulletin module's extension page.  Click on the Version History tab at the bottom to get the latest release information.</xar:mlstring>
+      </li>
+      <li><a href="http://www.curtisfarnham.com/" target="_blank">www.curtisfarnham.com</a> - <xar:mlstring>Author's website</xar:mlstring>
+      </li>
+  </ul>
+  <p class="xar-sub">
+    <strong>&nbsp;<xar:mlstring>eBulletin module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 0.9.7&nbsp; 2005-11-21
+  </p>
+</div>
+</div>

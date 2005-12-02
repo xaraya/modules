@@ -1,0 +1,42 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Subscriber Validation</xar:mlstring></h2>
+<div style="margin: auto;"><xar:template file="statusmsg" type="module" />
+
+<xar:if condition="$phase eq 'val'">
+
+    <h3>Success!</h3>
+
+    <p>
+        <xar:ml>
+            <xar:mlstring>Subscription request for #(1) &lt;#(2)&gt; was successfully completed.</xar:mlstring>
+            <xar:mlvar>#$name#</xar:mlvar>
+            <xar:mlvar>#$email#</xar:mlvar>
+        </xar:ml>
+    </p>
+
+<xar:else />
+
+    <p>
+        <xar:mlstring>IMPORTANT: Since you are not a registered user of this website, we must verify your email address every time you modify your subscriptions.</xar:mlstring>
+    </p>
+
+    <p>
+        <xar:mlstring>An email has been sent to the address you entered.  To complete your subscription modifications, you MUST retrieve it and follow the instructions provided.</xar:mlstring>
+    </p>
+
+    <p><xar:mlstring>Some email providers may interpret our email as Spam or Bulk Mail.  Please check any corresponding mailboxes if you do not receive an email from us soon.  If you do not find it within 24 hours, please contact the website administrator.  To aid in locating the message, here are some details:</xar:mlstring></p>
+
+<pre>
+   FROM: #$adminname# &lt;#$adminemail#&gt;
+     TO: #$name# &lt;#$email#&gt;
+SUBJECT: #$subject#
+</pre>
+
+    <p><a href="&xar-modurl-ebulletin-user-main;"><xar:mlstring>Return to subscriptions page</xar:mlstring></a></p>
+
+</xar:if>
+
+</div>
+</div>

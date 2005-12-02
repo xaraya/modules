@@ -1,0 +1,19 @@
+Version 0.9.8 2005-11-26
+    - GUI tweaks
+    - documentation of date replacement feature in subject line
+
+Version 0.9.7 2005-11-21
+    - first "official" release
+    - M-A-J-O-R code review and cleanup, GUI upgrade, and rewrite
+    - synax review and attempt to follow Xaraya Coding Standards RFC
+    - added batch subscription editor and import tool
+    - added subscription block
+    - unregistered site users can also subscribe now
+    - supports module aliases now
+    - default template directory changed; default is compabile with xarPreCoreGetVarDirPath().
+    - saner handling of recipient emails (To, From, Reply-To, etc.)
+    - added a 'public' flag so arbitrary publications can be kept from user GUI displays
+    - option to make unregistered subscribers validate/confirm their addresses through email
+
+Version 0.9.5 2005-11-09
+    - first release

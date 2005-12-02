@@ -1,0 +1,121 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Newsletters</xar:mlstring></h2>
+<div style="margin: auto;"><xar:template file="statusmsg" type="module" />
+
+<p>
+    <xar:ml>
+        <xar:mlstring>#(1) produces email newsletters to keep you informed and involved.  Check the boxes below to subscribe.</xar:mlstring>
+        <xar:mlvar>#xarModGetVar('themes', 'SiteName')#</xar:mlvar>
+    </xar:ml>
+</p>
+
+<xar:if condition="$loggedin">
+    <p><xar:mlstring><em>To unsubscribe</em>, uncheck the boxes and press the Update Subscriptions button.</xar:mlstring></p>
+<xar:else />
+    <p><xar:mlstring><em>To unsubscribe</em>, use the same name and email as before.  Just leave the boxes unchecked and press the Update Subscriptions button.</xar:mlstring></p>
+</xar:if>
+
+
+<form action="&xar-modurl-ebulletin-user-subscribe;" method="post">
+<input type="hidden" name="authid" id="authid" value="#$authid#" />
+
+<fieldset>
+    <legend><xar:mlstring>Subscription Options</xar:mlstring></legend>
+
+    <div class="xar-form-input-wrapper">
+        <span class="xar-form-label" title="#xarML('Publications to subscribe to')#">
+            <xar:mlstring>Please subscribe me to:</xar:mlstring>
+        </span><br /><br />
+        <xar:if condition="empty($pubs)">
+            <xar:mlstring><em>Sorry, no publications are available at this time.</em></xar:mlstring>
+        <xar:else />
+            <div>
+                <xar:foreach in="$pubs" value="$pub">
+                    <xar:if condition="!empty($pub['subscribed'])">
+                        <input type="checkbox" name="subscriptions[#$pub['id']#]" id="publication_#$pub['id']#" checked="checked" />
+                    <xar:else />
+                        <input type="checkbox" name="subscriptions[#$pub['id']#]" id="publication_#$pub['id']#" />
+                    </xar:if>
+                    <label for="publication_#$pub['id']#">
+                        <em>#$pub['name']#</em>
+                        <xar:if condition="!empty($pub['desc'])">
+                            - #$pub['desc']#
+                        </xar:if>
+                    </label><br />
+                </xar:foreach>
+            </div>
+        </xar:if>
+    </div>
+
+</fieldset>
+<fieldset>
+    <legend><xar:mlstring>Identification</xar:mlstring></legend>
+
+
+    <div class="xar-form-input-wrapper">
+        <label for="name" class="xar-form-label" title="#xarML('Your Name')#">
+            <xar:mlstring>Full Name:</xar:mlstring>
+        </label>
+        <xar:if condition="$loggedin">
+            #$name#
+        <xar:else />
+            <input type="text" name="name" id="name" maxlength="255" class="xar-form-textlong" />
+            <span class="xar-sub"><xar:mlstring>(Required)</xar:mlstring></span>
+            <xar:if condition="!empty($invalid['name'])">
+                <div class="xar-error">
+                    <xar:mlstring>ERROR! Name cannot be blank.</xar:mlstring>
+                </div>
+            </xar:if>
+        </xar:if>
+    </div>
+
+    <div class="xar-form-input-wrapper">
+        <label for="email" class="xar-form-label" title="#xarML('Your Email Address')#">
+            <xar:mlstring>Email Address:</xar:mlstring>
+        </label>
+        <xar:if condition="$loggedin">
+            #$email#
+        <xar:else />
+            <input type="text" name="email" id="email" maxlength="255" class="xar-form-textlong" />
+            <span class="xar-sub"><xar:mlstring>(Required)</xar:mlstring></span>
+            <xar:if condition="!empty($invalid['name'])">
+                <div class="xar-error">
+                    <xar:mlstring>ERROR! Email blank or invalid.</xar:mlstring>
+                </div>
+            </xar:if>
+        </xar:if>
+    </div>
+
+    <xar:if condition="$loggedin">
+        <div class="xar-form-input-wrapper xar-sub">
+            <xar:ml>
+                <xar:mlstring>To modify this information, please visit your <a href="#(1)">account settings</a> page.</xar:mlstring>
+                <xar:mlvar>#$accounturl#</xar:mlvar>
+            </xar:ml>
+        </div>
+    </xar:if>
+</fieldset>
+
+<fieldset>
+        <div class="xar-form-input-wrapper-after">
+             <input type="submit" value="#xarML('Update Subscriptions')#"  tabindex="2" />
+        </div>
+</fieldset>
+
+<xar:if condition="!empty($hidden)">
+    <xar:foreach in="$hidden" value="$pub">
+        <xar:if condition="!empty($pub['subscribed'])">
+            <input type="hidden" name="subscriptions[#$pub['id']#]" id="publication_#$pub['id']#" />
+        </xar:if>
+    </xar:foreach>
+</xar:if>
+
+</form>
+
+
+
+
+</div>
+</div>
