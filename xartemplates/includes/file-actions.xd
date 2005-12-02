@@ -1,0 +1,38 @@
+<xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
+
+<xar:if condition="xarTplAddStyleLink('files', 'navtabs')"></xar:if>
+<dl class="xar-tabs">
+    <dt class="help">
+        <xar:mlstring>Actions</xar:mlstring>: 
+    </dt>
+
+	<xar:if condition="!empty($options['view'])">
+		<dd>
+			<a href="#xarModURL('files', 'user', 'view', array('path' => $item['urlpath']))#" title="#xarML('View this file (external window)')#" target="_blank"><xar:mlstring>View</xar:mlstring></a>
+		</dd>
+		<dd>
+			<a href="#xarModURL('files', 'user', 'download', array('path' => $item['urlpath']))#" title="#xarML('Download this file')#"><xar:mlstring>Download</xar:mlstring></a>
+		</dd>
+	</xar:if>
+
+	<xar:if condition="!empty($options['edit'])">
+		<dd>
+			<a href="#xarModURL('files', 'user', 'modify', array('path' => $item['urlpath']))#" title="#xarML('Edit this file')#"><xar:mlstring>Edit</xar:mlstring></a>
+		</dd>
+	</xar:if>
+
+	<xar:if condition="!empty($options['delete'])">
+		<dd>
+			<xar:if condition="$item['is_dir']">
+				<a href="#xarModURL('files', 'user', 'rename', array('path' => $item['urlpath'], 'itemtype' => 'folder'))#" title="#xarML('Rename')#"><xar:mlstring>Rename</xar:mlstring></a>
+			<xar:else />
+				<a href="#xarModURL('files', 'user', 'rename', array('path' => $item['urlpath'], 'itemtype' => 'file'))#" title="#xarML('Rename')#"><xar:mlstring>Rename</xar:mlstring></a>
+			</xar:if>
+		</dd>
+		<dd>
+			<a href="#xarModURL('files', 'user', 'delete', array('path' => $item['urlpath']))#" title="#xarML('Delete')#"><xar:mlstring>Delete</xar:mlstring></a>
+		</dd>
+	</xar:if>
+
+</dl>
+<br />

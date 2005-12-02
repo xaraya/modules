@@ -1,0 +1,10 @@
+Version 0.4.0 2005-11-13
+   - first "official" release
+   - filesystem functions are now Windows compatible
+   - added Rename, New File, and Edit functions
+   - major GUI upgrade
+   - code review and cleanup
+
+Version 0.3.0 2005-11-10
+   - first release
+

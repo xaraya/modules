@@ -1,0 +1,24 @@
+Mime images
+--------------
+
+Background:
+
+This module uses mimetype images from the mime module.  However, the mime
+module does not make thumbnails suitable for file listings in this module.
+Therefore, the standard images from the mime module have been resized and
+included in the mime/ directory.  Copy the contrib/mime/ folder to
+/themes/your-theme/modules/ or copy the images from the mime/images/
+folder to /modules/mime/xarimages/.
+
+A shell script for resizing images has also been included.  See
+contrib/resize-images.sh.  This requires ImageMagick's convert utility.
+
+
+Summary (in *nix-speak):
+
+cp -a contrib/mime/ /path/to/your/site/themes/your-theme/modules/
+
+ ** or **
+
+cp -a contrib/mime/images/* /path/to/your/site/modules/mime/xarimages/
+

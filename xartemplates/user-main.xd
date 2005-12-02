@@ -1,0 +1,53 @@
+<xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
+
+<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
+<div class="xar-mod-body"><h2><xar:template file="file-pager" type="module" /></h2>
+<div style="margin: auto;"><xar:template file="statusmsg" type="module" />
+
+<xar:set name="$folderactions"><xar:template file="folder-actions" type="module" /></xar:set>
+#$folderactions#
+
+<table width="100%">
+<tr>
+    <th colspan="2"><xar:mlstring>File</xar:mlstring></th>
+    <th><xar:mlstring>Size</xar:mlstring></th>
+    <th><xar:mlstring>Date</xar:mlstring></th>
+</tr>
+
+<xar:comment> *** SHOW FILES IN THIS FOLDER *** </xar:comment>
+<xar:foreach in="$files" value="$item">
+<tr>
+    <xar:if condition="$item['is_dir']">
+        <td width="13">
+            <a href="#xarModURL('files', 'user', 'display', array('path' => $item['urlpath']))#" title="#xarML('Details')#"><img src="#xarTplGetImage('fs-directory-13x16.png')#" alt="#xarML('dir')#" width="13" height="16" /></a>
+        </td>
+        <td>
+            <a href="#xarModURL('files', 'user', 'main', array('path' => $item['urlpath']))#" title="#xarML('Enter this directory')#">
+                <xar:if condition="$item['file'] eq '.'">
+                    <xar:mlstring>(Current Directory)</xar:mlstring>
+                <xar:elseif condition="$item['file'] eq '..'" />
+                    <xar:mlstring>(Parent Directory)</xar:mlstring>
+                <xar:else />
+                    #$item['file']#
+                </xar:if>
+            </a>
+        </td>
+    <xar:else />
+        <td width="13">
+            <a href="#xarModURL('files', 'user', 'display', array('path' => $item['urlpath']))#" title="#xarML('Details')#"><img src="#$item['image_small']#" alt="#xarML('file')#" width="13" height="16" /></a>
+        </td>
+        <td>
+            <a href="#xarModURL('files', 'user', 'download', array('path' => $item['urlpath']))#" title="#xarML('Download this file')#">#$item['file']#</a>
+        </td>
+    </xar:if>
+    <td width="10%">#$item['hrsize']#</td>
+    <td width="25%">#$item['hrmodified']#</td>
+</tr>
+</xar:foreach>
+</table>
+
+
+<xar:if condition="count($files) gt 20">#$folderactions#</xar:if>
+
+</div>
+</div>

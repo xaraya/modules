@@ -1,0 +1,7 @@
+Author:
+Curtis Farnham <curtis@farnham.com>
+
+Thanks to:
+Web hosts Site5, IX Webhosting, Lunarpages, and Crosswebhost
+	(Whose triumphs and tragedies regarding their file managers gave me direction
+	in designing this one.)
