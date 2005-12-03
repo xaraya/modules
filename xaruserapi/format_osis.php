@@ -1,21 +1,21 @@
 <?php
 /**
  * File: $Id:
- * 
+ *
  * Format a string for OSIS format
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage bible
- * @author curtisdf 
+ * @author curtisdf
  */
 /**
  * format OSIS string
- * 
- * @author curtisdf 
+ *
+ * @author curtisdf
  * @param  $args ['html'] results array
  * @param  $args ['strongs'] boolean, whether or not to format with strong's numbers
  * @returns string
@@ -47,7 +47,7 @@ function bible_userapi_format_osis($args)
             } elseif ($matches[1][$index] == 'H') {
                 $sname = 'StrongsHebrew';
             }
-            $url = xarModURL('bible', 'user', 'strongs', array('sname' => $sname, 'query' => $matches[2][$index], 'string' => $matches[3][$index]));
+            $url = xarModURL('bible', 'user', 'dictionary', array('sname' => $sname, 'query' => $matches[2][$index], 'string' => $matches[3][$index]));
             $html = str_replace($match, "<a href=\"$url\">".$matches[3][$index]."</a>", $html);
         }
     }
@@ -73,6 +73,6 @@ function bible_userapi_format_osis($args)
 
     return $html;
 
-} 
+}
 
 ?>

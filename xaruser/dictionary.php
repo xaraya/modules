@@ -142,12 +142,13 @@ function bible_user_dictionary($args)
                 $lang = $matches[2][$index][0];
                 $num = $matches[3][$index][0];
 
-                // duct tape and bailing wire
+                // apply duct tape and bailing wire
                 $lang = ucfirst(strtolower($lang));
                 $this_sname = "Strongs$lang";
+                $num = preg_replace("/^0+/", '', $num);
+
                 $url = xarModURL('bible', 'user', 'dictionary', array(
-                    'sname' => $this_sname,
-                    'query' => preg_replace("/^0*/", '', $matches[3][$index][0])
+                    'sname' => $this_sname, 'query' => $num
                 ));
 
                 // remove entries from original
@@ -160,9 +161,15 @@ function bible_user_dictionary($args)
                     'url'   => $url,
                     'num'   => $num
                 );
-                // sort and reindex
-                ksort($results['see'][$lang]);
-                $results['see'][$lang] = array_slice($results['see'][$lang], 0);
+            } // foreach "See LANG for DDDDDD" match
+
+            // sort and re-index "See LANG for DDDDDD" matches
+            if (!empty($results['see'])) {
+                foreach ($results['see'] as $lang => $row) {
+                    ksort($row);
+                    $row = array_slice($row, 0);
+                    $results['see'][$lang] = $row;
+                }
             }
 
             $results['def'] = $def;
