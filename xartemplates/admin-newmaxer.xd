@@ -1,0 +1,128 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<!-- This Javascript will check for required fields before the form is submitted. -->
+<xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
+<script type="text/javascript">
+<!--
+    // Enter name of mandatory fields
+    var fieldRequired = Array("ric", "maxernumber");
+    // Enter field description to appear in the dialog box
+    var fieldDescription = Array("RIC", "MaxerNumber");
+// -->
+</script>
+
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Maxer Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>New</xar:mlstring></h2>
+
+    <xar:comment>
+    ('personid',  'int:1:', $personid,  $personid,  XARVAR_NOT_REQUIRED)) return;
+
+    if (!xarVarFetch('function',    'int:1:', $function,    $function,    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('maxerstatus',    'int:1:', $maxerstatus,    $maxerstatus,    XARVAR_NOT_REQUIRED)) return;
+    </xar:comment>
+
+    <form method="post" action="&xar-modurl-maxercalls-admin-createmaxer;" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
+        <fieldset>
+            <legend><xar:mlstring>New maxer</xar:mlstring></legend>
+
+            <div class="xar-form-input-wrapper">
+                 <label for="ric" class="xar-form-label" title="#xarML('This is universal unique identification number')#">
+                        <xar:mlstring>RIC:</xar:mlstring>
+                 </label>
+                 <xar:if condition="isset($ric)">
+                     <input type="text" name="ric" id="ric" value="#$ric#" maxlength="32" class="xar-form-textmedium" />
+                 <xar:else />
+                        <input type="text" name="ric" id="ric" value="#$item.ric#" maxlength="32" class="xar-form-textmedium" />
+                 </xar:if>
+                 <xar:if condition="!empty($invalid['ric'])">
+                     <div class="xar-error">
+                            <xar:mlstring>ERROR! This is not a valid ric</xar:mlstring>
+                     </div>
+                 <xar:elseif condition="!empty($invalid['duplicate'])"/>
+                     <div class="xar-error">
+                            <xar:mlstring>ERROR! This is a duplicate ric</xar:mlstring>
+                     </div>
+                 </xar:if>
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                <label for="maxernumber" class="xar-form-label" title="#xarML('This is the number the maxer is programmed to respond to')#">
+                    <xar:mlstring>Number:</xar:mlstring>
+                </label>
+                <xar:if condition="isset($maxernumber)">
+                    <input type="text" name="maxernumber" id="maxernumber" value="#$maxernumber#" maxlength="5" class="xar-form-textshort" />
+                <xar:else />
+                    <input type="text" name="maxernumber" id="maxernumber" value="#$item.maxernumber#" maxlength="5" class="xar-form-textshort" />
+                </xar:if>
+                <xar:if condition="!empty($invalid['maxernumber'])">
+                    <div class="xar-error">
+                        <xar:mlstring>ERROR! This is not a valid maxernumber</xar:mlstring>
+                    </div>
+                </xar:if>
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                 <label for="program" class="xar-form-label" title="#xarML('The function that has been given to this maxer')#">
+                        <xar:mlstring>Programmed for:</xar:mlstring>
+                 </label>
+             <xar:if condition="isset($program)">
+                 <input type="text" name="program" id="program" value="#$program#" maxlength="100" class="xar-form-textlong" />
+             <xar:else />
+                    <input type="text" name="program" id="program" value="#$item.program#" maxlength="32" class="xar-form-textlong" />
+             </xar:if>
+             <xar:if condition="!empty($invalid['program'])">
+                 <div class="xar-error">
+                        <xar:mlstring>ERROR! This is not a valid ric</xar:mlstring>
+                 </div>
+             </xar:if>
+            </div>
+            <div class="xar-form-input-wrapper">
+                 <label for="remark" class="xar-form-label" title="#xarML('Remark on this maxer')#">
+                        <xar:mlstring>Remarks:</xar:mlstring>
+                 </label>
+             <xar:if condition="isset($remark)">
+                <textarea name="remark" id="remark" wrap="virtual" rows="5" cols="40" value="#$remark#"></textarea>
+             <xar:else />
+                <textarea name="remark" id="remark" wrap="virtual" rows="5" cols="40" value="#$item.remark#"></textarea>
+             </xar:if>
+             <xar:if condition="!empty($invalid['remark'])">
+                 <div class="xar-error">
+                        <xar:mlstring>ERROR! This is not a valid remark</xar:mlstring>
+                 </div>
+             </xar:if>
+            </div>
+            <div class="xar-form-input-wrapper">
+                 <label for="personid" class="xar-form-label" title="#xarML('Carrier')#">
+                        <xar:mlstring>Person carrying this maxer:</xar:mlstring>
+                 </label>
+                 <xar:data-input name="personid" type="418" value="$personid" />
+            </div>
+        </fieldset>
+        <xar:if condition="!empty($hookoutput)">
+         <fieldset>
+            <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
+                <xar:foreach in="$hookoutput" key="$hookmodule">
+              <!--
+                You can display individual hooks if you want using xar:if statements
+
+                <xar:if condition="($hookmodule eq 'categories') and !empty($hookmodule)">
+                    #$hookoutput['categories']#
+                </xar:if>
+
+                or display them all with one command as follows
+                -->
+                #$hookoutput[$hookmodule]#
+                </xar:foreach>
+        </fieldset>
+        </xar:if>
+        <fieldset>
+            <div class="xar-form-input-wrapper-after">
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <input type="submit" value="#xarML('Add Maxer')#" />
+            </div>
+        </fieldset>
+    </form>
+</div>
