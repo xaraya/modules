@@ -34,32 +34,29 @@ function bible_adminapi_install($args)
     }
 
     // get text data
-    $text = xarModAPIFunc('bible', 'user', 'get',
-                          array('tid' => $tid, 'state' => 'all'));
+    $text = xarModAPIFunc(
+        'bible', 'user', 'get', array('tid' => $tid, 'state' => 'all')
+    );
+    if (empty($text) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
     // make sure file matches what's in the record
     $textdir = xarModGetVar('bible', 'textdir');
     if (!file_exists("$textdir/$text[file]") ||
         md5_file("$textdir/$text[file]") != $text['md5']) {
-        $msg = xarML('File #(1) does not exist or has changed since record was last updated',
-            $text['file']);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-            new SystemException($msg));
+        $msg = xarML(
+            'File #(1) does not exist or has changed since record was last updated', $text['file']
+        );
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
-
-    // Check for exceptions
-    if (!isset($text) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     // security check
-    if (!xarSecurityCheck('AddBible', 1, 'Text', "$text[sname]:$tid")) {
-        return;
-    }
+    if (!xarSecurityCheck('AddBible', 1, 'Text', "$text[sname]:$tid")) return;
 
     // get database and table parameters
-    list($dbconn,
-         $texttable) = xarModAPIFunc('bible', 'user', 'getdbconn', array('tid' => $tid));
-
+    list($dbconn, $texttable) = xarModAPIFunc(
+        'bible', 'user', 'getdbconn', array('tid' => $tid)
+    );
     xarDBLoadTableMaintenanceAPI();
 
     // if table already exists, remove it so we can re-create it
@@ -96,8 +93,17 @@ function bible_adminapi_install($args)
     $result = $dbconn->Execute($query);
     if (!$result) return;
 
+    // handle gzipped texts too
+    if (substr($text['file'], strlen($text['file'])-3) == '.gz') {
+        $openfunc = 'gzopen';
+        $getsfunc = 'gzgets';
+    } else {
+        $openfunc = 'fopen';
+        $getsfunc = 'fgets';
+    }
+
     // load file into database
-    $fd = fopen("$textdir/$text[file]", 'r');
+    $fd = $openfunc("$textdir/$text[file]", 'r');
 
     // how we add depends on text type
     if ($text['type'] == 1) {
@@ -123,7 +129,7 @@ function bible_adminapi_install($args)
         while (!feof($fd)) {
 
             // read the next line from the file
-            $buffer = trim(fgets($fd));
+            $buffer = trim($getsfunc($fd));
 
             // skip to next line if empty
             if (empty($buffer)) continue;
@@ -201,7 +207,7 @@ function bible_adminapi_install($args)
         while (!feof($fd)) {
 
             // read the next line from the file
-            $buffer = fgets($fd);
+            $buffer = $getsfunc($fd);
 
             // if we match the '$$T0000000' lines...
             if (preg_match("/^\s*\\$\\$\w\d+\s*\$/", $buffer)) {

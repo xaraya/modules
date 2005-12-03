@@ -98,7 +98,7 @@ function bible_userapi_get($args)
     // now get config file details, if there is one
     if ($config_exists) {
         $textdir = xarModGetVar('bible', 'textdir');
-        $configfile = "$textdir/".preg_replace("/\.(vpl|dat)\$/i", '.conf', $file);
+        $configfile = "$textdir/".preg_replace("/\.(vpl\.gz|dat\.gz|vpl|dat)\$/i", '.conf', $file);
         if (file_exists($configfile)) {
             list($junk, $junk, $junk, $config) = xarModAPIFunc(
                 'bible', 'user', 'parseconffile', array('file' => $configfile)

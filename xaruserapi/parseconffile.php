@@ -1,16 +1,16 @@
 <?php
 /**
  * File: $Id:
- * 
+ *
  * Parse a Sword .conf file, INI style
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage bible
- * @author curtisdf 
+ * @author curtisdf
  */
 /**
  * parse .conf file from Sword
@@ -29,14 +29,14 @@ function bible_userapi_parseconffile($args)
     $invalid = array();
     if (!isset($file) || !file_exists($file)) {
         $invalid[] = 'file';
-    } 
+    }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
             join(', ', $invalid), 'admin', 'parseconffile', 'Bible');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException($msg));
         return;
-    } 
+    }
 
     // get contents of file
     $fd = fopen($file, 'r');
@@ -81,6 +81,6 @@ function bible_userapi_parseconffile($args)
     if (isset($config['description'])) $lname = $config['description'];
 
     return array($sname, $lname, $md5, $config);
-} 
+}
 
 ?>
