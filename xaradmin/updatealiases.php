@@ -1,35 +1,32 @@
 <?php
 /**
  * File: $Id:
- * 
+ *
  * Update book aliases
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage bible
- * @author curtisdf 
+ * @author curtisdf
  */
 function bible_admin_updatealiases()
 {
-    if (!xarVarFetch('aliases', 'array', $aliases, array())) return;
-
-    // confirm auth code
+    // security checks
+    if (!xarSecurityCheck('EditBible')) return;
     if (!xarSecConfirmAuthKey()) return;
 
-    // security check
-    if (!xarSecurityCheck('EditBible')) {
-        return;
-    }
+    // get HTTP vars
+    if (!xarVarFetch('aliases', 'array', $aliases, array())) return;
 
     // save via api function
     xarModAPIFunc('bible', 'admin', 'updatealiases', array('aliases' => $aliases));
-    if (xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+    if (xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
-    // This function generated no output, and so now it is complete we redirect
-    // the user to an appropriate page for them to carry on their work
+    // set status message and redirect
+    xarSessionSetVar('statusmsg', xarML('Aliases successfully updated!'));
     xarResponseRedirect(xarModURL('bible', 'admin', 'aliases'));
 
     // Return

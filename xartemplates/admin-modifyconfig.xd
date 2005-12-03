@@ -94,8 +94,6 @@
             <xar:else/>
                 <input type="checkbox" onclick="this.form.submit();" name="altdb" id="altdb" value="1" />
             </xar:if>
-            <br />
-            <span class="xar-sub"><xar:mlstring>(Database must be created manually)</xar:mlstring></span>
         </div>
 
     </fieldset>
@@ -103,6 +101,10 @@
     <xar:if condition="$altdb">
         <fieldset>
             <legend><xar:mlstring>Database Options</xar:mlstring></legend>
+
+            <div class="xar-form-input-wrapper">
+                <xar:mlstring>NOTE: Database must be created manually</xar:mlstring>
+            </div>
 
             <div class="xar-form-input-wrapper">
                 <label for="altdbhost" class="xar-form-label" title="#xarML('Database hostname')#">

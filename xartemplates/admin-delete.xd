@@ -4,28 +4,51 @@
 <div class="xar-mod-body"><h2><xar:mlstring>Delete a Text</xar:mlstring></h2>
 <div style="margin: auto;"><xar:template file="admin-menu" type="module" />
 
-<div align="center">#$confirmtext#</div><br />
+<h3 class="xar-align-center"><xar:mlstring>Confirm deleting this text?</xar:mlstring></h3>
 <form method="post" action="&xar-modurl-bible-admin-delete;">
-    <input type="hidden" name="authid" id="authid" value="#$authid#" />
-    <input type="hidden" name="confirm" id="confirm" value="true" />
-    <input type="hidden" name="tid" id="tid" value="#$tid#" />
-    <input type="hidden" name="return" id="return" value="#$return#" />
 
-    <table border="0" width="300">
-        <tr>
-            <td>#$textid#:</td>
-            <td>#$tid#</td>
-        </tr>
-        <tr>
-            <td>#$snamelabel#:</td>
-            <td>#$snamevalue#</td>
-        </tr>
-        <tr>
-            <td colspan="2" align="center"><br />
-                <input type="submit" value="#$confirmbutton#"  />
-            </td>
-        </tr>
-    </table>
+    <fieldset>
+        <legend>
+            <xar:mlstring>Text marked for deletion</xar:mlstring>
+        </legend>
+        <div class="xar-form-input-wrapper">
+            <label for="tid" class="xar-form-label" title="#xarML('Text ID')#">
+            <xar:mlstring>ID:</xar:mlstring>
+            </label>
+            #$tid#
+        </div>
+
+        <div class="xar-form-input-wrapper">
+            <label for="sname" class="xar-form-label" title="#xarML('Name')#">
+            <xar:mlstring>Name:</xar:mlstring>
+            </label>
+            #$text.sname#
+        </div>
+
+        <div class="xar-form-input-wrapper">
+            <label for="desc" class="xar-form-label" title="#xarML('Description')#">
+            <xar:mlstring>Description:</xar:mlstring>
+            </label>
+            #$text.lname#
+        </div>
+
+    </fieldset>
+
+    <fieldset>
+        <div class="xar-form-input-wrapper-after">
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="hidden" name="confirm" id="confirm" value="true" />
+            <input type="hidden" name="tid" id="tid" value="#$tid#" />
+            <input type="hidden" name="return" id="return" value="#$return#" />
+            <input type="submit" value="#xarML('Confirm')#" />
+        </div>
+        <div class="xar-form-input-wrapper-before">
+            <a href="#$return#">
+                <xar:mlstring>Cancel and Return</xar:mlstring>
+            </a>
+            </div>
+    </fieldset>
+
 </form>
 </div>
 </div>

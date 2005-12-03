@@ -20,6 +20,7 @@ function bible_admin_activate($args)
 {
     extract($args);
 
+    // get HTTP vars
     if (!xarVarFetch('tid', 'int:1:', $tid)) return;
     if (!xarVarFetch('return', 'str:1:', $return, xarServerGetVar('HTTP_REFERER'), XARVAR_NOT_REQUIRED)) return;
 
@@ -27,28 +28,22 @@ function bible_admin_activate($args)
     if (empty($return)) $return = '';
 
     // get text so we can do security check
-    $text = xarModAPIFunc('bible', 'user', 'get',
-                          array('tid' => $tid));
-
-    // Check for exceptions
-    if (!isset($text) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+    $text = xarModAPIFunc('bible', 'user', 'get', array('tid' => $tid));
+    if (!isset($text) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
     // security check
-    if (!xarSecurityCheck('AddBible', 1, 'Text', "$text[sname]:$tid")) {
-        return;
-    }
+    if (!xarSecurityCheck('AddBible', 1, 'Text', "$text[sname]:$tid")) return;
 
     // change state
-    if (!xarModAPIFunc('bible', 'admin', 'setstate',
-                       array('tid' => $tid, 'newstate' => 2))) {
-        return;
-    }
+    if (!xarModAPIFunc(
+        'bible', 'admin', 'setstate', array('tid' => $tid, 'newstate' => 2))
+    ) return;
 
     // now send to the page where we create the index
+    xarSessionSetVar('statusmsg', xarML('Text successfully activated!'));
     if (empty($return)) $return = xarModURL('bible', 'admin', 'view');
     xarResponseRedirect($return);
 
-    // Return
     return true;
 }
 

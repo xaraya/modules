@@ -6,6 +6,7 @@
 
 
 <form method="post" action="&xar-modurl-bible-admin-update;">
+
 <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
     <input type="hidden" name="return" id="return" value="#$return#" />
 

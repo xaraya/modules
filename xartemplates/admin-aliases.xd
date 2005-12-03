@@ -11,7 +11,9 @@
 <form method="post" action="#xarModUrl('bible', 'admin', 'updatealiases')#">
 <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
 
-<p><input type="submit" value="#xarML('Update')#" /></p>
+<div class="xar-form-input-wrapper-after">
+    <input type="submit" value="#xarML('Update')#" />
+</div>
 
 <table width="100%">
     <tr>
@@ -33,7 +35,9 @@
     </xar:foreach>
 </table>
 
-<p><input type="submit" value="#xarML('Update')#" /></p>
+<div class="xar-form-input-wrapper-after">
+    <input type="submit" value="#xarML('Update')#" />
+</div>
 
 </form>
 
