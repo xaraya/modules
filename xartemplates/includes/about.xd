@@ -1,0 +1,53 @@
+            <h3><xar:mlstring>About the</xar:mlstring> #$text['sname']#</h3>
+
+            <table width="100%" acellspacing="3">
+            <xar:if condition="!empty($text['description'])">
+                <tr>
+                    <td style="font-weight: bold;"><xar:mlstring>Description</xar:mlstring>:</td>
+                    <td>#$text['description']#</td>
+                </tr>
+            </xar:if>
+            <xar:if condition="!empty($text['lang'])">
+                <tr>
+                    <td style="font-weight: bold;"><xar:mlstring>Language</xar:mlstring>:</td>
+                    <td>#$text['lang']#</td>
+                </tr>
+            </xar:if>
+            <xar:if condition="!empty($text['about'])">
+                <tr>
+                    <td colspan="2">
+                        <xar:set name="$pretty_about">$text['about'];</xar:set>
+                        <xar:set name="$pretty_about">str_replace('&#92;par', '<br />', $pretty_about);</xar:set>
+                        <xar:set name="$pretty_about">preg_replace("/&#92;\w*/", '', $pretty_about);</xar:set>
+                        <span style="font-weight: bold;"><xar:mlstring>About</xar:mlstring>:</span><br />
+                        <div style="text-align: justify;">#$pretty_about#</div>
+                    </td>
+                </tr>
+            </xar:if>
+            <xar:if condition="!empty($text['sourcetype'])">
+                <tr>
+                    <td style="font-weight: bold;"><xar:mlstring>Source Type</xar:mlstring>:</td>
+                    <td>#$text['sourcetype']#</td>
+                </tr>
+            </xar:if>
+            <xar:if condition="!empty($text['distributionlicense'])">
+                <tr>
+                    <td style="font-weight: bold;"><xar:mlstring>License</xar:mlstring>:</td>
+                    <td>#$text['distributionlicense']#</td>
+                </tr>
+            </xar:if>
+            <xar:if condition="!empty($text['encoding'])">
+                <tr>
+                    <td style="font-weight: bold;"><xar:mlstring>Encoding</xar:mlstring>:</td>
+                    <td>#$text['encoding']#</td>
+                </tr>
+            </xar:if>
+            <xar:if condition="!empty($text['lcsh'])">
+                <tr>
+                    <td style="font-weight: bold;"><xar:mlstring>LCSH</xar:mlstring>:</td>
+                    <td>#$text['lcsh']#</td>
+                </tr>
+            </xar:if>
+            </table>
+
+            <br /><br />
