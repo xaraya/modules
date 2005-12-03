@@ -63,12 +63,7 @@ function bible_userapi_encode_shorturl($args)
             $path .= $join . 'showcontext=1';
             $join = '&';
         }
-        if ($func == 'search') {
-            $db_numitems = xarModGetUserVar('bible', 'user_searchversesperpage');
-        } else if ($func == 'lookup') {
-            $db_numitems = xarModGetUserVar('bible', 'user_lookupversesperpage');
-        }
-        if (isset($numitems) && $numitems != $db_numitems) {
+        if (isset($numitems)) {
             $path .= $join . 'numitems=' . $numitems;
             $join = '&';
         }

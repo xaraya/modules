@@ -136,41 +136,35 @@ function bible_user_dictionary($args)
             $def = $results['def'];
             preg_match_all("/(see\s+(hebrew|greek)\s+for\s+)(\d+)/i", $def, $matches, PREG_OFFSET_CAPTURE);
 
-            // reverse order of matches to make replacing easier
-            foreach ($matches as $index => $set) {
-                $matches[$index] = array_reverse($set);
-            }
-
             foreach ($matches[0] as $index => $match) {
-                $args = array();
-                // figure out if we need hebrew or greek
-                if (preg_match("/^greek\$/i", $matches[2][$index][0])) {
-                    $this_sname = 'StrongsGreek';
-                } elseif (preg_match("/^hebrew\$/i", $matches[2][$index][0])) {
-                    $this_sname = 'StrongsHebrew';
-                } else {
-                    $this_sname = $sname;
-                }
-                // make sure we don't link to a word that doesn't exist
-                if (($this_sname == 'StrongsGreek' && $matches[3][$index][0] > 5624) ||
-                    ($this_sname == 'StrongsHebrew' && $matches[3][$index][0] > 8674)) {
-                    continue;
-                }
-                $args['sname'] = $this_sname;
-                $args['query'] = preg_replace("/^0*/", '', $matches[3][$index][0]);
-                $url = xarModURL('bible', 'user', 'dictionary', $args);
+                // get vars from this match
+                $line = $matches[0][$index][0];
+                $lang = $matches[2][$index][0];
+                $num = $matches[3][$index][0];
 
-                $seefor = ucfirst($matches[1][$index][0]);
-                $seefor = str_replace('HEBREW', 'Hebrew', $seefor);
-                $seefor = str_replace('GREEK', 'Greek', $seefor);
-                $replace = "$seefor <a href=\"$url\">".$matches[3][$index][0]."</a>.";
-                $def = substr_replace($def, $replace, $match[1], strlen($match[0]));
+                // duct tape and bailing wire
+                $lang = ucfirst(strtolower($lang));
+                $this_sname = "Strongs$lang";
+                $url = xarModURL('bible', 'user', 'dictionary', array(
+                    'sname' => $this_sname,
+                    'query' => preg_replace("/^0*/", '', $matches[3][$index][0])
+                ));
+
+                // remove entries from original
+                $def = str_replace($line, '', $def);
+                $def = trim($def);
+
+                // append an array of data for "see LANG for DDDDD" links
+                $results['see'][$lang][$num] = array(
+                    'sname' => $this_sname,
+                    'url'   => $url,
+                    'num'   => $num
+                );
+                // sort and reindex
+                ksort($results['see'][$lang]);
+                $results['see'][$lang] = array_slice($results['see'][$lang], 0);
             }
 
-            // add line break before the first "see LANG for DDDDD"
-            if (!empty($match[1])) {
-                $def = substr_replace($def, '<br />', $match[1], 0);
-            }
             $results['def'] = $def;
         }
 
@@ -221,11 +215,23 @@ function bible_user_dictionary($args)
             $numitems = xarModGetVar('bible', 'user_wordsperpage');
         }
 
+        // get pager
+        $pager = xarTplGetPager(
+            $startnum,
+            xarModAPIFunc('bible', 'user', 'countwords', array('sname' => $sname)),
+            xarModURL('bible', 'user', 'dictionary', array('sname' => $sname, 'startnum' => '%%', 'numitems' => $numitems)),
+            $numitems
+        );
+
         // get words
         $results = xarModAPIFunc('bible', 'user', 'lookupdictionary',
             array('startnum' => $startnum, 'numitems' => $numitems, 'sname' => $sname)
         );
         if (empty($results) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+
+        // how many rows to display per column in our table?
+        $cols = 2; // make this dynamic?
+        $rowpercol = ceil(count($results)/$cols);
 
         // add links
         foreach ($results as $index => $result) {
@@ -244,6 +250,8 @@ function bible_user_dictionary($args)
         $data['sname'] = $sname;
         $data['query'] = '';
         $data['results'] = &$results;
+        $data['rowpercol'] = $rowpercol;
+        $data['pager'] = &$pager;
 
         break;
 

@@ -30,9 +30,7 @@
                 <xar:mlstring>Word or Number</xar:mlstring>
             </label>
             <input type="text" name="query" value="#$query#" class="xar-form-textlong" />
-            <div class="xar-form-input-wrapper-after xar-sub">
-                <xar:mlstring>(Leave blank to see index)</xar:mlstring>
-            </div>
+            <span class="xar-sub"><xar:mlstring>(Leave blank for word index)</xar:mlstring></span>
         </div>
 
         <div class="xar-form-input-wrapper-after">
@@ -45,22 +43,49 @@
 
 <xar:if condition="$displaytype eq 'view'">
 
-    <h2>#$text['lname']#</h2>
+    <h2>#$text.lname#</h2>
 
     <xar:if condition="!empty($string)">
         <h3>"#$string#"</h3>
     </xar:if>
 
     <xar:if condition="!empty($results)">
-        <h3>#$results['num']# - #$results['word']#</h3>
+        <h3>#$results.num# - #$results.word#</h3>
 
-        <b><xar:mlstring>Pronunciation Key</xar:mlstring>:</b> #$results['pron']#
+        <b><xar:mlstring>Pronunciation</xar:mlstring>:</b> #$results.pron#
         <br /><br />
 
         <b><xar:mlstring>Definition</xar:mlstring>:</b><br />
         <div class="bible-strongs-definition">
-            <xar:set name="def">nl2br($results['def']);</xar:set>
-            #$def#
+            #$results.def#
+
+            <xar:if condition="!empty($results.see)">
+                <br /><br />
+                <xar:foreach in="$results.see" key="$lang" value="$row">
+                    <xar:ml>
+                        <xar:mlstring>See #(1) for</xar:mlstring>
+                        <xar:mlvar>#$lang#</xar:mlvar>
+                    </xar:ml>
+                    <xar:if condition="count($row) eq 1">
+                        <a href="#$row[0]['url']#">#$row[0]['num']#</a>.
+                    <xar:elseif condition="count($row) eq 2" />
+                        <a href="#$row[0]['url']#">#$row[0]['num']#</a>
+                        <xar:mlstring>and</xar:mlstring>
+                        <a href="#$row[1]['url']#">#$row[1]['num']#</a>.
+                    <xar:elseif condition="count($row) gt 2" />
+                        <xar:loop name="$row">
+                            <xar:if condition="$loop:index lt count($row) - 1">
+                                <a href="#$loop:item.url#">#$loop:item.num#</a>,
+                            <xar:else />
+                                <xar:mlstring>and</xar:mlstring>
+                                <a href="#$loop:item.url#">#$loop:item.num#</a>.
+                            </xar:if>
+                        </xar:loop>
+                    </xar:if>
+                    <br />
+                </xar:foreach>
+            </xar:if>
+
         </div>
     <xar:else />
 
@@ -75,11 +100,42 @@
 
 <xar:elseif condition="$displaytype eq 'browse'" />
 
-    <h2>#$text['lname']#</h2>
+    <h2>#$text.lname#</h2>
 
-    <xar:foreach in="$results" value="$word">
-        <a href="#$word.url#">#$word.pron# - #$word.word#</a><br />
-    </xar:foreach>
+    <xar:if condition="!empty($pager)"><div class="xar-align-center xar-padding-thick">#$pager#</div></xar:if>
+
+    <table width="100%">
+    <tr><td>
+
+        <table class="xar-border-thick">
+            <tr>
+                <th><xar:mlstring>Number</xar:mlstring></th>
+                <th><xar:mlstring>Pronunciation</xar:mlstring></th>
+                <th><xar:mlstring>Word</xar:mlstring></th>
+            </tr>
+        <xar:loop name="$results">
+            <tr>
+                <td><a href="#$loop:item.url#">#$loop:item.num#</a></td>
+                <td><a href="#$loop:item.url#">#$loop:item.pron#</a></td>
+                <td><a href="#$loop:item.url#">#$loop:item.word#</a></td>
+            </tr>
+
+            <xar:if condition="($loop:index+1) lt count($results) and ($loop:index+1) % $rowpercol eq 0">
+                    </table>
+                </td><td>
+                    <table class="xar-border-thick">
+                        <tr>
+                            <th><xar:mlstring>Number</xar:mlstring></th>
+                            <th><xar:mlstring>Pronunciation</xar:mlstring></th>
+                            <th><xar:mlstring>Word</xar:mlstring></th>
+                        </tr>
+            </xar:if>
+        </xar:loop>
+        </table>
+    </td></tr>
+    </table>
+
+    <xar:if condition="!empty($pager)"><div class="xar-align-center xar-padding-thick">#$pager#</div></xar:if>
 
 
 

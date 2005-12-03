@@ -48,7 +48,7 @@ function bible_admin_view()
         $startnum,
         xarModAPIFunc('bible', 'user', 'countitems', array('state' => 'all')),
         xarModURL('bible', 'admin', 'view', array('startnum' => '%%')),
-        xarModGetVar('bible', 'admin_itemsperpage')
+        $numitems
     );
 
     // get other vars

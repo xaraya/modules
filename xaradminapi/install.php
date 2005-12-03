@@ -97,9 +97,11 @@ function bible_adminapi_install($args)
     if (substr($text['file'], strlen($text['file'])-3) == '.gz') {
         $openfunc = 'gzopen';
         $getsfunc = 'gzgets';
+        $closefunc = 'gzclose';
     } else {
         $openfunc = 'fopen';
         $getsfunc = 'fgets';
+        $closefunc = 'fclose';
     }
 
     // load file into database
@@ -212,15 +214,18 @@ function bible_adminapi_install($args)
             // if we match the '$$T0000000' lines...
             if (preg_match("/^\s*\\$\\$\w\d+\s*\$/", $buffer)) {
 
-            // save previous def
-                $queries[] = "('', ?, ?, ?, ?)";
-                $bindvars[] = $num;
-                $bindvars[] = $word;
-                $bindvars[] = trim($pron);
-                $bindvars[] = trim($def);
+                $def = trim($def);
+                if (!empty($def)) {
+                    // save previous def
+                    $queries[] = "('', ?, ?, ?, ?)";
+                    $bindvars[] = $num;
+                    $bindvars[] = $word;
+                    $bindvars[] = trim($pron);
+                    $bindvars[] = $def;
+                    $count++;
+                }
 
                 // insert into DB several verses at a time
-                $count++;
                 if ($count > 200) {
 
                     // insert this set into the database
@@ -254,20 +259,23 @@ function bible_adminapi_install($args)
         }
 
         // insert last set into the database
-        $queries[] = "('', ?, ?, ?, ?)";
-        $bindvars[] = $num;
-        $bindvars[] = $word;
-        $bindvars[] = $pron;
-        $bindvars[] = trim($def);
-        $query = $query_start . join(', ', $queries);
-        $result = $dbconn->Execute($query,$bindvars);
-
-        if (!$result) return;
+        $def = trim($def);
+        if (!empty($def)) {
+            $queries[] = "('', ?, ?, ?, ?)";
+            $bindvars[] = $num;
+            $bindvars[] = $word;
+            $bindvars[] = trim($pron);
+            $bindvars[] = $def;
+        }
+        if (!empty($queries)) {
+            $query = $query_start . join(', ', $queries);
+            $result = $dbconn->Execute($query,$bindvars);
+            if (!$result) return;
+        }
 
     }
-    fclose($fd);
+    $closefunc($fd);
 
-    // Let the calling process know that we have finished successfully
     return true;
 }
 
