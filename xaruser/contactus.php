@@ -123,15 +123,25 @@ function sitecontact_user_contactus($args)
     $siteurl = xarServerGetBaseURL();
     $subject = $requesttext;
 
+    /* comments in emails is still a problem - set it manually for this module */
+    $themecomments = xarModGetVar('themes','ShowTemplates');
+    $mailcomments = xarModGetVar('mail','ShowTemplates');
+    if ($mailcomments == true) {
+        xarModSetVar('themes','ShowTemplates',true);
+    } else {
+        xarModSetVar('themes','ShowTemplates',false);
+    }
+
+
     /* Prepare the html text message to user */
-     
+
     $trans = get_html_translation_table(HTML_ENTITIES);
     $trans = array_flip($trans);
     $htmlsubject = strtr(xarVarPrepHTMLDisplay($requesttext), $trans);
     $htmlcompany = strtr(xarVarPrepHTMLDisplay($company), $trans);
     $htmlusermessage  = strtr(xarVarPrepHTMLDisplay($usermessage), $trans);
     $htmlnotetouser  = strtr(xarVarPrepHTMLDisplay($notetouser), $trans);
-   
+
 
     /* jojodee: html_entity_decode only available in php >=4.3
      * $htmlsubject = html_entity_decode(xarVarPrepHTMLDisplay($requesttext));
@@ -258,7 +268,8 @@ function sitecontact_user_contactus($args)
                            'admin',
                            'sendhtmlmail', $args))return;
     }
-
+    /* Set the theme comments back */
+    xarModSetVar('themes','ShowTemplates',$themecomments);
     /* lets update status and display updated configuration */
     xarResponseRedirect(xarModURL('sitecontact', 'user', 'main', array('message' => '1')));
 
