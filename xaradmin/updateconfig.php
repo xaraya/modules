@@ -1,22 +1,23 @@
 <?php
 /**
  * File: $Id:
- * 
+ *
  * Update configuration parameters of the module with information passed back by the modification form
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage bible
- * @author curtisdf 
+ * @author curtisdf
  */
 function bible_admin_updateconfig()
 {
     if (!xarVarFetch('admin_textsperpage', 'int', $admin_textsperpage, 10, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('user_searchversesperpage', 'int', $user_searchversesperpage, 10, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('user_lookupversesperpage', 'int', $user_lookupversesperpage, 20, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('user_wordsperpage', 'int', $user_wordsperpage, 40, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('textdir', 'str', $textdir, 'var/bible', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('altdb', 'checkbox', $altdb, false, XARVAR_NOT_REQUIRED)) return;
@@ -33,6 +34,7 @@ function bible_admin_updateconfig()
     xarModSetVar('bible', 'admin_textsperpage', $admin_textsperpage);
     xarModSetVar('bible', 'user_searchversesperpage', $user_searchversesperpage);
     xarModSetVar('bible', 'user_lookupversesperpage', $user_lookupversesperpage);
+    xarModSetVar('bible', 'user_wordsperpage', $user_wordsperpage);
     xarModSetVar('bible', 'admin_textsperpage', $admin_textsperpage);
     xarModSetVar('bible', 'textdir', preg_replace("/\/\$/", '', $textdir));
     xarModSetVar('bible', 'SupportShortURLs', $shorturls);

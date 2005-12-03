@@ -18,6 +18,9 @@
 <tr><td><label for="user_lookupversesperpage">#$lookupverseslabel#</label></td>
 <td><input type="text" name="user_lookupversesperpage" id="user_lookupversesperpage" size="4" maxlength="10" value="#$lookupversesvalue#" /></td></tr>
 
+<tr><td><label for="user_wordsperpage">#$wordslabel#</label></td>
+<td><input type="text" name="user_wordsperpage" id="user_wordsperpage" size="4" maxlength="10" value="#$wordsvalue#" /></td></tr>
+
 <tr><td><label for="textdir">#$textdirlabel#</label></td>
 <td><input type="text" name="textdir" id="textdir" size="24" maxlength="128" value="#$textdirvalue#" /></td></tr>
 

@@ -62,18 +62,17 @@ function bible_userapi_getmenulinks()
             'label' => xarML('Passage Lookup')
         );
 
-        // Concordance
-        if (false !== ($strongs = xarModAPIFunc(
+        // Dictionary
+        if (false !== ($dictionary = xarModAPIFunc(
             'bible', 'user', 'getall',
             array('state' => 2, 'type' => 2, 'order' => 'sname', 'sort' => 'desc')
         ))) {
-            $menulinks['concordance'] = array(
-                'url' => xarModURL('bible', 'user', 'concordance'),
-                'title' => xarML('Concordance'),
-                'label' => xarML('Concordance')
+            $menulinks['dictionary'] = array(
+                'url' => xarModURL('bible', 'user', 'dictionary'),
+                'title' => xarML('Dictionary'),
+                'label' => xarML('Dictionary')
             );
         }
-
     }
 
     return $menulinks;

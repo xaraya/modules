@@ -11,7 +11,7 @@
 
 <br />
 
-<form action="#xarModURL('bible', 'user', 'query')#" method="post" onSubmit="str=this.queryraw.value;str=replace(str,' ','%20');str=replace(str,'+','%2B');this.query.value=str;">
+<form action="&xar-modurl-bible-user-query;" method="post" onSubmit="str=this.queryraw.value;str=replace(str,' ','%20');str=replace(str,'+','%2B');this.query.value=str;">
 
     <span class="xar-nowrap">
     <xar:mlstring>Text</xar:mlstring>:

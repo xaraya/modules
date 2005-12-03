@@ -1,0 +1,91 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Dictionary</xar:mlstring></h2>
+<div style="margin: auto;"><xar:template file="user-menu" type="module" />
+
+<br />
+<form action="&xar-modurl-bible-user-dictionary;" method="post">
+
+    <fieldset>
+        <legend><xar:mlstring>Search Form</xar:mlstring></legend>
+
+        <div class="xar-form-input-wrapper">
+            <label for="sname" class="xar-form-label" title="#xarML('Dictionary to search in')#">
+                <xar:mlstring>Dictionary</xar:mlstring>
+            </label>
+            <select name="sname">
+                <xar:foreach in="$texts" value="$text">
+                    <xar:if condition="$text.sname eq $default_sname">
+                        <option value="#$text.sname#" selected="selected">#$text.sname# - #$text['lname']#</option>
+                    <xar:else />
+                        <option value="#$text.sname#">#$text.sname# - #$text.lname#</option>
+                    </xar:if>
+                </xar:foreach>
+            </select>
+        </div>
+
+        <div class="xar-form-input-wrapper">
+            <label for="query" class="xar-form-label" title="#xarML('Word, transliterated word, or number')#">
+                <xar:mlstring>Word or Number</xar:mlstring>
+            </label>
+            <input type="text" name="query" value="#$query#" class="xar-form-textlong" />
+            <div class="xar-form-input-wrapper-after xar-sub">
+                <xar:mlstring>(Leave blank to see index)</xar:mlstring>
+            </div>
+        </div>
+
+        <div class="xar-form-input-wrapper-after">
+            <input type="submit" value="#xarML('Submit')#" />
+        </div>
+
+    </fieldset>
+
+</form>
+
+<xar:if condition="$displaytype eq 'view'">
+
+    <h2>#$text['lname']#</h2>
+
+    <xar:if condition="!empty($string)">
+        <h3>"#$string#"</h3>
+    </xar:if>
+
+    <xar:if condition="!empty($results)">
+        <h3>#$results['num']# - #$results['word']#</h3>
+
+        <b><xar:mlstring>Pronunciation Key</xar:mlstring>:</b> #$results['pron']#
+        <br /><br />
+
+        <b><xar:mlstring>Definition</xar:mlstring>:</b><br />
+        <div class="bible-strongs-definition">
+            <xar:set name="def">nl2br($results['def']);</xar:set>
+            #$def#
+        </div>
+    <xar:else />
+
+        <p class="xar-error">
+            <xar:ml>
+                <xar:mlstring>No matches found for query "#(1)"</xar:mlstring>
+                <xar:mlvar>#$query#</xar:mlvar>
+            </xar:ml>
+        </p>
+
+    </xar:if>
+
+<xar:elseif condition="$displaytype eq 'browse'" />
+
+    <h2>#$text['lname']#</h2>
+
+    <xar:foreach in="$results" value="$word">
+        <a href="#$word.url#">#$word.pron# - #$word.word#</a><br />
+    </xar:foreach>
+
+
+
+</xar:if>
+
+
+
+</div>
+</div>

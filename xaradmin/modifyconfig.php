@@ -31,6 +31,7 @@ function bible_admin_modifyconfig()
     $data['textslabel'] = xarML('Texts per page in admin screens');
     $data['searchverseslabel'] = xarML('Verses per page in keyword searches');
     $data['lookupverseslabel'] = xarML('Verses per page in passage lookups');
+    $data['wordslabel'] = xarML('Words per page on dictionary index');
     $data['textdirlabel'] = xarML('Directory to find the texts in');
     $data['shorturlslabel'] = xarML('Enable short URLs');
     $data['altdblabel'] = xarML('Use alternate database for storage of texts?');
@@ -44,6 +45,8 @@ function bible_admin_modifyconfig()
     $data['textsvalue'] = xarModGetVar('bible', 'admin_textsperpage');
     $data['searchversesvalue'] = xarModGetVar('bible', 'user_searchversesperpage');
     $data['lookupversesvalue'] = xarModGetVar('bible', 'user_lookupversesperpage');
+    $data['wordsvalue'] = xarModGetVar('bible', 'user_wordsperpage');
+
     $data['textdirvalue'] = xarModGetVar('bible', 'textdir');
     $data['shorturlschecked'] = xarModGetVar('bible', 'SupportShortURLs') ?
     'checked' : '';

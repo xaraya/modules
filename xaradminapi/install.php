@@ -78,7 +78,7 @@ function bible_adminapi_install($args)
             'xar_tags' => array('type' => 'text', 'null' => false));
 
     } elseif ($text['type'] == 2) {
-        // type 2 is Strong's Concordance
+        // type 2 is Strong's Dictionaries
         $fields = array('xar_wid' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
             'xar_num' => array('type' => 'integer', 'size' => 'small', 'null' => false),
             'xar_word' => array('type' => 'varchar', 'size' => '32', 'null' => false),
@@ -210,7 +210,7 @@ function bible_adminapi_install($args)
                 $queries[] = "('', ?, ?, ?, ?)";
                 $bindvars[] = $num;
                 $bindvars[] = $word;
-                $bindvars[] = $pron;
+                $bindvars[] = trim($pron);
                 $bindvars[] = trim($def);
 
                 // insert into DB several verses at a time

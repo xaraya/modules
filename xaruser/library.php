@@ -67,8 +67,8 @@ function bible_user_library()
             }
         }
 
-        // get table of contents
-        $toc = xarModAPIFunc('bible', 'user', 'lookup', $text);
+        // get table of contents if it's a Bible text
+        $toc = ($text['type'] == 1) ? xarModAPIFunc('bible', 'user', 'lookup', $text) : array();
 
         // initialize template data
         $data = xarModAPIFunc('bible', 'user', 'menu', array('func' => 'library'));
@@ -78,7 +78,7 @@ function bible_user_library()
         $data['text'] = &$text;
         $data['toc'] = &$toc;
 
-    // no text was specified, so we list the available texts
+    // no text was specified, so list the available texts
     } else {
 
         // get active texts
@@ -87,18 +87,18 @@ function bible_user_library()
         );
 
         // get Strong's texts
-        $strongs = xarModAPIFunc('bible', 'user', 'getall',
+        $dictionaries = xarModAPIFunc('bible', 'user', 'getall',
             array('state' => 2, 'type' => 2, 'order' => 'sname', 'sort' => 'desc')
         );
 
         // if no texts, we have to throw some kind of error
-        if (empty($texts) && empty($strongs)) {
+        if (empty($texts) && empty($dictionaries)) {
             // API function failed, so return false
             if (xarCurrentErrorType() != XAR_NO_EXCEPTION) {
                 return;
             // No API error, so text must exist but is not available(?). Send system message.
             } else {
-                $msg = xarML('No texts or concordances are available!  '
+                $msg = xarML('No texts or dictionaries are available!  '
                     . 'Sorry, I am unable to proceed.');
                 xarErrorSet(XAR_SYSTEM_MESSAGE, '', new SystemException($msg));
                 return;
@@ -110,7 +110,7 @@ function bible_user_library()
 
         // set template vars
         $data['texts'] = &$texts;
-        $data['strongs'] = &$strongs;
+        $data['dictionaries'] = &$dictionaries;
 
     }
 

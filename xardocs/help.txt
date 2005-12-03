@@ -102,19 +102,23 @@ own. Besides, you might learn something. :-)
 Bible Texts: Installing
 -----------------------
 Upload your .vpl and .conf files to your text directory (default is
-/var/bible/).  Then go to Bible Admin => View Texts, reload the page so it can
-detect those files.  Press "Install" next to the text you want, and confirm
+/var/bible/).  Then go to Bible Admin => View Texts and reload the page so it
+can detect those files.  Press "Install" next to the text you want, and confirm
 it.  If you server is slow, this might take a while.  But on my P4 laptop
 it takes less than 15 seconds for an average-sized text.
 
 
-Strong's Concordance
+Strong's Dictionaries
 --------------------
-This module supports Strong's Concordance.  Download it from Bible for Xaraya's
-homepage.  It integrates nicely with Sword's KJV Bible which has Strong's
-numbers embedded.  This makes words and phrases in the KJV click-able, which
-brings up Strong's definition for that number.  I don't know if other texts
-have Strong's numbers embedded, but if so, they should work the same way.
+This module supports Strong's Hebrew and Greek Dictionaries.  NOTE: this is not
+the same as Strong's Concordance.  It is meant for looking up words in texts
+that have Strong's numbers embedded.  It will *not* show you how many times
+and/or the places where a Hebrew or Greek word occurs.
+
+The dictionaries are available as a single download from Bible for Xaraya's
+homepage.  They integrate nicely with Sword's KJV Bible which has these
+numbers embedded.  Words and phrases in the KJV are clickable, which brings up
+Strong's definition for that number.
 
 
 Usage

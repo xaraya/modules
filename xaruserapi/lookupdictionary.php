@@ -1,21 +1,21 @@
 <?php
 /**
  * File: $Id:
- * 
+ *
  * Perform a Strong's Concordance lookup
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage bible
- * @author curtisdf 
+ * @author curtisdf
  */
 /**
  * strong's lookup
- * 
- * @author curtisdf 
+ *
+ * @author curtisdf
  * @param  $args ['sname'] short name of text to look in
  * @param  $args ['tid'] text ID to look in
  * @param  $args ['objectid'] a generic object id (if called by other modules)
@@ -24,20 +24,23 @@
  * @return result array, or false on failure
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
-function bible_userapi_strongslookup($args)
+function bible_userapi_lookupdictionary($args)
 {
     extract($args);
 
     // Optional args
-    if (empty($query)) {
-        $query = '';
-    }
-    if (!isset($rand)) {
-        $rand = false;
-    }
+    if (empty($query)) $query = '';
+    if (!isset($startnum)) $startnum = 1;
+    if (!isset($numitems)) $numitems = -1;
 
-    // Argument check
+    // validate args
     $invalid = array();
+    if (!isset($startnum) || !is_numeric($startnum)) {
+        $invalid[] = 'startnum';
+    }
+    if (!isset($numitems) || !is_numeric($numitems)) {
+        $invalid[] = 'numitems';
+    }
     if (!isset($sname) && !isset($tid)) {
         $invalid[] = 'text identifier';
     }
@@ -49,15 +52,13 @@ function bible_userapi_strongslookup($args)
     }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-            join(', ', $invalid), 'user', 'strongslookup', 'Bible');
+            join(', ', $invalid), 'user', 'lookupdictionary', 'Bible');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException($msg));
         return;
     }
 
-    if (!empty($objectid)) {
-        $tid = $objectid;
-    }
+    if (!empty($objectid)) $tid = $objectid;
 
     // get text data
     $args = array();
@@ -72,56 +73,55 @@ function bible_userapi_strongslookup($args)
     // security check
     if (!xarSecurityCheck('ViewBible', 1, 'Text', "$text[sname]:$tid")) {
         return;
-    } 
-
-    // get database parameters
-    list($textdbconn,
-         $texttable) = xarModAPIFunc('bible', 'user', 'getdbconn',
-                                     array('tid' => $tid));
-
-    // if query was empty, give table of contents
-    if (empty($query)) {
-        $ref = xarML('Table of Contents');
-
-        $results = array('ref' => $ref,
-                         'type' => 'toc',
-                         'text' => $text);
-
-        return $results;
     }
 
-    // prepare SQL parameters
-    $sqlquery = "SELECT *
-                 FROM $texttable
-                 WHERE
-                 (xar_num REGEXP ? OR
-                  xar_word = ? OR
-                  xar_pron = ?)";
-    $bindvars = array('0{0,}'.addslashes($query), $query, $query);
+    // get database parameters
+    list($textdbconn, $texttable) = xarModAPIFunc(
+        'bible', 'user', 'getdbconn', array('tid' => $tid)
+    );
 
-    // get matches
-    $result = $textdbconn->SelectLimit($sqlquery, 1, 0, $bindvars);
-    if (!$result) return; 
+    // prepare SQL parameters
+    $sqlquery = "SELECT * FROM $texttable WHERE 1 ";
+
+    if (empty($query)) {
+        $result = $textdbconn->SelectLimit($sqlquery, $numitems, $startnum-1, array());
+    } else {
+        if (is_numeric($query)) {
+            $sqlquery .= "AND xar_num = ?";
+            $bindvars = array($query);
+        } else {
+            $sqlquery .= "AND (xar_word = ? OR xar_pron = ?)";
+            $bindvars = array($query, $query);
+        }
+        // get matches
+        $result = $textdbconn->Execute($sqlquery, $bindvars);
+    }
+
+    if (!$result) return;
     if ($result->EOF) return;
 
-    list($wid, $num, $word, $pron, $def) = $result->fields;
+    $results = array();
+    for (; !$result->EOF; $result->MoveNext()) {
+
+        list($wid, $num, $word, $pron, $def) = $result->fields;
+
+        // assemble result parameters
+        $results[] = array(
+            'wid'  => $wid,
+            'num'  => $num,
+            'word' => $word,
+            'pron' => $pron,
+            'def'  => $def
+        );
+    }
     $result->Close();
 
-    $entry = array('wid' => $wid,
-                   'num' => $num,
-                   'word' => $word,
-                   'pron' => $pron,
-                   'def' => $def);
-
-
-    // assemble result parameters
-    $results = array('ref' => $word,
-                     'query' => $query,
-                     'text' => $text,
-                     'entry' => $entry);
+    if (!empty($query)) {
+        $results = $results[0];
+    }
 
     return $results;
 
-} 
+}
 
 ?>

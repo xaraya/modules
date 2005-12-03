@@ -1,22 +1,22 @@
 <?php
 /**
  * File: $Id:
- * 
+ *
  * View a keyword search
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage bible
- * @author curtisdf 
+ * @author curtisdf
  */
 /**
  * view a keyword search
  */
 function bible_user_view($args)
-{ 
+{
     extract($args);
 
     if (!xarVarFetch('startnum', 'int:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
@@ -27,16 +27,15 @@ function bible_user_view($args)
     if (!xarVarFetch('lastlimits', 'str', $lastlimits, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('query', 'str:0:', $query, '', XARVAR_NOT_REQUIRED)) return;
 
-    if (!xarSecurityCheck('ViewBible')) return; 
+    if (!xarSecurityCheck('ViewBible')) return;
 
     // optional parameters
     if (empty($numitems)) {
         $numitems = xarModGetUserVar('bible', 'user_searchversesperpage');
     }
 
-    if (!empty($objectid)) {
-        $tid = $objectid;
-    }
+    // get defaults
+    if (!empty($objectid)) $tid = $objectid;
 
     // validate variables
     $invalid = array();
@@ -54,15 +53,15 @@ function bible_user_view($args)
         return;
     }
 
-	// if no query, redirect to library page for this text
-	if (empty($query)) {
-		if (!empty($sname)) {
-			xarResponseRedirect(xarModURL('bible', 'user', 'library', array('sname' => $sname)));
-		} elseif (!empty($tid)) {
-			xarResponseRedirect(xarModURL('bible', 'user', 'library', array('tid' => $tid)));
-		}
-		return;
-	}
+    // if no query, redirect to library page for this text
+    if (empty($query)) {
+        if (!empty($sname)) {
+            xarResponseRedirect(xarModURL('bible', 'user', 'library', array('sname' => $sname)));
+        } elseif (!empty($tid)) {
+            xarResponseRedirect(xarModURL('bible', 'user', 'library', array('tid' => $tid)));
+        }
+        return;
+    }
 
     // store the original query
     $query_orig = $query;
@@ -72,19 +71,19 @@ function bible_user_view($args)
                            array('state' => 2, 'type' => 1, 'order' => 'sname'));
 
     // prepare template variables
-    $data = xarModAPIFunc('bible', 'user', 'menu', array('func' => 'search')); 
+    $data = xarModAPIFunc('bible', 'user', 'menu', array('func' => 'search'));
     $data['status'] = '';
     $data['texts'] = $texts;
-    $data['pager'] = ''; 
+    $data['pager'] = '';
     $data['query'] = $query;
 
     // work out the sname (could have been passed the tid or the sname)
-	if (empty($sname)) {
-		$text = xarModAPIFunc('bible', 'user', 'get', array('tid' => $tid));
-		$sname = $text['sname'];
-	} else {
-		$text = xarModAPIFunc('bible', 'user', 'get', array('sname' => $sname));
-	}
+    if (empty($sname)) {
+        $text = xarModAPIFunc('bible', 'user', 'get', array('tid' => $tid));
+        $sname = $text['sname'];
+    } else {
+        $text = xarModAPIFunc('bible', 'user', 'get', array('sname' => $sname));
+    }
     $data['text'] = $text;
     $data['sname'] = $sname;
 
@@ -92,10 +91,10 @@ function bible_user_view($args)
     xarSessionSetVar('bible_sname', $sname);
 
     /**
-	 * detect search limits
-	 *
-	 * ... when things like "limit=ot,gos" are in the query
-	 */
+     * detect search limits
+     *
+     * ... when things like "limit=ot,gos" are in the query
+     */
     preg_match("/\blim(it)?s?=([^ ]*)/", $query, $match);
     $query_orig = $query;
 
@@ -130,13 +129,13 @@ function bible_user_view($args)
 
     // perform search function
     $results = xarModAPIFunc('bible', 'user', 'search',
-							array('tid' => $tid,
-								'sname' => $sname,
-								'query' => $query,
-								'numitems' => $numitems,
-								'startnum' => $startnum,
-								'limits' => $limits,
-								'text' => $text));
+                            array('tid' => $tid,
+                                'sname' => $sname,
+                                'query' => $query,
+                                'numitems' => $numitems,
+                                'startnum' => $startnum,
+                                'limits' => $limits,
+                                'text' => $text));
 
     // check if query was not found
     if (empty($results) || empty($results['lines'])) {
@@ -163,13 +162,13 @@ function bible_user_view($args)
     // update page title
     if (!empty($sname) && !empty($query)) {
         $sep = xarModGetVar('themes', 'SiteTitleSeparator');
-	    xarTplSetPageTitle(xarVarPrepForDisplay("$sname$sep$query_orig"));
+        xarTplSetPageTitle(xarVarPrepForDisplay("$sname$sep$query_orig"));
     } else {
-	    xarTplSetPageTitle(xarVarPrepForDisplay(xarML('Passage Lookup')));
+        xarTplSetPageTitle(xarVarPrepForDisplay(xarML('Passage Lookup')));
     }
 
     // Return the template variables defined in this function
-    return $data; 
-} 
+    return $data;
+}
 
 ?>

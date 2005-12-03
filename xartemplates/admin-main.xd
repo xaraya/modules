@@ -18,7 +18,7 @@
         <li><xar:mlstring>Searching by keyword</xar:mlstring></li>
         <li><xar:mlstring>Looking up passages directly</xar:mlstring></li>
         <li><xar:mlstring>Table of Contents displaying all books and chapters for quick reference</xar:mlstring></li>
-        <li><xar:mlstring>Supports Strong's Concordance</xar:mlstring></li>
+        <li><xar:mlstring>Supports Strong's Hebrew and Greek Dictionaries</xar:mlstring></li>
         <li><xar:mlstring>Fuzzy, Boolean, and ranked searching</xar:mlstring></li>
         <li><xar:mlstring>And much more...</xar:mlstring></li>
     </ul>

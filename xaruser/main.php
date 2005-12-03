@@ -36,7 +36,7 @@ function bible_user_main()
         }
     }
 
-    // get a default text name to use for the dropdown menu
+     // get default text for dropdown list
     $sname = xarSessionGetVar('bible_sname');
     if (empty($sname)) {
         // none is set for this session, so use the first one in the texts list

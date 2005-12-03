@@ -13,12 +13,12 @@
     </xar:foreach>
     </ul>
 
-    <xar:if condition="!empty($strongs)">
-        <h2><xar:mlstring>Strong's Concordance</xar:mlstring></h2>
+    <xar:if condition="!empty($dictionaries)">
+        <h2><xar:mlstring>Dictionaries</xar:mlstring></h2>
 
         <ul>
-        <xar:foreach in="$strongs" value="$text">
-            <li><a href="#xarModURL('bible', 'user', 'strongs', array('sname' => $text['sname']))#">#$text['lname']#</a></li>
+        <xar:foreach in="$dictionaries" value="$text">
+            <li><a href="#xarModURL('bible', 'user', 'library', array('sname' => $text['sname']))#">#$text['lname']#</a></li>
         </xar:foreach>
         </ul>
     </xar:if>
@@ -82,18 +82,24 @@
 
     </xar:if>
 
-    <h3>#$toc['ref']#</h3>
+    <xar:if condition="$text['type'] eq 2">
 
-    <xar:foreach in="$toc['lines']" key="$display" value="$chapters">
-        <div style="margin: 3px;">
-            <div style="font-weight: bold; margin-bottom: 3px;"><a href="#xarModURL('bible', 'user', 'display', array('sname' => $toc['text']['sname'], 'query' => $display))#">#$display#</a></div>
-            <div style="margin-left: 8px;">
-            <xar:foreach in="$chapters" value="$chapter">
-                <a href="#xarModURL('bible', 'user', 'display', array('sname' => $toc['text']['sname'], 'query' => $display.' '.$chapter))#">#$chapter#</a>&nbsp;
-            </xar:foreach>
+
+
+    <xar:elseif condition="!empty($toc)" />
+        <h3>#$toc['ref']#</h3>
+
+        <xar:foreach in="$toc['lines']" key="$display" value="$chapters">
+            <div style="margin: 3px;">
+                <div style="font-weight: bold; margin-bottom: 3px;"><a href="#xarModURL('bible', 'user', 'display', array('sname' => $toc['text']['sname'], 'query' => $display))#">#$display#</a></div>
+                <div style="margin-left: 8px;">
+                <xar:foreach in="$chapters" value="$chapter">
+                    <a href="#xarModURL('bible', 'user', 'display', array('sname' => $toc['text']['sname'], 'query' => $display.' '.$chapter))#">#$chapter#</a>&nbsp;
+                </xar:foreach>
+                </div>
             </div>
-        </div>
-    </xar:foreach>
+        </xar:foreach>
+    </xar:if>
 
 </xar:if>
 

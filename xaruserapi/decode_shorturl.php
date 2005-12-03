@@ -37,9 +37,6 @@ function bible_userapi_decode_shorturl($params)
     } elseif (preg_match('/^help/i', $params[1])) {
         return array('help', $args);
 
-    } elseif (preg_match('/^concordance/i', $params[1])) {
-        return array('concordance', $args);
-
     } elseif (preg_match('/^query/i', $params[1])) {
         if (isset($params[2])) {
             $args['sname'] = $params[2];
@@ -65,6 +62,14 @@ function bible_userapi_decode_shorturl($params)
         }
         return array('lookup', $args);
 
+    } elseif (preg_match('/^dictionary/i', $params[1])) {
+        if (isset($params[2])) {
+            $args['sname'] = $params[2];
+            if (isset($params[3])) $args['query'] = $params[3];
+        }
+        return array('dictionary', $args);
+
+
     } elseif (preg_match('/^Strongs(Greek|Hebrew)/i', $params[1])) {
 
         if (!isset($params[2])) {
@@ -72,7 +77,7 @@ function bible_userapi_decode_shorturl($params)
         }
         $args['sname'] = $params[1];
         $args['query'] = $params[2];
-        return array('strongs', $args);
+        return array('dictionary', $args);
 
     } else {
 

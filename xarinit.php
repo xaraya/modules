@@ -10,7 +10,7 @@
  * @link http://www.xaraya.com
  *
  * @subpackage bible
- * @author curtisdf 
+ * @author curtisdf
  */
 
 function bible_init()
@@ -82,7 +82,8 @@ function bible_init()
     xarModSetVar('bible', 'admin_textsperpage', 10);
     xarModSetVar('bible', 'user_searchversesperpage', 10);
     xarModSetVar('bible', 'user_lookupversesperpage', 20);
-    xarModSetVar('bible', 'textdir', 'var/bible');
+    xarModSetVar('bible', 'user_wordsperpage', 40);
+    xarModSetVar('bible', 'textdir', xarPreCoreGetVarDirPath().'/bible');
     xarModSetVar('bible', 'SupportShortURLs', 0);
     xarModSetVar('bible', 'altdb', 0);
     xarModSetVar('bible', 'altdbtype', 'mysql');
@@ -156,13 +157,13 @@ function bible_upgrade($oldversion)
  */
 function bible_delete()
 {
-	/**
-	 * Delete tables
-	 *
-	 * This module permits text tables to be stored in an alternate
-	 * database.  So we can't just do a simple delete of all Bible
-	 * tables.  We need to do two separate deletes, one inside each DB.
-	 */
+    /**
+     * Delete tables
+     *
+     * This module permits text tables to be stored in an alternate
+     * database.  So we can't just do a simple delete of all Bible
+     * tables.  We need to do two separate deletes, one inside each DB.
+     */
 
     // get db setup
     $dbconn = xarDBGetConn();
@@ -170,18 +171,18 @@ function bible_delete()
     $xartable = xarDBGetTables();
 
     // drop all text tables we can find
-	$texts = xarModAPIFunc('bible', 'user', 'getall');
-	$tables = array();
-	foreach ($texts as $tid => $text) {
-		$tables[] = "$xartable[bible_text]_$tid";
-	}
+    $texts = xarModAPIFunc('bible', 'user', 'getall');
+    $tables = array();
+    foreach ($texts as $tid => $text) {
+        $tables[] = "$xartable[bible_text]_$tid";
+    }
     $query = "DROP TABLE IF EXISTS " . join(', ', $tables);
     $textsdbconn->Execute($query);
     if ($textsdbconn->ErrorNo()) return;
 
-	// now drop the Bible tables in Xar's DB
-	$tables = array($xartable['bible_texts'],
-					$xartable['bible_aliases']);
+    // now drop the Bible tables in Xar's DB
+    $tables = array($xartable['bible_texts'],
+                    $xartable['bible_aliases']);
     $query = "DROP TABLE IF EXISTS " . join(', ', $tables);
     $dbconn->Execute($query);
     if ($dbconn->ErrorNo()) return;

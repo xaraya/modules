@@ -1,21 +1,21 @@
 <?php
 /**
  * File: $Id:
- * 
+ *
  * Support for short URLs (user functions)
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage bible
- * @author curtisdf 
+ * @author curtisdf
  */
 /**
  * return the path for a short URL to xarModURL for this module
- * 
- * @author curtisdf 
+ *
+ * @author curtisdf
  * @param  $args the function and arguments passed to xarModURL
  * @returns string
  * @return path to be added to index.php for a short URL, or empty if failed
@@ -26,13 +26,13 @@ function bible_userapi_encode_shorturl($args)
 
     if (!isset($func)) return;
 
-    $path = ''; 
+    $path = '';
     $join = '?';
     $module = 'bible';
 
     // specify short URLs
     if (isset($sname) &&
-	   ($func == 'main' || $func == 'view' || $func == 'display' || $func == 'strongs')) {
+       ($func == 'main' || $func == 'view' || $func == 'display' || $func == 'dictionary')) {
         $path = "/$module/$sname/";
         if (isset($query)) {
             $path .= "$query/";
@@ -41,15 +41,15 @@ function bible_userapi_encode_shorturl($args)
         $path = "/$module/";
     } elseif ($func == 'query') {
         $path = "/$module/query/";
-    } elseif ($func == 'concordance') {
-        $path = "/$module/concordance/";
     } elseif ($func == 'search') {
         $path = "/$module/search/";
     } elseif ($func == 'lookup') {
         $path = "/$module/lookup/";
+    } elseif ($func == 'dictionary') {
+        $path = "/$module/dictionary/";
     } elseif ($func == 'library') {
         $path = "/$module/library/";
-		if (isset($sname)) $path .= "$sname/";
+        if (isset($sname)) $path .= "$sname/";
     } elseif ($func == 'help') {
         $path = "/$module/help/";
     }
@@ -83,6 +83,6 @@ function bible_userapi_encode_shorturl($args)
     }
 
     return $path;
-} 
+}
 
 ?>
