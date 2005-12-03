@@ -25,7 +25,7 @@
  */
 function sigmapersonnel_userapi_countitems($args)
 {
-    extract($args)
+    extract($args);
     if (!xarVarFetch('catid', 'int:1:', $catid, '',XARVAR_NOT_REQUIRED)) return; // 0 is nothing
     if (!xarVarFetch('persstatus', 'int:1:', $persstatus, '',XARVAR_NOT_REQUIRED)) return;
     // Get database setup

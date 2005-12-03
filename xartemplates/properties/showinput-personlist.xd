@@ -3,9 +3,9 @@
 <select name="#$name#" id="#$id#" tabindex="#$tabindex#" >
     <xar:foreach in="$persons" value="$soption" >
         <xar:if condition="$value eq $soption['name']" >
-            <option value="#$soption['name']#" selected="selected">#$soption['name']#</option>
+            <option value="#$soption['id']#" selected="selected">#$soption['name']#</option>
         <xar:else />
-            <option value="#$soption['name']#">#$soption['name']#</option>
+            <option value="#$soption['id']#">#$soption['name']#</option>
         </xar:if>
     </xar:foreach>
 </select>
