@@ -22,11 +22,10 @@
  */
 function bible_adminapi_scantextdir($args)
 {
-    extract($args);
+    // security check
+    if (!xarSecurityCheck('EditBible', 1)) return;
 
-    if (!xarSecurityCheck('EditBible', 1, 'Text', "All:All")) {
-        return;
-    }
+    extract($args);
 
     // get module vars
     $textdir = xarModGetVar('bible', 'textdir');
@@ -49,7 +48,7 @@ function bible_adminapi_scantextdir($args)
     }
 
     // get texts in database
-    $dbtexts = xarModAPIFunc('bible', 'user', 'getall');
+    $dbtexts = xarModAPIFunc('bible', 'user', 'getall', array('state' => 'all'));
 
     // check for differences between file and db texts
     $newtexts = $filetexts;

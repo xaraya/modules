@@ -14,30 +14,46 @@
  */
 function bible_user_main()
 {
+    // security check
     if (!xarSecurityCheck('ViewBible')) return;
-
-    $data = xarModAPIFunc('bible', 'user', 'menu', array('func' => 'main'));
-
-    xarTplSetPageTitle(xarML('Quick Search'));
 
     // get active texts
     $texts = xarModAPIFunc('bible', 'user', 'getall',
-                           array('state' => 2,
-                                 'type' => 1,
-                                 'order' => 'sname'));
-    $data['texts'] = $texts;
+        array('state' => 2, 'type' => 1, 'order' => 'sname')
+    );
 
-    // set the default shortname of the text
+    // if no texts, we have to throw some kind of error
+    if (empty($texts)) {
+        // API function failed, so return false
+        if (xarCurrentErrorType() != XAR_NO_EXCEPTION) {
+            return;
+        // No API error, so we must not have any texts available.  Send system message.
+        } else {
+            $msg = xarML('No Bible texts are available for searching or passage lookup!  '
+                . 'Sorry, I am unable to proceed.');
+            xarErrorSet(XAR_SYSTEM_MESSAGE, '', new SystemException($msg));
+            return;
+        }
+    }
+
+    // get a default text name to use for the dropdown menu
     $sname = xarSessionGetVar('bible_sname');
     if (empty($sname)) {
         // none is set for this session, so use the first one in the texts list
         $sname = empty($texts) ? '' : $texts[key($texts)]['sname'];
         xarSessionSetVar('bible_sname', $sname);
     }
+
+    // set page title
+    xarTplSetPageTitle(xarML('Quick Search'));
+
+    // initialzie template data
+    $data = xarModAPIFunc('bible', 'user', 'menu', array('func' => 'main'));
+
+    // set template vars
+    $data['texts'] = $texts;
     $data['sname'] = $sname;
 
-
-    // Return the template variables defined in this function
     return $data;
 }
 

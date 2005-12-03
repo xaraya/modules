@@ -2,17 +2,11 @@
 
 <div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>Keyword Search</xar:mlstring></h2>
-<div style="margin: auto;">
-
-<xar:template file="menu" type="module" />
+<div style="margin: auto;"><xar:template file="menu" type="module" />
 
 <xar:base-include-javascript filename="booltoggle.js" position="head" />
 
-<xar:if condition="!empty($status)"><p class="xar-align-center xar-style-bold">#$status#</p></xar:if>
-
-    <form action="#xarModURL('bible', 'user', 'validate')#" method="post" name="searchform">
-
-    <input type="hidden" name="function" value="view" />
+<form action="&xar-modurl-bible-user-validate;" method="post" name="searchform">
 
     <table width="100%" cellspacing="8">
     <tr><td colspan="2"><input type="submit" value="#xarML('Search')#" /></td></tr>
@@ -116,7 +110,9 @@
         </td>
     </tr>
     <tr><td colspan="2"><input type="submit" value="#xarML('Search')#" /></td></tr>
-</table>
+    </table>
+
+    <input type="hidden" name="function" value="view" />
 
 </form>
 

@@ -1,50 +1,77 @@
 <?php
 /**
  * File: $Id:
- * 
+ *
  * Utility function to pass individual menu items to the main menu
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage example
- * @author Example module development team 
+ * @author Example module development team
  */
 /**
  * utility function pass individual menu items to the main menu
- * 
- * @author the Example module development team 
+ *
+ * @author the Example module development team
  * @returns array
  * @return array containing the menulinks for the main menu items.
  */
-function example_userapi_getmenulinks()
-{ 
-    // First we need to do a security check to ensure that we only return menu items
-    // that we are suppose to see.
-    if (xarSecurityCheck('ViewExample', 0)) {
-        // The main menu will look for this array and return it for a tree view of the module
-        // We are just looking for three items in the array, the url, which we need to use the
-        // xarModURL function, the title of the link, which will display a tool tip for the
-        // module url, in order to keep the label short, and finally the exact label for the
-        // function that we are displaying.
-        $menulinks[] = Array('url' => xarModURL('example',
-                'user',
-                'view'), 
-            // In order to display the tool tips and label in any language,
-            // we must encapsulate the calls in the xarML in the API.
-            'title' => xarML('Displays all example items for view'),
-            'label' => xarML('Display'));
-    } 
-    // If we return nothing, then we need to tell PHP this, in order to avoid an ugly
-    // E_ALL error.
-    if (empty($menulinks)) {
-        $menulinks = '';
-    } 
-    // The final thing that we need to do in this function is return the values back
-    // to the main menu for display.
+function bible_userapi_getmenulinks()
+{
+    // initialize array of links
+    $menulinks = array();
+
+    // Quick Search
+    $menulinks['main'] = array(
+        'url' => xarModURL('bible', 'user', 'main'),
+        'title' => xarML('Quick Search'),
+        'label' => xarML('Quick Search')
+    );
+
+    // Keyword Search
+    $menulinks['search'] = array(
+        'url' => xarModURL('bible', 'user', 'search'),
+        'title' => xarML('Keyword Search'),
+        'label' => xarML('Keyword Search')
+    );
+
+    // Passage Lookup
+    $menulinks['lookup'] = array(
+        'url' => xarModURL('bible', 'user', 'lookup'),
+        'title' => xarML('Passage Lookup'),
+        'label' => xarML('Passage Lookup')
+    );
+
+    // Concordance
+    if (false !== ($strongs = xarModAPIFunc(
+        'bible', 'user', 'getall',
+        array('state' => 2, 'type' => 2, 'order' => 'sname', 'sort' => 'desc')
+    ))) {
+        $menulinks['concordance'] = array(
+            'url' => xarModURL('bible', 'user', 'concordance'),
+            'title' => xarML('Concordance'),
+            'label' => xarML('Concordance')
+        );
+    }
+
+    // Library
+    $menulinks['library'] = array(
+        'url' => xarModURL('bible', 'user', 'library'),
+        'title' => xarML('Library'),
+        'label' => xarML('Library')
+    );
+
+    // Help
+    $menulinks['help'] = array(
+        'url' => xarModURL('bible', 'user', 'help'),
+        'title' => xarML('Help'),
+        'label' => xarML('Help')
+    );
+
     return $menulinks;
-} 
+}
 
 ?>

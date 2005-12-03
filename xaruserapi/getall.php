@@ -1,22 +1,22 @@
 <?php
 /**
  * File: $Id:
- * 
+ *
  * Get all module items
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage bible
- * @author curtisdf 
+ * @author curtisdf
  */
 /**
  * get all Bible texts
- * 
- * @author curtisdf 
- * @param state $ (optional) the state of texts to get
+ *
+ * @author curtisdf
+ * @param state $ (optional) the state of texts to get ('all' or a text ID)
  * @param numitems $ the number of texts to retrieve (default -1 = all)
  * @param startnum $ start with this text number (default 1)
  * @returns array
@@ -24,8 +24,8 @@
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function bible_userapi_getall($args)
-{ 
-    extract($args); 
+{
+    extract($args);
 
     // Optional arguments.
     if (!isset($startnum)) {
@@ -40,8 +40,11 @@ function bible_userapi_getall($args)
     if (!isset($sort)) {
         $sort = 'asc';
     }
+    if (!isset($state)) {
+        $state = 2; // default is to only return active texts
+    }
 
-    // Argument check
+    // argument check
     $invalid = array();
     if (!isset($startnum) || !is_numeric($startnum)) {
         $invalid[] = 'startnum';
@@ -49,7 +52,7 @@ function bible_userapi_getall($args)
     if (!isset($numitems) || !is_numeric($numitems)) {
         $invalid[] = 'numitems';
     }
-    if (isset($state) && !is_numeric($state)) {
+    if (empty($state) || (!is_numeric($state) && $state != 'all')) {
         $invalid[] = 'state';
     }
     if (isset($order) && !in_array($order, array('tid', 'sname', 'lname'))) {
@@ -64,17 +67,16 @@ function bible_userapi_getall($args)
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException($msg));
         return;
-    } 
+    }
 
-    $texts = array(); 
+    $texts = array();
 
     // security check
-    if (!xarSecurityCheck('ViewBible')) return; 
+    if (!xarSecurityCheck('ViewBible')) return;
 
     $dbconn = xarDBGetConn();
-    $xartable = xarDBGetTables(); 
-
-    $texttable = $xartable['bible_texts']; 
+    $xartable = xarDBGetTables();
+    $texttable = $xartable['bible_texts'];
 
     $query = "SELECT xar_tid,
                      xar_sname,
@@ -87,7 +89,7 @@ function bible_userapi_getall($args)
                      xar_type
             FROM $texttable WHERE 1 ";
     $bindvars = array();
-    if (isset($state)) {
+    if (isset($state) && is_numeric($state)) {
         $query .= "AND xar_state = ? ";
         $bindvars[] = $state;
     }
@@ -97,27 +99,28 @@ function bible_userapi_getall($args)
     }
 
     $query .= "ORDER BY xar_$order $sort ";
-    $result = $dbconn->SelectLimit($query, $numitems, $startnum-1, $bindvars); 
+    $result = $dbconn->SelectLimit($query, $numitems, $startnum-1, $bindvars);
 
-    if (!$result) return; 
+    if (!$result) return;
 
     for (; !$result->EOF; $result->MoveNext()) {
         list($tid, $sname, $lname, $file, $md5, $config_exists, $md5_config, $state) = $result->fields;
         if (xarSecurityCheck('ViewBible', 0, 'Text', "$sname:$tid")) {
-            $texts[$tid] = array('tid' => $tid,
+            $texts[$tid] = array(
+                'tid' => $tid,
                 'sname' => $sname,
                 'lname' => $lname,
                 'file' => $file,
                 'md5' => $md5,
                 'config_exists' => $config_exists,
                 'md5_config' => $md5_config,
-                'state' => $state);
+                'state' => $state
+            );
         }
     }
-    $result->Close(); 
+    $result->Close();
 
-    // Return the texts
     return $texts;
-} 
+}
 
 ?>
