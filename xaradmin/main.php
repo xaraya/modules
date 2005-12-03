@@ -1,25 +1,31 @@
 <?php
-
 /**
- * the main administration function
- *
- * @author Curtis Farnham
- * @access public
- * @param no $ parameters
- * @return true on success or void on failure
- * @throws XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION'
- */
+* main admin function
+*
+* @package unassigned
+* @copyright (C) 2002-2005 by The Digital Development Foundation
+* @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+* @link http://www.xaraya.com
+*
+* @subpackage bible
+* @link http://xaraya.com/index.php/release/550.html
+* @author Curtis Farnham <curtis@farnham.com>
+*/
+/**
+* main administration function
+*/
 function bible_admin_main()
 {
-    // Security Check
+    // security check
     if (!xarSecurityCheck('AdminBible')) return;
 
+    // show overview or redirect to a more useful function
     if (xarModGetVar('adminpanels', 'overview') == 0) {
-        // Return the output
         return xarModAPIFunc('bible', 'admin', 'menu');
     } else {
         xarResponseRedirect(xarModURL('bible', 'admin', 'view'));
     }
+
     // success
     return true;
 }

@@ -2,7 +2,7 @@
 
 <div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>Install Text</xar:mlstring></h2>
-<div style="margin: auto;"><xar:template file="menu" type="module" />
+<div style="margin: auto;"><xar:template file="admin-menu" type="module" />
 
 <div class="xar-align-center"><xar:mlstring>Are you sure you want to install this text? This may take several seconds.</xar:mlstring></div>
 <br />

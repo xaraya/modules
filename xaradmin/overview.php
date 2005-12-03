@@ -1,36 +1,29 @@
 <?php
 /**
- * Overview displays standard Overview page
- *
- * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
- * @subpackage Bible Module
- * @link http://xaraya.com/index.php/release/1.html
- */
+* Display module overview
+*
+* @package unassigned
+* @copyright (C) 2002-2005 by The Digital Development Foundation
+* @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+* @link http://www.xaraya.com
+*
+* @subpackage bible
+* @link http://xaraya.com/index.php/release/550.html
+* @author Curtis Farnham <curtis@farnham.com>
+*/
 /**
- * Overview displays standard Overview page
- *
- * Used to call the template that provides display of the overview
- *
- * @author Curtis Farnham
- * @returns array xarTplModule with $data containing template data
- * @return array containing the menulinks for the overview item on the main manu
- */
+* Display module overview
+*/
 function bible_admin_overview()
 {
-   /* Security Check */
-    if (!xarSecurityCheck('AdminBible',0)) return;
+    // security check
+    if (!xarSecurityCheck('AdminBible', 0)) return;
 
-    $data = array();
-    
-    /* if there is a separate overview function return data to it
-     * else just call the main function that usually displays the overview 
-     */
+    // initialize template data
+    $data = xarModAPIFunc('bible', 'admin', 'menu');
 
-    return xarTplModule('bible', 'admin', 'main', $data,'main');
+    // show overview page
+    return xarTplModule('bible', 'admin', 'main', $data, 'main');
 }
 
 ?>

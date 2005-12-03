@@ -1,14 +1,10 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
-<div class="xar-mod-head">
-    <span class="xar-mod-title"><xar:mlstring>Bible Administration</xar:mlstring></span>
-</div>
-<div class="xar-mod-body">
-<div style="margin: auto;"><xar:template file="menu" type="module" />
+<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Overview</xar:mlstring></h2>
+<div style="margin: auto;"><xar:template file="admin-menu" type="module" />
 
     <img src="#xarTplGetImage('admin.gif')#" alt="#xarML('official icon')#" width="96" height="96" class="xar-module-icon" />
-
-    <h2><xar:mlstring>Overview</xar:mlstring></h2>
 
     <h3><xar:mlstring>What is it?</xar:mlstring></h3>
     <p>

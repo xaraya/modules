@@ -2,7 +2,7 @@
 
 <div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>Book Aliases</xar:mlstring></h2>
-<div style="margin: auto;"><xar:template file="menu" type="module" />
+<div style="margin: auto;"><xar:template file="admin-menu" type="module" />
 
 <p>
     <em><xar:mlstring>Note: There must be at least one alias per book.  No whitespace is allowed around the commas.</xar:mlstring></em>

@@ -1,10 +1,8 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
-<xar:template file="menu" type="module" />
-
-<div class="xar-mod-body"><h2>View Texts</h2><br />
+<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>Upgrade a Text</xar:mlstring></h2><br />
-<div style="margin: auto;"><xar:template file="menu" type="module" />
+<div style="margin: auto;"><xar:template file="admin-menu" type="module" />
 
 <!-- the specific template for the current admin function comes here -->
 

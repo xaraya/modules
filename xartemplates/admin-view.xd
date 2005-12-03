@@ -2,9 +2,11 @@
 
 <div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>View Texts</xar:mlstring></h2>
-<div style="margin: auto;"><xar:template file="menu" type="module" />
+<div style="margin: auto;"><xar:template file="admin-menu" type="module" />
 
-<table width="100%">
+<xar:if condition="!empty($pager)"><div class="xar-align-center xar-margin-thick">#$pager#</div></xar:if>
+
+<table class="xar-fullwidth">
     <tr>
         <th><xar:mlstring>ID</xar:mlstring></th>
         <th><xar:mlstring>Short Name</xar:mlstring></th>
@@ -34,7 +36,6 @@
 </table>
 <br />
 
-<!-- add the pager here -->
-<xar:if condition="!empty($text)">#$pager#</xar:if>
+<xar:if condition="!empty($pager)"><div class="xar-align-center xar-margin-thick">#$pager#</div></xar:if>
 </div>
 </div>
