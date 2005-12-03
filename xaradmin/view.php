@@ -51,8 +51,9 @@ function bible_admin_view()
         xarModGetVar('bible', 'admin_itemsperpage')
     );
 
-    // get list of text states
+    // get other vars
     $states = xarModAPIFunc('bible', 'admin', 'statelist');
+    $return = xarServerGetCurrentURL();
 
     // generate list of options for each text
     foreach ($texts as $tid => $text) {
@@ -68,14 +69,16 @@ function bible_admin_view()
             // Install
             $link = array(xarML('Install'));
             if (xarSecurityCheck('AddBible', 0, 'Text', "$text[sname]:$tid")) {
-                $link[] = xarModURL('bible', 'admin', 'new', array('tid' => $tid));
+                $link[] = xarModURL(
+                    'bible', 'admin', 'new', array('tid' => $tid, 'return' => $return)
+                );
             }
             $links[] = $link;
 
             // Edit
             $link = array(xarML('Edit'));
             if (xarSecurityCheck('EditBible', 0, 'Text', "$text[sname]:$tid")) {
-                $link[] = xarModURL('bible', 'admin', 'modify', array('tid' => $tid));
+                $link[] = xarModURL('bible', 'admin', 'modify', array('tid' => $tid, 'return' => $return));
             }
             $links[] = $link;
             break;
@@ -84,19 +87,19 @@ function bible_admin_view()
             // Activate
             $link = array(xarML('Activate'));
             if (xarSecurityCheck('EditBible', 0, 'Text', "$text[sname]:$tid")) {
-                $link[] = xarModURL('bible', 'admin', 'activate', array('tid' => $tid));
+                $link[] = xarModURL('bible', 'admin', 'activate', array('tid' => $tid, 'return' => $return));
             }
             $links[] = $link;
             // Remove
             $link = array(xarML('Remove'));
             if (xarSecurityCheck('DeleteBible', 0, 'Item', "$text[sname]:$tid")) {
-                $link[] = xarModURL('bible', 'admin', 'delete', array('tid' => $tid));
+                $link[] = xarModURL('bible', 'admin', 'delete', array('tid' => $tid, 'return' => $return));
             }
             $links[] = $link;
             // Edit
             $link = array(xarML('Edit'));
             if (xarSecurityCheck('EditBible', 0, 'Text', "$text[sname]:$tid")) {
-                $link[] = xarModURL('bible', 'admin', 'modify', array('tid' => $tid));
+                $link[] = xarModURL('bible', 'admin', 'modify', array('tid' => $tid, 'return' => $return));
             }
             $links[] = $link;
             break;
@@ -105,13 +108,13 @@ function bible_admin_view()
             // Deactivate
             $link = array(xarML('Deactivate'));
             if (xarSecurityCheck('EditBible', 0, 'Text', "$text[sname]:$tid")) {
-                $link[] = xarModURL('bible', 'admin', 'deactivate', array('tid' => $tid));
+                $link[] = xarModURL('bible', 'admin', 'deactivate', array('tid' => $tid, 'return' => $return));
             }
             $links[] = $link;
             // Edit
             $link = array(xarML('Edit'));
             if (xarSecurityCheck('EditBible', 0, 'Text', "$text[sname]:$tid")) {
-                $link[] = xarModURL('bible', 'admin', 'modify', array('tid' => $tid));
+                $link[] = xarModURL('bible', 'admin', 'modify', array('tid' => $tid, 'return' => $return));
             }
             $links[] = $link;
             break;
@@ -120,7 +123,7 @@ function bible_admin_view()
             // Upgrade
             $link = array(xarML('Upgrade'));
             if (xarSecurityCheck('AddBible', 0, 'Text', "$text[sname]:$tid")) {
-                $link[] = xarModURL('bible', 'admin', 'upgrade', array('tid' => $tid));
+                $link[] = xarModURL('bible', 'admin', 'upgrade', array('tid' => $tid, 'return' => $return));
             }
             $links[] = $link;
 
@@ -133,7 +136,7 @@ function bible_admin_view()
             // Remove
             $link = array(xarML('Remove'));
             if (xarSecurityCheck('DeleteBible', 0, 'Item', "$text[sname]:$tid")) {
-                $link[] = xarModURL('bible', 'admin', 'delete', array('tid' => $tid));
+                $link[] = xarModURL('bible', 'admin', 'delete', array('tid' => $tid, 'return' => $return));
             }
             $links[] = $link;
             break;

@@ -22,12 +22,17 @@
  */
 function bible_userapi_countitems($args)
 {
+    // security check
+    if (!xarSecurityCheck('ViewBible')) return;
+
     extract($args);
 
+    // prepare for database
     $dbconn = xarDBGetConn();
     $xartable = xarDBGetTables();
     $texttable = $xartable['bible_texts'];
 
+    // generate query
     $query = "SELECT COUNT(1) FROM $texttable WHERE 1";
     $bindvars = array();
     if (!empty($state) && is_numeric($state)) {
@@ -35,12 +40,12 @@ function bible_userapi_countitems($args)
         $bindvars[] = $state;
     }
 
+    // execute query
     $result = $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
-    // retrieve the number
+    // retrieve the number and close db connection
     list($numitems) = $result->fields;
-
     $result->Close();
 
     return $numitems;

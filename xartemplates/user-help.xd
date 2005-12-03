@@ -2,9 +2,7 @@
 
 <div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>Help</xar:mlstring></h2>
-<div style="margin: auto; text-align: justify;">
-
-<xar:template file="menu" type="module" />
+<div style="margin: auto; text-align: justify;"><xar:template file="user-menu" type="module" />
 
 <xar:if condition="!empty($status)"><p class="xar-align-center xar-style-bold">#$status#</p></xar:if>
 

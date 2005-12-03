@@ -24,52 +24,57 @@ function bible_userapi_getmenulinks()
     // initialize array of links
     $menulinks = array();
 
-    // Quick Search
-    $menulinks['main'] = array(
-        'url' => xarModURL('bible', 'user', 'main'),
-        'title' => xarML('Quick Search'),
-        'label' => xarML('Quick Search')
-    );
+    // security check
+    if (xarSecurityCheck('ReadBible', 0)) {
 
-    // Keyword Search
-    $menulinks['search'] = array(
-        'url' => xarModURL('bible', 'user', 'search'),
-        'title' => xarML('Keyword Search'),
-        'label' => xarML('Keyword Search')
-    );
-
-    // Passage Lookup
-    $menulinks['lookup'] = array(
-        'url' => xarModURL('bible', 'user', 'lookup'),
-        'title' => xarML('Passage Lookup'),
-        'label' => xarML('Passage Lookup')
-    );
-
-    // Concordance
-    if (false !== ($strongs = xarModAPIFunc(
-        'bible', 'user', 'getall',
-        array('state' => 2, 'type' => 2, 'order' => 'sname', 'sort' => 'desc')
-    ))) {
-        $menulinks['concordance'] = array(
-            'url' => xarModURL('bible', 'user', 'concordance'),
-            'title' => xarML('Concordance'),
-            'label' => xarML('Concordance')
+        // Help
+        $menulinks['help'] = array(
+            'url' => xarModURL('bible', 'user', 'help'),
+            'title' => xarML('Help'),
+            'label' => xarML('Help')
         );
+
+        // Library
+        $menulinks['library'] = array(
+            'url' => xarModURL('bible', 'user', 'library'),
+            'title' => xarML('Library'),
+            'label' => xarML('Library')
+        );
+
+        // Quick Search
+        $menulinks['main'] = array(
+            'url' => xarModURL('bible', 'user', 'main'),
+            'title' => xarML('Quick Search'),
+            'label' => xarML('Quick Search')
+        );
+
+        // Keyword Search
+        $menulinks['search'] = array(
+            'url' => xarModURL('bible', 'user', 'search'),
+            'title' => xarML('Keyword Search'),
+            'label' => xarML('Keyword Search')
+        );
+
+        // Passage Lookup
+        $menulinks['lookup'] = array(
+            'url' => xarModURL('bible', 'user', 'lookup'),
+            'title' => xarML('Passage Lookup'),
+            'label' => xarML('Passage Lookup')
+        );
+
+        // Concordance
+        if (false !== ($strongs = xarModAPIFunc(
+            'bible', 'user', 'getall',
+            array('state' => 2, 'type' => 2, 'order' => 'sname', 'sort' => 'desc')
+        ))) {
+            $menulinks['concordance'] = array(
+                'url' => xarModURL('bible', 'user', 'concordance'),
+                'title' => xarML('Concordance'),
+                'label' => xarML('Concordance')
+            );
+        }
+
     }
-
-    // Library
-    $menulinks['library'] = array(
-        'url' => xarModURL('bible', 'user', 'library'),
-        'title' => xarML('Library'),
-        'label' => xarML('Library')
-    );
-
-    // Help
-    $menulinks['help'] = array(
-        'url' => xarModURL('bible', 'user', 'help'),
-        'title' => xarML('Help'),
-        'label' => xarML('Help')
-    );
 
     return $menulinks;
 }

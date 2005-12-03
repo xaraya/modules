@@ -1,29 +1,29 @@
 <?php
 /**
  * File: $Id:
- * 
+ *
  * Install a text
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage bible
- * @author curtisdf 
+ * @author curtisdf
  */
 /**
  * install a text
- * 
- * @author curtisdf 
+ *
+ * @author curtisdf
  * @param  $args ['tid'] ID of the text
  * @returns bool
  * @return true on success, false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function bible_adminapi_install($args)
-{ 
-    extract($args); 
+{
+    extract($args);
 
     if (!isset($tid) || !is_numeric($tid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
@@ -31,11 +31,11 @@ function bible_adminapi_install($args)
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException($msg));
         return;
-    } 
+    }
 
     // get text data
     $text = xarModAPIFunc('bible', 'user', 'get',
-                          array('tid' => $tid));
+                          array('tid' => $tid, 'state' => 'all'));
 
     // make sure file matches what's in the record
     $textdir = xarModGetVar('bible', 'textdir');
@@ -130,7 +130,7 @@ function bible_adminapi_install($args)
 
             // separate reference from text
             preg_match("/^([^\:]+) (\d{1,3})\:(\d{1,3}\w?) (.*)/", $buffer, $matches);
-            list($string, $book, $chapter, $verse, $line) = $matches;
+            @list($string, $book, $chapter, $verse, $line) = $matches;
 
             // separate tags from text
             preg_match_all("/<[^>]*>/", $line, $matches, PREG_OFFSET_CAPTURE);
@@ -169,8 +169,8 @@ function bible_adminapi_install($args)
         // insert last set into the database
         $query = $query_start . join(', ', $queries);
         $result = $dbconn->Execute($query,$bindvars);
-    
-        if (!$result) return; 
+
+        if (!$result) return;
 
         // generate SQL that will create the index
         $query = "ALTER TABLE $texttable
@@ -205,7 +205,7 @@ function bible_adminapi_install($args)
 
             // if we match the '$$T0000000' lines...
             if (preg_match("/^\s*\\$\\$\w\d+\s*\$/", $buffer)) {
-    
+
             // save previous def
                 $queries[] = "('', ?, ?, ?, ?)";
                 $bindvars[] = $num;
@@ -256,13 +256,13 @@ function bible_adminapi_install($args)
         $query = $query_start . join(', ', $queries);
         $result = $dbconn->Execute($query,$bindvars);
 
-        if (!$result) return; 
+        if (!$result) return;
 
     }
     fclose($fd);
 
     // Let the calling process know that we have finished successfully
     return true;
-} 
+}
 
 ?>

@@ -10,6 +10,7 @@
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <input type="hidden" name="confirm" id="confirm" value="true" />
     <input type="hidden" name="tid" id="tid" value="#$tid#" />
+    <input type="hidden" name="return" id="return" value="#$return#" />
 
     <table border="0" width="300">
         <tr>

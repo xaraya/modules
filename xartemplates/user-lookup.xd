@@ -2,13 +2,11 @@
 
 <div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>Passage Lookup</xar:mlstring></h2>
-<div style="margin: auto;">
-
-<xar:template file="menu" type="module" />
+<div style="margin: auto;"><xar:template file="user-menu" type="module" />
 
 <xar:if condition="!empty($status)"><p class="xar-align-center xar-style-bold">#$status#</p></xar:if>
 
-    <form action="#xarModURL('bible', 'user', 'validate')#" method="post" name="lookupform">
+    <form action="&xar-modurl-bible-user-validate;" method="post" name="lookupform">
 
     <input type="hidden" name="function" value="display" />
 
