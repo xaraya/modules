@@ -55,9 +55,9 @@ But there's more:
    for more information about texts.
 
 
-Bible Texts: Creating
----------------------
-This module uses Bible texts in verse-per-line (VPL) format, such as:
+Bible Texts: Creating Your Own
+------------------------------
+This module uses Bible texts in verse-per-line (VPL) format, as in:
 
    Genesis 1:1 In the beginning <RB>God created the heavens and the earth.
    Genesis 1:2 Now the earth was formless and empty. Darkness was on the surface of the deep. Gods Spirit was hovering over the surface of the waters.<CM>
@@ -65,43 +65,46 @@ This module uses Bible texts in verse-per-line (VPL) format, such as:
    Genesis 1:4 God saw the light, and saw that it was good. God divided the light from the darkness.
    etc...
 
-However you can achieve that is fine, but the book names must correspond to
+However you want to achieve that is fine, but the book names must correspond to
 what is used by The Sword Project (http://www.crosswire.org/sword/).  The
-easiest way is to install Sword and the texts you want on your computer, and
-export them.  You can use Sword's mod2vpl utility.
-
-Texts must have an extension of .vpl and may not be compressed.  However, they
-can be compressed or deleted from your filesystem after installing.  On a *nix
-command line, exporting can be done as follows, using the KJV Bible as an
-example:
+easiest way is to install Sword and the texts you want on your computer and
+export them using Sword's mod2vpl utility.  On a *nix command line, exporting
+can be done as follows, using the KJV Bible as an example:
 
    /path/to/your/mod2vpl KJV 1 > kjv.vpl
+
+If I recall, it's the same on a Windows command prompt, but you might have
+to add ".exe" after the "mod2vpl" part.  The text name is CASE SENSITIVE!
 
 Note the number "1" after the text name.  This tells mod2vpl to export the
 reference as well as the text of the verse.  Google for "mod2vpl" and similar
 if you need help.  Or ask the nice Sword people about it.  (But DON'T ask them
 to export texts for you.  Bug me about it instead.)
 
+Texts must have an extension of .vpl (or .vpl.gz as of version 0.9.6, as gzip
+support was added then).  After installing a text, you may remove it from your
+filesystem to save space.  This is permissible because the text itself is
+copied into a database.
+
 Texts can be enhanced by uploading the .conf file directly from your Sword
 installation directories.  This tells the Bible module more about the text
-and makes for a nicer Table of Contents page.  The .conf file may NOT be
-deleted after the text is installed.  Sword .conf files can be found in:
+and makes for a nicer Table of Contents page.  The .conf file MAY NOT BE
+DELETED after the text is installed.  Sword .conf files can be found in:
 
    /path/to/your/sword/mods.d/
 
-Make sure your .vpl and your .conf file have the same base name, or the Bible
-module might not recognize that they're related.
+Make sure your .vpl(.gz) and your .conf file have the same base name, or they
+won't be recognized as being related.
 
 A limited number of texts are available at my website (see below for the URL.
 You're welcome to bug me about making additional versions available, but I
-cannot guarantee that I will have the time or the interest in exporting
-whatever odd Bible version you want.  I encourage you to export things on your
-own. Besides, you might learn something. :-)
+cannot guarantee that I will be able to fulfill all requests.  I encourage you
+to export things on your own. Besides, you might learn something. :-)
 
 
 Bible Texts: Installing
 -----------------------
-Upload your .vpl and .conf files to your text directory (default is
+Upload your .vpl(.gz) and .conf files to your text directory (default is
 /var/bible/).  Then go to Bible Admin => View Texts and reload the page so it
 can detect those files.  Press "Install" next to the text you want, and confirm
 it.  If you server is slow, this might take a while.  But on my P4 laptop

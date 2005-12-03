@@ -1,4 +1,12 @@
-Release 0.9.6, 2005-11-15
+Release 0.9.6, 2005-12-03 (last rev e4d63bf1221707b50fbe986fedbfb883fee949e8)
+    - eliminated 'Not Used' entries in Strong's; dictionary display tweaks; pager for word index
+    - Support for gzipped texts
+    - Removed obsolete admin navtabs; fixed admin template headers and overview page
+    - changed Concordance to Dictionary semantics; bugfix on pronunciation searches; GUI overhaul
+    - add missing template for concordance page
+    - user and admin don't share same menu include; admin functions return to same page as started from
+    - User-side navbar, menu links; admin pager fix
+    - initial upload of bible module to Monotone
     - sanity in random block (code review and overhaul)
 
 Release 0.9.5, 2005-11-14
