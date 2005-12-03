@@ -24,13 +24,8 @@ function bible_admin_view()
     if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('numitems', 'int:1:', $numitems, 0, XARVAR_NOT_REQUIRED)) return;
 
-    // scan the texts directory and synchronize list
-    xarModAPIFunc('bible', 'admin', 'scantextdir');
-
     // now many items should we show?
-    if (empty($numitems)) {
-        $numitems = xarModGetVar('bible', 'admin_textsperpage');
-    }
+    if (empty($numitems)) $numitems = xarModGetVar('bible', 'admin_textsperpage');
 
     // get texts
     $texts = xarModAPIFunc('bible', 'user', 'getall', array(
@@ -54,6 +49,7 @@ function bible_admin_view()
     // get other vars
     $states = xarModAPIFunc('bible', 'admin', 'statelist');
     $return = xarServerGetCurrentURL();
+    $scanurl = xarModURL('bible', 'admin', 'scantextdir');
 
     // generate list of options for each text
     foreach ($texts as $tid => $text) {
@@ -148,6 +144,7 @@ function bible_admin_view()
     $data = xarModAPIFunc('bible', 'admin', 'menu');
 
     // set template vars
+    $data['scanurl'] = $scanurl;
     $data['pager'] = &$pager;
     $data['texts'] = &$texts;
 

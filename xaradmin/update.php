@@ -22,11 +22,15 @@
  */
 function bible_admin_update($args)
 {
+    // security check
+    if (!xarSecConfirmAuthKey()) return;
+
     extract($args);
 
-    if (!xarVarFetch('tid', 'int:1:', $tid, $tid, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('objectid', 'str:1:', $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('invalid', 'str:1:', $invalid, XARVAR_NOT_REQUIRED)) return;
+    // get HTTP vars
+    if (!xarVarFetch('tid', 'id', $tid, $tid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('objectid', 'id', $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('invalid', 'array', $invalid, $invalid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('sname', 'str:1:', $sname, $sname, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('lname', 'str:1:', $lname, $lname, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('return', 'str:1:', $return, xarServerGetVar('HTTP_REFERER'), XARVAR_NOT_REQUIRED)) return;
@@ -35,44 +39,39 @@ function bible_admin_update($args)
     if (!empty($objectid)) $tid = $objectid;
     if (empty($return)) $return = '';
 
-    if (!xarSecConfirmAuthKey()) return;
-
+    // validate vars
     $invalid = array();
     if (empty($sname) || !is_string($sname)) {
         $invalid['sname'] = 1;
         $sname = '';
     }
-    if (empty($lname) || !is_string($lname)) {
+    if (!empty($lname) && !is_string($lname)) {
         $invalid['lname'] = 1;
         $lname = '';
     }
 
-    // check if we have any errors
+    // assemble array of data
+    $data = array();
+    $data['tid'] = $tid;
+    $data['sname'] = $sname;
+    $data['lname'] = $lname;
+
     if (count($invalid) > 0) {
-        // call the admin_new function and return the template vars
-        // (you need to copy admin-new.xd to admin-create.xd here)
-        return xarModFunc('bible', 'admin', 'modify',
-                          array('sname'     => $sname,
-                                'lname'     => $lname,
-                                'invalid'  => $invalid));
+        $data['invalid'] = $invalid;
+        return xarModFunc('bible', 'admin', 'modify', $data);
     }
 
-    // call API function to do the updating
-    if (!xarModAPIFunc('bible',
-                       'admin',
-                       'update',
-                       array('tid'   => $tid,
-                             'sname'   => $sname,
-                             'lname' => $lname))) {
-        return; // throw back
-    }
+    // let the API function do the updating
+    if (!xarModAPIFunc('bible', 'admin', 'update',
+        array('tid' => $tid, 'sname' => $sname, 'lname' => $lname))
+    ) return;
+
+    // set status message and redirect to specified location
     xarSessionSetVar('statusmsg', xarML('Text was successfully updated!'));
-
-    // now send to the page where we create the index
     if (empty($return)) $return = xarModURL('bible', 'admin', 'view');
     xarResponseRedirect($return);
 
-    // Return
+    // success
     return true;
 }
 

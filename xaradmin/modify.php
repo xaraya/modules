@@ -23,9 +23,10 @@ function bible_admin_modify($args)
 {
     extract($args);
 
-    if (!xarVarFetch('tid', 'int:1:', $tid)) return;
-    if (!xarVarFetch('objectid', 'str:1:', $objectid, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('invalid', 'str:1:', $invalid, XARVAR_NOT_REQUIRED)) return;
+    // get HTTP vars
+    if (!xarVarFetch('tid', 'id', $tid)) return;
+    if (!xarVarFetch('objectid', 'id', $objectid, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('invalid', 'array', $invalid, $invalid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('sname', 'str:1:', $sname, $sname, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('lname', 'str:1:', $lname, $lname, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('return', 'str:1:', $return, xarServerGetVar('HTTP_REFERER'), XARVAR_NOT_REQUIRED)) return;
@@ -34,27 +35,42 @@ function bible_admin_modify($args)
     if (!empty($objectid)) $tid = $objectid;
     if (empty($return)) $return = '';
 
-    $text = xarModAPIFunc('bible', 'user', 'get', array('tid' => $tid, 'state' => 'all'));
+    // get text
+    $args = array();
+    if (!empty($tid)) $args['tid'] = $tid;
+    if (!empty($sname)) $args['sname'] = $sname;
+    $args['state'] = 'all';
+    $text = xarModAPIFunc('bible', 'user', 'get', $args);
     if (!isset($text) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
     // security check
-    if (!xarSecurityCheck('EditBible', 1, 'Text', "$text[sname]:$text[tid]")) {
-        return;
-    }
+    if (!xarSecurityCheck('EditBible', 1, 'Text', "$text[sname]:$text[tid]")) return;
 
-    // Return the template variables defined in this function
+    // get text vars
+    if (!isset($sname)) $sname = $text['sname'];
+    if (!isset($lname)) $lname = $text['lname'];
+    $id = $text['tid'];
+    $type = $text['type'];
+
+    // get other vars
+    $authid = xarSecGenAuthKey();
+
+    // get hooks
+    $item = $text;
+    $item['module'] = 'bible';
+    $hookoutput = xarModCallHooks('item', 'modify', $id, $item);
+
+    // initialize template data
     $data = xarModAPIFunc('bible', 'admin', 'menu');
-    $data = array_merge($data, array(
-        'authid'       => xarSecGenAuthKey(),
-        'snamelabel'   => xarVarPrepForDisplay(xarML('Short Name')),
-        'sname'        => $text['sname'],
-        'lnamelabel'   => xarVarPrepForDisplay(xarML('Long Name')),
-        'lname'        => $text['lname'],
-        'invalid'      => $invalid,
-        'updatebutton' => xarVarPrepForDisplay(xarML('Update Text')),
-        'text'         => $text,
-        'return'       => $return)
-    );
+
+    // set template vars
+    $data['id']      = $id;
+    $data['sname']   = $sname;
+    $data['lname']   = $lname;
+    $data['type']    = $type;
+    $data['authid']  = $authid;
+    $data['invalid'] = $invalid;
+    $data['return']  = $return;
 
     return $data;
 }

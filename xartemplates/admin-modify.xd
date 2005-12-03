@@ -7,51 +7,50 @@
 
 <form method="post" action="&xar-modurl-bible-admin-update;">
 
-<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-    <input type="hidden" name="return" id="return" value="#$return#" />
+    <fieldset>
+        <legend><xar:mlstring>Display Options</xar:mlstring></legend>
 
-<div style="clear: both; padding-top: 10px;">
+        <div class="xar-form-input-wrapper">
+            <label for="sname"  class="xar-form-label" title="#xarML('Text Name')#">
+                <xar:mlstring>Name:</xar:mlstring>
+            </label>
+            <xar:if condition="$type eq 2">
+                #$sname#
+            <xar:else />
+                <input type="text" name="sname" id="sname" value="#$sname#" maxlength="32" class="xar-form-textshort" />
+                <span class="xar-error">*</span>
+                <xar:if condition="!empty($invalid['sname'])">
+                    <div class="xar-error">
+                        <xar:mlstring>ERROR! Name cannot be blank.</xar:mlstring>
+                    </div>
+                </xar:if>
+            </xar:if>
+        </div>
 
-<span style="float: left; width: 20%; text-align: right;">
-    <span class="help" title="#xarML('Abbreviated name of this text')#"><label for="sname">#$snamelabel#</label>:</span>
-</span>
-<span style="float: right; width: 78%; text-align: left;">
-    <xar:if condition="preg_match('/^Strongs(Greek|Hebrew)$/', $sname)">
-        <input type="hidden" name="sname" valeu="#$sname#" /> #$sname#
-    <xar:else />
-        <input type="text" name="sname" id="sname" size="8" maxlength="32" value="#$sname#" /> <xar:if condition="!empty($invalid['sname'])">
-        <span style="color: red"><xar:mlstring>ERROR! This is not a valid text name</xar:mlstring>
-        </xar:if>
+        <div class="xar-form-input-wrapper">
+            <label for="lname"  class="xar-form-label" title="#xarML('Description')#">
+                <xar:mlstring>Description:</xar:mlstring>
+            </label>
+            <input type="text" name="lname" id="lname" value="#$lname#" maxlength="128" class="xar-form-textlong" />
+        </div>
+    </fieldset>
+
+    <xar:if condition="!empty($hookoutput)">
+        <fieldset>
+            <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
+                <xar:foreach in="$hookoutput" key="$hookmodule" value="$hook">
+                    #$hook#
+                </xar:foreach>
+        </fieldset>
     </xar:if>
-</span>
-</div>
-
-<div style="clear: both; padding-top: 10px;">
-
-<span style="float: left; width: 20%; text-align: right;">
-    <span class="help" title="#xarML('Descriptive name of this Bible text')#"><label for="lname">#$lnamelabel#</label>:</span>
-</span>
-<span style="float: right; width: 78%; text-align: left;">
-    <input type="text" name="lname" id="lname" size="48" maxlength="128" value="#$text['lname']#" />
-    <xar:if condition="!empty($invalid['lname'])">
-        <span style="color: red"><xar:mlstring>ERROR! This is not a valid text name</xar:mlstring>
-    </xar:if>
-</span>
-</div>
-
-
-    <div style="clear: both; padding-top: 10px;">
-    <!--
-        // Add an authorisation ID - this adds a hidden field in the form that
-        // contains an authorisation ID.  The authorisation ID is very important in
-        // preventing certain attacks on the website
-    -->
-        <input type="hidden" name="tid" id="tid" value="#$text['tid']#" />
-        <span style="float: left; width: 30%; text-align: right;"><input type="submit" value="#$updatebutton#" /></span>
+    <div class="xar-form-input-wrapper-after">
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <input type="hidden" name="return" id="return" value="#$return#" />
+        <input type="hidden" name="tid" id="tid" value="#$id#" />
+        <input type="submit" value="#xarML('Update')#" />
     </div>
 
 </form>
 
-<br />
 </div>
 </div>

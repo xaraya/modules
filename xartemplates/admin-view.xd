@@ -4,6 +4,8 @@
 <div class="xar-mod-body"><h2><xar:mlstring>View Texts</xar:mlstring></h2>
 <div style="margin: auto;"><xar:template file="admin-menu" type="module" />
 
+<p><a href="#$scanurl#"><xar:mlstring>Re-scan text directory</xar:mlstring></a></p>
+
 <xar:if condition="!empty($pager)"><div class="xar-align-center xar-margin-thick">#$pager#</div></xar:if>
 
 <table class="xar-fullwidth">
