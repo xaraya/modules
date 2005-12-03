@@ -7,52 +7,156 @@
 <table width="100%" border="0" cellspacing="1" cellpadding="3">
 
 <form method="post" action="&xar-modurl-bible-admin-updateconfig;">
-    <input type="hidden" name="authid" id="authid" value="#$authid#" />
 
-<tr><td><label for="admin_textsperpage">#$textslabel#</label></td>
-<td><input type="text" name="admin_textsperpage" id="admin_textsperpage" size="3" maxlength="3" value="#$textsvalue#" /></td></tr>
+    <fieldset>
+        <legend><xar:mlstring>Display Options</xar:mlstring></legend>
 
-<tr><td><label for="user_searchversesperpage">#$searchverseslabel#</label></td>
-<td><input type="text" name="user_searchversesperpage" id="user_searchversesperpage" size="3" maxlength="3" value="#$searchversesvalue#" /></td></tr>
+        <div class="xar-form-input-wrapper">
+            <label for="admin_textsperpage" class="xar-form-label" title="#xarML('Texts per page in admin listing')#">
+                <xar:mlstring>Texts per page</xar:mlstring>
+            </label>
+            <input type="text" name="admin_textsperpage" id="admin_textsperpage" value="#$admin_textsperpage#" maxlength="3" size="3" />
+        </div>
 
-<tr><td><label for="user_lookupversesperpage">#$lookupverseslabel#</label></td>
-<td><input type="text" name="user_lookupversesperpage" id="user_lookupversesperpage" size="4" maxlength="10" value="#$lookupversesvalue#" /></td></tr>
+        <div class="xar-form-input-wrapper">
+            <label for="user_searchversesperpage" class="xar-form-label" title="#xarML('Hits per page in keyword searches')#">
+                <xar:mlstring>Hits per page</xar:mlstring>
+            </label>
+            <input type="text" name="user_searchversesperpage" id="user_searchversesperpage" value="#$user_searchversesperpage#" maxlength="3" size="3" />
+        </div>
 
-<tr><td><label for="user_wordsperpage">#$wordslabel#</label></td>
-<td><input type="text" name="user_wordsperpage" id="user_wordsperpage" size="4" maxlength="10" value="#$wordsvalue#" /></td></tr>
+        <div class="xar-form-input-wrapper">
+            <label for="user_lookupversesperpage" class="xar-form-label" title="#xarML('Verses per page in passage lookups')#">
+                <xar:mlstring>Verses per page</xar:mlstring>
+            </label>
+            <input type="text" name="user_lookupversesperpage" id="user_lookupversesperpage" value="#$user_lookupversesperpage#" maxlength="3" size="3" />
+        </div>
 
-<tr><td><label for="textdir">#$textdirlabel#</label></td>
-<td><input type="text" name="textdir" id="textdir" size="24" maxlength="128" value="#$textdirvalue#" /></td></tr>
+        <div class="xar-form-input-wrapper">
+            <label for="user_wordsperpage" class="xar-form-label" title="#xarML('Words per page in dictionary index')#">
+                <xar:mlstring>Dictionary words per page</xar:mlstring>
+            </label>
+            <input type="text" name="user_wordsperpage" id="user_wordsperpage" value="#$user_wordsperpage#" maxlength="3" size="3" />
+        </div>
 
-<tr><td><label for="shorturls">#$shorturlslabel#</label></td>
-<td><input type="checkbox" name="shorturls" id="shorturls" value="1" #$shorturlschecked# /></td></tr>
-<tr><td colspan="2"><br /></td></tr>
-<tr><td colspan="2"><span style="font-weight: bold;"><xar:mlstring>Alternate Database:</xar:mlstring></span>
-<br />
-<span style="font-size: smaller; font-style: italic;"><xar:mlstring>Database must be created manually</xar:mlstring></span>
-</td></tr>
-<tr><td><label for="altdb">#$altdblabel#</label></td>
-<td><input type="checkbox" name="altdb" id="altdb" value="1" #$altdbchecked# /></td></tr>
-<tr><td><label for="altdbtype">#$altdbtypelabel#</label></td>
-<td><input type="text" name="altdbtype" id="altdbtype" size="8" maxlength="12" value="#$altdbtypevalue#" /></td></tr>
-<tr><td><label for="altdbhost">#$altdbhostlabel#</label></td>
-<td><input type="text" name="altdbhost" id="altdbhost" size="16" maxlength="64" value="#$altdbhostvalue#" /></td></tr>
-<tr><td><label for="altdbname">#$altdbnamelabel#</label></td>
-<td><input type="text" name="altdbname" id="altdbname" size="16" maxlength="64" value="#$altdbnamevalue#" /></td></tr>
-<tr><td><label for="altdbname">#$altdbunamelabel#</label></td>
-<td><input type="text" name="altdbuname" id="altdbuname" size="16" maxlength="64" value="#$altdbunamevalue#" /></td></tr>
-<tr><td><label for="altdbpass">#$altdbpasslabel#</label></td>
-<td><input type="text" name="altdbpass" id="altdbpass" size="16" maxlength="64" value="#$altdbpassvalue#" /></td></tr>
+    </fieldset>
 
-<tr><td colspan="2">
-#$hooks#
-</td></tr>
+    <fieldset>
+        <legend><xar:mlstring>System Options</xar:mlstring></legend>
 
-<tr><td colspan="2" align="center">
-    <input type="submit" value="#$updatebutton#" /></td></tr>
+        <div class="xar-form-input-wrapper">
+            <label for="supportshorturls" class="xar-form-label" title="#xarML('Enable short URLS?')#">
+                <xar:mlstring>Enable short URLs?</xar:mlstring>
+            </label>
+            <xar:if condition="$supportshorturls">
+                <input type="checkbox" name="supportshorturls" id="supportshorturls" value="1" checked="checked" />
+            <xar:else/>
+                <input type="checkbox" name="supportshorturls" id="supportshorturls" value="1" />
+            </xar:if>
+        </div>
+
+      <div class="xar-form-input-wrapper">
+          <label for="usemodulealias" class="xar-form-label" title="#xarML('Use an alias instead of the module name')#">
+              <xar:mlstring>Use a module alias?</xar:mlstring>
+          </label>
+          <xar:if condition="$usemodulealias">
+              <input type="checkbox" name="usemodulealias" id="usemodulealias" value="1" checked="checked" />
+          <xar:else />
+              <input type="checkbox" name="usemodulealias" id="usemodulealias" value="1" />
+          </xar:if>
+      </div>
+
+      <div class="xar-form-input-wrapper">
+          <label for="aliasname" class="xar-form-label" title="#xarML('The name of module alias to be used.')#">
+              <xar:mlstring>Module Alias Name</xar:mlstring>
+          </label>
+          <input type="text" name="aliasname" id="aliasname" value="#$aliasname#" class="xar-form-textmedium" maxlength="100" />
+      </div>
+
+    </fieldset>
+
+    <fieldset>
+        <legend><xar:mlstring>Text Installation Options</xar:mlstring></legend>
+
+        <div class="xar-form-input-wrapper">
+            <label for="textdir" class="xar-form-label" title="#xarML('Directory to find texts in')#">
+                <xar:mlstring>Text archive directory</xar:mlstring>
+            </label>
+            <input type="text" name="textdir" id="textdir" value="#$textdir#" maxlength="128" class="xar-form-textlong" />
+        </div>
+
+        <div class="xar-form-input-wrapper">
+            <label for="altdb" class="xar-form-label" title="#xarML('Use alternate database for storing text tables')#">
+                <xar:mlstring>Alternate database for texts?</xar:mlstring>
+            </label>
+            <xar:if condition="$altdb">
+                <input type="checkbox" onclick="this.form.submit();" name="altdb" id="altdb" value="1" checked="checked" />
+            <xar:else/>
+                <input type="checkbox" onclick="this.form.submit();" name="altdb" id="altdb" value="1" />
+            </xar:if>
+            <br />
+            <span class="xar-sub"><xar:mlstring>(Database must be created manually)</xar:mlstring></span>
+        </div>
+
+    </fieldset>
+
+    <xar:if condition="$altdb">
+        <fieldset>
+            <legend><xar:mlstring>Database Options</xar:mlstring></legend>
+
+            <div class="xar-form-input-wrapper">
+                <label for="altdbhost" class="xar-form-label" title="#xarML('Database hostname')#">
+                    <xar:mlstring>Host</xar:mlstring>
+                </label>
+                <input type="text" name="altdbhost" id="altdbhost" value="#$altdbhost#" maxlength="100" class="xar-form-textmedium" />
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                <label for="altdbtype" class="xar-form-label" title="#xarML('Database type')#">
+                    <xar:mlstring>Type</xar:mlstring>
+                </label>
+                <input type="text" name="altdbtype" id="altdbtype" value="#$altdbtype#" maxlength="100" class="xar-form-textmedium" />
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                <label for="altdbname" class="xar-form-label" title="#xarML('Database name')#">
+                    <xar:mlstring>Name</xar:mlstring>
+                </label>
+                <input type="text" name="altdbname" id="altdbname" value="#$altdbname#" maxlength="100" class="xar-form-textmedium" />
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                <label for="altdbuname" class="xar-form-label" title="#xarML('Database username')#">
+                    <xar:mlstring>Username</xar:mlstring>
+                </label>
+                <input type="text" name="altdbuname" id="altdbuname" value="#$altdbuname#" maxlength="100" class="xar-form-textmedium" />
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                <label for="altdbpass" class="xar-form-label" title="#xarML('Database password')#">
+                    <xar:mlstring>Password</xar:mlstring>
+                </label>
+                <input type="password" name="altdbpass" id="altdbpass" value="#$altdbpass#" maxlength="100" class="xar-form-textmedium" />
+            </div>
+
+        </fieldset>
+    </xar:if>
+
+    <fieldset>
+      <legend><xar:mlstring>Enabled Hooks</xar:mlstring></legend>
+      <xar:if condition="!empty($hookoutput)">
+        <xar:foreach in="$hookoutput" key="$hookmodule">
+          #$hookoutput[$hookmodule]#
+        </xar:foreach>
+      </xar:if>
+    </fieldset>
+
+    <div class="xar-form-input-wrapper-after">
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <input type="submit" value="#xarML('Update Configuration')#" />
+    </div>
+
 </form>
 
-</table>
-<br />
 </div>
 </div>

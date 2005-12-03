@@ -26,9 +26,13 @@ function bible_userapi_encode_shorturl($args)
 
     if (!isset($func)) return;
 
+    // use module alias if set
+    $usemodulealias = xarModGetVar('bible', 'useModuleAlias');
+    $aliasname = xarModGetVar('bible', 'aliasname');
+    $module = ($usemodulealias) ? $aliasname : 'bible';
+
     $path = '';
     $join = '?';
-    $module = 'bible';
 
     // specify short URLs
     if (isset($sname) &&
