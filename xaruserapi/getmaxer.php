@@ -14,11 +14,11 @@
 
 /**
  * Get a specific maxer
- * 
+ *
  * Standard function of a module to retrieve a specific item
  *
  * @author the Maxercalls module development team
- * @param  $args ['maxerid'] id of example item to get
+ * @param  $args ['maxerid'] id of maxercalls item to get
  * @returns array
  * @return item array, or false on failure
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION

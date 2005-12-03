@@ -72,11 +72,25 @@ function maxercalls_admin_newmaxer($args)
     } else {
         $data['remark'] = $remark;
     }
-
+    if (empty($ric)) {
+        $data['ric'] = '';
+    } else {
+        $data['ric'] = $ric;
+    }
+    if (empty($maxernumber)) {
+        $data['maxernumber'] = '';
+    } else {
+        $data['maxernumber'] = $maxernumber;
+    }
     if (empty($program)) {
         $data['program'] = '';
     } else {
         $data['program'] = $program;
+    }
+    if (empty($personid)) {
+        $data['personid'] = '';
+    } else {
+        $data['personid'] = $personid;
     }
     /* Return the template variables defined in this function */
     return $data;
