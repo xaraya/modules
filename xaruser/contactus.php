@@ -114,18 +114,6 @@ function sitecontact_user_contactus($args)
                             $company,
                             $notetouser);
 
-    /* Get the existing value of htmlmail module */
-    $oldhtmlvalue=xarModGetVar('mail','html');
-    if (!isset($oldhtmlvalue) ) {
-    $oldhtmlvalue=false;
-    }
-    if ($usehtmlemail ==1) {
-    /* temporarily set the use of html in mail. */
-        xarModSetVar('mail','html',1);
-    } else {
-    /*make sure at least temporarily it is set to use text in mail */
-        xarModSetVar('mail','html',0);
-    }
     $sendname=xarModGetVar('sitecontact','scdefaultname');
     if (!isset($sendname)) {
         $adminname= xarModGetVar('mail','adminname');
@@ -151,7 +139,8 @@ function sitecontact_user_contactus($args)
      *  $htmlusermessage = html_entity_decode(xarVarPrepHTMLDisplay($usermessage));
      * $htmlnotetouser = xarVarPrepHTMLDisplay($notetouser);
      */
-    $userhtmlmessage= xarTplModule('sitecontact',
+
+        $userhtmlmessage= xarTplModule('sitecontact',
                                    'user',
                                    'usermail',
                                     array('notetouser' => $htmlnotetouser,
@@ -165,7 +154,6 @@ function sitecontact_user_contactus($args)
                                           'propdata'    => $propdata,
                                           'todaydate'  => $todaydate),
                                     'html');
-
 
         /* prepare the text message to user */
         $textsubject = strtr($requesttext,$trans);
@@ -190,22 +178,30 @@ function sitecontact_user_contactus($args)
 
 
    if (($allowcopy) and ($sendcopy)) {
-    /* let's send a copy of the feedback form to the sender
-     * if it is permitted by admin, and the user wants it */
+      /* let's send a copy of the feedback form to the sender
+      * if it is permitted by admin, and the user wants it */
+      $args = array('info'         => $useremail,
+                    'name'         => $username,
+                    'subject'      => $subject,
+                    'message'      => $usertextmessage,
+                    'htmlmessage'  => $userhtmlmessage,
+                    'from'         => $setmail,
+                    'fromname'     => $sendname);
 
-   /* send mail to user */
-    if (!xarModAPIFunc('mail',
+        /* send mail to user , if html email let's do that  else just send text*/
+        if ($usehtmlemail != 1) {
+
+            if (!xarModAPIFunc('mail',
                        'admin',
-                       'sendmail',
-                       array('info'         => $useremail,
-                             'name'         => $username,
-                             'subject'      => $subject,
-                             'message'      => $usertextmessage,
-                             'htmlmessage'  => $userhtmlmessage,
-                             'from'         => $setmail,
-                             'fromname'     => $sendname))) return;
-    }/* allow copy*/
+                       'sendmail', $args)) return;
 
+        } else {/*it's html email */
+
+            if (!xarModAPIFunc('mail',
+                       'admin',
+                       'sendhtmlmail', $args)) return;
+        }
+    }
     /* now let's do the html message to admin */
    $adminhtmlmessage= xarTplModule('sitecontact',
                                    'user',
@@ -223,6 +219,7 @@ function sitecontact_user_contactus($args)
                                           'propdata'    => $propdata,
                                           'userreferer' => $userreferer),
                                           'html');
+
 
     /* Let's do admin text message */
     $admintextmessage= xarTplModule('sitecontact',
@@ -242,19 +239,25 @@ function sitecontact_user_contactus($args)
                                           'userreferer' => $userreferer),
                                           'text');
     /* send email to admin */
-    if (!xarModAPIFunc('mail',
-                       'admin',
-                       'sendmail',
-                       array('info'         => $setmail,
-                             'name'         => $sendname,
-                             'subject'      => $subject,
-                             'message'      => $admintextmessage,
-                             'htmlmessage'  => $adminhtmlmessage,
-                             'from'         => $useremail,
-                             'fromname'     => $username))) return;
+    $args = array('info'         => $setmail,
+                  'name'         => $sendname,
+                  'subject'      => $subject,
+                  'message'      => $admintextmessage,
+                  'htmlmessage'  => $adminhtmlmessage,
+                  'from'         => $useremail,
+                  'fromname'     => $username);
+                  
+    if ($usehtmlemail != 1) {
 
-    /* set back the original value of html mail in case it has been changed */
-    xarModSetVar('mail','html',$oldhtmlvalue);
+        if (!xarModAPIFunc('mail',
+                           'admin',
+                           'sendmail', $args))return;
+    } else {
+
+        if (!xarModAPIFunc('mail',
+                           'admin',
+                           'sendhtmlmail', $args))return;
+    }
 
     /* lets update status and display updated configuration */
     xarResponseRedirect(xarModURL('sitecontact', 'user', 'main', array('message' => '1')));
