@@ -110,7 +110,7 @@ function julian_userapi_gethooked($args)
         //return xarML('There is no event hooked to this item.');
     }
 
-    if (!xarSecurityCheck('ViewJulian')) { // TODO
+    if (!xarSecurityCheck('Viewjulian')) { // TODO
         return;
     }
     // Return the item array

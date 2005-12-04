@@ -36,7 +36,7 @@ function julian_user_viewevent()
     if (!xarVarFetch('cal_date','int',$cal_date)) return; // str here?
 
     // Security check
-    if (!xarSecurityCheck('ViewJulian')) return;
+    if (!xarSecurityCheck('Viewjulian')) return;
     // TODO: make this an API for linked event
     // establish a db connection
     $dbconn =& xarDBGetConn();
