@@ -55,7 +55,7 @@ function example_init()
                xar_number    I4        NotNull    DEFAULT 0
               ";
 
-    /* C:  Varchar, capped to 255 characters.
+    /* C:  Varchar, capped to 255 characters. To prevent SQL errors, set a size when using C(sizeint)
        X:  Larger varchar, capped to 4000 characters
        XL: For Oracle, returns CLOB, otherwise the largest varchar size.
        C2: Multibyte varchar
@@ -331,7 +331,7 @@ function example_delete()
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
 
     /* Drop the example tables */
-     $result = $datadict->dropTable($exampletable);
+    $result = $datadict->dropTable($exampletable);
 
      /* Remove any module aliases before deleting module vars */
     /* Assumes one module alias in this case */
