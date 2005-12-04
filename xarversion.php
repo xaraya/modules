@@ -12,7 +12,7 @@
  */
 $modversion['name']           = 'Maxercalls';
 $modversion['id']             = '247';
-$modversion['version']        = '0.1.6';
+$modversion['version']        = '0.2.0';
 $modversion['displayname']    = xarML('Maxercalls');
 $modversion['description']    = 'Register calls on pagers from users';
 $modversion['credits']        = 'xardocs/credits.txt';

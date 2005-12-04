@@ -47,7 +47,7 @@ function maxercalls_admin_modify($args)
         return $msg;
     }
 
-    if (!xarSecurityCheck('EditMaxercalls',1,'item',$itemid)) return;
+    if (!xarSecurityCheck('AdminMaxercalls',1,'item',$itemid)) return;
 
     // get the Dynamic Object defined for this module (and itemtype, if relevant)
     $object = xarModAPIFunc('dynamicdata','user','getobject',
@@ -59,7 +59,8 @@ function maxercalls_admin_modify($args)
     // get the values for this item
     $newid = $object->getItem();
     if (!isset($newid) || $newid != $itemid) return;
-
+    // Authentication
+    $data['authid'] = xarSecGenAuthKey();
     // Get data ready for the template
     $data['itemid']   = $itemid;
     $data['itemtype'] = $itemtype;

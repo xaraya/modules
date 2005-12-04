@@ -1,6 +1,6 @@
 <?php
 /**
- * maxercalls initialization functions
+ * Maxercalls initialization functions
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
@@ -8,11 +8,12 @@
  * @link http://www.xaraya.com
  *
  * @subpackage Maxercalls module
- * @author Michel V. maxercalls module development team
+ * @link http://xaraya.com/index.php/release/247.html
+ * @author Maxercalls module development team
  */
 
 /**
- * initialise the maxercalls module
+ * Initialise the maxercalls module
  * This function is only ever called once during the lifetime of a particular
  * module instance
  */
@@ -59,9 +60,10 @@ function maxercalls_init()
     // Pass the Table Create DDL to adodb to create the table and send exception if unsuccessful
     $result = &$dbconn->Execute($query);
     if (!$result) return;
-    $maxerstable = $xartable['maxercalls_maxers'];
+
     // Create table to hold the maxers themselves
-    /* Get a data dictionary object with all the item create methods in it */
+    $maxerstable = $xartable['maxercalls_maxers'];
+    // Get a data dictionary object with all the item create methods in it
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
     $fields = "xar_maxerid      I  AUTO    PRIMARY,
                xar_personid     I  NOTNULL DEFAULT 0,
@@ -74,6 +76,30 @@ function maxercalls_init()
               ";
     /* Create or alter the table as necessary */
     $result = $datadict->changeTable($maxerstable, $fields);
+    if (!$result) {return;}
+
+    // Create table to hold the maxerstatus themselves
+    $statustable = $xartable['maxercalls_maxerstatus'];
+    // Get a data dictionary object with all the item create methods in it
+    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+    $fields = "xar_mstatusid    I  AUTO    PRIMARY,
+               xar_maxerstatus  C(200)  NOTNULL DEFAULT '',
+               xar_statuscolor  C(10)  NOTNULL DEFAULT ''
+              ";
+    /* Create or alter the table as necessary */
+    $result = $datadict->changeTable($statustable, $fields);
+    if (!$result) {return;}
+
+    // Create table to hold the maxerstatus themselves
+    $functiontable = $xartable['maxercalls_maxerfunction'];
+    // Get a data dictionary object with all the item create methods in it
+    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+    $fields = "xar_mfunctionid    I  AUTO    PRIMARY,
+               xar_maxerfunction  C(200)  NOTNULL DEFAULT '',
+               xar_functioncolor  C(10)  NOTNULL DEFAULT ''
+              ";
+    /* Create or alter the table as necessary */
+    $result = $datadict->changeTable($functiontable, $fields);
     if (!$result) {return;}
 
     // If Categories API loaded and available, generate proprietary
@@ -253,6 +279,8 @@ function maxercalls_upgrade($oldversion)
     /* Upgrade dependent on old version number */
     switch ($oldversion) {
         case '0.1.5':
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
             $maxerstable = $xartable['maxercalls_maxers'];
             // Create table to hold the maxers themselves
             /* Get a data dictionary object with all the item create methods in it */
@@ -274,6 +302,34 @@ function maxercalls_upgrade($oldversion)
             xarModSetVar('maxercalls','aliasname','');
             return maxercalls_upgrade('0.1.6');
         case '0.1.6':
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+            // Create table to hold the maxerstatus themselves
+            $statustable = $xartable['maxercalls_maxerstatus'];
+            // Get a data dictionary object with all the item create methods in it
+            $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+            $fields = "xar_mstatusid    I  AUTO    PRIMARY,
+                       xar_maxerstatus  C(200)  NOTNULL DEFAULT '',
+                       xar_statuscolor  C(10)  NOTNULL DEFAULT ''
+                      ";
+            /* Create or alter the table as necessary */
+            $result = $datadict->changeTable($statustable, $fields);
+            if (!$result) {return;}
+
+            // Create table to hold the maxerstatus themselves
+            $functiontable = $xartable['maxercalls_maxerfunction'];
+            // Get a data dictionary object with all the item create methods in it
+            $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+            $fields = "xar_mfunctionid    I  AUTO    PRIMARY,
+                       xar_maxerfunction  C(200)  NOTNULL DEFAULT '',
+                       xar_functioncolor  C(10)  NOTNULL DEFAULT ''
+                      ";
+            /* Create or alter the table as necessary */
+            $result = $datadict->changeTable($functiontable, $fields);
+            if (!$result) {return;}
+            return maxercalls_upgrade('0.2.0');
+        case '0.2.0':
+
             break;
     }
     return true;
@@ -297,19 +353,16 @@ function maxercalls_delete()
     $result = $dbconn->Execute($query);
     if (!$result) return;
 
-    $query = xarDBDropTable($xartable['maxercalls_types']);
-    if (empty($query)) return; // throw back
+    /* Get a data dictionary object with item create and delete methods */
+    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+    // Initialise table array
+    $basename = 'maxercalls';
 
-    // Drop the table and send exception if returns false.
-    $result = $dbconn->Execute($query);
-    if (!$result) return;
+    foreach(array('types', 'maxers', 'maxerstatus', 'maxerfunction') as $table) {
 
-    $query = xarDBDropTable($xartable['maxercalls_maxers']);
-    if (empty($query)) return; // throw back
-
-    // Drop the table and send exception if returns false.
-    $result = $dbconn->Execute($query);
-    if (!$result) return;
+    /* Drop the tables */
+     $result = $datadict->dropTable($xartable[$basename . '_' . $table]);
+    }
 
     $objectid = xarModGetVar('maxercalls','calltypeid');
     if (!empty($objectid)) {

@@ -17,6 +17,7 @@
  * This function is called internally by the core whenever the module is
  * loaded.  It is loaded by xarMod__loadDbInfo().
  *
+ * @author MichelV
  * @access private
  * @return array
  */
@@ -28,6 +29,8 @@ function maxercalls_xartables()
     $xarTables['maxercalls'] = xarDBGetSiteTablePrefix() . '_maxercalls';
     $xarTables['maxercalls_types'] = xarDBGetSiteTablePrefix() . '_maxercalls_types';
     $xarTables['maxercalls_maxers'] = xarDBGetSiteTablePrefix() . '_maxercalls_maxers';
+    $xarTables['maxercalls_maxerstatus'] = xarDBGetSiteTablePrefix() . '_maxercalls_maxerstatus';
+    $xarTables['maxercalls_maxerfunction'] = xarDBGetSiteTablePrefix() . '_maxercalls_maxerfunction';
     // Return the table information
     return $xarTables;
 }

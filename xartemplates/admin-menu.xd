@@ -1,8 +1,12 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<!-- common admin menu for this module - remove link to the current function -->
-<!-- the variables used in this menu come from maxercalls_admin_menu() -->
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Callmaxers Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2>#$menutitle#</h2><br />
-<div style="margin: auto;">
+<xar:set name="tmp">xarTplAddStyleLink('base', 'navtabs')</xar:set>
+<dl class="xar-tabs" style="margin-bottom: 0px;">
 
-<!-- the specific template for the current admin function comes here -->
+    <xar:foreach in="$menulinks" key="$key" value="$link">
+        <xar:if condition="$itemtype eq $link.itemtype">
+            <dd class="active"><a href="#xarModURL('maxercalls', 'admin', 'view', array('itemtype' => $link.itemtype))#">#$link.label#</a></dd>
+        <xar:else />
+            <dd><a href="#xarModURL('maxercalls', 'admin', 'view', array('itemtype' => $link.itemtype))#">#$link.label#</a></dd>
+        </xar:if>
+    </xar:foreach>
+</dl>

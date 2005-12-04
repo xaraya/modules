@@ -121,6 +121,9 @@
         <fieldset>
             <div class="xar-form-input-wrapper-after">
                 <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <!-- TODO: replace two hidden fields below with real input -->
+                <input type="hidden" name="function" id="authid" value="#$function#" />
+                <input type="hidden" name="maxerstatus" id="authid" value="#$maxerstatus#" />
                 <input type="submit" value="#xarML('Add Maxer')#" />
             </div>
         </fieldset>

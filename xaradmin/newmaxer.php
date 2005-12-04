@@ -92,6 +92,16 @@ function maxercalls_admin_newmaxer($args)
     } else {
         $data['personid'] = $personid;
     }
+    if (empty($function)) {
+        $data['function'] = '';
+    } else {
+        $data['function'] = $function;
+    }
+    if (empty($maxerstatus)) {
+        $data['maxerstatus'] = '';
+    } else {
+        $data['maxerstatus'] = $maxerstatus;
+    }
     /* Return the template variables defined in this function */
     return $data;
 }

@@ -8,6 +8,7 @@
  * @link http://www.xaraya.com
  *
  * @subpackage Maxercalls module
+ * @link http://xaraya.com/index.php/release/247.html
  * @author Maxercalls module development team
  */
 
@@ -38,7 +39,7 @@ function maxercalls_admin_view($args)
     $data['itemtype'] = $itemtype;
     $data['startnum'] = $startnum;
     // The Generic Menu
-    //$data['menu']      = xarModFunc('maxercalls','admin','menu');
+    $data['menu']      = xarModFunc('maxercalls','admin','menu');
     $data['menutitle'] = xarVarPrepForDisplay(xarML('View the hooked dynamic data options'));
 
     if (empty($data['itemtype'])){
