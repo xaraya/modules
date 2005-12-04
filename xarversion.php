@@ -1,16 +1,16 @@
 <?php
 /**
- * File: $Id: s.xaradmin.php 1.28 03/02/08 17:38:40-05:00 John.Cox@mcnabb. $
- *
  * Userpoints System
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
- * @subpackage userpoints module
+ *
+ * @subpackage Userpoints module
  * @author Vassilis Stratigakis
  */
-$modversion['name']           = 'Userpoints';
+$modversion['name']           = 'userpoints';
 $modversion['id']             = '782';
 $modversion['version']        = '1.2.0';
 $modversion['displayname']    = xarML('Userpoints');
@@ -25,7 +25,6 @@ $modversion['author']         = 'Vassilis Stratigakis';
 $modversion['contact']        = 'http://www.netforgers.com/';
 $modversion['admin']          = 1;
 $modversion['user']           = 0;
-$modversion['securityschema'] = array('Userpoints::' => 'User ID:Item Type:Item ID');
 $modversion['class']          = 'Utility';
 $modversion['category']       = 'Content';
 ?>

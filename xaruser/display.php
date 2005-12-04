@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Get points
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Userpoints Module
+ * @link http://xaraya.com/index.php/release/782.html
+ * @author Userpoints Module Development Team
+ */
 /**
  * add user points for displaying an item
  * @param $args['objectid'] ID of the item this point is for
@@ -98,17 +109,17 @@ function userpoints_user_display($args)
         return '';
     }
 
-    $points = $pointsvalues['tpoints']; 
-      
+    $points = $pointsvalues['tpoints'];
+
     $uptid = $pointsvalues['uptid'];
-      
+
     $args['uptid'] = $uptid;
     $args['points'] = $points;
     $args['uid'] = $uid;
 
     $pointsadded = xarModAPIFunc('userpoints', 'admin', 'addpoints',$args);
 */
-    
+
     // Nothing to see here
     return '';
 }

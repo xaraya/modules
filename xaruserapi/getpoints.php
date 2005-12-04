@@ -1,4 +1,16 @@
 <?php
+/**
+ * Get points
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Userpoints Module
+ * @link http://xaraya.com/index.php/release/782.html
+ * @author Userpoints Module Development Team
+ */
 function userpoints_userapi_getpoints($args)
 {
     extract($args);
@@ -60,7 +72,7 @@ function userpoints_userapi_getpoints($args)
     $query = "SELECT xar_uptid, xar_tpoints
             FROM $pointstypestable
             WHERE xar_module = '$pmodule'
-            AND (xar_itemtype = $itemtype OR xar_itemtype = 0) 
+            AND (xar_itemtype = $itemtype OR xar_itemtype = 0)
             AND xar_action = '$paction'";
      $result =& $dbconn->Execute($query);
     if (!$result) return;
@@ -73,7 +85,7 @@ function userpoints_userapi_getpoints($args)
         $data['uptid'] = $uptid;
         $data['tpoints'] = $tpoints;
     }
-    
+
     return $data;
 */
 }

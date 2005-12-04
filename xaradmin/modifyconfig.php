@@ -1,17 +1,28 @@
 <?php
-
+/**
+ * Update the config of this module
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Userpoints Module
+ * @link http://xaraya.com/index.php/release/782.html
+ * @author Userpoints Module Development Team
+ */
 /**
  * Update the configuration parameters of the module based on data from the modification form
- * 
- * @author Vassilis Stratigakis 
- * @access public 
+ *
+ * @author Vassilis Stratigakis
+ * @access public
  * @param no $ parameters
  * @return true on success or void on failure
  * @throws no exceptions
  * @todo nothing
  */
 function userpoints_admin_modifyconfig()
-{ 
+{
     // Security Check
     if (!xarSecurityCheck('AdminUserpoints')) return;
 
@@ -123,6 +134,6 @@ function userpoints_admin_modifyconfig()
 
     $data['authid'] = xarSecGenAuthKey();
     return $data;
-} 
+}
 
 ?>

@@ -1,3 +1,6 @@
+Nov 2005
+UiScrub
+
 Version 1.2.0 30th December 2004
    - get hooks working again
    - only keep total score per user at the moment

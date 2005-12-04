@@ -1,55 +1,47 @@
 <?php
 /**
- * File: $Id:
- * 
- * Update an example item
- * 
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * Get the score for a user
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage userpoints
- * @author Userpoints module development team 
+ * @subpackage Userpoints Module
+ * @link http://xaraya.com/index.php/release/782.html
+ * @author Userpoints Module Development Team
  */
 /**
- * update an example item
- * 
- * @author the Example module development team 
+ * update a rank
+ *
+ * @author the Userpoints module development team
  * @param  $args ['exid'] the ID of the item
  * @param  $args ['name'] the new name of the item
  * @param  $args ['number'] the new number of the item
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function userpoints_adminapi_updaterank($args)
-{ 
-    // Get arguments from argument array - all arguments to this function
-    // should be obtained from the $args array, getting them from other
-    // places such as the environment is not allowed, as that makes
-    // assumptions that will not hold in future versions of Xaraya
-    extract($args); 
-    // Argument check - make sure that all required arguments are present
-    // and in the right format, if not then set an appropriate error
-    // message and return
-    // Note : since we have several arguments we want to check here, we'll
-    // report all those that are invalid at the same time...
+{
+
+    extract($args);
+    // Argument check
     $invalid = array();
     if (!isset($id) || !is_numeric($id)) {
         $invalid[] = 'rank ID';
-    } 
+    }
     if (!isset($rankname) || !is_string($rankname)) {
         $invalid[] = 'rankname';
-    } 
+    }
     if (!isset($rankminscore) || !is_numeric($rankminscore)) {
         $invalid[] = 'rankminscore';
-    } 
+    }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
             join(', ', $invalid), 'admin', 'updaterank', 'Userpoints');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException($msg));
         return;
-    } 
+    }
     // The user API function is called.  This takes the item ID which
     // we obtained from the input and gets us the information on the
     // appropriate item.  If the item does not exist we post an appropriate
@@ -57,38 +49,22 @@ function userpoints_adminapi_updaterank($args)
     $item = xarModAPIFunc('userpoints',
                           'user',
                           'getrank',
-        array('id' => $id)); 
+        array('id' => $id));
     // Check for exceptions
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-     
-    // Security check - important to do this as early on as possible to
-    // avoid potential security holes or just too much wasted processing.
-    // However, in this case we had to wait until we could obtain the item
-    // name to complete the instance information so this is the first
-    // chance we get to do the check
-    // Note that at this stage we have two sets of item information, the
-    // pre-modification and the post-modification.  We need to check against
-    // both of these to ensure that whoever is doing the modification has
-    // suitable permissions to edit the item otherwise people can potentially
-    // edit areas to which they do not have suitable access
+
+    // Security check
     if (!xarSecurityCheck('EditUserpointsRank', 1, 'Rank', "$item[rankname]:$id")) {
         return;
-    } 
-    // Get database setup - note that both xarDBGetConn() and xarDBGetTables()
-    // return arrays but we handle them differently.  For xarDBGetConn()
-    // we currently just want the first item, which is the official
-    // database handle.  For xarDBGetTables() we want to keep the entire
-    // tables array together for easy reference later on
+    }
+    // Get database setup
     $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables(); 
+    $xartable =& xarDBGetTables();
     // It's good practice to name the table and column definitions you
     // are getting - $table and $column don't cut it in more complex
     // modules
-    $ranks = $xartable['userpoints_ranks']; 
-    // Update the item - the formatting here is not mandatory, but it does
-    // make the SQL statement relatively easy to read.  Also, separating
-    // out the sql statement from the Execute() command allows for simpler
-    // debug operation if it is ever needed
+    $ranks = $xartable['userpoints_ranks'];
+    // Update the item
     $query = "UPDATE $ranks
             SET xar_rankname = ?,
                 xar_rankminscore = ?
@@ -96,16 +72,15 @@ function userpoints_adminapi_updaterank($args)
     $result = &$dbconn->Execute($query, array($rankname, $rankminscore, (int)$id));
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
-    if (!$result) return; 
+    if (!$result) return;
     // Let any hooks know that we have updated an item.  As this is an
     // update hook we're passing the updated $item array as the extra info
     $item['module'] = 'userpoints';
     $item['itemid'] = $id;
     $item['rankname'] = $rankname;
     $item['rankminscore'] = $rankminscore;
-    xarModCallHooks('item', 'update', $id, $item); 
+    xarModCallHooks('item', 'update', $id, $item);
     // Let the calling process know that we have finished successfully
     return true;
-} 
-
+}
 ?>
