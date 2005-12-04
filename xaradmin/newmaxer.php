@@ -41,12 +41,12 @@ function maxercalls_admin_newmaxer($args)
     /* Security check. - Will need some improvements. Extra type?
      */
     if (!xarSecurityCheck('DeleteMaxercalls')) return;
-
-    // Get all personids
-    // TODO: This should be a nice API function, or DDProperty
-    $persons = xarModAPIFunc('sigmapersonnel','user','getall');
-
-
+    // Get the maxerstatus that we can use
+    $data['statusses'] = xarModAPIFunc('maxercalls', 'user', 'gets',
+                                      array('itemtype' => 6));
+    // Get the maxerfunctions that we can use
+    $data['functions'] = xarModAPIFunc('maxercalls', 'user', 'gets',
+                                      array('itemtype' => 7));
     /* Generate a one-time authorisation code for this operation */
     $data['authid'] = xarSecGenAuthKey();
     $data['invalid'] = $invalid;

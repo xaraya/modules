@@ -100,6 +100,32 @@
                  </label>
                  <xar:data-input name="personid" type="418" value="$personid" />
             </div>
+
+            <div class="xar-form-input-wrapper">
+                <label for="function" class="xar-form-label">
+                     <span class="help" title="#xarML('Enter the function of this maxer.')#">
+                   <xar:mlstring>Function</xar:mlstring>
+                   </span>
+                </label>
+                <select name="function">
+                <xar:loop name="$functions">
+                    <option value="#$loop:item['mfunctionid']#">#$loop:item['maxerfunction']#</option>
+                </xar:loop>
+                </select>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="maxerstatus" class="xar-form-label">
+                     <span class="help" title="#xarML('Enter the status of this maxer.')#">
+                   <xar:mlstring>Status of maxer</xar:mlstring>
+                   </span>
+                </label>
+                <select name="maxerstatus">
+                <xar:loop name="$statusses">
+                    <option value="#$loop:item['mstatusid']#">#$loop:item['maxerstatus']#</option>
+                </xar:loop>
+                </select>
+            </div>
+
         </fieldset>
         <xar:if condition="!empty($hookoutput)">
          <fieldset>

@@ -13,12 +13,8 @@
 
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Maxercalls</xar:mlstring></span></div>
 <div class="xar-mod-body">
-
-<div class="xar-maxercalls xar-maxercalls-user-new">
-
     <xar:template file="header" />
         <div class="xar-maxercalls-contents">
-
             <form action="&xar-modurl-maxercalls-user-create;"
                   onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);"
                   method="post"
@@ -28,7 +24,7 @@
                             <xar:mlstring>Add a maxercall for your own maxer</xar:mlstring>
                         </legend>
                         <div class="xar-form-input-wrapper">
-                            <label for="calltime"  class="required xar-form-label">
+                            <label for="calltime" class="required xar-form-label">
                                 <span class="help" title="#xarML('Time the call occured.')#">
                                     #$calltimelabel#
                                 </span>
@@ -193,14 +189,15 @@
                                     #$calltextlabel#
                                 </span>
                             </label>
-                        <span class="field">
-                            <select name="calltext">
-                            <option value=""></option>
-                            <xar:loop name="$calltext">
-                                <option value="#$loop:item['typeid']#">#$loop:item['calltext']#</option>
-                            </xar:loop>
-                            </select>
-                        </span>
+                            <span class="field">
+                                <select name="calltext">
+                                <option value=""></option>
+                                <xar:loop name="$calltext">
+                                    <option value="#$loop:item['typeid']#">#$loop:item['calltext']#</option>
+                                </xar:loop>
+                                </select>
+                            </span>
+                        </div>
                         <div class="xar-form-input-wrapper">
                             <label for="remarks" class="xar-form-label">
                                 <span class="help" title="#xarML('Any remark on this call, eg a different calltext.')#">

@@ -1,0 +1,4 @@
+form fieldset label.required span:before {
+    content: " * ";
+    color: red;
+}

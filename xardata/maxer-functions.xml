@@ -1,0 +1,43 @@
+<object name="Maxercalls Maxerstatus">
+  <objectid>16</objectid>
+  <label>Maxerstatus</label>
+  <moduleid>247</moduleid>
+  <itemtype>6</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+    <property name="mstatusid">
+      <id>74</id>
+      <label>Mstatusid</label>
+      <type>itemid</type>
+      <default></default>
+      <source>xar_maxercalls_maxerstatus.xar_mstatusid</source>
+      <status>1</status>
+      <order>1</order>
+      <validation>int (11)</validation>
+    </property>
+    <property name="maxerstatus">
+      <id>75</id>
+      <label>Maxerstatus</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_maxercalls_maxerstatus.xar_maxerstatus</source>
+      <status>1</status>
+      <order>2</order>
+      <validation>0:200</validation>
+    </property>
+    <property name="statuscolor">
+      <id>76</id>
+      <label>Statuscolor</label>
+      <type>tcolorpicker</type>
+      <default></default>
+      <source>xar_maxercalls_maxerstatus.xar_statuscolor</source>
+      <status>1</status>
+      <order>3</order>
+      <validation>0:10</validation>
+    </property>
+  </properties>
+</object>
+

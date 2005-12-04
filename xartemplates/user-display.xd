@@ -1,101 +1,92 @@
-<xar:if condition="xarTplAddStyleLink('maxercalls', 'xarform')"></xar:if>
-<xar:if condition="xarTplAddStyleLink('maxercalls', 'style')"></xar:if>
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:style scope="module" />
 
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Maxercalls</xar:mlstring></span></div>
 <div class="xar-mod-body">
-
-<div class="xar-maxercalls xar-maxercalls-user-display">
-
     <xar:template file="header" />
-		<div class="xar-maxercalls-contents">
-	
-			<form class="xar-form"
-				  action=#xarModUrl('maxercalls', 'user', 'view')#
-				  method="post"
-				  enctype="application/x-www-form-urlencoded">
-				<fieldset class="xar-norm">
-					<fieldset class="formelements xar-norm">
-						<legend>
-							<strong><xar:mlstring>View the details for this call</xar:mlstring></strong>
-						</legend>
-                        <p class="param">
-                            <label for="calltime"  class="required">
-                                <span class="help" title="#xarML('Time the call occured.')#">
-                                    #$calltimelabel#
-                                </span>
-                            </label>
-							<span class="fullright">
-							#$calltime_value#
-							</span>
-                        </p>
-						<p class="param">
-                        <label for="date" class="required">
-                            <span class="help" title="#xarML('Date of the call.')#">
-                                #$calldatelabel#
+    <div class="xar-maxercalls-contents">
+        <form action="&xar-modurl-maxercalls-user-view;"
+              method="post"
+              enctype="application/x-www-form-urlencoded">
+                <fieldset>
+                    <legend>
+                        <strong><xar:mlstring>View the details for this call</xar:mlstring></strong>
+                    </legend>
+                    <div class="xar-form-input-wrapper">
+                        <label for="calltime" class="xar-form-label required">
+                            <span class="help" title="#xarML('Time the call occured.')#">
+                                #$calltimelabel#
                             </span>
                         </label>
-							<span class="fullright">
-							#$calldate_value#
-							</span>
-						</p>
-						<p class="param">
-							<label for="calltext">
-								<span class="help" title="#xarML('The text of this call, in a generalised form.')#">
-									#$calltextlabel#
-								</span>
-							</label>
-							<span class="fullright">
-							#$calltext#
-							</span>
-						</p>
-					    <p class="param">
-							<label for="remarks">
-								<span class="help" title="#xarML('Any remark on this call, eg a different calltext.')#">
-									#$remarkslabel#
-								</span>
-							</label>
-								<span class="fullright">
-									#$remarks_value#
-								</span>
-						</p>
-					</fieldset>
-					<fieldset class="formelements xar-norm">
-						<legend>
-							<strong><xar:mlstring>Category of the call and other data</xar:mlstring></strong>
-						</legend>
-						<p class="param">
-							<label for="enteredby">
-								<span class="help" title="#xarML('This call was entered by')#">
-									#$enteredbylabel#
-								</span>
-							</label>
-							<span class="fullright">
-							#$enteredby_value#
-						</span>
-						</p>
-						<p class="param">
-							<label for="enteredby">
-								<span class="help" title="#xarML('This call was entered on')#">
-									#$entertslabel#
-								</span>
-							</label>
-							<span class="fullright">
-							#$enterts_value#
-						</span>
-						</p>
-						<xar:if condition="!empty($hookoutput)">
-						<br />
-						<xar:foreach in="$hookoutput" key="$hookmodule">
-							#$hookoutput[$hookmodule]#
-						</xar:foreach>
-						</xar:if>
-					</fieldset>
-			</fieldset>
-
-				<input type="submit" value="#$returnbutton#" />
-	       </form>
-	   </div>
-	</div>
+                        <span class="fullright">
+                        #$calltime_value#
+                        </span>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                    <label for="date" class="xar-form-label required">
+                        <span class="help" title="#xarML('Date of the call.')#">
+                            #$calldatelabel#
+                        </span>
+                    </label>
+                        <span class="fullright">
+                        #$calldate_value#
+                        </span>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="calltext" class="xar-form-label">
+                            <span class="help" title="#xarML('The text of this call, in a generalised form.')#">
+                                #$calltextlabel#
+                            </span>
+                        </label>
+                        <span class="fullright">
+                        #$calltext#
+                        </span>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="remarks" class="xar-form-label">
+                            <span class="help" title="#xarML('Any remark on this call, eg a different calltext.')#">
+                                #$remarkslabel#
+                            </span>
+                        </label>
+                            <span class="fullright">
+                                #$remarks_value#
+                            </span>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>
+                        <strong><xar:mlstring>Category of the call and other data</xar:mlstring></strong>
+                    </legend>
+                    <div class="xar-form-input-wrapper">
+                        <label for="enteredby" class="xar-form-label">
+                            <span class="help" title="#xarML('This call was entered by')#">
+                                #$enteredbylabel#
+                            </span>
+                        </label>
+                        <span class="fullright">
+                        #$enteredby_value#
+                    </span>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="enteredby" class="xar-form-label">
+                            <span class="help" title="#xarML('This call was entered on')#">
+                                #$entertslabel#
+                            </span>
+                        </label>
+                        <span class="fullright">
+                        #$enterts_value#
+                    </span>
+                    </div>
+                    <xar:if condition="!empty($hookoutput)">
+                    <br />
+                    <xar:foreach in="$hookoutput" key="$hookmodule">
+                        #$hookoutput[$hookmodule]#
+                    </xar:foreach>
+                    </xar:if>
+                </fieldset>
+            <input type="submit" value="#$returnbutton#" />
+       </form>
+   </div>
 </div>
 <xar:if condition="xarModIsHooked('dynamicdata')">
     <xar:data-getitem name="$properties" module="maxercalls" itemid="$callid" />
