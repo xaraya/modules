@@ -17,7 +17,7 @@
  *
  * @author  Jodie Razdrh/John Kevlin/David St.Clair
  * @author  Julian Development Team, MichelV. <michelv@xarayahosting.nl>
- * @author  zsolt (PostGres compatibility)
+ * @author  Zsolt for PostGres compatability
  * @access  public
  * @param   event data
  * @return  returnURL
@@ -185,8 +185,7 @@ function julian_user_updateevent()
         $hooks = xarModCallHooks('item', 'update', $id, $item);
 
     } else {
-        $nextId = $dbconn->GenId($event_table);
-        $query = "INSERT INTO " .  $event_table . " (event_id,
+        $query = "INSERT INTO " .  $event_table . " (
                 calendar_id,
                 isallday,
                 organizer,
@@ -217,7 +216,7 @@ function julian_user_updateevent()
                 dtstart,
                 transp,
                 created
-                ) VALUES (?,
+                ) VALUES (
                 ?,
                 ?,
                 ?,
@@ -250,7 +249,7 @@ function julian_user_updateevent()
                 ?);";
                 $created =date("Y-m-d H:i:s");
                 $uidnow = xarUserGetVar('uid');
-                $bindvars = array ($nextId, 0
+                $bindvars = array (0
                                   , $event_allday
                                   , (int) $uidnow
                                   , $contact
@@ -287,7 +286,7 @@ function julian_user_updateevent()
                  * on your database, that this is different from $nextId as obtained
                  * above, so it is better to be safe than sorry in this situation
                  */
-                $id = $dbconn->PO_Insert_ID($event_table, 'event_id');
+                $id = $dbconn->Insert_ID($event_table, 'event_id', 'serial');
 
         // Call the hooks. Event is new, we have just created it.
         $item = array();
