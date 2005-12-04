@@ -51,8 +51,9 @@ function bible_user_main()
     $data = xarModAPIFunc('bible', 'user', 'menu', array('func' => 'main'));
 
     // set template vars
-    $data['texts'] = $texts;
+    $data['texts'] = &$texts;
     $data['sname'] = $sname;
+    $data['query'] = '';
 
     return $data;
 }

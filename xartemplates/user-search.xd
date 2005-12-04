@@ -8,85 +8,109 @@
 
 <form action="&xar-modurl-bible-user-validate;" method="post" name="searchform">
 
-    <table width="100%" cellspacing="8">
-    <tr><td colspan="2"><input type="submit" value="#xarML('Search')#" /></td></tr>
-    <tr><td valign="top"><b><xar:mlstring>Text</xar:mlstring>:</b></td>
-        <td>
+    <fieldset>
+        <div class="xar-form-input-wrapper-after">
+            <input type="submit" value="#xarML('Search')#" />
+        </div>
+    </fieldset>
 
-        <select name="sname">
-            <xar:foreach in="$texts" value="$text">
-                <xar:set name="$value">urlencode($text['sname']);</xar:set>
-                <xar:if condition="!empty($sname) and $text['sname'] eq $sname">
-                    <option value="#$value#" selected="selected">#$text['sname']# - #$text['lname']#</option>
-                <xar:else />
-                    <option value="#$value#">#$text['sname']# - #$text['lname']#</option>
-                </xar:if>
-            </xar:foreach>
-        </select>
-        </td>
-    </tr>
-    <tr>
-        <td><b><xar:mlstring>Search Type</xar:mlstring>:</b></td>
-        <td>
+    <fieldset>
+        <legend><xar:mlstring>Advanced Keyword Search Options</xar:mlstring></legend>
+
+        <div class="xar-form-input-wrapper">
+            <label for="sname" class="xar-form-label" title="#xarML('Text to search in')#">
+                <xar:mlstring>Text:</xar:mlstring>
+            </label>
+        </div>
+        <div class="xar-form-input-wrapper">
+            <select name="sname">
+                <xar:foreach in="$texts" value="$text">
+                    <xar:if condition="!empty($sname) and $text.sname eq $sname">
+                        <option value="#$text.sname#" selected="selected">#$text.sname# - #$text.lname#</option>
+                    <xar:else />
+                        <option value="#$text.sname#">#$text.sname# - #$text.lname#</option>
+                    </xar:if>
+                </xar:foreach>
+            </select>
+        </div>
+        <br />
+        <div class="xar-form-input-wrapper">
+            <label for="searchtype" class="xar-form-label" title="#xarML('Type of search')#">
+                <xar:mlstring>Search Type</xar:mlstring>
+            </label>
             <select name="searchtype" id="type" onChange="boolToggle(this);">
                 <option value=""><xar:mlstring>Auto Detect</xar:mlstring></option>
                 <option value="normal"><xar:mlstring>Normal</xar:mlstring></option>
                 <option value="fuzzy"><xar:mlstring>Fuzzy</xar:mlstring></option>
                 <option value="boolean"><xar:mlstring>Boolean</xar:mlstring></option>
             </select>
-        </td>
-    </tr>
-    <tr><td valign="top"><b><xar:mlstring>Search Terms</xar:mlstring>:</b></td>
-        <td>
-            <table width="100%">
-            <tr><td>
-                <input type="text" name="words[]" size="24" />
-                <select name="bools[]" id="bools[]" disabled="true" onChange="if(this.selectedIndex!=0)document.searchform.elements['type'].selectedIndex=3;">
-                    <option value=""><xar:mlstring>---</xar:mlstring></option>
-                    <option value=""><xar:mlstring>scored higher</xar:mlstring></option>
-                    <option value="+"><xar:mlstring>present</xar:mlstring></option>
-                    <option value="-"><xar:mlstring>not present</xar:mlstring></option>
-                    <option value="~"><xar:mlstring>scored lower</xar:mlstring></option>
-                </select>
-            </td></tr>
-            <tr><td>
-                <input type="text" name="words[]" size="24" />
-                <select name="bools[]" id="bools[]" disabled="true" onChange="if(this.selectedIndex!=0)document.searchform.elements['type'].selectedIndex=3;">
-                    <option value=""><xar:mlstring>---</xar:mlstring></option>
-                    <option value=""><xar:mlstring>scored higher</xar:mlstring></option>
-                    <option value="+"><xar:mlstring>present</xar:mlstring></option>
-                    <option value="-"><xar:mlstring>not present</xar:mlstring></option>
-                    <option value="~"><xar:mlstring>scored lower</xar:mlstring></option>
-                </select>
-            </td></tr>
-            <tr><td>
-                <input type="text" name="words[]" size="24" />
-                <select name="bools[]" id="bools[]" disabled="true" onChange="if(this.selectedIndex!=0)document.searchform.elements['type'].selectedIndex=3;">
-                    <option value=""><xar:mlstring>---</xar:mlstring></option>
-                    <option value=""><xar:mlstring>scored higher</xar:mlstring></option>
-                    <option value="+"><xar:mlstring>present</xar:mlstring></option>
-                    <option value="-"><xar:mlstring>not present</xar:mlstring></option>
-                    <option value="~"><xar:mlstring>scored lower</xar:mlstring></option>
-                </select>
-            </td></tr>
-            <tr><td>
-                <input type="text" name="words[]" size="24" />
-                <select name="bools[]" id="bools[]" disabled="true" onChange="if(this.selectedIndex!=0)document.searchform.elements['type'].selectedIndex=3;">
-                    <option value=""><xar:mlstring>---</xar:mlstring></option>
-                    <option value=""><xar:mlstring>scored higher</xar:mlstring></option>
-                    <option value="+"><xar:mlstring>present</xar:mlstring></option>
-                    <option value="-"><xar:mlstring>not present</xar:mlstring></option>
-                    <option value="~"><xar:mlstring>scored lower</xar:mlstring></option>
-                </select>
-            </td></tr>
-            </table>
-        </td>
-    </tr>
-    <tr><td colspan="2"><b><xar:mlstring>Search Limits</xar:mlstring>:</b></td></tr>
-    <tr><td colspan="2">
-        <div style="font-style: italic; margin: 10px;"><xar:mlstring>If no limits are specified, the entire text will be searched.</xar:mlstring></div>
-            <table width="100%">
+        </div>
 
+        <div class="xar-form-input-wrapper">
+            <label for="words_1" class="xar-form-label" title="#xarML('Search Terms')#">
+                <xar:mlstring>Search Terms</xar:mlstring>
+            </label>
+            <div class="xar-form-input-wrapper">
+                <input type="text" name="words[]" id="words_1" class="xar-form-textmedium" />
+                <select name="bools[]" id="bools[]" disabled="true" onChange="if(this.selectedIndex!=0)document.searchform.elements['type'].selectedIndex=3;">
+                    <option value=""><xar:mlstring>---</xar:mlstring></option>
+                    <option value=""><xar:mlstring>scored higher</xar:mlstring></option>
+                    <option value="+"><xar:mlstring>present</xar:mlstring></option>
+                    <option value="-"><xar:mlstring>not present</xar:mlstring></option>
+                    <option value="~"><xar:mlstring>scored lower</xar:mlstring></option>
+                </select>
+            </div>
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><br /></label>
+            <div class="xar-form-input-wrapper">
+                <input type="text" name="words[]" class="xar-form-textmedium" />
+                <select name="bools[]" id="bools[]" disabled="true" onChange="if(this.selectedIndex!=0)document.searchform.elements['type'].selectedIndex=3;">
+                    <option value=""><xar:mlstring>---</xar:mlstring></option>
+                    <option value=""><xar:mlstring>scored higher</xar:mlstring></option>
+                    <option value="+"><xar:mlstring>present</xar:mlstring></option>
+                    <option value="-"><xar:mlstring>not present</xar:mlstring></option>
+                    <option value="~"><xar:mlstring>scored lower</xar:mlstring></option>
+                </select>
+            </div>
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><br /></label>
+            <div class="xar-form-input-wrapper">
+                <input type="text" name="words[]" class="xar-form-textmedium" />
+                <select name="bools[]" id="bools[]" disabled="true" onChange="if(this.selectedIndex!=0)document.searchform.elements['type'].selectedIndex=3;">
+                    <option value=""><xar:mlstring>---</xar:mlstring></option>
+                    <option value=""><xar:mlstring>scored higher</xar:mlstring></option>
+                    <option value="+"><xar:mlstring>present</xar:mlstring></option>
+                    <option value="-"><xar:mlstring>not present</xar:mlstring></option>
+                    <option value="~"><xar:mlstring>scored lower</xar:mlstring></option>
+                </select>
+            </div>
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><br /></label>
+            <div class="xar-form-input-wrapper">
+                <input type="text" name="words[]" class="xar-form-textmedium" />
+                <select name="bools[]" id="bools[]" disabled="true" onChange="if(this.selectedIndex!=0)document.searchform.elements['type'].selectedIndex=3;">
+                    <option value=""><xar:mlstring>---</xar:mlstring></option>
+                    <option value=""><xar:mlstring>scored higher</xar:mlstring></option>
+                    <option value="+"><xar:mlstring>present</xar:mlstring></option>
+                    <option value="-"><xar:mlstring>not present</xar:mlstring></option>
+                    <option value="~"><xar:mlstring>scored lower</xar:mlstring></option>
+                </select>
+            </div>
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label for="searchtype" class="xar-form-label" title="#xarML('Search limits')#">
+                <xar:mlstring>Search Limits</xar:mlstring>
+            </label>
+            <br />
+            <div class="xar-form-input-wrapper xar-sub">
+                <xar:mlstring>If no limits are specified, the entire text will be searched.</xar:mlstring>
+            </div>
+        </div>
+        <div class="xar-form-input-wrapper">
+            <table width="90%">
             <tr><td valign="top">
                 <xar:foreach in="$groupnames" key="$key" value="$value">
                     <nobr><input type="checkbox" name="limits[]" id="limit_#$key#" value="#$key#" />
@@ -106,13 +130,15 @@
                 </xar:foreach>
             </td></tr>
             </table>
+        </div>
+    </fieldset>
 
-        </td>
-    </tr>
-    <tr><td colspan="2"><input type="submit" value="#xarML('Search')#" /></td></tr>
-    </table>
-
-    <input type="hidden" name="function" value="view" />
+    <fieldset>
+        <div class="xar-form-input-wrapper-after">
+            <input type="hidden" name="function" value="view" />
+            <input type="submit" value="#xarML('Search')#" />
+        </div>
+    </fieldset>
 
 </form>
 
