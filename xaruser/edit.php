@@ -76,10 +76,15 @@ function julian_user_edit()
    $item = xarModAPIFunc('julian', 'user', 'get', array('event_id' => $id));
 
 
-   // End date and time
-   // determine the end date for a recurring event
-   // TODO: With the new get.php this should be rewritten
-   list($event_endyear,$event_endmonth,$event_endday) = explode("-",$item['recur_until']);
+   $event_endyear='';
+   $event_endmonth='';
+   $event_endday='';
+   if($item['recur_until']) {
+       // End date and time
+       // determine the end date for a recurring event
+       // TODO: With the new get.php this should be rewritten
+       list($event_endyear,$event_endmonth,$event_endday) = explode("-",$item['recur_until']);
+   }
 
     //Date time from item
     //setting start date time variables

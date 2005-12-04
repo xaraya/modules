@@ -15,12 +15,14 @@
 function julian_userapi_getcolor($args)
 {
   extract($args);
-  if (!xarVarFetch('category','isset',$category)) return;
+  if (xarVarFetch('category','isset',$category, $category, XARVAR_DONT_SET)) return;
 
+  if(empty($category)) {
+      return;
+  }
   //Setup DB connection
-  $dbconn = xarDBGetConn();
-  //get db tables
-  $xartable = xarDBGetTables();
+  $dbconn =& xarDBGetConn();
+  $xartable =& xarDBGetTables();
   //set events table
   $categories_table = $xartable['julian_category_properties'];
   //Get the color for the category

@@ -1,25 +1,23 @@
 <?php
-
 /**
-* File: $Id: updateevent.php,v 1.8 2005/03/30 09:50:04 caseygeene Exp $
-*
-* Inserts/Updates an event.
-*
-* @package Xaraya eXtensible Management System
-* @copyright (C) 2005 by Metrostat Technologies, Inc.
-* @license GPL {@link http://www.gnu.org/licenses/gpl.html}
-* @link http://www.metrostat.net
-*
-* @subpackage julian
-* initial template: Roger Raymond
-* @author Jodie Razdrh/John Kevlin/David St.Clair
-*/
+ * Inserts/Updates an event.
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 by Metrostat Technologies, Inc.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.metrostat.net
+ *
+ * @subpackage Julian Module
+ * initial template: Roger Raymond
+ * @author Jodie Razdrh/John Kevlin/David St.Clair
+ */
 /**
  * Create or update an event
  *
  *
  * @author  Jodie Razdrh/John Kevlin/David St.Clair
  * @author  Julian Development Team, MichelV. <michelv@xarayahosting.nl>
+ * @author  zsolt (PostGres compatibility)
  * @access  public
  * @param   event data
  * @return  returnURL
@@ -28,7 +26,7 @@
 function julian_user_updateevent()
 {
    //This prevents users from viewing something they are not suppose to.
-   if (!xarSecurityCheck('Editjulian')) return;
+   if (!xarSecurityCheck('EditJulian')) return;
    if (!xarVarFetch('cancel','str',$cancel,'')) return;
    //If Cancel was pressed, go back to previous page
    if (strcmp($cancel,''))
@@ -114,7 +112,7 @@ function julian_user_updateevent()
    //If not an all day event, eventstartdate gets a time and duration.
    $duration="";
    if (!$event_allday) {
-      $ampm = $event_startampm==1?"AM":"PM";
+      $ampm = $event_startampm== 1 ? "AM" : "PM";
       $eventstartdate =  date("Y-m-d H:i:s",strtotime($eventstartdate." ".$event_starttimeh.":".$event_starttimem.":00 ".$ampm));
       $duration = strcmp($event_dur_hours.':'.$event_dur_minutes,'0:00')?$event_dur_hours.':'.$event_dur_minutes:'';
    }
@@ -144,7 +142,7 @@ function julian_user_updateevent()
     // Load up database
     $dbconn =& xarDBGetConn();
     //get db tables
-    $xartable =& xarDBGetTables();
+    $xartable = xarDBGetTables();
     //set events table
     $event_table = $xartable['julian_events'];
 
@@ -187,47 +185,109 @@ function julian_user_updateevent()
         $hooks = xarModCallHooks('item', 'update', $id, $item);
 
     } else {
-
-        $query = "INSERT INTO " .  $event_table . "
-                SET calendar_id= ?,
-                isallday=?,
-                organizer=?,
-                contact=?,
-                url=?,
-                summary=?,
-                description=?,
-                class=?,
-                priority=?,
-                status=?,
-                share_uids=?,
-                location=?,
-                street1=?,
-                street2=?,
-                city=?,
-                state=?,
-                zip=?,
-                phone=?,
-                email=?,
-                fee=?,
-                categories=?,
-                rrule=?,
-                recur_freq=?,
-                recur_until=?,
-                recur_count=?,
-                recur_interval=?,
-                duration=?,
-                dtstart=?,
-                transp=?,
-                created=?";
+        $nextId = $dbconn->GenId($event_table);
+        $query = "INSERT INTO " .  $event_table . " (event_id,
+                calendar_id,
+                isallday,
+                organizer,
+                contact,
+                url,
+                summary,
+                description,
+                class,
+                priority,
+                status,
+                share_uids,
+                location,
+                street1,
+                street2,
+                city,
+                state,
+                zip,
+                phone,
+                email,
+                fee,
+                categories,
+                rrule,
+                recur_freq,
+                recur_until,
+                recur_count,
+                recur_interval,
+                duration,
+                dtstart,
+                transp,
+                created
+                ) VALUES (?,
+                ?,
+                ?,
+                ?,
+                ?,
+                ?,
+                ?,
+                ?,
+                ?,
+                ?,
+                ?,
+                ?,
+                ?,
+                ?,
+                ?,
+                ?,
+                ?,
+                ?,
+                ?,
+                ?,
+                ?,
+                ?,
+                ?,
+                ?,
+                ?,
+                ?,
+                ?,
+                ?,
+                ?,
+                ?,
+                ?);";
                 $created =date("Y-m-d H:i:s");
                 $uidnow = xarUserGetVar('uid');
-                $bindvars = array ('0', $event_allday, $uidnow, $contact,
-                $website, $summary, $description , $class, 0, 1, $share, $location,
-                $street1, $street2, $city, $state, $zip, $phone, $email, $fee, $category,
-                $rrule, $recur_freq, $recur_until, $recur_count, $recur_interval, $duration, $eventstartdate,
-                1, $created);
+                $bindvars = array ($nextId, 0
+                                  , $event_allday
+                                  , (int) $uidnow
+                                  , $contact
+                                  , $website
+                                  , $summary
+                                  , $description
+                                  , (int) $class
+                                  , 0
+                                  , 1
+                                  , $share
+                                  , $location
+                                  , $street1
+                                  , $street2
+                                  , $city
+                                  , $state
+                                  , $zip
+                                  , $phone
+                                  , $email
+                                  , $fee
+                                  , $category
+                                  , $rrule
+                                  , (int) $recur_freq
+                                  , $recur_until == '' ? NULL : $recur_until
+                                  , (int) $recur_count
+                                  , (int) $recur_interval
+                                  , $duration
+                                  , $eventstartdate == '' ? NULL : $eventstartdate
+                                  , 1
+                                  , $created);
                 $result = $dbconn->Execute($query, $bindvars);
-                $id=$dbconn->Insert_ID();
+                if (!$result) return;
+
+                /* Get the ID of the item that we inserted. It is possible, depending
+                 * on your database, that this is different from $nextId as obtained
+                 * above, so it is better to be safe than sorry in this situation
+                 */
+                $id = $dbconn->PO_Insert_ID($event_table, 'event_id');
 
         // Call the hooks. Event is new, we have just created it.
         $item = array();
