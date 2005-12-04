@@ -17,7 +17,7 @@
  *
  * @author  Jodie Razdrh/John Kevlin/David St.Clair
  * @author  Julian Development Team, MichelV. <michelv@xarayahosting.nl>
- * @author  Zsolt for PostGres compatability
+ * @author  Zsolt for PostGres competability
  * @access  public
  * @param   event data
  * @return  returnURL
@@ -26,7 +26,7 @@
 function julian_user_updateevent()
 {
    //This prevents users from viewing something they are not suppose to.
-   if (!xarSecurityCheck('EditJulian')) return;
+   if (!xarSecurityCheck('Editjulian')) return;
    if (!xarVarFetch('cancel','str',$cancel,'')) return;
    //If Cancel was pressed, go back to previous page
    if (strcmp($cancel,''))
@@ -286,6 +286,7 @@ function julian_user_updateevent()
                  * on your database, that this is different from $nextId as obtained
                  * above, so it is better to be safe than sorry in this situation
                  */
+                 // 'serial' is PostGres7 specific
                 $id = $dbconn->Insert_ID($event_table, 'event_id', 'serial');
 
         // Call the hooks. Event is new, we have just created it.
