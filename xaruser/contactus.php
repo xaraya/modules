@@ -123,13 +123,16 @@ function sitecontact_user_contactus($args)
     $siteurl = xarServerGetBaseURL();
     $subject = $requesttext;
 
-    /* comments in emails is still a problem - set it manually for this module */
+    /* comments in emails is a problem - set it manually for this module
+       let's make it contingent on the mail module var - as that is what 
+       seems intuitively the correct thing
+    */
     $themecomments = xarModGetVar('themes','ShowTemplates');
     $mailcomments = xarModGetVar('mail','ShowTemplates');
-    if ($mailcomments == true) {
-        xarModSetVar('themes','ShowTemplates',true);
+    if ($mailcomments == 1) {
+        xarModSetVar('themes','ShowTemplates',1);
     } else {
-        xarModSetVar('themes','ShowTemplates',false);
+        xarModSetVar('themes','ShowTemplates',0);
     }
 
 
@@ -196,7 +199,8 @@ function sitecontact_user_contactus($args)
                     'message'      => $usertextmessage,
                     'htmlmessage'  => $userhtmlmessage,
                     'from'         => $setmail,
-                    'fromname'     => $sendname);
+                    'fromname'     => $sendname,
+                    'usetemplates' => false);
 
         /* send mail to user , if html email let's do that  else just send text*/
         if ($usehtmlemail != 1) {
@@ -255,7 +259,8 @@ function sitecontact_user_contactus($args)
                   'message'      => $admintextmessage,
                   'htmlmessage'  => $adminhtmlmessage,
                   'from'         => $useremail,
-                  'fromname'     => $username);
+                  'fromname'     => $username,
+                  'usetemplates' => false);
                   
     if ($usehtmlemail != 1) {
 
