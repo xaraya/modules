@@ -1,7 +1,7 @@
 <?php
 /**
  * Update a DD item for this module
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -9,12 +9,12 @@
  *
  * @subpackage Courses Module
  * @link http://xaraya.com/index.php/release/179.html
- * @author Courses module development team 
+ * @author Courses module development team
  */
 
 /**
  * Update an item of a specified item type
- *  
+ *
  * @param $itemtype - type of item that is being updated (required)
  * @param $itemid - item id  (required)
  * @param $preview  - do a preview if set (optional)
@@ -66,7 +66,7 @@ function courses_admin_update($args)
     /* Get menu elements */
     $data['menu']      = xarModFunc('courses','admin','menu');
     $data['menutitle'] = xarML('Modify course parameter');
-    
+
     // if we're in preview mode, or if there is some invalid input, show the form again
     if (!empty($preview) || !$isvalid) {
         $data = xarModAPIFunc('courses','admin','menu');
@@ -100,7 +100,7 @@ function courses_admin_update($args)
     $itemid = $object->updateItem();
     if (empty($itemid)) return; // throw back
     // let's go back to the admin view
-    xarSessionSetVar('statusmsg', xarML('Item deleted'));
+    xarSessionSetVar('statusmsg', xarML('Item updated'));
     // Why does this one not work correct?
     xarResponseRedirect(xarModURL('courses', 'admin', 'view', array('itemtype' => $itemtype)));
 
