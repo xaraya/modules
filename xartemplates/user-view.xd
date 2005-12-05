@@ -1,14 +1,10 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>SIGMA Personnel</xar:mlstring></span>
 </div>
 <div class="xar-mod-body">
-
     <xar:template type="module" file="header" />
-
     <h2><xar:mlstring>SIGMA personnel</xar:mlstring></h2>
-
     <xar:if condition="!empty($status)">
         <strong>#$status#</strong>
     </xar:if>
@@ -23,7 +19,7 @@
         <xar:foreach in="$items" value="$item">
         <tr>
             <td>
-                    #$item.personid#
+                #$item.personid#
             </td>
             <td>
                 <xar:if condition="empty($item.link)">
@@ -36,21 +32,16 @@
                 #$item.firstname#
             </td>
             <td>
-
                 <!-- we only show a link if the item link variable is not empty -->
-
                 <xar:if condition="empty($item.link)">
                      #$item.tussenvgsl# #$item.lastname#
                 <xar:else />
                     <a href="#$item.link#">#$item.tussenvgsl# #$item.lastname#</a>
                 </xar:if>
-
             </td>
         </tr>
         </xar:foreach>
-
     </table>
-
     <div class="xar-align-center xar-padding-thick">
         <!-- add the pager here -->
         #$pager#

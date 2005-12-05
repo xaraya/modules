@@ -7,10 +7,18 @@
         <xar:foreach in="$items" value="$item">
             <!-- we only show a link if the item link variable is not empty -->
             <xar:if condition="empty($item['link'])">
-                #xarVarPrepForDisplay($item['name'])#<br />
+                #xarVarPrepForDisplay($item['lastname'])#<br />
             <xar:else />
-               <a href="#$item['link']#">#xarVarPrepForDisplay($item['name'])#</a><br />
+               <a href="#$item['link']#">#xarVarPrepForDisplay($item['lastname'])#</a><br />
             </xar:if>
         </xar:foreach>
     </xar:if>
 </p>
+<p> Presence: #$presence#</p>
+<p> Presence1: #$presence1#</p>
+<p> Presence2: #$presence2#</p>
+
+<p> Status: #$tstatus#</p>
+<p> Status1: #$tstatus1#</p>
+<p> Status2: #$tstatus2#</p>
+<p> Status3: #$tstatus3#</p>
