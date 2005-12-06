@@ -29,7 +29,7 @@ function example_user_view()
      * environment is not allowed, as that makes assumptions that will
      * not hold in future versions of Xaraya
      */
-    if (!xarVarFetch('startnum', 'str:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
     /* Initialise the $data variable that will hold the data to be used in
      * the blocklayout template, and get the common menu configuration - it
      * helps if all of the module pages have a standard menu at the top to
