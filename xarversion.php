@@ -1,18 +1,15 @@
 <?php
-
 /**
- * File: $Id$
- * 
  * Wiki
- * 
+ *
  * @package Wiki
  * @copyright (C) 2002 by the Xaraya Development Team.
  * @link http://www.xaraya.com
  * @subpackage Wiki
- * @author Sebastien Bernard 
- * @todo check if these functions are used, what are they for?
+ * @author Sebastien Bernard
+ * @todo nothing
  */
-$modversion['name']           = 'Wiki';
+$modversion['name']           = 'wiki';
 $modversion['id']             = '28';
 $modversion['version']        = '1.0.0';
 $modversion['displayname']    = xarML('Wiki');
@@ -27,7 +24,6 @@ $modversion['author']         = 'Sebastien Bernard, Jim McDonald';
 $modversion['contact']        = 'sebastien@mouzaia.com';
 $modversion['admin']          = 0;
 $modversion['user']           = 0;
-$modversion['securityschema'] = array();
 $modversion['class']          = 'Utility';
 $modversion['category']       = 'Content';
 ?>
