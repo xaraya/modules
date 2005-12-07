@@ -32,7 +32,7 @@
     <xar:for start="$i = 1" test="$i le $optcount" iter="$i++">
         <div class="xar-form-input-wrapper">
             <label for="option_#$i#" class="xar-form-label">
-                <xar:mlstring>Options</xar:mlstring>
+                <xar:mlstring>Option</xar:mlstring>
                 #$i#
             </label>
             <input type="text" id="option_#$i#" name="poll[options][#$i#]" value="" size="50" maxlength="50"/>
