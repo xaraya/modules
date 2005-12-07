@@ -1,14 +1,25 @@
 <?php
-
+/**
+ * XProject Module - A simple project management module
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage XProject Module
+ * @link http://xaraya.com/index.php/release/665.html
+ * @author XProject Module Development Team
+ */
 function xproject_admin_modifyconfig()
 {
     //xarModLoad('xproject','user');
     $data = xarModAPIFunc('xproject','admin','menu');
-/*
+
     if (!xarSecurityCheck('AdminXProject', 0)) {
         return;
     }
-*/
+
     $data['authid'] = xarSecGenAuthKey();
 
     $dateoptions = array();
@@ -20,13 +31,11 @@ function xproject_admin_modifyconfig()
     }
 */
     for ($x = 0; $x < count($dateformatlist) ; $x++) {
-        $dateoptions[] = array('id'=>$x,'name'=>strftime($dateformatlist[$x], time()),'selected'=>"");
+        $dateoptions[] = array('id'=>$x,'name'=>strftime($dateformatlist[$x], time()));
     }
 
-
-
     $data['dateoptions'] = $dateoptions;
-    $data['dateformat'] = xarModGetVar('xproject', 'dateformat');
+    $data['dateformat'] = xarModGetVar('xproject', 'dateformat'); // int
 
     $data['maxdone'] = xarModGetVar('xproject', 'maxdone');
     $data['refreshmain'] = xarModGetVar('xproject', 'refreshmain');
@@ -41,7 +50,7 @@ function xproject_admin_modifyconfig()
     $hooks = xarModCallHooks('module', 'modifyconfig', 'xproject',
                        array('module' => 'xproject'));
     if (empty($hooks)) {
-        $data['hooks'] = array('categories' => xarML('You can assign base categories by enabling the categories hooks for example module'));
+        $data['hooks'] = array('categories' => xarML('You can assign base categories by enabling the categories hooks for this module'));
     } else {
         $data['hooks'] = $hooks;
 

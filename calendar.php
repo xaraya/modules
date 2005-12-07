@@ -1,5 +1,16 @@
-<?php // $Id: calendar.php,v 1.2 2002/05/13 18:34:10 voll Exp $
-
+<?php
+/**
+ * XProject Module - A simple project management module
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage XProject Module
+ * @link http://xaraya.com/index.php/release/665.html
+ * @author XProject Module Development Team
+ */
 echo '<html><head>
 <style type="text/css">
 td.cal   { font-size:11pt; }
@@ -26,7 +37,7 @@ print "<body bgcolor=\"".xarModGetVar('xproject', 'BACKGROUND_COLOR'). "\">";
 
 /**
  * creates the HTML for the calender (direct output)
- * 
+ *
  * @param $Monat int The month to display
  * @param $Jahr  int The year to display
  */

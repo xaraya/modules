@@ -3,13 +3,8 @@
 <h2><xar:mlstring>Modify Configuration</xar:mlstring></h2>
 <div align="center">
 <table border="0" cellspacing="0" cellpadding="2">
-<!--
-    // Start form - note the use of xarModURL() to create the recipient URL of
-    // this form.  All URLs should be generated through xarModURL() to ensure
-    // compatibility with future versions of Xaraya
--->
+
 <form method="post" action="&xar-modurl-xproject-admin-updateconfig;">
-    <input type="hidden" name="authid" value="#$authid#" />
 
 <tr><td><label for="dateformat"><xar:mlstring>Date Format</xar:mlstring></label></td>
 <td><select name="dateformat" id="dateformat">
@@ -94,6 +89,7 @@
     </select>
 </td></tr>
 <tr><td colspan="2" align="center"><br />
+    <input type="hidden" name="authid" value="#$authid#" />
     <input type="submit" value="#$updatebutton#"></td></tr>
 </form>
 

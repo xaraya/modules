@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * XProject Module - A simple project management module
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage XProject Module
+ * @link http://xaraya.com/index.php/release/665.html
+ * @author XProject Module Development Team
+ */
 /**
  * initialise the xproject module
  * This function is only ever called once during the lifetime of a particular
@@ -172,7 +183,7 @@ function xproject_init()
     xarModSetVar('xproject', 'display_hours', 0);
     xarModSetVar('xproject', 'display_frequency', 0);
     xarModSetVar('xproject', 'ACCESS_RESTRICTED', 0);
-    xarModSetVar('xproject', 'DATEFORMAT', "1");
+    xarModSetVar('xproject', 'dateformat', 1);
     xarModSetVar('xproject', 'MAX_DONE', 10);
     xarModSetVar('xproject', 'MOST_IMPORTANT_DAYS', 3);
     xarModSetVar('xproject', 'REFRESH_MAIN', 600);
@@ -280,7 +291,7 @@ function xproject_delete()
     if (isset($isalias) && ($isalias =='xproject')){
         xarModDelAlias($aliasname,'xproject');
     }
-    
+
     xarModAPIFunc('categories', 'admin', 'deletecat', array('cid' => xarModGetVar('xproject', 'mastercid')));
     /* Delete any module variables */
     xarModDelAllVars('xproject');

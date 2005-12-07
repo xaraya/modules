@@ -1,19 +1,31 @@
 <?
+/**
+ * XProject Module - A simple project management module
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage XProject Module
+ * @link http://xaraya.com/index.php/release/665.html
+ * @author XProject Module Development Team
+ */
 // DATE CONVERTER, EMAIL GENERATOR, TASK VIEW, TASK DISPLAY, AND TREE/LEAF FUNCTIONS
 
 /**
  * Date-conversion depending on DATEFORMAT
- * 
+ *
  * @param $datestring String date in US Format
  * @return String date in format specified in DATEFORMAT
  */
 function convDate($datestr,$dateformat = "m-d-y")
 {
-	$datestamp = strtotime($datestr);
+    $datestamp = strtotime($datestr);
     if(empty($dateformat)) $dateformat = xarModGetVar('xproject', 'DATEFORMAT');
-	$returndate = @date($dateformat, $datestamp);
-	if(empty($returndate)) $returndate = $datestr;
-	return $returndate;
+    $returndate = @date($dateformat, $datestamp);
+    if(empty($returndate)) $returndate = $datestr;
+    return $returndate;
 }
 
 /**
@@ -56,7 +68,7 @@ function generateMail($id,$action)
         // responsible users found: generate mail-text
         $result->Close();
 
-        
+
         $xproject_todos_column = &$xartable['xproject_todos_column'];
         $xproject_xproject_column = &$xartable['xproject_xproject_column'];
         if (!($result = $dbconn->Execute("SELECT $xartable[xproject_todos].*,
@@ -124,7 +136,7 @@ function generateMail($id,$action)
             $message_html .="</table>";
         }
 
-        // get the receipients 
+        // get the receipients
         $xproject_users_column = &$xartable['xproject_users_column'];
         $query ="SELECT $xproject_users_column[usernr] FROM $xartable[xproject_users]";
         $query.=" WHERE $xproject_users_column[usernr] in (";
@@ -247,7 +259,7 @@ function printToDoTable($xquery, $xis_search, $page) {
         $query .= " WHERE $xproject_todos_column[project_id]=$xproject_project_members_column[project_id]
             AND $xproject_project_members_column[member_id] =" . xarUserGetVar('uid');
     }
-    $query .= " 
+    $query .= "
         AND $xproject_todos_column[todo_id] = $xproject_responsible_persons_column[todo_id]
         AND $xproject_users_column[usernr] = $xproject_responsible_persons_column[user_id]";
 
@@ -257,14 +269,14 @@ function printToDoTable($xquery, $xis_search, $page) {
     }
 
     $result = $dbconn->Execute("$xquery");
-    
+
     if ($result->PO_RecordCount() == 0 ){
         return (_XPROJECT_NO_DATA_FOUND);
     }
-    
+
     $i = 0;
     $str .= '<table border="0" cellspacing="1" cellpadding="0" rules="cols" width="100%"><tr>';
-    
+
     if (xarModGetVar('xproject', 'SHOW_LINE_NUMBERS')){
         $str .= "<th>#</th>";
     }
@@ -274,7 +286,7 @@ function printToDoTable($xquery, $xis_search, $page) {
             $xREFRESH_URL = xarModURL('xproject', 'user', 'main', $arrayurl);
             $str .= '<th width="60" align="left">
             <a href="'.$xREFRESH_URL.'">'._XPROJECT_PRIORITY.'</a></th>';
-        } else { 
+        } else {
             $arrayurl['order_by'] = 'prio_desc';
             $xREFRESH_URL = xarModURL('xproject', 'user', 'main', $arrayurl);
             $str .= '<th width="60" align="left">
@@ -287,7 +299,7 @@ function printToDoTable($xquery, $xis_search, $page) {
         $xREFRESH_URL = xarModURL('xproject', 'user', 'main', $arrayurl);
         $str .= '<th align="left">
         <a href="'.$xREFRESH_URL.'">'._XPROJECT_STATUS.'</a></th>';
-    } else { 
+    } else {
         $arrayurl['order_by'] = 'status_desc';
         $xREFRESH_URL = xarModURL('xproject', 'user', 'main', $arrayurl);
         $str .= '<th align="left">
@@ -298,7 +310,7 @@ function printToDoTable($xquery, $xis_search, $page) {
         $str .= "<th>%</th>";
     }
     $str .= "<th align=\"left\">"._XPROJECT_TEXT."</th>";
-    
+
     /*
     if ($order_by=="responsible_asc"){
         $arrayurl['order_by'] = 'responsible_desc';
@@ -311,22 +323,22 @@ function printToDoTable($xquery, $xis_search, $page) {
     }
     */
         $str .= "<th align=\"left\">"._XPROJECT_RESPONSIBLE."</th>\n";
-    
+
     if ($order_by=="due_asc"){
         $arrayurl['order_by'] = 'due_desc';
         $xREFRESH_URL = xarModURL('xproject', 'user', 'main', $arrayurl);
         $str .= '<th width="60" align="left"><a href="'.$xREFRESH_URL.'">'._XPROJECT_DUE.'</a></th>';
-    } else { 
+    } else {
         $arrayurl['order_by'] = 'due_asc';
         $xREFRESH_URL = xarModURL('xproject', 'user', 'main', $arrayurl);
         $str .= '<th width="60" align="left"><a href="'.$xREFRESH_URL.'">'._XPROJECT_DUE.'</a></th>';
     }
-    
+
     if ($order_by=="changed_on_asc") {
         $arrayurl['order_by'] = 'changed_on_desc';
         $xREFRESH_URL = xarModURL('xproject', 'user', 'main', $arrayurl);
         $str .= '<th width="60" align="left"><a href="'.$xREFRESH_URL.'">'._XPROJECT_CHANGED_ON.'</a></th>';
-    } else { 
+    } else {
         $arrayurl['order_by'] = 'changed_on_asc';
         $xREFRESH_URL = xarModURL('xproject', 'user', 'main', $arrayurl);
         $str .= '<th width="60" align="left"><a href="'.$xREFRESH_URL.'">'._XPROJECT_CHANGED_ON.'</a></th>';
@@ -349,13 +361,13 @@ function printToDoTable($xquery, $xis_search, $page) {
         $percentage_completed = $result->fields[4];
         $due_date = $result->fields[6];
         $date_changed = $result->fields[8];
-    
-        // Abstand vor den erledigten Einträgen. --> bessere Übersicht. 
+
+        // Abstand vor den erledigten Eintr?gen. --> bessere ?bersicht.
         if ($done_start==true && $status == 10){
             $str .= '<tr><td height="15"></td></tr>';
             $done_start=false;
         }
-    
+
         if ($due_date < $very_important_date && $due_date != "0000-00-00" && $status != 10 &&
               xarModGetVar('xproject', 'VERY_IMPORTANT_DAYS') != 0){
             $ROW_COLOR = xarModGetVar('xproject', 'VERY_IMPORTANT_COLOR');
@@ -379,7 +391,7 @@ function printToDoTable($xquery, $xis_search, $page) {
         }
 
         $priority = switchPriority($priority);
-    
+
         if (xarModGetVar('xproject', 'SHOW_PRIORITY_IN_TABLE')){
             if (xarModGetVar('xproject', 'SHOW_EXTRA_ASTERISK') == 2 && $nr_notes > 0 ){
                 $str .= "<td>$priority <b>*</b></td>";
@@ -389,7 +401,7 @@ function printToDoTable($xquery, $xis_search, $page) {
         }
 
         $str .= "<td>$stati[$status]</td>";
-    
+
         if (xarModGetVar('xproject', 'SHOW_PERCENTAGE_IN_TABLE')) {
             $str .= "<td align=\"center\">";
             if (xarModGetVar('xproject', 'SHOW_EXTRA_ASTERISK') == 3 && $nr_notes > 0){
@@ -418,7 +430,7 @@ function printToDoTable($xquery, $xis_search, $page) {
         }
         $respstr = substr($respstr,0,-2);
         $str .= $respstr."</td>";
-        
+
         if ($due_date < $most_important_date && $due_date != "0000-00-00" &&
             xarModGetVar('xproject', 'MOST_IMPORTANT_DAYS') != 0) {
             $str .= "<td nowrap=\"nowrap\"><font color=\"".xarModGetVar('xproject', 'MOST_IMPORTANT_COLOR')."\">" . convDate($due_date) . "</font></td>";
@@ -426,7 +438,7 @@ function printToDoTable($xquery, $xis_search, $page) {
             $str .= '<td nowrap="nowrap">' . convDate($due_date) . "</td>";
         }
         $str .= "<td>" . convDate(strftime("%Y-%m-%d %H:%M:%S",$date_changed)) . "</td>";
-    
+
         // Anzahl der Notes anzeigen. Wenn mehr als 5 vorhanden sind, dann soll
         // die Zahl angezeigt werden, sonnst die entsprechende Anzahl Sternchen.
         if ($nr_notes > 0) {
@@ -444,7 +456,7 @@ function printToDoTable($xquery, $xis_search, $page) {
         } else {
               $str .= '<td>&nbsp;<a href="'.
                       xarModURL('xproject', 'user', 'main', array('route' => DETAILS, 'id' => $id)).
-                      '">'._XPROJECT_DETAILS.'</a></td>'; 
+                      '">'._XPROJECT_DETAILS.'</a></td>';
         }
         $str .= '</tr>';
         $i++;
@@ -473,22 +485,22 @@ function printToDoTable($xquery, $xis_search, $page) {
 
         if (xarSessionGetVar('xproject_my_tasks') == 1 ) {
             // show only tasks where I'm responsible for
-            $query .= " 
+            $query .= "
                 AND $xproject_responsible_persons_column[user_id] = ". xarUserGetVar('uid')."
                 AND $xproject_todos_column[todo_id] = $xproject_responsible_persons_column[todo_id]";
         }
 
         $query .= "  GROUP BY $xproject_todos_column[todo_id]
             ORDER BY $xproject_todos_column[date_changed] DESC
-            LIMIT ". xarModGetVar('xproject', 'MAX_DONE'); 
+            LIMIT ". xarModGetVar('xproject', 'MAX_DONE');
 
         $result = $dbconn->Execute("$query");
         $anzahl = $result->PO_RecordCount();
-    
+
         $i = 0;
-    
+
         $done_start=0;
-    
+
         for (;!$result->EOF;$result->MoveNext()) {
             $id                = $result->fields[0];
             $text            = $result->fields[2];
@@ -503,21 +515,21 @@ function printToDoTable($xquery, $xis_search, $page) {
             $percentage_completed    = $result->fields[4];
             $due_date            = $result->fields[6];
             $date_changed        = $result->fields[8];
-    
-            // Abstand vor den erledigten Einträgen. --> bessere Übersicht. 
+
+            // Abstand vor den erledigten Eintr?gen. --> bessere ?bersicht.
             if ($done_start==0) {
                 $str .= '<tr><td height="15"></td></tr>';
                 $done_start=1;
             }
-    
+
             $str .= "<tr bgcolor=\"".xarModGetVar('xproject', 'DONE_COLOR')."\">";
-    
+
             $priority = switchPriority($priority);
-    
+
             if (xarModGetVar('xproject', 'SHOW_LINE_NUMBERS')) {
                 $str .= '<td align="right">' . ($i+$nr_datasets) . ".</td>";
             }
-    
+
             if (xarModGetVar('xproject', 'SHOW_PRIORITY_IN_TABLE')) {
                 if ($nr_notes > 0) {
                       $str .= "<td>$priority <b>*</b></td>";
@@ -527,7 +539,7 @@ function printToDoTable($xquery, $xis_search, $page) {
             }
 
             $str .= "<td>$stati[$status]</td>";
-    
+
             if (xarModGetVar('xproject', 'SHOW_PERCENTAGE_IN_TABLE')) {
                 $str .= "<td align=\"center\">$percentage_completed</td>";
             }
@@ -556,13 +568,13 @@ function printToDoTable($xquery, $xis_search, $page) {
             $str .= $respstr."</td>";
             $str .= '<td nowrap="nowrap">' . convDate($due_date) . "</td>";
             $str .= "<td>" . convDate(strftime("%Y-%m-%d %H:%M:%S", $date_changed)) . "</td>";
-    
+
             // Anzahl der Notes anzeigen. Wenn mehr als 5 vorhanden sind, dann soll
             // die Zahl angezeigt werden, sonnst die entsprechende Anzahl Sternchen.
             if ($nr_notes > 0) {
                 $str .= "<td>&nbsp;<a href=\"".
                 xarModURL('xproject', 'user', 'main', array('route' => DETAILS, 'id' => $id)).
-                "\">"._XPROJECT_DETAILS."</a><b>"; 
+                "\">"._XPROJECT_DETAILS."</a><b>";
                 if ($nr_notes < 5) {
                     for ($zaehler=0;($zaehler < $nr_notes) && ($zaehler < 5) && ($nr_notes < 5) ; $zaehler++) {
                     $str .= "*";
@@ -571,11 +583,11 @@ function printToDoTable($xquery, $xis_search, $page) {
                 $str .= "&nbsp;&nbsp;&nbsp;$nr_notes";
             }
             $str .= "</b></td>";
-        } else { 
+        } else {
           // not todo-liste
           $str .= "<td>&nbsp;<a href=\"".
                   xarModURL('xproject', 'user', 'main', array('route' => DETAILS, 'id' => $id)).
-                  "\">"._XPROJECT_DETAILS."</a></td>"; 
+                  "\">"._XPROJECT_DETAILS."</a></td>";
         }
         $str .= '</tr>
             ';
@@ -583,7 +595,7 @@ function printToDoTable($xquery, $xis_search, $page) {
     }
     }
     $str .= "</table>";
-    
+
     return $str;
 }
 
@@ -659,7 +671,7 @@ function details_page($id){
 
     $xproject_todos_column = &$xartable['xproject_todos_column'];
     $xproject_xproject_column = &$xartable['xproject_xproject_column'];
-    
+
     if (!($result = $dbconn->Execute("SELECT $xartable[xproject_todos].*,$xproject_xproject_column[project_name]
         FROM $xartable[xproject_todos], $xartable[xproject_tasks]
                 WHERE $xproject_todos_column[todo_id]=$id
@@ -798,7 +810,7 @@ function details_page($id){
               WHERE $xproject_notes_column[todo_id]=$id
               AND $xproject_notes_column[usernr]=$xproject_users_column[usernr]");
     $anzahl = $result->PO_RecordCount();
-  
+
     $i = 0;
 
     if ($anzahl > 0){
@@ -862,8 +874,8 @@ function xproject_userapi_gettree($args) {
             if ( $task['parentid'] == $t['taskid'] ) {
                 $hasparent = true;
                 break;
-	    }
-	}
+        }
+    }
         if (!$hasparent) {
             $tree['subtasks'][$task['taskid']] = add_leaf($task,$alltasks);
         }
@@ -877,7 +889,7 @@ function add_leaf($t,$alltasks) {
     foreach ($alltasks as $task) {
         if ( $task['parentid'] == $t['taskid'] ) {
             $t['subtasks'][$task['taskid']] = add_leaf($task,$alltasks);
-	}
+    }
     }
     return $t;
 }

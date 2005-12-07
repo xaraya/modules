@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * XProject Module - A simple project management module
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage XProject Module
+ * @link http://xaraya.com/index.php/release/665.html
+ * @author XProject Module Development Team
+ */
 function xproject_user_display($args)
 {
     extract($args);
@@ -7,15 +18,14 @@ function xproject_user_display($args)
     if (!xarVarFetch('objectid', 'id', $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('startnum', 'int', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('taskid', 'id', $taskid, $taskid, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('filter', 'isset', $filter, $filter, XARVAR_NOT_REQUIRED)) return;//TODO: what is this?
-    //if (!xarVarFetch('taskid', 'id', $taskid, $taskid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('filter', 'str', $filter, $filter, XARVAR_NOT_REQUIRED)) return;
 
     if (!empty($objectid)) {
         $projectid = $objectid;
     }
 
     $data = xarModAPIFunc('xproject','user','menu');
-
+    $data['projectid'] = $projectid;
     $data['status'] = '';
     $data['taskid'] = $taskid;
 
@@ -51,7 +61,7 @@ function xproject_user_display($args)
         $data['taskdescription'] = $task['description'];
 
         //if (xarSecAuthAction(0, 'xproject::Tasks', '$task[name]::$taskid', ACCESS_EDIT)) {
-        if (!xarSecurityCheck('EditXProject', 0, 'Item', "All:All:All")) {//TODO: security
+        if (xarSecurityCheck('EditXProject', 0, 'Item', "All:All:All")) {//TODO: security
             $data['curtask_editurl'] = xarModURL('xproject', 'tasks', 'modify', array('taskid' => $taskid));
         } else {
             $data['curtask_editurl'] = "";
@@ -95,7 +105,7 @@ function xproject_user_display($args)
     }
 
     // BUILD TASK ADD FORM
-    if (!xarSecurityCheck('EditXProject', 0, 'Item', "All:All:All")) {//TODO: security
+    if (xarSecurityCheck('EditXProject', 0, 'Item', "All:All:All")) {//TODO: security
     //if (xarSecAuthAction(0, 'xproject::Projects', '$project[name]::$project[projectid]', ACCESS_MODERATE)) {
         $data['authid'] = xarSecGenAuthKey();
 
@@ -192,7 +202,6 @@ function xproject_user_display($args)
                                 'name' => $option);
     }
     $data['taskoptions'] = $taskoptions;
-
     return $data;
 }
 ?>
