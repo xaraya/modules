@@ -61,11 +61,11 @@
                         </xar:mlstring>
                     </span>
                 </label>
-                <input type="text" name="emotion" id="emotion" value="#emotion#" size="30" maxlength="100" />
+                <input type="text" name="emotion" id="emotion" value="#$emotion#" size="30" maxlength="100" />
             </p>
             <xar:if condition="!empty($hooks)">
                 <xar:foreach in="$hooks" key="$hookmodule">
-                    #$hooks[$hookmodule]# 
+                    #$hooks[$hookmodule]#
                 </xar:foreach>
             </xar:if>
             <p class="param">
