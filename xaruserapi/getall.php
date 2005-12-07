@@ -122,7 +122,7 @@ function xproject_userapi_getall($args)
             $criticaldays,
             $sendmailfreq,
             $billable) = $result->fields;
-        if (xarSecAuthAction(0, 'xproject::', "$name::$projectid", ACCESS_READ)) {
+        if (xarSecurityCheck('ReadXProject', 0, 'Item', "$name:All:$projectid")) {
             $numtasks = xarModAPIFunc('xproject', 'tasks', 'countitems', array('projectid' => $projectid));
             $tasks[] = array('projectid' => $projectid,
                              'name' => $name,

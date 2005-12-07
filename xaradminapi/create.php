@@ -1,8 +1,5 @@
 <?php
-
 /**
- *
- *
  * Administration System
  *
  * @package Xaraya eXtensible Management System
@@ -31,7 +28,7 @@ function xproject_adminapi_create($args)
         return;
     }
 
-    if (!xarSecAuthAction(0, 'xproject::Project', "$name::", ACCESS_ADD)) {
+    if (!xarSecurityCheck('AddXProject', 1, 'Item', "$name:All:All")) {
         $msg = xarML('Not authorized to add #(1) items',
                     'xproject');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
@@ -46,7 +43,7 @@ function xproject_adminapi_create($args)
 
     $nextId = $dbconn->GenId($xprojecttable);
 
-    $sql = "INSERT INTO $xprojecttable (
+    $query = "INSERT INTO $xprojecttable (
               xar_projectid,
               xar_name,
               xar_description,
@@ -58,7 +55,8 @@ function xproject_adminapi_create($args)
               xar_criticaldays,
               xar_sendmailfreq,
               xar_billable)
-            VALUES (
+            VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+            /*
               $nextId,
               '" . xarVarPrepForStore($name) . "',
               '" . xarVarPrepForStore($description) . "',
@@ -70,17 +68,24 @@ function xproject_adminapi_create($args)
               " . $criticaldays . ",
               " . $sendmails . ",
               " . ($billable ? $billable : "NULL") . ")";
+*/
+    $bindvars = array(
+              $nextId,
+              $name,
+              $description,
+              $displaydates ? $displaydates : NULL,
+              $displayhours ? $displayhours : NULL,
+              $displayfreq ? $displayfreq : NULL,
+              $private ? $private : NULL,
+              $importantdays,
+              $criticaldays,
+              $sendmails,
+              $billable ? $billable : NULL);
+    $result = &$dbconn->Execute($query,$bindvars);
+    if (!$result) return;
 
 // PRIVATE INITIALLY SET BASED ON USER PREFERENCE
 
-    $dbconn->Execute($sql);
-
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarML('DATABASE_ERROR', $sql);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    }
 
     $projectid = $dbconn->PO_Insert_ID($xprojecttable, 'xar_projectid');
 

@@ -13,31 +13,26 @@ function xproject_userapi_get($args)
     }
 
     $dbconn =& xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $xartable =& xarDBGetTables();
 
     $xprojecttable = $xartable['xproject'];
 
-    $sql = "SELECT xar_projectid,
+    $query = "SELECT xar_projectid,
                    xar_name,
                    xar_description,
                    xar_usedatefields,
-				   xar_usehoursfields,
-				   xar_usefreqfields,
-				   xar_allowprivate,
-				   xar_importantdays,
-				   xar_criticaldays,
-				   xar_sendmailfreq,
-				   xar_billable
-			FROM $xprojecttable
-            WHERE xar_projectid = " . $projectid;
-    $result = $dbconn->Execute($sql);
+                   xar_usehoursfields,
+                   xar_usefreqfields,
+                   xar_allowprivate,
+                   xar_importantdays,
+                   xar_criticaldays,
+                   xar_sendmailfreq,
+                   xar_billable
+            FROM $xprojecttable
+            WHERE xar_projectid = ?";
+    $result = &$dbconn->Execute($query,array($projectid));
 
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarML('DATABASE_ERROR', $sql);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    }
+    if (!$result) return;
 
     if ($result->EOF) {
         $result->Close();
@@ -47,39 +42,35 @@ function xproject_userapi_get($args)
         return;
     }
 
-	list($projectid,
-		$name, 
-		$description, 
-		$usedatefields, 
-		$usehoursfields, 
-		$usefreqfields, 
-		$allowprivate, 
-		$importantdays, 
-		$criticaldays, 
-		$sendmailfreq, 
-		$billable) = $result->fields;
-		
+    list($projectid,
+        $name,
+        $description,
+        $usedatefields,
+        $usehoursfields,
+        $usefreqfields,
+        $allowprivate,
+        $importantdays,
+        $criticaldays,
+        $sendmailfreq,
+        $billable) = $result->fields;
+
     $result->Close();
 
-    if (!xarSecAuthAction(0, 'xproject::', "$name::$projectid", ACCESS_READ)) {
-        $msg = xarML('Not authorized to access #(1) item #(2)',
-                    'xproject', xarVarPrepForStore($projectid));
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+    if (!xarSecurityCheck('ReadXProject', 1, 'Item', "$name:All:$projectid")) {
         return;
     }
 
     $task = array('projectid' => $projectid,
-				 'name' => $name,
-				 'description' => $description,
-				 'usedatefields' => $usedatefields,
-				 'usehoursfields' => $usehoursfields,
-				 'usefreqfields' => $usefreqfields,
-				 'allowprivate' => $allowprivate,
-				 'importantdays' => $importantdays,
-				 'criticaldays' => $criticaldays,
-				 'sendmailfreq' => $sendmailfreq,
-				 'billable' => $billable);
+                 'name' => $name,
+                 'description' => $description,
+                 'usedatefields' => $usedatefields,
+                 'usehoursfields' => $usehoursfields,
+                 'usefreqfields' => $usefreqfields,
+                 'allowprivate' => $allowprivate,
+                 'importantdays' => $importantdays,
+                 'criticaldays' => $criticaldays,
+                 'sendmailfreq' => $sendmailfreq,
+                 'billable' => $billable);
 
     return $task;
 }

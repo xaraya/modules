@@ -24,14 +24,14 @@ function xproject_user_view($args)
     for ($i = 0; $i < count($xprojects); $i++) {
         $project = $xprojects[$i];
 //		if (xarSecAuthAction(0, 'xproject::Projects', "$project[name]::$project[projectid]", ACCESS_READ)) {
-        if (!xarSecurityCheck('ReadXProject', 0, 'Item', "All:All:All")) {//TODO: security
+        if (xarSecurityCheck('ReadXProject', 0, 'Item', "$project[name]:All:$project[projectid]")) {//TODO: security
             $xprojects[$i]['link'] = xarModURL('xproject',
                                                'user',
                                                'display',
                                                array('projectid' => $project['projectid']));
         }
         //if (xarSecAuthAction(0, 'xproject::Projects', "$project[name]::$project[projectid]", ACCESS_EDIT)) {
-        if (!xarSecurityCheck('editXProject', 0, 'Item', "All:All:All")) {//TODO: security
+        if (xarSecurityCheck('EditXProject', 0, 'Item', "$project[name]:All:$project[projectid]")) {//TODO: security
             $xprojects[$i]['editurl'] = xarModURL('xproject',
                                                'admin',
                                                'modify',
@@ -39,7 +39,7 @@ function xproject_user_view($args)
         } else {
             $xprojects[$i]['editurl'] = '';
         }
-        if (xarSecAuthAction(0, 'xproject::Projects', "$project[name]::$project[projectid]", ACCESS_DELETE)) {
+        if (xarSecurityCheck('DeleteXProject', 0, 'Item', "$project[name]:All:$project[projectid]")) {
             $xprojects[$i]['deleteurl'] = xarModURL('xproject',
                                                'admin',
                                                'delete',
