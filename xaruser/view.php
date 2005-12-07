@@ -42,9 +42,8 @@ function helpdesk_user_view($args)
         if( empty($$var) ){ $$var = $value; }
         if( $$var == -1 ){ $$var = ''; }
         xarSessionSetVar("Modules.helpdesk.view.$var", $$var); 
-        var_dump($$var);       
     }
-       
+        
     $data = array();
     $data['menu']    = xarModFunc('helpdesk', 'user', 'menu');
     $data['summary'] = xarModFunc('helpdesk', 'user', 'summaryfooter');
