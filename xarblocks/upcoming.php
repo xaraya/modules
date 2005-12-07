@@ -61,7 +61,7 @@ function courses_upcomingblock_display($blockinfo)
 
     // Defaults
     if (empty($vars['numitems'])) {
-        $vars['numitems'] = 5;
+        $vars['numitems'] = 10;
     }
 
     //set dates for determining which events to show for the upcoming events
@@ -71,7 +71,6 @@ function courses_upcomingblock_display($blockinfo)
         $BlockDays = 7;
     }
     $args['BlockDays'] = $BlockDays;
-    //	$BlockDays = 7; // TODO replace these in settings
     $today=date("Y-m-d");
     $tomorrow=date("Y-m-d",strtotime("tomorrow"));
     $endblockdate=date("Y-m-d",strtotime("+$BlockDays days"));
@@ -81,7 +80,12 @@ function courses_upcomingblock_display($blockinfo)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $courses_planning = $xartable['courses_planning'];
-
+    // Only get hidden courses for admin
+    if (xarSecurityCheck('AdminCourses', 0)) {
+    $where = "0, 1";
+    } else {
+    $where = "0";
+    }
     // Query
     $sql = "SELECT xar_planningid,
                    xar_courseid,
@@ -89,7 +93,8 @@ function courses_upcomingblock_display($blockinfo)
                    xar_enddate
             FROM $courses_planning
             WHERE  (xar_startdate <'". $today ."' AND xar_enddate > '".$today."')
-                      OR (xar_startdate > '" . $today . "' AND xar_enddate < '" .$endblockdate ."')
+               OR (xar_startdate > '" . $today . "' AND xar_enddate < '" .$endblockdate ."')
+               AND xar_hideplanning in ($where)
             ORDER by xar_startdate ASC ";
     $result = $dbconn->SelectLimit($sql, $vars['numitems'], $startnum-1 );
 
@@ -109,14 +114,14 @@ function courses_upcomingblock_display($blockinfo)
     for (; !$result->EOF; $result->MoveNext()) {
         list($planningid, $courseid, $startdate, $enddate) = $result->fields;
 
-        if (xarSecurityCheck('ViewCourses', 0, 'Course', "All:All:All")) {
-            if (xarSecurityCheck('ReadCourses', 0, 'Course', "All:All:All")) {
+        if (xarSecurityCheck('ViewCourses', 0, 'Course', "All:All:All")) { // TODO: privileges
+            if (xarSecurityCheck('ReadCourses', 0, 'Course', "All:All:All")) { // TODO: privileges
                 $item = array();
                 $item['link'] = xarModURL('courses', 'user', 'displayplanned',
                                           array('planningid' => $planningid));
             }
             $item['startdate'] = $startdate;
-                $item['enddate'] = $enddate;
+            $item['enddate'] = $enddate;
             $coursename = xarModAPIFunc('courses', 'user', 'getcoursename', array('courseid'=>$courseid));
             $item['coursename'] = $coursename['name'];
         }

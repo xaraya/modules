@@ -1,8 +1,8 @@
 <?php
 /**
- * Display an planned course
+ * Display a planned course
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -14,6 +14,7 @@
 
 /**
  * display a course
+ *
  * This is the function to provide detailed information on a single course
  * and show the details of all planned occurences
  *
@@ -71,6 +72,7 @@ function courses_user_displayplanned($args)
         $timenow = time();
         $closetime = strtotime($closedate);
         if((int)$closetime > (int)$timenow) {
+            $data['closed'] = false;
             // See if student is already enrolled
             $enrolled = xarModAPIFunc('courses',
                                       'user',
@@ -86,7 +88,6 @@ function courses_user_displayplanned($args)
                 $data['enrolled'] = 0;
                 $data['enrollbutton'] = xarVarPrepForDisplay(xarML('Enroll'));
                 $data['action'] = "xarModUrl('courses', 'user', 'enroll')";
-
             }
         } else {
             $data['closed'] = true;
