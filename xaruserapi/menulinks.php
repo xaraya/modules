@@ -69,10 +69,8 @@ function helpdesk_userapi_menulinks()
     if (xarSecurityCheck('readhelpdesk',0)) {
         $menulinks[] = Array('url'   => xarModURL('helpdesk',
                                                   'user',
-                                                  'view',
-                                                  array('selection' => 'MYALL')),
+                                                  'view'),
                              'page' => 'view',
-                             'selection' => 'MYALL',
                              'title' => xarML('View Tickets'),
                              'label' => xarML('View Tickets'));
     }
