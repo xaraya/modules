@@ -5,7 +5,7 @@ function xproject_admin_new()
     xarModLoad('xproject','user');
     $data = xarModAPIFunc('xproject','user','menu');
 
-    if (xarSecurityCheck('AddXProject')) {
+    if (!xarSecurityCheck('AddXProject')) {
         return;
     }
 

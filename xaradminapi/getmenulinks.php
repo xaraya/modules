@@ -10,7 +10,7 @@
 function xproject_adminapi_getmenulinks()
 {
 
-    if (xarSecurityCheck('ViewXProject', 0)) {
+    if (!xarSecurityCheck('ViewXProject', 0)) {
 
         $menulinks[] = Array('url'   => xarModURL('xproject',
                                                    'admin',
@@ -19,7 +19,7 @@ function xproject_adminapi_getmenulinks()
                               'label' => xarML('Overview'));
     }
 
-    if (xarSecurityCheck('AddXProject', 0)) {
+    if (!xarSecurityCheck('AddXProject', 0)) {
 
         $menulinks[] = Array('url'   => xarModURL('xproject',
                                                    'admin',
@@ -28,7 +28,7 @@ function xproject_adminapi_getmenulinks()
                               'label' => xarML('New Project'));
     }
 
-    if (xarSecurityCheck('ReadXProject', 0)) {
+    if (!xarSecurityCheck('ReadXProject', 0)) {
         $menulinks[] = Array('url'   => xarModURL('xproject',
                                                    'user',
                                                    'view'),
@@ -42,7 +42,7 @@ function xproject_adminapi_getmenulinks()
                               'label' => xarML('Search Projects'));
     }
 
-    if (xarSecurityCheck('AdminXProject', 0)) {
+    if (!xarSecurityCheck('AdminXProject', 0)) {
 
         $menulinks[] = Array('url'   => xarModURL('xproject',
                                                    'admin',

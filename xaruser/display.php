@@ -15,10 +15,10 @@ function xproject_user_display($args)
     }
 
     $data = xarModAPIFunc('xproject','user','menu');
-    
+
     $data['status'] = '';
     $data['taskid'] = $taskid;
-    
+
     $project = xarModAPIFunc('xproject',
                           'user',
                           'get',
@@ -39,30 +39,30 @@ function xproject_user_display($args)
                               'tasks',
                               'get',
                               array('taskid' => $taskid));
-    
+
         if (isset($task) && xarExceptionMajor() == XAR_NO_EXCEPTION) {
             list($task['name']) = xarModCallHooks('item',
                                                  'transform',
                                                  $taskid,
                                                  array($task['name']));
         }
-        
+
         $data['taskname'] = $task['name'];
         $data['taskdescription'] = $task['description'];
-        
+
         //if (xarSecAuthAction(0, 'xproject::Tasks', '$task[name]::$taskid', ACCESS_EDIT)) {
-        if (xarSecurityCheck('EditXProject', 0, 'Item', "All:All:All")) {//TODO: security
+        if (!xarSecurityCheck('EditXProject', 0, 'Item', "All:All:All")) {//TODO: security
             $data['curtask_editurl'] = xarModURL('xproject', 'tasks', 'modify', array('taskid' => $taskid));
         } else {
             $data['curtask_editurl'] = "";
         }
-        if (xarSecurityCheck('DeleteXProject', 0, 'Item', "All:All:All")) {//TODO: security
+        if (!xarSecurityCheck('DeleteXProject', 0, 'Item', "All:All:All")) {//TODO: security
         //if (xarSecAuthAction(0, 'xproject::Tasks', '$task[name]::$taskid', ACCESS_DELETE)) {
             $data['curtask_deleteurl'] = xarModURL('xproject', 'tasks', 'delete', array('taskid' => $taskid));
         } else {
             $data['curtask_deleteurl'] = "";
         }
-        
+
         if($task['parentid'] > 0) {
             $parent = xarModAPIFunc('xproject',
                                   'tasks',
@@ -71,7 +71,7 @@ function xproject_user_display($args)
         } else {
             $data['roottask'] = xarML('project overview');
         }
-        
+
         if (isset($parent) && xarExceptionMajor() == XAR_NO_EXCEPTION) {
             $data['taskparent_name'] = $parent['name'];
             $data['taskparent_id'] = $parent['taskid'];
@@ -95,17 +95,17 @@ function xproject_user_display($args)
     }
 
     // BUILD TASK ADD FORM
-    if (xarSecurityCheck('EditXProject', 0, 'Item', "All:All:All")) {//TODO: security
+    if (!xarSecurityCheck('EditXProject', 0, 'Item', "All:All:All")) {//TODO: security
     //if (xarSecAuthAction(0, 'xproject::Projects', '$project[name]::$project[projectid]', ACCESS_MODERATE)) {
         $data['authid'] = xarSecGenAuthKey();
 
         $data['projectid'] = $project['projectid'];
         $data['parentid'] = $taskid;
-    
+
         if(!isset($taskid) || $taskid == 0) $data['tasknamelabel'] = xarVarPrepForDisplay(xarML('New Task'));
         else $data['tasknamelabel'] = xarVarPrepForDisplay(xarML('New Sub-Task'));
-        
-        $statusoptions = array();    
+
+        $statusoptions = array();
         $statusoptions[] = array('id'=>0,'name'=>xarML('Open'));
         $statusoptions[] = array('id'=>1,'name'=>xarML('Closed'));
         $data['statusoptions'] = $statusoptions;
@@ -116,7 +116,7 @@ function xproject_user_display($args)
         }
 
         $data['addbutton'] = xarVarPrepForDisplay(xarML('Add'));
-    
+
         $item = array();
         $item['module'] = 'xproject';
         $hooks = xarModCallHooks('item','new','',$item);
@@ -129,7 +129,7 @@ function xproject_user_display($args)
                 $data['hookoutput'] = $hooks;
             }
     }
-    
+
     $filteroptions = array(xarML('default'),
                             xarML('My Tasks'),
                             xarML('Available Tasks'),
@@ -182,7 +182,7 @@ function xproject_user_display($args)
         $data['numtasks'] = count($data['tasks']);
         $numtasks = count($data['tasks']);
     }
-        
+
     $taskoptionslist = array(1 => xarML('Surface'),
                             2 => xarML('Delete') . ' (' . xarML('delete subtasks') . ')',
                             3 => xarML('Delete') . ' (' . xarML('move subtasks up') . ')');

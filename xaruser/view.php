@@ -7,9 +7,9 @@ function xproject_user_view($args)
 
     $data = xarModAPIFunc('xproject','user','menu');
 
-	$data['items'] = array();
+    $data['items'] = array();
 
-    if (xarSecurityCheck('ViewXProject')) {
+    if (!xarSecurityCheck('ViewXProject')) {
         return;
     }
 
@@ -19,38 +19,38 @@ function xproject_user_view($args)
                           array('startnum' => $startnum,
                                 'numitems' => 10));//TODO: numitems
 
-	if (!isset($xprojects) && xarExceptionMajor() != XAR_NO_EXCEPTION) return;
-	
+    if (!isset($xprojects) && xarExceptionMajor() != XAR_NO_EXCEPTION) return;
+
     for ($i = 0; $i < count($xprojects); $i++) {
         $project = $xprojects[$i];
 //		if (xarSecAuthAction(0, 'xproject::Projects', "$project[name]::$project[projectid]", ACCESS_READ)) {
-        if (xarSecurityCheck('ReadXProject', 0, 'Item', "All:All:All")) {//TODO: security
-			$xprojects[$i]['link'] = xarModURL('xproject',
-											   'user',
-											   'display',
-											   array('projectid' => $project['projectid']));
-		}
-		//if (xarSecAuthAction(0, 'xproject::Projects', "$project[name]::$project[projectid]", ACCESS_EDIT)) {
-		if (xarSecurityCheck('editXProject', 0, 'Item', "All:All:All")) {//TODO: security
-			$xprojects[$i]['editurl'] = xarModURL('xproject',
-											   'admin',
-											   'modify',
-											   array('projectid' => $project['projectid']));
-		} else {
-			$xprojects[$i]['editurl'] = '';
-		}
-		if (xarSecAuthAction(0, 'xproject::Projects', "$project[name]::$project[projectid]", ACCESS_DELETE)) {
-			$xprojects[$i]['deleteurl'] = xarModURL('xproject',
-											   'admin',
-											   'delete',
-											   array('projectid' => $project['projectid']));
-		} else {
-			$xprojects[$i]['deleteurl'] = '';
-		}
+        if (!xarSecurityCheck('ReadXProject', 0, 'Item', "All:All:All")) {//TODO: security
+            $xprojects[$i]['link'] = xarModURL('xproject',
+                                               'user',
+                                               'display',
+                                               array('projectid' => $project['projectid']));
+        }
+        //if (xarSecAuthAction(0, 'xproject::Projects', "$project[name]::$project[projectid]", ACCESS_EDIT)) {
+        if (!xarSecurityCheck('editXProject', 0, 'Item', "All:All:All")) {//TODO: security
+            $xprojects[$i]['editurl'] = xarModURL('xproject',
+                                               'admin',
+                                               'modify',
+                                               array('projectid' => $project['projectid']));
+        } else {
+            $xprojects[$i]['editurl'] = '';
+        }
+        if (xarSecAuthAction(0, 'xproject::Projects', "$project[name]::$project[projectid]", ACCESS_DELETE)) {
+            $xprojects[$i]['deleteurl'] = xarModURL('xproject',
+                                               'admin',
+                                               'delete',
+                                               array('projectid' => $project['projectid']));
+        } else {
+            $xprojects[$i]['deleteurl'] = '';
+        }
     }
 
     $data['xprojects'] = $xprojects;
-	$data['pager'] = '';
+    $data['pager'] = '';
     return $data;
 }
 

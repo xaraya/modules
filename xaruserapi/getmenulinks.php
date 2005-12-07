@@ -10,7 +10,7 @@
 function xproject_userapi_getmenulinks()
 {
 
-    if (xarSecurityCheck('ViewXProject', 0)) {
+    if (!xarSecurityCheck('ViewXProject', 0)) {
 
         $menulinks[] = Array('url'   => xarModURL('xproject',
                                                    'user',
@@ -19,7 +19,7 @@ function xproject_userapi_getmenulinks()
                               'label' => xarML('Overview'));
     }
 
-    if (xarSecurityCheck('AddXProject', 0)) {
+    if (!xarSecurityCheck('AddXProject', 0)) {
         $menulinks[] = Array('url'   => xarModURL('xproject',
                                                    'user',
                                                    'new'),
@@ -27,7 +27,7 @@ function xproject_userapi_getmenulinks()
                               'label' => xarML('New Project'));
     }
 
-    if (xarSecurityCheck('ReadXProject', 0)) {
+    if (!xarSecurityCheck('ReadXProject', 0)) {
 
         $menulinks[] = Array('url'   => xarModURL('xproject',
                                                    'user',

@@ -8,30 +8,31 @@
     // this form.  All URLs should be generated through xarModURL() to ensure
     // compatibility with future versions of Xaraya
 -->
-<form method="post" action="&xar-modurl-xproject-admin-updateconfig;">    <input type="hidden" name="authid" value="#$authid#" />
+<form method="post" action="&xar-modurl-xproject-admin-updateconfig;">
+    <input type="hidden" name="authid" value="#$authid#" />
 
 <tr><td><label for="dateformat"><xar:mlstring>Date Format</xar:mlstring></label></td>
 <td><select name="dateformat" id="dateformat">
-	<xar:loop name="$dateoptions">
-		<xar:if condition="$loop:item['id'] eq $dateformat">
-      		<option value="#$loop:item['id']#" selected="selected">#$loop:item['name']#</option>
-		<xar:else/>
-      		<option value="#$loop:item['id']#">#$loop:item['name']#</option>
-		</xar:if>
-	</xar:loop>
-	</select>
+    <xar:loop name="$dateoptions">
+        <xar:if condition="$loop:item['id'] eq $dateformat">
+            <option value="#$loop:item['id']#" selected="selected">#$loop:item['name']#</option>
+        <xar:else/>
+            <option value="#$loop:item['id']#">#$loop:item['name']#</option>
+        </xar:if>
+    </xar:loop>
+    </select>
 </td></tr>
 
 <tr><td><label for="maxdone"><xar:mlstring>Max Completed Shown</xar:mlstring></label></td>
 <td><select name="maxdone" id="maxdone">
-	<xar:for start="$i = 1" test="$i <= 9" iter="$i++">
-		<xar:if condition="$i eq $maxdone">
-      	<option value="#$i#" selected="selected">#$i#</option>
-		<xar:else/>
-      	<option value="#$i#">#$i#</option>
-		</xar:if>
-	</xar:for>
-	</select>
+    <xar:for start="$i = 1" test="$i <= 9" iter="$i++">
+        <xar:if condition="$i eq $maxdone">
+        <option value="#$i#" selected="selected">#$i#</option>
+        <xar:else/>
+        <option value="#$i#">#$i#</option>
+        </xar:if>
+    </xar:for>
+    </select>
 </td></tr>
 
 <tr><td><label for="refreshmain"><xar:mlstring>Refresh view (in seconds)</xar:mlstring></label></td>
@@ -83,14 +84,14 @@
 
 <tr><td><label for="itemsperpage"><xar:mlstring>Tasks per page</xar:mlstring></label></td>
 <td><select name="itemsperpage" id="itemsperpage">
-	<xar:for start="$i = 1" test="$i <= 9" iter="$i++">
-		<xar:if condition="$i eq $itemsperpage">
-      	<option value="#$i#" selected="selected">#$i#</option>
-		<xar:else/>
-      	<option value="#$i#">#$i#</option>
-		</xar:if>
-	</xar:for>
-	</select>
+    <xar:for start="$i = 1" test="$i <= 9" iter="$i++">
+        <xar:if condition="$i eq $itemsperpage">
+        <option value="#$i#" selected="selected">#$i#</option>
+        <xar:else/>
+        <option value="#$i#">#$i#</option>
+        </xar:if>
+    </xar:for>
+    </select>
 </td></tr>
 <tr><td colspan="2" align="center"><br />
     <input type="submit" value="#$updatebutton#"></td></tr>
@@ -99,4 +100,20 @@
 </table>
 </div>
 </div>
-<div class="xar-mod-foot">#$hooks#</div>
+    <fieldset>
+      <legend><xar:mlstring>Enabled Hooks</xar:mlstring></legend>
+      <xar:if condition="!empty($hooks)">
+        <xar:foreach in="$hooks" key="$hookmodule">
+          <!--
+              You can display individual hooks if you want using xar:if statements
+
+              <xar:if condition="($hookmodule eq 'categories') and !empty($hookmodule)">
+                #$hooks['categories']#
+              </xar:if>
+
+              or display them all with one command as follows
+              -->
+          #$hooks[$hookmodule]#
+        </xar:foreach>
+      </xar:if>
+    </fieldset>
