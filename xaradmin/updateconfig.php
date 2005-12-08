@@ -12,29 +12,25 @@
  * @author xarDPLink Module Development Team
  */
 
-function xardplink_admin_updateconfig()
+function xardplink_admin_updateconfig($args)
 {
-    // Get parameters from whatever input we need.
-    $_loc = pnVarCleanFromInput('url');
-    $_window = pnVarCleanFromInput('use_window');
-    $_wrap = pnVarCleanFromInput('use_postwrap');
+    extract($args);
+    if (!xarVarFetch('use_window',         'checkbox', $use_window, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('url', 'str',      $url, '/dotproject', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('use_wrap',    'checkbox', $use_wrap, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('aliasname',    'str:1:',   $aliasname, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('modulealias',  'checkbox', $modulealias,false,XARVAR_NOT_REQUIRED)) return;
 
-
-    // Confirm authorisation code.
-    if (!pnSecConfirmAuthKey()) {
-        pnSessionSetVar('errormsg', _BADAUTHKEY);
-        pnRedirect(pnModURL('xardplink', 'admin', ''));
-        return true;
-    }
+    if (!xarSecConfirmAuthKey()) return;
 
     // Update module variables.
-    pnModSetVar('xardplink', 'url', $_loc);
-    pnModSetVar('xardplink', 'use_window', $_window);
-    pnModSetVar('xardplink', 'use_postwrap', $_wrap);
+    xarModSetVar('xardplink', 'url', $url);
+    xarModSetVar('xardplink', 'use_window', $use_window);
+    xarModSetVar('xardplink', 'use_wrap', $use_wrap);
 
     // This function generated no output, and so now it is complete we redirect
     // the user to an appropriate page for them to carry on their work
-    pnRedirect('admin.php');
+    xarResponseRedirect(xarModURL('xardplink', 'admin', 'modifyconfig'));
 
     // Return
     return true;

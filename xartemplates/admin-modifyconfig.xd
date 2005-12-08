@@ -1,101 +1,55 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
-<!-- common admin menu for this module - remove link to the current function -->
-<!-- the variables used in this menu come from example_admin_menu() -->
 <div class="xar-mod-head">
-  <span class="xar-mod-title"><xar:mlstring>Example Administration</xar:mlstring></span>
+  <span class="xar-mod-title"><xar:mlstring>xarDPLink Administration</xar:mlstring></span>
 </div>
 <div class="xar-mod-body">
   <h2><xar:mlstring>Modify Config</xar:mlstring></h2>
-  <!--
-      display a status message to the user if an action has been
-      taken on an item
-    -->
+
   <xar:if condition="xarSessionGetVar('statusmsg') != ''">
     <p>#xarSessionGetVar('statusmsg')#</p>
   </xar:if>
-  <!-- the specific template for the current admin function comes here -->
 
-  <!-- Start form - note we do not use api functions to create the recipient URL of
-       this form, but entity instead. All URLs should be generated this way to ensure
-       compatibility with future versions of Xaraya.
-    -->
+  <form method="post" id="post" action="&xar-modurl-xardplink-admin-updateconfig;" enctype="application/x-www-form-urlencoded">
 
-    <form method="post" id="post" action="&xar-modurl-example-admin-updateconfig;" enctype="application/x-www-form-urlencoded">
-
-
-    <!-- Use standard xaraya classes for form elements -->
-    <fieldset>
-      <legend><xar:mlstring>Display Options</xar:mlstring></legend>
-
-      <div class="xar-form-input-wrapper">
-        <label for="bold" class="xar-form-label" title="#xarML('Use bold for example items.')#">
-          <xar:mlstring>Display Example Items In Bold?</xar:mlstring>
-        </label>
-        <xar:if condition="$boldchecked">
-          <input type="checkbox" name="bold" id="bold" value="1" checked="checked"/>
-          <xar:else/>
-          <input type="checkbox" name="bold" id="bold" value="1" />
-        </xar:if>
-      </div>
-
-      <div class="xar-form-input-wrapper">
-        <label for="itemsperpage" class="xar-form-label" title="#xarML('Number of example items per page')#">
-          <xar:mlstring>Example Items Per Page:</xar:mlstring>
-        </label>
-        <input type="text" name="itemsperpage" id="itemsperpage" value="#$itemsvalue#" maxlength="3" class="xar-form-textshort" />
-      </div>
-    </fieldset>
     <fieldset>
       <legend><xar:mlstring>System Options</xar:mlstring></legend>
+
       <div class="xar-form-input-wrapper">
-        <label for="shorturls" class="xar-form-label" title="#xarML('Enable short URLS?')#">
-          <xar:mlstring>Enable short URLs?</xar:mlstring>
+        <label for="url" class="xar-form-label" title="#xarML('The Location of the dotProject installation.')#">
+          <xar:mlstring>The Location of the dotProject installation.</xar:mlstring>
         </label>
-        <xar:if condition="$shorturlschecked">
-          <input type="checkbox" name="shorturls" id="shorturls" value="1" checked="checked" />
+        <p>
+        <xar:mlstring>Do not use the trailing slash !!!!</xar:mlstring>
+        </p>
+        <input type="text" name="url" id="url" value="#$url#" maxlength="50" class="xar-form-textlong" />
+      </div>
+      <div class="xar-form-input-wrapper">
+        <label for="use_wrap" class="xar-form-label" title="#xarML('Use the postWrap option')#">
+          <xar:mlstring>Use PostWrap</xar:mlstring>
+        </label>
+        <xar:if condition="$use_wrapchecked">
+          <input type="checkbox" name="use_wrap" id="use_wrap" value="1" checked="checked"/>
           <xar:else/>
-          <input type="checkbox" name="shorturls" id="shorturls" value="1" />
+          <input type="checkbox" name="use_wrap" id="use_wrap" value="1" />
         </xar:if>
       </div>
-
       <div class="xar-form-input-wrapper">
-        <label for = "modulealias" class="xar-form-label" title="#xarML('Use an alias instead of the module name')#">
-          <xar:mlstring>
-            Use a module alias
-          </xar:mlstring>
+        <label for="use_window" class="xar-form-label" title="#xarML('Enable short URLS?')#">
+          <xar:mlstring>Open Application Full Screen</xar:mlstring>
         </label>
-        <xar:if condition="xarModGetVar('example', 'useModuleAlias')">
-          <input type="checkbox" name="modulealias" id="modulealias" value="1" checked="checked" />
-          <xar:else />
-          <input type="checkbox" name="modulealias" id="modulealias" value="1" />
+        <xar:if condition="$use_windowchecked">
+          <input type="checkbox" name="use_window" id="use_window" value="1" checked="checked" />
+          <xar:else/>
+          <input type="checkbox" name="use_window" id="use_window" value="1" />
         </xar:if>
-
       </div>
-      <div class="xar-form-input-wrapper">
-        <label for="aliasname" class="xar-form-label" title="#xarML('The name of module alias to be used.')#">
-          <xar:mlstring>
-            Module Alias Name
-          </xar:mlstring>
-        </label>
-        <input type="text" name="aliasname" id="aliasname" value="#xarModGetVar('example', 'aliasname')#" size="32" maxlength="100" />
-      </div>
-
     </fieldset>
 
     <fieldset>
       <legend><xar:mlstring>Enabled Hooks</xar:mlstring></legend>
       <xar:if condition="!empty($hooks)">
         <xar:foreach in="$hooks" key="$hookmodule">
-          <!--
-              You can display individual hooks if you want using xar:if statements
-
-              <xar:if condition="($hookmodule eq 'categories') and !empty($hookmodule)">
-                #$hooks['categories']#
-              </xar:if>
-
-              or display them all with one command as follows
-              -->
           #$hooks[$hookmodule]#
         </xar:foreach>
       </xar:if>
@@ -114,9 +68,4 @@
 
   </form>
 </div>
-<!--
-     // clear the status message
-     // we put this in an if tag to prevent the function from
-     // showing '1' in the page
-  -->
 <xar:if condition="xarSessionSetVar('statusmsg', '')"></xar:if>
