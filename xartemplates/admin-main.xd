@@ -1,0 +1,47 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<!-- This is a standard template for the module overview  -->
+<!-- Each Module Should have an overview explaining exactly what it does, and giving an overview of the blocks and hooks that it includes or accepts. -->
+<div class="xar-mod-head">
+  <span class="xar-mod-title"><xar:mlstring>Example Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+  <img src="http://dotproject.net/themes/Imagic2/images/dp_icon_large.gif" class="xar-module-icon" width="256" height="60" />
+
+  <h2><xar:mlstring>Overview</xar:mlstring></h2>
+
+  <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+  <p>
+    <em><xar:mlstring>XarDPLink is a utility module for Xaraya and DotProject.</xar:mlstring></em>
+    <xar:mlstring>It is currently responsible for accomplishing two main tasks:</xar:mlstring>
+  </p>
+  <ol>
+    <li><xar:mlstring>Provide a common login.</xar:mlstring></li>
+    <li><xar:mlstring>More to come...</xar:mlstring></li>
+
+  </ol>
+  <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
+  <ul>
+    <li><xar:mlstring>Please, first install DotProject. </xar:mlstring></li>
+
+
+    <li><xar:mlstring>Then edit the configuration to use the postnuke authentication</xar:mlstring></li>
+    <li><xar:mlstring>Edit the config of this module</xar:mlstring></li>
+  </ul>
+  <h3>
+    <xar:mlstring>Further Information</xar:mlstring>
+  </h3>
+  <p>
+    <xar:mlstring>Further information on this module can be found at</xar:mlstring>
+  </p>
+  <ul>
+    <li><xar:mlstring>xarDPLink Extension page at</xar:mlstring> <a title="#xarML('Example Module - Xaraya Extension 591')#" href="http://www.xaraya.com/index.php/release/591.html">Xaraya Extension and Releases</a>.
+      <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+    </li>
+    <li><xar:mlstring>Related tutorials and documentation on Example found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/example/" title="#xarML('Related documentation on Example')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+    </li>
+  </ul>
+  <p class="xar-sub">
+    <strong>&nbsp;<xar:mlstring>xarDPLink Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 0.5.0&nbsp; 2005-12-08
+  </p>
+</div>
+
