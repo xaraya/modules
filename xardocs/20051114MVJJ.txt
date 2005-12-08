@@ -1,0 +1,132 @@
+### Log session started at ma 14. nov 12:15:16 2005 ###
+[12:17:18] <jason> The start is a structure to put it in: the groups are defined
+[12:17:28] <jason> Then the questions, yes.
+[12:17:43] <jason> Then place the questions into the groups (MyAdmin :-(
+[12:18:41] <jason> Have you found the 'modify question' GUI functions?
+[12:19:12] <MichelV> yes
+[12:19:13] <MichelV> And new
+[12:19:17] <jason> I tend to create a question, then fill in its details using the GUI
+[12:19:27] <jason> since it handles any hooked dd fields
+[12:20:09] <MichelV> What really needs to be hooked?
+[12:20:27] <MichelV> The minimum I mean to get it working
+[12:20:27] <jason> I hook DD to the quesions (i.e. to the question types)
+[12:20:43] <jason> and use that to define the extra columns used to define a question
+[12:20:48] <jason> the extra fields, rather
+[12:21:38] <jason> For example, a multi-choice question will need to referece the list of options in the choices.
+[12:21:53] <jason> That could be a DD field with the name of the list in the lists module,
+[12:22:08] <jason> or a textarea field with a list of CSV options
+[12:22:19] <jason> depending on how you want to implement it.
+[12:22:58] <jason> I only used the lists module because I needed five different languages, and could 'outsource' the translations of the questions and options to that module.
+[12:24:27] <MichelV> yeah, i'ld like to use it more as well
+[12:25:21] <jason> A button in the question modify page, to take you direct to the list in question, would also be useful.
+[12:26:01] <jason> But maybe even better, if the lists module could provide an update/create hook, so it can be updated from within the question like DD - that would be cool.
+[12:26:30] <MichelV> Hold on...
+[12:26:42] <jason> I'm jumping ahead, I know.
+[12:26:53] <MichelV> Let's first try to get the 'make survey' working
+[12:27:14] <MichelV> What would help, is if you can include some notes on which functions are REMAS
+[12:27:21] <MichelV> And which are necessary
+[12:27:23] <jason> There is no screen for adding questions to groups, and ordering those questions. That would be a good start.
+[12:27:29] <MichelV> yes
+[12:27:43] <MichelV> And for that I need to understand the structure :)
+[12:28:19] <jason> REMAS has a few special question types, which I notice are still in the repo (and will be of no use to anyone else). Other than that, the rest is very generic.
+[12:29:44] <MichelV> like noresponsegaps
+[12:30:36] <jason> Not sure there - the NORESPONSE status of questions is a generic part
+[12:31:00] <MichelV> ok
+[12:31:03] <jason> It just means a question has not been answered at all yet.
+[12:31:08] <MichelV> So need to rewrite the query there
+[12:31:48] <jason> A survey is complete if all responses are of status: VALID or NA
+[12:32:33] <jason> NA means the question does not need to be answered, as it is skipped over by the user through dependancy rules.
+[12:33:15] <jason> NORESPONSE means the survey system has presented that question to the user, but it has not been answered.
+[12:33:39] <jason> INVALID means it has been presented, and the response from the user fails some validarion check.
+[12:35:56] <MichelV> ok
+[12:36:19] <MichelV> So a survey has groups of questions
+[12:36:39] <MichelV> The groups of questions has questions from the questions list
+[12:36:49] <MichelV> The questions can have list objects in them
+[12:37:00] <jason> Each group is, in effect, a page of questions - they are presented together, on one page, with a 'next. and 'previous' button.
+[12:37:08] <MichelV> A user starts a survey, the usersurvey gets registered
+[12:37:35] <MichelV> Somewhere answers are generated and stored in the answers table
+[12:37:49] <jason> Yes
+[12:37:51] <MichelV> Where is the check on completeness?
+[12:38:20] <jason> When a page (a group) is first presented, then a set of dummy answers are generated for all those questions in the group.
+[12:38:29] <jason> So I visit page 1, with 5 Qs,
+[12:38:46] <jason> and 5 answers of status NORESPONSE are added to the responses table.
+[12:38:55] <MichelV> ok
+[12:39:09] <MichelV> and those are updated
+[12:39:11] <jason> At that point, the survey is not complete, because not all responses are either NA or VALID.
+[12:39:25] <jason> If I update those questions,
+[12:39:39] <jason> then some may be invalid, and the survey still remains incomplete.
+[12:39:57] <jason> If I answer then all validly, then the survey will take me to page 2,
+[12:40:16] <jason> where the next set of NORESPONSE responses are immediately generated.
+[12:40:24] <MichelV> ?
+[12:40:27] <jason> So even with page 1 (phone)
+[12:40:37] <MichelV> I thought a user can see the complete survey anyways
+[12:40:54] <MichelV> That would mean the check is over all questions with dummy answers
+[12:42:33] <jason> back
+[12:43:22] <jason> Yes - the 'is survey complete' check looks at all the responses given so far, which may or may not include all possible responses to the survey.
+[12:43:40] <jason> Remember: some groups of questions may be optional, depending upon previous answers,
+[12:43:59] <jason> so you never know exactly how many questions need to be answered in a survey.
+[12:44:44] <jason> You only know it is complete by counting up all the quesions that *have* been answered, and if all are valid (or NA) then the survey is complete, otherwise, there are further quesions to be answered.
+[12:49:15] <MichelV> ok
+[12:49:32] <MichelV> so this optionality needs to be built in the make-up of the survey
+[12:49:41] <MichelV> That is a relationtype
+[12:51:01] <MichelV> where is that defined?
+[12:54:41] <jason> The optionality is defined in the 'rules' table.
+[12:55:06] <MichelV> But what if answer = B
+[12:55:11] <MichelV> Then load group 7?
+[12:55:12] <jason> Each rule in the table defines a condition that will make a group 'non-applicable'
+[12:55:22] <jason> e.g.
+[12:56:14] <jason> A rule may state "if question X123 has response 'B' then group 7 is no longer relevant"
+[12:57:00] <jason> After each page is submitted, all the rules are evaluated, and the groups that are no longer relevant are hidden (by setting their status to 'NA', and they no longer appear to the user).
+[12:57:42] <jason> Each 'rule' is a class, just like the question types, but in the rulesapi directory.
+[12:58:45] <jason> A rule would be defined something like this: groupid=7 'X123;VALUE;B'
+[12:58:46] <MichelV> This is the group_rules table?
+[12:58:50] <jason> Yes
+[12:59:30] <MichelV> surveys_adminapi_applyresponserules
+[12:59:34] <jason> That rule example I gave, would call up the 'value' rule class, and pass the other stuff in as parameters, a bit like Xaraya validation rules.
+[12:59:36] <jason> Yes
+[12:59:57] <MichelV> ok, so we need an interface to make rules
+[13:00:03] <jason> The above would be more like:  groupid=7 'VALUE;X123;B'
+[13:00:28] <jason> There are comments in the code that explain what the rules look like.
+[13:01:47] <jason> A GUI to edit those rules would need to split the string apart into easy-to-understand fields, and then pack them back together. e.g. for rule 'value', the user could be given a drop-down list of quesion numbers, and a text field for the value.
+[13:02:01] <MichelV> yep
+[13:02:23] <jason> Each row in group_rules can contain many rules chained together, with either an AND an OR operator.
+[13:03:00] <MichelV> And the rule apply to a group of questions
+[13:03:25] <MichelV> So survey=groups of questions and rules that apply to the groups of questions
+[13:04:03] <MichelV> When making a question, do you need to know the group in advance?
+[13:04:24] <MichelV> So is the working order survey->groups->questions+rules?
+[13:05:05] <jason> Yes (to rules apply to groups)
+[13:05:13] <jason> No (to need to know in advance)
+[13:05:56] <jason> A question can be floating - not used in any survey, or it could be used in one group, or even repeated in many surveys and across multiple groups within one survey.
+[13:06:50] <MichelV> ok
+[13:07:12] <MichelV> What is the difference between surveys_groups and surveys_question_groups ?
+[13:07:21] <MichelV> The tables, which is used for which?
+[13:08:46] <jason> 'groups' are the actual groups themselves
+[13:08:59] <jason> 'question_groups' just places questions within those groups.
+[13:09:08] <MichelV> ok :)
+[13:11:14] <jason> That looks like a flash of inspiration ;-)
+[13:11:20] <MichelV> And could surveys types be categories ?
+[13:11:26] <MichelV> yes it is
+[13:11:53] <jason> not sure - I don't think I use categories
+[13:12:42] <jason> A survey type, is just a survey definition.
+[13:13:08] <jason> It is the survey before it is taken.
+[13:14:28] <MichelV> Not really following that one
+[13:15:12] <MichelV> I have here surveys, types and user_surveys
+[13:15:36] <MichelV> The last is when  a user has started filling in
+[13:15:48] <MichelV> Then types makes up the survey
+[13:15:52] <MichelV> and surveys?
+[13:20:02] <jason> I guess the survey type, IIRC, was just a means to hook something to a survey, such as a description or, as you suggest, a category
+[13:22:29] <MichelV> So down bottom, the surveys table is the one that 'dictates' what a survey is.
+[13:22:36] <MichelV> Groups only relate to that
+[13:22:40] <MichelV> And questions to that
+[13:22:52] <jason> Yees
+[13:24:04] <jason> Agaist a survey, you can set privileges too - so some surveys are open only to some people.
+[13:24:32] <MichelV> ok
+[13:24:32] <jason> Also you can set how many times a person is allowed to take that survey, and whether they are allowed to have several on the go at once or not.
+[13:25:03] <jason> BTW, the 'user id' in the user_survey is a string for a good reason
+[13:25:23] <jason> it can take the 'uid' or the visitor's session_id if they are not logged on,
+[13:25:46] <jason> so anonymous users can take a survey, and keep coming back to complete it so long as their session remains
+[13:25:58] <jason> I never used that feature, but it is there
+[13:26:03] <MichelV> ok
+[13:26:45] <jason> Priveges against a survey or survey type are what defines whether an anonymous user can take the survey or not.
+[13:27:20] <jason> And it also defines the admins: i.e. the people who have privileges ot look at and alter other people's surveys.
+### Log session terminated at ma 14. nov 18:06:44 2005 ###

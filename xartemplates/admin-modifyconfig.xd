@@ -16,7 +16,7 @@
     </xar:if>
 
     <form method="post" action="&xar-modurl-surveys-admin-updateconfig;" enctype="application/x-www-form-urlencoded">
-        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+
         <fieldset>
         <legend><xar:mlstring>Display Options</xar:mlstring></legend>
 
@@ -24,18 +24,18 @@
                 <label for="SendEventMails" class="xar-form-label" help" title="#xarML('Use bold for example items.')#">
                        <xar:mlstring>Send Event Email to admins?</xar:mlstring>
                 </label>
-                <xar:if condition="$SendEventMailschecked">
+                <xar:if condition="$SendEventMailsChecked">
                     <input type="checkbox" name="SendEventMails" id="SendEventMails" value="1" checked="checked"/>
                 <xar:else/>
                     <input type="checkbox" name="SendEventMails" id="SendEventMails" value="1" />
                 </xar:if>
             </div>
-        
+
             <div class="xar-form-input-wrapper">
                 <label for="itemsperpage" class="xar-form-label" title="#xarML('Number of example items per page')#">
                         <xar:mlstring>Items Per Page:</xar:mlstring>
                 </label>
-                <input type="text" name="itemsperpage" id="itemsperpage" value="#$itemsvalue#" maxlength="3" class="xar-form-textshort" />
+                <input type="text" name="itemsperpage" id="itemsperpage" value="#$itemsperpage#" maxlength="3" class="xar-form-textshort" />
             </div>
         </fieldset>
         <fieldset>
@@ -50,7 +50,7 @@
                     <input type="checkbox" name="shorturls" id="shorturls" value="1" />
                 </xar:if>
             </div>
-            
+
             <div class="xar-form-input-wrapper">
                 <label for = "usealias" class="xar-form-label" title="#xarML('Use an alias instead of the module name')#">
                         <xar:mlstring>
@@ -70,7 +70,7 @@
                             Module Alias Name
                         </xar:mlstring>
                 </label>
-                <input type="text" name="aliasname" id="aliasname" value="#xarModGetVar('example', 'aliasname')#" size="32" maxlength="100" />
+                <input type="text" name="aliasname" id="aliasname" value="#xarModGetVar('surveys', 'aliasname')#" size="32" maxlength="100" />
             </div>
 
         </fieldset>
@@ -93,16 +93,17 @@
             </xar:if>
         </fieldset>
 
-     <fieldset>
-                <div class="xar-form-input-wrapper-after">
-            <input type="submit" value="#xarML('Update Configuration')#" />
-        </div>
-
+        <fieldset>
+            <div class="xar-form-input-wrapper-after">
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <input type="submit" value="#xarML('Update Configuration')#" />
+            </div>
+        </fieldset>
     </form>
 </div>
-<!-- 
+<!--
     // clear the status message
-    // we put this in an if tag to prevent the function from 
+    // we put this in an if tag to prevent the function from
     // showing '1' in the page
 -->
 <xar:if condition="xarSessionSetVar('statusmsg', '')"></xar:if>

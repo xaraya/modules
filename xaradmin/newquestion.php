@@ -20,24 +20,14 @@
  * @return array
  */
 function surveys_admin_newquestion($args)
-{ 
-    /* Admin functions of this type can be called by other modules.  If this
-xar_qid         I AUTO PRIMARY,
-                xar_type_id     I NOTNULL default 0,
-                xar_name        C(100) default NULL,
-                xar_desc        text,
-                xar_mandatory   C(1) NOTNULL default N,
-                xar_default 
-     */
+{
     extract($args);
-
-
     if (!xarVarFetch('type_id',     'int:1:', $type_id,  $type_id,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('name',        'str:1:', $name,     $name,     XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('desc',        'str:1:', $desc,     $desc,     XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('mandatory',   'enum:Y:N', $mandatory,$mandatory,XARVAR_NOT_REQUIRED)) return; 
+    if (!xarVarFetch('mandatory',   'enum:Y:N', $mandatory,$mandatory,XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('default',     'str:1:', $default,  $default,  XARVAR_NOT_REQUIRED)) return;
-    
+
     if (!xarVarFetch('invalid', 'array',  $invalid, $invalid, XARVAR_NOT_REQUIRED)) return;
     /* Initialise the $data variable that will hold the data to be used in
      * the blocklayout template, and get the common menu configuration - it
@@ -54,19 +44,26 @@ xar_qid         I AUTO PRIMARY,
     $data['authid'] = xarSecGenAuthKey();
     $data['invalid'] = $invalid;
 
+    $itemtypes = xarModAPIfunc(
+        'surveys', 'user', 'gettypes',
+        array('type' => 'Q')
+    );
+    $data['itemtypes']= $itemtypes;
     $item = array();
     $item['module'] = 'surveys';
+    $item['itemid'] = 0;
+    $item['itemtype'] = 'Q';// TODO: ???$type_id;
     $hooks = xarModCallHooks('item', 'new', '', $item);
 
     if (empty($hooks)) {
-        $data['hookoutput'] = '';
+        $data['hookoutput'] = array();
     } else {
         /* You can use the output from individual hooks in your template too, e.g. with
          * $hookoutput['categories'], $hookoutput['dynamicdata'], $hookoutput['keywords'] etc.
          */
         $data['hookoutput'] = $hooks;
     }
-    $data['hooks'] = '';
+
     /* Type ID goes here
      */
     if (empty($name)) {
