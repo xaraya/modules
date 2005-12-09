@@ -1,5 +1,4 @@
 <?PHP
-// $Id: pnadmin.php
 // LICENSE
 //
 // This program is free software; you can redistribute it and/or
@@ -38,23 +37,11 @@ function xardplink_admin_main()
     if (!xarSecurityCheck('AdminXardplink')) return;
 
     if (xarModGetVar('adminpanels', 'overview') == 0) {
-        /* If you want to go directly to some default function, instead of
-         * having a separate main function, you can simply call it here, and
-         * use the same template for admin-main.xd as for admin-view.xd
-         * return xarModFunc('example','admin','view');
-         */
-
-        /* Initialise the $data variable that will hold the data to be used in
-         * the blocklayout template, and get the common menu configuration - it
-         * helps if all of the module pages have a standard menu at the top to
-         * support easy navigation
-         */
         $data = array();
+        // Show the main overview page
         return $data;
     } else {
-        /* If the Overview documentation is turned off, then we just return the view page,
-         * or whatever function seems to be the most fitting.
-         */
+        // Goto config
         xarResponseRedirect(xarModURL('xardplink', 'admin', 'modifyconfig'));
     }
     /* success so return true */

@@ -35,8 +35,8 @@
         </xar:if>
       </div>
       <div class="xar-form-input-wrapper">
-        <label for="use_window" class="xar-form-label" title="#xarML('Enable short URLS?')#">
-          <xar:mlstring>Open Application Full Screen</xar:mlstring>
+        <label for="use_window" class="xar-form-label" title="#xarML('Open DotProject in a new window?')#">
+          <xar:mlstring>Open DotProject in a Full new Screen</xar:mlstring>
         </label>
         <xar:if condition="$use_windowchecked">
           <input type="checkbox" name="use_window" id="use_window" value="1" checked="checked" />

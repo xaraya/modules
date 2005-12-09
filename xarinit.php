@@ -14,8 +14,8 @@
 function xardplink_init()
 {
     xarModSetVar('xardplink', 'url',  '/dotproject');
-    xarModSetVar('xardplink', 'use_window', 0);
-    xarModSetVar('xardplink', 'use_postwrap', 0);
+    xarModSetVar('xardplink', 'use_window', 1);
+    xarModSetVar('xardplink', 'use_wrap', 0);
 
     /**
      * Register the module components that are privileges objects
@@ -23,30 +23,46 @@ function xardplink_init()
      * xarregisterMask(Name,Realm,Module,Component,Instance,Level,Description)
      */
 
-    xarRegisterMask('ViewXardplink', 'All', 'example', 'Item', 'All:All:All', 'ACCESS_OVERVIEW');
-    xarRegisterMask('ReadXardplink', 'All', 'example', 'Item', 'All:All:All', 'ACCESS_READ');
-    xarRegisterMask('EditXardplink', 'All', 'example', 'Item', 'All:All:All', 'ACCESS_EDIT');
-    xarRegisterMask('AddXardplink', 'All', 'example', 'Item', 'All:All:All', 'ACCESS_ADD');
-    xarRegisterMask('DeleteXardplink', 'All', 'example', 'Item', 'All:All:All', 'ACCESS_DELETE');
-    xarRegisterMask('AdminXardplink', 'All', 'example', 'Item', 'All:All:All', 'ACCESS_ADMIN');
+    xarRegisterMask('ViewXardplink', 'All', 'xardplink', 'Item', 'All:All:All', 'ACCESS_OVERVIEW');
+    xarRegisterMask('ReadXardplink', 'All', 'xardplink', 'Item', 'All:All:All', 'ACCESS_READ');
+    xarRegisterMask('EditXardplink', 'All', 'xardplink', 'Item', 'All:All:All', 'ACCESS_EDIT');
+    xarRegisterMask('AddXardplink', 'All', 'xardplink', 'Item', 'All:All:All', 'ACCESS_ADD');
+    xarRegisterMask('DeleteXardplink', 'All', 'xardplink', 'Item', 'All:All:All', 'ACCESS_DELETE');
+    xarRegisterMask('AdminXardplink', 'All', 'xardplink', 'Item', 'All:All:All', 'ACCESS_ADMIN');
 
     return true;
 }
-
+/**
+ * Upgrade from previous version
+ */
 function xardplink_upgrade($oldversion)
 {
     switch ($oldversion) {
         case '0.5.0':
         case '0.7.0':
+            xarModDelAllVars('xardplink');
+            xarModSetVar('xardplink', 'use_wrap', 0);
+            xarModSetVar('xardplink', 'use_window', 1);
+            xarRemoveMasks('xardplink');
+            xarRegisterMask('ViewXardplink', 'All', 'xardplink', 'Item', 'All:All:All', 'ACCESS_OVERVIEW');
+            xarRegisterMask('ReadXardplink', 'All', 'xardplink', 'Item', 'All:All:All', 'ACCESS_READ');
+            xarRegisterMask('EditXardplink', 'All', 'xardplink', 'Item', 'All:All:All', 'ACCESS_EDIT');
+            xarRegisterMask('AddXardplink', 'All', 'xardplink', 'Item', 'All:All:All', 'ACCESS_ADD');
+            xarRegisterMask('DeleteXardplink', 'All', 'xardplink', 'Item', 'All:All:All', 'ACCESS_DELETE');
+            xarRegisterMask('AdminXardplink', 'All', 'xardplink', 'Item', 'All:All:All', 'ACCESS_ADMIN');
+            return xardplink_upgrade('0.8.0');
+        case '0.8.0':
             break;
-
     }
     return true;
 }
-
+/**
+ * Delete this module
+ */
 function xardplink_delete()
 {
     xarModDelAllVars('xardplink');
+    xarRemoveMasks('xardplink');
     return true;
 }
 ?>

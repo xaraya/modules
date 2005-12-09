@@ -20,13 +20,13 @@
  */
 $modversion['name']         = 'xardplink';
 $modversion['id']           = '591';
-$modversion['version']      = '0.7.0';
+$modversion['version']      = '0.8.0';
 $modversion['displayname']  = xarML('XarDPLink');
 $modversion['description']  = 'Xaraya to dotProject login manager';
 $modversion['credits']      = 'xardocs/credits.txt';
 $modversion['help']         = 'xardocs/readme.txt';
 $modversion['changelog']    = 'xardocs/changelog.txt';
-$modversion['license']      = 'xardocs/license.txt';
+$modversion['license']      = 'GPL';
 $modversion['official']     = 0;
 $modversion['author']       = 'MichelV';
 $modversion['contact']      = 'michelv@xaraya.com';
