@@ -76,7 +76,7 @@
                         #$enddatelabel#
                         </span>
                     </label>
-                    <xar:data-input name="enddate" type="8" value="$enddate" />
+                    <xar:data-input name="enddate" type="8" validation="date" value="$enddate" />
                 </div>
                 <div class="xar-form-input-wrapper">
                     <label for="closedate" class="required xar-form-label">
@@ -84,9 +84,9 @@
                         #$closedatelabel#
                         </span>
                     </label>
-                    <xar:data-input name="closedate" type="8" value="$closedate" />
+                    <xar:data-input name="closedate" type="8" validation="date" value="$closedate" />
                 </div>
-                
+
            </fieldset>
            <fieldset class="formelements xar-norm">
                 <legend>
@@ -303,9 +303,9 @@
                     <xar:data-input name="hideplanning" type="14" value="$hideplanning" />
                 </div>
            </fieldset>
-          
+
             <xar:comment>
-            
+
             <xar:if condition="!isset($contact)">
                 <div style="clear: both; padding-top: 10px;">
                 <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
@@ -314,15 +314,15 @@
                 </span>
                 <span style="float: right; width: 78%; text-align: left;">
                  <xar:data-input name="contact" type="3" value="$contact" />
-            
+
                 <xar:if condition="!empty($invalid['contact'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid contact</xar:mlstring></span>
                     </xar:if>
                 </span>
                 </div>
-            
+
             <xar:else />
-            
+
                 <div style="clear: both; padding-top: 10px;">
                 <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                 <span style="float: left; width: 20%; text-align: right;">
@@ -330,15 +330,15 @@
                 </span>
                 <span style="float: right; width: 78%; text-align: left;">
                  <xar:data-input name="contact" type="3" value="$item['contact']" />
-            
+
                     <xar:if condition="!empty($invalid['contact'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid contact</xar:mlstring></span>
                     </xar:if>
                 </span>
                 </div>
-            
+
             </xar:if>
-            
+
             </xar:comment>
         <xar:if condition="!empty($hookoutput)">
          <fieldset>
@@ -352,7 +352,7 @@
           </fieldset>
         </xar:if>
             <fieldset>
-                <div class="xar-form-input-wrapper-after">        
+                <div class="xar-form-input-wrapper-after">
                     <input type="hidden" name="courseid" id="courseid" value="#$coursedata['courseid']#" />
                     <input type="hidden" name="authid" id="authid" value="#$authid#" />
                     <input type="submit" value="#$addplanningbutton#" />

@@ -1,7 +1,7 @@
 <?php
 /**
  * Standard function to create a new module item
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -9,12 +9,15 @@
  *
  * @subpackage Courses Module
  * @link http://xaraya.com/index.php/release/179.html
- * @author Courses module development team 
+ * @author Courses module development team
  */
 /**
- * add new dynamic data item for courses
+ * Add new dynamic data item for the courses configuration
+ *
  * This is a standard function that is called whenever an administrator
  * wishes to create a new module item
+ *
+ * @return array
  */
 function courses_admin_new($args)
 {
@@ -35,7 +38,7 @@ function courses_admin_new($args)
     // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing
     if (!xarSecurityCheck('AdminCourses')) return;
-    
+
     // Generate a one-time authorisation code for this operation
     $data['authid'] = xarSecGenAuthKey();
     $data['object'] = xarModAPIFunc('dynamicdata','user','getobject',
@@ -50,7 +53,7 @@ function courses_admin_new($args)
 
     $hooks = xarModCallHooks('item','new','',$item);
     if (empty($hooks)) {
-        $data['hooks'] = '';
+        $data['hooks'] = array();
     }else {
         $data['hooks'] = $hooks;
     }

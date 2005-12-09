@@ -1,7 +1,7 @@
 <?php
-/** 
+/**
  * Modify a planned course
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -9,14 +9,16 @@
  *
  * @subpackage Courses Module
  * @link http://xaraya.com/index.php/release/179.html
+ * @author Courses module development team
  */
 /**
- * modify a planned course
+ * Modify a planned course
  * This is a standard function that is called whenever an administrator
  * wishes to modify a current module item
- * 
- * @author Courses module development team  
+ *
+ * @author Courses module development team
  * @param  $ 'planningid' the id of the item to be modified
+ * @return array with data for this planned course
  */
 function courses_admin_modifyplanned($args)
 {
@@ -25,7 +27,7 @@ function courses_admin_modifyplanned($args)
     if (!xarVarFetch('planningid', 'id', $planningid, NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('objectid',   'id', $objectid, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('invalid',    'array::', $invalid, array(), XARVAR_NOT_REQUIRED)) return;
-    
+
     // At this stage we check to see if we have been passed $objectid, the
     // generic item identifier.
     if (!empty($objectid)) {
@@ -48,7 +50,7 @@ function courses_admin_modifyplanned($args)
                                 'get',
                                  array('courseid' => $planneddata['courseid']));
     if (!isset($coursedata) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-    
+
     // Get menu variables
     $planneddata['module'] = 'courses';
     $hooks = array();

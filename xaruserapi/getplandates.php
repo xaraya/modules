@@ -1,7 +1,7 @@
 <?php
 /**
  * Get all dates that a course is planned
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -9,12 +9,13 @@
  *
  * @subpackage Courses Module
  * @link http://xaraya.com/index.php/release/179.html
- * @author Courses module development team 
+ * @author Courses module development team
  */
 /**
  * get all dates that course is planned
- * 
- * @author the Courses module development team 
+ *
+ * @author the Courses module development team
+ * @param id courseid The course to get all the dates for
  * @param numitems $ the number of items to retrieve (default -1 = all)
  * @param startnum $ start with this item number (default 1)
  * @returns array
@@ -27,23 +28,23 @@ function courses_userapi_getplandates($args)
     if (!xarVarFetch('courseid', 'id',     $courseid)) return;
     if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('numitems', 'int:1:', $numitems, -1, XARVAR_NOT_REQUIRED)) return;
-    
+
     $items = array();
     // Security check
     if (!xarSecurityCheck('ReadCourses')) return;
-    
+
     if (xarSecurityCheck('EditCourses', 0)) {
     $where = "0, 1";
     } else {
     $where = "0";
     }
-    
+
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $planningtable = $xartable['courses_planning'];
     // TODO: implement security check when this item is hidden from display
     // TODO: how to select by cat ids (automatically) when needed ???
-    // Get items 
+    // Get items
         $query = "SELECT xar_planningid,
                    xar_courseid,
                    xar_credits,

@@ -27,7 +27,7 @@ function courses_userapi_getitemtypes($args)
                           'url'   => xarModURL('courses','user','view'));
 
     $itemtypes[2] = array('label' => xarVarPrepForDisplay(xarML('Planned Courses')),
-                          'title' => xarVarPrepForDisplay(xarML('Planned Courses')),
+                          'title' => xarVarPrepForDisplay(xarML('Planned Course')),
                           'url'   => xarModURL('courses','user','displayplanned'));
 
 

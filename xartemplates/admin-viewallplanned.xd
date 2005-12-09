@@ -63,8 +63,10 @@
         </xar:foreach>
     </table>
     <br />
-
     <!-- add the pager here -->
     #$pager#
-
 </div>
+<!-- Empty statusmsg -->
+<xar:if condition="xarSessionGetVar('statusmsg') ne ''">
+   #xarSessionSetVar('statusmsg','')#
+</xar:if>

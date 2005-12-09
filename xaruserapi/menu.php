@@ -1,7 +1,7 @@
 <?php
 /**
  * Generate the common menu configuration
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -9,10 +9,11 @@
  *
  * @subpackage Courses Module
  * @link http://xaraya.com/index.php/release/179.html
- * @author Courses module development team 
+ * @author Courses module development team
  */
 /**
- * generate the common menu configuration
+ * generate the common menu configuration for users
+ * @todo keep this? Currently not in use
  */
 function courses_userapi_menu()
 {
@@ -26,5 +27,4 @@ function courses_userapi_menu()
     // No real use for now
     return $menu;
 }
-
 ?>

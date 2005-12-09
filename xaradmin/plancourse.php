@@ -1,7 +1,7 @@
 <?php
 /**
  * Plan a course
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -9,47 +9,47 @@
  *
  * @subpackage Courses Module
  * @link http://xaraya.com/index.php/release/179.html
-
+ * @author Courses module development team
  */
 /**
  * Add new planning for a course
- * This is a standard function that is called whenever an administrator
- * wishes to create a new planning for a specified course
  *
- * @author Courses module development team  
+ * You will need to add a planned course to the list, before it becomes available for students
  *
- * @param ['courseid'] Id of the course that will be planned
+ * @author Courses module development team
+ * @param id $courseid Id of the course that will be planned
+ * @return array
  */
 function courses_admin_plancourse($args)
 {
     extract($args);
 
     // Get parameters from whatever input we need.
-    if (!xarVarFetch('courseid', 'id', $courseid)) return;
-    if (!xarVarFetch('name', 'str:1:', $name, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('number', 'str:1:', $number, '',XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('coursetype', 'str:1:', $coursetype, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('level', 'int:1:', $level, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('year', 'int:1:', $year, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('credits', 'int::', $credits, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('creditsmin', 'int::', $creditsmin, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('creditsmax', 'int::', $creditsmax, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('shortdesc', 'str:1:', $shortdesc, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('prerequisites', 'str:1:', $prerequisites, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('aim', 'str:1:', $aim, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('method', 'str:1:', $method, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('language', 'str:1:', $language, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('location', 'str:1:', $location, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('costs', 'str:1:', $costs, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('material', 'str:1:', $material, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('startdate', 'str::', $startdate, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('enddate', 'str::', $enddate, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('hideplanning', 'int:1:', $hideplanning, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('info', 'str:1:', $info, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('invalid', 'array::', $invalid, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('courseid',        'id', $courseid)) return;
+    if (!xarVarFetch('name',            'str:1:', $name, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('number',          'str:1:', $number, '',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('coursetype',      'str:1:', $coursetype, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('level',           'int:1:', $level, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('year',            'int:1:', $year, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('credits',         'int::', $credits, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('creditsmin',      'int::', $creditsmin, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('creditsmax',      'int::', $creditsmax, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('shortdesc',       'str:1:', $shortdesc, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('prerequisites',   'str:1:', $prerequisites, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('aim',             'str:1:', $aim, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('method',          'str:1:', $method, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('language',        'str:1:', $language, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('location',        'str:1:', $location, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('costs',           'str:1:', $costs, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('material',        'str:1:', $material, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('startdate',       'str::', $startdate, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('enddate',         'str::', $enddate, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('hideplanning',    'int:1:', $hideplanning, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('info',            'str:1:', $info, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('invalid',         'array::', $invalid, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('minparticipants', 'int::', $minparticipants, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('maxparticipants', 'int::', $maxparticipants, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('closedate', 'str::', $closedate, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('closedate',       'str::', $closedate, '', XARVAR_NOT_REQUIRED)) return;
 
     // Initialise the $data variable
     $data = xarModAPIFunc('courses', 'admin', 'menu');
@@ -59,7 +59,7 @@ function courses_admin_plancourse($args)
     $data['authid'] = xarSecGenAuthKey();
     $data['invalid'] = $invalid;
 
-    //Get info on the course already in main table    
+    //Get info on the course already in main table
     $coursedata = xarModAPIFunc('courses',
                           'user',
                           'get',
@@ -107,9 +107,9 @@ function courses_admin_plancourse($args)
     $data['year'] = xarModAPIFunc('courses', 'user', 'gets',
                                       array('itemtype' => 5));
 
-
     $item = array();
     $item['module'] = 'courses';
+    $item['itemtype'] = 1;
     $hooks = xarModCallHooks('item', 'new', '', $item);
 
     if (empty($hooks)) {
@@ -120,8 +120,7 @@ function courses_admin_plancourse($args)
          */
         $data['hookoutput'] = $hooks;
     }
-    $data['hooks'] = '';
-    
+
     $data['item'] = $item;
     // For E_ALL purposes, we need to check to make sure the vars are set.
     // If they are not set, then we need to set them empty to surpress errors
@@ -153,7 +152,7 @@ function courses_admin_plancourse($args)
     } else {
         $data['creditsmax'] = $creditsmax;
     }
-    
+
      if (empty($shortdesc)) {
         $data['shortdesc'] = '';
     } else {
@@ -205,7 +204,7 @@ function courses_admin_plancourse($args)
     } else {
         $data['location'] = $location;
     }
-    
+
     if (empty($hideplanning)) {
         $data['hideplanning'] = '';
     } else {
@@ -221,13 +220,13 @@ function courses_admin_plancourse($args)
     } else {
         $data['minparticipants'] = $minparticipants;
     }
-    
+
     if (empty($closedate)) {
         $data['closedate'] = '';
     } else {
         $data['closedate'] = $closedate;
     }
-    
+
     // Return the template variables defined in this function
     return $data;
 }

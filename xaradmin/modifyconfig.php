@@ -1,7 +1,7 @@
 <?php
-/** 
+/**
  * Standard function to modify configuration parameters
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -10,12 +10,12 @@
  * @subpackage Courses Module
  * @link http://xaraya.com/index.php/release/179.html
  */
-
 /**
  * This is a standard function to modify the configuration parameters of the
  * module courses
- * @author Courses module development team  
+ * @author Courses module development team
  * @author MichelV michelv@xarayahosting.nl
+ * @return array
  */
 function courses_admin_modifyconfig()
 {
@@ -47,7 +47,7 @@ function courses_admin_modifyconfig()
         $data['hooks'] = array('categories' => xarML('You can assign base categories by enabling the categories hooks for this module'));
     } else {
         $data['hooks'] = $hooks;
-    
+
         /* You can use the output from individual hooks in your template too, e.g. with
          * $hooks['categories'], $hooks['dynamicdata'], $hooks['keywords'] etc.
          */

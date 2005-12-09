@@ -1,6 +1,6 @@
 <?php
-/** 
- * 
+/**
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -8,11 +8,11 @@
  *
  * @subpackage Courses Module
  * @link http://xaraya.com/index.php/release/179.html
- * @author Courses module development team 
+ * @author Courses module development team
  */
 /**
  * delete a course
- * 
+ *
  * @author Michel V
  * @param  $ 'courseid' the id of the course to be deleted
  * @param  $ 'confirm' confirm that this item can be deleted
@@ -27,9 +27,9 @@ function courses_admin_deletecourse($args)
     if (!empty($objectid)) {
         $courseid = $objectid;
     }
-    
+
     xarSessionSetVar('statusmsg','');
-    
+
     // Get the course.
     $item = xarModAPIFunc('courses',
         'user',
@@ -62,23 +62,21 @@ function courses_admin_deletecourse($args)
     }
     // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) return;
-    
+
     // TODO: Check for existing links with participants and planned courses. Only allow delete when none are present.
     // Get the dates this course is planned
-    
+
     $countplanned = count(xarModAPIFunc('courses',
             'user',
             'getplandates',
             array('courseid' => $courseid)));
-            
-    if (($countplanned) > 0) {
 
+    if (($countplanned) > 0) {
         xarSessionSetVar('statusmsg', xarML('This course has been planned for #(1) times', $countplanned));
         xarResponseRedirect(xarModURL('courses', 'admin', 'deletecourse', array('courseid'=>$courseid)));//, 'statusMSG'=> $statusMSG
         return ; // throw back
     }
     // Get on...
-    
     // Call API to do the delete
     if (!xarModAPIFunc('courses',
             'admin',
@@ -88,6 +86,7 @@ function courses_admin_deletecourse($args)
     }
     // This function generated no output, and so now it is complete we redirect
     // the user to an appropriate page for them to carry on their work
+    xarSessionSetVar('statusmsg',xarML('Course Deleted'));
     xarResponseRedirect(xarModURL('courses', 'admin', 'viewcourses'));
     // Return
     return true;

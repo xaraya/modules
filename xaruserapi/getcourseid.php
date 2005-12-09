@@ -1,7 +1,7 @@
 <?php
 /**
  * Get the id of a course when the number is known
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -9,17 +9,17 @@
  *
  * @subpackage Courses Module
  * @link http://xaraya.com/index.php/release/179.html
- * @author Courses module development team 
+ * @author Courses module development team
  */
- 
 /**
- * get a specific courseID for a given coursenumber
- * 
- * @author the Courses module development team 
+ * Get a specific courseID for a given coursenumber
+ *
+ * @author the Courses module development team
  * @param  $args ['number'] The code of the course to get
  * @returns courseid
- * @return item array, or false on failure
+ * @return item array with courseid and data on the hidden status, or false on failure
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
+ * @todo MichelV: <1>Extend to search for planningid ?
  */
 function courses_userapi_getcourseid($args)
 {
@@ -37,7 +37,7 @@ function courses_userapi_getcourseid($args)
     } else {
     $where = "0";
     }
-    
+
     // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -54,17 +54,17 @@ function courses_userapi_getcourseid($args)
         $msg = xarML('This course does not exists');
 //        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'ID_NOT_EXIST',
 //            new SystemException(__FILE__ . '(' . __LINE__ . '): ' . $msg));
-        return;
+        return false;
     }
     // Extract fields
     list($courseid, $hidecourse) = $result->fields;
     $result->Close();
 
-    // Security checks 
+    // Security checks
     // For this function, the user must *at least* have READ access to this item
     if (!xarSecurityCheck('ReadCourses', 1, 'Course', "$courseid:All:All")) {
         return;
-        }
+    }
     $item = array('courseid'   => $courseid,
                   'hidecourse' => $hidecourse);
     // Return the item array

@@ -33,8 +33,8 @@ function courses_userapi_getitemlinks($args)
         if (!isset($item)) return;
         $itemlinks[$itemid] = array('url' => xarModURL('courses', 'user', 'display',
                 array('courseid' => $itemid)),
-            'title' => xarML('Display Course'),
-            'label' => xarVarPrepForDisplay($item['name']));
+                      'title' => xarML('Display Course'),
+                      'label' => xarVarPrepForDisplay($item['name']));
     }
     return $itemlinks;
 }

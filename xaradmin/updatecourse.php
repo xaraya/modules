@@ -1,7 +1,7 @@
 <?php
 /**
  * Standard function to update a current course
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -9,16 +9,17 @@
  *
  * @subpackage Courses Module
  * @link http://xaraya.com/index.php/release/179.html
- * @author Courses module development team 
+ * @author Courses module development team
  */
 /**
  * This is a standard function that is called with the results of the
  * form supplied by xarModFunc('courses','admin','modifycourse') to update a current item
- * 
+ *
  * @author MichelV <michelv@xarayahosting.nl>
- * @param  $ 'courseid' the id of the course to be updated
- * @param  $ 'name' the name of the course to be updated
- * @param  $ 'number' the number of the course to be updated
+ * @param  id $courseid the id of the course to be updated
+ * @param  str $name the name of the course to be updated
+ * @param  str $number the number of the course to be updated
+ * @return true
  */
 function courses_admin_updatecourse($args)
 {
@@ -35,7 +36,7 @@ function courses_admin_updatecourse($args)
     if (!xarVarFetch('intendedcredits', 'str:1:30', $intendedcredits, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('freq',            'str:1:', $freq, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('contact',         'str:1:', $contact, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('contactuid',      'int:1:', $contactuid,'', XARVAR_NOT_REQUIRED)) return;    
+    if (!xarVarFetch('contactuid',      'int:1:', $contactuid,'', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('hidecourse',      'int:1:', $hidecourse, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('last_modified',   'str:1:', $last_modified, '', XARVAR_NOT_REQUIRED)) return;
     // At this stage we check to see if we have been passed $objectid, the
@@ -48,7 +49,7 @@ function courses_admin_updatecourse($args)
     if (!xarSecConfirmAuthKey()) return;
     // We don't make an invalid here... so why need it?
     $invalid = array();
- 
+
     if (empty($name)) {
         $data['name'] = '';
     } else {
@@ -107,6 +108,7 @@ function courses_admin_updatecourse($args)
 
     // check if we have any errors
     if (count($invalid) > 0) {
+        xarSessionSetVar('statusmsg', xarML('There is an error in the data you have provided, please check!'));
        // call the admin_modifycourse function and return the template vars
        // (you need to copy admin-new.xd to admin-create.xd here)
        return xarModFunc('courses', 'admin', 'modifycourse',
@@ -143,7 +145,7 @@ function courses_admin_updatecourse($args)
                              'last_modified' => $last_modified,
                              'intendedcredits' => $intendedcredits))) {
         return false; // throw back
-    } 
+    }
     // TODO: how to remove previous statusmsg?
     xarSessionSetVar('statusmsg', xarML('Course Was Successfully Updated!'));
 
