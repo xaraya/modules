@@ -7,7 +7,7 @@
   <h2><xar:mlstring>Modify Config</xar:mlstring></h2>
 
   <xar:if condition="xarSessionGetVar('statusmsg') != ''">
-    <p>#xarSessionGetVar('statusmsg')#</p>
+    <span class:xar-notice><strong>#xarSessionGetVar('statusmsg')#</strong></span>
   </xar:if>
 
   <form method="post" id="post" action="&xar-modurl-xardplink-admin-updateconfig;" enctype="application/x-www-form-urlencoded">
@@ -25,8 +25,8 @@
         <input type="text" name="url" id="url" value="#$url#" maxlength="50" class="xar-form-textlong" />
       </div>
       <div class="xar-form-input-wrapper">
-        <label for="use_wrap" class="xar-form-label" title="#xarML('Use the postWrap option')#">
-          <xar:mlstring>Use PostWrap</xar:mlstring>
+        <label for="use_wrap" class="xar-form-label" title="#xarML('Use the Window Module')#">
+          <xar:mlstring>Use the Window Module</xar:mlstring>
         </label>
         <xar:if condition="$use_wrapchecked">
           <input type="checkbox" name="use_wrap" id="use_wrap" value="1" checked="checked"/>
@@ -45,24 +45,10 @@
         </xar:if>
       </div>
     </fieldset>
-
-    <fieldset>
-      <legend><xar:mlstring>Enabled Hooks</xar:mlstring></legend>
-      <xar:if condition="!empty($hooks)">
-        <xar:foreach in="$hooks" key="$hookmodule">
-          #$hooks[$hookmodule]#
-        </xar:foreach>
-      </xar:if>
-    </fieldset>
+    <p><xar:mlstring>Note: you can not use both the window module and the Full Screen option at the same time</xar:mlstring></p>
 
     <div class="xar-form-input-wrapper-after">
-        <!--
-        Add an authorisation ID - this adds a hidden field in the form that
-        contains an authorisation ID. The authorisation ID is very important in
-        preventing certain attacks on the website
-        -->
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
-
         <input type="submit" value="#xarML('Update Configuration')#" />
     </div>
 

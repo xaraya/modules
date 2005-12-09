@@ -1,6 +1,6 @@
 <?PHP
 /**
- * Standard Utility function pass individual menu items to the main menu
+ * Xaraya wrapper module for DotProject
  *
  * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
@@ -12,8 +12,10 @@
  * @author xarDPLink Module Development Team
  */
 /**
- * Main administration menu
- * was admin_menu
+ * Modify the configuration of xarDPLink
+ *
+ * this was admin_menu in dplink
+ * @author MichelV
  */
 function xardplink_admin_modifyconfig() {
 
@@ -21,23 +23,10 @@ function xardplink_admin_modifyconfig() {
     $data = array();
     /* Generate a one-time authorisation code for this operation */
     $data['authid'] = xarSecGenAuthKey();
-    /* Specify some values for display */
-    $data['use_wrapchecked'] = xarModGetVar('xardplink', 'use_wrap') ? true : false;
+    /* Get the values and check box options */
+    $data['use_wrapchecked']   = xarModGetVar('xardplink', 'use_wrap') ? true : false;
     $data['use_windowchecked'] = xarModGetVar('xardplink', 'use_window') ? true : false;
-    $data['url'] = xarModGetVar('xardplink', 'url');
-
-    $hooks = xarModCallHooks('module', 'modifyconfig', 'xardplink',
-                       array('module' => 'xardplink'));
-    if (empty($hooks)) {
-        $data['hooks'] = array('categories' => xarML('You can assign base categories by enabling the categories hooks for example module'));
-    } else {
-        $data['hooks'] = $hooks;
-
-         /* You can use the output from individual hooks in your template too, e.g. with
-         * $hooks['categories'], $hooks['dynamicdata'], $hooks['keywords'] etc.
-         */
-        $data['hookoutput'] = $hooks;
-    }
+    $data['url']               = xarModGetVar('xardplink', 'url');
 
     return $data;
 }

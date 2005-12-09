@@ -1,13 +1,13 @@
 <?php
 /**
- * Xaraya/SHIM login manager module.  Migrates Postnuke logins
+ * Xaraya/SHIM login manager module.  Migrates Xaraya logins
  * and permissions to the SHIM (SISSI release and later).
  * Based on DPLink by Adam Donnison <adam@saki.com.au>;
  * which is based on pnDProject.
- * http://www.dotproject.com/
+ * @link http://www.dotproject.com/
  */
 /**
- * Standard Utility function pass individual menu items to the main menu
+ * Xaraya wrapper module for DotProject
  *
  * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
@@ -20,7 +20,7 @@
  */
 $modversion['name']         = 'xardplink';
 $modversion['id']           = '591';
-$modversion['version']      = '0.5.0';
+$modversion['version']      = '0.7.0';
 $modversion['displayname']  = xarML('XarDPLink');
 $modversion['description']  = 'Xaraya to dotProject login manager';
 $modversion['credits']      = 'xardocs/credits.txt';

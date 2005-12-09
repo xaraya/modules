@@ -1,6 +1,6 @@
 <?php
 /**
- * Standard Utility function pass individual menu items to the main menu
+ * Xaraya wrapper module for DotProject: initialise
  *
  * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
@@ -37,6 +37,7 @@ function xardplink_upgrade($oldversion)
 {
     switch ($oldversion) {
         case '0.5.0':
+        case '0.7.0':
             break;
 
     }

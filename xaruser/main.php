@@ -47,9 +47,10 @@ function xardplink_user_main()
     } else {
         $url .= "/index.php?login=pn%26userdata=$bparm%26check=$check";
         if ($wrap) {
-            header("Location: modules.php?op=modload&name=PostWrap&file=index&page=$url");
+            header("Location: index.php?module=window&page=$url");
         } else {
-            header("Location: modules.php?op=modload&name=xardplink&file=index&url=$url");
+            //header("Location: modules.php?op=modload&name=xardplink&file=index&url=$url");
+            header("Location: index.php?xardplink&file=index&url=$url");
         }
     }
     exit;
