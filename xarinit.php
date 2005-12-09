@@ -637,23 +637,16 @@ function courses_delete()
     $query = xarDBDropTable($xartable['courses']);
     if (empty($query)) return; // throw back
 
-    // Drop the table and send exception if returns false.
-    $result = &$dbconn->Execute($query);
-    if (!$result) return;
+    /* Get a data dictionary object with item create and delete methods */
+    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+    // Initialise table array
+    $basename = 'courses';
 
-     $query = xarDBDropTable($xartable['courses_students']);
-    if (empty($query)) return; // throw back
+    foreach(array('students', 'planning', 'teachers') as $table) {
 
-    // Drop the table and send exception if returns false.
-    $result = &$dbconn->Execute($query);
-    if (!$result) return;
-
-    $query = xarDBDropTable($xartable['courses_planning']);
-    if (empty($query)) return; // throw back
-
-    // Drop the table and send exception if returns false.
-    $result = &$dbconn->Execute($query);
-    if (!$result) return;
+    /* Drop the tables */
+     $result = $datadict->dropTable($xartable[$basename . '_' . $table]);
+    }
 
     // Delete any module variables
     xarModDelAllVars('courses');
@@ -670,6 +663,13 @@ function courses_delete()
             'unregister_block_type',
             array('modName' => 'courses',
                 'blockType' => 'others'))) return;
+
+    // UnRegister blocks
+    if (!xarModAPIFunc('blocks',
+            'admin',
+            'unregister_block_type',
+            array('modName' => 'courses',
+                'blockType' => 'upcoming'))) return;
 
     // Remove module hooks
     if (!xarModUnregisterHook('item', 'usermenu', 'GUI',
@@ -697,28 +697,13 @@ function courses_delete()
      // Hook for Categories
     xarModAPIFunc('modules','admin','disablehooks',array('hookModName' => 'categories','callerModName' => 'courses'));
     // Hook for Dynamic Data
-    xarModAPIFunc(
-        'modules'
-        ,'admin'
-        ,'disablehooks'
-        ,array(
-            'hookModName'       => 'dynamicdata'
-            ,'callerModName'    => 'courses'));
+    xarModAPIFunc('modules','admin','disablehooks',array('hookModName' => 'dynamicdata','callerModName' => 'courses'));
     // Hook for Mail
-    xarModAPIFunc(
-        'modules'
-        ,'admin'
-        ,'disablehooks'
-        ,array(
-            'hookModName'       => 'mail'
-            ,'callerModName'    => 'courses'));
+    xarModAPIFunc('modules','admin','disablehooks',array('hookModName' => 'mail',     'callerModName'   => 'courses'));
     /*
      * REMOVE all comments (which are stored via the comments api)
      */
-    xarModAPIFunc('comments',
-                  'admin',
-                  'delete_module_nodes',
-                   array('modid' => xarModGetIDFromName('courses')));
+    xarModAPIFunc('comments','admin','delete_module_nodes',array('modid' => xarModGetIDFromName('courses')));
 
    // remove the table from dynamic data
     $objectinfo = xarModAPIFunc(

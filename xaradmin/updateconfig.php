@@ -1,33 +1,34 @@
 <?php
 /**
- * 
  * Update configuration parameters of the module with information passed back by the modification form
- * 
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 by the Xaraya Development Team.
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Courses Module
  * @link http://xaraya.com/index.php/release/179.html
- * @author Courses module development team 
+ * @author Courses module development team
  */
 /**
  * This is a standard function to update the configuration parameters of the
  * module given the information passed back by the modification form
+ *
+ * @return true
  */
 function courses_admin_updateconfig()
 {
     if (!xarVarFetch('HideEmptyFields', 'checkbox', $HideEmptyFields, false, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('itemsperpage', 'str:1:', $itemsperpage, '10', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('hidecoursemsg', 'str::', $hidecoursemsg, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('AlwaysNotify', 'str::', $AlwaysNotify, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('hideplanningmsg', 'str::', $hideplanningmsg, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('ShowShortDesc', 'checkbox', $ShowShortDesc, false, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('aliasname',    'str:1:',   $aliasname, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('modulealias',  'checkbox', $modulealias,false,XARVAR_NOT_REQUIRED)) return;
-    
+    if (!xarVarFetch('itemsperpage',    'int:1:',   $itemsperpage, 10, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('shorturls',       'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('hidecoursemsg',   'str::',    $hidecoursemsg, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('AlwaysNotify',    'str::',    $AlwaysNotify, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('hideplanningmsg', 'str::',    $hideplanningmsg, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('ShowShortDesc',   'checkbox', $ShowShortDesc, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('aliasname',       'str:1:',   $aliasname, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('modulealias',     'checkbox', $modulealias,false,XARVAR_NOT_REQUIRED)) return;
+
     // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) return;
     // Update module variables.

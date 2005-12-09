@@ -2,20 +2,19 @@
 /**
  * View teachers for one planned course
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Courses Module
  * @link http://xaraya.com/index.php/release/179.html
- *
+ * @author Courses module development team
  */
- 
 /**
  * View teachers for one planned course
  *
- * @author Courses module development team 
+ * @author Courses module development team
  * @author MichelV <michelv@xarayahosting.nl>
  * @param ['planningid'] ID of the planned course
  * @param ['startnum']
@@ -36,7 +35,7 @@ function courses_admin_teachers()
         xarModAPIFunc('courses', 'user', 'countitems'), //TODO make count function
         xarModURL('courses', 'admin', 'teachers', array('startnum' => '%%')),
         xarModGetVar('courses', 'itemsperpage'));
-    
+
     // Security check
     if (!xarSecurityCheck('EditCourses', 0, 'Course', 'All:$planningid:All')) return;
 
@@ -69,7 +68,7 @@ function courses_admin_teachers()
  //       $items[$i]['statusname'] = xarModAPIFunc('courses', 'user', 'getstatus',
  //                                    array('status' => $item['status']));
         $items[$i]['selected']='';
-        
+
         if (xarSecurityCheck('EditCourses', 0, 'Course', "All:$planningid:All")) {
             $items[$i]['deleteurl'] = xarModURL('courses',
                 'admin',
@@ -81,7 +80,7 @@ function courses_admin_teachers()
         }
         $items[$i]['deletetitle'] = xarML('Remove teacher');
     }
-    
+
     // Add the array of items to the template variables
     $data['authid'] = xarSecGenAuthKey();
     $data['items'] = $items;

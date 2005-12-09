@@ -1,7 +1,7 @@
 <?php
 /**
  * Check to see if user is already attached to a planned course
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -15,9 +15,9 @@
  * see if there is already a link between the current user and a planned course
  *
  * @author Michel V.
- * @param planningid The ID of the planned course
- * @param uid. The ID of the user to check for.
- *
+ * @param id planningid The ID of the planned course
+ * @param id uid. The ID of the user to check for.
+ * @return empty array with items found or nothing
  */
 function courses_userapi_check_enrolled($args)
 {
@@ -25,7 +25,7 @@ function courses_userapi_check_enrolled($args)
     extract($args);
     if (!xarVarFetch('planningid', 'id', $planningid)) return;
     if (!xarVarFetch('uid', 'int:1:', $uid)) return;
-    
+
     if (!isset($planningid) || !is_numeric($planningid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
             'item ID', 'user', 'check_enrolled', 'courses');
@@ -48,10 +48,10 @@ function courses_userapi_check_enrolled($args)
     $result = $dbconn->Execute($sql);
     // Nothing found: return empty
     $items=array();
-    
-    if (!$result) {return;
-    }
-    else {
+
+    if (!$result) {
+        return;
+    } else {
     for (; !$result->EOF; $result->MoveNext()) {
         list($userid, $planningid) = $result->fields;
         if (xarSecurityCheck('ReadCourses', 0, 'Course', "All:$planningid:All")) {

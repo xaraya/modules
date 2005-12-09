@@ -15,7 +15,7 @@
 /**
  * Searches all courses
  *
- * @author Michel V (original: J. Cox)
+ * @author MichelV (original: J. Cox) <michelv@xaraya.com>
  * @access private
  * @returns mixed description of return
  */
@@ -52,7 +52,7 @@ function courses_userapi_search($args)
         $join = "LEFT JOIN $planningtable ON $coursestable.xar_courseid = $planningtable.xar_courseid";
         $where[] = "$planningtable.xar_longdesc LIKE '%$q%'";
     }
-    
+
     if(count($where) > 1){
         $clause = join($where, ' OR ');
     }

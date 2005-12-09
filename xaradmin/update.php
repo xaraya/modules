@@ -11,7 +11,6 @@
  * @link http://xaraya.com/index.php/release/179.html
  * @author Courses module development team
  */
-
 /**
  * Update an item of a specified item type
  *

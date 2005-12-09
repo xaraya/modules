@@ -1,7 +1,7 @@
 <?php
-/** 
+/**
  * Get a course name
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -9,13 +9,13 @@
  *
  * @subpackage Courses Module
  * @link http://xaraya.com/index.php/release/179.html
- * @author Courses module development team 
+ * @author Courses module development team
  */
 /**
  * get the name for a courses
- * 
+ *
  * @author Michel V.
- * @author the Courses module development team 
+ * @author the Courses module development team
  * @param  $args ['courseid'] The ID of the coursename to get
  * @returns array
  * @return array of items, or false on failure
@@ -45,7 +45,7 @@ function courses_userapi_getcoursename($args)
     $query = "SELECT xar_name
               FROM $coursestable
               WHERE xar_courseid = ? AND xar_hidecourse in ($where)";
-    $result = &$dbconn->Execute($query, array((int)$courseid));
+    $result = &$dbconn->Execute($query, array($courseid));
     if (!$result) return;
     // Check for no rows found, and if so, close the result set and return an exception
     if ($result->EOF) {
@@ -57,7 +57,7 @@ function courses_userapi_getcoursename($args)
     }
     list($name) = $result->fields;
     $result->Close();
-    $item = array('courseid' => $courseid,
+    $item = array('courseid' => $courseid, // Is this necessary?
                   'name'     => $name);
 
     return $item;

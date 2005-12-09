@@ -1,7 +1,7 @@
 <?php
 /**
- * Delete an student item
- * 
+ * Delete a student item
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -9,12 +9,12 @@
  *
  * @subpackage Courses Module
  * @link http://xaraya.com/index.php/release/179.html
- * @author MichelV. 
+ * @author MichelV.
  */
 /**
  * delete a student
- * 
- * @author the courses module development team 
+ *
+ * @author the courses module development team
  * @param  $args ['sid'] ID of the student item
  * @returns bool
  * @return true on success, false on failure

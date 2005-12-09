@@ -54,7 +54,7 @@ function courses_admin_newcourse($args)
     $item = array();
     $item['module'] = 'courses';
     $item['returnurl'] = xarModURL('courses', 'admin', 'newcourse');
-    $item['itemtype'] = 1;
+    $item['itemtype'] = 1; // Course
     $hooks = xarModCallHooks('item', 'new', '', $item);
     if (empty($hooks)) {
         $data['hookoutput'] = array();

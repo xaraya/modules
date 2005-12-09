@@ -1,7 +1,7 @@
 <?php
 /**
  * Get all courses
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -9,12 +9,12 @@
  *
  * @subpackage Courses Module
  * @link http://xaraya.com/index.php/release/179.html
- * @author Courses module development team 
+ * @author Courses module development team
  */
 /**
  * get all courses
- * 
- * @author the Courses module development team 
+ *
+ * @author the Courses module development team
  * @param numitems $ the number of items to retrieve (default -1 = all)
  * @param startnum $ start with this item number (default 1)
  * @param sortby $ the parameter to sort by (default name)
@@ -25,11 +25,11 @@
 function courses_userapi_getall($args)
 {
     extract($args);
-    if (!xarVarFetch('startnum', 'int:1:',         $startnum, '1',     XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('numitems', 'int:1:',         $numitems, '-1',    XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('sortby',   'str:1:',         $sortby,   'name',  XARVAR_NOT_REQUIRED)) return; 
-    if (!xarVarFetch('sortorder','enum:DESC:ASC:', $sortorder,'DESC',  XARVAR_NOT_REQUIRED)) return;      
-    
+    if (!xarVarFetch('startnum', 'int:1:',         $startnum, 1,     XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('numitems', 'int:1:',         $numitems, -1,    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('sortby',   'str:1:',         $sortby,   'name',  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('sortorder','enum:DESC:ASC:', $sortorder,'DESC',  XARVAR_NOT_REQUIRED)) return;
+
     // Argument check
     $valid = array('name','shortdesc','number');
     if (!isset($sortby) || !in_array($sortby,$valid)) { // Should be orderby and then sortby ASC DESC
@@ -60,7 +60,7 @@ function courses_userapi_getall($args)
                    xar_contactuid,
                    xar_hidecourse,
                    xar_last_modified";
-    
+
     // TODO: how to select by cat ids (automatically) when needed ???
     // My try at it...
     if (!empty($catid) && xarModIsHooked('categories','courses')) {
@@ -73,19 +73,19 @@ function courses_userapi_getall($args)
                         LEFT JOIN $categoriesdef[table]
                         ON $categoriesdef[field] = xar_courseid )
                         $categoriesdef[more]
-                        WHERE $categoriesdef[where] 
+                        WHERE $categoriesdef[where]
                         AND xar_hidecourse in ($where)";
             } else {
-                $query .= " FROM $coursestable 
+                $query .= " FROM $coursestable
                             WHERE xar_hidecourse in ($where)";
             }
      } else {
-        $query .= " FROM $coursestable 
+        $query .= " FROM $coursestable
                     WHERE xar_hidecourse in ($where)";
      }
 
     $query .= " ORDER BY $coursestable.xar_" . $sortby;
-    $query .= " $sortorder";   
+    $query .= " $sortorder";
     $result = $dbconn->SelectLimit($query, $numitems, $startnum-1);
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return

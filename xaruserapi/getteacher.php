@@ -1,7 +1,7 @@
 <?php
-/** 
+/**
  * Get a specific teacher
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -9,12 +9,12 @@
  *
  * @subpackage Courses Module
  * @link http://xaraya.com/index.php/release/179.html
- * @author Courses module development team 
+ * @author Courses module development team
  */
 /**
  * get a teacher of a planned course
- * 
- * @author the Courses module development team 
+ *
+ * @author the Courses module development team
  * @param tid $ the ID of the teacher to get
  * @returns array
  * @return array of items, or false on failure
@@ -48,7 +48,7 @@ function courses_userapi_getteacher($args)
                      xar_type
               FROM $teacherstable
               WHERE xar_tid = ?";
-            
+
     $result = $dbconn->Execute($query, array((int)$tid));
 
     if ($result->EOF) {
@@ -61,11 +61,11 @@ function courses_userapi_getteacher($args)
     // Put item into result array.
     for (; !$result->EOF; $result->MoveNext()) {
         list($sid, $userid, $planningid, $type) = $result->fields;
-        if (xarSecurityCheck('ReadCourses', 0, 'Course', "All:$planningid:All")) { //TODO
+        if (xarSecurityCheck('ReadCourses', 0, 'Course', "All:$planningid:All")) { //TODO: check this privilege
             $item = array('tid' 	   => $tid,
                           'userid'     => $userid,
-                		  'planningid' => $planningid,
-                		  'type'       => $type);
+                          'planningid' => $planningid,
+                          'type'       => $type);
         }
     }
 

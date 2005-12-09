@@ -4,4 +4,5 @@ Terminology:
 *course: a set of lessons with one theme. A course must be given a unique code, and can be planned.
 *planned course: an occurence of one particular course
 
-There is at this moment (0.1) no mechanism to group courses in an educational plan.
+There is at this moment (0.1.4) no mechanism to group courses in an educational plan. A separate module will be developed for this.
+

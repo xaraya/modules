@@ -11,7 +11,6 @@
  * @link http://xaraya.com/index.php/release/179.html
  * @author Courses module development team
  */
-
 /**
  * View all planned courses
  *
@@ -63,6 +62,7 @@ function courses_admin_viewallplanned()
     if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     // Quick check for emptyness...
     if (count($items) == 0) {
+        // This causes a weird empty page...
         return;
     } else {
         // Check individual permissions for Edit / Delete

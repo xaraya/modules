@@ -11,8 +11,8 @@
 5. Think about payment options (We at SENSE don't need them)
 6. Finish course planning interface (Partly done)
 7. Link to calendar
-8. Deadlines for enrolling (Partly done, need closing of enroll function)
-9. Block for upcoming courses and their deadlines
+8. Deadlines for enrolling [done]
+9. Block for upcoming courses and their deadlines [in progress]
 10. Minimum/max participants (Partly done, need check for enroll)
 11. Improve the admin functions
 12. Link teachers to the planned courses, besides showing their addresses

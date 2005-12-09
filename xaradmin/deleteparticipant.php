@@ -1,7 +1,7 @@
 <?php
-/** 
+/**
  * Delete an participant
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -9,12 +9,12 @@
  *
  * @subpackage Courses Module
  * @link http://xaraya.com/index.php/release/179.html
- * @author Courses module development team 
+ * @author Courses module development team
  */
 /**
  * delete a participant, remove the participant from a planned course
  * This function should only be used by an admin as for normal use the status of the student should be changed instead
- * 
+ *
  * @author MichelV <michelv@xarayahosting.nl>
  * @param  $ 'sid' the id of the student to be deleted
  * @param  $ 'planningid' the id of the planned course
@@ -61,7 +61,7 @@ function courses_admin_deleteparticipant($args)
         $data['planningidlabel'] = xarML('ID of course occurence');
         $data['namelabel'] = xarML('Name of Participant');
         $data['namevalue'] = xarVarPrepForDisplay(xarUserGetVar('name', $item['userid']));
-        $data['coursename'] = 
+        $data['coursename'] =
         $data['confirmbutton'] = xarML('Confirm');
         // Generate a one-time authorisation code for this operation
         $data['authid'] = xarSecGenAuthKey();
@@ -75,12 +75,12 @@ function courses_admin_deleteparticipant($args)
             'admin',
             'deleteparticipant',
             array('sid' => $sid))) {
-        return; // throw back
+        return false; // throw back
     }
     // Return to participants for this planned course
+    xarSessionSetVar('statusmsg','Participant deleted');
     xarResponseRedirect(xarModURL('courses', 'admin', 'participants', array('planningid' => $planningid)));
     // Return
     return true;
 }
-
 ?>

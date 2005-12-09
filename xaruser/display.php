@@ -11,7 +11,6 @@
  * @link http://xaraya.com/index.php/release/179.html
  * @author XarayaGeek , Michel V.
  */
-
 /**
  * Display a single course
  *

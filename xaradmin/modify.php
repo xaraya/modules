@@ -1,7 +1,7 @@
 <?php
 /**
  * Modify DD item for courses
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -9,18 +9,15 @@
  *
  * @subpackage Courses Module
  * @link http://xaraya.com/index.php/release/179.html
- * @author Courses module development team 
+ * @author Courses module development team
  */
-
-
 /**
  * Modify an item of the itemtype specified
  *
  * @param $itemtype - type of item that is being created (required)
  * @param $itemid - item id  (required)
  * @param $objectid - object id is used instead of item id if there is one
- * @return template data
- *
+ * @return array with template data
  */
 function courses_admin_modify($args)
 {
@@ -72,6 +69,7 @@ function courses_admin_modify($args)
     $data['object']   =& $object;
 
     // Take care of hooks
+    // Are these needed?
     $item = array();
     $item['module']   = 'courses';
     $item['itemid']   = $itemid;

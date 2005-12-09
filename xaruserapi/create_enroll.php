@@ -25,10 +25,10 @@
 function courses_userapi_create_enroll($args)
 {
     extract($args);
-    if (!xarVarFetch('planningid', 'id', $planningid)) return;
-    if (!xarVarFetch('uid', 'int:1:', $uid)) return;
+    if (!xarVarFetch('planningid', 'id',     $planningid)) return;
+    if (!xarVarFetch('uid',        'int:1:', $uid)) return;
     if (!xarVarFetch('studstatus', 'int:1:', $studstatus, '1')) return;
-    if (!xarVarFetch('regdate', 'str:1:', $regdate)) return;
+    if (!xarVarFetch('regdate',    'str:1:', $regdate)) return;
 
     $invalid = array();
      if (!isset($uid) || !is_numeric($uid)) {
@@ -72,13 +72,13 @@ function courses_userapi_create_enroll($args)
     // Get the ID of the item that we inserted.
     $enrollid = $dbconn->PO_Insert_ID($studentstable, 'xar_sid');
     // Let any hooks know that we have created a new item.
-    
+
     // TODO: evaluate
     $item = $args;
     $item['module'] = 'courses';
     $item['itemid'] = $enrollid;
     xarModCallHooks('item', 'create', $enrollid, $item);
-    
+
     // Return the id of the newly created item to the calling process
     return $enrollid;
 }

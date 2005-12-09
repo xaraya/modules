@@ -1,7 +1,7 @@
 <?php
 /**
  * Create a new course
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -59,6 +59,7 @@ function courses_admin_createcourse($args)
 
     // check if we have any errors
     if (count($invalid) > 0) {
+        xarSessionSetVar('statusmsg', xarML('Please check the data you have provided!'));
         // call the admin_newcourse function and return the template vars
         return xarModFunc('courses', 'admin', 'newcourse',
                           array('name' => $name,

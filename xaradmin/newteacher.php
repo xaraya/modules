@@ -22,12 +22,11 @@
  */
 function courses_admin_newteacher($args)
 {
+    extract($args);
 
- extract($args);
-
-  if (!xarVarFetch('planningid', 'id', $planningid, NULL, XARVAR_DONT_SET)) return;
-  if (!xarVarFetch('userid',     'int::', $userid, NULL, XARVAR_DONT_SET)) return;
-  // if (!xarVarFetch('extpid',       'isset', $extpid,       NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('planningid', 'id', $planningid, NULL, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('userid',     'int::', $userid, NULL, XARVAR_DONT_SET)) return;
+    // if (!xarVarFetch('extpid',       'isset', $extpid,       NULL, XARVAR_DONT_SET)) {return;}
     // Check to see if this user is already enrolled in this course
     $check = xarModAPIFunc('courses',
                            'admin',
@@ -36,7 +35,7 @@ function courses_admin_newteacher($args)
                                  'planningid' => $planningid));
 
     //if (!isset($courses) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-    
+
     // Check if this teacher is already a teacher
     if (count($check)!=0) {
     $msg = xarML('This teacher has already been assigned to this course');
@@ -45,21 +44,21 @@ function courses_admin_newteacher($args)
         return;
     }
 
-        $item = xarModAPIFunc('courses',
-        'user',
-        'getplanned',
-        array('planningid' => $planningid));
+    $item = xarModAPIFunc('courses',
+                         'user',
+                         'getplanned',
+                         array('planningid' => $planningid));
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-    
-    // If user is not enrolled already go ahead and create the enrollment
-    // Get status of student
+
+    // If user is not a teacher yet go ahead and create the teacher id
+    // Create the teacher
     $type = 1;
     $tid = xarModAPIFunc('courses',
-                          'admin',
-                          'create_teacher',
-                          array('userid'     => $userid,
-                                'planningid' => $planningid,
-                                'type' => $type));
+                         'admin',
+                         'create_teacher',
+                         array('userid'     => $userid,
+                               'planningid' => $planningid,
+                               'type' => $type));
 
     if (!isset($tid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 /*
@@ -84,6 +83,7 @@ function courses_admin_newteacher($args)
 */
     // This function generated no output, and so now it is complete we redirect
     // the user to an appropriate page for them to carry on their work
+    xarSessionSetVar('statusmsg', xarML('Teacher created successfully'));
     xarResponseRedirect(xarModURL('courses', 'admin', 'teachers', array('planningid' => $planningid)));
     // Return
     return true;

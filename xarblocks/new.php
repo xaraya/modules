@@ -1,18 +1,19 @@
 <?php
 /**
  * Timeplanning Block
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Courses
- * @author Courses module development team 
+ * @author Courses module development team
  */
 
 /**
  * initialise block
+ * @todo MichelV: Make this block work
  */
 function courses_newblock_init()
 {
