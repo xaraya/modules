@@ -152,16 +152,19 @@
                     </tr>
                 </table>
                 <p class="xar-align-left">
-                    <xar:mlstring>
-                        Configuration 
+                    <strong><xar:mlstring>
+                        Configuration
                     </xar:mlstring>
-                    : 
+                    </strong>
+                    :
                     <br />
-                    ( 
                     <xar:mlstring>
-                        leave Label empty if you don't want to use a field 
+                        Leave Label empty if you don't want to use a field and uncheck Input.
                     </xar:mlstring>
-                    ) 
+                    <br />
+                    <xar:mlstring>
+                        Edit Validation for default fields via the clickable field name (some field formats only).
+                    </xar:mlstring>
                 </p>
                 <table width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent">
                     <tr>
@@ -194,7 +197,17 @@
                     <xar:foreach in="$fields" value="$field">
                         <tr>
                             <td class="xar-align-left">
-                                <label for="label_#$field['name']#">#$field['name']#</label> 
+                            <xar:comment>Add validation link here - for those fields that already have it plus allowable textarea fields</xar:comment>
+                            <xar:if condition="$field['format'] eq 'textarea_large' or $field['format'] eq 'textarea_medium' or $field['format'] eq 'textarea_small' or $field['format'] eq 'dropdown' or $field['format'] eq 'imagelist' or $field['format'] eq 'webpage' or $field['format'] eq 'fileupload' or $field['format'] eq 'textupload' or $field['format'] eq 'userlist'">
+                                <xar:set name="editvalidation">
+                                    xarML('Edit validation for property "#(1)"',$field['name'])
+                                </xar:set>
+                                <a href="#xarModURL('articles','admin','showpropval',array('ptid' => $ptid, 'field' => $field['name']))#" title="#xarVarPrepForDisplay($editvalidation)#">
+                                    <label for="label_#$field['name']#">#$field['name']#</label>
+                                </a>
+                            <xar:else />
+                                <label for="label_#$field['name']#">#$field['name']#</label>
+                            </xar:if>
                             </td>
                             <td class="xar-norm">
                                 <input type="text" name="label[#$field['name']#]" id="label_#$field['name']#" value="#$field['label']#" /> 
@@ -209,23 +222,31 @@
                                 #$field['type']# 
                             </td>
                         </tr>
+                        
+                        <xar:comment>
+                            Want to add validation for textareas - users are pulling out hair to work out how to change size of textareas on defaults
+                            so move this to a link on the label name so we can do this without cluttering inteface
+                            and also make it consistent.
+                            Revert if the change seems inappropriate.
                         <xar:if condition="$field['format'] eq 'dropdown' or $field['format'] eq 'imagelist' or $field['format'] eq 'webpage' or $field['format'] eq 'fileupload' or $field['format'] eq 'textupload' or $field['format'] eq 'userlist'">
                             <tr>
                                 <td class="xar-accent">
                                     <xar:set name="editvalidation">
-                                        xarML('Edit validation for property "#(1)"',$field['name']) 
+                                        xarML('Edit validation for property "#(1)"',$field['name'])
                                     </xar:set>
-                                    <a href="#xarModURL('articles','admin','showpropval',array('ptid' => $ptid, 'field' => $field['name']))#" title="#xarVarPrepForDisplay($editvalidation)#"> 
+                                    <a href="#xarModURL('articles','admin','showpropval',array('ptid' => $ptid, 'field' => $field['name']))#" title="#xarVarPrepForDisplay($editvalidation)#">
                                         <xar:mlstring>
-                                            Validation 
+                                            Validation
                                         </xar:mlstring>
                                     </a>
                                 </td>
                                 <td class="xar-align-left xar-accent" colspan="4">
-                                    <input type="text" name="validation[#$field['name']#]" id="validation_#$field['name']#" value="#$field['validation']#" size="60" /> 
+                                    <input type="text" name="validation[#$field['name']#]" id="validation_#$field['name']#" value="#$field['validation']#" size="60" />
                                 </td>
                             </tr>
                         </xar:if>
+                        </xar:comment>
+
                     </xar:foreach>
                 </table>
                 <br />
