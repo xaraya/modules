@@ -288,14 +288,6 @@ function xarbb_user_viewtopic($args)
 
     // Images
     // These are dependant on the time functions being changed
-    $data['newtopic']    = '<img src="' . xarTplGetImage('new/post.gif') . '" alt="'.xarML('New topic').'" />';
-    $data['newreply']    = '<img src="' . xarTplGetImage('new/reply.gif') . '" alt="'.xarML('New reply').'" />';
-    $data['quoteimg']    = '<img src="' . xarTplGetImage('new/icon_quote.gif') . '" alt="'.xarML('Quote').'" />';
-    $data['editimg']     = '<img src="' . xarTplGetImage('new/icon_edit.gif') . '" alt="'.xarML('Edit').'" />';
-    $data['deleteimg']   = '<img src="' . xarTplGetImage('new/icon_delete.gif') . '" alt="'.xarML('Delete').'" />';
-    $data['ipimg']       = '<img src="' . xarTplGetImage('new/icon_ip.gif') . '" alt="'.xarML('IP').'" />';
-    $data['closed']      = '<img src="' . xarTplGetImage('new/reply-locked.gif') . '" alt="'.xarML('Closed Topic').'" />';
-
     $data['post']       = $post;
 
     $item = array();

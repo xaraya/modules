@@ -11,10 +11,10 @@
         <xar:comment>
 <!-- old image icons, left here for reference -->
             <a href="#xarModURL('xarbb', 'user', 'newtopic', array('fid' => $fid))#">
-                #$newtopic# 
+                <img src="#xarTplGetImage('new/post.gif')" alt="#xarML('New topic')"/> 
             </a>
             <a href="#xarModURL('xarbb', 'user', 'newreply', array('tid' => $tid))#">
-                #$newreply# 
+                <img src="#xarTplGetImage('new/reply.gif')#" alt="#xarML('New reply')#"/> 
             </a>
         </xar:comment>
     </xar:sec>
@@ -23,7 +23,7 @@
         <xar:template file="closedtopic-ml-button" type="module" />
         <xar:comment>
 <!-- old image icons, left here for reference -->
-            #$closed# 
+            <img src="#xarTplGetImage('new/reply-locked.gif')#" alt="#xarML('CLosed Topic')#"/> 
         </xar:comment>
     </xar:sec>
 </xar:if>
