@@ -18,578 +18,575 @@
     </div>
 
     <div class="xar-mod-body"><h2><xar:mlstring>Modify this person</xar:mlstring></h2><br />
+        <form method="post"
+              action="&xar-modurl-sigmapersonnel-admin-createperson;"
+              onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);"
+              enctype="application/x-www-form-urlencoded">
+               <fieldset>
+                    <legend>
+                        <strong><xar:mlstring>Name and address</xar:mlstring></strong>
+                    </legend>
+                    <div class="xar-form-input-wrapper">
+                        <label for="firstname" class="xar-form-label required">
+                            <span class="help" title="#xarML('Enter the First Name for this person.')#">
+                            <xar:mlstring>First Name</xar:mlstring>
+                            </span>
+                        </label>
+                        <xar:data-input name="firstname" type="2" value="$item['firstname']" />
+                        <xar:if condition="!empty($invalid['firstname'])">
+                          <span style="color: red"><xar:mlstring>ERROR! This is not a valid name</xar:mlstring></span>
+                        </xar:if>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="lastname" class="xar-form-label required">
+                            <span class="help" title="#xarML('Enter the Last Name for this person.')#">
+                            <xar:mlstring>Last Name</xar:mlstring>
+                            </span>
+                        </label>
+                        <xar:data-input name="lastname" type="2" value="$item['lastname']" />
+                        <xar:if condition="!empty($invalid['lastname'])">
+                          <span style="color: red"><xar:mlstring>ERROR! This is not a valid name</xar:mlstring></span>
+                        </xar:if>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="tussenvgsl" class="xar-form-label">
+                            <span class="help" title="#xarML('Enter the tussenvoegsel of this person.')#">
+                            <xar:mlstring>Tussenvoegsel(s)</xar:mlstring>
+                            </span>
+                        </label>
+                        <xar:data-input name="tussenvgsl" type="2" value="$item['tussenvgsl']" />
+                        <xar:if condition="!empty($invalid['tussenvgsl'])">
+                          <span style="color: red"><xar:mlstring>ERROR! This is not a valid tussenvgsl</xar:mlstring></span>
+                        </xar:if>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="initials" class="xar-form-label">
+                            <span class="help" title="#xarML('Enter the initials of this person.')#">
+                            <xar:mlstring>Initials</xar:mlstring>
+                            </span>
+                        </label>
+                        <xar:data-input name="initials" type="2" value="$item['initials']" />
+                        <xar:if condition="!empty($invalid['initials'])">
+                          <span style="color: red"><xar:mlstring>ERROR! This is not a valid initials</xar:mlstring></span>
+                        </xar:if>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="sex" class="xar-form-label">
+                            <span class="help" title="#xarML('Enter the sex of this person.')#">
+                            <xar:mlstring>Sexe</xar:mlstring>
+                            </span>
+                        </label>
+                        <xar:data-input name="sex" type="2" value="$item['sex']" />
+                        <xar:if condition="!empty($invalid['sex'])">
+                          <span style="color: red"><xar:mlstring>ERROR! This is not a valid sex</xar:mlstring></span>
+                        </xar:if>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="title" class="xar-form-label">
+                            <span class="help" title="#xarML('Enter the title of this person.')#">
+                            <xar:mlstring>Title</xar:mlstring>
+                            </span>
+                        </label>
+                        <xar:data-input name="title" type="2" value="$ptitle" />
+                        <xar:if condition="!empty($invalid['title'])">
+                          <span style="color: red"><xar:mlstring>ERROR! This is not a valid title</xar:mlstring></span>
+                        </xar:if>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="street" class="xar-form-label">
+                            <span class="help" title="#xarML('Enter the street of this person.')#">
+                            <xar:mlstring>Street</xar:mlstring>
+                            </span>
+                        </label>
+                        <xar:data-input name="street" type="2" value="$item['street']" />
+                        <xar:if condition="!empty($invalid['street'])">
+                          <span style="color: red"><xar:mlstring>ERROR! This is not a valid street</xar:mlstring></span>
+                        </xar:if>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="zip" class="xar-form-label">
+                            <span class="help" title="#xarML('Enter the zip of this person.')#">
+                            <xar:mlstring>ZIP Code</xar:mlstring>
+                            </span>
+                        </label>
+                        <xar:data-input name="zip" type="2" value="$item['zip']" />
+                        <xar:if condition="!empty($invalid['zip'])">
+                          <span style="color: red"><xar:mlstring>ERROR! This is not a valid zip</xar:mlstring></span>
+                        </xar:if>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                      <label for="cityid" class="xar-form-label">
+                         <span class="help" title="#xarML('Choose the city/town')#">
+                            <xar:mlstring>Town or City</xar:mlstring>
+                         </span>
+                      </label>
+                        <select name="cityid">
+                        <xar:loop name="$cities">
+                            <option value="#$loop:item['cityid']#">#$loop:item['city']#</option>
+                        </xar:loop>
+                        </select>
+                    </div>
 
-            <form method="post"
-                  action="&xar-modurl-sigmapersonnel-admin-createperson;"
-                  onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);"
-                  enctype="application/x-www-form-urlencoded">
-                   <fieldset>
-                        <legend>
-                            <strong><xar:mlstring>Name and address</xar:mlstring></strong>
-                        </legend>
-                        <div class="xar-form-input-wrapper">
-                            <label for="firstname" class="xar-form-label required">
-                                <span class="help" title="#xarML('Enter the First Name for this person.')#">
-                                <xar:mlstring>First Name</xar:mlstring>
-                                </span>
-                            </label>
-                            <xar:data-input name="firstname" type="2" value="$item['firstname']" />
-                            <xar:if condition="!empty($invalid['firstname'])">
-                              <span style="color: red"><xar:mlstring>ERROR! This is not a valid name</xar:mlstring></span>
-                            </xar:if>
-                        </div>
-                        <div class="xar-form-input-wrapper">
-                            <label for="lastname" class="xar-form-label required">
-                                <span class="help" title="#xarML('Enter the Last Name for this person.')#">
-                                <xar:mlstring>Last Name</xar:mlstring>
-                                </span>
-                            </label>
-                            <xar:data-input name="lastname" type="2" value="$item['lastname']" />
-                            <xar:if condition="!empty($invalid['lastname'])">
-                              <span style="color: red"><xar:mlstring>ERROR! This is not a valid name</xar:mlstring></span>
-                            </xar:if>
-                        </div>
-                        <div class="xar-form-input-wrapper">
-                            <label for="tussenvgsl" class="xar-form-label">
-                                <span class="help" title="#xarML('Enter the tussenvoegsel of this person.')#">
-                                #$tussenvgsllabel#
-                                </span>
-                            </label>
-                            <xar:data-input name="tussenvgsl" type="2" value="$item['tussenvgsl']" />
-                            <xar:if condition="!empty($invalid['tussenvgsl'])">
-                              <span style="color: red"><xar:mlstring>ERROR! This is not a valid tussenvgsl</xar:mlstring></span>
-                            </xar:if>
-                        </div>
-                        <div class="xar-form-input-wrapper">
-                            <label for="initials" class="xar-form-label">
-                                <span class="help" title="#xarML('Enter the initials of this person.')#">
-                                #$initialslabel#
-                                </span>
-                            </label>
-                            <xar:data-input name="initials" type="2" value="$item['initials']" />
-                            <xar:if condition="!empty($invalid['initials'])">
-                              <span style="color: red"><xar:mlstring>ERROR! This is not a valid initials</xar:mlstring></span>
-                            </xar:if>
-                        </div>
-                        <div class="xar-form-input-wrapper">
-                            <label for="sex" class="xar-form-label">
-                                <span class="help" title="#xarML('Enter the sex of this person.')#">
-                                #$sexlabel#
-                                </span>
-                            </label>
-                            <xar:data-input name="sex" type="2" value="$item['sex']" />
-                            <xar:if condition="!empty($invalid['sex'])">
-                              <span style="color: red"><xar:mlstring>ERROR! This is not a valid sex</xar:mlstring></span>
-                            </xar:if>
-                        </div>
-                        <div class="xar-form-input-wrapper">
-                            <label for="title" class="xar-form-label">
-                                <span class="help" title="#xarML('Enter the title of this person.')#">
-                                #$titlelabel#
-                                </span>
-                            </label>
-                            <xar:data-input name="title" type="2" value="$title" />
-                            <xar:if condition="!empty($invalid['title'])">
-                              <span style="color: red"><xar:mlstring>ERROR! This is not a valid title</xar:mlstring></span>
-                            </xar:if>
-                        </div>
-                        <div class="xar-form-input-wrapper">
-                            <label for="street" class="xar-form-label">
-                                <span class="help" title="#xarML('Enter the street of this person.')#">
-                                #$streetlabel#
-                                </span>
-                            </label>
-                            <xar:data-input name="street" type="2" value="$street" />
-                            <xar:if condition="!empty($invalid['street'])">
-                              <span style="color: red"><xar:mlstring>ERROR! This is not a valid street</xar:mlstring></span>
-                            </xar:if>
-                        </div>
-                        <div class="xar-form-input-wrapper">
-                            <label for="zip" class="xar-form-label">
-                                <span class="help" title="#xarML('Enter the zip of this person.')#">
-                                #$ziplabel#
-                                </span>
-                            </label>
-                            <xar:data-input name="zip" type="2" value="$zip" />
-                            <xar:if condition="!empty($invalid['zip'])">
-                              <span style="color: red"><xar:mlstring>ERROR! This is not a valid zip</xar:mlstring></span>
-                            </xar:if>
-                        </div>
-                        <div class="xar-form-input-wrapper">
-                          <label for="cityid" class="xar-form-label">
-                             <span class="help" title="#xarML('Choose the city/town')#">
-                                #$cityidlabel#
-                             </span>
-                          </label>
-                            <select name="cityid">
-                            <xar:loop name="$cities">
-                                <option value="#$loop:item['cityid']#">#$loop:item['city']#</option>
-                            </xar:loop>
-                            </select>
-                        </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="phonehome" class="xar-form-label">
+                            <span class="help" title="#xarML('Enter the phonenumber at home of this person.')#">
+                            <xar:mlstring>Home phone number</xar:mlstring>
+                            </span>
+                        </label>
+                        <xar:data-input name="phonehome" type="2" value="$item['phonehome']" />
+                        <xar:if condition="!empty($invalid['phonehome'])">
+                          <span style="color: red"><xar:mlstring>ERROR! This is not a phonenumber</xar:mlstring></span>
+                        </xar:if>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="mobile" class="xar-form-label">
+                            <span class="help" title="#xarML('Enter the mobile phonenumber of this person.')#">
+                            <xar:mlstring>Mobile phone number</xar:mlstring>
+                            </span>
+                        </label>
+                        <xar:data-input name="mobile" type="2" value="$item['mobile']" />
+                        <xar:if condition="!empty($invalid['mobile'])">
+                          <span style="color: red"><xar:mlstring>ERROR! This is not a phonenumber</xar:mlstring></span>
+                        </xar:if>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="phonework" class="xar-form-label">
+                            <span class="help" title="#xarML('Enter the phonenumber at work of this person.')#">
+                            <xar:mlstring>Work phone number</xar:mlstring>
+                            </span>
+                        </label>
+                        <xar:data-input name="phonework" type="2" value="$item['phonework']" />
+                        <xar:if condition="!empty($invalid['phonework'])">
+                          <span style="color: red"><xar:mlstring>ERROR! This is not a phonenumber</xar:mlstring></span>
+                        </xar:if>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="email" class="xar-form-label">
+                            <span class="help" title="#xarML('Enter the email address of this person.')#">
+                            <xar:mlstring>Email address</xar:mlstring>
+                            </span>
+                        </label>
+                        <xar:data-input name="email" type="2" value="$item['email']" />
+                        <xar:if condition="!empty($invalid['email'])">
+                          <span style="color: red"><xar:mlstring>ERROR! This is not an e-mail address</xar:mlstring></span>
+                        </xar:if>
+                    </div>
+               </fieldset>
 
-                        <div class="xar-form-input-wrapper">
-                            <label for="phonehome" class="xar-form-label">
-                                <span class="help" title="#xarML('Enter the phonenumber at home of this person.')#">
-                                #$phonehomelabel#
-                                </span>
-                            </label>
-                            <xar:data-input name="phonehome" type="2" value="$phonehome" />
-                            <xar:if condition="!empty($invalid['phonehome'])">
-                              <span style="color: red"><xar:mlstring>ERROR! This is not a phonenumber</xar:mlstring></span>
-                            </xar:if>
-                        </div>
-                        <div class="xar-form-input-wrapper">
-                            <label for="mobile" class="xar-form-label">
-                                <span class="help" title="#xarML('Enter the mobile phonenumber of this person.')#">
-                                <xar:mlstring>Mobile phone number</xar:mlstring>
-                                </span>
-                            </label>
-                            <xar:data-input name="mobile" type="2" value="$mobile" />
-                            <xar:if condition="!empty($invalid['mobile'])">
-                              <span style="color: red"><xar:mlstring>ERROR! This is not a phonenumber</xar:mlstring></span>
-                            </xar:if>
-                        </div>
-                        <div class="xar-form-input-wrapper">
-                            <label for="phonework" class="xar-form-label">
-                                <span class="help" title="#xarML('Enter the phonenumber at work of this person.')#">
-                                #$phoneworklabel#
-                                </span>
-                            </label>
-                            <xar:data-input name="phonework" type="2" value="$phonework" />
-                            <xar:if condition="!empty($invalid['phonework'])">
-                              <span style="color: red"><xar:mlstring>ERROR! This is not a phonenumber</xar:mlstring></span>
-                            </xar:if>
-                        </div>
-                        <div class="xar-form-input-wrapper">
-                            <label for="email" class="xar-form-label">
-                                <span class="help" title="#xarML('Enter the email address of this person.')#">
-                                #$emaillabel#
-                                </span>
-                            </label>
-                            <xar:data-input name="email" type="2" value="$email" />
-                            <xar:if condition="!empty($invalid['email'])">
-                              <span style="color: red"><xar:mlstring>ERROR! This is not an e-mail address</xar:mlstring></span>
-                            </xar:if>
-                        </div>
-                   </fieldset>
+               <fieldset>
+                    <legend>
+                        <strong><xar:mlstring>Privacy Options</xar:mlstring></strong>
+                    </legend>
+                    <div class="xar-form-input-wrapper">
+                        <label for="privphonehome" class="xar-form-label">
+                            <span class="help" title="#xarML('privphonehome.')#">
+                            <xar:mlstring>Home phone number private?</xar:mlstring>
+                            </span>
+                        </label>
+                        <xar:data-input name="privphonehome" type="checkbox" value="$item['privphonehome']" />
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="privwork" class="xar-form-label">
+                            <span class="help" title="#xarML('privwork.')#">
+                            <xar:mlstring>Work address private?</xar:mlstring>
+                            </span>
+                        </label>
+                        <xar:data-input name="privwork" type="checkbox" value="$item['privwork']" />
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="privemail" class="xar-form-label">
+                            <span class="help" title="#xarML('privemail.')#">
+                            <xar:mlstring>Email address private?</xar:mlstring>
+                            </span>
+                        </label>
+                        <xar:data-input name="privemail" type="checkbox" value="$item['privemail']" />
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="privbirthdate" class="xar-form-label">
+                            <span class="help" title="#xarML('privbirthdate.')#">
+                            <xar:mlstring>Birthdate private?</xar:mlstring>
+                            </span>
+                        </label>
+                        <xar:data-input name="privbirthdate" type="checkbox" value="$item['privbirthdate']" />
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="privaddress" class="xar-form-label">
+                            <span class="help" title="#xarML('privaddress.')#">
+                            <xar:mlstring>Address private?</xar:mlstring>
+                            </span>
+                        </label>
+                        <xar:data-input name="privaddress" type="checkbox" value="$item['privaddress']" />
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="privphonework" class="xar-form-label">
+                            <span class="help" title="#xarML('privphonework.')#">
+                            <xar:mlstring>Work phone number private?</xar:mlstring>
+                            </span>
+                        </label>
+                        <xar:data-input name="privphonework" type="checkbox" value="$item['privphonework']" />
+                    </div>
+               </fieldset>
+               <fieldset>
+                    <legend>
+                        <strong><xar:mlstring>Contact Information in case of emergency</xar:mlstring></strong>
+                    </legend>
+                    <div class="xar-form-input-wrapper">
+                        <label for="contactname" class="xar-form-label">
+                            <span class="help" title="#xarML('Enter the name of the contact person.')#">
+                            <xar:mlstring>Name of contact person</xar:mlstring>
+                            </span>
+                        </label>
+                        <xar:data-input name="contactname" type="textbox" value="$item['contactname']" />
+                        <xar:if condition="!empty($invalid['contactname'])">
+                          <span style="color: red"><xar:mlstring>ERROR! This is not a valid name</xar:mlstring></span>
+                        </xar:if>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="contactphone" class="xar-form-label">
+                            <span class="help" title="#xarML('Enter the phonenumber of the contact person.')#">
+                            <xar:mlstring>Phone number of contact person</xar:mlstring>
+                            </span>
+                        </label>
+                        <xar:data-input name="contactphone" type="textbox" value="$item['contactphone']" />
+                        <xar:if condition="!empty($invalid['contactphone'])">
+                          <span style="color: red"><xar:mlstring>ERROR! This is not a valid phonenumber</xar:mlstring></span>
+                        </xar:if>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="contactstreet" class="xar-form-label">
+                            <span class="help" title="#xarML('Enter the street of the contact person.')#">
+                            <xar:mlstring>Street of contact person</xar:mlstring>
+                            </span>
+                        </label>
+                        <xar:data-input name="contactstreet" type="textbox" value="$item['contactstreet']" />
+                        <xar:if condition="!empty($invalid['contactstreet'])">
+                          <span style="color: red"><xar:mlstring>ERROR! This is not a valid street</xar:mlstring></span>
+                        </xar:if>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                      <label for="contactcityid" class="xar-form-label">
+                         <span class="help" title="#xarML('Choose the city or town of the contact')#">
+                            <xar:mlstring>Town or city of contact person</xar:mlstring>
+                         </span>
+                      </label>
+                        <select name="contactcityid">
+                        <xar:loop name="$cities">
+                            <option value="#$loop:item['cityid']#">#$loop:item['city']#</option>
+                        </xar:loop>
+                        </select>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="contactrelation" class="xar-form-label">
+                            <span class="help" title="#xarML('Enter the relationship of the new person to the contact person.')#">
+                            <xar:mlstring>Relation to contact person</xar:mlstring>
+                            </span>
+                        </label>
+                        <xar:data-input name="contactrelation" type="textbox" value="$item['contactrelation']" />
+                        <xar:if condition="!empty($invalid['contactrelation'])">
+                          <span style="color: red"><xar:mlstring>ERROR! This is not a valid contact relationship</xar:mlstring></span>
+                        </xar:if>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="contactmobile" class="xar-form-label">
+                            <span class="help" title="#xarML('Enter the mobile phone number of the contact person.')#">
+                            <xar:mlstring>Mobile phone number of contact</xar:mlstring>
+                            </span>
+                        </label>
+                        <xar:data-input name="contactmobile" type="textbox" value="$item['contactmobile']" />
+                        <xar:if condition="!empty($invalid['contactmobile'])">
+                          <span style="color: red"><xar:mlstring>ERROR! This is not a valid mobile phonenumber</xar:mlstring></span>
+                        </xar:if>
+                    </div>
 
-                   <fieldset>
-                        <legend>
-                            <strong><xar:mlstring>Privacy Options</xar:mlstring></strong>
-                        </legend>
-                        <div class="xar-form-input-wrapper">
-                            <label for="privphonehome" class="xar-form-label">
-                                <span class="help" title="#xarML('privphonehome.')#">
-                                #$privphonehomelabel#
-                                </span>
-                            </label>
-                            <xar:data-input name="privphonehome" type="checkbox" value="$privphonehome" />
-                        </div>
-                        <div class="xar-form-input-wrapper">
-                            <label for="privwork" class="xar-form-label">
-                                <span class="help" title="#xarML('privwork.')#">
-                                #$privworklabel#
-                                </span>
-                            </label>
-                            <xar:data-input name="privwork" type="checkbox" value="$privwork" />
-                        </div>
-                        <div class="xar-form-input-wrapper">
-                            <label for="privemail" class="xar-form-label">
-                                <span class="help" title="#xarML('privemail.')#">
-                                #$privemaillabel#
-                                </span>
-                            </label>
-                            <xar:data-input name="privemail" type="checkbox" value="$privemail" />
-                        </div>
-                        <div class="xar-form-input-wrapper">
-                            <label for="privbirthdate" class="xar-form-label">
-                                <span class="help" title="#xarML('privbirthdate.')#">
-                                #$privbirthdatelabel#
-                                </span>
-                            </label>
-                            <xar:data-input name="privbirthdate" type="checkbox" value="$privbirthdate" />
-                        </div>
-                        <div class="xar-form-input-wrapper">
-                            <label for="privaddress" class="xar-form-label">
-                                <span class="help" title="#xarML('privaddress.')#">
-                                #$privaddresslabel#
-                                </span>
-                            </label>
-                            <xar:data-input name="privaddress" type="checkbox" value="$privaddress" />
-                        </div>
-                        <div class="xar-form-input-wrapper">
-                            <label for="privphonework" class="xar-form-label">
-                                <span class="help" title="#xarML('privphonework.')#">
-                                #$privphoneworklabel#
-                                </span>
-                            </label>
-                            <xar:data-input name="privphonework" type="checkbox" value="$privphonework" />
-                        </div>
-                   </fieldset>
-                   <fieldset>
-                        <legend>
-                            <strong><xar:mlstring>Contact Information in case of emergency</xar:mlstring></strong>
-                        </legend>
-                        <div class="xar-form-input-wrapper">
-                            <label for="contactname" class="xar-form-label">
-                                <span class="help" title="#xarML('Enter the name of the contact person.')#">
-                                #$contactnamelabel#
-                                </span>
-                            </label>
-                            <xar:data-input name="contactname" type="textbox" value="$contactname" />
-                            <xar:if condition="!empty($invalid['contactname'])">
-                              <span style="color: red"><xar:mlstring>ERROR! This is not a valid name</xar:mlstring></span>
-                            </xar:if>
-                        </div>
-                        <div class="xar-form-input-wrapper">
-                            <label for="contactphone" class="xar-form-label">
-                                <span class="help" title="#xarML('Enter the phonenumber of the contact person.')#">
-                                #$contactphonelabel#
-                                </span>
-                            </label>
-                            <xar:data-input name="contactphone" type="textbox" value="$contactphone" />
-                            <xar:if condition="!empty($invalid['contactphone'])">
-                              <span style="color: red"><xar:mlstring>ERROR! This is not a valid phonenumber</xar:mlstring></span>
-                            </xar:if>
-                        </div>
-                        <div class="xar-form-input-wrapper">
-                            <label for="contactstreet" class="xar-form-label">
-                                <span class="help" title="#xarML('Enter the street of the contact person.')#">
-                                #$contactstreetlabel#
-                                </span>
-                            </label>
-                            <xar:data-input name="contactstreet" type="textbox" value="$contactstreet" />
-                            <xar:if condition="!empty($invalid['contactstreet'])">
-                              <span style="color: red"><xar:mlstring>ERROR! This is not a valid street</xar:mlstring></span>
-                            </xar:if>
-                        </div>
-                        <div class="xar-form-input-wrapper">
-                          <label for="contactcityid" class="xar-form-label">
-                             <span class="help" title="#xarML('Choose the city or town of the contact')#">
-                                #$contactcityidlabel#
-                             </span>
-                          </label>
-                            <select name="contactcityid">
-                            <xar:loop name="$cities">
-                                <option value="#$loop:item['cityid']#">#$loop:item['city']#</option>
-                            </xar:loop>
-                            </select>
-                        </div>
-                        <div class="xar-form-input-wrapper">
-                            <label for="contactrelation" class="xar-form-label">
-                                <span class="help" title="#xarML('Enter the relationship of the new person to the contact person.')#">
-                                #$contactrelationlabel#
-                                </span>
-                            </label>
-                            <xar:data-input name="contactrelation" type="textbox" value="$contactrelation" />
-                            <xar:if condition="!empty($invalid['contactrelation'])">
-                              <span style="color: red"><xar:mlstring>ERROR! This is not a valid contact relationship</xar:mlstring></span>
-                            </xar:if>
-                        </div>
-                        <div class="xar-form-input-wrapper">
-                            <label for="contactmobile" class="xar-form-label">
-                                <span class="help" title="#xarML('Enter the mobile phone number of the contact person.')#">
-                                #$contactmobilelabel#
-                                </span>
-                            </label>
-                            <xar:data-input name="contactmobile" type="textbox" value="$contactmobile" />
-                            <xar:if condition="!empty($invalid['contactmobile'])">
-                              <span style="color: red"><xar:mlstring>ERROR! This is not a valid mobile phonenumber</xar:mlstring></span>
-                            </xar:if>
-                        </div>
-
-                   </fieldset>
-                   <fieldset>
-                        <legend>
-                            <strong><xar:mlstring>Additional information</xar:mlstring></strong>
-                        </legend>
-                        <div class="xar-form-input-wrapper">
-                          <label for="persstatus" class="xar-form-label">
-                             <span class="help" title="#xarML('Enter the status for this person.')#">
-                                #$persstatuslabel#
-                             </span>
-                          </label>
-                            <select name="persstatus">
-                            <xar:loop name="$persstatusses">
-                                <option value="#$loop:item['statusid']#">#$loop:item['statustype']#</option>
-                            </xar:loop>
-                            </select>
-                        </div>
+               </fieldset>
+               <fieldset>
+                    <legend>
+                        <strong><xar:mlstring>Additional information</xar:mlstring></strong>
+                    </legend>
+                    <div class="xar-form-input-wrapper">
+                      <label for="persstatus" class="xar-form-label">
+                         <span class="help" title="#xarML('Enter the status for this person.')#">
+                            <xar:mlstring>Status</xar:mlstring>
+                         </span>
+                      </label>
+                        <select name="persstatus">
+                        <xar:loop name="$persstatusses">
+                            <option value="#$loop:item['statusid']#">#$loop:item['statustype']#</option>
+                        </xar:loop>
+                        </select>
+                    </div>
 
 
-                        <div class="xar-form-input-wrapper">
-                            <label for="birthdate" class="xar-form-label">
-                                <span class="help" title="#xarML('Enter the date of birth of the person.')#">
-                                #$birthdatelabel#
-                                </span>
-                            </label>
-                            <xar:data-input name="birthdate" type="calendar" value="$birthdate" />
-                          <xar:if condition="!empty($invalid['birthdate'])">
-                            <span style="color: red"><xar:mlstring>ERROR! This is not a valid birthdate</xar:mlstring></span>
-                          </xar:if>
-                        </div>
-                        <div class="xar-form-input-wrapper">
-                            <label for="birthplace" class="xar-form-label">
-                                <span class="help" title="#xarML('Enter the place of birth of this person.')#">
-                                #$birthplacelabel#
-                                </span>
-                            </label>
-                            <xar:data-input name="birthplace" type="textbox" value="$birthplace" />
-                          <xar:if condition="!empty($invalid['birthplace'])">
-                            <span style="color: red"><xar:mlstring>ERROR! This is not a valid place of birth</xar:mlstring></span>
-                          </xar:if>
-                        </div>
-                        <div class="xar-form-input-wrapper">
-                            <label for="nrkdistrict" class="xar-form-label">
-                                <span class="help" title="#xarML('Enter the NRK district of this person.')#">
-                                #$nrkdistrictlabel#
-                                </span>
-                            </label>
-                            <select name="nrkdistrict">
-                            <xar:loop name="$districts">
-                                <option value="#$loop:item['districtid']#">#$loop:item['district']#</option>
-                            </xar:loop>
-                            </select>
-                        </div>
-                        <div class="xar-form-input-wrapper">
-                            <label for="nrknumber" class="xar-form-label">
-                                <span class="help" title="#xarML('Enter the NRK number of this person.')#">
-                                #$nrknumberlabel#
-                                </span>
-                            </label>
-                            <xar:data-input name="nrknumber" type="15" value="$nrknumber" />
-                          <xar:if condition="!empty($invalid['nrknumber'])">
-                            <span style="color: red"><xar:mlstring>ERROR! This is not a valid nrknumber</xar:mlstring></span>
-                          </xar:if>
-                        </div>
-                        <div class="xar-form-input-wrapper">
-                            <label for="pnumber" class="xar-form-label">
-                                <span class="help" title="#xarML('Enter the SIGMA number of this person.')#">
-                                <xar:mlstring>SIGMA identification number</xar:mlstring>
-                                </span>
-                            </label>
-                            <xar:data-input name="pnumber" type="15" value="$pnumber" />
-                          <xar:if condition="!empty($invalid['pnumber'])">
-                            <span style="color: red"><xar:mlstring>ERROR! This is not a valid SIGMA identification number</xar:mlstring></span>
-                          </xar:if>
-                        </div>
-                        <div class="xar-form-input-wrapper">
-                            <label for="ehbonr" class="xar-form-label">
-                                <span class="help" title="#xarML('Enter the First Aid certificate number of this person.')#">
-                                #$ehbonrlabel#
-                                </span>
-                            </label>
-                            <xar:data-input name="ehbonr" type="15" value="$ehbonr" />
-                          <xar:if condition="!empty($invalid['ehbonr'])">
-                            <span style="color: red"><xar:mlstring>ERROR! This is not a valid First Aid number</xar:mlstring></span>
-                          </xar:if>
-                        </div>
-                        <div class="xar-form-input-wrapper">
-                            <label for="ehboplus" class="xar-form-label">
-                                <span class="help" title="#xarML('First Aid including bandages?.')#">
-                                #$ehbopluslabel#
-                                </span>
-                            </label>
-                            <xar:data-input name="ehboplus" type="checkbox" value="$ehboplus" />
-                        </div>
-                        <div class="xar-form-input-wrapper">
-                            <label for="ehbodate" class="xar-form-label">
-                                <span class="help" title="#xarML('Enter the date the First Aid certificate expires.')#">
-                                #$ehbodatelabel#
-                                </span>
-                            </label>
-                            <xar:data-input name="ehbodate" type="calendar" value="$ehbodate" validation="date"/>
-                          <xar:if condition="!empty($invalid['ehbodate'])">
-                            <span style="color: red"><xar:mlstring>ERROR! This is not a valid date</xar:mlstring></span>
-                          </xar:if>
-                        </div>
-                        <div class="xar-form-input-wrapper">
-                            <label for="ehboplace" class="xar-form-label">
-                                <span class="help" title="#xarML('Enter the place or organisation that extends the First Aid certificate of this person.')#">
-                                #$ehboplacelabel#
-                                </span>
-                            </label>
-                            <xar:data-input name="ehboplace" type="textbox" value="$ehboplace" />
-                          <xar:if condition="!empty($invalid['ehboplace'])">
-                            <span style="color: red"><xar:mlstring>ERROR! This is not a valid First Aid place</xar:mlstring></span>
-                          </xar:if>
-                        </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="birthdate" class="xar-form-label">
+                            <span class="help" title="#xarML('Enter the date of birth of the person.')#">
+                            <xar:mlstring>Birthdate</xar:mlstring>
+                            </span>
+                        </label>
+                        <xar:data-input name="birthdate" type="calendar" value="$item['birthdate']" />
+                      <xar:if condition="!empty($invalid['birthdate'])">
+                        <span style="color: red"><xar:mlstring>ERROR! This is not a valid birthdate</xar:mlstring></span>
+                      </xar:if>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="birthplace" class="xar-form-label">
+                            <span class="help" title="#xarML('Enter the place of birth of this person.')#">
+                            <xar:mlstring>Place of birth</xar:mlstring>
+                            </span>
+                        </label>
+                        <xar:data-input name="birthplace" type="textbox" value="$item['birthplace']" />
+                      <xar:if condition="!empty($invalid['birthplace'])">
+                        <span style="color: red"><xar:mlstring>ERROR! This is not a valid place of birth</xar:mlstring></span>
+                      </xar:if>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="nrkdistrict" class="xar-form-label">
+                            <span class="help" title="#xarML('Enter the NRK district of this person.')#">
+                            <xar:mlstring>NRK district</xar:mlstring>
+                            </span>
+                        </label>
+                        <select name="nrkdistrict">
+                        <xar:loop name="$districts">
+                            <option value="#$loop:item['districtid']#">#$loop:item['district']#</option>
+                        </xar:loop>
+                        </select>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="nrknumber" class="xar-form-label">
+                            <span class="help" title="#xarML('Enter the NRK number of this person.')#">
+                            <xar:mlstring>NRK registration number</xar:mlstring>
+                            </span>
+                        </label>
+                        <xar:data-input name="nrknumber" type="15" value="$item['nrknumber']" />
+                      <xar:if condition="!empty($invalid['nrknumber'])">
+                        <span style="color: red"><xar:mlstring>ERROR! This is not a valid nrknumber</xar:mlstring></span>
+                      </xar:if>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="pnumber" class="xar-form-label">
+                            <span class="help" title="#xarML('Enter the SIGMA number of this person.')#">
+                            <xar:mlstring>SIGMA identification number</xar:mlstring>
+                            </span>
+                        </label>
+                        <xar:data-input name="pnumber" type="15" value="$item['pnumber']" />
+                      <xar:if condition="!empty($invalid['pnumber'])">
+                        <span style="color: red"><xar:mlstring>ERROR! This is not a valid SIGMA identification number</xar:mlstring></span>
+                      </xar:if>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="ehbonr" class="xar-form-label">
+                            <span class="help" title="#xarML('Enter the First Aid certificate number of this person.')#">
+                            <xar:mlstring>First aid certificate number</xar:mlstring>
+                            </span>
+                        </label>
+                        <xar:data-input name="ehbonr" type="15" value="$item['ehbonr']" />
+                      <xar:if condition="!empty($invalid['ehbonr'])">
+                        <span style="color: red"><xar:mlstring>ERROR! This is not a valid First Aid number</xar:mlstring></span>
+                      </xar:if>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="ehboplus" class="xar-form-label">
+                            <span class="help" title="#xarML('First Aid including bandages?.')#">
+                            <xar:mlstring>First aid including bandages?</xar:mlstring>
+                            </span>
+                        </label>
+                        <xar:data-input name="ehboplus" type="checkbox" value="$item['ehboplus']" />
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="ehbodate" class="xar-form-label">
+                            <span class="help" title="#xarML('Enter the date the First Aid certificate expires.')#">
+                            <xar:mlstring>Date of renewal for first aid</xar:mlstring>
+                            </span>
+                        </label>
+                        <xar:data-input name="ehbodate" type="calendar" value="$item['ehbodate']" validation="date"/>
+                      <xar:if condition="!empty($invalid['ehbodate'])">
+                        <span style="color: red"><xar:mlstring>ERROR! This is not a valid date</xar:mlstring></span>
+                      </xar:if>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="ehboplace" class="xar-form-label">
+                            <span class="help" title="#xarML('Enter the place or organisation that extends the First Aid certificate of this person.')#">
+                            <xar:mlstring>Organisation to renew first aid</xar:mlstring>
+                            </span>
+                        </label>
+                        <xar:data-input name="ehboplace" type="textbox" value="$item['ehboplace']" />
+                      <xar:if condition="!empty($invalid['ehboplace'])">
+                        <span style="color: red"><xar:mlstring>ERROR! This is not a valid First Aid place</xar:mlstring></span>
+                      </xar:if>
+                    </div>
 
-                   </fieldset>
-                   <fieldset>
-                        <legend>
-                            <strong><xar:mlstring>Intake</xar:mlstring></strong>
-                        </legend>
-                        <div class="xar-form-input-wrapper">
-                            <label for="dateintake" class="xar-form-label">
-                                <span class="help" title="#xarML('Enter the date of the intake talk with this person.')#">
-                                #$dateintakelabel#
-                                </span>
-                            </label>
-                            <xar:data-input name="dateintake" type="calendar" value="$dateintake" validation="date"/>
-                          <xar:if condition="!empty($invalid['dateintake'])">
-                            <span style="color: red"><xar:mlstring>ERROR! This is not a valid date</xar:mlstring></span>
-                          </xar:if>
-                        </div>
-                        <div class="xar-form-input-wrapper">
-                            <label for="intakeby" class="xar-form-label">
-                                <span class="help" title="#xarML('Enter the people that the intake talk took with this person.')#">
-                                #$intakebylabel#
-                                </span>
-                            </label>
-                            <xar:data-input name="intakeby" type="textbox" value="$intakeby" />
-                          <xar:if condition="!empty($invalid['intakeby'])">
-                            <span style="color: red"><xar:mlstring>ERROR! This is not a valid intakeby</xar:mlstring></span>
-                          </xar:if>
-                        </div>
-                        <div class="xar-form-input-wrapper">
-                            <label for="dateemploy" class="xar-form-label">
-                                <span class="help" title="#xarML('Enter the date this person started working for SIGMA.')#">
-                                #$dateemploylabel#
-                                </span>
-                            </label>
-                            <xar:data-input name="dateemploy" type="calendar" value="$dateemploy" validation="date"/>
-                          <xar:if condition="!empty($invalid['dateemploy'])">
-                            <span style="color: red"><xar:mlstring>ERROR! This is not a valid date</xar:mlstring></span>
-                          </xar:if>
-                        </div>
-                        <div class="xar-form-input-wrapper">
-                            <label for="dateout" class="xar-form-label">
-                                <span class="help" title="#xarML('Enter the date this person stopped working for SIGMA.')#">
-                                #$dateoutlabel#
-                                </span>
-                            </label>
-                            <xar:data-input name="dateout" type="calendar" value="$dateout" validation="date"/>
-                          <xar:if condition="!empty($invalid['dateout'])">
-                            <span style="color: red"><xar:mlstring>ERROR! This is not a valid date</xar:mlstring></span>
-                          </xar:if>
-                        </div>
-                        <div class="xar-form-input-wrapper">
-                            <label for="dateouttalk" class="xar-form-label">
-                                <span class="help" title="#xarML('Enter the date this person had the takeout talk.')#">
-                                #$dateouttalklabel#
-                                </span>
-                            </label>
-                            <xar:data-input name="dateouttalk" type="calendar" value="$dateouttalk" validation="date"/>
-                          <xar:if condition="!empty($invalid['dateouttalk'])">
-                            <span style="color: red"><xar:mlstring>ERROR! This is not a valid date</xar:mlstring></span>
-                          </xar:if>
-                        </div>
-                        <div class="xar-form-input-wrapper">
-                            <label for="outtalkwith" class="xar-form-label">
-                                <span class="help" title="#xarML('Enter the person that had the takeout talk with this person.')#">
-                                #$outtalkwithlabel#
-                                </span>
-                            </label>
-                            <xar:data-input name="outtalkwith" type="textbox" value="$outtalkwith" />
-                          <xar:if condition="!empty($invalid['outtalkwith'])">
-                            <span style="color: red"><xar:mlstring>ERROR! This is not a valid outtalkwith</xar:mlstring></span>
-                          </xar:if>
-                        </div>
-                        <div class="xar-form-input-wrapper">
-                            <label for="outreason" class="xar-form-label">
-                                <span class="help" title="#xarML('Enter the reason this person stopped working for SIGMA.')#">
-                                #$outreasonlabel#
-                                </span>
-                            </label>
-                            <xar:data-input name="outreason" type="textbox" value="$outreason" />
-                          <xar:if condition="!empty($invalid['outreason'])">
-                            <span style="color: red"><xar:mlstring>ERROR! This is not a reason description</xar:mlstring></span>
-                          </xar:if>
-                        </div>
+               </fieldset>
+               <fieldset>
+                    <legend>
+                        <strong><xar:mlstring>Intake</xar:mlstring></strong>
+                    </legend>
+                    <div class="xar-form-input-wrapper">
+                        <label for="dateintake" class="xar-form-label">
+                            <span class="help" title="#xarML('Enter the date of the intake talk with this person.')#">
+                            <xar:mlstring>Date of intake talk</xar:mlstring>
+                            </span>
+                        </label>
+                        <xar:data-input name="dateintake" type="calendar" value="$item['dateintake']" validation="date"/>
+                      <xar:if condition="!empty($invalid['dateintake'])">
+                        <span style="color: red"><xar:mlstring>ERROR! This is not a valid date</xar:mlstring></span>
+                      </xar:if>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="intakeby" class="xar-form-label">
+                            <span class="help" title="#xarML('Enter the people that the intake talk took with this person.')#">
+                            <xar:mlstring>Intake taken by</xar:mlstring>
+                            </span>
+                        </label>
+                        <xar:data-input name="intakeby" type="textbox" value="$item['intakeby']" />
+                      <xar:if condition="!empty($invalid['intakeby'])">
+                        <span style="color: red"><xar:mlstring>ERROR! This is not a valid intakeby</xar:mlstring></span>
+                      </xar:if>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="dateemploy" class="xar-form-label">
+                            <span class="help" title="#xarML('Enter the date this person started working for SIGMA.')#">
+                            <xar:mlstring>Datum of employment</xar:mlstring>
+                            </span>
+                        </label>
+                        <xar:data-input name="dateemploy" type="calendar" value="$item['dateemploy']" validation="date"/>
+                      <xar:if condition="!empty($invalid['dateemploy'])">
+                        <span style="color: red"><xar:mlstring>ERROR! This is not a valid date</xar:mlstring></span>
+                      </xar:if>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="dateout" class="xar-form-label">
+                            <span class="help" title="#xarML('Enter the date this person stopped working for SIGMA.')#">
+                            <xar:mlstring>Datum uit dienst</xar:mlstring>
+                            </span>
+                        </label>
+                        <xar:data-input name="dateout" type="calendar" value="$item['dateout']" validation="date"/>
+                      <xar:if condition="!empty($invalid['dateout'])">
+                        <span style="color: red"><xar:mlstring>ERROR! This is not a valid date</xar:mlstring></span>
+                      </xar:if>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="dateouttalk" class="xar-form-label">
+                            <span class="help" title="#xarML('Enter the date this person had the takeout talk.')#">
+                            <xar:mlstring>Date of talk about departure</xar:mlstring>
+                            </span>
+                        </label>
+                        <xar:data-input name="dateouttalk" type="calendar" value="$item['dateouttalk']" validation="date"/>
+                      <xar:if condition="!empty($invalid['dateouttalk'])">
+                        <span style="color: red"><xar:mlstring>ERROR! This is not a valid date</xar:mlstring></span>
+                      </xar:if>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="outtalkwith" class="xar-form-label">
+                            <span class="help" title="#xarML('Enter the person that had the takeout talk with this person.')#">
+                            <xar:mlstring>Departure talk with</xar:mlstring>
+                            </span>
+                        </label>
+                        <xar:data-input name="outtalkwith" type="textbox" value="$item['outtalkwith']" />
+                      <xar:if condition="!empty($invalid['outtalkwith'])">
+                        <span style="color: red"><xar:mlstring>ERROR! This is not a valid outtalkwith</xar:mlstring></span>
+                      </xar:if>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="outreason" class="xar-form-label">
+                            <span class="help" title="#xarML('Enter the reason this person stopped working for SIGMA.')#">
+                            <xar:mlstring>Reason for departure</xar:mlstring>
+                            </span>
+                        </label>
+                        <xar:data-input name="outreason" type="textbox" value="$item['outreason']" />
+                      <xar:if condition="!empty($invalid['outreason'])">
+                        <span style="color: red"><xar:mlstring>ERROR! This is not a reason description</xar:mlstring></span>
+                      </xar:if>
+                    </div>
 
-                   </fieldset>
+               </fieldset>
 
-                   <fieldset>
-                        <legend>
-                            <strong><xar:mlstring>Material</xar:mlstring></strong>
-                        </legend>
+               <fieldset>
+                    <legend>
+                        <strong><xar:mlstring>Material</xar:mlstring></strong>
+                    </legend>
 
-                        <div class="xar-form-input-wrapper">
-                            <label for="dateshoes" class="xar-form-label">
-                                <span class="help" title="#xarML('Enter the date this person received shoes from SIGMA.')#">
-                                #$dateshoeslabel#
-                                </span>
-                            </label>
-                            <xar:data-input name="dateshoes" type="calendar" value="$dateshoes" validation="date"/>
-                          <xar:if condition="!empty($invalid['dateshoes'])">
-                            <span style="color: red"><xar:mlstring>ERROR! This is not a valid date</xar:mlstring></span>
-                          </xar:if>
-                        </div>
-                        <div class="xar-form-input-wrapper">
-                            <label for="sizeshoes" class="xar-form-label">
-                                <span class="help" title="#xarML('Enter the size of the shoes received.')#">
-                                #$sizeshoeslabel#
-                                </span>
-                            </label>
-                            <xar:data-input name="sizeshoes" type="textbox" value="$sizeshoes" />
-                          <xar:if condition="!empty($invalid['sizeshoes'])">
-                            <span style="color: red"><xar:mlstring>ERROR! This is not a valid size of shoes</xar:mlstring></span>
-                          </xar:if>
-                        </div>
-                        <div class="xar-form-input-wrapper">
-                            <label for="banknr" class="xar-form-label">
-                                <span class="help" title="#xarML('Enter the bank account number of this person.')#">
-                                #$banknrlabel#
-                                </span>
-                            </label>
-                            <xar:data-input name="banknr" type="textbox" value="$banknr" />
-                          <xar:if condition="!empty($invalid['banknr'])">
-                            <span style="color: red"><xar:mlstring>ERROR! This is not a valid bank account nr</xar:mlstring></span>
-                          </xar:if>
-                        </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="dateshoes" class="xar-form-label">
+                            <span class="help" title="#xarML('Enter the date this person received shoes from SIGMA.')#">
+                            <xar:mlstring>Date of shoes release</xar:mlstring>
+                            </span>
+                        </label>
+                        <xar:data-input name="dateshoes" type="calendar" value="$item['dateshoes']" validation="date"/>
+                      <xar:if condition="!empty($invalid['dateshoes'])">
+                        <span style="color: red"><xar:mlstring>ERROR! This is not a valid date</xar:mlstring></span>
+                      </xar:if>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="sizeshoes" class="xar-form-label">
+                            <span class="help" title="#xarML('Enter the size of the shoes received.')#">
+                            <xar:mlstring>Size of shoes</xar:mlstring>
+                            </span>
+                        </label>
+                        <xar:data-input name="sizeshoes" type="textbox" value="$item['sizeshoes']" />
+                      <xar:if condition="!empty($invalid['sizeshoes'])">
+                        <span style="color: red"><xar:mlstring>ERROR! This is not a valid size of shoes</xar:mlstring></span>
+                      </xar:if>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="banknr" class="xar-form-label">
+                            <span class="help" title="#xarML('Enter the bank account number of this person.')#">
+                            <xar:mlstring>Bank account number</xar:mlstring>
+                            </span>
+                        </label>
+                        <xar:data-input name="banknr" type="textbox" value="$item['banknr']" />
+                      <xar:if condition="!empty($invalid['banknr'])">
+                        <span style="color: red"><xar:mlstring>ERROR! This is not a valid bank account nr</xar:mlstring></span>
+                      </xar:if>
+                    </div>
 
-                        <div class="xar-form-input-wrapper">
-                          <label for="bankplaceid" class="xar-form-label">
-                             <span class="help" title="#xarML('Choose the city or town where the bank account is registered')#">
-                                #$bankplaceidlabel#
-                             </span>
-                          </label>
-                            <select name="bankplaceid">
-                            <xar:loop name="$cities">
-                                <option value="#$loop:item['cityid']#">#$loop:item['city']#</option>
-                            </xar:loop>
-                            </select>
-                        </div>
+                    <div class="xar-form-input-wrapper">
+                      <label for="bankplaceid" class="xar-form-label">
+                         <span class="help" title="#xarML('Choose the city or town where the bank account is registered')#">
+                            <xar:mlstring>Bank account place</xar:mlstring>
+                         </span>
+                      </label>
+                        <select name="bankplaceid">
+                        <xar:loop name="$cities">
+                            <option value="#$loop:item['cityid']#">#$loop:item['city']#</option>
+                        </xar:loop>
+                        </select>
+                    </div>
 
-                        <div class="xar-form-input-wrapper">
-                            <label for="others" class="xar-form-label">
-                                <span class="help" title="#xarML('Other remarks.')#">
-                                #$otherslabel#
-                                </span>
-                            </label>
-                            <xar:data-input name="others" type="4" value="$others" />
-                          <xar:if condition="!empty($invalid['others'])">
-                            <span style="color: red"><xar:mlstring>ERROR! This is not a others</xar:mlstring></span>
-                          </xar:if>
-                        </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="others" class="xar-form-label">
+                            <span class="help" title="#xarML('Other remarks.')#">
+                            <xar:mlstring>Other remarks</xar:mlstring>
+                            </span>
+                        </label>
+                        <xar:data-input name="others" type="4" value="$item['others']" />
+                      <xar:if condition="!empty($invalid['others'])">
+                        <span style="color: red"><xar:mlstring>ERROR! This is not a others</xar:mlstring></span>
+                      </xar:if>
+                    </div>
 
-                        <div class="xar-form-input-wrapper">
-                            <label for="educationremarks" class="xar-form-label">
-                                <span class="help" title="#xarML('Remarks related to education.')#">
-                                #$educationremarkslabel#
-                                </span>
-                            </label>
-                            <xar:data-input name="educationremarks" type="4" value="$educationremarks" />
-                          <xar:if condition="!empty($invalid['educationremarks'])">
-                            <span style="color: red"><xar:mlstring>ERROR! This is not a valid remark type</xar:mlstring></span>
-                          </xar:if>
-                        </div>
-                   </fieldset>
-                <div class="xar-form-input-wrapper">
-                    <xar:if condition="!empty($hookoutput)">
-                        <xar:foreach in="$hookoutput" key="$hookmodule">
-                            #$hookoutput['categories']#
-                        </xar:foreach>
-                    </xar:if>
-                </div>
-                <div style="clear: both; padding-top: 10px;">
-                    <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                    <span style="float: left; width: 30%; text-align: right;"><input type="submit" value="#$addbutton#" /></span>
-                </div>
-
-            </form>
-
+                    <div class="xar-form-input-wrapper">
+                        <label for="educationremarks" class="xar-form-label">
+                            <span class="help" title="#xarML('Remarks related to education.')#">
+                            <xar:mlstring>Education remarks</xar:mlstring>
+                            </span>
+                        </label>
+                        <xar:data-input name="educationremarks" type="4" value="$item['educationremarks']" />
+                      <xar:if condition="!empty($invalid['educationremarks'])">
+                        <span style="color: red"><xar:mlstring>ERROR! This is not a valid remark type</xar:mlstring></span>
+                      </xar:if>
+                    </div>
+               </fieldset>
+            <div class="xar-form-input-wrapper">
+                <xar:if condition="!empty($hookoutput)">
+                    <xar:foreach in="$hookoutput" key="$hookmodule">
+                        #$hookoutput['categories']#
+                    </xar:foreach>
+                </xar:if>
+            </div>
+            <div style="clear: both; padding-top: 10px;">
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <input type="submit" value="#$updatebutton#" />
+            </div>
+        </form>
     </div>
 </div>

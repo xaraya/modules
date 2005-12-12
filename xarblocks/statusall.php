@@ -121,7 +121,8 @@ function sigmapersonnel_statusallblock_display($blockinfo)
             } else {
                 $tstatus++;
             }
-
+            $data['persstatusses'] = xarModAPIFunc('sigmapersonnel', 'user', 'gets',
+                                              array('itemtype' => 6));
 
             // See what his presence is
             $personpresence = xarModApiFunc('sigmapersonnel', 'user', 'presencenow', array('personid' => $item['personid']));
@@ -134,8 +135,11 @@ function sigmapersonnel_statusallblock_display($blockinfo)
             } else {
                 $presence++;
             }
-;
 
+            // Get the presencetypes
+            // TODO: what if there are no types defined?
+            $data['types'] = xarModAPIFunc('sigmapersonnel', 'user', 'gets',
+                                              array('itemtype' => 5));
 
 /*
 $array = array (1, "hello", 1, "world", "hello");

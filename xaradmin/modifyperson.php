@@ -91,71 +91,28 @@ function sigmapersonnel_admin_modifyperson($args)
     if (!xarSecurityCheck('EditSIGMAPersonnel', 1, 'PersonnelItem', "$personid:All:$item[persstatus]")) { // add catid:
         return;
     }
-
+    $data['cities'] = xarModAPIFunc('sigmapersonnel', 'user', 'gets',
+                                      array('itemtype' => 4));
+    $data['districts'] = xarModAPIFunc('sigmapersonnel', 'user', 'gets',
+                                      array('itemtype' => 3));
+    $data['persstatusses'] = xarModAPIFunc('sigmapersonnel', 'user', 'gets',
+                                      array('itemtype' => 6));
     $data['useridlabel'] = xarVarPrepForDisplay(xarML('Xaraya User ID '));
-    $data['pnumberlabel'] = xarVarPrepForDisplay(xarML('SIGMA number '));
-    $data['persstatuslabel'] = xarVarPrepForDisplay(xarML('Status '));
-    $data['firstnamelabel'] = xarVarPrepForDisplay(xarML('First name '));
-    $data['lastnamelabel'] = xarVarPrepForDisplay(xarML('Last name '));
-    $data['tussenvgsllabel'] = xarVarPrepForDisplay(xarML('Tussenvoegsel(s)'));
-    $data['initialslabel'] = xarVarPrepForDisplay(xarML('Initials'));
-    $data['sexlabel'] = xarVarPrepForDisplay(xarML('Sexe'));
-    $data['titlelabel'] = xarVarPrepForDisplay(xarML('Title'));
-    $data['streetlabel'] = xarVarPrepForDisplay(xarML('Street'));
-    $data['ziplabel'] = xarVarPrepForDisplay(xarML('ZIP Code'));
-    $data['cityidlabel'] = xarVarPrepForDisplay(xarML('Town or City'));
-    $data['phonehomelabel'] = xarVarPrepForDisplay(xarML('Home phone number'));
-
-    $data['phoneworklabel'] = xarVarPrepForDisplay(xarML('Work phone number'));
-    $data['emaillabel'] = xarVarPrepForDisplay(xarML('Email address'));
-    $data['privphonehomelabel'] = xarVarPrepForDisplay(xarML('Home phone number private?'));
-    $data['privworklabel'] = xarVarPrepForDisplay(xarML('Work address private?'));
-    $data['privemaillabel'] = xarVarPrepForDisplay(xarML('Email address private?'));
-    $data['privbirthdatelabel'] = xarVarPrepForDisplay(xarML('Birtdate private?'));
-    $data['privaddresslabel'] = xarVarPrepForDisplay(xarML('Address private?'));
-    $data['privphoneworklabel'] = xarVarPrepForDisplay(xarML('Work phone number private?'));
-    $data['contactnamelabel'] = xarVarPrepForDisplay(xarML('Name of contact person '));
-    $data['contactphonelabel'] = xarVarPrepForDisplay(xarML('Phone number of contact person'));
-    $data['contactstreetlabel'] = xarVarPrepForDisplay(xarML('Street of contact person'));
-    $data['contactcityidlabel'] = xarVarPrepForDisplay(xarML('Town or city of contact person'));
-    $data['contactrelationlabel'] = xarVarPrepForDisplay(xarML('Relation to contact person'));
-    $data['contactmobilelabel'] = xarVarPrepForDisplay(xarML('Mobile phone number of contact'));
-    $data['birthdatelabel'] = xarVarPrepForDisplay(xarML('Birthdate'));
-    $data['birthplacelabel'] = xarVarPrepForDisplay(xarML('Place of birth'));
-    $data['nrkdistrictlabel'] = xarVarPrepForDisplay(xarML('NRK district'));
-    $data['nrknumberlabel'] = xarVarPrepForDisplay(xarML('NRK registration number'));
-    $data['ehbonrlabel'] = xarVarPrepForDisplay(xarML('First aid certificate number'));
-    $data['ehbopluslabel'] = xarVarPrepForDisplay(xarML('First aid including bandages?'));
-    $data['ehbodatelabel'] = xarVarPrepForDisplay(xarML('Date of renewal for first aid'));
-    $data['ehboplacelabel'] = xarVarPrepForDisplay(xarML('Organisation to renew first aid'));
-    $data['dateintakelabel'] = xarVarPrepForDisplay(xarML('Date of intake talk'));
-    $data['intakebylabel'] = xarVarPrepForDisplay(xarML('Intake taken by'));
-    $data['dateemploylabel'] = xarVarPrepForDisplay(xarML('Datum in dienst'));
-    $data['dateoutlabel'] = xarVarPrepForDisplay(xarML('Datum uit dienst'));
-    $data['dateouttalklabel'] = xarVarPrepForDisplay(xarML('Date of talk about departure'));
-    $data['outreasonlabel'] = xarVarPrepForDisplay(xarML('Reason for departure'));
-    $data['outtalkwithlabel'] = xarVarPrepForDisplay(xarML('Talk taken with'));
-    $data['dateshoeslabel'] = xarVarPrepForDisplay(xarML('Date of shoes release'));
-    $data['sizeshoeslabel'] = xarVarPrepForDisplay(xarML('Size of shoes'));
-    $data['banknrlabel'] = xarVarPrepForDisplay(xarML('Bank account number'));
-    $data['bankplaceidlabel'] = xarVarPrepForDisplay(xarML('Bank account place'));
-    $data['otherslabel'] = xarVarPrepForDisplay(xarML('Other remarks'));
-    $data['educationremarkslabel'] = xarVarPrepForDisplay(xarML('Education remarks'));
-
-
-
     // Get menu variables - it helps if all of the module pages have a standard
     // menu at their head to aid in navigation
     // $menu = xarModAPIFunc('sigmapersonnel','admin','menu','modify');
-    $hooks = '';
+    $hooks = array();
     $item['module'] = 'sigmapersonnel';
     $hooks = xarModCallHooks('item', 'modify', $personid, $item);
     // Return the template variables defined in this function
-    return array('authid'       => xarSecGenAuthKey(),
-                 'invalid'      => $invalid,
-                 'updatebutton' => xarVarPrepForDisplay(xarML('Update Person')),
-                 'hookoutput'   => $hooks,
-                 'item'         => $item);
+    $data['authid'] = xarSecGenAuthKey();
+    $data['invalid']      = $invalid;
+    $data['updatebutton'] = xarVarPrepForDisplay(xarML('Update Person'));
+    $data['hookoutput']   = $hooks;
+    $data['item']         = $item;
+    $data['ptitle']       = $item['title'];
+
+    return $data;
 }
 
 ?>

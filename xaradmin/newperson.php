@@ -145,7 +145,7 @@ function sigmapersonnel_admin_newperson($args)
     $hooks = xarModCallHooks('item', 'new', '', $item);
 
     if (empty($hooks)) {
-        $data['hookoutput'] = '';
+        $data['hookoutput'] = array();
     } else {
         // You can use the output from individual hooks in your template too, e.g. with
         // $hookoutput['categories'], $hookoutput['dynamicdata'], $hookoutput['keywords'] etc.
