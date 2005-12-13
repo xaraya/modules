@@ -1,8 +1,8 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <strong>
-   <xar:mlstring>Current and upcoming Courses </xar:mlstring>
+   #$numitems# <xar:mlstring>Courses in the </xar:mlstring>
    <xar:ml>
-   <xar:mlstring>for the next #(1) days</xar:mlstring>
+   <xar:mlstring>next #(1) days</xar:mlstring>
    <xar:mlvar>#$BlockDays#</xar:mlvar>
    </xar:ml>
 </strong>
@@ -10,9 +10,9 @@
     <xar:if condition="count($items) ge 1">
         <xar:foreach in="$items" value="$item">
             <xar:if condition="empty($item.link)">
-                <li>#xarVarPrepForDisplay($item.startdate)# #xarVarPrepForDisplay($item.coursename)#<br /></li>
+                <li>#xarVarPrepForDisplay($item.startdate)# #xarVarPrepForDisplay($item.trimname)#<br /></li>
             <xar:else />
-               <li><a href="#$item.link#">#xarVarPrepForDisplay($item.startdate)# #xarVarPrepForDisplay($item.coursename)#</a><br /></li>
+               <li><a href="#$item.link#" title="#$item.coursename#">#xarVarPrepForDisplay($item.startdate)# #xarVarPrepForDisplay($item.trimname)#</a><br /></li>
             </xar:if>
         </xar:foreach>
     </xar:if>

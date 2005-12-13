@@ -124,11 +124,12 @@ function courses_upcomingblock_display($blockinfo)
             $item['enddate'] = $enddate;
             $coursename = xarModAPIFunc('courses', 'user', 'getcoursename', array('courseid'=>$courseid));
             $item['coursename'] = $coursename['name'];
+            //string substr ( string string, int start [, int length] )
+            $item['trimname'] = substr ( $coursename['name'], 0, 10).'...';
         }
         $items[] = $item;
     }
-
-    $blockinfo['content'] = array('items' => $items,'BlockDays'=> $BlockDays);
+    $blockinfo['content'] = array('items' => $items,'BlockDays'=> $BlockDays, 'numitems' => $vars['numitems']);
 
     return $blockinfo;
 }
