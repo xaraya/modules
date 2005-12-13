@@ -1,18 +1,16 @@
 <?php
-/*
+/**
  * Newsletter create story
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage newsletter module
+ * @subpackage Newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * Create a new Newsletter story
  *
@@ -31,8 +29,8 @@
  * @param 'storyDateYear' the year the story was published
  * @param 'altDate' alternative text date field if no publication date of story
  * @param 'fullTextLink' the full text link to the story
- * @param 'registerLink' does the link require registration to view?(0=no, 1=yes) 
- * @param 'linkExpiration' override of default publication link expiration 
+ * @param 'registerLink' does the link require registration to view?(0=no, 1=yes)
+ * @param 'linkExpiration' override of default publication link expiration
  * @param 'commentary' commentary on the story content
  * @param 'commentarySource' source of the commentary from dropdown list
  * @param 'newCommentarySource' new source of the commentary
@@ -43,7 +41,7 @@
 function newsletter_admin_createstory()
 {
 
-    
+
     // Get parameters from the input
     if (!xarVarFetch('ownerId', 'id', $ownerId)) {
         xarErrorFree();
@@ -116,7 +114,7 @@ function newsletter_admin_createstory()
 
         return xarModFunc('newsletter','admin','newstory',$_sendBackData);
     }
-    
+
     // Add new commentary source if field isn't empty
     if (!empty($newCommentarySource)) {
             $newcommsource = xarModAPIFunc('newsletter',
@@ -124,7 +122,7 @@ function newsletter_admin_createstory()
                                     'newcommentarysource',
                                     array('publicationId' => $publicationId,
                                           'newCommentarySource' => $newCommentarySource));
-            
+
             if (!empty($newcommsource)) {
                 $commentarySource = $newcommsource;
         }
@@ -147,7 +145,7 @@ function newsletter_admin_createstory()
                                      array('id' => $publicationId));
 
             // Check for exceptions
-            if (!isset($pubItem) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+            if (!isset($pubItem) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
                 return; // throw back
 
             $linkExpiration = $pubItem['linkExpiration'];
@@ -155,7 +153,7 @@ function newsletter_admin_createstory()
             // Default to never expire
             $linkExpiration = 0;
         }
-    } 
+    }
 
     // Set DatePublished to 0 for a new story
     $tstmpDatePublished =  0;
@@ -182,7 +180,7 @@ function newsletter_admin_createstory()
                                     'articleid' => $articleid));
 
     // Check return value
-    if (!isset($storyId) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+    if (!isset($storyId) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
         return; // throw back
 
     // A new story has been added to an issue, so sort the stories
@@ -219,7 +217,7 @@ function newsletter_admin_createstory()
                               'issueId' => $issueId,
                               'ownerId' => $ownerId,
                               'categoryId' => $categoryId);
-                              
+
     // If creating another story
     // MichelV: changed to provide for easier translations of button
     if (empty($submitbuttonAdd)) {

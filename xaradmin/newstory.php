@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter add story
  *
  * @package Xaraya eXtensible Management System
@@ -8,11 +8,9 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage newsletter module
+ * @subpackage Newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * Add a new Newsletter story
  *
@@ -27,10 +25,9 @@ function newsletter_admin_newstory($args)
     // set a default value for form error messages
     // this will get overwritten w/ the extract call if formErrorMsg was passed in args
     $formErrorMsg=array();
-    
+
     // get the arguments passed to us
-    //extract($args);
-    
+    extract($args);
 
     // Security check
     if(!xarSecurityCheck('AddNewsletter')) return;
@@ -41,7 +38,7 @@ function newsletter_admin_newstory($args)
     if (!xarVarFetch('issueId',         'int:0:', $issueId, 0)) return;
     if (!xarVarFetch('categoryId',      'int:0:', $categoryId, 0)) return;
     if (!xarVarFetch('articleid',       'int:0:', $articleid, NULL,XARVAR_NOT_REQUIRED)) return;
-    
+
     // get input if they have an error and need the form repopulated
     if (!xarVarFetch('content', 'str:0:', $content, NULL,XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('altDate', 'str:0:', $altDate, NULL,XARVAR_NOT_REQUIRED)) return;
@@ -62,8 +59,7 @@ function newsletter_admin_newstory($args)
             $data[$key]=$val;
         }
     }
-    
-    
+
     // Set template strings
     $data['addlabel'] = xarVarPrepForDisplay(xarML('Finished'));
     $data['nextlabel'] = xarVarPrepForDisplay(xarML('Add Another Story'));
@@ -74,7 +70,6 @@ function newsletter_admin_newstory($args)
                                           'get',
                                            array('phase' => 'publication',
                                                  'sortby' => 'title'));
-    
     // Check for exceptions
     if (!isset($data['publications']) && xarCurrentErrorType() != XAR_NO_EXCEPTION)  {
         return; // throw back
@@ -82,14 +77,14 @@ function newsletter_admin_newstory($args)
 
     // default is to not use articles
     $data['canUseArticles']=false;
-    
+
     // only do this step if they have the articles module loaded up
     if (xarModIsAvailable('articles')){
         $data['canUseArticles']=true;
-        
+
         if (isset($articleid) && $articleid!=0){
             $data['articleid']=$articleid;
-            
+
             // get all the articles based on the users filter set (article_args)
             $_articlearray = xarModAPIFunc(
                 'articles', 'user', 'get', array("aid"=>$data['articleid'] ));
@@ -97,16 +92,17 @@ function newsletter_admin_newstory($args)
             $data['articletitle']=substr($_articlearray['title'],0,50);
         }
     }
-    
+
     // Check if we have an ownerid
     if (!$ownerId) {
         // Get current user
+        // TODO: Can this be replaced with Xaraya calls?
         $data['loggeduser'] = xarModAPIFunc('newsletter',
                                             'user',
                                             'getloggeduser');
-                                            
+
         $ownerId = $data['loggeduser']['uid'];
-    }                                   
+    }
 
     // Set owner id
     $data['ownerId'] = $ownerId;
@@ -125,7 +121,7 @@ function newsletter_admin_newstory($args)
 
     // Set category id - this will allow the category to be "sticky"
     // from one story to the next
-    $data['categoryId'] = $categoryId; 
+    $data['categoryId'] = $categoryId;
 
     // Get categories
     $data['number_of_categories'] = xarModGetVar('newsletter', 'number_of_categories');
@@ -182,7 +178,7 @@ function newsletter_admin_newstory($args)
                                      'getchildcategories',
                                      array('parentcid' => $pubItem['cid'],
                                            'numcats' => $data['number_of_categories']));
-        
+
         if ($categories) {
             $data['categories'] = $categories;
         }
@@ -215,7 +211,7 @@ function newsletter_admin_newstory($args)
                                            'appendchildcategories',
                                            array('parentcid' => $category['cid'],
                                                  'numcats' => $data['number_of_categories']));
-        
+
             // Merge the category arrays
             $data['categories'] = array_merge($data['categories'], $grandchildren);
         }

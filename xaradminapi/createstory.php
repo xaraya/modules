@@ -1,17 +1,15 @@
 <?php
-/*
- * Newsletter 
+/**
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage newsletter module
+ * @subpackage Newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * Create an story
  *
@@ -81,9 +79,9 @@ function newsletter_adminapi_createstory($args)
               WHERE xar_title = ?
               AND xar_cid = ?
               AND xar_ownerid = ?";
-    
+
     $result =& $dbconn->Execute($query, $bindvars);
-    if (!$result) return false; 
+    if (!$result) return false;
 
     if ($result->RecordCount() > 0) {
         return false;  // story already exists

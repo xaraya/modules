@@ -9,39 +9,38 @@ window.open(urlGoto,windowName,'width='+widthPassed+',height='+heightPassed+',re
   <span class="xar-mod-title">#$menu['menutitle']#</span>
 </div>
 <div class="xar-mod-body">
-  <h2><xar:mlstring>Modify Story</xar:mlstring></h2><br />
-  <div style="text-align: left;margin: auto;">
-    <form action="#xarModURL('newsletter', 'admin', 'modifystory')#" method="post" enctype="application/x-www-form-urlencoded" >
+    <h2><xar:mlstring>Modify Story</xar:mlstring></h2><br />
+    <form action="&xar-modurl-newsletter-admin-modifystory;" method="post" enctype="application/x-www-form-urlencoded" >
       <input type="hidden" name="id" id="id" value="#$story['id']#" />
-        
-      
       <xar:if condition="!empty($formErrorMsg)">
         <br/><font color="Red">There is an a problem with your story.  Please see details in red below.</font><br/>
       </xar:if>
-      <table border="0" cellpadding="5">
-        <tr>
-          <td>
-            <xar:mlstring>Publication:</xar:mlstring>
-          </td>
-          <td>
-            <select name="publicationId" onChange="if(this.options[this.selectedIndex].value != 0) this.form.submit();" tabindex="1">
-              <option value="0">Choose Publication</option>
-              <xar:loop name="$story['publications']">
-                <xar:if condition="$story['publicationId'] eq $loop:item['id']">
-                  <option name="id" value="#$loop:item['id']#" selected="selected">#xarVarPrepForDisplay($loop:item['title'])#</option>
-                  <xar:else />
-                  <option name="id" value="#$loop:item['id']#">#xarVarPrepForDisplay($loop:item['title'])#</option>
-                </xar:if>
-              </xar:loop>
-            </select>
-          </td>
-        </tr>
-      </table>
+        <fieldset>
+            <legend>
+                <xar:mlstring>Publication:</xar:mlstring>
+            </legend>
+            <div class="xar-form-input-wrapper">
+                <label for="name" class="xar-form-label" title="#xarML('Choose the publication.')#">
+                       <xar:mlstring>Choose publication:</xar:mlstring>
+                </label>
+
+                  <select name="publicationId" onChange="if(this.options[this.selectedIndex].value != 0) this.form.submit();" tabindex="1">
+                  <option value="0">Choose Publication</option>
+                  <xar:loop name="$story['publications']">
+                    <xar:if condition="$story['publicationId'] eq $loop:item['id']">
+                      <option name="id" value="#$loop:item['id']#" selected="selected">#xarVarPrepForDisplay($loop:item['title'])#</option>
+                      <xar:else />
+                      <option name="id" value="#$loop:item['id']#">#xarVarPrepForDisplay($loop:item['title'])#</option>
+                    </xar:if>
+                  </xar:loop>
+                </select>
+            </div>
+        </fieldset>
     </form>
-    <form action="#xarModURL('newsletter', 'admin', 'updatestory')#" method="post" enctype="application/x-www-form-urlencoded" >
-      <input type="hidden" name="authid" id="authid" value="#$authid#" /> 
+    <form action="&xar-modurl-newsletter-admin-updatestory;" method="post" enctype="application/x-www-form-urlencoded" >
+      <input type="hidden" name="authid" id="authid" value="#$authid#" />
       <input type="hidden" name="id" id="id" value="#$story['id']#" />
-      <input type="hidden" name="publicationId" id="publicationId" value="#$story['publicationId']#" />     
+      <input type="hidden" name="publicationId" id="publicationId" value="#$story['publicationId']#" />
       <table>
         <xar:if condition="$canUseArticles">
           <tr >
@@ -51,9 +50,9 @@ window.open(urlGoto,windowName,'width='+widthPassed+',height='+heightPassed+',re
             <td>
               <xar:if condition="isSet($articletitle)">
                 #$articletitle# <br/>
-                  <a href="#xarModURL('newsletter', 'admin', 'modifystory')#&amp;id=#$story['id']#&amp;articleid=0" tabindex="2">None</a> - 
-                  <a href="javascript:newwindow('#xarModURL('articles', 'user', 'display', array('aid' => $articleid))#?theme=print')" tabindex="3" >Preview</a> - 
-                  <input type="hidden" name="articleid" id="articleid" value="#$articleid#" />   
+                  <a href="#xarModURL('newsletter', 'admin', 'modifystory')#&amp;id=#$story['id']#&amp;articleid=0" tabindex="2">None</a> -
+                  <a href="javascript:newwindow('#xarModURL('articles', 'user', 'display', array('aid' => $articleid))#?theme=print')" tabindex="3" >Preview</a> -
+                  <input type="hidden" name="articleid" id="articleid" value="#$articleid#" />
               </xar:if>
               <a href="javascript:newwindow('#xarModURL('newsletter', 'admin', 'choosearticle')#&amp;id=#$story['id']#&amp;notNew=true')" tabindex="4" >Choose</a>
             </td>
@@ -65,7 +64,7 @@ window.open(urlGoto,windowName,'width='+widthPassed+',height='+heightPassed+',re
               #$hooks#
             </td>
           </tr>
-        </xar:if>  
+        </xar:if>
         <tr>
           <td>
             <xar:mlstring>Story Owner:</xar:mlstring>
@@ -103,7 +102,7 @@ window.open(urlGoto,windowName,'width='+widthPassed+',height='+heightPassed+',re
             </td>
           </tr>
           <xar:else />
-          <input type="hidden" name="categoryId" id="categoryId" value="#$story['number_of_categories']#" />       
+          <input type="hidden" name="categoryId" id="categoryId" value="#$story['number_of_categories']#" />
         </xar:if>
         <tr>
           <td valign="top">
@@ -165,7 +164,7 @@ window.open(urlGoto,windowName,'width='+widthPassed+',height='+heightPassed+',re
             <input type="text" name="fullTextLink" id="fullTextLink" value="#xarVarPrepForDisplay($story['fullTextLink'])#" size="50" maxlength="255" tabindex="13" />
           </td>
         </tr>
-        
+
         <tr>
           <td>
             <xar:mlstring>Registration Required<br/>to View Link:</xar:mlstring>
@@ -207,8 +206,8 @@ window.open(urlGoto,windowName,'width='+widthPassed+',height='+heightPassed+',re
             </xar:if>
           </td>
         </tr>
-        
-        
+
+
         <tr>
           <td>
             <xar:mlstring>Date Published:</xar:mlstring>
@@ -232,5 +231,4 @@ window.open(urlGoto,windowName,'width='+widthPassed+',height='+heightPassed+',re
         </tr>
       </table>
     </form>
-  </div>
 </div>

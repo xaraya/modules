@@ -1,20 +1,19 @@
 <?php
-/*
- * Newsletter 
+/**
+ * Newsletter
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage newsletter module
+ * @subpackage Newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
+ */
 
 /**
  * Retrieve a logged user's information from roles
- * 
+ *
  * @private
  * @author Richard Cave
  * @returns array
@@ -23,7 +22,7 @@
 function newsletter_userapi_getloggeduser()
 {
     // Get logged userid
-    $userId = xarSessionGetVar('uid'); 
+    $userId = xarSessionGetVar('uid');
     if ($userId == _XAR_ID_UNREGISTERED)
         return;
 

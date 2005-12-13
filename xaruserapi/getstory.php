@@ -1,19 +1,17 @@
 <?php
-/*
- * Newsletter 
+/**
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage newsletter module
+ * @subpackage Newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
- * Get an Newsletter story by id
+ * Get a Newsletter story by id
  *
  * @author Richard Cave
  * @param $args an array of arguments
@@ -46,7 +44,7 @@ function newsletter_userapi_getstory($args)
     // Name the table and column definitions
     $nwsltrTable = $xartable['nwsltrStories'];
 
-    $query = "SELECT xar_pid, 
+    $query = "SELECT xar_pid,
                      xar_cid,
                      xar_ownerid,
                      xar_title,
@@ -82,9 +80,9 @@ function newsletter_userapi_getstory($args)
     $datePublished = array();
 
     list($pid,
-         $cid, 
-         $ownerId, 
-         $title, 
+         $cid,
+         $ownerId,
+         $title,
          $source,
          $content,
          $priority,
@@ -135,7 +133,7 @@ function newsletter_userapi_getstory($args)
         $datePublished['day'] = date('d', $datePublished['timestamp']);
         $datePublished['year'] = date('Y', $datePublished['timestamp']);
     }
-                
+
     // Create the story array
     $story = array('id' => $id,
                    'pid' => $pid,
@@ -158,8 +156,8 @@ function newsletter_userapi_getstory($args)
 
     // if we have an article ID, get the article
     if (!empty($story['articleid'])){
-        // retrieve the article 
-        
+        // retrieve the article
+
         $_article  = xarModAPIFunc('articles','user','getAll',
                 array('aids'=>array($story['articleid']),
                       'extra'=>array('dynamicdata')
