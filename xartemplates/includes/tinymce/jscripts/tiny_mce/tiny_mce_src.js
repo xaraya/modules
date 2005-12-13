@@ -1,7 +1,7 @@
 /**
  * $RCSfile: tiny_mce_src.js,v $
- * $Revision: 1.281 $
- * $Date: 2005/12/02 08:12:07 $
+ * $Revision: 1.283 $
+ * $Date: 2005/12/07 19:27:17 $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004, Moxiecode Systems AB, All rights reserved.
@@ -9,8 +9,8 @@
 
 function TinyMCE() {
 	this.majorVersion = "2";
-	this.minorVersion = "0";
-	this.releaseDate = "2005-12-01";
+	this.minorVersion = "0.2";
+	this.releaseDate = "2005-xx-xx";
 
 	this.instances = new Array();
 	this.stickyClassesLookup = new Array();
@@ -1754,7 +1754,7 @@ TinyMCE.prototype._cleanupAttribute = function(valid_attributes, element_name, a
 			if (tinyMCE.cleanup_on_save && attribValue.indexOf('mceItemAnchor') != -1)
 				attribValue = attribValue.replace(/mceItem[a-z0-9]+/gi, '');
 
-			if (element_name == "table" || element_name == "td") {
+			if (element_name == "table" || element_name == "td" || element_name == "th") {
 				// Handle visual aid
 				if (tinyMCE.cleanup_visual_table_class != "")
 					attribValue = tinyMCE.getVisualAidClass(attribValue, !tinyMCE.cleanup_on_save);
@@ -3596,44 +3596,19 @@ TinyMCE.prototype.fixGeckoBaseHREFBug = function(m, e, h) {
 
 			return h;
 		} else {
-			if (h.indexOf(' xsrc') != -1) {
-				var n = e.getElementsByTagName("img");
+			var el = new Array('img','select','area','iframe');
+
+			for (var a=0; a<el.length; a++) {
+				var n = e.getElementsByTagName(el[a]);
+
 				for (var i=0; i<n.length; i++) {
 					var xsrc = tinyMCE.getAttrib(n[i], "xsrc");
-
-					if (xsrc != "") {
-						n[i].src = tinyMCE.convertRelativeToAbsoluteURL(tinyMCE.settings['base_href'], xsrc);
-						n[i].removeAttribute("xsrc");
-					}
-				}
-
-				// Select image form fields
-				var n = e.getElementsByTagName("select");
-				for (var i=0; i<n.length; i++) {
-					var xsrc = tinyMCE.getAttrib(n[i], "xsrc");
-
-					if (xsrc != "") {
-						n[i].src = tinyMCE.convertRelativeToAbsoluteURL(tinyMCE.settings['base_href'], xsrc);
-						n[i].removeAttribute("xsrc");
-					}
-				}
-
-				// iframes
-				var n = e.getElementsByTagName("iframe");
-				for (var i=0; i<n.length; i++) {
-					var xsrc = tinyMCE.getAttrib(n[i], "xsrc");
-
-					if (xsrc != "") {
-						n[i].src = tinyMCE.convertRelativeToAbsoluteURL(tinyMCE.settings['base_href'], xsrc);
-						n[i].removeAttribute("xsrc");
-					}
-				}
-			}
-
-			if (h.indexOf(' xhref') != -1) {
-				var n = e.getElementsByTagName("a");
-				for (var i=0; i<n.length; i++) {
 					var xhref = tinyMCE.getAttrib(n[i], "xhref");
+
+					if (xsrc != "") {
+						n[i].src = tinyMCE.convertRelativeToAbsoluteURL(tinyMCE.settings['base_href'], xsrc);
+						n[i].removeAttribute("xsrc");
+					}
 
 					if (xhref != "") {
 						n[i].href = tinyMCE.convertRelativeToAbsoluteURL(tinyMCE.settings['base_href'], xhref);

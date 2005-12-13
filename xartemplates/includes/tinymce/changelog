@@ -1,3 +1,9 @@
+Version 2.0.2 (2005-xx-xx)
+	Added updated Danish language pack contributed by Jan Moelgaard, John Dalsgaard and Bo Frederiksen.
+	Fixed bug where mceVisualAid class wasn't removed from TH elements on save.
+	Fixed bug where the href attribute area elements gets converted to xhref. 
+	Fixed XHTML compliance for Preview plugin contributed by Bo Frederiksen.
+	Fixed entity decoding problem with insert button of the advhr plugin contributed by Bo Frederiksen.
 Version 2.0.1 (2005-12-02)
 	Fixed critical bug in some MSIE versions when submiting content.
 Version 2.0 (2005-12-01)

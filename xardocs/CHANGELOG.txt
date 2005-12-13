@@ -1,9 +1,14 @@
+* Version 1.0.0 13 Dec 05
+- Fix for href to xhref conversion bug
+- updated danish language pack
+- minor fixes 
+
 * Version 1.0.0 2 Dec 05
 - Many many bug fixes and integrating tinymce 2.0
 - New ibrowser - please update your ibrowser config file
 - Updated language packs
 - Support for Opera, and improved support for Safari
-- Support for Firefox 1.5 
+- Support for Firefox 1.5
 
 * Version 0.9.4
 - Allow a space to act to remove line totall in custom adv theme row building
