@@ -1,17 +1,15 @@
 <?php
-/*
- * Newsletter 
+/**
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage newsletter module
+ * @subpackage Newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * Get an Newsletter issue by id
  *
@@ -57,7 +55,7 @@ function newsletter_userapi_getissue($args)
                WHERE xar_id = ?";
 
     // Process query
-    $result =& $dbconn->Execute($query, array((int) $id));
+    $result =& $dbconn->Execute($query, array($id));
 
     // Check for an error
     if (!$result) return;
@@ -72,8 +70,8 @@ function newsletter_userapi_getissue($args)
     $datePublished = array();
 
     list($pid,
-         $title, 
-         $ownerId, 
+         $title,
+         $ownerId,
          $external,
          $editorNote,
          $datePublished['timestamp'],
@@ -107,7 +105,7 @@ function newsletter_userapi_getissue($args)
         $datePublished['day'] = date('d', $datePublished['timestamp']);
         $datePublished['year'] = date('Y', $datePublished['timestamp']);
     }
-                
+
     // Create the issue
     $issue = array('id' => $id,
                    'pid' => $pid,

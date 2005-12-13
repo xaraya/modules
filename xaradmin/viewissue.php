@@ -1,6 +1,6 @@
 <?php
-/*
- * Newsletter 
+/**
+ * Newsletter
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
@@ -9,9 +9,7 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * View a list of Newsletter issues
  *
@@ -53,11 +51,11 @@ function newsletter_admin_viewissue($args)
         if (!isset($publication) && xarCurrentErrorType() != XAR_NO_EXCEPTION) {
             return; // throw back
         }
-        
+
         $data['publication_title'] = $publication['title'];
     }
 
-    // Set publication 
+    // Set publication
     $data['publicationId'] = $publicationId;
 
     // Prepare the array variable that will hold all items for display
@@ -109,7 +107,7 @@ function newsletter_admin_viewissue($args)
         $issues[$i]['newstorytitle'] = xarML('New Story');
         $issues[$i]['editstoriestitle'] = xarML('Edit Stories');
 
-        if (xarSecurityCheck('EditNewsletter', 0)) { 
+        if (xarSecurityCheck('EditNewsletter', 0)) {
             $issues[$i]['editurl'] = xarModURL('newsletter',
                                                'admin',
                                                'modifyissue',
@@ -134,7 +132,7 @@ function newsletter_admin_viewissue($args)
             $issues[$i]['editstoriesurl'] = '';
         }
 
-        if(xarSecurityCheck('ReadNewsletter', 0)) { 
+        if(xarSecurityCheck('ReadNewsletter', 0)) {
             $issues[$i]['previewurl'] = xarModURL('newsletter',
                                                   'admin',
                                                   'previewissue',
@@ -143,7 +141,7 @@ function newsletter_admin_viewissue($args)
             $issues[$i]['previewurl'] = '';
         }
 
-        if(xarSecurityCheck('AdminNewsletter', 0)) { 
+        if(xarSecurityCheck('EditNewsletter', 0)) { //AdminNewsletter
             // Check if the issue has been published already
             if ($issue['datePublished']['timestamp'] == 0) {
                 $issues[$i]['publishurl'] = xarModURL('newsletter',
@@ -157,7 +155,7 @@ function newsletter_admin_viewissue($args)
             $issues[$i]['publishurl'] = '';
         }
 
-        if(xarSecurityCheck('DeleteNewsletter', 0)) { 
+        if(xarSecurityCheck('DeleteNewsletter', 0)) {
             $issues[$i]['deleteurl'] = xarModURL('newsletter',
                                                  'admin',
                                                  'deleteissue',
@@ -225,16 +223,16 @@ function newsletter_admin_viewissue($args)
 
     // Create pagination
     $data['pager'] = xarTplGetPager($startnum,
-                                    xarModAPIFunc('newsletter', 
-                                                  'user', 
-                                                  'countissues', 
+                                    xarModAPIFunc('newsletter',
+                                                  'user',
+                                                  'countissues',
                                                   array('owner' => $owner,
                                                         'publicationId' => $publicationId,
                                                         'display' => $display,
                                                         'external' => 0)),
-                                    xarModURL('newsletter', 
-                                              'admin', 
-                                              'viewissue', 
+                                    xarModURL('newsletter',
+                                              'admin',
+                                              'viewissue',
                                               array('startnum' => '%%',
                                                    'sortby' => $sortby,
                                                    'owner' => $owner,

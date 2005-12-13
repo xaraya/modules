@@ -1,17 +1,15 @@
 <?php
-/*
- * Newsletter 
+/**
+ * Newsletter
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage newsletter module
+ * @subpackage Newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * View a list of Newsletter disclaimers
  *
@@ -48,7 +46,7 @@ function newsletter_admin_viewdisclaimer($args)
                                        'phase' => 'disclaimer'));
 
     // Check for exceptions
-    if (!isset($disclaimers) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+    if (!isset($disclaimers) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
         return; // throw back
 
     // Check individual permissions for Edit / Delete
@@ -58,7 +56,7 @@ function newsletter_admin_viewdisclaimer($args)
         $disclaimers[$i]['edittitle'] = xarML('Edit');
         $disclaimers[$i]['deletetitle'] = xarML('Delete');
 
-        if(xarSecurityCheck('EditNewsletter', 0)) { 
+        if(xarSecurityCheck('EditNewsletter', 0)) {
             $disclaimers[$i]['editurl'] = xarModURL('newsletter',
                                                     'admin',
                                                     'modifydisclaimer',
@@ -67,7 +65,7 @@ function newsletter_admin_viewdisclaimer($args)
             $disclaimers[$i]['editurl'] = '';
         }
 
-        if(xarSecurityCheck('DeleteNewsletter', 0)) { 
+        if(xarSecurityCheck('DeleteNewsletter', 0)) {
             $disclaimers[$i]['deleteurl'] = xarModURL('newsletter',
                                                       'admin',
                                                       'deletedisclaimer',

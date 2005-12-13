@@ -1,11 +1,12 @@
 <div class="xar-mod-head">
-    <span class="xar-mod-title">#$menu['menutitle']#</span>
+    <span class="xar-mod-title"><xar:mlstring>Modify Disclaimer</xar:mlstring></span>
 </div>
+<br />
+#$menu#
 <div class="xar-mod-body">
     <h2><xar:mlstring>Modify Disclaimer</xar:mlstring></h2><br />
-    <div style="text-align: left;margin: auto;">
-        <form action="#xarModURL('newsletter', 'admin', 'updatedisclaimer')#" method="post" enctype="application/x-www-form-urlencoded" >
-        <input type="hidden" name="authid" id="authid" value="#$authid#" /> 
+        <form action="&xar-modurl-newsletter-admin-updatedisclaimer;" method="post" enctype="application/x-www-form-urlencoded" >
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <input type="hidden" name="id" id="id" value="#$item['id']#" />
         <table border="0" cellpadding="5">
             <tr>
@@ -35,7 +36,6 @@
                 <input type="submit" value="#$updatebutton#"  tabindex="3" />
                 </td>
             </tr>
-        </table>    
+        </table>
         </form>
-    </div>
 </div>

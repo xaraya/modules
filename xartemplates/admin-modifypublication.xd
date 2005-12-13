@@ -4,8 +4,8 @@
 <div class="xar-mod-body">
   <h2><xar:mlstring>Modify Publication</xar:mlstring></h2><br />
   <div style="text-align: left;margin: auto;">
-    <form action="#xarModURL('newsletter', 'admin', 'updatepublication')#" method="post" enctype="application/x-www-form-urlencoded" >
-      <input type="hidden" name="authid" id="authid" value="#$authid#" /> 
+    <form action="&xar-modurl-newsletter-admin-updatepublication;" method="post" enctype="application/x-www-form-urlencoded" >
+      <input type="hidden" name="authid" id="authid" value="#$authid#" />
       <input type="hidden" name="id" id="id" value="#$publication['id']#" />
       <table border="0" cellpadding="5">
         <tr>
@@ -58,7 +58,7 @@
             </td>
           </tr>
         <xar:else />
-          <input type="hidden" name="categoryId" id="categoryId" value="#$publication['number_of_categories']#" />        
+          <input type="hidden" name="categoryId" id="categoryId" value="#$publication['number_of_categories']#" />
         </xar:if>
         <tr>
           <td>
@@ -94,7 +94,7 @@
         </tr>
         <tr>
           <td>
-            <b><xar:mlstring>Email From Name:</xar:mlstring></b> 
+            <b><xar:mlstring>Email From Name:</xar:mlstring></b>
             <br/><font size="1">(Default is owner's name)</font>
           </td>
           <td>
@@ -103,7 +103,7 @@
         </tr>
         <tr>
           <td>
-            <b><xar:mlstring>Email From Address:</xar:mlstring></b> 
+            <b><xar:mlstring>Email From Address:</xar:mlstring></b>
             <br/><font size="1">(Default is owner's email address)</font>
           </td>
           <td>
@@ -163,7 +163,7 @@
         </tr>
         <tr>
           <td>
-            <b><xar:mlstring>Private Publication:</xar:mlstring></b> 
+            <b><xar:mlstring>Private Publication:</xar:mlstring></b>
           </td>
           <td>
             <xar:if condition="$publication['private'] eq 1">
@@ -209,7 +209,7 @@
             <input type="submit" value="#$updatebutton#"  tabindex="19" />
           </td>
         </tr>
-      </table>            
+      </table>
     </form>
   </div>
 </div>

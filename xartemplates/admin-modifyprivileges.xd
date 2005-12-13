@@ -7,9 +7,9 @@
 #$menu#
 <div class="xar-mod-body">
   <div class="contentBorder">
-    <div style="text-align: left;margin: auto;">        
+    <div style="text-align: left;margin: auto;">
       <xar:if condition="$creategroups eq 0">
-        <form action="#xarModURL('newsletter', 'admin', 'updategroups')#" method="post" enctype="application/x-www-form-urlencoded" >
+        <form action="&xar-modurl-newsletter-admin-updategroups;" method="post" enctype="application/x-www-form-urlencoded" >
           <input type="hidden" name="authid" id="authid" value="#$authid#" />
           <table border="0" cellpadding="2">
             <tr align="left" valign="top">
@@ -104,7 +104,7 @@
             <xar:else />
                 <b><xar:mlstring>Default groups have already been created!</xar:mlstring></b>
                 <br /><br />
-                <xar:mlstring>Click here to</xar:mlstring>&nbsp;<a href="&xar-modurl-roles-admin-viewroles;"><xar:mlstring>View Groups</xar:mlstring></a> 
+                <xar:mlstring>Click here to</xar:mlstring>&nbsp;<a href="&xar-modurl-roles-admin-viewroles;"><xar:mlstring>View Groups</xar:mlstring></a>
                 <br/><br/>
                 <form action="#xarModURL('newsletter', 'admin', 'updateprivileges')#" method="post" enctype="application/x-www-form-urlencoded" >
                 <input type="hidden" name="authid" id="authid" value="#$authid#" />
@@ -155,7 +155,7 @@
                     </td>
                 </tr>
                 </tr>
-            </table>    
+            </table>
             <br/><br/>
             <center>
             <input type="submit" value="#$updateprivbutton#"  tabindex="16" />
@@ -163,11 +163,14 @@
             </form>
             </xar:if>
             <br />
-            <table border="0" cellpadding="5">
-                <tr>
-                    <td>#$hooks#</td>
-                </tr>
-            </table>
+            <xar:if condition="(!empty($hooks))">
+                <fieldset>
+                    <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
+                        <xar:foreach in="$hooks" key="$hookmodule">
+                        #$hooks[$hookmodule]#
+                       </xar:foreach>
+                </fieldset>
+            </xar:if>
         </div>
     </div>
 </div>

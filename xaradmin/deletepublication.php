@@ -1,6 +1,6 @@
 <?php
-/*
- * Newsletter 
+/**
+ * Newsletter
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
@@ -9,9 +9,7 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * Delete an Newsletter publication
  *
@@ -45,7 +43,7 @@ function newsletter_admin_deletepublication($args)
                                  array('id' => $id));
 
     // Check for exceptions
-    if (!isset($publication) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+    if (!isset($publication) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
         return; // throw back
 
     // Check for confirmation.
@@ -60,12 +58,12 @@ function newsletter_admin_deletepublication($args)
                                               'get',
                                                array('phase' => 'publication',
                                                      'sortby' => 'title'));
-        
+
         // Check for exceptions
         if (!isset($data['publications']) && xarCurrentErrorType() != XAR_NO_EXCEPTION)  {
             return; // throw back
         }
-    
+
         // Specify for which publication you want confirmation
         $data['id'] = $id;
         $data['confirmbutton'] = xarML('Confirm');

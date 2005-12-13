@@ -1,17 +1,15 @@
 <?php
-/*
- * Newsletter 
+/**
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage newsletter module
+ * @subpackage Newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * Modify an Newsletter issue
  *
@@ -22,7 +20,7 @@
  * @returns array
  * @return $templateVarArray
  */
-function newsletter_admin_modifyissue() 
+function newsletter_admin_modifyissue()
 {
     // Security check
     if(!xarSecurityCheck('EditNewsletter')) return;
@@ -38,13 +36,13 @@ function newsletter_admin_modifyissue()
                            array('id' => $id));
 
     // Check for exceptions
-    if (!isset($issue) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+    if (!isset($issue) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
         return; // throw back
 
     // Assign publication to issue pid if not set
     if ($publication == 0)
         $publication = $issue['pid'];
-    
+
     // Get the chosen publication
     if ($publication != 0) {
         $pubItem = xarModAPIFunc('newsletter',
@@ -53,7 +51,7 @@ function newsletter_admin_modifyissue()
                                  array('id' => $publication));
 
         // Check for exceptions
-        if (!isset($pubItem) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+        if (!isset($pubItem) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
             return; // throw back
 
         // If issue fromname is empty, then set to publication fromname
@@ -71,9 +69,9 @@ function newsletter_admin_modifyissue()
                                   'user',
                                   'get',
                                    array('phase' => 'publication'));
-    
+
     // Check for exceptions
-    if (!isset($publications) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+    if (!isset($publications) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
         return; // throw back
 
     $issue['publications'] = $publications;

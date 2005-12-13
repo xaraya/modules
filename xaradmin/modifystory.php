@@ -1,17 +1,15 @@
 <?php
-/*
- * Newsletter 
+/**
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage newsletter module
+ * @subpackage Newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * Modify an Newsletter story
  *
@@ -23,40 +21,39 @@
  * @returns array
  * @return $templateVarArray
  */
-function newsletter_admin_modifystory($args=array()) 
+function newsletter_admin_modifystory($args=array())
 {
     // set a default value for form error messages
     // this will get overwritten w/ the extract call if formErrorMsg was passed in args
     $formErrorMsg=array();
-    
+
     $story=array();
-    
+
     // get the arguments passed to us
     extract($args);
-    
+
     // Security check
     if(!xarSecurityCheck('EditNewsletter')) return;
-    
+
     // Get input parameters
     if (!xarVarFetch('id', 'id', $id)) return;
     if (!xarVarFetch('publicationId', 'int:0:', $publicationId, 0)) return;
-    
+
     if (empty($story)){
         // call the user API function to retrieve all the content
         // for the story with the matching id ($id)
         $story = xarModAPIFunc('newsletter',
                                'user',
                                'getstory',
-                               array('id' => $id));      
-    }
-    else{
+                               array('id' => $id));
+    }else{
         // call the user API function to retrieve all the content
         // for the story with the matching id ($id)
         $_storyDB = xarModAPIFunc('newsletter',
-                               'user',
-                               'getstory',
-                               array('id' => $id));   
-                               
+                                  'user',
+                                  'getstory',
+                                  array('id' => $id));
+
         // put the story we just got in the form into the proper story format
         // set the data from the form over the db pull
         $_storyDB['articleid']=$story['articleid'];
@@ -67,35 +64,35 @@ function newsletter_admin_modifystory($args=array())
         $_storyDB['fullTextLink']=$story['fullTextLink'];
         $_storyDB['commentary']=$story['commentary'];
         $_storyDB['commentarySource']=$story['commentarySource'];
-        
+
         // now make them the same for all the shared code below
         $story = $_storyDB;
 
     }
-       
-    // set what we'll return to be an array and populate it depending on 
+
+    // set what we'll return to be an array and populate it depending on
     // if we use articles or stories
     $templateVarArray = array();
-     
+
     // default is to not use articles
     $templateVarArray['canUseArticles']=false;
-    
-    
+
+
     // only do this step if they have the articles module loaded up
     if (xarModIsAvailable('articles')){
         // get input parameters.  These allow the user
         // to use an article in place of a story.  The first three (pubtypeid, catfilter, status) reduce
         // the number of articles shown to the user to choose from.  ie article must be of this pubtype,
         // in this category and of this status.
-        
+
         // we may not have gotten the article vars from the form, they may need to be pulled from the
-        // database.  the previous xarModAPIFunc('newsletter','user','getstory',) call has what we need.  Do this 
+        // database.  the previous xarModAPIFunc('newsletter','user','getstory',) call has what we need.  Do this
         // in the fourth xarVarFetch argument which will make the db value default if the form is empty.
         xarVarFetch('articleid', 'int:0:', $vars['articleid'], $story['articleid'], XARVAR_NOT_REQUIRED);
-        
+
         $templateVarArray['canUseArticles']=true;
     }
-    
+
     // get an array of all the publication from the database. we'll to put in the drop down
     // to choose a publication for the story to use.
     $story['publications'] = xarModAPIFunc('newsletter',
@@ -103,16 +100,14 @@ function newsletter_admin_modifystory($args=array())
                                            'get',
                                             array('phase' => 'publication',
                                                   'sortby' => 'title'));
-    
+
     // Check for exceptions from the xarMadAPIFunc call
-    if (!isset($story['publications']) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
-        return; // throw back
-                           
-                                                     
-    // Check for exceptions
-    if (!isset($story) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+    if (!isset($story['publications']) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
         return; // throw back
 
+    // Check for exceptions
+    if (!isset($story) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
+        return; // throw back
 
     // Find the publication based on story category
     if ($publicationId != 0) {
@@ -123,7 +118,7 @@ function newsletter_admin_modifystory($args=array())
                                  array('id' => $publicationId));
 
         // Check for exceptions
-        if (!isset($pubItem) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+        if (!isset($pubItem) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
             return; // throw back
     } else {
         // Check if the story has a publication already
@@ -137,7 +132,7 @@ function newsletter_admin_modifystory($args=array())
                                      array('id' => $publicationId));
 
             // Check for exceptions
-            if (!isset($pubItem) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+            if (!isset($pubItem) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
                 return; // throw back
 
         } elseif ($story['cid'] != 0) {
@@ -179,10 +174,10 @@ function newsletter_admin_modifystory($args=array())
                                      'getchildcategories',
                                      array('parentcid' => $pubItem['cid'],
                                            'numcats' => $story['number_of_categories']));
-        
+
         if ($categories)
             $story['categories'] = $categories;
-    
+
     } else {
         // Get the child categories below the master category
         $categories = xarModAPIFunc('newsletter',
@@ -220,7 +215,7 @@ function newsletter_admin_modifystory($args=array())
                                        array('phase' => 'owner'));
 
     // Check for exceptions
-    if (!isset($story['owners']) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+    if (!isset($story['owners']) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
         return; // throw back
 
     // Get the list of commentary sources from module var
@@ -250,10 +245,9 @@ function newsletter_admin_modifystory($args=array())
     // Get the admin menu
     $menu = xarModAPIFunc('newsletter', 'admin', 'menu');
 
-
     if (isset($vars['articleid']) && $vars['articleid']!=0){
         $templateVarArray['articleid']=$vars['articleid'];
-        
+
         // get all the articles based on the users filter set (article_args)
         $_articlearray = xarModAPIFunc(
             'articles', 'user', 'get', array("aid"=>$templateVarArray['articleid'] ));

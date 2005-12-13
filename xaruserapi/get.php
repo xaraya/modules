@@ -1,6 +1,6 @@
 <?php
-/*
- * Newsletter 
+/**
+ * Newsletter
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
@@ -10,8 +10,6 @@
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
 */
-
-
 /**
  * Get all Newsletter items
  *
@@ -123,8 +121,8 @@ function newsletter_userapi_get($args)
 
             // Put items into result array
             for (; !$result->EOF; $result->MoveNext()) {
-                list($uid, 
-                     $rid, 
+                list($uid,
+                     $rid,
                      $ownerName,
                      $signature) = $result->fields;
 
@@ -212,7 +210,7 @@ function newsletter_userapi_get($args)
                         break;
                 }
             }
-            
+
             if (isset($owner)) {
                 if ($owner) {
                     // Get current uid
@@ -253,14 +251,14 @@ function newsletter_userapi_get($args)
             // Put items into result array
             for (; !$result->EOF; $result->MoveNext()) {
 
-                list($id, 
-                     $ownerId, 
-                     $ownerName, 
+                list($id,
+                     $ownerId,
+                     $ownerName,
                      $pid,
                      $publicationTitle,
                      $cid,
                      $categoryName,
-                     $title, 
+                     $title,
                      $source,
                      $content,
                      $priority,
@@ -293,7 +291,7 @@ function newsletter_userapi_get($args)
                     $datePublished['day'] = date('d', $datePublished['timestamp']);
                     $datePublished['year'] = date('Y', $datePublished['timestamp']);
                 }
-                
+
                 $items[] = array('id' => $id,
                                  'ownerId' => $ownerId,
                                  'ownerName' => $ownerName,
@@ -314,7 +312,7 @@ function newsletter_userapi_get($args)
                                  'commentarySource' => $commentarySource,
                                  'articleid'=>$articleid);
             }
-            
+
             // Close result set
             $result->Close();
 
@@ -401,7 +399,7 @@ function newsletter_userapi_get($args)
                     $query .= " AND $issuesTable.xar_ownerid = " . $userid;
                 }
             }
-            
+
             if ($publicationId) {
                 $query .= " AND $issuesTable.xar_pid = " . $publicationId;
             }
@@ -436,11 +434,11 @@ function newsletter_userapi_get($args)
 
             // Put items into result array
             for (; !$result->EOF; $result->MoveNext()) {
-                list($id, 
+                list($id,
                      $pid,
                      $publicationTitle,
                      $title,
-                     $ownerId, 
+                     $ownerId,
                      $ownerName,
                      $external,
                      $editorNote,
@@ -526,11 +524,11 @@ function newsletter_userapi_get($args)
 
             // Put items into result array
             for (; !$result->EOF; $result->MoveNext()) {
-                list($id, 
+                list($id,
                      $cid,
                      $altcids,
                      $categoryName,
-                     $ownerId, 
+                     $ownerId,
                      $ownerName,
                      $templateHTML,
                      $templateText,
@@ -538,7 +536,7 @@ function newsletter_userapi_get($args)
                      $logo,
                      $linkExpiration,
                      $linkRegistration,
-                     $description, 
+                     $description,
                      $disclaimerId,
                      $introduction,
                      $private,
@@ -557,7 +555,7 @@ function newsletter_userapi_get($args)
                 } else {
                     $ownerEmail = $userData['email'];
                 }
-                
+
                 // Unserialize the altcids
                 if (is_string($altcids)) {
                     $altcids = unserialize($altcids);
@@ -620,8 +618,8 @@ function newsletter_userapi_get($args)
 
             // Put items into result array
             for (; !$result->EOF; $result->MoveNext()) {
-                list($uid, 
-                     $pid, 
+                list($uid,
+                     $pid,
                      $ownerName,
                      $state,
                      $htmlmail) = $result->fields;
@@ -667,7 +665,7 @@ function newsletter_userapi_get($args)
                              xar_htmlmail
                       FROM $nwsltrTable
                       WHERE xar_pid = ?";
-            
+
             $bindvars[] = (int) $pid;
 
             $query .= " ORDER by $nwsltrTable.xar_email";
@@ -691,7 +689,7 @@ function newsletter_userapi_get($args)
 
             // Close result set
             $result->Close();
-            
+
             break;
 
         default:

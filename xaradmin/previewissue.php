@@ -1,20 +1,18 @@
 <?php
-/*
- * Newsletter 
+/**
+ * Newsletter
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage newsletter module
+ * @subpackage Newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * Preview an issue before publication
- * 
+ *
  * @public
  * @author Richard Cave
  * @param 'issueId' the id of the issue to preview
@@ -62,9 +60,9 @@ function newsletter_admin_previewissue($args)
 
     // Set publication id and issue id
     $data['publicationid'] = $issue['pid'];
-    $data['issueid'] = $issueId; 
+    $data['issueid'] = $issueId;
 
-    // Add field to track source of issue.  This will be set to 
+    // Add field to track source of issue.  This will be set to
     // either 'web' or 'email'.  This can be used to optionally
     // track hits of issue through AWStats, etc.
     $issue['source'] = 'web';
@@ -96,7 +94,7 @@ function newsletter_admin_previewissue($args)
                                         array('filename' => $templateName));
 
         if (!$sourceFileName) {
-            return;      
+            return;
         }
     }
 
@@ -106,7 +104,7 @@ function newsletter_admin_previewissue($args)
     // Check if preview is in new browser window
     if (xarModGetVar('newsletter', 'previewbrowser')) {
         // We're going to open a new browser window and display the
-        // issue in that browser window.  So print $issueHTML and 
+        // issue in that browser window.  So print $issueHTML and
         // then die as we don't want any further processing to happen
         print $issueHTML;
         die();

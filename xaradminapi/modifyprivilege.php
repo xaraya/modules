@@ -1,16 +1,15 @@
 <?php
-/*
- * Newsletter 
+/**
+ * Newsletter
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage newsletter module
+ * @subpackage Newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
+ */
 /**
  * Create a privilege
  *
@@ -89,7 +88,7 @@ function newsletter_adminapi_modifyprivilege($args)
             $access = 'ACCESS_OVERVIEW';
             break;
     }
-    
+
     if ($type == 'add') {
         xarRegisterPrivilege($privilege,'All','newsletter','All','All',$access,$comment);
 
@@ -102,10 +101,10 @@ function newsletter_adminapi_modifyprivilege($args)
         $priv = $privs->findPrivilege($privilege);
         if (!$priv) return false;  // throw back
 
-        if (!$role->removePrivilege($priv)) 
+        if (!$role->removePrivilege($priv))
             return false;
     }
-    
+
     return true;
 }
 

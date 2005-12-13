@@ -1,17 +1,15 @@
 <?php
-/*
- * Newsletter 
+/**
+ * Newsletter
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage newsletter module
+ * @subpackage Newsletter module
  * @author Richard Cave <rcave@xaraya.com>
 */
-
-
 /**
  * View a list of Newsletter stories
  *
@@ -54,11 +52,11 @@ function newsletter_admin_viewstory($args)
         if (!isset($issue) && xarCurrentErrorType() != XAR_NO_EXCEPTION) {
             return; // throw back
         }
-        
+
         $data['issue_title'] = $issue['title'];
     }
 
-    // Set issue 
+    // Set issue
     $data['issueId'] = $issueId;
 
     // Prepare the array variable that will hold all items for display
@@ -113,7 +111,7 @@ function newsletter_admin_viewstory($args)
     // Get category name and parent category name
     $data['showcategory'] = false;
     for ($idx = 0; $idx < count($stories); $idx++) {
-            
+
         if ($stories[$idx]['cid'] != 0 ) {
             $category = xarModAPIFunc('categories',
                                       'user',
@@ -121,7 +119,7 @@ function newsletter_admin_viewstory($args)
                                       Array('cid' => $stories[$idx]['cid']));
 
             // Check for exceptions
-            if (!isset($category) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+            if (!isset($category) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
                 return;
 
             // Get category parent name and prepend
@@ -206,7 +204,7 @@ function newsletter_admin_viewstory($args)
         $stories[$i]['edittitle'] = xarML('Edit');
         $stories[$i]['deletetitle'] = xarML('Delete');
 
-        if(xarSecurityCheck('EditNewsletter', 0)) { 
+        if(xarSecurityCheck('EditNewsletter', 0)) {
             $stories[$i]['editurl'] = xarModURL('newsletter',
                                               'admin',
                                               'modifystory',
@@ -215,7 +213,7 @@ function newsletter_admin_viewstory($args)
             $stories[$i]['editurl'] = '';
         }
 
-        if(xarSecurityCheck('DeleteNewsletter', 0)) { 
+        if(xarSecurityCheck('DeleteNewsletter', 0)) {
             $stories[$i]['deleteurl'] = xarModURL('newsletter',
                                                 'admin',
                                                 'deletestory',
@@ -229,15 +227,15 @@ function newsletter_admin_viewstory($args)
     $data['stories'] = $stories;
 
     $data['pager'] = xarTplGetPager($startnum,
-                                    xarModAPIFunc('newsletter', 
-                                                  'user', 
-                                                  'countstories', 
+                                    xarModAPIFunc('newsletter',
+                                                  'user',
+                                                  'countstories',
                                                   array('owner' => $owner,
                                                         'issueId' => $issueId,
                                                         'display' => $display)),
-                                    xarModURL('newsletter', 
-                                              'admin', 
-                                              'viewstory', 
+                                    xarModURL('newsletter',
+                                              'admin',
+                                              'viewstory',
                                               array('startnum' => '%%',
                                                    'sortby' => $sortby,
                                                    'owner' => $owner,

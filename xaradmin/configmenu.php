@@ -1,6 +1,6 @@
 <?php
-/*
- * Newsletter 
+/**
+ * Newsletter
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
@@ -9,8 +9,7 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
+ */
 /**
  * generate config menu fragments
  *
@@ -29,11 +28,11 @@ function newsletter_admin_configmenu()
 
     xarVarFetch('func', 'str', $data['page'],  'main', XARVAR_NOT_REQUIRED);
    // xarVarFetch('sortby', 'str', $data['selection'],  '', XARVAR_NOT_REQUIRED);
-    
+
     $data['menulinks'] = xarModAPIFunc('newsletter', 'admin', 'configmenu');
     //$data['enabledimages']  = xarModGetVar('newsletter', 'Enable Images');
 
-    xarTplAddStyleLink('newsletter', 'style', $fileExt = 'css');
+    //xarTplAddStyleLink('newsletter', 'style', $fileExt = 'css');
 
     // Return the template variables defined in this function
     return $data;

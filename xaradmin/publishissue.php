@@ -1,17 +1,15 @@
 <?php
-/*
- * Newsletter 
+/**
+ * Newsletter
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage newsletter module
+ * @subpackage Newsletter module
  * @author Richard Cave <rcave@xaraya.com>
 */
-
-
 /**
  * Publish an Newsletter issue
  *
@@ -24,7 +22,7 @@
 function newsletter_admin_publishissue()
 {
     // Security check
-    if(!xarSecurityCheck('AdminNewsletter')) return;
+    if(!xarSecurityCheck('AdminNewsletter')) return; // TODO: Is this ok?
 
     // Get parameters from input
     if (!xarVarFetch('confirm', 'int:0:1', $confirm, 0)) return;
@@ -53,7 +51,7 @@ function newsletter_admin_publishissue()
     // Check for exceptions
     if (!isset($publication) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
         return; // throw back
-    
+
     // Determine if issue was already published
     if ($issue['datePublished']['timestamp'] != 0) {
         // If this issue was already published, then display a warning

@@ -1,17 +1,15 @@
 <?php
-/*
- * Newsletter 
+/**
+ * Newsletter
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage newsletter module
+ * @subpackage Newsletter module
  * @author Richard Cave <rcave@xaraya.com>
 */
-
-
 /**
  * Add a new Newsletter issue
  *
@@ -26,43 +24,43 @@ function newsletter_admin_newissue()
 {
     // Security check
     if(!xarSecurityCheck('AddNewsletter')) return;
-    
+
     // Get input parameters
     if (!xarVarFetch('display', 'str:1:', $display, 'unpublished')) return;
     if (!xarVarFetch('publicationId', 'int:0:', $publicationId, 0)) return;
-    
+
     // Get the admin menu
     $data = xarModAPIFunc('newsletter', 'admin', 'menu');
 
     // Set template strings
     $data['addlabel'] = xarVarPrepForDisplay(xarML('Add Issue'));
     $data['itemsperpage'] = xarModGetVar('newsletter', 'itemsperpage');
-    
+
     // Get the list of publications
     $data['publications'] = xarModAPIFunc('newsletter',
                                           'user',
                                           'get',
                                            array('phase' => 'publication',
                                                  'sortby' => 'title'));
-    
+
     // Check for exceptions
-    if (!isset($data['publications']) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+    if (!isset($data['publications']) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
         return; // throw back
-        
+
     // Get publication if publicationId present
     if ($publicationId) {
         // Get this publication
         $publication = xarModAPIFunc('newsletter',
                                      'user',
                                      'getpublication',
-                                     array('id' => $publicationId));  
-                                     
+                                     array('id' => $publicationId));
+
         // Check for exceptions
-        if (!isset($publication) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+        if (!isset($publication) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
             return; // throw back
-            
+
         // Set publication name
-        $publication_title = $publication['title'];                                     
+        $publication_title = $publication['title'];
 
         // Get issue from name and email and publication
         $data['fromname'] = $publication['fromname'];
@@ -93,8 +91,8 @@ function newsletter_admin_newissue()
 
     // Set publication
     $data['publicationId'] = $publicationId;
-    $data['publication_title'] = $publication_title;   
-    $data['issue_title'] = $publication_title;     
+    $data['publication_title'] = $publication_title;
+    $data['issue_title'] = $publication_title;
     $data['display'] = $display;
 
     // Set external checkbox to true

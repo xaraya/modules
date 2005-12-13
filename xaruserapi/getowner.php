@@ -1,17 +1,15 @@
 <?php
-/*
- * Newsletter 
+/**
+ * Newsletter
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage newsletter module
+ * @subpackage Newsletter module
  * @author Richard Cave <rcave@xaraya.com>
 */
-
-
 /**
  * Get an Newsletter owner by id
  *
@@ -53,7 +51,7 @@ function newsletter_userapi_getowner($args)
                WHERE xar_uid = ?";
 
     // Process query
-    $result =& $dbconn->Execute($query, array((int) $id));
+    $result =& $dbconn->Execute($query, array($id));
 
     // Check for an error
     if (!$result) return;
@@ -65,8 +63,8 @@ function newsletter_userapi_getowner($args)
     }
 
     // Obtain the owner information from the result set
-    list($uid, 
-         $rid, 
+    list($uid,
+         $rid,
          $signature) = $result->fields;
 
     // Close result set
@@ -81,7 +79,7 @@ function newsletter_userapi_getowner($args)
     if ($userData == false) {
         // If this user does not exist in xar_roles table
         // then show as unknown
-        $ownerName = "Unknown User";
+        $ownerName = xarML('Unknown User');
     } else {
         // Create the owner
         $ownerName = $userData['name'];

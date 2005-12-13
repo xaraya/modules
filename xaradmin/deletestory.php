@@ -1,6 +1,6 @@
 <?php
-/*
- * Newsletter 
+/**
+ * Newsletter
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
@@ -9,9 +9,7 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * Delete an Newsletter story
  *
@@ -41,7 +39,7 @@ function newsletter_admin_deletestory($args)
                            array('id' => $id));
 
     // Check for exceptions
-    if (!isset($story) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+    if (!isset($story) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
         return; // throw back
 
     // Check for confirmation.
@@ -78,9 +76,9 @@ function newsletter_admin_deletestory($args)
                            'user',
                            'gettopicbystory',
                            array('storyId' => $id));
-    
+
     // Check for exceptions
-    if (!isset($topic) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+    if (!isset($topic) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
         return; // throw back
 
     // The API function is called

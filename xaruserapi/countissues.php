@@ -1,6 +1,6 @@
 <?php
-/*
- * Newsletter 
+/**
+ * Newsletter
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
@@ -9,9 +9,7 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * Utility function to count the number of issues in a publication
  *
@@ -63,7 +61,7 @@ function newsletter_userapi_countissues($args)
         // Get issues for a publication
         $query = "SELECT COUNT(1)
                   FROM  $issuesTable
-                  WHERE $issuesTable.xar_pid = ? 
+                  WHERE $issuesTable.xar_pid = ?
                   AND   $issuesTable.xar_pid != 0";
         $bindvars[] = (int) $publicationId;
     } else {

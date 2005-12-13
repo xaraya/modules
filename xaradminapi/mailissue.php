@@ -1,28 +1,26 @@
 <?php
-/*
- * Newsletter 
+/**
+ * Newsletter
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage newsletter module
+ * @subpackage Newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * Mail the Newsletter issue
  *
  * @public
  * @param $args an array of arguments (if called by other modules)
  * @param $args['publication'] publication of the issue to mail
- * @param $args['issue'] issue to mail 
- * @param $args['recipients'] recipients that are getting issue 
- * @param $args['bccrecipients'] bccrecipients that are getting issue 
- * @param $args['issueText'] text version of the issue 
- * @param $args['issueHTML'] HTML version of the issue 
+ * @param $args['issue'] issue to mail
+ * @param $args['recipients'] recipients that are getting issue
+ * @param $args['bccrecipients'] bccrecipients that are getting issue
+ * @param $args['issueText'] text version of the issue
+ * @param $args['issueHTML'] HTML version of the issue
  * @param $args['type'] version of the issue to send ('html' or 'text')
  * @author Richard Cave
  * @returns bool
@@ -47,7 +45,7 @@ function newsletter_adminapi_mailissue($args)
     }
     if (!isset($issueText)) {
         $invalid[] = 'issueText';
-    } 
+    }
     if (!isset($issueHTML)) {
         $invalid[] = 'issueHTML';
     }
@@ -67,7 +65,7 @@ function newsletter_adminapi_mailissue($args)
     if (!isset($bccrecipients)) {
         $bccrecipients = array();
     }
-    
+
     // Check if fromname or fromemail is set in the issue.  If not, then check
     // the publication.  If that is not set then default to publication owner.
     if (empty($issue['fromname']) || empty($issue['fromemail'])) {
@@ -124,7 +122,7 @@ function newsletter_adminapi_mailissue($args)
                                 'sendhtmlmail',
                                 $mailargs);
 
-        // Free any errors that occur.  We don't want mail to 
+        // Free any errors that occur.  We don't want mail to
         // set an error because as this will stop processing
         // the newsletter to all recipients.
         xarErrorFree();
@@ -135,7 +133,7 @@ function newsletter_adminapi_mailissue($args)
                                 'sendmail',
                                 $mailargs);
 
-        // Free any errors that occur.  We don't want mail to 
+        // Free any errors that occur.  We don't want mail to
         // set an error because as this will stop processing
         // the newsletter to all recipients.
         xarErrorFree();

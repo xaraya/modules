@@ -1,20 +1,18 @@
 <?php
-/*
- * Newsletter 
+/**
+ * Newsletter
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage newsletter module
+ * @subpackage Newsletter module
  * @author Richard Cave <rcave@xaraya.com>
 */
-
-
 /**
  * Get the contents of a single issue
- * 
+ *
  * @private
  * @author Richard Cave
  * @param $args an array of arguments
@@ -50,7 +48,7 @@ function newsletter_userapi_getissuefordisplay($args)
                            array('id' => $issueId));
 
     // Check for exceptions
-    if (!isset($issue) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+    if (!isset($issue) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
         return; // throw back
 
     // Check if anything was returned
@@ -79,7 +77,7 @@ function newsletter_userapi_getissuefordisplay($args)
 
     if ($userData) {
         $issue['ownerName'] = $userData['name'];
-        
+
         // Get the owner signature
         $owner = xarModAPIFunc('newsletter',
                                'user',
@@ -106,7 +104,7 @@ function newsletter_userapi_getissuefordisplay($args)
                                   'phase' => 'topic'));
 
     // Check for exceptions
-    if (!isset($topics) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+    if (!isset($topics) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
         return; // throw back
 
     // Get ready for headlines
@@ -122,13 +120,13 @@ function newsletter_userapi_getissuefordisplay($args)
                                        array('id' => $topics[$idx]['storyId']));
 
         // Check for exceptions
-        if (!isset($stories[$idx]) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+        if (!isset($stories[$idx]) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
             return; // throw back
-        
+
         // Make sure a story was returned
         if (!empty($stories[$idx])) {
             // Check to see if link has expired
-            $linkExpiration = $stories[$idx]['linkExpiration']; 
+            $linkExpiration = $stories[$idx]['linkExpiration'];
             $storyDate = $stories[$idx]['storyDate'];
             $stories[$idx]['linkExpired'] = false;
             if ($storyDate['timestamp'] != 0 && $linkExpiration != 0) {
@@ -148,7 +146,7 @@ function newsletter_userapi_getissuefordisplay($args)
                                           Array('cid' => $stories[$idx]['cid']));
 
                 // Check for exceptions
-                if (!isset($category) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+                if (!isset($category) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
                     return; // throw back
 
                 // Set headlines
@@ -180,8 +178,8 @@ function newsletter_userapi_getissuefordisplay($args)
         }
     }
 
-    // Assign headlines 
-    $issue['headlines'] = $headlines; 
+    // Assign headlines
+    $issue['headlines'] = $headlines;
 
     return $issue;
 }

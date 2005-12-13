@@ -1,6 +1,6 @@
 <?php
-/*
- * Newsletter 
+/**
+ * Newsletter
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
@@ -9,9 +9,7 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * Modify privileges
  *
@@ -40,10 +38,10 @@ function newsletter_admin_modifyprivileges()
     if (!$data['creategroups']) {
         // Labels for creating groups
         $data['creategroupbutton'] =  xarVarPrepForDisplay(xarML('Create Groups'));
- 
+
         $data['publishergrouplabel'] = xarVarPrepForDisplay(xarML($publisherGroup));
         $data['editorgrouplabel'] = xarVarPrepForDisplay(xarML($editorGroup));
-        $data['writergrouplabel'] = xarVarPrepForDisplay(xarML($writerGroup)); 
+        $data['writergrouplabel'] = xarVarPrepForDisplay(xarML($writerGroup));
 
         // See Everyone group exists to set defaultgroup
         if( xarFindRole("Everybody"))
@@ -72,7 +70,7 @@ function newsletter_admin_modifyprivileges()
 
         $data['groups'] = $groups;
     }
-        
+
     // Specify privileges
     $data['publisherlabel'] = $publisherGroup;
     $data['editorlabel'] = $editorGroup;
@@ -93,19 +91,19 @@ function newsletter_admin_modifyprivileges()
         $data['masks'][$idx]['name'] = $nwsltrMasks[$idx]->name;
         $data['masks'][$idx]['level'] = $nwsltrMasks[$idx]->level;
     }
-    
+
     $data['publisherMask'] = xarModGetVar('newsletter', 'publishermask');
     $data['editorMask'] = xarModGetVar('newsletter', 'editormask');
     $data['writerMask'] = xarModGetVar('newsletter', 'writermask');
-
+    // Would you ever need hooks here??
     // Set hooks
-    $hooks = xarModCallHooks('module', 
-                             'modifyprivileges', 
+    $hooks = xarModCallHooks('module',
+                             'modifyprivileges',
                              'newsletter',
                              array('module' => 'newsletter'));
 
     if (empty($hooks) || !is_string($hooks)) {
-        $data['hooks'] = '';
+        $data['hooks'] = array();
     } else {
         $data['hooks'] = $hooks;
     }

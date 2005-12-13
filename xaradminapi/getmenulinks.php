@@ -1,17 +1,15 @@
 <?php
-/*
- * Newsletter 
+/**
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * Utility function to pass individual menu items to the main menu
  *
@@ -55,7 +53,7 @@ function newsletter_adminapi_getmenulinks()
     if (empty($menulinks)) {
         $menulinks = '';
     }
-    
+
     return $menulinks;
 }
 

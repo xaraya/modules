@@ -12,7 +12,7 @@
         }
         </script>
         <table border="0" cellpadding="5">
-          <form action="#xarModURL('newsletter', 'admin', 'modifyissue')#" method="post" enctype="application/x-www-form-urlencoded" >
+          <form action="&xar-modurl-newsletter-admin-modifyissue;" method="post" enctype="application/x-www-form-urlencoded" >
             <input type="hidden" name="display" id="display" value="#$display#" />
             <input type="hidden" name="id" id="id" value="#$issue['id']#" />
             <tr>
@@ -34,13 +34,13 @@
             </tr>
           </form>
           <form action="&xar-modurl-newsletter-admin-updateissue;" method="post" enctype="application/x-www-form-urlencoded">
-            <input type="hidden" name="authid" id="authid" value="#$authid#" /> 
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
             <input type="hidden" name="id" id="id" value="#$issue['id']#" />
             <input type="hidden" name="display" id="display" value="#$display#" />
             <input type="hidden" name="publication" id="publication" value="#$publication#" />
             <tr>
               <td>
-                <b><xar:mlstring>Owner Name:</xar:mlstring></b> 
+                <b><xar:mlstring>Owner Name:</xar:mlstring></b>
               </td>
               <td>
                 <select name="ownerId" tabindex="2">
@@ -56,7 +56,7 @@
             </tr>
             <tr>
               <td>
-                <b><xar:mlstring>Title:</xar:mlstring></b> 
+                <b><xar:mlstring>Title:</xar:mlstring></b>
               </td>
               <td>
                 <input type="text" name="title" id="title" value="#xarVarPrepForDisplay($issue['title'])#" size="50" maxlength="255" tabindex="3" />
@@ -64,7 +64,7 @@
             </tr>
             <tr>
               <td>
-                <b><xar:mlstring>Editor Note:</xar:mlstring></b> 
+                <b><xar:mlstring>Editor Note:</xar:mlstring></b>
               </td>
               <td>
                 <textarea name="editorNote" rows="5" cols="50" tabindex="4">#xarVarPrepForDisplay($issue['editorNote'])#</textarea>
@@ -72,7 +72,7 @@
             </tr>
             <tr>
               <td>
-                <b><xar:mlstring>Show in Archives:</xar:mlstring></b> 
+                <b><xar:mlstring>Show in Archives:</xar:mlstring></b>
               </td>
               <td>
                 <xar:if condition="$issue['external'] eq 1">
@@ -84,7 +84,7 @@
             </tr>
             <tr>
               <td>
-                <b><xar:mlstring>Email From Name:</xar:mlstring></b> 
+                <b><xar:mlstring>Email From Name:</xar:mlstring></b>
                 <br/><font size="1">(Overrides the publication email from name)</font>
               </td>
               <td>
@@ -93,7 +93,7 @@
             </tr>
             <tr>
               <td>
-                <b><xar:mlstring>Email From Address:</xar:mlstring></b> 
+                <b><xar:mlstring>Email From Address:</xar:mlstring></b>
                 <br/><font size="1">(Overrides the publication email from address)</font>
               </td>
               <td>
@@ -102,7 +102,7 @@
             </tr>
             <tr>
               <td>
-                <b><xar:mlstring>Date Published:</xar:mlstring></b> 
+                <b><xar:mlstring>Date Published:</xar:mlstring></b>
                 <br/><font size="1">(remove date to unpublish issue)</font>
               </td>
               <td>
@@ -122,6 +122,6 @@
               </td>
             </tr>
           </form>
-        </table>            
+        </table>
     </div>
 </div>

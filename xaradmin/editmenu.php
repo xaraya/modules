@@ -1,6 +1,6 @@
 <?php
-/*
- * Newsletter 
+/**
+ * Newsletter
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
@@ -10,7 +10,6 @@
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
 */
-
 /**
  * generate edit menu fragments
  *
@@ -22,14 +21,14 @@
 function newsletter_admin_editmenu()
 {
     // Security check
-    if(!xarSecurityCheck('AdminNewsletter')) return;
+    if(!xarSecurityCheck('EditNewsletter')) return;
 
     // Create data array
     $data = array();
 
     xarVarFetch('func', 'str', $data['page'],  'main', XARVAR_NOT_REQUIRED);
    // xarVarFetch('sortby', 'str', $data['selection'],  '', XARVAR_NOT_REQUIRED);
-    
+
     $data['menulinks'] = xarModAPIFunc('newsletter', 'admin', 'editmenu');
     //$data['enabledimages']  = xarModGetVar('newsletter', 'Enable Images');
 

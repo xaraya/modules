@@ -1,6 +1,6 @@
 <?php
-/*
- * Newsletter 
+/**
+ * Newsletter
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
@@ -9,9 +9,7 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * Modify an Newsletter publication
  *
@@ -21,7 +19,7 @@
  * @returns array
  * @return $templateVarArray
  */
-function newsletter_admin_modifypublication() 
+function newsletter_admin_modifypublication()
 {
     // Security check
     if(!xarSecurityCheck('EditNewsletter')) return;
@@ -36,7 +34,7 @@ function newsletter_admin_modifypublication()
                                  array('id' => $id));
 
     // Check for exceptions
-    if (!isset($publication) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+    if (!isset($publication) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
         return; // throw back
 
     // Get the list of owners
@@ -59,31 +57,31 @@ function newsletter_admin_modifypublication()
                                                 'user',
                                                 'get',
                                                 array('phase' => 'disclaimer'));
-                                                
+
     // Check for exceptions
     if (!isset($publication['disclaimers']) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
         return; // throw back
-                                                
+
     // Get the publication disclaimer
     $disclaimer = xarModAPIFunc('newsletter',
                                 'user',
                                 'getdisclaimer',
                                  array('id' => $publication['disclaimerId']));
-                                 
+
     // Check for exceptions
     if (!isset($disclaimer) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
-        return; // throw back     
+        return; // throw back
 
     // Get all categories for altcids drop down
     $altcategories = xarModAPIFunc('categories',
                                    'user',
                                    'getcat');
-                                                                                              
+
     // Check for exceptions
     if (!isset($altcategories) && xarCurrentErrorType() != XAR_NO_EXCEPTION) {
         return;
-    }       
-    
+    }
+
     // Loop through altcategories and check those that are part of publication
     for ($idx = 0; $idx < count($altcategories); $idx++) {
         if (in_array($altcategories[$idx]['cid'], $publication['altcids'])) {
@@ -91,8 +89,8 @@ function newsletter_admin_modifypublication()
         } else {
             $altcategories[$idx]['selected'] = 0;
         }
-    }      
-                              
+    }
+
     // Set hook variables
     $publication['module'] = 'newsletter';
     $hooks = xarModCallHooks('publication','modify',$id,$publication);

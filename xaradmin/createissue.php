@@ -1,6 +1,6 @@
 <?php
-/*
- * Newsletter 
+/**
+ * Newsletter
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
@@ -9,9 +9,7 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * Create a new Newsletter issue
  *
@@ -30,7 +28,7 @@
  */
 function newsletter_admin_createissue()
 {
-    // Confirm authorization key 
+    // Confirm authorization key
     if (!xarSecConfirmAuthKey()) {
         $msg = xarML('Invalid authorization key for creating new #(1) item', 'Newsletter');
         xarErrorSet(XAR_USER_EXCEPTION, 'FORBIDDEN_OPERATION', new DefaultUserException($msg));
@@ -38,7 +36,7 @@ function newsletter_admin_createissue()
     }
 
     // Get parameters from the input
-    if (!xarVarFetch('publicationId', 'id', $publicationId)) { 
+    if (!xarVarFetch('publicationId', 'id', $publicationId)) {
         xarErrorFree();
         $msg = xarML('You must select a publication.');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
@@ -57,7 +55,7 @@ function newsletter_admin_createissue()
     if (!xarVarFetch('external', 'int:0:1:', $external, 0)) return;
     if (!xarVarFetch('fromname', 'str:1:', $fromname, '')) return;
     if (!xarVarFetch('fromemail', 'str:1:', $fromemail, '')) return;
-    
+
     // If the fromname or fromemail fields are empty, then retrieve the information
     // from the publication
     if (empty($fromname) || empty($fromemail)) {
@@ -95,12 +93,12 @@ function newsletter_admin_createissue()
                                    'fromemail' => $fromemail));
 
     // Check return value
-    if (!isset($issueId) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+    if (!isset($issueId) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
         return; // throw back
 
     // Success
     xarSessionSetVar('statusmsg', xarML('Issue Created'));
-    
+
     // Create template array
     $templateVarArray = array(
         'publicationId' => $publicationId,

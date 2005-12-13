@@ -1,25 +1,23 @@
 <?php
-/*
- * Newsletter 
+/**
+ * Newsletter
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage newsletter module
+ * @subpackage Newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
- * Create a new commentary source for a publication if it 
- * does not already exist 
- * 
+ * Create a new commentary source for a publication if it
+ * does not already exist
+ *
  * @private
  * @author Richard Cave
  * @param $args an array of arguments
- * @param $args['publicationId'] publication ID 
+ * @param $args['publicationId'] publication ID
  * @param $args['newCommentarySource'] new source of the commentary
  * @returns array
  * @return $issues
@@ -83,7 +81,7 @@ function newsletter_adminapi_newcommentarysource($args)
         $sourceList = serialize($sourceList);
         xarModSetVar('newsletter', 'commentarysource', $sourceList);
     }
-    
+
     return $commentarySource;
 }
 ?>

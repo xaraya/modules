@@ -1,6 +1,6 @@
 <?php
-/*
- * Newsletter 
+/**
+ * Newsletter
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
@@ -9,8 +9,7 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
+ */
 /**
  * Update privileges
  *
@@ -47,22 +46,22 @@ function newsletter_admin_updateprivileges()
     if ($publisherMask != $oldPublisherMask) {
         $publisherRole = xarModGetVar('newsletter', 'publisher');
 
-        // Remove old privilege 
+        // Remove old privilege
         if (!xarModAPIFunc('newsletter',
                            'admin',
                            'modifyprivilege',
                            array('type' => 'remove',
-                                  'mask' => $oldPublisherMask, 
+                                  'mask' => $oldPublisherMask,
                                   'rolename' => $publisherRole))) {
             return false; // throw back
         }
 
-        // Assign new privilege 
+        // Assign new privilege
         if (!xarModAPIFunc('newsletter',
                            'admin',
                            'modifyprivilege',
                             array('type' => 'add',
-                                  'mask' => $publisherMask, 
+                                  'mask' => $publisherMask,
                                   'rolename' => $publisherRole))) {
             return false; // throw back
         }
@@ -74,22 +73,22 @@ function newsletter_admin_updateprivileges()
     if ($editorMask != $oldEditorMask) {
         $editorRole = xarModGetVar('newsletter', 'editor');
 
-        // Remove old privilege 
+        // Remove old privilege
         if (!xarModAPIFunc('newsletter',
                            'admin',
                            'modifyprivilege',
                             array('type' => 'remove',
-                                  'mask' => $oldEditorMask, 
+                                  'mask' => $oldEditorMask,
                                   'rolename' => $editorRole))) {
             return false; // throw back
         }
 
-        // Assign new privilege 
+        // Assign new privilege
         if (!xarModAPIFunc('newsletter',
                            'admin',
                            'modifyprivilege',
                             array('type' => 'add',
-                                  'mask' => $editorMask, 
+                                  'mask' => $editorMask,
                                   'rolename' => $editorRole))) {
             return false; // throw back
         }
@@ -101,22 +100,22 @@ function newsletter_admin_updateprivileges()
     if ($writerMask != $oldWriterMask) {
         $writerRole = xarModGetVar('newsletter', 'writer');
 
-        // Remove old privilege 
+        // Remove old privilege
         if (!xarModAPIFunc('newsletter',
                            'admin',
                            'modifyprivilege',
                             array('type' => 'remove',
-                                  'mask' => $oldWriterMask, 
+                                  'mask' => $oldWriterMask,
                                   'rolename' => $writerRole))) {
             return false; // throw back
         }
 
-        // Assign new privilege 
+        // Assign new privilege
         if (!xarModAPIFunc('newsletter',
                            'admin',
                            'modifyprivilege',
                             array('type' => 'add',
-                                  'mask' => $writerMask, 
+                                  'mask' => $writerMask,
                                   'rolename' => $writerRole))) {
             return false; // throw back
         }

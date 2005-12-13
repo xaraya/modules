@@ -1,16 +1,15 @@
 <?php
-/*
- * Newsletter 
+/**
+ * Newsletter
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage newsletter module
+ * @subpackage Newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
+ */
 /**
  * generate the common admin menu configuration
  *
@@ -24,15 +23,17 @@ function newsletter_adminapi_editmenu()
     $menulinks = array();
 
     // Specify the menu titles to be used in your blocklayout template
-    if(xarSecurityCheck('EditNewsletter', 0)) {
 
+
+    if(xarSecurityCheck('AdminNewsletter', 0)) {
         $menulinks[] = Array('url'   => xarModURL('newsletter',
                                                   'admin',
                                                   'viewpublication'),
                              'page'  => 'viewpublication',
                              'title' => xarML('Edit publications.'),
                              'label' => xarML('Edit Publications'));
-
+    }
+    if(xarSecurityCheck('EditNewsletter', 0)) {
         $menulinks[] = Array('url'   => xarModURL('newsletter',
                                                   'admin',
                                                   'viewissue'),
@@ -54,7 +55,6 @@ function newsletter_adminapi_editmenu()
                              'title' => xarML('Edit disclaimers.'),
                              'label' => xarML('Edit disclaimers'));
 
-
         // Check to see if this user is a publication owner
         $userId = xarSessionGetVar('uid');
         $owner = xarModAPIFunc('newsletter',
@@ -75,7 +75,7 @@ function newsletter_adminapi_editmenu()
     if (empty($menulinks)) {
         $menulinks = '';
     }
-    
+
     // Return the array containing the menu configuration
     return $menulinks;
 }

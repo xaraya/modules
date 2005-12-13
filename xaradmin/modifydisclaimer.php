@@ -1,17 +1,15 @@
 <?php
-/*
- * Newsletter 
+/**
+ * Newsletter
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage newsletter module
+ * @subpackage Newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * Modify an Newsletter disclaimer
  *
@@ -21,7 +19,7 @@
  * @returns array
  * @return $templateVarArray
  */
-function newsletter_admin_modifydisclaimer() 
+function newsletter_admin_modifydisclaimer()
 {
     // Security check
     if(!xarSecurityCheck('EditNewsletter')) return;
@@ -36,7 +34,7 @@ function newsletter_admin_modifydisclaimer()
                           array('id' => $id));
 
     // Check for exceptions
-    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
         return; // throw back
 
     // Set hook variables
