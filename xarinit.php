@@ -40,7 +40,9 @@ function vendors_init()
 # Set extensions
 #
 
+	$commerceobjects = array();
 	$nextitemtype = xarModAPIFunc('dynamicdata','admin','getnextitemtype',array('modid' => 27));
+
 	$new = array('name' => 'commerceroles',
 				 'label' => 'CommerceRoles',
 				 'moduleid' => 27,
@@ -49,6 +51,8 @@ function vendors_init()
 				 'parent' => ROLES_GROUPTYPE,
 				);
 	$objectid = xarModAPIFunc('dynamicdata','admin','createobject',$new);
+	$commerceobjects[$objectid] = 'commerceroles';
+
 	$new = array('name' => 'suppliers',
 				 'label' => 'Suppliers',
 				 'moduleid' => 27,
@@ -57,6 +61,8 @@ function vendors_init()
 				 'parent' => $nextitemtype,
 				);
 	$objectid = xarModAPIFunc('dynamicdata','admin','createobject',$new);
+	$commerceobjects[$objectid] = 'suppliers';
+
 	$new = array('name' => 'manufacturers',
 				 'label' => 'Manufacturers',
 				 'moduleid' => 27,
@@ -65,10 +71,28 @@ function vendors_init()
 				 'parent' => $nextitemtype+1,
 				);
 	$objectid = xarModAPIFunc('dynamicdata','admin','createobject',$new);
+	$commerceobjects[$objectid] = 'manufacturers';
 
-    xarMakeRoleMemberByName('commerceroles','Everybody');
-    xarMakeRoleMemberByName('suppliers','commerceroles');
-    xarMakeRoleMemberByName('manufacturers','commerceroles');
+	xarModSetVar('commerce','commerceobjects',serialize($commerceobjects));
+
+	$everybody = xarFindRole('Everybody');
+	$nextitemtype = 1000;
+	$new = array('name' => 'CommerceRoles',
+				 'itemtype' => ROLES_GROUPTYPE,
+				 'parentid' => $everybody->getID(),
+				);
+	$uid = xarModAPIFunc('roles','admin','create',$new);
+	$new = array('name' => 'Suppliers',
+				 'itemtype' => ROLES_GROUPTYPE,
+				 'parentid' => $uid,
+				);
+	$uid1 = xarModAPIFunc('roles','admin','create',$new);
+	$new = array('name' => 'Manufacturers',
+				 'itemtype' => ROLES_GROUPTYPE,
+				 'parentid' => $uid,
+				);
+	$uid1 = xarModAPIFunc('roles','admin','create',$new);
+
     return true;
 }
 
@@ -87,6 +111,34 @@ function vendors_delete()
     $table = $prefix . "_vendors";
     $query = xarDBDropTable($table);
     if (empty($query)) return; // throw back
+
+    // Delete the DD objects created by this module
+	$commerceobjects = unserialize(xarModGetVar('commerce','commerceobjects'));
+	foreach ($commerceobjects as $key => $value)
+	    if (!xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $key))) return;
+
+	// Purge all the roles created by this module
+	$role = xarFindRole('suppliers');
+	$descendants = $role->getDescendants();
+	foreach ($descendants as $item)
+		if (!$item->purge()) return;
+	if (!$role->purge()) return;
+
+	$role = xarFindRole('manufacturers');
+	$descendants = $role->getDescendants();
+	foreach ($descendants as $item)
+		if (!$item->purge()) return;
+	if (!$role->purge()) return;
+
+	$role = xarFindRole('commerceroles');
+	if (!$role->purge()) return;
+
+    // Remove Masks and Instances
+    xarRemoveMasks('vendors');
+    xarRemoveInstances('vendors');
+
+    // Remove Modvars
+//    xarModDelAllVars('vendors');
 
     return true;
 }
