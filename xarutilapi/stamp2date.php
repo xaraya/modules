@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id: stamp2date.php,v 1.2 2003/12/22 07:12:50 garrett Exp $
- *
  * AddressBook utilapi stamp2date
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -32,7 +30,7 @@ function addressbook_utilapi_stamp2date($args)
     $p3 = strtok($token);
     $p4 = strtok($token);
     $returnValue = '';
-    $dateformat = xarModGetVar(__ADDRESSBOOK__,'dateformat');
+    $dateformat = xarModGetVar('addressbook','dateformat');
     if ($dateformat == 1) {
         //$returnValue = date("d.m.Y",$idate);
         $returnValue = $p3.'.'.$p2.'.'.$p1;

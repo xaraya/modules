@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id: confirmdelete.php,v 1.3 2003/12/22 07:12:50 garrett Exp $
- *
  * AddressBook user confirmDelete
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -17,13 +15,13 @@
 //=========================================================================
 //  Confirm deletion
 //=========================================================================
-function addressbook_user_confirmdelete() 
+function addressbook_user_confirmdelete()
 {
 
     $output = array();
 
     // preserve menu settings
-    $menuValues = xarModAPIFunc(__ADDRESSBOOK__,'user','getmenuvalues');
+    $menuValues = xarModAPIFunc('addressbook','user','getmenuvalues');
     foreach ($menuValues as $key=>$value) {
         $output[$key] = $value;
     }
@@ -37,10 +35,10 @@ function addressbook_user_confirmdelete()
                     'total'     =>$output['total']);
 
     // Get the values
-    $output = xarModAPIFunc(__ADDRESSBOOK__,'user','getsubmitvalues', array ('output'=>$output));
+    $output = xarModAPIFunc('addressbook','user','getsubmitvalues', array ('output'=>$output));
 
     // Get detailed values from database
-    $details = xarModAPIFunc(__ADDRESSBOOK__,'user','getdetailvalues',array('id'=>$output['id']));
+    $details = xarModAPIFunc('addressbook','user','getdetailvalues',array('id'=>$output['id']));
     foreach ($details as $key=>$value) {
         $output[$key] = $value;
     }
@@ -51,7 +49,7 @@ function addressbook_user_confirmdelete()
     $output['buttonDelete'] = xarML('Delete');
     $output['buttonCancel'] = xarML('Cancel');
 
-    return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
+    return xarModAPIFunc('addressbook','util','handleexception',array('output'=>$output));
 
 } // END confirmDelete
 

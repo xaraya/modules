@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id: modifycustomfields.php,v 1.5 2004/11/16 05:40:47 garrett Exp $
- *
  * AddressBook admin functions
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -13,7 +11,6 @@
  * @author Garrett Hunter <garrett@blacktower.com>
  * Based on pnAddressBook by Thomas Smiatek <thomas@smiatek.com>
  */
-
 /**
  * Display form used to update the custom field settings
  * Handle the data submission
@@ -21,7 +18,7 @@
  * @param GET / POST passed from modifycustomfields form
  * @return xarTemplate data
  */
-function addressbook_admin_modifycustomfields() 
+function addressbook_admin_modifycustomfields()
 {
 
     $output = array(); // template contents go here
@@ -35,60 +32,60 @@ function addressbook_admin_modifycustomfields()
         xarVarFetch('formSubmit', 'str::', $formSubmit,FALSE);
         if ($formSubmit) {
             if (!xarSecConfirmAuthKey())
-                return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
+                return xarModAPIFunc('addressbook','util','handleexception',array('output'=>$output));
 
             if (!xarVarFetch ('id', 'array::',$formData['id'], FALSE))  {
-                return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
+                return xarModAPIFunc('addressbook','util','handleexception',array('output'=>$output));
             }
             if (!xarVarFetch ('custDisplay', 'array::',$formData['custDisplay'], FALSE))  {
-                return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
+                return xarModAPIFunc('addressbook','util','handleexception',array('output'=>$output));
             }
             if (!xarVarFetch ('custShortLabel', 'array::',$formData['custShortLabel'], FALSE))  {
-                return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
+                return xarModAPIFunc('addressbook','util','handleexception',array('output'=>$output));
             }
             if (!xarVarFetch ('del', 'array::',$formData['del'], FALSE))  {
-                return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
+                return xarModAPIFunc('addressbook','util','handleexception',array('output'=>$output));
             }
             if (!xarVarFetch ('custLabel', 'array::',$formData['custLabel'], FALSE))  {
-                return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
+                return xarModAPIFunc('addressbook','util','handleexception',array('output'=>$output));
             }
             if (!xarVarFetch ('custType','array::',$formData['custType'],FALSE)) {
-                return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
+                return xarModAPIFunc('addressbook','util','handleexception',array('output'=>$output));
             }
             if (!xarVarFetch ('incID','int::',$formData['incID'],FALSE))  {
-                return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
+                return xarModAPIFunc('addressbook','util','handleexception',array('output'=>$output));
             }
             if (!xarVarFetch ('decID','int::',$formData['decID'],FALSE))  {
-                return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
+                return xarModAPIFunc('addressbook','util','handleexception',array('output'=>$output));
             }
             if (!xarVarFetch ('newDisplay', 'checkbox',$formData['newDisplay'], FALSE))  {
-                return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
+                return xarModAPIFunc('addressbook','util','handleexception',array('output'=>$output));
             }
             if (!xarVarFetch ('newShortLabel', 'str::30',$formData['newShortLabel'], FALSE))  {
-                return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
+                return xarModAPIFunc('addressbook','util','handleexception',array('output'=>$output));
             }
             if (!xarVarFetch ('newname','str::30',$formData['newname'],FALSE))  {
-                return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
+                return xarModAPIFunc('addressbook','util','handleexception',array('output'=>$output));
             }
             if (!xarVarFetch ('newtype','str::30',$formData['newtype'],FALSE))  {
-                return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
+                return xarModAPIFunc('addressbook','util','handleexception',array('output'=>$output));
             }
 
             /**
              * Perform the update
              */
-            if (!xarModAPIFunc(__ADDRESSBOOK__,'admin','updatecustomfields',$formData)) {
-                return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
+            if (!xarModAPIFunc('addressbook','admin','updatecustomfields',$formData)) {
+                return xarModAPIFunc('addressbook','util','handleexception',array('output'=>$output));
             }
         }
 //FIXME:<garrett> would rather use a userapi here
-        $output['custfields'] = xarModAPIFunc(__ADDRESSBOOK__,'admin','getcustomfields');
+        $output['custfields'] = xarModAPIFunc('addressbook','admin','getcustomfields');
         if(!is_array($output['custfields'])) {
-            return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
+            return xarModAPIFunc('addressbook','util','handleexception',array('output'=>$output));
         }
 
         //TODO - this should be in a table & configurable. geh
-        $output['datatypes'][] = array('id'=>_AB_CUSTOM_TEXT_SHORT,     'name'=>' Text, 60 chars, 1 line');
+        $output['datatypes'][] = array('id'=>_AB_CUSTOM_TEXT_SHORT,     'name'=>'Text, 60 chars, 1 line');
         $output['datatypes'][] = array('id'=>_AB_CUSTOM_TEXT_MEDIUM,    'name'=>'Text, 120 chars, 2 lines');
         $output['datatypes'][] = array('id'=>_AB_CUSTOM_TEXT_LONG,      'name'=>'Text, 240 chars, 4 lines');
         $output['datatypes'][] = array('id'=>_AB_CUSTOM_INTEGER,        'name'=>'Integer numbers');
@@ -105,10 +102,10 @@ function addressbook_admin_modifycustomfields()
         $output['btnCommitText'] = xarML('Commit Changes');
 
     } else {
-        return xarTplModule(__ADDRESSBOOK__,'user','noauth');
+        return xarTplModule('addressbook','user','noauth');
     }
 
-    return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
+    return xarModAPIFunc('addressbook','util','handleexception',array('output'=>$output));
 
 } // END modifycustomfields
 

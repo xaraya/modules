@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id: resequencecustomfields.php,v 1.2 2004/03/28 23:22:58 garrett Exp $
- *
  * AddressBook admin resequenceCustomFields
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -13,9 +11,8 @@
  * @author Garrett Hunter <garrett@blacktower.com>
  * Based on pnAddressBook by Thomas Smiatek <thomas@smiatek.com>
  */
-
 /**
- * Resquence custom field position ids
+ * Resequence custom field position ids
  *
  * @param none
  * @return bool

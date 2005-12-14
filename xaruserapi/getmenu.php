@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id: getmenu.php,v 1.4 2003/12/22 07:12:50 garrett Exp $
- *
  * AddressBook user getMenu
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -17,7 +15,7 @@
 /**
  * Displays user menu
  */
-function addressbook_userapi_getMenu($args) 
+function addressbook_userapi_getMenu($args)
 {
     extract ($args);
 
@@ -27,7 +25,7 @@ function addressbook_userapi_getMenu($args)
         $output['show_menu_off'] = false;
     }
     else {
-        $menu_off = xarModGetVar(__ADDRESSBOOK__, 'menu_off');
+        $menu_off = xarModGetVar('addressbook', 'menu_off');
         switch ($menu_off) {
             case 0:
                 $output['show_menu_off'] = FALSE;
@@ -52,14 +50,14 @@ function addressbook_userapi_getMenu($args)
     }
     else {
         // Start Category
-        $output['cats'] = xarModAPIFunc(__ADDRESSBOOK__,'util','getitems',array('tablename'=>'categories'));
+        $output['cats'] = xarModAPIFunc('addressbook','util','getitems',array('tablename'=>'categories'));
 
-        $sortby_1 = xarModAPIFunc(__ADDRESSBOOK__,'user','getsortby',array('sort'=>1));
-        $sortby_2 = xarModAPIFunc(__ADDRESSBOOK__,'user','getsortby',array('sort'=>2));
+        $sortby_1 = xarModAPIFunc('addressbook','user','getsortby',array('sort'=>1));
+        $sortby_2 = xarModAPIFunc('addressbook','user','getsortby',array('sort'=>2));
         $output['sortby'][] = array('id'=>0,'name'=>xarVarPrepHTMLDisplay($sortby_1));
         $output['sortby'][] = array('id'=>1,'name'=>xarVarPrepHTMLDisplay($sortby_2));
 
-        if ((xarModGetVar(__ADDRESSBOOK__, 'menu_semi') != 1) || (xarSecurityCheck('EditAddressBook',0))) {
+        if ((xarModGetVar('addressbook', 'menu_semi') != 1) || (xarSecurityCheck('EditAddressBook',0))) {
 
             // Removed display stuff
 
@@ -68,7 +66,7 @@ function addressbook_userapi_getMenu($args)
              */
             if (xarUserIsLoggedIn()) {
 
-                if (((xarModGetVar(__ADDRESSBOOK__, 'globalprotect'))==1) && (!xarSecurityCheck('EditAddressBook',0))) {
+                if (((xarModGetVar('addressbook', 'globalprotect'))==1) && (!xarSecurityCheck('EditAddressBook',0))) {
                     $menuprivate_fl = 1;
                 }
                 else {
@@ -148,7 +146,7 @@ function addressbook_userapi_getMenu($args)
             $output['newAddrLinkTEXT'] = xarML('Add new address');
 
             // Set our flag / template uses to determine if it should display the link
-            $output['addNewAddress'] = xarModAPIFunc(__ADDRESSBOOK__,'user','checkaccesslevel',array('option'=>'create'));
+            $output['addNewAddress'] = xarModAPIFunc('addressbook','user','checkaccesslevel',array('option'=>'create'));
 
             // End New Record
 

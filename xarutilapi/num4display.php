@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id: num4display.php,v 1.2 2003/12/22 07:12:50 garrett Exp $
- *
  * AddressBook utilapi num4display
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -13,9 +11,8 @@
  * @author Garrett Hunter <garrett@blacktower.com>
  * Based on pnAddressBook by Thomas Smiatek <thomas@smiatek.com>
  */
-
 /**
- * Validates the passed in string as an email address
+ * Format of the number to display
  *
  * @param string $inum
  * @return string - number formatted for display
@@ -27,7 +24,7 @@ function addressbook_userapi_num4display($args)
         return '';
     }
     $returnValue = '';
-    $dateformat = xarModGetVar(__ADDRESSBOOK__,'numformat');
+    $dateformat = xarModGetVar('addressbook','numformat');
     if ($dateformat == '9.999,99') {
         $returnValue = number_format($inum,2,',','.');
     }

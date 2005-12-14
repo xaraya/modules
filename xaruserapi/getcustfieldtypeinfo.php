@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id: getcustfieldtypeinfo.php,v 1.3 2004/11/13 06:20:14 garrett Exp $
- *
  * AddressBook utility functions
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *

@@ -12,7 +12,7 @@
         <td colspan="#$numcols#">
 <!--        <td colspan="11">  -->
         <table width="100%" border="0" cellspacing="0" cellpadding="5">
-        <xar:if condition="xarModGetVar(__ADDRESSBOOK__,'use_prefix')">
+        <xar:if condition="xarModGetVar('addressbook','use_prefix')">
           <tr>
             <td align="right" valign="middle"><xar:mlstring>Prefix/Title</xar:mlstring>:</td>
             <td align="left" valign="middle">
@@ -61,7 +61,7 @@
 
             </td>
             </tr>
-            <xar:if condition="xarModGetVar(__ADDRESSBOOK__,'use_img') and xarSecurityCheck('ReadAddressBook',0)">
+            <xar:if condition="xarModGetVar('addressbook','use_img') and xarSecurityCheck('ReadAddressBook',0)">
             <tr>
               <td align="right" valign="middle"><xar:mlstring>Image</xar:mlstring>:</td>
               <td align="left" valign="middle">

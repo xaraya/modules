@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id: handleexception.php,v 1.15 2004/01/25 02:05:09 garrett Exp $
- *
  * AddressBook utilapi handleException
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -31,7 +29,7 @@
  * @return array abErroMsg - if an _AB_ERR_ERROR is encountered
  * @return array abDebugMsg - if an _AB_ERR_DEBUG is encountered
  */
-function addressbook_utilapi_handleexception ($args) 
+function addressbook_utilapi_handleexception ($args)
 {
 
     extract($args);
@@ -77,14 +75,14 @@ function addressbook_utilapi_handleexception ($args)
                     /**
                      * if configured, kick out an email to the admin & developer
                      */
-                    $rptErrAdminFlag = xarModGetVar(__ADDRESSBOOK__,'rptErrAdminFlag');
-                    $rptErrDevFlag = xarModGetVar(__ADDRESSBOOK__,'rptErrDevFlag');
+                    $rptErrAdminFlag = xarModGetVar('addressbook','rptErrAdminFlag');
+                    $rptErrDevFlag = xarModGetVar('addressbook','rptErrDevFlag');
                     if ($rptErrAdminFlag || $rptErrDevFlag) {
 
                         $to = array();
                         if ($rptErrAdminFlag) {
-                            $adminEmail= xarModGetVar(__ADDRESSBOOK__,'rptErrAdminEmail');
-                            if (!xarModAPIFunc(__ADDRESSBOOK__,'util','is_email',array('email'=>$adminEmail))) {
+                            $adminEmail= xarModGetVar('addressbook','rptErrAdminEmail');
+                            if (!xarModAPIFunc('addressbook','util','is_email',array('email'=>$adminEmail))) {
                                 $adminEmail = "unknown@".$_SERVER['SERVER_NAME'];
                             }
 
@@ -96,13 +94,13 @@ function addressbook_utilapi_handleexception ($args)
                                            ,'email'=>_AB_DEVQA_EMAIL);
                         }
 
-                        $abModInfo = xarModGetInfo(xarModGetIDFromName(__ADDRESSBOOK__));
+                        $abModInfo = xarModGetInfo(xarModGetIDFromName('addressbook'));
 
-                        $from = array ('name' => __ADDRESSBOOK__." Module"
-                                      ,'email' => __ADDRESSBOOK__."@".$_SERVER['SERVER_NAME']
+                        $from = array ('name' => 'addressbook'." Module"
+                                      ,'email' => 'addressbook'."@".$_SERVER['SERVER_NAME']
                                       );
 
-                        $subject = __ADDRESSBOOK__." Exception Raised";
+                        $subject = 'addressbook'." Exception Raised";
 
                         //Unformatted message used for both Plain Text & HTML emails
                         $message  = '';
@@ -182,7 +180,7 @@ function addressbook_utilapi_handleexception ($args)
          * for a more user friendly message
          */
         if (isset($abExceptions['xarSysException'])) {
-            $output = xarTplModule(__ADDRESSBOOK__,'user','error',$output);
+            $output = xarTplModule('addressbook','user','error',$output);
         }
     } // END if
 

@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id: xartables.php,v 1.2 2003/12/22 07:06:34 garrett Exp $
- *
  * AddressBook utility functions
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -13,7 +11,6 @@
  * @author Garrett Hunter <garrett@blacktower.com>
  * Based on pnAddressBook by Thomas Smiatek <thomas@smiatek.com>
  */
-
 /**
  * This function is called internally by the core whenever the module is
  * loaded.  It adds in the information

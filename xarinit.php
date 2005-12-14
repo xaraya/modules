@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id: xarinit.php,v 1.6 2005/03/28 21:32:20 garrett Exp $
- *
  * AddressBook utility functions
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -13,7 +11,6 @@
  * @author Garrett Hunter <garrett@blacktower.com>
  * Based on pnAddressBook by Thomas Smiatek <thomas@smiatek.com>
  */
-
 /**
  * initialise the AddressBook module
  * This function is only ever called once during the lifetime of a particular
@@ -21,7 +18,6 @@
  */
 function addressbook_init()
 {
-
     //FIXME: until we figure out module globals
     // if this does get changed, $abModVars will no longer be scoped here..
     include_once ('modules/addressbook/xarglobal.php');
@@ -212,31 +208,31 @@ function addressbook_init()
         if (!$result) return;
     }
 
-    xarModSetVar(__ADDRESSBOOK__, 'abtitle', 'Xaraya Address Book');
-    xarModSetVar(__ADDRESSBOOK__, 'guestmode', 1);
-    xarModSetVar(__ADDRESSBOOK__, 'usermode', 7);
-    xarModSetVar(__ADDRESSBOOK__, 'itemsperpage', 30);
-    xarModSetVar(__ADDRESSBOOK__, 'globalprotect', 0);
-    xarModSetVar(__ADDRESSBOOK__, 'menu_off', 0);
-    xarModSetVar(__ADDRESSBOOK__, 'custom_tab', '');
-    xarModSetVar(__ADDRESSBOOK__, 'zipbeforecity', 0);
-    xarModSetVar(__ADDRESSBOOK__, 'hidecopyright', 0);
-    xarModSetVar(__ADDRESSBOOK__, 'use_prefix', 0);
-    xarModSetVar(__ADDRESSBOOK__, 'display_prefix', 0);
-    xarModSetVar(__ADDRESSBOOK__, 'use_img', 0);
-    xarModSetVar(__ADDRESSBOOK__, 'textareawidth', 60);
-    xarModSetVar(__ADDRESSBOOK__, 'dateformat', 0);
-    xarModSetVar(__ADDRESSBOOK__, 'numformat', '9,999.99');
-    xarModSetVar(__ADDRESSBOOK__, 'sortorder_1', 'sortname,sortcompany');
-    xarModSetVar(__ADDRESSBOOK__, 'sortorder_2', 'sortcompany,sortname');
-    xarModSetVar(__ADDRESSBOOK__, 'menu_semi', 0);
-    xarModSetVar(__ADDRESSBOOK__, 'name_order', 0);
-    xarModSetVar(__ADDRESSBOOK__, 'special_chars_1', 'ÄÖÜäöüß');
-    xarModSetVar(__ADDRESSBOOK__, 'special_chars_2', 'AOUaous');
-    xarModSetVar(__ADDRESSBOOK__, 'SupportShortURLs', 0);
-    xarModSetVar(__ADDRESSBOOK__, 'rptErrAdminFlag', 1);
-    xarModSetVar(__ADDRESSBOOK__, 'rptErrAdminEmail', xarModGetVar('mail','adminmail'));
-    xarModSetVar(__ADDRESSBOOK__, 'rptErrDevFlag', 1);
+    xarModSetVar('addressbook', 'abtitle', 'Xaraya Address Book');
+    xarModSetVar('addressbook', 'guestmode', 1);
+    xarModSetVar('addressbook', 'usermode', 7);
+    xarModSetVar('addressbook', 'itemsperpage', 30);
+    xarModSetVar('addressbook', 'globalprotect', 0);
+    xarModSetVar('addressbook', 'menu_off', 0);
+    xarModSetVar('addressbook', 'custom_tab', '');
+    xarModSetVar('addressbook', 'zipbeforecity', 0);
+    xarModSetVar('addressbook', 'hidecopyright', 0);
+    xarModSetVar('addressbook', 'use_prefix', 0);
+    xarModSetVar('addressbook', 'display_prefix', 0);
+    xarModSetVar('addressbook', 'use_img', 0);
+    xarModSetVar('addressbook', 'textareawidth', 60);
+    xarModSetVar('addressbook', 'dateformat', 0);
+    xarModSetVar('addressbook', 'numformat', '9,999.99');
+    xarModSetVar('addressbook', 'sortorder_1', 'sortname,sortcompany');
+    xarModSetVar('addressbook', 'sortorder_2', 'sortcompany,sortname');
+    xarModSetVar('addressbook', 'menu_semi', 0);
+    xarModSetVar('addressbook', 'name_order', 0);
+    xarModSetVar('addressbook', 'special_chars_1', '???????');
+    xarModSetVar('addressbook', 'special_chars_2', 'AOUaous');
+    xarModSetVar('addressbook', 'SupportShortURLs', 0);
+    xarModSetVar('addressbook', 'rptErrAdminFlag', 1);
+    xarModSetVar('addressbook', 'rptErrAdminEmail', xarModGetVar('mail','adminmail'));
+    xarModSetVar('addressbook', 'rptErrDevFlag', 1);
 
     /*********************************************************************
     * Define instances for this module
@@ -251,7 +247,7 @@ function addressbook_init()
                               'limit'  => 20
                             ),
                     );
-    xarDefineInstance(__ADDRESSBOOK__, 'Item', $instances);
+    xarDefineInstance('addressbook', 'Item', $instances);
 
 
     /*********************************************************************
@@ -259,11 +255,11 @@ function addressbook_init()
     * Format is
     * xarregisterMask(Name,Realm,Module,Component,Instance,Level,Description)
     *********************************************************************/
-    xarRegisterMask('ReadAddressBook',   'All',__ADDRESSBOOK__,'Item','All:All:All','ACCESS_READ');
-    xarRegisterMask('EditAddressBook',   'All',__ADDRESSBOOK__,'Item','All:All:All','ACCESS_EDIT');
-    xarRegisterMask('AddAddressBook',    'All',__ADDRESSBOOK__,'Item','All:All:All','ACCESS_ADD');
-    xarRegisterMask('DeleteAddressBook', 'All',__ADDRESSBOOK__,'Item','All:All:All','ACCESS_DELETE');
-    xarRegisterMask('AdminAddressBook',  'All',__ADDRESSBOOK__,'Item','All:All:All','ACCESS_ADMIN');
+    xarRegisterMask('ReadAddressBook',   'All','addressbook','Item','All:All:All','ACCESS_READ');
+    xarRegisterMask('EditAddressBook',   'All','addressbook','Item','All:All:All','ACCESS_EDIT');
+    xarRegisterMask('AddAddressBook',    'All','addressbook','Item','All:All:All','ACCESS_ADD');
+    xarRegisterMask('DeleteAddressBook', 'All','addressbook','Item','All:All:All','ACCESS_DELETE');
+    xarRegisterMask('AdminAddressBook',  'All','addressbook','Item','All:All:All','ACCESS_ADMIN');
 
 
     // Initialisation successful
@@ -283,9 +279,9 @@ function addressbook_upgrade($oldversion)
     switch($oldversion) {
         case '1.0':
             // New Admin Message mod vars in 1.1 & later
-            xarModSetVar (__ADDRESSBOOK__,'rptErrAdminFlag', 1);
-            xarModSetVar (__ADDRESSBOOK__,'rptErrAdminEmail', xarModGetVar('mail','adminmail'));
-            xarModSetVar (__ADDRESSBOOK__,'rptErrDevFlag', 1);
+            xarModSetVar ('addressbook','rptErrAdminFlag', 1);
+            xarModSetVar ('addressbook','rptErrAdminEmail', xarModGetVar('mail','adminmail'));
+            xarModSetVar ('addressbook','rptErrDevFlag', 1);
 
         case '1.1':
             // Alter the table to for cross DB compatibility and rename a column
@@ -418,7 +414,7 @@ function addressbook_upgrade($oldversion)
             }
 
             // Add a config var to allow the prefix to be displayed in the search results
-            xarModSetVar(__ADDRESSBOOK__, 'display_prefix', 0);
+            xarModSetVar('addressbook', 'display_prefix', 0);
 
             break;
 
@@ -426,13 +422,13 @@ function addressbook_upgrade($oldversion)
         /*
          * This release will fix the user privileges problem where only Admins may insert records
          */
-            xarRemoveMasks(__ADDRESSBOOK__);
+            xarRemoveMasks('addressbook');
 
-            xarRegisterMask('ReadAddressBook',   'All',__ADDRESSBOOK__,'Item','All:All:All','ACCESS_READ');
-            xarRegisterMask('EditAddressBook',   'All',__ADDRESSBOOK__,'Item','All:All:All','ACCESS_EDIT');
-            xarRegisterMask('AddAddressBook',    'All',__ADDRESSBOOK__,'Item','All:All:All','ACCESS_ADD');
-            xarRegisterMask('DeleteAddressBook', 'All',__ADDRESSBOOK__,'Item','All:All:All','ACCESS_DELETE');
-            xarRegisterMask('AdminAddressBook',  'All',__ADDRESSBOOK__,'Item','All:All:All','ACCESS_ADMIN');
+            xarRegisterMask('ReadAddressBook',   'All','addressbook','Item','All:All:All','ACCESS_READ');
+            xarRegisterMask('EditAddressBook',   'All','addressbook','Item','All:All:All','ACCESS_EDIT');
+            xarRegisterMask('AddAddressBook',    'All','addressbook','Item','All:All:All','ACCESS_ADD');
+            xarRegisterMask('DeleteAddressBook', 'All','addressbook','Item','All:All:All','ACCESS_DELETE');
+            xarRegisterMask('AdminAddressBook',  'All','addressbook','Item','All:All:All','ACCESS_ADMIN');
 
             break;
     }
@@ -477,9 +473,9 @@ function addressbook_delete()
     }
 
     // Remove remaining Variables, Masks, and Instances
-    xarModDelAllVars(__ADDRESSBOOK__);
-    xarRemoveMasks(__ADDRESSBOOK__);
-    xarRemoveInstances(__ADDRESSBOOK__);
+    xarModDelAllVars('addressbook');
+    xarRemoveMasks('addressbook');
+    xarRemoveInstances('addressbook');
 
     // Deletion successful
     return true;

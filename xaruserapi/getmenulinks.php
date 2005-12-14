@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id: getmenulinks.php,v 1.4 2005/03/28 22:54:57 garrett Exp $
- *
  * AddressBook user getMenuLinks
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -22,9 +20,9 @@
 function addressbook_userapi_getmenulinks()
 {
     // FIXME:<garrett> should be able to move this all into Xaraya sec model
-    if (xarModAPIFunc(__ADDRESSBOOK__,'user','checkaccesslevel',array('option'=>'create'))) {
+    if (xarModAPIFunc('addressbook','user','checkaccesslevel',array('option'=>'create'))) {
 
-        $menulinks[] = Array('url'   => xarModURL(__ADDRESSBOOK__,
+        $menulinks[] = Array('url'   => xarModURL('addressbook',
                                                    'user',
                                                    'insertedit'),
                               'title' => xarML('Add a new address'),
@@ -33,7 +31,7 @@ function addressbook_userapi_getmenulinks()
 
     if (xarSecurityCheck('ReadAddressBook',0)) {
 
-        $menulinks[] = Array('url'   => xarModURL(__ADDRESSBOOK__,
+        $menulinks[] = Array('url'   => xarModURL('addressbook',
                                                    'user',
                                                    'viewall'),
                               'title' => xarML('View address book entries'),
@@ -44,7 +42,7 @@ function addressbook_userapi_getmenulinks()
 
     if (xarSecurityCheck('AdminAddressBook',0)) {
 
-        $menulinks[] = Array('url'   => xarModURL(__ADDRESSBOOK__,
+        $menulinks[] = Array('url'   => xarModURL('addressbook',
                                                    'user',
                                                    'export'),
                              'title' => xarML('Export address book entries'),

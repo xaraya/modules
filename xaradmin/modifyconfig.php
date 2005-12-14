@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id: modifyconfig.php,v 1.5 2004/11/13 06:21:39 garrett Exp $
- *
  * AddressBook admin functions
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -13,7 +11,6 @@
  * @author Garrett Hunter <garrett@blacktower.com>
  * Based on pnAddressBook by Thomas Smiatek <thomas@smiatek.com>
  */
-
 /**
  * Display form used to update the configuration settings
  * Handle the data submission
@@ -21,7 +18,7 @@
  * @param GET / POST passed from modifyconfig form
  * @return xarTemplate data
  */
-function addressbook_admin_modifyconfig() 
+function addressbook_admin_modifyconfig()
 {
 
     $output = array(); // template contents go here
@@ -40,7 +37,7 @@ function addressbook_admin_modifyconfig()
              * Data integrity / Security check
              */
             if (!xarSecConfirmAuthKey())
-                return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
+                return xarModAPIFunc('addressbook','util','handleexception',array('output'=>$output));
 
             // Security Settins
             if (!xarVarFetch ('guestmode_1','checkbox',$formData['guestmode_1'], 0)) return;
@@ -83,41 +80,41 @@ function addressbook_admin_modifyconfig()
             if (!xarVarFetch ('rptErrAdminEmail','str:1:128',$formData['rptErrAdminEmail'], FALSE)) return;
             if (!xarVarFetch ('rptErrDevFlag','checkbox',$formData['rptErrDevFlag'], 1)) return;
 
-            if (!xarModAPIFunc(__ADDRESSBOOK__,'admin','updateconfig',$formData)) {
-                return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
+            if (!xarModAPIFunc('addressbook','admin','updateconfig',$formData)) {
+                return xarModAPIFunc('addressbook','util','handleexception',array('output'=>$output));
             }
         }
         // Thanks to Jason Judge <admin@academe.co.uk> for suggesting the
         // use of floor() & mod!!
         // Set values that will be displayed in the template
-        $guestMode = xarModGetVar(__ADDRESSBOOK__, 'guestmode');
+        $guestMode = xarModGetVar('addressbook', 'guestmode');
         $output['guestmode_1'] = $guestMode % 2;
         $output['guestmode_2'] = floor($guestMode / 2) % 2;
         $output['guestmode_3'] = floor($guestMode / 4) % 2;
 
-        $userMode = xarModGetVar(__ADDRESSBOOK__, 'usermode');
+        $userMode = xarModGetVar('addressbook', 'usermode');
         $output['usermode_1'] = $userMode % 2;
         $output['usermode_2'] = floor($userMode / 2) % 2;
         $output['usermode_3'] = floor($userMode / 4) % 2;
 
         // User Title for Address Book
-        $output['abtitle'] = xarModGetVar(__ADDRESSBOOK__, 'abtitle');
+        $output['abtitle'] = xarModGetVar('addressbook', 'abtitle');
 
         /**
          * Build Sort Order Options
          */
         // Get the default Sort Order
-        $output['defSortCols'] = explode(',',xarModGetVar(__ADDRESSBOOK__, 'sortorder_1'));
+        $output['defSortCols'] = explode(',',xarModGetVar('addressbook', 'sortorder_1'));
         // Get Alternate Sort Order
-        $output['altSortCols'] = explode(',',xarModGetVar(__ADDRESSBOOK__, 'sortorder_2'));
+        $output['altSortCols'] = explode(',',xarModGetVar('addressbook', 'sortorder_2'));
 
         // build the basic sort options
-        $sortOptions = xarModAPIFunc(__ADDRESSBOOK__,'util','getsortoptions');
+        $sortOptions = xarModAPIFunc('addressbook','util','getsortoptions');
 
         // Inclue custom fields in sorts & ordering
-        $custom_tab = xarModGetVar(__ADDRESSBOOK__,'custom_tab');
+        $custom_tab = xarModGetVar('addressbook','custom_tab');
         if ((!empty($custom_tab)) && ($custom_tab != '')) {
-            $custFieldLabels = xarModAPIFunc(__ADDRESSBOOK__,'admin','getcustomfields');
+            $custFieldLabels = xarModAPIFunc('addressbook','admin','getcustomfields');
             foreach($custFieldLabels as $custFieldLabel) {
                 $sortOptions[] = array('id'=>$custFieldLabel['colName'], 'name'=>xarVarPrepHTMLDisplay($custFieldLabel['custLabel']));
             }
@@ -136,42 +133,42 @@ function addressbook_admin_modifyconfig()
         $temp2 = xarML('First name').' '.xarML('Last name');
         $output['name_order'][] = array('id'=>0, 'name'=>$temp1);
         $output['name_order'][] = array('id'=>1, 'name'=>$temp2);
-        $output['name_order_selected'] = xarModGetVar(__ADDRESSBOOK__, 'name_order');
+        $output['name_order_selected'] = xarModGetVar('addressbook', 'name_order');
 
         // Additional Settings
-        $output['special_chars_1']  = xarModGetVar(__ADDRESSBOOK__, 'special_chars_1');
-        $output['special_chars_2']  = xarModGetVar(__ADDRESSBOOK__, 'special_chars_2');
+        $output['special_chars_1']  = xarModGetVar('addressbook', 'special_chars_1');
+        $output['special_chars_2']  = xarModGetVar('addressbook', 'special_chars_2');
 
-        $output['globalprotect']    = xarModGetVar(__ADDRESSBOOK__, 'globalprotect');
-        $output['use_prefix']       = xarModGetVar(__ADDRESSBOOK__, 'use_prefix');
-        $output['display_prefix']   = xarModGetVar(__ADDRESSBOOK__, 'display_prefix');
-        $output['use_img']          = xarModGetVar(__ADDRESSBOOK__, 'use_img');
+        $output['globalprotect']    = xarModGetVar('addressbook', 'globalprotect');
+        $output['use_prefix']       = xarModGetVar('addressbook', 'use_prefix');
+        $output['display_prefix']   = xarModGetVar('addressbook', 'display_prefix');
+        $output['use_img']          = xarModGetVar('addressbook', 'use_img');
 
         // Disable / enable menu options
         $output['menu_off'][] = array('id'=>0, 'name'=>xarML('Enabled for all'));
         $output['menu_off'][] = array('id'=>1, 'name'=>xarML('Disabled for all'));
         $output['menu_off'][] = array('id'=>2, 'name'=>xarML('Disabled only for guests'));
-        $output['menu_off_selected'] = (int) xarModGetVar(__ADDRESSBOOK__, 'menu_off');
+        $output['menu_off_selected'] = (int) xarModGetVar('addressbook', 'menu_off');
 
-        $output['menu_semi']        = xarModGetVar(__ADDRESSBOOK__, 'menu_semi');
-        $output['zipbeforecity']    = xarModGetVar(__ADDRESSBOOK__, 'zipbeforecity');
-        $output['itemsperpage']     = xarModGetVar(__ADDRESSBOOK__, 'itemsperpage');
-        $output['hidecopyright']    = xarModGetVar(__ADDRESSBOOK__, 'hidecopyright');
-        $output['custom_tab']       = xarModGetVar(__ADDRESSBOOK__, 'custom_tab');
-        $output['textareawidth']    = xarModGetVar(__ADDRESSBOOK__, 'textareawidth');
+        $output['menu_semi']        = xarModGetVar('addressbook', 'menu_semi');
+        $output['zipbeforecity']    = xarModGetVar('addressbook', 'zipbeforecity');
+        $output['itemsperpage']     = xarModGetVar('addressbook', 'itemsperpage');
+        $output['hidecopyright']    = xarModGetVar('addressbook', 'hidecopyright');
+        $output['custom_tab']       = xarModGetVar('addressbook', 'custom_tab');
+        $output['textareawidth']    = xarModGetVar('addressbook', 'textareawidth');
 
         $output['dateformat'][] = array('id'=>0, 'name'=>xarVarPrepForDisplay(_AB_DATEFORMAT_1));
         $output['dateformat'][] = array('id'=>1, 'name'=>xarVarPrepForDisplay(_AB_DATEFORMAT_2));
-        $output['dateformat_selected'] = xarModGetVar(__ADDRESSBOOK__, 'dateformat');
+        $output['dateformat_selected'] = xarModGetVar('addressbook', 'dateformat');
 
         $output['numformat'][] = array('id'=>'9,999.99', 'name'=>'9,999.99');
         $output['numformat'][] = array('id'=>'9.999,99', 'name'=>'9.999,99');
-        $output['numformat_selected'] = xarModGetVar(__ADDRESSBOOK__, 'numformat');
+        $output['numformat_selected'] = xarModGetVar('addressbook', 'numformat');
 
         // Admin Message config
-        $output['rptErrAdminFlag']    = xarModGetVar(__ADDRESSBOOK__, 'rptErrAdminFlag');
-        $output['rptErrAdminEmail']   = xarModGetVar(__ADDRESSBOOK__, 'rptErrAdminEmail');
-        $output['rptErrDevFlag']      = xarModGetVar(__ADDRESSBOOK__, 'rptErrDevFlag');
+        $output['rptErrAdminFlag']    = xarModGetVar('addressbook', 'rptErrAdminFlag');
+        $output['rptErrAdminEmail']   = xarModGetVar('addressbook', 'rptErrAdminEmail');
+        $output['rptErrDevFlag']      = xarModGetVar('addressbook', 'rptErrDevFlag');
 
         // Generate a one-time authorisation code for this operation
         $output['authid'] = xarSecGenAuthKey();
@@ -180,10 +177,10 @@ function addressbook_admin_modifyconfig()
         $output['btnCommitText'] = xarML('Commit Changes');
 
     } else {
-        return xarTplModule(__ADDRESSBOOK__,'user','noauth');
+        return xarTplModule('addressbook','user','noauth');
     }
 
-    return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
+    return xarModAPIFunc('addressbook','util','handleexception',array('output'=>$output));
 
 } // END modifyconfig
 

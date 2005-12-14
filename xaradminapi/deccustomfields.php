@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id: deccustomfields.php,v 1.2 2004/03/28 23:22:58 garrett Exp $
- *
  * AddressBook admin decCustomfields
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -41,7 +39,7 @@ function addressbook_adminapi_decCustomfields($args)
     }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                     join(', ', $invalid), 'admin', 'updateItems', __ADDRESSBOOK__);
+                     join(', ', $invalid), 'admin', 'updateItems', 'addressbook');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                     new SystemException($msg));
         $returnCode = FALSE;

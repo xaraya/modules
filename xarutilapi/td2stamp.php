@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id: td2stamp.php,v 1.3 2004/11/16 05:40:47 garrett Exp $
- *
  * AddressBook utilapi td2stamp
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -13,7 +11,6 @@
  * @author Garrett Hunter <garrett@blacktower.com>
  * Based on pnAddressBook by Thomas Smiatek <thomas@smiatek.com>
  */
-
 /**
  * converts a date string into a AddressBook formatted date
  *
@@ -26,7 +23,7 @@ function addressbook_utilapi_td2stamp($args)
     if( (!isset($idate)) || (empty($idate)) || ($idate=='')) {
         return 'NULL';
     }
-    $dateformat = xarModGetVar(__ADDRESSBOOK__,'dateformat');
+    $dateformat = xarModGetVar('addressbook','dateformat');
     $token = "-./ ";
     $p1 = strtok($idate,$token);
     $p2 = strtok($token);

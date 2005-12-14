@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id: getsortoptions.php,v 1.2 2003/12/22 07:12:50 garrett Exp $
- *
  * AddressBook utilapi getSortOptions
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -20,7 +18,7 @@
  * @param none
  * @return array
  */
-function addressbook_utilapi_getsortoptions() 
+function addressbook_utilapi_getsortoptions()
 {
 
     $sortOptions = array();

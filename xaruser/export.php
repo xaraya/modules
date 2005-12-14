@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id: viewall.php,v 1.2 2004/03/28 23:23:16 garrett Exp $
- *
  * AddressBook user viewAll
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -28,11 +26,11 @@ function addressbook_user_export()
      */
     if (xarSecurityCheck('AdminAddressBook',0)) {
 
-        xarModAPIFunc(__ADDRESSBOOK__,'user','export');
+        xarModAPIFunc('addressbook','user','export');
 
     }
 
-    return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
+    return xarModAPIFunc('addressbook','util','handleexception',array('output'=>$output));
 
 } // END export
 

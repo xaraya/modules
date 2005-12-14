@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id: modifyprefixes.php,v 1.5 2003/12/22 07:11:41 garrett Exp $
- *
  * AddressBook admin modifylabels
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -21,7 +19,7 @@
  * @param GET / POST passed from modifyprefix form
  * @return xarTemplate data
  */
-function addressbook_admin_modifyprefixes($args) 
+function addressbook_admin_modifyprefixes($args)
 {
     $output = array (); // template contents go here
     /**
@@ -35,29 +33,29 @@ function addressbook_admin_modifyprefixes($args)
         if ($formSubmit) {
 
             if (!xarSecConfirmAuthKey())
-                return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
+                return xarModAPIFunc('addressbook','util','handleexception',array('output'=>$output));
 
 
             if (!xarVarFetch ('id', 'array::',$formData['id'], FALSE)) {
-                return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
+                return xarModAPIFunc('addressbook','util','handleexception',array('output'=>$output));
             }
             if (!xarVarFetch ('del', 'array::',$formData['del'], FALSE))  {
-                return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
+                return xarModAPIFunc('addressbook','util','handleexception',array('output'=>$output));
             }
             if (!xarVarFetch ('name', 'array::',$formData['name'], FALSE))  {
-                return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
+                return xarModAPIFunc('addressbook','util','handleexception',array('output'=>$output));
             }
             if (!xarVarFetch ('newname','str::30',$formData['newname'],FALSE))  {
-                return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
+                return xarModAPIFunc('addressbook','util','handleexception',array('output'=>$output));
             }
 
-            if (!xarModAPIFunc(__ADDRESSBOOK__,'admin','updateprefixes',$formData)) {
-                return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
+            if (!xarModAPIFunc('addressbook','admin','updateprefixes',$formData)) {
+                return xarModAPIFunc('addressbook','util','handleexception',array('output'=>$output));
             }
         }
 
         // get the list of prefixes
-        $output['prefixes'] = xarModAPIFunc(__ADDRESSBOOK__,'util','getitems',array('tablename'=>'prefixes'));
+        $output['prefixes'] = xarModAPIFunc('addressbook','util','getitems',array('tablename'=>'prefixes'));
 
         // Generate a one-time authorisation code for this operation
         $output['authid'] = xarSecGenAuthKey();
@@ -66,10 +64,10 @@ function addressbook_admin_modifyprefixes($args)
         $output['btnCommitText'] = xarML('Commit Changes');
 
     } else {
-        return xarTplModule(__ADDRESSBOOK__,'user','noauth');
+        return xarTplModule('addressbook','user','noauth');
     }
 
-    return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
+    return xarModAPIFunc('addressbook','util','handleexception',array('output'=>$output));
 
 } // END modifyprefixes
 

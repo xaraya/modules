@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id: updatelabels.php,v 1.2 2004/03/28 23:22:58 garrett Exp $
- *
  * AddressBook admin function
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -13,7 +11,6 @@
  * @author Garrett Hunter <garrett@blacktower.com>
  * Based on pnAddressBook by Thomas Smiatek <thomas@smiatek.com>
  */
-
 /**
  * update the label information used in the contact form
  *
@@ -23,7 +20,6 @@
  */
 function addressbook_adminapi_updatelabels($args)
 {
-
     // var defines
     $dels = '';
 
@@ -40,7 +36,7 @@ function addressbook_adminapi_updatelabels($args)
     if (!isset($name)) { $invalid[] = 'name'; }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) in function #(2)() in module #(3)',
-                     join(', ',$invalid), 'updatelabels', __ADDRESSBOOK__);
+                     join(', ',$invalid), 'updatelabels', 'addressbook');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                     new SystemException($msg));
         return FALSE;
@@ -80,7 +76,7 @@ function addressbook_adminapi_updatelabels($args)
                               ,'bindvars'=>array($modName[$k],$id)));
     }
 
-    if(xarModAPIFunc(__ADDRESSBOOK__,'admin','updateitems',array('tablename'=>'labels','updates'=>$updates))) {
+    if(xarModAPIFunc('addressbook','admin','updateitems',array('tablename'=>'labels','updates'=>$updates))) {
         xarErrorSet(XAR_USER_EXCEPTION,
                     _AB_ERR_INFO,
                     new abUserException('UPDATE - '.xarML('successful')));
@@ -88,7 +84,7 @@ function addressbook_adminapi_updatelabels($args)
 
     if(!empty($dels)) {
         $delete = "DELETE FROM $labelTable WHERE nr IN ($dels)";
-        if(xarModAPIFunc(__ADDRESSBOOK__,'admin','deleteitems',array('tablename'=>'labels','delete'=>$delete))) {
+        if(xarModAPIFunc('addressbook','admin','deleteitems',array('tablename'=>'labels','delete'=>$delete))) {
         xarErrorSet(XAR_USER_EXCEPTION,
                     _AB_ERR_INFO,
                     new abUserException('DELETE - '.xarML('successful')));
@@ -96,7 +92,7 @@ function addressbook_adminapi_updatelabels($args)
     }
 
     if( (isset($newname)) && ($newname != '') ) {
-        if(xarModAPIFunc(__ADDRESSBOOK__,'admin','additems',array('tablename'=>'labels','name'=>$newname))) {
+        if(xarModAPIFunc('addressbook','admin','additems',array('tablename'=>'labels','name'=>$newname))) {
         xarErrorSet(XAR_USER_EXCEPTION,
                     _AB_ERR_INFO,
                     new abUserException('INSERT - '.xarML('successful')));

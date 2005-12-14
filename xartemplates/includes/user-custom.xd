@@ -92,7 +92,7 @@ function LimitText(fieldObj,maxChars) {
                     </xar:if>
                     <xar:elseif condition="!strcmp($custUserData[$i]['custType'],_AB_CUSTOM_DATE)" />
                     <xar:if condition="!empty($custUserData[$i]['userData'])">
-                      <xar:if condition="xarModGetVar(__ADDRESSBOOK__,'dateformat') eq 0">
+                      <xar:if condition="xarModGetVar('addressbook','dateformat') eq 0">
                         <xar:set name="$date">date("m.d.Y",$custUserData[$i]['userData']);</xar:set>
                         <xar:else />
                         <xar:set name="$date">date("d.m.Y",$custUserData[$i]['userData']);</xar:set>
@@ -101,7 +101,7 @@ function LimitText(fieldObj,maxChars) {
                       <xar:else />
                       <input name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" value="" size="10" maxlength="10" />
                     </xar:if>
-                    <xar:if condition="xarModGetVar(__ADDRESSBOOK__,'dateformat') eq 0">
+                    <xar:if condition="xarModGetVar('addressbook','dateformat') eq 0">
                       &nbsp;&nbsp;#$dateformat_1#
                       <xar:else />
                       &nbsp;&nbsp;#$dateformat_2#

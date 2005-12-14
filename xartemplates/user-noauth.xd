@@ -1,6 +1,6 @@
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        #xarModGetVar(__ADDRESSBOOK__,'abtitle')#
+        #xarModGetVar('addressbook','abtitle')#
     </span>
 </div>
 <div style="border-width: 1px; background-color:#DEDEDE; border-style: solid; border-color: #666666; padding: 2px; text-align:center;">
@@ -15,7 +15,7 @@
             <strong>
                         <xar:ml>
                             <xar:mlstring>Please click <a href="#(1)">here</a> return to the start.</xar:mlstring>
-                            <xar:mlvar>#xarModURL(__ADDRESSBOOK__,'user','viewall')#</xar:mlvar>
+                            <xar:mlvar>#xarModURL('addressbook','user','viewall')#</xar:mlvar>
                         </xar:ml>
             </strong>
             <br />

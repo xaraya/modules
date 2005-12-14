@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id: displaydocs.php,v 1.1 2003/12/22 07:26:55 garrett Exp $
- *
  * AddressBook admin functions
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -17,7 +15,7 @@
 /**
  * Placeholder function to display a static page
  */
-function addressbook_admin_displaydocs () 
+function addressbook_admin_displaydocs ()
 {
 
     return array();

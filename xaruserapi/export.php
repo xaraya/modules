@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id: getmenulinks.php,v 1.2 2004/03/28 23:23:16 garrett Exp $
- *
  * AddressBook user export
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -34,14 +32,14 @@ function addressbook_userapi_export()
     if($dbconn->ErrorNo() != 0) { return false; }
 
     // Retrieve all the custom fields, we use this throughout.
-    $custFields = xarModAPIFunc(__ADDRESSBOOK__,'user','getcustfieldinfo',array('flag'=>_AB_CUST_ALLFIELDINFO));
+    $custFields = xarModAPIFunc('addressbook','user','getcustfieldinfo',array('flag'=>_AB_CUST_ALLFIELDINFO));
 
     /**
      * Get the prefix decodes if we are to display them
      */
     $prefixes = array();
-    if (xarModGetVar(__ADDRESSBOOK__, 'display_prefix')) {
-        $prefixes = xarModAPIFunc(__ADDRESSBOOK__,'util','getitems',array('tablename'=>'prefixes'));
+    if (xarModGetVar('addressbook', 'display_prefix')) {
+        $prefixes = xarModAPIFunc('addressbook','util','getitems',array('tablename'=>'prefixes'));
     }
 
 // List Header

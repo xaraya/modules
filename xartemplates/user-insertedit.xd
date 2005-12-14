@@ -1,7 +1,7 @@
 <!-- START TITLE BAR -->
 <xar:template compile="false" file="mod-title" type="module" />
 <!-- END TITLE BAR -->
-<xar:set name="$modInfo">xarModGetInfo(xarModGetIDFromName(__ADDRESSBOOK__))</xar:set>
+<xar:set name="$modInfo">xarModGetInfo(xarModGetIDFromName('addressbook'))</xar:set>
 <div class="xar-mod-body" style="display:block;">
   <!-- START WARN DISPLAY -->
   <div style="text-align:center;">
@@ -10,7 +10,7 @@
 <!-- END WARN DISPLAY -->
 <xar:if condition="!isset($insertStatus)">
     <div class="xar-alt-outline" style="padding:.25; text-align:center;">
-<form action="#xarModURL(__ADDRESSBOOK__, 'user', 'insertedit')#" method="post" enctype="application/x-www-form-urlencoded" name="addcontact" id="addcontact">
+<form action="#xarModURL('addressbook', 'user', 'insertedit')#" method="post" enctype="application/x-www-form-urlencoded" name="addcontact" id="addcontact">
 <!-- START MENUVALUES -->
 <input name="id" type="hidden" value="#$id#" id="id" />
 <input name="formcall" type="hidden" value="#$formcall#" id="formcall" />
@@ -142,9 +142,9 @@
 </div>
 <xar:else />
   <div class="xar-alt-outline" style="padding: 4em; text-align:center;">
-      <h3>#xarModGetVar(__ADDRESSBOOK__,'abtitle')# <xar:mlstring>Entry Saved!</xar:mlstring></h3>
+      <h3>#xarModGetVar('addressbook','abtitle')# <xar:mlstring>Entry Saved!</xar:mlstring></h3>
         <br />
-      <a href="#xarModURL(__ADDRESSBOOK__,'user','insertedit',$menuValues)#">[#$newAddrLinkTEXT#...]</a>&nbsp;&nbsp;<a href="#xarModURL(__ADDRESSBOOK__,'user','viewall',$menuValues)#">[#$backToListTEXT#]</a>
+      <a href="#xarModURL('addressbook','user','insertedit',$menuValues)#">[#$newAddrLinkTEXT#...]</a>&nbsp;&nbsp;<a href="#xarModURL('addressbook','user','viewall',$menuValues)#">[#$backToListTEXT#]</a>
   </div>
 </xar:if>
 </div>

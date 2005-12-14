@@ -1,5 +1,5 @@
-<xar:if condition="!xarModGetVar(__ADDRESSBOOK__, 'hidecopyright')">
-<xar:set id="modInfo" name="$modInfo">xarModGetInfo(xarModGetIDFromName(__ADDRESSBOOK__));</xar:set>
+<xar:if condition="!xarModGetVar('addressbook', 'hidecopyright')">
+<xar:set id="modInfo" name="$modInfo">xarModGetInfo(xarModGetIDFromName('addressbook'));</xar:set>
 <div style="text-align:center; padding:.5em;">
     <span class="xar-sub"><xar:mlstring>Powered by</xar:mlstring> <a href="http://xaraya.blacktower.com">AddressBook v#$modInfo['version']#</a> &copy; 2005 Garrett Hunter</span>
 </div>

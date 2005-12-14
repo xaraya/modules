@@ -3,6 +3,6 @@
 <strong>#$infoMsg#</strong>
 <br />
 <br />
-<a href="#xarModURL(__ADDRESSBOOK__, 'user', 'viewall',$menuValues)#">[#$backToListTEXT#]</a>
+<a href="#xarModURL('addressbook', 'user', 'viewall',$menuValues)#">[#$backToListTEXT#]</a>
 </div>
 <xar:template compile="false" file="mod-footer" type="module" />

@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id: getsortby.php,v 1.3 2004/11/13 06:20:14 garrett Exp $
- *
  * AddressBook userapi getSortBy
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -26,10 +24,10 @@ function addressbook_userapi_getSortBy($args)
         return false;
     }
     if ($sort == 1) {
-        $sortCols = explode(',',xarModGetVar(__ADDRESSBOOK__, 'sortorder_1'));
+        $sortCols = explode(',',xarModGetVar('addressbook', 'sortorder_1'));
     }
     else {
-        $sortCols = explode(',',xarModGetVar(__ADDRESSBOOK__, 'sortorder_2'));
+        $sortCols = explode(',',xarModGetVar('addressbook', 'sortorder_2'));
     }
     for ($i=0;$i<2;$i++) {
         switch ($sortCols[$i]) {
@@ -55,9 +53,9 @@ function addressbook_userapi_getSortBy($args)
                 $returnArray[$i] = xarML('Country');
                 break;
         }
-        $custom_tab = xarModGetVar(__ADDRESSBOOK__,'custom_tab');
+        $custom_tab = xarModGetVar('addressbook','custom_tab');
         if ((!empty($custom_tab)) && ($custom_tab != '')) {
-            $custUserData = xarModAPIFunc(__ADDRESSBOOK__,'user','getcustfieldtypeinfo');
+            $custUserData = xarModAPIFunc('addressbook','user','getcustfieldtypeinfo');
             foreach($custUserData as $userData) {
                 if ($sortCols[$i] == $userData['colName']) {
                     $returnArray[$i] = $userData['custLabel'];

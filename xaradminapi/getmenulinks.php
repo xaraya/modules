@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id: getmenulinks.php,v 1.5 2003/12/22 07:12:50 garrett Exp $
- *
  * AddressBook admin getMenuLinks
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -13,7 +11,6 @@
  * @author Garrett Hunter <garrett@blacktower.com>
  * Based on pnAddressBook by Thomas Smiatek <thomas@smiatek.com>
  */
-
 /**
  * builds an array of menulinks for display in a menu block
  *
@@ -21,16 +18,10 @@
  */
 function addressbook_adminapi_getmenulinks()
 {
-    if (xarSecurityCheck('AdminAddressBook',0)) {
-        $menulinks[] = Array('url'   => xarModURL(__ADDRESSBOOK__,
-                                                   'admin',
-                                                   'modifyconfig'),
-                              'title' => xarML('Modify the settings for the module.'),
-                              'label' => xarML('Modify Config'));
-    }
+
 
     if (xarSecurityCheck('AdminAddressBook',0)) {
-        $menulinks[] = Array('url'   => xarModURL(__ADDRESSBOOK__,
+        $menulinks[] = Array('url'   => xarModURL('addressbook',
                                                    'admin',
                                                    'modifycategories'),
                               'title' => xarML('Modify categories for the module.'),
@@ -38,7 +29,7 @@ function addressbook_adminapi_getmenulinks()
     }
 
     if (xarSecurityCheck('AdminAddressBook',0)) {
-        $menulinks[] = Array('url'   => xarModURL(__ADDRESSBOOK__,
+        $menulinks[] = Array('url'   => xarModURL('addressbook',
                                                    'admin',
                                                    'modifylabels'),
                               'title' => xarML('Modify module labels used to describe data fields'),
@@ -46,7 +37,7 @@ function addressbook_adminapi_getmenulinks()
     }
 
     if (xarSecurityCheck('AdminAddressBook',0)) {
-        $menulinks[] = Array('url'   => xarModURL(__ADDRESSBOOK__,
+        $menulinks[] = Array('url'   => xarModURL('addressbook',
                                                   'admin',
                                                   'modifyprefixes'),
                               'title' => xarML('Modify contact prefix labels (Mr. / Mrs. / etc.)'),
@@ -54,7 +45,7 @@ function addressbook_adminapi_getmenulinks()
     }
 
     if (xarSecurityCheck('AdminAddressBook',0)) {
-        $menulinks[] = Array('url'   => xarModURL(__ADDRESSBOOK__,
+        $menulinks[] = Array('url'   => xarModURL('addressbook',
                                                   'admin',
                                                   'modifycustomfields'),
                               'title' => xarML('Modify custom fields'),
@@ -62,13 +53,19 @@ function addressbook_adminapi_getmenulinks()
     }
 
     if (xarSecurityCheck('AdminAddressBook',0)) {
-        $menulinks[] = Array('url'   => xarModURL(__ADDRESSBOOK__,
+        $menulinks[] = Array('url'   => xarModURL('addressbook',
                                                   'admin',
                                                   'displaydocs'),
                               'title' => xarML('Administrator Documentation'),
                               'label' => xarML('Admin Docs'));
     }
-
+    if (xarSecurityCheck('AdminAddressBook',0)) {
+        $menulinks[] = Array('url'   => xarModURL('addressbook',
+                                                   'admin',
+                                                   'modifyconfig'),
+                              'title' => xarML('Modify the settings for the module.'),
+                              'label' => xarML('Modify Config'));
+    }
     // If we return nothing, then we need to tell PHP this, in order to avoid an ugly
     // E_ALL error.
     if (empty($menulinks)){

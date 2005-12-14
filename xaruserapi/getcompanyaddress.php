@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id: getcompanyaddress.php,v 1.3 2004/01/24 18:36:22 garrett Exp $
- *
  * AddressBook userapi getCompanyAddress
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -20,7 +18,7 @@
  * @param int $id - AddressBook entry with Company address
  * @return array - company name + address
  */
-function addressbook_userapi_getCompanyAddress($args) 
+function addressbook_userapi_getCompanyAddress($args)
 {
     extract($args);
     $dbconn =& xarDBGetConn();

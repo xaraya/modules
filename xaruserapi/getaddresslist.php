@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id: getaddresslist.php,v 1.4 2004/11/16 05:40:47 garrett Exp $
- *
  * AddressBook user getAddressList
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -25,7 +23,7 @@ function addressbook_userapi_getAddressList($args)
     extract($args);
 
     // Get the menu values
-    $menuValues = xarModAPIFunc(__ADDRESSBOOK__,'user','getmenuvalues');
+    $menuValues = xarModAPIFunc('addressbook','user','getmenuvalues');
     foreach ($menuValues as $key=>$value) {
         $output[$key] = $value;
     }
@@ -38,11 +36,11 @@ function addressbook_userapi_getAddressList($args)
     // Note Searchorder
     $output['sql'] = "SELECT * FROM $address_table";
 //    if ($output['sortview'] != 1) {
-//        $sort_1 = xarModGetVar(__ADDRESSBOOK__, 'sortorder_1');
+//        $sort_1 = xarModGetVar('addressbook', 'sortorder_1');
 //        $output['sql'] = "SELECT *, CONCAT($sort_1) AS listname FROM $address_table";
 //    }
 //    else {
-//        $sort_2 = xarModGetVar(__ADDRESSBOOK__, 'sortorder_2');
+//        $sort_2 = xarModGetVar('addressbook', 'sortorder_2');
 //        $output['sql'] = "SELECT *, CONCAT($sort_2) AS listname FROM $address_table";
 //    }
 
@@ -53,7 +51,7 @@ function addressbook_userapi_getAddressList($args)
 
     // Private Contacts only
     // if globalprotect, only records of the user are shown
-    if (((xarModGetVar(__ADDRESSBOOK__, 'globalprotect'))==1) && (!xarSecurityCheck('EditAddressBook',0))) {
+    if (((xarModGetVar('addressbook', 'globalprotect'))==1) && (!xarSecurityCheck('EditAddressBook',0))) {
         $output['sql'] .= " WHERE (user_id=$user_id)";
     }
     else {
@@ -87,10 +85,10 @@ function addressbook_userapi_getAddressList($args)
     // A-Z
     if ($output['all'] == 0) {
         if ($output['sortview'] != 1) {
-            $sortCols = explode(',',xarModGetVar(__ADDRESSBOOK__, 'sortorder_1'));
+            $sortCols = explode(',',xarModGetVar('addressbook', 'sortorder_1'));
         }
         else {
-            $sortCols = explode(',',xarModGetVar(__ADDRESSBOOK__, 'sortorder_2'));
+            $sortCols = explode(',',xarModGetVar('addressbook', 'sortorder_2'));
         }
         if ($sortCols[0] == 'sortname') {
             if ($output['char']) {
@@ -123,7 +121,7 @@ function addressbook_userapi_getAddressList($args)
     }
 
     // Retrieve all the custom fields, we use this throughout.
-    $custFields = xarModAPIFunc(__ADDRESSBOOK__,'user','getcustfieldinfo',array('flag'=>_AB_CUST_ALLFIELDINFO));
+    $custFields = xarModAPIFunc('addressbook','user','getcustfieldinfo',array('flag'=>_AB_CUST_ALLFIELDINFO));
 
     // Search
     if ($output['formSearch']) {
@@ -155,10 +153,10 @@ function addressbook_userapi_getAddressList($args)
 
     // Sort
     if ($output['sortview'] != 1) {
-        $sortCols = explode(",",xarModGetVar(__ADDRESSBOOK__, 'sortorder_1'));
+        $sortCols = explode(",",xarModGetVar('addressbook', 'sortorder_1'));
     }
     else {
-        $sortCols = explode(",",xarModGetVar(__ADDRESSBOOK__, 'sortorder_2'));
+        $sortCols = explode(",",xarModGetVar('addressbook', 'sortorder_2'));
     }
     $output['sql'] .= " ORDER BY ";
     foreach ($sortCols as $sortCol) {
@@ -178,7 +176,7 @@ function addressbook_userapi_getAddressList($args)
         xarErrorSet(XAR_USER_EXCEPTION, _AB_ERR_INFO, new abUserException(xarML('There are no records to show in this view'))); //gehDEBUG
     }
 
-    $items = xarModGetVar(__ADDRESSBOOK__, 'itemsperpage');
+    $items = xarModGetVar('addressbook', 'itemsperpage');
     $result =& $dbconn->PageExecute($output['sql'],$items,$output['page']);
 
     if ($dbconn->ErrorNo() != 0) {
@@ -207,7 +205,7 @@ function addressbook_userapi_getAddressList($args)
                             'all'=>$output['all'],
                             'char'=>$char);
 
-            $pageURL = xarModURL(__ADDRESSBOOK__,'user','main',$params);
+            $pageURL = xarModURL('addressbook','user','main',$params);
             if ($i != 65) {
                 $azLink .= ' | ';
             }
@@ -230,18 +228,18 @@ function addressbook_userapi_getAddressList($args)
      * Get the title of each column to be displayed.
      */
     if ($output['sortview'] != 1) {
-        $output['headers'] = xarModAPIFunc(__ADDRESSBOOK__,'user','getlistheader',array('sort'=>1));
+        $output['headers'] = xarModAPIFunc('addressbook','user','getlistheader',array('sort'=>1));
     }
     else {
-        $output['headers'] = xarModAPIFunc(__ADDRESSBOOK__,'user','getlistheader',array('sort'=>2));
+        $output['headers'] = xarModAPIFunc('addressbook','user','getlistheader',array('sort'=>2));
     }
 
     /**
      * Get the prefix decodes if we are to display them
      */
     $prefixes = array();
-    if (xarModGetVar(__ADDRESSBOOK__, 'display_prefix')) {
-        $prefixes = xarModAPIFunc(__ADDRESSBOOK__,'util','getitems',array('tablename'=>'prefixes'));
+    if (xarModGetVar('addressbook', 'display_prefix')) {
+        $prefixes = xarModAPIFunc('addressbook','util','getitems',array('tablename'=>'prefixes'));
     }
 
     $abData = array('id'            => ''
@@ -301,11 +299,11 @@ function addressbook_userapi_getAddressList($args)
         $output['searchResults'][] = $abData;
 
         /* not sure what this does gehDEBUG
-//        $cus_fields = xarModAPIFunc(__ADDRESSBOOK__,'user','customfieldinformation',array('id'=>$id));
+//        $cus_fields = xarModAPIFunc('addressbook','user','customfieldinformation',array('id'=>$id));
         $i=1;
         foreach($cus_fields as $cus) {
             if ($cus['type']=='date default NULL') {
-                $cus['value'] = xarModAPIFunc(__ADDRESSBOOK__,'user','stamp2date',array('idate'=>$cus['value']));
+                $cus['value'] = xarModAPIFunc('addressbook','user','stamp2date',array('idate'=>$cus['value']));
             }
             $the_name = 'custom_'.$i;
             $$the_name = $cus['value'];
@@ -316,10 +314,10 @@ function addressbook_userapi_getAddressList($args)
          * Step 1
          */
         if ($output['sortview'] != 1) {
-            $sortCols = explode(',',xarModGetVar(__ADDRESSBOOK__, 'sortorder_1'));
+            $sortCols = explode(',',xarModGetVar('addressbook', 'sortorder_1'));
         }
         else {
-            $sortCols = explode(',',xarModGetVar(__ADDRESSBOOK__, 'sortorder_2'));
+            $sortCols = explode(',',xarModGetVar('addressbook', 'sortorder_2'));
         }
 
         /*
@@ -330,7 +328,7 @@ function addressbook_userapi_getAddressList($args)
         if ($sortCols[0] == 'sortname') {
             if ((!empty($fname) && !empty($lname)) ||
                 (!empty($fname) || !empty($lname))) {
-                if (xarModGetVar(__ADDRESSBOOK__, 'name_order')==_AB_NO_FIRST_LAST) {
+                if (xarModGetVar('addressbook', 'name_order')==_AB_NO_FIRST_LAST) {
                     if (!empty($prefixes) && $prefix > 0) {
                         $displayName .= $prefixes[$prefix-1]['name'].' ';
                     }
@@ -365,7 +363,7 @@ function addressbook_userapi_getAddressList($args)
          * Step 3
          */
         if ($sortCols[1] == 'sortname') {
-            if (xarModGetVar(__ADDRESSBOOK__, 'name_order')==1) {
+            if (xarModGetVar('addressbook', 'name_order')==1) {
                 if ((!empty($fname)) && (!empty($lname))) {
                     $displayRow[] = xarVarPrepHTMLDisplay($fname).' '.xarVarPrepHTMLDisplay($lname);
                 } else {
@@ -417,8 +415,8 @@ function addressbook_userapi_getAddressList($args)
          */
         switch($c_main) {
             case 0:
-                if(!xarModAPIFunc(__ADDRESSBOOK__,'util','is_email',array('email'=>$contact_1))) {
-                    if(!xarModAPIFunc(__ADDRESSBOOK__,'util','is_url',array('url'=>$contact_1))) {
+                if(!xarModAPIFunc('addressbook','util','is_email',array('email'=>$contact_1))) {
+                    if(!xarModAPIFunc('addressbook','util','is_url',array('url'=>$contact_1))) {
                         if (!empty($contact_1)) {
                             $displayRow[] = xarVarPrepHTMLDisplay($contact_1);
                         } else {
@@ -434,8 +432,8 @@ function addressbook_userapi_getAddressList($args)
                 }
                 break;
             case 1:
-                if(!xarModAPIFunc(__ADDRESSBOOK__,'util','is_email',array('email'=>$contact_2))) {
-                    if(!xarModAPIFunc(__ADDRESSBOOK__,'util','is_url',array('url'=>$contact_2))) {
+                if(!xarModAPIFunc('addressbook','util','is_email',array('email'=>$contact_2))) {
+                    if(!xarModAPIFunc('addressbook','util','is_url',array('url'=>$contact_2))) {
                         if (!empty($contact_2)) {
                             $displayRow[] = xarVarPrepHTMLDisplay($contact_2);
                         } else {
@@ -451,8 +449,8 @@ function addressbook_userapi_getAddressList($args)
                 }
                 break;
             case 2:
-                if(!xarModAPIFunc(__ADDRESSBOOK__,'util','is_email',array('email'=>$contact_3))) {
-                    if(!xarModAPIFunc(__ADDRESSBOOK__,'util','is_url',array('url'=>$contact_3))) {
+                if(!xarModAPIFunc('addressbook','util','is_email',array('email'=>$contact_3))) {
+                    if(!xarModAPIFunc('addressbook','util','is_url',array('url'=>$contact_3))) {
                         if (!empty($contact_3)) {
                             $displayRow[] = xarVarPrepHTMLDisplay($contact_3);
                         } else {
@@ -468,8 +466,8 @@ function addressbook_userapi_getAddressList($args)
                 }
                 break;
             case 3:
-                if(!xarModAPIFunc(__ADDRESSBOOK__,'util','is_email',array('email'=>$contact_4))) {
-                    if(!xarModAPIFunc(__ADDRESSBOOK__,'util','is_url',array('url'=>$contact_4))) {
+                if(!xarModAPIFunc('addressbook','util','is_email',array('email'=>$contact_4))) {
+                    if(!xarModAPIFunc('addressbook','util','is_url',array('url'=>$contact_4))) {
                         if (!empty($contact_4)) {
                             $displayRow[] = xarVarPrepHTMLDisplay($contact_4);
                         } else {
@@ -485,8 +483,8 @@ function addressbook_userapi_getAddressList($args)
                 }
                 break;
             case 4:
-                if(!xarModAPIFunc(__ADDRESSBOOK__,'util','is_email',array('email'=>$contact_5))) {
-                    if(!xarModAPIFunc(__ADDRESSBOOK__,'util','is_url',array('url'=>$contact_5))) {
+                if(!xarModAPIFunc('addressbook','util','is_email',array('email'=>$contact_5))) {
+                    if(!xarModAPIFunc('addressbook','util','is_url',array('url'=>$contact_5))) {
                         if (!empty($contact_5)) {
                             $displayRow[] = xarVarPrepHTMLDisplay($contact_5);
                         } else {
@@ -502,8 +500,8 @@ function addressbook_userapi_getAddressList($args)
                 }
                 break;
             default:
-                if(!xarModAPIFunc(__ADDRESSBOOK__,'util','is_email',array('email'=>$contact_1))) {
-                    if(!xarModAPIFunc(__ADDRESSBOOK__,'util','is_url',array('url'=>$contact_1))) {
+                if(!xarModAPIFunc('addressbook','util','is_email',array('email'=>$contact_1))) {
+                    if(!xarModAPIFunc('addressbook','util','is_url',array('url'=>$contact_1))) {
                         if (!empty($contact_1)) {
                             $displayRow[] = xarVarPrepHTMLDisplay($contact_1);
                         } else {
@@ -536,11 +534,11 @@ function addressbook_userapi_getAddressList($args)
         //FIXME:<garrett> sloppy way of of setting up data. Redundant vars (accessLevel, *TEXT..)
         $output['displayRows'][] = array ('displayRow' => $displayRow
                                          ,'user'    => $user
-                                       ,'detailURL' => xarModURL(__ADDRESSBOOK__,'user','viewdetail',$detailargs)
+                                       ,'detailURL' => xarModURL('addressbook','user','viewdetail',$detailargs)
                                        ,'detailTXT' => xarML('Details')
-                                       ,'deleteURL' => xarModURL(__ADDRESSBOOK__,'user','confirmdelete',$detailargs)
+                                       ,'deleteURL' => xarModURL('addressbook','user','confirmdelete',$detailargs)
                                        ,'deleteTXT' => xarML('Delete')
-                                       ,'editURL'   => xarModURL(__ADDRESSBOOK__,'user','insertedit',$detailargs)
+                                       ,'editURL'   => xarModURL('addressbook','user','insertedit',$detailargs)
                                        ,'editTXT'   => xarML('Edit')
                                        ,'accessLevel'=> array('option'=>'edit')
                                         );
@@ -569,7 +567,7 @@ function addressbook_userapi_getAddressList($args)
                 'total'=>$output['total'],
                 'page'=>$i);
         }
-        $output['pageNav'][]  = array ('pageURL' => xarModURL(__ADDRESSBOOK__,'user','viewall',$params)
+        $output['pageNav'][]  = array ('pageURL' => xarModURL('addressbook','user','viewall',$params)
                                     ,'pageNum' => $i
                                     ,'absolutePage' => $result->AbsolutePage());
     } // END for

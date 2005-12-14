@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id: insertrecord.php,v 1.5 2004/11/16 05:40:47 garrett Exp $
- *
  * AddressBook user insertRecord
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -23,22 +21,22 @@ function addressbook_userapi_insertrecord($args)
 {
     extract($args);
 
-    $lname      = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$lname);
-    $fname      = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$fname);
-    $title      = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$title);
-    $company    = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$company);
-    $zip        = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$zip);
-    $city       = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$city);
-    $address_1  = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$address_1);
-    $address_2  = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$address_2);
-    $state      = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$state);
-    $country    = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$country);
-    $contact_1  = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$contact_1);
-    $contact_2  = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$contact_2);
-    $contact_3  = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$contact_3);
-    $contact_4  = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$contact_4);
-    $contact_5  = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$contact_5);
-    $note       = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$note);
+    $lname      = xarModAPIFunc('addressbook','user','securitycheck',$lname);
+    $fname      = xarModAPIFunc('addressbook','user','securitycheck',$fname);
+    $title      = xarModAPIFunc('addressbook','user','securitycheck',$title);
+    $company    = xarModAPIFunc('addressbook','user','securitycheck',$company);
+    $zip        = xarModAPIFunc('addressbook','user','securitycheck',$zip);
+    $city       = xarModAPIFunc('addressbook','user','securitycheck',$city);
+    $address_1  = xarModAPIFunc('addressbook','user','securitycheck',$address_1);
+    $address_2  = xarModAPIFunc('addressbook','user','securitycheck',$address_2);
+    $state      = xarModAPIFunc('addressbook','user','securitycheck',$state);
+    $country    = xarModAPIFunc('addressbook','user','securitycheck',$country);
+    $contact_1  = xarModAPIFunc('addressbook','user','securitycheck',$contact_1);
+    $contact_2  = xarModAPIFunc('addressbook','user','securitycheck',$contact_2);
+    $contact_3  = xarModAPIFunc('addressbook','user','securitycheck',$contact_3);
+    $contact_4  = xarModAPIFunc('addressbook','user','securitycheck',$contact_4);
+    $contact_5  = xarModAPIFunc('addressbook','user','securitycheck',$contact_5);
+    $note       = xarModAPIFunc('addressbook','user','securitycheck',$note);
     if (!isset($private)) { $private=0; }
     if (!xarUserIsLoggedIn()) { $user_id=0; }
     $last_updt = time();
@@ -50,7 +48,7 @@ function addressbook_userapi_insertrecord($args)
         foreach($custUserData as $rowIdx=>$userData) {
             if (strstr($userData['custType'],_AB_CUST_TEST_STRING)) {
                 $custUserData[$rowIdx]['userData'] =
-                        xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$userData['userData']);
+                        xarModAPIFunc('addressbook','user','securitycheck',$userData['userData']);
             }
         }
     }
@@ -64,7 +62,7 @@ function addressbook_userapi_insertrecord($args)
         /**
          * If we have either a first or last name
          */
-        if (xarModGetVar(__ADDRESSBOOK__, 'name_order')==_AB_NO_FIRST_LAST) {
+        if (xarModGetVar('addressbook', 'name_order')==_AB_NO_FIRST_LAST) {
             if (!empty($fname)) {
                 $sortvalue = $fname.' '.$lname;
             } else {
@@ -79,15 +77,15 @@ function addressbook_userapi_insertrecord($args)
 
         }
     } elseif (!empty($company)) {
-        if (xarModGetVar(__ADDRESSBOOK__, 'name_order')==_AB_NO_FIRST_LAST) {
+        if (xarModGetVar('addressbook', 'name_order')==_AB_NO_FIRST_LAST) {
             $sortvalue = $company;
         } else {
             $sortvalue = $company.', ';
         }
     }
 
-    $special1 = xarModGetVar(__ADDRESSBOOK__, 'special_chars_1');
-    $special2 = xarModGetVar(__ADDRESSBOOK__, 'special_chars_2');
+    $special1 = xarModGetVar('addressbook', 'special_chars_1');
+    $special2 = xarModGetVar('addressbook', 'special_chars_2');
     for ($i=0;$i<strlen($special1);$i++) {
         $a[substr($special1,$i,1)]=substr($special2,$i,1);
     }
@@ -135,7 +133,7 @@ function addressbook_userapi_insertrecord($args)
                                        ,c_main";
 
             if (isset($custUserData)) {
-                $custColNames = xarModAPIFunc(__ADDRESSBOOK__,'user','getcustfieldinfo',
+                $custColNames = xarModAPIFunc('addressbook','user','getcustfieldinfo',
                                            array('flag'=>_AB_CUST_UDCOLNAMESONLY,'custUserData'=>$custUserData));
                 foreach($custColNames as $colName) {
                     $sql .= ",".$colName;
@@ -220,20 +218,20 @@ function addressbook_userapi_insertrecord($args)
                 array_push ($bindvars, $userData['userData']);
 
             } elseif ($userData['custType']==_AB_CUSTOM_DATE) {
-                array_push ($bindvars, xarModAPIFunc(__ADDRESSBOOK__,'util','td2stamp',array('idate'=>$userData['userData'])));
+                array_push ($bindvars, xarModAPIFunc('addressbook','util','td2stamp',array('idate'=>$userData['userData'])));
 
             } elseif ($userData['custType']==_AB_CUSTOM_INTEGER) {
-                array_push ($bindvars, xarModAPIFunc(__ADDRESSBOOK__,'util','input2numeric',array('inum'=>$userData['userData'])));
+                array_push ($bindvars, xarModAPIFunc('addressbook','util','input2numeric',array('inum'=>$userData['userData'])));
 
             } elseif ($userData['custType']==_AB_CUSTOM_CHECKBOX) {
                 if (isset($userData['userData'])) {
-                    array_push ($bindvars, xarModAPIFunc(__ADDRESSBOOK__,'util','input2numeric',array('inum'=>$userData['userData'])));
+                    array_push ($bindvars, xarModAPIFunc('addressbook','util','input2numeric',array('inum'=>$userData['userData'])));
                 } else {
                     array_push ($bindvars, 'NULL');
                 }
 
             } elseif ($userData['custType']==_AB_CUSTOM_DECIMAL) {
-                array_push ($bindvars, xarModAPIFunc(__ADDRESSBOOK__,'util','input2numeric',array('inum'=>$userData['userData'])));
+                array_push ($bindvars, xarModAPIFunc('addressbook','util','input2numeric',array('inum'=>$userData['userData'])));
 
             } elseif ((!strstr($userData['custType'],_AB_CUSTOM_BLANKLINE) &&
                        !strstr($userData['custType'],_AB_CUSTOM_HORIZ_RULE)) &&

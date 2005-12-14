@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id: getsubmitvalues.php,v 1.3 2004/11/16 05:40:47 garrett Exp $
- *
  * AddressBook utility functions
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -13,14 +11,13 @@
  * @author Garrett Hunter <garrett@blacktower.com>
  * Based on pnAddressBook by Thomas Smiatek <thomas@smiatek.com>
  */
-
 /**
  * Retrieves all form input from the GET / POST and formats
  *
  * @param mixed
  * @return mixed
  */
-function addressbook_userapi_getsubmitvalues($args) 
+function addressbook_userapi_getsubmitvalues($args)
 {
 
     extract($args);
@@ -66,7 +63,7 @@ function addressbook_userapi_getsubmitvalues($args)
     /**
      * Retrieve custom field values
      */
-    $custom_tab = xarModGetVar(__ADDRESSBOOK__,'custom_tab');
+    $custom_tab = xarModGetVar('addressbook','custom_tab');
     if (!empty($custom_tab)) {
         if (!xarVarFetch ('custUserData','array::',$output['custUserData'], array())) return;
     } // END if

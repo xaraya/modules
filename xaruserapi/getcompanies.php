@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id: getcompanies.php,v 1.3 2004/01/24 18:36:22 garrett Exp $
- *
  * AddressBook userapi getCompanies
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -20,7 +18,7 @@
  * @param N/A
  * @return array of companies
  */
-function addressbook_userapi_getCompanies() 
+function addressbook_userapi_getCompanies()
 {
     $dbconn =& xarDBGetConn();
     $xarTables =& xarDBGetTables();

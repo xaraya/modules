@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id: updatecustomfields.php,v 1.5 2004/11/16 05:40:47 garrett Exp $
- *
  * AddressBook admin functions
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -13,7 +11,6 @@
  * @author Garrett Hunter <garrett@blacktower.com>
  * Based on pnAddressBook by Thomas Smiatek <thomas@smiatek.com>
  */
-
 /**
  * update the customfield settings
  *
@@ -44,7 +41,7 @@ function addressbook_adminapi_updatecustomfields($args)
     if (!isset($custShortLabel)) { $invalid[] = '*custShortLabel*'; }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) in function #(2)() in module #(3)',
-                     join(', ',$invalid), 'updatelabels', __ADDRESSBOOK__);
+                     join(', ',$invalid), 'updatelabels', 'addressbook');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                     new SystemException($msg));
         return FALSE;
@@ -65,11 +62,11 @@ function addressbook_adminapi_updatecustomfields($args)
      * not both
      */
     if (isset($incID) && $incID > 0) {
-        if (!xarModAPIFunc(__ADDRESSBOOK__, 'admin', 'inccustomfields', array('id' => $incID))) {
+        if (!xarModAPIFunc('addressbook', 'admin', 'inccustomfields', array('id' => $incID))) {
             return FALSE;
         }
     } elseif (isset($decID) && $decID > 0) {
-        if (!xarModAPIFunc(__ADDRESSBOOK__, 'admin', 'deccustomfields', array('id' => $decID))) {
+        if (!xarModAPIFunc('addressbook', 'admin', 'deccustomfields', array('id' => $decID))) {
             return FALSE;
         }
     } else {
@@ -124,7 +121,7 @@ function addressbook_adminapi_updatecustomfields($args)
             }
         }
 
-        if(xarModAPIFunc(__ADDRESSBOOK__,'admin','updateitems',array('tablename'=>'customfields','updates'=>$updates))) {
+        if(xarModAPIFunc('addressbook','admin','updateitems',array('tablename'=>'customfields','updates'=>$updates))) {
             xarErrorSet(XAR_USER_EXCEPTION,
                         _AB_ERR_INFO,
                         new abUserException('UPDATE - '.xarML('successful')));
@@ -133,11 +130,11 @@ function addressbook_adminapi_updatecustomfields($args)
         }
 
         if (count($modDel)) {
-            if(xarModAPIFunc(__ADDRESSBOOK__,'admin','deletecustomfields',array('modDel'=>$modDel,'modDelType'=>$modDelType))) {
+            if(xarModAPIFunc('addressbook','admin','deletecustomfields',array('modDel'=>$modDel,'modDelType'=>$modDelType))) {
                 xarErrorSet(XAR_USER_EXCEPTION,
                             _AB_ERR_INFO,
                             new abUserException('DELETE - '.xarML('successful')));
-                if (!xarModAPIFunc(__ADDRESSBOOK__,'admin','resequencecustomfields')) {
+                if (!xarModAPIFunc('addressbook','admin','resequencecustomfields')) {
                     return FALSE;
                 }
             } else {
@@ -167,11 +164,11 @@ function addressbook_adminapi_updatecustomfields($args)
 
             array_push($inserts,array('sql'=>"ALTER TABLE $adr_table ADD custom_".$nextID." ".$newtype,'bindvars'=>array()));
 
-            if(xarModAPIFunc(__ADDRESSBOOK__,'admin','addcustomfields',array('inserts'=>$inserts))) {
+            if(xarModAPIFunc('addressbook','admin','addcustomfields',array('inserts'=>$inserts))) {
                 xarErrorSet(XAR_USER_EXCEPTION,
                             _AB_ERR_INFO,
                             new abUserException('INSERT - '.xarML('successful')));
-                if (!xarModAPIFunc(__ADDRESSBOOK__,'admin','resequencecustomfields')) {
+                if (!xarModAPIFunc('addressbook','admin','resequencecustomfields')) {
                     return FALSE;
                 }
             } else {

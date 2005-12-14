@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id: getdetailvalues.php,v 1.2 2004/03/28 23:23:16 garrett Exp $
- *
  * AddressBook user getDetailValues
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -21,7 +19,7 @@
  * @return array $detailValues
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
-function addressbook_userapi_getDetailValues($args) 
+function addressbook_userapi_getDetailValues($args)
 {
 
     $detailValues = FALSE;
@@ -37,7 +35,7 @@ function addressbook_userapi_getDetailValues($args)
     if (!isset($id)) { $invalid[] = 'id'; }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) in function #(2)() in module #(3)',
-                     join(', ',$invalid), 'getDetailValues', __ADDRESSBOOK__);
+                     join(', ',$invalid), 'getDetailValues', 'addressbook');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                     new SystemException($msg));
         return FALSE;
@@ -92,7 +90,7 @@ function addressbook_userapi_getDetailValues($args)
         /**
          * get the custom field information
          */
-        $detailValues['custUserData'] = xarModAPIFunc(__ADDRESSBOOK__,'user','getcustfieldinfo',array('id'=>$id));
+        $detailValues['custUserData'] = xarModAPIFunc('addressbook','user','getcustfieldinfo',array('id'=>$id));
 
         $result->Close();
     }

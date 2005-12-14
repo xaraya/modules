@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id: is_url.php,v 1.3 2004/11/16 05:40:47 garrett Exp $
- *
  * AddressBook utilapi is_url
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -20,7 +18,7 @@
  * @param string $url
  * @return bool true / false
  */
-function addressbook_utilapi_is_url ($args) 
+function addressbook_utilapi_is_url ($args)
 {
     extract($args);
     $UrlElements = parse_url($url);

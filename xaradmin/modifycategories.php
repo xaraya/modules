@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id: modifycategories.php,v 1.4 2003/12/22 07:11:41 garrett Exp $
- *
  * AddressBook admin modifyCategories
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -21,7 +19,7 @@
  * @param GET / POST passed from modifycategories form
  * @return xarTemplate data
  */
-function addressbook_admin_modifycategories() 
+function addressbook_admin_modifycategories()
 {
 
     $output = array();
@@ -39,20 +37,20 @@ function addressbook_admin_modifycategories()
              * Data integrity / Security check
              */
             if (!xarSecConfirmAuthKey())
-                return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
+                return xarModAPIFunc('addressbook','util','handleexception',array('output'=>$output));
 
             if (!xarVarFetch ('id', 'array::',$formData['id'], FALSE)) return;
             if (!xarVarFetch ('del', 'array::',$formData['del'], FALSE)) return;
             if (!xarVarFetch ('name', 'array::',$formData['name'], FALSE)) return;
             if (!xarVarFetch ('newname','str::30',$formData['newname'], FALSE)) return;
 
-            if (!xarModAPIFunc(__ADDRESSBOOK__,'admin','updatecategories',$formData)) {
-                return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
+            if (!xarModAPIFunc('addressbook','admin','updatecategories',$formData)) {
+                return xarModAPIFunc('addressbook','util','handleexception',array('output'=>$output));
             }
         }
 
         // get the list of categories
-        $output['categories'] = xarModAPIFunc(__ADDRESSBOOK__,'util','getitems',array('tablename'=>'categories'));
+        $output['categories'] = xarModAPIFunc('addressbook','util','getitems',array('tablename'=>'categories'));
 
         // Generate a one-time authorisation code for this operation
         $output['authid'] = xarSecGenAuthKey();
@@ -61,11 +59,11 @@ function addressbook_admin_modifycategories()
         $output['btnCommitText'] = xarVarPrepHTMLDisplay(xarML('Commit Changes'));
 
     } else {
-        return xarTplModule(__ADDRESSBOOK__,'user','noauth');
+        return xarTplModule('addressbook','user','noauth');
     }
 
 
-    return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
+    return xarModAPIFunc('addressbook','util','handleexception',array('output'=>$output));
 
 } // END modifycategories
 

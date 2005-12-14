@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id: xarglobal.php,v 1.4 2004/11/16 05:40:47 garrett Exp $
- *
  * AddressBook utility functions
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -103,8 +101,8 @@ define('_AB_CUST_TEST_STRING',      'varchar');
 /**
  * Developer QA Contact information
  */
-define('_AB_DEVQA_NAME',    __ADDRESSBOOK__."QualityControl");
-define('_AB_DEVQA_EMAIL',    __ADDRESSBOOK__."@blacktower.com");
+define('_AB_DEVQA_NAME',    'addressbook'."QualityControl");
+define('_AB_DEVQA_EMAIL',    'addressbook'."@blacktower.com");
 
 ////////////////
 //

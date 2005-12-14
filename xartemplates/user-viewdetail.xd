@@ -32,7 +32,7 @@
 <xar:if condition="!empty($address_1)">
           #$address_2#<br />
 </xar:if>
-<xar:if condition="xarModGetVar(__ADDRESSBOOK__,'zipbeforecity')">
+<xar:if condition="xarModGetVar('addressbook','zipbeforecity')">
   <xar:if condition="!empty($zip)">
           #$zip#&nbsp;
   </xar:if>
@@ -112,7 +112,7 @@
                         <td style="text-align:left;" >
                         <xar:if condition="isset($cud['userData'])">
                           <xar:if condition="strstr($cud['custType'],_AB_CUSTOM_DATE)">
-                            <xar:if condition="xarModGetVar(__ADDRESSBOOK__,'dateformat') eq 0">
+                            <xar:if condition="xarModGetVar('addressbook','dateformat') eq 0">
                               <xar:set name="$date">date("m.d.Y",$cud['userData']);</xar:set>
                             <xar:else />
                               <xar:set name="$date">date("d.m.Y",$cud['userData']);</xar:set>

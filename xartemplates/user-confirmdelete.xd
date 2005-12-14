@@ -27,7 +27,7 @@ function MM_callJS(jsStr) { //v2.0
     #$company#<br />
 </xar:if>
 
-<form action="#xarModURL(__ADDRESSBOOK__, 'user', 'dodelete',$menuValues)#" method="post" enctype="application/x-www-form-urlencoded" name="deleteContact" id="deleteContact">
+<form action="#xarModURL('addressbook', 'user', 'dodelete',$menuValues)#" method="post" enctype="application/x-www-form-urlencoded" name="deleteContact" id="deleteContact">
   <input type="hidden" id="authid" name="authid" value="#$authid#" />
   <input type="hidden" id="id" name="id" value="#$id#" /><br />
   <input name="#$buttonDelete#" type="submit" id="#$buttonDelete#" value="#$buttonDelete#" />&nbsp;&nbsp;&nbsp;

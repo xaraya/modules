@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id: checksubmitvalues.php,v 1.4 2004/11/16 05:40:47 garrett Exp $
- *
  * AddressBook user checkSubmitValues
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -38,7 +36,7 @@ function addressbook_userapi_checksubmitvalues($args)
                             if ((!empty($cus['userData'])) && (!ereg("^[+|-]{0,1}[0-9.,]{0,8}[.|,]{0,1}[0-9]{0,2}$",$cus['userData'],$regs))) {
                                 xarErrorSet(XAR_USER_EXCEPTION,
                                             _AB_ERR_INFO,
-                                            new abUserException(xarML('There is a false numeric value in the #(1) tab.', xarModGetVar(__ADDRESSBOOK__,'custom_tab'))));
+                                            new abUserException(xarML('There is a false numeric value in the #(1) tab.', xarModGetVar('addressbook','custom_tab'))));
                                 $checkResult = FALSE;
                             }
                             break;
@@ -46,15 +44,15 @@ function addressbook_userapi_checksubmitvalues($args)
                             if ((!empty($cus['userData'])) && (!ereg("^[0-9]{1,9}$",$cus['userData'],$regs))) {
                                 xarErrorSet(XAR_USER_EXCEPTION,
                                             _AB_ERR_INFO,
-                                            new abUserException(xarML('In the #(1) tab there are characters in a digit-only field.',xarModGetVar(__ADDRESSBOOK__,'custom_tab'))));
+                                            new abUserException(xarML('In the #(1) tab there are characters in a digit-only field.',xarModGetVar('addressbook','custom_tab'))));
                                 $checkResult = FALSE;
                             }
                             break;
                         case _AB_CUSTOM_DATE:
-                            if (!xarModAPIFunc(__ADDRESSBOOK__,'util','td2stamp',array('idate'=>$cus['userData']))) {
+                            if (!xarModAPIFunc('addressbook','util','td2stamp',array('idate'=>$cus['userData']))) {
                                 xarErrorSet(XAR_USER_EXCEPTION,
                                             _AB_ERR_INFO,
-                                            new abUserException(xarML('In the #(1) tab there is a false date format.', xarModGetVar(__ADDRESSBOOK__,'custom_tab'))));
+                                            new abUserException(xarML('In the #(1) tab there is a false date format.', xarModGetVar('addressbook','custom_tab'))));
                                 $checkResult = FALSE;
                             }
                             break;

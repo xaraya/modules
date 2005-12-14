@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id: viewdetail.php,v 1.3 2004/11/16 05:40:47 garrett Exp $
- *
  * AddressBook user viewDetail
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -13,7 +11,6 @@
  * @author Garrett Hunter <garrett@blacktower.com>
  * Based on pnAddressBook by Thomas Smiatek <thomas@smiatek.com>
  */
-
 /**
  * Display details
  */
@@ -21,36 +18,36 @@ function addressbook_user_viewdetail()
 {
 
     $output = array();
-    $output['abModInfo'] = xarModGetInfo(xarModGetIDFromName(__ADDRESSBOOK__));
+    $output['abModInfo'] = xarModGetInfo(xarModGetIDFromName('addressbook'));
 
     /**
      * Retrieve data from submitted input / URL
      */
-    $output = xarModAPIFunc(__ADDRESSBOOK__,'user','getsubmitvalues', array('output' => $output));
+    $output = xarModAPIFunc('addressbook','user','getsubmitvalues', array('output' => $output));
 
     /**
      * Retrieve any config values needed to configure the page
      */
-    $output['zipbeforecity'] = xarModGetVar(__ADDRESSBOOK__,'zipbeforecity');
+    $output['zipbeforecity'] = xarModGetVar('addressbook','zipbeforecity');
 
     // Get detailed values from database
-    $details = xarModAPIFunc(__ADDRESSBOOK__,'user','getdetailvalues',array('id'=>$output['id']));
+    $details = xarModAPIFunc('addressbook','user','getdetailvalues',array('id'=>$output['id']));
     if ($details && is_array($details)) {
         foreach ($details as $key=>$value) {
             $output[$key] = $value;
         }
     } else { // did not get details for some reason
-        return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
+        return xarModAPIFunc('addressbook','util','handleexception',array('output'=>$output));
     }
 
     // Get the labels
-    $labels = xarModAPIFunc(__ADDRESSBOOK__,'util','getitems',array('tablename'=>'labels'));
+    $labels = xarModAPIFunc('addressbook','util','getitems',array('tablename'=>'labels'));
 
     // General information
     // headline
     $output['info'] = xarML('Category') . ': ' . xarML('Unfiled');
     if ($output['cat_id'] > 0) {
-        $cats = xarModAPIFunc(__ADDRESSBOOK__,'util','getitems',array('tablename'=>'categories'));
+        $cats = xarModAPIFunc('addressbook','util','getitems',array('tablename'=>'categories'));
         foreach ($cats as $cat) {
             if ($output['cat_id'] == $cat['id']) {
                 $output['info'] = xarML('Category') . ': ' . xarVarPrepHTMLDisplay($cat['name']);
@@ -77,9 +74,9 @@ function addressbook_user_viewdetail()
             foreach ($labels as $lab) {
                 if ($output[$the_label] == $lab['id']) {
                     $contact['label'] = xarVarPrepHTMLDisplay($lab['name']);
-                    if(xarModAPIFunc(__ADDRESSBOOK__,'util','is_email',array('email'=>$output[$the_contact]))) {
+                    if(xarModAPIFunc('addressbook','util','is_email',array('email'=>$output[$the_contact]))) {
                         $contact['contact'] = '<a href="mailto:'.xarVarPrepHTMLDisplay($output[$the_contact]).'">'.xarVarPrepHTMLDisplay($output[$the_contact]).'</a>';
-                    } elseif (xarModAPIFunc(__ADDRESSBOOK__,'util','is_url',array('url'=>$output[$the_contact]))) {
+                    } elseif (xarModAPIFunc('addressbook','util','is_url',array('url'=>$output[$the_contact]))) {
                         $contact['contact'] = '<a href="'.xarVarPrepHTMLDisplay($output[$the_contact]).'" target="_blank">'.xarVarPrepHTMLDisplay($output[$the_contact]).'</a>';
                     }
                     else {
@@ -100,14 +97,13 @@ function addressbook_user_viewdetail()
     /**
      * Custom information
      */
-    $custom_tab = xarModGetVar(__ADDRESSBOOK__,'custom_tab');
+    $custom_tab = xarModGetVar('addressbook','custom_tab');
     if ((!empty($custom_tab)) || ($custom_tab != '')) {
 
         $output['custom_tab'] = $custom_tab;
-        $custUserData = xarModAPIFunc(__ADDRESSBOOK__,'user','getcustfieldinfo',
+        $custUserData = xarModAPIFunc('addressbook','user','getcustfieldinfo',
                                         array('id'=>$output['id']
                                              ,'flag'=>_AB_CUST_ALLINFO));
-
 
     } // END if
 
@@ -126,7 +122,7 @@ function addressbook_user_viewdetail()
      * Navigation buttons
      */
     // Copy to clipboard if IE
-    if (xarModAPIFunc(__ADDRESSBOOK__,'util','checkforie')) {
+    if (xarModAPIFunc('addressbook','util','checkforie')) {
         $clip='';
         if (!empty($output['company'])) {$clip.=$output['company'].'\n'; }
         if (!empty($output['lname'])) {
@@ -153,7 +149,7 @@ function addressbook_user_viewdetail()
 
     $output['goBack'] = xarML('Back to list');
 
-    return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
+    return xarModAPIFunc('addressbook','util','handleexception',array('output'=>$output));
 
 } // END viewdetail
 

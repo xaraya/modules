@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id: updateconfig.php,v 1.3 2004/11/13 06:21:57 garrett Exp $
- *
  * AddressBook admin functions
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -13,7 +11,6 @@
  * @author Garrett Hunter <garrett@blacktower.com>
  * Based on pnAddressBook by Thomas Smiatek <thomas@smiatek.com>
  */
-
 /**
  * update the primary module configuration settings
  *
@@ -25,7 +22,7 @@
  *        SORTERROR_2
  *        SPECIAL_CHARS_ERROR
  */
-function addressbook_adminapi_updateconfig($args) 
+function addressbook_adminapi_updateconfig($args)
 {
 
     /**
@@ -66,10 +63,10 @@ function addressbook_adminapi_updateconfig($args)
                     new abUserException(xarML('Corrected: The access rights of guest were higher than for registered users!!!')));
     }
 
-    xarModSetVar(__ADDRESSBOOK__, 'guestmode',       $guestmode);
-    xarModSetVar(__ADDRESSBOOK__, 'usermode',        $usermode);
+    xarModSetVar('addressbook', 'guestmode',       $guestmode);
+    xarModSetVar('addressbook', 'usermode',        $usermode);
 
-    xarModSetVar(__ADDRESSBOOK__, 'abtitle',         $abtitle);
+    xarModSetVar('addressbook', 'abtitle',         $abtitle);
 
     if ($sortdata_1 == $sortdata_2) {
         xarErrorSet(XAR_USER_EXCEPTION,
@@ -78,7 +75,7 @@ function addressbook_adminapi_updateconfig($args)
     }
     else {
         $s_1 = $sortdata_1.','.$sortdata_2;
-        xarModSetVar(__ADDRESSBOOK__, 'sortorder_1', $s_1);
+        xarModSetVar('addressbook', 'sortorder_1', $s_1);
     }
     if ($sortdata_3 == $sortdata_4) {
         xarErrorSet(XAR_USER_EXCEPTION,
@@ -87,10 +84,10 @@ function addressbook_adminapi_updateconfig($args)
     }
     else {
         $s_2 = $sortdata_3.','.$sortdata_4;
-        xarModSetVar(__ADDRESSBOOK__, 'sortorder_2', $s_2);
+        xarModSetVar('addressbook', 'sortorder_2', $s_2);
     }
 
-    xarModSetVar(__ADDRESSBOOK__, 'name_order',      $name_order);
+    xarModSetVar('addressbook', 'name_order',      $name_order);
 
     if (strlen($special_chars_1) != strlen($special_chars_2)) {
         xarErrorSet(XAR_USER_EXCEPTION,
@@ -98,38 +95,38 @@ function addressbook_adminapi_updateconfig($args)
                     new abUserException(xarML('Both fields must contain the same number of characters - Special character replacement was NOT saved!')));
     }
     else {
-        xarModSetVar(__ADDRESSBOOK__, 'special_chars_1', $special_chars_1);
-        xarModSetVar(__ADDRESSBOOK__, 'special_chars_2', $special_chars_2);
+        xarModSetVar('addressbook', 'special_chars_1', $special_chars_1);
+        xarModSetVar('addressbook', 'special_chars_2', $special_chars_2);
     }
 
     // Admin Message
     if (!empty($rptErrAdminEmail)) {
-        if (!xarModAPIFunc(__ADDRESSBOOK__,'util','is_email',array('email'=>$rptErrAdminEmail))) {
+        if (!xarModAPIFunc('addressbook','util','is_email',array('email'=>$rptErrAdminEmail))) {
             xarErrorSet(XAR_USER_EXCEPTION,
                         _AB_ERR_WARN,
                         new abUserException(_AB_BAD_ADMIN_EMAIL));
         } else {
-            xarModSetVar(__ADDRESSBOOK__, 'rptErrAdminEmail',   $rptErrAdminEmail);
+            xarModSetVar('addressbook', 'rptErrAdminEmail',   $rptErrAdminEmail);
         }
     }
 
-    xarModSetVar(__ADDRESSBOOK__, 'globalprotect',   $globalprotect);
-    xarModSetVar(__ADDRESSBOOK__, 'use_prefix',      $use_prefix);
-    xarModSetVar(__ADDRESSBOOK__, 'display_prefix',  $display_prefix);
-    xarModSetVar(__ADDRESSBOOK__, 'use_img',         $use_img);
-    xarModSetVar(__ADDRESSBOOK__, 'menu_off',        $menu_off);
-    xarModSetVar(__ADDRESSBOOK__, 'menu_semi',       $menu_semi);
-    xarModSetVar(__ADDRESSBOOK__, 'zipbeforecity',   $zipbeforecity);
-    xarModSetVar(__ADDRESSBOOK__, 'itemsperpage',    $itemsperpage);
-    xarModSetVar(__ADDRESSBOOK__, 'hidecopyright',   $hidecopyright);
+    xarModSetVar('addressbook', 'globalprotect',   $globalprotect);
+    xarModSetVar('addressbook', 'use_prefix',      $use_prefix);
+    xarModSetVar('addressbook', 'display_prefix',  $display_prefix);
+    xarModSetVar('addressbook', 'use_img',         $use_img);
+    xarModSetVar('addressbook', 'menu_off',        $menu_off);
+    xarModSetVar('addressbook', 'menu_semi',       $menu_semi);
+    xarModSetVar('addressbook', 'zipbeforecity',   $zipbeforecity);
+    xarModSetVar('addressbook', 'itemsperpage',    $itemsperpage);
+    xarModSetVar('addressbook', 'hidecopyright',   $hidecopyright);
 
-    xarModSetVar(__ADDRESSBOOK__, 'custom_tab',      $custom_tab);
-    xarModSetVar(__ADDRESSBOOK__, 'textareawidth',   $textareawidth);
-    xarModSetVar(__ADDRESSBOOK__, 'dateformat',      $dateformat);
-    xarModSetVar(__ADDRESSBOOK__, 'numformat',       $numformat);
+    xarModSetVar('addressbook', 'custom_tab',      $custom_tab);
+    xarModSetVar('addressbook', 'textareawidth',   $textareawidth);
+    xarModSetVar('addressbook', 'dateformat',      $dateformat);
+    xarModSetVar('addressbook', 'numformat',       $numformat);
 
-    xarModSetVar(__ADDRESSBOOK__, 'rptErrAdminFlag', $rptErrAdminFlag);
-    xarModSetVar(__ADDRESSBOOK__, 'rptErrDevFlag',   $rptErrDevFlag);
+    xarModSetVar('addressbook', 'rptErrAdminFlag', $rptErrAdminFlag);
+    xarModSetVar('addressbook', 'rptErrDevFlag',   $rptErrDevFlag);
 
 
 //FIXME: <garrett> we want to say SUCCESS while at the same time

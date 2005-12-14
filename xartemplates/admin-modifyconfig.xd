@@ -9,7 +9,7 @@
   </div>
 <!-- END WARN DISPLAY -->
   <div class="xar-norm-outline" style="padding:.25em;">
-    <form method="post" action="#xarModURL(__ADDRESSBOOK__,'admin','modifyconfig')#">
+    <form method="post" action="#xarModURL('addressbook','admin','modifyconfig')#">
 <!-- SECURITY SETTINGS -->
         <div id="secSettings" style="margin:.25em;">
           <div style="margin: 0em 1em;">
@@ -117,7 +117,7 @@
                     <option value="#$sortoption['id']#">#$sortoption['name']#</option>
                       <xar:else />
                     <option value="#$sortoption['id']#" selected="selected">#$sortoption['name']#</option>
-                      </xar:if> 
+                      </xar:if>
                     </xar:foreach>
                   </select>
                   |
@@ -127,7 +127,7 @@
                     <option value="#$sortoption['id']#">#$sortoption['name']#</option>
                       <xar:else />
                     <option value="#$sortoption['id']#" selected="selected">#$sortoption['name']#</option>
-                      </xar:if> 
+                      </xar:if>
                     </xar:foreach>
                   </select>
                 </td>
@@ -397,8 +397,8 @@
           </div>
           <div style="margin: 0em 1em;">
             <div style="padding:.5em;">
-                  <xar:mlstring>Quality Control Reports are sent whenever AddressBook catches an error 
-                    that halts user processing. These are typically errors in the module software which should 
+                  <xar:mlstring>Quality Control Reports are sent whenever AddressBook catches an error
+                    that halts user processing. These are typically errors in the module software which should
                     be corrected by the development team.</xar:mlstring>
             </div>
           </div>

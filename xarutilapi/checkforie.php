@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id: checkforie.php,v 1.2 2004/03/28 23:23:16 garrett Exp $
- *
  * AddressBook util checkForIE
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -20,7 +18,7 @@
  * @param none
  * @return bool (true - client uses Internet Explorer / false - no IE
  */
-function addressbook_utilapi_checkforie() 
+function addressbook_utilapi_checkforie()
 {
     if (xarModLoad('sniffer','user')) {
         xarModAPIFunc('sniffer','user','sniff');
@@ -34,7 +32,7 @@ function addressbook_utilapi_checkforie()
         return TRUE;
     } else {
         xarErrorFree();
-        xarCoreExceptionFree();    
+        xarCoreExceptionFree();
     }
     return FALSE;
 
