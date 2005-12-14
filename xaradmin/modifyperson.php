@@ -1,8 +1,8 @@
 <?php
 /**
- * Standard function to modify an item
+ * Standard function to modify a person
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -11,7 +11,7 @@
  * @author Michel V.
  */
 /**
- * modify an item
+ * Modify a person
  * This is a standard function that is called whenever an administrator
  * wishes to modify a current module item
  *
@@ -105,7 +105,7 @@ function sigmapersonnel_admin_modifyperson($args)
     $item['module'] = 'sigmapersonnel';
     $hooks = xarModCallHooks('item', 'modify', $personid, $item);
     // Return the template variables defined in this function
-    $data['authid'] = xarSecGenAuthKey();
+    $data['authid']       = xarSecGenAuthKey();
     $data['invalid']      = $invalid;
     $data['updatebutton'] = xarVarPrepForDisplay(xarML('Update Person'));
     $data['hookoutput']   = $hooks;

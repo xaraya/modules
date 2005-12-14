@@ -19,7 +19,7 @@
 
     <div class="xar-mod-body"><h2><xar:mlstring>Modify this person</xar:mlstring></h2><br />
         <form method="post"
-              action="&xar-modurl-sigmapersonnel-admin-createperson;"
+              action="&xar-modurl-sigmapersonnel-admin-updateperson;"
               onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);"
               enctype="application/x-www-form-urlencoded">
                <fieldset>
@@ -122,11 +122,14 @@
                       </label>
                         <select name="cityid">
                         <xar:loop name="$cities">
-                            <option value="#$loop:item['cityid']#">#$loop:item['city']#</option>
+                            <xar:if condition="$item['cityid'] == $loop:item['cityid']">
+                                <option value="#$loop:item['cityid']#" selected="selected">#$loop:item['city']#</option>
+                            <xar:else />
+                                <option value="#$loop:item['cityid']#">#$loop:item['city']#</option>
+                            </xar:if>
                         </xar:loop>
                         </select>
                     </div>
-
                     <div class="xar-form-input-wrapper">
                         <label for="phonehome" class="xar-form-label">
                             <span class="help" title="#xarML('Enter the phonenumber at home of this person.')#">
@@ -264,15 +267,19 @@
                         </xar:if>
                     </div>
                     <div class="xar-form-input-wrapper">
-                      <label for="contactcityid" class="xar-form-label">
-                         <span class="help" title="#xarML('Choose the city or town of the contact')#">
-                            <xar:mlstring>Town or city of contact person</xar:mlstring>
-                         </span>
-                      </label>
+                        <label for="contactcityid" class="xar-form-label">
+                            <span class="help" title="#xarML('Choose the city or town of the contact')#">
+                                <xar:mlstring>Town or city of contact person</xar:mlstring>
+                            </span>
+                        </label>
                         <select name="contactcityid">
-                        <xar:loop name="$cities">
-                            <option value="#$loop:item['cityid']#">#$loop:item['city']#</option>
-                        </xar:loop>
+                            <xar:loop name="$cities">
+                                <xar:if condition="$item['contactcityid'] == $loop:item['cityid']">
+                                    <option value="#$loop:item['cityid']#" selected="selected">#$loop:item['city']#</option>
+                                <xar:else />
+                                    <option value="#$loop:item['cityid']#">#$loop:item['city']#</option>
+                                </xar:if>
+                            </xar:loop>
                         </select>
                     </div>
                     <div class="xar-form-input-wrapper">
@@ -311,7 +318,11 @@
                       </label>
                         <select name="persstatus">
                         <xar:loop name="$persstatusses">
-                            <option value="#$loop:item['statusid']#">#$loop:item['statustype']#</option>
+                            <xar:if condition="$item['persstatus'] == $loop:item['statusid']">
+                                <option value="#$loop:item['statusid']#" selected="selected">#$loop:item['statustype']#</option>
+                            <xar:else />
+                                <option value="#$loop:item['statusid']#">#$loop:item['statustype']#</option>
+                            </xar:if>
                         </xar:loop>
                         </select>
                     </div>
@@ -346,9 +357,13 @@
                             </span>
                         </label>
                         <select name="nrkdistrict">
-                        <xar:loop name="$districts">
-                            <option value="#$loop:item['districtid']#">#$loop:item['district']#</option>
-                        </xar:loop>
+                            <xar:loop name="$districts">
+                                <xar:if condition="$item['nrkdistrict'] == $loop:item['districtid']">
+                                    <option value="#$loop:item['districtid']#" selected="selected">#$loop:item['district']#</option>
+                                <xar:else />
+                                    <option value="#$loop:item['districtid']#">#$loop:item['district']#</option>
+                                </xar:if>
+                            </xar:loop>
                         </select>
                     </div>
                     <div class="xar-form-input-wrapper">
@@ -546,9 +561,13 @@
                          </span>
                       </label>
                         <select name="bankplaceid">
-                        <xar:loop name="$cities">
-                            <option value="#$loop:item['cityid']#">#$loop:item['city']#</option>
-                        </xar:loop>
+                            <xar:loop name="$cities">
+                                <xar:if condition="$item['bankplaceid'] == $loop:item['cityid']">
+                                    <option value="#$loop:item['cityid']#" selected="selected">#$loop:item['city']#</option>
+                                <xar:else />
+                                    <option value="#$loop:item['cityid']#">#$loop:item['city']#</option>
+                                </xar:if>
+                            </xar:loop>
                         </select>
                     </div>
 
