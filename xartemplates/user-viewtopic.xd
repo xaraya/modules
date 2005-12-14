@@ -433,22 +433,27 @@
                                     <xar:sec mask="PostxarBB" catch="false">
                                         <xar:if condition="(isset($allowbbcode) and ($allowbbcode eq 'true')) or (isset($allowhtml) and ($allowhtml eq 'true'))">
 <!-- <xar:if condition="xarModIsAvailable('bbcode')"> -->
-                                            <a href="#xarModUrl('xarbb', 'user', 'newreply', array('cid' => $item['xar_cid'], 'tid' => $tid, 'phase' => 'quote'))#" title="#xarML('Quote')#">#$quoteimg#</a>
+                                            <a href="#xarModUrl('xarbb', 'user', 'newreply', array('cid' => $item['xar_cid'], 'tid' => $tid, 'phase' => 'quote'))#" title="#xarML('Quote')#">
+                                                <img src="#xarTplGetImage('new/icon_quote.gif')#" alt="#xarML('Quote')#" /></a>
                                         </xar:if>
                                     </xar:sec>
                                     <xar:if condition="xarUserGetVar('uid') eq $item['xar_uid']">
-                                        <a href="#xarModUrl('xarbb', 'user', 'newreply', array('cid' => $item['xar_cid'], 'tid' => $tid, 'phase' => 'edit'))#" title="#xarML('Edit')#">#$editimg#</a>
+                                        <a href="#xarModUrl('xarbb', 'user', 'newreply', array('cid' => $item['xar_cid'], 'tid' => $tid, 'phase' => 'edit'))#" title="#xarML('Edit')#">
+                                            <img src="#xarTplGetImage('new/icon_edit.gif')#" alt="#xarML('Edit')#"/></a>
                                         <xar:else />
                                         <xar:sec mask="ModxarBB" catch="false">
-                                            <a href="#xarModUrl('xarbb', 'user', 'newreply', array('cid' => $item['xar_cid'], 'tid' => $tid, 'phase' => 'edit'))#" title="#xarML('Edit')#">#$editimg#</a>
+                                            <a href="#xarModUrl('xarbb', 'user', 'newreply', array('cid' => $item['xar_cid'], 'tid' => $tid, 'phase' => 'edit'))#" title="#xarML('Edit')#">
+                                                <img src="#xarTplGetImage('new/icon_edit.gif')#" alt="#xarML('Edit')#"/></a>
                                         </xar:sec>
                                     </xar:if>
                                 </xar:if>
                                 <xar:sec mask="DeletexarBB" catch="false">
-                                    <a href="#xarModUrl('xarbb', 'user', 'deletereply', array('cid' => $item['xar_cid'], 'confirmation' => 1, 'authid' => $authid))#" onclick="return xar_base_confirmLink(this, '#xarML('Delete this reply?').' '.xarVarPrepfordisplay($item['xar_title'])#?')" title="#xarML('Delete')#">#$deleteimg#</a>
+                                    <a href="#xarModUrl('xarbb', 'user', 'deletereply', array('cid' => $item['xar_cid'], 'confirmation' => 1, 'authid' => $authid))#" onclick="return xar_base_confirmLink(this, '#xarML('Delete this reply?').' '.xarVarPrepfordisplay($item['xar_title'])#?')" title="#xarML('Delete')#">
+                                        <img src="#xarTplGetImage('new/icon_delete.gif')#" alt="#xarML('Delete')#"/></a>
                                 </xar:sec>
                                 <xar:sec mask="AdminxarBB" catch="false">
-                                    <a href="#xarModUrl('xarbb', 'admin', 'checkip', array('ip' => $item['xar_hostname']))#" title="#xarML('Check IP')#">#$ipimg#</a>
+                                    <a href="#xarModUrl('xarbb', 'admin', 'checkip', array('ip' => $item['xar_hostname']))#" title="#xarML('Check IP')#">
+                                        <img src="#xarTplGetImage('new/icon_ip.gif')#" alt="#xarML('IP')#"/></a>
                                 </xar:sec>
                             </xar:if>
                         </div>
@@ -619,7 +624,8 @@
                 <a href="#xarModUrl('xarbb', 'user', 'locktopic', array('tstatus' => 0, 'tid' => $tid))#" title="#xarML('Lock topic')#"><img src="#xarTplGetImage('new/topic_unlock.gif')#" alt="#xarML('Unlock Topic')#" /></a>
             </xar:if>
             <xar:sec mask="DeletexarBB" catch="false">
-                <a href="#xarModUrl('xarbb', 'user', 'deletetopic', array('tid' => $tid, 'confirmation' => 1, 'authid' => $authid))#" onclick="return xar_base_confirmLink(this, '#xarML('Delete this topic?').' '.xarVarPrepfordisplay($ttitle)#?')" title="#xarML('Delete topic')#">#$deleteimg#</a>
+                <a href="#xarModUrl('xarbb', 'user', 'deletetopic', array('tid' => $tid, 'confirmation' => 1, 'authid' => $authid))#" onclick="return xar_base_confirmLink(this, '#xarML('Delete this topic?').' '.xarVarPrepfordisplay($ttitle)#?')" title="#xarML('Delete topic')#">
+                    <img src="#xarTplGetImage('new/icon_delete.gif')#" alt="#xarML('Delete')#"/></a>
             </xar:sec>
             <a href="#xarModUrl('xarbb', 'user', 'movetopic', array('tid' => $tid))#" title="#xarML('Move topic')#"><img src="#xarTplGetImage('new/topic_move.gif')#" alt="#xarML('Move Topic')#" /></a>
         </div>
