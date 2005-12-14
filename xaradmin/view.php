@@ -67,7 +67,7 @@ function example_admin_view()
                             array('startnum' => $startnum,
                                   'numitems' => xarModGetVar('example','itemsperpage')));
     /* Check for exceptions */
-    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; /* throw back */
+    if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; /* throw back */
 
     /* Check individual permissions for Edit / Delete
      * Note : we could use a foreach ($items as $item) here as well, as
