@@ -48,12 +48,13 @@ function tinymce_admin_updateconfig()
             if (!xarVarFetch('tinyheight','str:1:',$tinyheight,'',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinylang','str:1:',$tinylang,'',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinybr','str:1:',$tinybr,'false',XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('tinynowrap','str:1:',$tinynowrap,'false',XARVAR_NOT_REQUIRED)) return;
+            //if (!xarVarFetch('tinynowrap','str:1:',$tinynowrap,'false',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinypara','str:1:',$tinypara,'false',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinytilemap','str:1:',$tinytilemap,'true',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinyeditorselector','str:1:',$tinyeditorselector,'mceEditor',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinyeditordeselector','str:1:',$tinyeditordeselector,'',XARVAR_NOT_REQUIRED)) return;
-
+            if (!xarVarFetch('tinycleanup','str:1:',$tinycleanup,'true',XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('tinycompressor','str:1:',$tinycompressor,'false',XARVAR_NOT_REQUIRED)) return;
                xarModSetVar('tinymce', 'tinytheme', $tinytheme);
                xarModSetVar('tinymce', 'tinyask', $tinyask);
                xarModSetVar('tinymce', 'tinyundolevel',$tinyundolevel);
@@ -64,7 +65,9 @@ function tinymce_admin_updateconfig()
                xarModSetVar('tinymce', 'tinylang', $tinylang);
                xarModSetVar('tinymce', 'tinybr', $tinybr);
                xarModSetVar('tinymce', 'tinypara', $tinypara);
-               xarModSetVar('tinymce', 'tinynowrap', $tinynowrap);
+              // xarModSetVar('tinymce', 'tinynowrap', $tinynowrap);
+               xarModSetVar('tinymce', 'tinycompressor',$tinycompressor);
+               xarModSetVar('tinymce', 'tinycleanup',$tinycleanup);
                xarModSetVar('tinymce', 'usebutton', $usebutton);
                xarModSetVar('tinymce', 'tinybrowsers', $tinybrowsers);
                xarModSetVar('tinymce', 'tinytilemap', $tinytilemap);
@@ -87,7 +90,7 @@ function tinymce_admin_updateconfig()
             if (!xarVarFetch('tinydate', 'str:1:', $tinydate, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinytime', 'str:1:', $tinytime, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinyinvalid', 'str:1:', $tinyinvalid, '', XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('useibrowser','int:1:',$useibrowser,0,XARVAR_NOT_REQUIRED)) return;
+            //if (!xarVarFetch('useibrowser','int:1:',$useibrowser,0,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('editorcss','str:1:',$editorcss,'',XARVAR_NOT_REQUIRED)) return;
 
                  xarModSetVar('tinymce', 'tinyextended', $tinyextended);
@@ -206,13 +209,20 @@ function tinymce_admin_updateconfig()
     if (xarModGetVar('tinymce','tinybr')=='true'){
         $jstext .='force_br_newlines: "true",';
     }
+   /* deprecated 1.0.1
     if (xarModGetVar('tinymce','tinynowrap')=='true'){
         $jstext .='nowrap: "true",';
     }
+    */
     if (xarModGetVar('tinymce','tinytilemap')=='true'){
         $jstext .='button_tile_map : "true",';
     }
-
+    if (xarModGetVar('tinymce','tinycleanup')=='false'){
+        $jstext .='cleanup: "false",';
+    }else{
+     $jstext .='cleanup: "true",';
+    }
+     $jstext .=	'safari_warning: "false",';
     
     if (xarModGetVar('tinymce','tinypara')=='true'){
         $jstext .='force_p_newlines: "true",';

@@ -77,9 +77,14 @@ function tinymce_admin_modifyconfig()
     $data['tinyresizehorizontal'] = xarModGetVar('tinymce', 'tinyresizehorizontal');   
     $data['tinyeditorselector'] = xarModGetVar('tinymce', 'tinyeditorselector');        
     $data['tinyeditordeselector'] = xarModGetVar('tinymce', 'tinyeditordeselector');
+    $data['tinycompressor']= xarModGetVar('tinymce', 'tinycompressor');
+    $data['tinycleanup']= xarModGetVar('tinymce', 'tinycleanup');
+    if (!isset($data['tinycleanup'])){
+        $data['tinycleanup']='true';
+    }
 
     if (!isset($data['tinybrowsers'])){
-        $data['tinybrowsers']='msie,gecko,safari';
+        $data['tinybrowsers']='msie,gecko,opera';
     }
 
     if (!isset($data['usebutton']) || ($data['tinymode']=='textareas')){

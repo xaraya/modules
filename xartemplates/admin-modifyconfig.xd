@@ -338,6 +338,23 @@
                 </select>
                 <xar:mlstring>Faster loading. May not work with some DOCTYPE declarations.</xar:mlstring>
             </div>
+
+           <div class="xar-form-input-wrapper">
+                <label for="tinycompressor" class="xar-form-label" title="#xarML('Use compressed js to increase preformance?')#">
+                      <xar:mlstring>Use compressor?:</xar:mlstring>
+                </label>
+                <select name="tinycompressor" id="tinycompressor" size="1">
+                <xar:if condition="$tinycompressor eq 'false'">
+                    <option value="false" selected="selected"><xar:mlstring>No</xar:mlstring></option>
+                    <option value="true"><xar:mlstring>Yes</xar:mlstring></option>
+                <xar:elseif condition="$tinycompressor eq 'true'" />
+                    <option value="false"><xar:mlstring>No</xar:mlstring></option>
+                    <option value="true" selected="selected"><xar:mlstring>Yes</xar:mlstring></option>
+                </xar:if>
+                </select>
+                <xar:mlstring>Compressor increases performance. Defaults to off.</xar:mlstring>
+           </div>
+
            <div class="xar-form-input-wrapper">
                 <label for="tinywidth" class="xar-form-label" title="#xarML('Defaults to width of individual textareas if left blank')#">
                     <xar:mlstring>Override width:</xar:mlstring>
@@ -361,6 +378,22 @@
                 <xar:mlstring>Unlimited if blank</xar:mlstring>
            </div>
            <div class="xar-form-input-wrapper">
+                <label for="tinycleanup" class="xar-form-label" title="#xarML('Set cleanup functionality that enables you to specify what elements and attributes are allowed.')#">
+                    <xar:mlstring>Use cleanup?</xar:mlstring>
+                </label>
+                <select name="tinycleanup" id="tinycleanup" size="1" >
+                <xar:if condition="$tinycleanup eq 'false'">
+                    <option value="false" selected="selected"><xar:mlstring>No</xar:mlstring></option>
+                    <option value="true"><xar:mlstring>Yes</xar:mlstring></option>
+                <xar:else />
+                    <option value="false"><xar:mlstring>No</xar:mlstring></option>
+                    <option value="true" selected="selected"><xar:mlstring>Yes</xar:mlstring></option>
+                </xar:if>
+                </select>
+                <xar:mlstring>Set ON by default. Setting to off is not recommended.</xar:mlstring>
+            </div>
+
+           <div class="xar-form-input-wrapper">
                 <label for="tinybr" class="xar-form-label" title="#xarML('Force all carriage returns to &lt;br /&gt; tags instead of &lt;p&gt; tags')#">
                     <xar:mlstring>Force all Returns to &lt;br /&gt;:</xar:mlstring>
                 </label>
@@ -373,7 +406,6 @@
                     <option value="true" selected="selected"><xar:mlstring>Yes</xar:mlstring></option>
                 </xar:if>
                 </select>
-                <xar:mlstring>Currently only works with IE</xar:mlstring>
             </div>
            <div class="xar-form-input-wrapper">
                 <label for="tinypara" class="xar-form-label" title="#xarML('Force all carriage returns to &lt;p /&gt; tags instead of &lt;br /&gt; tags')#">
@@ -389,23 +421,7 @@
                     <option value="true" selected="selected"><xar:mlstring>Yes</xar:mlstring></option>
                 </xar:if>
                 </select>
-                <xar:mlstring>Gecko browsers only (Mozilla, Firefox)</xar:mlstring>
             </div>
-           <div class="xar-form-input-wrapper">
-                <label for="tinynowrap" class="xar-form-label" title="#xarML('Set how content is wrapped - defaults to disabled')#">
-                      <xar:mlstring>Turn Text Wrap off:</xar:mlstring>
-                </label>
-                <select name="tinynowrap" id="tinynowrap" size="1">
-                <xar:if condition="$tinynowrap eq 'false'">
-                    <option value="false" selected="selected"><xar:mlstring>No</xar:mlstring></option>
-                    <option value="true"><xar:mlstring>Yes</xar:mlstring></option>
-                <xar:elseif condition="$tinynowrap eq 'true'" />
-                    <option value="false"><xar:mlstring>No</xar:mlstring></option>
-                    <option value="true" selected="selected"><xar:mlstring>Yes</xar:mlstring></option>
-                </xar:if>
-                </select>
-                <xar:mlstring>Defaults to disabled (wrap on)</xar:mlstring>
-           </div>
            </fieldset>
        <fieldset>
             <div class="xar-form-input-wrapper-after">
