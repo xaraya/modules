@@ -327,7 +327,7 @@
                 <label for="tinytilemap" class="xar-form-label" title="#xarML('Use tiled images instead of individual for faster loading.')#">
                     <xar:mlstring>Use icon map?</xar:mlstring>
                 </label>
-                <select name="tinytilemap" id="tinytilemap" size="1" onchange="submit();">
+                <select name="tinytilemap" id="tinytilemap" size="1" >
                 <xar:if condition="$tinytilemap ne 'true'">
                     <option value="false" selected="selected"><xar:mlstring>No</xar:mlstring></option>
                     <option value="true"><xar:mlstring>Yes</xar:mlstring></option>

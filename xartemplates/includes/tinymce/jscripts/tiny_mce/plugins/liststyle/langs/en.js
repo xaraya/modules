@@ -10,5 +10,7 @@ uroman : 'Upper roman numbers (I, II, III...)',
 disc : 'Disc',
 circle : 'Circle',
 square : 'Square',
-none : 'None'
+none : 'None',
+title : 'List Style',
+imagedesc : 'Edit List Style'
 });

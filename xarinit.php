@@ -39,9 +39,9 @@ function tinymce_init()
    //xarModSetVar('tinymce', 'tinyencode','');
    xarModSetVar('tinymce', 'tinyinlinestyle','true');
    xarModSetVar('tinymce', 'tinyundolevel',10);
-   xarModSetVar('tinymce', 'tinyplugins', 'searchreplace,print,liststyle,advimage,advlink,table,paste,fullscreen');
+   xarModSetVar('tinymce', 'tinyplugins', 'searchreplace,print,advimage,advlink,table,paste,fullscreen,emotions');
    xarModSetVar('tinymce', 'tinybuttons', 'search,replace,pastetext,pasteword');
-   xarModSetVar('tinymce', 'tinybuttons2','liststyle,print,fullscreen,emotions');
+   xarModSetVar('tinymce', 'tinybuttons2','print,fullscreen,emotions');
    xarModSetVar('tinymce', 'tinybuttons3','tablecontrols');
    xarModSetVar('tinymce', 'tinybuild1', '');
    xarModSetVar('tinymce', 'tinybuild2', '');

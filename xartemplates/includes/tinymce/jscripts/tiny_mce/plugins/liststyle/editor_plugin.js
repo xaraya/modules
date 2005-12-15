@@ -17,7 +17,7 @@ function TinyMCE_liststyle_getInfo() {
 function TinyMCE_liststyle_getControlHTML(control_name) {
 	switch (control_name) {
 		case "liststyle":
-			return '<a href="javascript:tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceListStyle\');" target="_self" onmousedown="return false;"><img id="{$editor_id}_liststyle" src="{$pluginurl}/images/liststyle.gif" title="{$lang_insert_liststyle_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" /></a>';
+			return '<a href="javascript:tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceListStyle\');" target="_self" onmousedown="return false;"><img id="{$editor_id}_liststyle" src="{$pluginurl}/images/liststyle.gif" title="{$lang_liststyle_imagedesc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" /></a>';
 	}
 	return "";
 }
