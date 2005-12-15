@@ -82,7 +82,9 @@ function tinymce_admin_modifyconfig()
     if (!isset($data['tinycleanup'])){
         $data['tinycleanup']='true';
     }
-
+    if (!isset($data['multiconfig'])){
+        $data['multiconfig']='';
+    }
     if (!isset($data['tinybrowsers'])){
         $data['tinybrowsers']='msie,gecko,opera';
     }

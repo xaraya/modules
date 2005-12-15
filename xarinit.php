@@ -226,7 +226,7 @@ function tinymce_upgrade($oldversion)
             xarModSetVar('tinymce', 'tinycleanup','true');
             xarModDelVar('tinymce', 'useibrowser');
             xarModDelVar('tinymce', 'tinynowrap');
-            xarModDelVar('tinymce', 'tinyencode')
+            xarModDelVar('tinymce', 'tinyencode');
             return tinymce_upgrade('1.0.1');
     case '1.0.1': //current version
         break;

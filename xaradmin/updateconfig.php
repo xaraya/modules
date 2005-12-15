@@ -319,7 +319,7 @@ function tinymce_admin_updateconfig()
     $jstext .='language : "'.xarModGetVar('tinymce','tinylang').'" ';
 
     /* now add the other configurations */
-    if (xarModGetVar('tinymce','usemulticonfig')){
+    if (xarModGetVar('tinymce','usemulticonfig')=='true'){
         if (strlen(trim(xarModGetVar('tinymce','multiconfig')))>0) {
           $multiconfig =xarModGetVar('tinymce','multiconfig');
         }
