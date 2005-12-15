@@ -84,12 +84,12 @@
 		if(!$nfile = renameImg($clib, $cfile, $nfile)) {
 			echo $l->m('er_001') . ': ' . $l->m('er_033');	
 		};
-	} else if ($param[0] == 'upload') {		// ACTION: upload image
+	} else if ($param[0] == 'upload') {		// ACTION: upload image		
 		$action = $param[0];		
 		$chkT   = (isset($_REQUEST['chkThumbSize']) ? $_REQUEST['chkThumbSize'] : Array() ); 	// thumb-sizes in Array								
 		$selR   = (isset($_REQUEST['selRotate']) ? $_REQUEST['selRotate'] : '');	// auto rotate	
 		if (isset($_FILES['nfile']['name'][0])) {			
-			if (!$nfile = uploadImg($clib, $chkT, $selR)) {
+			if (!$nfile = uploadImg($clib, $chkT, $selR)) {	
 				echo $l->m('er_001') . ': ' . $l->m('er_028');	
 			}	
 		};	

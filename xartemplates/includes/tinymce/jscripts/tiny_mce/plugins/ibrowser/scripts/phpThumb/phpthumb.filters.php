@@ -119,9 +119,117 @@ class phpthumb_filters {
 	}
 
 
+	function BlurGaussian(&$gdimg) {
+		if (phpthumb_functions::version_compare_replacement(phpversion(), '5.0.0', '>=') && phpthumb_functions::gd_is_bundled()) {
+			if (ImageFilter($gdimg, IMG_FILTER_GAUSSIAN_BLUR)) {
+				return true;
+			}
+			$this->DebugMessage('FAILED: ImageFilter($gdimg, IMG_FILTER_GAUSSIAN_BLUR)', __FILE__, __LINE__);
+			// fall through and try it the hard way
+		}
+		// currently not implemented "the hard way"
+		$this->DebugMessage('FAILED: phpthumb_filters::BlurGaussian($gdimg) [function not implemented]', __FILE__, __LINE__);
+		return false;
+	}
+
+
+	function BlurSelective(&$gdimg) {
+		if (phpthumb_functions::version_compare_replacement(phpversion(), '5.0.0', '>=') && phpthumb_functions::gd_is_bundled()) {
+			if (ImageFilter($gdimg, IMG_FILTER_SELECTIVE_BLUR)) {
+				return true;
+			}
+			$this->DebugMessage('FAILED: ImageFilter($gdimg, IMG_FILTER_SELECTIVE_BLUR)', __FILE__, __LINE__);
+			// fall through and try it the hard way
+		}
+		// currently not implemented "the hard way"
+		$this->DebugMessage('FAILED: phpthumb_filters::BlurSelective($gdimg) [function not implemented]', __FILE__, __LINE__);
+		return false;
+	}
+
+
+	function Brightness(&$gdimg, $amount=0) {
+		if ($amount == 0) {
+			return true;
+		}
+		$amount = max(-255, min(255, $amount));
+
+		if (phpthumb_functions::version_compare_replacement(phpversion(), '5.0.0', '>=') && phpthumb_functions::gd_is_bundled()) {
+			if (ImageFilter($gdimg, IMG_FILTER_BRIGHTNESS, $amount)) {
+				return true;
+			}
+			$this->DebugMessage('FAILED: ImageFilter($gdimg, IMG_FILTER_BRIGHTNESS, '.$amount.')', __FILE__, __LINE__);
+			// fall through and try it the hard way
+		}
+
+		$scaling = (255 - abs($amount)) / 255;
+		$baseamount = (($amount > 0) ? $amount : 0);
+		for ($x = 0; $x < ImageSX($gdimg); $x++) {
+			for ($y = 0; $y < ImageSY($gdimg); $y++) {
+				$OriginalPixel = phpthumb_functions::GetPixelColor($gdimg, $x, $y);
+				foreach ($OriginalPixel as $key => $value) {
+					$NewPixel[$key] = round($baseamount + ($OriginalPixel[$key] * $scaling));
+				}
+				$newColor = ImageColorAllocate($gdimg, $NewPixel['red'], $NewPixel['green'], $NewPixel['blue']);
+				ImageSetPixel($gdimg, $x, $y, $newColor);
+			}
+		}
+		return true;
+	}
+
+
+	function Contrast(&$gdimg, $amount=0) {
+		if ($amount == 0) {
+			return true;
+		}
+		$amount = max(-255, min(255, $amount));
+
+		if (phpthumb_functions::version_compare_replacement(phpversion(), '5.0.0', '>=') && phpthumb_functions::gd_is_bundled()) {
+			if (ImageFilter($gdimg, IMG_FILTER_CONTRAST, $amount)) {
+				return true;
+			}
+			$this->DebugMessage('FAILED: ImageFilter($gdimg, IMG_FILTER_CONTRAST, '.$amount.')', __FILE__, __LINE__);
+			// fall through and try it the hard way
+		}
+
+		if ($amount > 0) {
+			$scaling = 1 + ($amount / 255);
+		} else {
+			$scaling = (255 - abs($amount)) / 255;
+		}
+		for ($x = 0; $x < ImageSX($gdimg); $x++) {
+			for ($y = 0; $y < ImageSY($gdimg); $y++) {
+				$OriginalPixel = phpthumb_functions::GetPixelColor($gdimg, $x, $y);
+				foreach ($OriginalPixel as $key => $value) {
+					$NewPixel[$key] = min(255, max(0, round($OriginalPixel[$key] * $scaling)));
+				}
+				$newColor = ImageColorAllocate($gdimg, $NewPixel['red'], $NewPixel['green'], $NewPixel['blue']);
+				ImageSetPixel($gdimg, $x, $y, $newColor);
+			}
+		}
+	}
+
+
 	function Colorize(&$gdimg, $amount, $targetColor) {
 		$amount      = (is_numeric($amount)                          ? $amount      : 25);
 		$targetColor = (phpthumb_functions::IsHexColor($targetColor) ? $targetColor : 'gray');
+
+		if ($amount == 0) {
+			return true;
+		}
+
+		if (phpthumb_functions::version_compare_replacement(phpversion(), '5.0.0', '>=') && phpthumb_functions::gd_is_bundled()) {
+			if ($targetColor == 'gray') {
+				$targetColor = '808080';
+			}
+			$r = substr($targetColor, 0, 2);
+			$g = substr($targetColor, 2, 2);
+			$b = substr($targetColor, 4, 2);
+			if (ImageFilter($gdimg, IMG_FILTER_COLORIZE, $r, $g, $b)) {
+				return true;
+			}
+			$this->DebugMessage('FAILED: ImageFilter($gdimg, IMG_FILTER_COLORIZE)', __FILE__, __LINE__);
+			// fall through and try it the hard way
+		}
 
 		// overridden below for grayscale
 		if ($targetColor != 'gray') {
@@ -149,6 +257,9 @@ class phpthumb_filters {
 
 
 	function Desaturate(&$gdimg, $amount, $color='') {
+		if ($amount == 0) {
+			return true;
+		}
 		return phpthumb_filters::Colorize($gdimg, $amount, (phpthumb_functions::IsHexColor($color) ? $color : 'gray'));
 	}
 
@@ -230,6 +341,20 @@ class phpthumb_filters {
 	}
 
 
+	function EdgeDetect(&$gdimg) {
+		if (phpthumb_functions::version_compare_replacement(phpversion(), '5.0.0', '>=') && phpthumb_functions::gd_is_bundled()) {
+			if (ImageFilter($gdimg, IMG_FILTER_EDGEDETECT)) {
+				return true;
+			}
+			$this->DebugMessage('FAILED: ImageFilter($gdimg, IMG_FILTER_EDGEDETECT)', __FILE__, __LINE__);
+			// fall through and try it the hard way
+		}
+		// currently not implemented "the hard way"
+		$this->DebugMessage('FAILED: phpthumb_filters::EdgeDetect($gdimg) [function not implemented]', __FILE__, __LINE__);
+		return false;
+	}
+
+
 	function Elipse($gdimg) {
 		if (phpthumb_functions::gd_version() < 2) {
 			return false;
@@ -253,6 +378,20 @@ class phpthumb_filters {
 		} else {
 			//$this->DebugMessage('$gdimg_elipsemask_double = phpthumb_functions::ImageCreateFunction() failed', __FILE__, __LINE__);
 		}
+		return false;
+	}
+
+
+	function Emboss(&$gdimg) {
+		if (phpthumb_functions::version_compare_replacement(phpversion(), '5.0.0', '>=') && phpthumb_functions::gd_is_bundled()) {
+			if (ImageFilter($gdimg, IMG_FILTER_EMBOSS)) {
+				return true;
+			}
+			$this->DebugMessage('FAILED: ImageFilter($gdimg, IMG_FILTER_EMBOSS)', __FILE__, __LINE__);
+			// fall through and try it the hard way
+		}
+		// currently not implemented "the hard way"
+		$this->DebugMessage('FAILED: phpthumb_filters::Emboss($gdimg) [function not implemented]', __FILE__, __LINE__);
 		return false;
 	}
 
@@ -313,8 +452,22 @@ class phpthumb_filters {
 
 
 	function Gamma(&$gdimg, $amount) {
-		ImageGammaCorrect($gdimg, 1.0, $amount);
-		return true;
+		if (number_format($amount, 4) == '1.0000') {
+			return true;
+		}
+		return ImageGammaCorrect($gdimg, 1.0, $amount);
+	}
+
+
+	function Grayscale(&$gdimg) {
+		if (phpthumb_functions::version_compare_replacement(phpversion(), '5.0.0', '>=') && phpthumb_functions::gd_is_bundled()) {
+			if (ImageFilter($gdimg, IMG_FILTER_GRAYSCALE)) {
+				return true;
+			}
+			$this->DebugMessage('FAILED: ImageFilter($gdimg, IMG_FILTER_GRAYSCALE)', __FILE__, __LINE__);
+			// fall through and try it the hard way
+		}
+		return phpthumb_filters::Colorize($gdimg, 100, 'gray');
 	}
 
 
@@ -541,7 +694,28 @@ class phpthumb_filters {
 	}
 
 
-	function Negative($gdimg) {
+	function MeanRemoval(&$gdimg) {
+		if (phpthumb_functions::version_compare_replacement(phpversion(), '5.0.0', '>=') && phpthumb_functions::gd_is_bundled()) {
+			if (ImageFilter($gdimg, IMG_FILTER_MEAN_REMOVAL)) {
+				return true;
+			}
+			$this->DebugMessage('FAILED: ImageFilter($gdimg, IMG_FILTER_MEAN_REMOVAL)', __FILE__, __LINE__);
+			// fall through and try it the hard way
+		}
+		// currently not implemented "the hard way"
+		$this->DebugMessage('FAILED: phpthumb_filters::MeanRemoval($gdimg) [function not implemented]', __FILE__, __LINE__);
+		return false;
+	}
+
+
+	function Negative(&$gdimg) {
+		if (phpthumb_functions::version_compare_replacement(phpversion(), '5.0.0', '>=') && phpthumb_functions::gd_is_bundled()) {
+			if (ImageFilter($gdimg, IMG_FILTER_NEGATE)) {
+				return true;
+			}
+			$this->DebugMessage('FAILED: ImageFilter($gdimg, IMG_FILTER_NEGATE)', __FILE__, __LINE__);
+			// fall through and try it the hard way
+		}
 		$ImageSX = ImageSX($gdimg);
 		$ImageSY = ImageSY($gdimg);
 		for ($x = 0; $x < $ImageSX; $x++) {
@@ -589,9 +763,25 @@ class phpthumb_filters {
 	}
 
 
+	function Saturation(&$gdimg, $amount, $color='') {
+		if ($amount == 0) {
+			return true;
+		} elseif ($amount > 0) {
+			$amount = 0 - $amount;
+		} else {
+			$amount = abs($amount);
+		}
+		return phpthumb_filters::Desaturate($gdimg, $amount, $color);
+	}
+
+
 	function Sepia(&$gdimg, $amount, $targetColor) {
-		$amount      = (is_numeric($amount)                          ? max(0, min(100, $amount)) : 50);
-		$targetColor = (phpthumb_functions::IsHexColor($targetColor) ? $targetColor              : 'A28065');
+		$amount      = (is_numeric($amount) ? max(0, min(100, $amount)) : 50);
+		$targetColor = (phpthumb_functions::IsHexColor($targetColor) ? $targetColor : 'A28065');
+
+		if ($amount == 0) {
+			return true;
+		}
 
 		$TargetPixel['red']   = hexdec(substr($targetColor, 0, 2));
 		$TargetPixel['green'] = hexdec(substr($targetColor, 2, 2));
@@ -620,8 +810,26 @@ class phpthumb_filters {
 	}
 
 
+	function Smooth(&$gdimg, $amount=6) {
+		$amount = min(25, max(0, $amount));
+		if ($amount == 0) {
+			return true;
+		}
+		if (phpthumb_functions::version_compare_replacement(phpversion(), '5.0.0', '>=') && phpthumb_functions::gd_is_bundled()) {
+			if (ImageFilter($gdimg, IMG_FILTER_SMOOTH, $amount)) {
+				return true;
+			}
+			$this->DebugMessage('FAILED: ImageFilter($gdimg, IMG_FILTER_SMOOTH, '.$amount.')', __FILE__, __LINE__);
+			// fall through and try it the hard way
+		}
+		// currently not implemented "the hard way"
+		$this->DebugMessage('FAILED: phpthumb_filters::Smooth($gdimg, '.$amount.') [function not implemented]', __FILE__, __LINE__);
+		return false;
+	}
+
+
 	function Threshold(&$gdimg, $cutoff) {
-		$cutoff = ($cutoff ? $cutoff : 128);
+		$cutoff = min(255, max(0, ($cutoff ? $cutoff : 128)));
 		for ($x = 0; $x < ImageSX($gdimg); $x++) {
 			for ($y = 0; $y < ImageSY($gdimg); $y++) {
 				$currentPixel = phpthumb_functions::GetPixelColor($gdimg, $x, $y);
@@ -634,6 +842,29 @@ class phpthumb_filters {
 				ImageSetPixel($gdimg, $x, $y, $newColor);
 			}
 		}
+		return true;
+	}
+
+
+	function ImageTrueColorToPalette2(&$image, $dither, $ncolors) {
+		// http://www.php.net/manual/en/function.imagetruecolortopalette.php
+		// zmorris at zsculpt dot com (17-Aug-2004 06:58)
+		$width  = ImageSX($image);
+		$height = ImageSY($image);
+		$image_copy = ImageCreateTrueColor($width, $height);
+		//ImageCopyMerge($image_copy, $image, 0, 0, 0, 0, $width, $height, 100);
+		ImageCopy($image_copy, $image, 0, 0, 0, 0, $width, $height);
+		ImageTrueColorToPalette($image, $dither, $ncolors);
+		ImageColorMatch($image_copy, $image);
+		ImageDestroy($image_copy);
+		return true;
+	}
+
+	function ReduceColorDepth(&$gdimg, $colors=256, $dither=true) {
+		$colors = max(min($colors, 256), 2);
+		// ImageTrueColorToPalette usually makes ugly colors, the replacement is a bit better
+		//ImageTrueColorToPalette($gdimg, $dither, $colors);
+		phpthumb_filters::ImageTrueColorToPalette2($gdimg, $dither, $colors);
 		return true;
 	}
 
@@ -817,7 +1048,8 @@ class phpthumb_filters {
 				$text_color_background = phpthumb_functions::ImageColorAllocateAlphaSafe($img_watermark, 255, 255, 255, 127);
 				ImageFilledRectangle($img_watermark, 0, 0, ImageSX($img_watermark), ImageSY($img_watermark), $text_color_background);
 
-				if ($angle) {
+				if ($angle && function_exists('ImageRotate')) {
+					// using $img_watermark_mask is pointless if ImageRotate function isn't available
 					if ($img_watermark_mask = phpthumb_functions::ImageCreateFunction($text_width, $text_height)) {
 						$mask_color_background = ImageColorAllocate($img_watermark_mask, 0, 0, 0);
 						ImageAlphaBlending($img_watermark_mask, false);

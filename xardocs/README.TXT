@@ -1,6 +1,6 @@
-INSTALLATION AND USE - XarTinyMCE Version 1.0.0
+INSTALLATION AND USE - XarTinyMCE Version 1.0.1
 
-UPGRADES to 1.0.0:
+UPGRADES to 1.0.1:
 IMPORTANT!! PLEASE SEE SPECIAL UPGRADE CONSIDERATIONS AT THE END OF THIS DOCUMENT
 
 XarTinyMCE is a configurable, lightweight WYSIWYG editor.
@@ -11,6 +11,8 @@ The current version of this Xaraya integration provides for
 configuration options via a user interface in the admin configuration area for XarTinyMCE.
 There is also integration of an Image Browser.
 This version sees new functionality in the Image Browser.
+Image manager for xartinymce is also available for download separately.
+
 NOTE: Make sure you use the NEW CONFIGURATION FILE for ibrowser in tinymce/xartemplates/includes directory.
 
 
@@ -79,7 +81,7 @@ Please make sure you copy the ibrowser config.inc file in
 modules/tinymce/xartemplates/includes/ibrowserconfig.inc to your
 var/ibrowser/ directory and update the configuration settings there.
 
-THERE IS A NEW CONFIGURATION FILE - Please update your old one.
+THERE IS A NEW IBROWSER CONFIGURATION FILE - Please update your old one.
 
 Only relative paths are available at the moment until full ibrowser integration is completed.
 

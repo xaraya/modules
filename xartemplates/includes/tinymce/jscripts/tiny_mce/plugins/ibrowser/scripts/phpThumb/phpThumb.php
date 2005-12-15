@@ -14,8 +14,9 @@ ini_set('display_errors', '1');
 if (!@ini_get('safe_mode')) {
 	set_time_limit(60);  // shouldn't take nearly this long in most cases, but with many filter and/or a slow server...
 }
+$starttime = array_sum(explode(' ', microtime()));
 
-if (!function_exists('ImageJPEG') && !function_exists('ImagePNG') && !function_exists('ImageGIF')) {
+if (!@$_GET['phpThumbDebug'] && !function_exists('ImageJPEG') && !function_exists('ImagePNG') && !function_exists('ImageGIF')) {
 	// base64-encoded error image in GIF format
 	$ERROR_NOGD = 'R0lGODlhIAAgALMAAAAAABQUFCQkJDY2NkZGRldXV2ZmZnJycoaGhpSUlKWlpbe3t8XFxdXV1eTk5P7+/iwAAAAAIAAgAAAE/vDJSau9WILtTAACUinDNijZtAHfCojS4W5H+qxD8xibIDE9h0OwWaRWDIljJSkUJYsN4bihMB8th3IToAKs1VtYM75cyV8sZ8vygtOE5yMKmGbO4jRdICQCjHdlZzwzNW4qZSQmKDaNjhUMBX4BBAlmMywFSRWEmAI6b5gAlhNxokGhooAIK5o/pi9vEw4Lfj4OLTAUpj6IabMtCwlSFw0DCKBoFqwAB04AjI54PyZ+yY3TD0ss2YcVmN/gvpcu4TOyFivWqYJlbAHPpOntvxNAACcmGHjZzAZqzSzcq5fNjxFmAFw9iFRunD1epU6tsIPmFCAJnWYE0FURk7wJDA0MTKpEzoWAAskiAAA7';
 	header('Content-Type: image/gif');
@@ -29,7 +30,7 @@ if (phpversion() < '4.1.0') {
 	$_GET    = $HTTP_GET_VARS;
 }
 
-if (@$_SERVER['PATH_INFO']) {
+if (empty($_GET) && !empty($_SERVER['PATH_INFO'])) {
 	$_SERVER['PHP_SELF'] = str_replace($_SERVER['PATH_INFO'], '', @$_SERVER['PHP_SELF']);
 
 	$args = explode(';', substr($_SERVER['PATH_INFO'], 1));
@@ -58,9 +59,11 @@ if (!include_once(dirname(__FILE__).'/phpthumb.class.php')) {
 }
 ob_end_clean();
 $phpThumb = new phpThumb();
+$phpThumb->DebugTimingMessage('phpThumb.php start', __FILE__, __LINE__, $starttime);
 
 ////////////////////////////////////////////////////////////////
 // Debug output, to try and help me diagnose problems
+$phpThumb->DebugTimingMessage('phpThumbDebug[0]', __FILE__, __LINE__);
 if (@$_GET['phpThumbDebug'] == '0') {
 	$phpThumb->phpThumbDebug();
 }
@@ -84,11 +87,9 @@ if (file_exists(dirname(__FILE__).'/phpThumb.config.php')) {
 if (@$PHPTHUMB_CONFIG['high_security_enabled']) {
 	if (!@$_GET['hash']) {
 		$phpThumb->ErrorImage('ERROR: missing hash');
-	}
-	if (strlen($PHPTHUMB_CONFIG['high_security_password']) < 5) {
+	} elseif (strlen($PHPTHUMB_CONFIG['high_security_password']) < 5) {
 		$phpThumb->ErrorImage('ERROR: strlen($PHPTHUMB_CONFIG[high_security_password]) < 5');
-	}
-	if ($_GET['hash'] != md5(str_replace('&hash='.$_GET['hash'], '', $_SERVER['QUERY_STRING']).$PHPTHUMB_CONFIG['high_security_password'])) {
+	} elseif ($_GET['hash'] != md5(str_replace('&hash='.$_GET['hash'], '', $_SERVER['QUERY_STRING']).$PHPTHUMB_CONFIG['high_security_password'])) {
 		$phpThumb->ErrorImage('ERROR: invalid hash');
 	}
 }
@@ -140,13 +141,18 @@ if (@$_GET['src'] && isset($_GET['md5s']) && empty($_GET['md5s'])) {
 	}
 }
 
-foreach ($PHPTHUMB_CONFIG as $key => $value) {
-	$keyname = 'config_'.$key;
-	$phpThumb->setParameter($keyname, $value);
+if (!empty($PHPTHUMB_CONFIG)) {
+	foreach ($PHPTHUMB_CONFIG as $key => $value) {
+		$keyname = 'config_'.$key;
+		$phpThumb->setParameter($keyname, $value);
+	}
+} else {
+	$phpThumb->DebugMessage('$PHPTHUMB_CONFIG is empty', __FILE__, __LINE__);
 }
 
 ////////////////////////////////////////////////////////////////
 // Debug output, to try and help me diagnose problems
+$phpThumb->DebugTimingMessage('phpThumbDebug[1]', __FILE__, __LINE__);
 if (@$_GET['phpThumbDebug'] == '1') {
 	$phpThumb->phpThumbDebug();
 }
@@ -193,14 +199,21 @@ if ($phpThumb->config_mysql_query) {
 
 ////////////////////////////////////////////////////////////////
 // Debug output, to try and help me diagnose problems
+$phpThumb->DebugTimingMessage('phpThumbDebug[2]', __FILE__, __LINE__);
 if (@$_GET['phpThumbDebug'] == '2') {
 	$phpThumb->phpThumbDebug();
 }
 ////////////////////////////////////////////////////////////////
 
+if (@$PHPTHUMB_CONFIG['cache_default_only_suffix'] && (strpos($PHPTHUMB_CONFIG['cache_default_only_suffix'], '*') !== false)) {
+	$PHPTHUMB_DEFAULTS_DISABLEGETPARAMS = true;
+}
 $allowedGETparameters = array('src', 'new', 'w', 'h', 'wp', 'hp', 'wl', 'hl', 'ws', 'hs', 'f', 'q', 'sx', 'sy', 'sw', 'sh', 'zc', 'bc', 'bg', 'bgt', 'fltr', 'file', 'goto', 'err', 'xto', 'ra', 'ar', 'aoe', 'far', 'iar', 'maxb', 'down', 'phpThumbDebug', 'hash', 'md5s');
 foreach ($_GET as $key => $value) {
-	if (in_array($key, $allowedGETparameters)) {
+	if (@$PHPTHUMB_DEFAULTS_DISABLEGETPARAMS && ($key != 'src')) {
+		// disabled, do not set parameter
+		$phpThumb->DebugMessage('ignoring $_GET['.$key.'] because of $PHPTHUMB_DEFAULTS_DISABLEGETPARAMS', __FILE__, __LINE__);
+	} elseif (in_array($key, $allowedGETparameters)) {
 		$phpThumb->setParameter($key, $value);
 	} else {
 		$phpThumb->ErrorImage('Forbidden parameter: '.$key);
@@ -208,6 +221,7 @@ foreach ($_GET as $key => $value) {
 }
 
 if (!empty($PHPTHUMB_DEFAULTS) && is_array($PHPTHUMB_DEFAULTS)) {
+	$phpThumb->DebugMessage('setting $PHPTHUMB_DEFAULTS['.implode(';', array_keys($PHPTHUMB_DEFAULTS)).']', __FILE__, __LINE__);
 	foreach ($PHPTHUMB_DEFAULTS as $key => $value) {
 		if ($PHPTHUMB_DEFAULTS_GETSTRINGOVERRIDE || !isset($_GET[$key])) {
 			$phpThumb->setParameter($key, $value);
@@ -217,6 +231,7 @@ if (!empty($PHPTHUMB_DEFAULTS) && is_array($PHPTHUMB_DEFAULTS)) {
 
 ////////////////////////////////////////////////////////////////
 // Debug output, to try and help me diagnose problems
+$phpThumb->DebugTimingMessage('phpThumbDebug[3]', __FILE__, __LINE__);
 if (@$_GET['phpThumbDebug'] == '3') {
 	$phpThumb->phpThumbDebug();
 }
@@ -249,6 +264,7 @@ if (!empty($UnAllowedGET)) {
 
 ////////////////////////////////////////////////////////////////
 // Debug output, to try and help me diagnose problems
+$phpThumb->DebugTimingMessage('phpThumbDebug[4]', __FILE__, __LINE__);
 if (@$_GET['phpThumbDebug'] == '4') {
 	$phpThumb->phpThumbDebug();
 }
@@ -323,6 +339,7 @@ while ($CanPassThroughDirectly && $phpThumb->src) {
 
 ////////////////////////////////////////////////////////////////
 // Debug output, to try and help me diagnose problems
+$phpThumb->DebugTimingMessage('phpThumbDebug[5]', __FILE__, __LINE__);
 if (@$_GET['phpThumbDebug'] == '5') {
 	$phpThumb->phpThumbDebug();
 }
@@ -372,7 +389,7 @@ function RedirectToCachedFile() {
 		if ($getimagesize = @GetImageSize($phpThumb->cache_filename)) {
 			header('Content-Type: '.phpthumb_functions::ImageTypeToMIMEtype($getimagesize[2]));
 		}
-		if (ereg('^'.preg_quote($nice_docroot).'(.*)$', $nice_cachefile, $matches)) {
+		if (!@$PHPTHUMB_CONFIG['cache_force_passthru'] && ereg('^'.preg_quote($nice_docroot).'(.*)$', $nice_cachefile, $matches)) {
 			header('Location: '.dirname($matches[1]).'/'.urlencode(basename($matches[1])));
 		} else {
 			@readfile($phpThumb->cache_filename);
@@ -393,6 +410,7 @@ if (is_file($phpThumb->cache_filename)) {
 
 ////////////////////////////////////////////////////////////////
 // Debug output, to try and help me diagnose problems
+$phpThumb->DebugTimingMessage('phpThumbDebug[6]', __FILE__, __LINE__);
 if (@$_GET['phpThumbDebug'] == '6') {
 	$phpThumb->phpThumbDebug();
 }
@@ -464,6 +482,7 @@ if ($phpThumb->rawImageData) {
 
 ////////////////////////////////////////////////////////////////
 // Debug output, to try and help me diagnose problems
+$phpThumb->DebugTimingMessage('phpThumbDebug[7]', __FILE__, __LINE__);
 if (@$_GET['phpThumbDebug'] == '7') {
 	$phpThumb->phpThumbDebug();
 }
@@ -473,6 +492,7 @@ $phpThumb->GenerateThumbnail();
 
 ////////////////////////////////////////////////////////////////
 // Debug output, to try and help me diagnose problems
+$phpThumb->DebugTimingMessage('phpThumbDebug[8]', __FILE__, __LINE__);
 if (@$_GET['phpThumbDebug'] == '8') {
 	$phpThumb->phpThumbDebug();
 }
@@ -495,9 +515,9 @@ if ($phpThumb->config_allow_parameter_file && $phpThumb->file) {
 		if ($phpThumb->RenderToFile($phpThumb->cache_filename)) {
 			chmod($phpThumb->cache_filename, 0644);
 			RedirectToCachedFile();
-			$phpThumb->DebugMessage('Failed to match DOCUMENT_ROOT in $phpThumb->cache_filename', __FILE__, __LINE__);
+		} else {
+			$phpThumb->DebugMessage('Failed: RenderToFile('.$phpThumb->cache_filename.')', __FILE__, __LINE__);
 		}
-		$phpThumb->DebugMessage('Failed: RenderToFile('.$phpThumb->cache_filename.')', __FILE__, __LINE__);
 
 	} else {
 
@@ -509,6 +529,7 @@ if ($phpThumb->config_allow_parameter_file && $phpThumb->file) {
 
 ////////////////////////////////////////////////////////////////
 // Debug output, to try and help me diagnose problems
+$phpThumb->DebugTimingMessage('phpThumbDebug[9]', __FILE__, __LINE__);
 if (@$_GET['phpThumbDebug'] == '9') {
 	$phpThumb->phpThumbDebug();
 }

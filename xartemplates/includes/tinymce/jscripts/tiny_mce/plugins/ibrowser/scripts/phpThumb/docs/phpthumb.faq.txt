@@ -8,8 +8,45 @@
 //////////////////////////////////////////////////////////////
 
 
+Q: My question isn't answered here and I can't find any
+   forums, how do I get support?
+A: Please email me directly at info@silisoftware.com with
+   any questions, suggestions, donations, etc.
+
+
 Q: What is the GPL? Can I use this for commercial sites?
 A: See the GPL FAQ: http://www.gnu.org/licenses/gpl-faq.html
+   In general, if you just want to call phpThumb.php in the
+   standard <img src="phpThumb.php?src=pic.jpg&w=100"> manner
+   then there is no problem, you're free to do this no matter
+   if you site is commercial or not, or what license your code
+   is released under.
+   If you're calling phpThumb() as an object then you will
+   probably run into license issues, so consult the above FAQ
+   and the GPL itself.
+   No matter if you use phpThumb() commercially or not, no
+   payment is required. However, donations are always welcome
+   and can be made at http://phpthumb.sourceforge.net
+
+
+Q: Some images generate thumbnails, but some fail (the original
+   non-resized image is output instead).
+A: Your PHP installation does not have a high enough memory_limit
+   and ImageMagick is not installed on the server. The PHP memory
+   required is 5 times the number of pixels in the image.
+   For example:
+     640x480x5   = 1.5MB
+     1600x1200x5 = 9.2MB
+   You can adjust the PHP memory limit in php.ini (if you have
+   permission on your server to do so), or (better yet) install
+   ImageMagick on the server and that will bypass the memory limit
+   issue. If you can't do either of the above, you can resize the
+   images manually (with your favourite image editor) to a size
+   that your memory_limit setting can handle, and/or you can
+   re-save the images with an image editor that can embed an EXIF
+   thumbnail (Photoshop for example) which phpThumb can use as an
+   image source (lower image quality, but perhaps better than
+   nothing).
 
 
 Q: I'm getting is this error message:
@@ -44,10 +81,49 @@ A: Check these two values are present and properly configured
    $PHPTHUMB_CONFIG['allow_src_above_docroot']  (default=false)
    $PHPTHUMB_CONFIG['allow_src_above_phpthumb'] (default=true)
    If your images are outside DOCUMENT_ROOT then you will have
-   to configure 'allow_src_above_docroot' to true
+   to configure 'allow_src_above_docroot' to true.
 
 
 Q: Are there any front-end GUI interfaces to phpThumb()?
 A: See /demo/readme.demo.txt
 
+
+Q: Why can't Flash work with images output from phpThumb()?
+A: Flash doesn't like progressive JPEG. Set:
+   $PHPTHUMB_CONFIG['output_interlace'] = false;
+
+
+Q: Image quality is not very good - why?
+A: If you're using GD v1.x, no way around it. Upgrade to GD v2.x
+
+
+Q: Image quality is very bad, very pixelated -- why?
+A: You may be trying to resize images larger than the available
+   PHP memory, so phpThumb is simply extracting and using the
+   EXIF thumbnail as the image source, which is usually about
+   160x120 (so if you resize it to 640x480 it will look very bad).
+   To calculate the required size for memory_limit in php.ini,
+   calculate the number of pixels in the image and multiply by 5:
+   For example, 1600x1200 = 1600 * 1200 * 5 = 9600000 = 10M
+
+
+Q: Can I save the generated thumbnail to a file?
+A: Yes, there are several ways to do so; the best way is to call
+   phpThumb as an object and call RenderToFile() to save the
+   thumbnail to whatever filename you want.
+   See /demo/phpThumb.demo.object.php for an example.
+   The other way is to use the 'file' parameter (see
+   /docs/phpthumb.readme.txt) but this parameter is deprecated
+   and may not exist in future versions of phpThumb().
+
+
+Q: "Off-server thumbnailing is not allowed" -- how do I enable it?
+A: By default, phpThumb() only makes thumbnails for the same domain
+   that it is running on. To allow it to make thumbnails for a limited
+   number of other domains, add them (in phpThumb.config.php) like this:
+     $PHPTHUMB_CONFIG['nohotlink_valid_domains'] = array(
+     	@$_SERVER['HTTP_HOST'], 'example.com', 'www.example.com',
+     	'subdomain.example.net', 'example.org');
+   To disable off-server thumbnail blocking, just set:
+     $PHPTHUMB_CONFIG['nohotlink_enabled'] = false;
 

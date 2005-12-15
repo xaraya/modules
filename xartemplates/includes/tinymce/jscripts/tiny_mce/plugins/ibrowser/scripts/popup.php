@@ -92,8 +92,7 @@ body {
 </head>
 
 <body onload="resizeWinTo('iDiv'); hideloadmessage();">
-
-	<div id="iDiv" style="position:absolute; left:0px; top:0px;">
-        <img onclick="window.close();" src="<?php echo $src; ?>" border="0" alt="<?php echo $clTxt; ?>" title="<?php echo $clTxt; ?>" style="cursor: pointer;"/></div>
+<?php include dirname(__FILE__) . '/loadmsg.php'; ?>
+	<div id="iDiv" style="position:absolute; left:0px; top:0px;"><img onclick="window.close();" src="<?php echo $src; ?>" border="0" alt="<?php echo $clTxt; ?>" title="<?php echo $clTxt; ?>" style="cursor: pointer;"/></div>
 </body>
 </html>

@@ -303,7 +303,7 @@ class phpthumb_functions {
 	function SafeExec($command) {
 		static $AllowedExecFunctions = array();
 		if (empty($AllowedExecFunctions)) {
-			$AllowedExecFunctions = array('exec'=>true, 'system'=>true, 'shell_exec'=>true, 'passthru'=>true);
+			$AllowedExecFunctions = array('shell_exec'=>true, 'passthru'=>true, 'system'=>true, 'exec'=>true);
 			if (@ini_get('safe_mode')) {
 				$AllowedExecFunctions['shell_exec'] = false;
 			}
@@ -346,13 +346,22 @@ class phpthumb_functions {
 		return false;
 	}
 
+	function gd_is_bundled() {
+		static $isbundled = null;
+		if (is_null($isbundled)) {
+			$gd_info = phpthumb_functions::gd_info();
+			$isbundled = (strpos($gd_info['GD Version'], 'bundled') !== false);
+		}
+		return $isbundled;
+	}
+
 	function gd_version($fullstring=false) {
 		static $cache_gd_version = array();
 		if (empty($cache_gd_version)) {
 			$gd_info = phpthumb_functions::gd_info();
-			if (substr($gd_info['GD Version'], 0, strlen('bundled (')) == 'bundled (') {
-				$cache_gd_version[1] = $gd_info['GD Version'];                                         // e.g. "bundled (2.0.15 compatible)"
-				$cache_gd_version[0] = (float) substr($gd_info['GD Version'], strlen('bundled ('), 3); // e.g. "2.0" (not "bundled (2.0.15 compatible)")
+			if (eregi('bundled \((.+)\)$', $gd_info['GD Version'], $matches)) {
+				$cache_gd_version[1] = $gd_info['GD Version'];  // e.g. "bundled (2.0.15 compatible)"
+				$cache_gd_version[0] = (float) $matches[1];     // e.g. "2.0" (not "bundled (2.0.15 compatible)")
 			} else {
 				$cache_gd_version[1] = $gd_info['GD Version'];                       // e.g. "1.6.2 or higher"
 				$cache_gd_version[0] = (float) substr($gd_info['GD Version'], 0, 3); // e.g. "1.6" (not "1.6.2 or higher")
@@ -487,6 +496,39 @@ class phpthumb_functions {
 		return false;
 	}
 
+	function nonempty_min() {
+		$arg_list = func_get_args();
+		$acceptable = array();
+		foreach ($arg_list as $arg) {
+			if ($arg) {
+				$acceptable[] = $arg;
+			}
+		}
+		return min($acceptable);
+	}
+
+}
+
+if (!function_exists('file_get_contents')) {
+	function file_get_contents($filename) {
+		if ($fp = @fopen($filename, 'rb')) {
+			$buffer = fread($fp, filesize($filename));
+			fclose($fp);
+			return $buffer;
+		}
+		return false;
+	}
+}
+
+if (!function_exists('file_put_contents')) {
+	function file_put_contents($filename, $filedata) {
+		if ($fp = @fopen($filename, 'wb')) {
+			fwrite($fp, $filedata);
+			fclose($fp);
+			return true;
+		}
+		return false;
+	}
 }
 
 ?>

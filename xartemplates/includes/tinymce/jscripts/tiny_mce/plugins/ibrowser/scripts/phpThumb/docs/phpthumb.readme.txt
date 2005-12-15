@@ -235,18 +235,38 @@ URL Parameters:
   bg = background hex color (default = FFFFFF)
   bc = border hex color (default = 000000)
 fltr = filter system. Call as an array as follows:
+       - "brit" (Brightness) [ex: &fltr[]=brit|<value>]
+         where <value> is the amount +/- to adjust brightness
+         (range -255 to 255)
+         Availble in PHP5 with bundled GD only.
+       - "cont" (Constrast) [ex: &fltr[]=cont|<value>]
+         where <value> is the amount +/- to adjust contrast
+         (range -255 to 255)
+         Availble in PHP5 with bundled GD only.
        - "gam" (Gamma Correction) [ex: &fltr[]=gam|<value>]
          where <value> can be a number >0 to 10+ (default 1.0)
          Must be >0 (zero gives no effect). There is no max,
          although beyond 10 is pretty useless. Negative
          numbers actually do something, maybe not quite the
          desired effect, but interesting nonetheless.
-       - "ds" (DeSaturate) [ex: &fltr[]=ds|<value>]
+       - "sat" (SATuration) [ex: &fltr[]=sat|<value>]
          where <value> is a number between zero (no change)
-         and 100 (complete desaturation -- grayscale), or it
-         can be a negative number for saturation boost.
+         and -100 (complete desaturation = grayscale), or it
+         can be any positive number for increased saturation.
+       - "ds" (DeSaturate) [ex: &fltr[]=ds|<value>]
+         is an alias for "sat" except values are inverted
+         (positive values remove color, negative values boost
+         saturation)
        - "gray" (Grayscale) [ex: &fltr[]=gray]
-         this is an alias for 100% desaturation
+         remove all color from image, make it grayscale
+       - "th" (Threshold) [ex: &fltr[]=th|<value>]
+         makes image greyscale, then sets all pixels brighter
+         than <value> (range 0-255) to white, and all pixels
+         darker than <value> to black
+       - "rcd" (Reduce Color Depth) [ex: &fltr[]=rcd|<c>|<d>]
+         where <c> is the number of colors (2-256) you want
+         in the output image, and <d> is "1" for dithering
+         (deault) or "0" for no dithering
        - "clr" (Colorize) [ex: &fltr[]=clr|<value>|<color>]
          where <value> is a number between 0 and 100 for the
          amount of colorization, and <color> is the hex color
@@ -261,6 +281,14 @@ fltr = filter system. Call as an array as follows:
          (default = 3).
        - "blur" (Blur) [ex: &fltr[]=blur|<radius>]
          where (0 < <radius> < 25) (default = 1)
+       - "gblr" (Gaussian Blur) [ex: &fltr[]=gblr]
+         Availble in PHP5 with bundled GD only.
+       - "sblr" (Selective Blur) [ex: &fltr[]=gblr]
+         Availble in PHP5 with bundled GD only.
+       - "smth" (Smooth) [ex: &fltr[]=smth|<value>]
+         where <value> is the weighting value for the matrix
+         (range -10 to 10, default 6)
+         Availble in PHP5 with bundled GD only.
        - "lvl" (Levels) [ex: &fltr[]=lvl|<channel>|<min>|<max>
          where <channel> can be one of 'r', 'g', 'b', 'a' (for
          Red, Green, Blue, Alpha respectively), or '*' for all
@@ -334,6 +362,10 @@ fltr = filter system. Call as an array as follows:
          (thanks mailÿmmjaeger*com)
        - "flip" [ex: &fltr[]=flip|x   or   &fltr[]=flip|y]
          flip image on X or Y axis
+       - "ric" [ex: &fltr[]=ric|<x>|<y>]
+         rounds off the corners of the image (to transparent
+         for PNG output), where <x> is the horizontal radius
+         of the curve and <y> is the vertical radius
        - "elip" [ex: &fltr[]=elip]
          similar to rounded corners but more extreme
        - "mask" [ex: &fltr[]=mask|filename.png]
@@ -399,7 +431,9 @@ md5s = MD5 hash of the source image -- if this parameter is
        be set).  (1=on, 0=off)  (overrides "far")
  far = Force Aspect Ratio - image will be created at size
        specified by "w" and "h" (which must both be set).
-       (1=on, 0=off)
+       Alignment: L=left,R=right,T=top,B=bottom,C=center
+       BL,BR,TL,TR use the appropriate direction if the
+       image is landscape or portrait.
 maxb = MAXimum Byte size - output quality is auto-set to
        fit thumbnail into "maxb" bytes  (compression
        quality is adjusted for JPEG, bit depth is adjusted
@@ -462,6 +496,7 @@ General Notes:
   EXIF thumbnail extraction requires PHP v4.2.0+
   Image rotation requires PHP v4.3.0+. There have been
     reports of problems with PHP older than v4.3.3
+  Some image filters require PHP v5.0.0+
 
 * phpThumb() works with GD v1.x, but works better with
    GD v2.0+ because of the true-color image support

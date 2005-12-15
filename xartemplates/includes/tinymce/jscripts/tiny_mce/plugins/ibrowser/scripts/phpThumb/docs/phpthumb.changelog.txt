@@ -3,6 +3,78 @@
 //        available at http://phpthumb.sourceforge.net     ///
 //////////////////////////////////////////////////////////////
 
+v1.6.3 - December ??, 2005
+  * Bugfix: safe mode warnings in ImageCreateFromStringReplacement
+    (thanks adminÿalex-home*net)
+  * Bugfix: 'new' got broken (1x1 images)
+
+v1.6.2 - November 24, 2005
+  * Animated GIF output is now possible if ImageMagick is
+    available and no filters (other than resize) are applied
+    (thanks brandenbassÿgmail*com for idea)
+  * Added $PHPTHUMB_CONFIG['cache_force_passthru'] to work
+    around cached-image-only-works-second-time issue
+    (thanks yakoÿ11y11*com)
+  * Bugfix: black borders on some image edges
+    (thanks atelierÿdelirius*ch && chuckÿcatalyststudio*com)
+  * Bugfix: uncaught PHP warning in RenderToFile DebugMessage
+  * Bugfix: allow phpThumbDebug in noGD PHP installations
+  * Bugfix: 'hash' warning in high_security mode
+    (thanks bernhardÿwtf*at)
+  * Bugfix: non-TTF rotated text watermarks now work (unrotated)
+    with no warnings if ImageRotate is unavailable
+    (thanks aparviaiÿusers*sourceforge*net)
+
+v1.6.1 - August 26, 2005
+  * Filters now use GD functions where available (using
+    ImageFilter, only available in PHP v5.0.0+ with bundled
+    version of GD). Enabled for: colorize, negative,
+    grayscale, brightness, contrast, gaussian blur, selective
+    blur, mean removal  (thanks donlaurÿmac*com)
+  * Added config_prefer_imagemagick (defaults=true)
+  * Added phpthumb_filters::Grayscale()        'gray'
+  * Added phpthumb_filters::ReduceColorDepth() 'rcd'
+  * Added phpthumb_filters::Brightness()       'brit'
+  * Added phpthumb_filters::Contrast()         'cont'
+  * Added phpthumb_filters::Saturation()       'sat'
+  * Added phpthumb_filters::EdgeDetect()    'edge' [PHP5 only]
+  * Added phpthumb_filters::BlurGaussian()  'gblr' [PHP5 only]
+  * Added phpthumb_filters::BlurSelective() 'gblr' [PHP5 only]
+  * Added phpthumb_filters::MeanRemoval()   'mean' [PHP5 only]
+  * Added phpthumb_filters::Smooth()        'smth' [PHP5 only]
+  * New timing debug info in phpThumbDebug
+  * Added config_cache_differentiate_offsite
+  * config_die_on_error now defaults to false
+  * ResolveSource works better
+  * cache filenames with 'fltr' parameters have changed
+  * Filters now skip processing if amount=0 or similar
+  * [#1263051] 'far' now accepts L,R,T,B,C as values giving
+    alignment of left/right/top/bottom/center respectively.
+    Old value of '1' defaults to centered
+    (thanks webgrappaÿusers*sourceforge*net)
+  * Bugfix: RenderToFile() now fails properly when output format
+    is unknown
+  * Bugfix: PNG transparency wasn't working with 'far'
+  * Bugfix: source images with EXIF thumbnails that differ in
+    aspect ratio no longer use EXIF thumbnails as source unless
+    no other options exist
+  * Bugfix: setting 'src' with setParameter now invokes
+    setSourceFilename to properly set $this->sourceFilename
+    (thanks Gazou)
+  * Bugfix: 'zc' had poor quality when used with ImageMagick
+  * Bugfix: 'aoe' parameter broken when not using ImageMagick
+    (thanks frankieali4ÿhotmail*com)
+  * Bugfix: fixed issue with symbolic links
+    (thanks hornet136ÿgmail*com)
+  * Bugfix: config_max_source_pixels now defaults to same
+    calculation as used in phpThumb.config.php
+    (thanks vukshaÿhotmail*com)
+  * Bugfix: Offsite cached thumbnails no longer use unique
+    referer (now either nothing or "_offsite")
+    (thanks swaayeÿyahoo*com)
+  * Bugfix: "Unknown image type identified by ì<?phî" errors
+    in some installations  (thanks frankieali4ÿhotmail*com)
+
 v1.6.0 - July 18, 2005
   * Included new file phpThumb.demo.random.php to select a
     random image from a specified folder, optionally only

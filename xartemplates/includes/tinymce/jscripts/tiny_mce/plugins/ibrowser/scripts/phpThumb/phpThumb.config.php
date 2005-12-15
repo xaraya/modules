@@ -35,7 +35,7 @@ $PHPTHUMB_CONFIG['cache_directory'] = dirname(__FILE__).'/cache/';              
 //$PHPTHUMB_CONFIG['cache_directory'] = './cache/';                                           // set the cache directory relative to the source image - must start with '.' (will not work to cache URL- or database-sourced images, please use an absolute directory name)
 //$PHPTHUMB_CONFIG['cache_directory'] = null;                                                 // disable thumbnail caching (not recommended)
 
-$PHPTHUMB_CONFIG['cache_disable_warning'] = true; // If [cache_directory] is non-existant or not writable, and [cache_disable_warning] is false, an error image will be generated warning to either set the cache directory or disable the warning (to avoid people not knowing about the cache)
+$PHPTHUMB_CONFIG['cache_disable_warning'] = false; // If [cache_directory] is non-existant or not writable, and [cache_disable_warning] is false, an error image will be generated warning to either set the cache directory or disable the warning (to avoid people not knowing about the cache)
 
 
 // * Cache culling: phpThumb can automatically limit the contents of the cache directory
@@ -57,6 +57,18 @@ $PHPTHUMB_CONFIG['cache_source_directory'] = dirname(__FILE__).'/cache/source/';
 // * cache source modification date configuration
 $PHPTHUMB_CONFIG['cache_source_filemtime_ignore_local']  = false; // if true, local source images will not be checked for modification date and cached image will be used if available, even if source image is changed or removed
 $PHPTHUMB_CONFIG['cache_source_filemtime_ignore_remote'] = false; // if true, remote source images will not be checked for modification date and cached image will be used if available, even if source image is changed or removed
+
+$PHPTHUMB_CONFIG['cache_differentiate_offsite'] = true; // if true, hotlinked images are cached seperately from locally-called images; if false, all images share the same cache regardless of HTTP referer
+
+// If non-empty, GETstring parameters (except 'src') are ignored and only $PHPTHUMB_DEFAULTS
+// parameters (set at the bottom of phpThumb.config.php) are used for processing.
+// The '*' character MUST be used to represent the source image name
+$PHPTHUMB_CONFIG['cache_default_only_suffix'] = '';           // cached in normal phpThumb manner
+//$PHPTHUMB_CONFIG['cache_default_only_suffix'] = '*_thumb';  // cache 'pic.jpg' becomes 'pic_thumb.jpg' (or 'pic_thumb.png' if PNG output is selected, etc)
+//$PHPTHUMB_CONFIG['cache_default_only_suffix'] = 'small-*';  // cache 'pic.jpg' becomes 'small-pic.jpg' (or 'small-pic.png' if PNG output is selected, etc)
+
+$PHPTHUMB_CONFIG['cache_force_passthru'] = true;  // if true, cached image data will always be passed to browser; if false, HTTP redirect will be used instead
+
 
 
 // * Temp directory configuration
@@ -105,6 +117,7 @@ if (strtoupper(substr(PHP_OS, 0, 3)) == 'WIN') {
 	//$PHPTHUMB_CONFIG['imagemagick_path'] = '/usr/local/bin/convert';
 	$PHPTHUMB_CONFIG['imagemagick_path'] = null;
 }
+$PHPTHUMB_CONFIG['prefer_imagemagick'] = true;  // If true, use ImageMagick to resize thumbnails if possible; if false only use ImageMagick if PHP memory limit is too low.
 
 
 // * Default output configuration:
@@ -114,8 +127,8 @@ $PHPTHUMB_CONFIG['output_maxheight'] = 0;      // default maximum thumbnail heig
 $PHPTHUMB_CONFIG['output_interlace'] = true;   // if true: interlaced output for GIF/PNG, progressive output for JPEG; if false: non-interlaced for GIF/PNG, baseline for JPEG.
 
 // * Error message configuration
-$PHPTHUMB_CONFIG['error_image_width']           = 175;      // default width for error images
-$PHPTHUMB_CONFIG['error_image_height']          = 175;      // default height for error images
+$PHPTHUMB_CONFIG['error_image_width']           = 150;      // default width for error images
+$PHPTHUMB_CONFIG['error_image_height']          = 150;      // default height for error images
 $PHPTHUMB_CONFIG['error_message_image_default'] = '';       // Set this to the name of a generic error image (e.g. '/images/error.png') that you want displayed in place of any error message that may occur. This setting is overridden by the 'err' parameter, which does the same thing.
 $PHPTHUMB_CONFIG['error_bgcolor']               = 'CCCCFF'; // background color of error message images
 $PHPTHUMB_CONFIG['error_textcolor']             = 'FF0000'; // color of text in error messages
@@ -171,7 +184,8 @@ $PHPTHUMB_CONFIG['allow_parameter_file']     = false;  // if true, allow use of 
 $PHPTHUMB_CONFIG['allow_parameter_goto']     = false;  // if true, allow use of 'goto' parameter; if false (default) the 'goto' parameter is disabled/ignored
 
 
-$PHPTHUMB_CONFIG['use_exif_thumbnail_for_speed'] = true; // If true, and EXIF thumbnail is available, and is larger or equal to output image dimensions, use EXIF thumbnail rather than actual source image for generating thumbnail. Benefit is only speed, avoiding resizing large image.
+$PHPTHUMB_CONFIG['config_prefer_imagemagick']    = true;  // If true, use ImageMagick to resize thumbnails if possible, since it is usually faster than GD functions; if false only use ImageMagick if PHP memory limit is too low.
+$PHPTHUMB_CONFIG['use_exif_thumbnail_for_speed'] = false; // If true, and EXIF thumbnail is available, and is larger or equal to output image dimensions, use EXIF thumbnail rather than actual source image for generating thumbnail. Benefit is only speed, avoiding resizing large image.
 
 // END USER CONFIGURATION SECTION
 
@@ -180,12 +194,11 @@ $PHPTHUMB_CONFIG['use_exif_thumbnail_for_speed'] = true; // If true, and EXIF th
 // START DEFAULT PARAMETERS SECTION
 // If any parameters are constant across ALL images, you can set them here
 
-// If true, any parameters in the URL will override the defaults set here
-// If false, any parameters set here cannot be overridden in the URL
-$PHPTHUMB_DEFAULTS_GETSTRINGOVERRIDE = true;
+$PHPTHUMB_DEFAULTS_GETSTRINGOVERRIDE = true;  // if true, any parameters in the URL will override the defaults set here; if false, any parameters set here cannot be overridden in the URL
+$PHPTHUMB_DEFAULTS_DISABLEGETPARAMS  = false; // if true, GETstring parameters will be ignored (except for 'src') and only below default parameters will be used; if false, both default and GETstring parameters will be used (depending on $PHPTHUMB_DEFAULTS_GETSTRINGOVERRIDE). Will be auto-set true if !empty($PHPTHUMB_CONFIG['cache_default_only_suffix'])
 
-//$PHPTHUMB_DEFAULTS['w']    = 200;
-//$PHPTHUMB_DEFAULTS['fltr'] = array('wmi|/images/watermark.png');
+//$PHPTHUMB_DEFAULTS['w']    = 100;
+//$PHPTHUMB_DEFAULTS['fltr'] = array('blur|10');
 //$PHPTHUMB_DEFAULTS['q']    =  90;
 
 
