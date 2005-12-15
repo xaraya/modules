@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * XProject Module - A simple project management module
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage XProject Module
+ * @link http://xaraya.com/index.php/release/665.html
+ * @author XProject Module Development Team
+ */
 function xproject_groupsapi_get($args)
 {
     extract($args);
@@ -36,20 +47,20 @@ function xproject_groupsapi_get($args)
         return false;
     }
 
-	list($gid, $gname) = $result->fields;
+    list($gid, $gname) = $result->fields;
 
     $result->Close();
 
-	$groupmembers = xarModAPIFunc('xproject','groups','getmembers',array('gid' => $gid));
-	$memberlist = array();
-	foreach($groupmembers as $member) $memberlist[] = $member['uid'];
-	
-	if(in_array(xarSessionGetVar('uid'),$memberlist)
-		|| (xarSecAuthAction(0, 'Groups::', "$gname::$gid", ACCESS_READ))) {
-		$group = array('gid'	=> $gid,
-					'gname'		=> $gname);
-	}
-	
+    $groupmembers = xarModAPIFunc('xproject','groups','getmembers',array('gid' => $gid));
+    $memberlist = array();
+    foreach($groupmembers as $member) $memberlist[] = $member['uid'];
+
+    if(in_array(xarSessionGetVar('uid'),$memberlist)
+        || (xarSecAuthAction(0, 'Groups::', "$gname::$gid", ACCESS_READ))) {
+        $group = array('gid'	=> $gid,
+                    'gname'		=> $gname);
+    }
+
 
     return $group;
 }

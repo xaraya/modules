@@ -1,18 +1,29 @@
 <?php
-
+/**
+ * XProject Module - A simple project management module
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage XProject Module
+ * @link http://xaraya.com/index.php/release/665.html
+ * @author XProject Module Development Team
+ */
 function xproject_admin_delete($args)
 {
     list($projectid,
          $objectid,
          $confirm) = xarVarCleanFromInput('projectid',
-										  'objectid',
-										  'confirm');
+                                          'objectid',
+                                          'confirm');
 
     extract($args);
 
      if (!empty($objectid)) {
          $projectid = $objectid;
-     }                     
+     }
     $project = xarModAPIFunc('xproject',
                          'user',
                          'get',
@@ -29,8 +40,8 @@ function xproject_admin_delete($args)
     }
 
     if (empty($confirm)) {
-		xarModLoad('xproject','user');
-		$data = xarModAPIFunc('xproject','user','menu');
+        xarModLoad('xproject','user');
+        $data = xarModAPIFunc('xproject','user','menu');
 
         $data['projectid'] = $projectid;
 
@@ -40,7 +51,7 @@ function xproject_admin_delete($args)
         $data['authid'] = xarSecGenAuthKey();
 
         return $data;
-	}
+    }
     if (!xarSecConfirmAuthKey()) return;
     if (!xarModAPIFunc('xproject',
                      'admin',

@@ -1,12 +1,23 @@
 <?php
-
+/**
+ * XProject Module - A simple project management module
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage XProject Module
+ * @link http://xaraya.com/index.php/release/665.html
+ * @author XProject Module Development Team
+ */
 function xproject_groupsapi_deleteuser($args)
 {
     extract($args);
 
     if((!isset($gid)) || (!isset($uid))) {
-	xarSessionSetVar('errormsg', _MODARGSERROR);
-	return false;
+    xarSessionSetVar('errormsg', _MODARGSERROR);
+    return false;
     }
     $dbconn =& xarDBGetConn();
     $xartable = xarDBGetTables();
@@ -14,7 +25,7 @@ function xproject_groupsapi_deleteuser($args)
     $groupmembership = $xartable['group_membership'];
 
     if (!xarSecAuthAction(0, 'Groups::', "::", ACCESS_DELETE)) {
-	xarSessionSetVar('errormsg', _GROUPSNOAUTH);
+    xarSessionSetVar('errormsg', _GROUPSNOAUTH);
         return false;
     }
     // Get details on current group
@@ -24,8 +35,8 @@ function xproject_groupsapi_deleteuser($args)
 
     $result = $dbconn->Execute($query);
     if ($result->EOF) {
-	xarSessionSetVar('errormsg', 'No such group ID '.$gid.'');
-	return false;
+    xarSessionSetVar('errormsg', 'No such group ID '.$gid.'');
+    return false;
     }
     list($gname) = $result->fields;
     $result->Close();

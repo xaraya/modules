@@ -1,30 +1,34 @@
 <?php
-
+/**
+ * XProject Module - A simple project management module
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage XProject Module
+ * @link http://xaraya.com/index.php/release/665.html
+ * @author XProject Module Development Team
+ */
 function xproject_groups_newgroup()
 {
-    $output = new xarHTML();
+    if (!xarVarFetch('gname',   'str::', $gname,   '', XARVAR_NOT_REQUIRED)) return;
+    // Security check
+    if (!xarSecurityCheck('AddXProject', 0, 'Group', "All:All:All"))
 
-    $output->SetInputMode(_XH_VERBATIMINPUT);
-    $func = xarVarCleanFromInput('func');
-	if($func == "newgroup") $output->Text(xarModAPIFunc('xproject','user','menu'));
+    $menu = xarModAPIFunc('xproject','user','menu');
 
-    if (!xarSecAuthAction(0, 'Groups::', '::', ACCESS_ADD)) {
-        $output->Text(_GROUPSADDNOAUTH);
-        return $output->GetOutput();
+    if (empty($gname)) {
+        $data['gname'] = '';
+    } else {
+        $data['gname'] = $gname;
     }
-    $output->FormStart(xarModURL('xproject', 'groups', 'addgroup'));
-    $output->LineBreak();
-    $output->Text(xarML('Team name'));
-    $output->FormText('gname', '', 20, 20);
-    $output->FormHidden('authid', xarSecGenAuthKey());
-    $output->LineBreak(2);
-    $output->FormSubmit(_NEWGROUP);
-    $output->FormEnd();
 
-    return $output->GetOutput();
+    $data['namelabel'] =xarML('Team name');
+
+    $data['authid'] = xarSecGenAuthKey();
+
+    return $data;
 }
-
-/*
- * addGroup - add a group
- */
 ?>

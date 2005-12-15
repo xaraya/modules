@@ -182,7 +182,7 @@ function xprojectToggleView(id){
                             <form action="&xar-modurl-xproject-admin-migrate;" method="post" style="margin: 0 0 0 0;">
                             <input type="hidden" name="authid" value="#$authid#" />
                             <input type="hidden" name="projectid" value="#$projectid#" />
-                            <input type="hidden" name="parentid" value="#$taskparent_id#" />
+                            <input type="hidden" name="parentid" value="#$parentid#" />
                             <input type="hidden" name="taskid" value="#$taskid#" />
                         </th>
                         <th>

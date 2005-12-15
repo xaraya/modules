@@ -1,33 +1,36 @@
 <?php
-
+/**
+ * XProject Module - A simple project management module
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage XProject Module
+ * @link http://xaraya.com/index.php/release/665.html
+ * @author XProject Module Development Team
+ */
 function xproject_groups_addgroup()
 {
-    $output = new xarHTML();
-
-    $gname = xarVarCleanFromInput('gname');
-
+    if (!xarVarFetch('gname',   'str::', $gname,   '', XARVAR_NOT_REQUIRED)) return;
+    // Security check
+    if (!xarSecurityCheck('AddXProject', 0, 'Group', "All:All:All"))
     if (!xarSecConfirmAuthKey()) {
-        xarSessionSetVar('errormsg', _BADAUTHKEY);
-        xarResponseRedirect(xarModURL('xproject', 'groups', 'main'));
-        return true;
+        return;
     }
-	
+
     $gname = xarModAPIFunc('xproject',
-			  'groups',
-			  'addgroup', array('gname' => $gname));
+              'groups',
+              'addgroup', array('gname' => $gname));
 
     if ($gname == false) {
-		xarSessionSetVar('errormsg', _GROUPALREADYEXISTS);
-		return $output->GetOutput();
+        xarSessionSetVar('errormsg', _GROUPALREADYEXISTS);
+        return $output->GetOutput();
     }
-	
-    xarSessionSetVar('statusmsg', _GROUPADDED);
+
+    xarSessionSetVar('statusmsg', xarML('Group added'));
 
     xarResponseRedirect(xarModURL('xproject', 'groups', 'main'));
 }
-
-/*
- * deletegroup - delete a group
- * prompts for confirmation
- */
 ?>

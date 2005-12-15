@@ -97,9 +97,7 @@ function xproject_user_display($args)
                                        'display',
                                        array('projectid' => $projectid)));
     if (empty($hooks)) {
-        $data['hookoutput'] = '';
-    } elseif (is_array($hooks)) {
-        $data['hookoutput'] = join('',$hooks);
+        $data['hookoutput'] = array();
     } else {
         $data['hookoutput'] = $hooks;
     }

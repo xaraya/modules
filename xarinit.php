@@ -214,14 +214,20 @@ function xproject_init()
      * xarregisterMask(Name,Realm,Module,Component,Instance,Level,Description)
      */
 
-   // xarRegisterMask('ReadExampleBlock', 'All', 'example', 'Block', 'All', 'ACCESS_OVERVIEW');
+   // Tasks and projects
     xarRegisterMask('ViewXProject', 'All', 'xproject', 'Item', 'All:All:All', 'ACCESS_OVERVIEW');
     xarRegisterMask('ReadXProject', 'All', 'xproject', 'Item', 'All:All:All', 'ACCESS_READ');
     xarRegisterMask('EditXProject', 'All', 'xproject', 'Item', 'All:All:All', 'ACCESS_EDIT');
     xarRegisterMask('AddXProject', 'All', 'xproject', 'Item', 'All:All:All', 'ACCESS_ADD');
     xarRegisterMask('DeleteXProject', 'All', 'xproject', 'Item', 'All:All:All', 'ACCESS_DELETE');
     xarRegisterMask('AdminXProject', 'All', 'xproject', 'Item', 'All:All:All', 'ACCESS_ADMIN');
-
+   // Groups
+    xarRegisterMask('ViewXProject', 'All', 'xproject', 'Group', 'All:All:All', 'ACCESS_OVERVIEW');
+    xarRegisterMask('ReadXProject', 'All', 'xproject', 'Group', 'All:All:All', 'ACCESS_READ');
+    xarRegisterMask('EditXProject', 'All', 'xproject', 'Group', 'All:All:All', 'ACCESS_EDIT');
+    xarRegisterMask('AddXProject', 'All', 'xproject', 'Group', 'All:All:All', 'ACCESS_ADD');
+    xarRegisterMask('DeleteXProject', 'All', 'xproject', 'Group', 'All:All:All', 'ACCESS_DELETE');
+    xarRegisterMask('AdminXProject', 'All', 'xproject', 'Group', 'All:All:All', 'ACCESS_ADMIN');
     return true;
 }
 
@@ -230,34 +236,34 @@ function xproject_upgrade($oldversion)
     switch($oldversion) {
 
         case '0.1.0':
-    xarModSetVar('xproject', 'SupportShortURLs', 0);
-    /* If you provide short URL encoding functions you might want to also
-     * provide module aliases and have them set in the module's administration.
-     * Use the standard module var names for useModuleAlias and aliasname.
-     */
-    xarModSetVar('xproject', 'useModuleAlias',false);
-    xarModSetVar('xproject','aliasname','');
+            xarModSetVar('xproject', 'SupportShortURLs', 0);
+            /* If you provide short URL encoding functions you might want to also
+             * provide module aliases and have them set in the module's administration.
+             * Use the standard module var names for useModuleAlias and aliasname.
+             */
+            xarModSetVar('xproject', 'useModuleAlias',false);
+            xarModSetVar('xproject','aliasname','');
+            /**
+             * Register the module components that are privileges objects
+             * Format is
+             * xarregisterMask(Name,Realm,Module,Component,Instance,Level,Description)
+             */
 
-//    xarBlockTypeRegister('xproject', 'first');
-//    xarBlockTypeRegister('xproject', 'others');
-
-    /**
-     * Register the module components that are privileges objects
-     * Format is
-     * xarregisterMask(Name,Realm,Module,Component,Instance,Level,Description)
-     */
-
-   // xarRegisterMask('ReadExampleBlock', 'All', 'example', 'Block', 'All', 'ACCESS_OVERVIEW');
-    xarRegisterMask('ViewXProject', 'All', 'xproject', 'Item', 'All:All:All', 'ACCESS_OVERVIEW');
-    xarRegisterMask('ReadXProject', 'All', 'xproject', 'Item', 'All:All:All', 'ACCESS_READ');
-    xarRegisterMask('EditXProject', 'All', 'xproject', 'Item', 'All:All:All', 'ACCESS_EDIT');
-    xarRegisterMask('AddXProject', 'All', 'xproject', 'Item', 'All:All:All', 'ACCESS_ADD');
-    xarRegisterMask('DeleteXProject', 'All', 'xproject', 'Item', 'All:All:All', 'ACCESS_DELETE');
-    xarRegisterMask('AdminXProject', 'All', 'xproject', 'Item', 'All:All:All', 'ACCESS_ADMIN');
-
-
-            break;
-        case 1.0:
+            xarRegisterMask('ViewXProject', 'All', 'xproject', 'Item', 'All:All:All', 'ACCESS_OVERVIEW');
+            xarRegisterMask('ReadXProject', 'All', 'xproject', 'Item', 'All:All:All', 'ACCESS_READ');
+            xarRegisterMask('EditXProject', 'All', 'xproject', 'Item', 'All:All:All', 'ACCESS_EDIT');
+            xarRegisterMask('AddXProject', 'All', 'xproject', 'Item', 'All:All:All', 'ACCESS_ADD');
+            xarRegisterMask('DeleteXProject', 'All', 'xproject', 'Item', 'All:All:All', 'ACCESS_DELETE');
+            xarRegisterMask('AdminXProject', 'All', 'xproject', 'Item', 'All:All:All', 'ACCESS_ADMIN');
+            return xproject_upgrade('0.1.1');
+        case '0.1.1':
+           // Groups
+            xarRegisterMask('ViewXProject', 'All', 'xproject', 'Group', 'All:All:All', 'ACCESS_OVERVIEW');
+            xarRegisterMask('ReadXProject', 'All', 'xproject', 'Group', 'All:All:All', 'ACCESS_READ');
+            xarRegisterMask('EditXProject', 'All', 'xproject', 'Group', 'All:All:All', 'ACCESS_EDIT');
+            xarRegisterMask('AddXProject', 'All', 'xproject', 'Group', 'All:All:All', 'ACCESS_ADD');
+            xarRegisterMask('DeleteXProject', 'All', 'xproject', 'Group', 'All:All:All', 'ACCESS_DELETE');
+            xarRegisterMask('AdminXProject', 'All', 'xproject', 'Group', 'All:All:All', 'ACCESS_ADMIN');
             break;
 
     }
