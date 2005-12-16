@@ -43,10 +43,14 @@ function translations_adminapi_get_module_dirs($args)
         closedir($dd);
     }
     if (file_exists("modules/$moddir/xartemplates")) {
-        if (file_exists("modules/$moddir/xartemplates/includes")) 
+        if (file_exists("modules/$moddir/xartemplates/includes"))
             $names[] = 'templates/includes';
-        if (file_exists("modules/$moddir/xartemplates/blocks")) 
+        if (file_exists("modules/$moddir/xartemplates/blocks"))
             $names[] = 'templates/blocks';
+        if (file_exists("modules/$moddir/xartemplates/properties"))
+            $names[] = 'templates/properties';
+        if (file_exists("modules/$moddir/xartemplates/objects"))
+            $names[] = 'templates/objects';
     }
     return $names;
 }

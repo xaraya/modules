@@ -16,12 +16,12 @@
 
 $staticNames = array();
 
-function searchFiles($path, $prefix, $force=0) 
+function searchFiles($path, $prefix, $force=0)
 {
     global $staticNames;
 
     $path2 = ereg_replace($prefix,"",$path);
-  
+
     if ($force) {
         $staticNames[] = $path2;
         return false;
@@ -67,6 +67,12 @@ function translations_adminapi_get_theme_dirs($args)
                         }
                         if (is_dir("themes/$themedir/modules/$moddir/includes")) {
                             $filesIncl = searchFiles("themes/$themedir/modules/$moddir/includes", $prefix);
+                        }
+                        if (is_dir("themes/$themedir/modules/$moddir/properties")) {
+                            $filesIncl = searchFiles("themes/$themedir/modules/$moddir/properties", $prefix);
+                        }
+                        if (is_dir("themes/$themedir/modules/$moddir/objects")) {
+                            $filesIncl = searchFiles("themes/$themedir/modules/$moddir/objects", $prefix);
                         }
                         if ($filesBlock || $filesIncl) $force = 1;
                         searchFiles("themes/$themedir/modules/$moddir", $prefix, $force);
