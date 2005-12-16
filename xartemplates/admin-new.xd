@@ -1,0 +1,107 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<xar:comment>
+    This tag will add the module specific style sheet to this template (empty for the moment)
+    This file is located in /xarstyles and is -as a standard- called styles.css
+    You can add other files by adding files="filename without extension" to the tag eg
+    <xar:style scope="module" file="forms" /> for forms.css in example/xarstyles
+</xar:comment>
+<xar:style scope="module" />
+
+<!-- This Javascript will check for required fields before the form is submitted. -->
+<xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
+<script type="text/javascript">
+<!--
+    // Enter name of mandatory fields
+    var fieldRequired = Array("name", "number");
+    // Enter field description to appear in the dialog box
+    var fieldDescription = Array("Name", "Number");
+// -->
+</script>
+
+<!-- common admin menu for this module - remove link to the current function -->
+<!-- the variables used in this menu come from example_admin_menu() -->
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Example Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>New</xar:mlstring></h2>
+
+    <!-- the specific template for the current admin function comes here -->
+
+    <!--
+        // Start form - note we do not use xarModURL() to create the recipient URL of
+        // this form. Instead we use the entity tag equivalent. All URLs should be generated through the entity equivalent of xarModURL() to ensure
+        // compatibility with future versions of Xaraya
+    -->
+    <form method="post" action="&xar-modurl-example-admin-create;" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
+        <fieldset>
+            <legend><xar:mlstring>Creating a new item</xar:mlstring></legend>
+
+            <div class="xar-form-input-wrapper">
+                 <label for="name" class="xar-form-label" title="#xarML('This is the item name')#">
+                        <xar:mlstring>Example Name:</xar:mlstring>
+                 </label>
+             <xar:if condition="isset($name)">
+                 <input type="text" name="name" id="name" value="#$name#" maxlength="32" class="xar-form-textmedium" />
+             <xar:else />
+                    <input type="text" name="name" id="name" value="#$item.name#" maxlength="32" class="xar-form-textmedium" />
+             </xar:if>
+             <xar:if condition="!empty($invalid['name'])">
+                 <div class="xar-error">
+                        <xar:mlstring>ERROR! This is not a valid example name</xar:mlstring>
+                 </div>
+             <xar:elseif condition="!empty($invalid['duplicate'])"/>
+                 <div class="xar-error">
+                        <xar:mlstring>ERROR! This is a duplicate name</xar:mlstring>
+                 </div>
+             </xar:if>
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                 <label for="number" class="xar-form-label" title="#xarML('This is the item number')#">
+                         <xar:mlstring>Example Number:</xar:mlstring>
+                </label>
+
+                <xar:if condition="isset($number)">
+                    <input type="text" name="number" id="number" value="#$number#" maxlength="5" class="xar-form-textshort" />
+                <xar:else />
+                    <input type="text" name="number" id="number" value="#$item.number#" maxlength="5" class="xar-form-textshort" />
+                </xar:if>
+                <xar:if condition="!empty($invalid['number'])">
+                    <div class="xar-error">
+                        <xar:mlstring>ERROR! This is not a valid example number</xar:mlstring>
+                    </div>
+                </xar:if>
+            </div>
+        </fieldset>
+        <xar:if condition="!empty($hookoutput)">
+         <fieldset>
+            <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
+                <xar:foreach in="$hookoutput" key="$hookmodule">
+              <!--
+                You can display individual hooks if you want using xar:if statements
+
+                <xar:if condition="($hookmodule eq 'categories') and !empty($hookmodule)">
+                    #$hookoutput['categories']#
+                </xar:if>
+
+                or display them all with one command as follows
+                -->
+                #$hookoutput[$hookmodule]#
+                </xar:foreach>
+        </fieldset>
+        </xar:if>
+        <fieldset>
+            <div class="xar-form-input-wrapper-after">
+        <!--
+            // Add an authorisation ID - this adds a hidden field in the form that
+            // contains an authorisation ID.  The authorisation ID is very important in
+            // preventing certain attacks on the website
+        -->
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <input type="submit" value="#xarML('Add Example Item')#" />
+            </div>
+        </fieldset>
+    </form>
+</div>

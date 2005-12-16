@@ -1,0 +1,68 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<!-- common admin menu for this module - remove link to the current function -->
+<!-- the variables used in this menu come from example_admin_menu() -->
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Example Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Delete</xar:mlstring></h2>
+
+    <!-- the specific template for the current admin function comes here -->
+
+    <h3 class="xar-align-center"><xar:mlstring>Confirm deleting this item?</xar:mlstring></h3>
+    <form method="post" action="&xar-modurl-example-admin-delete;">
+        <!--
+            // This layout is crude.  Adapt it for your module's data
+         -->
+        <fieldset>
+            <legend>
+                <xar:mlstring>Item marked for deletion</xar:mlstring>
+            </legend>
+            <div class="xar-form-input-wrapper">
+             <label for="itemid" class="xar-form-label" title="#xarML('This is the item id')#">
+                <xar:mlstring>Item ID:</xar:mlstring>
+             </label>
+              #$exid#
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                <label for="itemname"  class="xar-form-label"  title="#xarML('This is the item name')#">
+                    <xar:mlstring>Example Name:</xar:mlstring>
+                </label>
+                 #$namevalue#
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <div class="xar-form-input-wrapper-after">
+        <!--
+           * Add an authorisation ID - this adds a hidden field in the form that
+           * contains an authorisation ID.  The authorisation ID is very important in
+           * preventing certain attacks on the website
+        -->
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <input type="hidden" name="confirm" id="confirm" value="true" />
+                <input type="hidden" name="exid" id="exid" value="#$exid#" />
+                <input type="submit" value="#xarML('Confirm')#" />
+
+            </div>
+            <!--
+             * Let's set a return URL here for cancelling the delete.
+             * In this case it's easy as we know where the user
+             * has come from - there is only the admin view form that leads to delete
+             * so let's set that here
+             * Make sure we also set the text so it can be translated
+             * by wrapping the display text in xar:mlstring tag
+             *
+             * Adding a link rather than a button and moving it away from Submit
+             * make it less likely of a mistaken click on cancel
+             *
+            -->
+            <div class="xar-form-input-wrapper-before">
+             <a href="&xar-modurl-example-admin-view;">
+                 <xar:mlstring>Cancel and Return</xar:mlstring>
+             </a>
+             </div>
+        </fieldset>
+    </form>
+</div>

@@ -1,0 +1,125 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<!-- This Javascript will check for required fields before the form is submitted. -->
+
+<xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
+<script type="text/javascript">
+<!--
+    // Enter name of mandatory fields
+    var fieldRequired = Array("name", "number");
+    // Enter field description to appear in the dialog box
+    var fieldDescription = Array("Name", "Number");
+//-->
+</script>
+
+<!-- common admin menu for this module - remove link to the current function -->
+<!-- the variables used in this menu come from example_admin_menu() -->
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Example Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Modify</xar:mlstring></h2>
+
+    <xar:if condition="xarSessionGetVar('statusmsg') ne ''">
+        <p>#xarSessionGetVar('statusmsg')#</p>
+    </xar:if>
+
+    <!-- the specific template for the current admin function comes here -->
+
+    <!--
+        // Start form - note we do not use api functions like xarModURL() to create the recipient URL of
+        // this form.  All URLs should be generated through the entity  equivalent of xarModURL to ensure
+        // compatibility with future versions of Xaraya
+    -->
+    <form method="post" action="&xar-modurl-example-admin-update;" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
+        <fieldset>
+            <legend>
+                <xar:mlstring>Item to Modify</xar:mlstring>
+            </legend>
+
+            <div class="xar-form-input-wrapper">
+                <label for="name" class="xar-form-label" title="#xarML('This is the tool tip help for this item.')#">
+                       <xar:mlstring>Example Name:</xar:mlstring>
+                </label>
+                <xar:if condition="isset($name)">
+                    <input type="text" name="name" id="name" value="#$name#" maxlength="32" class="xar-form-textmedium" />
+                <xar:else />
+                    <input type="text" name="name" id="name" value="#$item.name#" maxlength="32" class="xar-form-textmedium" />
+                </xar:if>
+
+            <xar:if condition="!empty($invalid['name'])">
+                <p class="xar-error">
+                    <xar:mlstring>ERROR! This is not a valid example name</xar:mlstring>
+                </p>
+            </xar:if>
+            </div>
+
+
+            <div class="xar-form-input-wrapper">
+                <label for="number" class="xar-form-label" title="#xarML('This is the tool tip help for this item.')#">
+                       <xar:mlstring>Example Number:</xar:mlstring>
+                </label>
+                <xar:if condition="isset($number)">
+                    <input type="text" name="number" id="number" value="#$number#" maxlength="5" class="xar-form-textshort" />
+                <xar:else />
+                    <input type="text" name="number" id="number" value="#$item.number#" maxlength="5" class="xar-form-textshort" />
+                </xar:if>
+                <xar:if condition="!empty($invalid['number'])">
+                    <p class="xar-error">
+                        <xar:mlstring>ERROR! This is not a valid example number</xar:mlstring>
+                    </p>
+                </xar:if>
+            </div>
+
+        </fieldset>
+
+        <xar:if condition="!empty($hooks)">
+        <fieldset>
+            <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
+                <xar:foreach in="$hooks" key="$hookmodule">
+                <!--
+                You can display individual hooks if you want using xar:if statements
+
+                <xar:if condition="($hookmodule eq 'categories') and !empty($hookmodule)">
+                    #$hooks['categories']#
+                </xar:if>
+
+                or display them all with one command as follows
+                -->
+                #$hooks[$hookmodule]#
+
+
+               </xar:foreach>
+        </fieldset>
+         </xar:if>
+        <fieldset>
+            <div class="xar-form-input-wrapper-after">
+        <!--
+            * Add an authorisation ID - this adds a hidden field in the form that
+            * contains an authorisation ID.  The authorisation ID is very important in
+            * preventing certain attacks on the website
+        -->
+               <input type="hidden" name="authid" id="authid" value="#$authid#" />
+               <input type="hidden" name="exid" id="exid" value="#$item.exid#" />
+               <input type="submit" value="#xarML('Update Example')#" />
+            </div>
+            <!--
+             * Let's set a return URL here for cancelling the delete.
+             * In this case it's easy as we know where the user
+             * has come from - there is only the admin view form that leads to delete
+             * so let's set that here
+             * Make sure we also set the text so it can be translated
+             * by wrapping the display text in xar:mlstring tag
+             *
+             * Adding a link rather than a button and moving it away from Submit
+             * make it less likely of a mistaken click on cancel
+             *
+            -->
+            <div class="xar-form-input-wrapper-before">
+             <a href="&xar-modurl-example-admin-view;">
+                 <xar:mlstring>Cancel and Return</xar:mlstring>
+             </a>
+             </div>
+        </fieldset>
+    </form>
+</div>
