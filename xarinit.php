@@ -168,7 +168,6 @@ function commerce_init()
                          'ice_taxzones', 'ice_taxzonemapping', 'ice_addressformats',
                          'ice_configuration', 'ice_config_groups');
 
-    $ice_objects = array();
     // Treat destructive right now
     $existing_objects  = xarModApiFunc('dynamicdata','user','getobjects');
     foreach($existing_objects as $objectid => $objectinfo) {
