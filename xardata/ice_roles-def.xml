@@ -1,0 +1,52 @@
+<object name="ice_roles">
+  <objectid>18</objectid>
+  <label>CommerceRoles</label>
+  <moduleid>27</moduleid>
+  <itemtype>1000</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>1</isalias>
+  <properties>
+    <property name="created">
+      <id>97</id>
+      <label>Created</label>
+      <type>calendar</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="modified">
+      <id>98</id>
+      <label>Modified</label>
+      <type>calendar</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+    <property name="external_id">
+      <id>99</id>
+      <label>External ID</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>3</order>
+      <validation></validation>
+    </property>
+    <property name="status">
+      <id>100</id>
+      <label>Status</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>4</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>
