@@ -14,15 +14,16 @@
 /**
  * utility function to count the number of items held by this module
  *
- * @author the Example module development team
+ * @author the XProject module development team
  * @returns integer
  * @return number of items held by this module
  * @raise DATABASE_ERROR
+ * @todo MichelV: can groups be in categories? Then add category select
  */
 function xproject_groupsapi_countitems()
 {
     $dbconn =& xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $xartable =& xarDBGetTables();
 
     $groupstable = $xartable['groups'];
 
@@ -44,10 +45,4 @@ function xproject_groupsapi_countitems()
 
     return $numitems;
 }
-
-/*
- * addGroup - add a group
- * @param $args['gname'] group name to add
- * @return true on success, false if group exists
- */
 ?>

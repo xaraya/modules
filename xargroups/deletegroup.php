@@ -13,52 +13,61 @@
  */
 function xproject_groups_deletegroup()
 {
-    if (!xarSecConfirmAuthKey()) {
-        xarSessionSetVar('errormsg', _BADAUTHKEY);
-        xarResponseRedirect(xarModURL('xproject', 'groups', 'main'));
-        return true;
-    }
-    list($gid,
-         $gname,
-         $confirmation) = xarVarCleanFromInput('gid',
-                                              'gname',
-                                              'confirmation');
+    if (!xarSecConfirmAuthKey()) return;
+    if (!xarVarFetch('gid',      'id', $gid)) return;
+    if (!xarVarFetch('objectid', 'id', $objectid, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('confirm',  'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return;
 
-    if (!xarSecAuthAction(0, 'Groups::', "$gname::$gid", ACCESS_DELETE)) {
-        xarSessionSetVar('errormsg', _GROUPSDELNOAUTH);
-        xarResponseRedirect(xarModURL('xproject', 'groups', 'main'));
+    if (!empty($objectid)) {
+        $gid = $objectid;
     }
 
-    if (empty($confirmation)) {
 
-        $output = new xarHTML();
+    $item = xarModAPIFunc('xproject',
+                          'groups',
+                          'get',
+                          array('gid' => $gid));
+    /* Check for exceptions */
+    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+    
+    if (!xarSecurityCheck('DeleteXProject', 1, 'Group', "All:All:All")) {// TODO: Add gid in here
+        return;
+    }
+    if (empty($confirm)) {
+        // Add menu?
+        $data = array();
 
-        $func = xarVarCleanFromInput('func');
-        if($func == "new") $output->Text(xarModAPIFunc('xproject','user','menu'));
-        $output->ConfirmAction(_DELETEGROUPSURE,
-                               xarModURL('xproject',
-                                        'groups',
-                                        'deletegroup'),
-                               _CANCEL,
-                               xarModURL('xproject',
-                                        'groups',
-                                        'main'),
-                               array('gid' => $gid));
+        /* Specify for which item you want confirmation */
+        $data['gid'] = $gid;
 
-        return $output->GetOutput();
+        /* Add some other data you'll want to display in the template */
+        $data['item'] = $item;
+        $data['namevalue'] = xarVarPrepForDisplay($item['name']); 
+        // More prep?
+
+        /* Generate a one-time authorisation code for this operation */
+        $data['authid'] = xarSecGenAuthKey();
+        // Get members for this group
+        $members = xarModAPIFunc ('xproject', 'groups', 'getmembers', array('gid'=>$gid));
+        if (count($members) > 0) {
+            $data['members'] = $members;
+            $data['nummembers'] = count($members);
+        } else {
+            $data['members'] ='';
+            $data['nummembers'] = 0;
+        }
+        
+        /* Return the template variables defined in this function */
+        return $data;
     }
     if (xarModAPIFunc('xproject',
              'groups',
              'deletegroup', array('gid' => $gid))) {
 
-        xarSessionSetVar('statusmsg', _GROUPDELETED);
+        xarSessionSetVar('statusmsg', xarML('Group Deleted'));
     }
     xarResponseRedirect(xarModURL('xproject', 'groups', 'main'));
 
     return true;
 }
-
-/*
- * adduser - user selection for a group
- */
 ?>

@@ -214,14 +214,14 @@ function xproject_init()
      * xarregisterMask(Name,Realm,Module,Component,Instance,Level,Description)
      */
 
-   // Tasks and projects
+   // Tasks and projects: pid, tid, owner?
     xarRegisterMask('ViewXProject', 'All', 'xproject', 'Item', 'All:All:All', 'ACCESS_OVERVIEW');
     xarRegisterMask('ReadXProject', 'All', 'xproject', 'Item', 'All:All:All', 'ACCESS_READ');
     xarRegisterMask('EditXProject', 'All', 'xproject', 'Item', 'All:All:All', 'ACCESS_EDIT');
     xarRegisterMask('AddXProject', 'All', 'xproject', 'Item', 'All:All:All', 'ACCESS_ADD');
     xarRegisterMask('DeleteXProject', 'All', 'xproject', 'Item', 'All:All:All', 'ACCESS_DELETE');
     xarRegisterMask('AdminXProject', 'All', 'xproject', 'Item', 'All:All:All', 'ACCESS_ADMIN');
-   // Groups
+   // Groups: gid
     xarRegisterMask('ViewXProject', 'All', 'xproject', 'Group', 'All:All:All', 'ACCESS_OVERVIEW');
     xarRegisterMask('ReadXProject', 'All', 'xproject', 'Group', 'All:All:All', 'ACCESS_READ');
     xarRegisterMask('EditXProject', 'All', 'xproject', 'Group', 'All:All:All', 'ACCESS_EDIT');
@@ -248,7 +248,7 @@ function xproject_upgrade($oldversion)
              * Format is
              * xarregisterMask(Name,Realm,Module,Component,Instance,Level,Description)
              */
-
+    
             xarRegisterMask('ViewXProject', 'All', 'xproject', 'Item', 'All:All:All', 'ACCESS_OVERVIEW');
             xarRegisterMask('ReadXProject', 'All', 'xproject', 'Item', 'All:All:All', 'ACCESS_READ');
             xarRegisterMask('EditXProject', 'All', 'xproject', 'Item', 'All:All:All', 'ACCESS_EDIT');

@@ -46,7 +46,7 @@ function xproject_groupsapi_addgroup($args)
 
     if ($count == 1) {
         xarSessionSetVar('errormsg', xarML('Group already exists'));
-    return false;
+        return false;
     } else {
         $nextId = $dbconn->GenId($grouptable);
         $query = "INSERT INTO $groupstable
@@ -54,9 +54,26 @@ function xproject_groupsapi_addgroup($args)
 
     $bindvars = array($nextId, (string) $gname);
     $result = &$dbconn->Execute($query,$bindvars);
+    if (!$result) return;
 
-    return true;
+    /* Get the ID of the item that we inserted. It is possible, depending
+     * on your database, that this is different from $nextId as obtained
+     * above, so it is better to be safe than sorry in this situation
+     */
+    $gid = $dbconn->PO_Insert_ID($groupstable, 'xar_gid');
+
+    /* Let any hooks know that we have created a new item. As this is a
+     * create hook we're passing 'exid' as the extra info, which is the
+     * argument that all of the other functions use to reference this
+     * item
+     */
+    $item = $args;
+    $item['module'] = 'xproject';
+    $item['itemtype' = NULL // TODO: Add the type here
+    $item['itemid'] = $gid;
+    xarModCallHooks('item', 'create', $gid, $item);
+    /* Return the id of the newly created item to the calling process */
+    return $gid;
     }
 }
-
 ?>

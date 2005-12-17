@@ -78,9 +78,4 @@ function xproject_groups_viewgroup($args)
 
     return $output->GetOutput();
 }
-
-/*
- * newGroup - create a new group
- * Takes no parameters
- */
 ?>

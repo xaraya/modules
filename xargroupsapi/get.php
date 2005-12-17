@@ -20,9 +20,8 @@ function xproject_groupsapi_get($args)
         return false;
     }
 
-    if (!xarSecAuthAction(0, 'groups::', "::", ACCESS_READ)) {
-        xarSessionSetVar('errormsg', xarML('Not authorised to access Tasks module'));
-        return false;
+    if (!xarSecurityCheck('ReadXProject', 0, 'Group', "All:All:All")) {// TODO: add $gid
+        return;
     }
 
     $dbconn =& xarDBGetConn();
@@ -34,34 +33,33 @@ function xproject_groupsapi_get($args)
     $query = "SELECT xar_gid,
                      xar_name
               FROM $groupstable
-            WHERE $groupscolumn[gid] = " . $gid;
-    $result = $dbconn->Execute($query);
+            WHERE xar_gid = ?";
+    $result = &$dbconn->Execute($query,array($gid));
 
-    if ($dbconn->ErrorNo() != 0) {
-        xarSessionSetVar('errormsg', $query);
-        return false;
-    }
-
+    if (!$result) return;
+    /* Check for no rows found, and if so, close the result set and return an exception */
     if ($result->EOF) {
-        xarSessionSetVar('errormsg', $query);
-        return false;
+        $result->Close();
+        $msg = xarML('This item does not exist');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'ID_NOT_EXIST',
+            new SystemException(__FILE__ . '(' . __LINE__ . '): ' . $msg));
+        return;
     }
-
+    // List groupid and name
     list($gid, $gname) = $result->fields;
 
     $result->Close();
-
+    // Get the group members
     $groupmembers = xarModAPIFunc('xproject','groups','getmembers',array('gid' => $gid));
     $memberlist = array();
-    foreach($groupmembers as $member) $memberlist[] = $member['uid'];
-
-    if(in_array(xarSessionGetVar('uid'),$memberlist)
-        || (xarSecAuthAction(0, 'Groups::', "$gname::$gid", ACCESS_READ))) {
-        $group = array('gid'	=> $gid,
-                    'gname'		=> $gname);
+    foreach($groupmembers as $member) {
+        $memberlist[] = $member['uid'];
     }
-
-
+    // Members get read access
+    if(in_array(xarSessionGetVar('uid'),$memberlist) || (xarSecurityCheck('ReadXProject', 0, 'Group', "All:All:All"))) {
+        $group = array('gid'	=> $gid,
+                       'gname'  => $gname);
+    }
     return $group;
 }
 

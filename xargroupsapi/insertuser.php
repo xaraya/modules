@@ -20,7 +20,7 @@ function xproject_groupsapi_insertuser($args)
         return false;
     }
     $dbconn =& xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $xartable =& xarDBGetTables();
 
     $groupmembership = $xartable['group_membership'];
 

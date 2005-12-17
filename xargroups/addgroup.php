@@ -25,12 +25,11 @@ function xproject_groups_addgroup()
               'addgroup', array('gname' => $gname));
 
     if ($gname == false) {
-        xarSessionSetVar('errormsg', _GROUPALREADYEXISTS);
-        return $output->GetOutput();
+        return $gname;
     }
 
     xarSessionSetVar('statusmsg', xarML('Group added'));
-
+    // Return to?
     xarResponseRedirect(xarModURL('xproject', 'groups', 'main'));
 }
 ?>

@@ -76,8 +76,4 @@ function xproject_groups_viewallgroups()
 
     return $output->GetOutput();
 }
-
-/*
- * viewgroup - view a group
- */
 ?>
