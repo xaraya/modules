@@ -924,24 +924,20 @@ function commerce_init()
 
 # --------------------------------------------------------
 #
-# Set extensions
+# Create a parent category for commerce
+#
+    $cid = xarModAPIFunc('categories', 'admin', 'create',
+                         array('name' => 'ICE Category',
+                               'description' => 'Commerce Base Category',
+                               'parent_id' => 0));
+    // save the id for later
+    xarModSetVar('commerce', 'ice_basecategory', $cid);
+
+# --------------------------------------------------------
+#
+# Set a parent group for commerce
 #
 
-/*	$ice_objects = array();
-	$nextitemtype = xarModAPIFunc('dynamicdata','admin','getnextitemtype',array('modid' => 27));
-
-	$new = array('name' => 'ice_roles',
-				 'label' => 'CommerceRoles',
-				 'moduleid' => 27,
-				 'itemtype' => $nextitemtype,
-				 'urlparam' => 'itemid',
-				 'parent' => ROLES_GROUPTYPE,
-				);
-	$objectid = xarModAPIFunc('dynamicdata','admin','createobject',$new);
-	$ice_objects[$objectid] = 'ice_roles';
-
-	xarModSetVar('commerce','ice_objects',serialize($ice_objects));
-*/
 	$everybody = xarFindRole('Everybody');
 	$new = array('name' => 'CommerceRoles',
 				 'itemtype' => ROLES_GROUPTYPE,
