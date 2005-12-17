@@ -166,7 +166,8 @@ function commerce_init()
     $ice_objects = array('ice_countries', 'ice_currencies', 'ice_taxclasses',
                          'ice_taxrates', 'ice_languages', 'ice_zones',
                          'ice_taxzones', 'ice_taxzonemapping', 'ice_addressformats',
-                         'ice_configuration', 'ice_config_groups');
+                         'ice_configuration', 'ice_config_groups',
+                         'ice_roles');
 
     // Treat destructive right now
     $existing_objects  = xarModApiFunc('dynamicdata','user','getobjects');
@@ -184,17 +185,23 @@ function commerce_init()
     // data in XML files [ice-objectname]-def.xml an [ice-objectname]-data.xml
 
     // TODO: This will bomb out if the object already exists
+	$objects = array();
     foreach($ice_objects as $ice_object) {
         $def_file = 'modules/commerce/xardata/'.$ice_object.'-def.xml';
         $dat_file = 'modules/commerce/xardata/'.$ice_object.'-data.xml';
 
-        if(!xarModAPIFunc('dynamicdata','util','import', array('file' => $def_file, 'keepitemid' => true))) return;
+        $objectid = xarModAPIFunc('dynamicdata','util','import', array('file' => $def_file, 'keepitemid' => true));
+        if (!$objectid) return;
+        else $objects[$objectid] = $ice_object;
         // Let data import be allowed to be empty
         if(file_exists($dat_file)) {
             // And allow it to fail for now
             xarModAPIFunc('dynamicdata','util','import', array('file' => $dat_file,'keepitemid' => true));
         }
     }
+
+	xarModSetVar('commerce','ice_objects',serialize($objects));
+
     /** END ICE MODEL **/
 
     $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_customers";
@@ -920,10 +927,10 @@ function commerce_init()
 # Set extensions
 #
 
-	$objects = array();
+/*	$ice_objects = array();
 	$nextitemtype = xarModAPIFunc('dynamicdata','admin','getnextitemtype',array('modid' => 27));
 
-	$new = array('name' => 'commerceroles',
+	$new = array('name' => 'ice_roles',
 				 'label' => 'CommerceRoles',
 				 'moduleid' => 27,
 				 'itemtype' => $nextitemtype,
@@ -931,10 +938,10 @@ function commerce_init()
 				 'parent' => ROLES_GROUPTYPE,
 				);
 	$objectid = xarModAPIFunc('dynamicdata','admin','createobject',$new);
-	$objects[$objectid] = 'commerceroles';
+	$ice_objects[$objectid] = 'ice_roles';
 
-	xarModSetVar('commerce','commerceobjects',serialize($objects));
-
+	xarModSetVar('commerce','ice_objects',serialize($ice_objects));
+*/
 	$everybody = xarFindRole('Everybody');
 	$new = array('name' => 'CommerceRoles',
 				 'itemtype' => ROLES_GROUPTYPE,
@@ -981,8 +988,8 @@ function commerce_delete()
     }
 
     // Delete the DD objects created by commerce modules
-	$commerceobjects = unserialize(xarModGetVar('commerce','commerceobjects'));
-	foreach ($commerceobjects as $key => $value)
+	$ice_objects = unserialize(xarModGetVar('commerce','ice_objects'));
+	foreach ($ice_objects as $key => $value)
 	    $result = xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $key));
 
 	// Purge all the roles created by this module
