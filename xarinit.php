@@ -192,7 +192,7 @@ function commerce_init()
 
         $objectid = xarModAPIFunc('dynamicdata','util','import', array('file' => $def_file, 'keepitemid' => true));
         if (!$objectid) return;
-        else $objects[$objectid] = $ice_object;
+        else $objects[$ice_object] = $objectid;
         // Let data import be allowed to be empty
         if(file_exists($dat_file)) {
             // And allow it to fail for now

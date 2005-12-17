@@ -1,6 +1,6 @@
 <object name="ice_roles">
   <objectid>18</objectid>
-  <label>CommerceRoles</label>
+  <label>CommerceRole</label>
   <moduleid>27</moduleid>
   <itemtype>1000</itemtype>
   <urlparam>itemid</urlparam>
