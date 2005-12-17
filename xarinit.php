@@ -40,7 +40,6 @@ function vendors_init()
 # Set extensions
 #
 
-    $ice_objects = array('ice_suppliers', 'ice_manufacturers');
     $ice_objects = array('ice_suppliers');
 
     // Treat destructive right now
@@ -57,9 +56,9 @@ function vendors_init()
         $def_file = 'modules/vendors/xardata/'.$ice_object.'-def.xml';
         $dat_file = 'modules/vendors/xardata/'.$ice_object.'-data.xml';
 
-        $objectid = xarModAPIFunc('dynamicdata','util','import', array('file' => $def_file, 'keepitemid' => true));
-        if (!$objectid) return;
-        else $objects[$objectid] = $ice_object;
+        $objectid = xarModAPIFunc('dynamicdata','util','import', array('file' => $def_file));
+        if (!$objectid) continue;
+        else $objects[$ice_object] = $objectid;
         // Let data import be allowed to be empty
         if(file_exists($dat_file)) {
             // And allow it to fail for now
@@ -69,34 +68,6 @@ function vendors_init()
 
 	xarModSetVar('commerce','ice_objects',serialize($objects));
 
-/*	$ice_objects = unserialize(xarModGetVar('commerce','ice_objects'));
-	$objs = array_flip($ice_objects);
-	$objects = $ice_objects;
-	$nextitemtype = xarModAPIFunc('dynamicdata','admin','getnextitemtype',array('modid' => 27));
-	$parent = xarModAPIFunc('dynamicdata','user','getobjectinfo',array('objectid' => $objs['ice_roles']));
-
-	$new = array('name' => 'ice_suppliers',
-				 'label' => 'Suppliers',
-				 'moduleid' => 27,
-				 'itemtype' => $nextitemtype,
-				 'urlparam' => 'itemid',
-				 'parent' => $parent['itemtype'],
-				);
-	$objectid = xarModAPIFunc('dynamicdata','admin','createobject',$new);
-	$objects[$objectid] = 'ice_suppliers';
-
-	$new = array('name' => 'ice_manufacturers',
-				 'label' => 'Manufacturers',
-				 'moduleid' => 27,
-				 'itemtype' => $nextitemtype+1,
-				 'urlparam' => 'itemid',
-				 'parent' => $parent['itemtype'],
-				);
-	$objectid = xarModAPIFunc('dynamicdata','admin','createobject',$new);
-	$objects[$objectid] = 'ice_manufacturers';
-
-	xarModSetVar('commerce','ice_objects',serialize($objects));
-*/
 	$parent = xarFindRole('CommerceRoles');
 	$new = array('name' => 'Suppliers',
 				 'itemtype' => ROLES_GROUPTYPE,
@@ -129,9 +100,11 @@ function vendors_delete()
     if (empty($query)) return; // throw back
 
     // Delete the DD objects created by this module
-	$ice_objects = array_flip(unserialize(xarModGetVar('commerce','ice_objects')));
-	$result = xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $ice_objects['ice_suppliers']));
-	$result = xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $ice_objects['ice_manufacturers']));
+	$ice_objects = unserialize(xarModGetVar('commerce','ice_objects'));
+	if (isset($ice_objects['ice_suppliers']))
+		$result = xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $ice_objects['ice_suppliers']));
+	if (isset($ice_objects['ice_manufacturers']))
+		$result = xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $ice_objects['ice_manufacturers']));
 
 	// Purge all the roles created by this module
 	$role = xarFindRole('Suppliers');
