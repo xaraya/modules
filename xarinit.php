@@ -764,7 +764,10 @@ function commerce_init()
     $query = "INSERT INTO " . $prefix . "_commerce_customers_status (customers_status_id, language_id, customers_status_name, customers_status_public, customers_status_image, customers_status_discount, customers_status_ot_discount_flag, customers_status_ot_discount, customers_status_graduated_prices, customers_status_show_price, customers_status_show_price_tax) VALUES (2, 3, 'New customer', 1, 'customer_status.gif', '".$status_discount2."', '".$status_ot_discount_flag2."', '".$status_ot_discount2."', '".$graduated_price2."', '".$show_price2."', '".$show_tax2."')";
     if (!$q->run($query)) return;
 
-    // Register masks
+# --------------------------------------------------------
+#
+# Register masks
+#
     xarRegisterMask('ViewCommerceBlocks','All','commerce','Block','All:All:All','ACCESS_OVERVIEW');
     xarRegisterMask('ReadCommerceBlock','All','commerce','Block','All:All:All','ACCESS_READ');
     xarRegisterMask('EditCommerceBlock','All','commerce','Block','All:All:All','ACCESS_EDIT');
@@ -775,7 +778,10 @@ function commerce_init()
     xarRegisterMask('ReadCommerce','All','commerce','All','All','ACCESS_READ');
     xarRegisterMask('AdminCommerce','All','commerce','All','All','ACCESS_ADMIN');
 
-// Register some block types
+# --------------------------------------------------------
+#
+# Register block types
+#
     if (!xarModAPIFunc('blocks',
                        'admin',
                        'register_block_type',
@@ -867,8 +873,10 @@ function commerce_init()
 
     xarModSetVar('commerce', 'itemsperpage', 20);
 
-// Create some block instances
-
+# --------------------------------------------------------
+#
+# Register block instances
+#
 // Put a config menu in the 'left' blockgroup
     $type = xarModAPIFunc('blocks', 'user', 'getblocktype', array('module' => 'commerce', 'type'=>'configmenu'));
     $leftgroup = xarModAPIFunc('blocks', 'user', 'getgroup', array('name'=> 'left'));

@@ -157,7 +157,7 @@ function commerce_configmenublock_display($blockinfo)
 	$modules = unserialize(xarModGetVar('commerce','ice_modules'));
 	unset($modules['commerce']);
 	foreach ($modules as $key => $value) {
-		$data .= xarTplBlock('vendors',
+		$data .= xarTplBlock($key,
 							$template,
 							array(  'content'     => $content,
 									'marker'        => $marker,
