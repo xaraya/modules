@@ -37,6 +37,35 @@ function vendors_init()
 
 # --------------------------------------------------------
 #
+# Register block types
+#
+    if (!xarModAPIFunc('blocks',
+            'admin',
+            'register_block_type',
+            array('modName' => 'vendors',
+                'blockType' => 'manufacturer_info'))) return;
+
+    if (!xarModAPIFunc('blocks',
+            'admin',
+            'register_block_type',
+            array('modName' => 'vendors',
+                'blockType' => 'manufacturers'))) return;
+
+
+# --------------------------------------------------------
+#
+# Register block instances
+#
+// Put a manufacturers block in the 'right' blockgroup
+    $type = xarModAPIFunc('blocks', 'user', 'getblocktype', array('module' => 'vendors', 'type'=>'manufacturers'));
+    $rightgroup = xarModAPIFunc('blocks', 'user', 'getgroup', array('name'=> 'right'));
+    $bid = xarModAPIFunc('blocks','admin','create_instance',array('type' => $type['tid'],
+                                                                  'name' => 'productsmanufacturers',
+                                                                  'state' => 0,
+                                                                  'groups' => array($rightgroup)));
+
+# --------------------------------------------------------
+#
 # Set extensions
 #
 
