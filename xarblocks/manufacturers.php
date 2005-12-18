@@ -14,7 +14,7 @@
 /**
  * Initialise the block
  */
-function commerce_manufacturersblock_init()
+function vendors_manufacturersblock_init()
 {
     return array(
         'content_text' => '',
@@ -31,12 +31,12 @@ function commerce_manufacturersblock_init()
 /**
  * Get information on the block ($blockinfo array)
  */
-function commerce_manufacturersblock_info()
+function vendors_manufacturersblock_info()
 {
     return array(
         'text_type' => 'Content',
         'text_type_long' => 'Generic Content Block',
-        'module' => 'commerce',
+        'module' => 'vendors',
         'func_update' => '',
         'allow_multiple' => true,
         'form_content' => false,
@@ -51,17 +51,17 @@ function commerce_manufacturersblock_info()
  * @param $blockinfo array
  * @returns $blockinfo array
  */
-function commerce_manufacturersblock_display($blockinfo)
+function vendors_manufacturersblock_display($blockinfo)
 {
     // Security Check
-    if (!xarSecurityCheck('ViewCommerceBlocks', 0, 'Block', "content:$blockinfo[title]:All")) {return;}
+    if (!xarSecurityCheck('ViewVendorsBlocks', 0, 'Block', "content:$blockinfo[title]:All")) {return;}
 
     include_once 'modules/xen/xarclasses/xenquery.php';
     $xartables = xarDBGetTables();
-    $configuration = xarModAPIFunc('commerce','admin','load_configuration');
+    $configuration = xarModAPIFunc('vendors','admin','load_configuration');
     if(!xarVarFetch('manufacturers_id',    'int',  $manufacturers_id, 0, XARVAR_NOT_REQUIRED)) {return;}
 
-    $q = new xenQuery("SELECT",$xartables['commerce_manufacturers'],array('manufacturers_id', 'manufacturers_name'));
+    $q = new xenQuery("SELECT",$xartables['vendors_manufacturers'],array('manufacturers_id', 'manufacturers_name'));
     $q->setorder('manufacturers_name');
     if(!$q->run()) return;
     if ($q->getrows() == 0) return;
@@ -72,7 +72,7 @@ function commerce_manufacturersblock_display($blockinfo)
         foreach ($q->output() as $manufacturers) {
             $manufacturers_name = ((strlen($manufacturers['manufacturers_name']) > $configuration['max_display_manufacturer_name_len']) ? substr($manufacturers['manufacturers_name'], 0, $configuration['max_display_manufacturer_name_len']) . '..' : $manufacturers['manufacturers_name']);
             if ($manufacturers_id && $manufacturers_id == $manufacturers['manufacturers_id']) $manufacturers_name = '<b>' . $manufacturers_name .'</b>';
-            $list .= '<a href="' . xarModURL('commerce','user','default',array('manufacturers_id'  => $manufacturers['manufacturers_id'])) . '">' . $manufacturers_name . '</a><br>';
+            $list .= '<a href="' . xarModURL('vendors','user','default',array('manufacturers_id'  => $manufacturers['manufacturers_id'])) . '">' . $manufacturers_name . '</a><br>';
         }
 
     }
@@ -86,7 +86,7 @@ function commerce_manufacturersblock_display($blockinfo)
             $manufacturers_name = ((strlen($manufacturers['manufacturers_name']) > $configuration['max_display_manufacturer_name_len']) ? substr($manufacturers['manufacturers_name'], 0, $configuration['max_display_manufacturer_name_len']) . '..' : $manufacturers['manufacturers_name']);
             $manufacturers_array[] = array('id' => $manufacturers['manufacturers_id'],                                     'text' => $manufacturers_name);
         }
-        $dropdown = xarModAPIFunc('commerce','user','draw_pull_down_menu',array(
+        $dropdown = xarModAPIFunc('vendors','user','draw_pull_down_menu',array(
                 'name' =>'manufacturers_id',
                 'values' => $manufacturers_array,
                 'default' => xarSessionGetVar('currency'),

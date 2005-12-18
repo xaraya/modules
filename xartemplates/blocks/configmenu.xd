@@ -12,7 +12,7 @@
             <xar:if condition="xarModURL('vendors','admin','main') eq $currenturl">
                 <li class="xar-menu-subitem-current">Manufacturers #$marker#</li>
             <xar:else />
-                <li class="xar-menu-subitem"><a href="#xarModURL('vendors','admin','main')#" title="Manufacturers">Suppliers</a>
+                <li class="xar-menu-subitem"><a href="#xarModURL('vendors','admin','main')#" title="Manufacturers">Manufacturers</a>
             </li>
             </xar:if>
         </ul>
