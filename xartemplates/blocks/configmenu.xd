@@ -1,0 +1,60 @@
+<ul class="xar-menu-section">
+    <li class="xar-menu-section">Products
+        <ul class="xar-menu-item">
+            <xar:if condition="xarModURL('products','admin','categories') eq $currenturl">
+                <li class="xar-menu-subitem-current">Categories/Products #$marker#</li>
+            <xar:else />
+                <li class="xar-menu-subitem"><a href="#xarModURL('products','admin','categories')#" title="Categories/Products">Categories/Products</a>
+            </li>
+            </xar:if>
+        </ul>
+        <ul class="xar-menu-item">
+            <xar:if condition="xarModURL('products','admin','xsell_products') eq $currenturl">
+                <li class="xar-menu-subitem-current">XSell Products #$marker#</li>
+            <xar:else />
+                <li class="xar-menu-subitem"><a href="#xarModURL('products','admin','xsell_products')#" title="XSell Products">XSell Products</a>
+            </li>
+            </xar:if>
+        </ul>
+        <ul class="xar-menu-item">
+            <xar:if condition="xarModURL('products','admin','new_attributes') eq $currenturl">
+                <li class="xar-menu-subitem-current">Attribute Manager #$marker#</li>
+            <xar:else />
+                <li class="xar-menu-subitem"><a href="#xarModURL('products','admin','new_attributes')#" title="Attribute Manager">Attribute Manager</a>
+            </li>
+            </xar:if>
+        </ul>
+        <ul class="xar-menu-item">
+            <xar:if condition="xarModURL('products','admin','products_attributes') eq $currenturl">
+                <li class="xar-menu-subitem-current">Product Options #$marker#</li>
+            <xar:else />
+                <li class="xar-menu-subitem"><a href="#xarModURL('products','admin','products_attributes')#" title="Product Options">Product Options</a>
+            </li>
+            </xar:if>
+        </ul>
+        <ul class="xar-menu-item">
+            <xar:if condition="xarModURL('products','admin','reviews') eq $currenturl">
+                <li class="xar-menu-subitem-current">Product Reviews #$marker#</li>
+            <xar:else />
+                <li class="xar-menu-subitem"><a href="#xarModURL('products','admin','reviews')#" title="Product Reviews">Product Reviews</a>
+            </li>
+            </xar:if>
+        </ul>
+        <ul class="xar-menu-item">
+            <xar:if condition="xarModURL('products','admin','specials') eq $currenturl">
+                <li class="xar-menu-subitem-current">Special Pricing #$marker#</li>
+            <xar:else />
+                <li class="xar-menu-subitem"><a href="#xarModURL('products','admin','specials')#" title="Special Pricing">Special Pricing</a>
+            </li>
+            </xar:if>
+        </ul>
+        <ul class="xar-menu-item">
+            <xar:if condition="xarModURL('products','admin','products_expected') eq $currenturl">
+                <li class="xar-menu-subitem-current">Products Expected #$marker#</li>
+            <xar:else />
+                <li class="xar-menu-subitem"><a href="#xarModURL('products','admin','products_expected')#" title="Products Expected">Products Expected</a>
+            </li>
+            </xar:if>
+        </ul>
+    </li>
+</ul>
