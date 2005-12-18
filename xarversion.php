@@ -1,6 +1,6 @@
 <?php
 $modversion['name'] = 'carts';
-$modversion['id'] = '40003';
+$modversion['id'] = '30202';
 $modversion['version'] = '0.5.0';
 $modversion['displayname'] = xarML('Carts');
 $modversion['description'] = 'Shopping Cart Module';
@@ -20,5 +20,9 @@ $modversion['category'] = 'Content';
 // this module depends on the xen module
 // this module depends on the commerce module
 // this module depends on the products module
-$modversion['dependency'] = array(147,3005,3006,40002);
+$modversion['dependency'] = array(147,3005,3006,30201);
+$modversion['dependencyinfo'] = array(147 => 'categories',
+									  3005 => 'xen',
+									  3006 => 'commerce',
+									  30201 => 'products');
 ?>

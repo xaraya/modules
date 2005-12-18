@@ -1,0 +1,14 @@
+<ul class="xar-menu-section">
+    <li class="xar-menu-section">Cart
+    <xar:comment>
+        <ul class="xar-menu-item">
+            <xar:if condition="xarModURL('products','admin','products_expected') eq $currenturl">
+                <li class="xar-menu-subitem-current">Products Expected #$marker#</li>
+            <xar:else />
+                <li class="xar-menu-subitem"><a href="#xarModURL('products','admin','products_expected')#" title="Products Expected">Products Expected</a>
+            </li>
+            </xar:if>
+        </ul>
+    </xar:comment>
+    </li>
+</ul>

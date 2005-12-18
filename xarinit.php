@@ -100,7 +100,10 @@ function carts_init()
 
     # data
 
-    // Register masks
+# --------------------------------------------------------
+#
+# Register masks
+#
     xarRegisterMask('ViewCartsBlocks','All','carts','Block','All:All:All','ACCESS_OVERVIEW');
     xarRegisterMask('ReadCartsBlock','All','carts','Block','All:All:All','ACCESS_READ');
     xarRegisterMask('EditCartsBlock','All','carts','Block','All:All:All','ACCESS_EDIT');
@@ -114,17 +117,26 @@ function carts_init()
     xarRegisterMask('DeleteCartsBlock','All','carts','Block','All:All:All','ACCESS_DELETE');
     xarRegisterMask('AdminCarts','All','carts','All','All','ACCESS_ADMIN');
 
-// Register some block types
+# --------------------------------------------------------
+#
+# Set up modvars
+#
+    xarModSetVar('carts', 'itemsperpage', 20);
+
+# --------------------------------------------------------
+#
+# Register block types
+#
     if (!xarModAPIFunc('blocks',
             'admin',
             'register_block_type',
             array('modName' => 'carts',
                 'blockType' => 'shopping_cart'))) return;
 
-    xarModSetVar('carts', 'itemsperpage', 20);
-
-// Create some block instances
-
+# --------------------------------------------------------
+#
+# Register block instances
+#
 // Put a shopping cart block in the 'right' blockgroup
     $type = xarModAPIFunc('blocks', 'user', 'getblocktype', array('module' => 'carts', 'type'=>'shopping_cart'));
     $rightgroup = xarModAPIFunc('blocks', 'user', 'getgroup', array('name'=> 'right'));
@@ -132,6 +144,15 @@ function carts_init()
                                                                   'name' => 'cartscart',
                                                                   'state' => 0,
                                                                   'groups' => array($rightgroup)));
+
+# --------------------------------------------------------
+#
+# Add this module to the list of installed commerce suite modules
+#
+    $modules = unserialize(xarModGetVar('commerce', 'ice_modules'));
+    $info = xarModGetInfo(xarModGetIDFromName('carts'));
+    $modules[$info['name']] = $info['regid'];
+    $result = xarModSetVar('commerce', 'ice_modules', serialize($modules));
 
 // Initialisation successful
     return true;
@@ -175,6 +196,10 @@ function carts_delete()
 
     // The modules module will take care of all the blocks
 
+    // Remove from the list of commerce modules
+    $modules = unserialize(xarModGetVar('commerce', 'ice_modules'));
+    unset($modules['carts']);
+    $result = xarModSetVar('commerce', 'ice_modules', serialize($modules));
 
 // Delete successful
 
