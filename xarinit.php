@@ -159,6 +159,12 @@ function todolist_init()
     // New additions
     xarModSetVar('todolist', 'itemsperpage', 20);
     xarModSetVar('todolist', 'SupportShortURLs', 0);
+
+    xarModSetVar('todolist', 'useModuleAlias',false);
+    xarModSetVar('todolist', 'aliasname','');
+
+
+
 // These should go to user Vars...
 
 //    xarModSetVar('todolist','userpref','1;all;0;1');

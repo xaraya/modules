@@ -9,7 +9,6 @@
  *
  * @subpackage Todolist Module
  */
-
 /**
  * Modify a group
  *
@@ -17,7 +16,7 @@
  * wishes to modify a current module item
  *
  * @author Todolist Module Development Team
- * @param  $ 'exid' the id of the item to be modified
+ * @param  $ 'group_id' the id of the item to be modified
  */
 function todolist_admin_modifygroup($args)
 { 

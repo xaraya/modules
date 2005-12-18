@@ -76,7 +76,6 @@ function todolist_admin_modifyproject($args)
                  'project_description'  => xarVarPrepForDisplay($item['project_description']),
                  'invalid'      => $invalid,
                  'hookoutput'   => $hooks,
-                 'hooks'        => '',
                  'item'         => $item,
                  'title'        => xarML('Edit Project'));
 }
