@@ -38,7 +38,26 @@ This table holds the general plans
 -Total credits to meet
 -minimum credits to meet?
 -dates opening/closing?
+*/
+    $planstable = $xartable['itsp_plans'];
 
+    /* Get a data dictionary object with all the item create methods in it */
+    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+    $fields = "xar_planid      I         AUTO       PRIMARY,
+               xar_planname    C(100)    NotNull    DEFAULT '',
+               xar_plandesc    X         NotNull    DEFAULT '',
+               xar_planrules   C(255)    NotNull    DEFAULT '',
+               xar_credits     I         NotNull    DEFAULT 0,
+               xar_mincredit   I         NotNull    DEFAULT 0,
+               xar_dateopen    T         Null       DEFAULT NULL,
+               xar_dateclose   T         Null       DEFAULT NULL
+              ";
+
+    /* Create or alter the table as necessary */
+    $result = $datadict->changeTable($planstable, $fields);
+    if (!$result) {return;}
+
+/*
 Table: itsp_planitems
 Table with planitems: the building blocks. These are the blocks a student can use to form his own ITSP. These blocks need to be filled in with courses or other items, depending on the type of planitem.
 
@@ -48,7 +67,27 @@ Table with planitems: the building blocks. These are the blocks a student can us
 -Rule(s) which courses can be involved, or which open items can be added. This dictates what table to get the courses from.
 Ruleformat: (compare to privileges) coursetype:Level:Category:internal/external/open
 "All" in the rule determines All
+*/
+    $planitemstable = $xartable['itsp_planitems'];
 
+    /* Get a data dictionary object with all the item create methods in it */
+    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+    $fields = "xar_pitemid  I         AUTO       PRIMARY,
+               xar_pitemname    C(100)    NotNull    DEFAULT '',
+               xar_pitemdesc    X         NotNull    DEFAULT '',
+               xar_pitemrules   C(255)    NotNull    DEFAULT '',
+               xar_credits     I         NotNull    DEFAULT 0,
+               xar_mincredit   I         NotNull    DEFAULT 0,
+               xar_dateopen    T         Null       DEFAULT NULL,
+               xar_dateclose   T         Null       DEFAULT NULL
+              ";
+
+    /* Create or alter the table as necessary */
+    $result = $datadict->changeTable($planitemstable, $fields);
+    if (!$result) {return;}
+
+
+/*
 Table: itsp_planlinks
 Table with links between plan and planitems. Planitems can be reused.
 
@@ -93,7 +132,7 @@ This table deals with the free courses. So: how to add the custom courses/items 
     /* It's good practice to name the table definitions you
      * are using - $table doesn't cut it in more complex modules
      */
-    $itsptable = $xartable['itsp'];
+    $itsptable = $xartable['itsp_'];
 
     /* Get a data dictionary object with all the item create methods in it */
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
