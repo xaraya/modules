@@ -1,58 +1,58 @@
 <ul class="xar-menu-section">
-    <li class="xar-menu-section">Products
+    <li class="xar-menu-section"><xar:mlstring>Products</xar:mlstring>
         <ul class="xar-menu-item">
             <xar:if condition="xarModURL('products','admin','categories') eq $currenturl">
-                <li class="xar-menu-subitem-current">Categories/Products #$marker#</li>
+                <li class="xar-menu-subitem-current"><xar:mlstring>Categories/Products</xar:mlstring> #$marker#</li>
             <xar:else />
-                <li class="xar-menu-subitem"><a href="#xarModURL('products','admin','categories')#" title="Categories/Products">Categories/Products</a>
+                <li class="xar-menu-subitem"><a href="#xarModURL('products','admin','categories')#" title="#xarML('Categories/Products')#"><xar:mlstring>Categories/Products</xar:mlstring></a>
             </li>
             </xar:if>
         </ul>
         <ul class="xar-menu-item">
             <xar:if condition="xarModURL('products','admin','xsell_products') eq $currenturl">
-                <li class="xar-menu-subitem-current">XSell Products #$marker#</li>
+                <li class="xar-menu-subitem-current"><xar:mlstring>XSell Products</xar:mlstring> #$marker#</li>
             <xar:else />
-                <li class="xar-menu-subitem"><a href="#xarModURL('products','admin','xsell_products')#" title="XSell Products">XSell Products</a>
+                <li class="xar-menu-subitem"><a href="#xarModURL('products','admin','xsell_products')#" title="#xarML('XSell Products')#"><xar:mlstring>XSell Products</xar:mlstring></a>
             </li>
             </xar:if>
         </ul>
         <ul class="xar-menu-item">
             <xar:if condition="xarModURL('products','admin','new_attributes') eq $currenturl">
-                <li class="xar-menu-subitem-current">Attribute Manager #$marker#</li>
+                <li class="xar-menu-subitem-current"><xar:mlstring>Attribute Manager</xar:mlstring> #$marker#</li>
             <xar:else />
-                <li class="xar-menu-subitem"><a href="#xarModURL('products','admin','new_attributes')#" title="Attribute Manager">Attribute Manager</a>
+                <li class="xar-menu-subitem"><a href="#xarModURL('products','admin','new_attributes')#" title="#xarML('Attribute Manager')#"><xar:mlstring>Attribute Manager</xar:mlstring></a>
             </li>
             </xar:if>
         </ul>
         <ul class="xar-menu-item">
             <xar:if condition="xarModURL('products','admin','products_attributes') eq $currenturl">
-                <li class="xar-menu-subitem-current">Product Options #$marker#</li>
+                <li class="xar-menu-subitem-current"><xar:mlstring>Product Options</xar:mlstring> #$marker#</li>
             <xar:else />
-                <li class="xar-menu-subitem"><a href="#xarModURL('products','admin','products_attributes')#" title="Product Options">Product Options</a>
+                <li class="xar-menu-subitem"><a href="#xarModURL('products','admin','products_attributes')#" title="#xarML('Product Options')#"><xar:mlstring>Product Options</xar:mlstring></a>
             </li>
             </xar:if>
         </ul>
         <ul class="xar-menu-item">
             <xar:if condition="xarModURL('products','admin','reviews') eq $currenturl">
-                <li class="xar-menu-subitem-current">Product Reviews #$marker#</li>
+                <li class="xar-menu-subitem-current"><xar:mlstring>Product Reviews</xar:mlstring> #$marker#</li>
             <xar:else />
-                <li class="xar-menu-subitem"><a href="#xarModURL('products','admin','reviews')#" title="Product Reviews">Product Reviews</a>
+                <li class="xar-menu-subitem"><a href="#xarModURL('products','admin','reviews')#" title="#xarML('Product Reviews')#"><xar:mlstring>Product Reviews</xar:mlstring></a>
             </li>
             </xar:if>
         </ul>
         <ul class="xar-menu-item">
             <xar:if condition="xarModURL('products','admin','specials') eq $currenturl">
-                <li class="xar-menu-subitem-current">Special Pricing #$marker#</li>
+                <li class="xar-menu-subitem-current"><xar:mlstring>Special Pricing</xar:mlstring> #$marker#</li>
             <xar:else />
-                <li class="xar-menu-subitem"><a href="#xarModURL('products','admin','specials')#" title="Special Pricing">Special Pricing</a>
+                <li class="xar-menu-subitem"><a href="#xarModURL('products','admin','specials')#" title="#xarML('Special Pricing')#"><xar:mlstring>Special Pricing</xar:mlstring></a>
             </li>
             </xar:if>
         </ul>
         <ul class="xar-menu-item">
             <xar:if condition="xarModURL('products','admin','products_expected') eq $currenturl">
-                <li class="xar-menu-subitem-current">Products Expected #$marker#</li>
+                <li class="xar-menu-subitem-current"><xar:mlstring>Products Expected</xar:mlstring> #$marker#</li>
             <xar:else />
-                <li class="xar-menu-subitem"><a href="#xarModURL('products','admin','products_expected')#" title="Products Expected">Products Expected</a>
+                <li class="xar-menu-subitem"><a href="#xarModURL('products','admin','products_expected')#" title="#xarML('Products Expected')#"><xar:mlstring>Products Expected</xar:mlstring></a>
             </li>
             </xar:if>
         </ul>

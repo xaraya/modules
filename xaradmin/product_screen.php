@@ -10,7 +10,7 @@
 //  (c) 2003  nextcommerce (nextcommerce.sql,v 1.76 2003/08/25); www.nextcommerce.org
 // ----------------------------------------------------------------------
 
-function commerce_admin_product_screen()
+function products_admin_product_screen()
 {
     include_once 'modules/commerce/xarclasses/object_info.php';
 
@@ -88,14 +88,14 @@ function commerce_admin_product_screen()
                         $q->addfield('products_image', $products_image);
                     }
 
-                    $q->addtable($xartables['commerce_products']);
+                    $q->addtable($xartables['products_products']);
                     if ($action == 'insert_product') {
                         $q->settype('INSERT');
                         $q->addfield('products_date_added', mktime());
                         if(!$q->run()) return;
 
-                        $q = new xenQuery('INSERT', $xartables['commerce_products_to_categories']);
-                        $lastid = $q->lastid($xartables['commerce_products'], 'products_id');
+                        $q = new xenQuery('INSERT', $xartables['products_products_to_categories']);
+                        $lastid = $q->lastid($xartables['products_products'], 'products_id');
                         $q->addfield('products_id', $lastid);
                         $q->addfield('categories_id', $data['cPath']);
                         if(!$q->run()) return;
@@ -108,7 +108,7 @@ function commerce_admin_product_screen()
                     }
                     // Here we go, lets write Group prices into db
                     // start
-                    $q = new xenQuery('SELECT',$xartables['commerce_customers_status'], 'customers_status_id');
+                    $q = new xenQuery('SELECT',$xartables['products_customers_status'], 'customers_status_id');
                     $q->eq('language_id', $currentlang['id']);
                     $q->ne('customers_status_id', 0);
                     if(!$q->run()) return;
@@ -128,7 +128,7 @@ function commerce_admin_product_screen()
                                 }
                                 $personal_price=xtc_round($personal_price,PRICE_PRECISION);
                             }
-                                    $q = new xenQuery('UPDATE',$xartables['commerce_personal_offers_by_customers_status_' . $group_data[$col]['STATUS_ID']]);
+                                    $q = new xenQuery('UPDATE',$xartables['products_personal_offers_by_customers_status_' . $group_data[$col]['STATUS_ID']]);
                                     $q->addfield('personal_offer', $personal_price);
                                     $q->eq('products_id', $products_id);
                                     $q->eq('quantity', 1);
@@ -138,7 +138,7 @@ function commerce_admin_product_screen()
                     */
                 // end
                 // ok, lets check write new staffelpreis into db (if there is one)
-                $q = new xenQuery('SELECT',$xartables['commerce_customers_status'], 'customers_status_id');
+                $q = new xenQuery('SELECT',$xartables['products_customers_status'], 'customers_status_id');
                 $q->eq('language_id', $currentlang['id']);
                 $q->ne('customers_status_id', 0);
                 if(!$q->run()) return;
@@ -156,7 +156,7 @@ function commerce_admin_product_screen()
                         }
                         $staffelpreis=xtc_round($staffelpreis,PRICE_PRECISION);
                         if ($staffelpreis!='' && $quantity!='') {
-                            $q = new xenQuery('INSERT',$xartables['commerce_personal_offers_by_customers_status_'] . $group_data[$col]['STATUS_ID']);
+                            $q = new xenQuery('INSERT',$xartables['products_personal_offers_by_customers_status_'] . $group_data[$col]['STATUS_ID']);
                             $q->addfield('price_id', '');
                             $q->addfield('products_id', $products_id);
                             $q->addfield('quantity', $quantity);
@@ -167,7 +167,7 @@ function commerce_admin_product_screen()
                 }
 */
                 $q = new xenQuery();
-                $q->addtable($xartables['commerce_products_description']);
+                $q->addtable($xartables['products_products_description']);
                 if(!xarVarFetch('products_name',              'array',  $products_name,   '', XARVAR_NOT_REQUIRED)) {return;}
                 if(!xarVarFetch('products_url',               'array',  $products_url,   '', XARVAR_NOT_REQUIRED)) {return;}
                 if(!xarVarFetch('products_description',       'array',  $products_description,   '', XARVAR_NOT_REQUIRED)) {return;}
@@ -201,7 +201,7 @@ function commerce_admin_product_screen()
                         }
                     }
                 }
-                xarResponseRedirect(xarModURL('commerce','admin','categories', array('cPath' => $data['cPath'], 'pID' => $products_id)));
+                xarResponseRedirect(xarModURL('products','admin','categories', array('cPath' => $data['cPath'], 'pID' => $products_id)));
             }
             break;
         }
@@ -209,8 +209,8 @@ function commerce_admin_product_screen()
 
     if (isset($data['pID'])) {
         $q = new xenQuery('SELECT');
-        $q->addtable($xartables['commerce_products_description'],'pd');
-        $q->addtable($xartables['commerce_products'],'p');
+        $q->addtable($xartables['products_products_description'],'pd');
+        $q->addtable($xartables['products_products'],'p');
         $q->addfields(array('p.products_fsk18',
                             'p.product_template',
                             'p.options_template',
@@ -288,11 +288,11 @@ function commerce_admin_product_screen()
         $default_array[]=array('id' => 'default','text' => xarML('--No files available--'));
     }
     $data['producttemplatefiles'] = $default_array;
-    $dirname = 'modules/commerce/xartemplates/product_info/';
+    $dirname = 'modules/products/xartemplates/product_info/';
     if (isset($dirname) && $dir = opendir($dirname)){
         $files = array();
         while  (($file = readdir($dir)) !==false) {
-            if (is_file('modules/commerce/xartemplates/product_info/'.$file) and ($file !="index.html")){
+            if (is_file('modules/products/xartemplates/product_info/'.$file) and ($file !="index.html")){
             $files[]=array(
                         'id' => $file,
                         'text' => $file);
@@ -310,11 +310,11 @@ function commerce_admin_product_screen()
         $default_array[]=array('id' => 'default','text' => xarML('--No files available--'));
     }
     $data['optionstemplatefiles'] = $default_array;
-    $dirname = 'modules/commerce/xartemplates/product_options/';
+    $dirname = 'modules/products/xartemplates/product_options/';
     if (isset($dirname) && $dir = opendir($dirname)){
         $files = array();
         while  (($file = readdir($dir)) !==false) {
-            if (is_file('modules/commerce/xartemplates/product_options/'.$file) and ($file !="index.html")){
+            if (is_file('modules/products/xartemplates/product_options/'.$file) and ($file !="index.html")){
             $files[]=array(
                         'id' => $file,
                         'text' => $file);
@@ -325,7 +325,7 @@ function commerce_admin_product_screen()
     }
 
 /*
-    $customers_statuses_array = xarModAPIFunc('commerce','user', 'get_customers_statuses');
+    $customers_statuses_array = xarModAPIFunc('products','user', 'get_customers_statuses');
     $customers_statuses_array=array_merge(array(array('id'=>'all','text'=> xarML('All'))),$customers_statuses_array);
     $data['customers_statuses_array'] = $customers_statuses_array;
 */
@@ -398,7 +398,7 @@ if(!xarVarFetch('action', 'str',  $action, NULL, XARVAR_DONT_SET)) {return;}
                     $q->addfield('sort_order',$sort_order);
                     $q->addfield('categories_status',$categories_status);
 
-                    $q->addtable('commerce_categories');
+                    $q->addtable('products_categories');
                     if ($action == 'insert_category') {
                         $q->addfield('parent_id',$current_category_id);
                         $q->addfield('date_added',mktime());
@@ -439,19 +439,19 @@ if(!xarVarFetch('action', 'str',  $action, NULL, XARVAR_DONT_SET)) {return;}
                             $q1->eq('categories_id',$categories_id);
                             $q1->eq('language_id',$language_id);
                         }
-                            $q1->addtable('commerce_categories_description');
+                            $q1->addtable('products_categories_description');
                             $q1->run();
                     }
 
                     if ($categories_image = new upload('categories_image', DIR_FS_CATALOG_IMAGES)) {
-                        $q = new xenQuery('SELECT','commerce_categories');
+                        $q = new xenQuery('SELECT','products_categories');
                         $q->addfield('categories_image',$categories_image->filename);
                         $q->eq('categories_id',$categories_id);
                         if(!$q->run()) return;
                     }
 
                 }
-                xarResponseRedirect(xarModURL('commerce','admin','categories', array('cPath' => $cPath, 'cID' => $categories_id)));
+                xarResponseRedirect(xarModURL('products','admin','categories', array('cPath' => $cPath, 'cID' => $categories_id)));
             }
 //            break;
 //        }
