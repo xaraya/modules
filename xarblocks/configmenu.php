@@ -142,17 +142,27 @@ function commerce_configmenublock_display($blockinfo)
     $currenturl = str_replace('&', '&amp;', xarServerGetCurrentURL());
 
 
-        // TPL override
-        if (empty($blockinfo['template'])) {
-            $template = 'configmenu';
-        } else {
-            $template = $blockinfo['template'];
-        }
-        $data = xarTplBlock('commerce',
-                            $template,
-                            array(  'content'     => $content,
-                                    'marker'        => $marker,
-                                    'currenturl'     => $currenturl));
+	// TPL override
+	if (empty($blockinfo['template'])) {
+		$template = 'configmenu';
+	} else {
+		$template = $blockinfo['template'];
+	}
+	$data = xarTplBlock('commerce',
+						$template,
+						array(  'content'     => $content,
+								'marker'        => $marker,
+								'currenturl'     => $currenturl));
+
+	$modules = unserialize(xarModGetVar('commerce','ice_modules'));
+	unset($modules['commerce']);
+	foreach ($modules as $key => $value) {
+		$data .= xarTplBlock('vendors',
+							$template,
+							array(  'content'     => $content,
+									'marker'        => $marker,
+									'currenturl'     => $currenturl));
+    }
 
     // Populate block info and pass to BlockLayout.
     $blockinfo['content'] = $data;
