@@ -1,0 +1,20 @@
+<ul class="xar-menu-section">
+    <li class="xar-menu-section">Vendors
+        <ul class="xar-menu-item">
+            <xar:if condition="xarModURL('vendors','admin','main') eq $currenturl">
+                <li class="xar-menu-subitem-current">Suppliers #$marker#</li>
+            <xar:else />
+                <li class="xar-menu-subitem"><a href="#xarModURL('vendors','admin','main')#" title="Suppliers">Suppliers</a>
+            </li>
+            </xar:if>
+        </ul>
+        <ul class="xar-menu-item">
+            <xar:if condition="xarModURL('vendors','admin','main') eq $currenturl">
+                <li class="xar-menu-subitem-current">Manufacturers #$marker#</li>
+            <xar:else />
+                <li class="xar-menu-subitem"><a href="#xarModURL('vendors','admin','main')#" title="Manufacturers">Manufacturers</a>
+            </li>
+            </xar:if>
+        </ul>
+    </li>
+</ul>
