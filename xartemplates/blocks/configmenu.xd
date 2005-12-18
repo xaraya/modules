@@ -1,11 +1,11 @@
 <ul class="xar-menu-section">
-    <li class="xar-menu-section">Cart
+    <li class="xar-menu-section"><xar:mlstring>Cart</xar:mlstring>
     <xar:comment>
         <ul class="xar-menu-item">
             <xar:if condition="xarModURL('products','admin','products_expected') eq $currenturl">
-                <li class="xar-menu-subitem-current">Products Expected #$marker#</li>
+                <li class="xar-menu-subitem-current"><xar:mlstring>Products Expected</xar:mlstring> #$marker#</li>
             <xar:else />
-                <li class="xar-menu-subitem"><a href="#xarModURL('products','admin','products_expected')#" title="Products Expected">Products Expected</a>
+                <li class="xar-menu-subitem"><a href="#xarModURL('products','admin','products_expected')#" title="#xarML('Products Expected')#"><xar:mlstring>Products Expected</xar:mlstring></a>
             </li>
             </xar:if>
         </ul>

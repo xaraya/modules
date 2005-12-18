@@ -154,7 +154,7 @@ function carts_init()
     $modules[$info['name']] = $info['regid'];
     $result = xarModSetVar('commerce', 'ice_modules', serialize($modules));
 
-// Initialisation successful
+	// Initialisation successful
     return true;
 }
 
@@ -201,9 +201,9 @@ function carts_delete()
     unset($modules['carts']);
     $result = xarModSetVar('commerce', 'ice_modules', serialize($modules));
 
-// Delete successful
+	// Delete successful
 
-return true;
+	return true;
 }
 # --------------------------------------------------------
 
