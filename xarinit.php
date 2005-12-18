@@ -93,34 +93,6 @@ function products_init()
     )";
     if (!$q->run($query)) return;
 
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_products_manufacturers";
-    if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_products_manufacturers (
-      manufacturers_id int NOT NULL auto_increment,
-      manufacturers_name varchar(32) NOT NULL,
-      manufacturers_image varchar(64),
-      date_added datetime NULL,
-      last_modified datetime NULL,
-      PRIMARY KEY (manufacturers_id),
-      KEY IDX_MANUFACTURERS_NAME (manufacturers_name)
-    )";
-    if (!$q->run($query)) return;
-
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_products_manufacturers_info";
-    if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_products_manufacturers_info (
-      manufacturers_id int NOT NULL,
-      languages_id int NOT NULL,
-      manufacturers_meta_title varchar(100) NOT NULL,
-      manufacturers_meta_description varchar(255) NOT NULL,
-      manufacturers_meta_keywords varchar(255) NOT NULL,
-      manufacturers_url varchar(255) NOT NULL,
-      url_clicked int(5) NOT NULL default '0',
-      date_last_click datetime NULL,
-      PRIMARY KEY (manufacturers_id, languages_id)
-    )";
-    if (!$q->run($query)) return;
-
     $query = "DROP TABLE IF EXISTS " . $prefix . "_products_products";
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_products_products (
@@ -817,7 +789,10 @@ function products_init()
     $query = "INSERT INTO " . $prefix . "_products_configuration_group VALUES ('16', 'Meta-Tags/Search engines', 'Meta-tags/Search engines', '16', '1')";
     if (!$q->run($query)) return;
 
-    // Register masks
+# --------------------------------------------------------
+#
+# Register masks
+#
     xarRegisterMask('ViewProductsBlocks','All','products','Block','All:All:All','ACCESS_OVERVIEW');
     xarRegisterMask('ReadProductsBlock','All','products','Block','All:All:All','ACCESS_READ');
     xarRegisterMask('EditProductsBlock','All','products','Block','All:All:All','ACCESS_EDIT');
@@ -831,13 +806,16 @@ function products_init()
     xarRegisterMask('DeleteProducts','All','products','All','All:All:All','ACCESS_DELETE');
     xarRegisterMask('AdminProducts','All','products','All','All','ACCESS_ADMIN');
 
-// Register some block types
-    if (!xarModAPIFunc('blocks',
-                       'admin',
-                       'register_block_type',
-                       array('modName'  => 'products',
-                             'blockType'=> 'configmenu'))) return;
+# --------------------------------------------------------
+#
+# Set up modvars
+#
+    xarModSetVar('products', 'itemsperpage', 20);
 
+# --------------------------------------------------------
+#
+# Register block types
+#
     if (!xarModAPIFunc('blocks',
             'admin',
             'register_block_type',
@@ -849,18 +827,6 @@ function products_init()
             'register_block_type',
             array('modName' => 'products',
                 'blockType' => 'best_sellers'))) return;
-
-    if (!xarModAPIFunc('blocks',
-            'admin',
-            'register_block_type',
-            array('modName' => 'products',
-                'blockType' => 'manufacturer_info'))) return;
-
-    if (!xarModAPIFunc('blocks',
-            'admin',
-            'register_block_type',
-            array('modName' => 'products',
-                'blockType' => 'manufacturers'))) return;
 
     if (!xarModAPIFunc('blocks',
             'admin',
@@ -880,17 +846,10 @@ function products_init()
             array('modName' => 'products',
                 'blockType' => 'specials'))) return;
 
-    xarModSetVar('products', 'itemsperpage', 20);
-
-// Create some block instances
-
-// Put a config menu in the 'left' blockgroup
-    $type = xarModAPIFunc('blocks', 'user', 'getblocktype', array('module' => 'products', 'type'=>'configmenu'));
-    $leftgroup = xarModAPIFunc('blocks', 'user', 'getgroup', array('name'=> 'left'));
-    $bid = xarModAPIFunc('blocks','admin','create_instance',array('type' => $type['tid'],
-                                                                  'name' => 'productsconfig',
-                                                                  'state' => 0,
-                                                                  'groups' => array($leftgroup)));
+# --------------------------------------------------------
+#
+# Register block instances
+#
 // Put a search block in the 'left' blockgroup
     $type = xarModAPIFunc('blocks', 'user', 'getblocktype', array('module' => 'products', 'type'=>'search'));
     $leftgroup = xarModAPIFunc('blocks', 'user', 'getgroup', array('name'=> 'left'));
@@ -905,13 +864,15 @@ function products_init()
                                                                   'name' => 'productscategories',
                                                                   'state' => 0,
                                                                   'groups' => array($leftgroup)));
-// Put a manufacturers block in the 'right' blockgroup
-    $type = xarModAPIFunc('blocks', 'user', 'getblocktype', array('module' => 'products', 'type'=>'manufacturers'));
-    $rightgroup = xarModAPIFunc('blocks', 'user', 'getgroup', array('name'=> 'right'));
-    $bid = xarModAPIFunc('blocks','admin','create_instance',array('type' => $type['tid'],
-                                                                  'name' => 'productsmanufacturers',
-                                                                  'state' => 0,
-                                                                  'groups' => array($rightgroup)));
+
+# --------------------------------------------------------
+#
+# Add this module to the list of installed commerce suite modules
+#
+    $modules = unserialize(xarModGetVar('commerce', 'ice_modules'));
+    $info = xarModGetInfo(xarModGetIDFromName('products'));
+    $modules[$info['name']] = $info['regid'];
+    $result = xarModSetVar('commerce', 'ice_modules', serialize($modules));
 
 // Initialisation successful
     return true;
@@ -955,10 +916,13 @@ function products_delete()
 
     // The modules module will take care of all the blocks
 
+    // Remove from the list of commerce modules
+    $modules = unserialize(xarModGetVar('commerce', 'ice_modules'));
+    unset($modules['products']);
+    $result = xarModSetVar('commerce', 'ice_modules', serialize($modules));
 
-// Delete successful
-
-return true;
+	// Delete successful
+	return true;
 }
 # --------------------------------------------------------
 
