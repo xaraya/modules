@@ -945,6 +945,14 @@ function commerce_init()
 				);
 	$uid = xarModAPIFunc('roles','admin','create',$new);
 
+# --------------------------------------------------------
+#
+# Add this module to the list of installed commerce suite modules
+#
+    $info = xarModGetInfo(xarModGetIDFromName('commerce'));
+    $modules[$info['name']] = $info['regid'];
+    $result = xarModSetVar('commerce', 'ice_modules', serialize($modules));
+
 // Initialisation successful
     return true;
 }
@@ -1001,6 +1009,11 @@ function commerce_delete()
 
     // Remove Modvars
     xarModDelAllVars('commerce');
+
+    // Remove from the list of commerce modules
+    $modules = unserialize(xarModGetVar('commerce', 'ice_modules'));
+    unset($modules['commerce']);
+    $result = xarModSetVar('commerce', 'ice_modules', serialize($modules));
 
     // Remove the language block
     $blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'commercelanguage'));
