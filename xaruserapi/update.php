@@ -74,7 +74,7 @@ function helpdesk_userapi_update($args)
         Send an e-mail to user when the ticket is closed
         @author MichelV.
         $mail needs to be set
-	*/
+    */
     if( $statusid == '3' )
     {
         $mailaction = 'closed';

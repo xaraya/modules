@@ -1,16 +1,16 @@
 <?php
 /**
-    Helpdesk
- 
-    @package Xaraya eXtensible Management System
-    @copyright (C) 2003-2004 by Envision Net, Inc.
-    @license GPL <http://www.gnu.org/licenses/gpl.html>
-    @link http://www.envisionnet.net/
- 
-    @subpackage Helpdesk module
-    @author Brian McGilligan <brian@envisionnet.net>
-*/
-
+ * Helpdesk Module
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Helpdesk Module
+ * @link http://www.envisionnet.net/home/products/helpdesk/
+ * @author Brian McGilligan <brian@envisionnet.net>
+ */
 // Is Based On:
 /********************************************************/
 /* Dimensionquest Help Desk                             */
@@ -25,7 +25,7 @@
 
 $modversion['id'] = '910';
 $modversion['name'] = 'helpdesk';
-$modversion['version'] = '0.7.0';
+$modversion['version'] = '0.7.1';
 $modversion['displayname']    = xarML('HelpDesk');
 $modversion['description'] = 'HelpDesk Module';
 $modversion['credits'] = 'docs/credits.txt';

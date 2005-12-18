@@ -34,7 +34,7 @@ function helpdesk_admin_new($args)
     $data['menutitle'] = xarModAPIFunc('helpdesk','admin','menu');
 
     // get the Dynamic Object defined for this module (and itemtype, if relevant)
-    $data['object'] =& xarModAPIFunc('dynamicdata','user','getobject',
+    $data['object'] = xarModAPIFunc('dynamicdata','user','getobject',
                                      array('module'   => 'helpdesk',
                                            'itemtype' => $itemtype )
                                     );

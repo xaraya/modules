@@ -2,7 +2,7 @@
 
 /**
    utility function pass individual menu items to the main menu
- 
+
    @return array containing the menulinks for the main menu items.
 */
 function helpdesk_adminapi_getmenulinks()
@@ -15,7 +15,7 @@ function helpdesk_adminapi_getmenulinks()
 
         $menulinks[] = Array('url'   => xarModURL('helpdesk',
                                                   'admin',
-                                                  'main'),
+                                                  'overview'),
                               'title' => xarML('Overview'),
                               'label' => xarML('Overview'));
     }
