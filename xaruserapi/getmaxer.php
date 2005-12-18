@@ -1,6 +1,6 @@
 <?php
 /**
- * Get a specific item
+ * Get a specific maxer
  *
  * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
@@ -8,7 +8,7 @@
  * @link http://www.xaraya.com
  *
  * @subpackage Maxercalls Module
- * @link http://xaraya.com/index.php/release/36.html
+ * @link http://xaraya.com/index.php/release/247.html
  * @author Maxercalls Module Development Team
  */
 

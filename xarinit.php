@@ -135,15 +135,9 @@ function maxercalls_init()
     }
     // Set up an initial value for a module variable.
     xarModSetVar('maxercalls', 'itemsperpage', 10);
-    // If your module supports short URLs, the website administrator should
-    // be able to turn it on or off in your module administration
     xarModSetVar('maxercalls', 'SupportShortURLs', 0);
-    /* If you provide short URL encoding functions you might want to also
-     * provide module aliases and have them set in the module's administration.
-     * Use the standard module var names for useModuleAlias and aliasname.
-     */
     xarModSetVar('maxercalls', 'useModuleAlias',false);
-    xarModSetVar('maxercalls','aliasname','');
+    xarModSetVar('maxercalls', 'aliasname','');
     // Register our hooks that we are providing to other modules.  The maxercalls
     // module shows an maxercalls hook in the form of the user menu.
     if (!xarModRegisterHook('item', 'usermenu', 'GUI',
@@ -400,5 +394,4 @@ function maxercalls_delete()
     // Deletion successful
     return true;
 }
-
 ?>

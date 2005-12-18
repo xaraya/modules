@@ -1,6 +1,6 @@
 <?php
 /**
- * Create a new maxercalls item
+ * Create a new maxer
  *
  * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
@@ -8,18 +8,19 @@
  * @link http://www.xaraya.com
  *
  * @subpackage Maxercalls Module
- * @link http://xaraya.com/index.php/release/36.html
+ * @link http://xaraya.com/index.php/release/247.html
  * @author Maxercalls Module Development Team
  */
-
 /**
- * Create a new maxercalls item
+ * Create a new maxer
  *
  * This is a standard adminapi function to create a module item
  *
  * @author the Maxercalls module development team
- * @param  $args ['name'] name of the item
- * @param  $args ['number'] number of the item
+ * @param  $args ['ric'] unique number of the pager
+ * @param  $args ['personid'] number of person carrying this pager
+ * @param status
+ * @param etc
  * @returns int
  * @return maxercalls item ID on success, false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
@@ -48,24 +49,17 @@ function maxercalls_adminapi_createmaxer($args)
             new SystemException($msg));
         return;
     }
-     */    /* Security check - important to do this as early on as possible to
+     */
+    /* Security check - important to do this as early on as possible to
      * avoid potential security holes or just too much wasted processing
      */
     if (!xarSecurityCheck('DeleteMaxercalls')) {
         return;
     }
     /* Get database setup - note that both xarDBGetConn() and xarDBGetTables()
-     * return arrays but we handle them differently. For xarDBGetConn()
-     * we currently just want the first item, which is the official
-     * database handle. For xarDBGetTables() we want to keep the entire
-     * tables array together for easy reference later on
      */
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-    /* It's good practice to name the table and column definitions you
-     * are getting - $table and $column don't cut it in more complex
-     * modules
-     */
     $maxerstable = $xartable['maxercalls_maxers'];
     /* Get next ID in table - this is required prior to any insert that
      * uses a unique ID, and ensures that the ID generation is carried
@@ -91,15 +85,11 @@ function maxercalls_adminapi_createmaxer($args)
      */
     if (!$result) return;
 
-    /* Get the ID of the item that we inserted. It is possible, depending
-     * on your database, that this is different from $nextId as obtained
-     * above, so it is better to be safe than sorry in this situation
+    /* Get the ID of the item that we inserted.
      */
     $maxerid = $dbconn->PO_Insert_ID($maxercallstable, 'xar_maxerid');
 
     /* Let any hooks know that we have created a new item.
-     * TODO: evaluate
-     * xarModCallHooks('item', 'create', $exid, 'exid');
      */
     $item = $args;
     $item['module'] = 'maxercalls';

@@ -32,13 +32,10 @@ function maxercalls_admin_newmaxer($args)
     if (!xarVarFetch('remark',      'str:1:', $remark,  $remark,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('program',     'str:1:200', $program,    $program,    XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('invalid',     'array',  $invalid, $invalid, XARVAR_NOT_REQUIRED)) return;
-    /* Initialise the $data variable that will hold the data to be used in
-     * the blocklayout template, and get the common menu configuration - it
-     * helps if all of the module pages have a standard menu at the top to
-     * support easy navigation
-     */
+
+    // Will we use a menu here?
     $data = xarModAPIFunc('maxercalls', 'admin', 'menu');
-    /* Security check. - Will need some improvements. Extra type?
+    /* Security check. TODO: Will need some improvements. Extra type?
      */
     if (!xarSecurityCheck('DeleteMaxercalls')) return;
     // Get the maxerstatus that we can use
@@ -47,6 +44,9 @@ function maxercalls_admin_newmaxer($args)
     // Get the maxerfunctions that we can use
     $data['functions'] = xarModAPIFunc('maxercalls', 'user', 'gets',
                                       array('itemtype' => 7));
+
+//DynProperty!    $persons = xarModAPIFunc('sigmapersonnel', 'user', 'getall',array('status' =>NULL));//TODO
+
     /* Generate a one-time authorisation code for this operation */
     $data['authid'] = xarSecGenAuthKey();
     $data['invalid'] = $invalid;

@@ -8,10 +8,9 @@
  * @link http://www.xaraya.com
  *
  * @subpackage Maxercalls Module
- * @link http://xaraya.com/index.php/release/36.html
+ * @link http://xaraya.com/index.php/release/247.html
  * @author Maxercalls Module Development Team
  */
-
 /**
  * Create a new maxer
  *
@@ -47,27 +46,33 @@ function maxercalls_admin_createmaxer($args)
                           'user',
                           'validateitem',
                           array('name' => $name));
-
+*/
     // Argument check
     $invalid = array();
-    if (empty($number) || !is_numeric($number)) {
-        $invalid['number'] = 1;
+    if (empty($ric) || !is_numeric($ric)) {
+        $invalid['ric'] = 1;
         $number = '';
     }
-    if (empty($name) || !is_string($name)) {
-        $invalid['name'] = 1;
+    if (empty($maxerstatus) || !is_integer($maxerstatus)) {
+        $invalid['maxerstatus'] = 1;
         $name = '';
     }
-
+/*
     if (!empty($name) && $item['name'] == $name) {
         $invalid['duplicate'] = 1;
     }
+*/
     // check if we have any errors
     if (count($invalid) > 0) {
 
-        return xarModFunc('maxercalls', 'admin', 'new',
-                          array('name' => $name,
-                                'number' => $number,
+        return xarModFunc('maxercalls', 'admin', 'newmaxer',
+                          array('personid'    => $personid,
+                                  'ric'         => $ric,
+                                  'maxernumber' => $maxernumber,
+                                  'function'    => $function,
+                                  'program'     => $program,
+                                  'maxerstatus' => $maxerstatus,
+                                  'remark'      => $remark
                                 'invalid' => $invalid));
     }     */
     /* Confirm authorisation code. */

@@ -16,14 +16,6 @@
 </div>
 <div class="xar-mod-body">
     <h2><xar:mlstring>New</xar:mlstring></h2>
-
-    <xar:comment>
-    ('personid',  'int:1:', $personid,  $personid,  XARVAR_NOT_REQUIRED)) return;
-
-    if (!xarVarFetch('function',    'int:1:', $function,    $function,    XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('maxerstatus',    'int:1:', $maxerstatus,    $maxerstatus,    XARVAR_NOT_REQUIRED)) return;
-    </xar:comment>
-
     <form method="post" action="&xar-modurl-maxercalls-admin-createmaxer;" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
         <fieldset>
             <legend><xar:mlstring>New maxer</xar:mlstring></legend>
