@@ -11,6 +11,10 @@
  * @link http://xaraya.com/index.php/release/665.html
  * @author XProject Module Development Team
  */
+/*
+ * Insert a user into a group
+ *
+ */
 function xproject_groupsapi_insertuser($args)
 {
     extract($args);
@@ -21,7 +25,7 @@ function xproject_groupsapi_insertuser($args)
     }
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-
+    $groupstable = $xartable['groups']; // TODO: doesn't exist!!!
     $groupmembership = $xartable['group_membership'];
 
     if (!xarSecAuthAction(0, 'Groups::', "::", ACCESS_ADD)) {

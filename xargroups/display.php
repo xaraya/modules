@@ -11,7 +11,7 @@
  * @link http://xaraya.com/index.php/release/665.html
  * @author XProject Module Development Team
  */
-function xproject_groups_viewgroup($args)
+function xproject_groups_display($args)
 {
     extract($args);
 

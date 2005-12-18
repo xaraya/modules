@@ -13,6 +13,12 @@
  */
 function xproject_groups_modifygroup()
 {
+    if (!xarVarFetch('gid',     'id',     $gid)) return;
+    if (!xarVarFetch('objectid', 'id',     $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('invalid',  'array', $invalid, XARVAR_NOT_REQUIRED)) return;
+    //if (!xarVarFetch('number',   'int',    $number, $number,XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('gname',     'str:1:', $gname, $gname, XARVAR_NOT_REQUIRED)) return;
+
     list($gname,
      $gid) = xarVarCleanFromInput('gname',
                      'gid');
@@ -39,10 +45,4 @@ function xproject_groups_modifygroup()
 
     return $output->GetOutput();
 }
-
-/*
- * renameGroup - rename group
- * @param $gid - passed to adminapi
- * @param $gname - passed to adminapi
- */
 ?>
