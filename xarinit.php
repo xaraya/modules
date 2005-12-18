@@ -80,6 +80,15 @@ function vendors_init()
 				);
 	$uid1 = xarModAPIFunc('roles','admin','create',$new);
 
+# --------------------------------------------------------
+#
+# Add this module to the list of installed commerce suite modules
+#
+    $modules = unserialize(xarModGetVar('commerce', 'ice_modules'));
+    $info = xarModGetInfo(xarModGetIDFromName('vendors'));
+    $modules[$info['name']] = $info['regid'];
+    $result = xarModSetVar('commerce', 'ice_modules', serialize($modules));
+
     return true;
 }
 
@@ -125,6 +134,11 @@ function vendors_delete()
 
     // Remove Modvars
     xarModDelAllVars('vendors');
+
+    // Remove from the list of commerce modules
+    $modules = unserialize(xarModGetVar('commerce', 'ice_modules'));
+    unset($modules['vendors']);
+    $result = xarModSetVar('commerce', 'ice_modules', serialize($modules));
 
     return true;
 }
