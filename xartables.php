@@ -28,10 +28,13 @@ function itsp_xartables()
     /* Get the name for the itsp item table.  This is not necessary
      * but helps in the following statements and keeps them readable
      */
-    $itspTable = xarDBGetSiteTablePrefix() . '_itsp';
+    $basename = 'itsp';
 
-    /* Set the table name */
-    $xarTables['itsp'] = $itspTable;
+    foreach(array('plans', 'planitems', 'planlinks', 'itsp', 'itsp_courselinks', 'itsp_courses') as $table) {
+        // Set the table name.
+        $xarTables[$basename . '_' . $table] = xarDBGetSiteTablePrefix() . '_' . $basename . '_' . $table;
+    }
+
     /* Return the table information */
     return $xarTables;
 }

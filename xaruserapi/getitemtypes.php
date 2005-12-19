@@ -23,12 +23,13 @@ function itsp_userapi_getitemtypes($args)
 
    /*  do not use this if you only handle one type of items in your module */
 
-   /*    $itemtypes[1] = array('label' => xarVarPrepForDisplay(xarML('ITSP Items')),
-                          'title' => xarVarPrepForDisplay(xarML('View ITSP Items')),
+       $itemtypes[1] = array('label' => xarVarPrepForDisplay(xarML('ITSP Plans')),
+                          'title' => xarVarPrepForDisplay(xarML('View ITSP Plans')),
                           'url'   => xarModURL('itsp','user','view'));
-    ...
-   */
 
+       $itemtypes[2] = array('label' => xarVarPrepForDisplay(xarML('ITSPs')),
+                          'title' => xarVarPrepForDisplay(xarML('View ITSPs')),
+                          'url'   => xarModURL('itsp','user','viewitsp'));
     return $itemtypes;
 }
 ?>

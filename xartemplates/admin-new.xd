@@ -22,7 +22,7 @@
 <!-- common admin menu for this module - remove link to the current function -->
 <!-- the variables used in this menu come from example_admin_menu() -->
 <div class="xar-mod-head">
-    <span class="xar-mod-title"><xar:mlstring>Example Administration</xar:mlstring></span>
+    <span class="xar-mod-title"><xar:mlstring>ITSP Administration</xar:mlstring></span>
 </div>
 <div class="xar-mod-body">
     <h2><xar:mlstring>New</xar:mlstring></h2>
@@ -40,7 +40,7 @@
 
             <div class="xar-form-input-wrapper">
                  <label for="name" class="xar-form-label" title="#xarML('This is the item name')#">
-                        <xar:mlstring>Example Name:</xar:mlstring>
+                        <xar:mlstring>ITSP Name:</xar:mlstring>
                  </label>
              <xar:if condition="isset($name)">
                  <input type="text" name="name" id="name" value="#$name#" maxlength="32" class="xar-form-textmedium" />
@@ -60,7 +60,7 @@
 
             <div class="xar-form-input-wrapper">
                  <label for="number" class="xar-form-label" title="#xarML('This is the item number')#">
-                         <xar:mlstring>Example Number:</xar:mlstring>
+                         <xar:mlstring>ITSP Number:</xar:mlstring>
                 </label>
 
                 <xar:if condition="isset($number)">
@@ -100,7 +100,7 @@
             // preventing certain attacks on the website
         -->
                 <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                <input type="submit" value="#xarML('Add Example Item')#" />
+                <input type="submit" value="#xarML('Add ITSP Item')#" />
             </div>
         </fieldset>
     </form>

@@ -29,10 +29,10 @@ function itsp_userapi_getitemlinks($args)
 
     foreach ($args['itemids'] as $itemid) {
         $item = xarModAPIFunc('itsp', 'user', 'get',
-            array('exid' => $itemid));
+            array('planid' => $itemid));
         if (!isset($item)) return;
         $itemlinks[$itemid] = array('url' => xarModURL('itsp', 'user', 'display',
-                array('exid' => $itemid)),
+                array('planid' => $itemid)),
             'title' => xarML('Display ITSP Item'),
             'label' => xarVarPrepForDisplay($item['name']));
     }

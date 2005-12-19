@@ -11,7 +11,6 @@
  * @link http://xaraya.com/index.php/release/572.html
  * @author ITSP Module Development Team
  */
-
 /**
  * Utility function pass individual menu items to the main menu
  *
@@ -23,21 +22,25 @@ function itsp_userapi_getmenulinks()
     /* First we need to do a security check to ensure that we only return menu items
      * that we are suppose to see.
      */
-    if (xarSecurityCheck('ViewITSP', 0)) {
-        /* The main menu will look for this array and return it for a tree view of the module
-         * We are just looking for three items in the array, the url, which we need to use the
-         * xarModURL function, the title of the link, which will display a tool tip for the
-         * module url, in order to keep the label short, and finally the exact label for the
-         * function that we are displaying.
-         */
+    if (xarSecurityCheck('ViewITSPPlan', 0)) {
         $menulinks[] = array('url' => xarModURL('itsp',
                 'user',
                 'view'),
             /* In order to display the tool tips and label in any language,
              * we must encapsulate the calls in the xarML in the API.
              */
-            'title' => xarML('Displays all itsp items for view'),
-            'label' => xarML('Display'));
+            'title' => xarML('View our education plans'),
+            'label' => xarML('Plans'));
+    }
+    if (xarSecurityCheck('ReadITSP', 0)) {
+        $menulinks[] = array('url' => xarModURL('itsp',
+                'user',
+                'itsp'),
+            /* In order to display the tool tips and label in any language,
+             * we must encapsulate the calls in the xarML in the API.
+             */
+            'title' => xarML('View your education plan'),
+            'label' => xarML('My ITSP'));
     }
     /* If we return nothing, then we need to tell PHP this, in order to avoid an ugly
      * E_ALL error.

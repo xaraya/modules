@@ -50,7 +50,9 @@ This table holds the general plans
                xar_credits     I         NotNull    DEFAULT 0,
                xar_mincredit   I         NotNull    DEFAULT 0,
                xar_dateopen    T         Null       DEFAULT NULL,
-               xar_dateclose   T         Null       DEFAULT NULL
+               xar_dateclose   T         Null       DEFAULT NULL,
+               xar_datemodi    T         Null       DEFAULT NULL,
+               xar_modiby      I         NotNull    DEFAULT 0
               ";
 
     /* Create or alter the table as necessary */
@@ -72,14 +74,16 @@ Ruleformat: (compare to privileges) coursetype:Level:Category:internal/external/
 
     /* Get a data dictionary object with all the item create methods in it */
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
-    $fields = "xar_pitemid  I         AUTO       PRIMARY,
-               xar_pitemname    C(100)    NotNull    DEFAULT '',
-               xar_pitemdesc    X         NotNull    DEFAULT '',
-               xar_pitemrules   C(255)    NotNull    DEFAULT '',
+    $fields = "xar_pitemid     I         AUTO       PRIMARY,
+               xar_pitemname   C(100)    NotNull    DEFAULT '',
+               xar_pitemdesc   X         NotNull    DEFAULT '',
+               xar_pitemrules  C(255)    NotNull    DEFAULT '',
                xar_credits     I         NotNull    DEFAULT 0,
                xar_mincredit   I         NotNull    DEFAULT 0,
                xar_dateopen    T         Null       DEFAULT NULL,
-               xar_dateclose   T         Null       DEFAULT NULL
+               xar_dateclose   T         Null       DEFAULT NULL,
+               xar_datemodi    T         Null       DEFAULT NULL,
+               xar_modiby      I         NotNull    DEFAULT 0
               ";
 
     /* Create or alter the table as necessary */
@@ -93,6 +97,21 @@ Table with links between plan and planitems. Planitems can be reused.
 
 -ID plan
 -ID planitem
+*/
+    $planlinkstable = $xartable['itsp_planlinks'];
+
+    /* Get a data dictionary object with all the item create methods in it */
+    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+    $fields = "xar_pitemid  I         NotNull    DEFAULT 0,
+               xar_planid   I         NotNull    DEFAULT 0,
+               xar_datemodi T         Null       DEFAULT NULL,
+               xar_modiby   I         NotNull    DEFAULT 0
+              ";
+
+    /* Create or alter the table as necessary */
+    $result = $datadict->changeTable($planlinkstable, $fields);
+    if (!$result) {return;}
+/*
 
 Table: itsp_itsp
 Table with the ITSP: the entry point for students. Will the supervision be included in here?
@@ -106,15 +125,59 @@ Table with the ITSP: the entry point for students. Will the supervision be inclu
 -date approval
 -date certificate requested
 -date certificate awarded
+*/
+    $itsptable = $xartable['itsp_itsp'];
+
+    /* Get a data dictionary object with all the item create methods in it */
+    //TODO: Status types?
+    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+    $fields = "xar_itspid           I         AUTO       PRIMARY,
+               xar_userid           I         NotNull    DEFAULT 0,
+               xar_planid           I         NotNull    DEFAULT 0,
+               xar_itspstatus       C(255)    NotNull    DEFAULT '',
+               xar_datesubm         T         Null       DEFAULT NULL,
+               xar_dateappr         T         Null       DEFAULT NULL,
+               xar_datecertreq      T         Null       DEFAULT NULL,
+               xar_datecertaward    T         Null       DEFAULT NULL,
+               xar_datemodi         T         Null       DEFAULT NULL,
+               xar_modiby           I         NotNull    DEFAULT 0
+              ";
+
+    /* Create or alter the table as necessary */
+    $result = $datadict->changeTable($itsptable, $fields);
+    if (!$result) {return;}
+
+
+/*
 
 Table: itsp_itsp_courselinks
-Then a table with courses added to the ITSP by students
+
 There are two types: fixed courses and courses that are added in a free form (courses not taken from the courses module). This table only deals with courses from the courses module.
 
 - LinkedCourseID: the rest should be coming from the hooked item.
 - PlanitemID:
 -approval: is this gonna be part of the ITSP?
 
+*/
+    $courselinkstable = $xartable['itsp_itsp_courselinks'];
+
+    /* Get a data dictionary object with all the item create methods in it */
+    // Table with courses added to the ITSP by students
+    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+    $fields = "xar_courselinkid     I         AUTO       PRIMARY,
+               xar_lcourseid        I         NotNull    DEFAULT 0,
+               xar_itspid           I         NotNull    DEFAULT 0,
+               xar_pitemid          I         NotNull    DEFAULT 0,
+               xar_dateappr         T         Null       DEFAULT NULL,
+               xar_datemodi         T         Null       DEFAULT NULL,
+               xar_modiby           I         NotNull    DEFAULT 0
+              ";
+
+    /* Create or alter the table as necessary */
+    $result = $datadict->changeTable($courselinkstable, $fields);
+    if (!$result) {return;}
+
+/*
 Table: itsp_itsp_courses
 This table deals with the free courses. So: how to add the custom courses/items to the itsp of a student?
 
@@ -129,50 +192,28 @@ This table deals with the free courses. So: how to add the custom courses/items 
 - result (standard 0=planned. Then a mark of status can be added).
 - approval (is this item to be in the ITSP?)
 */
-    /* It's good practice to name the table definitions you
-     * are using - $table doesn't cut it in more complex modules
-     */
-    $itsptable = $xartable['itsp_'];
+    $icoursestable = $xartable['itsp_itsp_courses'];
 
     /* Get a data dictionary object with all the item create methods in it */
+    // Table with courses added to the ITSP by students
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
-    $fields = "xar_exid      I         AUTO       PRIMARY,
-               xar_name      C(100)    NotNull    DEFAULT '',
-               xar_number    I4        NotNull    DEFAULT 0
+    $fields = "xar_icourseid        I         AUTO       PRIMARY,
+               xar_pitemid          I         NotNull    DEFAULT 0,
+               xar_itspid           I         NotNull    DEFAULT 0,
+               xar_icoursetitle     C(255)    NotNull    DEFAULT '',
+               xar_icourseloc       C(255)    NotNull    DEFAULT '',
+               xar_icoursedesc      X         NotNull    DEFAULT '',
+               xar_icoursecredits   I         NotNull    DEFAULT 0,
+               xar_icourselevel     C(255)    NotNull    DEFAULT '',
+               xar_icourseresult    C(255)    NotNull    DEFAULT '',
+               xar_icoursedate      T         Null       DEFAULT NULL,
+               xar_dateappr         T         Null       DEFAULT NULL,
+               xar_datemodi         T         Null       DEFAULT NULL,
+               xar_modiby           I         NotNull    DEFAULT 0
               ";
 
-    /* C:  Varchar, capped to 255 characters.
-       X:  Larger varchar, capped to 4000 characters
-       XL: For Oracle, returns CLOB, otherwise the largest varchar size.
-       C2: Multibyte varchar
-       X2: Multibyte varchar (largest size)
-       B:  BLOB (binary large object)
-       D:  Date
-       T:  Datetime or Timestamp
-       L:  Integer field suitable for storing booleans (0 or 1)
-       I:  Integer (mapped to I4)
-       I1: 1-byte integer
-       I2: 2-byte integer
-       I4: 4-byte integer
-       I8: 8-byte integer
-       F:  Floating point number
-       N:  Numeric or decimal number
-    */
-    /*
-       AUTO          For autoincrement numbers and sets NOTNULL also.
-       KEY           Primary key field. Sets NOTNULL also.
-       PRIMARY       Same as KEY.
-       DEFAULT       The default value. Character strings are auto-quoted unless
-                        the string begins and ends with spaces, eg ' SYSDATE '.
-       NOTNULL       If field is not null.
-       DEFDATE       Set default value to call function to get today's date.
-       DEFTIMESTAMP  Set default to call function to get today's datetime.
-       NOQUOTE       Prevents autoquoting of default string values.
-       CONSTRAINTS   Additional constraints defined at end of field definition.
-    */
-
     /* Create or alter the table as necessary */
-    $result = $datadict->changeTable($itsptable, $fields);
+    $result = $datadict->changeTable($icoursestable, $fields);
     if (!$result) {return;}
 
     /* If and as necessary create indexes for your tables */
@@ -199,11 +240,11 @@ This table deals with the free courses. So: how to add the custom courses/items 
         xarModSetVar('itsp', 'number_of_categories', 1);
         xarModSetVar('itsp', 'mastercids', $itspcid);
         $itspcategories = array();
-        $itspcategories[] = array('name' => "one",
+        $itspcategories[] = array('name' => "Eduction plan one",
             'description' => "description one");
-        $itspcategories[] = array('name' => "two",
+        $itspcategories[] = array('name' => "Education plan two",
             'description' => "description two");
-        $itspcategories[] = array('name' => "three",
+        $itspcategories[] = array('name' => "Education plan three",
             'description' => "description three");
         foreach($itspcategories as $subcat) {
             $itspsubcid = xarModAPIFunc('categories',
@@ -263,7 +304,7 @@ This table deals with the free courses. So: how to add the custom courses/items 
      * (limit) which defines the maximum number of rows a dropdown can have. If the number of
      * instances is greater than the limit (e.g. registered users), the UI instead presents an
      * input field for manual input, which is then checked for validity.
-     */
+
     $query1 = "SELECT DISTINCT xar_name FROM " . $itsptable;
     $query2 = "SELECT DISTINCT xar_number FROM " . $itsptable;
     $query3 = "SELECT DISTINCT xar_exid FROM " . $itsptable;
@@ -282,6 +323,7 @@ This table deals with the free courses. So: how to add the custom courses/items 
             )
         );
     xarDefineInstance('itsp', 'Item', $instances);
+     */
     /* You can also use some external "wizard" function to specify instances :
 
       $instances = array(
@@ -363,15 +405,20 @@ function itsp_delete()
      * database handle.  For xarDBGetTables() we want to keep the entire
      * tables array together for easy reference later on
      */
+    /* Get database setup */
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-    $itsptable = $xartable['itsp'];
+
     /* Get a data dictionary object with item create and delete methods */
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+    // Initialise table array
+    $basename = 'itsp';
 
-    /* Drop the itsp tables */
-     $result = $datadict->dropTable($itsptable);
+    foreach(array('plans', 'planitems', 'planlinks', 'itsp', 'itsp_courselinks', 'itsp_courses') as $table) {
 
+    /* Drop the tables */
+     $result = $datadict->dropTable($xartable[$basename . '_' . $table]);
+    }
     /* Remove any module aliases before deleting module vars */
     /* Assumes one module alias in this case */
     $aliasname =xarModGetVar('itsp','aliasname');
