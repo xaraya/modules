@@ -96,13 +96,6 @@ function commerce_configmenublock_display($blockinfo)
         array(1,xarModURL('commerce','admin','tax_rates'), 'Tax Rates','')
      );
 
-    $content[4]['heading'] = "Customers";
-    $content[4]['lines'] = array(
-        array(1,xarModURL('commerce','admin','customers'), 'Customers',''),
-        array(1,xarModURL('commerce','admin','customers_status'), 'Customer Groups',''),
-        array(1,xarModURL('commerce','admin','orders'), 'Orders','')
-     );
-
     $content[6]['heading'] = "Statistics";
     $content[6]['lines'] = array(
         array(1,xarModURL('commerce','admin','stats_products_viewed'), 'Viewed Products',''),
