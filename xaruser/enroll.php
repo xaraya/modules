@@ -39,13 +39,13 @@ function courses_user_enroll($args)
     if (!empty($objectid)) {
         $planningid = $objectid;
     }
-    // What does this do?
+    /* What does this do?
     $courses['transform'] = array('name');
     $item = xarModCallHooks('item',
         'transform',
         $planningid,
         $courses);
-    
+    */
     // Get the username so we can pass it to the enrollment function
     $uid = xarUserGetVar('uid');
     //Check to see if this user is already enrolled in this course

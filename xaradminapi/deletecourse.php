@@ -1,19 +1,19 @@
 <?php
 /**
  * Delete a course
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage example
- * @author Example module development team 
+ * @author Example module development team
  */
 /**
  * delete a course
- * 
- * @author the Courses module development team 
+ *
+ * @author the Courses module development team
  * @param  $args ['courseid'] ID of the course
  * @returns bool
  * @return true on success, false on failure
@@ -57,6 +57,7 @@ function courses_adminapi_deletecourse($args)
     // delete hook we're not passing any extra info
     // xarModCallHooks('item', 'delete', $exid, '');
     $item['module'] = 'courses';
+    $item['itemtype']=1;
     $item['itemid'] = $courseid;
     xarModCallHooks('item', 'delete', $courseid, $item);
     // Let the calling process know that we have finished successfully

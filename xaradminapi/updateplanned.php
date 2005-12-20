@@ -1,7 +1,7 @@
 <?php
 /**
  * Update a planned course
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -9,12 +9,12 @@
  *
  * @subpackage Courses Module
  * @link http://xaraya.com/index.php/release/179.html
- * @author Courses module development team 
+ * @author Courses module development team
  */
 /**
  * update a planned course
- * 
- * @author the Courses module development team 
+ *
+ * @author the Courses module development team
  * @param  $args ['planningid'] the ID of the course
  * @param  $args ['name'] the new name of the item
  * @param  $args ['number'] the new number of the item
@@ -95,9 +95,9 @@ function courses_adminapi_updateplanned($args)
                            xar_hideplanning =?,
                            xar_last_modified =?
                         WHERE xar_planningid = $planningid";
-            
+
     $bindvars = array($planningid, $courseid, $year, $credits, $creditsmin, $creditsmax, $startdate, $enddate, $prerequisites, $aim, $method, $longdesc,
-                      $costs, $committee, $coordinators, $lecturers, $location, $material, $info, $program, $minparticipants, 
+                      $costs, $committee, $coordinators, $lecturers, $location, $material, $info, $program, $minparticipants,
                       $maxparticipants, $closedate, $hideplanning, $last_modified);
     $result = &$dbconn->Execute($query, $bindvars);
     // Check for an error with the database code, adodb has already raised
@@ -105,10 +105,10 @@ function courses_adminapi_updateplanned($args)
     if (!$result) return;
     // Let any hooks know that we have updated an item.  As this is an
     // update hook we're passing the updated $item array as the extra info
+    $item = $args;
     $item['module'] = 'courses';
     $item['itemid'] = $planningid;
-    $item['name'] = $name;
-    $item['number'] = $number;
+    $item['itemtype']=2;
     xarModCallHooks('item', 'update', $planningid, $item);
     // Let the calling process know that we have finished successfully
     return true;

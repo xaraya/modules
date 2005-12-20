@@ -185,6 +185,7 @@ function courses_user_displayplanned($args)
         'user',
         'displayplanned',
         array('planningid' => $planningid));
+    $item['itemtype']=2;
     $hooks = xarModCallHooks('item','display',$planningid,$item);
     if (empty($hooks)) {
         $data['hookoutput'] = array();

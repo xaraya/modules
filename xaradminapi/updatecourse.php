@@ -1,7 +1,7 @@
 <?php
 /**
  * Update a course
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -9,12 +9,12 @@
  *
  * @subpackage Courses Module
  * @link http://xaraya.com/index.php/release/179.html
- * @author Courses module development team 
+ * @author Courses module development team
  */
 /**
  * update a course
- * 
- * @author the Course module development team 
+ *
+ * @author the Course module development team
  * @param  $args ['courseid'] the ID of the course
  * @param  $args ['name'] the new name of the item
  * @param  $args ['number'] the new number of the item
@@ -24,12 +24,12 @@
 function courses_adminapi_updatecourse($args)
 {
     extract($args);
-    
+
     if (!xarVarFetch('courseid', 'id', $courseid)) return;
     if (!xarVarFetch('objectid', 'id', $objectid, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('name', 'str:1:', $name)) return;
     if (!xarVarFetch('number', 'str:1:', $number)) return;
-    
+
     // Argument check
     // TODO: should these be in other place? Non-API?
     $invalid = array();
@@ -92,6 +92,7 @@ function courses_adminapi_updatecourse($args)
     // update hook we're passing the updated $item array as the extra info
     $item['module'] = 'courses';
     $item['itemid'] = $courseid;
+    $item['itemtype']=1;
     $item['name'] = $name;
     $item['number'] = $number;
     $item['level'] =$level;

@@ -64,7 +64,7 @@ function courses_adminapi_createcourse($args)
               xar_hidecourse,
               xar_last_modified)
               VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
-            
+
     $bindvars = array($nextId, $name, $number, $coursetype, $level, $shortdesc, $intendedcredits, $freq, $contact, $contactuid, $hidecourse, $last_modified);
     $result = &$dbconn->Execute($query, $bindvars);
     if (!$result) return;
@@ -74,6 +74,7 @@ function courses_adminapi_createcourse($args)
     // Let any hooks know that we have created a new item.
     $item = $args;
     $item['module'] = 'courses';
+    $item['itemtype'] = 1;
     $item['itemid'] = $courseid;
     xarModCallHooks('item', 'create', $courseid, $item);
     // Return the id of the newly created item to the calling process

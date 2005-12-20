@@ -26,7 +26,7 @@ function courses_adminapi_createplanning($args)
     // Get arguments from argument array
     extract($args);
     // Argument check TODO
-    
+
     // Security check
     if (!xarSecurityCheck('EditCourses', 1, 'Course', "$courseid:All:All")) {
         return;
@@ -65,7 +65,7 @@ function courses_adminapi_createplanning($args)
                            xar_hideplanning,
                            xar_last_modified)
               VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-            
+
     $bindvars = array($nextId, $courseid, $year, $credits, $creditsmin, $creditsmax, $startdate, $enddate, $prerequisites, $aim, $method, $longdesc,
      $costs, $committee, $coordinators, $lecturers, $location, $material, $info, $program, $minparticipants, $maxparticipants, $closedate, $hideplanning, $last_modified);
     $result = &$dbconn->Execute($query, $bindvars);
@@ -78,6 +78,7 @@ function courses_adminapi_createplanning($args)
     // xarModCallHooks('item', 'create', $planningid, 'planningid');
     $item = $args;
     $item['module'] = 'courses';
+    $item['itemtype'] = 2;
     $item['itemid'] = $planningid;
     xarModCallHooks('item', 'create', $planningid, $item);
     // Return the id of the newly created item to the calling process
