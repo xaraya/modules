@@ -24,11 +24,6 @@
  */
 function itsp_userapi_get($args)
 {
-    /* Get arguments from argument array - all arguments to this function
-     * should be obtained from the $args array, getting them from other places
-     * such as the environment is not allowed, as that makes assumptions that
-     * will not hold in future versions of Xaraya
-     */
     extract($args);
     /* Argument check - make sure that all required arguments are present and
      * in the right format, if not then set an appropriate error message

@@ -1,6 +1,6 @@
 <?php
 /**
- * Create a new item
+ * Create a new ITSP
  *
  * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
@@ -13,7 +13,7 @@
  */
 
 /**
- * Create a new item
+ * Create a new ITSP
  *
  * Standard function to create a new item
  * This is a standard function that is called with the results of the
@@ -27,19 +27,7 @@ function itsp_user_create($args)
 {
     extract($args);
 
-    /* Get parameters from whatever input we need. All arguments to this
-xar_itspid           I         AUTO       PRIMARY,
-               xar_userid           I         NotNull    DEFAULT 0,
-               xar_planid           I         NotNull    DEFAULT 0,
-               xar_itspstatus       C(255)    NotNull    DEFAULT '',
-               xar_datesubm         T         Null       DEFAULT NULL,
-               xar_dateappr         T         Null       DEFAULT NULL,
-               xar_datecertreq      T         Null       DEFAULT NULL,
-               xar_datecertaward    T         Null       DEFAULT NULL,
-               xar_datemodi         T         Null       DEFAULT NULL,
-               xar_modiby           I         NotNull    DEFAULT 0
-     */
-    if (!xarVarFetch('objectid', 'id',     $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('objectid', 'id',     $objectid, $objectid, XARVAR_NOT_REQUIRED)) return; //??
     if (!xarVarFetch('invalid',  'str:1:', $invalid,  '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('userid',  'int:1:', $userid,  $userid,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('planid',  'int:1:', $planid,  $planid,  XARVAR_NOT_REQUIRED)) return;
@@ -82,11 +70,7 @@ xar_itspid           I         AUTO       PRIMARY,
                                 'datecertaward' => $datecertaward,
                                 'invalid'       => $invalid));
     }
-    /* Confirm authorisation code. This checks that the form had a valid
-     * authorisation code attached to it. If it did not then the function will
-     * proceed no further as it is possible that this is an attempt at sending
-     * in false data to the system
-     */
+    // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) return;
     // Create the ITSP
     $itspid = xarModAPIFunc('itsp',
@@ -99,13 +83,14 @@ xar_itspid           I         AUTO       PRIMARY,
                                     'dateappr'      => $dateappr,
                                     'datecertreq'   => $datecertreq,
                                     'datecertaward' => $datecertaward));
-    /* The return value of the function is checked here
-     */
+    // The return value of the function is checked here
+
     if (!isset($itspid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+    xarSessionSetVar('statusmsg', xarML('ITSP was successfully created!'));
     /* This function generated no output, and so now it is complete we redirect
      * the user to an appropriate page for them to carry on their work
      */
-    xarResponseRedirect(xarModURL('itsp', 'user', 'view'));
+    xarResponseRedirect(xarModURL('itsp', 'user', 'display', array('objectid'=> $itspid));
     /* Return true, in this case */
     return true;
 }
