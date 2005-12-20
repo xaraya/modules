@@ -18,7 +18,7 @@
  * form supplied by xarModFunc('itsp','admin','modify') to update a current item
  *
  * @author ITSP module development team
- * @param  $ 'exid' the id of the item to be updated
+ * @param  $ 'planid' the id of the item to be updated
  * @param  $ 'name' the name of the item to be updated
  * @param  $ 'number' the number of the item to be updated
  */
@@ -40,11 +40,17 @@ function itsp_admin_update($args)
      * environment is not allowed, as that makes assumptions that will
      * not hold in future versions of Xaraya
      */
-    if (!xarVarFetch('exid',     'id',     $exid,     $exid,     XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('objectid', 'id',     $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('invalid',  'array',  $invalid,  $invalid,        XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('number',   'int:1:', $number,   $number,   XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('name',     'str:1:', $name,     $name,     XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('planid',     'id',     $planid,     $planid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('objectid',   'id',     $objectid,   $objectid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('invalid',    'array',  $invalid,    $invalid, XARVAR_NOT_REQUIRED)) return;
+
+    if (!xarVarFetch('planname',   'str:1:', $planname,   $planname,    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('plandesc',   'str:1:', $plandesc,   $plandesc,    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('planrules',  'str:1:', $planrules,  $planrules,    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('credits',    'int:1:', $credits,    $credits,  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('mincredit',  'int:1:', $mincredit,  $mincredit,  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('dateopen',   'int:1:', $dateopen,   $dateopen,  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('dateclose',  'int:1:', $dateclose,  $dateclose,  XARVAR_NOT_REQUIRED)) return;
 
     /* At this stage we check to see if we have been passed $objectid, the
      * generic item identifier.  This could have been passed in by a hook or
@@ -57,7 +63,7 @@ function itsp_admin_update($args)
      * decision of which of these ways to go is up to the module developer
      */
     if (!empty($objectid)) {
-        $exid = $objectid;
+        $planid = $objectid;
     }
 
     /* Confirm authorisation code.  This checks that the form had a valid
@@ -72,12 +78,12 @@ function itsp_admin_update($args)
      */
 
     $invalid = array();
-    if (empty($number) || !is_numeric($number)) {
-        $invalid['number'] = 1;
+    if (empty($credits) || !is_numeric($credits)) {
+        $invalid['credits'] = 1;
         $number = '';
     }
-    if (empty($name) || !is_string($name)) {
-        $invalid['name'] = 1;
+    if (empty($planname) || !is_string($planname)) {
+        $invalid['planname'] = 1;
         $name = '';
     }
 
@@ -87,9 +93,14 @@ function itsp_admin_update($args)
          * (you need to copy admin-new.xd to admin-create.xd here)
          */
         return xarModFunc('itsp', 'admin', 'modify',
-                          array('name'     => $name,
-                                'number'   => $number,
-                                'invalid'  => $invalid));
+                          array('invalid' => $invalid,
+                                'planname' => $planname,
+                                'plandesc' => $plandesc,
+                                'planrules' => $planrules,
+                                'credits' => $credits,
+                                'mincredit' => $mincredit,
+                                'dateopen' => $dateopen,
+                                'dateclose' => $dateclose));
     }
 
     /* The API function is called.  Note that the name of the API function and
@@ -105,12 +116,16 @@ function itsp_admin_update($args)
     if (!xarModAPIFunc('itsp',
                        'admin',
                        'update',
-                       array('exid'   => $exid,
-                             'name'   => $name,
-                             'number' => $number))) {
+                       array('planname' => $planname,
+                             'plandesc' => $plandesc,
+                             'planrules' => $planrules,
+                             'credits' => $credits,
+                             'mincredit' => $mincredit,
+                             'dateopen' => $dateopen,
+                             'dateclose' => $dateclose))) {
         return; /* throw back */
     }
-    xarSessionSetVar('statusmsg', xarML('ITSP Item was successfully updated!'));
+    xarSessionSetVar('statusmsg', xarML('ITSP Plan was successfully updated!'));
     /* This function generated no output, and so now it is complete we redirect
      * the user to an appropriate page for them to carry on their work
      */

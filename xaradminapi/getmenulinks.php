@@ -11,7 +11,6 @@
  * @link http://xaraya.com/index.php/release/572.html
  * @author ITSP Module Development Team
  */
-
 /**
  * Pass the admin items to the admin menu
  *
@@ -31,21 +30,17 @@ function itsp_adminapi_getmenulinks()
             'label' => xarML('Overview'));
     }
 
-    if (xarSecurityCheck('AddITSP', 0)) {
+    if (xarSecurityCheck('AddITSPPlan', 0)) {
 
         $menulinks[] = Array('url' => xarModURL('itsp','admin','new'),
             /* In order to display the tool tips and label in any language,
              * we must encapsulate the calls in the xarML in the API.
              */
-            'title' => xarML('Adds a new item to system.'),
-            'label' => xarML('Add Item'));
+            'title' => xarML('Adds a new plan.'),
+            'label' => xarML('Add Plan'));
     }
     /* Security Check */
-    if (xarSecurityCheck('EditITSP', 0)) {
-        /* We do the same for each new menu item that we want to add to our admin panels.
-         * This creates the tree view for each item.  Obviously, we don't need to add every
-         * function, but we do need to have a way to navigate through the module.
-         */
+    if (xarSecurityCheck('EditITSPPlan', 0)) {
         $menulinks[] = Array('url' => xarModURL('itsp','admin','view'),
             /* In order to display the tool tips and label in any language,
              * we must encapsulate the calls in the xarML in the API.
@@ -55,10 +50,6 @@ function itsp_adminapi_getmenulinks()
     }
     /* Security Check */
     if (xarSecurityCheck('AdminITSP', 0)) {
-        /* We do the same for each new menu item that we want to add to our admin panels.
-         * This creates the tree view for each item.  Obviously, we don't need to add every
-         * function, but we do need to have a way to navigate through the module.
-         */
         $menulinks[] = Array('url' => xarModURL('itsp','admin','modifyconfig'),
             /* In order to display the tool tips and label in any language,
              * we must encapsulate the calls in the xarML in the API.

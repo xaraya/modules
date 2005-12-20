@@ -12,7 +12,7 @@
  * @author ITSP Module Development Team
  */
 /**
- * Add new item
+ * Add a new plan
  *
  * This is a standard function that is called whenever an administrator
  * wishes to create a new module item
@@ -22,23 +22,17 @@
  */
 function itsp_admin_new($args)
 {
-    /* Admin functions of this type can be called by other modules.  If this
-     * happens then the calling module will be able to pass in arguments to
-     * this function through the $args parameter.  Hence we extract these
-     * arguments *before* we have obtained any form-based input through
-     * xarVarFetch().
-     */
     extract($args);
 
-    /* Get parameters from whatever input we need.  All arguments to this
-     * function should be obtained from xarVarFetch(). xarVarFetch allows
-     * the checking of the input variables as well as setting default
-     * values if needed.  Getting vars from other places such as the
-     * environment is not allowed, as that makes assumptions that will
-     * not hold in future versions of Xaraya
-     */
-    if (!xarVarFetch('number',  'int:1:', $number,  $number,  XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('name',    'str:1:', $name,    $name,    XARVAR_NOT_REQUIRED)) return;
+    // Get parameters from whatever input we need.
+    if (!xarVarFetch('planname',    'str:1:', $planname,    $planname,    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('plandesc',    'str:1:', $plandesc,    $plandesc,    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('planrules',    'str:1:', $planrules,    $planrules,    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('credits',  'int:1:', $credits,  $credits,  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('mincredit',  'int:1:', $mincredit,  $mincredit,  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('dateopen',  'int:1:', $dateopen,  $dateopen,  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('dateclose',  'int:1:', $dateclose,  $dateclose,  XARVAR_NOT_REQUIRED)) return;
+
     if (!xarVarFetch('invalid', 'array',  $invalid, $invalid, XARVAR_NOT_REQUIRED)) return;
     /* Initialise the $data variable that will hold the data to be used in
      * the blocklayout template, and get the common menu configuration - it
@@ -49,7 +43,7 @@ function itsp_admin_new($args)
     /* Security check - important to do this as early as possible to avoid
      * potential security holes or just too much wasted processing
      */
-    if (!xarSecurityCheck('AddITSP')) return;
+    if (!xarSecurityCheck('AddITSPPlan')) return;
 
     /* Generate a one-time authorisation code for this operation */
     $data['authid'] = xarSecGenAuthKey();
@@ -57,6 +51,7 @@ function itsp_admin_new($args)
 
     $item = array();
     $item['module'] = 'itsp';
+    $item['itemtype'] = 1;
     $hooks = xarModCallHooks('item', 'new', '', $item);
 
     if (empty($hooks)) {
@@ -71,17 +66,43 @@ function itsp_admin_new($args)
     /* For E_ALL purposes, we need to check to make sure the vars are set.
      * If they are not set, then we need to set them empty to surpress errors
      */
-    if (empty($name)) {
-        $data['name'] = '';
+    if (empty($planname)) {
+        $data['planname'] = '';
     } else {
-        $data['name'] = $name;
+        $data['planname'] = $planname;
     }
 
-    if (empty($number)) {
-        $data['number'] = '';
+    if (empty($plandesc)) {
+        $data['plandesc'] = '';
     } else {
-        $data['number'] = $number;
+        $data['plandesc'] = $plandesc;
     }
+    if (empty($planrules)) {
+        $data['planrules'] = '';
+    } else {
+        $data['planrules'] = $planrules;
+    }
+    if (empty($credits)) {
+        $data['credits'] = '';
+    } else {
+        $data['credits'] = $credits;
+    }
+    if (empty($mincredit)) {
+        $data['mincredit'] = '';
+    } else {
+        $data['mincredit'] = $mincredit;
+    }
+    if (empty($dateopen)) {
+        $data['dateopen'] = '';
+    } else {
+        $data['dateopen'] = $dateopen;
+    }
+    if (empty($dateclose)) {
+        $data['dateclose'] = '';
+    } else {
+        $data['dateclose'] = $dateclose;
+    }
+
     /* Return the template variables defined in this function */
     return $data;
 }

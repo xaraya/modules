@@ -11,7 +11,6 @@
  * @link http://xaraya.com/index.php/release/572.html
  * @author ITSP Module Development Team
  */
-
 /**
  * Create a new itsp item
  *
@@ -39,11 +38,11 @@ function itsp_adminapi_create($args)
      * report all those that are invalid at the same time...
      */
     $invalid = array();
-    if (!isset($name) || !is_string($name)) {
-        $invalid[] = 'name';
+    if (!isset($planname) || !is_string($planname)) {
+        $invalid[] = 'planname';
     }
-    if (!isset($number) || !is_numeric($number)) {
-        $invalid[] = 'number';
+    if (!isset($credits) || !is_numeric($credits)) {
+        $invalid[] = 'credits';
     }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
@@ -55,46 +54,46 @@ function itsp_adminapi_create($args)
     /* Security check - important to do this as early on as possible to
      * avoid potential security holes or just too much wasted processing
      */
-    if (!xarSecurityCheck('AddITSP', 1, 'Item', "$name:All:All")) {
+    if (!xarSecurityCheck('AddITSPPlan', 1, 'Plan', "All:All:All")) {//TODO: check
         return;
     }
-    /* Get database setup - note that both xarDBGetConn() and xarDBGetTables()
-     * return arrays but we handle them differently.  For xarDBGetConn()
-     * we currently just want the first item, which is the official
-     * database handle.  For xarDBGetTables() we want to keep the entire
-     * tables array together for easy reference later on
-     */
+    $datemodi = time();
+    $modiby = xarUserGetVar('uid');
+    // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     /* It's good practice to name the table and column definitions you
      * are getting - $table and $column don't cut it in more complex
      * modules
      */
-    $itsptable = $xartable['itsp'];
+    $planstable = $xartable['itsp_plans'];
     /* Get next ID in table - this is required prior to any insert that
      * uses a unique ID, and ensures that the ID generation is carried
      * out in a database-portable fashion
      */
-    $nextId = $dbconn->GenId($itsptable);
+    $nextId = $dbconn->GenId($planstable);
     /* Add item - the formatting here is not mandatory, but it does make
      * the SQL statement relatively easy to read.  Also, separating out
      * the sql statement from the Execute() command allows for simpler
      * debug operation if it is ever needed
      */
-    $query = "INSERT INTO $itsptable (
-              xar_exid,
-              xar_name,
-              xar_number)
-            VALUES (?,?,?)";
+    $query = "INSERT INTO $planstable (
+               xar_planid,
+               xar_planname,
+               xar_plandesc,
+               xar_planrules,
+               xar_credits,
+               xar_mincredits,
+               xar_dateopen,
+               xar_dateclose,
+               xar_datemodi,
+               xar_modiby)
+            VALUES (?,?,?,?,?,?,?,?,?,?)";
     /* Create an array of values which correspond to the order of the
-     * Question marks  in the statement above. The database layer will then
-     * figure out what to do with these variables before actually sending them
-     * to the database. (such as quoting, escaping or other operations specific to
-     * the backend)
-     * In some cases you need to explicitly state the type of the variable like
-     *in the $name variable below (not needed here, just for educational purposes)
+     * Question marks in the statement above.
      */
-    $bindvars = array($nextId, (string) $name, $number);
+    $bindvars = array($nextId, (string) $planname, $plandesc, $planrules, $credits, $mincredits,
+    $dateopen, $dateclose, $datemodi, $modiby);
     $result = &$dbconn->Execute($query,$bindvars);
 
     /* Check for an error with the database code, adodb has already raised
@@ -106,20 +105,15 @@ function itsp_adminapi_create($args)
      * on your database, that this is different from $nextId as obtained
      * above, so it is better to be safe than sorry in this situation
      */
-    $exid = $dbconn->PO_Insert_ID($itsptable, 'xar_exid');
+    $planid = $dbconn->PO_Insert_ID($itsptable, 'xar_planid');
 
-    /* Let any hooks know that we have created a new item.  As this is a
-     * create hook we're passing 'exid' as the extra info, which is the
-     * argument that all of the other functions use to reference this
-     * item
-     * TODO: evaluate
-     * xarModCallHooks('item', 'create', $exid, 'exid');
-     */
+    // Let any hooks know that we have created a new item.
     $item = $args;
     $item['module'] = 'itsp';
-    $item['itemid'] = $exid;
-    xarModCallHooks('item', 'create', $exid, $item);
+    $item['itemtype'] = 1;
+    $item['itemid'] = $planid;
+    xarModCallHooks('item', 'create', $planid, $item);
     /* Return the id of the newly created item to the calling process */
-    return $exid;
+    return $planid;
 }
 ?>

@@ -146,8 +146,6 @@ Table with the ITSP: the entry point for students. Will the supervision be inclu
     /* Create or alter the table as necessary */
     $result = $datadict->changeTable($itsptable, $fields);
     if (!$result) {return;}
-
-
 /*
 
 Table: itsp_itsp_courselinks
@@ -274,7 +272,7 @@ This table deals with the free courses. So: how to add the custom courses/items 
      * Use the standard module var names for useModuleAlias and aliasname.
      */
     xarModSetVar('itsp', 'useModuleAlias',false);
-    xarModSetVar('itsp','aliasname','');
+    xarModSetVar('itsp', 'aliasname','');
 
     /* Register our hooks that we are providing to other modules.  The itsp
      * module shows an itsp hook in the form of the user menu.
@@ -305,11 +303,11 @@ This table deals with the free courses. So: how to add the custom courses/items 
      * instances is greater than the limit (e.g. registered users), the UI instead presents an
      * input field for manual input, which is then checked for validity.
 
-    $query1 = "SELECT DISTINCT xar_name FROM " . $itsptable;
+    $query3 = "SELECT DISTINCT xar_name FROM " . $itsptable;
     $query2 = "SELECT DISTINCT xar_number FROM " . $itsptable;
-    $query3 = "SELECT DISTINCT xar_exid FROM " . $itsptable;
+    $query1 = "SELECT DISTINCT xar_planid FROM " . $planstable;
     $instances = array(
-        array('header' => 'ITSP Name:',
+        array('header' => 'ITSP id:',
             'query' => $query1,
             'limit' => 20
             ),
@@ -361,6 +359,7 @@ This table deals with the free courses. So: how to add the custom courses/items 
     xarRegisterMask('DeleteITSP', 'All', 'itsp', 'ITSP', 'All:All:All', 'ACCESS_DELETE');
     xarRegisterMask('AdminITSP', 'All', 'itsp', 'ITSP', 'All:All:All', 'ACCESS_ADMIN');
     // Let's seperate for the plans for now
+    // Planid
     //xarRegisterMask('ReadITSPBlock', 'All', 'itsp', 'Block', 'All', 'ACCESS_OVERVIEW');
     xarRegisterMask('ViewITSPPlan', 'All', 'itsp', 'Plan', 'All:All:All', 'ACCESS_OVERVIEW');
     xarRegisterMask('ReadITSPPlan', 'All', 'itsp', 'Plan', 'All:All:All', 'ACCESS_READ');
