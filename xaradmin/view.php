@@ -11,7 +11,6 @@
  * @link http://xaraya.com/index.php/release/572.html
  * @author ITSP Module Development Team
  */
-
 /**
  * Standard function to view items
  *
@@ -21,13 +20,6 @@
  */
 function itsp_admin_view()
 {
-    /* Get parameters from whatever input we need.  All arguments to this
-     * function should be obtained from xarVarFetch(). xarVarFetch allows
-     * the checking of the input variables as well as setting default
-     * values if needed.  Getting vars from other places such as the
-     * environment is not allowed, as that makes assumptions that
-     * will not hold in future versions of Xaraya
-     */
     if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
     /* Initialise the $data variable that will hold the data to be used in
      * the blocklayout template, and get the common menu configuration - it
@@ -49,7 +41,7 @@ function itsp_admin_view()
      * table so that the pager function can do its job properly
      */
     $data['pager'] = xarTplGetPager($startnum,
-        xarModAPIFunc('itsp', 'user', 'countitems'),
+        xarModAPIFunc('itsp', 'user', 'countitems', array('itemtype' => 1)),
         xarModURL('itsp', 'admin', 'view', array('startnum' => '%%')),
         xarModGetVar('itsp', 'itemsperpage'));
     /* Security check - important to do this as early as possible to avoid
@@ -76,19 +68,19 @@ function itsp_admin_view()
      */
     for ($i = 0; $i < count($items); $i++) {
         $item = $items[$i];
-        if (xarSecurityCheck('EditITSP', 0, 'Item', "$item[name]:All:$item[exid]")) {
+        if (xarSecurityCheck('EditITSPlan', 0, 'Plan', "$planid:All:All")) {
             $items[$i]['editurl'] = xarModURL('itsp',
                 'admin',
                 'modify',
-                array('exid' => $item['exid']));
+                array('planid' => $item['planid']));
         } else {
             $items[$i]['editurl'] = '';
         }
-        if (xarSecurityCheck('DeleteITSP', 0, 'Item', "$item[name]:All:$item[exid]")) {
+        if (xarSecurityCheck('DeleteITSPPlan', 0, 'Plan', "$planid:All:All")) {
             $items[$i]['deleteurl'] = xarModURL('itsp',
                 'admin',
                 'delete',
-                array('exid' => $item['exid']));
+                array('planid' => $item['planid']));
         } else {
             $items[$i]['deleteurl'] = '';
         }
@@ -98,12 +90,5 @@ function itsp_admin_view()
 
     /* Return the template variables defined in this function */
     return $data;
-    /* Note : instead of using the $data variable, you could also specify
-     * the different template variables directly in your return statement :
-     *
-     * return array('items' => ...,
-     * 'namelabel' => ...,
-     *... => ...);
-     */
 }
 ?>

@@ -11,36 +11,39 @@
  * @link http://xaraya.com/index.php/release/572.html
  * @author ITSP Module Development Team
  */
-
 /**
  * Utility function to count the number of items held by this module
  *
+ * @param itemtype
  * @author the ITSP module development team
  * @returns integer
  * @return number of items held by this module
  * @raise DATABASE_ERROR
  */
-function itsp_userapi_countitems()
+function itsp_userapi_countitems($args)
 {
-    /* Get database setup - note that both xarDBGetConn() and xarDBGetTables()
-     * return arrays but we handle them differently.  For xarDBGetConn() we
-     * currently just want the first item, which is the official database
-     * handle.  For xarDBGetTables() we want to keep the entire tables array
-     * together for easy reference later on
+    extract ($args);
+    if (!isset($itemtype) || !is_numeric($itemtype)) {
+        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
+            'item ID', 'user', 'countitems', 'ITSP');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+            new SystemException($msg));
+        return;
+    }
+    /* Get database setup
      */
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-    /* It's good practice to name the table and column definitions you are
-     * getting - $table and $column don't cut it in more complex modules
-     */
-    $itsptable = $xartable['itsp'];
-    /* Get item - the formatting here is not mandatory, but it does make the
-     * SQL statement relatively easy to read.  Also, separating out the sql
-     * statement from the Execute() command allows for simpler debug operation
-     * if it is ever needed
-     */
+
+    //Switch for the itemtypes
+    switch ($itemtype) {
+        case '1':
+        $table = $xartable['itsp_plans'];
+        case '2':
+        $table = $xartable['itsp_itsp'];
+    }
     $query = "SELECT COUNT(1)
-            FROM $itsptable";
+              FROM $table";
     /* If there are no variables you can pass in an empty array for bind variables
      * or no parameter.
      */

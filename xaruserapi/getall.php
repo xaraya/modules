@@ -11,9 +11,8 @@
  * @link http://xaraya.com/index.php/release/572.html
  * @author ITSP Module Development Team
  */
-
 /**
- * Get all itsp items
+ * Get all ITSPs
  *
  * @author the ITSP module development team
  * @param numitems $ the number of items to retrieve (default -1 = all)
@@ -77,18 +76,25 @@ function itsp_userapi_getall($args)
     /* It's good practice to name the table definitions you are
      * using - $table doesn't cut it in more complex modules
      */
-    $itsptable = $xartable['itsp'];
+    $itsptable = $xartable['itsp_itsp'];
     /* TODO: how to select by cat ids (automatically) when needed ???
      * Get items - the formatting here is not mandatory, but it does make the
      * SQL statement relatively easy to read.  Also, separating out the sql
      * statement from the SelectLimit() command allows for simpler debug
      * operation if it is ever needed
      */
-    $query = "SELECT xar_exid,
-                     xar_name,
-                     xar_number
+    $query = "SELECT xar_itspid,
+                     xar_userid,
+                   xar_planid,
+                   xar_itspstatus,
+                   xar_datesubm,
+                   xar_dateappr,
+                   xar_datecertreq,
+                   xar_datecertaward,
+                   xar_datemodi,
+                   xar_modiby
               FROM $itsptable
-              ORDER BY xar_name";
+              ORDER BY xar_itspid";
     /* SelectLimit also supports bind variable, they get to be put in
      * as the last parameter in the function below. In this case we have no
      * bind variables, so we left the parameter out. We could have passed in an
@@ -106,11 +112,25 @@ function itsp_userapi_getall($args)
      * the details of the item, this *must* be verified by your function.
      */
     for (; !$result->EOF; $result->MoveNext()) {
-        list($exid, $name, $number) = $result->fields;
-        if (xarSecurityCheck('ViewITSP', 0, 'Item', "$name:All:$exid")) {
-            $items[] = array('exid'   => $exid,
-                             'name'   => $name,
-                             'number' => $number);
+        list($itspid, $userid, $planid,
+               $itspstatus,
+               $datesubm,
+               $dateappr,
+               $datecertreq,
+               $datecertaward,
+               $datemodi,
+               $modiby) = $result->fields;
+        if (xarSecurityCheck('ViewITSP', 0, 'ITSP', "$itspid:$planid:All")) {
+            $items[] = array('itspid'        => $itspid,
+                              'userid'        => $userid,
+                              'planid'        => $planid,
+                              'itspstatus'    => $itspstatus,
+                              'datesubm'      => $datesubm,
+                              'dateappr'      => $dateappr,
+                              'datecertreq'   => $datecertreq,
+                              'datecertaward' => $datecertaward,
+                              'datemodi'      => $datemodi,
+                              'modiby'        => $modiby);
         }
     }
     /* All successful database queries produce a result set, and that result

@@ -11,9 +11,8 @@
  * @link http://xaraya.com/index.php/release/572.html
  * @author ITSP Module Development Team
  */
-
 /**
- * View a list of items
+ * View a list of items: plans
  *
  * This is a standard function to provide an overview of all of the items
  * available from the module.
@@ -22,13 +21,6 @@
  */
 function itsp_user_view()
 {
-    /* Get parameters from whatever input we need.  All arguments to this
-     * function should be obtained from xarVarFetch(). xarVarFetch allows
-     * the checking of the input variables as well as setting default
-     * values if needed.  Getting vars from other places such as the
-     * environment is not allowed, as that makes assumptions that will
-     * not hold in future versions of Xaraya
-     */
     if (!xarVarFetch('startnum', 'str:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
     /* Initialise the $data variable that will hold the data to be used in
      * the blocklayout template, and get the common menu configuration - it
@@ -55,11 +47,9 @@ function itsp_user_view()
      */
     $items = xarModAPIFunc('itsp',
         'user',
-        'getall',
+        'getall_plans',
         array('startnum' => $startnum,
-            'numitems' => xarModGetUserVar('itsp',
-                'itemsperpage',
-                $uid)));
+              'numitems' => xarModGetUserVar('itsp','itemsperpage',$uid)));
     if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     /* TODO: check for conflicts between transformation hook output and xarVarPrepForDisplay
@@ -119,13 +109,5 @@ function itsp_user_view()
     /* Return the template variables defined in this function */
     return $data;
 
-    /* Note : instead of using the $data variable, you could also specify
-     * the different template variables directly in your return statement :
-     *
-     * return array('menu' => ...,
-     * 'items' => ...,
-     * 'pager' => ...,
-     * ... => ...);
-     */
 }
 ?>

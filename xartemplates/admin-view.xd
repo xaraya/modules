@@ -19,13 +19,13 @@
     <table class="xar-fullwidth">
         <tr>
             <th>
-                <xar:mlstring>ITSP Name</xar:mlstring>
+                <xar:mlstring>Plan Name</xar:mlstring>
             </th>
             <th>
-                <xar:mlstring>ITSP Number</xar:mlstring>
+                <xar:mlstring>Plan Number</xar:mlstring>
             </th>
             <th>
-                <xar:mlstring>ITSP Options</xar:mlstring>
+                <xar:mlstring>Plan Options</xar:mlstring>
             </th>
         </tr>
         <xar:foreach in="$items" value="$item">

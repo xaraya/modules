@@ -25,50 +25,46 @@
  */
 function itsp_user_create($args)
 {
-    /* Admin functions of this type can be called by other modules. If this
-     *  happens then the calling module will be able to pass in arguments to
-     * this function through the $args parameter. Hence we extract these
-     * arguments *before* we have obtained any form-based input through
-     * xarVarFetch().
-     */
     extract($args);
 
     /* Get parameters from whatever input we need. All arguments to this
-     * function should be obtained from xarVarFetch(). xarVarFetch allows
-     * the checking of the input variables as well as setting default
-     * values if needed. Getting vars from other places such as the
-     * environment is not allowed, as that makes assumptions that will
-     * not hold in future versions of Xaraya
+xar_itspid           I         AUTO       PRIMARY,
+               xar_userid           I         NotNull    DEFAULT 0,
+               xar_planid           I         NotNull    DEFAULT 0,
+               xar_itspstatus       C(255)    NotNull    DEFAULT '',
+               xar_datesubm         T         Null       DEFAULT NULL,
+               xar_dateappr         T         Null       DEFAULT NULL,
+               xar_datecertreq      T         Null       DEFAULT NULL,
+               xar_datecertaward    T         Null       DEFAULT NULL,
+               xar_datemodi         T         Null       DEFAULT NULL,
+               xar_modiby           I         NotNull    DEFAULT 0
      */
-    if (!xarVarFetch('exid',     'id',     $exid,     $exid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('objectid', 'id',     $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('invalid',  'str:1:', $invalid,  '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('number',   'int:1:', $number,   $number, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('name',     'str:1:', $name,     '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('userid',  'int:1:', $userid,  $userid,  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('planid',  'int:1:', $planid,  $planid,  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('itspstatus',    'str:1:', $itspstatus,    $itspstatus,    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('datesubm',  'int:1:', $datesubm,  $datesubm,  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('dateappr',  'int:1:', $dateappr,  $dateappr,  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('datecertreq',  'int:1:', $datecertreq,  $datecertreq,  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('datecertaward',  'int:1:', $datecertaward,  $datecertaward,  XARVAR_NOT_REQUIRED)) return;
+
     /* Argument check - make sure that all required arguments are present
      * and in the right format, if not then return to the add form with the
      * values that are there and a message with a session var. If you perform
      * this check now, you could do away with the check in the API along with
      * the exception that comes with it.
-     */
+    // Check to see if user can submit an ITSP?
     $item = xarModAPIFunc('itsp',
                           'user',
                           'validateitem',
                           array('name' => $name));
-
+     */
     // Argument check
     $invalid = array();
-    if (empty($number) || !is_numeric($number)) {
-        $invalid['number'] = 1;
+    if (empty($planid) || !is_numeric($planid)) {
+        $invalid['planid'] = 1;
         $number = '';
-    }
-    if (empty($name) || !is_string($name)) {
-        $invalid['name'] = 1;
-        $name = '';
-    }
-
-    if (!empty($name) && $item['name'] == $name) {
-        $invalid['duplicate'] = 1;
     }
     // check if we have any errors
     if (count($invalid) > 0) {
@@ -77,9 +73,14 @@ function itsp_user_create($args)
          * call the user_new function and return the template vars
          */
         return xarModFunc('itsp', 'user', 'new',
-                          array('name' => $name,
-                                'number' => $number,
-                                'invalid' => $invalid));
+                          array('userid'        => $userid,
+                                'planid'        => $planid,
+                                'itspstatus'    => $itspstatus,
+                                'datesubm'      => $datesubm,
+                                'dateappr'      => $dateappr,
+                                'datecertreq'   => $datecertreq,
+                                'datecertaward' => $datecertaward,
+                                'invalid'       => $invalid));
     }
     /* Confirm authorisation code. This checks that the form had a valid
      * authorisation code attached to it. If it did not then the function will
@@ -87,25 +88,20 @@ function itsp_user_create($args)
      * in false data to the system
      */
     if (!xarSecConfirmAuthKey()) return;
-    /* Notable by its absence there is no security check here. This is because
-     * the security check is carried out within the API function and as such we
-     * do not duplicate the work here
-     * The API function is called. Note that the name of the API function and
-     *the name of this function are identical, this helps a lot when
-     * programming more complex modules. The arguments to the function are
-     * passed in as their own arguments array
+    // Create the ITSP
+    $itspid = xarModAPIFunc('itsp',
+                            'user',
+                            'create',
+                              array('userid'        => $userid,
+                                    'planid'        => $planid,
+                                    'itspstatus'    => $itspstatus,
+                                    'datesubm'      => $datesubm,
+                                    'dateappr'      => $dateappr,
+                                    'datecertreq'   => $datecertreq,
+                                    'datecertaward' => $datecertaward));
+    /* The return value of the function is checked here
      */
-    $exid = xarModAPIFunc('itsp',
-                          'user',
-                          'create',
-                          array('name' => $name,
-                                'number' => $number));
-    /* The return value of the function is checked here, and if the function
-     * suceeded then an appropriate message is posted. Note that if the
-     * function did not succeed then the API function should have already
-     * posted a failure message so no action is required
-     */
-    if (!isset($exid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($itspid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     /* This function generated no output, and so now it is complete we redirect
      * the user to an appropriate page for them to carry on their work
      */

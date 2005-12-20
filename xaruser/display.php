@@ -12,7 +12,7 @@
  * @author ITSP Module Development Team
  */
 /**
- * Display an item
+ * Display the user's ITSP
  *
  * This is a standard function to provide detailed informtion on a single item
  * available from the module.

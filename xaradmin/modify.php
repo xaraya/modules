@@ -45,7 +45,7 @@ function itsp_admin_modify($args)
      */
     $item = xarModAPIFunc('itsp',
                           'user',
-                          'getplan',
+                          'get_plan',
                           array('planid' => $planid));
 
     /* Check for exceptions */
@@ -71,7 +71,7 @@ function itsp_admin_modify($args)
                  'mincredits'   => $mincredits,
                  'planrules'    => $planrules,
                  'dateopen'     => $dateopen,
-                 'dateclose'    => $dateclose
+                 'dateclose'    => $dateclose,
                  'invalid'      => $invalid,
                  'hookoutput'   => $hooks,
                  'item'         => $item);

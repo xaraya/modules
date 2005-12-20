@@ -1,6 +1,6 @@
 <?php
 /**
- * Add new item
+ * Add new item ITSP
  *
  * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
@@ -12,7 +12,7 @@
  * @author ITSP Module Development Team
  */
 /**
- * Add new item
+ * Add new ITSP
  *
  * This is a standard function that is called whenever an useristrator
  * wishes to create a new module item
@@ -31,14 +31,15 @@ function itsp_user_new($args)
     extract($args);
 
     /* Get parameters from whatever input we need. All arguments to this
-     * function should be obtained from xarVarFetch(). xarVarFetch allows
-     * the checking of the input variables as well as setting default
-     * values if needed. Getting vars from other places such as the
-     * environment is not allowed, as that makes assumptions that will
-     * not hold in future versions of Xaraya
      */
-    if (!xarVarFetch('number',  'int:1:', $number,  $number,  XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('name',    'str:1:', $name,    $name,    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('userid',        'int:1:', $userid,        $userid,  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('planid',        'int:1:', $planid,        $planid,  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('itspstatus',    'str:1:', $itspstatus,    $itspstatus,    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('datesubm',      'int:1:', $datesubm,      $datesubm,  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('dateappr',      'int:1:', $dateappr,      $dateappr,  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('datecertreq',   'int:1:', $datecertreq,   $datecertreq,  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('datecertaward', 'int:1:', $datecertaward, $datecertaward,  XARVAR_NOT_REQUIRED)) return;
+
     if (!xarVarFetch('invalid', 'array',  $invalid, $invalid, XARVAR_NOT_REQUIRED)) return;
     /* Initialise the $data variable that will hold the data to be used in
      * the blocklayout template, and get the common menu configuration - it
@@ -57,6 +58,7 @@ function itsp_user_new($args)
 
     $item = array();
     $item['module'] = 'itsp';
+    $item['itemtype'] = 2;
     $hooks = xarModCallHooks('item', 'new', '', $item);
 
     if (empty($hooks)) {
@@ -69,19 +71,45 @@ function itsp_user_new($args)
     }
     $data['hooks'] = '';
     /* For E_ALL purposes, we need to check to make sure the vars are set.
-     * If they are not set, then we need to set them empty to surpress errors
      */
-    if (empty($name)) {
-        $data['name'] = '';
+    if (empty($userid)) {
+        $data['userid'] = '';
     } else {
-        $data['name'] = $name;
+        $data['userid'] = $userid;
     }
 
-    if (empty($number)) {
-        $data['number'] = '';
+    if (empty($planid)) {
+        $data['planid'] = '';
     } else {
-        $data['number'] = $number;
+        $data['planid'] = $planid;
     }
+
+    if (empty($itspstatus)) {
+        $data['itspstatus'] = '';
+    } else {
+        $data['itspstatus'] = $itspstatus;
+    }
+    if (empty($datesubm)) {
+        $data['datesubm'] = '';
+    } else {
+        $data['datesubm'] = $datesubm;
+    }
+    if (empty($dateappr)) {
+        $data['dateappr'] = '';
+    } else {
+        $data['dateappr'] = $dateappr;
+    }
+    if (empty($datecertreq)) {
+        $data['datecertreq'] = '';
+    } else {
+        $data['datecertreq'] = $datecertreq;
+    }
+    if (empty($datecertaward)) {
+        $data['datecertaward'] = '';
+    } else {
+        $data['datecertaward'] = $datecertaward;
+    }
+
     /* Return the template variables defined in this function */
     return $data;
 }

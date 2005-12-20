@@ -22,21 +22,16 @@
  * @return item array, or false on failure
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
-function itsp_userapi_get($args)
+function itsp_userapi_get_plan($args)
 {
-    /* Get arguments from argument array - all arguments to this function
-     * should be obtained from the $args array, getting them from other places
-     * such as the environment is not allowed, as that makes assumptions that
-     * will not hold in future versions of Xaraya
-     */
     extract($args);
     /* Argument check - make sure that all required arguments are present and
      * in the right format, if not then set an appropriate error message
      * and return
      */
-    if (!isset($itspid) || !is_numeric($itspid)) {
+    if (!isset($planid) || !is_numeric($planid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-            'item ID', 'user', 'get', 'ITSP');
+            'item ID', 'user', 'get_plan', 'ITSP');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException($msg));
         return;
@@ -47,25 +42,25 @@ function itsp_userapi_get($args)
     /* It's good practice to name the table and column definitions you are
      * getting - $table and $column don't cut it in more complex modules
      */
-    $itsptable = $xartable['itsp_itsp'];
+    $planstable = $xartable['itsp_plans'];
     /* Get item - the formatting here is not mandatory, but it does make the
      * SQL statement relatively easy to read.  Also, separating out the sql
      * statement from the Execute() command allows for simpler debug operation
      * if it is ever needed
      */
     $query = "SELECT
-               xar_userid,
-               xar_planid,
-               xar_itspstatus,
-               xar_datesubm,
-               xar_dateappr,
-               xar_datecertreq,
-               xar_datecertaward,
+               xar_planname,
+               xar_plandesc,
+               xar_planrules,
+               xar_credits,
+               xar_mincredit,
+               xar_dateopen,
+               xar_dateclose,
                xar_datemodi,
                xar_modiby
-              FROM $itsptable
-              WHERE xar_itspid = ?";
-    $result = &$dbconn->Execute($query,array($itspid));
+              FROM $planstable
+              WHERE xar_planid = ?";
+    $result = &$dbconn->Execute($query,array($planid));
     /* Check for an error with the database code, adodb has already raised
      * the exception so we just return
      */
@@ -79,14 +74,8 @@ function itsp_userapi_get($args)
         return;
     }
     /* Obtain the item information from the result set */
-    list($userid, $planid,
-               $itspstatus,
-               $datesubm,
-               $dateappr,
-               $datecertreq,
-               $datecertaward,
-               $datemodi,
-               $modiby) = $result->fields;
+    list($planid, $planname, $plandesc, $planrules, $credits,
+         $mincredit, $dateopen, $dateclose, $datemodi, $modiby) = $result->fields;
     /* All successful database queries produce a result set, and that result
      * set should be closed when it has been finished with
      */
@@ -101,16 +90,16 @@ function itsp_userapi_get($args)
         return;
     }
     /* Create the item array */
-    $item = array('itspid'        => $itspid,
-                  'userid'        => $userid,
-                  'planid'        => $planid,
-                  'itspstatus'    => $itspstatus,
-                  'datesubm'      => $datesubm,
-                  'dateappr'      => $dateappr,
-                  'datecertreq'   => $datecertreq,
-                  'datecertaward' => $datecertaward,
-                  'datemodi'      => $datemodi,
-                  'modiby'        => $modiby);
+    $item = array('planid'      => $planid,
+                  'planname'    => $planname,
+                  'plandesc'    => $plandesc,
+                  'planrules'   => $planrules,
+                  'credits'     => $credits,
+                  'mincredit'   => $mincredits,
+                  'dateopen'    => $dateopen,
+                  'dateclose'   => $dateclose,
+                  'datemodi'    => $datemodi
+                  'modiby'      => $modiby);
     /* Return the item array */
     return $item;
 }
