@@ -56,25 +56,12 @@ function itsp_user_view()
      * Loop through each item and display it.
      */
     foreach ($items as $item) {
-        /* Let any transformation hooks know that we want to transform some text
-         * You'll need to specify the item id, and an array containing all the
-         * pieces of text that you want to transform (e.g. for autolinks, wiki,
-         * smilies, bbcode, ...).
-         * Note : for your module, you might not want to call transformation
-         * hooks in this overview list, but only in the display of the details
-         * in the display() function.
-         * list($item['name']) = xarModCallHooks('item',
-         * 'transform',
-         * $item['exid'],
-         * array($item['name']));
-         * Security check 2 - if the user has read access to the item, show a
-         * link to display the details of the item
-         */
-        if (xarSecurityCheck('ReadITSP', 0, 'Item', "$item[name]:All:$item[exid]")) {
+        // Add read link
+        if (xarSecurityCheck('ReadITSPPlan', 0, 'Plan', "$planid:All:All")) {
             $item['link'] = xarModURL('itsp',
                 'user',
                 'display',
-                array('exid' => $item['exid']));
+                array('planid' => $item['planid']));
             /* Security check 2 - else only display the item name (or whatever is
              * appropriate for your module)
              */
@@ -82,7 +69,7 @@ function itsp_user_view()
             $item['link'] = '';
         }
         /* Clean up the item text before display */
-        $item['name'] = xarVarPrepForDisplay($item['name']);
+        $item['planname'] = xarVarPrepForDisplay($item['planname']);
         /* Add this item to the list of items to be displayed */
         $data['items'][] = $item;
     }
@@ -98,14 +85,14 @@ function itsp_user_view()
      * table so that the pager function can do its job properly
      */
     $data['pager'] = xarTplGetPager($startnum,
-        xarModAPIFunc('itsp', 'user', 'countitems'),
+        xarModAPIFunc('itsp', 'user', 'countitems', array('itemtype'=>1)),
         xarModURL('itsp', 'user', 'view', array('startnum' => '%%')),
         xarModGetUserVar('itsp', 'itemsperpage', $uid));
 
     /* Same as above.  We are changing the name of the page to raise
      * better search engine compatibility.
      */
-    xarTplSetPageTitle(xarVarPrepForDisplay(xarML('View ITSPs')));
+    xarTplSetPageTitle(xarVarPrepForDisplay(xarML('View our Educational plans')));
     /* Return the template variables defined in this function */
     return $data;
 

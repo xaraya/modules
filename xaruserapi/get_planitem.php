@@ -22,16 +22,16 @@
  * @return item array, or false on failure
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
-function itsp_userapi_get_plan($args)
+function itsp_userapi_get_planitem($args)
 {
     extract($args);
     /* Argument check - make sure that all required arguments are present and
      * in the right format, if not then set an appropriate error message
      * and return
      */
-    if (!isset($planid) || !is_numeric($planid)) {
+    if (!isset($pitemid) || !is_numeric($pitemid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-            'item ID', 'user', 'get_plan', 'ITSP');
+            'item ID', 'user', 'get_planitem', 'ITSP');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException($msg));
         return;
@@ -42,25 +42,25 @@ function itsp_userapi_get_plan($args)
     /* It's good practice to name the table and column definitions you are
      * getting - $table and $column don't cut it in more complex modules
      */
-    $planstable = $xartable['itsp_plans'];
+    $planitemstable = $xartable['itsp_planitems'];
     /* Get item - the formatting here is not mandatory, but it does make the
      * SQL statement relatively easy to read.  Also, separating out the sql
      * statement from the Execute() command allows for simpler debug operation
      * if it is ever needed
      */
     $query = "SELECT
-               xar_planname,
-               xar_plandesc,
-               xar_planrules,
+               xar_pitemname,
+               xar_pitemdesc,
+               xar_pitemrules,
                xar_credits,
                xar_mincredit,
                xar_dateopen,
                xar_dateclose,
                xar_datemodi,
                xar_modiby
-              FROM $planstable
-              WHERE xar_planid = ?";
-    $result = &$dbconn->Execute($query,array($planid));
+              FROM $planitemstable
+              WHERE xar_pitemid = ?";
+    $result = &$dbconn->Execute($query,array($planitemid));
     /* Check for an error with the database code, adodb has already raised
      * the exception so we just return
      */
@@ -74,27 +74,34 @@ function itsp_userapi_get_plan($args)
         return;
     }
     /* Obtain the item information from the result set */
-    list($planname, $plandesc, $planrules, $credits,
-         $mincredit, $dateopen, $dateclose, $datemodi, $modiby) = $result->fields;
+    list($pitemname,
+           $pitemdesc,
+           $pitemrules,
+           $credits,
+           $mincredit,
+           $dateopen,
+           $dateclose,
+           $datemodi,
+           $modiby) = $result->fields;
     /* All successful database queries produce a result set, and that result
      * set should be closed when it has been finished with
      */
     $result->Close();
     // Security check
-    if (!xarSecurityCheck('ReadITSP', 1, 'ITSP', "$itspid: $planid:All")) {
+    if (!xarSecurityCheck('ReadITSPPlan', 1, 'Plan', "All:$pitemid:All")) {
         return;
     }
     /* Create the item array */
-    $item = array('planid'      => $planid,
-                  'planname'    => $planname,
-                  'plandesc'    => $plandesc,
-                  'planrules'   => $planrules,
-                  'credits'     => $credits,
-                  'mincredit'   => $mincredits,
-                  'dateopen'    => $dateopen,
-                  'dateclose'   => $dateclose,
-                  'datemodi'    => $datemodi,
-                  'modiby'      => $modiby);
+    $item = array('pitemid'     => $pitemid,
+                  'pitemname'   => $pitemname,
+                   'pitemdesc'  => $pitemdesc,
+                   'pitemrules' => $pitemrules,
+                   'credits'    => $credits,
+                   'mincredit'  => $mincredits,
+                   'dateopen'   => $dateopen,
+                   'dateclose'  => $dateclose,
+                   'datemodi'   => $datemodi,
+                   'modiby'     => $modiby);
     /* Return the item array */
     return $item;
 }

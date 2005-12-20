@@ -1,5 +1,8 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<!-- common admin menu for this module - remove link to the current function -->
+<xar:base-include-javascript module="base" filename="confirmlink.js" />
+<!-- common admin menu for this module - remove link to the current function
+<a href="#$loop:item['deleteurl']#" onclick="return xar_base_confirmLink(this, '#xarVarPrepForDisplay($loop:item['deleteconfirm'])#')">
+-->
 <!-- the variables used in this menu come from example_admin_menu() -->
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>ITSP Administration</xar:mlstring></span>

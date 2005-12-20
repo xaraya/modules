@@ -59,7 +59,7 @@
              *
             -->
             <div class="xar-form-input-wrapper-before">
-             <a href="&xar-modurl-example-admin-view;">
+             <a href="&xar-modurl-itsp-admin-view;">
                  <xar:mlstring>Cancel and Return</xar:mlstring>
              </a>
              </div>

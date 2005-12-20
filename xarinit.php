@@ -352,7 +352,7 @@ This table deals with the free courses. So: how to add the custom courses/items 
 
     xarRegisterMask('ReadITSPBlock', 'All', 'itsp', 'Block', 'All', 'ACCESS_OVERVIEW');
     // The ITSP seen from the student.
-    // $itspid: $planid
+    // $itspid:$planid
     xarRegisterMask('ViewITSP', 'All', 'itsp', 'ITSP', 'All:All:All', 'ACCESS_OVERVIEW');
     xarRegisterMask('ReadITSP', 'All', 'itsp', 'ITSP', 'All:All:All', 'ACCESS_READ');
     xarRegisterMask('EditITSP', 'All', 'itsp', 'ITSP', 'All:All:All', 'ACCESS_EDIT');
@@ -360,7 +360,7 @@ This table deals with the free courses. So: how to add the custom courses/items 
     xarRegisterMask('DeleteITSP', 'All', 'itsp', 'ITSP', 'All:All:All', 'ACCESS_DELETE');
     xarRegisterMask('AdminITSP', 'All', 'itsp', 'ITSP', 'All:All:All', 'ACCESS_ADMIN');
     // Let's seperate for the plans for now
-    // Planid
+    // $planid:$pitemid:
     //xarRegisterMask('ReadITSPBlock', 'All', 'itsp', 'Block', 'All', 'ACCESS_OVERVIEW');
     xarRegisterMask('ViewITSPPlan', 'All', 'itsp', 'Plan', 'All:All:All', 'ACCESS_OVERVIEW');
     xarRegisterMask('ReadITSPPlan', 'All', 'itsp', 'Plan', 'All:All:All', 'ACCESS_READ');
