@@ -1,27 +1,27 @@
 <?php
 /**
   Modify a ticket item
-  
+
   @author Brian McGilligan
   @return Template data
 */
 function helpdesk_user_modify($args)
 {
     extract($args);
-    
+
     xarVarFetch('tid',        'int:1:',  $tid,        null,  XARVAR_NOT_REQUIRED);
     xarVarFetch('confirm',    'isset',   $confirm,    null,  XARVAR_NOT_REQUIRED);
     xarVarFetch('itemtype',   'int',     $itemtype,   1,     XARVAR_NOT_REQUIRED);
-    
+
     if (!xarModAPILoad('helpdesk', 'user')) { return false; }
     if (!xarModAPILoad('security', 'user')) { return false; }
-         
+
     // If we have confirmation do the update
     if( !empty($confirm) )
     {
         $enforceauthkey = xarModGetVar('helpdesk', 'EnforceAuthKey');
         if ( $enforceauthkey && !xarSecConfirmAuthKey() ){ return false; }
-        
+
         /*
             Security check to prevent un authorized users from modifying it
         */
@@ -34,7 +34,7 @@ function helpdesk_user_modify($args)
             )
         );
         if( !$has_security ){ return false; }
-        
+
         if( !xarVarFetch('userid',     'str:1:',  $userid,  null,  XARVAR_NOT_REQUIRED) ){ return false; }
         if( !xarVarFetch('name',       'str:1:',  $name,  null,  XARVAR_NOT_REQUIRED) ){ return false; }
         if( !xarVarFetch('phone',      'str:1:',  $phone,  null,  XARVAR_NOT_REQUIRED) ){ return false; }
@@ -52,6 +52,7 @@ function helpdesk_user_modify($args)
             'userid'     => $userid,
             'name'       => $name,
             'subject'    => $subject,
+            'phone'      => $phone,
             'domain'     => $domain,
             'priority'   => $priority,
             'statusid'   => $statusid,
@@ -59,24 +60,35 @@ function helpdesk_user_modify($args)
             'assignedto' => $assignedto,
             'source'     => $source,
             'closedby'   => $closedby
-        );        
+        );
         $result = xarModAPIFunc('helpdesk', 'user', 'update', $params);
+
+        /**
+            Send an e-mail to user when the ticket is closed
+            @author MichelV.
+            $mail needs to be set
+        */
+        if( $statusid == '3' )
+        {
+            $mailaction = 'closed';
+            $params['mailaction'] = $mailaction;
+            $params['email']      = xarUserGetVar('email', $openedby);
+            $params['status']     = $statusid;
+            $mail = xarModFunc('helpdesk','user','sendmail', $params);
+            // Check if the email has been sent.
+            if( $mail === false ){ return false; }
+        }
 
         $item = array();
         $item['module'] = 'helpdesk';
-        $item['itemtype'] = $itemtype;        
+        $item['itemtype'] = $itemtype;
         $hooks = xarModCallHooks('item', 'update', $tid, $item);
-                
-        xarResponseRedirect(xarModURL('helpdesk', 'user', 'view',
-            array(
-                'tid'       => $tid,
-                'selection' => 'MYALL' // MYALL includes assigned tickets now
-            )
-        ));
-        
-        return true;                           
-    }    
-    
+
+        xarResponseRedirect(xarModURL('helpdesk', 'user', 'view'));
+
+        return true;
+    }
+
     /*
         Get the ticket Data, if we can not get it then we must not have privs for it.
     */
@@ -90,35 +102,35 @@ function helpdesk_user_modify($args)
     {
         $msg = xarML("You do not have the proper security clearance to view this ticket!");
         xarErrorSet(XAR_USER_EXCEPTION, 'NO_PRIVILEGES', $msg);
-        return false;    
+        return false;
     }
-    
+
     /*
         These funcs should be rethought once we get the rest working
     */
-    $data['priority'] = xarModAPIFunc('helpdesk', 'user', 'gets', 
+    $data['priority'] = xarModAPIFunc('helpdesk', 'user', 'gets',
         array(
             'itemtype' => 2
         )
     );
-    $data['status'] = xarModAPIFunc('helpdesk', 'user', 'gets', 
+    $data['status'] = xarModAPIFunc('helpdesk', 'user', 'gets',
         array(
             'itemtype' => 3
         )
     );
-    $data['sources'] = xarModAPIFunc('helpdesk', 'user', 'gets', 
+    $data['sources'] = xarModAPIFunc('helpdesk', 'user', 'gets',
         array(
             'itemtype' => 4
         )
     );
-    $data['reps'] = xarModAPIFunc('helpdesk', 'user', 'gets', 
+    $data['reps'] = xarModAPIFunc('helpdesk', 'user', 'gets',
         array(
             'itemtype' => 10
         )
     );
-        
-    $data['users'] = xarModAPIFunc('roles', 'user', 'getall');                  
-    
+
+    $data['users'] = xarModAPIFunc('roles', 'user', 'getall');
+
     $item = array();
     $item['module'] = 'helpdesk';
     $item['itemtype'] = $itemtype;
@@ -128,15 +140,15 @@ function helpdesk_user_modify($args)
     }else {
         $data['hookoutput'] = $hooks;
     }
-    
-    $data['tid']            = $tid;    
+
+    $data['tid']            = $tid;
     $data['menu']           = xarModFunc('helpdesk', 'user', 'menu');
     $data['EditAccess']     = xarSecurityCheck('edithelpdesk', 0);
     $data['UserLoggedIn']   = xarUserIsLoggedIn();
     $data['enforceauthkey'] = xarModGetVar('helpdesk', 'EnforceAuthKey');
-    $data['enabledimages']  = xarModGetVar('helpdesk', 'Enable Images');    
-    $data['summary']        = xarModFunc('helpdesk', 'user', 'summaryfooter');    
-        
-    return xarTplModule('helpdesk', 'user', 'modify', $data);    
+    $data['enabledimages']  = xarModGetVar('helpdesk', 'Enable Images');
+    $data['summary']        = xarModFunc('helpdesk', 'user', 'summaryfooter');
+
+    return xarTplModule('helpdesk', 'user', 'modify', $data);
 }
 ?>

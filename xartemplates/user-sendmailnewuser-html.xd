@@ -1,23 +1,24 @@
 <p>
    <xar:mlstring>Dear</xar:mlstring> #$name#,
 </p>
-
 <p>
     <xar:mlstring>
         You have submitted a ticket to our helpdesk system.
     </xar:mlstring>
 </p>
-
-
 <p>
-<xar:mlstring>Subject:</xar:mlstring> #$subject#<br />
-<xar:mlstring>Issue:</xar:mlstring> #$issue#<br />
-<xar:mlstring>Notes:</xar:mlstring> #$notes#<br />
-<xar:mlstring>Link to the ticket:</xar:mlstring> <a href="#$viewticket#">#$viewticket#</a>
+    <xar:mlstring>Subject:</xar:mlstring> #$subject#
 </p>
-
 <p>
-<xar:mlstring>Link all your tickets:</xar:mlstring> <a href="#$viewtickets#">#$viewtickets#</a>
+    <xar:mlstring>Issue:</xar:mlstring> #$issue#
+</p>
+<p>
+    <xar:mlstring>View the ticket:</xar:mlstring><br />
+    <a href="#$viewticket#">#$viewticket#</a>
+</p>
+<p>
+    <xar:mlstring>View all your tickets:</xar:mlstring><br />
+    <a href="#$viewtickets#">#$viewtickets#</a>
 </p>
 
 <xar:comment>
@@ -25,7 +26,6 @@
 More parameters available:
 $userid
 $name
-$whosubmit
 $phone
 $email
 $domain

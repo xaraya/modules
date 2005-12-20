@@ -1,19 +1,21 @@
 <xar:mlstring>Dear</xar:mlstring> #$name#,
-<xar:mlstring>The ticket that you have submitted to our helpdesk system has been closed.</xar:mlstring>
+
+<xar:mlstring>
+    The ticket that you submitted to our helpdesk system has been closed.
+</xar:mlstring>
 
 <xar:mlstring>Subject:</xar:mlstring> #$subject#<br />
-<xar:mlstring>Issue:</xar:mlstring> #$issue#<br />
-<xar:mlstring>Notes:</xar:mlstring> #$notes#<br />
-<xar:mlstring>Link to the ticket:</xar:mlstring> #$viewticket#<br />
 
-<xar:mlstring>Link all your tickets:</xar:mlstring> #$viewtickets#<br />
+<xar:mlstring>Link to the ticket:</xar:mlstring>
+#$viewticket#<br />
+
+<xar:mlstring>Link all your tickets:</xar:mlstring>
+#$viewtickets#<br />
 
 <xar:comment>
-
 More parameters available:
 $userid
 $name
-$whosubmit
 $phone
 $email
 $domain
@@ -23,10 +25,7 @@ $status
 $openedby
 $assignedto
 $closedby
-$issue
-$notes
 $viewticket
 $viewtickets
 $tid
-
 </xar:comment>
