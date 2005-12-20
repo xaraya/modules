@@ -51,3 +51,11 @@
 <xar:else />
     <div class="xar-error"><xar:mlstring>Please create a Dynamic Data item 'body' to hold your HTML</xar:mlstring></div>
 </xar:if>
+
+<xar:if condition="!empty($hooks)">
+    <xar:foreach in="$hooks" key="$hookmodule">
+    <xar:if condition="trim($hooks[$hookmodule]) ne ''">
+    <div>#$hooks[$hookmodule]#</div>
+    </xar:if>
+    </xar:foreach>
+</xar:if>
