@@ -752,11 +752,11 @@ function commerce_init()
             array('modName' => 'commerce',
                 'blockType' => 'currencies'))) return;
 
-    if (!xarModAPIFunc('blocks',
-            'admin',
-            'register_block_type',
-            array('modName' => 'commerce',
-                'blockType' => 'customers_status'))) return;
+    //if (!xarModAPIFunc('blocks',
+    //        'admin',
+    //        'register_block_type',
+    //        array('modName' => 'commerce',
+    //             'blockType' => 'customers_status'))) return;
 
     if (!xarModAPIFunc('blocks',
             'admin',
@@ -776,11 +776,11 @@ function commerce_init()
             array('modName' => 'commerce',
                 'blockType' => 'languages'))) return;
 
-    if (!xarModAPIFunc('blocks',
-            'admin',
-            'register_block_type',
-            array('modName' => 'commerce',
-                'blockType' => 'order_history'))) return;
+    //if (!xarModAPIFunc('blocks',
+    //        'admin',
+    //        'register_block_type',
+    //        array('modName' => 'commerce',
+    //            'blockType' => 'order_history'))) return;
 
     if (!xarModAPIFunc('blocks',
             'admin',
@@ -819,42 +819,69 @@ function commerce_init()
 # Register block instances
 #
 // Put a config menu in the 'left' blockgroup
-    $type = xarModAPIFunc('blocks', 'user', 'getblocktype', array('module' => 'commerce', 'type'=>'configmenu'));
-    $leftgroup = xarModAPIFunc('blocks', 'user', 'getgroup', array('name'=> 'left'));
-    $bid = xarModAPIFunc('blocks','admin','create_instance',array('type' => $type['tid'],
-                                                                  'name' => 'commerceconfig',
-                                                                  'state' => 0,
-                                                                  'groups' => array($leftgroup)));
+    $cur = xarModAPIFunc('blocks','user','get',array('name' => 'commerceconfig'));
+
+    if(!isset($cur)) {
+        $type = xarModAPIFunc('blocks', 'user', 'getblocktype', array('module' => 'commerce', 'type'=>'configmenu'));
+        $leftgroup = xarModAPIFunc('blocks', 'user', 'getgroup', array('name'=> 'left'));
+        $bid = xarModAPIFunc('blocks','admin','create_instance',array('type' => $type['tid'],
+                                                                      'name' => 'commerceconfig',
+                                                                      'state' => 0,
+                                                                      'groups' => array($leftgroup)));
+    }
 // Put an exit menu in the 'left' blockgroup
-    $type = xarModAPIFunc('blocks', 'user', 'getblocktype', array('module' => 'base', 'type'=>'menu'));
-    $leftgroup = xarModAPIFunc('blocks', 'user', 'getgroup', array('name'=> 'left'));
-    $bid = xarModAPIFunc('blocks','admin','create_instance',array('type' => $type['tid'],
-                                                                  'name' => 'commerceexit',
-                                                                  'content' => 'a:6:{s:14:"displaymodules";b:0;s:10:"showlogout";b:1;s:10:"displayrss";b:0;s:12:"displayprint";b:0;s:6:"marker";s:3:"[x]";s:7:"content";s:52:"index.php?module=commerce&type=user&func=exit|Exit||";}',
-                                                                  'state' => 0,
-                                                                  'groups' => array($leftgroup)));
+    $cur = xarModAPIFunc('blocks','user','get',array('name' => 'commerceexit'));
+    if(!isset($cur)) {
+        $type = xarModAPIFunc('blocks', 'user', 'getblocktype', array('module' => 'base', 'type'=>'menu'));
+        $leftgroup = xarModAPIFunc('blocks', 'user', 'getgroup', array('name'=> 'left'));
+        $bid = xarModAPIFunc('blocks','admin','create_instance',array('type' => $type['tid'],
+                                                                      'name' => 'commerceexit',
+                                                                      'content' => 'a:6:{s:14:"displaymodules";b:0;s:10:"showlogout";b:1;s:10:"displayrss";b:0;s:12:"displayprint";b:0;s:6:"marker";s:3:"[x]";s:7:"content";s:52:"index.php?module=commerce&type=user&func=exit|Exit||";}',
+                                                                      'state' => 0,
+                                                                      'groups' => array($leftgroup)));
+    }
 // Put a information block in the 'left' blockgroup
-    $type = xarModAPIFunc('blocks', 'user', 'getblocktype', array('module' => 'commerce', 'type'=>'information'));
-    $leftgroup = xarModAPIFunc('blocks', 'user', 'getgroup', array('name'=> 'left'));
-    $bid = xarModAPIFunc('blocks','admin','create_instance',array('type' => $type['tid'],
-                                                                  'name' => 'commerceinformation',
-                                                                  'state' => 0,
-                                                                  'groups' => array($leftgroup)));
+    $cur = xarModAPIFunc('blocks','user','get',array('name' => 'commerceexit'));
+    if(!isset($cur)) {
+        $type = xarModAPIFunc('blocks', 'user', 'getblocktype', array('module' => 'base', 'type'=>'menu'));
+        $leftgroup = xarModAPIFunc('blocks', 'user', 'getgroup', array('name'=> 'left'));
+        $bid = xarModAPIFunc('blocks','admin','create_instance',array('type' => $type['tid'],
+                                                                      'name' => 'commerceexit',
+                                                                      'content' => 'a:6:{s:14:"displaymodules";b:0;s:10:"showlogout";b:1;s:10:"displayrss";b:0;s:12:"displayprint";b:0;s:6:"marker";s:3:"[x]";s:7:"content";s:52:"index.php?module=commerce&type=user&func=exit|Exit||";}',
+                                                                      'state' => 0,
+                                                                      'groups' => array($leftgroup)));
+    }
+// Put a information block in the 'left' blockgroup
+    $cur = xarModAPIFunc('blocks','user','get',array('name' => 'commerceinformation'));
+    if(!isset($cur)) {
+        $type = xarModAPIFunc('blocks', 'user', 'getblocktype', array('module' => 'commerce', 'type'=>'information'));
+        $leftgroup = xarModAPIFunc('blocks', 'user', 'getgroup', array('name'=> 'left'));
+        $bid = xarModAPIFunc('blocks','admin','create_instance',array('type' => $type['tid'],
+                                                                      'name' => 'commerceinformation',
+                                                                      'state' => 0,
+                                                                      'groups' => array($leftgroup)));
+    }
 // Put a language block in the 'right' blockgroup
-    $type = xarModAPIFunc('blocks', 'user', 'getblocktype', array('module' => 'roles', 'type'=>'language'));
-    $rightgroup = xarModAPIFunc('blocks', 'user', 'getgroup', array('name'=> 'right'));
-    $bid = xarModAPIFunc('blocks','admin','create_instance',array('type' => $type['tid'],
-                                                                  'name' => 'commercelanguage',
-                                                                  'title' => xarML('Language'),
+    $cur = xarModAPIFunc('blocks','user','get',array('name' => 'commercelanguage'));
+    if(!isset($cur)) {
+        $type = xarModAPIFunc('blocks', 'user', 'getblocktype', array('module' => 'roles', 'type'=>'language'));
+        $rightgroup = xarModAPIFunc('blocks', 'user', 'getgroup', array('name'=> 'right'));
+        $bid = xarModAPIFunc('blocks','admin','create_instance',array('type' => $type['tid'],
+                                                                      'name' => 'commercelanguage',
+                                                                      'title' => xarML('Language'),
+                                                                      'state' => 0,
+                                                                      'groups' => array($rightgroup)));
+    }
+        // Put a currency block in the 'right' blockgroup
+    $cur = xarModAPIFunc('blocks','user','get',array('name' => 'commercecurrencies'));
+    if(!isset($cur)) {
+        $type = xarModAPIFunc('blocks', 'user', 'getblocktype', array('module' => 'commerce', 'type'=>'currencies'));
+        $rightgroup = xarModAPIFunc('blocks', 'user', 'getgroup', array('name'=> 'right'));
+        $bid = xarModAPIFunc('blocks','admin','create_instance',array('type' => $type['tid'],
+                                                                      'name' => 'commercecurrencies',
                                                                   'state' => 0,
                                                                   'groups' => array($rightgroup)));
-// Put a currency block in the 'right' blockgroup
-    $type = xarModAPIFunc('blocks', 'user', 'getblocktype', array('module' => 'commerce', 'type'=>'currencies'));
-    $rightgroup = xarModAPIFunc('blocks', 'user', 'getgroup', array('name'=> 'right'));
-    $bid = xarModAPIFunc('blocks','admin','create_instance',array('type' => $type['tid'],
-                                                                  'name' => 'commercecurrencies',
-                                                                  'state' => 0,
-                                                                  'groups' => array($rightgroup)));
+    }
 // Put a shopping cart block in the 'right' blockgroup
 //    $type = xarModAPIFunc('blocks', 'user', 'getblocktype', array('module' => 'commerce', 'type'=>'shopping_cart'));
 //    $rightgroup = xarModAPIFunc('blocks', 'user', 'getgroup', array('name'=> 'right'));
@@ -864,13 +891,15 @@ function commerce_init()
 //                                                                  'groups' => array($rightgroup)));
 
 // Put a admin info block in the 'right' blockgroup
-    $type = xarModAPIFunc('blocks', 'user', 'getblocktype', array('module' => 'commerce', 'type'=>'admin'));
-    $rightgroup = xarModAPIFunc('blocks', 'user', 'getgroup', array('name'=> 'right'));
-    $bid = xarModAPIFunc('blocks','admin','create_instance',array('type' => $type['tid'],
-                                                                  'name' => 'commerceadmininfo',
-                                                                  'state' => 0,
-                                                                  'groups' => array($rightgroup)));
-
+    $cur = xarModAPIFunc('blocks','user','get',array('name' => 'commerceadmininfo'));
+    if(!isset($cur)) {
+        $type = xarModAPIFunc('blocks', 'user', 'getblocktype', array('module' => 'commerce', 'type'=>'admin'));
+        $rightgroup = xarModAPIFunc('blocks', 'user', 'getgroup', array('name'=> 'right'));
+        $bid = xarModAPIFunc('blocks','admin','create_instance',array('type' => $type['tid'],
+                                                                      'name' => 'commerceadmininfo',
+                                                                      'state' => 0,
+                                                                      'groups' => array($rightgroup)));
+    }
 # --------------------------------------------------------
 #
 # Create a parent category for commerce
@@ -888,11 +917,14 @@ function commerce_init()
 #
 
 	$everybody = xarFindRole('Everybody');
-	$new = array('name' => 'CommerceRoles',
-				 'itemtype' => ROLES_GROUPTYPE,
-				 'parentid' => $everybody->getID(),
-				);
-	$uid = xarModAPIFunc('roles','admin','create',$new);
+    $curRole = xarFindRole('CommerceRoles');
+    if(!isset($curRole)) {
+        $new = array('name' => 'CommerceRoles',
+                     'itemtype' => ROLES_GROUPTYPE,
+                     'parentid' => $everybody->getID(),
+                     );
+        $uid = xarModAPIFunc('roles','admin','create',$new);
+    }
 
 # --------------------------------------------------------
 #
@@ -941,10 +973,11 @@ function commerce_delete()
     }
 
     // Delete the DD objects created by commerce modules
-	$ice_objects = unserialize(xarModGetVar('commerce','ice_objects'));
+	$ice_objects = @unserialize(xarModGetVar('commerce','ice_objects'));
+    if(!empty($ice_objects)) {
 	foreach ($ice_objects as $key => $value)
 	    $result = xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $key));
-
+    }
 	// Purge all the roles created by this module
 	$role = xarFindRole('commerceroles');
 	$descendants = $role->getDescendants();
