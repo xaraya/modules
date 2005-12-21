@@ -814,6 +814,24 @@ function products_init()
 
 # --------------------------------------------------------
 #
+# Delete block details for this module (for now)
+#
+    $blocktypes = xarModAPIfunc(
+        'blocks', 'user', 'getallblocktypes',
+        array('module' => 'products')
+    );
+
+    // Delete block types.
+    if (is_array($blocktypes) && !empty($blocktypes)) {
+        foreach($blocktypes as $blocktype) {
+            $result = xarModAPIfunc(
+                'blocks', 'admin', 'delete_type', $blocktype
+            );
+        }
+    }
+
+# --------------------------------------------------------
+#
 # Register block types
 #
     if (!xarModAPIFunc('blocks',
