@@ -37,6 +37,24 @@ function vendors_init()
 
 # --------------------------------------------------------
 #
+# Delete block details for this module (for now)
+#
+    $blocktypes = xarModAPIfunc(
+        'blocks', 'user', 'getallblocktypes',
+        array('module' => 'vendors')
+    );
+
+    // Delete block types.
+    if (is_array($blocktypes) && !empty($blocktypes)) {
+        foreach($blocktypes as $blocktype) {
+            $result = xarModAPIfunc(
+                'blocks', 'admin', 'delete_type', $blocktype
+            );
+        }
+    }
+
+# --------------------------------------------------------
+#
 # Register block types
 #
     if (!xarModAPIFunc('blocks',
@@ -97,16 +115,22 @@ function vendors_init()
 	xarModSetVar('commerce','ice_objects',serialize($objects));
 
 	$parent = xarFindRole('CommerceRoles');
-	$new = array('name' => 'Suppliers',
-				 'itemtype' => ROLES_GROUPTYPE,
-				 'parentid' => $parent->getID(),
-				);
-	$uid1 = xarModAPIFunc('roles','admin','create',$new);
-	$new = array('name' => 'Manufacturers',
-				 'itemtype' => ROLES_GROUPTYPE,
-				 'parentid' => $parent->getID(),
-				);
-	$uid1 = xarModAPIFunc('roles','admin','create',$new);
+	$role = xarFindRole('Suppliers');
+	if (empty($role)) {
+		$new = array('name' => 'Suppliers',
+					 'itemtype' => ROLES_GROUPTYPE,
+					 'parentid' => $parent->getID(),
+					);
+		$uid1 = xarModAPIFunc('roles','admin','create',$new);
+	}
+	$role = xarFindRole('Manufacturers');
+	if (empty($role)) {
+		$new = array('name' => 'Manufacturers',
+					 'itemtype' => ROLES_GROUPTYPE,
+					 'parentid' => $parent->getID(),
+					);
+		$uid1 = xarModAPIFunc('roles','admin','create',$new);
+	}
 
 # --------------------------------------------------------
 #
