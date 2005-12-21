@@ -40,7 +40,7 @@ function customers_init()
 # Set extensions
 #
 
-    $ice_objects = array('ice_customers');
+    $ice_objects = array('ice_customers','ice_customer_groups');
 
     // Treat destructive right now
     $existing_objects  = xarModApiFunc('dynamicdata','user','getobjects');
