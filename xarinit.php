@@ -37,6 +37,35 @@ function customers_init()
 
 # --------------------------------------------------------
 #
+# Delete block details for this module (for now)
+#
+    $blocktypes = xarModAPIfunc(
+        'blocks', 'user', 'getallblocktypes',
+        array('module' => 'customers')
+    );
+
+    // Delete block types.
+    if (is_array($blocktypes) && !empty($blocktypes)) {
+        foreach($blocktypes as $blocktype) {
+            $result = xarModAPIfunc(
+                'blocks', 'admin', 'delete_type', $blocktype
+            );
+        }
+    }
+
+# --------------------------------------------------------
+#
+# Register block types
+#
+    if (!xarModAPIFunc('blocks',
+            'admin',
+            'register_block_type',
+            array('modName' => 'customers',
+                'blockType' => 'customers_status'))) return;
+
+
+# --------------------------------------------------------
+#
 # Set extensions
 #
 
@@ -68,12 +97,15 @@ function customers_init()
 
 	xarModSetVar('commerce','ice_objects',serialize($objects));
 
-	$parent = xarFindRole('CommerceRoles');
-	$new = array('name' => 'Customers',
-				 'itemtype' => ROLES_GROUPTYPE,
-				 'parentid' => $parent->getID(),
-				);
-	$uid1 = xarModAPIFunc('roles','admin','create',$new);
+	$role = xarFindRole('Customers');
+	if (empty($role)) {
+		$parent = xarFindRole('CommerceRoles');
+		$new = array('name' => 'Customers',
+					 'itemtype' => ROLES_GROUPTYPE,
+					 'parentid' => $parent->getID(),
+					);
+		$uid1 = xarModAPIFunc('roles','admin','create',$new);
+	}
 
 # --------------------------------------------------------
 #
