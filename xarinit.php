@@ -41,7 +41,6 @@ function customers_init()
 #
 
     $ice_objects = array('ice_customers');
-    $ice_objects = array();
 
     // Treat destructive right now
     $existing_objects  = xarModApiFunc('dynamicdata','user','getobjects');
