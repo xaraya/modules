@@ -149,7 +149,9 @@ function xarbb_latestpostsblock_display($blockinfo)
                     }
                 }
                 $username = $usernames[$topic['tposter']];
-
+                if ($topic['tstatus']==5){
+                    $topic['tid']=$topic['tpost'];
+                }
                 //Put each topic in consistent format for post comparison
                 $postlist[]=array(
                           'tid'       => $topic['tid'],
