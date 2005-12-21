@@ -125,6 +125,24 @@ function carts_init()
 
 # --------------------------------------------------------
 #
+# Delete block details for this module (for now)
+#
+    $blocktypes = xarModAPIfunc(
+        'blocks', 'user', 'getallblocktypes',
+        array('module' => 'carts')
+    );
+
+    // Delete block types.
+    if (is_array($blocktypes) && !empty($blocktypes)) {
+        foreach($blocktypes as $blocktype) {
+            $result = xarModAPIfunc(
+                'blocks', 'admin', 'delete_type', $blocktype
+            );
+        }
+    }
+
+# --------------------------------------------------------
+#
 # Register block types
 #
     if (!xarModAPIFunc('blocks',
@@ -132,6 +150,12 @@ function carts_init()
             'register_block_type',
             array('modName' => 'carts',
                 'blockType' => 'shopping_cart'))) return;
+
+    if (!xarModAPIFunc('blocks',
+            'admin',
+            'register_block_type',
+            array('modName' => 'carts',
+                'blockType' => 'order_history'))) return;
 
 # --------------------------------------------------------
 #
