@@ -204,29 +204,6 @@ function commerce_init()
 
     /** END ICE MODEL **/
 
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_customers";
-    if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_commerce_customers (
-       customers_id int NOT NULL auto_increment,
-       customers_status int(5) DEFAULT '1' NOT NULL,
-       customers_gender char(1) NOT NULL,
-       customers_firstname varchar(32) NOT NULL,
-       customers_lastname varchar(32) NOT NULL,
-       customers_dob datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
-       customers_email_address varchar(96) NOT NULL,
-       customers_default_address_id int NOT NULL,
-       customers_telephone varchar(32) NOT NULL,
-       customers_fax varchar(32),
-       customers_password varchar(40) NOT NULL,
-       customers_newsletter char(1),
-       customers_newsletter_mode char( 1 ) DEFAULT '0' NOT NULL,
-       member_flag char(1) DEFAULT '0' NOT NULL,
-       delete_user char(1) DEFAULT '1' NOT NULL,
-       account_type int(1) NOT NULL default '0',
-       PRIMARY KEY (customers_id)
-    )";
-    if (!$q->run($query)) return;
-
     $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_customers_basket";
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_commerce_customers_basket (
@@ -249,19 +226,6 @@ function commerce_init()
       products_options_id int NOT NULL,
       products_options_value_id int NOT NULL,
       PRIMARY KEY (customers_basket_attributes_id)
-    )";
-    if (!$q->run($query)) return;
-
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_customers_info";
-    if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_commerce_customers_info (
-      customers_info_id int NOT NULL,
-      customers_info_date_of_last_logon datetime,
-      customers_info_number_of_logons int(5),
-      customers_info_date_account_created datetime,
-      customers_info_date_account_last_modified datetime,
-      global_product_notifications int(1) DEFAULT '0',
-      PRIMARY KEY (customers_info_id)
     )";
     if (!$q->run($query)) return;
 
