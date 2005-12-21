@@ -244,29 +244,6 @@ function commerce_init()
     )";
     if (!$q->run($query)) return;
 
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_customers_status";
-    if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_commerce_customers_status (
-      customers_status_id int(11) NOT NULL default '0',
-      language_id int(11) NOT NULL DEFAULT '1',
-      customers_status_name VARCHAR(32) NOT NULL DEFAULT '',
-      customers_status_public int(1) NOT NULL DEFAULT '1',
-      customers_status_image varchar(64) DEFAULT NULL,
-      customers_status_discount decimal(4,2) DEFAULT '0',
-      customers_status_ot_discount_flag char(1) NOT NULL DEFAULT '0',
-      customers_status_ot_discount decimal(4,2) DEFAULT '0',
-      customers_status_graduated_prices varchar(1) NOT NULL DEFAULT '0',
-      customers_status_show_price int(1) NOT NULL DEFAULT '1',
-      customers_status_show_price_tax int(1) NOT NULL DEFAULT '1',
-      customers_status_add_tax_ot  int(1) NOT NULL DEFAULT '0',
-      customers_status_payment_unallowed varchar(255) NOT NULL,
-      customers_status_shipping_unallowed varchar(255) NOT NULL,
-      customers_status_discount_attributes  int(1) NOT NULL DEFAULT '0',
-      PRIMARY KEY  (customers_status_id,language_id),
-      KEY idx_orders_status_name (customers_status_name)
-    )";
-    if (!$q->run($query)) return;
-
     $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_customers_status_history";
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_commerce_customers_status_history (
