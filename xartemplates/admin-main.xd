@@ -41,7 +41,7 @@
    <ul style="list-style: disc;">
       <li><a title="#xarML('Bible Module - Xaraya Extension 550')#" href="http://www.xaraya.com/index.php/release/550.html" target="_blank">Xaraya Extension and Releases</a> - <xar:mlstring>Bible module's extension page.  Click on the Version History tab at the bottom to get the latest release information.</xar:mlstring>
       </li>
-      <li><a href="http://www.curtisfarnham.com/" target="_blank">www.curtisfarnham.com</a> - <xar:mlstring>Author's website</xar:mlstring>
+      <li><a href="http://xaraya.curtisfarnham.com/" target="_blank">www.curtisfarnham.com</a> - <xar:mlstring>Author's website</xar:mlstring>
       </li>
   </ul>
   <p class="xar-sub">

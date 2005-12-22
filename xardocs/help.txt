@@ -134,4 +134,4 @@ xardocs/randomblock.txt for important usage information.
 
 
 ---------------
-Curtis Farnham - http://www.curtisfarnham.com/
+Curtis Farnham - http://xaraya.curtisfarnham.com/
