@@ -6,58 +6,60 @@
 </div>
 <div class="xar-mod-body">
 <form name="post" id="post" action="&xar-modurl-authldap-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded">
-        <fieldset>
+               <fieldset>
             <legend>
                     <xar:mlstring>LDAP Server Configuration</xar:mlstring>
             </legend>
             <input type="hidden" name="authid" id="authid" value="#$authid#" />
             <div class="xar-standard-box-padding ">
-                <xar:mlstring>The LDAP server settings are also configurable from the</xar:mlstring>
-                <a href="#xarModURL('xarldap', 'admin', 'modifyconfig')#">xarldap module</a>.
+                <xar:ml>
+                    <xar:mlstring>If you are configuring Xaraya to use LDAP for user authentication, you should configure the LDAP server within the <a href="#(1)">authldap module</a>.</xar:mlstring>
+                    <xar:mlvar>#xarModURL('authldap', 'admin', 'modifyconfig')#</xar:mlvar>
+                </xar:ml>
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="ldapserver" title="#xarML('LDAP Server Name or IP')#" class="xar-form-label">
                     <xar:mlstring>LDAP Server Name or IP</xar:mlstring>
                 </label>
-                <input type="text" id="ldapserver" name="ldapserver" size="30" value="#$ldapservervalue#" />
+                <input type="text" id="ldapserver" name="ldapserver" value="#$ldapservervalue#" />
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="portnumber" title="#xarML('LDAP Server Port Number')#" class="xar-form-label">
                     <xar:mlstring>LDAP Server Port Number</xar:mlstring>
                 </label>
-                <input type="text" id="portnumber" name="portnumber" size="30" value="#$portnumbervalue#" />
+                <input type="text" id="portnumber" name="portnumber" value="#$portnumbervalue#" />
             </div>
-            <div class="xar-standard-box-padding ">
+            <div class="xar-standard-box-padding">
                 <b><xar:mlstring>Note: </xar:mlstring></b><xar:mlstring>If the server name contains "ldap://" or "ldaps://", then the port number is ignored.  Instead, append the port number to the server name as in "ldaps://server:port".</xar:mlstring>
             </div>
             <div class="xar-form-input-wrapper">
-                <label for="anonymousbind" title="#xarML('Anonymously Bind to Server')#" class="xar-form-label">
+                <label for="anonymousbindvalue" title="#xarML('Anonymously Bind to Server')#" class="xar-form-label">
                     <xar:mlstring>Anonymously Bind to Server</xar:mlstring>
                 </label>
                 <xar:if condition="$anonymousbindvalue eq 'true'">
-                    <input type="checkbox" id="anonymousbind name="anonymousbind" value="1" checked="checked" />
+                    <input type="checkbox" id="anonymousbind" name="anonymousbind" value="1" checked="checked"/>
                 <xar:else/>
-                    <input type="checkbox" id="anonymousbind name="anonymousbind" value="1" />
+                    <input type="checkbox" id="anonymousbind" name="anonymousbind" value="1" />
                 </xar:if>
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="binddn" title="#xarML('LDAP bind DN')#" class="xar-form-label">
-                    <xar:mlstring>LDAP Bind DN</xar:mlstring>
+                    <xar:mlstring>LDAP bind DN</xar:mlstring>
                 </label>
-                <input type="text" id="binddn" name="binddn" size="30" value="#$binddnvalue#" />
+                <input type="text" id="binddn" name="binddn" value="#$binddnvalue#" />
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="uidfield" title="#xarML('LDAP UserID Field Name')#" class="xar-form-label">
                     <xar:mlstring>LDAP UserID Field Name</xar:mlstring>
                 </label>
-                <input type="text" id="uidfield" name="uidfield" size="30" value="#$uidfieldvalue#" />
+                <input type="text" id="uidfield" name="uidfield" value="#$uidfieldvalue#" />
             </div>
             <div class="xar-form-input-wrapper">
-                <label for="searchuserdn" title="#xarML('Search User DN')#" class="xar-form-label">
-                    <xar:mlstring>Search User DN</xar:mlstring>
+                <label for="uidfield" title="#xarML('Search User DN')#" class="xar-form-label">
+                        <xar:mlstring>Search User DN</xar:mlstring>
                 </label>
                 <xar:if condition="$searchuserdnvalue eq 'true'">
-                    <input type="checkbox" id="searchuserdn" name="searchuserdn" value="1" checked="checked" />
+                    <input type="checkbox" id="searchuserdn" name="searchuserdn" value="1" checked="checked"/>
                 <xar:else/>
                     <input type="checkbox" id="searchuserdn" name="searchuserdn" value="1" />
                 </xar:if>
@@ -66,20 +68,20 @@
                 <label for="adminid" title="#xarML('LDAP Admin ID')#" class="xar-form-label">
                     <xar:mlstring>LDAP Admin ID</xar:mlstring>
                 </label>
-                <input type="text" id="adminid" name="adminid" size="30" value="#$adminidvalue#" />
+                <input type="text" id="adminid" name="adminid" value="#$adminidvalue#" />
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="adminpasswd" title="#xarML('LDAP Admin Password')#" class="xar-form-label">
                     <xar:mlstring>LDAP Admin Password</xar:mlstring>
                 </label>
-                <input type="password" id="adminpasswd" name="adminpasswd" size="30" value="#$adminpasswdvalue#" />
+                <input type="password" id="adminpasswd" name="adminpasswd" value="#$adminpasswdvalue#" />
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="tls" title="#xarML('LDAP Admin Password')#" class="xar-form-label">
                     <xar:mlstring>Use TLS (LDAP Protocol 3 only)</xar:mlstring>
                 </label>
                 <xar:if condition="$tls eq 'true'">
-                    <input type="checkbox" id="tls" name="tls" value="1" checked="checked" />
+                    <input type="checkbox" id="tls" name="tls" value="1" checked="checked"/>
                 <xar:else/>
                     <input type="checkbox" id="tls" name="tls" value="1" />
                 </xar:if>
@@ -187,45 +189,45 @@
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="ldap_base4groups" title="#xarML('LDAP base for group search')#" class="xar-form-labellong">
-                    <xar:mlstring>LDAP base for group search</xar:mlstring></td>
+                    <xar:mlstring>LDAP base for group search</xar:mlstring>
                 </label>
-                <input type="text" id="ldap_base4groups" name="ldap_base4groups" size="30" value="#$ldap_base4groups#" /></td>
+                <input type="text" id="ldap_base4groups" name="ldap_base4groups" size="30" value="#$ldap_base4groups#" />
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="ldap_groups_to_import" title="#xarML('LDAP groups to import')#" class="xar-form-labellong">
-                    <xar:mlstring>LDAP groups to import (separated by comma <kdb>','</kdb>)</xar:mlstring></td>
+                    <xar:mlstring>LDAP groups to import (separated by comma <kdb>','</kdb>)</xar:mlstring>
                 </label>
-                <input type="text" id="ldap_groups_to_import" name="ldap_groups_to_import" size="30" value="#$ldap_groups_to_import#" /></td>
+                <input type="text" id="ldap_groups_to_import" name="ldap_groups_to_import" size="30" value="#$ldap_groups_to_import#" />
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="group_name_attrname" title="#xarML('LDAP attribute name: group name')#" class="xar-form-labellong">
-                    <xar:mlstring>LDAP attribute name: group name</xar:mlstring></td>
+                    <xar:mlstring>LDAP attribute name: group name</xar:mlstring>
                 </label>
-                <input type="text" id="group_name_attrname" name="group_name_attrname" size="30" value="#$group_name_attrname#" /></td>
+                <input type="text" id="group_name_attrname" name="group_name_attrname" size="30" value="#$group_name_attrname#" />
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="group_ref_attrname" title="#xarML('LDAP attribute name: children group reference')#" class="xar-form-labellong">
-                    <xar:mlstring>LDAP attribute name: children group reference</xar:mlstring></td>
+                    <xar:mlstring>LDAP attribute name: children group reference</xar:mlstring>
                 </label>
-                <input type="text" id="group_ref_attrname" name="group_ref_attrname" size="30" value="#$group_ref_attrname#" /></td>
+                <input type="text" id="group_ref_attrname" name="group_ref_attrname" size="30" value="#$group_ref_attrname#" />
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="group_ref_attrtype" title="#xarML('LDAP attribute type: children group reference')#" class="xar-form-labellong">
-                    <xar:mlstring>LDAP attribute type: children group reference</xar:mlstring></td>
+                    <xar:mlstring>LDAP attribute type: children group reference</xar:mlstring>
                 </label>
-                <input type="text" id="group_ref_attrtype" name="group_ref_attrtype" size="30" value="#$group_ref_attrtype#" /></td>
+                <input type="text" id="group_ref_attrtype" name="group_ref_attrtype" size="30" value="#$group_ref_attrtype#" />
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="user_ref_attrname" title="#xarML('LDAP attribute name: user member reference')#" class="xar-form-labellong">
-                    <xar:mlstring>LDAP attribute name: user member reference</xar:mlstring></td>
+                    <xar:mlstring>LDAP attribute name: user member reference</xar:mlstring>
                 </label>
-                <input type="text" id="user_ref_attrname" name="user_ref_attrname" size="30" value="#$user_ref_attrname#" /></td>
+                <input type="text" id="user_ref_attrname" name="user_ref_attrname" size="30" value="#$user_ref_attrname#" />
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="user_ref_attrtype" title="#xarML('LDAP attribute type: user member reference')#" class="xar-form-labellong">
-                    <xar:mlstring>LDAP attribute type: user member reference</xar:mlstring></td>
+                    <xar:mlstring>LDAP attribute type: user member reference</xar:mlstring>
                 </label>
-                <input type="text" id="user_ref_attrtype" name="user_ref_attrtype" size="30" value="#$user_ref_attrtype#" /></td>
+                <input type="text" id="user_ref_attrtype" name="user_ref_attrtype" size="30" value="#$user_ref_attrtype#" />
             </div>
         </fieldset>
         <div class="xar-standard-box-padding ">
