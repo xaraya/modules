@@ -12,7 +12,7 @@
 
 function vendors_admin_suppliers()
 {
-    return xarModFunc('commerce','admin','commoninfo_object',array('objectname' => 'ice_suppliers'));
+    return xarModFunc('commerce','admin','commoninfo_object',array('objectname' => 'ice_suppliers', 'tplmodule' => 'vendors'));
 }
 
 ?>
