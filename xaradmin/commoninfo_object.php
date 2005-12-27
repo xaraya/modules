@@ -2,15 +2,15 @@
 /**
  *  Common UI function to wrap common info objects rendering
  *
- * @param string objectname The object which contains the definition (and data) 
+ * @param string objectname The object which contains the definition (and data)
  * @author Marcel van der Boom <marcel@xaraya.com>
  *
  */
 function commerce_admin_commoninfo_object($args = array() )
 {
-    /* 
+    /*
         These three are from the older pages, we probably want to change these
-    
+
         For the common info pages, we probably want to be able to inject the following
         for better access:
         - itemid   : which itemid should be selected/active/visible etc.
@@ -20,14 +20,14 @@ function commerce_admin_commoninfo_object($args = array() )
     if(!xarVarFetch('page',   'int',  $page, 1, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('cID',    'int',  $cID, NULL, XARVAR_DONT_SET)) {return;}
     extract($args);
-    
+
     // Do we still need this here?
     $localeinfo = xarLocaleGetInfo(xarMLSGetSiteLocale());
     $data['language'] = $localeinfo['lang'] . "_" . $localeinfo['country'];
     $data['cInfo'] = isset($cInfo) ? get_object_vars($cInfo) : '';
     $data['page'] = $page;
     $data['action'] = $action;
-    
+
     // Retrieve the object info from DD
     $objectInfo = xarModApiFunc('dynamicdata','user','getobjectinfo', array('name' => $objectname));
     if(!$objectInfo) {
@@ -41,6 +41,8 @@ function commerce_admin_commoninfo_object($args = array() )
     $data['objectlabel'] = xarML($objectInfo['label']); // What sort of effect does this have?
     // TODO: get the first item, not itemid 1, that might not even exist.
     $data['itemid'] = isset($cId) ? $cId : 1;
+    $data['tplmodule'] = isset($tplmodule) ? $tplmodule : 'dynamicdata';
+
 
     $data['itemsperpage'] = xarModGetVar('commerce', 'itemsperpage');
     $data['use_grouping'] = isset($use_grouping) ? $use_grouping : false;
