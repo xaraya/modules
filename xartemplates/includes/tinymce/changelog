@@ -1,7 +1,15 @@
 Version 2.0.2 (2005-xx-xx)
 	Added updated Danish language pack contributed by Jan Moelgaard, John Dalsgaard and Bo Frederiksen.
+	Added new save_onsavecallback option to the save plugin, this function is called on save.
+	Added new save_enablewhendirty option to the save plugin, this will disable the button until changes are made.
+	Added new onpageload callback event, this event is called when the page is loaded but before instances are made.
+	Fixed various documentation errors and typos, modified the FAQ.
+	Fixed issue where the first handleNodeChange call was done to early in initialization.
+	Fixed issue with Dutch language pack for advlink plugin.
 	Fixed bug where mceVisualAid class wasn't removed from TH elements on save.
-	Fixed bug where the href attribute area elements gets converted to xhref. 
+	Fixed bug where the href attribute area elements gets converted to xhref.
+	Fixed bug with document relative anchors being forced absolute even when the convert_urls was set to false.
+	Fixed issue with CSS where "arrow" was used instead of "default" for cursor replacement.
 	Fixed XHTML compliance for Preview plugin contributed by Bo Frederiksen.
 	Fixed entity decoding problem with insert button of the advhr plugin contributed by Bo Frederiksen.
 Version 2.0.1 (2005-12-02)

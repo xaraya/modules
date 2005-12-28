@@ -143,3 +143,26 @@ a {
 thead {
 	background-color: #E6EBF1;	
 }
+
+.btable {
+}
+
+.btable th {
+	border: 1px solid gray;
+	vertical-align: top;
+}
+
+.btable td {
+	border: 1px solid gray;
+	vertical-align: top;
+}
+
+.plist {
+	list-style-type: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+.plist li {
+	padding-bottom: 3px;
+}

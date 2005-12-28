@@ -1,9 +1,9 @@
-* Version 1.0.1 16 Dec 05
+* Version 1.0.1 26 Dec 05
 - Fix for href to xhref conversion bug
 - updated danish language pack
-- minor fixes 
+- minor fixes
 - addition of configurable js compressor for increased performance
-
+- Updated compressor file with security fixes
 
 * Version 1.0.0 2 Dec 05
 - Many many bug fixes and integrating tinymce 2.0

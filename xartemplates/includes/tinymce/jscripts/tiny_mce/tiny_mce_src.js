@@ -1,7 +1,7 @@
 /**
  * $RCSfile: tiny_mce_src.js,v $
- * $Revision: 1.283 $
- * $Date: 2005/12/07 19:27:17 $
+ * $Revision: 1.287 $
+ * $Date: 2005/12/21 15:26:16 $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004, Moxiecode Systems AB, All rights reserved.
@@ -806,9 +806,6 @@ TinyMCE.prototype.setupContent = function(editor_id) {
 	tinyMCE.selectedInstance = inst;
 	tinyMCE.selectedElement = inst.contentWindow.document.body;
 
-	if (!inst.isHidden())
-		tinyMCE.triggerNodeChange(false, true);
-
 	// Call custom DOM cleanup
 	tinyMCE._customCleanup(inst, "insert_to_editor_dom", inst.getBody());
 	tinyMCE._customCleanup(inst, "setup_content_dom", inst.getBody());
@@ -822,6 +819,9 @@ TinyMCE.prototype.setupContent = function(editor_id) {
 	inst.undoLevels[inst.undoLevels.length] = inst.startContent;
 
 	tinyMCE.operaOpacityCounter = -1;
+
+	if (!inst.isHidden())
+		tinyMCE.triggerNodeChange(false, true);
 };
 
 TinyMCE.prototype.cleanupHTMLCode = function(s) {
@@ -844,17 +844,21 @@ TinyMCE.prototype.cleanupHTMLCode = function(s) {
 		s = s.replace(/<p><hr \/><\/p>/gi, "<hr>");
 
 	// Convert relative anchors to absolute URLs ex: #something to file.htm#something
-	s = s.replace(new RegExp('(href=\"?)(\\s*?#)', 'gi'), '$1' + tinyMCE.settings['document_base_url'] + "#");
+	if (tinyMCE.getParam('convert_urls'))
+		s = s.replace(new RegExp('(href=\"?)(\\s*?#)', 'gi'), '$1' + tinyMCE.settings['document_base_url'] + "#");
 
 	return s;
 };
 
 TinyMCE.prototype.storeAwayURLs = function(s) {
 	// Remove all mce_src, mce_href and replace them with new ones
-	s = s.replace(new RegExp('mce_src\\s*=\\s*\"[^ >\"]*\"', 'gi'), '');
-	s = s.replace(new RegExp('mce_href\\s*=\\s*\"[^ >\"]*\"', 'gi'), '');
-	s = s.replace(new RegExp('src\\s*=\\s*\"([^ >\"]*)\"', 'gi'), 'src="$1" mce_src="$1"');
-	s = s.replace(new RegExp('href\\s*=\\s*\"([^ >\"]*)\"', 'gi'), 'href="$1" mce_href="$1"');
+//	s = s.replace(new RegExp('mce_src\\s*=\\s*\"[^ >\"]*\"', 'gi'), '');
+//	s = s.replace(new RegExp('mce_href\\s*=\\s*\"[^ >\"]*\"', 'gi'), '');
+
+	if (!s.match(/(mce_src|mce_href)/gi, s)) {
+		s = s.replace(new RegExp('src\\s*=\\s*\"([^ >\"]*)\"', 'gi'), 'src="$1" mce_src="$1"');
+		s = s.replace(new RegExp('href\\s*=\\s*\"([^ >\"]*)\"', 'gi'), 'href="$1" mce_href="$1"');
+	}
 
 	return s;
 };
@@ -1344,6 +1348,8 @@ TinyMCE.prototype.submitPatch = function() {
 };
 
 TinyMCE.prototype.onLoad = function() {
+	tinyMCE.executeCallback('onpageload', '_onpageload', 0);
+
 	for (var c=0; c<tinyMCE.configs.length; c++) {
 		tinyMCE.settings = tinyMCE.configs[c];
 
@@ -3596,7 +3602,7 @@ TinyMCE.prototype.fixGeckoBaseHREFBug = function(m, e, h) {
 
 			return h;
 		} else {
-			var el = new Array('img','select','area','iframe');
+			var el = new Array('a','img','select','area','iframe','base','input','script','embed','object');
 
 			for (var a=0; a<el.length; a++) {
 				var n = e.getElementsByTagName(el[a]);
@@ -5661,6 +5667,8 @@ TinyMCEControl.prototype.execCommand = function(command, user_interface, value) 
 
 				var newHTML = tinyMCE.trim(this.getBody().innerHTML);
 				if (newHTML != this.undoLevels[this.undoIndex]) {
+					//tinyMCE.debug(newHTML, this.undoLevels[this.undoIndex]);
+
 					tinyMCE.executeCallback('onchange_callback', '_onchange', 0, this);
 
 					// Time to compress

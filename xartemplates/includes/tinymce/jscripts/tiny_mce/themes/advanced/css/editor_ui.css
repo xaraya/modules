@@ -13,24 +13,24 @@
 
 .mceButtonNormal {
 	border: 1px solid #F0F0EE !important;
-	cursor: arrow;
+	cursor: default;
 }
 
 .mceButtonOver {
 	border: 1px solid #0A246A !important;
-	cursor: arrow;
+	cursor: default;
 	background-color: #B6BDD2;
 }
 
 .mceButtonDown {
-	cursor: arrow;
+	cursor: default;
 	border: 1px solid #0A246A !important;
 	background-color: #8592B5;
 }
 
 .mceButtonSelected {
 	border: 1px solid #C0C0BB !important;
-	cursor: arrow;
+	cursor: default;
 }
 
 .mceButtonDisabled {
@@ -38,7 +38,7 @@
 	-moz-opacity:0.3;
 	opacity: 0.3;
 	border: 1px solid #F0F0EE !important;
-	cursor: arrow;
+	cursor: default;
 }
 
 .mceSeparator {

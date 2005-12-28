@@ -4,7 +4,7 @@
  * $Revision: $
  * $Date: $
  *
- * @version 1.03
+ * @version 1.05
  * @author Moxiecode
  * @copyright Copyright © 2005, Moxiecode Systems AB, All rights reserved.
  *
@@ -21,17 +21,26 @@ $suffix = "";							// Set to "_src" to use source version
 $expiresOffset = 3600 * 24 * 10;		// 10 days util client cache expires
 
 // Get data to load
-$theme = isset($_GET['theme']) ? $_GET['theme'] : "";
-$language = isset($_GET['language']) ? $_GET['language'] : "";
-$plugins = isset($_GET['plugins']) ? $_GET['plugins'] : "";
-$lang = isset($_GET['lang']) ? $_GET['lang'] : "en";
-$index = isset($_GET['index']) ? $_GET['index'] : -1;
+$theme = isset($_GET['theme']) ? TinyMCE_checkInput($_GET['theme']) : "";
+$language = isset($_GET['language']) ? TinyMCE_checkInput($_GET['language']) : "";
+$plugins = isset($_GET['plugins']) ? TinyMCE_checkInput($_GET['plugins']) : "";
+$lang = isset($_GET['lang']) ? TinyMCE_checkInput($_GET['lang']) : "en";
+$index = isset($_GET['index']) ? TinyMCE_checkInput($_GET['index']) : -1;
+
+// Security check function, can only contain a-z 0-9 , _ - and whitespace.
+function TinyMCE_checkInput($str) {
+	if (!preg_match("/^([0-9a-z\-_ ,]*)$/i", $str)) {
+		echo "alert('Verification of \"". addslashes($str) ."\" string failed, can only contain a-z 0-9 , _ - and whitespace');";
+		die();
+	}
+	return $str;
+}
 
 // Only gzip the contents if clients and server support it
+$encodings = array();
+
 if (isset($_SERVER['HTTP_ACCEPT_ENCODING']))
 	$encodings = explode(',', strtolower($_SERVER['HTTP_ACCEPT_ENCODING']));
-else
-	$encodings = array();
 
 // Check for gzip header or northon internet securities
 if ((in_array('gzip', $encodings) || isset($_SERVER['---------------'])) && function_exists('ob_gzhandler') && !ini_get('zlib.output_compression'))
@@ -65,8 +74,8 @@ if ($index > -1) {
 	// Load all plugins and their language packs
 	$plugins = explode(",", $plugins);
 	foreach ($plugins as $plugin) {
-		$pluginFile = realpath("plugins/" . $plugin . "/editor_plugin" . $suffix . ".js");
-		$languageFile = realpath("plugins/" . $plugin . "/langs/" . $lang . ".js");
+		$pluginFile = realpath("plugins/" . trim($plugin) . "/editor_plugin" . $suffix . ".js");
+		$languageFile = realpath("plugins/" . trim($plugin) . "/langs/" . $lang . ".js");
 
 		if ($pluginFile)
 			echo file_get_contents($pluginFile);

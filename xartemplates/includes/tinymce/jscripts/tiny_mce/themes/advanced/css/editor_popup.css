@@ -84,7 +84,7 @@ td.charmap, td.charmapOver {
 
 td.charmapOver {
 	background-color: #CCCCCC;
-	cursor: arrow;
+	cursor: default;
 }
 
 a.charmap {
@@ -120,17 +120,17 @@ input.checkbox {
 	border-bottom: 1px solid;
 	border-right: 1px solid;
 	border-color: #F0F0EE;
-	cursor: arrow;
+	cursor: default;
 }
 
 .mceButtonOver {
 	border: 1px solid #0A246A;
-	cursor: arrow;
+	cursor: default;
 	background-color: #B6BDD2;
 }
 
 .mceButtonDown {
-	cursor: arrow;
+	cursor: default;
 	border: 1px solid #0A246A;
 	background-color: #8592B5;
 }
@@ -144,7 +144,7 @@ input.checkbox {
 	border-bottom: 1px solid;
 	border-right: 1px solid;
 	border-color: #F0F0EE;
-	cursor: arrow;
+	cursor: default;
 }
 
 .mceActionPanel {
