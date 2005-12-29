@@ -33,7 +33,7 @@ function translations_admin_show_status()
     $data = array();
 
     // core
-    $tmp =& translations_create_trabar(XARMLS_DNTYPE_CORE, 'xaraya', 0, 'core','core');
+    $tmp = translations_create_trabar(XARMLS_DNTYPE_CORE, 'xaraya', 0, 'core','core');
     $coreentries =& count_entries(&$tmp['entrydata']);
     unset($tmp);
 
@@ -49,7 +49,7 @@ function translations_admin_show_status()
         $args['locale'] = translations_working_locale();
         $testbackend = xarModAPIFunc('translations','admin','create_backend_instance',$args);
         if (isset($testbackend) && $testbackend->bindDomain(XARMLS_DNTYPE_MODULE, $modname)) {
-            $tmp =&  translations_create_trabar(XARMLS_DNTYPE_MODULE, $modname, $modid, 'modules',$modname);
+            $tmp =  translations_create_trabar(XARMLS_DNTYPE_MODULE, $modname, $modid, 'modules',$modname);
             $modentries[$modname] =& count_entries(&$tmp['entrydata']);
             unset($tmp);
             $mod_totalentries += $modentries[$modname]['numEntries'];
@@ -78,7 +78,7 @@ function translations_admin_show_status()
         $args['locale'] = translations_working_locale();
         $testbackend = xarModAPIFunc('translations','admin','create_backend_instance',$args);
         if (isset($testbackend) && $testbackend->bindDomain(XARMLS_DNTYPE_THEME, $themename)) {
-            $tmp =&  translations_create_trabar(XARMLS_DNTYPE_THEME, $themename, $themeid, 'themes', $themename);
+            $tmp =  translations_create_trabar(XARMLS_DNTYPE_THEME, $themename, $themeid, 'themes', $themename);
             $themeentries[$themename] =& count_entries(&$tmp['entrydata']);
             unset($tmp);
             $theme_totalentries += $themeentries[$themename]['numEntries'];
