@@ -57,37 +57,29 @@ function comments_userapi_add_rootnode( $args )
     // the correct value.
     $nextId = $dbconn->GenId($commenttable);
 
-    $sql = "INSERT INTO $xartable[comments] (
-                                xar_cid,
-                                xar_pid,
-                                xar_text,
-                                xar_title,
-                                xar_author,
-                                xar_left,
-                                xar_right,
-                                xar_status,
-                                xar_objectid,
-                                xar_modid,
-                                xar_itemtype,
-                                xar_hostname,
-                                xar_date
-                                            )
-                    VALUES (    $nextId,
-                                0,
-                                'This is for internal use and works only as a place holder. PLEASE do NOT delete this comment as it could have detrimental effects on the consistency of the comments table.',
-                                'ROOT NODE - PLACEHOLDER. DO NOT DELETE!',
-                                1,
-                                $left,
-                                $right,
-                                "._COM_STATUS_ROOT_NODE.",
-                                $objectid,
-                                $modid,
-                                $itemtype,
-                                '',
-                                $cdate 
-                            )";
+    $sql = "INSERT INTO $xartable[comments] 
+              (xar_cid, xar_pid, xar_text,
+               xar_title, xar_author, xar_left,
+               xar_right, xar_status, xar_objectid,
+               xar_modid, xar_itemtype,
+               xar_hostname, xar_date )
+            VALUE (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    $bindvars = array( $nextId,
+                       0,
+                       'This is for internal use and works only as a place holder. PLEASE do NOT delete this comment as it could have detrimental effects on the consistency of the comments table.',
+                       'ROOT NODE - PLACEHOLDER. DO NOT DELETE!',
+                       1,
+                       $left,
+                       $right,
+                       _COM_STATUS_ROOT_NODE,
+                       $objectid,
+                       $modid,
+                       $itemtype,
+                       '',
+                       $cdate 
+                       );
 
-    $result =& $dbconn->Execute($sql);
+    $result =& $dbconn->Execute($sql,$bindvars);
 
     if(!$result)
         return;
