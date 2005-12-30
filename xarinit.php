@@ -774,7 +774,7 @@ function commerce_init()
     //        'admin',
     //        'register_block_type',
     //        array('modName' => 'commerce',
-                'blockType' => 'infobox'))) return;
+    //           'blockType' => 'infobox'))) return;
 
     if (!xarModAPIFunc('blocks',
             'admin',
@@ -824,7 +824,6 @@ function commerce_init()
 #
 // Put a config menu in the 'left' blockgroup
     $cur = xarModAPIFunc('blocks','user','get',array('name' => 'commerceconfig'));
-
     if(!isset($cur)) {
         $type = xarModAPIFunc('blocks', 'user', 'getblocktype', array('module' => 'commerce', 'type'=>'configmenu'));
         $leftgroup = xarModAPIFunc('blocks', 'user', 'getgroup', array('name'=> 'left'));
@@ -832,6 +831,7 @@ function commerce_init()
                                                                       'name' => 'commerceconfig',
                                                                       'state' => 0,
                                                                       'groups' => array($leftgroup)));
+    }
 /*// Put an exit menu in the 'left' blockgroup
     $cur = xarModAPIFunc('blocks','user','get',array('name' => 'commerceexit'));
     if(!isset($cur)) {
@@ -863,7 +863,9 @@ function commerce_init()
                                                                       'name' => 'commerceinformation',
                                                                       'state' => 0,
                                                                       'groups' => array($leftgroup)));
-/*// Put a language block in the 'right' blockgroup
+    }
+/*
+// Put a language block in the 'right' blockgroup
     $cur = xarModAPIFunc('blocks','user','get',array('name' => 'commercelanguage'));
     if(!isset($cur)) {
         $type = xarModAPIFunc('blocks', 'user', 'getblocktype', array('module' => 'roles', 'type'=>'language'));
@@ -921,8 +923,6 @@ function commerce_init()
 	$role = xarFindRole('CommerceRoles');
 	if (empty($role)) {
 		$everybody = xarFindRole('Everybody');
-    $curRole = xarFindRole('CommerceRoles');
-    if(!isset($curRole)) {
 		$new = array('name' => 'CommerceRoles',
 					 'itemtype' => ROLES_GROUPTYPE,
 					 'parentid' => $everybody->getID(),
@@ -977,11 +977,10 @@ function commerce_delete()
     }
 
     // Delete the DD objects created by commerce modules
-	$ice_objects = @unserialize(xarModGetVar('commerce','ice_objects'));
-    if(!empty($ice_objects)) {
+	$ice_objects = unserialize(xarModGetVar('commerce','ice_objects'));
 	foreach ($ice_objects as $key => $value)
 	    $result = xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $key));
-    }
+
 	// Purge all the roles created by this module
 	$role = xarFindRole('commerceroles');
 	$descendants = $role->getDescendants();
@@ -1017,8 +1016,7 @@ function commerce_delete()
 
 // Delete successful
 
-return true;
+	return true;
 }
-# --------------------------------------------------------
 
 ?>
