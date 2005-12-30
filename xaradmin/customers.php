@@ -12,7 +12,8 @@
 
 function customers_admin_customers()
 {
-    return xarModFunc('commerce','admin','commoninfo_object',array('objectname' => 'ice_customers'));
+    return xarModFunc('commerce','admin','commoninfo_object',array('objectname' => 'ice_customers', 'tplmodule' => 'customers'));
+//    return xarModFunc('commerce','admin','commoninfo_object',array('objectname' => 'ice_customers'));
 }
 
 /*
