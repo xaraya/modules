@@ -407,7 +407,8 @@ class xoapWeather
             return $this->locData($loc);
         } elseif(!isset($p->tree[0]['children'][0]['children'])) {
             // no results
-            return;
+            $null=null;
+            return $null;
         } else {
             $tree = $p->tree[0]['children'][0]['children'];
         }

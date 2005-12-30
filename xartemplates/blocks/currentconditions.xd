@@ -2,7 +2,9 @@
 <table border="0" cellpadding="2" cellspacing="2">
     <tr>
         <td valign="top" align="center">
-            <img src="modules/weather/xarimages/icons/default/64/#$wData.icon#.png" /><br />
+             <img src="#xarTplGetImage('icons/default/64/'.$wData.icon.'.png','weather')#" alt="#$wData.icon#" />
+            <!--<img src="modules/weather/xarimages/icons/default/64/#$wData.icon#.png" />-->
+            <br />
             <strong>#$wData.conditions#</strong>
         </td>
         <td valign="top" align="right">
