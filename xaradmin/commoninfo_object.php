@@ -40,7 +40,7 @@ function commerce_admin_commoninfo_object($args = array() )
     $data['itemtype'] = $objectInfo['itemtype'];
     $data['objectlabel'] = xarML($objectInfo['label']); // What sort of effect does this have?
     // TODO: get the first item, not itemid 1, that might not even exist.
-    $data['itemid'] = isset($cId) ? $cId : 1;
+    $data['itemid'] = isset($cId) ? $cId : 0;
     $data['tplmodule'] = isset($tplmodule) ? $tplmodule : 'dynamicdata';
 
 
