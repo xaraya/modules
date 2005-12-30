@@ -1,5 +1,5 @@
 <?php
-function foo_user_usermenu($args)
+function customers_user_usermenu($args)
 {
 
     // Security check
@@ -12,8 +12,8 @@ function foo_user_usermenu($args)
         case 'menu':
             $iconbasic = 'modules/roles/xarimages/home.gif';
             $iconenhanced = 'modules/roles/xarimages/home.gif';
-            $current = xarModURL('roles', 'user', 'account', array('moduleload' => 'foo'));
-            $data = xarTplModule('foo','user', 'user_menu_icon', array('iconbasic'    => $iconbasic,
+            $current = xarModURL('roles', 'user', 'account', array('moduleload' => 'customers'));
+            $data = xarTplModule('customers','user', 'user_menu_icon', array('iconbasic'    => $iconbasic,
                                                                          'iconenhanced' => $iconenhanced,
                                                                          'current'      => $current));
             break;
@@ -39,7 +39,7 @@ function foo_user_usermenu($args)
 						unset($hooks['dynamicdata']);
 					}
 
-					$data = xarTplModule('foo','user', 'user_menu_tab1',
+					$data = xarTplModule('customers','user', 'user_menu_tab1',
 										  array('authid'       => $authid,
 										  'withupload'   => $withupload,
 										  'name'         => $name,
@@ -52,7 +52,7 @@ function foo_user_usermenu($args)
 					break;
 
 				case 'tab2':
-					$data = xarTplModule('foo','user', 'user_menu_tab2');
+					$data = xarTplModule('customers','user', 'user_menu_tab2');
 					break;
 			}
 			break;
