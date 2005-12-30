@@ -147,16 +147,19 @@ function commerce_configmenublock_display($blockinfo)
 								'marker'        => $marker,
 								'currenturl'     => $currenturl));
 
-	$modules = unserialize(xarModGetVar('commerce','ice_modules'));
-	unset($modules['commerce']);
-	foreach ($modules as $key => $value) {
-		$data .= xarTplBlock($key,
+    // Get this working for now - should not be returning null - fix later in xarinit
+    $ice_modules= xarModGetVar('commerce','ice_modules');
+    if (isset($ice_modules)) {
+    	$modules = unserialize(xarModGetVar('commerce','ice_modules'));
+	    unset($modules['commerce']);
+	    foreach ($modules as $key => $value) {
+		    $data .= xarTplBlock($key,
 							$template,
 							array(  'content'     => $content,
 									'marker'        => $marker,
 									'currenturl'     => $currenturl));
+        }
     }
-
     // Populate block info and pass to BlockLayout.
     $blockinfo['content'] = $data;
     return $blockinfo;
