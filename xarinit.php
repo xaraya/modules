@@ -887,11 +887,7 @@ function products_init()
 #
 # Add this module to the list of installed commerce suite modules
 #
-    // Should not be null - fix in commerce init - get this working for now
-    $ice_modules=xarModGetVar('commerce', 'ice_modules');
-    if (isset($ice_modules)) {
-        $modules = unserialize(xarModGetVar('commerce', 'ice_modules'));
-    }
+	$modules = unserialize(xarModGetVar('commerce', 'ice_modules'));
     $info = xarModGetInfo(xarModGetIDFromName('products'));
     $modules[$info['name']] = $info['regid'];
     $result = xarModSetVar('commerce', 'ice_modules', serialize($modules));
