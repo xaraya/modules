@@ -96,11 +96,8 @@ function vendors_init()
             if(!xarModApiFunc('dynamicdata','admin','deleteobject', array('objectid' => $objectid))) return;
         }
     }
-    // Should not be null - fix in commerce init - get this working for now
-    $ice_modules=xarModGetVar('commerce', 'ice_objects');
-    if (isset($ice_modules)) {
-  	        $objects = unserialize(xarModGetVar('commerce','ice_objects'));
-    }
+
+    $objects = unserialize(xarModGetVar('commerce', 'ice_objects'));
     foreach($ice_objects as $ice_object) {
         $def_file = 'modules/vendors/xardata/'.$ice_object.'-def.xml';
         $dat_file = 'modules/vendors/xardata/'.$ice_object.'-data.xml';
