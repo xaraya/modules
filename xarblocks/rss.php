@@ -89,6 +89,15 @@ function headlines_rssblock_display($blockinfo)
 
 
     if (xarModGetVar('headlines', 'magpie')){
+        // Set some globals to bring Magpie into line with
+        // site and headlines settngs.
+        if (!defined('MAGPIE_OUTPUT_ENCODING')) {
+            define('MAGPIE_OUTPUT_ENCODING', xarMLSGetCharsetFromLocale(xarMLSGetCurrentLocale()));
+        }
+        // Set the Magpie cache lower than the block cache, so we always fetch something.
+        if (!defined('MAGPIE_CACHE_AGE')) {
+            define('MAGPIE_CACHE_AGE', round($vars['refresh'] / 2));
+        }
         $data = xarModAPIFunc('magpie',
                               'user',
                               'process',
