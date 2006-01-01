@@ -18,8 +18,8 @@ function authentication_userapi_getmenulinks()
 
     if (xarModGetVar('authentication', 'allowregistration')){
     // Security check
-		if (xarUserIsLoggedIn()){
-			$menulinks[] = Array('url'   => xarModURL('authentication',
+		if (!xarUserIsLoggedIn()){
+			$menulinks[] = array('url'   => xarModURL('authentication',
 													  'user',
 													  'register'),
 								 'title' => xarML('Log in'),
@@ -27,14 +27,14 @@ function authentication_userapi_getmenulinks()
 		}
     }
     if (xarModGetVar('authentication', 'showprivacy')){
-        $menulinks[] = Array('url'   => xarModURL('authentication',
+        $menulinks[] = array('url'   => xarModURL('authentication',
                                                   'user',
                                                   'privacy'),
                              'title' => xarML('Privacy Policy for this Website'),
                              'label' => xarML('Privacy Policy'));
     }
     if (xarModGetVar('authentication', 'showterms')){
-        $menulinks[] = Array('url'   => xarModURL('authentication',
+        $menulinks[] = array('url'   => xarModURL('authentication',
                                                   'user',
                                                   'terms'),
                              'title' => xarML('Terms of Use for this website'),
