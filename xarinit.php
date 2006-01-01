@@ -74,24 +74,26 @@ president@whitehouse.gov';
     xarModSetVar('authentication', 'disallowedips', $disallowedips);
 
     // Register blocks
-    if (!xarModAPIFunc('blocks',
+    $tid = xarModAPIFunc('blocks',
             'admin',
             'register_block_type',
             array('modName' => 'authentication',
-                'blockType' => 'login'))) return;
+                'blockType' => 'login'));
+    if (!$tid) return;
 
-    if (!xarModAPIFunc('blocks',
-            'admin',
-            'register_block_type',
-            array('modName' => 'authentication',
-                'blockType' => 'online'))) return;
 
-    if (!xarModAPIFunc('blocks',
-            'admin',
-            'register_block_type',
-            array('modName' => 'authentication',
-                'blockType' => 'user'))) return;
-
+    if (!xarModAPIFunc('blocks', 'user', 'get', array('name'  => 'login'))) {
+        $rightgroup = xarModAPIFunc('blocks', 'user', 'getgroup', array('name'=> 'right'));
+        if (!xarModAPIFunc('blocks', 'admin', 'create_instance',
+                           array('title'    => 'Login',
+                                 'name'     => 'login',
+                                 'type'     => $tid,
+                                 'groups'    => array($rightgroup),
+                                 'template' => '',
+                                 'state'    => 2))) {
+            return;
+        }
+    }
     return true;
 }
 
@@ -130,6 +132,24 @@ function authentication_upgrade($oldVersion)
  */
 function authentication_delete()
 {
+# --------------------------------------------------------
+#
+# Delete block details for this module (for now)
+#
+    $blocktypes = xarModAPIfunc(
+        'blocks', 'user', 'getallblocktypes',
+        array('module' => 'authentication')
+    );
+
+    // Delete block types.
+    if (is_array($blocktypes) && !empty($blocktypes)) {
+        foreach($blocktypes as $blocktype) {
+            $result = xarModAPIfunc(
+                'blocks', 'admin', 'delete_type', $blocktype
+            );
+        }
+    }
+
     /**
      * Remove modvars, instances and masks
      */
