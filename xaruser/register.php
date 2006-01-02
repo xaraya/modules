@@ -244,7 +244,7 @@ function authentication_user_register()
             if (empty($pass)){
                 $pass = '';
             }
-            $checkdynamic = xarModGetVar('roles', 'showdynamic');
+            $checkdynamic = xarModGetVar('authentication', 'showdynamic');
             if ($checkdynamic){
                 // dynamic properties (if any)
                 $properties = null;
