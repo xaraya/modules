@@ -63,7 +63,7 @@ function comments_userapi_add_rootnode( $args )
                xar_right, xar_status, xar_objectid,
                xar_modid, xar_itemtype,
                xar_hostname, xar_date )
-            VALUE (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
     $bindvars = array( $nextId,
                        0,
                        'This is for internal use and works only as a place holder. PLEASE do NOT delete this comment as it could have detrimental effects on the consistency of the comments table.',
