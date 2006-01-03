@@ -23,10 +23,10 @@ function release_admin_viewdocs()
     if(!xarSecurityCheck('EditRelease')) return;
 
     // Get parameters
-    if (!(xarVarFetch('phase', 'enum:unapproved:viewall:certified:price:supported', $phase, 'unapproved', XARVAR_NOT_REQUIRED)) return;
-    if (!(xarVarFetch('startnum', 'int', $starnum, 1, XARVAR_NOT_REQUIRED)) return;
-    if (!(xarVarFetch('filter', 'str', $filter, $filter, XARVAR_NOT_REQUIRED)) return;
-    if (!(xarVarFetch('type', 'str', $type, $type, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('phase', 'enum:unapproved:viewall:certified:price:supported', $phase, 'unapproved', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('startnum', 'int', $starnum, 1, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('filter', 'str', $filter, $filter, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('type', 'str', $type, $type, XARVAR_NOT_REQUIRED)) return;
     /*
     list($startnum,
          $phase,

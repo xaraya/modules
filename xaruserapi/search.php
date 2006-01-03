@@ -96,7 +96,7 @@ function release_userapi_search($args)
                                 'uid' => $uid,
                                 'regname' => $regname,
                                 'displname' => $displname,
-							    'desc' => $desc,
+                                'desc' => $desc,
                                 'author' => xarUserGetVar('name',$uid),
                                 'exttype' => $exttype );
         }
