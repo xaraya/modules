@@ -8,7 +8,7 @@
   <img src="modules/example/xarimages/admin.gif" class="xar-module-icon" alt="official icon" width="96" height="96" />
 
   <h2><xar:mlstring>Overview</xar:mlstring></h2>
-  
+
   <h3><xar:mlstring>What is it?</xar:mlstring></h3>
   <p>
     <em><xar:mlstring>Example is the documented Xaraya Example Module.</xar:mlstring></em>
@@ -17,7 +17,7 @@
   <ol>
     <li><xar:mlstring>Providing a simple module template with standard functions, blocks, hooks, Dynamic Data properties, and templates that Developers can use as a basis for a new module.</xar:mlstring></li>
     <li><xar:mlstring>Providing documentation in the functions and template files for those that wish to learn about standard Xaraya Module development.</xar:mlstring></li>
-    
+
   </ol>
   <p><xar:mlstring>The example module demonstrates:</xar:mlstring>
   </p>
@@ -26,18 +26,18 @@
     <li><xar:mlstring>templates with standard style classes, layouts and template requirements to meet Xaraya Block Layout coding standards.</xar:mlstring></li>
     <li><xar:mlstring>examples of hooks, blocks, dynamic data properties, and event handlers.</xar:mlstring></li>
   </ul>
-  
+
   <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
   <p>
-    <xar:mlstring>This module is intended as a reference for other modules to use.  Its output is just a basic non-usable output in many cases.</xar:mlstring>
+    <xar:mlstring>This module is intended as a reference for other modules to use. Its output is just a basic non-usable output in many cases.</xar:mlstring>
   </p>
-  
+
   <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
   <ul>
     <li><xar:mlstring>first</xar:mlstring></li>
     <li><xar:mlstring>example</xar:mlstring></li>
   </ul>
-  
+
   <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
   <ul>
     <li><xar:mlstring>Usermenu -- Allows interface with the Roles "My Account Page"</xar:mlstring></li>
@@ -52,13 +52,13 @@
       the Search module to activate the respective hooks.
     </xar:mlstring>
   </p>
-  
+
   <h3><xar:mlstring>Included Dynamic Data Properties</xar:mlstring></h3>
   <ul>
     <li><xar:mlstring>Example -- Provides example code and templates for an Example property</xar:mlstring></li>
-    
+
   </ul>
-  
+
   <h3>
     <xar:mlstring>Further Information</xar:mlstring>
   </h3>

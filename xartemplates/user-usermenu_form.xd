@@ -4,7 +4,7 @@
 </h2>
 
 <form action="&xar-modurl-example-user-usermenu;" method="post" enctype="application/x-www-form-urlencoded">
-<input type="hidden" name="authid" id="authid" value="#$authid#" />    
+<input type="hidden" name="authid" id="authid" value="#$authid#" />
 <input type="hidden" name="uid" id="uid" value="#$uid#" />
 <input type="hidden" name="phase" id="phase" value="update" />
 <fieldset>
@@ -16,7 +16,7 @@
            <input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#$value#" />
        </div>
        <div class="xar-form-input-wrapper-after">
-           <xar:mlstring>This is only an example of hooking the user menu.  You may or may not need this functionality for your module, or wish to add more.</xar:mlstring>
+           <xar:mlstring>This is only an example of hooking the user menu. You may or may not need this functionality for your module, or wish to add more.</xar:mlstring>
        </div>
 </fieldset>
 

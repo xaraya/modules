@@ -20,11 +20,11 @@
  * @return array
  */
 function example_admin_view()
-{ 
-    /* Get parameters from whatever input we need.  All arguments to this
+{
+    /* Get parameters from whatever input we need. All arguments to this
      * function should be obtained from xarVarFetch(). xarVarFetch allows
      * the checking of the input variables as well as setting default
-     * values if needed.  Getting vars from other places such as the
+     * values if needed. Getting vars from other places such as the
      * environment is not allowed, as that makes assumptions that
      * will not hold in future versions of Xaraya
      */
@@ -44,7 +44,7 @@ function example_admin_view()
      * being many items to display.
      *
      *
-     * Note that this function includes another user API function.  The
+     * Note that this function includes another user API function. The
      * function returns a simple count of the total number of items in the item
      * table so that the pager function can do its job properly
      */
@@ -56,7 +56,7 @@ function example_admin_view()
      * potential security holes or just too much wasted processing
      */
     if (!xarSecurityCheck('EditExample')) return;
-    /* The user API function is called.  This takes the number of items
+    /* The user API function is called. This takes the number of items
      * required and the first number in the list of all items, which we
      * obtained from the input and gets us the information on the appropriate
      * items.
@@ -67,7 +67,7 @@ function example_admin_view()
                             array('startnum' => $startnum,
                                   'numitems' => xarModGetVar('example','itemsperpage')));
     /* Check for exceptions */
-    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; /* throw back */
+    if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; /* throw back */
 
     /* Check individual permissions for Edit / Delete
      * Note : we could use a foreach ($items as $item) here as well, as
@@ -92,7 +92,7 @@ function example_admin_view()
         } else {
             $items[$i]['deleteurl'] = '';
         }
-    } 
+    }
     /* Add the array of items to the template variables */
     $data['items'] = $items;
 

@@ -26,8 +26,8 @@ function example_user_usermenu($args)
      * link to display the details of the item
      */
     if (!xarSecurityCheck('ViewExample')) return;
-    
-    /* First, lets find out where we are in our logic.  If the phase
+
+    /* First, lets find out where we are in our logic. If the phase
      * variable is set, we will load the correct page in the loop.
      */
     if (!xarVarFetch('phase', 'str:1:100', $phase, 'menu', XARVAR_NOT_REQUIRED)) return;
@@ -43,7 +43,7 @@ function example_user_usermenu($args)
             break;
 
         case 'form':
-            /* Its good practice for the user menu to be personalized.  In order to do so, we
+            /* Its good practice for the user menu to be personalized. In order to do so, we
              * need to get some information about the user.
              */
             $name = xarUserGetVar('name');
@@ -53,7 +53,7 @@ function example_user_usermenu($args)
              */
             $authid = xarSecGenAuthKey('example');
             /* Lets get the value that we want to override from the preferences. Notice that we are
-             * xarModUserGetMod and not xarModGetVar so we can grab the overridden value.  You do
+             * xarModUserGetVar and not xarModGetVar so we can grab the overridden value. You do
              * not have to use a user variable for every module var that the module posses, just
              * the variables that you want to override.
              */
@@ -77,19 +77,19 @@ function example_user_usermenu($args)
             if (!xarVarFetch('uid', 'int:1:', $uid)) return;
             if (!xarVarFetch('itemsperpage', 'str:1:100', $itemsperpage, '20', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('name', 'str:1:100', $name, '', XARVAR_NOT_REQUIRED)) return;
-            
+
             /* Confirm authorisation code. */
             if (!xarSecConfirmAuthKey()) return;
 
             xarModSetUserVar('example', 'itemsperpage', $itemsperpage, $uid);
-            /* Redirect back to the account page.  We could also redirect back to our form page as
+            /* Redirect back to the account page. We could also redirect back to our form page as
              * well by adding the phase variable to the array.
              */
             xarResponseRedirect(xarModURL('roles', 'user', 'account'));
 
             break;
     }
-    /* Finally, we need to send our variables to block layout for processing.  Since we are
+    /* Finally, we need to send our variables to block layout for processing. Since we are
      * using the data var for processing above, we need to do the same with the return.
      */
     return $data;

@@ -9,26 +9,25 @@
 
     <!-- the specific template for the current admin function comes here -->
 
-    
     <h3 class="xar-align-center"><xar:mlstring>Confirm deleting this item?</xar:mlstring></h3>
     <form method="post" action="&xar-modurl-example-admin-delete;">
         <!--
-            // This layout is crude.  Adapt it for your module's data
+            // This layout is crude. Adapt it for your module's data
          -->
         <fieldset>
             <legend>
                 <xar:mlstring>Item marked for deletion</xar:mlstring>
             </legend>
             <div class="xar-form-input-wrapper">
-             <label for="itemid"  class="xar-form-label" title="#xarML('This is the item id')#">
-                     <xar:mlstring>Item ID:</xar:mlstring>
+             <label for="itemid" class="xar-form-label" title="#xarML('This is the item id')#">
+                <xar:mlstring>Item ID:</xar:mlstring>
              </label>
               #$exid#
             </div>
 
             <div class="xar-form-input-wrapper">
                 <label for="itemname"  class="xar-form-label"  title="#xarML('This is the item name')#">
-                         <xar:mlstring>Example Name:</xar:mlstring>
+                    <xar:mlstring>Example Name:</xar:mlstring>
                 </label>
                  #$namevalue#
             </div>
@@ -38,7 +37,7 @@
             <div class="xar-form-input-wrapper-after">
         <!--
            * Add an authorisation ID - this adds a hidden field in the form that
-           * contains an authorisation ID.  The authorisation ID is very important in
+           * contains an authorisation ID. The authorisation ID is very important in
            * preventing certain attacks on the website
         -->
                 <input type="hidden" name="authid" id="authid" value="#$authid#" />
@@ -64,7 +63,6 @@
                  <xar:mlstring>Cancel and Return</xar:mlstring>
              </a>
              </div>
-
         </fieldset>
     </form>
 </div>

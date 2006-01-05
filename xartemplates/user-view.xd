@@ -11,12 +11,18 @@
     <h2><xar:mlstring>Example Items</xar:mlstring></h2>
 
     <!-- the specific template for the current function comes here -->
-    
+
     <!-- some status given by the function using this template -->
-    
+
     <xar:if condition="!empty($status)">
         <strong>#$status#</strong>
     </xar:if>
+    <xar:comment>
+        <!-- Add a navigator for categories when you have hooked categories to the example module -->
+        <xar:if condition="xarModIsHooked('categories','example')">
+            <xar:categories-navigation layout="trails" showchildren="1" module="example" catid="$catid" />
+        </xar:if>
+    </xar:comment>
     <table>
         <tr>
             <th><xar:mlstring>Unique ID</xar:mlstring></th>
@@ -27,7 +33,7 @@
         <!-- Loop over all the items given by the function. Since $data['items']
              is preset to an empty array, we don't need to use an if/else
              structure like we do in user-display.xd -->
-    
+
         <xar:foreach in="$items" value="$item">
         <tr>
             <td>
@@ -49,13 +55,13 @@
                 <xar:else />
                     <a href="#$item.link#">#$item.name#</a>
                 </xar:if>
-    
+
             </td>
         </tr>
         </xar:foreach>
-    
+
     </table>
-        
+
     <div class="xar-align-center xar-padding-thick">
         <!-- add the pager here -->
         #$pager#

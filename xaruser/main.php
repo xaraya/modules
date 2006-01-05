@@ -16,7 +16,7 @@
  * The main user function
  *
  * This function is the default function, and is called whenever the module is
- * initiated without defining arguments.  As such it can be used for a number
+ * initiated without defining arguments. As such it can be used for a number
  * of things, but most commonly it either just shows the module menu and
  * returns or calls whatever the module designer feels should be the default
  * function (often this is the view() function)
@@ -24,12 +24,12 @@
  * @author the Example module development team
  */
 function example_user_main()
-{ 
+{
     /* Security check - important to do this as early as possible to avoid
-     * potential security holes or just too much wasted processing.  For the
+     * potential security holes or just too much wasted processing. For the
      * main function we want to check that the user has at least overview
      * privilege for some item within this component, or else they won't be
-     * able to see anything and so we refuse access altogether.  The lowest
+     * able to see anything and so we refuse access altogether. The lowest
      * level of access for users depends on the particular module, but it is
      * generally either 'overview' or 'read'
      */
@@ -47,7 +47,7 @@ function example_user_main()
     /* Specify some other variables used in the blocklayout template */
     $data['welcome'] = xarML('Welcome to this Example module...');
     /* We also may want to change the title of the page for a little
-     * better search results from the spiders.  All we are doing below
+     * better search results from the spiders. All we are doing below
      * Is telling Xaraya what the title of the page should be, and
      * Xaraya controls the rest.
      */

@@ -21,19 +21,19 @@
  * @return array
  */
 function example_admin_new($args)
-{ 
-    /* Admin functions of this type can be called by other modules.  If this
+{
+    /* Admin functions of this type can be called by other modules. If this
      * happens then the calling module will be able to pass in arguments to
-     * this function through the $args parameter.  Hence we extract these
+     * this function through the $args parameter. Hence we extract these
      * arguments *before* we have obtained any form-based input through
      * xarVarFetch().
      */
     extract($args);
 
-    /* Get parameters from whatever input we need.  All arguments to this
+    /* Get parameters from whatever input we need. All arguments to this
      * function should be obtained from xarVarFetch(). xarVarFetch allows
      * the checking of the input variables as well as setting default
-     * values if needed.  Getting vars from other places such as the
+     * values if needed. Getting vars from other places such as the
      * environment is not allowed, as that makes assumptions that will
      * not hold in future versions of Xaraya
      */
@@ -60,7 +60,7 @@ function example_admin_new($args)
     $hooks = xarModCallHooks('item', 'new', '', $item);
 
     if (empty($hooks)) {
-        $data['hookoutput'] = '';
+        $data['hookoutput'] = array();
     } else {
         /* You can use the output from individual hooks in your template too, e.g. with
          * $hookoutput['categories'], $hookoutput['dynamicdata'], $hookoutput['keywords'] etc.

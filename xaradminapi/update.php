@@ -13,15 +13,15 @@
  */
 /**
  * Update an example item
- * 
- * @author the Example module development team 
+ *
+ * @author the Example module development team
  * @param  $args ['exid'] the ID of the item
  * @param  $args ['name'] the new name of the item
  * @param  $args ['number'] the new number of the item
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function example_adminapi_update($args)
-{ 
+{
     /* Get arguments from argument array - all arguments to this function
      * should be obtained from the $args array, getting them from other
      * places such as the environment is not allowed, as that makes
@@ -51,15 +51,15 @@ function example_adminapi_update($args)
             new SystemException($msg));
         return;
     }
-    /* The user API function is called.  This takes the item ID which
+    /* The user API function is called. This takes the item ID which
      * we obtained from the input and gets us the information on the
-     * appropriate item.  If the item does not exist we post an appropriate
+     * appropriate item. If the item does not exist we post an appropriate
      * message and return
      */
     $item = xarModAPIFunc('example',
         'user',
         'get',
-        array('exid' => $exid)); 
+        array('exid' => $exid));
     /*Check for exceptions */
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
@@ -69,7 +69,7 @@ function example_adminapi_update($args)
      * name to complete the instance information so this is the first
      * chance we get to do the check
      * Note that at this stage we have two sets of item information, the
-     * pre-modification and the post-modification.  We need to check against
+     * pre-modification and the post-modification. We need to check against
      * both of these to ensure that whoever is doing the modification has
      * suitable permissions to edit the item otherwise people can potentially
      * edit areas to which they do not have suitable access
@@ -81,9 +81,9 @@ function example_adminapi_update($args)
         return;
     }
     /* Get database setup - note that both xarDBGetConn() and xarDBGetTables()
-     * return arrays but we handle them differently.  For xarDBGetConn()
+     * return arrays but we handle them differently. For xarDBGetConn()
      * we currently just want the first item, which is the official
-     * database handle.  For xarDBGetTables() we want to keep the entire
+     * database handle. For xarDBGetTables() we want to keep the entire
      * tables array together for easy reference later on
      */
     $dbconn =& xarDBGetConn();
@@ -94,7 +94,7 @@ function example_adminapi_update($args)
      */
     $exampletable = $xartable['example'];
     /* Update the item - the formatting here is not mandatory, but it does
-     * make the SQL statement relatively easy to read.  Also, separating
+     * make the SQL statement relatively easy to read. Also, separating
      * out the sql statement from the Execute() command allows for simpler
      * debug operation if it is ever needed
      */
@@ -107,7 +107,7 @@ function example_adminapi_update($args)
      * the exception so we just return
      */
     if (!$result) return;
-    /* Let any hooks know that we have updated an item.  As this is an
+    /* Let any hooks know that we have updated an item. As this is an
      * update hook we're passing the updated $item array as the extra info
      */
     $item['module'] = 'example';
@@ -115,8 +115,8 @@ function example_adminapi_update($args)
     $item['name'] = $name;
     $item['number'] = $number;
     xarModCallHooks('item', 'update', $exid, $item);
-    
+
     /* Let the calling process know that we have finished successfully */
     return true;
-} 
+}
 ?>
