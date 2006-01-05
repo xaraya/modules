@@ -94,6 +94,10 @@ president@whitehouse.gov';
             return;
         }
     }
+
+	// Make this the default authentication module
+	xarModSetVar('roles', 'defaultauthmodule', xarModGetIDFromName('authentication'));
+
     return true;
 }
 
