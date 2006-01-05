@@ -180,8 +180,8 @@ function articles_user_search($args)
         }
         $ptids = array_keys($seenptid);
     }
-
-    if (isset($q) && $q === '') {
+    /* Ensure whitespace alone not passed to api -causes errors */
+    if (isset($q) && trim($q) === '') {
         $q = null;
     }
 
