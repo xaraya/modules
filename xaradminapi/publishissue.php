@@ -77,8 +77,8 @@ function ebulletin_adminapi_publishissue($args)
     // interfering
     $old_htmlheadfoot = xarModGetVar('mail', 'htmluseheadfoot');
     $old_txtheadfoot = xarModGetVar('mail', 'txtuseheadfoot');
-    xarModSetVar('mail', 'htmluseheadfoot', 0);
-    xarModSetVar('mail', 'txtuseheadfoot', 0);
+    if (!empty($old_htmlheadfoot)) xarModSetVar('mail', 'htmluseheadfoot', 0);
+    if (!empty($old_txtheadfoot)) xarModSetVar('mail', 'txtuseheadfoot', 0);
 
     // send mail
     if (empty($htmlmessage)) {
