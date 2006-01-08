@@ -73,8 +73,7 @@ function ebulletin_adminapi_publishissue($args)
     // set other mail params
     $mail['usetemplates'] = false;
 
-    // turn off certain mail params to keep the mail module from
-    // interfering
+    // turn off certain mail params to keep the mail module from interfering
     $old_htmlheadfoot = xarModGetVar('mail', 'htmluseheadfoot');
     $old_txtheadfoot = xarModGetVar('mail', 'txtuseheadfoot');
     if (!empty($old_htmlheadfoot)) xarModSetVar('mail', 'htmluseheadfoot', 0);
@@ -87,11 +86,11 @@ function ebulletin_adminapi_publishissue($args)
         if (!xarModAPIFunc('mail', 'admin', 'sendmail', $mail)) return;
     }
 
-    // turn things back on
-    if (!empty($old_htmlheadfoot)) {
+    // restore old mail params
+    if (!is_null($old_htmlheadfoot)) {
         xarModSetVar('mail', 'htmluseheadfoot', $old_htmlheadfoot);
     }
-    if (!empty($old_txtheadfoot)) {
+    if (!is_null($old_txtheadfoot)) {
         xarModSetVar('mail', 'txtuseheadfoot', $old_txtheadfoot);
     }
 
