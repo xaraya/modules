@@ -23,7 +23,7 @@ function ebulletin_admin_updateconfig()
     if (!xarVarFetch('admin_issuesperpage', 'int:0', $admin_issuesperpage, 10, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('admin_subsperpage', 'int:0', $admin_subsperpage, 40, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('supportshorturls', 'checkbox', $supportshorturls, false, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('modulealias', 'checkbox', $modulealias, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('usemodulealias', 'checkbox', $usemodulealias, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('aliasname', 'str:1:', $aliasname, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('template_dir', 'str:1', $template_dir,
         xarPreCoreGetVarDirPath().'/ebulletin', XARVAR_NOT_REQUIRED)
@@ -40,8 +40,8 @@ function ebulletin_admin_updateconfig()
     // validate and clean up template dir
     $template_dir = trim($template_dir);
     if (empty($template_dir) || !is_dir($template_dir) || !is_readable($template_dir)) {
-        $msg = xarML('Invalid template directory #(1).  Make sure it exists and is readable.', $template_dir);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        $msg = xarML('Invalid template directory #(1).  Make sure it exists and is readable by the web server.', $template_dir);
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
@@ -49,7 +49,7 @@ function ebulletin_admin_updateconfig()
     $aliasname = trim($aliasname);
     $aliasname = str_replace(' ', '_', $aliasname);
     $currentalias = xarModGetVar('ebulletin', 'aliasname');
-    if ($modulealias && $aliasname) {
+    if ($usemodulealias && $aliasname) {
         if (!xarModSetAlias($aliasname, 'ebulletin')) return;
     } elseif ($currentalias) {
         xarModDelAlias($currentalias, 'ebulletin');
@@ -59,7 +59,7 @@ function ebulletin_admin_updateconfig()
     xarModSetVar('ebulletin', 'admin_issuesperpage', $admin_issuesperpage);
     xarModSetVar('ebulletin', 'admin_subsperpage', $admin_subsperpage);
     xarModSetVar('ebulletin', 'SupportShortURLs', $supportshorturls);
-    xarModSetVar('ebulletin', 'useModuleAlias', $modulealias);
+    xarModSetVar('ebulletin', 'useModuleAlias', $usemodulealias);
     xarModSetVar('ebulletin', 'aliasname', $aliasname);
     xarModSetVar('ebulletin', 'template_dir', $template_dir);
     xarModSetVar('ebulletin', 'theme', $theme);

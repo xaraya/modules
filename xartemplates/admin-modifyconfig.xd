@@ -40,13 +40,13 @@
         </div>
 
       <div class="xar-form-input-wrapper">
-          <label for = "modulealias" class="xar-form-label" title="#xarML('Use an alias instead of the module name')#">
+          <label for="usemodulealias" class="xar-form-label" title="#xarML('Use an alias instead of the module name')#">
               <xar:mlstring>Use a module alias?</xar:mlstring>
           </label>
-          <xar:if condition="xarModGetVar('ebulletin', 'useModuleAlias')">
-              <input type="checkbox" name="modulealias" id="modulealias" value="1" checked="checked" />
+          <xar:if condition="$usemodulealias">
+              <input type="checkbox" name="usemodulealias" id="usemodulealias" value="1" checked="checked" />
           <xar:else />
-              <input type="checkbox" name="modulealias" id="modulealias" value="1" />
+              <input type="checkbox" name="usemodulealias" id="usemodulealias" value="1" />
           </xar:if>
       </div>
 
@@ -145,7 +145,7 @@
         <legend><xar:mlstring>Security Options</xar:mlstring></legend>
 
         <div class="xar-form-input-wrapper">
-            <label for="requirevalidation" class="xar-form-label" title="#xarML('Require unregistered users to v alidate?')#">
+            <label for="requirevalidation" class="xar-form-label" title="#xarML('Require unregistered users to validate?')#">
                 <xar:mlstring>Require unregistered users to validate?</xar:mlstring>
             </label>
             <xar:if condition="$requirevalidation">
@@ -159,9 +159,9 @@
 
     <fieldset>
       <legend><xar:mlstring>Enabled Hooks</xar:mlstring></legend>
-      <xar:if condition="!empty($hooks)">
-        <xar:foreach in="$hooks" key="$hookmodule">
-          #$hooks[$hookmodule]#
+      <xar:if condition="!empty($hookoutput)">
+        <xar:foreach in="$hookoutput" key="$hookmodule">
+          #$hookoutput[$hookmodule]#
         </xar:foreach>
       </xar:if>
     </fieldset>

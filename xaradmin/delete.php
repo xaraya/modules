@@ -13,15 +13,6 @@
 */
 /**
  * delete item
- * This is a standard function that is called whenever an administrator
- * wishes to delete a current module item.  Note that this function is
- * the equivalent of both of the modify() and update() functions above as
- * it both creates a form and processes its output.  This is fine for
- * simpler functions, but for more complex operations such as creation and
- * modification it is generally easier to separate them into separate
- * functions.  There is no requirement in the Xaraya MDG to do one or the
- * other, so either or both can be used as seen appropriate by the module
- * developer
  *
  * @param  $ 'id' the id of the item to be deleted
  * @param  $ 'confirm' confirm that this item can be deleted

@@ -59,7 +59,7 @@ function ebulletin_admin_modifyconfig()
     $data['admin_issues']      = $admin_issuesperpage;
     $data['admin_subs']        = $admin_subsperpage;
     $data['supportshorturls']  = $supportshorturls;
-    $data['useAliasName']      = $usemodulealias;
+    $data['usemodulealias']    = $usemodulealias;
     $data['aliasname']         = $aliasname;
     $data['template_dir']      = $template_dir;
     $data['theme']             = $theme;

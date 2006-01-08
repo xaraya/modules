@@ -63,8 +63,9 @@ function ebulletin_adminapi_regenerateissue($args)
     // generate start and end dates
     $beforesign = ($pub['startsign'] == 'before') ? '-' : '+';
     $aftersign = ($pub['endsign'] == 'before') ? '-' : '+';
-    $startdate = strtotime($beforesign.$pub['numsago'].' '.$pub['unitsago']);
-    $enddate = strtotime($aftersign.$pub['numsfromnow'].' '.$pub['unitsfromnow']);
+    // fix bug 5327 by jonathan@parkerhill.com
+    $startdate = strtotime($beforesign.$pub['numsago'].' '.$pub['unitsago'], strtotime($issue['issuedate']));
+    $enddate = strtotime($aftersign.$pub['numsfromnow'].' '.$pub['unitsfromnow'], strtotime($issue['issuedate']));
 
     // generate the issue
     list(

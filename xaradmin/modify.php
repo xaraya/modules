@@ -56,24 +56,24 @@ function ebulletin_admin_modify($args)
     if (!xarSecurityCheck('EditeBulletin', 1, 'Publication', "$pub[name]:$id")) return;
 
     // get publication vars
-    if (empty($name))         $name = $pub['name'];
-    if (empty($desc))         $desc = $pub['desc'];
-    if (empty($public))       $public = $pub['public'];
-    if (empty($to))           $to = $pub['to'];
-    if (empty($toname))       $toname = $pub['toname'];
-    if (empty($from))         $from = $pub['from'];
-    if (empty($fromname))     $fromname = $pub['fromname'];
-    if (empty($replyto))      $replyto = $pub['replyto'];
-    if (empty($replytoname))  $replytoname = $pub['replytoname'];
-    if (empty($subject))      $subject = $pub['subject'];
-    if (empty($tpl_txt))      $tpl_txt = $pub['tpl_txt'];
-    if (empty($tpl_html))     $tpl_html = $pub['tpl_html'];
-    if (empty($numsago))      $numsago = $pub['numsago'];
-    if (empty($unitsago))     $unitsago = $pub['unitsago'];
-    if (empty($startsign))    $startsign = $pub['startsign'];
-    if (empty($numsfromnow))  $numsfromnow = $pub['numsfromnow'];
-    if (empty($unitsfromnow)) $unitsfromnow = $pub['unitsfromnow'];
-    if (empty($endsign))      $endsign = $pub['endsign'];
+    if (!isset($name))         $name = $pub['name'];
+    if (!isset($desc))         $desc = $pub['desc'];
+    if (!isset($public))       $public = $pub['public'];
+    if (!isset($to))           $to = $pub['to'];
+    if (!isset($toname))       $toname = $pub['toname'];
+    if (!isset($from))         $from = $pub['from'];
+    if (!isset($fromname))     $fromname = $pub['fromname'];
+    if (!isset($replyto))      $replyto = $pub['replyto'];
+    if (!isset($replytoname))  $replytoname = $pub['replytoname'];
+    if (!isset($subject))      $subject = $pub['subject'];
+    if (!isset($tpl_txt))      $tpl_txt = $pub['tpl_txt'];
+    if (!isset($tpl_html))     $tpl_html = $pub['tpl_html'];
+    if (!isset($numsago))      $numsago = $pub['numsago'];
+    if (!isset($unitsago))     $unitsago = $pub['unitsago'];
+    if (!isset($startsign))    $startsign = $pub['startsign'];
+    if (!isset($numsfromnow))  $numsfromnow = $pub['numsfromnow'];
+    if (!isset($unitsfromnow)) $unitsfromnow = $pub['unitsfromnow'];
+    if (!isset($endsign))      $endsign = $pub['endsign'];
 
     // get other vars
     $authid = xarSecGenAuthKey();
@@ -94,7 +94,9 @@ function ebulletin_admin_modify($args)
     $signs[] = array('after', xarML('after'));
 
     // get hooks
-    $hookoutput = xarModCallHooks('item', 'new', '', array('module' => 'ebulletin'));
+    $item = $pub;
+    $item['module'] = 'ebulletin';
+    $hookoutput = xarModCallHooks('item', 'modify', $id, $item);
 
     // initialize template array
     $data = xarModAPIFunc('ebulletin', 'admin', 'menu');
@@ -127,7 +129,7 @@ function ebulletin_admin_modify($args)
     $data['units']     = $units;
     $data['signs']     = $signs;
     $data['template_dir'] = $template_dir;
-    $data['hookitems'] = $hookoutput;
+    $data['hookitems'] = &$hookoutput;
 
     return $data;
 }

@@ -125,9 +125,9 @@ function ebulletin_admin_update($args)
         return xarModFunc('ebulletin', 'admin', 'modify', $data);
     }
 
-    // let API function do the creating
+    // let API function do the updating
     $id = xarModAPIFunc('ebulletin', 'admin', 'update', $data);
-    if (!isset($id) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+    if (empty($id) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
     // set status message and redirect to publications view page
     xarSessionSetVar('statusmsg', xarML('Publication successfully updated!'));

@@ -28,9 +28,9 @@ function ebulletin_userapi_encode_shorturl($args)
     if (!isset($func)) return;
 
     // use module alias if set
-    $usealias = xarModGetVar('ebulletin', 'useModuleAlias');
+    $usemodulealias = xarModGetVar('ebulletin', 'useModuleAlias');
     $aliasname = xarModGetVar('ebulletin', 'aliasname');
-    $module = ($usealias) ? $aliasname : 'ebulletin';
+    $module = ($usemodulealias) ? $aliasname : 'ebulletin';
 
     // set path vars
     $path = '';

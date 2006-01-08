@@ -17,15 +17,15 @@ The following variables from eBulletin are available during template compilation
 
     $date - an array of dates, as follows:
 
-        $date.ymd        - the issue date in YYYY-MM-DD format
-        $date.unix       - the issue date in UNIX time (number of seconds since the last epoch)
-        $date.short      - the issue date in 'short' format as defined by your locale settings
-        $date.medium     - the issue date in 'medium' format as defined by your locale settings
-        $date.long       - the issue date in 'long' format as defined by your locale settings
-        $date.start_unix - the publication's starting interval, in UNIX time
-        $date.start_ymd  - the publication's starting interval, in YYYY-MM-DD format
-        $date.end_unix   - the publication's ending interval, in UNIX time
-        $date.end_ymd    - the publication's ending interval, in YYYY-MM-DD format
+        $date['ymd']        - the issue date in YYYY-MM-DD format
+        $date['unix']       - the issue date in UNIX time (number of seconds since the last epoch)
+        $date['short']      - the issue date in 'short' format as defined by your locale settings
+        $date['medium']     - the issue date in 'medium' format as defined by your locale settings
+        $date['long']       - the issue date in 'long' format as defined by your locale settings
+        $date['start_unix'] - the publication's starting interval, in UNIX time
+        $date['start_ymd']  - the publication's starting interval, in YYYY-MM-DD format
+        $date['end_unix']   - the publication's ending interval, in UNIX time
+        $date['end_ymd']    - the publication's ending interval, in YYYY-MM-DD format
 
     $subject - the subject to be used when sending the newsletter
 
@@ -46,6 +46,20 @@ The following variables from eBulletin are available during template compilation
 
 You can always use <xar:set ...>, #xarModGetVar()#, and the like to retrieve other system
 variables too.
+
+
+Dates in Subject Lines
+---------------------------
+
+It is possible to include date-related strings in you publication's subject field.  Any of the
+$date['foo'] items listed above can be placed in the subject by surrounding the key with a "%"
+sign, as in:
+
+    Weekly Update - %medium%
+
+This will be rendered as the following, for example, when you publish the issue:
+
+    Weekly Update - Jan 07, 2006
 
 
 URL Shorthand
