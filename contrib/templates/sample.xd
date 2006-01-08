@@ -42,39 +42,41 @@ The following variables from eBulletin are available during template compilation
     $copyright  - copyright notice
     $adminname  - name of site admin
     $adminemail - email address of site admin
+    $issueid    - the ID of the current issue
+
+You can always use <xar:set ...>, #xarModGetVar()#, and the like to retrieve additional system
+variables.
 
 
-You can always use <xar:set ...>, #xarModGetVar()#, and the like to retrieve other system
-variables too.
-
-
-Dates in Subject Lines
+Subject Line
 ---------------------------
 
-It is possible to include date-related strings in you publication's subject field.  Any of the
-$date['foo'] items listed above can be placed in the subject by surrounding the key with a "%"
-sign, as in:
+It is possible to include date-related strings and/or the issue ID in the subject field.  Any of the
+$date['...'] items listed above, as well as 'issueid' can be placed in the subject by surrounding the key
+with a "%" sign, as in:
 
-    Weekly Update - %medium%
+    Weekly Update #%issueid% - %medium%
 
 This will be rendered as the following, for example, when you publish the issue:
 
-    Weekly Update - Jan 07, 2006
+    Weekly Update #257 - Jan 07, 2006
 
 
 URL Shorthand
 ---------------------------
 
-Don't forget about Blocklayout's shorthand for generating URL's.  For example, instead of:
+Don't forget about Blocklayout's nifty shorthand for generating certain strings.  For example,
+instead of:
 
     #xarModURL('articles', 'user', 'view')#
     #xarModURL()#
+    #xarModGetVar('themes', 'SiteSlogan')#
 
 You can do:
 
     &xar-modurl-articles-user-view;
     &xar-baseurl;
-
+    &xar-mod-themes-SiteSlogan;
 
 
 Customized themes

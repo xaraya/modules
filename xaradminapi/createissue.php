@@ -66,19 +66,12 @@ function ebulletin_adminapi_createissue($args)
     $startdate = strtotime($beforesign.$pub['numsago'].' '.$pub['unitsago'], strtotime($issuedate));
     $enddate = strtotime($aftersign.$pub['numsfromnow'].' '.$pub['unitsfromnow'], strtotime($issuedate));
 
-    // generate the issue
-    list(
-        $subject, $body_html, $body_txt
-    ) = xarModAPIFunc('ebulletin', 'admin', 'generateissue', array(
-        'issuedate' => $issuedate,
-        'startdate' => $startdate,
-        'enddate' => $enddate,
-        'subject' => $pub['subject'],
-        'htmltemplate' => $tpl_html,
-        'txttemplate' => $tpl_txt,
-        'themename' => $theme
-    ));
-    if (xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+    /**
+    * This is tricky.  To include an accurate issue ID, we have to have saved it to the DB first.
+    * Unfortunately, $dbconn->GenId($issuestable) doesn't work for this purpose.  So, we create
+    * a dummy issue entry in the DB, then use the "regenerate" function to generate it for the
+    * first time!
+    */
 
     // prepare for database
     $dbconn = xarDBGetConn();
@@ -100,12 +93,16 @@ function ebulletin_adminapi_createissue($args)
             xar_published
         ) VALUES (?,?,?,?,?,?,?)
     ";
-    $bindvars = array($nextId, $pid, $issuedate, $subject, $body_html, $body_txt, 0);
+    $bindvars = array($nextId, $pid, $issuedate, '', '', '', 0);
     $result = $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
     // retrieve the ID that was created
     $id = $dbconn->PO_Insert_ID($issuestable, 'xar_id');
+
+    // "regenerate" the issue (actually, generate it for the first time)
+    xarModAPIFunc('ebulletin', 'admin', 'regenerateissue', array('id' => $id));
+    if (xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
     // call create hooks
     $item = $args;

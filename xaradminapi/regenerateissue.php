@@ -71,13 +71,14 @@ function ebulletin_adminapi_regenerateissue($args)
     list(
         $subject, $body_html, $body_txt
     ) = xarModAPIFunc('ebulletin', 'admin', 'generateissue', array(
+        'issueid' => $issue['id'],
         'issuedate' => $issue['issuedate'],
         'startdate' => $startdate,
         'enddate' => $enddate,
         'subject' => $pub['subject'],
         'htmltemplate' => $tpl_html,
         'txttemplate' => $tpl_txt,
-        'themename' => $theme
+        'themename' => $theme,
     ));
     if (xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 

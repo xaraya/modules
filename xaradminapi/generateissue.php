@@ -51,6 +51,9 @@ function ebulletin_adminapi_generateissue($args)
     if (empty($enddate) || !is_numeric($enddate)) {
         $invalid[] = 'end date';
     }
+    if (empty($issueid) || !is_numeric($issueid)) {
+        $invalid[] = 'issue ID';
+    }
 
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
@@ -77,6 +80,7 @@ function ebulletin_adminapi_generateissue($args)
             $subject = str_replace("%$datetype%", $datevalue, $subject);
         }
     }
+    $subject = str_replace("%issueid%", $issueid, $subject);
 
     // initialize template vars
     $data = array();
@@ -85,13 +89,13 @@ function ebulletin_adminapi_generateissue($args)
     $data['date'] = $date;
     $data['subject'] = $subject;
     $data['publication'] = $publication;
+    $data['issueid'] = $issueid;
     $data['sitename'] = xarModGetVar('themes', 'SiteName');
     $data['siteslogan'] = xarModGetVar('themes', 'SiteSlogan');
     $data['footer'] = xarModGetVar('themes', 'SiteFooter');
     $data['copyright'] = xarModGetVar('themes', 'SiteCopyRight');
     $data['adminname'] = xarModGetVar('mail', 'adminname');
     $data['adminemail'] = xarModGetVar('mail', 'adminemail');
-
 
     // swap themes while we generate newsletter
     $current_theme = xarTplGetThemeName();
