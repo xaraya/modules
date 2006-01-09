@@ -48,11 +48,11 @@ function newsletter_admin_deleteissue($args)
     if (!$confirm) {
 
         // Get the admin menu
-        $data = xarModAPIFunc('newsletter', 'admin', 'menu');
+        // $data = xarModAPIFunc('newsletter', 'admin', 'menu');
 
         // Specify for which issue you want confirmation
         $data['id'] = $id;
-        $data['confirmbutton'] = xarML('Confirm');
+        // $data['confirmbutton'] = xarML('Confirm');
 
         // Data to display in the template
         $data['namevalue'] = xarVarPrepForDisplay($issue['title']);

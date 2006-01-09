@@ -1,56 +1,54 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
-  <span class="xar-mod-title">#$menutitle#</span>
+    <span class="xar-mod-title">
+        <xar:mlstring>Newsletter Administration</xar:mlstring>
+    </span>
 </div>
 <div class="xar-mod-body">
-  <h2><xar:mlstring>Delete Publication</xar:mlstring></h2><br />
-  <div style="text-align: center;margin: auto;">
-    <form action="#xarModURL('newsletter', 'admin', 'deletepublication')#" method="post" enctype="application/x-www-form-urlencoded" >
-      <input type="hidden" name="authid" value="#$authid#" />
-      <input type="hidden" name="id" id="id" value="#$id#" />
-      <input type="hidden" name="confirm" id="confirm" value="1"/>
-      <table width="100%" border="0" cellpadding="5">
-        <tr>
-          <td>
-            <span class="xar-title"><xar:mlstring>You are about to delete a publication.</xar:mlstring></span>
-          </td>
-        </tr>
-        <tr align="left">
-          <td>
-            <span class="xar-title"><xar:mlstring>On removal of publication:</xar:mlstring></span>
-            <br />
-            <input type="radio" value="remove" name="issues" checked="checked"/>
-            <xar:mlstring>Delete all issues, stories and subscriptions for this publication.</xar:mlstring>
-            <br />
-            <input type="radio" value="reassign" name="issues"/>
-            <xar:mlstring>Move all issues, stories and subscriptions to another publication.</xar:mlstring>
-            <br />
-            <select name="newpid">
-              <option value="0">Choose Publication:</option>
-              <xar:loop name="$publications">
-                <xar:if condition="$id != $loop:item['id']">
-                  <option name="id" value="#$loop:item['id']#" selected="selected">#$loop:item['title']#</option>
-                </xar:if>
-              </xar:loop>
-            </select>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <span class="xar-title"><xar:mlstring>Confirm removal of publication:</xar:mlstring></span>&nbsp;&nbsp;
-            #$namevalue#
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <input type="submit" value="#$confirmbutton#"  tabindex="1" />
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <a href="&xar-modurl-newsletter-admin-viewpublication;"><xar:mlstring>Cancel removal of publication</xar:mlstring></a>
-          </td>
-        </tr>
-      </table>
-    </form>        
-  </div>
+    <h2><xar:mlstring>Delete Publication</xar:mlstring></h2>
+    <form name="post" id="post" action="&xar-modurl-newsletter-admin-deletepublication;" method="post" enctype="application/x-www-form-urlencoded">
+        <fieldset>
+            <legend>
+                <xar:mlstring>You are about to delete a publication</xar:mlstring>
+            </legend>
+            <input type="hidden" name="authid" value="#$authid#" />
+            <input type="hidden" name="id" id="id" value="#$id#" />
+            <input type="hidden" name="confirm" id="confirm" value="1"/>
+            <div class="xar-form-input-wrapper">
+                <label for="issues" title="#xarML('choose option')#" class="xar-form-label">
+                    <xar:mlstring>On removal of publication:</xar:mlstring>
+                </label>
+                <input type="radio" value="remove" id="issues" name="issues" checked="checked" />
+                <xar:mlstring>Delete all issues, stories and subscriptions for this publication.</xar:mlstring>
+                <br />
+                <input type="radio" value="reassign" id="issues" name="issues" />
+                <xar:mlstring>Move all issues, stories and subscriptions to another publication.</xar:mlstring>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="newpid" title="#xarML('choose option')#" class="xar-form-label">
+                    <xar:mlstring>Choose publication:</xar:mlstring>
+                </label>
+                <select id="newpid" name="newpid">
+                    <option value="0">Choose ...</option>
+                    <xar:loop name="$publications">
+                        <xar:if condition="$id != $loop:item['id']">
+                            <option name="id" value="#$loop:item['id']#" selected="selected">#$loop:item['title']#</option>
+                        </xar:if>
+                    </xar:loop>
+                </select>
+            </div>
+            <div class="xar-form-input-wrapper-after">
+                <xar:mlstring>Confirm removal of publication:</xar:mlstring></span>&nbsp;&nbsp;
+                #$namevalue#
+            </div>
+        </fieldset>
+        <div class="xar-form-input-wrapper-after">
+            <input type="submit" value="#xarML('Confirm')#"  tabindex="1" />
+        </div>
+        <div class="xar-form-input-wrapper-after">
+            <a href="&xar-modurl-newsletter-admin-viewpublication;">
+                <xar:mlstring>Cancel removal of publication</xar:mlstring>
+            </a>
+        </div>
+    </form>
 </div>

@@ -32,18 +32,19 @@ function newsletter_admin_viewpublication($args)
     if (!xarVarFetch('startnum', 'int:0:', $startnum, 1)) return;
     if (!xarVarFetch('sortby', 'str:1:', $sortby, 'title')) return;
     if (!xarVarFetch('owner', 'int:0:1', $owner, 0)) return;
-
+    if (!xarVarFetch('func', 'str', $data['page'],  'main', XARVAR_NOT_REQUIRED)) return;
     // Get the admin edit menu
-    $data['menu'] = xarModFunc('newsletter', 'admin', 'editmenu');
+   // $data['menu'] = xarModFunc('newsletter', 'admin', 'editmenu');
 
+    $data['menu'] = xarModApiFunc('newsletter', 'admin', 'editmenu');
     // Prepare the array variable that will hold all items for display
     $data['items'] = array();
     $data['startnum'] = $startnum;
     $data['sortby'] = $sortby;
 
     // Specify some labels for display
-    $data['ownerlabel'] = xarVarPrepForDisplay(xarML('Owner Name'));
-    $data['optionslabel']=xarVarPrepForDisplay(xarML('Options'));
+    // $data['ownerlabel'] = xarVarPrepForDisplay(xarML('Owner Name'));
+    // $data['optionslabel']=xarVarPrepForDisplay(xarML('Options'));
 
     // The user API function is called.
     $publications = xarModAPIFunc('newsletter',

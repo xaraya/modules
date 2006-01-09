@@ -20,11 +20,13 @@
  */
 function newsletter_admin_modifynewsletter()
 {
+	if (!xarVarFetch('func', 'str', $data['page'],  'main', XARVAR_NOT_REQUIRED)) return;
+	
     // Security check
     if(!xarSecurityCheck('AdminNewsletter')) return;
 
     // Get the admin edit menu
-    $data['menu'] = xarModFunc('newsletter', 'admin', 'configmenu');
+    $data['menu'] = xarModApiFunc('newsletter', 'admin', 'configmenu');
 
     // Generate a one-time authorisation code for this operation
     $data['authid'] = xarSecGenAuthKey();

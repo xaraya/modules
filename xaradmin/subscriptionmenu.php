@@ -33,7 +33,7 @@ function newsletter_admin_subscriptionmenu()
     $data['menulinks'] = xarModAPIFunc('newsletter', 'admin', 'subscriptionmenu');
     //$data['enabledimages']  = xarModGetVar('newsletter', 'Enable Images');
 
-    xarTplAddStyleLink('newsletter', 'style', $fileExt = 'css');
+    //xarTplAddStyleLink('newsletter', 'style', $fileExt = 'css');
 
     // Return the template variables defined in this function
     return $data;

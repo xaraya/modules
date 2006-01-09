@@ -1,20 +1,23 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:base-include-javascript filename="launchRemote.js" />
 <div class="xar-mod-head">
-  <span class="xar-mod-title">#$menutitle#</span>
+    <span class="xar-mod-title">
+        <xar:mlstring>Newsletter Module</xar:mlstring>
+    </span>
 </div>
-
 <div class="xar-mod-body">
-  <h2><xar:mlstring>View Archives</xar:mlstring></h2><br />
-  <div style="text-align: left;margin: auto;">
+  <h2><xar:mlstring>View Archives</xar:mlstring></h2>
     <form action="&xar-modurl-newsletter-user-viewarchives;" method="post" enctype="application/x-www-form-urlencoded">
       <input type="hidden" name="startnum" id="startnum" value="0" />
-      <table width="100%" border="0" cellspacing="0" cellpadding="4">
-        <tr>
-          <td>
-            <b><xar:mlstring>Select Publication:</xar:mlstring></b>
-          </td>
-          <td>
-            <select name="publicationId" onChange="this.form.submit();" tabindex="1">
+      <fieldset>
+            <legend>
+                <xar:mlstring>Choose publication</xar:mlstring>
+            </legend>
+      <div class="xar-form-input-wrapper">
+      <label for="publicationId" title="#xarML('Publication')#" class="xar-form-label">
+            <xar:mlstring>Select Publication:</xar:mlstring>
+      </label>    
+           <select name="publicationId" onChange="this.form.submit();" tabindex="1">
               <option value="0">All Publications</option>
               <xar:loop name="$publications">
                 <xar:if condition="$loop:item['private'] != 1">
@@ -26,33 +29,32 @@
                 </xar:if>
               </xar:loop>
             </select>
-          </td>
-        </tr>
-      </table>
+       </div>
+       </fieldset>
     </form>
-    
-    <br />
     <xar:if condition="empty($issues)">
+    <div class="xar-form-input-wrapper">
       <xar:mlstring>Sorry - there are no archives available at this time.</xar:mlstring>
+    </div>
       <xar:else />
-      <table width="100%" border="1" cellspacing="0" cellpadding="4">
+      <table class="xar-fullwidth">
         <tr>
           <xar:if condition="$issuetitleurl != ''">
-            <th><a href="#$issuetitleurl#"><xar:mlstring>Issue Title</xar:mlstring></a></th>
+            <th class="xar-align-center"><a href="#$issuetitleurl#"><xar:mlstring>Issue Title</xar:mlstring></a></th>
             <xar:else />
-            <th><xar:mlstring>Issue Title</xar:mlstring></th>
+            <th class="xar-align-center"><xar:mlstring>Issue Title</xar:mlstring></th>
           </xar:if>
           <xar:if condition="$publicationurl != ''">
-            <th><a href="#$publicationurl#"><xar:mlstring>Publication</xar:mlstring></a></th>
+            <th class="xar-align-center"><a href="#$publicationurl#"><xar:mlstring>Publication</xar:mlstring></a></th>
             <xar:else />
-            <th><xar:mlstring>Date Published</xar:mlstring></th>
+            <th class="xar-align-center"><xar:mlstring>Date Published</xar:mlstring></th>
           </xar:if>
           <xar:if condition="$datepublishedurl != ''">
-            <th><a href="#$datepublishedurl#"><xar:mlstring>Date Published</xar:mlstring></a></th>
+            <th class="xar-align-center"><a href="#$datepublishedurl#"><xar:mlstring>Date Published</xar:mlstring></a></th>
             <xar:else />
-            <th><xar:mlstring>Date Published</xar:mlstring></th>
+            <th class="xar-align-center"><xar:mlstring>Date Published</xar:mlstring></th>
           </xar:if>
-          <th><xar:mlstring>Options</xar:mlstring></th>
+          <th class="xar-align-center"><xar:mlstring>Options</xar:mlstring></th>
         </tr>
         <xar:loop name="$issues">
           <xar:if condition="$loop:item['external'] eq 1">
@@ -62,7 +64,7 @@
               <td>
                 #$loop:item['datePublished']['mon']#-#$loop:item['datePublished']['day']#-#$loop:item['datePublished']['year']#
               </td>
-              <td>
+              <td class="xar-align-center">
                 <xar:if condition="empty($loop:item['previewurl'])">
                   #$loop:item['previewtitle']#
                   <xar:else />
@@ -77,10 +79,7 @@
           </xar:if>
         </xar:loop>
       </table>
-      <br />
       <!-- add the pager here -->
       #$pager#
     </xar:if>
-    <br />
   </div>
-</div>

@@ -30,7 +30,7 @@ function newsletter_admin_publishissue()
 
     // Get the admin edit menu
     $data = array();
-    $data['menu'] = xarModFunc('newsletter', 'admin', 'editmenu');
+    // $data['menu'] = xarModFunc('newsletter', 'admin', 'editmenu');
 
     // Get the issue for display
     $issue = xarModAPIFunc('newsletter',
@@ -72,7 +72,7 @@ function newsletter_admin_publishissue()
     if (!$confirm) {
         // Specify for which story you want confirmation
         $data['issueId'] = $issueId;
-        $data['confirmbutton'] = xarML('Confirm');
+        // $data['confirmbutton'] = xarML('Confirm');
         $data['publicationtitle'] = xarVarPrepForDisplay($publication['title']);
         $data['issuetitle'] = xarVarPrepForDisplay($issue['title']);
         $data['published'] = false;

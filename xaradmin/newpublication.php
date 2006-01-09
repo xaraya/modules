@@ -26,10 +26,10 @@ function newsletter_admin_newpublication()
     if(!xarSecurityCheck('AddNewsletter')) return;
 
     // Get the admin menu
-    $data = xarModAPIFunc('newsletter', 'admin', 'menu');
+    //$data = xarModAPIFunc('newsletter', 'admin', 'menu');
 
     // Set template strings
-    $data['addlabel'] = xarVarPrepForDisplay(xarML('Add Publication'));
+   // $data['addlabel'] = xarVarPrepForDisplay(xarML('Add Publication'));
 
     // Get current user
     $data['loggeduser'] = xarModAPIFunc('newsletter',

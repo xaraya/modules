@@ -1,114 +1,107 @@
-<html>
-  <head>
-  </head>
-  <body>
-    <div class="xar-mod-head">
-      <!-- <span class="xar-mod-title">#$menutitle#</span> -->
-    </div>
-    <div class="xar-mod-body"><h2><xar:mlstring>Choose Article</xar:mlstring></h2><br />
-      <div style="text-align: left;margin: auto;">
-        <form action="#xarModURL('newsletter', 'admin', 'choosearticle')#" method="post" enctype="application/x-www-form-urlencoded" name="chooseArticleForm">
-          <input type="hidden" name="authid" id="authid" value="#$authid#" />     
-          <input type="hidden" name="publicationId" id="publicationId" value="#$publicationId#" />       
-          <input type="hidden" name="issueId" id="issueId" value="#$issueId#" />    
-          <input type="hidden" name="id" id="id" value="#$id#" />    
-          <input type="hidden" name="notNew" id="notNew" value="#$notNew#" />    
-
-          <table border="0" cellpadding="5">
-            <xar:if condition="$canUseArticles">
-              <tr bgcolor="#DDDDDD">
-                <td valign="bottom">
-                  <xar:mlstring>Publication Type</xar:mlstring>
-                </td>
-                <td>
-                  Selecting an article to be used in place of this story's title and content.  If you enter a title or content
-                  below, the article's title or content will be over ridden by it.<br/> 
-                  <select name="pubtypeid" id="pubtypeid" onChange="this.form.submit();">
-                    <option value="0"><xar:mlstring>All</xar:mlstring></option>
-                    <xar:foreach in="$pubtypes" key="$pubid" value="$pubtype">
-                      <xar:if condition="!empty($pubtypeid) and $pubtypeid eq $pubid">
-                        <option value="#$pubid#" selected="selected">#$pubtype['descr']#</option>
-                        <xar:else />
-                        <option value="#$pubid#">#$pubtype['descr']#</option>
-                      </xar:if>
-                    </xar:foreach>
-                  </select>
-                </td>
-              </tr>
-              
-              <tr bgcolor="#DDDDDD">
-                <td>
-                  <xar:mlstring>Category</xar:mlstring>
-                </td>
-                <td>
-                  <select name="catfilter" id="catfilter" onChange="this.form.submit();">
-                    <option value="0"><xar:mlstring>All</xar:mlstring></option>
-                    <xar:foreach in="$categorylist" value="$catlistx">
-                      <xar:if condition="!empty($catfilter) and $catfilter eq $catlistx['cid']">
-                        <option value="#$catlistx['cid']#" selected="selected">#$catlistx['name']#</option>
-                        <xar:else />
-                        <option value="#$catlistx['cid']#">#$catlistx['name']#</option>
-                      </xar:if>
-                    </xar:foreach>
-                  </select>
-                </td>
-              </tr>
-              
-              <tr bgcolor="#DDDDDD">
-                <td>
-                  <xar:mlstring>Status</xar:mlstring>
-                </td>
-                <td>
-                  <select name="status" id="status'" size="1" onChange="this.form.submit();">
-                    <xar:foreach in="$statusoptions" value="$statusoption">
-                      <xar:if condition="!empty($status) and $status eq $statusoption['id']">
-                        <option value="#$statusoption['id']#" selected="selected">#$statusoption['name']#</option>
-                        <xar:else />
-                        <option value="#$statusoption['id']#">#$statusoption['name']#</option>
-                      </xar:if>
-                    </xar:foreach>
-                  </select>
-                </td>
-              </tr>
-              
-              <tr bgcolor="#DDDDDD">
-                <td>
-                  <xar:mlstring>Featured Article</xar:mlstring>
-                </td>
-                <td>
-                  <select name="articleid" id="articleid" size="1">
-                    <xar:set name="$noarticleSelected">$noarticleSelected="";</xar:set>
-                    <xar:if condition="$articleid eq 0">
-                      <xar:set name="$noarticleSelected">$noarticleSelected="selected=\"selected\"";</xar:set>
-                    </xar:if>
-                    
-                    <xar:foreach in="$filtereditems" value="$filtereditem">
-                      <xar:if condition="$articleid eq $filtereditem['aid']">
-                        <option value="#$filtereditem['aid']#" selected="selected">#$filtereditem['title']#</option>
-                        <xar:else />
-                        <option value="#$filtereditem['aid']#">#$filtereditem['title']#</option>
-                      </xar:if>
-                    </xar:foreach>
-                  </select>
-                </td>
-              </tr>
-            </xar:if>
-            <tr>
-              <td colspan="2" align="center">
-                <br /><br />
-                <!-- <a HREF="javascript:void(0);" onClick="window.opener.location.href = '#xarModURL('newsletter', 'admin', 'newstory')#'+ '&amp;articleid='+document.chooseArticleForm.articleid.value;self.close();">test</A> -->
-                <xar:if condition="!empty($notNew)">
-                  <a href="javascript:void(0);" onClick="window.opener.location.href = '#xarModURL('newsletter', 'admin', 'modifystory')#'+'&amp;id=#$id#&amp;articleid='+document.chooseArticleForm.articleid.value;self.close();">Use Selected</a>
-                  <xar:else/>
-                  <a href="javascript:void(0);" onClick="window.opener.location.href = '#xarModURL('newsletter', 'admin', 'newstory')#'+'&amp;publicationId=#$publicationId#&amp;issueId=#$issueId#&amp;articleid='+document.chooseArticleForm.articleid.value;self.close();">Use Selected</a>
-                </xar:if>
-                - 
-                <a HREF="javascript:void(0);" onClick="self.close();">Cancel</a>
-              </td>
-            </tr>
-          </table>
-        </form>       
-      </div>
-    </div>     
-  </body>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE blocklayout PUBLIC "-//XAR//DTD BL 1.0 Strict//EN" "http://xaraya.com/bl1/DTD/bl1-strict.dtd">
+<?xar type="page" ?>
+<xar:blocklayout version="1.0" content="text/html" xmlns:xar="http://xaraya.com/2004/blocklayout" dtd="xhtml1-strict">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+	<title>#$tpl:pageTitle#</title>
+	<xar:style scope="common" />
+	<xar:additional-styles /> 
+	<xar:style scope="theme" file="style" method="import" />
+</head>
+<body>
+<div class="xar-mod-body">
+	<form name="chooseArticleForm" id="chooseArticleForm" action="&xar-modurl-newsletter-admin-choosearticle;" method="post" enctype="application/x-www-form-urlencoded">
+	<input type="hidden" name="authid" id="authid" value="#$authid#" />     
+	<input type="hidden" name="publicationId" id="publicationId" value="#$publicationId#" />       
+	<input type="hidden" name="issueId" id="issueId" value="#$issueId#" />    
+	<input type="hidden" name="id" id="id" value="#$id#" />    
+	<input type="hidden" name="notNew" id="notNew" value="#$notNew#" />    
+	<xar:if condition="$canUseArticles">
+		<div class="xar-form-input-wrapper">
+			<xar:mlstring>Selecting an article to be used in place of this story's title and content.  If you enter a title or content
+			below, the article's title or content will be over ridden by it.</xar:mlstring>
+		</div> 
+		<fieldset>
+			<legend>
+				<xar:mlstring>Choose Article</xar:mlstring>
+			</legend>
+			<div class="xar-form-input-wrapper">
+				<label for="pubtypeid" title="#xarML('choose option')#" class="xar-form-label">
+					<xar:mlstring>Publication Type</xar:mlstring>
+				</label>
+				<select name="pubtypeid" id="pubtypeid" onChange="this.form.submit();">
+					<option value="0"><xar:mlstring>All</xar:mlstring></option>
+					<xar:foreach in="$pubtypes" key="$pubid" value="$pubtype">
+						<xar:if condition="!empty($pubtypeid) and $pubtypeid eq $pubid">
+							<option value="#$pubid#" selected="selected">#$pubtype['descr']#</option>
+						<xar:else />
+							<option value="#$pubid#">#$pubtype['descr']#</option>
+						</xar:if>
+					</xar:foreach>
+				</select>
+			</div>
+			<div class="xar-form-input-wrapper">              
+				<label for="catfilter" title="#xarML('choose option')#" class="xar-form-label">
+					<xar:mlstring>Category</xar:mlstring>
+				</label>
+				<select name="catfilter" id="catfilter" onChange="this.form.submit();">
+					<option value="0"><xar:mlstring>All</xar:mlstring></option>
+					<xar:foreach in="$categorylist" value="$catlistx">
+						<xar:if condition="!empty($catfilter) and $catfilter eq $catlistx['cid']">
+							<option value="#$catlistx['cid']#" selected="selected">#$catlistx['name']#</option>
+						<xar:else />
+							<option value="#$catlistx['cid']#">#$catlistx['name']#</option>
+						</xar:if>
+					</xar:foreach>
+				</select>
+			</div>
+			<div class="xar-form-input-wrapper"> 
+				<label for="status" title="#xarML('choose option')#" class="xar-form-label">
+					<xar:mlstring>Status</xar:mlstring>
+				</label>
+				<select name="status" id="status" size="1" onChange="this.form.submit();">
+					<xar:foreach in="$statusoptions" value="$statusoption">
+						<xar:if condition="!empty($status) and $status eq $statusoption['id']">
+							<option value="#$statusoption['id']#" selected="selected">#$statusoption['name']#</option>
+						<xar:else />
+							<option value="#$statusoption['id']#">#$statusoption['name']#</option>
+						</xar:if>
+					</xar:foreach>
+				</select>
+			</div>                  
+			<div class="xar-form-input-wrapper">                   
+				<label for="articleid" title="#xarML('choose option')#" class="xar-form-label">
+					<xar:mlstring>Featured Article</xar:mlstring>
+				</label>
+				<select name="articleid" id="articleid" size="1">
+					<xar:set name="$noarticleSelected">$noarticleSelected="";</xar:set>
+					<xar:if condition="$articleid eq 0">
+						<xar:set name="$noarticleSelected">$noarticleSelected="selected=\"selected\"";</xar:set>
+					</xar:if>
+					<xar:foreach in="$filtereditems" value="$filtereditem">
+						<xar:if condition="$articleid eq $filtereditem['aid']">
+							<option value="#$filtereditem['aid']#" selected="selected">#$filtereditem['title']#</option>
+						<xar:else />
+							<option value="#$filtereditem['aid']#">#$filtereditem['title']#</option>
+						</xar:if>
+					</xar:foreach>
+				</select>
+			</div>
+		</fieldset>
+	</xar:if>
+	<div class="xar-form-input-wrapper-after">
+		<!-- <a HREF="javascript:void(0);" onClick="window.opener.location.href = '#xarModURL('newsletter', 'admin', 'newstory')#'+ '&amp;articleid='+document.chooseArticleForm.articleid.value;self.close();">test</A> -->
+		<xar:if condition="!empty($notNew)">
+			<a href="javascript:void(0);" onClick="window.opener.location.href = '#xarModURL('newsletter', 'admin', 'modifystory')#'+'&amp;id=#$id#&amp;articleid='+document.chooseArticleForm.articleid.value;self.close();">Use Selected</a>
+		<xar:else/>
+			<a href="javascript:void(0);" onClick="window.opener.location.href = '#xarModURL('newsletter', 'admin', 'newstory')#'+'&amp;publicationId=#$publicationId#&amp;issueId=#$issueId#&amp;articleid='+document.chooseArticleForm.articleid.value;self.close();">Use Selected</a>
+		</xar:if>
+		- 
+		<a HREF="javascript:void(0);" onClick="self.close();">Cancel</a>
+	</div>
+	</form>       
+</div>
+</body>
 </html>
+</xar:blocklayout>

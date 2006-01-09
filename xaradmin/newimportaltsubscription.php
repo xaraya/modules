@@ -22,11 +22,12 @@
  */
 function newsletter_admin_newimportaltsubscription()
 {
+    if (!xarVarFetch('func', 'str', $data['page'],  'main', XARVAR_NOT_REQUIRED)) return;
     // Get the admin edit menu
-    $data['menu'] = xarModFunc('newsletter', 'admin', 'subscriptionmenu');
+    $data['menu'] = xarModApiFunc('newsletter', 'admin', 'subscriptionmenu');
 
     // Options label
-    $data['importbutton'] = xarVarPrepForDisplay(xarML('Import Subscriptions'));
+    // $data['importbutton'] = xarVarPrepForDisplay(xarML('Import Subscriptions'));
 
     // Set startnum to display all publications
     $startnum = 1;

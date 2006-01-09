@@ -1,89 +1,66 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:mlstring>Newsletter</xar:mlstring>
+        <xar:mlstring>Newsletter Administration</xar:mlstring>
     </span>
 </div>
-<br />
-#$menu#
 <div class="xar-mod-body">
-    <div class="contentBorder">
-        <div style="text-align: left;margin: auto;">
-            <br />
-            <xar:if condition="!empty($publications)">
-                <form action="#xarModURL('newsletter', 'admin', 'createaltsubscription')#" method="post" enctype="application/x-www-form-urlencoded" >
-                <input type="hidden" name="authid" id="authid" value="#$authid#" />     
-                <table border="0" width="100%">
-                    <tr>
-                        <td align="left" colspan="2">
-                            <b><xar:mlstring>Note:  This should only be used to add new subscriptions that are not registered on your site.</xar:mlstring></b>
-                            <br /><br />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="left">
-                            <xar:mlstring>Subscription Name:</xar:mlstring>
-                        </td>
-                        <td>
-                            <input type="text" name="name" id="name" value="" size="50" maxlength="100" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="left">
-                            <xar:mlstring>Subscription Email:</xar:mlstring>
-                            <br /><br />
-                        </td>
-                        <td>
-                            <input type="text" name="email" id="email" value="" size="50" maxlength="255" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="left">
-                            <xar:mlstring>Mail Options</xar:mlstring>
-                        </td>
-                        <td>
-                            <input type="checkbox" name="validate" id="validate" value="1" checked="checked" />
-                            &nbsp;&nbsp;Validate Email Address (syntax check)
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>&nbsp;</td>
-                        <td>
-                            <input type="checkbox" name="htmlmail" id="htmlmail" value="1" checked="checked" />
-                            &nbsp;&nbsp;HTML Mail
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                        <hr/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="left" colspan="2">
-                            <xar:mlstring>Choose which publication(s) to add new subscription:</xar:mlstring>
-                        </td>
-                    </tr>
-                    <xar:loop name="$publications">
-                        <tr>
-                            <td>
-                                <b>#$loop:item['title']#</b>
-                            </td>
-                            <td align="left" valign="center">
-                                <input type="checkbox" name="pids[]" id="pids[]" value="#$loop:item['id']#"/>
-                            </td>
-                        </tr>
-                    </xar:loop>
-                    <tr>
-                        <td colspan="2" align="center">
-                            <br /><br />
-                            <input type="submit" value="#$subscribebutton#"  />
-                        </td>
-                    </tr>
-                </table>
-                </form>
-            <xar:else />
-                <br /><br />
-                <xar:mlstring>Sorry - there are no publications available at this time.</xar:mlstring>
-            </xar:if>
+<xar:template file="navtab" type="module" />
+    <xar:if condition="!empty($publications)">
+        <form action="#xarModURL('newsletter', 'admin', 'createaltsubscription')#" method="post" enctype="application/x-www-form-urlencoded" >
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <div class="xar-form-input-wrapper">
+                <xar:mlstring>Note:  This should only be used to add new subscriptions that are not registered on your site.</xar:mlstring>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="name" class="xar-form-label" title="#xarML('Subscription Name.')#">
+                    <xar:mlstring>Subscription Name:</xar:mlstring>
+                </label>
+                <input type="text" name="name" id="name" value="" size="50" maxlength="100" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="email" class="xar-form-label" title="#xarML('Subscription Email.')#">
+                    <xar:mlstring>Subscription Email:</xar:mlstring>
+                </label>
+                <input type="text" name="email" id="email" value="" size="50" maxlength="255" />
+            </div>
+            <fieldset>
+                <legend>
+                    <xar:mlstring>Mail Options</xar:mlstring>
+                </legend>
+                <div class="xar-form-input-wrapper">
+                    <label for="validate" class="xar-form-label" title="#xarML('Validate Email Address.')#">
+                        <xar:mlstring>Validate Email Address (syntax check)</xar:mlstring>
+                    </label>
+                    <input type="checkbox" name="validate" id="validate" value="1" checked="checked" />
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="htmlmail" class="xar-form-label" title="#xarML('HTML Mail.')#">
+                        <xar:mlstring>HTML Mail</xar:mlstring>
+                    </label>
+                    <input type="checkbox" name="htmlmail" id="htmlmail" value="1" checked="checked" />
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>
+                    <xar:mlstring>Choose which publication(s) to add new subscription:</xar:mlstring>
+                </legend>
+                <xar:loop name="$publications">
+                    <div class="xar-form-input-wrapper">
+                        <label for="pids[]" class="xar-form-label" title="#xarML('Publication name.')#">
+                            #$loop:item['title']#
+                        </label>
+                        <input type="checkbox" name="pids[]" id="pids[]" value="#$loop:item['id']#"/>
+                    </div>
+                </xar:loop>
+            </fieldset>
+            <div class="xar-form-input-wrapper-after">
+                <input type="submit" value="#xarML('Subscribe')#" />
+            </div>
+        </form>
+    <xar:else />
+        <div class="xar-form-input-wrapper">
+            <xar:mlstring>Sorry - there are no publications available at this time.</xar:mlstring>
         </div>
-    </div>
+    </xar:if>
 </div>

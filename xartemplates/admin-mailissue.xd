@@ -1,62 +1,42 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:style scope="module" module="base" file="navtabs" />
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:mlstring>Newsletter</xar:mlstring>
+        <xar:mlstring>Newsletter Administration</xar:mlstring>
     </span>
 </div>
-<br />
-#$menu#
 <div class="xar-mod-body">
-    <div class="contentBorder">
-        <div style="text-align: left;margin: auto;">
-            <table width="100%" border="0" cellspacing="0" cellpadding="4">
-                <tr>
-                    <td colspan="2">
-                        <b><xar:mlstring>Publication Results</xar:mlstring></b>
-                    </td>
-                </tr>
-                <tr>
-                    <td width="20%">
-                        <xar:mlstring>Issue:</xar:mlstring>
-                        <br />
-                    </td>
-                    <td>
-                        <b>#$publication['title']#&nbsp;:&nbsp;#$issue['title']#</b>
-                    </td>
-                </tr>
-                <tr>
-                    <td width="20%">
-                        <xar:mlstring>Total Sent:</xar:mlstring>
-                    </td>
-                    <td>
-                        <b>#$issueCounts['total']#</b>
-                    </td>
-                </tr>
-                <xar:if condition="!$bulkemail">
-                    <tr>
-                        <td width="20%">
-                            <xar:mlstring>Total Errors:</xar:mlstring>
-                        </td>
-                        <td>
-                            <b>#$issueCounts['errors']#</b>
-                        </td>
-                    </tr>
-                </xar:if>
-                <br />
-                <xar:if condition="$issueCounts['total'] != 0">
-                    <tr>
-                        <td colspan="2">
-                            <a href="#$viewsubscriptionurl#"><xar:mlstring>Click here to view subscriptions</xar:mlstring></a>
-                        </td>
-                    </tr>
-                <xar:else />
-                    <tr>
-                        <td colspan="2">
-                            <b><xar:mlstring>Nobody has subscribed to this publication!</xar:mlstring></b>
-                        </td>
-                    </tr>
-                </xar:if>
-            </table>
-            <br />
+    <xar:template file="navtab" type="module" />
+     <fieldset>
+        <legend>
+            <xar:mlstring>Publication Results</xar:mlstring>
+        </legend>
+    <div class="xar-form-input-wrapper">
+        <label for="pubblication" title="#xarML('Pubblication')#" class="xar-form-label">
+        <xar:mlstring>Issue:</xar:mlstring>
+        </label>
+        #$publication['title']#&nbsp;:&nbsp;#$issue['title']#
+    </div>
+    <div class="xar-form-input-wrapper">
+    <label for="totla" title="#xarML('Total')#" class="xar-form-label">
+        <xar:mlstring>Total Sent:</xar:mlstring>
+        </label>
+        #$issueCounts['total']#
+    </div>
+    <xar:if condition="!$bulkemail">
+        <div class="xar-form-input-wrapper">
+            <label for="errors" title="#xarML('Errors')#" class="xar-form-label">
+                <xar:mlstring>Total Errors:</xar:mlstring>
+            </label>
+            #$issueCounts['errors']#
         </div>
+    </xar:if>
+    </fieldset>
+    <div class="xar-form-input-wrapper-after">
+        <xar:if condition="$issueCounts['total'] != 0">
+                <a href="#$viewsubscriptionurl#"><xar:mlstring>Click here to view subscriptions</xar:mlstring></a>
+        <xar:else />
+            <xar:mlstring>Nobody has subscribed to this publication!</xar:mlstring>
+        </xar:if>
     </div>
 </div>

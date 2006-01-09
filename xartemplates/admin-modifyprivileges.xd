@@ -1,176 +1,175 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
-  <span class="xar-mod-title">
-    <xar:mlstring>Newsletter</xar:mlstring>
-  </span>
+    <span class="xar-mod-title">
+        <xar:mlstring>Newsletter Administration</xar:mlstring>
+    </span>
 </div>
-<br />
-#$menu#
 <div class="xar-mod-body">
-  <div class="contentBorder">
-    <div style="text-align: left;margin: auto;">
-      <xar:if condition="$creategroups eq 0">
-        <form action="&xar-modurl-newsletter-admin-updategroups;" method="post" enctype="application/x-www-form-urlencoded" >
-          <input type="hidden" name="authid" id="authid" value="#$authid#" />
-          <table border="0" cellpadding="2">
-            <tr align="left" valign="top">
-              <td colspan="3">#xarML('If you want to use the default groups and privileges for Newsletter, set the groups accordingly.')#</td>
-            </tr>
-            <tr>
-              <td><b><xar:mlstring>Default Groups</xar:mlstring></b></td>
-              <td><b><xar:mlstring>Group</xar:mlstring></b></td>
-              <td><b><xar:mlstring>Privilege</xar:mlstring></b></td>
-            </tr>
-            <tr>
-              <td>#$publishergrouplabel# </td>
-              <td>
-                <select name="publisherGroup" id="publisherGroup">
-                  <xar:loop name="$groups">
-                    <xar:if condition="$loop:item['name'] eq $defaultgroup">
-                      <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#" selected="selected">#$loop:item['name']#</option>
-                      <xar:else />
-                      <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#">#$loop:item['name']#</option>
-                    </xar:if>
-                  </xar:loop>
-                </select>
-              </td>
-              <td>
-                <select name="publisherMask" id="publisherMask">
-                  <xar:loop name="$masks">
-                    <xar:if condition="$loop:item['name'] eq $publisherMask">
-                      <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#" selected="selected">#$loop:item['name']# (Level #$loop:item['level']#)</option>
-                      <xar:else />
-                      <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#">#$loop:item['name']# (Level #$loop:item['level']#)</option>
-                    </xar:if>
-                  </xar:loop>
-                </select>
-              </td>
-            </tr>
-            <tr>
-              <td>#$editorgrouplabel# </td>
-              <td>
-                <select name="editorGroup" id="editorGroup">
-                  <xar:loop name="$groups">
-                    <xar:if condition="$loop:item['name'] eq $defaultgroup">
-                      <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#" selected="selected">#$loop:item['name']#</option>
-                      <xar:else />
-                      <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#">#$loop:item['name']#</option>
-                    </xar:if>
-                  </xar:loop>
-                </select>
-              </td>
-              <td>
-                <select name="editorMask" id="editorMask">
-                            <xar:loop name="$masks">
-                                <xar:if condition="$loop:item['name'] eq $editorMask">
-                                    <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#" selected="selected">#$loop:item['name']# (Level #$loop:item['level']#)</option>
-                                <xar:else />
-                                    <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#">#$loop:item['name']# (Level #$loop:item['level']#)</option>
-                                </xar:if>
-                            </xar:loop>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>#$writergrouplabel# </td>
-                        <td>
-                            <select name="writerGroup" id="writerGroup">
-                            <xar:loop name="$groups">
-                                <xar:if condition="$loop:item['name'] eq $defaultgroup">
-                                    <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#" selected="selected">#$loop:item['name']#</option>
-                                <xar:else />
-                                    <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#">#$loop:item['name']#</option>
-                                </xar:if>
-                            </xar:loop>
-                            </select>
-                        </td>
-                        <td>
-                            <select name="writerMask" id="writerMask">
-                            <xar:loop name="$masks">
-                                <xar:if condition="$loop:item['name'] eq $writerMask">
-                                    <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#" selected="selected">#$loop:item['name']# (Level #$loop:item['level']#)</option>
-                                <xar:else />
-                                    <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#">#$loop:item['name']# (Level #$loop:item['level']#)</option>
-                                </xar:if>
-                            </xar:loop>
-                            </select>
-                        </td>
-                    </tr>
-                </table>
-                <br/><br/>
-                <center>
-                <input type="submit" value="#$creategroupbutton#"  tabindex="16" />
-                </center>
-            </form>
-            <xar:else />
-                <b><xar:mlstring>Default groups have already been created!</xar:mlstring></b>
-                <br /><br />
-                <xar:mlstring>Click here to</xar:mlstring>&nbsp;<a href="&xar-modurl-roles-admin-viewroles;"><xar:mlstring>View Groups</xar:mlstring></a>
-                <br/><br/>
-                <form action="#xarModURL('newsletter', 'admin', 'updateprivileges')#" method="post" enctype="application/x-www-form-urlencoded" >
-                <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                <table border="0" cellpadding="5">
-                <tr>
-                    <td><b><xar:mlstring>Group</xar:mlstring></b></td>
-                    <td><b><xar:mlstring>Privilege</xar:mlstring></b></td>
-                </tr>
-                <tr>
-                    <td>#$publisherlabel#</td>
-                    <td>
-                        <select name="publisherMask" id="publisherMask">
-                        <xar:loop name="$masks">
-                            <xar:if condition="$loop:item['name'] eq $publisherMask">
-                                <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#" selected="selected">#$loop:item['name']# (Level #$loop:item['level']#)</option>
-                            <xar:else />
-                                <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#">#$loop:item['name']# (Level #$loop:item['level']#)</option>
-                            </xar:if>
-                        </xar:loop>
-                        </select>
-                    </td>
-                <tr>
-                    <td>#$editorlabel#</td>
-                    <td>
-                        <select name="editorMask" id="editorMask">
-                        <xar:loop name="$masks">
-                            <xar:if condition="$loop:item['name'] eq $editorMask">
-                                <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#" selected="selected">#$loop:item['name']# (Level #$loop:item['level']#)</option>
-                            <xar:else />
-                                <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#">#$loop:item['name']# (Level #$loop:item['level']#)</option>
-                            </xar:if>
-                        </xar:loop>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>#$writerlabel#</td>
-                    <td>
-                        <select name="writerMask" id="writerMask">
-                        <xar:loop name="$masks">
-                            <xar:if condition="$loop:item['name'] eq $writerMask">
-                                <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#" selected="selected">#$loop:item['name']# (Level #$loop:item['level']#)</option>
-                            <xar:else />
-                                <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#">#$loop:item['name']# (Level #$loop:item['level']#)</option>
-                            </xar:if>
-                        </xar:loop>
-                        </select>
-                    </td>
-                </tr>
-                </tr>
-            </table>
-            <br/><br/>
-            <center>
-            <input type="submit" value="#$updateprivbutton#"  tabindex="16" />
-            </center>
-            </form>
-            </xar:if>
-            <br />
-            <xar:if condition="(!empty($hooks))">
-                <fieldset>
-                    <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
-                        <xar:foreach in="$hooks" key="$hookmodule">
-                        #$hooks[$hookmodule]#
-                       </xar:foreach>
-                </fieldset>
-            </xar:if>
-        </div>
-    </div>
+<xar:template file="navtab" type="module" />
+	<xar:if condition="$creategroups eq 0">
+		<div class="xar-form-input-wrapper">
+			<form action="&xar-modurl-newsletter-admin-updategroups;" method="post" enctype="application/x-www-form-urlencoded" >
+				<input type="hidden" name="authid" id="authid" value="#$authid#" />
+				<div class="xar-form-input-wrapper xar-align-center">
+					<xar:mlstring>If you want to use the default groups and privileges for Newsletter, set the groups accordingly</xar:mlstring>
+				</div>
+				<table class="xar-fullwidth" />
+					<tr>
+						<th class="xar-align-center"><xar:mlstring>Default Groups</xar:mlstring></th>
+						<th class="xar-align-center"><xar:mlstring>Group</xar:mlstring></th>
+						<th class="xar-align-center"><xar:mlstring>Privilege</xar:mlstring></th>
+					</tr>
+					<tr>
+						<td>#$publishergrouplabel# </td>
+						<td>
+							<select name="publisherGroup" id="publisherGroup">
+								<xar:loop name="$groups">
+									<xar:if condition="$loop:item['name'] eq $defaultgroup">
+										<option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#" selected="selected">#$loop:item['name']#</option>
+									<xar:else />
+										<option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#">#$loop:item['name']#</option>
+									</xar:if>
+								</xar:loop>
+							</select>
+						</td>
+						<td>
+							<select name="publisherMask" id="publisherMask">
+								<xar:loop name="$masks">
+									<xar:if condition="$loop:item['name'] eq $publisherMask">
+										<option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#" selected="selected">#$loop:item['name']# (Level #$loop:item['level']#)</option>
+									<xar:else />
+										<option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#">#$loop:item['name']# (Level #$loop:item['level']#)</option>
+									</xar:if>
+								</xar:loop>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>#$editorgrouplabel# </td>
+						<td>
+							<select name="editorGroup" id="editorGroup">
+								<xar:loop name="$groups">
+									<xar:if condition="$loop:item['name'] eq $defaultgroup">
+										<option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#" selected="selected">#$loop:item['name']#</option>
+									<xar:else />
+										<option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#">#$loop:item['name']#</option>
+									</xar:if>
+								</xar:loop>
+							</select>
+						</td>
+						<td>
+							<select name="editorMask" id="editorMask">
+								<xar:loop name="$masks">
+									<xar:if condition="$loop:item['name'] eq $editorMask">
+										<option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#" selected="selected">#$loop:item['name']# (Level #$loop:item['level']#)</option>
+									<xar:else />
+										<option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#">#$loop:item['name']# (Level #$loop:item['level']#)</option>
+									</xar:if>
+								</xar:loop>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>#$writergrouplabel# </td>
+						<td>
+							<select name="writerGroup" id="writerGroup">
+								<xar:loop name="$groups">
+									<xar:if condition="$loop:item['name'] eq $defaultgroup">
+										<option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#" selected="selected">#$loop:item['name']#</option>
+									<xar:else />
+										<option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#">#$loop:item['name']#</option>
+									</xar:if>
+								</xar:loop>
+							</select>
+						</td>
+						<td>
+							<select name="writerMask" id="writerMask">
+								<xar:loop name="$masks">
+									<xar:if condition="$loop:item['name'] eq $writerMask">
+										<option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#" selected="selected">#$loop:item['name']# (Level #$loop:item['level']#)</option>
+									<xar:else />
+										<option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#">#$loop:item['name']# (Level #$loop:item['level']#)</option>
+									</xar:if>
+								</xar:loop>
+							</select>
+						</td>
+					</tr>
+				</table>
+				<br/><br/>
+				<center>
+					<input type="submit" value="#$creategroupbutton#"  tabindex="16" />
+				</center>
+			</form>
+		</div>
+	<xar:else />
+		<form action="#xarModURL('newsletter', 'admin', 'updateprivileges')#" method="post" enctype="application/x-www-form-urlencoded" >
+    		<div class="xar-form-input-wrapper">
+    			<p><b><xar:mlstring>Default groups have already been created!</xar:mlstring></b></p>
+    			<p><xar:mlstring>Click here to</xar:mlstring>&nbsp;<a href="&xar-modurl-roles-admin-viewroles;"><xar:mlstring>View Groups</xar:mlstring></a></p>
+    		</div>    
+    		<fieldset>
+    			<legend>
+    				<xar:mlstring>Modify privileges</xar:mlstring>
+    			</legend>
+    			<input type="hidden" name="authid" id="authid" value="#$authid#" />    
+    			<div class="xar-form-input-wrapper">
+    				<label for="publisherMask" class="xar-form-label" title="#xarML('Publisher group.')#">               
+    					#$publisherlabel#
+    				</label>        
+    				<select name="publisherMask" id="publisherMask">
+    					<xar:loop name="$masks">
+    						<xar:if condition="$loop:item['name'] eq $publisherMask">
+    							<option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#" selected="selected">#$loop:item['name']# (Level #$loop:item['level']#)</option>
+    						<xar:else />
+    							<option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#">#$loop:item['name']# (Level #$loop:item['level']#)</option>
+    						</xar:if>
+    					</xar:loop>
+    				</select>
+    			</div>                        
+    			<div class="xar-form-input-wrapper">
+    				<label for="editorMask" class="xar-form-label" title="#xarML('Editor group.')#"> 
+    					#$editorlabel#
+    				</label>
+    				<select name="editorMask" id="editorMask">
+    					<xar:loop name="$masks">
+    						<xar:if condition="$loop:item['name'] eq $editorMask">
+    							<option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#" selected="selected">#$loop:item['name']# (Level #$loop:item['level']#)</option>
+    						<xar:else />
+    							<option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#">#$loop:item['name']# (Level #$loop:item['level']#)</option>
+    						</xar:if>
+    					</xar:loop>
+    				</select>
+    			</div>                        
+    			<div class="xar-form-input-wrapper">                    
+    				<label for="writerMask" class="xar-form-label" title="#xarML('Writer group.')#">
+    					#$writerlabel#
+    				</label>
+    				<select name="writerMask" id="writerMask">
+    					<xar:loop name="$masks">
+    						<xar:if condition="$loop:item['name'] eq $writerMask">
+    							<option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#" selected="selected">#$loop:item['name']# (Level #$loop:item['level']#)</option>
+    						<xar:else />
+    							<option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#">#$loop:item['name']# (Level #$loop:item['level']#)</option>
+    						</xar:if>
+    					</xar:loop>
+    				</select>
+    			</div>                          
+    		</fieldset>
+    		<div class="xar-form-input-wrapper-after">                 
+    			<input type="submit" value="#$updateprivbutton#"  tabindex="16" />
+    		</div>            
+		</form>            
+	</xar:if>
+	<xar:if condition="(!empty($hooks))">
+		<fieldset>
+			<legend>
+				<xar:mlstring>Hooked content</xar:mlstring>
+			</legend>
+			<div class="xar-form-input-wrapper">	
+				<xar:foreach in="$hooks" key="$hookmodule">
+					#$hooks[$hookmodule]#
+				</xar:foreach>
+	    	</div>
+		</fieldset>
+	</xar:if>
 </div>

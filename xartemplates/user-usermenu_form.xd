@@ -1,0 +1,58 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-body">
+    <h3><xar:mlstring>Newsletter Information for</xar:mlstring> #$name#</h3>
+    <form name="post" id="post" action="&xar-modurl-newsletter-user-usermenu;" method="post" enctype="application/x-www-form-urlencoded">    
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <input type="hidden" name="uid" id="uid" value="#$uid#" />
+        <input type="hidden" name="phase" id="phase" value="update" />
+                <fieldset>
+        	<legend>
+        		<xar:mlstring>Subscription Options</xar:mlstring>
+        	</legend>
+        	<xar:if condition="empty($pubs)">
+        		<div class="xar-form-input-wrapper">
+        			<xar:mlstring><em>Sorry, no publications are available at this time.</em></xar:mlstring>
+        		</div>
+        	<xar:else />  
+        		<div class="xar-form-input-wrapper">
+        			<xar:mlstring>Please subscribe me to:</xar:mlstring>
+        		</div>
+        		<div class="xar-form-input-wrapper">
+        			<xar:foreach in="$pubs" value="$pub">
+        				<p> 
+        					<xar:if condition="!empty($pub['subscribed'])">
+        						<input type="checkbox" name="pids[]" id="pids[]" value="#$pub['id']#" checked="checked" />
+        					<xar:else />
+        						<input type="checkbox" name="pids[]" id="pids[]" value="#$pub['id']#" />
+        					</xar:if>
+        					<label for="pids[]">
+        						<strong>#$pub['title']#</strong>
+        						<xar:if condition="!empty($pub['introduction'])">
+        							- #$pub['introduction']#
+        						</xar:if>
+        					</label>
+        				</p>
+        			</xar:foreach>
+        		</div>
+        	</fieldset>
+        	<fieldset>
+        		<legend>
+        			<xar:mlstring>Mail Options</xar:mlstring>
+        		</legend>
+        		<div class="xar-form-input-wrapper">
+        			<label for="htmlmail" class="xar-form-label">
+        				<xar:mlstring>Use HTML mail:</xar:mlstring>
+        			</label>
+        			<xar:if condition="$htmlmail eq true">
+        				<input type="checkbox" name="htmlmail" id="htmlmail" value="1" checked="checked" />
+        			<xar:else />
+        				<input type="checkbox" name="htmlmail" id="htmlmail" value="1" />
+        			</xar:if>
+        		</div>
+        	</fieldset>
+        </xar:if>
+        <div class="xar-form-input-wrapper-after">
+        	<input type="submit" value="#xarML('Subscribe')#"  tabindex="2" />
+        </div>
+    </form>
+</div>

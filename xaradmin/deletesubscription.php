@@ -49,12 +49,12 @@ function newsletter_admin_deletesubscription($args)
     if (!$confirm) {
 
         // Get the admin menu
-        $data = xarModAPIFunc('newsletter', 'admin', 'menu');
+        // $data = xarModAPIFunc('newsletter', 'admin', 'menu');
 
         // Specify for which item you want confirmation
         $data['uid'] = $uid;
         $data['pid'] = $pid;
-        $data['confirmbutton'] = xarML('Confirm');
+        // $data['confirmbutton'] = xarML('Confirm');
 
         // Data to display in the template
         $data['name'] = xarVarPrepForDisplay($subscription['name']);

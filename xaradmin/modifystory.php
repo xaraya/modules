@@ -243,7 +243,7 @@ function newsletter_admin_modifystory($args=array())
     }
 
     // Get the admin menu
-    $menu = xarModAPIFunc('newsletter', 'admin', 'menu');
+   // $menu = xarModAPIFunc('newsletter', 'admin', 'menu');
 
     if (isset($vars['articleid']) && $vars['articleid']!=0){
         $templateVarArray['articleid']=$vars['articleid'];
@@ -262,8 +262,8 @@ function newsletter_admin_modifystory($args=array())
     }
 
     // Set template array with all story based info
-    $templateVarArray['updatebutton'] = xarVarPrepForDisplay(xarML('Update Story'));
-    $templateVarArray['menu'] = $menu;
+    // $templateVarArray['updatebutton'] = xarVarPrepForDisplay(xarML('Update Story'));
+    // $templateVarArray['menu'] = $menu;
     $templateVarArray['hooks'] = $hooks;
     $templateVarArray['story'] = $story;
     $templateVarArray['formErrorMsg'] = $formErrorMsg;

@@ -22,12 +22,15 @@
  */
 function newsletter_admin_newaltsubscription()
 {
+    
+    if (!xarVarFetch('func', 'str', $data['page'],  'main', XARVAR_NOT_REQUIRED)) return;
+    
     // Get the admin subscription menu
-    $data['menu'] = xarModFunc('newsletter', 'admin', 'subscriptionmenu');
+    $data['menu'] = xarModApiFunc('newsletter', 'admin', 'subscriptionmenu');
 
     // Options label
     $data['publishername'] = xarModGetVar('newsletter', 'publishername');
-    $data['subscribebutton'] = xarVarPrepForDisplay(xarML('Add Subscription'));
+    // $data['subscribebutton'] = xarVarPrepForDisplay(xarML('Add Subscription'));
 
     // Set startnum to display all publications
     $startnum = 1;

@@ -92,14 +92,14 @@ function newsletter_admin_modifyissue()
     }
 
     // Get the admin menu
-    $menu = xarModAPIFunc('newsletter', 'admin', 'menu');
+    // $menu = xarModAPIFunc('newsletter', 'admin', 'menu');
 
     // Set the template variables defined in this function
     $templateVarArray = array('authid' => xarSecGenAuthKey(),
-        'updatebutton' => xarVarPrepForDisplay(xarML('Update Issue')),
+        // 'updatebutton' => xarVarPrepForDisplay(xarML('Update Issue')),
         'hooks' => $hooks,
         'itemsperpage' => xarModGetVar('newsletter', 'itemsperpage'),
-        'menu' => $menu,
+        // 'menu' => $menu,
         'display' => $display,
         'publication' => $publication,
         'issue' => $issue);

@@ -1,31 +1,30 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
-    <span class="xar-mod-title">#$menutitle#</span>
+    <span class="xar-mod-title">
+        <xar:mlstring>Newsletter Administration</xar:mlstring>
+    </span>
 </div>
 <div class="xar-mod-body">
-    <h2><xar:mlstring>View Owner</xar:mlstring></h2><br />
-        <div style="text-align: left;margin: auto;">
-        
-        <table width="100%" border="1" cellspacing="0" cellpadding="4">
-            <tr>
-                <th><xar:mlstring>Owner Name</xar:mlstring></th>
-                <th><xar:mlstring>Options</xar:mlstring></th>
-            </tr>
-            <xar:if condition="!empty($owner)">
+    <h2><xar:mlstring>View Owner</xar:mlstring></h2>
+    <table class="xar-fullwidth">
+        <tr>
+            <th><xar:mlstring>Owner Name</xar:mlstring></th>
+            <th><xar:mlstring>Options</xar:mlstring></th>
+        </tr>
+        <xar:if condition="!empty($owner)">
             <tr>
                 <td>#$owner['name']#</td>
                 <xar:if condition="!empty($owner['options'])">
                     <td>#$owner['options']#</td>
                 </xar:if>
-                <td>
-                   <xar:if condition="empty($owner['editurl'])">
-                       #$owner['edittitle']#
-                   <xar:else />
-                       <a href="#$owner['editurl']#">#$owner['edittitle']#</a>
-                   </xar:if>
+                <td class="xar-align-center">
+                    <xar:if condition="empty($owner['editurl'])">
+                        #$owner['edittitle']#
+                    <xar:else />
+                        <a href="#$owner['editurl']#">#$owner['edittitle']#</a>
+                    </xar:if>
                 </td>
             </tr>
-            </xar:if>
-        </table>
-        <br />
-    </div>
+        </xar:if>
+    </table>
 </div>

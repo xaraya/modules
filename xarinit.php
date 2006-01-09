@@ -16,13 +16,14 @@
  */
 function newsletter_init()
 {
+ /*
     if(!xarModIsAvailable('categories')) {
         $msg=xarML('The categories module should be activated first');
         xarErrorSet(XAR_SYSTEM_EXCEPTION,'MODULE_DEPENDENCY',
                         new SystemException($msg));
         return;
     }
-
+*/
     // Get datbase setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -255,6 +256,12 @@ function newsletter_init()
     xarModSetVar('newsletter', 'templateHTML', 'publication-template-html.xd');
     xarModSetVar('newsletter', 'templateText', 'publication-template-text.xd');
 
+    // register usermenu hook (give user some subscription options)
+    if (!xarModRegisterHook('item', 'usermenu', 'GUI', 'newsletter', 'user', 'usermenu')) {
+        return false;
+    }
+
+
     // Register Block types (this *should* happen at activation/deactivation)
     if (!xarModAPIFunc('blocks',
                        'admin',
@@ -459,6 +466,13 @@ function newsletter_upgrade($oldversion)
             // fall through to the next upgrade
             
         case '1.1.2':
+            
+            if (!xarModRegisterHook('item', 'usermenu', 'GUI', 'newsletter', 'user', 'usermenu')) {
+        return false;
+    		}
+            break;
+            
+        case '1.1.3':
             // Code to upgrade from version 1.1.2 goes here
             break;
 
@@ -567,10 +581,21 @@ function newsletter_delete()
                        array('modName'  => 'newsletter',
                              'blockType'=> 'information'))) return;
 
+    
+
+ // unregister usermenu hook (give user some subscription options)
+
+if (!xarModUnregisterHook('item', 'usermenu', 'GUI',
+                           'newsletter', 'user', 'usermenu')) {
+        return false;
+    }
+
+
     // Remove privileges, security masks and instances
     xarRemoveMasks('newsletter');
     xarRemoveInstances('newsletter');
     xarRemovePrivileges('newsletter');
+    xarModDelAllVars('newsletter');
 
     // Remove publisher role
     $publisherRole = xarModGetVar('newsletter', 'publisher');
@@ -601,34 +626,6 @@ function newsletter_delete()
                       'deletegroup',
                       array('uid'  => $userData->uid));
     }
-
-    
-    // Delete any module variables
-    xarModDelVar('newsletter', 'number_of_categories');
-    xarModDelVar('newsletter', 'mastercid');
-    xarModDelVar('newsletter', 'creategroups');
-    xarModDelVar('newsletter', 'publishername');
-    xarModDelVar('newsletter', 'information');
-    xarModDelVar('newsletter', 'privacypolicy');
-    xarModDelVar('newsletter', 'itemsperpage');
-    xarModDelVar('newsletter', 'subscriptionsperpage');
-    xarModDelVar('newsletter', 'categorysort');
-    xarModDelVar('newsletter', 'linkexpiration');
-    xarModDelVar('newsletter', 'linkregistration');
-    xarModDelVar('newsletter', 'templateHTML');
-    xarModDelVar('newsletter', 'templateText');
-    xarModDelVar('newsletter', 'publisher');
-    xarModDelVar('newsletter', 'editor');
-    xarModDelVar('newsletter', 'writer');
-    xarModDelVar('newsletter', 'nwsltrmask');
-    xarModDelVar('newsletter', 'publishermask');
-    xarModDelVar('newsletter', 'editormask');
-    xarModDelVar('newsletter', 'writermask');
-    xarModDelVar('newsletter', 'previewbrowser');
-    xarModDelVar('newsletter', 'commentarysource');
-    xarModDelVar('newsletter', 'SupportShortURLs');
-    xarModDelVar('newsletter', 'bulkemail');
-    xarModDelVar('newsletter', 'activeusers');
 
     // Deletion successful
     return true;

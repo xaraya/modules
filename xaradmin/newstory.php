@@ -5,7 +5,6 @@
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Newsletter module
@@ -47,7 +46,7 @@ function newsletter_admin_newstory($args)
     //xarVarFetch('content', 'str:0:', $data['content'], NULL,XARVAR_NOT_REQUIRED);
 
     // Get the admin menu
-    $data = xarModAPIFunc('newsletter', 'admin', 'menu');
+    //$data = xarModAPIFunc('newsletter', 'admin', 'menu');
 
     // see if we had anything passed to us
     if (!empty($args) && is_array($args)){
@@ -61,8 +60,8 @@ function newsletter_admin_newstory($args)
     }
 
     // Set template strings
-    $data['addlabel'] = xarVarPrepForDisplay(xarML('Finished'));
-    $data['nextlabel'] = xarVarPrepForDisplay(xarML('Add Another Story'));
+    //$data['addlabel'] = xarVarPrepForDisplay(xarML('Finished'));
+    //$data['nextlabel'] = xarVarPrepForDisplay(xarML('Add Another Story'));
 
     // Get the list of publications
     $data['publications'] = xarModAPIFunc('newsletter',

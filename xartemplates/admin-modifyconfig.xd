@@ -1,65 +1,64 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:mlstring>Newsletter</xar:mlstring>
+        <xar:mlstring>Newsletter Administration</xar:mlstring>
     </span>
 </div>
-<br />
-#$menu#
 <div class="xar-mod-body">
-    <div class="contentBorder">
-        <form action="&xar-modurl-newsletter-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded" >
-            <!-- Use standard xaraya classes for form elements -->
-            <fieldset>
-                <legend><xar:mlstring>Bulk Email</xar:mlstring></legend>
-                <xar:mlstring>Bulk email will send one email and bcc (blind carbon copy) all subscribers.</xar:mlstring>
-                <br />
-                <xar:mlstring>The email From address will be the publisher's email address.</xar:mlstring>
-                <div class="xar-form-input-wrapper">
-                    <label for="bulkemail" class="xar-form-label" title="#xarML('Bulk email will send one email and bcc (blind carbon copy) all subscribers.')#">
-                        <xar:mlstring>Enable Bulk Email:</xar:mlstring>
-                    </label>
-                    <xar:if condition="$bulkemail == 'checked'">
-                        <input type="checkbox" name="bulkemail" id="bulkemail" value="1" checked="checked" tabindex="1"/>
-                        <xar:else/>
-                        <input type="checkbox" name="bulkemail" id="bulkemail" value="1" tabindex="1"/>
-                    </xar:if>
-                </div>
-
-                <div class="xar-form-input-wrapper">
-                    <label for="activeusers" class="xar-form-label" title="#xarML('This does not include alternative subscriptions.')#">
-                        <xar:mlstring>Send newsletter only to active users:</xar:mlstring>
-                    </label>
-                      <xar:if condition="$activeuserschecked == 'checked'">
-                        <input type="checkbox" name="activeusers" id="activeusers" value="1" checked="checked" tabindex="2"/>
-                        <xar:else/>
-                        <input type="checkbox" name="activeusers" id="bulkemail" value="1" tabindex="1"/>
-                      </xar:if>
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label for="shorturls" class="xar-form-label" title="#xarML('Enable Short URL Support.')#">
-                        <xar:mlstring>Enable Short URL Support:</xar:mlstring>
-                    </label>
-                      <xar:if condition="$shorturlschecked =='checked'">
-                        <input type="checkbox" name="shorturls" id="shorturls" value="1" checked="checked" tabindex="3"/>
-                        <xar:else/>
-                        <input type="checkbox" name="shorturls" id="shorturls" value="1" tabindex="3"/>
-                      </xar:if>
-                </div>
-            </fieldset>    
-            <fieldset>
-                <legend><xar:mlstring>Enabled Hooks</xar:mlstring></legend>
-                <xar:if condition="!empty($hooks)">
-                    <xar:foreach in="$hooks" key="$hookmodule">
-                      #$hooks[$hookmodule]#
-                    </xar:foreach>
-                </xar:if>
-            </fieldset>
-            <div class="xar-form-input-wrapper-after">
-                <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                <input type="submit" value="#$updatebutton#"  tabindex="3" />
+    <xar:template file="navtab" type="module" />
+    <form name="post" id="post" action="&xar-modurl-newsletter-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded" >
+        <fieldset>
+            <legend>
+            	<xar:mlstring>Bulk Email</xar:mlstring>
+            </legend>
+            <div class="xar-form-input-wrapper">
+            	<p><xar:mlstring>Bulk email will send one email and bcc (blind carbon copy) all subscribers.</xar:mlstring></p>
+            	<p><xar:mlstring>The email From address will be the publisher's email address.</xar:mlstring></p>
             </div>
-        </form>
-
-    </div>
+            <div class="xar-form-input-wrapper">
+            	<label for="bulkemail" class="xar-form-label" title="#xarML('Bulk email will send one email and bcc (blind carbon copy) all subscribers.')#">
+            		<xar:mlstring>Enable Bulk Email:</xar:mlstring>
+            	</label>
+            	<xar:if condition="$bulkemail == 'checked'">
+            		<input type="checkbox" name="bulkemail" id="bulkemail" value="1" checked="checked" tabindex="1"/>
+            	<xar:else/>
+            		<input type="checkbox" name="bulkemail" id="bulkemail" value="1" tabindex="1"/>
+            	</xar:if>
+            </div>       
+            <div class="xar-form-input-wrapper">
+            	<label for="activeusers" class="xar-form-label" title="#xarML('This does not include alternative subscriptions.')#">
+            		<xar:mlstring>Send newsletter only to active users:</xar:mlstring>
+            	</label>
+            	<xar:if condition="$activeuserschecked == 'checked'">
+            		<input type="checkbox" name="activeusers" id="activeusers" value="1" checked="checked" tabindex="2"/>
+            	<xar:else/>
+            		<input type="checkbox" name="activeusers" id="bulkemail" value="1" tabindex="1"/>
+            	</xar:if>
+            </div>
+            <div class="xar-form-input-wrapper">
+            	<label for="shorturls" class="xar-form-label" title="#xarML('Enable Short URL Support.')#">
+            		<xar:mlstring>Enable Short URL Support:</xar:mlstring>
+            	</label>
+            	<xar:if condition="$shorturlschecked =='checked'">
+            		<input type="checkbox" name="shorturls" id="shorturls" value="1" checked="checked" tabindex="3"/>
+            	<xar:else/>
+            		<input type="checkbox" name="shorturls" id="shorturls" value="1" tabindex="3"/>
+            	</xar:if>
+            </div>
+        </fieldset>    
+        <xar:if condition="!empty($hooks)">
+            <fieldset>
+            	<legend>
+            		<xar:mlstring>Enabled Hooks</xar:mlstring>
+            	</legend>                
+            	<xar:foreach in="$hooks" key="$hookmodule">
+            		#$hooks[$hookmodule]#
+            	</xar:foreach>                
+        	</fieldset>
+        </xar:if>
+        <div class="xar-form-input-wrapper-after">
+        	<input type="hidden" name="authid" id="authid" value="#$authid#" />
+        	<input type="submit" value="#xarML('Update configuration')#"  tabindex="3" />
+        </div>
+    </form>
 </div>

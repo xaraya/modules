@@ -1,0 +1,7 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<xar:if condition="$active">
+    <dd class="active"><a href="#$url#"><xar:mlstring>Newsletter</xar:mlstring></a></dd>
+<xar:else />
+    <dd><a href="#$url#"><xar:mlstring>Newsletter</xar:mlstring></a></dd>
+</xar:if>

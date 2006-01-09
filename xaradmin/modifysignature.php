@@ -22,6 +22,9 @@
  */
 function newsletter_admin_modifysignature() 
 {
+	
+	if (!xarVarFetch('func', 'str', $page,  'main', XARVAR_NOT_REQUIRED)) return;
+	
     // Security check
     if(!xarSecurityCheck('EditNewsletter')) return;
 
@@ -43,11 +46,12 @@ function newsletter_admin_modifysignature()
         }
 
         // Get the admin edit menu
-        $menu = xarModFunc('newsletter', 'admin', 'editmenu');
+        $menu = xarModApiFunc('newsletter', 'admin', 'editmenu');
 
         // Set the template variables defined in this function
         $templateVarArray = array('authid' => xarSecGenAuthKey(),
-            'updatebutton' => xarVarPrepForDisplay(xarML('Update Signature')),
+         //   'updatebutton' => xarVarPrepForDisplay(xarML('Update Signature')),
+         'page' => $page,
             'menu' => $menu,
             'hooks' => $hooks,
             'item' => $item);

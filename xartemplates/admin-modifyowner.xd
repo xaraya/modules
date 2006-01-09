@@ -1,49 +1,47 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
-  <span class="xar-mod-title">#$menu['menutitle']#</span>
+    <span class="xar-mod-title">
+        <xar:mlstring>Newsletter Administration</xar:mlstring>
+    </span>
 </div>
-<div class="xar-mod-body"><h2><xar:mlstring>Modify Newsletter User</xar:mlstring></h2><br />
-    <form action="&xar-modurl-newsletter-admin-updateowner;" method="post" enctype="application/x-www-form-urlencoded" >
-      <input type="hidden" name="authid" id="authid" value="#$authid#" />
-      <input type="hidden" name="id" id="id" value="#$owner['id']#" />
-      <table border="0" cellpadding="5">
-        <tr>
-          <td>
-            <b><xar:mlstring>User Name:</xar:mlstring></b>
-          </td>
-          <td>
-            #$owner['name']#
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <b><xar:mlstring>Select Group:</xar:mlstring></b>
-          </td>
-          <td>
-            <select name="groupName" id="groupName">
-              <xar:loop name="$owner['groups']">
-                <xar:if condition="$loop:item['name'] eq $owner['defaultgroup']">
-                  <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#" selected="selected">#$loop:item['name']#</option>
-                  <xar:else />
-                  <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#">#$loop:item['name']#</option>
-                </xar:if>
-              </xar:loop>
-            </select>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <b><xar:mlstring>Signature:</xar:mlstring></b>
-          </td>
-          <td>
-            <textarea name="signature" rows="8" cols="50" tabindex="1">#$owner['signature']#</textarea>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="2" align="center">
-            <br /><br />
-            <input type="submit" value="#$updatebutton#"  tabindex="2" />
-          </td>
-        </tr>
-      </table>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Modify Newsletter User</xar:mlstring></h2>
+    <form name="post" id="post" action="&xar-modurl-newsletter-admin-updateowner;" method="post" enctype="application/x-www-form-urlencoded" >
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <input type="hidden" name="id" id="id" value="#$owner['id']#" />
+        <fieldset>
+            <legend>
+                <xar:mlstring>You are about to modify an Newsletter user</xar:mlstring>
+            </legend>
+            <div class="xar-form-input-wrapper">
+                <label class="xar-form-label">
+                    <xar:mlstring>User Name:</xar:mlstring>
+                </label>
+                #$owner['name']#
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="groupName" class="xar-form-label">
+                    <xar:mlstring>Select Group:</xar:mlstring>
+                </label>
+                <select name="groupName" id="groupName" tabindex="1" />
+                    <xar:loop name="$owner['groups']">
+                        <xar:if condition="$loop:item['name'] eq $owner['defaultgroup']">
+                            <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#" selected="selected">#$loop:item['name']#</option>
+                        <xar:else />
+                            <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#">#$loop:item['name']#</option>
+                        </xar:if>
+                    </xar:loop>
+                </select>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="signature" class="xar-form-label">
+                    <xar:mlstring>Signature:</xar:mlstring>
+                </label>
+                <textarea id="signature" name="signature" rows="8" cols="50" tabindex="2">#$owner['signature']#</textarea>
+            </div>
+        </fieldset>
+        <div class="xar-form-input-wrapper-after">
+            <input type="submit" value="#xarML('Update user')#"  tabindex="3" />
+        </div>
     </form>
 </div>

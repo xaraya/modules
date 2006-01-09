@@ -1,65 +1,59 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
-    <span class="xar-mod-title">Newsletter</span>
+    <span class="xar-mod-title">
+        <xar:mlstring>Newsletter Administration</xar:mlstring>
+    </span>
 </div>
-<div align="xar-mod-body">
-    <h2><xar:mlstring>Modify Subscription</xar:mlstring></h2><br />
-    <div style="text-align: left;margin: auto;">
-        <form action="&xar-modurl-newsletter-admin-updatesubscription;" method="post" enctype="application/x-www-form-urlencoded">
-        <input type="hidden" name="authid" id="authid" value="#$authid#" /> 
-        <input type="hidden" name="uid" id="$uid" value="#$uid#" /> 
-        <table border="0" width="100%">
-            <tr>
-                <td align="left">
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Modify Subscription</xar:mlstring></h2>
+    <form name="post" id="post" action="&xar-modurl-newsletter-admin-updatesubscription;" method="post" enctype="application/x-www-form-urlencoded">
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <input type="hidden" name="uid" id="$uid" value="#$uid#" />
+        <fieldset>
+            <legend>
+                <xar:mlstring>Subscriber User</xar:mlstring>
+            </legend>
+            <div class="xar-form-input-wrapper">
+                <label class="xar-form-label">
                     <xar:mlstring>Subscription Name:</xar:mlstring>
-                </td>
-                <td>
-                    #xarVarPrepForDisplay($name)#
-                </td>
-            </tr>
-            <tr>
-                <td align="left">
-                    <xar:mlstring>Mail Options</xar:mlstring>
-                </td>
-                <td>
-                    <xar:if condition="$htmlmail eq 1">
-                        <input type="checkbox" name="htmlmail" id="htmlmail" value="1" checked="checked" />
-                    <xar:else />
-                        <input type="checkbox" name="htmlmail" id="htmlmail" value="1" />
-                    </xar:if>
-                &nbsp;&nbsp;HTML Mail
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                <hr/>
-                </td>
-            </tr>
-            <tr>
-                <td align="left" colspan="2">
+                </label>
+                #xarVarPrepForDisplay($name)#
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label class="xar-form-label">
+                    <xar:mlstring>Use HTML Mail</xar:mlstring>
+                </label>
+                <xar:if condition="$htmlmail eq 1">
+                    <input type="checkbox" name="htmlmail" id="htmlmail" value="1" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="htmlmail" id="htmlmail" value="1" />
+                </xar:if>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>
+                <xar:mlstring>Publications</xar:mlstring>
+            </legend>
+            <div class="xar-form-input-wrapper">
+                <span class="xar-title">
                     <xar:mlstring>Choose which publication(s) to modify subscription:</xar:mlstring>
-                </td>
-            </tr>
+                </span>
+            </div>
             <xar:loop name="$publications">
-                <tr>
-                    <td>
-                        <b>#$loop:item['title']#</b>
-                    </td>
-                    <td align="left" valign="center">
-                        <xar:if condition="$loop:item['checked'] eq true">
-                            <input type="checkbox" name="pids[]" id="pids[]" value="#$loop:item['id']#" checked="checked" />
-                        <xar:else />
-                            <input type="checkbox" name="pids[]" id="pids[]" value="#$loop:item['id']#" />
-                        </xar:if>
-                    </td>
-                </tr>
+                <div class="xar-form-input-wrapper">
+                    <label for="pids[]" class="xar-form-label">
+                        #$loop:item['title']#
+                    </label>
+                    <xar:if condition="$loop:item['checked'] eq true">
+                        <input type="checkbox" name="pids[]" id="pids[]" value="#$loop:item['id']#" checked="checked" />
+                    <xar:else />
+                        <input type="checkbox" name="pids[]" id="pids[]" value="#$loop:item['id']#" />
+                    </xar:if>
+                </div>
             </xar:loop>
-        <tr>
-            <td colspan="3" align="center">
-                <br /><br />
-                <input type="submit" value="#$updatebutton#"  />
-                </td>
-            </tr>
-        </table>
-        </form>
-    </div>
+        </fieldset>
+        <div class="xar-form-input-wrapper-after">
+            <input type="submit" value="#xarML('Update subscription')#" tabindex="1" />
+        </div>
+    </form>
 </div>

@@ -99,13 +99,13 @@ function newsletter_admin_modifypublication()
     }
 
     // Get the user menu
-    $menu = xarModAPIFunc('newsletter', 'user', 'menu');
+    // $menu = xarModAPIFunc('newsletter', 'user', 'menu');
 
     // Set the template variables defined in this function
     $templateVarArray = array('authid' => xarSecGenAuthKey(),
-        'updatebutton' => xarVarPrepForDisplay(xarML('Update Publication')),
+        //'updatebutton' => xarVarPrepForDisplay(xarML('Update Publication')),
         'hooks' => $hooks,
-        'menu' => $menu,
+        // 'menu' => $menu,
         'publication' => $publication,
         'disclaimer' => $disclaimer,
         'altcategories' => $altcategories);

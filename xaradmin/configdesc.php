@@ -22,8 +22,10 @@ function newsletter_admin_configdesc()
     // Security check
     if(!xarSecurityCheck('AdminNewsletter')) return;
 
+	if (!xarVarFetch('func', 'str', $data['page'],  'main', XARVAR_NOT_REQUIRED)) return;
+
     // Get the admin edit menu
-    $data['menu'] = xarModFunc('newsletter', 'admin', 'configmenu');
+    $data['menu'] = xarModApiFunc('newsletter', 'admin', 'configmenu');
 
     // Return the template variables defined in this function
     return $data;

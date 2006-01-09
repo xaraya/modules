@@ -76,14 +76,14 @@ function newsletter_admin_modifysubscription()
     }
 
     // Get the admin menu
-    $menu = xarModAPIFunc('newsletter', 'admin', 'menu');
+    // $menu = xarModAPIFunc('newsletter', 'admin', 'menu');
 
     // Return the template variables defined in this function
     $data['authid'] = xarSecGenAuthKey();
     $data['publishername'] = xarModGetVar('newsletter', 'publishername');
-    $data['updatebutton'] = xarVarPrepForDisplay(xarML('Update Subscription'));
+    // $data['updatebutton'] = xarVarPrepForDisplay(xarML('Update Subscription'));
     $data['hooks'] = $hooks;
-    $data['menu'] = $menu;
+    // $data['menu'] = $menu;
 
     // Return the template variables defined in this function
     return $data;

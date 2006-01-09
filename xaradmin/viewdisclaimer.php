@@ -26,9 +26,10 @@ function newsletter_admin_viewdisclaimer($args)
 
     // Get parameters from the input
     if (!xarVarFetch('startnum', 'int:0:', $startnum, 1)) return;
+    if (!xarVarFetch('func', 'str', $data['page'],  'main', XARVAR_NOT_REQUIRED)) return;
 
     // Get the admin menu
-    $data['menu'] = xarModFunc('newsletter', 'admin', 'editmenu');
+    $data['menu'] = xarModApiFunc('newsletter', 'admin', 'editmenu');
 
     // Prepare the array variable that will hold all items for display
     $data['items'] = array();

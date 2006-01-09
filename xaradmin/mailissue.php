@@ -33,6 +33,7 @@ function newsletter_admin_mailissue()
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
+    if (!xarVarFetch('func', 'str', $data['page'],  'main', XARVAR_NOT_REQUIRED)) return;
 
     // Get the issue for display
     $issue = xarModAPIFunc('newsletter',
@@ -68,13 +69,14 @@ function newsletter_admin_mailissue()
         return; // throw back
     
     // Get the admin edit menu
-    $menu = xarModFunc('newsletter', 'admin', 'editmenu');
+    $menu = xarModApiFunc('newsletter', 'admin', 'editmenu');
 
     // create template array
     $templateVarArray = array(
         'menu' => $menu,
         'publication' => $publication,
         'issue' => $issue,
+        'page' => $data['page'],
         'bulkemail' => xarModGetVar('newsletter', 'bulkemail'),
         'viewsubscriptionurl' => xarModURL('newsletter',
                                            'admin',

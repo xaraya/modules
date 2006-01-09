@@ -24,7 +24,7 @@ function newsletter_user_main()
     //if(!xarSecurityCheck('OverviewNewsletter')) return;
 
     // Get the user menu
-    $data = xarModAPIFunc('newsletter', 'user', 'menu');
+    //$data = xarModAPIFunc('newsletter', 'user', 'menu');
 
     // Get information text
     $data['publishername'] = xarModGetVar('newsletter', 'publishername');

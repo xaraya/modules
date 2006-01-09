@@ -26,10 +26,10 @@ function newsletter_user_newsubscription()
     if(!xarSecurityCheck('ReadNewsletter')) return;
 
     // Get the user menu
-    $data = xarModAPIFunc('newsletter', 'user', 'menu');
+    //$data = xarModAPIFunc('newsletter', 'user', 'menu');
 
     // Specify some other variables used in the blocklayout template
-    $data['welcome'] = xarML('Subscribe to a Newsletter');
+    //$data['welcome'] = xarML('Subscribe to a Newsletter');
 
     // Verify that the user is logged in - the user has
     // to registered and in the roles table or else 
@@ -41,7 +41,7 @@ function newsletter_user_newsubscription()
 
         // Get publisher name
         $data['publishername'] = xarModGetVar('newsletter', 'publishername');
-        $data['subscribebutton'] = xarVarPrepForDisplay(xarML('Subscribe'));
+       // $data['subscribebutton'] = xarVarPrepForDisplay(xarML('Subscribe'));
 
         // Get all the publications available
         $publications = xarModAPIFunc('newsletter',
@@ -56,8 +56,11 @@ function newsletter_user_newsubscription()
 
         // Convert newlines in text to <br /> for display
         for ($idx = 0; $idx < count($publications); $idx++) {
-            $brtext = nl2br($publications[$idx]['description']); 
-            $publications[$idx]['description'] = $brtext;
+            // may be I'm wrong here
+            //$brtext = nl2br($publications[$idx]['description']); 
+            //$publications[$idx]['description'] = $brtext;
+            $brtext = nl2br($publications[$idx]['introduction']); 
+            $publications[$idx]['introduction'] = $brtext;
         }
 
         $data['publications'] = $publications;
@@ -65,6 +68,7 @@ function newsletter_user_newsubscription()
 
     // Return the template variables defined in this function
     return $data;
+    
 }
 
 ?>

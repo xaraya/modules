@@ -1,39 +1,35 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
-  <span class="xar-mod-title">
-    <xar:mlstring>Newsletter</xar:mlstring>
-  </span>
+    <span class="xar-mod-title">
+        <xar:mlstring>Newsletter Administration</xar:mlstring>
+    </span>
 </div>
-<br />
-#$menu#
 <div class="xar-mod-body">
-    <div class="contentBorder">
-        <form action="&xar-modurl-newsletter-admin-updatenewsletter;" method="post" enctype="application/x-www-form-urlencoded" >
+    <xar:template file="navtab" type="module" />
+    <form name="post" id="post" action="&xar-modurl-newsletter-admin-updatenewsletter;" method="post" enctype="application/x-www-form-urlencoded" >
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <fieldset>
             <legend>
                 <xar:mlstring>Modify the following for display in the information block</xar:mlstring>
             </legend>
             <div class="xar-form-input-wrapper">
-                 <label for="publishername" class="xar-form-label" title="#xarML('Publisher or Company Name')#">
-                        <xar:mlstring>Publisher or Company Name</xar:mlstring>
-                 </label>
-              <input type="text" name="publishername" id="publishername" value="#xarVarPrepForDisplay($publishername)#" size="50" maxlength="255" tabindex="1" />
+                <label for="publishername" class="xar-form-label" title="#xarML('Publisher or Company Name')#">
+                    <xar:mlstring>Publisher or Company Name</xar:mlstring>
+                </label>
+                <input type="text" name="publishername" id="publishername" value="#xarVarPrepForDisplay($publishername)#" size="50" maxlength="255" tabindex="1" />
             </div>
             <div class="xar-form-input-wrapper">
-                 <label for="information" class="xar-form-label" title="#xarML('Information about Newsletter')#">
+                <label for="information" class="xar-form-label" title="#xarML('Information about Newsletter')#">
                     <xar:mlstring>Information about Newsletter</xar:mlstring>
-                 </label>
-              <textarea name="information" rows="10" cols="50" tabindex="2">#xarVarPrepForDisplay($information)#</textarea>
+                </label>
+                <textarea name="information" rows="10" cols="50" tabindex="2">#xarVarPrepForDisplay($information)#</textarea>
             </div>
-
             <div class="xar-form-input-wrapper">
                 <label for="templateHTML" class="xar-form-label" title="#xarML('Default HTML Publication Template:')#">
                     <xar:mlstring>Default HTML Publication Template:</xar:mlstring>
                 </label>
                 <input type="text" name="templateHTML" id="templateHTML" value="#xarVarPrepForDisplay($templateHTML)#" size="50" maxlength="255" tabindex="3" />
             </div>
-
             <div class="xar-form-input-wrapper">
                 <label for="templateText" class="xar-form-label" title="#xarML('Default Text Publication Template:')#">
                     <xar:mlstring>Default Text Publication Template:</xar:mlstring>
@@ -73,12 +69,8 @@
                 <input type="text" name="subscriptionsperpage" id="subscriptionsperpage" value="#$subscriptionsperpage#" size="7" tabindex="8" />
             </div>
         </fieldset>
-
-        <fieldset>
-            <div class="xar-form-input-wrapper-after">
-              <input type="submit" value="#$modifybutton#"  tabindex="9" />
-            </div>
-        </fieldset>
-        </form>
-    </div>
+        <div class="xar-form-input-wrapper-after">
+            <input type="submit" value="#xarML('Update config')#"  tabindex="9" />
+        </div>
+    </form>
 </div>

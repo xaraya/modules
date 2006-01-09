@@ -22,12 +22,13 @@
  */
 function newsletter_admin_searchsubscription()
 {
+	if (!xarVarFetch('func', 'str', $data['page'],  'main', XARVAR_NOT_REQUIRED)) return;
     // Get the admin subscription menu
-    $data['menu'] = xarModFunc('newsletter', 'admin', 'subscriptionmenu');
+    $data['menu'] = xarModApiFunc('newsletter', 'admin', 'subscriptionmenu');
 
     // Options label
     $data['showbutton']=xarVarPrepForDisplay(xarML('Show Subscriptions'));
-    $data['searchbutton']=xarVarPrepForDisplay(xarML('Search Subscriptions'));
+    // $data['searchbutton']=xarVarPrepForDisplay(xarML('Search Subscriptions'));
     $data['publishername'] = xarModGetVar('newsletter', 'publishername');
     $data['subscribebutton'] = xarVarPrepForDisplay(xarML('Add Subscription'));
     $data['importbutton'] = xarVarPrepForDisplay(xarML('Import Subscriptions'));
@@ -57,6 +58,7 @@ function newsletter_admin_searchsubscription()
 
     // Return the template variables defined in this function
     return $data;
+
 }
 
 

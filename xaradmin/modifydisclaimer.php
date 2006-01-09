@@ -45,12 +45,12 @@ function newsletter_admin_modifydisclaimer()
     }
 
     // Get the admin menu
-    $menu = xarModAPIFunc('newsletter', 'admin', 'menu');
+    // $menu = xarModAPIFunc('newsletter', 'admin', 'menu');
 
     // Return the template variables defined in this function
     $templateVarArray = array('authid' => xarSecGenAuthKey(),
-        'updatebutton' => xarVarPrepForDisplay(xarML('Update Disclaimer')),
-        'menu' => $menu,
+        // 'updatebutton' => xarVarPrepForDisplay(xarML('Update Disclaimer')),
+        // 'menu' => $menu,
         'hooks' => $hooks,
         'item' => $item);
 

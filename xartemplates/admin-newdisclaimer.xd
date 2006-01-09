@@ -1,35 +1,32 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
-  <span class="xar-mod-title">#$menutitle#</span>
+    <span class="xar-mod-title">
+        <xar:mlstring>Newsletter Administration</xar:mlstring>
+    </span>
 </div>
 <div class="xar-mod-body">
-  <h2><xar:mlstring>New Disclaimer</xar:mlstring></h2><br />
-  <div style="text-align: left;margin: auto;">
-    <form action="#xarModURL('newsletter', 'admin', 'createdisclaimer')#" method="post" enctype="application/x-www-form-urlencoded" >
-      <input type="hidden" name="authid" id="authid" value="#$authid#" />     
-      <table border="0" cellpadding="5">
-        <tr>
-          <td>
-            <b><xar:mlstring>Title:</xar:mlstring></b>
-          </td>
-          <td>
-            <input type="text" name="title" id="title" value="" size="50" maxlength="255" tabindex="1" />
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <b><xar:mlstring>Disclaimer:</xar:mlstring></b>
-          </td>
-          <td>
-            <textarea name="disclaimer" rows="8" cols="50" tabindex="2"></textarea>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="2" align="center">
-            <br /><br />
+    <h2><xar:mlstring>New Disclaimer</xar:mlstring></h2>
+    <form name="post" id="post" action="#xarModURL('newsletter', 'admin', 'createdisclaimer')#" method="post" enctype="application/x-www-form-urlencoded" >
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <fieldset>
+            <legend>
+                <xar:mlstring>Disclaimer</xar:mlstring>
+            </legend>
+            <div class="xar-form-input-wrapper">
+                <label for="title" class="xar-form-label">
+                    <xar:mlstring>Title:</xar:mlstring>
+                </label>
+                <input type="text" name="title" id="title" value="" size="50" maxlength="255" tabindex="1" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="disclaimer" class="xar-form-label">
+                    <xar:mlstring>Disclaimer:</xar:mlstring>
+                </label>
+                <textarea id="disclaimer" name="disclaimer" rows="8" cols="50" tabindex="2"></textarea>
+            </div>
+        </fieldset>
+        <div class="xar-form-input-wrapper-after">
             <input type="submit" value="#$addlabel#"  tabindex="3" />
-          </td>
-        </tr>
-      </table>            
+        </div>
     </form>
-  </div>
 </div>

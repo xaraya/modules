@@ -1,84 +1,71 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:mlstring>Newsletter</xar:mlstring>
+        <xar:mlstring>Newsletter Administration</xar:mlstring>
     </span>
 </div>
-<br />
-#$menu#
+<div class="xar-mod-body">
+<xar:template file="navtab" type="module" />
 <xar:if condition="!empty($publications)">
-    <div class="xar-mod-body">
-        <div class="contentBorder">
-            <div style="text-align: left;margin: auto;">
-                <form action="#xarModURL('newsletter', 'admin', 'viewsubscription')#" method="post" enctype="application/x-www-form-urlencoded" >
-                <input type="hidden" name="authid" id="authid" value="#$authid#" />     
-                <input type="hidden" name="search" id="search" value="publication" />       
-                <table width="100%" border="0" cellspacing="0" cellpadding="4">
-                    <tr>
-                        <td colspan="2">
-                            <xar:mlstring>Show all subscriptions for a publication:</xar:mlstring>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td width="50%">
-                        <select name="publicationId" tabindex="1">
-                            <xar:loop name="$publications">
-                                <option name="id" value="#$loop:item['id']#">#$loop:item['title']#</option>
-                            </xar:loop>
-                           </select>
-                        </td>
-                        <td width="50%">
-                            <input type="submit" value="#$showbutton#"  tabindex="2" />
-                        </td>
-                    </tr>
-                </table>            
-                </form>        
-                <br /><br />        
-                <form action="#xarModURL('newsletter', 'admin', 'viewsubscription')#" method="post" enctype="application/x-www-form-urlencoded" >
-                <input type="hidden" name="search" id="search" value="name" />      
-                <table width="100%" border="0" cellspacing="0" cellpadding="4">
-                    <tr>
-                        <td colspan="2">
-                            <xar:mlstring>Search by name:</xar:mlstring>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td width="50%">
-                            <input type="text" name="searchname" id="searchname" value="" size="30" maxlength="100" tabindex="3" />
-                        </td>
-                        <td width="50%">
-                            <input type="submit" value="#$searchbutton#"  tabindex="4" />
-                        </td>
-                    </tr>
-                </table>            
-                </form>        
-                <br /><br />        
-                <form action="#xarModURL('newsletter', 'admin', 'viewsubscription')#" method="post" enctype="application/x-www-form-urlencoded" >
-                <input type="hidden" name="search" id="search" value="email" />     
-                <table width="100%" border="0" cellspacing="0" cellpadding="4">
-                    <tr>
-                        <td colspan="2">
-                            <xar:mlstring>Search by email address:</xar:mlstring>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td width="50%">
-                            <input type="text" name="searchname" id="searchname" value="" size="30" maxlength="100" tabindex="5" />
-                        </td>
-                        <td width="50%">
-                            <input type="submit" value="#$searchbutton#"  tabindex="6" />
-                        </td>
-                    </tr>
-                </table>            
-                </form>
+    <form name="view" id="view" action="&xar-modurl-newsletter-admin-viewsubscription;" method="post" enctype="application/x-www-form-urlencoded">
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <input type="hidden" name="search" id="search" value="publication" />
+        <fieldset>
+            <legend>
+                <xar:mlstring>Search by publication</xar:mlstring>
+            </legend>
+            <div class="xar-form-input-wrapper">
+                <label for="publicationId" class="xar-form-label" title="#xarML('Choose Publication.')#">
+                    <xar:mlstring>Choose publication:</xar:mlstring>
+                </label>
+                <select name="publicationId" tabindex="1">
+                    <xar:loop name="$publications">
+                        <option name="id" value="#$loop:item['id']#">#$loop:item['title']#</option>
+                    </xar:loop>
+                </select>
             </div>
-        </div>
-    </div>
+            <div class="xar-form-input-wrapper-after">
+                <input type="submit" value="#xarML('Search')#"  tabindex="2" />
+            </div>
+        </fieldset>
+    </form>
+    <form name="view" id="view" action="&xar-modurl-newsletter-admin-viewsubscription;" method="post" enctype="application/x-www-form-urlencoded">
+        <input type="hidden" name="search" id="search" value="name" />
+        <fieldset>
+            <legend>
+                <xar:mlstring>Search by User name</xar:mlstring>
+            </legend>
+            <div class="xar-form-input-wrapper">
+                <label for="searchname" class="xar-form-label" title="#xarML('Choose Name.')#">
+                    <xar:mlstring>User name:</xar:mlstring>
+                </label>
+                <input type="text" name="searchname" id="searchname" value="" size="30" maxlength="100" tabindex="3" />
+            </div>
+            <div class="xar-form-input-wrapper-after">
+                <input type="submit" value="#xarML('Search')#"  tabindex="4" />
+            </div>
+        </fieldset>
+    </form>
+    <form action="#xarModURL('newsletter', 'admin', 'viewsubscription')#" method="post" enctype="application/x-www-form-urlencoded" >
+        <input type="hidden" name="search" id="search" value="email" />
+        <fieldset>
+            <legend>
+                <xar:mlstring>Search by Email</xar:mlstring>
+            </legend>
+            <div class="xar-form-input-wrapper">
+                <label for="searchname" class="xar-form-label" title="#xarML('Choose Email.')#">
+                    <xar:mlstring>Email address:</xar:mlstring>
+                </label>
+                <input type="text" name="searchname" id="searchname" value="" size="30" maxlength="100" tabindex="5" />
+            </div>
+            <div class="xar-form-input-wrapper-after">
+                <input type="submit" value="#xarML('Search')#"  tabindex="6" />
+            </div>
+        </fieldset>
+    </form>
 <xar:else />
-    <div class="xar-mod-body">
-        <div class="contentBorder">
-            <div style="text-align: left;margin: auto;">
-                <xar:mlstring>Sorry - there are no publications available at this time.</xar:mlstring>
-            </div>
-        </div>
+    <div class="xar-form-input-wrapper">
+        <xar:mlstring>Sorry - there are no publications available at this time.</xar:mlstring>
     </div>
 </xar:if>
+</div>

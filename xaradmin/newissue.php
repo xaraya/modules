@@ -30,11 +30,11 @@ function newsletter_admin_newissue()
     if (!xarVarFetch('publicationId', 'int:0:', $publicationId, 0)) return;
 
     // Get the admin menu
-    $data = xarModAPIFunc('newsletter', 'admin', 'menu');
+    // $data = xarModAPIFunc('newsletter', 'admin', 'menu');
 
     // Set template strings
-    $data['addlabel'] = xarVarPrepForDisplay(xarML('Add Issue'));
-    $data['itemsperpage'] = xarModGetVar('newsletter', 'itemsperpage');
+    // $data['addlabel'] = xarVarPrepForDisplay(xarML('Add Issue'));
+    // $data['itemsperpage'] = xarModGetVar('newsletter', 'itemsperpage');
 
     // Get the list of publications
     $data['publications'] = xarModAPIFunc('newsletter',

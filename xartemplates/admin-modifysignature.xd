@@ -1,47 +1,37 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:style scope="module" module="base" file="navtabs" />
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:mlstring>Newsletter</xar:mlstring>
+        <xar:mlstring>Newsletter Administration</xar:mlstring>
     </span>
 </div>
-<br />
-#$menu#
 <div class="xar-mod-body">
-    <div class="contentBorder">
-        <div style="text-align: left;margin: auto;">
-            <br />
-            <form action="&xar-modurl-newsletter-admin-updatesignature;" method="post" enctype="application/x-www-form-urlencoded">
-            <input type="hidden" name="authid" id="authid" value="#$authid#" /> 
+<xar:template file="navtab" type="module" />
+    <form name="post" id="post" action="&xar-modurl-newsletter-admin-updatesignature;" method="post" enctype="application/x-www-form-urlencoded">
+        <fieldset>
+            <legend>
+                <xar:mlstring>Edit your signature</xar:mlstring>
+            </legend>
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
             <input type="hidden" name="id" id="id" value="#$item['id']#" />
-            <table border="0" cellpadding="5">
-                <tr>
-                    <td colspan="2">
-                    #$hooks#
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <b><xar:mlstring>Name:</xar:mlstring></b>
-                    </td>
-                    <td>
-                        #$item['name']#
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <b><xar:mlstring>Signature:</xar:mlstring></b>
-                    </td>
-                    <td>
-                        <textarea name="signature" rows="8" cols="50" tabindex="1">#xarVarPrepForDisplay($item['signature'])#</textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2" align="center">
-                        <br /><br />
-                        <input type="submit" value="#$updatebutton#"  tabindex="2" />
-                    </td>
-                </tr>
-            </table>    
-            </form>
+            <div class="xar-form-input-wrapper">
+                <label for="#$item['name']#" title="#xarML('Name')#" class="xar-form-label">
+                    <xar:mlstring>Name:</xar:mlstring>
+                </label>
+                #$item['name']#
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="signature" title="#xarML('Signature')#" class="xar-form-label">
+                    <xar:mlstring>Signature:</xar:mlstring>
+                </label>
+                <textarea id="signature" name="signature" rows="8" cols="50" tabindex="1">#xarVarPrepForDisplay($item['signature'])#</textarea>
+            </div>
+            <div class="xar-form-input-wrapper">
+                #$hooks#
+            </div>
+        </fieldset>
+        <div class="xar-form-input-wrapper-after">
+            <input type="submit" value="#xarML('Update Signature')#"  tabindex="2" />
         </div>
-    </div>
+    </form>
 </div>

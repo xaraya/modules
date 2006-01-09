@@ -43,14 +43,14 @@ function newsletter_admin_deleteowner()
     if (!$confirm) {
 
         // get the admin menu
-        $data = xarModAPIFunc('newsletter', 'admin', 'menu');
+        // $data = xarModAPIFunc('newsletter', 'admin', 'menu');
 
         // Specify for which owner you want confirmation
         $data['id'] = $id;
 
         // Data to display in the template
         $data['namevalue'] = xarVarPrepForDisplay($owner['name']);
-        $data['confirmbutton'] = xarML('Confirm');
+        // $data['confirmbutton'] = xarML('Confirm');
 
         // Generate a one-time authorisation code for this operation
         $data['authid'] = xarSecGenAuthKey();

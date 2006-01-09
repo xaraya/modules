@@ -1,42 +1,43 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
-    <span class="xar-mod-title">#$menutitle#</span>
+    <span class="xar-mod-title">
+        <xar:mlstring>Newsletter Module</xar:mlstring>
+    </span>
 </div>
 <div class="xar-mod-body">
-    <h2><xar:mlstring>New Subscription</xar:mlstring></h2><br />
-    <div style="text-align: left;margin: auto;">
-        <xar:if condition="$loggedin eq true">
-            <xar:if condition="!empty($publications)">
-                <form action="#xarModURL('newsletter', 'user', 'createsubscription')#" method="post" enctype="application/x-www-form-urlencoded" >
-                <table border="0" width="100%">
+    <h3><xar:mlstring>New Subscription</xar:mlstring></h3>
+    <xar:if condition="$loggedin eq true">
+        <xar:if condition="!empty($publications)">
+            <form name="post" id="post" action="&xar-modurl-newsletter-user-createsubscription;" method="post" enctype="application/x-www-form-urlencoded" >
+                <div class="xar-form-input-wrapper">
+                    <xar:mlstring>Choose which publication(s) you would like to subscribe to:</xar:mlstring>
+                </div>
+                <table class="xar-fullwidth">
                     <tr>
-                        <td align="left" valign="top" colspan="3">
-                            <xar:mlstring>Choose which publication(s) you would like to subscribe to:</xar:mlstring>
-                            <br /><br />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>&nbsp;</td>
-                        <td>
-                            <b><xar:mlstring>Publication</xar:mlstring></b>
-                        </td>
-                        <td>
-                            <b><xar:mlstring>Description</xar:mlstring></b>
-                        </td>
+                        <th>&nbsp;</th>
+                        <th class="xar-align-center">
+                            <xar:mlstring>Publication</xar:mlstring>
+                        </th>
+                        <th class="xar-align-center">
+                            <xar:mlstring>Description</xar:mlstring>
+                        </th>
                     </tr>
                     <xar:loop name="$publications">
                         <xar:if condition="$loop:item['private'] != 1">
                             <tr>
-                                <td align="left" valign="center">
+                                <td class="xar-align-center xar-valign-middle">
                                     <input type="checkbox" name="pids[]" id="pids[]" value="#$loop:item['id']#"/>
                                 </td>
                                 <td>
                                     #$loop:item['title']#
                                 </td>
                                 <td>
+                                    <xar:if condition="!empty($loop:item['introduction'])">
+                                        #$loop:item['introduction']#
+                                        <xar:comment>
                                     <xar:if condition="!empty($loop:item['description'])">
-                                        <br /><br />
                                         #$loop:item['description']#
-                                        <br /><br />
+</xar:comment>
                                     <xar:else />
                                         &nbsp;
                                     </xar:if>
@@ -44,43 +45,30 @@
                             </tr>
                         </xar:if>
                     </xar:loop>
-                    <tr>
-                        <td align="left" valign="top" colspan="3">
-                            <b><xar:mlstring>Mail Options</xar:mlstring></b>
-                            <br /><br />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="checkbox" name="htmlmail" id="htmlmail" value="1" checked="checked" />
-                        </td>
-                        <td>
-                            HTML Mail
-                        </td>
-                        <td>
-                            <xar:mlstring>Select if you would like the Newsletter received in HTML format.</xar:mlstring>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="3" align="center">
-                            <br /><br />
-                            <input type="submit" value="#$subscribebutton#"  />
-                        </td>
-                    </tr>
                 </table>
-                </form>
-            <xar:else />
-                <br /><br />
-                <xar:mlstring>Sorry - there are no publications available at this time.</xar:mlstring>
-            </xar:if>
+                <fieldset>
+                    <legend>
+                        <xar:mlstring>Mail Options</xar:mlstring>
+                    </legend>
+                    <div class="xar-form-input-wrapper">
+                        <label for="htmlmail" class="xar-form-label" title="#xarML('Select if you would like a publication received in HTML format')#">
+                            <xar:mlstring>Use HTML mail</xar:mlstring>
+                        </label>
+                        <input type="checkbox" name="htmlmail" id="htmlmail" value="1" checked="checked" />
+                    </div>
+                </fieldset>
+                <div class="xar-form-input-wrapper-after">
+                    <input type="submit" value="#xarML('Subscribe')#"  />
+                </div>
+            </form>
         <xar:else />
-            <table border="0" width="100%">
-                <tr>
-                    <td>
-                <b><xar:mlstring>You must register before you can subscribe to an newsletter.</xar:mlstring></b>
-                    </td>
-                </tr>
-            </table>
+            <div class="xar-form-input-wrapper">
+                <xar:mlstring>Sorry - there are no publications available at this time.</xar:mlstring>
+            </div>
         </xar:if>
-    </div>
+    <xar:else />
+        <div class="xar-form-input-wrapper">
+            <xar:mlstring>You must register before you can subscribe to an newsletter.</xar:mlstring>
+        </div>
+    </xar:if>
 </div>

@@ -35,9 +35,9 @@ function newsletter_admin_viewissue($args)
     if (!xarVarFetch('display', 'str:1:', $display, 'unpublished')) return;
     if (!xarVarFetch('publicationId', 'int:0:', $publicationId, 0)) return;
     if (!xarVarFetch('orderby', 'str:1:', $orderby, 'ASC')) return;
-
+    if (!xarVarFetch('func', 'str', $data['page'],  'main', XARVAR_NOT_REQUIRED)) return;
     // Get the admin edit menu
-    $data['menu'] = xarModFunc('newsletter', 'admin', 'editmenu');
+    $data['menu'] = xarModApiFunc('newsletter', 'admin', 'editmenu');
 
     // Get the publication title
     $data['publication_title'] = '';

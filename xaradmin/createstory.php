@@ -53,8 +53,8 @@ function newsletter_admin_createstory()
     if (!xarVarFetch('categoryId',      'id',       $categoryId, 0)) return;
     if (!xarVarFetch('source',          'str:1:',   $source, '')) return;
     if (!xarVarFetch('articleid',       'int:0',    $articleid, 0)) return;
-    if (!xarVarFetch('title',           'str',      $title, '')) return;
-    if (!xarVarFetch('content',         'str',      $content, '')) return;
+    if (!xarVarFetch('title',           'str:',      $title, '')) return;
+    if (!xarVarFetch('content',         'str:',      $content, '')) return;
 
     // they must enter a title, unless they have selected an article
     if (empty($title) && ($articleid==0)) {

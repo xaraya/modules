@@ -1,0 +1,17 @@
+<xar:style scope="module" module="base" file="navtabs" />
+<dl class="xar-tabs">
+    <dt class="help" title="Choose an action to perform:">
+        <xar:mlstring>Actions:</xar:mlstring>
+    </dt>
+    <xar:loop name="$menu">
+        <xar:if condition="$page eq $loop:item['page'] AND empty($loop:item['type'])">
+            <dd class="active">
+                <a href="#$loop:item['url']#">#$loop:item['label']#</a>
+            </dd>
+        <xar:else/>
+            <dd>
+                <a href="#$loop:item['url']#">#$loop:item['label']#</a>
+            </dd>
+        </xar:if>
+    </xar:loop>
+</dl>

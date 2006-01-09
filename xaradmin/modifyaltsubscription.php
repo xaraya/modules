@@ -80,14 +80,14 @@ function newsletter_admin_modifyaltsubscription()
     }
 
     // Get the admin menu
-    $menu = xarModAPIFunc('newsletter', 'admin', 'menu');
+    // $menu = xarModAPIFunc('newsletter', 'admin', 'menu');
 
     // Return the template variables defined in this function
     $templateVarArray = array(
         'authid' => xarSecGenAuthKey(),
         'publishername' => xarModGetVar('newsletter', 'publishername'),
-        'updatebutton' => xarVarPrepForDisplay(xarML('Update Subscription')),
-        'menu' => $menu,
+        // 'updatebutton' => xarVarPrepForDisplay(xarML('Update Subscription')),
+        // 'menu' => $menu,
         'hooks' => $hooks,
         'subscription' => $subscription);
 

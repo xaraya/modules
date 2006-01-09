@@ -37,9 +37,10 @@ function newsletter_admin_viewsubscription($args)
     if (!xarVarFetch('search', 'str:1:', $search, 'name')) return;
     if (!xarVarFetch('publicationId', 'id', $publicationId, 0)) return;
     if (!xarVarFetch('searchname', 'str:1:', $searchname, '')) return;
+    if (!xarVarFetch('func', 'str', $data['page'],  'main', XARVAR_NOT_REQUIRED)) return;
 
     // Get the admin edit menu
-    $data['menu'] = xarModFunc('newsletter', 'admin', 'subscriptionmenu');
+    $data['menu'] = xarModApiFunc('newsletter', 'admin', 'subscriptionmenu');
 
     // Set parameters so we can return to this menu after a delete
     $data['startnum'] = $startnum;

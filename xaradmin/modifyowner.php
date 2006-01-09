@@ -68,13 +68,13 @@ function newsletter_admin_modifyowner()
     }
 
     // Get the admin menu
-    $menu = xarModAPIFunc('newsletter', 'admin', 'menu');
+    // $menu = xarModAPIFunc('newsletter', 'admin', 'menu');
 
     // Set the template variables defined in this function
     $templateVarArray = array('authid' => xarSecGenAuthKey(),
-            'updatebutton' => xarVarPrepForDisplay(xarML('Update User')),
+            //'updatebutton' => xarVarPrepForDisplay(xarML('Update User')),
             'hooks' => $hooks,
-            'menu' => $menu, 
+            // 'menu' => $menu, 
             'owner' => $owner);
 
     // Return the template variables defined in this function

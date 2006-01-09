@@ -1,32 +1,23 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
-    <span class="xar-mod-title">#$menutitle#</span>
+    <span class="xar-mod-title">
+        <xar:mlstring>Newsletter Module</xar:mlstring>
+    </span>
 </div>
 <div class="xar-mod-body">
-    <div style="text-align: left;margin: auto;">
-        <table border="0" width="100%">
-            <tr>
-                <td align="left" valign="top">
-                    #$information#
-                </td>
-            </tr>
-        </table>
-        <br /><hr/><br />
-        <xar:if condition="$loggedin eq true">
-            <table border="0" width="100%">
-                <tr>
-                    <td align="left" valign="top">
-                        <xar:mlstring>To subscribe to a Newsletter,</xar:mlstring>&nbsp;<a href="#$subscribelink#"><xar:mlstring>Click Here</xar:mlstring></a>
-                    </td>
-                </tr>
-            </table>
-        <xar:else />
-            <table border="0" width="100%">
-                <tr>
-                    <td align="left" valign="top">
-                        <xar:mlstring>To subscribe to a Newsletter, you must first</xar:mlstring>&nbsp;<a href="#$registerlink#"><xar:mlstring>Register Here</xar:mlstring></a>
-                    </td>
-                </tr>
-            </table>
-        </xar:if>
+    <div class="xar-form-input-wrapper">
+        #$information#
     </div>
+    <fieldset>
+        <legend>
+            <xar:mlstring>Subscribe</xar:mlstring>
+        </legend>
+        <div class="xar-form-input-wrapper">
+            <xar:if condition="$loggedin eq true">
+                <xar:mlstring>To subscribe to a Newsletter,</xar:mlstring>&nbsp;<a href="#$subscribelink#"><xar:mlstring>Click Here</xar:mlstring></a>
+            <xar:else />
+                <xar:mlstring>To subscribe to a Newsletter, you must first</xar:mlstring>&nbsp;<a href="#$registerlink#"><xar:mlstring>Register Here</xar:mlstring></a>
+            </xar:if>
+        </div>
+    </fieldset>
 </div>

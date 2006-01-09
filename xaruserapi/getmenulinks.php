@@ -25,12 +25,35 @@ function newsletter_userapi_getmenulinks()
 
     // Check if user is logged in
     if (xarUserIsLoggedIn()) {
+    	
+    	$uid = xarUserGetVar('uid');
+
+        // See if this user has already subscribed
+        $subscriptions = xarModAPIFunc('newsletter',
+                                       'user',
+                                       'getsubscription',
+                                       array('id' => 0, // doesn't matter
+                                             'uid' => $uid));
+
+        if (count($subscriptions) == 0) {
         $menulinks[] = Array('url'   => xarModURL('newsletter',
                                                   'user',
                                                   'newsubscription'),
-                             'title' => xarML('Subscribe to a Newsletter'),
+                                           'title' => xarML('Subscribe to an newsletter'),
                              'label' => xarML('Subscribe'));
+        } else {
+            $menulinks[]  = Array('url'   => xarModURL('newsletter',
+                                                                'user',
+                                                                'modifysubscription'),
+                                           'title' => xarML('Modify your subscription to an newsletter'),
+                                           'label' => xarML('Modify Subscription'));
     }
+    }
+    	
+    	
+    	
+    	
+   
 
     // Show past issues
     $menulinks[] = Array('url'   => xarModURL('newsletter',

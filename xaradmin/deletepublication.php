@@ -50,7 +50,7 @@ function newsletter_admin_deletepublication($args)
     if (!$confirm) {
 
         // Get the admin menu
-        $data = xarModAPIFunc('newsletter', 'admin', 'menu');
+        // $data = xarModAPIFunc('newsletter', 'admin', 'menu');
 
         // Get a list of all publications
         $data['publications'] = xarModAPIFunc('newsletter',
@@ -66,7 +66,7 @@ function newsletter_admin_deletepublication($args)
 
         // Specify for which publication you want confirmation
         $data['id'] = $id;
-        $data['confirmbutton'] = xarML('Confirm');
+        // $data['confirmbutton'] = xarML('Confirm');
 
         // Data to display in the template
         $data['namevalue'] = xarVarPrepForDisplay($publication['title']);

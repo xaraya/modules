@@ -46,11 +46,11 @@ function newsletter_admin_deletestory($args)
     if (!$confirm) {
 
         // Get the admin menu
-        $data = xarModAPIFunc('newsletter', 'admin', 'menu');
+        // $data = xarModAPIFunc('newsletter', 'admin', 'menu');
 
         // Specify for which story you want confirmation
         $data['id'] = $id;
-        $data['confirmbutton'] = xarML('Confirm');
+        // $data['confirmbutton'] = xarML('Confirm');
 
         $data['namevalue'] = xarVarPrepForDisplay($story['title']);
 

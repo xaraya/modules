@@ -19,33 +19,31 @@
 function newsletter_adminapi_getmenulinks()
 {
     $menulinks = array();
+     if(xarSecurityCheck('AdminNewsletter', 0)) {
+    	
+    	$menulinks[] = Array('url'   => xarModURL('newsletter','admin','overview'),
+                             'title' => xarML('Newsletter overview'),
+                             'label' => xarML('Overview'));
+        }
 
     if(xarSecurityCheck('EditNewsletter', 0)) {
 
-        $menulinks[] = Array('url'   => xarModURL('newsletter',
-                                                  'admin',
-                                                  'selectpublication'),
+        $menulinks[] = Array('url'   => xarModURL('newsletter','admin','selectpublication'),
                              'title' => xarML('Publish a new issue update.'),
                              'label' => xarML('Publish Issue'));
 
-        $menulinks[] = Array('url'   => xarModURL('newsletter',
-                                                  'admin',
-                                                  'viewissue'),
+        $menulinks[] = Array('url'   => xarModURL('newsletter','admin','viewissue'),
                              'title' => xarML('Edit a Newsletter.'),
                              'label' => xarML('Edit Issues'));
 
-        $menulinks[] = Array('url'   => xarModURL('newsletter',
-                                                  'admin',
-                                                  'searchsubscription'),
+        $menulinks[] = Array('url'   => xarModURL('newsletter','admin','searchsubscription'),
                               'title' => xarML('Add, Edit and Search for Subscriptions'),
                               'label' => xarML('Subscriptions'));
     }
 
     if(xarSecurityCheck('AdminNewsletter', 0)) {
 
-        $menulinks[] = Array('url'   => xarModURL('newsletter',
-                                                  'admin',
-                                                  'configdesc'),
+        $menulinks[] = Array('url'   => xarModURL('newsletter','admin','configdesc'),
                               'title' => xarML('Modify the configuration for the module'),
                               'label' => xarML('Modify Config'));
     }
