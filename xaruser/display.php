@@ -1,6 +1,6 @@
 <?php
 /**
- * Display the ITSP
+ * Display the ITSP for one user
  *
  * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
@@ -20,7 +20,7 @@
  * @author the ITSP module development team
  * @param  $args an array of arguments (if called by other modules)
  * @param  $args ['objectid'] a generic object id (if called by other modules)
- * @param  $args ['exid'] the item id used for this itsp module
+ * @param  $args ['itspid'] the item id used for this itsp module
  */
 function itsp_user_display($args)
 {
@@ -49,7 +49,7 @@ function itsp_user_display($args)
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; /* throw back */
 
     /* If your module deals with different types of items, you should specify the item type
-     * here, before calling any hooks 
+     * here, before calling any hooks
      */
       $item['itemtype'] = 2;
      /* Security check 2 - if your API function does *not* check for the

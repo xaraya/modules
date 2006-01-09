@@ -24,13 +24,13 @@
         <xar:foreach in="$items" value="$item">
         <tr>
             <td>
-                    #$item.exid#
+                    #$item.planid#
             </td>
             <td>
                 <xar:if condition="empty($item.link)">
-                    #$item.number#
+                    #$item.planname#
                 <xar:else />
-                    <a href="#$item.link#">#$item.number#</a>
+                    <a href="#$item.link#">#$item.planname#</a>
                 </xar:if>
             </td>
             <td>
@@ -38,9 +38,9 @@
                 <!-- we only show a link if the item link variable is not empty -->
 
                 <xar:if condition="empty($item.link)">
-                    #$item.name#
+                    #$item.dateopen#
                 <xar:else />
-                    <a href="#$item.link#">#$item.name#</a>
+                    <a href="#$item.link#">#$item.dateopen#</a>
                 </xar:if>
 
             </td>

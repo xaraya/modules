@@ -17,16 +17,13 @@
  * This is a standard function to provide an overview of all of the items
  * available from the module.
  *
+ * @param int startnum
  * @author the ITSP module development team
  */
 function itsp_user_view()
 {
     if (!xarVarFetch('startnum', 'str:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
-    /* Initialise the $data variable that will hold the data to be used in
-     * the blocklayout template, and get the common menu configuration - it
-     * helps if all of the module pages have a standard menu at the top to
-     * support easy navigation
-     */
+    // Initialise the $data variable that will hold the data
     $data = xarModAPIFunc('itsp', 'user', 'menu');
     /* Prepare the variable that will hold some status message if necessary */
     $data['status'] = '';
@@ -42,8 +39,6 @@ function itsp_user_view()
     $uid = xarUserGetVar('uid');
     /* The API function is called.  The arguments to the function are passed in
      * as their own arguments array.
-     * Security check 1 - the getall() function only returns items for which the
-     * the user has at least OVERVIEW access.
      */
     $items = xarModAPIFunc('itsp',
         'user',
@@ -57,11 +52,12 @@ function itsp_user_view()
      */
     foreach ($items as $item) {
         // Add read link
+        $planid = $item['planid'];
         if (xarSecurityCheck('ReadITSPPlan', 0, 'Plan', "$planid:All:All")) {
             $item['link'] = xarModURL('itsp',
                 'user',
                 'display',
-                array('planid' => $item['planid']));
+                array('planid' => $planid));
             /* Security check 2 - else only display the item name (or whatever is
              * appropriate for your module)
              */
@@ -79,10 +75,6 @@ function itsp_user_view()
     $uid = xarUserGetVar('uid');
     /* Call the xarTPL helper function to produce a pager in case of there
      * being many items to display.
-     *
-     * Note that this function includes another user API function.  The
-     * function returns a simple count of the total number of items in the item
-     * table so that the pager function can do its job properly
      */
     $data['pager'] = xarTplGetPager($startnum,
         xarModAPIFunc('itsp', 'user', 'countitems', array('itemtype'=>1)),
