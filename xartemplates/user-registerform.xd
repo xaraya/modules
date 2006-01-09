@@ -15,6 +15,16 @@
         <fieldset>
         <legend><xar:mlstring>Registration Requirements</xar:mlstring></legend>
             <div class="xar-form-input-wrapper">
+                <label for="itemtype" class="xar-form-label" title="#xarML('Choose the type of registration')#">
+                       <xar:mlstring>Register as a:</xar:mlstring>:
+                </label>
+                <xar:set name="usertype">ROLES_USERTYPE</xar:set>
+                <xar:data-input type="moduleitemtype" name="itemtype" id="itemtype" value="" modid="27" basetype="$usertype" />
+                <xar:if condition="!empty($invalid['itemtype'])">
+                    <span class="xar-error">#$invalid['itemtype']#</span>
+                </xar:if>
+            </div>
+            <div class="xar-form-input-wrapper">
                 <label for="username" class="xar-form-label" title="#xarML('Enter user name')#">
                        <xar:mlstring>Username</xar:mlstring>:
                 </label>

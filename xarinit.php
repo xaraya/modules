@@ -24,9 +24,9 @@ function authentication_init()
 #
 # Set up masks
 #
-    xarRegisterMask('ViewAuthentication','All','vendors','All','All','ACCESS_OVERVIEW');
-    xarRegisterMask('EditAuthentication','All','vendors','All','All','ACCESS_EDIT');
-    xarRegisterMask('AdminAuthentication','All','vendors','All','All','ACCESS_ADMIN');
+    xarRegisterMask('ViewAuthentication','All','authentication','All','All','ACCESS_OVERVIEW');
+    xarRegisterMask('EditAuthentication','All','authentication','All','All','ACCESS_EDIT');
+    xarRegisterMask('AdminAuthentication','All','authentication','All','All','ACCESS_ADMIN');
 
 # --------------------------------------------------------
 #
