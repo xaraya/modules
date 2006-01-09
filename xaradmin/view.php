@@ -21,11 +21,7 @@
 function itsp_admin_view()
 {
     if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
-    /* Initialise the $data variable that will hold the data to be used in
-     * the blocklayout template, and get the common menu configuration - it
-     * helps if all of the module pages have a standard menu at the top to
-     * support easy navigation
-     */
+
     $data = xarModAPIFunc('itsp', 'admin', 'menu');
     /* Initialise the variable that will hold the items, so that the template
      * doesn't need to be adapted in case of errors
@@ -55,7 +51,7 @@ function itsp_admin_view()
      */
     $items = xarModAPIFunc('itsp',
                            'user',
-                           'getall',
+                           'getall_plans',
                             array('startnum' => $startnum,
                                   'numitems' => xarModGetVar('itsp','itemsperpage')));
     /* Check for exceptions */
@@ -66,13 +62,15 @@ function itsp_admin_view()
      * shown in xaruser.php, but as an itsp, we'll adapt the $items array
      * 'in place', and *then* pass the complete items array to $data
      */
+    $planid = '';
     for ($i = 0; $i < count($items); $i++) {
         $item = $items[$i];
-        if (xarSecurityCheck('EditITSPlan', 0, 'Plan', "$planid:All:All")) {
+        $planid = $item['planid'];
+        if (xarSecurityCheck('EditITSPPlan', 0, 'Plan', "$planid:All:All")) {
             $items[$i]['editurl'] = xarModURL('itsp',
                 'admin',
                 'modify',
-                array('planid' => $item['planid']));
+                array('planid' => $planid));
         } else {
             $items[$i]['editurl'] = '';
         }
@@ -80,7 +78,7 @@ function itsp_admin_view()
             $items[$i]['deleteurl'] = xarModURL('itsp',
                 'admin',
                 'delete',
-                array('planid' => $item['planid']));
+                array('planid' => $planid));
         } else {
             $items[$i]['deleteurl'] = '';
         }

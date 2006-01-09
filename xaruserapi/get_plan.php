@@ -90,7 +90,7 @@ function itsp_userapi_get_plan($args)
                   'plandesc'    => $plandesc,
                   'planrules'   => $planrules,
                   'credits'     => $credits,
-                  'mincredit'   => $mincredits,
+                  'mincredit'   => $mincredit,
                   'dateopen'    => $dateopen,
                   'dateclose'   => $dateclose,
                   'datemodi'    => $datemodi,

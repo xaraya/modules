@@ -25,11 +25,6 @@
  */
 function itsp_adminapi_create($args)
 {
-    /* Get arguments from argument array - all arguments to this function
-     * should be obtained from the $args array, getting them from other
-     * places such as the environment is not allowed, as that makes
-     * assumptions that will not hold in future versions of Xaraya
-     */
     extract($args);
     /* Argument check - make sure that all required arguments are present
      * and in the right format, if not then set an appropriate error
@@ -83,7 +78,7 @@ function itsp_adminapi_create($args)
                xar_plandesc,
                xar_planrules,
                xar_credits,
-               xar_mincredits,
+               xar_mincredit,
                xar_dateopen,
                xar_dateclose,
                xar_datemodi,
@@ -92,7 +87,7 @@ function itsp_adminapi_create($args)
     /* Create an array of values which correspond to the order of the
      * Question marks in the statement above.
      */
-    $bindvars = array($nextId, (string) $planname, $plandesc, $planrules, $credits, $mincredits,
+    $bindvars = array($nextId, (string) $planname, $plandesc, $planrules, $credits, $mincredit,
     $dateopen, $dateclose, $datemodi, $modiby);
     $result = &$dbconn->Execute($query,$bindvars);
 
@@ -105,7 +100,7 @@ function itsp_adminapi_create($args)
      * on your database, that this is different from $nextId as obtained
      * above, so it is better to be safe than sorry in this situation
      */
-    $planid = $dbconn->PO_Insert_ID($itsptable, 'xar_planid');
+    $planid = $dbconn->PO_Insert_ID($planstable, 'xar_planid');
 
     // Let any hooks know that we have created a new item.
     $item = $args;

@@ -3,12 +3,11 @@
 <!-- common admin menu for this module - remove link to the current function
 <a href="#$loop:item['deleteurl']#" onclick="return xar_base_confirmLink(this, '#xarVarPrepForDisplay($loop:item['deleteconfirm'])#')">
 -->
-<!-- the variables used in this menu come from example_admin_menu() -->
 <div class="xar-mod-head">
-    <span class="xar-mod-title"><xar:mlstring>ITSP Administration</xar:mlstring></span>
+    <span class="xar-mod-title"><xar:mlstring>ITSP Plans Administration</xar:mlstring></span>
 </div>
 <div class="xar-mod-body">
-    <h2><xar:mlstring>ITSP Items</xar:mlstring></h2>
+    <h2><xar:mlstring>ITSP Plans</xar:mlstring></h2>
 
     <!--
         // display a status message to the user if an action has been
@@ -22,10 +21,10 @@
     <table class="xar-fullwidth">
         <tr>
             <th>
-                <xar:mlstring>Plan Name</xar:mlstring>
+                <xar:mlstring>Plan ID</xar:mlstring>
             </th>
             <th>
-                <xar:mlstring>Plan Number</xar:mlstring>
+                <xar:mlstring>Plan Name</xar:mlstring>
             </th>
             <th>
                 <xar:mlstring>Plan Options</xar:mlstring>
@@ -34,10 +33,10 @@
         <xar:foreach in="$items" value="$item">
         <tr>
             <td>
-                #$item.name#
+                #$item.planid#
             </td>
             <td>
-                #$item.number#
+                #$item.planname#
             </td>
             <td class="xar-align-center">
                <xar:if condition="empty($item['editurl'])">

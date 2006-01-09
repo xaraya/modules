@@ -24,10 +24,7 @@
 function itsp_userapi_getall_plans($args)
 {
     extract($args);
-    /* Optional arguments.
-     * FIXME: (!isset($startnum)) was ignoring $startnum as it contained a null value
-     * replaced it with ($startnum == "") (thanks for the talk through Jim S.) NukeGeek 9/3/02
-     * if (!isset($startnum)) { */
+    /* Optional arguments.*/
     if (!isset($startnum)) {
         $startnum = 1;
     }
@@ -67,8 +64,7 @@ function itsp_userapi_getall_plans($args)
      * using - $table doesn't cut it in more complex modules
      */
     $planstable = $xartable['itsp_plans'];
-    /* TODO: how to select by cat ids (automatically) when needed ???
-     * Get items - the formatting here is not mandatory, but it does make the
+    /* Get items - the formatting here is not mandatory, but it does make the
      * SQL statement relatively easy to read.  Also, separating out the sql
      * statement from the SelectLimit() command allows for simpler debug
      * operation if it is ever needed
@@ -97,15 +93,15 @@ function itsp_userapi_getall_plans($args)
          $mincredit, $dateopen, $dateclose, $datemodi, $modiby) = $result->fields;
         if (xarSecurityCheck('ViewITSPPlan', 0, 'Plan', "$planid:All:All")) {
             $items[] = array('planid'      => $planid,
-                              'planname'    => $planname,
-                              'plandesc'    => $plandesc,
-                              'planrules'   => $planrules,
-                              'credits'     => $credits,
-                              'mincredit'   => $mincredits,
-                              'dateopen'    => $dateopen,
-                              'dateclose'   => $dateclose,
-                              'datemodi'    => $datemodi,
-                              'modiby'      => $modiby);
+                             'planname'    => $planname,
+                             'plandesc'    => $plandesc,
+                             'planrules'   => $planrules,
+                             'credits'     => $credits,
+                             'mincredit'   => $mincredit,
+                             'dateopen'    => $dateopen,
+                             'dateclose'   => $dateclose,
+                             'datemodi'    => $datemodi,
+                             'modiby'      => $modiby);
         }
     }
     /* All successful database queries produce a result set, and that result

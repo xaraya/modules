@@ -12,7 +12,6 @@
 </script>
 
 <!-- common admin menu for this module - remove link to the current function -->
-<!-- the variables used in this menu come from example_admin_menu() -->
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>ITSP Administration</xar:mlstring></span>
 </div>
