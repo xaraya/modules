@@ -132,7 +132,7 @@ function netquery_user_main()
     }
     else if ($data['querytype'] == 'dig')
     {
-        $target = $data['host'];
+        $target = sanitizeSysString($data['host']);
         $digparam = $data['digparam'];
         $digexec_local = $data['digexec_local'];
         $msg = ('<p><b>DNS Query (Dig) Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b></p><p>');
@@ -216,7 +216,7 @@ function netquery_user_main()
         $tport = $data['portnum'];
         $submitlink = $data['submitlink'];
         $portdata = xarModAPIFunc('netquery', 'user', 'getportdata', array('port' => $tport));
-        $msg = ('<p><b>Port '.$tport.' Services &amp; Exploits [<a href="http://isc.sans.org/port_details.php?port='.$tport.'" target="_blank">Details</a>]');
+        $msg = ('<p><b>Port '.$tport.' Services &amp; Exploits [<a href="javascript:newwindow(\'http://isc.sans.org/port_details.php?port='.$tport.'\');">Details</a>]');
         if ($data['user_submissions']) $msg .= (' [<a href="'.$submitlink['url'].'">'.$submitlink['label'].'</a>]');
         $msg .= (' [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b></p><p>');
         if (!empty($target) && $target != 'None') {
@@ -235,7 +235,7 @@ function netquery_user_main()
         {
           if (!empty($portdatum['protocol'])) {
             $flagdata = xarModAPIFunc('netquery', 'user', 'getflagdata', array('flagnum' => $portdatum['flag']));
-            $notes = '<font color="'.$flagdata['fontclr'].'">['.$flagdata['keyword'].']</font> <a href="'.$flagdata['lookup_1'].$portdatum['comment'].'" target="_blank">'.$portdatum['comment'].'</a>';
+            $notes = '<font color="'.$flagdata['fontclr'].'">['.$flagdata['keyword'].']</font> <a href="javascript:newwindow(\''.$flagdata['lookup_1'].$portdatum['comment'].'\');">'.$portdatum['comment'].'</a>';
             $msg .= '<tr><td class="results">'.$portdatum['protocol'].'</td><td class="results">'.$portdatum['service'].'</td><td class="results">'.$notes.'</td></tr>';
           }
         }
@@ -283,7 +283,7 @@ function netquery_user_main()
         $tpoints = $data['maxp'];
         $msg = ('<p><b>ICMP Ping Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b></p><p>');
         if ($data['winsys']) {$PN=$data['pingexec_local'].' -n '.$tpoints.' '.$target;}
-        else {$PN=$data['pingexec_local'].' -c'.$tpoints.' '.$target;}
+        else {$PN=$data['pingexec_local'].' -c '.$tpoints.' '.$target;}
         exec($PN, $response, $rval);
         for ($i = 0; $i < count($response); $i++) {
             $png .= $response[$i].'<br />';
@@ -302,9 +302,10 @@ function netquery_user_main()
     {
         $rt = '';
         $target = sanitizeSysString($data['host']);
+        $tpoints = $data['maxt'];
         $msg = ('<p><b>Traceroute Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b></p><p>');
-        if ($data['winsys']) {$TR=$data['traceexec_local'].' '.$target;}
-        else {$TR=$data['traceexec_local'].' '.$target;}
+        if ($data['winsys']) {$TR=$data['traceexec_local'].' -h '.$tpoints.' '.$target;}
+        else {$TR=$data['traceexec_local'].' -m '.$tpoints.' '.$target;}
         exec($TR, $response, $rval);
         for ($i = 0; $i < count($response); $i++) {
             $rt .= $response[$i].'<br />';

@@ -2,9 +2,15 @@
   <xar:if condition="$vars['blockquery'] eq 'clientinfo'">
     <xar:if condition="!empty($geoip.cn)">
       <xar:if condition="!empty($geoip.geoflag)">
-        <img class="geoflag" src="#$geoip.geoflag#" /><br />
+        <img class="geoflag" src="#$geoip.geoflag#" alt="" /><br />
       </xar:if>
-      &para; <a href="http://www.mapquest.com/maps/map.adp?latlongtype=decimal&amp;latitude=#$geoip.lat#&amp;longitude=#$geoip.lon#&amp;zoom=0" target="_blank">#$geoip.cn#</a><br />
+      <xar:if condition="$mapping_site eq 1">
+        &para; <a href="javascript:newwindow('http://www.mapquest.com/maps/map.adp?latlongtype=decimal&amp;latitude=#$geoip.lat#&amp;longitude=#$geoip.lon#&amp;zoom=0');">#$geoip.cn#</a><br />
+      <xar:elseif condition="$mapping_site eq 2" />
+        &para; <a href="javascript:newwindow('http://www.multimap.com/map/browse.cgi?lat=#$geoip.lat#&amp;lon=#$geoip.lon#&amp;scale=40000000&amp;icon=x');">#$geoip.cn#</a><br />
+      <xar:else />
+        &para; #$geoip.cn#<br />
+      </xar:if>
     </xar:if>
     &para; <xar:mlstring>IP</xar:mlstring> : #$browserinfo->property("ip")#<br />
     &para; <xar:mlstring>OS</xar:mlstring> : #$browserinfo->property("platform")# #$browserinfo->property("os")#<br />
@@ -13,7 +19,13 @@
   <xar:elseif condition="$vars['blockquery'] eq 'topcountries'" />
     <xar:foreach in="$countries" value="$country">
         <xar:if condition="!empty($country.cn)">
-            <a href="http://www.mapquest.com/maps/map.adp?latlongtype=decimal&amp;latitude=#$country.lat#&amp;longitude=#$country.lon#&amp;zoom=0" target="_blank">#$country.cn#</a>:#$country.users#<br />
+          <xar:if condition="$mapping_site eq 1">
+            <a href="javascript:newwindow('http://www.mapquest.com/maps/map.adp?latlongtype=decimal&amp;latitude=#$country.lat#&amp;longitude=#$country.lon#&amp;zoom=0');">#$country.cn#</a>:#$country.users#<br />
+          <xar:elseif condition="$mapping_site eq 2" />
+            <a href="javascript:newwindow('http://www.multimap.com/map/browse.cgi?lat=#$country.lat#&amp;lon=#$country.lon#&amp;scale=40000000&amp;icon=x');">#$country.cn#</a>:#$country.users#<br />
+          <xar:else />
+            #$country.cn#:#$country.users#<br />
+          </xar:if>
         </xar:if>
     </xar:foreach>
   <xar:elseif condition="$vars['blockquery'] eq 'whois'" />
@@ -95,3 +107,11 @@
 <xar:else />
   <xar:mlstring>Sorry - You do not have access to Netquery</xar:mlstring>
 </xar:sec>
+
+<script type="text/javascript">
+function newwindow(link)
+{
+  newWin = window.open(link);
+  newWin.focus();
+}
+</script>

@@ -193,7 +193,19 @@
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <input type="hidden" name="querytype" id="querytype" value="trace" />
     <label for="host">#$tracelabel#</label>
+    <label class="count" for="maxt">#$maxtlabel#</label>
     <br /><input type="text" name="host" id="host" value="#$host#" size="32" maxlength="100" />
+    <select name="maxt" id="maxt">
+        <xar:foreach in="$maxtoptions" value="$maxtoption">
+            <xar:if condition="!empty($maxtoption)">
+                <xar:if condition="$maxtoption eq $maxt">
+                    <option selected="selected" value="#$maxtoption#">#$maxtoption#</option>
+                <xar:else />
+                    <option value="#$maxtoption#">#$maxtoption#</option>
+                </xar:if>
+            </xar:if>
+        </xar:foreach>
+    </select>
     <input class="gobutton" type="image" src="modules/netquery/xarimages/btn_go.gif" alt="Go" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <a href="javascript:popUp('#$hlplink.url#','console','400','600');"><img class="gobutton" src="modules/netquery/xarimages/btn_help.gif" alt="#$hlplink.label#" /></a>
   <br /></p></form>
@@ -253,9 +265,15 @@
     <xar:foreach in="$countries" value="$country">
       <xar:if condition="!empty($country.cn)">
           <tr><td>#$country.cc#</td><td>
-          <a href="http://www.mapquest.com/maps/map.adp?latlongtype=decimal&amp;latitude=#$country.lat#&amp;longitude=#$country.lon#&amp;zoom=0" target="_blank">#$country.cn#</a>
+          <xar:if condition="$mapping_site eq 1">
+            <a href="javascript:newwindow('http://www.mapquest.com/maps/map.adp?latlongtype=decimal&amp;latitude=#$country.lat#&amp;longitude=#$country.lon#&amp;zoom=0');">#$country.cn#</a>
+          <xar:elseif condition="$mapping_site eq 2" />
+            <a href="javascript:newwindow('http://www.multimap.com/map/browse.cgi?lat=#$country.lat#&amp;lon=#$country.lon#&amp;scale=40000000&amp;icon=x');">#$country.cn#</a>
+          <xar:else />
+            #$country.cn#
+          </xar:if>
           </td><td>
-          <img class="geoflag" src="#$country.geoflag#" />
+          <img class="geoflag" src="#$country.geoflag#" alt="" />
           </td><td>
           #$country.lat#
           </td><td>
@@ -273,8 +291,14 @@
   <xar:if condition="$clientinfo_enabled">
     <xar:mlstring>Client Info</xar:mlstring> - 
     <xar:if condition="!empty($geoip.cn)">
-      <xar:if condition="!empty($geoip.geoflag)"><img class="geoflag" src="#$geoip.geoflag#" /></xar:if>
-      <a href="http://www.mapquest.com/maps/map.adp?latlongtype=decimal&amp;latitude=#$geoip.lat#&amp;longitude=#$geoip.lon#&amp;zoom=0" target="_blank">#$geoip.cn#</a> - 
+      <xar:if condition="!empty($geoip.geoflag)"><img class="geoflag" src="#$geoip.geoflag#" alt="" /></xar:if>
+      <xar:if condition="$mapping_site eq 1">
+          <a href="javascript:newwindow('http://www.mapquest.com/maps/map.adp?latlongtype=decimal&amp;latitude=#$geoip.lat#&amp;longitude=#$geoip.lon#&amp;zoom=0');">#$geoip.cn#</a> - 
+      <xar:elseif condition="$mapping_site eq 2" />
+          <a href="javascript:newwindow('http://www.multimap.com/map/browse.cgi?lat=#$geoip.lat#&amp;lon=#$geoip.lon#&amp;scale=40000000&amp;icon=x');">#$geoip.cn#</a> - 
+      <xar:else />
+          #$geoip.cn#
+      </xar:if>
     </xar:if>
     <xar:mlstring>IP</xar:mlstring>: #$browserinfo->property("ip")# -
     <xar:mlstring>OS</xar:mlstring>: #$browserinfo->property("platform")# #$browserinfo->property("os")# -
@@ -305,5 +329,10 @@ function tracewindow(target)
 {
         var tracesite = "#$traceexec_remote#?#$traceexec_remote_t#=" + target;
         popUp(tracesite,'console','400','600')
+}
+function newwindow(link)
+{
+        newWin = window.open(link);
+        newWin.focus();
 }
 </script>

@@ -22,6 +22,7 @@ function netquery_userapi_mainapi()
     $data['httpreqlabel'] = xarVarPrepForDisplay(xarML('Request'));
     $data['pinglabel'] = xarVarPrepForDisplay(xarML('Ping IP Address or Host Name'));
     $data['maxplabel'] = xarVarPrepForDisplay(xarML('Count'));
+    $data['maxtlabel'] = xarVarPrepForDisplay(xarML('Count'));
     $data['pingremotelabel'] = xarVarPrepForDisplay(xarML('Ping IP or Host Name - Remote'));
     $data['tracelabel'] = xarVarPrepForDisplay(xarML('Traceroute IP or Host Name'));
     $data['traceremotelabel'] = xarVarPrepForDisplay(xarML('Traceroute IP or Host - Remote'));
@@ -35,6 +36,7 @@ function netquery_userapi_mainapi()
     $data['capture_log_filepath'] = xarModGetVar('netquery', 'capture_log_filepath');
     $data['capture_log_dtformat'] = xarModGetVar('netquery', 'capture_log_dtformat');
     $data['clientinfo_enabled'] = xarModGetVar('netquery', 'clientinfo_enabled');
+    $data['mapping_site'] = xarModGetVar('netquery', 'mapping_site');
     $data['topcountries_limit'] = xarModGetVar('netquery', 'topcountries_limit');
     $data['whois_enabled'] = xarModGetVar('netquery', 'whois_enabled');
     $data['whois_max_limit'] = xarModGetVar('netquery', 'whois_max_limit');
@@ -69,6 +71,7 @@ function netquery_userapi_mainapi()
     $data['j'] = 0;
     $data['winsys'] = (DIRECTORY_SEPARATOR == '\\');
     $data['maxpoptions'] = array(4, 5, 6, 7, 8, 9, 10);
+    $data['maxtoptions'] = array(10, 20, 30, 40, 50, 60);
     $data['httpoptions'] = array('HEAD', 'GET');
     $digoptions = array();
       $digoptions[] = array('name' => 'ANY', 'value' => 'ANY');
@@ -102,6 +105,7 @@ function netquery_userapi_mainapi()
     $data['domain'] = $domain;
     $data['whois_ext'] = $whois_ext;
     xarVarFetch('maxp', 'int:1:10', $data['maxp'], '4', XARVAR_NOT_REQUIRED);
+    xarVarFetch('maxt', 'int:1:100', $data['maxt'], '30', XARVAR_NOT_REQUIRED);
     xarVarFetch('host', 'str:1:', $data['host'], $_SERVER['REMOTE_ADDR'], XARVAR_NOT_REQUIRED);
     xarVarFetch('email', 'str:1:', $data['email'], 'someone@'.gethostbyaddr($_SERVER['REMOTE_ADDR']), XARVAR_NOT_REQUIRED);
     xarVarFetch('server', 'str:1:', $data['server'], 'None', XARVAR_NOT_REQUIRED);
@@ -167,7 +171,7 @@ function sanitizeSysString($string, $min = '', $max = '')
 {
   $pattern = '/(;|\||`|>|<|&|^|"|'."\n|\r|'".'|{|}|[|]|\)|\()/i';
   $string = preg_replace($pattern, '', $string);
-  $string = '"'.preg_replace('/\$/', '\\\$', $string).'"';
+  $string = preg_replace('/\$/', '\\\$', $string);
   $len = strlen($string);
   if((($min != '') && ($len < $min)) || (($max != '') && ($len > $max)))
     return FALSE;

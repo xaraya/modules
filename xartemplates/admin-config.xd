@@ -65,9 +65,8 @@
     <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <span class="help" title="#xarML('Netquery capture log PATH/FILENAME')#"><label for="capture_log_filepath"><xar:mlstring>At Filepath:</xar:mlstring></label></span>
       <input type="text" name="capture_log_filepath" id="capture_log_filepath" value="#$capture_log_filepath#" size="30" maxlength="100" />
-    </td>
-    <td>&nbsp;&nbsp;&nbsp;
-      <span class="help" title="#xarML('FORMAT for log date-time entries')#"><label for="capture_log_dtformat"><xar:mlstring>Datetime Fmt:</xar:mlstring></label></span>
+       ~
+      <span class="help" title="#xarML('FORMAT for log date-time entries')#"><label for="capture_log_dtformat"><xar:mlstring>Datetime:</xar:mlstring></label></span>
       <input type="text" name="capture_log_dtformat" id="capture_log_dtformat" value="#$capture_log_dtformat#" size="11" maxlength="100" />
     </td>
   </tr>
@@ -79,6 +78,25 @@
         <input type="checkbox" name="clientinfo_enabled" id="clientinfo_enabled" value="1" />
       </xar:if>
       <xar:mlstring>Enable Client Info (Main Interface)</xar:mlstring>
+      <xar:if condition="!empty($xaglink)">
+        ~ <a href="#$xaglink.url#">#$xaglink.label#</a>
+      </xar:if>
+    </td>
+  </tr>
+  <tr>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <span class="help" title="#xarML('Site to use for GeoIP mapping')#"><label for="mapping_site"><xar:mlstring>Mapping Site:</xar:mlstring></label></span>
+      <select name="mapping_site" id="mapping_site">
+      <xar:foreach in="$mappingsites" value="$mappingsite">
+        <xar:if condition="!empty($mappingsite.name)">
+          <xar:if condition="$mappingsite.value eq $mapping_site">
+            <option selected="selected" value="#$mappingsite.value#">#$mappingsite.name#</option>
+          <xar:else />
+            <option value="#$mappingsite.value#">#$mappingsite.name#</option>
+          </xar:if>
+        </xar:if>
+      </xar:foreach>
+      </select>
       ~
       <span class="help" title="#xarML('Maximum top countries to display')#"><label for="topcountries_limit"><xar:mlstring>Top Countries:</xar:mlstring></label></span>
       <select name="topcountries_limit" id="topcountries_limit">
@@ -92,9 +110,6 @@
         </xar:if>
       </xar:foreach>
       </select>
-      <xar:if condition="!empty($xaglink)">
-        ~ <a href="#$xaglink.url#">#$xaglink.label#</a>
-      </xar:if>
     </td>
   </tr>
   <tr align="left">
@@ -259,8 +274,7 @@
     <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <span class="help" title="#xarML('URL for remote system ping script')#"><label for="pingexec_remote"><xar:mlstring>Script URL:</xar:mlstring></label></span>
       <input type="text" name="pingexec_remote" id="pingexec_remote" value="#$pingexec_remote#" size="30" maxlength="100" />
-    </td>
-    <td>&nbsp;&nbsp;&nbsp;
+      ~
       <span class="help" title="#xarML('Remote ping script url?PARAM=target')#"><label for="pingexec_remote_t"><xar:mlstring>Target Param:</xar:mlstring></label></span>
       <input type="text" name="pingexec_remote_t" id="pingexec_remote_t" value="#$pingexec_remote_t#" size="6" maxlength="10" />
     </td>
@@ -295,8 +309,7 @@
     <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <span class="help" title="#xarML('URL for remote system traceroute script')#"><label for="traceexec_remote"><xar:mlstring>Script URL:</xar:mlstring></label></span>
       <input type="text" name="traceexec_remote" id="traceexec_remote" value="#$traceexec_remote#" size="30" maxlength="100" />
-    </td>
-    <td>&nbsp;&nbsp;&nbsp;
+      ~
       <span class="help" title="#xarML('Remote script traceroute url?PARAM=target')#"><label for="traceexec_remote_t"><xar:mlstring>Target Param:</xar:mlstring></label></span>
       <input type="text" name="traceexec_remote_t" id="traceexec_remote_t" value="#$traceexec_remote_t#" size="6" maxlength="10" />
     </td>

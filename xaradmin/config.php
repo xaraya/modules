@@ -20,6 +20,7 @@ function netquery_admin_config()
             if (!xarVarFetch('capture_log_filepath', 'str:1:', $capture_log_filepath, 'var/logs/netquery.log', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('capture_log_dtformat', 'str:1:', $capture_log_dtformat, 'Y-m-d H:i:s', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('clientinfo_enabled', 'checkbox', $clientinfo_enabled, '0', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('mapping_site', 'int:1:100000', $mapping_site, '0', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('topcountries_limit', 'int:1:100000', $topcountries_limit, '10', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('whois_enabled', 'checkbox', $whois_enabled, '0', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('whois_max_limit', 'int:1:10', $whois_max_limit, '3', XARVAR_NOT_REQUIRED)) return;
@@ -52,6 +53,7 @@ function netquery_admin_config()
             xarModSetVar('netquery', 'capture_log_filepath', $capture_log_filepath);
             xarModSetVar('netquery', 'capture_log_dtformat', $capture_log_dtformat);
             xarModSetVar('netquery', 'clientinfo_enabled', $clientinfo_enabled);
+            xarModSetVar('netquery', 'mapping_site', $mapping_site);
             xarModSetVar('netquery', 'topcountries_limit', $topcountries_limit);
             xarModSetVar('netquery', 'whois_enabled', $whois_enabled);
             xarModSetVar('netquery', 'whois_max_limit', $whois_max_limit);

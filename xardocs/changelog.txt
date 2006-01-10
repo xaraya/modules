@@ -38,3 +38,10 @@ Version 3.1 2005-04-15
    - changed geoflags data pak to use country codes
 Version 3.11 2005-07-25
    - added sanitizeSysString() function for local exec ops
+Version 3.12 2005-12-10
+   - added traceroute TTL (maximum hops) parameter
+   - added alternate GeoIP mapping  MultiMap option
+Version 3.20 2006-01-08
+   - dig command vulnerability corrected
+   - all <a> tag target attributes dropped (XHTML 1.0 Strict)
+   - all $_HTTP vars dropped (Requires PHP 4.10 or later)

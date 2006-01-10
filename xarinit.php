@@ -22,6 +22,7 @@ function netquery_init()
     xarModSetVar('netquery', 'capture_log_filepath', 'var/logs/nq_log.txt');
     xarModSetVar('netquery', 'capture_log_dtformat', 'Y-m-d H:i:s');
     xarModSetVar('netquery', 'clientinfo_enabled', 1);
+    xarModSetVar('netquery', 'mapping_site', 1);
     xarModSetVar('netquery', 'topcountries_limit', 10);
     xarModSetVar('netquery', 'whois_enabled', 1);
     xarModSetVar('netquery', 'whois_max_limit', 3);
@@ -85,6 +86,7 @@ function netquery_upgrade($oldversion)
             xarModSetVar('netquery', 'capture_log_filepath', 'var/logs/nq_log.txt');
             xarModSetVar('netquery', 'capture_log_dtformat', 'Y-m-d H:i:s');
             xarModSetVar('netquery', 'clientinfo_enabled', 1);
+            xarModSetVar('netquery', 'mapping_site', 1);
             xarModSetVar('netquery', 'topcountries_limit', 10);
             xarModSetVar('netquery', 'whois_max_limit', 3);
             xarModSetVar('netquery', 'whois_default', '.com');
@@ -116,6 +118,7 @@ function netquery_upgrade($oldversion)
             xarModSetVar('netquery', 'capture_log_filepath', 'var/logs/nq_log.txt');
             xarModSetVar('netquery', 'capture_log_dtformat', 'Y-m-d H:i:s');
             xarModSetVar('netquery', 'clientinfo_enabled', 1);
+            xarModSetVar('netquery', 'mapping_site', 1);
             xarModSetVar('netquery', 'topcountries_limit', 10);
             xarModSetVar('netquery', 'whois_max_limit', 3);
             xarModSetVar('netquery', 'whois_default', '.com');
@@ -146,6 +149,7 @@ function netquery_upgrade($oldversion)
             xarModSetVar('netquery', 'capture_log_filepath', 'var/logs/nq_log.txt');
             xarModSetVar('netquery', 'capture_log_dtformat', 'Y-m-d H:i:s');
             xarModSetVar('netquery', 'clientinfo_enabled', 1);
+            xarModSetVar('netquery', 'mapping_site', 1);
             xarModSetVar('netquery', 'topcountries_limit', 10);
             xarModSetVar('netquery', 'whois_max_limit', 3);
             xarModSetVar('netquery', 'whois_default', '.com');
@@ -176,6 +180,7 @@ function netquery_upgrade($oldversion)
             xarModSetVar('netquery', 'capture_log_filepath', 'var/logs/nq_log.txt');
             xarModSetVar('netquery', 'capture_log_dtformat', 'Y-m-d H:i:s');
             xarModSetVar('netquery', 'clientinfo_enabled', 1);
+            xarModSetVar('netquery', 'mapping_site', 1);
             xarModSetVar('netquery', 'topcountries_limit', 10);
             xarModSetVar('netquery', 'whois_default', '.com');
             xarModSetVar('netquery', 'digexec_local', $digexec);
@@ -205,6 +210,7 @@ function netquery_upgrade($oldversion)
             xarModSetVar('netquery', 'capture_log_filepath', 'var/logs/nq_log.txt');
             xarModSetVar('netquery', 'capture_log_dtformat', 'Y-m-d H:i:s');
             xarModSetVar('netquery', 'clientinfo_enabled', 1);
+            xarModSetVar('netquery', 'mapping_site', 1);
             xarModSetVar('netquery', 'topcountries_limit', 10);
             xarModSetVar('netquery', 'whois_default', '.com');
             xarModSetVar('netquery', 'digexec_local', $digexec);
@@ -231,6 +237,7 @@ function netquery_upgrade($oldversion)
             xarModSetVar('netquery', 'capture_log_filepath', 'var/logs/nq_log.txt');
             xarModSetVar('netquery', 'capture_log_dtformat', 'Y-m-d H:i:s');
             xarModSetVar('netquery', 'clientinfo_enabled', 1);
+            xarModSetVar('netquery', 'mapping_site', 1);
             xarModSetVar('netquery', 'topcountries_limit', 10);
             xarModSetVar('netquery', 'digexec_local', $digexec);
             xarModSetVar('netquery', 'whois_default', '.com');
@@ -248,17 +255,26 @@ function netquery_upgrade($oldversion)
         case '2.4.0':
             xarModSetVar('netquery', 'exec_timer_enabled', 1);
             xarModSetVar('netquery', 'capture_log_allowuser', 0);
+            xarModSetVar('netquery', 'mapping_site', 1);
             xarModSetVar('netquery', 'topcountries_limit', 10);
             xarModSetVar('netquery', 'digexec_local', $digexec);
             create_geocctable();
             create_geoiptable();
             break;
         case '3.0.0':
-        default:
+        case '3.1.0':
             xarModSetVar('netquery', 'exec_timer_enabled', 1);
             xarModSetVar('netquery', 'capture_log_allowuser', 0);
+            xarModSetVar('netquery', 'mapping_site', 1);
             xarModSetVar('netquery', 'topcountries_limit', 10);
             xarModSetVar('netquery', 'digexec_local', $digexec);
+            break;
+        case '3.1.1':
+        case '3.1.2':
+            xarModSetVar('netquery', 'mapping_site', 1);
+            break;
+        case '3.2.0':
+        default:
             break;
     }
     return true;
@@ -289,6 +305,7 @@ function netquery_delete()
     xarModDelVar('netquery', 'whois_max_limit');
     xarModDelVar('netquery', 'whois_enabled');
     xarModDelVar('netquery', 'topcountries_limit');
+    xarModDelVar('netquery', 'mapping_site');
     xarModDelVar('netquery', 'clientinfo_enabled');
     xarModDelVar('netquery', 'capture_log_dtformat');
     xarModDelVar('netquery', 'capture_log_filepath');

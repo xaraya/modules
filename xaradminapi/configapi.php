@@ -10,6 +10,7 @@ function netquery_adminapi_configapi()
     $data['capture_log_filepath'] = xarModGetVar('netquery', 'capture_log_filepath');
     $data['capture_log_dtformat'] = xarModGetVar('netquery', 'capture_log_dtformat');
     $data['clientinfo_enabled'] = xarModGetVar('netquery', 'clientinfo_enabled');
+    $data['mapping_site'] = xarModGetVar('netquery', 'mapping_site');
     $data['topcountries_limit'] = xarModGetVar('netquery', 'topcountries_limit');
     $data['whois_enabled'] = xarModGetVar('netquery', 'whois_enabled');
     $data['whois_max_limit'] = xarModGetVar('netquery', 'whois_max_limit');
@@ -38,6 +39,11 @@ function netquery_adminapi_configapi()
     $data['cancellabel'] = xarML('Cancel');
     $data['links'] = xarModAPIFunc('netquery', 'user', 'getlinks');
     $data['portsubmits'] = xarModAPIFunc('netquery', 'admin', 'countportflag', array('flag' => '99'));
+    $mappingsites = array();
+      $mappingsites[] = array('name' => 'None', 'value' => 0);
+      $mappingsites[] = array('name' => 'MapQuest', 'value' => 1);
+      $mappingsites[] = array('name' => 'MultiMap', 'value' => 2);
+    $data['mappingsites'] = $mappingsites;
     $topcountries = array();
       $topcountries[] = array('name' => '5', 'value' => 5);
       $topcountries[] = array('name' => '10', 'value' => 10);
