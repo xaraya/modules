@@ -120,9 +120,17 @@
   <p>
     <xar:mlstring>Transform hook allows you to choose which modules you want to censor and which you do not.</xar:mlstring>
   </p>
-</div>
-<div class="xar-mod-foot xar-align-center xar-padding-thick">
+        <h3><xar:mlstring>Further Information</xar:mlstring></h3>
   <p>
-    <xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring>
+       <xar:mlstring>Extended information about this module can be found at </xar:mlstring><a title="#xarML('Censor Module - Xaraya Extension 776')#" href="http://www.xaraya.com/index.php/release/776.html">Xaraya Extension and Releases</a>.
+       </p>
+      <ul>
+          <li><xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+          </li>
+          <li><xar:mlstring>Related tutorials and documentation on Newsletter found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/censor/" title="#xarML('Related documentation on Newsletter')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+          </li>
+      </ul>
+      <p class="xar-sub">
+         <strong>&nbsp;<xar:mlstring>Censor module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.1.0&nbsp; #xarLocaleGetFormattedDate('short','1130972400')#
   </p>
 </div>

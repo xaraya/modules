@@ -20,10 +20,16 @@
 function censor_adminapi_getmenulinks()
 {
     
+
+    if (xarSecurityCheck('AdminCensor')) {
+       $menulinks[] = Array('url' => xarModURL('censor','admin','overview'),
+                            'title' => xarML('Censor Overview'),
+                            'label' => xarML('Overview'));
+
+    }
+
     if (xarSecurityCheck('EditCensor')) {
-        $menulinks[] = Array('url' => xarModURL('censor',
-                'admin',
-                'view'),
+        $menulinks[] = Array('url' => xarModURL('censor','admin','view'),
             'title' => xarML('View and Edit Censored Words'),
             'label' => xarML('View'));
     } 
@@ -32,9 +38,7 @@ function censor_adminapi_getmenulinks()
     
     
     if (xarSecurityCheck('AddCensor')) {
-        $menulinks[] = Array('url' => xarModURL('censor',
-                'admin',
-                'new'),
+        $menulinks[] = Array('url' => xarModURL('censor','admin','new'),
             'title' => xarML('Add a new censored word into the system'),
             'label' => xarML('Add'));
     } 
@@ -42,9 +46,7 @@ function censor_adminapi_getmenulinks()
     
 
     if (xarSecurityCheck('AdminCensor')) {
-        $menulinks[] = Array('url' => xarModURL('censor',
-                'admin',
-                'modifyconfig'),
+        $menulinks[] = Array('url' => xarModURL('censor','admin','modifyconfig'),
             'title' => xarML('Modify the configuration for the Censor Module'),
             'label' => xarML('Modify Config'));
     } 

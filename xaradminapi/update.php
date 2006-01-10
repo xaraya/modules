@@ -31,10 +31,7 @@ function censor_adminapi_update($args)
         return;
     }
     // The user API function is called
-    $link = xarModAPIFunc('censor',
-                          'user',
-                          'get',
-                          array('cid' => $cid));
+    $link = xarModAPIFunc('censor','user','get',array('cid' => $cid));
 
     if ($link == false) {
         $msg = xarML('No Such Censored Word Present');
@@ -42,11 +39,6 @@ function censor_adminapi_update($args)
         return;
     } 
    
-    if ($all == 0) {
-        $loc[] = 'ALL';
-       } else {
-        $loc = $locale;   
-        }
    
     // Security Check
     if (!xarSecurityCheck('EditCensor')) return; 
@@ -62,7 +54,7 @@ function censor_adminapi_update($args)
                 xar_match_case      = ?,
                 xar_locale          = ?
             WHERE xar_cid           = ?";
-    $bindvars = array($keyword, $case, $matchcase, serialize($loc), $cid);
+    $bindvars = array($keyword, $case, $matchcase, serialize($locale), $cid);
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
     // Let the calling process know that we have finished successfully

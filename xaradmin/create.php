@@ -26,26 +26,23 @@ function censor_admin_create($args)
     if (!xarVarFetch('case', 'isset', $case, 0,XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('matchcase', 'isset', $matchcase, 0,XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('locale', 'array', $locale, '',XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('all', 'int:0:1', $all, '0',XARVAR_NOT_REQUIRED)) return;
 
 extract($args); 
 
-    if (empty($locale)) {
-        $locale[] = xarConfigGetVar('Site.MLS.DefaultLocale');
+    if (empty($locale) || in_array('ALL', $locale)){
+    	$loc[] = 'ALL';
+    } else {
+    	$loc = $locale;
     } 
 
     if (!xarSecConfirmAuthKey()) return; 
     // Security Check
     if (!xarSecurityCheck('EditCensor')) return; 
     // The API function is called
-    $cid = xarModAPIFunc('censor',
-                         'admin',
-                         'create',
-                         array('keyword' => $keyword,
+    $cid = xarModAPIFunc('censor','admin','create',array('keyword' => $keyword,
                                'case' => $case,
                                'matchcase' => $matchcase,
-                               'locale' => $locale,
-                               'all' => $all));
+                               							 'locale' => $loc));
 
     if (!isset($cid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
   

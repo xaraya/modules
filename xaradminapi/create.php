@@ -28,11 +28,7 @@ function censor_adminapi_create($args)
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     } 
-    if ($all == 0) {
-        $loc[] = 'ALL';
-       } else {
-        $loc = $locale ;   
-        }
+ 
         
     // Security Check
     if (!xarSecurityCheck('AddCensor')) return;
@@ -53,7 +49,7 @@ function censor_adminapi_create($args)
               ?,
               ?,
               ?)";
-    $bindvars = array($nextId, $keyword, $case, $matchcase, serialize($loc));
+    $bindvars = array($nextId, $keyword, $case, $matchcase, serialize($locale));
    
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;

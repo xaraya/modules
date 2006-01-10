@@ -66,34 +66,16 @@
                 </xar:if>
             </div>
             <div class="xar-form-input-wrapper">
-                <label for="all" title="#xarML('Choose if this censored word is tipical of one or more avaiable locale.')#" class="xar-form-label">
-                    <xar:mlstring>Choose Locale</xar:mlstring>
-                </label>
-                <select name="all" id="all" onchange="javascript:this.form.action = '&xar-modurl-censor-admin-new;';this.form.submit();">
-                     <xar:if condition="$all eq 1">
-                         <option value="1" selected="selected">#xarML('Yes')#</option>
-                     <xar:else />
-                         <option value="1">#xarML('Yes')#</option>
-                     </xar:if>
-                     <xar:if condition="$all eq 0">
-                         <option value="0" selected="selected">#xarML('No')#</option>
-                     <xar:else/>
-                         <option value="0">#xarML('No')#</option>
-                     </xar:if>
-                 </select>  
-            </div>
-            <xar:if condition="$all eq 1">
-                <div class="xar-form-input-wrapper">
                     <label for="locale" title="#xarML('This is the locale, for that when matched will be replaced.')#" class="xar-form-label">
                         <xar:mlstring>Locale</xar:mlstring>
                     </label>
                     <select multiple="multiple" size="5" name="locale[]" id="locale">
+                 	<option value="ALL">#xarML('All')#</option>
                         <xar:loop name="$locales">
                             <option value="#$loop:item['value']#">#$loop:item['name']#</option>
                         </xar:loop>
                     </select>
                 </div>
-            </xar:if>            
         </fieldset>
         <div class="xar-form-input-wrapper-after">
             <input type="submit" value="#xarML('Add')#" />
