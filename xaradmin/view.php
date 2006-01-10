@@ -2,7 +2,7 @@
 /**
  * Standard function to view dyn data for this module
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -11,7 +11,6 @@
  * @link http://xaraya.com/index.php/release/247.html
  * @author Maxercalls module development team
  */
-
 /**
  * view dynamic data for maxercalls
  */
@@ -49,9 +48,7 @@ function maxercalls_admin_view($args)
                        new SystemException($msg));
         return $msg;
     }
-
     // Return the template variables defined in this function
     return $data;
 }
-
 ?>

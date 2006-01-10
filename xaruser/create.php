@@ -2,15 +2,15 @@
 /**
  * Standard function to create a new item
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Maxercalls module
- * @author Michel V. Maxercalls module development team
+ * @link http://xaraya.com/index.php/release/247.html
+ * @author Maxercalls module development team
  */
-
 /**
  * This is a standard function that is called with the results of the
  * form supplied by xarModFunc('maxercalls','admin','new') to create a new item
@@ -110,14 +110,14 @@ function maxercalls_user_create($args)
 
     // The API function is called.
     $callid = xarModAPIFunc('maxercalls', 'admin', 'create',
-                          array('enteruid' => $enteruid,
-                                'owner' => $owner,
-                                'remarks' => $remarks,
-                                'calldate' => $calldate,
-                                'calltime' => $calltime,
-                                'calltext' => $calltext,
-                                'enterts' => $enterts,
-                                'itemtype' => $itemtype));
+                          array('enteruid'  => $enteruid,
+                                'owner'     => $owner,
+                                'remarks'   => $remarks,
+                                'calldate'  => $calldate,
+                                'calltime'  => $calltime,
+                                'calltext'  => $calltext,
+                                'enterts'   => $enterts,
+                                'itemtype'  => $itemtype));
 
     if (!isset($callid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     // This function generated no output, and so now it is complete we redirect

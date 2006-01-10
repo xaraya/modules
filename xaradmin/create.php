@@ -1,5 +1,17 @@
 <?php
 /**
+ * Create a dynamic item
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Maxercalls Module
+ * @link http://xaraya.com/index.php/release/36.html
+ * @author Maxercalls Module Development Team
+ */
+/**
    Create an item of item type
 
    @param $itemtype - type of item that is being created (required)
@@ -14,7 +26,7 @@ function maxercalls_admin_create($args)
     if (!xarSecConfirmAuthKey()) return; // throw back
 
     // Security Check
-    if (!xarSecurityCheck('editmaxercalls')) return;
+    if (!xarSecurityCheck('EditMaxercalls')) return;
 
     extract($args);
 

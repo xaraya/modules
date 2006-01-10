@@ -39,6 +39,14 @@ function maxercalls_adminapi_getmenulinks()
             'label' => xarML('View calls'));
     }
     // Security Check
+    if (xarSecurityCheck('AddMaxercalls', 0)) {
+        $menulinks[] = Array('url' => xarModURL('maxercalls',
+                'admin',
+                'newmaxer'),
+            'title' => xarML('Add a new pager to the database.'),
+            'label' => xarML('Add pager'));
+    }
+    // Security Check
     if (xarSecurityCheck('AdminMaxercalls', 0)) {
         $menulinks[] = Array('url' => xarModURL('maxercalls',
                 'admin',

@@ -20,7 +20,7 @@
    <h2><xar:mlstring>Modify call</xar:mlstring></h2><br />
 
    <div class="xar-maxercalls xar-maxercalls-admin-modify">
-   <!--    <xar:template file="header" /> -->
+
         <div class="xar-maxercalls-contents">
             <form action="&xar-modurl-maxercalls-admin-updatecall;"
                   onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);"
@@ -69,10 +69,20 @@
                         </div>
                     </fieldset>
                     <fieldset>
-                        <legend>
-                            <strong><xar:mlstring>Categories</xar:mlstring></strong>
-                        </legend>
-                        #$hooks#
+                        <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
+                            <xar:foreach in="$hookoutput" key="$hookmodule">
+                            <!--
+                            You can display individual hooks if you want using xar:if statements
+
+                            <xar:if condition="($hookmodule eq 'categories') and !empty($hookmodule)">
+                                #$hookoutput['categories']#
+                            </xar:if>
+
+                            or display them all with one command as follows
+                            -->
+                            #$hookoutput[$hookmodule]#
+
+                           </xar:foreach>
                     </fieldset>
                     <fieldset>
                         <div class="xar-form-input-wrapper-after">

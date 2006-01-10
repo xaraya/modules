@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id:
- *
  * Standard function to create a new module item
  *
  * @package Xaraya eXtensible Management System
@@ -13,9 +11,11 @@
  * @author maxercalls module development team
  */
 /**
- * add new item
- * This is a standard function that is called whenever an administrator
- * wishes to create a new module item
+ * add new call
+ * This is a standard function that is called whenever a user
+ * wishes to create a new call
+ *
+ * @todo Add confirmation
  */
 function maxercalls_user_new($args)
 {
@@ -33,10 +33,7 @@ function maxercalls_user_new($args)
     if (!xarVarFetch('remarks', 'str:1:', $remarks, $remarks, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('invalid', 'str:1:', $invalid, $invalid, XARVAR_NOT_REQUIRED)) return;
 
-    // Initialise the $data variable that will hold the data to be used in
-    // the blocklayout template, and get the common menu configuration - it
-    // helps if all of the module pages have a standard menu at the top to
-    // support easy navigation
+    // Initialise the $data variable that will hold the data to be used
     $data = xarModAPIFunc('maxercalls', 'user', 'menu');
     // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing
@@ -54,7 +51,6 @@ function maxercalls_user_new($args)
     $data['ownerlabel'] = xarVarPrepForDisplay(xarML('Owner of maxer'));
     $data['calltext'] = xarModAPIFunc('maxercalls', 'user', 'gets',
                                      array('itemtype' => 3));
-
 
     //Calendar option data
     $data['todays_month'] = date("n");

@@ -2,13 +2,14 @@
 /**
  * Standard function to modify an item
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Maxercalls module
- * @author Example module development team
+ * @subpackage Maxercalls Module
+ * @link http://xaraya.com/index.php/release/247.html
+ * @author Maxercalls module development team
  */
 /**
  * modify a call
@@ -19,9 +20,9 @@ function maxercalls_admin_modifycall($args)
 {
     extract($args);
 
-    if (!xarVarFetch('callid', 'int:1:', $callid)) return;
+    if (!xarVarFetch('callid',   'int:1:', $callid)) return;
     if (!xarVarFetch('objectid', 'str:1:', $objectid, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('invalid', 'str:1:', $invalid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('invalid',  'str:1:', $invalid, XARVAR_NOT_REQUIRED)) return;
 
     if (!empty($objectid)) {
         $callid = $objectid;
@@ -34,11 +35,7 @@ function maxercalls_admin_modifycall($args)
     // Check for exceptions
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
-    // Security check - important to do this as early as possible to avoid
-    // potential security holes or just too much wasted processing.  However,
-    // in this case we had to wait until we could obtain the item name to
-    // complete the instance information so this is the first chance we get to
-    // do the check
+    // Security check
     if (!xarSecurityCheck('EditMaxercalls', 1, 'Item', "$callid:All:$item[enteruid]")) {
         return;
     }
@@ -46,11 +43,12 @@ function maxercalls_admin_modifycall($args)
     // menu at their head to aid in navigation
     // $menu = xarModAPIFunc('maxercalls','admin','menu','modify');
     $item['module'] = 'maxercalls';
+    $item['itemtype'] = 1;
     $hooks = xarModCallHooks('item', 'modify', $callid, $item);
     if (empty($hooks)) {
-        $hooks = '';
-    } elseif (is_array($hooks)) {
-        $hooks = join('', $hooks);
+        $hookoutput = array();
+    } else {
+        $hookoutput = $hooks;
     }
     // Return the template variables defined in this function
     return array('authid'       => xarSecGenAuthKey(),
@@ -60,12 +58,12 @@ function maxercalls_admin_modifycall($args)
     //			 'enterts'      => $enterts,
     //			 'remarks'      => $remarks,
                  'updatebutton' => xarVarPrepForDisplay(xarML('Update call')),
-                 'hooks'        => $hooks,
+                 'hookoutput'    => $hookoutput,
                  'calldatelabel' => xarVarPrepForDisplay(xarML('Date of call YYYY-MM-DD')),
                  'calltimelabel' => xarVarPrepForDisplay(xarML('Time of call HH:MM')),
                  'calltextlabel' => xarVarPrepForDisplay(xarML('Type/Text of call')),
                  'calltypelabel' => xarVarPrepForDisplay(xarML('Type of call')),
-                 'ownerlabel' => xarVarPrepForDisplay(xarML('Owner of maxer')),
+                 'ownerlabel'   => xarVarPrepForDisplay(xarML('Owner of maxer')),
                  'remarkslabel' => xarVarPrepForDisplay(xarML('Other remarks')),
                  'item'         => $item);
 }
