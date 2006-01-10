@@ -27,7 +27,7 @@
                     <div class="xar-form-input-wrapper">
                         <label for="name" class="xar-form-label">
                             <span class="help" title="#xarML('The name of this course.')#">
-                            #$namelabel#
+                            <xar:mlstring>Course Name</xar:mlstring>
                             </span>
                         </label>
                         <xar:data-input name="name" type="static" value="$coursedata['name']" />
@@ -35,23 +35,23 @@
                     <div class="xar-form-input-wrapper">
                         <label for="number" class="xar-form-label">
                             <span class="help" title="#xarML('The code/number of this course.')#">
-                            #$numberlabel#
+                            <xar:mlstring>Course Number</xar:mlstring>
                             </span>
                         </label>
                         <xar:data-input name="number" type="static" value="$coursedata['number']" />
                     </div>
                     <div class="xar-form-input-wrapper">
                         <label for="freq" class="required xar-form-label">
-                            <span class="help" title="#xarML('The Frequency of this course.')#">
-                            #$freqlabel#
+                            <span class="help" title="#xarML('The frequency of this course.')#">
+                            <xar:mlstring>Course Frequency</xar:mlstring>
                             </span>
                         </label>
-                        <xar:data-input name="freq" type="static" value="$coursedata['freq']" />
+                        #$coursedata['freq']#
                     </div>
                     <div class="xar-form-input-wrapper">
                         <label for="year" class="required xar-form-label">
                             <span class="help" title="#xarML('Choose the course year or period for this occurence.')#">
-                            #$yearlabel#
+                            <xar:mlstring>Year for this occurence</xar:mlstring>
                             </span>
                         </label>
                             <select name="year">
@@ -63,7 +63,7 @@
                     <div class="xar-form-input-wrapper">
                         <label for="startdate" class="required xar-form-label">
                             <span class="help" title="#xarML('The date this course will start.')#">
-                            #$startdatelabel#
+                            <xar:mlstring>Start date</xar:mlstring>
                             </span>
                         </label>
                         <xar:data-input name="startdate" type="calendar" validation="date" value="$planneddata['startdate']" />
@@ -71,7 +71,7 @@
                     <div class="xar-form-input-wrapper">
                         <label for="enddate" class="required xar-form-label">
                             <span class="help" title="#xarML('The date this course will end.')#">
-                            #$enddatelabel#
+                            <xar:mlstring>End date</xar:mlstring>
                             </span>
                         </label>
                         <xar:data-input name="enddate" type="calendar" validation="date" value="$planneddata['enddate']" />
@@ -79,12 +79,12 @@
                     <div class="xar-form-input-wrapper">
                         <label for="closedate" class="required xar-form-label">
                             <span class="help" title="#xarML('The date registration for this course will end.')#">
-                            #$closedatelabel#
+                            <xar:mlstring>Registration closing date</xar:mlstring>
                             </span>
                         </label>
                         <xar:data-input name="closedate" type="calendar" validation="date" value="$planneddata['closedate']" />
                     </div>
-                    
+
                </fieldset>
                <fieldset>
                     <legend>
@@ -93,7 +93,7 @@
                     <div class="xar-form-input-wrapper">
                         <label for="credits" class="required xar-form-label">
                             <span class="help" title="#xarML('Enter the number of credits for this course.')#">
-                            #$creditslabel#
+                            <xar:mlstring>Course Credits</xar:mlstring>
                             </span>
                         </label>
                         <xar:data-input name="credits" type="15" value="$planneddata['credits']" />
@@ -104,7 +104,7 @@
                     <div class="xar-form-input-wrapper">
                         <label for="creditsmin" class="xar-form-label">
                             <span class="help" title="#xarML('Enter the minimum amount of credits for this course.')#">
-                            #$creditsminlabel#
+                            <xar:mlstring>Minimum Course Credits</xar:mlstring>
                             </span>
                         </label>
                         <xar:data-input name="creditsmin" type="15" value="$planneddata['creditsmin']" />
@@ -115,7 +115,7 @@
                     <div class="xar-form-input-wrapper">
                         <label for="creditsmax" class="xar-form-label">
                             <span class="help" title="#xarML('Enter the maximum amount of credits for this course.')#">
-                            #$creditsmaxlabel#
+                            <xar:mlstring>Course Maximum Credits</xar:mlstring>
                             </span>
                         </label>
                         <xar:data-input name="creditsmax" type="15" value="$planneddata['creditsmax']" />
@@ -131,7 +131,7 @@
                     <div class="xar-form-input-wrapper">
                         <label for="prerequisites" class="xar-form-label">
                             <span class="help" title="#xarML('Enter the prerequisites (Like another course to fulfill before a student can enroll into this one) for this course.')#">
-                            #$prereqlabel#
+                            <xar:mlstring>Course Prerequisites</xar:mlstring>
                             </span>
                         </label>
                         <textarea class="fullright" name="prerequisites" id="prerequisites" wrap="virtual" rows="10" cols="40">#$planneddata['prerequisites']#</textarea>
@@ -290,7 +290,7 @@
                     <div class="xar-form-input-wrapper">
                         <label for="info" class="xar-form-label">
                             <span class="help" title="#xarML('Other info on this course.')#">
-                            #$infolabel#
+                            <xar:mlstring>Other Course info</xar:mlstring>
                             </span>
                         </label>
                         <textarea name="info" id="info" wrap="virtual" rows="10" cols="40">#$planneddata['info']#</textarea>
@@ -301,7 +301,7 @@
                     <div class="xar-form-input-wrapper">
                         <label for="hideplanning" class="xar-form-label">
                             <span class="help" title="#xarML('Hide this planning from being viewed by site users.')#">
-                            #$hideplanninglabel#
+                            <xar:mlstring>Hide this occurence</xar:mlstring>
                             </span>
                         </label>
                         <xar:data-input name="hideplanning" type="14" value="$planneddata['hideplanning']" />
@@ -312,7 +312,7 @@
                     <div class="xar-form-input-wrapper">
                         <label for="last_modified" class="xar-form-label">
                             <span class="help" title="#xarML('Date of last modification.')#">
-                            #$lastmodilabel#
+                            <xar:mlstring>Date last modified</xar:mlstring>
                             </span>
                         </label>
                          #xarLocaleFormatDate($planneddata['last_modified'])#

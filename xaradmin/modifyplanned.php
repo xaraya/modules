@@ -13,8 +13,8 @@
  */
 /**
  * Modify a planned course
- * This is a standard function that is called whenever an administrator
- * wishes to modify a current module item
+ *
+ * Modify a planned occurence of a course.
  *
  * @author Courses module development team
  * @param  $ 'planningid' the id of the item to be modified
@@ -53,30 +53,18 @@ function courses_admin_modifyplanned($args)
 
     // Get menu variables
     $planneddata['module'] = 'courses';
+    $planneddate['itemtype'] = 2;
     $hooks = array();
     $hooks = xarModCallHooks('item', 'modify', $planningid, $planneddata); //Correct?
 
     $data['invalid']        = $invalid;
     $data['planningid']     = $planningid;
     $data['coursedata']     = $coursedata;
-    $data['namelabel']      = xarVarPrepForDisplay(xarML('Course Name'));
-    $data['numberlabel']    = xarVarPrepForDisplay(xarML('Course Number'));
+    // Extra labels
     $data['coursetypelabel'] = xarVarPrepForDisplay(xarML('Course Type (Category)'));
     $data['levellabel']     = xarVarPrepForDisplay(xarML('Course Level'));
-    $data['yearlabel']      = xarVarPrepForDisplay(xarML('Year for this occurence'));
-    $data['creditslabel']   = xarVarPrepForDisplay(xarML('Course Credits'));
-    $data['startdatelabel'] = xarVarPrepForDisplay(xarML('Start date'));
-    $data['enddatelabel']   = xarVarPrepForDisplay(xarML('End date'));
-    $data['creditsminlabel'] = xarVarPrepForDisplay(xarML('Course Minimum Credits'));
-    $data['creditsmaxlabel'] = xarVarPrepForDisplay(xarML('Course Maximum Credits'));
-    $data['prereqlabel']    = xarVarPrepForDisplay(xarML('Course Prerequisites'));
-    $data['languagelabel']  = xarVarPrepForDisplay(xarML('Course Language'));
-    $data['freqlabel']      = xarVarPrepForDisplay(xarML('Course Frequency'));
     $data['contactlabel']   = xarVarPrepForDisplay(xarML('Course Contact details'));
-    $data['closedatelabel'] = xarVarPrepForDisplay(xarML('Registration closing date'));
-    $data['lastmodilabel']  = xarVarPrepForDisplay(xarML('Date last modified'));
-    $data['hideplanninglabel'] = xarVarPrepForDisplay(xarML('Hide this occurence'));
-    $data['infolabel']      = xarVarPrepForDisplay(xarML('Other Course info'));
+
     $data['cancelbutton']   = xarVarPrepForDisplay(xarML('Cancel'));
     $data['level'] = xarModAPIFunc('courses', 'user', 'gets',
                                       array('itemtype' => 3));
