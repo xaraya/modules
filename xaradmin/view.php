@@ -80,7 +80,7 @@ function censor_admin_view()
 
         $censors[$i]['locale'] = implode(", ", $censor['locale']);
         if ($censors[$i]['locale']== 'ALL') {
-            $censors[$i]['locale']= xarML('ALL');
+            $censors[$i]['locale']= xarML('All');
             }
     } 
     // Add the array of items to the template variables

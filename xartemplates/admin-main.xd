@@ -127,7 +127,7 @@
       <ul>
           <li><xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
           </li>
-          <li><xar:mlstring>Related tutorials and documentation on Newsletter found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/censor/" title="#xarML('Related documentation on Newsletter')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+          <li><xar:mlstring>Related tutorials and documentation on Censor found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/censor/" title="#xarML('Related documentation on Censor')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
           </li>
       </ul>
       <p class="xar-sub">
