@@ -8,8 +8,7 @@
 function security_admin_changesecurity($args)
 {
     extract($args);
-    if( xarRequestGetVar('type') == 'admin' || xarRequestGetVar('func') == 'modify' ) return '';
-    
+
     /*
         Process the std. hook info
     */
@@ -19,7 +18,7 @@ function security_admin_changesecurity($args)
     $itemtype = 0;
     if( !empty($extrainfo['itemtype']) )
         $itemtype = $extrainfo['itemtype'];
-        
+
     $itemid = '';
     if( !empty($objectid) )
         $itemid = $objectid;
@@ -27,20 +26,20 @@ function security_admin_changesecurity($args)
     $returnUrl = '';
     if( !empty($extrainfo['returnurl']) )
         $returnUrl = $extrainfo['returnurl'];
-    else 
+    else
         $returnUrl = xarServerGetCurrentURL();
-        
-    $data = array();    
-    
+
+    $data = array();
+
     /*
-        If user has SECURITY_ADMIN level or is a site admin let them 
+        If user has SECURITY_ADMIN level or is a site admin let them
         modify security otherwise don't
     */
     xarModAPILoad('security');
     $has_admin_security = xarModAPIFunc('security', 'user', 'check',
         array(
-            'modid'    => $modid, 
-            'itemtype' => $itemtype, 
+            'modid'    => $modid,
+            'itemtype' => $itemtype,
             'itemid'   => $itemid,
             'level'    => SECURITY_ADMIN,
             'hide_exception' => true
@@ -59,7 +58,7 @@ function security_admin_changesecurity($args)
     // Make user this has an owner otherwise quit
     $owner = xarModAPIFunc('owner', 'user', 'get', $args);
     if( !$owner ) return '';
-    
+
     /*
         Get all the groups just incase it's needed for display purposes
     */
@@ -69,7 +68,7 @@ function security_admin_changesecurity($args)
     {
         $groupCache[$group['uid']] = $group;
     }
-    
+
     /*
         If an admin allow admin to change privs as if they were the owner.
         This allows the admin to assign privs how ever they want even if the
@@ -77,9 +76,9 @@ function security_admin_changesecurity($args)
     */
     if( xarSecurityCheck('AdminPanel', 0) )
         $uid = xarUserGetVar('uid');
-    else    
+    else
         $uid = $owner['uid'];
-        
+
     /*
         These groups are used in the Add groups menu thing to create new group privs
     */
@@ -88,14 +87,14 @@ function security_admin_changesecurity($args)
     else
         $groups = xarModAPIFunc('roles', 'user', 'getancestors', array('uid' => $uid));
     $tmp = array();
-    foreach ($groups as $key => $group) 
+    foreach ($groups as $key => $group)
     {
-        $tmp[$group['uid']] = $group;    
+        $tmp[$group['uid']] = $group;
     }
     $groups = $tmp;
 
     $secLevels = xarModAPIFunc('security', 'user', 'getlevels');
-    
+
     /*
         Calc Security Levels and make a Map
     */
@@ -111,10 +110,15 @@ function security_admin_changesecurity($args)
             $secMap[$gid][$currentLevel] = $group & $currentLevel;
         }
     }
-    
+
     /*
         Setup vars for the template
     */
+    $data['standalone'] = true;
+    if( xarRequestGetVar('type') == 'admin' || xarRequestGetVar('func') == 'modify' )
+    {
+        $data['standalone'] = false;
+    }
     $data['secLevels']= $secLevels; // different security levels
     $data['secMap']   = $secMap; // Security Map
     $data['levels']   = $levels; // Sec levels for each group
@@ -128,7 +132,7 @@ function security_admin_changesecurity($args)
     $data['itemid']   = $itemid;
     $data['action']   = xarModURL('security', 'admin', 'creategroupsecurity');
     $data['returnurl']= $returnUrl;
-    
+
     return $data;
 }
 ?>
