@@ -29,7 +29,7 @@ function itsp_userapi_get($args)
      * in the right format, if not then set an appropriate error message
      * and return
      */
-    if (!isset($itspid) || !is_numeric($itspid)) {
+    if ((!isset($itspid) || !is_numeric($itspid)) && (!isset($userid) || !is_numeric($userid))) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
             'item ID', 'user', 'get', 'ITSP');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
@@ -58,9 +58,13 @@ function itsp_userapi_get($args)
                xar_datecertaward,
                xar_datemodi,
                xar_modiby
-              FROM $itsptable
-              WHERE xar_itspid = ?";
-    $result = &$dbconn->Execute($query,array($itspid));
+              FROM $itsptable";
+    if (!empty($itspid) && is_numeric($itspid)) {
+        $query .= " WHERE xar_itspid = $itspid";
+    } elseif (isset($userid)) {
+        $query .= " WHERE xar_userid = $userid";
+    }
+    $result = &$dbconn->Execute($query);
     /* Check for an error with the database code, adodb has already raised
      * the exception so we just return
      */

@@ -1,12 +1,48 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<!-- common user menu for this module - remove link to the current function -->
-<!-- the variables used in this menu come from itsp_user_menu() -->
-<div>
-    <strong class="xar-margin-thickright">#$menutitle#</strong> |
-    <!-- a link to a particular menu item -->
-       <a href="#$menulink_view#" title="#$menulabel_view#" class="xar-margin-thicksides">#$menulabel_view#</a>
+<xar:if condition="xarTplAddStyleLink('base', 'navtabs')"></xar:if>
 
-    <!-- more menu items come here... remember to add some kind of
-      // separator between them
-    -->
+<xar:set name="$navITSPUrl">#xarModURL('itsp','user','itsp',array('itspid'=>$itspid))#</xar:set>
+
+<!-- the variables used in this menu come from itsp_user_menu() -->
+<div class="xar-itsp-usermenu">
+    <xar:set name="$null">#xarVarFetch('func','str:1:',$whatFunc)#</xar:set>
+    <dl class="xar-tabs">
+        <dt class="help"><xar:mlstring>View types</xar:mlstring>:</dt>
+        <xar:if condition="$whatFunc eq 'itsp'">
+            <dd class="active"><a href="#$navITSPUrl#"><xar:mlstring>ITSP</xar:mlstring></a></dd>
+        <xar:else />
+            <dd><a href="#$navITSPUrl#"><xar:mlstring>ITSP</xar:mlstring></a></dd>
+        </xar:if>
+        <xar:comment>
+        <xar:if condition="$whatFunc eq 'week'">
+            <dd class="active"><a href="#$navWeekUrl#"><xar:mlstring>Week</xar:mlstring></a></dd>
+        <xar:else />
+            <dd><a href="#$navWeekUrl#"><xar:mlstring>Week</xar:mlstring></a></dd>
+        </xar:if>
+        <xar:if condition="$whatFunc eq 'month'">
+            <dd class="active"><a href="#$navMonthUrl#"><xar:mlstring>Month</xar:mlstring></a></dd>
+        <xar:else />
+            <dd><a href="#$navMonthUrl#"><xar:mlstring>Month</xar:mlstring></a></dd>
+        </xar:if>
+        <xar:if condition="$whatFunc eq 'year'">
+            <dd class="active"><a href="#$navYearUrl#"><xar:mlstring>Year</xar:mlstring></a></dd>
+        <xar:else />
+            <dd><a href="#$navYearUrl#"><xar:mlstring>Year</xar:mlstring></a></dd>
+        </xar:if>
+        <xar:if condition="$whatFunc eq 'viewevents'">
+            <dd class="active"><a href="#$navEventsUrl#"><xar:mlstring>Events</xar:mlstring></a></dd>
+        <xar:else />
+          <dd><a href="#$navEventsUrl#"><xar:mlstring>Events</xar:mlstring></a></dd>
+        </xar:if>
+
+        <xar:if condition="xarUserIsLoggedIn()">
+            <xar:if condition="$whatFunc eq 'alerts'">
+                <dd class="active"><a href="#$navAlertsUrl#"><xar:mlstring>Alerts</xar:mlstring></a></dd>
+            <xar:else />
+                <dd><a href="#$navAlertsUrl#"><xar:mlstring>Alerts</xar:mlstring></a></dd>
+            </xar:if>
+        </xar:if>
+        </xar:comment>
+    </dl>
+
 </div>

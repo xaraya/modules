@@ -1,0 +1,49 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<!-- common user menu for this module - remove link to the current function -->
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Individual Training and Supervision Plan</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+
+    <!-- the variables used in this menu templte  come from itsp_user_menu() -->
+    <xar:template type="module" file="user-menu" />
+
+    <h2><xar:mlstring>Your plan</xar:mlstring></h2>
+
+    <!-- some status given by the function using this template -->
+
+    <xar:if condition="!empty($status)">
+        <strong>#$status#</strong>
+    <xar:else />
+
+        <p>
+            <xar:mlstring>Your name:</xar:mlstring>
+            #xarUserGetVar('name')#
+        </p>
+
+
+        <!-- if you want to extend this module with dynamic data, you can retrieve
+        //   that data in the code via APIs, or use e.g. the following BL tags here.
+        //   For the different options, see the overview of dynamicdata...
+        -->
+        <xar:if condition="xarModIsHooked('dynamicdata')">
+            <!-- 1. retrieve any dynamic properties defined for this object -->
+            <xar:data-getitem name="$properties" module="example" itemid="$exid" />
+            <!-- 2. for each property, display its label and value in output format -->
+            <xar:if condition="isset($properties) and count($properties) gt 0">
+                <xar:foreach in="$properties" key="$name">
+                          <xar:data-label property="$properties[$name]" />:
+                        <xar:data-output property="$properties[$name]" />
+                </xar:foreach>
+            </xar:if>
+        </xar:if>
+
+    <!-- add the output from the different display hooks here -->
+    <xar:if condition="!empty($hookoutput)">
+        <xar:foreach in="$hookoutput" key="$hookmodule">
+            #$hookoutput[$hookmodule]#
+        </xar:foreach>
+    </xar:if>
+
+</xar:if>
+</div>

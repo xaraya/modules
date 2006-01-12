@@ -1,6 +1,6 @@
 <?php
 /**
- * Modify an item
+ * Modify an ITSP
  *
  * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
@@ -11,36 +11,20 @@
  * @link http://xaraya.com/index.php/release/36.html
  * @author ITSP Module Development Team
  */
-
 /**
- * Modify an item
+ * Modify an ITSP
  *
  * This is a standard function that is called whenever an useristrator
  * wishes to modify a current module item
  *
  * @author ITSP Module Development Team
- * @param  $ 'exid' the id of the item to be modified
+ * @param  $ 'itspid' the id of the item to be modified
  */
 function itsp_user_modify($args)
 {
-
-    /* Admin functions of this type can be called by other modules. If this
-     * happens then the calling module will be able to pass in arguments to
-     * this function through the $args parameter. Hence we extract these
-     * arguments *before* we have obtained any form-based input through
-     * xarVarFetch(), so that parameters passed by the modules can also be
-     * checked by a certain validation.
-     */
     extract($args);
 
-    /* Get parameters from whatever input we need. All arguments to this
-     * function should be obtained from xarVarFetch(). xarVarFetch allows
-     * the checking of the input variables as well as setting default
-     * values if needed. Getting vars from other places such as the
-     * environment is not allowed, as that makes assumptions that will
-     * not hold in future versions of Xaraya
-     */
-    if (!xarVarFetch('exid',     'id',     $exid)) return;
+    if (!xarVarFetch('itspid',    'id',     $itspid)) return;
     if (!xarVarFetch('objectid', 'id',     $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('invalid',  'array', $invalid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('number',   'int',    $number, $number,XARVAR_NOT_REQUIRED)) return;
@@ -67,7 +51,7 @@ function itsp_user_modify($args)
     $item = xarModAPIFunc('itsp',
                           'user',
                           'get',
-                          array('exid' => $exid));
+                          array('itspid' => $itspid));
 
     /* Check for exceptions */
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; /* throw back */
@@ -86,7 +70,8 @@ function itsp_user_modify($args)
      * $menu = xarModAPIFunc('itsp','user','menu','modify');
      */
     $item['module'] = 'itsp';
-    $hooks = xarModCallHooks('item', 'modify', $exid, $item);
+    $item['itemid'] = 2;
+    $hooks = xarModCallHooks('item', 'modify', $itspid, $item);
 
     /* Return the template variables defined in this function */
     return array('authid'       => xarSecGenAuthKey(),
