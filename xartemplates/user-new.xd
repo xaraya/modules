@@ -13,32 +13,26 @@
 
 <!-- common admin menu for this module - remove link to the current function -->
 <div class="xar-mod-head">
-    <span class="xar-mod-title"><xar:mlstring>ITSP Administration</xar:mlstring></span>
+    <span class="xar-mod-title"><xar:mlstring>Individual Training and Supervision Plan</xar:mlstring></span>
 </div>
 <div class="xar-mod-body">
-    <h2><xar:mlstring>New Plan</xar:mlstring></h2>
+    <h2><xar:mlstring>New ITSP</xar:mlstring></h2>
 
-    <form method="post" action="&xar-modurl-itsp-admin-create;" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
+    <form method="post" action="&xar-modurl-itsp-user-create;" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
         <fieldset>
-            <legend><xar:mlstring>Creating a new plan</xar:mlstring></legend>
+            <legend><xar:mlstring>Choose the education plan</xar:mlstring></legend>
 
             <div class="xar-form-input-wrapper">
-                 <label for="name" class="xar-form-label" title="#xarML('This is the item name')#">
-                      <xar:mlstring>Name:</xar:mlstring>
+                 <label for="name" class="xar-form-label" title="#xarML('This is the name')#">
+                      <xar:mlstring>Education plan name:</xar:mlstring>
                  </label>
-                 <input type="text" name="planname" id="planname" value="#$planname#" maxlength="32" class="xar-form-textmedium" />
-
-                 <xar:if condition="!empty($invalid['planname'])">
-                     <div class="xar-error">
-                         <xar:mlstring>ERROR! This is not a valid name</xar:mlstring>
-                     </div>
-                 <xar:elseif condition="!empty($invalid['duplicate'])"/>
-                     <div class="xar-error">
-                         <xar:mlstring>ERROR! This is a duplicate name</xar:mlstring>
-                     </div>
-                 </xar:if>
+                 <select name="planid">
+                    <xar:loop name="$plans">
+                        <option value="#$loop:item['planid']#">#$loop:item['planname']#</option>
+                    </xar:loop>
+                 </select>
             </div>
-
+<xar:comment>
             <div class="xar-form-input-wrapper">
                 <label for="plandesc" class="xar-form-label" title="#xarML('This is the item number')#">
                     <xar:mlstring>ITSP Plan Description:</xar:mlstring>
@@ -127,16 +121,14 @@
                 </xar:foreach>
         </fieldset>
         </xar:if>
+
+</xar:comment>
         <fieldset>
             <div class="xar-form-input-wrapper-after">
-        <!--
-            // Add an authorisation ID - this adds a hidden field in the form that
-            // contains an authorisation ID.  The authorisation ID is very important in
-            // preventing certain attacks on the website
-        -->
                 <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                <input type="submit" value="#xarML('Add ITSP Plan')#" />
-            </div>
+                <input type="submit" value="#xarML('Choose this education plan')#" />
+
+                </div>
         </fieldset>
     </form>
 </div>

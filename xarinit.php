@@ -51,7 +51,7 @@ This table holds the general plans
                xar_mincredit   I         NotNull    DEFAULT 0,
                xar_dateopen    T         Null       DEFAULT NULL,
                xar_dateclose   T         Null       DEFAULT NULL,
-               xar_datemodi    T         Null       DEFAULT NULL,
+               xar_datemodi    I(10)     Null       DEFAULT NULL,
                xar_modiby      I         NotNull    DEFAULT 0
               ";
 
@@ -82,7 +82,7 @@ Ruleformat: (compare to privileges) coursetype:Level:Category:internal/external/
                xar_mincredit   I         NotNull    DEFAULT 0,
                xar_dateopen    T         Null       DEFAULT NULL,
                xar_dateclose   T         Null       DEFAULT NULL,
-               xar_datemodi    T         Null       DEFAULT NULL,
+               xar_datemodi    I(10)     Null       DEFAULT NULL,
                xar_modiby      I         NotNull    DEFAULT 0
               ";
 
@@ -104,7 +104,7 @@ Table with links between plan and planitems. Planitems can be reused.
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
     $fields = "xar_pitemid  I         NotNull    DEFAULT 0,
                xar_planid   I         NotNull    DEFAULT 0,
-               xar_datemodi T         Null       DEFAULT NULL,
+               xar_datemodi    I(10)     Null       DEFAULT NULL,
                xar_modiby   I         NotNull    DEFAULT 0
               ";
 
@@ -139,7 +139,7 @@ Table with the ITSP: the entry point for students. Will the supervision be inclu
                xar_dateappr         T         Null       DEFAULT NULL,
                xar_datecertreq      T         Null       DEFAULT NULL,
                xar_datecertaward    T         Null       DEFAULT NULL,
-               xar_datemodi         T         Null       DEFAULT NULL,
+               xar_datemodi         I(10)     Null       DEFAULT NULL,
                xar_modiby           I         NotNull    DEFAULT 0
               ";
 
@@ -167,7 +167,7 @@ There are two types: fixed courses and courses that are added in a free form (co
                xar_itspid           I         NotNull    DEFAULT 0,
                xar_pitemid          I         NotNull    DEFAULT 0,
                xar_dateappr         T         Null       DEFAULT NULL,
-               xar_datemodi         T         Null       DEFAULT NULL,
+               xar_datemodi         I(10)     Null       DEFAULT NULL,
                xar_modiby           I         NotNull    DEFAULT 0
               ";
 
@@ -206,7 +206,7 @@ This table deals with the free courses. So: how to add the custom courses/items 
                xar_icourseresult    C(255)    NotNull    DEFAULT '',
                xar_icoursedate      T         Null       DEFAULT NULL,
                xar_dateappr         T         Null       DEFAULT NULL,
-               xar_datemodi         T         Null       DEFAULT NULL,
+               xar_datemodi         I(10)     Null       DEFAULT NULL,
                xar_modiby           I         NotNull    DEFAULT 0
               ";
 

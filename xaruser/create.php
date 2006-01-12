@@ -8,10 +8,9 @@
  * @link http://www.xaraya.com
  *
  * @subpackage ITSP Module
- * @link http://xaraya.com/index.php/release/36.html
+ * @link http://xaraya.com/index.php/release/572.html
  * @author ITSP Module Development Team
  */
-
 /**
  * Create a new ITSP
  *
@@ -27,15 +26,15 @@ function itsp_user_create($args)
 {
     extract($args);
 
-    if (!xarVarFetch('objectid', 'id',     $objectid, $objectid, XARVAR_NOT_REQUIRED)) return; //??
-    if (!xarVarFetch('invalid',  'str:1:', $invalid,  '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('userid',  'int:1:', $userid,  $userid,  XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('planid',  'int:1:', $planid,  $planid,  XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('itspstatus',    'str:1:', $itspstatus,    $itspstatus,    XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('datesubm',  'int:1:', $datesubm,  $datesubm,  XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('dateappr',  'int:1:', $dateappr,  $dateappr,  XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('datecertreq',  'int:1:', $datecertreq,  $datecertreq,  XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('datecertaward',  'int:1:', $datecertaward,  $datecertaward,  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('objectid',      'id',     $objectid,      $objectid, XARVAR_NOT_REQUIRED)) return; //??
+    if (!xarVarFetch('invalid',       'str:1:', $invalid,       '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('userid',        'int:1:', $userid,        xarUserGetVar('uid'),  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('planid',        'int:1:', $planid,        $planid,  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('itspstatus',    'str:1:', $itspstatus,    'Added',    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('datesubm',      'int:1:', $datesubm,      $datesubm,  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('dateappr',      'int:1:', $dateappr,      $dateappr,  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('datecertreq',   'int:1:', $datecertreq,   $datecertreq,  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('datecertaward', 'int:1:', $datecertaward, $datecertaward,  XARVAR_NOT_REQUIRED)) return;
 
     /* Argument check - make sure that all required arguments are present
      * and in the right format, if not then return to the add form with the
@@ -78,11 +77,11 @@ function itsp_user_create($args)
                             'create',
                               array('userid'        => $userid,
                                     'planid'        => $planid,
-                                    'itspstatus'    => $itspstatus,
-                                    'datesubm'      => $datesubm,
-                                    'dateappr'      => $dateappr,
-                                    'datecertreq'   => $datecertreq,
-                                    'datecertaward' => $datecertaward));
+                                    'itspstatus'    => $itspstatus,//TODO: Make adjustable
+                                    'datesubm'      => 0,
+                                    'dateappr'      => 0,
+                                    'datecertreq'   => 0,
+                                    'datecertaward' => 0));
     // The return value of the function is checked here
 
     if (!isset($itspid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
@@ -90,7 +89,7 @@ function itsp_user_create($args)
     /* This function generated no output, and so now it is complete we redirect
      * the user to an appropriate page for them to carry on their work
      */
-    xarResponseRedirect(xarModURL('itsp', 'user', 'display', array('objectid'=> $itspid));
+    xarResponseRedirect(xarModURL('itsp', 'user', 'display', array('objectid'=> $itspid)));
     /* Return true, in this case */
     return true;
 }

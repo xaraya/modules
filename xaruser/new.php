@@ -8,13 +8,13 @@
  * @link http://www.xaraya.com
  *
  * @subpackage ITSP Module
- * @link http://xaraya.com/index.php/release/36.html
+ * @link http://xaraya.com/index.php/release/572.html
  * @author ITSP Module Development Team
  */
 /**
  * Add new ITSP
  *
- * This is a standard function that is called whenever an useristrator
+ * This is a standard function that is called whenever an user
  * wishes to create a new module item
  *
  * @author ITSP module development team
@@ -22,12 +22,6 @@
  */
 function itsp_user_new($args)
 {
-    /* Admin functions of this type can be called by other modules. If this
-     * happens then the calling module will be able to pass in arguments to
-     * this function through the $args parameter. Hence we extract these
-     * arguments *before* we have obtained any form-based input through
-     * xarVarFetch().
-     */
     extract($args);
 
     /* Get parameters from whatever input we need. All arguments to this
@@ -41,11 +35,7 @@ function itsp_user_new($args)
     if (!xarVarFetch('datecertaward', 'int:1:', $datecertaward, $datecertaward,  XARVAR_NOT_REQUIRED)) return;
 
     if (!xarVarFetch('invalid', 'array',  $invalid, $invalid, XARVAR_NOT_REQUIRED)) return;
-    /* Initialise the $data variable that will hold the data to be used in
-     * the blocklayout template, and get the common menu configuration - it
-     * helps if all of the module pages have a standard menu at the top to
-     * support easy navigation
-     */
+    /* Initialise the $data variable that will hold the data to be used in*/
     $data = xarModAPIFunc('itsp', 'user', 'menu');
     /* Security check - important to do this as early as possible to avoid
      * potential security holes or just too much wasted processing
@@ -54,7 +44,9 @@ function itsp_user_new($args)
 
     /* Generate a one-time authorisation code for this operation */
     $data['authid'] = xarSecGenAuthKey();
-    $data['invalid'] = $invalid;
+
+    $plans = xarModApiFunc('itsp','user','getall_plans', array('enddate' => time()));
+    $data['plans'] = $plans;
 
     $item = array();
     $item['module'] = 'itsp';

@@ -46,16 +46,14 @@ function itsp_userapi_getall_plans($args)
     }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-            join(', ', $invalid), 'user', 'getall', 'ITSP');
+            join(', ', $invalid), 'user', 'getall_plans', 'ITSP');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException($msg));
         return;
     }
 
     $items = array();
-    /* Security check - important to do this as early on as possible to
-     * avoid potential security holes or just too much wasted processing
-     */
+    // Security check
     if (!xarSecurityCheck('ViewITSPPlan')) return;
 
     $dbconn =& xarDBGetConn();
@@ -64,23 +62,23 @@ function itsp_userapi_getall_plans($args)
      * using - $table doesn't cut it in more complex modules
      */
     $planstable = $xartable['itsp_plans'];
-    /* Get items - the formatting here is not mandatory, but it does make the
-     * SQL statement relatively easy to read.  Also, separating out the sql
-     * statement from the SelectLimit() command allows for simpler debug
-     * operation if it is ever needed
-     */
+    // Get items
     $query = "SELECT xar_planid,
                      xar_planname,
-                       xar_plandesc,
-                       xar_planrules,
-                       xar_credits,
-                       xar_mincredit,
-                       xar_dateopen,
-                       xar_dateclose,
-                       xar_datemodi,
-                       xar_modiby
-              FROM $planstable
-              ORDER BY xar_planname";
+                     xar_plandesc,
+                     xar_planrules,
+                     xar_credits,
+                     xar_mincredit,
+                     xar_dateopen,
+                     xar_dateclose,
+                     xar_datemodi,
+                     xar_modiby
+              FROM $planstable";
+
+    if (isset($enddate) && !empty($enddate) && ($enddate >0) ) {
+        $query .= " WHERE xar_dateclose > $enddate OR xar_dateclose IS NULL";
+    }
+    $query .= " ORDER BY xar_planname ";
 
     $result = $dbconn->SelectLimit($query, $numitems, $startnum-1);
     /* Check for an error with the database code, adodb has already raised
@@ -92,6 +90,7 @@ function itsp_userapi_getall_plans($args)
         list($planid, $planname, $plandesc, $planrules, $credits,
          $mincredit, $dateopen, $dateclose, $datemodi, $modiby) = $result->fields;
         if (xarSecurityCheck('ViewITSPPlan', 0, 'Plan', "$planid:All:All")) {
+
             $items[] = array('planid'      => $planid,
                              'planname'    => $planname,
                              'plandesc'    => $plandesc,

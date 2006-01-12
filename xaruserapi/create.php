@@ -35,7 +35,7 @@ function itsp_userapi_create($args)
     }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-            join(', ', $invalid), 'user', 'create', 'ITSP');
+            join(', ', $invalid), 'userapi', 'create', 'ITSP');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException($msg));
         return;
@@ -68,14 +68,7 @@ function itsp_userapi_create($args)
                xar_datemodi,
                xar_modiby)
             VALUES (?,?,?,?,?,?,?,?,?,?)";
-    /* Create an array of values which correspond to the order of the
-     * Question marks  in the statement above. The database layer will then
-     * figure out what to do with these variables before actually sending them
-     * to the database. (such as quoting, escaping or other operations specific to
-     * the backend)
-     * In some cases you need to explicitly state the type of the variable like
-     *in the $name variable below (not needed here, just for educational purposes)
-     */
+
     $bindvars = array($nextId, $userid, $planid, $itspstatus, $datesubm, $dateappr, $datecertreq,
                       $datecertaward, $datemodi, $modiby);
     $result = &$dbconn->Execute($query,$bindvars);
@@ -85,9 +78,7 @@ function itsp_userapi_create($args)
      */
     if (!$result) return;
 
-    /* Get the ID of the item that we inserted. It is possible, depending
-     * on your database, that this is different from $nextId as obtained
-     * above, so it is better to be safe than sorry in this situation
+    /* Get the ID of the item that we inserted.
      */
     $itspid = $dbconn->PO_Insert_ID($itsptable, 'xar_itspid');
 
