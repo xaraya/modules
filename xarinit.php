@@ -40,7 +40,6 @@ function authentication_init()
 #
     xarModSetVar('authentication', 'allowregistration', 1);
     xarModSetVar('authentication', 'requirevalidation', 1);
-    xarModSetVar('authentication', 'itemsperpage', 20);
     xarModSetVar('authentication', 'uniqueemail', 1);
     xarModSetVar('authentication', 'askwelcomeemail', 1);
     xarModSetVar('authentication', 'askvalidationemail', 1);
