@@ -1,13 +1,13 @@
 <?php
 /**
     If a xaraya item is detected perform a security check out it.
-    
+
     @param $module   name of module
     @param $itemtype item type (optional)
     @param $itemid   item id of item
-    
+
     @return boolean true if user has access otherwise false
-    
+
     @throws exception when user is denied access
 */
 function security_eventapi_OnServerRequest($args)
@@ -18,23 +18,23 @@ function security_eventapi_OnServerRequest($args)
     $itemtype = xarRequestGetVar('itemtype');
     $itemid = xarRequestGetVar('itemid');
     $catid = xarRequestGetVar('catid');
-    
+
     if( empty($module) )
         $module = xarModGetName();
-    
+
     $modid = xarModGetIdFromName($module);
-    
+
     if( !empty($catid) && empty($itemid) && xarModIsHooked('security', 'categories') )
     {
         $modid = xarModGetIdFromName('categories');
         $module = 'categories';
-        
+
         if( empty($itemid) )
-            $itemid = $catid;    
+            $itemid = $catid;
     }
 
     if( !empty($itemid) && xarModIsHooked('security', $module) )
-    {            
+    {
         if( empty($itemtype) )
             $itemtype = null;
 
@@ -43,12 +43,19 @@ function security_eventapi_OnServerRequest($args)
         $securityExists = xarModAPIFunc('security', 'user', 'securityexists', $args);
         if( !$securityExists )
             return true;
-            
-        $args['level'] = SECURITY_READ;    
+
+        $args['level'] = SECURITY_READ;
         $check = xarModAPIFunc('security', 'user', 'check', $args);
-        if( !$check ){ return false; }                
+        if( !$check )
+        {
+            if( !xarUserIsLoggedIn() && function_exists("errorhandler_eventapi_log_user_in") )
+            {
+                errorhandler_eventapi_log_user_in();
+            }
+            return false;
+        }
     }
 
-    return true; 
+    return true;
 }
 ?>
