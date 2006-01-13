@@ -1,6 +1,6 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
-    <form method="post" action="&xar-modurl-itsp-user-modify;">
+
         <fieldset>
             <legend><xar:mlstring>Information</xar:mlstring></legend>
 
@@ -25,7 +25,7 @@
         </fieldset>
         <fieldset>
             <legend><xar:mlstring>You have added:</xar:mlstring></legend>
-            <xar:foreach in="$linkedcourses" key="lcourse">
+            <xar:foreach in="$courselinks" key="$courselinkid">
                 <div class="xar-form-input-wrapper">
                      <label for="name" class="xar-form-label" title="#xarML('This is the name')#">
                           <xar:mlstring>Coursetitle:</xar:mlstring>
@@ -74,4 +74,4 @@
                 </div>
         </fieldset>
 
-    </form>
+

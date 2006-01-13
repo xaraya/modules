@@ -25,30 +25,22 @@ function itsp_user_modify($args)
 {
     extract($args);
 
-    if (!xarVarFetch('itspid',    'id',   $itspid, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('itspid',    'id',   $itspid, $itspid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('objectid', 'id',    $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('pitemid', 'id',     $pitemid, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('invalid',  'array', $invalid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('pitemid', 'id',     $pitemid, $pitemid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('invalid',  'array', $invalid, array(), XARVAR_NOT_REQUIRED)) return;
 
-    if (!xarVarFetch('number',   'int',    $number, $number,XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('name',     'str:1:', $name, $name, XARVAR_NOT_REQUIRED)) return;
-
-    /* At this stage we check to see if we have been passed $objectid, the
-     * generic item identifier. This could have been passed in by a hook or
-     * through some other function calling this as part of a larger module, but
-     * if it exists it overrides $exid
-     *
-     * Note that this module could just use $objectid everywhere to avoid all
-     * of this munging of variables, but then the resultant code is less
-     * descriptive, especially where multiple objects are being used. The
-     * decision of which of these ways to go is up to the module developer
+    /* At this stage we check to see if we have been passed $objectid
      */
     if (!empty($objectid)) {
         $itspid = $objectid;
     }
+    /* Get menu variables - it helps if all of the module pages have a standard
+     * menu at their head to aid in navigation*/
+    $data = xarModAPIFunc('itsp','user','menu');
 
     if (empty($itspid)) {
-            $itsp = xarModAPIFunc('itsp',
+        $itsp = xarModAPIFunc('itsp',
                           'user',
                           'get',
                           array('userid' => xarUserGetVar('uid')));
@@ -62,29 +54,39 @@ function itsp_user_modify($args)
     }
 
     /* Check for exceptions */
-    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; /* throw back */
+    if (!isset($itsp) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; /* throw back */
+
     $planid = $itsp['planid'];
+    $itspid = $itsp['itspid'];
     /* Security check
      */
     if (!xarSecurityCheck('ReadITSP', 1, 'ITSP', "$itspid:$planid:All")) {
         return;
     }
 
-    /* Get menu variables - it helps if all of the module pages have a standard
-     * menu at their head to aid in navigation*/
-    $menu = xarModAPIFunc('itsp','user','menu');
+    // Check to see if we are already dealing with a planitem
+    if (!empty($pitemid) && is_numeric($pitemid)) {
+        //get planitem
+        $pitem = xarModApiFunc('itsp','user','get_planitem',array('pitemid'=>$pitemid));
+        $data['pitemrules'] = $pitem['pitemrules']; // TODO: split the rules up
+        // get the pitem details for this itsp
+
+        $courselinks = xarModApiFunc('itsp','user','getall_courselinks',array('itspid'=>$pitemid));
+        $data['pitem'] = $pitem;
+        $data['courselinks'] = $courselinks;
+
+    }
+
+
 
     $item['module'] = 'itsp';
     $item['itemid'] = 2;
     $hooks = xarModCallHooks('item', 'modify', $itspid, $item);
 
     /* Return the template variables defined in this function */
-    return array('authid'       => xarSecGenAuthKey(),
-                 'name'         => $name,
-                 'number'       => $number,
-                 'invalid'      => $invalid,
-                 'hookoutput'   => $hooks,
-                 'menu'         => $menu,
-                 'item'         => $item);
+    $data['authid']      = xarSecGenAuthKey();
+    $data['hookoutput']  = $hooks;
+    $data['item']        = $item;
+    return $data;
 }
 ?>

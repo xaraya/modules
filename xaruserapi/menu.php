@@ -23,16 +23,16 @@ function itsp_userapi_menu()
     /* Initialise the array that will hold the menu configuration */
     $menu = array();
     if (!xarVarFetch('itspid',   'id', $itspid,   NULL, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('pitemid',  'id', $pitemid,   NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('pitemid',  'id', $pitemid,  NULL, XARVAR_NOT_REQUIRED)) return;
     /* Specify the menu title to be used in your blocklayout template */
     $menu['menutitle'] = xarML('Individual Training and Supervision Plan');
 
     // Specify the labels/links for more menu items if relevant
 
-    // Get the planitems that a user uses in his ITSP
+    // Get the planitems that a user must use in his ITSP
     $userid = xarUserGetVar('uid');
     $itsp = xarModApiFunc('itsp','user','get',array('userid'=>$userid));
-    if($itsp) {
+    if(!empty($itsp)) {
         $planid = $itsp['planid'];
         $itspid = $itsp['itspid'];
         $menu['itspid'] = $itspid;

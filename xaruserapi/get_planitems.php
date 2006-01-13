@@ -55,6 +55,15 @@ function itsp_userapi_get_planitems($args)
      * the exception so we just return
      */
     if (!$result) return;
+
+    if ($result->EOF) {
+        $result->Close();
+        $msg = xarML('This item does not exist');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'ID_NOT_EXIST',
+            new SystemException(__FILE__ . '(' . __LINE__ . '): ' . $msg));
+        return;
+    }
+
     // Put items into result array.
     for (; !$result->EOF; $result->MoveNext()) {
         list($pitemid,
