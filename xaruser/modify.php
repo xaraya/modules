@@ -18,15 +18,18 @@
  * wishes to modify a current module item
  *
  * @author ITSP Module Development Team
- * @param  $ 'itspid' the id of the item to be modified
+ * @param  $ 'itspid' the id of the itsp to be modified
+ * @param  $ 'pitemid' the id of the plan item to be modified
  */
 function itsp_user_modify($args)
 {
     extract($args);
 
-    if (!xarVarFetch('itspid',    'id',     $itspid)) return;
-    if (!xarVarFetch('objectid', 'id',     $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('itspid',    'id',   $itspid, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('objectid', 'id',    $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('pitemid', 'id',     $pitemid, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('invalid',  'array', $invalid, XARVAR_NOT_REQUIRED)) return;
+
     if (!xarVarFetch('number',   'int',    $number, $number,XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('name',     'str:1:', $name, $name, XARVAR_NOT_REQUIRED)) return;
 
@@ -41,34 +44,36 @@ function itsp_user_modify($args)
      * decision of which of these ways to go is up to the module developer
      */
     if (!empty($objectid)) {
-        $exid = $objectid;
+        $itspid = $objectid;
     }
-    /* The user API function is called. This takes the item ID which we
-     * obtained from the input and gets us the information on the appropriate
-     * item. If the item does not exist we post an appropriate message and
-     * return
-     */
-    $item = xarModAPIFunc('itsp',
+
+    if (empty($itspid)) {
+            $itsp = xarModAPIFunc('itsp',
                           'user',
                           'get',
-                          array('itspid' => $itspid));
+                          array('userid' => xarUserGetVar('uid')));
+    } else {
+
+        // The user API function is called to get the ITSP
+        $itsp = xarModAPIFunc('itsp',
+                              'user',
+                              'get',
+                              array('itspid' => $itspid));
+    }
 
     /* Check for exceptions */
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; /* throw back */
-
-    /* Security check - important to do this as early as possible to avoid
-     * potential security holes or just too much wasted processing. However,
-     * in this case we had to wait until we could obtain the item name to
-     * complete the instance information so this is the first chance we get to
-     * do the check
+    $planid = $itsp['planid'];
+    /* Security check
      */
-    if (!xarSecurityCheck('EditITSP', 1, 'Item', "$item[name]:All:$exid")) {
+    if (!xarSecurityCheck('ReadITSP', 1, 'ITSP', "$itspid:$planid:All")) {
         return;
     }
+
     /* Get menu variables - it helps if all of the module pages have a standard
-     * menu at their head to aid in navigation
-     * $menu = xarModAPIFunc('itsp','user','menu','modify');
-     */
+     * menu at their head to aid in navigation*/
+    $menu = xarModAPIFunc('itsp','user','menu');
+
     $item['module'] = 'itsp';
     $item['itemid'] = 2;
     $hooks = xarModCallHooks('item', 'modify', $itspid, $item);
@@ -79,7 +84,7 @@ function itsp_user_modify($args)
                  'number'       => $number,
                  'invalid'      => $invalid,
                  'hookoutput'   => $hooks,
-                 'hooks'        => '',
+                 'menu'         => $menu,
                  'item'         => $item);
 }
 ?>

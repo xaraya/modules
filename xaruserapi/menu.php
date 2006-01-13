@@ -12,7 +12,9 @@
  * @author ITSP Module Development Team
  */
 /**
- * Generate the common menu configuration
+ * Generate the common user menu configuration
+ *
+ * This menu is used in the ITSP area for users
  *
  * @author the ITSP module development team
  */
@@ -20,13 +22,10 @@ function itsp_userapi_menu()
 {
     /* Initialise the array that will hold the menu configuration */
     $menu = array();
-
+    if (!xarVarFetch('itspid',   'id', $itspid,   NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('pitemid',  'id', $pitemid,   NULL, XARVAR_NOT_REQUIRED)) return;
     /* Specify the menu title to be used in your blocklayout template */
     $menu['menutitle'] = xarML('Individual Training and Supervision Plan');
-
-    /* Specify the menu items to be used in your blocklayout template */
-    $menu['menulabel_view'] = xarML('View ITSP');
-    $menu['menulink_view'] = xarModURL('itsp', 'user', 'view');
 
     // Specify the labels/links for more menu items if relevant
 
@@ -35,29 +34,34 @@ function itsp_userapi_menu()
     $itsp = xarModApiFunc('itsp','user','get',array('userid'=>$userid));
     if($itsp) {
         $planid = $itsp['planid'];
+        $itspid = $itsp['itspid'];
+        $menu['itspid'] = $itspid;
+        $menu['planid'] = $planid;
+        // Get the planitems for this plan in the ITSP
         $pitems = xarModApiFunc('itsp','user','get_planitems',array('planid'=>$planid));
         if (!empty($pitems)) {
             $menu['pitemnames'] = array();
             /* Enter items*/
             foreach ($pitems as $item) {
-                // Add read link
-                //$planid = $item['planid'];
-                if (xarSecurityCheck('ReadITSPPlan', 0, 'Plan', "$planid:All:All")) {
+                // Add modify link
+                $pitemid= $item['pitemid'];
+                $pitem = xarModApiFunc('itsp','user','get_planitem',array('pitemid'=>$pitemid));
+
+                if (xarSecurityCheck('EditITSPPlan', 0, 'Plan', "$planid:$pitemid:All")) {
                     $item['link'] = xarModURL('itsp',
                         'user',
-                        'display',
-                        array('planid' => $planid));
+                        'modify',
+                        array('pitemid' => $pitemid, 'itspid' => $itspid));
 
                 } else {
                     $item['link'] = '';
                 }
-                $pitem = xarModApiFunc('itsp','user','get_planitem',array('pitemid'=>$item['pitemid']));
+
                 $item['pitemname'] = xarVarPrepForDisplay($pitem['pitemname']);
                 $menu['pitems'][] = $item;
             }
         }
     }
-
 
      /* Return the array containing the menu configuration */
     return $menu;

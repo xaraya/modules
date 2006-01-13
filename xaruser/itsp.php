@@ -24,6 +24,8 @@
  */
 function itsp_user_itsp($args)
 {
+    // Quick one
+    if(!xarSecurityCheck('ViewITSP')) return;
     extract($args);
 
     if (!xarVarFetch('itspid',   'id', $itspid,   NULL, XARVAR_NOT_REQUIRED)) return;

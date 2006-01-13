@@ -1,7 +1,7 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:if condition="xarTplAddStyleLink('base', 'navtabs')"></xar:if>
 
-<xar:set name="$navITSPUrl">#xarModURL('itsp','user','itsp',array('itspid'=>$itspid))#</xar:set>
+<xar:set name="$navITSPUrl">#xarModURL('itsp','user','itsp')#</xar:set>
 
 <!-- the variables used in this menu come from itsp_userapi_menu()
      they involve a dynamic menu selection of the planitems.
@@ -16,10 +16,11 @@
             <dd><a href="#$navITSPUrl#"><xar:mlstring>ITSP</xar:mlstring></a></dd>
         </xar:if>
 
-        <xar:foreach in="$pitems" value="$item">
-            <dd><a href="#$item.link#">#$item.pitemname#</a></dd>
-        </xar:foreach>
-
+        <xar:if condition="!empty($pitems)">
+            <xar:foreach in="$pitems" value="$item">
+                <dd><a href="#$item.link#">#$item.pitemname#</a></dd>
+            </xar:foreach>
+        </xar:if>
         <xar:if condition="!xarUserIsLoggedIn()">
             <dd><a href="&xar-modurl-roles-user-account;"><xar:mlstring>Login</xar:mlstring></a></dd>
         </xar:if>
