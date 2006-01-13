@@ -27,6 +27,7 @@ function courses_userapi_getall($args)
     extract($args);
     if (!xarVarFetch('startnum', 'int:1:',         $startnum, 1,     XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('numitems', 'int:1:',         $numitems, -1,    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('level',    'int:1:',         $level, '',    XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('sortby',   'str:1:',         $sortby,   'name',  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('sortorder','enum:DESC:ASC:', $sortorder,'DESC',  XARVAR_NOT_REQUIRED)) return;
 
@@ -61,8 +62,8 @@ function courses_userapi_getall($args)
                    xar_hidecourse,
                    xar_last_modified";
 
-    // TODO: how to select by cat ids (automatically) when needed ???
-    // My try at it...
+
+    // Category selection
     if (!empty($catid) && xarModIsHooked('categories','courses')) {
         // Get the LEFT JOIN ... ON ...  and WHERE parts from categories
         $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
@@ -83,7 +84,10 @@ function courses_userapi_getall($args)
         $query .= " FROM $coursestable
                     WHERE xar_hidecourse in ($where)";
      }
-
+    // Level selection
+    if (!empty ($level) && is_numeric($level)) {
+        $query .= " AND xar_level = $level ";
+    }
     $query .= " ORDER BY $coursestable.xar_" . $sortby;
     $query .= " $sortorder";
     $result = $dbconn->SelectLimit($query, $numitems, $startnum-1);

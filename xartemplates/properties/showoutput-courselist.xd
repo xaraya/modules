@@ -1,0 +1,7 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<xar:if condition="$value gt '1'" >
+<a href="&xar-modurl-courses-user-display;&amp;courseid=#$value#">#$coursename#</a>
+<xar:else />
+#$coursename#
+</xar:if>
