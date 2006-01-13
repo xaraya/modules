@@ -23,9 +23,9 @@
             <p>#xarSessionGetVar('statusmsg')#</p>
         </xar:if>
         <div class="xar-courses-contents">
-        
+
             <form method="post"
-                  action="&xar-modurl-courses-admin-updatecourse;" 
+                  action="&xar-modurl-courses-admin-updatecourse;"
                   onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
                    <fieldset>
                         <legend>
@@ -36,7 +36,7 @@
                                 <span class="required">#$namelabel#</span>
                             </label>
                             <xar:data-input name="name" type="2" value="$name" />
-        
+
                             <xar:if condition="!empty($invalid['name'])">
                               <span style="color: red"><xar:mlstring>ERROR! This is not a valid name</xar:mlstring></span>
                             </xar:if>
@@ -145,11 +145,11 @@
                             #$coursedata['last_modified']#
                         </div>
                    </fieldset>
-                <xar:if condition="!empty($hooks)">
+                <xar:if condition="!empty($hookoutput)">
                 <fieldset>
                 <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
-                    <xar:foreach in="$hooks" key="$hookmodule">
-                    #$hooks[$hookmodule]#
+                    <xar:foreach in="$hookoutput" key="$hookmodule">
+                    #$hookoutput[$hookmodule]#
                     </xar:foreach>
                 </fieldset>
                 </xar:if>

@@ -47,11 +47,12 @@ function courses_admin_modifycourse($args)
     if (!xarSecurityCheck('EditCourses', 1, 'Course', "$courseid:All:All")) {
         return;
     }
-    // Get menu variables
+    // Call hooks
     $coursedata['module'] = 'courses';
+   // $coursedata['itemtype'] = 1;
     $hooks = xarModCallHooks('item', 'modify', $courseid, $coursedata);
     if (empty($hooks)) {
-        $data['hookoutput'] = '';
+        $data['hookoutput'] = array();
     } else {
         /* You can use the output from individual hooks in your template too, e.g. with
          * $hookoutput['categories'], $hookoutput['dynamicdata'], $hookoutput['keywords'] etc.
@@ -63,6 +64,7 @@ function courses_admin_modifycourse($args)
     $levels = xarModAPIFunc('courses', 'user', 'gets', array('itemtype' => 3));
 
     // Return the template variables defined in this function
+    // TODO: rewrite to $data
     return array('authid'           => xarSecGenAuthKey(),
                  'menutitle'        => xarVarPrepForDisplay(xarML('Edit a course')),
                  'courseid'         => $courseid,
@@ -80,10 +82,10 @@ function courses_admin_modifycourse($args)
                  'hidecourselabel'  => xarVarPrepForDisplay(xarML('Hide Course')),
                  'updatebutton'     => xarVarPrepForDisplay(xarML('Update Course')),
                  'cancelbutton'     => xarVarPrepForDisplay(xarML('Cancel')),
-                 'hooks'            => $hooks,
                  'coursedata'       => $coursedata,
                  'name'             => $coursedata['name'],
                  'contactuid'       => $coursedata['contactuid'],
+                 'hookoutput'       => $data['hookoutput'],
                  'levels'           => $levels);
 }
 

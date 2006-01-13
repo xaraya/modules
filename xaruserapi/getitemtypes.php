@@ -12,8 +12,9 @@
  * @author Courses module development team
  */
 /**
- * utility function to retrieve the list of item types of this module (if any)
+ * utility function to retrieve the list of item types of this module
  *
+ * @todo Implement. Causes errors
  * @returns array
  * @return array containing the item types and their description
  */

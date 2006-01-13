@@ -72,7 +72,7 @@
                     <span class="fullright">
                         <input type="checkbox" name="ShowShortDesc" id="ShowShortDesc" value="1" #$ShowShortDescchecked# />
                     </span>
-                </div>                
+                </div>
                 <div class="xar-form-input-wrapper">
                     <label for="itemsperpage" class="xar-form-label" title="#xarML('Number of items per page.')#">
                         <span class="required" >#xarML('Items Per Page?')#</span>
@@ -102,7 +102,7 @@
                   <input type="checkbox" name="modulealias" id="modulealias" value="1" checked="checked" />
                   <xar:else />
                   <input type="checkbox" name="modulealias" id="modulealias" value="1" />
-                </xar:if>  
+                </xar:if>
               </div>
               <div class="xar-form-input-wrapper">
                 <label for="aliasname" class="xar-form-label" title="#xarML('The name of module alias to be used.')#">
@@ -113,11 +113,11 @@
                 <input type="text" name="aliasname" id="aliasname" value="#xarModGetVar('courses', 'aliasname')#" size="32" maxlength="100" />
               </div>
            </fieldset>
-           <xar:if condition="!empty($hooks)">
+           <xar:if condition="!empty($hookoutput)">
             <fieldset>
                 <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
-                    <xar:foreach in="$hooks" key="$hookmodule">
-                    #$hooks[$hookmodule]#
+                    <xar:foreach in="$hookoutput" key="$hookmodule">
+                    #$hookoutput[$hookmodule]#
                     </xar:foreach>
             </fieldset>
            </xar:if>
