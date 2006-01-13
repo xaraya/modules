@@ -57,7 +57,7 @@ function itsp_userapi_get_planitem($args)
                xar_modiby
               FROM $planitemstable
               WHERE xar_pitemid = ?";
-    $result = &$dbconn->Execute($query,array($planitemid));
+    $result = &$dbconn->Execute($query,array($pitemid));
     /* Check for an error with the database code, adodb has already raised
      * the exception so we just return
      */
@@ -94,7 +94,7 @@ function itsp_userapi_get_planitem($args)
                    'pitemdesc'  => $pitemdesc,
                    'pitemrules' => $pitemrules,
                    'credits'    => $credits,
-                   'mincredit'  => $mincredits,
+                   'mincredit'  => $mincredit,
                    'dateopen'   => $dateopen,
                    'dateclose'  => $dateclose,
                    'datemodi'   => $datemodi,

@@ -33,29 +33,30 @@ function itsp_userapi_menu()
     // Get the planitems that a user uses in his ITSP
     $userid = xarUserGetVar('uid');
     $itsp = xarModApiFunc('itsp','user','get',array('userid'=>$userid));
-    $planid = $itsp['planid'];
+    if($itsp) {
+        $planid = $itsp['planid'];
+        $pitems = xarModApiFunc('itsp','user','get_planitems',array('planid'=>$planid));
+        if (!empty($pitems)) {
+            $menu['pitemnames'] = array();
+            /* Enter items*/
+            foreach ($pitems as $item) {
+                // Add read link
+                //$planid = $item['planid'];
+                if (xarSecurityCheck('ReadITSPPlan', 0, 'Plan', "$planid:All:All")) {
+                    $item['link'] = xarModURL('itsp',
+                        'user',
+                        'display',
+                        array('planid' => $planid));
 
-    $pitems = xarModApiFunc('itsp','user','get_planitems',array('planid'=>$planid));
-
-    $menu['pitemnames'] = array();
-/* Enter items*/
-    foreach ($pitems as $item) {
-        // Add read link
-        $planid = $item['planid'];
-        if (xarSecurityCheck('ReadITSPPlan', 0, 'Plan', "$planid:All:All")) {
-            $item['link'] = xarModURL('itsp',
-                'user',
-                'display',
-                array('planid' => $planid));
-
-        } else {
-            $item['link'] = '';
+                } else {
+                    $item['link'] = '';
+                }
+                $pitem = xarModApiFunc('itsp','user','get_planitem',array('pitemid'=>$item['pitemid']));
+                $item['pitemname'] = xarVarPrepForDisplay($pitem['pitemname']);
+                $menu['pitems'][] = $item;
+            }
         }
-        $pitemname = xarModApiFunc('itsp','user','get_planitem',array('pitemid'=>$item['pitemid']));
-        $item['pitemname'] = xarVarPrepForDisplay($item['pitemname']);
-        $menu['pitems'][] = $item;
     }
-
 
 
      /* Return the array containing the menu configuration */
