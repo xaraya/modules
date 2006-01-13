@@ -13,36 +13,10 @@
         <xar:else />
             <dd><a href="#$navITSPUrl#"><xar:mlstring>ITSP</xar:mlstring></a></dd>
         </xar:if>
-        <xar:comment>
-        <xar:if condition="$whatFunc eq 'week'">
-            <dd class="active"><a href="#$navWeekUrl#"><xar:mlstring>Week</xar:mlstring></a></dd>
-        <xar:else />
-            <dd><a href="#$navWeekUrl#"><xar:mlstring>Week</xar:mlstring></a></dd>
-        </xar:if>
-        <xar:if condition="$whatFunc eq 'month'">
-            <dd class="active"><a href="#$navMonthUrl#"><xar:mlstring>Month</xar:mlstring></a></dd>
-        <xar:else />
-            <dd><a href="#$navMonthUrl#"><xar:mlstring>Month</xar:mlstring></a></dd>
-        </xar:if>
-        <xar:if condition="$whatFunc eq 'year'">
-            <dd class="active"><a href="#$navYearUrl#"><xar:mlstring>Year</xar:mlstring></a></dd>
-        <xar:else />
-            <dd><a href="#$navYearUrl#"><xar:mlstring>Year</xar:mlstring></a></dd>
-        </xar:if>
-        <xar:if condition="$whatFunc eq 'viewevents'">
-            <dd class="active"><a href="#$navEventsUrl#"><xar:mlstring>Events</xar:mlstring></a></dd>
-        <xar:else />
-          <dd><a href="#$navEventsUrl#"><xar:mlstring>Events</xar:mlstring></a></dd>
-        </xar:if>
 
-        <xar:if condition="xarUserIsLoggedIn()">
-            <xar:if condition="$whatFunc eq 'alerts'">
-                <dd class="active"><a href="#$navAlertsUrl#"><xar:mlstring>Alerts</xar:mlstring></a></dd>
-            <xar:else />
-                <dd><a href="#$navAlertsUrl#"><xar:mlstring>Alerts</xar:mlstring></a></dd>
-            </xar:if>
+        <xar:if condition="!xarUserIsLoggedIn()">
+            <dd><a href="&xar-modurl-roles-user-account;"><xar:mlstring>Login</xar:mlstring></a></dd>
         </xar:if>
-        </xar:comment>
     </dl>
 
 </div>

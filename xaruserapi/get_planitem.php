@@ -17,7 +17,7 @@
  * Standard function of a module to retrieve a specific item
  *
  * @author the ITSP module development team
- * @param  $args ['itspid'] id of itsp item to get
+ * @param  $args ['pitemid'] id of itsp item to get
  * @returns array
  * @return item array, or false on failure
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
@@ -43,10 +43,7 @@ function itsp_userapi_get_planitem($args)
      * getting - $table and $column don't cut it in more complex modules
      */
     $planitemstable = $xartable['itsp_planitems'];
-    /* Get item - the formatting here is not mandatory, but it does make the
-     * SQL statement relatively easy to read.  Also, separating out the sql
-     * statement from the Execute() command allows for simpler debug operation
-     * if it is ever needed
+    /* Get item
      */
     $query = "SELECT
                xar_pitemname,

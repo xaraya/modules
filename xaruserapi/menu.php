@@ -28,11 +28,35 @@ function itsp_userapi_menu()
     $menu['menulabel_view'] = xarML('View ITSP');
     $menu['menulink_view'] = xarModURL('itsp', 'user', 'view');
 
-    /* Specify the labels/links for more menu items if relevant
+    // Specify the labels/links for more menu items if relevant
 
-     * But most people will prefer to specify all this manually in each
-     * blocklayout template anyway :-)
-     */
+    // Get the planitems that a user uses in his ITSP
+    $userid = xarUserGetVar('uid');
+    $itsp = xarModApiFunc('itsp','user','get',array('userid'=>$userid));
+    $planid = $itsp['planid'];
+
+    $pitems = xarModApiFunc('itsp','user','get_planitems',array('planid'=>$planid));
+
+    $menu['pitemnames'] = array();
+/* Enter items*/
+    foreach ($pitems as $item) {
+        // Add read link
+        $planid = $item['planid'];
+        if (xarSecurityCheck('ReadITSPPlan', 0, 'Plan', "$planid:All:All")) {
+            $item['link'] = xarModURL('itsp',
+                'user',
+                'display',
+                array('planid' => $planid));
+
+        } else {
+            $item['link'] = '';
+        }
+        $pitemname = xarModApiFunc('itsp','user','get_planitem',array('pitemid'=>$item['pitemid']));
+        $item['pitemname'] = xarVarPrepForDisplay($item['pitemname']);
+        $menu['pitems'][] = $item;
+    }
+
+
 
      /* Return the array containing the menu configuration */
     return $menu;

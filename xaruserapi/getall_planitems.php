@@ -83,7 +83,7 @@ function itsp_userapi_getall_planitems($args)
                      xar_dateclose,
                      xar_datemodi,
                      xar_modiby
-              FROM $itsptable
+              FROM $planitmemstable
               ORDER BY xar_pitemname";
 
     $result = $dbconn->SelectLimit($query, $numitems, $startnum-1);
