@@ -72,6 +72,12 @@ function itsp_user_modify($args)
         // get the pitem details for this itsp
 
         $courselinks = xarModApiFunc('itsp','user','getall_courselinks',array('itspid'=>$pitemid));
+
+
+
+
+
+
         $data['pitem'] = $pitem;
         $data['courselinks'] = $courselinks;
 
