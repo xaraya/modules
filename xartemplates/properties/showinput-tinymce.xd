@@ -35,7 +35,7 @@ textarea#'.$id.' {
 </xar:if>
 <xar:set name="tinybrowsers">explode(',',xarModGetVar('tinymce','tinybrowsers'))</xar:set>
 <xar:set name="usewysiwyg">0</xar:set>
-<xar:set name="useragent">getenv('HTTP_USER_AGENT');</xar:set>
+<xar:set name="useragent">#xarServerGetVar('HTTP_USER_AGENT')#</xar:set>
 <xar:foreach in="$tinybrowsers" value="$browsername">
     <xar:if condition="eregi($browsername,$useragent)">
         <xar:set name="usewysiwyg">1</xar:set>
