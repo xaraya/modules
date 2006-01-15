@@ -33,7 +33,7 @@
                         <div class="xar-form-input-wrapper">
                             <label for="calldate" class="xar-form-label required" >
                                 <span class="help" title="#xarML('Each maxercall requires a date.')#">
-                                    #$calldatelabel#
+                                    <xar:mlstring>Date of call YYYY-MM-DD</xar:mlstring>
                                 </span>
                             </label>
                             <xar:data-input name="calldate" type="2" value="$item['calldate']" />
@@ -41,7 +41,7 @@
                         <div class="xar-form-input-wrapper">
                             <label for="calltime" class="xar-form-label required">
                                 <span class="help" title="#xarML('Each maxercall requires a time.')#">
-                                    #$calltimelabel#
+                                    <xar:mlstring>Time of call HH:MM</xar:mlstring>
                                 </span>
                             </label>
                             <xar:data-input name="calltime" type="2" value="$item['calltime']" />
@@ -49,7 +49,7 @@
                         <div class="xar-form-input-wrapper">
                             <label for="owner" class="xar-form-label required">
                                 <span class="help" title="#xarML('The carrier of the maxer you are entering a call for.')#">
-                                    #$ownerlabel#
+                                    <xar:mlstring>Owner of maxer</xar:mlstring>
                                 </span>
                             </label>
                             <span class="fullright">
@@ -60,7 +60,7 @@
                         <div class="xar-form-input-wrapper">
                             <label for="remarks" class="xar-form-label">
                                 <span class="help" title="#xarML('Any remark on this call, eg a different calltext.')#">
-                                    #$remarkslabel#
+                                    <xar:mlstring>Other remarks</xar:mlstring>
                                 </span>
                             </label>
                             <span class="fullright">
@@ -89,7 +89,7 @@
                             <input type="hidden" name="authid" id="authid" value="#$authid#" />
                             <input type="hidden" name="callid" id="callid" value="#$item['callid']#" />
                             <input type="hidden" name="enterts" id="enterts" value="#$item['enterts']#" />
-                            <input type="submit" value="#$updatebutton#" />
+                            <input type="submit" value="xarML('Update call')" />
                         </div>
                     </fieldset>
             </form>

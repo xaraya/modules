@@ -54,17 +54,8 @@ function maxercalls_admin_modifycall($args)
     return array('authid'       => xarSecGenAuthKey(),
                  'callid'       => $callid,
                  'invalid'      => $invalid,
-    //			 'enteruid'     => $enteruid,
-    //			 'enterts'      => $enterts,
-    //			 'remarks'      => $remarks,
                  'updatebutton' => xarVarPrepForDisplay(xarML('Update call')),
                  'hookoutput'    => $hookoutput,
-                 'calldatelabel' => xarVarPrepForDisplay(xarML('Date of call YYYY-MM-DD')),
-                 'calltimelabel' => xarVarPrepForDisplay(xarML('Time of call HH:MM')),
-                 'calltextlabel' => xarVarPrepForDisplay(xarML('Type/Text of call')),
-                 'calltypelabel' => xarVarPrepForDisplay(xarML('Type of call')),
-                 'ownerlabel'   => xarVarPrepForDisplay(xarML('Owner of maxer')),
-                 'remarkslabel' => xarVarPrepForDisplay(xarML('Other remarks')),
                  'item'         => $item);
 }
 
