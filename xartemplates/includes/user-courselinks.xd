@@ -22,28 +22,35 @@
              #$pitem.mincredit#
         </div>
     </fieldset>
+
     <fieldset>
+    <xar:if condition="!empty($lcourses)">
         <legend><xar:mlstring>You have added:</xar:mlstring></legend>
-        <xar:foreach in="$courselinks" key="$courselinkid">
+        <xar:foreach in="$lcourses" key="$lcourseid">
             <div class="xar-form-input-wrapper">
                  <label for="name" class="xar-form-label" title="#xarML('This is the name')#">
                       <xar:mlstring>Coursetitle:</xar:mlstring>
                  </label>
-                 #$lcourse.name# Credits: #$lcourse.credits# Date: Status:
+                 #$lcourse.name# Credits: #$lcourse.intendedcredits# Date: Status:
             </div>
         </xar:foreach>
+    <xar:else />
+        <legend><xar:mlstring>You have not added any course yet</xar:mlstring></legend>
+    </xar:if>
     </fieldset>
     <fieldset>
         <legend><xar:mlstring>Add courses</xar:mlstring></legend>
         <div class="xar-form-input-wrapper">
              <label for="name" class="xar-form-label" title="#xarML('This is the name')#">
-                  <xar:mlstring>Education plan name:</xar:mlstring>
+                  <xar:mlstring>Choose one of the following courses to add name:</xar:mlstring>
              </label>
+             <xar:comment>
              <select name="planid">
                 <xar:loop name="$plans">
                     <option value="#$loop:item['planid']#">#$loop:item['planname']#</option>
                 </xar:loop>
              </select>
+             </xar:comment>
         </div>
     </fieldset>
 
@@ -64,13 +71,4 @@
         </xar:if>
     </xar:if>
 
-    <fieldset>
-        <div class="xar-form-input-wrapper-after">
-            <input type="hidden" name="authid" id="authid" value="#$authid#" />
-            <input type="hidden" name="itspid" id="itspid" value="#$itspid#" />
-            <input type="hidden" name="pitemid" id="pitemid" value="#$pitemid#" />
-            <input type="submit" value="#xarML('Update')#" />
-            </div>
-    </fieldset>
-
-
+    <input type="hidden" name="itspid" id="itspid" value="#$itspid#" />

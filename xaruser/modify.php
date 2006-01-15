@@ -25,9 +25,9 @@ function itsp_user_modify($args)
 {
     extract($args);
 
-    if (!xarVarFetch('itspid',    'id',   $itspid, $itspid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('itspid',   'id',   $itspid, $itspid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('objectid', 'id',    $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('pitemid', 'id',     $pitemid, $pitemid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('pitemid',  'id',     $pitemid, $pitemid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('invalid',  'array', $invalid, array(), XARVAR_NOT_REQUIRED)) return;
 
     /* At this stage we check to see if we have been passed $objectid
@@ -70,20 +70,46 @@ function itsp_user_modify($args)
         $pitem = xarModApiFunc('itsp','user','get_planitem',array('pitemid'=>$pitemid));
         $data['pitemrules'] = $pitem['pitemrules']; // TODO: split the rules up
         // get the pitem details for this itsp
-
+        // get all linked courses
         $courselinks = xarModApiFunc('itsp','user','getall_courselinks',array('itspid'=>$pitemid));
+        // for each linked course get the details
+        if (!isset($courselinks) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
+        /* TODO: check for conflicts between transformation hook output and xarVarPrepForDisplay
+         * Loop through each item and display it.
+         */
+        foreach ($courselinks as $lcourse) {
+            // Add read link
+            $courseid = $lcourse['lcourseid'];
+            if (xarSecurityCheck('ReadITSPPlan', 0, 'Plan', "$planid:All:All")) {
+                $lcourse['link'] = xarModURL('courses',
+                    'user',
+                    'display',
+                    array('courseid' => $courseid));
+                /* Security check 2 - else only display the item name (or whatever is
+                 * appropriate for your module)
+                 */
+            } else {
+                $lcourse['link'] = '';
+            }
+            $course = xarModApiFunc('courses','user','get', array('courseid'=>$courseid));
+            /* Clean up the item text before display */
+            $lcourse['name'] = xarVarPrepForDisplay($course['name']);
+            $lcourse['intendedcredits'] = $course['intendedcredits'];
+            /* Add this item to the list of items to be displayed */
+            $data['lcourses'][] = $item;
+        }
 
 
 
 
 
         $data['pitem'] = $pitem;
-        $data['courselinks'] = $courselinks;
+
 
     }
 
-
+    $data['pitemid'] = $pitemid;
 
     $item['module'] = 'itsp';
     $item['itemid'] = 2;
