@@ -83,7 +83,7 @@ function itsp_userapi_getall_planitems($args)
                      xar_dateclose,
                      xar_datemodi,
                      xar_modiby
-              FROM $planitmemstable
+              FROM $planitemstable
               ORDER BY xar_pitemname";
 
     $result = $dbconn->SelectLimit($query, $numitems, $startnum-1);
@@ -109,7 +109,7 @@ function itsp_userapi_getall_planitems($args)
                              'pitemdesc'  => $pitemdesc,
                              'pitemrules' => $pitemrules,
                              'credits'    => $credits,
-                             'mincredit'  => $mincredits,
+                             'mincredit'  => $mincredit,
                              'dateopen'   => $dateopen,
                              'dateclose'  => $dateclose,
                              'datemodi'   => $datemodi,
