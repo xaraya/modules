@@ -21,7 +21,72 @@
  */
 function sitecontact_init()
 {
+    /* Setup our table for holding the different contact itemtype forms */
+    $dbconn =& xarDBGetConn();
+    $xarTables =& xarDBGetTables();
+
+    $sitecontactTable = $xarTables['sitecontact'];
+
+    /* Get a data dictionary object with all the item create methods in it */
+    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+
+    $fields= "xar_scid           I      AUTO       PRIMARY,
+	          xar_sctypename     C(100) NotNull    DEFAULT '',
+              xar_sctypedesc     C(254) NotNull    DEFAULT '',
+              xar_customtext     X      NotNull    DEFAULT '',
+              xar_customtitle    C(150) NotNull    DEFAULT '',
+              xar_optiontext     X      NotNull    DEFAULT '',
+              xar_webconfirmtext X      NotNull    DEFAULT '',
+              xar_notetouser     X      NotNull    DEFAULT '',
+              xar_allowcopy      L      NotNull    DEFAULT 0,
+              xar_usehtmlemail   L      NotNull    DEFAULT 0,
+   	          xar_scdefaultemail C(254) NotNull    DEFAULT '',
+              xar_scdefaultname  C(254) NotNull    DEFAULT '',
+              xar_scactive       L      NotNull    DEFAULT 1
+              ";
+            $result = $datadict->changeTable($sitecontactTable, $fields);
+           if (!$result) {return;}
+
+    /* Create a default form */
+   $defaultemail=  xarModGetVar('mail', 'adminmail');
+    $sitecontactTable = $xarTables['sitecontact'];
+    $query = "INSERT INTO $sitecontactTable
+                  (xar_scid,
+	               xar_sctypename,
+                   xar_sctypedesc,
+                   xar_customtext,
+                   xar_customtitle,
+                   xar_optiontext,
+                   xar_webconfirmtext,
+                   xar_notetouser,
+                   xar_allowcopy,
+                   xar_usehtmlemail,
+   	               xar_scdefaultemail,
+                   xar_scdefaultname,
+                   xar_scactive)
+                VALUES (1,
+                        'basic',
+                        'Basic contact form',
+                        'Thank you for visiting. We appreciate your feedback.\nPlease let us know how we can assist you.',
+                        'Contact and Feedback',
+                        'Information request,\nGeneral assistance,\nWebsite issue,\nSpam report,\nComplaint,\nThank you!',
+                        'Your message has been sent. Thank you for contacting us.',
+                        'Dear %%username%%\n\nThis message confirms your email has been sent.\n\nThank you for your feedback.\n\nAdministrator\n%%sitename%%\n-------------------------------------------------------------',
+                        '1',
+                        '0',
+                        '$defaultemail',
+                        'Site Admin',
+                        1
+                        )";
+
+    $result =& $dbconn->Execute($query);
+           if (!$result) {return;}
+
+
     xarModSetVar('sitecontact', 'itemsperpage', 10);
+    xarModSetVar('sitecontact', 'defaultform',1);
+    xarModSetVar('sitecontact', 'defaultsort','scid');
+    xarModSetVar('sitecontact', 'scactive', 1);
     xarModSetVar('sitecontact', 'SupportShortURLs', 0);
     xarModSetVar('sitecontact', 'useModuleAlias',0);
     xarModSetVar('sitecontact', 'aliasname','');
@@ -116,15 +181,89 @@ function sitecontact_upgrade($oldversion)
        case '0.2.0':
            return sitecontact_upgrade('0.3.0');
             break;
-        case '0.0.3':
+        case '0.3.0':
            xarModSetVar('sitecontact', 'useModuleAlias',0);
            xarModSetVar('sitecontact', 'aliasname','');
-
+             return sitecontact_upgrade('0.4.0');
              break;
-        case '1.0.0':
-            // Code to upgrade from version 2.0 goes here
-            break;
+        case '0.4.0':
+            /* New modvars */
+            xarModSetVar('sitecontact', 'defaultform',1);
+            xarModSetVar('sitecontact', 'scactive',1);            
+            xarModSetVar('sitecontact', 'defaultsort','scid');
+            /* Setup our table for holding the different contact itemtype forms */
+            $dbconn =& xarDBGetConn();
+            $xarTables =& xarDBGetTables();
 
+            $sitecontactTable = $xarTables['sitecontact'];
+
+            /* Get a data dictionary object with all the item create methods in it */
+            $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+
+           	$fields= "xar_scid            I      AUTO       PRIMARY,
+	                  xar_sctypename     C(100) NotNull    DEFAULT '',
+                      xar_sctypedesc     C(254) NotNull    DEFAULT '',
+	                  xar_customtext     X      NotNull    DEFAULT '',
+	                  xar_customtitle    C(150) NotNull    DEFAULT '',
+	                  xar_optiontext     X      NotNull    DEFAULT '',
+	                  xar_webconfirmtext X      NotNull    DEFAULT '',
+	                  xar_notetouser     X      NotNull    DEFAULT '',
+	                  xar_allowcopy      L      NotNull    DEFAULT 0,
+	                  xar_usehtmlemail   L      NotNull    DEFAULT 0,
+         	          xar_scdefaultemail C(254) NotNull    DEFAULT '',
+	                  xar_scdefaultname  C(254) NotNull    DEFAULT '',
+	                  xar_scactive       L      NotNull    DEFAULT 1
+              ";
+            $result = $datadict->changeTable($sitecontactTable, $fields);
+            if (!$result) {return;}
+            /* Create a default form */
+            $defaultemail=  xarModGetVar('mail', 'adminmail');
+            $usehtmlemail = xarModGetVar('sitecontact', 'usehtmlemail');
+            $allowcopy = xarModGetVar('sitecontact', 'allowcopy');
+            $scdefaultemail = xarModGetVar('sitecontact', 'scdefaultemail');
+            $customtitle = xarModGetVar('sitecontact', 'customtitle');
+            $customtext = xarModGetVar('sitecontact', 'customtext');
+            $optiontext = xarModGetVar('sitecontact', 'optiontext');
+            $webconfirmtext = xarModGetVar('sitecontact', 'webconfirmtext');
+            $notetouser = xarModGetVar('sitecontact', 'notetouser');
+            $scdefaultname=xarModGetVar('sitecontact', 'scdefaultname');
+            $sitecontactTable = $xarTables['sitecontact'];
+           $query ="INSERT INTO $sitecontactTable
+                  (xar_scid,
+	               xar_sctypename,
+                   xar_sctypedesc,
+                   xar_customtext,
+                   xar_customtitle,
+                   xar_optiontext,
+                   xar_webconfirmtext,
+                   xar_notetouser,
+                   xar_allowcopy,
+                   xar_usehtmlemail,
+   	               xar_scdefaultemail,
+                   xar_scdefaultname,
+                   xar_scactive)
+                VALUES (1,
+                        'basic',
+                        'Basic contact form',
+                        '$customtext',
+                        '$customtitle',
+                        '$optiontext',
+                        '$webconfirmtext',
+                        '$notetouser',
+                        '$allowcopy',
+                        '$usehtmlemail',
+                        '$scdefaultemail',
+                        '$scdefaultname',
+                        1
+                        )";
+
+                        $result =& $dbconn->Execute($query);
+           if (!$result) {return;}
+           return sitecontact_upgrade('0.5.0');
+
+            break;
+        case '0.5.0':
+             break;
     }
     // Update successful
     return true;
@@ -137,6 +276,14 @@ function sitecontact_upgrade($oldversion)
  */
 function sitecontact_delete()
 {
+    /* drop the sitecontact table */
+    $dbconn =& xarDBGetConn();
+    $xarTables =& xarDBGetTables();
+
+    $sitecontactTable = $xarTables['sitecontact'];
+    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+    $result = $datadict->dropTable($sitecontactTable);
+
     /* Remove any module aliases before deleting module vars */
     $aliasname =xarModGetVar('sitecontact','aliasname');
     $isalias = xarModGetAlias($aliasname);

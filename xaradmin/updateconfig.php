@@ -19,7 +19,11 @@
  */
 function sitecontact_admin_updateconfig()
 {
+    // Confirm authorisation code
+    if (!xarSecConfirmAuthKey()) return;
+
     if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('scactive', 'checkbox', $scactive, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('customtext', 'str:1:', $customtext, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('customtitle', 'str:1:', $customtitle, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('optiontext', 'str:1:', $optiontext, '', XARVAR_NOT_REQUIRED)) return;
@@ -31,18 +35,23 @@ function sitecontact_admin_updateconfig()
     if (!xarVarFetch('scdefaultname', 'str:1:', $scdefaultname, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('aliasname', 'str:1:', $aliasname, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('modulealias','checkbox', $modulealias,false,XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('defaultform','int:1:', $defaultform, 1,XARVAR_NOT_REQUIRED)) return;
+    if(!xarVarFetch('itemsperpage','int',   $itemsperpage, 20, XARVAR_NOT_REQUIRED)) {return;}
 
-    if (!xarSecConfirmAuthKey()) return;
+
     xarModSetVar('sitecontact', 'customtext', $customtext);
     xarModSetVar('sitecontact', 'customtitle', $customtitle);
     xarModSetVar('sitecontact', 'optiontext', $optiontext);
     xarModSetVar('sitecontact', 'SupportShortURLs', $shorturls);
+    xarModSetVar('sitecontact', 'scactive', $scactive);
     xarModSetVar('sitecontact', 'allowcopy', $allowcopy);
     xarModSetVar('sitecontact', 'usehtmlemail', $usehtmlemail);
     xarModSetVar('sitecontact', 'webconfirmtext', $webconfirmtext);
     xarModSetVar('sitecontact', 'notetouser', $notetouser);
     xarModSetVar('sitecontact', 'scdefaultemail', $scdefaultemail);
     xarModSetVar('sitecontact', 'scdefaultname', $scdefaultname);
+    xarModSetVar('sitecontact', 'defaultform', $defaultform);
+    xarModSetVar('sitecontact', 'itempsperpage', $itemsperpage);    
     if (isset($aliasname) && trim($aliasname)<>'') {
         xarModSetVar('sitecontact', 'useModuleAlias', $modulealias);
     } else{

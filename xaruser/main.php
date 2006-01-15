@@ -21,17 +21,49 @@
  */
 function sitecontact_user_main()
 {
-    if(!xarVarFetch('message', 'isset', $message,  NULL, XARVAR_DONT_SET)) {return;}
+    $defaultformid=(int)xarModGetVar('sitecontact','defaultform');
+
+    if(!xarVarFetch('message',    'isset',  $message,    NULL, XARVAR_DONT_SET)) {return;}
+	if(!xarVarFetch('sctypename', 'str:0:', $sctypename, NULL, XARVAR_NOT_REQUIRED)) {return;}
+	if(!xarVarFetch('scform',     'str:0:', $scform, NULL, XARVAR_NOT_REQUIRED)) {return;}
+	if(!xarVarFetch('scid',       'int:1:', $scid,       $defaultformid, XARVAR_NOT_REQUIRED)) {return;}
+    if (isset($scform) && !isset($sctypename)) { //provide alternate entry name
+      $sctypename=$scform;
+    }
 
     /* Security Check */
     if(!xarSecurityCheck('ViewSiteContact')) return;
 
     /*  Generate a onetime authorisation code for this operation */
     $data['authid'] = xarSecGenAuthKey();
+
     if (!empty($invalid)) {
         $data['invalid']=$invalid;
     }
+    $formdata=array();
+    $formdata2=array();
     $data['submit'] = xarML('Submit');
+    //See if we have a form name that exists and is active
+    if (isset($sctypename) && trim($sctypename) <> '') {
+       $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('sctypename'=>$sctypename));
+    } elseif (isset($scid) && $scid>0) { //should fall back to default form if not specified
+       $formdata2 = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid'=>$scid));
+    } else {
+     //hmm something would be wrong
+    }
+
+    //now what have we got ..
+    if (!isset($formdata) || empty($formdata)) { //it doesn't exist anymore or is not active
+        $formdata=$formdata2[0];
+    } else {
+        $formdata=$formdata[0];
+    }
+
+    if ($formdata['scactive']<>1) { //formdata exists but perhaps not active?
+       $formdata2=xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid'=>$scid));
+       $formdata=$formdata2[0];
+    }
+    /*
     $customtext = xarModGetVar('sitecontact','customtext');
     $customtitle = xarModGetVar('sitecontact','customtitle');
     $usehtmlemail= xarModGetVar('sitecontact', 'usehtmlemail');
@@ -43,6 +75,19 @@ function sitecontact_user_main()
     $data['usehtmlemail'] = $usehtmlemail;
     $data['allowcopy'] = $allowcopy;
     $optiontext = xarModGetVar('sitecontact','optiontext');
+    */
+    $customtext = $formdata['customtext'];
+    $customtitle = $formdata['customtitle'];
+    $usehtmlemail= $formdata['usehtmlemail'];
+    $allowcopy = $formdata['allowcopy'];
+
+    $data['customtitle']=xarVarPrepHTMLDisplay($customtitle);
+    $data['customtext'] = xarVarPrepHTMLDisplay($customtext);
+
+    $data['usehtmlemail'] = $usehtmlemail;
+    $data['allowcopy'] = $allowcopy;
+
+    $optiontext = $formdata['optiontext'];
     $optionset = array();
     $selectitem=array();
     $optionset=explode(',',$optiontext);
@@ -78,8 +123,10 @@ function sitecontact_user_main()
         $withupload = (int) false;
             if (xarModIsAvailable('dynamicdata')) {
                 // get the Dynamic Object defined for this module
-                $object =  xarModAPIFunc('dynamicdata','user','getobject', array('module' => 
-'sitecontact'));
+                $object =  xarModAPIFunc('dynamicdata','user','getobject',
+                array('module' =>'sitecontact',
+                      'itemtype'=>$formdata['scid']));
+
                 if (isset($object) && !empty($object->objectid)) {
                     $properties =& $object->getProperties();
                 }
@@ -93,7 +140,8 @@ function sitecontact_user_main()
             }
     unset($properties);
     $data['withupload']=$withupload;
-    $webconfirmtext = trim(xarModGetVar('sitecontact','webconfirmtext'));
+    //$webconfirmtext = trim(xarModGetVar('sitecontact','webconfirmtext'));
+    $webconfirmtext = trim($formdata['webconfirmtext']);
     if ((empty($webconfirmtext)) || (!isset($webconfirmtext))) {
 
         $webconfirmtext = xarML('Your message has been sent.');
@@ -109,8 +157,22 @@ function sitecontact_user_main()
         $data['message']='';
         $data['messagetxt'] = '';
     }
+    $data['scid']=$formdata['scid'];
+    $data['sctypename']=$formdata['sctypename'];
 
-   return $data;
+    if (!empty($data['sctypename'])){
+        $template = 'main-' . $data['sctypename'];
+    } else {
+        $template =  'main';
+    }
+
+	$templatedata = xarTplModule('sitecontact', 'user', $template, $data);
+
+	if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
+        xarErrorHandled();
+        $templatedata = xarTplModule('sitecontact', 'user', 'main', $data);
+	}
+   return $templatedata;
 
 }
 ?>

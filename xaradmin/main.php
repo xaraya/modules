@@ -27,7 +27,7 @@ function sitecontact_admin_main()
         /* Return the template variables defined in this function */
         return $data;
     } else {
-        xarResponseRedirect(xarModURL('sitecontact', 'admin', 'modifyconfig'));
+        xarResponseRedirect(xarModURL('sitecontact', 'admin', 'managesctypes',array('action'=>'view')));
     }
     /* success */
     return true;

@@ -4,7 +4,8 @@
     <span class="xar-mod-title"><xar:mlstring>Administration - SiteContact</xar:mlstring></span>
 </div>
 <div class="xar-mod-body">
-    <img src="modules/adminpanels/xarimages/admin.gif" class="xar-module-icon" alt="official icon" width="96" height="96" />
+ <xar:template type="module" file="admin-menu" />
+    <img src="#xarTplGetImage('admin_generic.gif','sitecontact')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
     <h2>
         <xar:mlstring>Overview</xar:mlstring>
     </h2>
@@ -13,20 +14,67 @@
     </h3>
         <p style="margin-left: 1em; margin-right: 1em; text-align:left;"> <em><xar:mlstring>SiteContact
             is a simple module that allows visitors to easily contact the Site
-            Administrator by email.</xar:mlstring></em>
+            Administrator by email. The module allows you to setup one or more forms with different fields and configurations using dynamic data. It comes preinstalled with one default Contact Form.</xar:mlstring></em>
         </p>
-    <h3>
+    <h2>
         <xar:mlstring>How to use it?</xar:mlstring>
-    </h3>
+    </h2>
         <p style="margin-left: 1em; margin-right: 1em; text-align:left;"> <xar:mlstring>Install SiteContact
-            as usual from the administration Module listing. There are no tables involved. Then, setup the module configuration in Modify Config option.</xar:mlstring>
+            as usual from the administration Module listing. There is one table (sitecontact) currently used to hold different contact form definitions. Then, setup the module configuration in Modify Config option.
+            </xar:mlstring>
         </p>
         <p style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <xar:mlstring>Sitecontact is ready to go. You can use the default form without any further configuration.
+            If you want to configure your default contact form, or create further forms, review the following.
+            </xar:mlstring>
+        </p>
+        <h3><xar:mlstring>Using and Customizing Display and Email Forms</xar:mlstring></h3>
+      <ol>
+        <li><xar:mlstring>
+        By default, a user will be able to see the Default Form  that you have configured for your site (see ModifyConfig options below). If no sitecontact form is specified in a URL the default form is used.
+        </xar:mlstring></li>
+
+        <li><xar:mlstring>
+        You can provide a link to any form by appending the <strong>formname</strong> to the main user url eg <code>index.php?module=sitecontact&amp;scform=myform</code>
+        </xar:mlstring></li>
+
+        <li><xar:mlstring>
+        All forms will use the default display template (user-main.xd) for display of the form on your site. You can also create custom templates with the name of your form appended to the end (<code>user-main-myform.xd</code>).
+        Form templates can be overridden in your theme as per other Xaraya templates, and will fall back to the default if no others exist (eg create <code>user-main-myform.xt</code> in your themes/yourtheme/modules/sitecontact directory).
+        </xar:mlstring></li>
+        <li><xar:mlstring>You can also create override templates that are used to send the emails to Admins of your site, or the users when they request a copy of the email. Each has both a HTML and TEXT template. The <strong>admin</strong> default html
+         and text email templates are <code>user-adminmail-html.xd</code> and <code>user-adminmail-text.xd</code> respectively.
+          The <strong>user</strong> templates are <code>user-usermail-html.xd</code> and <code>user-usermail-text.xd</code> respectively.
+         Override them in your theme.
+        </xar:mlstring>
+        </li>
+        <li><xar:mlstring>You can go further and create custom email templates for html and text for each FORM. eg if your
+         form is called <strong>basic</strong> you can create an override text email template called <code>user-usermail-html-basic.xt</code></xar:mlstring>
+        </li>
+        </ol>
+
+        <h3><xar:mlstring>Manage Contact Forms</xar:mlstring></h3>
+        <ol>
+        <li><xar:mlstring>
+        This option allows you to create new forms, modify, delete and preview existing ones. Sitecontact is installed with a default 'basic' form that you can start to use immediately.
+        Read below for the configuration options.
+        </xar:mlstring></li>
+
+        <li><xar:mlstring>
+        You can create new forms that will initially have configuration settings populated with the default values that you have set in the Modify Config option (see below).
+        </xar:mlstring></li>
+
+        </ol>
+
+        <h3><xar:mlstring>Modify Configuration (Global Configuration)</xar:mlstring></h3>
+        <p style="margin-left: 1em; margin-right: 1em; text-align:left;">
         <xar:mlstring>There are a number of variables you can set in the Modify Config
-                option. If any are left blank, a default is provided.</xar:mlstring>
+                option. These options are preset on install but you can change them. They are the GLOBAL options for sitecontact 
+                and will be used for all *new* contact forms that you create.</xar:mlstring>
         </p>
           <ol>
             <li><xar:mlstring>Check the Short URL checkbox to use short urls</xar:mlstring></li>
+            <li><xar:mlstring>You should set a <strong>Default Form</strong> for use on your site when no other forms are specified.</xar:mlstring></li>
             <li><xar:mlstring>You can use HTML in your emails or in the configurable text that
                 displays in SiteContact pages. But, please, if you do, make sure
                 you have HTML allowed in your site by configuring the
@@ -54,10 +102,14 @@
             Admin notification email (user-adminmail-text.xd and user-adminmail-html.xd) and the user (user-
             usermail-text.xd and user-usermail-html.xd).
             </xar:mlstring></li>
-            <li><xar:mlstring><strong>Hook Dynamic Data to Site Contact</strong> and setup your custom dynamic data property fields.
-            These currently assume the output of the dynamic data is string type.
-            Your Dynamic Data fields will be included in outgoing emails by default, but you can further template the dynamic data output in the respective templates.
-
+        </ol>
+    <h3><xar:mlstring>Extend Forms with Dynamic Data</xar:mlstring></h3>
+    <ol>
+            <li><xar:mlstring><strong>Hook Dynamic Data to Site Contact forms</strong> for either individual
+            forms or all of them and setup your custom dynamic data property fields for each of your sitecontact forms.
+            Your Dynamic Data fields will be <strong>included by default</strong> in display templates or outgoing emails  - no need to add them manually. </xar:mlstring></li>
+            <li><xar:mlstring>
+            You can further template the dynamic data output in the respective user display templates, and the email templates. You can also <strong>remove</strong> fields that you do not want displayed by editing the templates, or retemplate their output. Who said simple modules aren't powerful :)
             </xar:mlstring></li>
         </ol>
     <h3>
@@ -80,7 +132,7 @@
               </li>
          </ul>
          <p class="xar-sub">
-             <strong>&nbsp;<xar:mlstring>Sitecontact Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2005-09-24
+             <strong>&nbsp;<xar:mlstring>Sitecontact Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.5.0&nbsp; 2005-10-20
          </p>
       </div>
 

@@ -27,9 +27,10 @@ function sitecontact_adminapi_getmenulinks()
                                                 'overview'),
             'title' => xarML('SiteContact Overview'),
             'label' => xarML('Overview'));
-        $menulinks[] = Array('url' => xarModURL('sitecontact',
-                'admin',
-                'modifyconfig'),
+       $menulinks[] = Array('url' => xarModURL('sitecontact','admin','managesctypes'),
+            'title' => xarML('Manage the contact forms'),
+            'label' => xarML('Manage Contact Forms'));
+        $menulinks[] = Array('url' => xarModURL('sitecontact','admin','modifyconfig'),
             'title' => xarML('Modify the configuration for the module'),
             'label' => xarML('Modify Config'));
     }
@@ -40,6 +41,6 @@ function sitecontact_adminapi_getmenulinks()
      * to the main menu for display.
      */
     return $menulinks;
-} 
+}
 
 ?>

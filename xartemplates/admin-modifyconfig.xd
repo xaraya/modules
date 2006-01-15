@@ -1,21 +1,25 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
 <script type="text/javascript">
-
 </script>
-
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>Site Contact Administration</xar:mlstring></span>
 </div>
 <div class="xar-mod-body">
-    <h2><xar:mlstring>Modify Site Contact Configuration</xar:mlstring></h2>
-    
+<!--<xar:template file="navtabs" type="module" /> -->
+ <xar:template type="module" file="admin-menu" />
+    <h2>
+    <xar:ml>
+       <xar:mlstring>Modify #(1)</xar:mlstring>
+       <xar:mlvar>#$sctypename#</xar:mlvar>
+    </xar:ml>
+    </h2>
+    <p>
+        <xar:mlstring>Global configuration is used as default for creation of all new sitecontact forms</xar:mlstring>
+    </p>
     <form method="post" action="&xar-modurl-sitecontact-admin-updateconfig;">
-    <input type="hidden" name="authid" id="authid" value="#$authid#" />
-
-    <fieldset>
+   <fieldset>
     <legend><xar:mlstring>General Options</xar:mlstring></legend>
-
         <div class="xar-form-input-wrapper">
             <label for="shorturls" class="xar-form-label" title="#xarML('Use short URLS for contact form.')#">
                 <xar:mlstring>Support Short URLs</xar:mlstring>
@@ -47,10 +51,35 @@
             </label>
             <input type="text" name="aliasname" id="aliasname" value="#xarModGetVar('sitecontact', 'aliasname')#" size="32" maxlength="100" />
         </div>
-
+        <div class="xar-form-input-wrapper">
+            <label for="scdefaultform" class="xar-form-label" title="#xarML('Default form for display on your site')#">
+                <xar:mlstring>Default Sitecontact Form:</xar:mlstring>
+            </label>
+            <select name="defaultform" id="defaultform">
+                    <option value="0">
+                        <xar:mlstring>Select default</xar:mlstring>
+                    </option>
+                    <xar:foreach in="$scforms" value="$v" key="$k">
+                    <xar:set name="uppername">ucfirst($v['sctypename'])</xar:set>
+                        <xar:if condition="$v['scid'] eq $scdefaultform">
+                            <option id="defaultform_#$v['scid']#" value="#$v['scid']#" selected="selected">#$uppername#</option>
+                        <xar:else />
+                            <option id="defaultform_#$v['scid']#" value="#$v['scid']#">#$uppername#</option>
+                        </xar:if>
+                    </xar:foreach>
+            </select>
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label for="itemsperpage" class="xar-form-label" title="#xarML('Number of sitecontact forms listed per page in admin.')#">
+                    <xar:mlstring>
+                        Forms listed per admin page
+                    </xar:mlstring>
+            </label>
+            <input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#$itemsperpage#" />
+        </div>
         <div class="xar-form-input-wrapper">
             <label for="scdefaultemail" class="xar-form-label" title="#xarML('Default site email for receiving and sending contact emails. Defaults to Admin email')#">
-                <xar:mlstring>Default email:</xar:mlstring>
+                <xar:mlstring>Default 'From' email:</xar:mlstring>
 
             </label>
             <input type="text" name="scdefaultemail" id="scdefaultemail" size="40" maxlength="128" value="#$scdefaultemail#" />
@@ -58,14 +87,25 @@
 
         <div class="xar-form-input-wrapper">
             <label for="scdefaultname" class="xar-form-label" title="#xarML('Default name for receiving and sending contact emails. Defaults to site Admin name')#">
-                <xar:mlstring>Default email name:</xar:mlstring>
+                <xar:mlstring>Default 'From' email name:</xar:mlstring>
             </label>
             <input type="text" name="scdefaultname" id="scdefaultname" size="40" maxlength="128" value="#$scdefaultname#" />
         </div>
+          <label for="scactive" class="xar-form-label" title="#xarML('Site contact forms active by default?')#">
+               <xar:mlstring>New forms Active by default?</xar:mlstring>
+            </label>
+            <xar:if condition="$formisactive">
+                <input type="checkbox" name="scactive" id="scactive" value="1" checked="checked" />
+            <xar:else />
+                <input type="checkbox" name="scactive" id="scactive" value="1" />
+            </xar:if>
+        </div>
+
+
     </fieldset>
 
     <fieldset>
-    <legend><xar:mlstring>Contact Page Options</xar:mlstring></legend>
+    <legend><xar:mlstring>Contact Form Default Options</xar:mlstring></legend>
 
         <div class="xar-form-input-wrapper">
             <label for="customtitle" class="xar-form-label" title="#xarML('Custom title for your contact page.')#">
@@ -80,7 +120,7 @@
             </label>
             <textarea name="customtext" id="customtext" rows="5" cols="50">#$customtext#</textarea>
         </div>
-    
+
         <div class="xar-form-input-wrapper">
          <label for="webconfirmtext" class="xar-form-label" title="#xarML('Custom text displayed on your site after the user sends their message.')#">
                  <xar:mlstring>Confirm Page Text:</xar:mlstring>
@@ -90,7 +130,7 @@
     </fieldset>
 
    <fieldset>
-    <legend><xar:mlstring>User Email Options</xar:mlstring></legend>
+    <legend><xar:mlstring>User Email Default Options</xar:mlstring></legend>
         <div class="xar-form-input-wrapper">
          <label for="optiontext" class="xar-form-label" title="#xarML('Subject and optional email address per line. Form : Subject[semicolon]email[comma]')#">
                  <xar:mlstring>Options for subject with optional alternative email address:</xar:mlstring>
@@ -149,14 +189,13 @@
 
     <fieldset>
        <legend><xar:mlstring>Enabled Hooks</xar:mlstring></legend>
-            <xar:if condition="!empty($hooks)">
-                <xar:foreach in="$hooks" key="$hookmodule">
-                    #$hooks[$hookmodule]#
-                </xar:foreach>
-            </xar:if>
+       <xar:mlstring>Enable Dynamic Data by hooking Dynamic Data to Sitecontact or individual forms at </xar:mlstring>
+       <a href="&xar-modurl-modules-admin-hooks;&amp;hook=dynamicdata"><xar:mlstring>Modules-Configure Hooks-DynamicData</xar:mlstring></a>
     </fieldset>
     <fieldset>
         <div class="xar-form-input-wrapper-after">
+          <input type="hidden" name="authid" id="authid" value="#$authid#" />
+          <input type="hidden" name="scid" id="scid" value="#$scid#" />
             <xar:set name="$updatebutton"><xar:mlstring>Update Configuration</xar:mlstring></xar:set>
                 <input type="submit" value="#$updatebutton#" />
         </div>
