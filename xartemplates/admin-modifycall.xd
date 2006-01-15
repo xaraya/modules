@@ -89,7 +89,7 @@
                             <input type="hidden" name="authid" id="authid" value="#$authid#" />
                             <input type="hidden" name="callid" id="callid" value="#$item['callid']#" />
                             <input type="hidden" name="enterts" id="enterts" value="#$item['enterts']#" />
-                            <input type="submit" value="xarML('Update call')" />
+                            <input type="submit" value="#xarML('Update call')#" />
                         </div>
                     </fieldset>
             </form>
