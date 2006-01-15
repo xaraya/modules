@@ -128,10 +128,11 @@ Administrator
 */
     // Register our hooks that we are providing to other modules.  The example
     // module shows an example hook in the form of the user menu.
-    if (!xarModRegisterHook('item', 'usermenu', 'GUI',
+ /*   if (!xarModRegisterHook('item', 'usermenu', 'GUI',
                             'sitecontact', 'user', 'usermenu')) {
         return false;
     }
+ */
 /*
     $instancestable = $xartable['block_instances'];
     $typestable = $xartable['block_types'];
