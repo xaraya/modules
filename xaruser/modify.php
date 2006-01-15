@@ -97,7 +97,7 @@ function itsp_user_modify($args)
             $lcourse['name'] = xarVarPrepForDisplay($course['name']);
             $lcourse['intendedcredits'] = $course['intendedcredits'];
             /* Add this item to the list of items to be displayed */
-            $data['lcourses'][] = $item;
+            $data['lcourses'][] = $lcourse;
         }
 
 

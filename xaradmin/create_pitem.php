@@ -1,6 +1,6 @@
 <?php
 /**
- * Create a new plan
+ * Create a new pitem
  *
  * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
@@ -12,9 +12,9 @@
  * @author ITSP Module Development Team
  */
 /**
- * Create a new plan
+ * Create a new pitem
  *
- * Standard function to create a new plan
+ * Standard function to create a new pitem
  * This is a standard function that is called with the results of the
  * form supplied by xarModFunc('itsp','admin','new') to create a new item
  *
@@ -22,16 +22,16 @@
  * @param  $ 'name' the name of the item to be created
  * @param  $ 'number' the number of the item to be created
  */
-function itsp_admin_create($args)
+function itsp_admin_create_pitem($args)
 {
     extract($args);
 
     // Get parameters from whatever input we need.
-    if (!xarVarFetch('planid',     'id',     $planid,     $planid,    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('pitemid',     'id',     $pitemid,     $pitemid,    XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('objectid',   'id',     $objectid,   $objectid,  XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('planname',   'str:1:', $planname,   $planname,  XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('plandesc',   'str:1:', $plandesc,   $plandesc,  XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('planrules',  'str:1:', $planrules,  $planrules, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('pitemname',   'str:1:', $pitemname,   $pitemname,  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('pitemdesc',   'str:1:', $pitemdesc,   $pitemdesc,  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('pitemrules',  'str:1:', $pitemrules,  $pitemrules, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('credits',    'int:1:', $credits,    $credits,   XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('mincredit',  'int:1:', $mincredit,  $mincredit, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('dateopen',   'int:1:', $dateopen,   $dateopen,  XARVAR_NOT_REQUIRED)) return;
@@ -52,8 +52,8 @@ function itsp_admin_create($args)
         $invalid['credits'] = 1;
         $number = '';
     }
-    if (empty($planname) || !is_string($planname)) {
-        $invalid['plan'] = 1;
+    if (empty($pitemname) || !is_string($pitemname)) {
+        $invalid['pitemname'] = 1;
         $name = '';
     }
 /*
@@ -65,9 +65,9 @@ function itsp_admin_create($args)
     if (count($invalid) > 0) {
         return xarModFunc('itsp', 'admin', 'new',
                           array('invalid' => $invalid,
-                                'planname' => $planname,
-                                'plandesc' => $plandesc,
-                                'planrules' => $planrules,
+                                'pitemname' => $pitemname,
+                                'pitemdesc' => $pitemdesc,
+                                'pitemrules' => $pitemrules,
                                 'credits' => $credits,
                                 'mincredit' => $mincredit,
                                 'dateopen' => $dateopen,
@@ -77,20 +77,20 @@ function itsp_admin_create($args)
      /* Confirm authorisation code. */
     if (!xarSecConfirmAuthKey()) return;
     /* The API function is called. */
-    $planid = xarModAPIFunc('itsp',
+    $pitemid = xarModAPIFunc('itsp',
                           'admin',
-                          'create',
-                          array('planname' => $planname,
-                                'plandesc' => $plandesc,
-                                'planrules' => $planrules,
-                                'credits' => $credits,
-                                'mincredit' => $mincredit,
-                                'dateopen' => $dateopen,
-                                'dateclose' => $dateclose));
+                          'create_pitem',
+                          array('pitemname'  => $pitemname,
+                                'pitemdesc'  => $pitemdesc,
+                                'pitemrules' => $pitemrules,
+                                'credits'    => $credits,
+                                'mincredit'  => $mincredit,
+                                'dateopen'   => $dateopen,
+                                'dateclose'  => $dateclose));
     /* The return value of the function is checked here, and if the function
      * suceeded then an appropriate message is posted.
      */
-    if (!isset($planid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($pitemid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     xarSessionSetVar('statusmsg', xarML('ITSP Plan was successfully created!'));
     /* This function generated no output, and so now it is complete we redirect
      * the user to an appropriate page for them to carry on their work

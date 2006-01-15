@@ -1,6 +1,6 @@
 <?php
 /**
- * Add new item
+ * Add new planitem
  *
  * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
@@ -12,7 +12,7 @@
  * @author ITSP Module Development Team
  */
 /**
- * Add a new plan
+ * Add a new planitem
  *
  * This is a standard function that is called whenever an administrator
  * wishes to create a new module item
@@ -20,14 +20,15 @@
  * @author ITSP module development team
  * @return array
  */
-function itsp_admin_new($args)
+function itsp_admin_new_pitem($args)
 {
     extract($args);
 
+
     // Get parameters from whatever input we need.
-    if (!xarVarFetch('planname',   'str:1:', $planname,   $planname,  XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('plandesc',   'str:1:', $plandesc,   $plandesc,  XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('planrules',  'str:1:', $planrules,  $planrules, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('pitemname',   'str:1:', $pitemname,   $pitemname,  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('pitemdesc',   'str:1:', $pitemdesc,   $pitemdesc,  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('pitemrules',  'str:1:', $pitemrules,  $pitemrules, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('credits',    'int:1:', $credits,    $credits,   XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('mincredit',  'int:1:', $mincredit,  $mincredit, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('dateopen',   'int:1:', $dateopen,   $dateopen,  XARVAR_NOT_REQUIRED)) return;
@@ -51,7 +52,7 @@ function itsp_admin_new($args)
 
     $item = array();
     $item['module'] = 'itsp';
-    $item['itemtype'] = 1;
+    $item['itemtype'] = 3;
     $hooks = xarModCallHooks('item', 'new', '', $item);
 
     if (empty($hooks)) {
@@ -66,21 +67,21 @@ function itsp_admin_new($args)
     /* For E_ALL purposes, we need to check to make sure the vars are set.
      * If they are not set, then we need to set them empty to surpress errors
      */
-    if (empty($planname)) {
-        $data['planname'] = '';
+    if (empty($pitemname)) {
+        $data['pitemname'] = '';
     } else {
-        $data['planname'] = $planname;
+        $data['pitemname'] = $pitemname;
     }
 
-    if (empty($plandesc)) {
-        $data['plandesc'] = '';
+    if (empty($pitemdesc)) {
+        $data['pitemdesc'] = '';
     } else {
-        $data['plandesc'] = $plandesc;
+        $data['pitemdesc'] = $pitemdesc;
     }
-    if (empty($planrules)) {
-        $data['planrules'] = '';
+    if (empty($pitemrules)) {
+        $data['pitemrules'] = '';
     } else {
-        $data['planrules'] = $planrules;
+        $data['pitemrules'] = $pitemrules;
     }
     if (empty($credits)) {
         $data['credits'] = '';

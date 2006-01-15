@@ -39,6 +39,11 @@ function itsp_adminapi_getmenulinks()
             'title' => xarML('Adds a new plan.'),
             'label' => xarML('Add Plan'));
     }
+    if (xarSecurityCheck('AddITSPPlan', 0)) {
+        $menulinks[] = Array('url' => xarModURL('itsp','admin','new_pitem'),
+            'title' => xarML('Adds a new planitem.'),
+            'label' => xarML('Add PlanItem'));
+    }
     /* Security Check */
     if (xarSecurityCheck('EditITSPPlan', 0)) {
         $menulinks[] = Array('url' => xarModURL('itsp','admin','view'),

@@ -1,0 +1,142 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<!-- This Javascript will check for required fields before the form is submitted. -->
+<xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
+<script type="text/javascript">
+<!--
+    // Enter name of mandatory fields
+    var fieldRequired = Array("pitemname", "credits");
+    // Enter field description to appear in the dialog box
+    var fieldDescription = Array("Name", "Credits");
+// -->
+</script>
+
+<!-- common admin menu for this module - remove link to the current function -->
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>ITSP Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>New Plan</xar:mlstring></h2>
+
+    <form method="post" action="&xar-modurl-itsp-admin-create_pitem;" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
+        <fieldset>
+            <legend><xar:mlstring>Creating a new pitem</xar:mlstring></legend>
+
+            <div class="xar-form-input-wrapper">
+                 <label for="name" class="xar-form-label" title="#xarML('This is the item name')#">
+                      <xar:mlstring>Item Name:</xar:mlstring>
+                 </label>
+                 <input type="text" name="pitemname" id="pitemname" value="#$pitemname#" maxlength="32" class="xar-form-textmedium" />
+
+                 <xar:if condition="!empty($invalid['pitemname'])">
+                     <div class="xar-error">
+                         <xar:mlstring>ERROR! This is not a valid name</xar:mlstring>
+                     </div>
+                 <xar:elseif condition="!empty($invalid['duplicate'])"/>
+                     <div class="xar-error">
+                         <xar:mlstring>ERROR! This is a duplicate name</xar:mlstring>
+                     </div>
+                 </xar:if>
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                <label for="pitemdesc" class="xar-form-label" title="#xarML('This is the item number')#">
+                    <xar:mlstring>Item Plan Description:</xar:mlstring>
+                </label>
+                <xar:data-input name="pitemdesc" type="textarea_medium" value="$pitemdesc" />
+                <xar:if condition="!empty($invalid['pitemdesc'])">
+                    <div class="xar-error">
+                        <xar:mlstring>ERROR! This is not a valid description</xar:mlstring>
+                    </div>
+                </xar:if>
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                 <label for="pitemrules" class="xar-form-label" title="#xarML('This is the rule that applies to this pitem')#">
+                        <xar:mlstring>Rules for this pitem:</xar:mlstring>
+                 </label>
+                 <input type="text" name="pitemrules" id="pitemrules" value="#$pitemrules#" maxlength="255" class="xar-form-textmedium" />
+                 <xar:if condition="!empty($invalid['pitemrules'])">
+                     <div class="xar-error">
+                            <xar:mlstring>ERROR! This is not a valid rule</xar:mlstring>
+                     </div>
+                 </xar:if>
+            </div>
+            <div class="xar-form-input-wrapper">
+                 <label for="credits" class="xar-form-label" title="#xarML('This is the credits that need to be obtained in the pitem')#">
+                        <xar:mlstring>Credits:</xar:mlstring>
+                 </label>
+                 <input type="text" name="credits" id="credits" value="#$credits#" maxlength="32" class="xar-form-textshort" />
+                 <xar:if condition="!empty($invalid['credits'])">
+                     <div class="xar-error">
+                            <xar:mlstring>ERROR! This is not a valid credits</xar:mlstring>
+                     </div>
+                 </xar:if>
+            </div>
+            <div class="xar-form-input-wrapper">
+                 <label for="mincredit" class="xar-form-label" title="#xarML('This is the mincredits that need to be obtained in the pitem')#">
+                      <xar:mlstring>Mincredits:</xar:mlstring>
+                 </label>
+                 <input type="text" name="mincredit" id="mincredit" value="#$mincredit#" maxlength="32" class="xar-form-textshort" />
+                 <xar:if condition="!empty($invalid['mincredits'])">
+                     <div class="xar-error">
+                            <xar:mlstring>ERROR! This is not a valid mincredits</xar:mlstring>
+                     </div>
+                 </xar:if>
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                 <label for="dateopen" class="xar-form-label" title="#xarML('This is the date this pitem can be applied to')#">
+                        <xar:mlstring>Date to open the plan item:</xar:mlstring>
+                 </label>
+                 <xar:data-input name="dateopen" type="calendar" validation="date" value="$dateopen" />
+                 <xar:if condition="!empty($invalid['dateopen'])">
+                     <div class="xar-error">
+                            <xar:mlstring>ERROR! This is not a valid date</xar:mlstring>
+                     </div>
+                 </xar:if>
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                 <label for="name" class="xar-form-label" title="#xarML('This is the date this pitem can be applied to')#">
+                        <xar:mlstring>Date this plan item closes:</xar:mlstring>
+                 </label>
+                 <xar:data-input name="dateclose" type="calendar" validation="date" value="$dateclose" />
+                 <xar:if condition="!empty($invalid['dateclose'])">
+                     <div class="xar-error">
+                            <xar:mlstring>ERROR! This is not a valid date</xar:mlstring>
+                     </div>
+                 </xar:if>
+            </div>
+
+        </fieldset>
+        <xar:if condition="!empty($hookoutput)">
+         <fieldset>
+            <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
+                <xar:foreach in="$hookoutput" key="$hookmodule">
+              <!--
+                You can display individual hooks if you want using xar:if statements
+
+                <xar:if condition="($hookmodule eq 'categories') and !empty($hookmodule)">
+                    #$hookoutput['categories']#
+                </xar:if>
+
+                or display them all with one command as follows
+                -->
+                #$hookoutput[$hookmodule]#
+                </xar:foreach>
+        </fieldset>
+        </xar:if>
+        <fieldset>
+            <div class="xar-form-input-wrapper-after">
+        <!--
+            // Add an authorisation ID - this adds a hidden field in the form that
+            // contains an authorisation ID.  The authorisation ID is very important in
+            // preventing certain attacks on the website
+        -->
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <input type="submit" value="#xarML('Add the plan item')#" />
+            </div>
+        </fieldset>
+    </form>
+</div>
