@@ -188,6 +188,11 @@ function sitecontact_upgrade($oldversion)
              return sitecontact_upgrade('0.4.0');
              break;
         case '0.4.0':
+          // Remove incomplete module hook until ready
+           if (!xarModUnregisterHook('item', 'usermenu', 'GUI',
+              'sitecontact', 'user', 'usermenu')) {
+               return false;
+           }
             /* New modvars */
             xarModSetVar('sitecontact', 'defaultform',1);
             xarModSetVar('sitecontact', 'scactive',1);            
@@ -299,13 +304,13 @@ function sitecontact_delete()
                        'unregister_block_type',
                  array('modName' => 'sitecontact',
                        'blockType' => 'sitecontactblock'))) return;
-*/
+
     // Remove module hooks
     if (!xarModUnregisterHook('item', 'usermenu', 'GUI',
             'sitecontact', 'user', 'usermenu')) {
         return false;
     }
-
+*/
     xarRemoveMasks('sitecontact');
     xarRemoveInstances('sitecontact');
 
