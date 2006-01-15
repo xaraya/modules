@@ -21,9 +21,10 @@
  * @return path to be added to index.php for a short URL, or empty if failed
  */
 function sitecontact_userapi_encode_shorturl($args)
-{ 
+{
     /* Get arguments from argument array */
     extract($args);
+
     /* Check if we have something to work with */
     if (!isset($func)) {
         return;
@@ -51,20 +52,20 @@ function sitecontact_userapi_encode_shorturl($args)
         if (($module == $alias) && ($usealias)){
             /* OK, we can use a 'fake' module name here */
             $path = '/' . $aliasname . '/';
-            if (isset($scform) && isset($message))  {
-                $path = '/' . $aliasname . '/' . $scform .'/' . $message;
-            } elseif (isset($message) && is_numeric($message) && (!isset($scform))) {
+            if (isset($scid) && isset($message))  {
+                $path = '/' . $aliasname . '/' . $message .'/' . $scid;
+            } elseif (isset($message) && (!isset($scid))) {
                 $path = '/' . $aliasname . '/' . $message;
-            } elseif (isset($scform) && !isset($message)) {
+            } elseif (isset($scform) && is_string($scform) && !isset($message)) {
                $path = '/' . $aliasname . '/' . $scform;
             }
         }else {
             $path = '/' . $module . '/';
-             if (isset($sctypename) && isset($message))  {
-                $path = '/' . $module . '/' . $scform .'/' . $message;
-            } elseif (isset($message) && is_numeric($message) && (!isset($scform))) {
+            if (isset($scid) && isset($message))  {
+                $path = '/' . $module . '/' . $message .'/' . $scid;
+            } elseif (isset($message) && (!isset($scid))) {
                 $path = '/' . $module . '/' . $message;
-            } elseif (isset($scform) && !isset($message)) {
+            } elseif (isset($scform) && is_string($scform) && !isset($message)) {
                $path = '/' . $module . '/' . $scform;
             }
         }
@@ -72,24 +73,22 @@ function sitecontact_userapi_encode_shorturl($args)
           if (($module == $alias) && ($usealias)){
               $path = '/' . $aliasname . '/contactus';
 
-              if (isset($message) && is_numeric($message) && isset($scform)) {
-                  $path = '/' .$aliasname  . '/contactus/' .'/'.$scform.'/'. $message;
-              } elseif (!isset($message) && isset($scform)){
-                    $path = '/' .$aliasname  . '/contactus/' .'/'.$scform;
-              } elseif (isset($message) && is_numeric($message) && !isset($scform)) {
-                     $path = '/' .$aliasname  . '/contactus/' .'/'. $message;
+              if (isset($message)&& is_numeric($message) && isset($scid) && is_numeric($scid)) {
+                  $path = '/' .$aliasname  . '/contactus/' . $message.'/'. $scid;
+              } elseif (isset($message) && is_numeric($message) && !isset($scid)) {
+                     $path = '/' .$aliasname  . '/contactus/' .$message;
               }
-          }else{
-              $path = '/' . $module . '/contactus';
-              if (isset($message) && is_numeric($message) && isset($scform)) {
-                  $path = '/' .$module  . '/contactus/' .'/'.$scform.'/'. $message;
-              } elseif (!isset($message) && isset($scform)){
-                    $path = '/' .$module  . '/contactus/' .'/'.$scform;
-              } elseif (isset($message) && is_numeric($message) && !isset($scform)) {
-                     $path = '/' .$module  . '/contactus/' .'/'. $message;
+          }else {
+           if (isset($message) && is_numeric($message) && isset($scid) && is_numeric($scid)) {
+                  $path = '/' .$module  . '/contactus/' .$message.'/'. $scid;
+              } elseif (!isset($message) && isset($scid)){
+                    $path = '/' .$module  . '/contactus/' .$scform;
+              } elseif (isset($message) && !isset($scid)) {
+                     $path = '/' .$module  . '/contactus/'. $message;
               }
           }
     }
+  
     /* add some other module arguments as standard URL parameters */
     if (!empty($path)) {
         if (isset($startnum)) {

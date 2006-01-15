@@ -25,7 +25,7 @@ function sitecontact_user_main()
 
     if(!xarVarFetch('message',    'isset',  $message,    NULL, XARVAR_DONT_SET)) {return;}
 	if(!xarVarFetch('sctypename', 'str:0:', $sctypename, NULL, XARVAR_NOT_REQUIRED)) {return;}
-	if(!xarVarFetch('scform',     'str:0:', $scform, NULL, XARVAR_NOT_REQUIRED)) {return;}
+	if(!xarVarFetch('scform',     'str:0:', $scform,     NULL, XARVAR_NOT_REQUIRED)) {return;}
 	if(!xarVarFetch('scid',       'int:1:', $scid,       $defaultformid, XARVAR_NOT_REQUIRED)) {return;}
     if (isset($scform) && !isset($sctypename)) { //provide alternate entry name
       $sctypename=$scform;
@@ -50,6 +50,7 @@ function sitecontact_user_main()
        $formdata2 = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid'=>$scid));
     } else {
      //hmm something would be wrong
+     $formdata2 = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid'=>$scid));
     }
 
     //now what have we got ..

@@ -41,25 +41,45 @@ function sitecontact_userapi_decode_shorturl($params)
     if ((strtolower($params[0]) == 'sitecontact') || (strtolower($params[0] == $aliasname))) {
         array_shift($params);
     }
+  
+   $sctypes = xarModAPIFunc('sitecontact','user','getcontacttypes');
 
     /* If no path components then return. */
    if (empty($params[0])) {
         /* nothing specified -> we'll go to the main function */
         return array('main', $args);
+        
+  } elseif (preg_match('/^contactus/i', $params[0])) {
+        if (!empty($params[1]) && (preg_match('/^(\d+)/', $params[1], $matches))){
+            $args['message'] = (int)$matches[0];
+            if (!empty($params[2]) &&  (preg_match('/^(\d+)/', $params[2], $matches)))  {
+              $args['scid'] = (int)$matches[0];
+            }
+        }elseif (!empty($params[1]) && empty($params[2]) && (preg_match('/^(\d+)/', $params[1], $matches))){
+            $args['message'] = (int)$matches[0];
+            $args['scid'] = null;
+        }
+var_dump($args);
+        return array('contactus', $args);
+     }elseif (!empty($params[0]) && (preg_match('/^(\d+)/', $params[0], $matches))) {
+        $args['message'] = $matches[0];
+        if (!empty($params[1])  &&  (preg_match('/^(\d+)/', $params[1], $matches))) {
+            $args['scid'] = (int)$matches[0];
+        }
+         return array('main', $args);
+     }elseif (!empty($params[0]) && (preg_match('/^(\w+)/',$params[0],$matches))) {
+        $args['scform'] = $matches[0];
+        return array('main', $args);
+
     } elseif (preg_match('/^index/i', $params[0])) {
         /* some search engine/someone tried using index.html (or similar)
          * -> we'll go to the main function
          */
         return array('main', $args);
 
-    } elseif (preg_match('/^contactus/i', $params[0])) {
-        /* something that starts with 'list' is probably for the view function
-         * Note : make sure your encoding/decoding is consistent ! :-)
-         */
-        return array('contactus', $args);
     } elseif (preg_match('/^(\d+)/', $params[0], $matches)) {
-         $messageid = $matches[0];
-        $args['message'] = $messageid;
+         $message = $matches[0];
+        $args['message'] = (int)$message;
         return array('main', $args);
     } else {
 
