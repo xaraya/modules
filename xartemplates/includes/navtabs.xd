@@ -1,0 +1,29 @@
+<xar:set name="compare">xarServerGetCurrentURL()</xar:set>
+<xar:style scope="module" module="base" file="navtabs" />
+<dl class="xar-tabs">
+    <dt class="help">
+        <xar:mlstring>
+            SiteContact Form:
+        </xar:mlstring>
+
+    </dt>
+    <xar:foreach in="$scfilters" value="$scfilter">
+    <xar:sec mask="EditSiteContact" catch="false">
+     <!--   <xar:set name="viewurl">xarModURL('sitecontact','admin','modifyconfig',array('scid'=>$scid))</xar:set>-->
+    <xar:set name="viewurl">#$scfilter['sclink']#</xar:set>
+        <xar:if condition="$compare eq $viewurl">
+            <dd class="active">
+                <a href="#xarServerGetCurrentURL()#" title="#$scfilter['sctitle']#">
+                   #$scfilter['sctitle']#
+                </a>
+            </dd>
+        <xar:else />
+            <dd>
+                <a href="#$viewurl#">
+                #$scfilter['sctitle']#
+                </a>
+            </dd>
+        </xar:if>
+    </xar:sec>
+    </xar:foreach>
+</dl>
