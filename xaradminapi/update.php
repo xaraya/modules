@@ -1,6 +1,6 @@
 <?php
 /**
- * Update an itsp item
+ * Update an itsp plan
  *
  * @package modules
  * @copyright (C) 2002-2006 The Digital Development Foundation
@@ -12,7 +12,7 @@
  * @author ITSP Module Development Team
  */
 /**
- * Update an itsp item
+ * Update an itsp plan
  *
  * @author the ITSP module development team
  * @param  $args ['exid'] the ID of the item
@@ -22,11 +22,6 @@
  */
 function itsp_adminapi_update($args)
 {
-    /* Get arguments from argument array - all arguments to this function
-     * should be obtained from the $args array, getting them from other
-     * places such as the environment is not allowed, as that makes
-     * assumptions that will not hold in future versions of Xaraya
-     */
     extract($args);
     /* Argument check - make sure that all required arguments are present
      * and in the right format, if not then set an appropriate error
@@ -58,22 +53,12 @@ function itsp_adminapi_update($args)
      */
     $item = xarModAPIFunc('itsp',
         'user',
-        'getplan',
+        'get_plan',
         array('planid' => $planid));
     /*Check for exceptions */
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
-    /* Security check - important to do this as early on as possible to
-     * avoid potential security holes or just too much wasted processing.
-     * However, in this case we had to wait until we could obtain the item
-     * name to complete the instance information so this is the first
-     * chance we get to do the check
-     * Note that at this stage we have two sets of item information, the
-     * pre-modification and the post-modification.  We need to check against
-     * both of these to ensure that whoever is doing the modification has
-     * suitable permissions to edit the item otherwise people can potentially
-     * edit areas to which they do not have suitable access
-     */
+    // Security check
     if (!xarSecurityCheck('EditITSPPlan', 1, 'Plan', "$planid:All:All")) {
         return;
     }
@@ -85,20 +70,18 @@ function itsp_adminapi_update($args)
 
     $planstable = $xartable['itsp_plans'];
     $query = "UPDATE $planstable
-            SET xar_planid,
-               xar_planname,
-               xar_plandesc,
-               xar_planrules,
-               xar_credits,
-               xar_mincredits,
-               xar_dateopen,
-               xar_dateclose,
-               xar_datemodi,
-               xar_modiby)
-            VALUES (?,?,?,?,?,?,?,?,?,?)
+            SET xar_planname =?,
+               xar_plandesc =?,
+               xar_planrules =?,
+               xar_credits =?,
+               xar_mincredit =?,
+               xar_dateopen =?,
+               xar_dateclose =?,
+               xar_datemodi =?,
+               xar_modiby =?
             WHERE xar_planid = ?";
-    $bindvars = array($nextId, (string) $planname, $plandesc, $planrules, $credits, $mincredits,
-    $dateopen, $dateclose, $datemodi, $modiby);
+    $bindvars = array($planname, $plandesc, $planrules, $credits, $mincredit,
+    $dateopen, $dateclose, $datemodi, $modiby, $planid);
     $result = &$dbconn->Execute($query,$bindvars);
     /* Check for an error with the database code, adodb has already raised
      * the exception so we just return

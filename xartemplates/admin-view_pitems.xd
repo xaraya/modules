@@ -1,0 +1,68 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:base-include-javascript module="base" filename="confirmlink.js" />
+<!-- common admin menu for this module - remove link to the current function
+<a href="#$loop:item['deleteurl']#" onclick="return xar_base_confirmLink(this, '#xarVarPrepForDisplay($loop:item['deleteconfirm'])#')">
+-->
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>ITSP Plans Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>ITSP Plans</xar:mlstring></h2>
+
+    <!--
+        // display a status message to the user if an action has been
+        // taken on an item
+    -->
+    <xar:if condition="xarSessionGetVar('statusmsg') != ''">
+        <p>#xarSessionGetVar('statusmsg')#</p>
+    </xar:if>
+   <!-- the specific template for the current admin function comes here -->
+
+    <table class="xar-fullwidth">
+        <tr>
+            <th>
+                <xar:mlstring>Plan item rules</xar:mlstring>
+            </th>
+            <th>
+                <xar:mlstring>Plan item Name</xar:mlstring>
+            </th>
+            <th>
+                <xar:mlstring>Plan item Options</xar:mlstring>
+            </th>
+        </tr>
+        <xar:foreach in="$items" value="$item">
+        <tr>
+            <td>
+                #$item.pitemrules#
+            </td>
+            <td>
+                #$item.pitemid#: #$item.pitemname#
+            </td>
+            <td class="xar-align-center">
+               <xar:if condition="empty($item['editurl'])">
+                   <xar:mlstring>Edit</xar:mlstring>
+               <xar:else />
+                   <a href="#$item.editurl#"><xar:mlstring>Edit</xar:mlstring></a>
+               </xar:if>
+               |
+               <xar:if condition="empty($item['deleteurl'])">
+                   <xar:mlstring>Delete</xar:mlstring>
+               <xar:else />
+                   <a href="#$item.deleteurl#"><xar:mlstring>Delete</xar:mlstring></a>
+               </xar:if>
+            </td>
+        </tr>
+        </xar:foreach>
+    </table>
+
+    <div class="xar-align-center xar-padding-thick">
+        <!-- add the pager here -->
+        #$pager#
+    </div>
+</div>
+<!--
+    // clear the status message
+    // we put this in an if tag to prevent the function from
+    // showing '1' in the page
+-->
+<xar:if condition="xarSessionSetVar('statusmsg', '')"></xar:if>
