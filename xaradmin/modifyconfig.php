@@ -39,7 +39,7 @@ function courses_admin_modifyconfig()
      */
     $data['useAliasName'] = xarModGetVar('courses', 'useModuleAlias');
     $data['aliasname ']= xarModGetVar('courses','aliasname');
-
+    // TODO: call hook for each itemtype
     $hooks = xarModCallHooks('module', 'modifyconfig', 'courses',
                        array('module' => 'courses'));
     if (empty($hooks)) {
