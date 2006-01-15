@@ -3,7 +3,7 @@
  * Modify a plan
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -26,17 +26,17 @@ function itsp_admin_modify($args)
 
     /* Get parameters from whatever input we need.
      */
-    if (!xarVarFetch('planid',     'id',     $planid,     $planid, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('objectid',   'id',     $objectid,   $objectid, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('invalid',    'array',  $invalid,    array(), XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('planid',     'id',     $planid,     $planid,      XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('objectid',   'id',     $objectid,   $objectid,    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('invalid',    'array',  $invalid,    array(),      XARVAR_NOT_REQUIRED)) return;
 
     if (!xarVarFetch('planname',   'str:1:', $planname,   $planname,    XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('plandesc',   'str:1:', $plandesc,   $plandesc,    XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('planrules',  'str:1:', $planrules,  $planrules,    XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('credits',    'int:1:', $credits,    $credits,  XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('mincredit',  'int:1:', $mincredit,  $mincredit,  XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('dateopen',   'int:1:', $dateopen,   $dateopen,  XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('dateclose',  'int:1:', $dateclose,  $dateclose,  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('planrules',  'str:1:', $planrules,  $planrules,   XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('credits',    'int:1:', $credits,    $credits,     XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('mincredit',  'int:1:', $mincredit,  $mincredit,   XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('dateopen',   'int:1:', $dateopen,   $dateopen,    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('dateclose',  'int:1:', $dateclose,  $dateclose,   XARVAR_NOT_REQUIRED)) return;
 
     if (!empty($objectid)) {
         $planid = $objectid;
@@ -68,7 +68,7 @@ function itsp_admin_modify($args)
                  'planname'     => $planname,
                  'plandesc'     => $plandesc,
                  'credits'      => $credits,
-                 'mincredits'   => $mincredits,
+                 'mincredit'    => $mincredit,
                  'planrules'    => $planrules,
                  'dateopen'     => $dateopen,
                  'dateclose'    => $dateclose,

@@ -1,9 +1,9 @@
 <?php
 /**
- * Get a specific ITSP
+ * Get a specific plan
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -12,12 +12,12 @@
  * @author ITSP Module Development Team
  */
 /**
- * Get a specific ITSP
+ * Get a specific plan in ITSP
  *
  * Standard function of a module to retrieve a specific item
  *
  * @author the ITSP module development team
- * @param  $args ['itspid'] id of itsp item to get
+ * @param  $args ['planid'] id of plan to get
  * @returns array
  * @return item array, or false on failure
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
@@ -81,7 +81,7 @@ function itsp_userapi_get_plan($args)
      */
     $result->Close();
     // Security check
-    if (!xarSecurityCheck('ReadITSP', 1, 'ITSP', "$itspid: $planid:All")) {
+    if (!xarSecurityCheck('ReadITSPPlan', 1, 'Plan', "$planid:All:All")) {
         return;
     }
     /* Create the item array */

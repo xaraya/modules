@@ -1,9 +1,9 @@
 <?php
 /**
- * Create a new itsp item
+ * Create a new itsp plan item
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -12,7 +12,7 @@
  * @author ITSP Module Development Team
  */
 /**
- * Create a new itsp item
+ * Create a new itsp plan item
  *
  * This is a standard adminapi function to create a module item
  *
@@ -26,12 +26,7 @@
 function itsp_adminapi_create_pitem($args)
 {
     extract($args);
-    /* Argument check - make sure that all required arguments are present
-     * and in the right format, if not then set an appropriate error
-     * message and return
-     * Note : since we have several arguments we want to check here, we'll
-     * report all those that are invalid at the same time...
-     */
+    /* Argument check */
     $invalid = array();
     if (!isset($pitemname) || !is_string($pitemname)) {
         $invalid[] = 'pitemname';
@@ -91,11 +86,8 @@ function itsp_adminapi_create_pitem($args)
      */
     if (!$result) return;
 
-    /* Get the ID of the item that we inserted.  It is possible, depending
-     * on your database, that this is different from $nextId as obtained
-     * above, so it is better to be safe than sorry in this situation
-     */
-    $pitemid = $dbconn->PO_Insert_ID($pitemstable, 'xar_pitemid');
+    /* Get the ID of the item that we inserted. */
+    $pitemid = $dbconn->PO_Insert_ID($planitemstable, 'xar_pitemid');
 
     // Let any hooks know that we have created a new item.
     $item = $args;

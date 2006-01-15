@@ -3,7 +3,7 @@
  * Create a new pitem
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -63,7 +63,7 @@ function itsp_admin_create_pitem($args)
 */
     // check if we have any errors
     if (count($invalid) > 0) {
-        return xarModFunc('itsp', 'admin', 'new',
+        return xarModFunc('itsp', 'admin', 'new_pitem',
                           array('invalid' => $invalid,
                                 'pitemname' => $pitemname,
                                 'pitemdesc' => $pitemdesc,
@@ -91,7 +91,7 @@ function itsp_admin_create_pitem($args)
      * suceeded then an appropriate message is posted.
      */
     if (!isset($pitemid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-    xarSessionSetVar('statusmsg', xarML('ITSP Plan was successfully created!'));
+    xarSessionSetVar('statusmsg', xarML('ITSP Plan item was successfully created!'));
     /* This function generated no output, and so now it is complete we redirect
      * the user to an appropriate page for them to carry on their work
      */

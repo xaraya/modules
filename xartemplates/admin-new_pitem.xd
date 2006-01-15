@@ -16,11 +16,11 @@
     <span class="xar-mod-title"><xar:mlstring>ITSP Administration</xar:mlstring></span>
 </div>
 <div class="xar-mod-body">
-    <h2><xar:mlstring>New Plan</xar:mlstring></h2>
+    <h2><xar:mlstring>New Plan item</xar:mlstring></h2>
 
     <form method="post" action="&xar-modurl-itsp-admin-create_pitem;" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
         <fieldset>
-            <legend><xar:mlstring>Creating a new pitem</xar:mlstring></legend>
+            <legend><xar:mlstring>Creating a new plan item</xar:mlstring></legend>
 
             <div class="xar-form-input-wrapper">
                  <label for="name" class="xar-form-label" title="#xarML('This is the item name')#">
@@ -40,7 +40,7 @@
             </div>
 
             <div class="xar-form-input-wrapper">
-                <label for="pitemdesc" class="xar-form-label" title="#xarML('This is the item number')#">
+                <label for="pitemdesc" class="xar-form-label" title="#xarML('This is the item description')#">
                     <xar:mlstring>Item Plan Description:</xar:mlstring>
                 </label>
                 <xar:data-input name="pitemdesc" type="textarea_medium" value="$pitemdesc" />
