@@ -39,9 +39,10 @@
         </xar:mlstring></li>
 
         <li><xar:mlstring>
-        All forms will use the default display template (user-main.xd) for display of the form on your site. You can also create custom templates with the name of your form appended to the end (<code>user-main-myform.xd</code>).
-        Form templates can be overridden in your theme as per other Xaraya templates, and will fall back to the default if no others exist (eg create <code>user-main-myform.xt</code> in your themes/yourtheme/modules/sitecontact directory).
-        </xar:mlstring></li>
+        All forms will use the default display template (<code>user-main.xd</code>) for display of the form on your site.
+        You can also create custom templates with the name of your form appended to the end (user-main-<code>myform</code>.xd).
+        Form templates can be overridden in your theme as per other Xaraya templates (eg create <code>user-main-myform.xt</code> in
+         your themes/yourtheme/modules/sitecontact directory), and will fall back to the default template if no others exist.</xar:mlstring></li>
         <li><xar:mlstring>You can also create override templates that are used to send the emails to Admins of your site, or the users when they request a copy of the email. Each has both a HTML and TEXT template. The <strong>admin</strong> default html
          and text email templates are <code>user-adminmail-html.xd</code> and <code>user-adminmail-text.xd</code> respectively.
           The <strong>user</strong> templates are <code>user-usermail-html.xd</code> and <code>user-usermail-text.xd</code> respectively.
@@ -61,7 +62,7 @@
         </xar:mlstring></li>
 
         <li><xar:mlstring>
-        You can create new forms that will initially have configuration settings populated with the default values that you have set in the Modify Config option (see below).
+        You can create new forms that will initially have configuration settings populated with the default values that you have set in the global Modify Config option (see below).
         </xar:mlstring></li>
 
         </ol>
@@ -132,7 +133,7 @@
               </li>
          </ul>
          <p class="xar-sub">
-             <strong>&nbsp;<xar:mlstring>Sitecontact Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.5.0&nbsp; 2005-10-20
+             <strong>&nbsp;<xar:mlstring>Sitecontact Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.5.1&nbsp; 2006-01-15
          </p>
       </div>
 
