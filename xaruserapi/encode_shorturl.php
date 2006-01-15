@@ -43,30 +43,50 @@ function sitecontact_userapi_encode_shorturl($args)
     /* we can't rely on xarModGetName() here -> you must specify the modname */
     $module = 'sitecontact';
     $alias = xarModGetAlias($module);
+    if (isset($sctypename) && !isset($scform)) {
+         $scform=$sctypename;
+    }
     /* specify some short URLs relevant to your module */
     if ($func == 'main') {
         if (($module == $alias) && ($usealias)){
             /* OK, we can use a 'fake' module name here */
             $path = '/' . $aliasname . '/';
-            if (isset($message) && is_numeric($message)) {
+            if (isset($scform) && isset($message))  {
+                $path = '/' . $aliasname . '/' . $scform .'/' . $message;
+            } elseif (isset($message) && is_numeric($message) && (!isset($scform))) {
                 $path = '/' . $aliasname . '/' . $message;
+            } elseif (isset($scform) && !isset($message)) {
+               $path = '/' . $aliasname . '/' . $scform;
             }
         }else {
             $path = '/' . $module . '/';
-            if (isset($message) && is_numeric($message)) {
+             if (isset($sctypename) && isset($message))  {
+                $path = '/' . $module . '/' . $scform .'/' . $message;
+            } elseif (isset($message) && is_numeric($message) && (!isset($scform))) {
                 $path = '/' . $module . '/' . $message;
+            } elseif (isset($scform) && !isset($message)) {
+               $path = '/' . $module . '/' . $scform;
             }
         }
     } elseif ($func == 'contactus') {
           if (($module == $alias) && ($usealias)){
               $path = '/' . $aliasname . '/contactus';
-              if (isset($message) && is_numeric($message)) {
-                  $path = '/' .$aliasname  . '/contactus/' . $message;
+
+              if (isset($message) && is_numeric($message) && isset($scform)) {
+                  $path = '/' .$aliasname  . '/contactus/' .'/'.$scform.'/'. $message;
+              } elseif (!isset($message) && isset($scform)){
+                    $path = '/' .$aliasname  . '/contactus/' .'/'.$scform;
+              } elseif (isset($message) && is_numeric($message) && !isset($scform)) {
+                     $path = '/' .$aliasname  . '/contactus/' .'/'. $message;
               }
           }else{
               $path = '/' . $module . '/contactus';
-              if (isset($message) && is_numeric($message)) {
-                  $path = '/' . $module . '/contactus/' . $message;
+              if (isset($message) && is_numeric($message) && isset($scform)) {
+                  $path = '/' .$module  . '/contactus/' .'/'.$scform.'/'. $message;
+              } elseif (!isset($message) && isset($scform)){
+                    $path = '/' .$module  . '/contactus/' .'/'.$scform;
+              } elseif (isset($message) && is_numeric($message) && !isset($scform)) {
+                     $path = '/' .$module  . '/contactus/' .'/'. $message;
               }
           }
     }

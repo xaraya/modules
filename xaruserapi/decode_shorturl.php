@@ -23,11 +23,12 @@
  *          string arguments, or empty if it failed
  */
 function sitecontact_userapi_decode_shorturl($params)
-{ 
+{
     /* Initialise the argument list we will return */
     $args = array();
     $aliasisset = xarModGetVar('sitecontact', 'useModuleAlias');
     $aliasname = xarModGetVar('sitecontact','aliasname');
+
     if (($aliasisset) && isset($aliasname)) {
         $usealias   = true;
     } else{
@@ -50,6 +51,7 @@ function sitecontact_userapi_decode_shorturl($params)
          * -> we'll go to the main function
          */
         return array('main', $args);
+
     } elseif (preg_match('/^contactus/i', $params[0])) {
         /* something that starts with 'list' is probably for the view function
          * Note : make sure your encoding/decoding is consistent ! :-)
