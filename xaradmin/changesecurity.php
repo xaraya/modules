@@ -31,6 +31,31 @@ function security_admin_changesecurity($args)
 
     $data = array();
 
+    $has_security = xarModAPIFunc('security', 'user', 'securityexists',
+        array(
+            'modid' => $modid,
+            'itemtype' => $itemtype,
+            'itemid'   => $itemid
+        )
+    );
+    if( !$has_security )
+    {
+        $settings = xarModAPIFunc('security', 'user', 'get_default_settings',
+            array(
+                'modid' => $modid,
+                'itemtype' => $itemtype
+            )
+        );
+        xarModAPIFunc('security', 'admin', 'create',
+            array(
+                'modid'    => $modid,
+                'itemtype' => $itemtype,
+                'itemid'   => $itemid,
+                'settings' => $settings
+            )
+        );
+    }
+
     /*
         If user has SECURITY_ADMIN level or is a site admin let them
         modify security otherwise don't
