@@ -45,8 +45,12 @@ function sitecontact_admin_managesctypes()
     // Verify the action
     if (!isset($action) ){
         $action = 'view';
+        xarSessionSetVar('statusmsg','');
     }
-   $data['managetype']=xarML('List Forms');
+    if (!isset($scid) && $action =='view') {
+         xarSessionSetVar('statusmsg','');
+    }
+    $data['managetype']=xarML('List Forms');
     $formisactive = xarModGetVar('sitecontact', 'scactive') ? 'checked' : '';
 
     //Setup array with captured vars
@@ -170,6 +174,7 @@ function sitecontact_admin_managesctypes()
 
     // Fill in relevant variables
     if ($action == 'new') {
+        xarSessionSetVar('statusmsg','');
         $data['authid'] = xarSecGenAuthKey();
         $data['buttonlabel'] = xarML('Create');
         $data['managetype']=xarML('Create Form');
@@ -191,6 +196,7 @@ function sitecontact_admin_managesctypes()
         $data['item']=$item;
 
     } elseif ($action == 'modify') {
+         xarSessionSetVar('statusmsg','');
         $item = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid'=>$scid));
         $data['item']=$item[0];
         $data['managetype']=xarML('Edit Form Definition');
@@ -208,6 +214,7 @@ function sitecontact_admin_managesctypes()
             $data['hooks'] = $hooks;
         }
     } elseif ($action == 'delete') {
+        xarSessionSetVar('statusmsg','');
         $item = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid'=>$scid));
         $data['item']=$item[0];
         if ($scid == $defaultform) {
@@ -225,7 +232,7 @@ function sitecontact_admin_managesctypes()
                                  array('action' => 'confirm'));
 
     } elseif ($action == 'preview') {
-
+       xarSessionSetVar('statusmsg','');
        $item = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid'=>$scid));
        $data['item']=$item[0];
        $optionset=explode(',',$item[0]['optiontext']);
@@ -268,6 +275,7 @@ function sitecontact_admin_managesctypes()
 
     $data['action'] = $action;
     $data['sctypes']=$sctypes;
+
      $data['sctypelink'] = xarModURL('sitecontact','admin','managesctypes');
     // Return the template variables defined in this function
     return $data;
