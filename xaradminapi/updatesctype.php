@@ -127,7 +127,7 @@ function sitecontact_adminapi_updatesctype($args)
     $item['module'] = 'sitecontact';
     $item['itemid'] = $scid;
     $item['sctypename'] = $sctypename;
-
+    $item['itemtype'] = $scid;
     xarModCallHooks('item', 'update', $scid, $item);
 
     return true;

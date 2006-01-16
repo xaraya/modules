@@ -114,9 +114,13 @@ function sitecontact_adminapi_createsctype($args)
 
     // Get ptid to return
     $sctypeid = $dbconn->PO_Insert_ID($sitecontactTable, 'xar_sctypeid');
-
+    $args=array();
    // Let any hooks know that we have created a new user.
-    xarModCallHooks('item', 'create', $sctypeid, 'sctypeid');
+    $args['module'] = 'sitecontact';
+    $args['itemtype'] = $sctypeid ;
+    $args['itemid'] = $sctypeid ;
+    // then call the create hooks
+    $result = xarModCallHooks('item', 'create', $sctypeid, $args);
 
     $resultarray = array('sctypeid' => (int)$sctypeid,
                    'created' => 1);

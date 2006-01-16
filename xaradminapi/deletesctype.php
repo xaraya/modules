@@ -48,6 +48,11 @@ function sitecontact_adminapi_deletesctype($args)
                        new SystemException($msg));
         return false;
     }
+    //delete hooks
+    $item['module'] = 'sitecontact';
+    $item['itemid'] = $scid;
+    $item['itemtype']=$scid;
+    xarModCallHooks('item', 'delete', $scid, $item);
 
     // Get database setup
     $dbconn =& xarDBGetConn();
@@ -60,9 +65,6 @@ function sitecontact_adminapi_deletesctype($args)
     $result =& $dbconn->Execute($query,array($scid));
     if (!$result) return false;
 
-    $item['module'] = 'sitecontact';
-    $item['itemid'] = $scid;
-    xarModCallHooks('item', 'delete', $scid, $item);
 
     return true;
 }
