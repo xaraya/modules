@@ -44,3 +44,6 @@ jojodee 2005-10-12:
 - Add placeholders for modifyconfig/updateconfig and the template so we
   don't get errors on that function in the menu
 - Test/fix for xhtml compliancy for existing templates
+
+MichelV jan 2006
+- Add howto.txt with explanation. Can turn into userdoc later

@@ -14,7 +14,10 @@
 /**
  * Get lists of values for a list.
  *
+ * Use this function to open a list in another module
+ *
  * @author Lists Module Development Team
+ * @access public
  * @param $args['lid'] list ID (optional)
  * @param $args['list_name'] list name (optional)
  * @param $args['tid'] list type ID (optional)
@@ -96,7 +99,7 @@ function lists_userapi_getlistitems($args)
                     xar_short_name,
                     xar_long_name,
                     xar_desc,
-                    xar_order  
+                    xar_order
             FROM ' . $table_items . '
             WHERE   xar_lid = ? ' . (!empty($iid) ? 'AND xar_iid = ? ' : '');
         //echo $query; var_dump($bind); die;

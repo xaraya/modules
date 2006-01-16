@@ -11,7 +11,6 @@
  * @link http://xaraya.com/index.php/release/46.html
  * @author Jason Judge
  */
-
 /**
  * Get all lists.
  *
@@ -213,7 +212,7 @@ function lists_userapi_getlists($args)
             }
         }
     }
-    
+
     return $lists;
 }
 
