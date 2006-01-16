@@ -1,22 +1,23 @@
 <?php
 /**
- * Surveys table definitions function
- * 
+ * Start a new survey
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Surveys
- * @author Surveys module development team 
+ * @link http://xaraya.com/index.php/release/45.html
+ * @author Surveys module development team
  */
-/*
+/**
  * Start a new survey, and take the user to the start of it.
  *
  * Long Description [OPTIONAL one or more lines]
  *
  * @author     Jason Judge <jason.judge@academe.co.uk>
- * @author     Another Author <another@example.com>          [REQURIED]
+ * @author     MichelV. <michelv@xaraya.com>
  * @param string $arg1  the string used                      [OPTIONAL A REQURIED]
  * @param id    $sid Survey ID?
  *
@@ -32,7 +33,7 @@
  *
  */
 
-function surveys_user_startsurvey() 
+function surveys_user_startsurvey()
 {
     // Need a sid.
     if (!xarVarFetch('sid', 'id', $sid)) {return;}
@@ -40,7 +41,7 @@ function surveys_user_startsurvey()
     // Get the overview of surveys for this user.
     $overview = xarModAPIfunc('surveys', 'user', 'overview');
 
-    // Only allow a survey to be started if it is in the list of 
+    // Only allow a survey to be started if it is in the list of
     // allowed 'new' surveys.
     if (!isset($overview['new'][$sid])) {
         $msg = xarML('You are not permitted to start survey type #(1)', $sid);

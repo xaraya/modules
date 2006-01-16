@@ -1,17 +1,18 @@
 <?php
 /**
- * Surveys table definitions function
- * 
+ * Question type 'default'
+ *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Surveys
- * @author Surveys module development team 
+ * @link http://xaraya.com/index.php/release/45.html
+ * @author Surveys module development team
  */
-/*
- * Short Description [REQUIRED one line description]
+/**
+ * Question type 'default'
  *
  * Long Description [OPTIONAL one or more lines]
  *
@@ -31,9 +32,6 @@
  * @see        anothersample(), someotherlinke [reference to other function, class] [OPTIONAL]
  * @since      [Date of first inclusion long date format ]   [REQURIED]
  * @deprecated Deprecated [release version here]             [AS REQUIRED]
- */
-/*
- * Question type 'default'
  */
 
 function surveys_questionsapi_default($args) {
@@ -119,7 +117,7 @@ class surveys_questionsapi_default
         if (isset($this->dbquestion['response'])) {
             // Point the dbresponse to the element in the question.
             $this->dbresponse =& $this->dbquestion['response'];
-            // This only unlinks the response from the question - the 
+            // This only unlinks the response from the question - the
             // $dbresponse property is still a handle for the response,
             // so it is not deleted.
             unset($this->dbquestion['response']);
@@ -187,7 +185,7 @@ class surveys_questionsapi_default
         );
     }
 
-    
+
     // Validate the choice(s).
     function validate() {
         return true;
@@ -200,7 +198,7 @@ class surveys_questionsapi_default
 
     // Import values directly into the question responses (bypassing the submit form).
     // A question type may override this if basic validation is required.
-    // TODO: handle importing DD values here for question types that need more than 
+    // TODO: handle importing DD values here for question types that need more than
     // the standard value1 to value3.
     function import($args) {
         for($i = 1; $i <= 3; $i++) {
@@ -218,7 +216,7 @@ class surveys_questionsapi_default
 
     // TODO: the question type init methods below should be shifted out to
     // separate script to reduce the burden on this object script.
-    
+
     // Return the database question type array for this question type.
     // If types have not been set up, then set them up here.
     // The question and response type names can be passed in, or left to default.
@@ -278,7 +276,7 @@ class surveys_questionsapi_default
             array('moduleid' => $moduleid, 'itemtype' => $itemtype)
         );
 
-        // For some reason, 'getobject' will return a blank object rather than 
+        // For some reason, 'getobject' will return a blank object rather than
         // a NULL if the object with module/itemtype details was not found.
         // Check the objectid property to see if this is a real DD object or not.
         if (empty($object) || !isset($object->objectid)) {

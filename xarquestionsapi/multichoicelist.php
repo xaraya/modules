@@ -1,25 +1,32 @@
 <?php
 /**
- * Surveys table definitions function
- * 
+ * Question type 'multichoice
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Surveys
- * @author Surveys module development team 
+ * @link http://xaraya.com/index.php/release/45.html
+ * @author Surveys module development team
  */
-/*
- * Short Description [REQUIRED one line description]
+/**
+ * Question type 'multichoice
  *
  * Long Description [OPTIONAL one or more lines]
  *
  * @author     Jason Judge <jason.judge@academe.co.uk>
  * @author     Another Author <another@example.com>          [REQURIED]
  * @param string $arg1  the string used                      [OPTIONAL A REQURIED]
- * @param int    $arg2  an integer and use description
- *                      Identing long comments               [OPTIONAL A REQURIED]
+ * Data definition:
+ *  listname = list name ('lists' module)
+ *  desc = question text (default language)
+ *  desc_{lang} = question text (alt languages)
+ * Options from the list:
+ *  x = option value
+ *  x = option text (default language)
+ *  x_{lang} = option text (alt languages)
  *
  * @return int  type and name returned                       [OPTIONAL A REQURIED]
  *
@@ -30,19 +37,6 @@
  * @link       link to a reference                           [OPTIONAL]
  * @see        anothersample(), someotherlinke [reference to other function, class] [OPTIONAL]
  * @since      [Date of first inclusion long date format ]   [REQURIED]
- * @deprecated Deprecated [release version here]             [AS REQUIRED]
- */
-/*
- * Question type 'multichoice'
- *
- * Data definition:
- *  listname = list name ('lists' module)
- *  desc = question text (default language)
- *  desc_{lang} = question text (alt languages)
- * Options from the list:
- *  x = option value
- *  x = option text (default language)
- *  x_{lang} = option text (alt languages)
  */
 
 function surveys_questionsapi_multichoicelist($args) {
@@ -360,7 +354,7 @@ class surveys_questionsapi_multichoicelist extends surveys_questionsapi_default
                 'lang_suffix' => $this->lang_suffix
             )
         );
-        
+
         if (empty($list)) {
             // TODO: the list is empty - what to do?
             return;
