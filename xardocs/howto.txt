@@ -1,0 +1,14 @@
+HOWTO doc
+Get a single list with all its items
+
+Parameter: list name
+
+$list = xarModAPIfunc(
+    'lists', 'user', 'getlistitems',
+    array(
+        'list_name'=>$this->listname,
+        'listkey'=>'index',
+        'itemkey'=>'code',
+        'lang_suffix' => $this->lang_suffix
+    )
+);
