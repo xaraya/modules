@@ -64,7 +64,7 @@ function sitecontact_admin_modifyconfig()
            $scforms[]=$scform;
     }
     $data['scforms']=$scforms;
-
+    
     // call modifyconfig hooks with module only for general hooks
     //  - not required for general config but leave for backward compatibility
         $hooks = xarModCallHooks('module', 'modifyconfig', 'sitecontact',

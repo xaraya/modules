@@ -195,7 +195,6 @@
     <fieldset>
         <div class="xar-form-input-wrapper-after">
           <input type="hidden" name="authid" id="authid" value="#$authid#" />
-          <input type="hidden" name="scid" id="scid" value="#$scid#" />
             <xar:set name="$updatebutton"><xar:mlstring>Update Configuration</xar:mlstring></xar:set>
                 <input type="submit" value="#$updatebutton#" />
         </div>
