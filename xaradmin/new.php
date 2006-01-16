@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Create a Dyn Data item from SIGMAPersonnel
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage SIGMAPersonnel Module
+ * @link http://xaraya.com/index.php/release/418.html
+ * @author SIGMAPersonnel Module Development Team
+ */
 /**
  * add new item
  */
@@ -23,10 +34,10 @@ function sigmapersonnel_admin_new()
     // get the Dynamic Object defined for this module (and itemtype, if relevant)
     $data['object'] = xarModAPIFunc('dynamicdata','user','getobject',
                                      array('module' => 'sigmapersonnel',
-									       'itemtype' => $itemtype));
+                                           'itemtype' => $itemtype));
     $data['itemtype'] = $itemtype;
     $data['preview'] = $preview;
-	
+
     $data['menutitle'] = xarVarPrepForDisplay(xarML('Make a new hooked dynamic data object'));
     $item = array();
     $item['module'] = 'sigmapersonnel';
@@ -38,7 +49,8 @@ function sigmapersonnel_admin_new()
     } else {
         $data['hooks'] = $hooks;
     }
-
+    // Authentication
+    $data['authid'] =xarSecGenAuthKey();
     // Return the template variables defined in this function
     return $data;
 }

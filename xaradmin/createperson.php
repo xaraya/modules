@@ -1,26 +1,25 @@
 <?php
 /**
  * Create a new person
- * 
+ *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Sigmapersonnel Module
  * @link http://xaraya.com/index.php/release/418.html
- * @author Michel V. 
+ * @author Michel V.
  */
-
 /**
  * This is a standard function that is called with the results of the
  * form supplied by xarModFunc('sigmapersonnel','admin','new') to create a new item
- * 
+ *
  * @param  $ 'name' the name of the item to be created
  * @param  $ 'number' the number of the item to be created
  */
 function sigmapersonnel_admin_createperson($args)
-{ 
+{
     extract($args);
 
     // Get parameters from whatever input we need.
@@ -77,8 +76,8 @@ function sigmapersonnel_admin_createperson($args)
     if (!xarVarFetch('educationremarks', 'str::', $educationremarks, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('lastmodified', 'str:1:25', $lastmodified, date("Y-m-d H:i:s"),XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('lastmodifiedby', 'int:1:', $lastmodifiedby, xarUserGetVar('uid'),XARVAR_NOT_REQUIRED)) return;
-	
-    if (!xarVarFetch('invalid', 'str:1:', $invalid, '', XARVAR_NOT_REQUIRED)) return; 
+
+    if (!xarVarFetch('invalid', 'str:1:', $invalid, '', XARVAR_NOT_REQUIRED)) return;
     // Argument check
     $item = xarModAPIFunc('sigmapersonnel',
                           'user',
@@ -90,143 +89,143 @@ function sigmapersonnel_admin_createperson($args)
     if (empty($pnumber) || !is_numeric($pnumber)) {
         $invalid['pnumber'] = 1;
         $number = '';
-    } 
+    }
     if (empty($firstname) || !is_string($firstname)) {
         $invalid['firstname'] = 1;
         $firstname = '';
-    } 
+    }
     if (empty($lastname) || !is_string($lastname)) {
         $invalid['lastname'] = 1;
         $lastname = '';
-    } 
+    }
     if (!empty($pnumber) && $item['pnumber'] == $pnumber) {
         $invalid['duplicatepnumber'] = 1;
         $duplicatepnumber = '';
-    } 
+    }
     // check if we have any errors
     if (count($invalid) > 0) {
         // call the admin_new function and return the template vars
         // (you need to copy admin-new.xd to admin-create.xd here)
         return xarModFunc('sigmapersonnel', 'admin', 'newperson',
                           array(
-							'userid' => $userid,
-							'pnumber' => $pnumber,
-							'persstatus' => $persstatus,
-							'firstname' => $firstname,
-							'lastname' => $lastname,
-							'tussenvgsl' => $tussenvgsl,
-							'initials' => $initials,
-							'sex' => $sex,
-							'title' => $title,
-							'street' => $street,
-							'zip' => $zip,
-							'cityid' => $cityid,
-							'phonehome' => $phonehome,
-							'mobile' => $mobile,
-							'phonework' => $phonework,
-							'email' => $email,
-							'privphonehome' => $privphonehome,
-							'privwork' => $privwork,
-							'privemail' => $privemail,
-							'privbirthdate' => $privbirthdate,
-							'privaddress' => $privaddress,
-							'privphonework' => $privphonework,
-							'contactname' => $contactname,
-							'contactphone' => $contactphone,
-							'contactstreet' => $contactstreet,
-							'contactcityid' => $contactcityid,
-							'contactrelation' => $contactrelation,
-							'contactmobile' => $contactmobile,
-							'birthdate' => $birtdate,
-							'birthplace' => $birthplace,
-							'nrkdistrict' => $nrkdistrict,
-							'nrknumber' => $nrknumber,
-							'ehbonr' => $ehbonr,
-							'ehboplus' => $ehboplus,
-							'ehbodate' => $ehbodate,
-							'ehboplace' => $ehboplace,
-							'dateintake' => $dateintake,
-							'intakeby' => $intakeby,
-							'dateemploy' => $dateemploy,
-							'dateout' => $dateout,
-							'dateouttalk' => $dateouttalk,
-							'outreason' => $outreason,
-							'outtalkwith' => $outtalkwith,
-							'dateshoes' => $dateshoes,
-							'sizeshoes' => $sizeshoes,
-							'banknr' => $banknr,
-							'bankplaceid' => $bankplaceid,
-							'others' => $others,
-							'educationremarks' => $educationremarks,
-							'lastmodified' => $lastmodified,
-							'lastmodifiedby' => $lastmodifiedby,
+                            'userid' => $userid,
+                            'pnumber' => $pnumber,
+                            'persstatus' => $persstatus,
+                            'firstname' => $firstname,
+                            'lastname' => $lastname,
+                            'tussenvgsl' => $tussenvgsl,
+                            'initials' => $initials,
+                            'sex' => $sex,
+                            'title' => $title,
+                            'street' => $street,
+                            'zip' => $zip,
+                            'cityid' => $cityid,
+                            'phonehome' => $phonehome,
+                            'mobile' => $mobile,
+                            'phonework' => $phonework,
+                            'email' => $email,
+                            'privphonehome' => $privphonehome,
+                            'privwork' => $privwork,
+                            'privemail' => $privemail,
+                            'privbirthdate' => $privbirthdate,
+                            'privaddress' => $privaddress,
+                            'privphonework' => $privphonework,
+                            'contactname' => $contactname,
+                            'contactphone' => $contactphone,
+                            'contactstreet' => $contactstreet,
+                            'contactcityid' => $contactcityid,
+                            'contactrelation' => $contactrelation,
+                            'contactmobile' => $contactmobile,
+                            'birthdate' => $birtdate,
+                            'birthplace' => $birthplace,
+                            'nrkdistrict' => $nrkdistrict,
+                            'nrknumber' => $nrknumber,
+                            'ehbonr' => $ehbonr,
+                            'ehboplus' => $ehboplus,
+                            'ehbodate' => $ehbodate,
+                            'ehboplace' => $ehboplace,
+                            'dateintake' => $dateintake,
+                            'intakeby' => $intakeby,
+                            'dateemploy' => $dateemploy,
+                            'dateout' => $dateout,
+                            'dateouttalk' => $dateouttalk,
+                            'outreason' => $outreason,
+                            'outtalkwith' => $outtalkwith,
+                            'dateshoes' => $dateshoes,
+                            'sizeshoes' => $sizeshoes,
+                            'banknr' => $banknr,
+                            'bankplaceid' => $bankplaceid,
+                            'others' => $others,
+                            'educationremarks' => $educationremarks,
+                            'lastmodified' => $lastmodified,
+                            'lastmodifiedby' => $lastmodifiedby,
                             'invalid' => $invalid));
-    } 
+    }
     // Confirm authorisation code.
-    if (!xarSecConfirmAuthKey()) return; 
+    if (!xarSecConfirmAuthKey()) return;
     // The API function is called.
     $personid = xarModAPIFunc('sigmapersonnel',
                           'admin',
                           'createperson',
                           array(
-							'userid' => $userid,
-							'pnumber' => $pnumber,
-							'persstatus' => $persstatus,
-							'firstname' => $firstname,
-							'lastname' => $lastname,
-							'tussenvgsl' => $tussenvgsl,
-							'initials' => $initials,
-							'sex' => $sex,
-							'title' => $title,
-							'street' => $street,
-							'zip' => $zip,
-							'cityid' => $cityid,
-							'phonehome' => $phonehome,
-							'mobile' => $mobile,
-							'phonework' => $phonework,
-							'email' => $email,
-							'privphonehome' => $privphonehome,
-							'privwork' => $privwork,
-							'privemail' => $privemail,
-							'privbirthdate' => $privbirthdate,
-							'privaddress' => $privaddress,
-							'privphonework' => $privphonework,
-							'contactname' => $contactname,
-							'contactphone' => $contactphone,
-							'contactstreet' => $contactstreet,
-							'contactcityid' => $contactcityid,
-							'contactrelation' => $contactrelation,
-							'contactmobile' => $contactmobile,
-							'birthdate' => $birtdate,
-							'birthplace' => $birthplace,
-							'nrkdistrict' => $nrkdistrict,
-							'nrknumber' => $nrknumber,
-							'ehbonr' => $ehbonr,
-							'ehboplus' => $ehboplus,
-							'ehbodate' => $ehbodate,
-							'ehboplace' => $ehboplace,
-							'dateintake' => $dateintake,
-							'intakeby' => $intakeby,
-							'dateemploy' => $dateemploy,
-							'dateout' => $dateout,
-							'dateouttalk' => $dateouttalk,
-							'outreason' => $outreason,
-							'outtalkwith' => $outtalkwith,
-							'dateshoes' => $dateshoes,
-							'sizeshoes' => $sizeshoes,
-							'banknr' => $banknr,
-							'bankplaceid' => $bankplaceid,
-							'others' => $others,
-							'educationremarks' => $educationremarks,
-							'lastmodified' => $lastmodified,
-							'lastmodifiedby' => $lastmodifiedby)); 
+                            'userid' => $userid,
+                            'pnumber' => $pnumber,
+                            'persstatus' => $persstatus,
+                            'firstname' => $firstname,
+                            'lastname' => $lastname,
+                            'tussenvgsl' => $tussenvgsl,
+                            'initials' => $initials,
+                            'sex' => $sex,
+                            'title' => $title,
+                            'street' => $street,
+                            'zip' => $zip,
+                            'cityid' => $cityid,
+                            'phonehome' => $phonehome,
+                            'mobile' => $mobile,
+                            'phonework' => $phonework,
+                            'email' => $email,
+                            'privphonehome' => $privphonehome,
+                            'privwork' => $privwork,
+                            'privemail' => $privemail,
+                            'privbirthdate' => $privbirthdate,
+                            'privaddress' => $privaddress,
+                            'privphonework' => $privphonework,
+                            'contactname' => $contactname,
+                            'contactphone' => $contactphone,
+                            'contactstreet' => $contactstreet,
+                            'contactcityid' => $contactcityid,
+                            'contactrelation' => $contactrelation,
+                            'contactmobile' => $contactmobile,
+                            'birthdate' => strtotime($birtdate),
+                            'birthplace' => $birthplace,
+                            'nrkdistrict' => $nrkdistrict,
+                            'nrknumber' => $nrknumber,
+                            'ehbonr' => $ehbonr,
+                            'ehboplus' => $ehboplus,
+                            'ehbodate' => strtotime($ehbodate),
+                            'ehboplace' => $ehboplace,
+                            'dateintake' => strtotime($dateintake),
+                            'intakeby' => $intakeby,
+                            'dateemploy' => strtotime($dateemploy),
+                            'dateout' => strtotime($dateout),
+                            'dateouttalk' => strtotime($dateouttalk),
+                            'outreason' => $outreason,
+                            'outtalkwith' => $outtalkwith,
+                            'dateshoes' => strtotime($dateshoes),
+                            'sizeshoes' => $sizeshoes,
+                            'banknr' => $banknr,
+                            'bankplaceid' => $bankplaceid,
+                            'others' => $others,
+                            'educationremarks' => $educationremarks,
+                            'lastmodified' => $lastmodified,
+                            'lastmodifiedby' => $lastmodifiedby));
 
     // The return value of the function is checked here
     if (!isset($personid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
-    xarResponseRedirect(xarModURL('sigmapersonnel', 'admin', 'view')); 
+    xarResponseRedirect(xarModURL('sigmapersonnel', 'admin', 'viewpersons'));
     // Return
     return true;
-} 
+}
 
 ?>

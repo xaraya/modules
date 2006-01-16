@@ -3,7 +3,7 @@
  * Modify a Dyn Data item from SIGMAPersonnel
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -11,7 +11,6 @@
  * @link http://xaraya.com/index.php/release/418.html
  * @author SIGMAPersonnel Module Development Team
  */
- 
 /**
  * Modify an item of the itemtype specified
  *
@@ -63,7 +62,7 @@ function sigmapersonnel_admin_modify($args)
     if (!isset($newid) || $newid != $itemid) return;
 
     $data['menu']      = xarModFunc('sigmapersonnel','admin','menu');
-    $data['menutitle'] = xarModAPIFunc('sigmapersonnel','admin','menu');
+    $data['menutitle'] = xarVarPrepForDisplay(xarML('Modify a hooked dynamic data object'));
 
     // Get data ready for the template
     $data['itemid']   = $itemid;
@@ -81,7 +80,8 @@ function sigmapersonnel_admin_modify($args)
     }else {
         $data['hooks'] = $hooks;
     }
-
+    // Authentication
+    $data['authid'] =xarSecGenAuthKey();
     // Return the template variables defined in this function
     return $data;
 }

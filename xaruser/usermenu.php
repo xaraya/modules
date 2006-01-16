@@ -16,7 +16,7 @@
  * Display the user menu hook
  * This is a standard function to provide a link in the "Your Account Page"
  *
- * @author the MichelV 
+ * @author the MichelV
  * @param  $phase is the which part of the loop you are on
  */
 function sigmapersonnel_user_usermenu($args)
@@ -26,7 +26,7 @@ function sigmapersonnel_user_usermenu($args)
      * link to display the details of the item
      */
     if (!xarSecurityCheck('ViewSIGMAPersonnel')) return;
-    
+
     /* First, lets find out where we are in our logic.  If the phase
      * variable is set, we will load the correct page in the loop.
      */
@@ -54,19 +54,26 @@ function sigmapersonnel_user_usermenu($args)
             $authid = xarSecGenAuthKey('sigmapersonnel');
             $itemsperpage = xarModGetUserVar('sigmapersonnel', 'itemsperpage', $uid);
             // Get the person for this uid
-            $person = xarModAPIFunc('sigmapersonnel', 'user', 'getpersonid', array('uid'=> $uid)); 
+            $person = xarModAPIFunc('sigmapersonnel', 'user', 'getpersonid', array('uid'=> $uid));
             // This call does not generate an error!
             $persondata = '';
             if (!empty($person) && is_array($person)) {
                 $personid = $person['personid'];
                 // Implement check on person status here
-                $persondata = xarModAPIFunc('sigmapersonnel', 'user', 'get', array('personid'=> $personid)); 
+                $persondata = xarModAPIFunc('sigmapersonnel', 'user', 'get', array('personid'=> $personid));
             }
             $data = xarTplModule('sigmapersonnel', 'user', 'usermenu_form', array('authid' => $authid,
                     'name' => $name,
                     'uid' => $uid,
                     'itemsperpage' => $itemsperpage,
-                    'persondata' => $persondata));
+                    'persondata' => $persondata,
+                    'cities' => xarModAPIFunc('sigmapersonnel', 'user', 'gets',
+                                      array('itemtype' => 4)),
+                    'districts' => xarModAPIFunc('sigmapersonnel', 'user', 'gets',
+                                      array('itemtype' => 3)),
+                    'persstatusses' => xarModAPIFunc('sigmapersonnel', 'user', 'gets',
+                                      array('itemtype' => 6))
+                                      ));
             break;
 
         case 'update':
@@ -76,8 +83,36 @@ function sigmapersonnel_user_usermenu($args)
              */
             if (!xarVarFetch('uid', 'int:1:', $uid)) return;
             if (!xarVarFetch('itemsperpage', 'str:1:100', $itemsperpage, '20', XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('name', 'str:1:100', $name, '', XARVAR_NOT_REQUIRED)) return;
-            
+            // Names etc
+            if (!xarVarFetch('firstname', 'str:1:', $firstname, '',XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('lastname', 'str:1:', $lastname, '',XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('tussenvgsl', 'str:1:', $tussenvgsl, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('initials', 'str:1:', $initials, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('sex', 'str:1:', $sex, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('title', 'str:1:', $title, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('street', 'str:1:100', $street, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('zip', 'str:1:100', $zip, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('cityid', 'int:1:', $cityid, '',XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('phonehome', 'str:1:100', $phonehome, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('mobile', 'str:1:100', $mobile, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('phonework', 'str:1:100', $phonework, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('email', 'str:1:100', $email, '', XARVAR_NOT_REQUIRED)) return; //Type email?
+            // Privacy options
+            if (!xarVarFetch('privphonehome', 'checkbox', $privphonehome, false,XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('privwork', 'checkbox', $privwork,false,XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('privemail', 'checkbox', $privemail, false,XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('privbirthdate', 'checkbox', $privbirthdate, false,XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('privaddress', 'checkbox', $privaddress, false,XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('privphonework', 'checkbox', $privphonework, false,XARVAR_NOT_REQUIRED)) return;
+            // Contact person
+            if (!xarVarFetch('contactname', 'str:1:100', $contactname, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('contactphone', 'str:1:100', $contactphone, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('contactstreet', 'str:1:100', $contactstreet, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('contactcityid', 'int:1:', $contactcityid, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('contactrelation', 'str:1:100', $contactrelation, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('contactmobile', 'str:1:100', $contactmobile, '', XARVAR_NOT_REQUIRED)) return;
+
+
             /* Confirm authorisation code. */
             if (!xarSecConfirmAuthKey()) return;
 
@@ -85,7 +120,7 @@ function sigmapersonnel_user_usermenu($args)
             /* Redirect back to the account page.  We could also redirect back to our form page as
              * well by adding the phase variable to the array.
              */
-            xarResponseRedirect(xarModURL('roles', 'user', 'account'));
+            xarResponseRedirect(xarModURL('roles', 'user', 'account', array('moduleload' => 'sigmapersonnel')));
 
             break;
     }

@@ -61,22 +61,22 @@ function sigmapersonnel_init()
       xar_contactcityid I NOTNULL default 0,
       xar_contactrelation C(100) NOTNULL DEFAULT '',
       xar_contactmobile C(100) NOTNULL DEFAULT '',
-      xar_birthdate     D default NULL,
+      xar_birthdate     I default 0,
       xar_birthplace    C(100) NOTNULL DEFAULT '',
       xar_nrkdistrict   I NOTNULL default 0,
       xar_nrknumber     I NOTNULL default 0,
       xar_ehbonr        I NOTNULL default 0,
       xar_ehboplus      L NOTNULL default 0,
-      xar_ehbodate      D default NULL,
+      xar_ehbodate      I default NULL,
       xar_ehboplace     C(100) NOTNULL DEFAULT '',
-      xar_dateintake    D default NULL,
+      xar_dateintake    I default 0,
       xar_intakeby      C(100) NOTNULL DEFAULT '',
-      xar_dateemploy    D default NULL,
-      xar_dateout       D default NULL,
-      xar_dateouttalk   D default NULL,
+      xar_dateemploy    I NOTNULL default 0,
+      xar_dateout       I NOTNULL default 0,
+      xar_dateouttalk   I NOTNULL default 0,
       xar_outreason     X2,
       xar_outtalkwith   C(100) NOTNULL DEFAULT '',
-      xar_dateshoes     D,
+      xar_dateshoes     I NOTNULL default 0,
       xar_sizeshoes     I NOTNULL default 0,
       xar_banknr        C(15) NOTNULL  DEFAULT '',
       xar_bankplaceid   I NOTNULL default 0,
@@ -123,18 +123,16 @@ function sigmapersonnel_init()
 
     // Table for presence
     $presencetable = $xartable['sigmapersonnel_presence'];
-    $fields = array(
-        'xar_pid' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
-        'xar_userid' => array('type' => 'integer', 'null' => false), // User that entered
-        'xar_personid' => array('type' => 'integer', 'size' => 'small', 'null' => false, 'default' => '0'), // The one in the table
-        'xar_start' => array('type' => 'datetime'),
-        'xar_end' => array('type' => 'datetime'),
-        'xar_typeid' => array('type'=>'integer', 'size'=>'small', 'default'=>'0', 'null' => FALSE));
-    $query = xarDBCreateTable($presencetable, $fields);
-    if (empty($query)) return; // throw back
-    // Pass the Table Create DDL to adodb to create the table and send exception if unsuccessful
-    $result = &$dbconn->Execute($query);
-    if (!$result) return;
+    $fields = " xar_pid       I         AUTO       PRIMARY,
+                xar_userid    I NOTNULL default 0,
+                xar_personid  I NOTNULL default 0,
+                xar_start     I default 0,
+                xar_end       I default 0,
+                xar_typeid    I default 0
+                ";
+    /* Create or alter the table as necessary */
+    $result = $datadict->changeTable($presencetable, $fields);
+    if (!$result) {return;}
 
     // Table for Presence types
     $presencetypestable = $xartable['sigmapersonnel_presencetypes'];
@@ -368,7 +366,7 @@ function sigmapersonnel_delete()
     /* Get a data dictionary object with item create and delete methods */
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
     // Initialise table array
-    $basename = 'sigampersonnel';
+    $basename = 'sigmapersonnel';
 
     foreach(array('person', 'presencetypes', 'presence', 'cities', 'status', 'districts') as $table) {
 
