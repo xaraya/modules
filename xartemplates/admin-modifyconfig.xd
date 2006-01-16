@@ -189,7 +189,7 @@
 
     <fieldset>
        <legend><xar:mlstring>Enable Hooks for Sitecontact Forms (itemtypes)</xar:mlstring></legend>
-       <xar:mlstring>You can extra data fields to your forms by enabling Dynamic Data hooks for either all
+       <xar:mlstring>You can add extra data fields to your forms by enabling Dynamic Data hooks for either all
        Sitecontact forms or individually. To do this go to </xar:mlstring> <a href="&xar-modurl-modules-admin-hooks;&amp;hook=dynamicdata"><xar:mlstring>Modules-Configure Hooks-DynamicData</xar:mlstring></a><xar:mlstring>. Find
         the Sitecontact entry and enable DD hooks for ALL or Some (a checklist will appear) itemtypes.
        Edit a sitecontact form to add or modify DD property fields for that form.</xar:mlstring>

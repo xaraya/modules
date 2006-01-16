@@ -35,7 +35,8 @@
         </xar:mlstring></li>
 
         <li><xar:mlstring>
-        You can provide a link to any form by appending the form name variable (<strong>scform</strong>)and a <strong>form name</strong> to the main user url eg <strong><code>index.php?module=sitecontact&amp;scform=myform</code></strong>
+        You can provide a link to any form by appending the form name variable called: <strong>scform</strong> and a form name, for example 'myniceform', to the main user url eg <strong>index.php?module=sitecontact&amp;scform=myniceform</strong> or
+         with short urls <strong>index.php/sitecontact/myniceform</strong>
         </xar:mlstring></li>
 
         <li><xar:mlstring>
@@ -133,7 +134,7 @@
               </li>
          </ul>
          <p class="xar-sub">
-             <strong>&nbsp;<xar:mlstring>Sitecontact Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.5.1&nbsp; 2006-01-15
+             <strong>&nbsp;<xar:mlstring>Sitecontact Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.5.2&nbsp; 2006-01-17
          </p>
       </div>
 
