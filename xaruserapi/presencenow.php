@@ -26,7 +26,11 @@ function sigmapersonnel_userapi_presencenow($args)
 
     if (!xarVarFetch('uid',      'int:1:', $uid, xarUserGetVar('uid'), XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('personid', 'int:1:', $personid, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('dtasked',  'isset', $dtasked, date("Y-m-d H:i:s"), XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('dtasked',  'isset', $dtasked, time(), XARVAR_NOT_REQUIRED)) return;
+    // Safe conversion...?
+    if (is_string($dtasked)) {
+        $dtasked = strtotime($dtasked);
+    }
 
     // Check input
     $invalid = array();
@@ -35,7 +39,7 @@ function sigmapersonnel_userapi_presencenow($args)
     if (empty($uid) && empty($personid)) {
         $invalid[] = xarML('personid and uid combination');
     }
-    if (!isset($dtasked) || !is_string($dtasked)) {
+    if (!isset($dtasked)) {
         $invalid[] = 'dtasked';
     }
     if (count($invalid) > 0) {

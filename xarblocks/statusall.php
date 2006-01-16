@@ -114,7 +114,7 @@ function sigmapersonnel_statusallblock_display($blockinfo)
             // Add one to the appropriate statustype
             if($item['persstatus'] == 1) {
                 $tstatus1++;
-            }elseif ($item['persstatus'] == 2) {
+            } elseif ($item['persstatus'] == 2) {
                 $tstatus2++;
             } elseif ($item['persstatus'] == 3) {
                 $tstatus3++;

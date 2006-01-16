@@ -1,9 +1,8 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<h2>#$name# <xar:mlstring>Your SIGMA Information</xar:mlstring></h2>
+<h2><xar:mlstring>Your SIGMA Information</xar:mlstring></h2>
 <form action="&xar-modurl-sigmapersonnel-user-usermenu;"
       method="post"
       enctype="application/x-www-form-urlencoded">
-
       <xar:if condition="!empty($persondata)">
         <fieldset>
             <legend>
@@ -118,7 +117,88 @@
                 </label>
                 <xar:data-input name="email" type="2" value="$persondata['email']" />
             </div>
+            <div class="xar-form-input-wrapper">
+                <label for="birthdate" class="xar-form-label">
+                    <span class="help" title="#xarML('Enter the date of birth of the person.')#">
+                    <xar:mlstring>Birthdate</xar:mlstring>
+                    </span>
+                </label>
+                <xar:data-input name="birthdate" type="calendar" value="$persondata['birthdate']" />
+              <xar:if condition="!empty($invalid['birthdate'])">
+                <span style="color: red"><xar:mlstring>ERROR! This is not a valid birthdate</xar:mlstring></span>
+              </xar:if>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="birthplace" class="xar-form-label">
+                    <span class="help" title="#xarML('Enter the place of birth of this person.')#">
+                    <xar:mlstring>Place of birth</xar:mlstring>
+                    </span>
+                </label>
+                <xar:data-input name="birthplace" type="textbox" value="$persondata['birthplace']" />
+              <xar:if condition="!empty($invalid['birthplace'])">
+                <span style="color: red"><xar:mlstring>ERROR! This is not a valid place of birth</xar:mlstring></span>
+              </xar:if>
+            </div>
+
         </fieldset>
+
+       <fieldset>
+            <legend>
+                <strong><xar:mlstring>Your Privacy Options</xar:mlstring></strong>
+            </legend>
+            <p><xar:mlstring>Choose the parameters you do not want to show on the internal list</xar:mlstring></p>
+            <div class="xar-form-input-wrapper">
+                <label for="privphonehome" class="xar-form-label">
+                    <span class="help" title="#xarML('Your home telephone number.')#">
+                    #$privphonehomelabel#
+                    </span>
+                </label>
+                <xar:data-input name="privphonehome" type="checkbox" value="$persondata['privphonehome']" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="privwork" class="xar-form-label">
+                    <span class="help" title="#xarML('privwork.')#">
+                    #$privworklabel#
+                    </span>
+                </label>
+                <xar:data-input name="privwork" type="checkbox" value="$persondata['privwork']" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="privemail" class="xar-form-label">
+                    <span class="help" title="#xarML('privemail.')#">
+                    #$privemaillabel#
+                    </span>
+                </label>
+                <xar:data-input name="privemail" type="checkbox" value="$persondata['privemail']" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="privbirthdate" class="xar-form-label">
+                    <span class="help" title="#xarML('privbirthdate.')#">
+                    <xar:mlstring>Birthdate private?</xar:mlstring>
+                    </span>
+                </label>
+                <xar:data-input name="privbirthdate" type="checkbox" value="$persondata['privbirthdate']" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="privaddress" class="xar-form-label">
+                    <span class="help" title="#xarML('privaddress.')#">
+                    #$privaddresslabel#
+                    </span>
+                </label>
+                <xar:data-input name="privaddress" type="checkbox" value="$persondata['privaddress']" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="privphonework" class="xar-form-label">
+                    <span class="help" title="#xarML('privphonework.')#">
+                    #$privphoneworklabel#
+                    </span>
+                </label>
+                <xar:data-input name="privphonework" type="checkbox" value="$persondata['privphonework']" />
+            </div>
+       </fieldset>
+       <fieldset>
+
+       </fieldset>
     </xar:if>
     <fieldset>
         <div class="xar-form-input-wrapper">

@@ -1,21 +1,21 @@
 <?php
 /**
  * Create a new presence item
- * 
+ *
  * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Sigmapersonnel Module
- * @author SIGMAPersonnel module development team 
+ * @author SIGMAPersonnel module development team
  */
 
 /**
  * Create a new presence item
- * 
- * @author the SIGMAPersonnel module development team 
- * @author MichelV MichelV@xarayahosting.nl 
+ *
+ * @author the SIGMAPersonnel module development team
+ * @author MichelV MichelV@xarayahosting.nl
  * @param  $args ['start'] name of the item
  * @param  $args ['end'] number of the item
  * @param  $args ['typeid'] number of the item
@@ -25,16 +25,16 @@
  * @TODO MichelV: ITEMTYPES
  */
 function sigmapersonnel_userapi_create($args)
-{ 
-    extract($args); 
+{
+    extract($args);
     // Argument check
     $invalid = array();
-    if (!isset($start) || !is_string($start)) {
+    if (!isset($start) || !is_numeric($start)) {
         $invalid[] = 'start';
-    } 
-    if (!isset($end) || !is_string($end)) {
+    }
+    if (!isset($end) || !is_numeric($end)) {
         $invalid[] = 'end';
-    } 
+    }
     if (!isset($typeid) || !is_numeric($typeid)) {
         $invalid[] = 'typeid';
     }
@@ -44,18 +44,18 @@ function sigmapersonnel_userapi_create($args)
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException($msg));
         return;
-    } 
+    }
     // Security check
     if (!xarSecurityCheck('AddSIGMAPresence', 1, 'PresenceItem', "All:All:All")) {
         return;
-    } 
+    }
     // Who has entered this entry?
     $userid = xarUserGetVar('uid');
-    
+
     // Get database setup
     $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables(); 
-    $presencetable = $xartable['sigmapersonnel_presence']; 
+    $xartable =& xarDBGetTables();
+    $presencetable = $xartable['sigmapersonnel_presence'];
     // Get next ID in table
     $nextId = $dbconn->GenId($presencetable);
     // Add item
@@ -70,20 +70,20 @@ function sigmapersonnel_userapi_create($args)
     // Create an array of values
     $bindvars = array($nextId, $start, $end, $personid, $userid, $typeid);
     $result = &$dbconn->Execute($query,$bindvars);
-    
+
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
-    if (!$result) return; 
+    if (!$result) return;
     // Get the ID of the item that we inserted.
-    $pid = $dbconn->PO_Insert_ID($presencetable, 'xar_pid'); 
-    
+    $pid = $dbconn->PO_Insert_ID($presencetable, 'xar_pid');
+
     // Let any hooks know that we have created a new item.
     $item = $args;
     $item['module'] = 'sigmapersonnel';
     $item['itemid'] = $pid;
-    $item['itemtype'] = ''; //TODO
-    xarModCallHooks('item', 'create', $pid, $item); 
+    $item['itemtype'] = 2; //TODO
+    xarModCallHooks('item', 'create', $pid, $item);
     // Return the id of the newly created item to the calling process
     return $pid;
-} 
+}
 ?>

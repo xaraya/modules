@@ -12,10 +12,10 @@
     </xar:if>
 </p>
 <p> Presence: #$presence#</p>
-<p> #$types[1]['type']# #$presence1#</p>
-<p> #$types[2]['type']# #$presence2#</p>
+<xar:comment><p> #$types[1]['type']# #$presence1#</p>
+<p> #$types[2]['type']# #$presence2#</p></xar:comment>
 
 <p> Status: #$tstatus#</p>
-<p> #$persstatusses[1]['statustype']# #$tstatus1#</p>
-<p> #$persstatusses[2]['statustype']# #$tstatus2#</p>
+<xar:comment><p> #$persstatusses[1]['statustype']# #$tstatus1#</p>
+<p> #$persstatusses[2]['statustype']# #$tstatus2#</p></xar:comment>
 

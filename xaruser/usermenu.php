@@ -3,15 +3,14 @@
  * Display the user menu hook
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Sigmapersonnel Module
- * @link http://xaraya.com/index.php/release/36.html
+ * @link http://xaraya.com/index.php/release/418.html
  * @author Sigmapersonnel Module Development Team
  */
-
 /**
  * Display the user menu hook
  * This is a standard function to provide a link in the "Your Account Page"
@@ -46,7 +45,7 @@ function sigmapersonnel_user_usermenu($args)
             /* Its good practice for the user menu to be personalized.  In order to do so, we
              * need to get some information about the user.
              */
-            $name = xarUserGetVar('name');
+
             $uid = xarUserGetVar('uid');
             /* We also need to set the SecAuthKey, in order to stop hackers from setting user
              * vars off site.
@@ -62,8 +61,8 @@ function sigmapersonnel_user_usermenu($args)
                 // Implement check on person status here
                 $persondata = xarModAPIFunc('sigmapersonnel', 'user', 'get', array('personid'=> $personid));
             }
-            $data = xarTplModule('sigmapersonnel', 'user', 'usermenu_form', array('authid' => $authid,
-                    'name' => $name,
+            $data = xarTplModule('sigmapersonnel', 'user', 'usermenu_form', array(
+                    'authid' => $authid,
                     'uid' => $uid,
                     'itemsperpage' => $itemsperpage,
                     'persondata' => $persondata,
@@ -72,8 +71,22 @@ function sigmapersonnel_user_usermenu($args)
                     'districts' => xarModAPIFunc('sigmapersonnel', 'user', 'gets',
                                       array('itemtype' => 3)),
                     'persstatusses' => xarModAPIFunc('sigmapersonnel', 'user', 'gets',
-                                      array('itemtype' => 6))
-                                      ));
+                                      array('itemtype' => 6)),
+                     'phoneworklabel' => xarVarPrepForDisplay(xarML('Work phone number')),
+                     'emaillabel' => xarVarPrepForDisplay(xarML('Email address')),
+                     'privphonehomelabel' => xarVarPrepForDisplay(xarML('Home phone number private?')),
+                     'privworklabel' => xarVarPrepForDisplay(xarML('Work address private?')),
+                     'privemaillabel' => xarVarPrepForDisplay(xarML('Email address private?')),
+                     'privaddresslabel' => xarVarPrepForDisplay(xarML('Address private?')),
+                     'privphoneworklabel' => xarVarPrepForDisplay(xarML('Work phone number private?')),
+                     'contactnamelabel' => xarVarPrepForDisplay(xarML('Name of contact person ')),
+                     'contactphonelabel' => xarVarPrepForDisplay(xarML('Phone number of contact person')),
+                     'contactstreetlabel' => xarVarPrepForDisplay(xarML('Street of contact person')),
+                     'contactcityidlabel' => xarVarPrepForDisplay(xarML('Town or city of contact person')),
+                     'contactrelationlabel' => xarVarPrepForDisplay(xarML('Relation to contact person')),
+                     'contactmobilelabel' => xarVarPrepForDisplay(xarML('Mobile phone number of contact'))
+                     ));
+            // TODO: move the lists to lists module?
             break;
 
         case 'update':
@@ -112,11 +125,50 @@ function sigmapersonnel_user_usermenu($args)
             if (!xarVarFetch('contactrelation', 'str:1:100', $contactrelation, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('contactmobile', 'str:1:100', $contactmobile, '', XARVAR_NOT_REQUIRED)) return;
 
-
             /* Confirm authorisation code. */
             if (!xarSecConfirmAuthKey()) return;
 
             xarModSetUserVar('sigmapersonnel', 'itemsperpage', $itemsperpage, $uid);
+            // Update person data
+            if (!xarModAPIFunc('sigmapersonnel',
+                               'admin',
+                               'update',
+                               array(
+                                    'userid' => $userid,
+                                    'pnumber' => $pnumber,
+                                    'persstatus' => $persstatus,
+                                    'firstname' => $firstname,
+                                    'lastname' => $lastname,
+                                    'tussenvgsl' => $tussenvgsl,
+                                    'initials' => $initials,
+                                    'sex' => $sex,
+                                    'title' => $title,
+                                    'street' => $street,
+                                    'zip' => $zip,
+                                    'cityid' => $cityid,
+                                    'phonehome' => $phonehome,
+                                    'mobile' => $mobile,
+                                    'phonework' => $phonework,
+                                    'email' => $email,
+                                    'privphonehome' => $privphonehome,
+                                    'privwork' => $privwork,
+                                    'privemail' => $privemail,
+                                    'privbirthdate' => $privbirthdate,
+                                    'privaddress' => $privaddress,
+                                    'privphonework' => $privphonework,
+                                    'contactname' => $contactname,
+                                    'contactphone' => $contactphone,
+                                    'contactstreet' => $contactstreet,
+                                    'contactcityid' => $contactcityid,
+                                    'contactrelation' => $contactrelation,
+                                    'contactmobile' => $contactmobile,
+                                    'birthdate' => strtotime($birtdate),
+                                    'birthplace' => $birthplace
+                            ))) {
+                return; // throw back
+            }
+
+
             /* Redirect back to the account page.  We could also redirect back to our form page as
              * well by adding the phase variable to the array.
              */
