@@ -31,10 +31,34 @@ function itsp_userapi_menu()
 
     // Get the planitems that a user must use in his ITSP
     $userid = xarUserGetVar('uid');
-    $itsp = xarModApiFunc('itsp','user','get',array('userid'=>$userid));
-    if(!empty($itsp)) {
-        $planid = $itsp['planid'];
-        $itspid = $itsp['itspid'];
+    //Get ITSP
+    //Better ignore error
+    //$itsp = xarModApiFunc('itsp','user','get',array('userid'=>$userid));
+
+    // Get database setup
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+    $itsptable = $xartable['itsp_itsp'];
+    // Get item by userid
+    // TODO: move to own api?
+    $query = "SELECT xar_itspid,
+                     xar_planid
+              FROM $itsptable
+              WHERE xar_userid = $userid";
+
+    $result = &$dbconn->Execute($query);
+    /* Check for an error with the database code, adodb has already raised
+     * the exception so we just return
+     */
+    if (!$result) return $menu;
+
+    /* Obtain the item information from the result set */
+    list($itspid, $planid) = $result->fields;
+    $result->Close();
+
+    if(!empty($itspid)) {
+        //$planid = $itsp['planid'];
+        //$itspid = $itsp['itspid'];
         $menu['itspid'] = $itspid;
         $menu['planid'] = $planid;
         // Get the planitems for this plan in the ITSP
