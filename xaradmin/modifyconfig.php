@@ -30,15 +30,12 @@ function sigmapersonnel_admin_modifyconfig()
     // Generate a one-time authorisation code for this operation
     $data['authid'] = xarSecGenAuthKey();
     // Specify some labels and values for display
-    $data['boldlabel'] = xarVarPrepForDisplay(xarML('Display Items In Bold?'));
+
     $data['boldchecked'] = xarModGetVar('sigmapersonnel', 'bold') ? true : false;
-    $data['itemslabel'] = xarVarPrepForDisplay(xarML('Items Per Page?'));
     $data['itemsvalue'] = xarModGetVar('sigmapersonnel', 'itemsperpage');
-    $data['updatebutton'] = xarVarPrepForDisplay(xarML('Update Configuration'));
     // Note : if you don't plan on providing encode/decode functions for
     // short URLs (see xaruserapi.php), you should remove these from your
     // admin-modifyconfig.xard template !
-    $data['shorturlslabel'] = xarML('Enable short URLs?');
     $data['shorturlschecked'] = xarModGetVar('sigmapersonnel', 'SupportShortURLs') ? true : false;
     /* If you plan to use alias names for you module then you should use the next two alias vars
      * You must also use short URLS for aliases, and provide appropriate encode/decode functions.

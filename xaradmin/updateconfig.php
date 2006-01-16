@@ -1,16 +1,14 @@
 <?php
 /**
- * File: $Id:
- * 
  * Update configuration parameters of the module with information passed back by the modification form
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Sigmapersonnel Module
- * @author Michel V. 
+ * @author Michel V.
  */
 /**
  * This is a standard function to update the configuration parameters of the
