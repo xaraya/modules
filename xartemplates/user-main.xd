@@ -34,7 +34,7 @@
          <xar:set name="enctype">'multipart/form-data'</xar:set>
        </xar:if>
 
-        <form action="#xarModUrl('sitecontact', 'user', 'contactus')#" method="post" enctype="#$enctype#" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
+        <form action="&xar-modurl-sitecontact-user-contactus;" method="post" enctype="#$enctype#" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
             <fieldset>
                 <legend>#$contacttitle#</legend>
             <div class="xar-form-input-wrapper">

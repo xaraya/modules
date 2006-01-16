@@ -99,12 +99,12 @@ function sitecontact_user_main()
     }
     $data['optionitems']=$optionitems;
 
-    $HTTP_REMOTE_ADDR = getenv('REMOTE_ADDR');
+    $HTTP_REMOTE_ADDR = xarServerGetVar('REMOTE_ADDR');
     if (empty($HTTP_REMOTE_ADDR)) {
         $HTTP_REMOTE_ADDR= isset($_SERVER['$REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '';
     }
     $data['useripaddress'] = $HTTP_REMOTE_ADDR;
-    $HTTP_REFERER = getenv('HTTP_REFERER');
+    $HTTP_REFERER = xarServerGetVar('HTTP_REFERER');
     if (empty($HTTP_REFERER)) {
         $HTTP_REFERER = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
     }

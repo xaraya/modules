@@ -31,7 +31,7 @@
             </xar:if>
         </div>
         <div class="xar-form-input-wrapper">
-            <label for = "usealias" class="xar-form-label" title="#xarML('Use an alias instead of the module name')#">
+            <label for = "modulealias" class="xar-form-label" title="#xarML('Use an alias instead of the module name')#">
                 <xar:mlstring>
                     Use a module alias
                 </xar:mlstring>
@@ -52,7 +52,7 @@
             <input type="text" name="aliasname" id="aliasname" value="#xarModGetVar('sitecontact', 'aliasname')#" size="32" maxlength="100" />
         </div>
         <div class="xar-form-input-wrapper">
-            <label for="scdefaultform" class="xar-form-label" title="#xarML('Default form for display on your site')#">
+            <label for="defaultform" class="xar-form-label" title="#xarML('Default form for display on your site')#">
                 <xar:mlstring>Default Sitecontact Form:</xar:mlstring>
             </label>
             <select name="defaultform" id="defaultform">
@@ -91,6 +91,8 @@
             </label>
             <input type="text" name="scdefaultname" id="scdefaultname" size="40" maxlength="128" value="#$scdefaultname#" />
         </div>
+        
+        <div class="xar-form-input-wrapper">
           <label for="scactive" class="xar-form-label" title="#xarML('Site contact forms active by default?')#">
                <xar:mlstring>New forms Active by default?</xar:mlstring>
             </label>
@@ -174,12 +176,11 @@
         </div>
 
        <div  class="xar-form-input-wrapper-after">
-
-        <xar:mlstring>You can use the following variables in your email:</xar:mlstring>
+            <xar:mlstring>You can use the following variables in your email:</xar:mlstring>
        </div>
        <div  class="xar-form-input-wrapper-after">
 
-        %%useremail%%    &nbsp;&nbsp;<xar:mlstring>User email</xar:mlstring><br />
+         %%useremail%%    &nbsp;&nbsp;<xar:mlstring>User email</xar:mlstring><br />
          %%username%%     &nbsp;&nbsp;<xar:mlstring>User name</xar:mlstring><br />
          %%requesttext%%  &nbsp;&nbsp;<xar:mlstring>Subject from drop down list</xar:mlstring><br />
          %%company%%  &nbsp;&nbsp;<xar:mlstring>Organization</xar:mlstring><br />

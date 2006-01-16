@@ -20,6 +20,7 @@
 function sitecontact_user_contactus($args)
 {
   extract($args);
+
       $defaultformid=(int)xarModGetVar('sitecontact','defaultform');
     /* Get parameters */
     if (!xarVarFetch('username', 'str:1:', $username, '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
@@ -36,7 +37,6 @@ function sitecontact_user_contactus($args)
     if (isset($scform) && !isset($sctypename)) { //provide alternate entry name
       $sctypename=$scform;
     }
-
 
     /* Confirm authorisation code. */
     if (!xarSecConfirmAuthKey()) return;
@@ -231,7 +231,7 @@ function sitecontact_user_contactus($args)
          $usertextmessage= xarTplModule('sitecontact','user','usermail', $usertextarray,$texttemplate);
 		if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
 			xarErrorHandled();
-			$usertextmessage= xarTplModule('sitecontact', 'user', 'usermail',$userhtmlarray,'text');
+			$usertextmessage= xarTplModule('sitecontact', 'user', 'usermail',$usertextarray,'text');
 		}
 
    if (($allowcopy) and ($sendcopy)) {
@@ -248,16 +248,10 @@ function sitecontact_user_contactus($args)
 
         /* send mail to user , if html email let's do that  else just send text*/
         if ($usehtmlemail != 1) {
-
-            if (!xarModAPIFunc('mail',
-                       'admin',
-                       'sendmail', $args)) return;
+            if (!xarModAPIFunc('mail','admin','sendmail', $args)) return;
 
         } else {/*it's html email */
-
-            if (!xarModAPIFunc('mail',
-                       'admin',
-                       'sendhtmlmail', $args)) return;
+            if (!xarModAPIFunc('mail','admin','sendhtmlmail', $args)) return;
         }
     }
     /* now let's do the html message to admin */
@@ -278,7 +272,7 @@ function sitecontact_user_contactus($args)
     $adminhtmlmessage= xarTplModule('sitecontact','user','adminmail',$adminhtmlarray,$htmltemplate);
     if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
 		xarErrorHandled();
-	    $adminhtmlmessage= xarTplModule('sitecontact', 'user', 'usermail',$userhtmlarray,'html');
+	    $adminhtmlmessage= xarTplModule('sitecontact', 'user', 'adminmail',$adminhtmlarray,'html');
     }
     $admintextarray =  array('notetouser' => $textnotetouser,
                              'username'   => $username,
@@ -297,7 +291,7 @@ function sitecontact_user_contactus($args)
     $admintextmessage= xarTplModule('sitecontact','user','adminmail',$admintextarray,$texttemplate);
     if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
 		xarErrorHandled();
-	    $admintextmessage= xarTplModule('sitecontact', 'user', 'usermail',$userhtmlarray,'text');
+	    $admintextmessage= xarTplModule('sitecontact', 'user', 'adminmail',$admintextarray,'text');
 	}
 
     /* send email to admin */
@@ -311,15 +305,9 @@ function sitecontact_user_contactus($args)
                   'usetemplates' => false);
 
     if ($usehtmlemail != 1) {
-
-        if (!xarModAPIFunc('mail',
-                           'admin',
-                           'sendmail', $args))return;
+        if (!xarModAPIFunc('mail','admin','sendmail', $args))return;
     } else {
-
-        if (!xarModAPIFunc('mail',
-                           'admin',
-                           'sendhtmlmail', $args))return;
+        if (!xarModAPIFunc('mail','admin','sendhtmlmail', $args))return;
     }
     /* Set the theme comments back */
     xarModSetVar('themes','ShowTemplates',$themecomments);
