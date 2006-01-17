@@ -223,7 +223,7 @@ function sitecontact_upgrade($oldversion)
             $result = $datadict->changeTable($sitecontactTable, $fields);
             if (!$result) {return;}
             /* Create a default form */
-            $defaultemail=  xarModGetVar('mail', 'adminmail');
+            $scdefaultemail=  xarModGetVar('sitecontact', 'scdefaultemail');
             $usehtmlemail = xarModGetVar('sitecontact', 'usehtmlemail');
             $allowcopy = xarModGetVar('sitecontact', 'allowcopy');
             $scdefaultemail = xarModGetVar('sitecontact', 'scdefaultemail');
