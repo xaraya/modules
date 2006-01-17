@@ -15,21 +15,21 @@
  * Update an itsp plan
  *
  * @author the ITSP module development team
- * @param  $args ['planid'] the ID of the item
- * @param  $args ['planname'] the new name of the item
- * @param  $args ['plandesc'] the new description of the plan
+ * @param  $args ['pitemid'] the ID of the item
+ * @param  $args ['pitemname'] the new name of the item
+ * @param  $args ['pitemdesc'] the new description of the plan
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
-function itsp_adminapi_update($args)
+function itsp_adminapi_update_pitem($args)
 {
     extract($args);
     /* Argument check
      */
     $invalid = array();
-    if (!isset($planid) || !is_numeric($planid)) {
+    if (!isset($pitemid) || !is_numeric($pitemid)) {
         $invalid[] = 'item ID';
     }
-    if (!isset($planname) || !is_string($planname)) {
+    if (!isset($pitemname) || !is_string($pitemname)) {
         $invalid[] = 'name';
     }
     if (!isset($credits) || !is_numeric($credits)) {
@@ -37,7 +37,7 @@ function itsp_adminapi_update($args)
     }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-            join(', ', $invalid), 'admin', 'update', 'ITSP');
+            join(', ', $invalid), 'admin', 'update_pitem', 'ITSP');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException($msg));
         return;
@@ -49,13 +49,13 @@ function itsp_adminapi_update($args)
      */
     $item = xarModAPIFunc('itsp',
         'user',
-        'get_plan',
-        array('planid' => $planid));
+        'get_planitem',
+        array('pitemid' => $pitemid));
     /*Check for exceptions */
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     // Security check
-    if (!xarSecurityCheck('EditITSPPlan', 1, 'Plan', "$planid:All:All")) {
+    if (!xarSecurityCheck('EditITSPPlan', 1, 'Plan', "All:$pitemid:All")) {
         return;
     }
     /* Get database setup */
@@ -64,20 +64,20 @@ function itsp_adminapi_update($args)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
-    $planstable = $xartable['itsp_plans'];
-    $query = "UPDATE $planstable
-            SET xar_planname  =?,
-                xar_plandesc  =?,
-                xar_planrules =?,
+    $pitemstable = $xartable['itsp_planitems'];
+    $query = "UPDATE $pitemstable
+            SET xar_pitemname  =?,
+                xar_pitemdesc  =?,
+                xar_pitemrules =?,
                 xar_credits   =?,
                 xar_mincredit =?,
                 xar_dateopen  =?,
                 xar_dateclose =?,
                 xar_datemodi  =?,
                 xar_modiby    =?
-            WHERE xar_planid  =?";
-    $bindvars = array($planname, $plandesc, $planrules, $credits, $mincredit,
-    $dateopen, $dateclose, $datemodi, $modiby, $planid);
+            WHERE xar_pitemid  =?";
+    $bindvars = array($pitemname, $pitemdesc, $pitemrules, $credits, $mincredit,
+    $dateopen, $dateclose, $datemodi, $modiby, $pitemid);
     $result = &$dbconn->Execute($query,$bindvars);
     /* Check for an error with the database code, adodb has already raised
      * the exception so we just return
@@ -87,11 +87,11 @@ function itsp_adminapi_update($args)
      * update hook we're passing the updated $item array as the extra info
      */
     $item['module'] = 'itsp';
-    $item['itemid'] = $planid;
-    $item['planname'] = $planname;
+    $item['itemid'] = $pitemid;
+    $item['pitemname'] = $pitemname;
     $item['credits'] = $credits;
-    $item['itemtype'] = 1;
-    xarModCallHooks('item', 'update', $planid, $item);
+    $item['itemtype'] = 3;
+    xarModCallHooks('item', 'update', $pitemid, $item);
 
     /* Let the calling process know that we have finished successfully */
     return true;

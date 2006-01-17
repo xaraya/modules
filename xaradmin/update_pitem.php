@@ -18,25 +18,25 @@
  * form supplied by xarModFunc('itsp','admin','modify') to update a current item
  *
  * @author ITSP module development team
- * @param  $ 'planid' the id of the item to be updated
- * @param  $ 'planname' the name of the item to be updated
- * @param  $ 'plandesc' the description of the item to be updated
+ * @param  $ 'pitemid' the id of the item to be updated
+ * @param  $ 'pitemname' the name of the item to be updated
+ * @param  $ 'pitemdesc' the description of the item to be updated
  */
-function itsp_admin_update($args)
+function itsp_admin_update_pitem($args)
 {
     extract($args);
 
-    if (!xarVarFetch('planid',     'id',     $planid,     $planid,    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('pitemid',    'id',     $pitemid,     $pitemid,    XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('objectid',   'id',     $objectid,   $objectid,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('invalid',    'array',  $invalid,    $invalid,   XARVAR_NOT_REQUIRED)) return;
 
-    if (!xarVarFetch('planname',   'str:1:', $planname,   $planname,  XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('plandesc',   'str:1:', $plandesc,   $plandesc,  XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('planrules',  'str:1:', $planrules,  $planrules, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('pitemname',  'str:1:', $pitemname,   $pitemname,  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('pitemdesc',  'str:1:', $pitemdesc,   $pitemdesc,  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('pitemrules', 'str:1:', $pitemrules,  $pitemrules, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('credits',    'int:1:', $credits,    $credits,   XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('mincredit',  'int:1:', $mincredit,  $mincredit, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('dateopen',   'int:1:', $dateopen,   $dateopen,  XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('dateclose',  'int:1:', $dateclose,  $dateclose, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('dateopen',   'isset',  $dateopen,   $dateopen,  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('dateclose',  'isset',  $dateclose,  $dateclose, XARVAR_NOT_REQUIRED)) return;
 
     /* At this stage we check to see if we have been passed $objectid, the
      * generic item identifier.  This could have been passed in by a hook or
@@ -49,7 +49,7 @@ function itsp_admin_update($args)
      * decision of which of these ways to go is up to the module developer
      */
     if (!empty($objectid)) {
-        $planid = $objectid;
+        $pitemid = $objectid;
     }
 
     /* Confirm authorisation code.
@@ -65,8 +65,8 @@ function itsp_admin_update($args)
         $invalid['credits'] = 1;
         $number = '';
     }
-    if (empty($planname) || !is_string($planname)) {
-        $invalid['planname'] = 1;
+    if (empty($pitemname) || !is_string($pitemname)) {
+        $invalid['pitemname'] = 1;
         $name = '';
     }
 
@@ -75,12 +75,12 @@ function itsp_admin_update($args)
         /* call the admin_new function and return the template vars
          * (you need to copy admin-new.xd to admin-create.xd here)
          */
-        return xarModFunc('itsp', 'admin', 'modify',
+        return xarModFunc('itsp', 'admin', 'modify_pitem',
                           array('invalid'   => $invalid,
-                                'planid'    => $planid,
-                                'planname'  => $planname,
-                                'plandesc'  => $plandesc,
-                                'planrules' => $planrules,
+                                'pitemid'    => $pitemid,
+                                'pitemname'  => $pitemname,
+                                'pitemdesc'  => $pitemdesc,
+                                'pitemrules' => $pitemrules,
                                 'credits'   => $credits,
                                 'mincredit' => $mincredit,
                                 'dateopen'  => $dateopen,
@@ -89,26 +89,32 @@ function itsp_admin_update($args)
 
     /* The API function is called: update item.
      */
+    if ((!empty($dateopen)) && !is_numeric($dateopen)) {
+         $dateopen = strtotime($dateopen);
+    }
+    if ((!empty($dateclose)) && !is_numeric($dateclose)) {
+         $dateopen = strtotime($dateclose);
+    }
     if (!xarModAPIFunc('itsp',
                        'admin',
-                       'update',
-                       array('planid'    => $planid,
-                             'planname'  => $planname,
-                             'plandesc'  => $plandesc,
-                             'planrules' => $planrules,
+                       'update_pitem',
+                       array('pitemid'    => $pitemid,
+                             'pitemname'  => $pitemname,
+                             'pitemdesc'  => $pitemdesc,
+                             'pitemrules' => $pitemrules,
                              'credits'   => $credits,
                              'mincredit' => $mincredit,
-                             'dateopen'  => strtotime($dateopen),
-                             'dateclose' => strtotime($dateclose)
+                             'dateopen'  => $dateopen,
+                             'dateclose' => $dateclose
                              )
                        )) {
         return; /* throw back */
     }
-    xarSessionSetVar('statusmsg', xarML('ITSP Plan was successfully updated!'));
+    xarSessionSetVar('statusmsg', xarML('Plan item was successfully updated!'));
     /* This function generated no output, and so now it is complete we redirect
      * the user to an appropriate page for them to carry on their work
      */
-    xarResponseRedirect(xarModURL('itsp', 'admin', 'view'));
+    xarResponseRedirect(xarModURL('itsp', 'admin', 'view_pitems'));
     /* Return */
     return true;
 }

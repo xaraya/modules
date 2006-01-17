@@ -16,18 +16,21 @@
     <span class="xar-mod-title"><xar:mlstring>ITSP Administration</xar:mlstring></span>
 </div>
 <div class="xar-mod-body">
-    <h2><xar:mlstring>New Plan item</xar:mlstring></h2>
+    <h2><xar:mlstring>Modify a Plan item</xar:mlstring></h2>
 
-    <form method="post" action="&xar-modurl-itsp-admin-create_pitem;" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
+    <form method="post" action="&xar-modurl-itsp-admin-update_pitem;" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
         <fieldset>
-            <legend><xar:mlstring>Creating a new plan item</xar:mlstring></legend>
+            <legend><xar:mlstring>Update an existing plan item</xar:mlstring></legend>
 
             <div class="xar-form-input-wrapper">
                  <label for="name" class="xar-form-label" title="#xarML('This is the item name')#">
                       <xar:mlstring>Item Name:</xar:mlstring>
                  </label>
+                 <xar:if condition = "!empty($pitemname)">
                  <input type="text" name="pitemname" id="pitemname" value="#$pitemname#" maxlength="32" class="xar-form-textmedium" />
-
+                 <xar:else />
+                 <input type="text" name="pitemname" id="pitemname" value="#$item.pitemname#" maxlength="32" class="xar-form-textmedium" />
+                 </xar:if>
                  <xar:if condition="!empty($invalid['pitemname'])">
                      <div class="xar-error">
                          <xar:mlstring>ERROR! This is not a valid name</xar:mlstring>
@@ -43,7 +46,11 @@
                 <label for="pitemdesc" class="xar-form-label" title="#xarML('This is the item description')#">
                     <xar:mlstring>Item Plan Description:</xar:mlstring>
                 </label>
-                <xar:data-input name="pitemdesc" type="textarea_medium" value="$pitemdesc" />
+                <xar:if condition = "!empty($pitemdesc)">
+                    <xar:data-input name="pitemdesc" type="textarea_medium" value="$pitemdesc" />
+                <xar:else />
+                    <xar:data-input name="pitemdesc" type="textarea_medium" value="$item['pitemdesc']" />
+                </xar:if>
                 <xar:if condition="!empty($invalid['pitemdesc'])">
                     <div class="xar-error">
                         <xar:mlstring>ERROR! This is not a valid description</xar:mlstring>
@@ -57,7 +64,11 @@
                  </label>
                  <p>coursetype:Level:Category:internal/external/open</p>
                  <div class="xar-form-input-wrapper-after">
-                    <input type="text" name="pitemrules" id="pitemrules" value="#$pitemrules#" maxlength="255" class="xar-form-textmedium" />
+                    <xar:if condition = "!empty($pitemrules)">
+                        <input type="text" name="pitemrules" id="pitemrules" value="#$pitemrules#" maxlength="255" class="xar-form-textmedium" />
+                    <xar:else />
+                        <input type="text" name="pitemrules" id="pitemrules" value="#$item.pitemrules#" maxlength="255" class="xar-form-textmedium" />
+                    </xar:if>
                      <xar:if condition="!empty($invalid['pitemrules'])">
                          <div class="xar-error">
                                 <xar:mlstring>ERROR! This is not a valid rule</xar:mlstring>
@@ -69,7 +80,11 @@
                  <label for="credits" class="xar-form-label" title="#xarML('This is the credits that need to be obtained in the pitem')#">
                         <xar:mlstring>Credits:</xar:mlstring>
                  </label>
-                 <input type="text" name="credits" id="credits" value="#$credits#" maxlength="32" class="xar-form-textshort" />
+                 <xar:if condition = "!empty($credits)">
+                    <input type="text" name="credits" id="credits" value="#$credits#" maxlength="32" class="xar-form-textshort" />
+                 <xar:else />
+                    <input type="text" name="credits" id="credits" value="#$item.credits#" maxlength="32" class="xar-form-textshort" />
+                 </xar:if>
                  <xar:if condition="!empty($invalid['credits'])">
                      <div class="xar-error">
                             <xar:mlstring>ERROR! This is not a valid credits</xar:mlstring>
@@ -80,7 +95,11 @@
                  <label for="mincredit" class="xar-form-label" title="#xarML('This is the mincredits that need to be obtained in the pitem')#">
                       <xar:mlstring>Mincredits:</xar:mlstring>
                  </label>
-                 <input type="text" name="mincredit" id="mincredit" value="#$mincredit#" maxlength="32" class="xar-form-textshort" />
+                 <xar:if condition = "!empty($mincredit)">
+                    <input type="text" name="mincredit" id="mincredit" value="#$mincredit#" maxlength="32" class="xar-form-textshort" />
+                 <xar:else />
+                    <input type="text" name="mincredit" id="mincredit" value="#$item.mincredit#" maxlength="32" class="xar-form-textshort" />
+                 </xar:if>
                  <xar:if condition="!empty($invalid['mincredits'])">
                      <div class="xar-error">
                             <xar:mlstring>ERROR! This is not a valid mincredits</xar:mlstring>
@@ -92,7 +111,11 @@
                  <label for="dateopen" class="xar-form-label" title="#xarML('This is the date this pitem can be applied to')#">
                         <xar:mlstring>Date to open the plan item:</xar:mlstring>
                  </label>
-                 <xar:data-input name="dateopen" type="calendar" validation="date" value="$dateopen" />
+                 <xar:if condition = "!empty($dateopen)">
+                    <xar:data-input name="dateopen" type="calendar" validation="date" value="$dateopen" />
+                 <xar:else />
+                    <xar:data-input name="dateopen" type="calendar" validation="date" value="$item['dateopen']" />
+                 </xar:if>
                  <xar:if condition="!empty($invalid['dateopen'])">
                      <div class="xar-error">
                             <xar:mlstring>ERROR! This is not a valid date</xar:mlstring>
@@ -104,7 +127,11 @@
                  <label for="name" class="xar-form-label" title="#xarML('This is the date this pitem can be applied to')#">
                         <xar:mlstring>Date this plan item closes:</xar:mlstring>
                  </label>
-                 <xar:data-input name="dateclose" type="calendar" validation="date" value="$dateclose" />
+                 <xar:if condition = "!empty($dateclose)">
+                    <xar:data-input name="dateclose" type="calendar" validation="date" value="$dateclose" />
+                 <xar:else />
+                    <xar:data-input name="dateclose" type="calendar" validation="date" value="$item['dateclose']" />
+                 </xar:if>
                  <xar:if condition="!empty($invalid['dateclose'])">
                      <div class="xar-error">
                             <xar:mlstring>ERROR! This is not a valid date</xar:mlstring>
@@ -138,7 +165,8 @@
             // preventing certain attacks on the website
         -->
                 <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                <input type="submit" value="#xarML('Add the plan item')#" />
+                <input type="hidden" name="pitemid" id="pitemid" value="#$pitemid#" />
+                <input type="submit" value="#xarML('Update the plan item')#" />
             </div>
         </fieldset>
     </form>

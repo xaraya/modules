@@ -4,19 +4,19 @@
         <legend><xar:mlstring>Information</xar:mlstring></legend>
 
         <div class="xar-form-input-wrapper">
-             <label for="name" class="xar-form-label" title="#xarML('This is the name')#">
+             <label for="name" class="xar-form-label" title="#xarML('Name of this item')#">
                   <xar:mlstring>Name:</xar:mlstring>
              </label>
              #$pitem.pitemname#
         </div>
         <div class="xar-form-input-wrapper">
-             <label for="name" class="xar-form-label" title="#xarML('This is the name')#">
+             <label for="name" class="xar-form-label" title="#xarML('Rules and the description')#">
                   <xar:mlstring>Description:</xar:mlstring>
              </label>
              #$pitem.pitemdesc#
         </div>
         <div class="xar-form-input-wrapper">
-             <label for="name" class="xar-form-label" title="#xarML('This is the name')#">
+             <label for="name" class="xar-form-label" title="#xarML('The minimum amount of credits you need to pass this item')#">
                   <xar:mlstring>Minimum credits required:</xar:mlstring>
              </label>
              #$pitem.mincredit#
@@ -41,8 +41,8 @@
     <fieldset>
         <legend><xar:mlstring>Add courses</xar:mlstring></legend>
         <div class="xar-form-input-wrapper">
-             <label for="name" class="xar-form-label" title="#xarML('This is the name')#">
-                  <xar:mlstring>Choose one of the following courses to add name:</xar:mlstring>
+             <label for="name" class="xar-form-label" title="#xarML('Choose one of the following courses to add')#">
+                  <xar:mlstring>Add course:</xar:mlstring>
              </label>
              <xar:comment>
              <select name="planid">
@@ -53,7 +53,6 @@
              </xar:comment>
         </div>
     </fieldset>
-
 
     <!-- if you want to extend this module with dynamic data, you can retrieve
     //   that data in the code via APIs, or use e.g. the following BL tags here.
