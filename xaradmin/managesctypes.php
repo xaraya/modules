@@ -241,6 +241,8 @@ function sitecontact_admin_managesctypes()
         foreach ($optionset as $optionitem) {
            $optionitems[]=explode(';',$optionitem);
         }
+
+       $data['requesttext']='';
        $data['optionitems']=$optionitems;
        $data['link'] = xarModURL('sitecontact','admin','managesctypes');
        $scid=$data['item']['scid'];
