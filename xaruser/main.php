@@ -11,48 +11,27 @@
  * @link http://xaraya.com/index.php/release/572.html
  * @author ITSP Module Development Team
  */
-
 /**
  * The main user function
  *
  * This function is the default function, and is called whenever the module is
- * initiated without defining arguments.  As such it can be used for a number
- * of things, but most commonly it either just shows the module menu and
- * returns or calls whatever the module designer feels should be the default
- * function (often this is the view() function)
- *
+ * initiated without defining arguments.
+ * We will redirect to the ITSP of the user if that exists, or redirect to the view function
  * @author the ITSP module development team
  */
 function itsp_user_main()
 {
-    /* Security check - important to do this as early as possible to avoid
-     * potential security holes or just too much wasted processing.  For the
-     * main function we want to check that the user has at least overview
-     * privilege for some item within this component, or else they won't be
-     * able to see anything and so we refuse access altogether.  The lowest
-     * level of access for users depends on the particular module, but it is
-     * generally either 'overview' or 'read'
-     */
     if (!xarSecurityCheck('ViewITSP')) return;
-    /* If you want to go directly to some default function, instead of
-     * having a separate main function, you can simply call it here, and
-     * use the same template for user-main.xard as for user-view.xard
-     * return xarModFunc('itsp','user','view');
-     * Initialise the $data variable that will hold the data to be used in
-     * the blocklayout template, and get the common menu configuration - it
-     * helps if all of the module pages have a standard menu at the top to
-     * support easy navigation
-     */
-    $data = xarModAPIFunc('itsp', 'user', 'menu');
-    /* Specify some other variables used in the blocklayout template */
-    $data['welcome'] = xarML('Welcome to this ITSP module...');
-    /* We also may want to change the title of the page for a little
-     * better search results from the spiders.  All we are doing below
-     * Is telling Xaraya what the title of the page should be, and
-     * Xaraya controls the rest.
-     */
-    xarTplSetPageTitle(xarVarPrepForDisplay(xarML('Welcome')));
-    /* Return the template variables defined in this function */
-    return $data;
+
+    // See if user has a registered ITSP
+    $uid = xarUserGetVar('uid');
+    $itsp = xarModApiFunc('itsp','user','get_itspid',array('userid'=>$uid));
+    // Need to set the func
+    // Move on to ITSP when one is found
+    if (!empty($itsp)) {
+        return xarModFunc('itsp','user','itsp');
+    } else {
+        return xarModFunc('itsp','user','view');
+    }
 }
 ?>

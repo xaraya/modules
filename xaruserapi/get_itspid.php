@@ -1,6 +1,6 @@
 <?php
 /**
- * Get a specific ITSP
+ * Get a specific ITSP id
  *
  * @package modules
  * @copyright (C) 2002-2006 The Digital Development Foundation
@@ -12,27 +12,26 @@
  * @author ITSP Module Development Team
  */
 /**
- * Get a specific ITSP
+ * Get a specific ITSP id by userid
  *
  * Standard function of a module to retrieve a specific item
  *
  * @author the ITSP module development team
- * @param  $args ['itspid'] id of itsp item to get
  * @param  $args ['userid'] id of the user to get the itsp for
  * @returns array
  * @return item array, or false on failure
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
-function itsp_userapi_get($args)
+function itsp_userapi_get_itspid($args)
 {
     extract($args);
     /* Argument check - make sure that all required arguments are present and
      * in the right format, if not then set an appropriate error message
      * and return
      */
-    if ((!isset($itspid) || !is_numeric($itspid)) && (!isset($userid) || !is_numeric($userid))) {
+    if ((!isset($userid) || !is_numeric($userid))) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-            'item ID', 'user', 'get', 'ITSP');
+            'item ID', 'user', 'get_itspid', 'ITSP');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException($msg));
         return;
@@ -56,12 +55,9 @@ function itsp_userapi_get($args)
                xar_datecertaward,
                xar_datemodi,
                xar_modiby
-              FROM $itsptable";
-    if (!empty($itspid) && is_numeric($itspid)) {
-        $query .= " WHERE xar_itspid = $itspid";
-    } elseif (isset($userid)) {
-        $query .= " WHERE xar_userid = $userid";
-    }
+              FROM $itsptable
+              WHERE xar_userid = $userid";
+
     $result = &$dbconn->Execute($query);
     /* Check for an error with the database code, adodb has already raised
      * the exception so we just return
@@ -70,10 +66,7 @@ function itsp_userapi_get($args)
     /* Check for no rows found, and if so, close the result set and return an exception */
     if ($result->EOF) {
         $result->Close();
-        $msg = xarML('This item does not exist');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'ID_NOT_EXIST',
-            new SystemException(__FILE__ . '(' . __LINE__ . '): ' . $msg));
-        return;
+        return false;
     }
     /* Obtain the item information from the result set */
     list($itspid, $userid, $planid, $itspstatus, $datesubm, $dateappr, $datecertreq, $datecertaward, $datemodi, $modiby) = $result->fields;

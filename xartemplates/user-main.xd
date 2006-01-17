@@ -1,14 +1,9 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>ITSP</xar:mlstring></span>
 </div>
 <div class="xar-mod-body">
     <h2><xar:mlstring>ITSP</xar:mlstring></h2>
-
-    <!-- the variables used in this menu template  come from example_user_menu() -->
-    <xar:template type="module" file="user-menu" />
-
 </div>
 <div class="xar-mod-foot xar-align-center xar-padding-thick">
     <p>
