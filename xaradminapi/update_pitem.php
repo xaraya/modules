@@ -42,10 +42,7 @@ function itsp_adminapi_update_pitem($args)
             new SystemException($msg));
         return;
     }
-    /* The user API function is called.  This takes the item ID which
-     * we obtained from the input and gets us the information on the
-     * appropriate item.  If the item does not exist we post an appropriate
-     * message and return
+    /* Get the planitem
      */
     $item = xarModAPIFunc('itsp',
         'user',
