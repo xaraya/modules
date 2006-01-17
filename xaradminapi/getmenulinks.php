@@ -31,25 +31,6 @@ function ebulletin_adminapi_getmenulinks()
         );
     }
 
-    // new publication, new subscribers
-    if (xarSecurityCheck('AddeBulletin', 0)) {
-        $menulinks[] = array(
-            'url' => xarModURL('ebulletin', 'admin', 'new'),
-            'title' => xarML('Add new publication.'),
-            'label' => xarML('Add publication')
-        );
-        $menulinks[] = array(
-            'url' => xarModURL('ebulletin', 'admin', 'newsubscribers_reg'),
-            'title' => xarML('Add registered website users.'),
-            'label' => xarML('Add registered users')
-        );
-        $menulinks[] = array(
-            'url' => xarModURL('ebulletin', 'admin', 'newsubscribers_unreg'),
-            'title' => xarML('Add unregistered website users.'),
-            'label' => xarML('Add unregistered users')
-        );
-    }
-
     // view publications and issues and subscribers
     if (xarSecurityCheck('EditeBulletin', 0)) {
         $menulinks[] = array(

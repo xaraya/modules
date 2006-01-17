@@ -27,8 +27,9 @@ function ebulletin_init()
     // publications table
     $pubstable = $xartable['ebulletin'];
     $fields = array(
-        'xar_id'           => array('type' => 'integer', 'null' => false, 'increment' => true,
-            'primary_key' => true),
+        'xar_id'           => array(
+            'type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true
+        ),
         'xar_name'         => array('type' => 'varchar', 'size' => 255,   'null' => false),
         'xar_desc'         => array('type' => 'varchar', 'size' => 255,   'null' => false),
         'xar_public'       => array('type' => 'integer', 'size' => 1,     'null' => false),
@@ -60,8 +61,8 @@ function ebulletin_init()
     // issues table
     $issuestable = $xartable['ebulletin_issues'];
     $fields = array(
-        'xar_id'        => array('type' => 'integer', 'null' => false,
-            'increment' => true, 'primary_key' => true
+        'xar_id'        => array(
+            'type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true
         ),
         'xar_pid'       => array('type' => 'integer', 'size' => 'small', 'null' => false),
         'xar_issuedate' => array('type' => 'date',                       'null' => false),
@@ -82,12 +83,13 @@ function ebulletin_init()
     // subscriptions table
     $subscriptionstable = $xartable['ebulletin_subscriptions'];
     $fields = array(
-        'xar_id'    => array('type' => 'integer', 'null' => false, 'increment' => true,
-            'primary_key' => true
+        'xar_id'    => array(
+            'type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true
         ),
         'xar_pid'   => array('type' => 'integer', 'size' => 'small', 'null' => false),
         'xar_name'  => array('type' => 'varchar', 'size' => 255,     'null' => false),
-        'xar_email' => array('type' => 'varchar', 'size' => 255,     'null' => false)
+        'xar_email' => array('type' => 'varchar', 'size' => 255,     'null' => false),
+        'xar_uid'   => array('type' => 'integer', 'size' => 'large', 'null' => false)
     );
 
     // let xarDB create the query for us
@@ -171,6 +173,41 @@ function ebulletin_init()
 */
 function ebulletin_upgrade($oldversion)
 {
+    // Set up database tables
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+    $subscriptionstable = $xartable['ebulletin_subscriptions'];
+
+    // Get a data dictionary object with item create methods.
+    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+
+    switch($oldversion) {
+    case '0.9.7':
+        /**
+        * Changes:
+        *
+        * Move uid for registered subscribers to its own column
+        * instead of storing them in xar_email.
+        */
+
+        // create new column
+        $result = $datadict->ChangeTable(
+            $subscriptionstable, 'xar_uid I8 NotNull DEFAULT 0'
+        );
+        if (!$result) {return;}
+
+        // move uids to new column
+        $query = "
+            UPDATE $subscriptionstable
+            SET
+                xar_uid = xar_email,
+                xar_email = ''
+            WHERE xar_email REGEXP '^[[:digit:]]+$'
+        ";
+        $result = $dbconn->Execute($query);
+        if (!$result) {return;}
+
+    }
     return true;
 }
 
