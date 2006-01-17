@@ -27,6 +27,7 @@ class Dynamic_CourseList_Property extends Dynamic_Select_Property
     var $userstate = -1;
     var $showlist = array();
     var $orderlist = array();
+    var $typelist = array();
     var $showglue = '; ';
 
     /*
@@ -35,8 +36,10 @@ class Dynamic_CourseList_Property extends Dynamic_Select_Property
     * Options take the form:
     *   option-type:option-value;
     * option-types:
+    * coursetype:;Level:;Category:;source:internal/external/open; (not relevant here)
     *   catid:catid[,catid] - select only courses who are members of the given category(ies)
     *   level:value - select only courses of the given value
+    *   type:value - select only courses of the given value for type (varchar)
     *   show:field[,field] - show the specified field(s) in the select item
     *   showglue:string - string to join multiple fields together
     *   order:field[,field] - order the selection by the specified field
@@ -109,23 +112,25 @@ class Dynamic_CourseList_Property extends Dynamic_Select_Property
             if (!empty($this->catlist)) {
                 $select_options['catid'] = implode(',', $this->catlist);
             }
-
-            $users = xarModAPIFunc('courses', 'user', 'getall', $select_options);
+            if (!empty($this->typelist)) {
+                $select_options['type'] = implode(',', $this->typelist);
+            }
+            $courses = xarModAPIFunc('courses', 'user', 'getall', $select_options);
 
             // Loop for each user retrived and populate the options array.
             if (empty($this->showlist)) {
                 // Simple case (default) -
-                foreach ($users as $user) {
-                    $options[] = array('id' => $user['uid'], 'name' => $user['name']);
+                foreach ($courses as $course) {
+                    $options[] = array('id' => $course['courseid'], 'name' => $course['name']);
                 }
             } else {
                 // Complex case: allow specific fields to be selected.
-                foreach ($users as $user) {
+                foreach ($courses as $course) {
                     $namevalue = array();
                     foreach ($this->showlist as $showfield) {
-                        $namevalue[] = $user[$showfield];
+                        $namevalue[] = $course[$showfield];
                     }
-                    $options[] = array('id' => $user['uid'], 'name' => implode($this->showglue, $namevalue));
+                    $options[] = array('id' => $course['courseid'], 'name' => implode($this->showglue, $namevalue));
                 }
             }
         }
@@ -145,7 +150,7 @@ class Dynamic_CourseList_Property extends Dynamic_Select_Property
        //$data['select_options']=$select_options;
         $data['value']=$value;
         $data['options']=$options;
-        $data['users']=$users;
+        $data['courses']=$courses;
         $data['tabindex']=!empty($tabindex) ? $tabindex : 0;
         $data['invalid']=!empty($this->invalid) ? xarML('Invalid #(1)', $this->invalid) : '';
 
