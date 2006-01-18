@@ -139,7 +139,7 @@
                 </xar:if>
             </td>
             <td class="xar-accent authorname">
-                <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $loop:item['fposter']))#">
+                <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $loop:item['tposter']))#">
                     #$loop:item['name']#</a>
             </td>
             <td class="xar-accent authorname">
