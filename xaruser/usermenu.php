@@ -95,6 +95,7 @@ function sigmapersonnel_user_usermenu($args)
              * might be the number of items to be displayed per page.
              */
             if (!xarVarFetch('uid', 'int:1:', $uid)) return;
+            if (!xarVarFetch('personid', 'id', $personid)) return;
             if (!xarVarFetch('itemsperpage', 'str:1:100', $itemsperpage, '20', XARVAR_NOT_REQUIRED)) return;
             // Names etc
             if (!xarVarFetch('firstname', 'str:1:', $firstname, '',XARVAR_NOT_REQUIRED)) return;
@@ -134,8 +135,8 @@ function sigmapersonnel_user_usermenu($args)
             // Update person data
             if (!xarModAPIFunc('sigmapersonnel',
                                'admin',
-                               'update',
-                               array(
+                               'updateperson',
+                               array('personid' => $personid,
                                     'firstname' => $firstname,
                                     'lastname' => $lastname,
                                     'tussenvgsl' => $tussenvgsl,
@@ -161,7 +162,7 @@ function sigmapersonnel_user_usermenu($args)
                                     'contactcityid' => $contactcityid,
                                     'contactrelation' => $contactrelation,
                                     'contactmobile' => $contactmobile,
-                                    'birthdate' => strtotime($birthdate),
+                                    'birthdate' => $birthdate,
                                     'birthplace' => $birthplace
                             ))) {
                 return; // throw back

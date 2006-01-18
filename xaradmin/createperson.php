@@ -74,7 +74,7 @@ function sigmapersonnel_admin_createperson($args)
     if (!xarVarFetch('dateshoes', 'str:1:100', $dateshoes, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('others', 'str::', $others, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('educationremarks', 'str::', $educationremarks, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('lastmodified', 'str:1:25', $lastmodified, date("Y-m-d H:i:s"),XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('lastmodified', 'str:1:25', $lastmodified, time(),XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('lastmodifiedby', 'int:1:', $lastmodifiedby, xarUserGetVar('uid'),XARVAR_NOT_REQUIRED)) return;
 
     if (!xarVarFetch('invalid', 'str:1:', $invalid, '', XARVAR_NOT_REQUIRED)) return;

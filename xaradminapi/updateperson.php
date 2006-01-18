@@ -1,9 +1,9 @@
 <?php
 /**
- * Update an sigmapersonnel item
+ * Update a sigmapersonnel person
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -15,9 +15,9 @@
  * update an sigmapersonnel item
  *
  * @author the Michel V.
- * @param  $args ['exid'] the ID of the item
- * @param  $args ['name'] the new name of the item
- * @param  $args ['number'] the new number of the item
+ * @param  $args ['personid'] the ID of the item
+ * @param  $args ['firstname'] the first name of the person
+ * @param  $args ['pnumber'] the new person number of the item
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function sigmapersonnel_adminapi_updateperson($args)
@@ -54,15 +54,170 @@ function sigmapersonnel_adminapi_updateperson($args)
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     // Security check
-    if (!xarSecurityCheck('EditSIGMAPersonnel', 1, 'PersonnelItem', "$PersonID:All:All")) {
+    if (!xarSecurityCheck('EditSIGMAPersonnel', 1, 'PersonnelItem', "$personid:All:All")) {
         return;
     }
 
     // Implement situation of multiple parts of update
 
+    if (!isset($userid)) {
+        $userid = $item['userid'];
+    }
+    if (!isset($pnumber)) {
+        $pnumber = $item['pnumber'];
+    }
+    if (!isset($persstatus)) {
+        $persstatus = $item['persstatus'];
+    }
+    if (!isset($firstname)) {
+        $firstname = $item['firstname'];
+    }
+    if (!isset($lastname)) {
+        $lastname = $item['lastname'];
+    }
+    if (!isset($tussenvgsl)) {
+        $tussenvgsl = $item['tussenvgsl'];
+    }
+    if (!isset($initials)) {
+        $initials = $item['initials'];
+    }
+    if (!isset($sex)) {
+        $sex = $item['sex'];
+    }
+    if (!isset($title)) {
+        $title = $item['title'];
+    }
+    if (!isset($street)) {
+        $street = $item['street'];
+    }
+    if (!isset($zip)) {
+        $zip = $item['zip'];
+    }
+    if (!isset($cityid)) {
+        $cityid = $item['cityid'];
+    }
+    if (!isset($phonehome)) {
+        $phonehome = $item['phonehome'];
+    }
+    if (!isset($mobile)) {
+        $mobile = $item['mobile'];
+    }
+    if (!isset($phonework)) {
+        $phonework = $item['phonework'];
+    }
+    if (!isset($email)) {
+        $email = $item['email'];
+    }
+    if (!isset($privphonehome)) {
+        $privphonehome = $item['privphonehome'];
+    }
+    if (!isset($privwork)) {
+        $privwork = $item['privwork'];
+    }
+    if (!isset($privemail)) {
+        $privemail = $item['privemail'];
+    }
+    if (!isset($privbirthdate)) {
+        $privbirthdate = $item['privbirthdate'];
+    }
+    if (!isset($privaddress)) {
+        $privaddress = $item['privaddress'];
+    }
+    if (!isset($privphonework)) {
+        $privphonework = $item['privphonework'];
+    }
+    if (!isset($contactname)) {
+        $contactname = $item['contactname'];
+    }
+    if (!isset($contactphone)) {
+        $contactphone = $item['contactphone'];
+    }
+    if (!isset($contactstreet)) {
+        $contactstreet = $item['contactstreet'];
+    }
+    if (!isset($contactcityid)) {
+        $contactcityid = $item['contactcityid'];
+    }
+    if (!isset($contactrelation)) {
+        $contactrelation = $item['contactrelation'];
+    }
+    if (!isset($contactmobile)) {
+        $contactmobile = $item['contactmobile'];
+    }
+    if (!isset($birthdate)) {
+        $birthdate = $item['birthdate'];
+    }
+    if (!isset($birthplace)) {
+        $birthplace = $item['birthplace'];
+    }
+    if (!isset($nrkdistrict)) {
+        $nrkdistrict = $item['nrkdistrict'];
+    }
+    if (!isset($nrknumber)) {
+        $nrknumber = $item['nrknumber'];
+    }
+    if (!isset($ehbonr)) {
+        $ehbonr = $item['ehbonr'];
+    }
+    if (!isset($ehboplus)) {
+        $ehboplus = $item['ehboplus'];
+    }
+    if (!isset($ehboplace)) {
+        $ehboplace = $item['ehboplace'];
+    }
+    if (!isset($ehbodate)) {
+        $ehbodate = $item['ehbodate'];
+    }
+    if (!isset($dateintake)) {
+        $dateintake = $item['dateintake'];
+    }
+    if (!isset($intakeby)) {
+        $intakeby = $item['intakeby'];
+    }
+    if (!isset($dateemploy)) {
+        $dateemploy = $item['dateemploy'];
+    }
+    if (!isset($dateout)) {
+        $dateout = $item['dateout'];
+    }
+    if (!isset($dateouttalk)) {
+        $dateouttalk = $item['dateouttalk'];
+    }
+    if (!isset($outreason)) {
+        $outreason = $item['outreason'];
+    }
+    if (!isset($outtalkwith)) {
+        $outtalkwith = $item['outtalkwith'];
+    }
+    if (!isset($dateshoes)) {
+        $dateshoes = $item['dateshoes'];
+    }
+    if (!isset($sizeshoes)) {
+        $sizeshoes = $item['sizeshoes'];
+    }
+    if (!isset($banknr)) {
+        $banknr = $item['banknr'];
+    }
+    if (!isset($bankplaceid)) {
+        $bankplaceid = $item['bankplaceid'];
+    }
+    if (!isset($others)) {
+        $others = $item['others'];
+    }
+    if (!isset($educationremarks)) {
+        $educationremarks = $item['educationremarks'];
+    }
+    if (!isset($lastmodified)) {
+        $lastmodified = $item['lastmodified'];
+    }
+    if (!isset($lastmodifiedby)) {
+        $lastmodifiedby = $item['lastmodifiedby'];
+    }
+
+
     // Get database setup
-    $dbconn = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     // It's good practice to name the table and column definitions you
     // are getting - $table and $column don't cut it in more complex
     // modules

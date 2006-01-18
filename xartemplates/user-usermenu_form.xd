@@ -196,9 +196,7 @@
                 <xar:data-input name="privphonework" type="checkbox" value="$persondata['privphonework']" />
             </div>
        </fieldset>
-       <fieldset>
-
-       </fieldset>
+           <input type="hidden" name="personid" id="personid" value="#$persondata['personid']#" />
     </xar:if>
     <fieldset>
         <div class="xar-form-input-wrapper">
@@ -211,6 +209,7 @@
         </div>
     </fieldset>
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
+
     <input type="hidden" name="uid" id="uid" value="#$uid#" />
     <input type="hidden" name="phase" id="phase" value="update" />
     <input type="submit" value="Modify Your Information"  tabindex="2" />
