@@ -72,7 +72,7 @@ function maxercalls_admin_createmaxer($args)
                                   'function'    => $function,
                                   'program'     => $program,
                                   'maxerstatus' => $maxerstatus,
-                                  'remark'      => $remark
+                                  'remark'      => $remark,
                                 'invalid' => $invalid));
     }     */
     /* Confirm authorisation code. */

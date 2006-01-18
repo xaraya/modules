@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id:
+ * Create a new call
  *
- * Create a new maxercalls item
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
