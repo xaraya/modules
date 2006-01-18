@@ -52,7 +52,7 @@ function sigmapersonnel_admin_createperson($args)
     if (!xarVarFetch('contactcityid', 'int:1:', $contactcityid, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('contactrelation', 'str:1:100', $contactrelation, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('contactmobile', 'str:1:100', $contactmobile, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('birthdate', 'str', $birtdate, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('birthdate', 'str', $birthdate, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('birthplace', 'str:1:100', $birthplace, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('nrkdistrict', 'int:1:', $nrkdistrict, '',XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('nrknumber', 'int:1:', $nrknumber, '',XARVAR_NOT_REQUIRED)) return;
@@ -136,7 +136,7 @@ function sigmapersonnel_admin_createperson($args)
                             'contactcityid' => $contactcityid,
                             'contactrelation' => $contactrelation,
                             'contactmobile' => $contactmobile,
-                            'birthdate' => $birtdate,
+                            'birthdate' => $birthdate,
                             'birthplace' => $birthplace,
                             'nrkdistrict' => $nrkdistrict,
                             'nrknumber' => $nrknumber,
@@ -196,7 +196,7 @@ function sigmapersonnel_admin_createperson($args)
                             'contactcityid' => $contactcityid,
                             'contactrelation' => $contactrelation,
                             'contactmobile' => $contactmobile,
-                            'birthdate' => strtotime($birtdate),
+                            'birthdate' => strtotime($birthdate),
                             'birthplace' => $birthplace,
                             'nrkdistrict' => $nrkdistrict,
                             'nrknumber' => $nrknumber,

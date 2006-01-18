@@ -110,6 +110,8 @@ function sigmapersonnel_user_usermenu($args)
             if (!xarVarFetch('mobile', 'str:1:100', $mobile, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('phonework', 'str:1:100', $phonework, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('email', 'str:1:100', $email, '', XARVAR_NOT_REQUIRED)) return; //Type email?
+            if (!xarVarFetch('birthdate', 'str', $birthdate, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('birthplace', 'str:1:100', $birthplace, '', XARVAR_NOT_REQUIRED)) return;
             // Privacy options
             if (!xarVarFetch('privphonehome', 'checkbox', $privphonehome, false,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('privwork', 'checkbox', $privwork,false,XARVAR_NOT_REQUIRED)) return;
@@ -134,9 +136,6 @@ function sigmapersonnel_user_usermenu($args)
                                'admin',
                                'update',
                                array(
-                                    'userid' => $userid,
-                                    'pnumber' => $pnumber,
-                                    'persstatus' => $persstatus,
                                     'firstname' => $firstname,
                                     'lastname' => $lastname,
                                     'tussenvgsl' => $tussenvgsl,
@@ -162,7 +161,7 @@ function sigmapersonnel_user_usermenu($args)
                                     'contactcityid' => $contactcityid,
                                     'contactrelation' => $contactrelation,
                                     'contactmobile' => $contactmobile,
-                                    'birthdate' => strtotime($birtdate),
+                                    'birthdate' => strtotime($birthdate),
                                     'birthplace' => $birthplace
                             ))) {
                 return; // throw back
