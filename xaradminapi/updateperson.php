@@ -32,11 +32,12 @@ function sigmapersonnel_adminapi_updateperson($args)
     if (!isset($personid) || !is_numeric($personid)) {
         $invalid[] = 'item ID';
     }
-    if (!isset($lastname) || !is_string($lastname)) {
-        $invalid[] = 'lastname';
-    }
+
     if (!isset($firstname) || !is_string($firstname)) {
         $invalid[] = 'firstname';
+    }
+    if (!isset($lastname) || !is_string($lastname)) {
+        $invalid[] = 'lastname';
     }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
@@ -207,13 +208,8 @@ function sigmapersonnel_adminapi_updateperson($args)
     if (!isset($educationremarks)) {
         $educationremarks = $item['educationremarks'];
     }
-    if (!isset($lastmodified)) {
-        $lastmodified = $item['lastmodified'];
-    }
-    if (!isset($lastmodifiedby)) {
-        $lastmodifiedby = $item['lastmodifiedby'];
-    }
-
+    $lastmodified = time();
+    $lastmodifiedby = xarUserGetVar('uid');
 
     // Get database setup
     $dbconn =& xarDBGetConn();

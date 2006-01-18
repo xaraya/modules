@@ -1,19 +1,19 @@
 <?php
 /**
  * Create a new sigma person
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Sigmapersonnel Module
- * @author Michel V. 
+ * @author Michel V.
  */
 /**
  * create a new sigmapersonnel item
- * 
- * @author the Michel V. 
+ *
+ * @author the Michel V.
  * @param  $args ['firstname'] firstname of the item
  * @param  $args ['pnumber'] number of the item
  * @returns int
@@ -21,47 +21,39 @@
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function sigmapersonnel_adminapi_createperson($args)
-{ 
-    extract($args); 
+{
+    extract($args);
     // Argument check
     $invalid = array();
     if (!isset($firstname) || !is_string($firstname)) {
         $invalid[] = 'firstname';
-    } 
+    }
     if (!isset($lastname) || !is_string($lastname)) {
         $invalid[] = 'lastname';
-    } 
+    }
     /* Need to think this over.
     if (!isset($pnumber) || !is_numeric($pnumber)) {
         $invalid[] = 'pnumber';
-    } 
-    */ 
+    }
+    */
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
             join(', ', $invalid), 'admin', 'create', 'SIGMAPersonnel');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException($msg));
         return;
-    } 
+    }
     // Security check
     if (!xarSecurityCheck('AddSIGMAPersonnel', 1, 'PersonnelItem', "All:All:$persstatus")) {
         return;
-    } 
-    // Create vars
-    //$lastmodifiedby = xarUserGetVar('uid');
-    //$lastmodified = date("Y-m-d H:i:s");
-    /*
-    if (empty($pnumber) || !is_numeric($pnumber)) {
-        $pnumber = 0;
     }
-    if (empty($userid) || !is_numeric($userid)) {
-        $userid = 0;
-    }
-    */
+    $lastmodified = time();
+    $lastmodifiedby = xarUserGetVar('uid');
+
     // Get database setup
     $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables(); 
-    $sigmapersonneltable = $xartable['sigmapersonnel_person']; 
+    $xartable =& xarDBGetTables();
+    $sigmapersonneltable = $xartable['sigmapersonnel_person'];
     // Get next ID in table
     $nextId = $dbconn->GenId($sigmapersonneltable);
     // Add item
@@ -139,7 +131,7 @@ function sigmapersonnel_adminapi_createperson($args)
         $initials,
         $sex,
         $title,
-        
+
         $street,
         $zip,
         $cityid,
@@ -160,7 +152,7 @@ function sigmapersonnel_adminapi_createperson($args)
         $contactrelation,
         $contactmobile,
         $birthdate,
-        
+
         $birthplace,
         $nrkdistrict,
         $nrknumber,
@@ -171,7 +163,7 @@ function sigmapersonnel_adminapi_createperson($args)
         $dateintake,
         $intakeby,
         $dateemploy,
-        
+
         $dateout,
         $dateouttalk,
         $outreason,
@@ -182,20 +174,20 @@ function sigmapersonnel_adminapi_createperson($args)
         $bankplaceid,
         $others,
         $educationremarks,
-        
+
         $lastmodified,
         $lastmodifiedby);
     $result = &$dbconn->Execute($query,$bindvars);
-    if (!$result) return; 
+    if (!$result) return;
     // Get the ID of the item that we inserted.
-    $personid = $dbconn->PO_Insert_ID($sigmapersonneltable, 'xar_personid'); 
+    $personid = $dbconn->PO_Insert_ID($sigmapersonneltable, 'xar_personid');
     // Let any hooks know that we have created a new item.
     $item = $args;
     $item['module'] = 'sigmapersonnel';
     $item['itemid'] = $personid;
-    xarModCallHooks('item', 'create', $personid, $item); 
+    xarModCallHooks('item', 'create', $personid, $item);
     // Return the id of the newly created item to the calling process
     return $personid;
-} 
+}
 
 ?>

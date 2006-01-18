@@ -334,7 +334,7 @@
                             <xar:mlstring>Birthdate</xar:mlstring>
                             </span>
                         </label>
-                        <xar:data-input name="birthdate" type="calendar" value="$item['birthdate']" />
+                        <xar:data-input name="birthdate" type="calendar" value="$item['birthdate']" validation="date" />
                       <xar:if condition="!empty($invalid['birthdate'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid birthdate</xar:mlstring></span>
                       </xar:if>
@@ -604,7 +604,8 @@
             </div>
             <div style="clear: both; padding-top: 10px;">
                 <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                <input type="submit" value="#$updatebutton#" />
+                <input type="hidden" name="personid" id="personid" value="#$item['personid']#" />
+                <input type="submit" value="#xarML('Update Person')#" />
             </div>
         </form>
     </div>

@@ -18,7 +18,7 @@
  * @param  $ 'name' the name of the item to be created
  * @param  $ 'number' the number of the item to be created
  */
-function sigmapersonnel_admin_createperson($args)
+function sigmapersonnel_admin_updateperson($args)
 {
     extract($args);
 
@@ -104,7 +104,7 @@ function sigmapersonnel_admin_createperson($args)
     if (count($invalid) > 0) {
         // call the admin_new function and return the template vars
         // (you need to copy admin-new.xd to admin-create.xd here)
-        return xarModFunc('sigmapersonnel', 'admin', 'newperson',
+        return xarModFunc('sigmapersonnel', 'admin', 'modifyperson',
                           array(
                             'userid' => $userid,
                             'pnumber' => $pnumber,
@@ -162,7 +162,7 @@ function sigmapersonnel_admin_createperson($args)
     // The API function is called.
     $personid = xarModAPIFunc('sigmapersonnel',
                           'admin',
-                          'createperson',
+                          'updateperson',
                           array(
                             'userid' => $userid,
                             'pnumber' => $pnumber,

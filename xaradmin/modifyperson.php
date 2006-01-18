@@ -3,7 +3,7 @@
  * Standard function to modify a person
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -72,8 +72,6 @@ function sigmapersonnel_admin_modifyperson($args)
     if (!xarVarFetch('bankplaceid', 'int:1:', $bankplaceid, $bankplaceid,XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('others', 'str::', $others, $others, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('educationremarks', 'str::', $educationremarks, $educationremarks, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('lastmodified', 'str:1:25', $lastmodified, $lastmodified,XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('lastmodifiedby', 'int:1:', $lastmodifiedby, $lastmodifiedby,XARVAR_NOT_REQUIRED)) return;
 
     if (!xarVarFetch('invalid', 'array', $invalid, $invalid, XARVAR_NOT_REQUIRED)) return;
 
@@ -107,7 +105,6 @@ function sigmapersonnel_admin_modifyperson($args)
     // Return the template variables defined in this function
     $data['authid']       = xarSecGenAuthKey();
     $data['invalid']      = $invalid;
-    $data['updatebutton'] = xarVarPrepForDisplay(xarML('Update Person'));
     $data['hookoutput']   = $hooks;
     $data['item']         = $item;
     $data['ptitle']       = $item['title'];

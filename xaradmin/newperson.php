@@ -408,16 +408,6 @@ function sigmapersonnel_admin_newperson($args)
     } else {
         $data['educationremarks'] = $educationremarks;
     }
-    if (empty($lastmodified)) {
-        $data['lastmodified'] = '';
-    } else {
-        $data['lastmodified'] = $lastmodified;
-    }
-    if (empty($lastmodifiedby)) {
-        $data['lastmodifiedby'] = '';
-    } else {
-        $data['lastmodifiedby'] = $lastmodifiedby;
-    }
 
     // Return the template variables defined in this function
     return $data;
