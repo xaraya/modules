@@ -23,6 +23,7 @@ function sigmapersonnel_admin_updateperson($args)
     extract($args);
 
     // Get parameters from whatever input we need.
+    if (!xarVarFetch('personid', 'id', $personid)) return;
     if (!xarVarFetch('userid', 'int:1:', $userid, '',XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('objectid', 'id', $objectid, '', XARVAR_NOT_REQUIRED)) return; // OK to stay?
     if (!xarVarFetch('pnumber', 'int:1:', $pnumber, '',XARVAR_NOT_REQUIRED)) return;
@@ -79,8 +80,8 @@ function sigmapersonnel_admin_updateperson($args)
     // Argument check
     $item = xarModAPIFunc('sigmapersonnel',
                           'user',
-                          'validateitem',
-                          array('pnumber' => $pnumber));
+                          'get',
+                          array('personid' => $personid));
 
     // Argument check
     $invalid = array();
@@ -96,16 +97,14 @@ function sigmapersonnel_admin_updateperson($args)
         $invalid['lastname'] = 1;
         $lastname = '';
     }
-    if (!empty($pnumber) && $item['pnumber'] == $pnumber) {
-        $invalid['duplicatepnumber'] = 1;
-        $duplicatepnumber = '';
-    }
+
     // check if we have any errors
     if (count($invalid) > 0) {
         // call the admin_new function and return the template vars
         // (you need to copy admin-new.xd to admin-create.xd here)
         return xarModFunc('sigmapersonnel', 'admin', 'modifyperson',
                           array(
+                            'personid' => $personid,
                             'userid' => $userid,
                             'pnumber' => $pnumber,
                             'persstatus' => $persstatus,
@@ -163,7 +162,7 @@ function sigmapersonnel_admin_updateperson($args)
     $personid = xarModAPIFunc('sigmapersonnel',
                           'admin',
                           'updateperson',
-                          array(
+                          array('personid' => $personid,
                             'userid' => $userid,
                             'pnumber' => $pnumber,
                             'persstatus' => $persstatus,
@@ -192,22 +191,22 @@ function sigmapersonnel_admin_updateperson($args)
                             'contactcityid' => $contactcityid,
                             'contactrelation' => $contactrelation,
                             'contactmobile' => $contactmobile,
-                            'birthdate' => strtotime($birthdate),
+                            'birthdate' => $birthdate,
                             'birthplace' => $birthplace,
                             'nrkdistrict' => $nrkdistrict,
                             'nrknumber' => $nrknumber,
                             'ehbonr' => $ehbonr,
                             'ehboplus' => $ehboplus,
-                            'ehbodate' => strtotime($ehbodate),
+                            'ehbodate' => $ehbodate,
                             'ehboplace' => $ehboplace,
-                            'dateintake' => strtotime($dateintake),
+                            'dateintake' => $dateintake,
                             'intakeby' => $intakeby,
-                            'dateemploy' => strtotime($dateemploy),
-                            'dateout' => strtotime($dateout),
-                            'dateouttalk' => strtotime($dateouttalk),
+                            'dateemploy' => $dateemploy,
+                            'dateout' => $dateout,
+                            'dateouttalk' => $dateouttalk,
                             'outreason' => $outreason,
                             'outtalkwith' => $outtalkwith,
-                            'dateshoes' => strtotime($dateshoes),
+                            'dateshoes' => $dateshoes,
                             'sizeshoes' => $sizeshoes,
                             'banknr' => $banknr,
                             'bankplaceid' => $bankplaceid,

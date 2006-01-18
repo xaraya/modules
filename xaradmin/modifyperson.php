@@ -107,7 +107,61 @@ function sigmapersonnel_admin_modifyperson($args)
     $data['invalid']      = $invalid;
     $data['hookoutput']   = $hooks;
     $data['item']         = $item;
-    $data['ptitle']       = $item['title'];
+    $data['personid'] =  $personid;
+    $data['userid'] =  $userid;
+    $data['pnumber'] =  $pnumber;
+    $data['persstatus'] =  $persstatus;
+    $data['firstname'] =  $firstname;
+    $data['lastname'] =  $lastname;
+    $data['tussenvgsl'] =  $tussenvgsl;
+    $data['initials'] =  $initials;
+    $data['sex'] =  $sex;
+    $data['title'] =  $title;
+    $data['street'] =  $street;
+    $data['zip'] =  $zip;
+    $data['cityid'] =  $cityid;
+    $data['phonehome'] =  $phonehome;
+    $data['mobile'] =  $mobile;
+    $data['phonework'] =  $phonework;
+    $data['email'] =  $email;
+    $data['privphonehome'] =  $privphonehome;
+    $data['privwork'] =  $privwork;
+    $data['privemail'] =  $privemail;
+    $data['privbirthdate'] =  $privbirthdate;
+    $data['privaddress'] =  $privaddress;
+    $data['privphonework'] =  $privphonework;
+    $data['contactname'] =  $contactname;
+    $data['contactphone'] =  $contactphone;
+    $data['contactstreet'] =  $contactstreet;
+    $data['contactcityid'] =  $contactcityid;
+    $data['contactrelation'] =  $contactrelation;
+    $data['contactmobile'] =  $contactmobile;
+    $data['birthdate'] = $birthdate;
+    $data['birthplace'] =  $birthplace;
+    $data['nrkdistrict'] =  $nrkdistrict;
+    $data['nrknumber'] =  $nrknumber;
+    $data['ehbonr'] =  $ehbonr;
+    $data['ehboplus'] =  $ehboplus;
+    $data['ehbodate'] =  $ehbodate;
+    $data['ehboplace'] =  $ehboplace;
+    $data['dateintake'] =  $dateintake;
+    $data['intakeby'] =  $intakeby;
+    $data['dateemploy'] =  $dateemploy;
+    $data['dateout'] =  $dateout;
+    $data['dateouttalk'] =  $dateouttalk;
+    $data['outreason'] =  $outreason;
+    $data['outtalkwith'] =  $outtalkwith;
+    $data['dateshoes'] =  $dateshoes;
+    $data['sizeshoes'] = $sizeshoes;
+    $data['banknr'] = $banknr;
+    $data['bankplaceid'] =  $bankplaceid;
+    $data['dateshoes'] =  $dateshoes;
+    $data['others'] =  $others;
+    $data['educationremarks'] =  $educationremarks;
+
+
+
+
 
     return $data;
 }

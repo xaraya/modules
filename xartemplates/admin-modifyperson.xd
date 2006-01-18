@@ -87,7 +87,7 @@
                             <xar:mlstring>Title</xar:mlstring>
                             </span>
                         </label>
-                        <xar:data-input name="title" type="2" value="$ptitle" />
+                        <xar:data-input name="title" type="2" value="$title" />
                         <xar:if condition="!empty($invalid['title'])">
                           <span style="color: red"><xar:mlstring>ERROR! This is not a valid title</xar:mlstring></span>
                         </xar:if>

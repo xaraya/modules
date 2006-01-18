@@ -208,6 +208,35 @@ function sigmapersonnel_adminapi_updateperson($args)
     if (!isset($educationremarks)) {
         $educationremarks = $item['educationremarks'];
     }
+    // dateformatting
+
+    if (!empty($birthdate) && !is_numeric($birthdate)) {
+        // Work around for failing calendar property
+        list($year1, $month, $day) = split('-', $birthdate);
+        $year = $year1 +50;
+        $birthdate = mktime(0,0,0, $month,$day, $year);
+    }
+
+    if (!empty($ehbodate) && !is_numeric($ehbodate)) {
+        $ehbodate = strtotime($ehbodate);
+    }
+    if (!empty($dateintake) && !is_numeric($dateintake)) {
+        $dateintake = strtotime($dateintake);
+    }
+    if (!empty($dateout) && !is_numeric($dateout)) {
+        $dateout = strtotime($dateout);
+    }
+    if (!empty($dateouttalk) && !is_numeric($dateouttalk)) {
+        $dateouttalk = strtotime($dateouttalk);
+    }
+    if (!empty($dateemploy) && !is_numeric($dateemploy)) {
+        $dateemploy = strtotime($dateemploy);
+    }
+    if (!empty($dateshoes) && !is_numeric($dateshoes)) {
+        $dateshoes = strtotime($dateshoes);
+    }
+
+    // Last modification data
     $lastmodified = time();
     $lastmodifiedby = xarUserGetVar('uid');
 
