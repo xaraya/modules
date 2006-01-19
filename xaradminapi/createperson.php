@@ -52,9 +52,11 @@ function sigmapersonnel_adminapi_createperson($args)
 
     if (!empty($birthdate) && !is_numeric($birthdate)) {
         // Work around for failing calendar property
-        list($year1, $month, $day) = split('-', $birthdate);
+        /*list($year1, $month, $day) = split('-', $birthdate);
         $year = $year1 +50;
-        $birthdate = mktime(0,0,0, $month,$day, $year);
+        $birthdate = mktime(0,0,0,$month,$day,$year);*/
+        $bdate = strtotime($birthdate);
+        $birthdate = $bdate+3153600000;
     }
 
     if (!empty($ehbodate) && !is_numeric($ehbodate)) {

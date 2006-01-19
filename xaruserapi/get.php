@@ -164,6 +164,22 @@ function sigmapersonnel_userapi_get($args)
     if (!xarSecurityCheck('ReadSIGMAPersonnel', 1, 'PersonnelItem', "$personid:All:$persstatus")) {
         return;
     }
+
+    // Format the birthdate
+    // Workaround due to failing calendar property
+   /* if (!empty($birthdate) && !is_numeric($birthdate)) {
+        // Work around for failing calendar property
+        list($year1, $month, $day) = split('-', $birthdate);
+        $year = $year1 +50;
+        $birthdate = mktime(0,0,0, $month,$day, $year);
+    }
+    $bdate = date('Y-m-d', $birthdate);
+    list($year1, $month, $day) = split('-', $bdate);
+    $year = $year1 -50;
+    $birthdate = mktime(0,0,0,$month,$day,$year);*/
+    //$bdate = strtotime($birthdate);
+        $birthdate = $birthdate-1576800000;
+
     // Create the item array
     $item = array(
         'personid'      => $personid,

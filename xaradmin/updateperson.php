@@ -53,7 +53,7 @@ function sigmapersonnel_admin_updateperson($args)
     if (!xarVarFetch('contactcityid', 'int:1:', $contactcityid, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('contactrelation', 'str:1:100', $contactrelation, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('contactmobile', 'str:1:100', $contactmobile, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('birthdate', 'str', $birthdate, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('birthdate', 'str::', $birthdate, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('birthplace', 'str:1:100', $birthplace, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('nrkdistrict', 'int:1:', $nrkdistrict, '',XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('nrknumber', 'int:1:', $nrknumber, '',XARVAR_NOT_REQUIRED)) return;
@@ -76,7 +76,7 @@ function sigmapersonnel_admin_updateperson($args)
     if (!xarVarFetch('others', 'str::', $others, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('educationremarks', 'str::', $educationremarks, '', XARVAR_NOT_REQUIRED)) return;
 
-    if (!xarVarFetch('invalid', 'str:1:', $invalid, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('invalid', 'array', $invalid, array(), XARVAR_NOT_REQUIRED)) return;
     // Argument check
     $item = xarModAPIFunc('sigmapersonnel',
                           'user',
