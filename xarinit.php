@@ -30,7 +30,7 @@ function maxercalls_init()
     'xar_enteruid'=>array('null'=>FALSE, 'type'=>'integer','size'=>'small',  'default'=>'0'),
     'xar_owner'=>array('null'=>FALSE, 'type'=>'integer','size'=>'small',  'default'=>'0'),
     'xar_calltext'=>array('null'=>FALSE, 'type'=>'integer','size'=>'small',  'default'=>'0'),
-    'xar_remarks'=>array('null'=>TRUE,  'type'=>'varchar','size'=>100,  'default'=>'NULL'),
+    'xar_remarks'=>array('null'=>TRUE,  'type'=>'text', 'default'=>'NULL'),
     'xar_calldate'=>array('null'=>FALSE, 'type'=>'date'),//,'default'=>array('year'=>2005,'month'=>01,'day'=>17,'hour'=>'12','minute'=>59,'second'=>0)),
     'xar_calltime'=>array('null'=>FALSE, 'type'=>'time', 'size'=>'HHMM'),
     'xar_enterts'=>array('type'=>'timestamp')
@@ -323,7 +323,18 @@ function maxercalls_upgrade($oldversion)
             if (!$result) {return;}
             return maxercalls_upgrade('0.2.0');
         case '0.2.0':
+            // Upgrade remarks area
+            $dbconn = xarDBGetConn();
+            $xartable = xarDBGetTables();
 
+            $datadict = xarDBNewDataDict($dbconn, 'CREATE');
+            $callstable = xarDBgetSiteTablePrefix() . '_maxercalls';
+            // Apply changes
+            xarDBLoadTableMaintenanceAPI();
+            $result = $datadict->alterColumn($callstable, 'xar_remarks X default NULL');
+            if (!$result) return;
+            return maxercalls_upgrade('0.3.0');
+        case '0.3.0':
             break;
     }
     return true;
