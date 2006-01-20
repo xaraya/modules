@@ -11,6 +11,10 @@
         </xar:foreach>
     </xar:if>
 </p>
+<p>get statusnrs</p>
+Inzetbaar: #$amountstatus['Inzetbaar']#
+Niet Inzetbaar: #$amountstatus['Niet Inzetbaar']#
+
 <p> Presence: #$presence#</p>
 <xar:comment><p> #$types[1]['type']# #$presence1#</p>
 <p> #$types[2]['type']# #$presence2#</p></xar:comment>

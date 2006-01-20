@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id:
- *
  * Utility function counts number of items held by this module
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -38,8 +36,33 @@ function sigmapersonnel_userapi_countitems($args)
     // SQL statement relatively easy to read.  Also, separating out the sql
     // statement from the Execute() command allows for simpler debug operation
     // if it is ever needed
-    $query = "SELECT COUNT(1)
-            FROM $sigmapersonneltable";
+    $query = "SELECT COUNT(1) ";
+
+    // catid is not empty
+    if (!empty($catid) && xarModIsHooked('categories','sigmapersonnel')) {
+        // Get the LEFT JOIN ... ON ...  and WHERE parts from categories
+        $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
+                                       array('modid' => xarModGetIDFromName('sigmapersonnel'),
+                                             'catid' => $catid));
+
+        $query .= " FROM ($sigmapersonneltable
+                    LEFT JOIN $categoriesdef[table]
+                    ON $categoriesdef[field] = xar_personid )
+                    $categoriesdef[more]
+                    WHERE $categoriesdef[where]";
+                    if(!empty($persstatus)) {
+                        $query .= " AND ";
+                    }
+    } else {
+        $query .= " FROM $sigmapersonneltable";
+    }
+    if (!empty($persstatus) && empty($catid)) {
+        $query .= " WHERE xar_persstatus = $persstatus";
+    } elseif (!empty($persstatus) && !empty($catid)) {
+        // AND has been added
+        $query .= " xar_persstatus = $persstatus";
+    }
+
     // If there are no variables you can pass in an empty array for bind variables
     // or no parameter.
     $result = &$dbconn->Execute($query,array());

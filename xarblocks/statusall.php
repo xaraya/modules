@@ -85,7 +85,25 @@ function sigmapersonnel_statusallblock_display($blockinfo)
     // TODO: check for conflicts between transformation hook output and xarVarPrepForDisplay
     // Loop through each item
     $data['items'] = array();
+    // Get the standard status indicators
+    // TODO: what is the on call/not on call status?
+    $statusses = xarModAPIFunc('sigmapersonnel', 'user', 'gets',
+                                      array('itemtype' => 6));
 
+    // returns array statusid-> statustype
+
+    $data['nrstatus'] = count($statusses);
+    //echo $nrstatus;
+
+    foreach ($statusses as $status) {
+        $countstatus = xarModApiFunc('sigmapersonnel', 'user', 'countitems',
+                                      array('persstatus' => $status['statusid']));
+        if(!empty($countstatus)) {
+            $data['amountstatus'][$status['statustype']] = $countstatus;
+        } else {
+            $data['amountstatus'][$status['statustype']] = 0;
+        }
+    }
     $tstatus=0;
     $tstatus1=0;
     $tstatus2=0;
