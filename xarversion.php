@@ -26,4 +26,6 @@ $modversion['user'] = 1;
 $modversion['admin'] = 1;
 $modversion['class'] = 'Complete';
 $modversion['category'] = 'Content';
+// Dependent on categories
+$modversion['dependency'] = array(147);
 ?>

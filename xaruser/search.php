@@ -44,7 +44,7 @@ function release_user_search()
         $data['authorsearch']=1;
     }
 
-     if($q == ''){
+     if(trim($q) == ''){
         return $data;
     }
     // Default parameters
