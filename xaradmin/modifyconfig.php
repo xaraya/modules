@@ -43,16 +43,34 @@ function maxercalls_admin_modifyconfig()
     $data['aliasname ']= xarModGetVar('maxercalls','aliasname');
 
     $hooks = xarModCallHooks('module', 'modifyconfig', 'maxercalls',
-                       array('module' => 'maxercalls'));
+                       array('module' => 'maxercalls','itemtype' => 2));
     if (empty($hooks)) {
-        $data['hooks'] = array('categories' => xarML('You can assign base categories by enabling the categories hooks for example module'));
+        $data['maxerhooks'] = array('categories' => xarML('You can assign base categories by enabling the categories hooks for example module'));
     } else {
-        $data['hooks'] = $hooks;
+        $data['maxerhooks'] = $hooks;
 
          /* You can use the output from individual hooks in your template too, e.g. with
          * $hooks['categories'], $hooks['dynamicdata'], $hooks['keywords'] etc.
          */
         $data['hookoutput'] = $hooks;
+    }
+    // Itemtype 2
+    $hooks = xarModCallHooks('module', 'modifyconfig', 'maxercalls',
+                       array('module' => 'maxercalls','itemtype' => 2));
+    if (empty($hooks)) {
+        $data['maxerhooks'] = array('categories' => xarML('You can assign base categories by enabling the categories hooks for example module'));
+    } else {
+        $data['maxerhooks'] = $hooks;
+
+    }
+    // Itemtype 1 Calls
+    $hooks = xarModCallHooks('module', 'modifyconfig', 'maxercalls',
+                       array('module' => 'maxercalls','itemtype' => 1));
+    if (empty($hooks)) {
+        $data['callshooks'] = array('categories' => xarML('You can assign base categories by enabling the categories hooks for example module'));
+    } else {
+        $data['callshooks'] = $hooks;
+
     }
     // Return the template variables defined in this function
     return $data;

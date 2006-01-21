@@ -1,6 +1,5 @@
-<object name="Maxercalls maxerfunctions">
-  <objectid>15</objectid>
-  <label>Maxerfunctions</label>
+<object name="Maxerfunctions">
+  <label>Maxer functions</label>
   <moduleid>247</moduleid>
   <itemtype>7</itemtype>
   <urlparam>itemid</urlparam>
@@ -9,7 +8,7 @@
   <isalias>0</isalias>
   <properties>
     <property name="mfunctionid">
-      <id>63</id>
+      <id></id>
       <label>Mfunctionid</label>
       <type>itemid</type>
       <default></default>
@@ -19,7 +18,7 @@
       <validation>int (11)</validation>
     </property>
     <property name="maxerfunction">
-      <id>64</id>
+      <id></id>
       <label>Maxerfunction</label>
       <type>textbox</type>
       <default></default>
@@ -29,7 +28,7 @@
       <validation>0:200</validation>
     </property>
     <property name="functioncolor">
-      <id>65</id>
+      <id></id>
       <label>Functioncolor</label>
       <type>tcolorpicker</type>
       <default></default>

@@ -1,0 +1,18 @@
+<items>
+  <Maxerstatus itemid="1">
+    <mstatusid></mstatusid>
+    <maxerstatus>In use</maxerstatus>
+    <statuscolor>#009933</statuscolor>
+  </Maxerstatus>
+  <Maxerstatus itemid="2">
+    <mstatusid></mstatusid>
+    <maxerstatus>Reservated</maxerstatus>
+    <statuscolor>#FFFFCC</statuscolor>
+  </Maxerstatus>
+  <Maxerstatus itemid="3">
+    <mstatusid></mstatusid>
+    <maxerstatus>Out of order</maxerstatus>
+    <statuscolor>#FF0000</statuscolor>
+  </Maxerstatus>
+</items>
+

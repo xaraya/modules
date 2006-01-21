@@ -67,14 +67,14 @@ function maxercalls_admin_createmaxer($args)
 
         return xarModFunc('maxercalls', 'admin', 'newmaxer',
                           array('personid'    => $personid,
-                                  'ric'         => $ric,
-                                  'maxernumber' => $maxernumber,
-                                  'function'    => $function,
-                                  'program'     => $program,
-                                  'maxerstatus' => $maxerstatus,
-                                  'remark'      => $remark,
+                                'ric'         => $ric,
+                                'maxernumber' => $maxernumber,
+                                'function'    => $function,
+                                'program'     => $program,
+                                'maxerstatus' => $maxerstatus,
+                                'remark'      => $remark,
                                 'invalid' => $invalid));
-    }     */
+    }
     /* Confirm authorisation code. */
     if (!xarSecConfirmAuthKey()) return;
     /* The API function is called. Note that the name of the API function and

@@ -1,0 +1,18 @@
+<items>
+  <Maxerfunctions itemid="1">
+    <mfunctionid>1</mfunctionid>
+    <maxerfunction>Group one</maxerfunction>
+    <functioncolor>#009900</functioncolor>
+  </Maxerfunctions>
+  <Maxerfunctions itemid="2">
+    <mfunctionid>2</mfunctionid>
+    <maxerfunction>Group two</maxerfunction>
+    <functioncolor>#FFCC33</functioncolor>
+  </Maxerfunctions>
+  <Maxerfunctions itemid="3">
+    <mfunctionid>3</mfunctionid>
+    <maxerfunction>Out of order</maxerfunction>
+    <functioncolor>#FF0000</functioncolor>
+  </Maxerfunctions>
+</items>
+

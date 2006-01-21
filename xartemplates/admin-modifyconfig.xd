@@ -19,7 +19,7 @@
 
     <fieldset>
       <legend><xar:mlstring>Display Options</xar:mlstring></legend>
-      
+
       <div class="xar-form-input-wrapper">
         <label for="itemsperpage" class="xar-form-label" title="#xarML('Number of maxercalls items per page')#">
           <xar:mlstring>maxercalls Items Per Page:</xar:mlstring>
@@ -39,7 +39,7 @@
           <input type="checkbox" name="shorturls" id="shorturls" value="1" />
         </xar:if>
       </div>
-      
+
       <div class="xar-form-input-wrapper">
         <label for = "modulealias" class="xar-form-label" title="#xarML('Use an alias instead of the module name')#">
           <xar:mlstring>
@@ -51,7 +51,7 @@
           <xar:else />
           <input type="checkbox" name="modulealias" id="modulealias" value="1" />
         </xar:if>
-        
+
       </div>
       <div class="xar-form-input-wrapper">
         <label for="aliasname" class="xar-form-label" title="#xarML('The name of module alias to be used.')#">
@@ -61,32 +61,50 @@
         </label>
         <input type="text" name="aliasname" id="aliasname" value="#xarModGetVar('maxercalls', 'aliasname')#" size="32" maxlength="100" />
       </div>
-      
+
     </fieldset>
-    
+
     <fieldset>
-      <legend><xar:mlstring>Enabled Hooks</xar:mlstring></legend>
-      <xar:if condition="!empty($hooks)">
-        <xar:foreach in="$hooks" key="$hookmodule">
+      <legend><xar:mlstring>Enabled Hooks for calls</xar:mlstring></legend>
+      <xar:if condition="!empty($callshooks)">
+        <xar:foreach in="$callshooks" key="$hookmodule">
           <!--
               You can display individual hooks if you want using xar:if statements
-              
+
               <xar:if condition="($hookmodule eq 'categories') and !empty($hookmodule)">
                 #$hooks['categories']#
               </xar:if>
-              
+
               or display them all with one command as follows
               -->
-          #$hooks[$hookmodule]#
+          #$callshooks[$hookmodule]#
         </xar:foreach>
       </xar:if>
     </fieldset>
-    
+    <fieldset>
+      <legend><xar:mlstring>Enabled Hooks for maxers</xar:mlstring></legend>
+      <xar:if condition="!empty($maxerhooks)">
+        <xar:foreach in="$maxerhooks" key="$hookmodule">
+          <!--
+              You can display individual hooks if you want using xar:if statements
+
+              <xar:if condition="($hookmodule eq 'categories') and !empty($hookmodule)">
+                #$hooks['categories']#
+              </xar:if>
+
+              or display them all with one command as follows
+              -->
+          #$maxerhooks[$hookmodule]#
+        </xar:foreach>
+      </xar:if>
+    </fieldset>
+
+
     <div class="xar-form-input-wrapper-after">
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <input type="submit" value="#xarML('Update Configuration')#" />
     </div>
-    
+
   </form>
 </div>
 <xar:if condition="xarSessionSetVar('statusmsg', '')"></xar:if>

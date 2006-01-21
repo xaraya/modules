@@ -169,29 +169,54 @@ function maxercalls_init()
             'hookModName'       => 'categories'
             ,'callerModName'    => 'maxercalls'));
     // Hook for Dynamic Data
-    xarModAPIFunc(
+/*    xarModAPIFunc(
         'modules'
         ,'admin'
         ,'enablehooks'
         ,array(
             'hookModName'       => 'dynamicdata'
             ,'callerModName'    => 'maxercalls'));
-
+*/
     /*
-    * The Calltype Object
-
+     * Ok, Now lets create all of our dd objects
+     */
     $path = "modules/maxercalls/xardata/";
 
+    /*
+     * The Calltype Object
+     */
     $objectid = xarModAPIFunc('dynamicdata','util','import',
-                              array('file' => $path . 'mc_types.xml'));
+                              array('file' => $path . 'mc_calltypes-def.xml'));
     if (empty($objectid)) return;
     // save the object id for later
-    xarModSetVar('maxercalls','calltypeid',$objectid);
-    //This doesn't work well
-    //$objectid = xarModAPIFunc('dynamicdata','util','import',
-    //                          array('file' => $path . 'mc_types.data.xml'));
-    //if (empty($objectid)) return;
-    */
+    xarModSetVar('maxercalls','calltypeobjectid',$objectid);
+/*    $objectid = xarModAPIFunc('dynamicdata','util','import',
+                              array('file' => $path . 'mc_calltypes-data.xml'));
+    if (empty($objectid)) return;
+*/
+    /*
+     * The Maxer Functions Object
+     */
+    $objectid = xarModAPIFunc('dynamicdata','util','import',
+                              array('file' => $path . 'mc_mfunctions-def.xml'));
+    if (empty($objectid)) return;
+    // save the object id for later
+    xarModSetVar('maxercalls','mfunctionsobjectid',$objectid);
+/*    $objectid = xarModAPIFunc('dynamicdata','util','import',
+                              array('file' => $path . 'mc_mfunctions-data.xml'));
+    if (empty($objectid)) return;
+*/
+    /*
+     * The Maxer Status Object
+     */
+    $objectid = xarModAPIFunc('dynamicdata','util','import',
+                              array('file' => $path . 'mc_mstatus-def.xml'));
+    if (empty($objectid)) return;
+    // save the object id for later
+    xarModSetVar('maxercalls','mstatusobjectid',$objectid);
+    $objectid = xarModAPIFunc('dynamicdata','util','import',
+                              array('file' => $path . 'mc_mstatus-data.xml'));
+    if (empty($objectid)) return;
     /**
      * Define instances for this module
      * Format is
@@ -368,8 +393,16 @@ function maxercalls_delete()
     /* Drop the tables */
      $result = $datadict->dropTable($xartable[$basename . '_' . $table]);
     }
-
-    $objectid = xarModGetVar('maxercalls','calltypeid');
+    /* Drop the Dyn data objects */
+    $objectid = xarModGetVar('maxercalls','calltypeobjectid');
+    if (!empty($objectid)) {
+        xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
+    }
+    $objectid = xarModGetVar('maxercalls','mfunctionsobjectid');
+    if (!empty($objectid)) {
+        xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
+    }
+    $objectid = xarModGetVar('maxercalls','mstatusobjectid');
     if (!empty($objectid)) {
         xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
     }

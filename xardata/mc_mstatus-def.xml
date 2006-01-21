@@ -1,5 +1,5 @@
-<object name="Maxercalls maxerstatus">
-
+<object name="Maxerstatus">
+  <objectid></objectid>
   <label>Maxer status</label>
   <moduleid>247</moduleid>
   <itemtype>6</itemtype>
@@ -9,7 +9,7 @@
   <isalias>0</isalias>
   <properties>
     <property name="mstatusid">
-      <id>57</id>
+      <id></id>
       <label>Mstatusid</label>
       <type>itemid</type>
       <default></default>
@@ -19,7 +19,7 @@
       <validation>int (11)</validation>
     </property>
     <property name="maxerstatus">
-      <id>58</id>
+      <id></id>
       <label>Maxerstatus</label>
       <type>textbox</type>
       <default></default>
@@ -29,9 +29,9 @@
       <validation>0:200</validation>
     </property>
     <property name="statuscolor">
-      <id>59</id>
+      <id></id>
       <label>Statuscolor</label>
-      <type>textbox</type>
+      <type>tcolorpicker</type>
       <default></default>
       <source>xar_maxercalls_maxerstatus.xar_statuscolor</source>
       <status>1</status>

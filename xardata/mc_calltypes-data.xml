@@ -1,0 +1,13 @@
+<items>
+  <Maxercalltypes itemid="1">
+    <typeid>1</typeid>
+    <calltext>First group</calltext>
+    <color>#FF0000</color>
+  </Maxercalltypes>
+  <Maxercalltypes itemid="2">
+    <typeid>2</typeid>
+    <calltext>Second group</calltext>
+    <color>#00CC00</color>
+  </Maxercalltypes>
+</items>
+
