@@ -54,7 +54,7 @@ function release_userapi_search($args)
         if (isset($rid)) {
             $sql .= " OR ";
         }
-        $sql .= "xar_uid LIKE ? ";
+        $sql .= "xar_uid = ? ";
         $bindvars[] = $uid;
     }
 
@@ -62,23 +62,23 @@ function release_userapi_search($args)
         if (isset($rid) || isset($tid)) {
             $sql .= " OR ";
         }
-        $sql .= " xar_regname = ?";
+        $sql .= " xar_regname LIKE ?";
 
-        $bindvars[] = $regname;
+        $bindvars[] = '%'.$regname.'%';
     }
    if (isset($displname)) {
         if (isset($rid) || isset($tid) || isset($regname)) {
             $sql .= " OR ";
         }
-        $sql .= " xar_displname = ?";
-        $bindvars[] = $displname;
+        $sql .= " xar_displname LIKE ?";
+        $bindvars[] = '%'.$displname.'%';
     }
     if (isset($desc)) {
         if (isset($rid) || isset($tid) || isset($regname) || isset($displname)) {
             $sql .= " OR ";
         }
-        $sql .= " xar_desc = ?";
-        $bindvars[] = $desc;
+        $sql .= " xar_desc LIKE ?";
+        $bindvars[] = '%'.$desc.'%';
     }
     $sql .= ")  ORDER BY xar_rid ASC";
 
@@ -96,7 +96,7 @@ function release_userapi_search($args)
                                 'uid' => $uid,
                                 'regname' => $regname,
                                 'displname' => $displname,
-							    'desc' => $desc,
+                                'desc' => $desc,
                                 'author' => xarUserGetVar('name',$uid),
                                 'exttype' => $exttype );
         }
