@@ -215,7 +215,7 @@ function sigmapersonnel_admin_updateperson($args)
 
     // The return value of the function is checked here
     if (!isset($personid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-
+    xarSessionSetVar('statusmsg', xarML('Person successfully updated!'));
     xarResponseRedirect(xarModURL('sigmapersonnel', 'admin', 'viewpersons'));
     // Return
     return true;

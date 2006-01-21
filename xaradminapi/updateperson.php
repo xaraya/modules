@@ -373,6 +373,7 @@ function sigmapersonnel_adminapi_updateperson($args)
 
     xarModCallHooks('item', 'update', $personid, $item);
     // Let the calling process know that we have finished successfully
+
     return true;
 }
 
