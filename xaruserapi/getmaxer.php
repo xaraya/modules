@@ -3,7 +3,7 @@
  * Get a specific maxer
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -11,7 +11,6 @@
  * @link http://xaraya.com/index.php/release/247.html
  * @author Maxercalls Module Development Team
  */
-
 /**
  * Get a specific maxer
  *
@@ -68,7 +67,7 @@ function maxercalls_userapi_getmaxer($args)
     $result->Close();
     /* Security check
      */
-    if (!xarSecurityCheck('ReadMaxercalls', 1, 'Item', "All:All:All")) {
+    if (!xarSecurityCheck('ReadMaxercalls', 1, 'Maxer', "All:All:All")) {
         return;
     }
     /* Create the item array */

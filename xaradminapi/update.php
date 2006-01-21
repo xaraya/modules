@@ -54,34 +54,16 @@ function maxercalls_adminapi_update($args)
     // Check for exceptions
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
-    // Security check - important to do this as early on as possible to
-    // avoid potential security holes or just too much wasted processing.
-    // However, in this case we had to wait until we could obtain the item
-    // name to complete the instance information so this is the first
-    // chance we get to do the check
-    // Note that at this stage we have two sets of item information, the
-    // pre-modification and the post-modification.  We need to check against
-    // both of these to ensure that whoever is doing the modification has
-    // suitable permissions to edit the item otherwise people can potentially
-    // edit areas to which they do not have suitable access
-    if (!xarSecurityCheck('EditMaxercalls', 1, 'Item', "$callid:All:$item[enteruid]")) {
+    // Security check
+    if (!xarSecurityCheck('EditMaxercalls', 1, 'Call', "$callid:All:$item[enteruid]")) {
         return;
     }
-    // Get database setup - note that both xarDBGetConn() and xarDBGetTables()
-    // return arrays but we handle them differently.  For xarDBGetConn()
-    // we currently just want the first item, which is the official
-    // database handle.  For xarDBGetTables() we want to keep the entire
-    // tables array together for easy reference later on
-    $dbconn = xarDBGetConn();
-    $xartable = xarDBGetTables();
-    // It's good practice to name the table and column definitions you
-    // are getting - $table and $column don't cut it in more complex
-    // modules
+    // Get database setup
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+
     $maxercallstable = $xartable['maxercalls'];
-    // Update the item - the formatting here is not mandatory, but it does
-    // make the SQL statement relatively easy to read.  Also, separating
-    // out the sql statement from the Execute() command allows for simpler
-    // debug operation if it is ever needed
+    // Update the item
     $query = "UPDATE $maxercallstable
             SET xar_callid = ?,
               xar_enteruid = ?,
@@ -97,8 +79,10 @@ function maxercalls_adminapi_update($args)
     if (!$result) return;
     // Let any hooks know that we have updated an item.  As this is an
     // update hook we're passing the updated $item array as the extra info
+    $item = $args;
     $item['module'] = 'maxercalls';
     $item['itemid'] = $callid;
+    $item['itemtype'] = 1;
     $item['enteruid'] = $enteruid;
     $item['owner'] = $owner;
     $item['remarks'] = $remarks;

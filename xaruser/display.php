@@ -2,15 +2,14 @@
  /**
  * Display an item
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Maxercalls module
  * @author Michel Vorenhout
  */
-
 /**
  * display an item
  * This is a standard function to provide detailed informtion on a single item
@@ -34,17 +33,15 @@ function maxercalls_user_display($args)
     $data = xarModAPIFunc('maxercalls', 'user', 'menu');
     // Prepare the variable that will hold some status message if necessary
     $data['status'] = '';
-    // The API function is called.  The arguments to the function are passed in
-    // as their own arguments array.
-    // Security check 1 - the get() function will fail if the user does not
-    // have at least READ access to this item (also see below).
+    // Get the call
     $item = xarModAPIFunc('maxercalls',
         'user',
         'get',
         array('callid' => $callid));
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-
+    $item['module'] = 'maxercalls';
     $item['transform'] = array('name');
+    $item['itemtype'] =1;
     $item = xarModCallHooks('item',
         'transform',
         $callid,
@@ -83,11 +80,7 @@ function maxercalls_user_display($args)
     // You should use this -instead of globals- if you want to make
     // information available elsewhere in the processing of this page request
     xarVarSetCached('Blocks.maxercalls', 'callid', $callid);
-    // Let any hooks know that we are displaying an item.  As this is a display
-    // hook we're passing a return URL in the item info, which is the URL that any
-    // hooks will show after they have finished their own work.  It is normal
-    // for that URL to bring the user back to this function
-    $item['module'] = 'maxercalls';
+    // Let any hooks know that we are displaying an item.
     $item['returnurl'] = xarModURL('maxercalls',
         'user',
         'display',
@@ -97,7 +90,7 @@ function maxercalls_user_display($args)
         $callid,
         $item);
     if (empty($hooks)) {
-        $data['hookoutput'] = '';
+        $data['hookoutput'] = array();
     } else {
         // You can use the output from individual hooks in your template too, e.g. with
         // $hookoutput['comments'], $hookoutput['hitcount'], $hookoutput['ratings'] etc.

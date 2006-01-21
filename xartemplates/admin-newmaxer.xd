@@ -107,15 +107,20 @@
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="maxerstatus" class="xar-form-label">
-                     <span class="help" title="#xarML('Enter the status of this maxer.')#">
-                   <xar:mlstring>Status of maxer</xar:mlstring>
-                   </span>
+                    <span class="help" title="#xarML('Enter the status of this maxer.')#">
+                        <xar:mlstring>Status of maxer</xar:mlstring>
+                    </span>
                 </label>
                 <select name="maxerstatus">
                 <xar:loop name="$statusses">
                     <option value="#$loop:item['mstatusid']#">#$loop:item['maxerstatus']#</option>
                 </xar:loop>
                 </select>
+                <xar:if condition="!empty($invalid['maxerstatus'])">
+                    <div class="xar-error">
+                         <xar:mlstring>ERROR! This is not a valid status</xar:mlstring>
+                    </div>
+                </xar:if>
             </div>
 
         </fieldset>
@@ -140,8 +145,6 @@
             <div class="xar-form-input-wrapper-after">
                 <input type="hidden" name="authid" id="authid" value="#$authid#" />
                 <!-- TODO: replace two hidden fields below with real input -->
-                <input type="hidden" name="function" id="authid" value="#$function#" />
-                <input type="hidden" name="maxerstatus" id="authid" value="#$maxerstatus#" />
                 <input type="submit" value="#xarML('Add Maxer')#" />
             </div>
         </fieldset>

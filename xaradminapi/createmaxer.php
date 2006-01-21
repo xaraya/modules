@@ -3,7 +3,7 @@
  * Create a new maxer
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -53,7 +53,7 @@ function maxercalls_adminapi_createmaxer($args)
     /* Security check - important to do this as early on as possible to
      * avoid potential security holes or just too much wasted processing
      */
-    if (!xarSecurityCheck('DeleteMaxercalls')) {
+    if (!xarSecurityCheck('AddMaxercalls',1,'Maxer')) {
         return;
     }
     /* Get database setup - note that both xarDBGetConn() and xarDBGetTables()
@@ -87,13 +87,14 @@ function maxercalls_adminapi_createmaxer($args)
 
     /* Get the ID of the item that we inserted.
      */
-    $maxerid = $dbconn->PO_Insert_ID($maxercallstable, 'xar_maxerid');
+    $maxerid = $dbconn->PO_Insert_ID($maxerstable, 'xar_maxerid');
 
     /* Let any hooks know that we have created a new item.
      */
     $item = $args;
     $item['module'] = 'maxercalls';
     $item['itemid'] = $maxerid;
+    $item['itemtype'] = 2;
     xarModCallHooks('item', 'create', $maxerid, $item);
     /* Return the id of the newly created item to the calling process */
     return $maxerid;

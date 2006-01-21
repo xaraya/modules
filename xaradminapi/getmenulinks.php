@@ -3,7 +3,7 @@
  * Utility function to pass menu items to the main menu
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -21,7 +21,7 @@
 function maxercalls_adminapi_getmenulinks()
 {
     // Security Check
-    if (xarSecurityCheck('AddMaxercalls', 0)) {
+    if (xarSecurityCheck('AddMaxercalls', 0, 'Call')) {
         $menulinks[] = Array('url' => xarModURL('maxercalls',
                 'user',
                 'new'),
@@ -31,7 +31,7 @@ function maxercalls_adminapi_getmenulinks()
             'label' => xarML('Add call'));
     }
     // Security Check
-    if (xarSecurityCheck('EditMaxercalls', 0)) {
+    if (xarSecurityCheck('EditMaxercalls', 0,'Call')) {
         $menulinks[] = Array('url' => xarModURL('maxercalls',
                 'admin',
                 'viewcalls'),
@@ -39,7 +39,7 @@ function maxercalls_adminapi_getmenulinks()
             'label' => xarML('View calls'));
     }
     // Security Check
-    if (xarSecurityCheck('AddMaxercalls', 0)) {
+    if (xarSecurityCheck('AddMaxercalls', 0,'Maxer')) {
         $menulinks[] = Array('url' => xarModURL('maxercalls',
                 'admin',
                 'newmaxer'),
@@ -47,12 +47,20 @@ function maxercalls_adminapi_getmenulinks()
             'label' => xarML('Add pager'));
     }
     // Security Check
+    if (xarSecurityCheck('ReadMaxercalls', 0,'Maxer')) {
+        $menulinks[] = Array('url' => xarModURL('maxercalls',
+                'admin',
+                'viewmaxers'),
+            'title' => xarML('View all registered maxers.'),
+            'label' => xarML('View Pagers'));
+    }
+    // Security Check
     if (xarSecurityCheck('AdminMaxercalls', 0)) {
         $menulinks[] = Array('url' => xarModURL('maxercalls',
                 'admin',
                 'view'),
             'title' => xarML('View the dynamic objects'),
-            'label' => xarML('View DD objects'));
+            'label' => xarML('Module Parameters'));
     }
 
     // Security Check

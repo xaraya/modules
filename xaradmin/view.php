@@ -3,7 +3,7 @@
  * Standard function to view dyn data for this module
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -13,6 +13,8 @@
  */
 /**
  * view dynamic data for maxercalls
+ *
+ * @author MichelV <michelv@xarayahosting.nl>
  */
 function maxercalls_admin_view($args)
 {

@@ -1,8 +1,8 @@
 <?php
 /**
- * Delete a call from the database
+ * New dyn data item for the configuration of this module
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -10,7 +10,6 @@
  * @subpackage Maxercalls
  * @author Maxercalls module development team
  */
-
 /**
  * Add new dynamic data item
  *
@@ -59,7 +58,6 @@ function maxercalls_admin_new($args)
     } else {
         $data['hookoutput'] = $hooks;
     }
-    $data['hooks'] = '';
     $data['itemtype'] = $itemtype;
 
     // Return the template variables defined in this function

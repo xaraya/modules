@@ -8,16 +8,16 @@
  * @link http://www.xaraya.com
  *
  * @subpackage Maxercalls module
+ * @link http://xaraya.com/index.php/release/247.html
  * @author maxercalls module development team
  */
-
 /**
  * Return maxercalls table names to xaraya
  *
  * This function is called internally by the core whenever the module is
  * loaded.  It is loaded by xarMod__loadDbInfo().
  *
- * @author MichelV
+ * @author MichelV <michelv@xarayahosting.nl>
  * @access private
  * @return array
  */

@@ -3,14 +3,13 @@
  * Utility function to pass individual menu items to the main menu
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Maxercalls module
  * @author Maxercalls module development team
  */
-
 /**
  * utility function pass individual menu items to the main menu
  *

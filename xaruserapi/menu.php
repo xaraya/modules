@@ -2,16 +2,19 @@
 /**
  * Generate the common menu configuration
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Maxercalls module
- * @author Michel Vorenhout
+ * @subpackage Maxercalls module3
+ * @link http://xaraya.com/index.php/release/247.html
+ * @author MichelV
  */
 /**
  * generate the common menu configuration
+ *
+ * @author MichelV <michelv@xarayahosting.nl>
  */
 function maxercalls_userapi_menu()
 {

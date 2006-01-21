@@ -3,7 +3,7 @@
  * Get all maxers
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -11,11 +11,10 @@
  * @link http://xaraya.com/index.php/release/247.html
  * @author Maxercalls Module Development Team
  */
-
 /**
  * Get all maxers
- * 
- * @author the Maxercalls module development team 
+ *
+ * @author the Maxercalls module development team
  * @param numitems $ the number of items to retrieve (default -1 = all)
  * @param startnum $ start with this item number (default 1)
  * @returns array
@@ -23,7 +22,7 @@
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function maxercalls_userapi_getallmaxers($args)
-{ 
+{
     extract($args);
     /* Optional arguments.*/
     if (!isset($startnum)) {
@@ -47,7 +46,7 @@ function maxercalls_userapi_getallmaxers($args)
     }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-            join(', ', $invalid), 'user', 'getall', 'Example');
+            join(', ', $invalid), 'user', 'getallmaxers', 'Maxercalls');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException($msg));
         return;
@@ -57,7 +56,7 @@ function maxercalls_userapi_getallmaxers($args)
     /* Security check - important to do this as early on as possible to
      * avoid potential security holes or just too much wasted processing
      */
-    if (!xarSecurityCheck('ViewMaxercalls')) return;
+    if (!xarSecurityCheck('ViewMaxercalls',1,'Maxer')) return;
     /* Get database setup
      */
     $dbconn =& xarDBGetConn();
@@ -89,7 +88,7 @@ function maxercalls_userapi_getallmaxers($args)
     for (; !$result->EOF; $result->MoveNext()) {
         list($maxerid, $personid,$ric,$maxernumber,$function,
        $program,$maxerstatus,$remark) = $result->fields;
-        if (xarSecurityCheck('ViewMaxercalls', 0, 'Item', "All:All:All")) {
+        if (xarSecurityCheck('ViewMaxercalls', 0, 'Maxer', "All:All:All")) {
             $items[] = array('maxerid'     => $maxerid,
                              'personid'    => $personid,
                              'ric'         => $ric,
@@ -103,8 +102,8 @@ function maxercalls_userapi_getallmaxers($args)
     /* All successful database queries produce a result set, and that result
      * set should be closed when it has been finished with
      */
-    $result->Close(); 
+    $result->Close();
     /* Return the items */
     return $items;
-} 
+}
 ?>

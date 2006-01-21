@@ -102,7 +102,7 @@ function maxercalls_userapi_getall($args)
     // Put items into result array.
     for (; !$result->EOF; $result->MoveNext()) {
         list($callid, $calldate, $calltime, $calltext, $owner, $remarks, $enterts, $enteruid) = $result->fields;
-        if (xarSecurityCheck('ViewMaxercalls', 0, 'Item', "$callid:All:$enteruid")) {
+        if (xarSecurityCheck('ViewMaxercalls', 0, 'Call', "$callid:All:$enteruid")) {
             $items[] = array('callid' => $callid,
                 'calldate' => $calldate,
                 'calltime' => $calltime,

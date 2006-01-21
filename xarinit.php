@@ -249,7 +249,7 @@ function maxercalls_init()
             'limit' => 20
             )
         );
-    xarDefineInstance('maxercalls', 'Item', $instances);
+    xarDefineInstance('maxercalls', 'Call', $instances);
     // You can also use some external "wizard" function to specify instances :
 
     // $instances = array(

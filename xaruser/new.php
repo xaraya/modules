@@ -59,6 +59,7 @@ function maxercalls_user_new($args)
     //Call hooks and tell them of new item
     $item = array();
     $item['module'] = 'maxercalls';
+    $item['itemtype'] = 1;
     $hooks = xarModCallHooks('item', 'new', '', $item);
 
     if (empty($hooks)) {

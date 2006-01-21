@@ -49,12 +49,11 @@ function maxercalls_adminapi_create($args)
             new SystemException($msg));
         return;
     }
-    // Security check - important to do this as early on as possible to
-    // avoid potential security holes or just too much wasted processing
-/*    if (!xarSecurityCheck('AddMaxercalls', 1, 'Item', "$name:All:All")) {
+    // Security check
+    if (!xarSecurityCheck('AddMaxercalls', 1, 'Call')) {
         return;
     }
-*/    // Get database setup
+    // Get database setup
     $dbconn = xarDBGetConn();
     $xartable = xarDBGetTables();
     $maxercallstable = $xartable['maxercalls'];
@@ -82,7 +81,8 @@ function maxercalls_adminapi_create($args)
     $item = $args;
     $item['module'] = 'maxercalls';
     $item['itemid'] = $callid;
-    //$item['itemtype'] = $itemtype; // This is set in $args
+    $item['itemtype'] = 1;
+
     xarModCallHooks('item', 'create', $callid, $item);
     // Return the id of the newly created item to the calling process
     return $callid;

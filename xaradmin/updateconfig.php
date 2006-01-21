@@ -61,7 +61,8 @@ function maxercalls_admin_updateconfig()
     xarModSetVar('maxercalls', 'aliasname', $newalias);
 
     xarModCallHooks('module','updateconfig','maxercalls',
-                   array('module' => 'maxercalls'));
+                   array('module' => 'maxercalls',
+                         'itemtype' => 1));
 
     // This function generated no output, and so now it is complete we redirect
     // the user to an appropriate page for them to carry on their work

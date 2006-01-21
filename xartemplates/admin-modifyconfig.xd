@@ -81,6 +81,8 @@
         </xar:foreach>
       </xar:if>
     </fieldset>
+
+<xar:comment> TODO move to own templates
     <fieldset>
       <legend><xar:mlstring>Enabled Hooks for maxers</xar:mlstring></legend>
       <xar:if condition="!empty($maxerhooks)">
@@ -98,7 +100,7 @@
         </xar:foreach>
       </xar:if>
     </fieldset>
-
+</xar:comment>
 
     <div class="xar-form-input-wrapper-after">
         <input type="hidden" name="authid" id="authid" value="#$authid#" />

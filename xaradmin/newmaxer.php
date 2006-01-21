@@ -53,6 +53,7 @@ function maxercalls_admin_newmaxer($args)
 
     $item = array();
     $item['module'] = 'maxercalls';
+    $item['itemtype'] = 2;
     $hooks = xarModCallHooks('item', 'new', '', $item);
 
     if (empty($hooks)) {

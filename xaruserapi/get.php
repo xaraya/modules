@@ -3,14 +3,13 @@
  * Get a specific call
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Maxercalls module
  * @author Maxercalls module development team
  */
-
 /**
  * get a specific call
  *
@@ -65,7 +64,7 @@ function maxercalls_userapi_get($args)
     // set should be closed when it has been finished with
     $result->Close();
     // Security check
-    if (!xarSecurityCheck('ReadMaxercalls', 1, 'Item', "$callid:All:$enteruid")) {
+    if (!xarSecurityCheck('ReadMaxercalls', 1, 'Call', "$callid:All:$enteruid")) {
         return;
     }
     // Create the item array

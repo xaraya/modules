@@ -28,7 +28,7 @@ function maxercalls_admin_createmaxer($args)
     extract($args);
 
     if (!xarVarFetch('objectid',    'id',     $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('invalid',     'str:1:', $invalid,  '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('invalid',     'array',  $invalid,  array(), XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('personid',    'int:1:', $personid,  $personid,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('ric',         'int:1:', $ric,  $ric,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('maxernumber', 'int:1:', $maxernumber,  $maxernumber,  XARVAR_NOT_REQUIRED)) return;
@@ -51,11 +51,11 @@ function maxercalls_admin_createmaxer($args)
     $invalid = array();
     if (empty($ric) || !is_numeric($ric)) {
         $invalid['ric'] = 1;
-        $number = '';
+        $ric = '';
     }
-    if (empty($maxerstatus) || !is_integer($maxerstatus)) {
+    if (empty($maxerstatus) || !is_numeric($maxerstatus)) {
         $invalid['maxerstatus'] = 1;
-        $name = '';
+        $maxerstatus = '';
     }
 /*
     if (!empty($name) && $item['name'] == $name) {
