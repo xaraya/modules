@@ -160,7 +160,7 @@ function maxercalls_init()
         ,array(
             'hookModName'       => 'search'
             ,'callerModName'    => 'maxercalls'));
-     // Hook for Categories
+/*     // Hook for Categories
     xarModAPIFunc(
         'modules'
         ,'admin'
@@ -169,7 +169,7 @@ function maxercalls_init()
             'hookModName'       => 'categories'
             ,'callerModName'    => 'maxercalls'));
     // Hook for Dynamic Data
-/*    xarModAPIFunc(
+    xarModAPIFunc(
         'modules'
         ,'admin'
         ,'enablehooks'
@@ -190,10 +190,10 @@ function maxercalls_init()
     if (empty($objectid)) return;
     // save the object id for later
     xarModSetVar('maxercalls','calltypeobjectid',$objectid);
-/*    $objectid = xarModAPIFunc('dynamicdata','util','import',
+    $objectid = xarModAPIFunc('dynamicdata','util','import',
                               array('file' => $path . 'mc_calltypes-data.xml'));
     if (empty($objectid)) return;
-*/
+
     /*
      * The Maxer Functions Object
      */
@@ -202,10 +202,10 @@ function maxercalls_init()
     if (empty($objectid)) return;
     // save the object id for later
     xarModSetVar('maxercalls','mfunctionsobjectid',$objectid);
-/*    $objectid = xarModAPIFunc('dynamicdata','util','import',
+    $objectid = xarModAPIFunc('dynamicdata','util','import',
                               array('file' => $path . 'mc_mfunctions-data.xml'));
     if (empty($objectid)) return;
-*/
+
     /*
      * The Maxer Status Object
      */
@@ -414,23 +414,29 @@ function maxercalls_delete()
     }
     xarModDelAllVars('maxercalls');
 
-    // UnRegister blocks
-    if (!xarModAPIFunc('blocks',
-            'admin',
-            'unregister_block_type',
-            array('modName' => 'maxercalls',
-                'blockType' => 'first'))) return;
-    // UnRegister blocks
-    if (!xarModAPIFunc('blocks',
-            'admin',
-            'unregister_block_type',
-            array('modName' => 'maxercalls',
-                'blockType' => 'others'))) return;
     // Remove module hooks
     if (!xarModUnregisterHook('item', 'usermenu', 'GUI',
             'maxercalls', 'user', 'usermenu')) {
         return false;
     }
+    // Disable hooks
+    xarModAPIFunc(
+        'modules'
+        ,'admin'
+        ,'disablehooks'
+        ,array(
+            'hookModName'       => 'roles'
+            ,'callerModName'    => 'maxercalls'));
+
+    // Hook for module Search
+    xarModAPIFunc(
+        'modules'
+        ,'admin'
+        ,'disablehooks'
+        ,array(
+            'hookModName'       => 'search'
+            ,'callerModName'    => 'maxercalls'));
+
     // Remove Masks and Instances
     xarRemoveMasks('maxercalls');
     xarRemoveInstances('maxercalls');

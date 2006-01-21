@@ -5,16 +5,16 @@
     <dd class="active">
         <a href="#xarServerGetCurrentURL()#">
             <xar:mlstring>
-                Example
+                Maxers
             </xar:mlstring>
         </a>
-    </dd>    
+    </dd>
 <xar:else />
     <dd>
         <a href="#xarModURL('roles', 'user', 'account', array('moduleload' => 'maxercalls'))#">
             <xar:mlstring>
-                Example
+                Maxers
             </xar:mlstring>
         </a>
-    </dd>    
+    </dd>
 </xar:if>
