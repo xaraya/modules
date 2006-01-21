@@ -1,26 +1,27 @@
 <?php
 /**
  * Utility function to get DD item for type
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage SIGMAPersonnel
- * @author SIGMAPersonnel module development team 
+ * @link http://xaraya.com/index.php/release/418.html
+ * @author SIGMAPersonnel module development team
  */
 /**
  * Gets items of a DynamicData object 'presencetype'
  *
- * @author 
+ * @author
  * @param int $type - Type id to get the name for
  * @returns list of items of the item type
  */
 function sigmapersonnel_userapi_getprestype($args)
 {
     extract($args);
-    
+
     $modid = xarModGetIDFromName('sigmapersonnel');
 
     $info = array();

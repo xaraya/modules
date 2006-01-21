@@ -1,14 +1,14 @@
 <?php
 /**
  * Main user function
- * 
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ *
+ * @package modules
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Sigmapersonnel Module
- * @author Michel V. 
+ * @author Michel V.
  */
 /**
  * the main user function
@@ -17,12 +17,14 @@
  * of things, but most commonly it either just shows the module menu and
  * returns or calls whatever the module designer feels should be the default
  * function (often this is the view() function)
+ *
+ * @todo Turn str for time to timestamp
  */
 function sigmapersonnel_user_main()
-{ 
-    if (!xarSecurityCheck('ViewSIGMAPersonnel')) return; 
+{
+    if (!xarSecurityCheck('ViewSIGMAPersonnel')) return;
 
-    $data = xarModAPIFunc('sigmapersonnel', 'user', 'menu'); 
+    $data = xarModAPIFunc('sigmapersonnel', 'user', 'menu');
     // Specify some other variables used in the blocklayout template
     $dtasked = date("Y-m-d H:i:s");
     $uid = xarUserGetVar('uid');
@@ -32,11 +34,11 @@ function sigmapersonnel_user_main()
     } else {
         $data['currentpresence'] = xarML('Unknown');
     }
-    
+
     // We also may want to change the title of the page for a little
     // better search results from the spiders.
-    xarTplSetPageTitle(xarVarPrepForDisplay(xarML('Your entry to SIGMA Personnel data'))); 
+    xarTplSetPageTitle(xarVarPrepForDisplay(xarML('Your entry to SIGMA Personnel data')));
     // Return the template variables defined in this function
-    return $data; 
-} 
+    return $data;
+}
 ?>

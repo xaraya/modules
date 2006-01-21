@@ -36,10 +36,7 @@ function sigmapersonnel_user_view()
     if (!xarSecurityCheck('ViewSIGMAPersonnel')) return;
     // Lets get the UID of the current user to check for overridden defaults
     $uid = xarUserGetVar('uid');
-    // The API function is called.  The arguments to the function are passed in
-    // as their own arguments array.
-    // Security check 1 - the getall() function only returns items for which the
-    // the user has at least OVERVIEW access.
+    // The API function is called to get all persons
     $items = xarModAPIFunc('sigmapersonnel',
                             'user',
                             'getall',

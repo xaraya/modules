@@ -1,16 +1,15 @@
 <?php
 /**
- * File: $Id: s.xarinit.php 1.17 03/03/18 02:35:04-05:00 johnny@falling.local.lan $
- *
  * SIGMApersonnel initialization functions
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003-2005 by the Xaraya Development Team.
+ * @package modules
+ * @copyright (C) 2005-2006 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Sigmapersonnel Module
- * @author Michel V.
+ * @link http://xaraya.com/index.php/release/418.html
+ * @author MichelV.
  */
 
 /**

@@ -1,31 +1,31 @@
 <?php
 /**
- * File: $Id:
- * 
  * Extract function and arguments from short URLs for this module
- * 
- * @package Xaraya eXtensible Management System
+ *
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Sigmapersonnel Module
- * @author Michel V. 
+ * @link http://xaraya.com/index.php/release/418.html
+ * @author Michel V.
  */
 /**
  * extract function and arguments from short URLs for this module, and pass
  * them back to xarGetRequestInfo()
- * 
- * @author the Michel V. 
+ *
+ * @author the Michel V.
  * @param  $params array containing the different elements of the virtual path
  * @returns array
  * @return array containing func the function to be called and args the query
  *          string arguments, or empty if it failed
+ * @todo Everything
  */
 function sigmapersonnel_userapi_decode_shorturl($params)
-{ 
+{
     // Initialise the argument list we will return
-    $args = array(); 
+    $args = array();
     // Analyse the different parts of the virtual path
     // $params[1] contains the first part after index.php/sigmapersonnel
     // In general, you should be strict in encoding URLs, but as liberal
@@ -45,7 +45,7 @@ function sigmapersonnel_userapi_decode_shorturl($params)
         // something that starts with a number must be for the display function
         // Note : make sure your encoding/decoding is consistent ! :-)
         $exid = $matches[1];
-        $args['exid'] = $exid;
+        $args['pid'] = $pid;
         return array('display', $args);
     } else {
         // the first part might be something variable like a category name
@@ -79,8 +79,8 @@ function sigmapersonnel_userapi_decode_shorturl($params)
         // forget about trying to decode this thing
         // you *could* return the main function here if you want to
         // return array('main', $args);
-    } 
+    }
     // default : return nothing -> no short URL decoded
-} 
+}
 
 ?>

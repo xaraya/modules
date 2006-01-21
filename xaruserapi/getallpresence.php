@@ -8,6 +8,7 @@
  * @link http://www.xaraya.com
  *
  * @subpackage Sigmapersonnel Module
+ * @link http://xaraya.com/index.php/release/418.html
  * @author SIGMAPersonnel module development team
  */
 /**

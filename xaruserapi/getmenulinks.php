@@ -3,51 +3,49 @@
  * Utility function pass individual menu items to the main menu
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage SIGMAPersonnel Module
  * @link http://xaraya.com/index.php/release/418.html
- * @author Michel V. 
+ * @author Michel V.
  */
 /**
  * utility function pass individual menu items to the main menu
- * 
- * @author the Michel V. 
+ *
+ * @author MichelV.
  * @returns array
  * @return array containing the menulinks for the main menu items.
  */
 function sigmapersonnel_userapi_getmenulinks()
-{ 
+{
     // First we need to do a security check to ensure that we only return menu items
     // that we are suppose to see.
     if (xarSecurityCheck('ViewSIGMApersonnel', 0)) {
         $menulinks[] = Array('url' => xarModURL('sigmapersonnel',
                 'user',
-                'view'), 
+                'view'),
             // In order to display the tool tips and label in any language,
             // we must encapsulate the calls in the xarML in the API.
             'title' => xarML('Display all sigmapersonnel items for view'),
             'label' => xarML('View'));
-    } 
-    if (xarSecurityCheck('ViewSIGMApersonnel', 0)) {
+    }
+    if (xarSecurityCheck('AddSIGMApresence', 0)) {
         $menulinks[] = Array('url' => xarModURL('sigmapersonnel',
                 'user',
-                'new'), 
-            // In order to display the tool tips and label in any language,
-            // we must encapsulate the calls in the xarML in the API.
+                'new'),
             'title' => xarML('Add a new presence entry'),
             'label' => xarML('Add presence'));
-    } 
+    }
     // If we return nothing, then we need to tell PHP this, in order to avoid an ugly
     // E_ALL error.
     if (empty($menulinks)) {
         $menulinks = '';
-    } 
+    }
     // The final thing that we need to do in this function is return the values back
     // to the main menu for display.
     return $menulinks;
-} 
+}
 
 ?>
