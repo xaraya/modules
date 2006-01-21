@@ -1,15 +1,14 @@
 <?php
 /**
- * File: $Id:
- *
  * Display the user menu hook
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Maxercalls module
+ * @link http://xaraya.com/index.php/release/247.html
  * @author Maxercalls module development team
  */
 /**
@@ -21,8 +20,7 @@
 function maxercalls_user_usermenu($args)
 {
     extract($args);
-    // Security check  - if the user has read access to the menu, show a
-    // link to display the details of the item
+    // Security check
     if (!xarSecurityCheck('ViewMaxercalls')) return;
     // First, lets find out where we are in our logic.  If the phase
     // variable is set, we will load the correct page in the loop.

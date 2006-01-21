@@ -3,7 +3,7 @@
  * Maxercalls initialization functions
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -11,7 +11,6 @@
  * @link http://xaraya.com/index.php/release/247.html
  * @author Maxercalls module development team
  */
-
 /**
  * Initialise the maxercalls module
  * This function is only ever called once during the lifetime of a particular
@@ -279,12 +278,19 @@ function maxercalls_init()
      */
 
     xarRegisterMask('ReadMaxercallsBlock', 'All', 'maxercalls', 'Block', 'All', 'ACCESS_OVERVIEW');
-    xarRegisterMask('ViewMaxercalls', 'All', 'maxercalls', 'Item', 'All:All:All', 'ACCESS_OVERVIEW');
-    xarRegisterMask('ReadMaxercalls', 'All', 'maxercalls', 'Item', 'All:All:All', 'ACCESS_READ');
-    xarRegisterMask('EditMaxercalls', 'All', 'maxercalls', 'Item', 'All:All:All', 'ACCESS_EDIT');
-    xarRegisterMask('AddMaxercalls', 'All', 'maxercalls', 'Item', 'All:All:All', 'ACCESS_ADD');
-    xarRegisterMask('DeleteMaxercalls', 'All', 'maxercalls', 'Item', 'All:All:All', 'ACCESS_DELETE');
-    xarRegisterMask('AdminMaxercalls', 'All', 'maxercalls', 'Item', 'All:All:All', 'ACCESS_ADMIN');
+    xarRegisterMask('ViewMaxercalls', 'All', 'maxercalls', 'Call', 'All:All:All', 'ACCESS_OVERVIEW');
+    xarRegisterMask('ReadMaxercalls', 'All', 'maxercalls', 'Call', 'All:All:All', 'ACCESS_READ');
+    xarRegisterMask('EditMaxercalls', 'All', 'maxercalls', 'Call', 'All:All:All', 'ACCESS_EDIT');
+    xarRegisterMask('AddMaxercalls', 'All', 'maxercalls', 'Call', 'All:All:All', 'ACCESS_ADD');
+    xarRegisterMask('DeleteMaxercalls', 'All', 'maxercalls', 'Call', 'All:All:All', 'ACCESS_DELETE');
+    xarRegisterMask('AdminMaxercalls', 'All', 'maxercalls', 'Call', 'All:All:All', 'ACCESS_ADMIN');
+    // Maxers
+    xarRegisterMask('ViewMaxercalls', 'All', 'maxercalls', 'Maxer', 'All:All:All', 'ACCESS_OVERVIEW');
+    xarRegisterMask('ReadMaxercalls', 'All', 'maxercalls', 'Maxer', 'All:All:All', 'ACCESS_READ');
+    xarRegisterMask('EditMaxercalls', 'All', 'maxercalls', 'Maxer', 'All:All:All', 'ACCESS_EDIT');
+    xarRegisterMask('AddMaxercalls', 'All', 'maxercalls', 'Maxer', 'All:All:All', 'ACCESS_ADD');
+    xarRegisterMask('DeleteMaxercalls', 'All', 'maxercalls', 'Maxer', 'All:All:All', 'ACCESS_DELETE');
+    xarRegisterMask('AdminMaxercalls', 'All', 'maxercalls', 'Maxer', 'All:All:All', 'ACCESS_ADMIN');
     // Initialisation successful
     return true;
 }
@@ -360,6 +366,23 @@ function maxercalls_upgrade($oldversion)
             if (!$result) return;
             return maxercalls_upgrade('0.3.0');
         case '0.3.0':
+            xarRemoveMasks('maxercalls');
+            xarRegisterMask('ReadMaxercallsBlock', 'All', 'maxercalls', 'Block', 'All', 'ACCESS_OVERVIEW');
+            xarRegisterMask('ViewMaxercalls', 'All', 'maxercalls', 'Call', 'All:All:All', 'ACCESS_OVERVIEW');
+            xarRegisterMask('ReadMaxercalls', 'All', 'maxercalls', 'Call', 'All:All:All', 'ACCESS_READ');
+            xarRegisterMask('EditMaxercalls', 'All', 'maxercalls', 'Call', 'All:All:All', 'ACCESS_EDIT');
+            xarRegisterMask('AddMaxercalls', 'All', 'maxercalls', 'Call', 'All:All:All', 'ACCESS_ADD');
+            xarRegisterMask('DeleteMaxercalls', 'All', 'maxercalls', 'Call', 'All:All:All', 'ACCESS_DELETE');
+            xarRegisterMask('AdminMaxercalls', 'All', 'maxercalls', 'Call', 'All:All:All', 'ACCESS_ADMIN');
+            // Maxers
+            xarRegisterMask('ViewMaxercalls', 'All', 'maxercalls', 'Maxer', 'All:All:All', 'ACCESS_OVERVIEW');
+            xarRegisterMask('ReadMaxercalls', 'All', 'maxercalls', 'Maxer', 'All:All:All', 'ACCESS_READ');
+            xarRegisterMask('EditMaxercalls', 'All', 'maxercalls', 'Maxer', 'All:All:All', 'ACCESS_EDIT');
+            xarRegisterMask('AddMaxercalls', 'All', 'maxercalls', 'Maxer', 'All:All:All', 'ACCESS_ADD');
+            xarRegisterMask('DeleteMaxercalls', 'All', 'maxercalls', 'Maxer', 'All:All:All', 'ACCESS_DELETE');
+            xarRegisterMask('AdminMaxercalls', 'All', 'maxercalls', 'Maxer', 'All:All:All', 'ACCESS_ADMIN');
+            return maxercalls_upgrade('0.3.1');
+        case '0.3.1':
             break;
     }
     return true;

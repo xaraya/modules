@@ -3,16 +3,17 @@
  * Maxercalls version control
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Maxercalls Module
+ * @link http://xaraya.com/index.php/release/247.html
  * @author MichelV
  */
 $modversion['name']           = 'Maxercalls';
 $modversion['id']             = '247';
-$modversion['version']        = '0.3.0';
+$modversion['version']        = '0.3.1';
 $modversion['displayname']    = xarML('Maxercalls');
 $modversion['description']    = 'Register calls on pagers from users';
 $modversion['credits']        = 'xardocs/credits.txt';
@@ -26,5 +27,5 @@ $modversion['admin']          = 1;
 $modversion['user']           = 1;
 $modversion['class']          = 'Complete';
 $modversion['category']       = 'Content';
-$modversion['dependency']     = array(14, 147, 182,418);
+$modversion['dependency']     = array(14, 147, 182, 418);
 ?>

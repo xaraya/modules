@@ -3,15 +3,15 @@
  * Delete a call from the database
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Maxercalls
+ * @link http://xaraya.com/index.php/release/247.html
  * @author Maxercalls module development team
  */
-
- /**
+/**
  * delete a call
  *
  * @param  $ 'callid' the id of the item to be deleted
@@ -23,7 +23,7 @@ function maxercalls_admin_deletecall($args)
 
     // Get parameters from whatever input we need.
     if (!xarVarFetch('callid',   'int:1:', $callid)) return;
-    if (!xarVarFetch('objectid', 'id', $objectid, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('objectid', 'id',     $objectid, NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('confirm',  'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return;
 
     //Check for external input
