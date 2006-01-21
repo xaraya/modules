@@ -1,6 +1,6 @@
 <object name="sigmapersonnel_status">
   <objectid>14</objectid>
-  <label>Person Status</label>
+  <label>PersonStatus</label>
   <moduleid>418</moduleid>
   <itemtype>6</itemtype>
   <urlparam>itemid</urlparam>
@@ -9,7 +9,7 @@
   <isalias>0</isalias>
   <properties>
     <property name="statusid">
-      <id>54</id>
+      <id></id>
       <label>Statusid</label>
       <type>itemid</type>
       <default></default>
@@ -19,7 +19,7 @@
       <validation>int (11)</validation>
     </property>
     <property name="statustype">
-      <id>55</id>
+      <id></id>
       <label>Statustype</label>
       <type>textbox</type>
       <default></default>

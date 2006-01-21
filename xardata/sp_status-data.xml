@@ -1,0 +1,18 @@
+<items>
+  <sigmapersonnel_status itemid="1">
+    <statusid>1</statusid>
+    <statustype>On Call</statustype>
+  </sigmapersonnel_status>
+  <sigmapersonnel_status itemid="2">
+    <statusid>2</statusid>
+    <statustype>Not on Call</statustype>
+  </sigmapersonnel_status>
+  <sigmapersonnel_status itemid="3">
+    <statusid>3</statusid>
+    <statustype>Out of service</statustype>
+  </sigmapersonnel_status>
+  <sigmapersonnel_status itemid="4">
+    <statusid>4</statusid>
+    <statustype>Candidate</statustype>
+  </sigmapersonnel_status>
+</items>

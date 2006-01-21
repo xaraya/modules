@@ -26,7 +26,7 @@ function sigmapersonnel_user_main()
 
     $data = xarModAPIFunc('sigmapersonnel', 'user', 'menu');
     // Specify some other variables used in the blocklayout template
-    $dtasked = date("Y-m-d H:i:s");
+    $dtasked = time();
     $uid = xarUserGetVar('uid');
     $presenceid = xarModAPIFunc('sigmapersonnel', 'user', 'presencenow', array('uid'=>$uid, 'dtasked' => $dtasked));
     if ($presenceid) {

@@ -1,0 +1,11 @@
+<items>
+  <sigmapersonnel_presencetypes itemid="1">
+    <typeid>1</typeid>
+    <type>Present</type>
+  </sigmapersonnel_presencetypes>
+  <sigmapersonnel_presencetypes itemid="2">
+    <typeid>2</typeid>
+    <type>Not present</type>
+  </sigmapersonnel_presencetypes>
+</items>
+

@@ -9,7 +9,7 @@
   <isalias>0</isalias>
   <properties>
     <property name="cityid">
-      <id>50</id>
+      <id></id>
       <label>Cityid</label>
       <type>itemid</type>
       <default></default>
@@ -19,7 +19,7 @@
       <validation>int (11)</validation>
     </property>
     <property name="city">
-      <id>51</id>
+      <id></id>
       <label>City</label>
       <type>textbox</type>
       <default></default>

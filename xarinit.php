@@ -232,6 +232,59 @@ function sigmapersonnel_init()
             'sigmapersonnel', 'user', 'usermenu')) {
         return false;
     }
+    // Set the dyn data object that we use as the module parameters
+    $path = "modules/sigmapersonnel/xardata/";
+    /*
+     * The Cities Object
+     */
+    $objectid = xarModAPIFunc('dynamicdata','util','import',
+                              array('file' => $path . 'sp_cities-def.xml'));
+    if (empty($objectid)) return;
+    // save the object id for later
+    xarModSetVar('maxercalls','citiesobjectid',$objectid);
+/*
+    $objectid = xarModAPIFunc('dynamicdata','util','import',
+                              array('file' => $path . 'mc_cities-data.xml'));
+    if (empty($objectid)) return;
+*/
+    /*
+     * The Districts Object
+     */
+    $objectid = xarModAPIFunc('dynamicdata','util','import',
+                              array('file' => $path . 'sp_districts-def.xml'));
+    if (empty($objectid)) return;
+    // save the object id for later
+    xarModSetVar('maxercalls','districtsobjectid',$objectid);
+/*
+    $objectid = xarModAPIFunc('dynamicdata','util','import',
+                              array('file' => $path . 'mc_districts-data.xml'));
+    if (empty($objectid)) return;
+*/
+    /*
+     * The Presencetypes Object
+     */
+    $objectid = xarModAPIFunc('dynamicdata','util','import',
+                              array('file' => $path . 'sp_presencetypes-def.xml'));
+    if (empty($objectid)) return;
+    // save the object id for later
+    xarModSetVar('maxercalls','presencetypesobjectid',$objectid);
+
+    $objectid = xarModAPIFunc('dynamicdata','util','import',
+                              array('file' => $path . 'mc_presencetypes-data.xml'));
+    if (empty($objectid)) return;
+
+    /*
+     * The PersonStatus Object
+     */
+    $objectid = xarModAPIFunc('dynamicdata','util','import',
+                              array('file' => $path . 'sp_status-def.xml'));
+    if (empty($objectid)) return;
+    // save the object id for later
+    xarModSetVar('maxercalls','statusobjectid',$objectid);
+
+    $objectid = xarModAPIFunc('dynamicdata','util','import',
+                              array('file' => $path . 'mc_status-data.xml'));
+    if (empty($objectid)) return;
 
     /**
      * Define instances for this module
@@ -372,6 +425,25 @@ function sigmapersonnel_delete()
     /* Drop the tables */
      $result = $datadict->dropTable($xartable[$basename . '_' . $table]);
     }
+
+    /* Drop the Dyn data objects */
+    $objectid = xarModGetVar('sigmapersonnel','citiesobjectid');
+    if (!empty($objectid)) {
+        xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
+    }
+    $objectid = xarModGetVar('sigmapersonnel','districtsobjectid');
+    if (!empty($objectid)) {
+        xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
+    }
+    $objectid = xarModGetVar('sigmapersonnel','presencetypesobjectid');
+    if (!empty($objectid)) {
+        xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
+    }
+    $objectid = xarModGetVar('sigmapersonnel','statusobjectid');
+    if (!empty($objectid)) {
+        xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
+    }
+
 
 
     // Delete any module variables

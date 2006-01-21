@@ -7,34 +7,25 @@
     #$menu#
     </xar:if>
 
-    <div class="tborder">
-        <xar:if condition="!empty($preview)">
-            <table width="100%" border="1" cellspacing="0" cellpadding="4">
-                <tr>
-                    <td align="center">
-                        <xar:mlstring>Preview</xar:mlstring>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="center">
-                        <xar:data-display object="$object" />
-                    </td>
-                </tr>
-            </table>
-        </xar:if>
-        <form method="post" action="#xarModURL('sigmapersonnel','admin','create')#">
-        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-            <table width="100%" border="0" cellpadding="4" cellspacing="0">
+    <xar:if condition="!empty($preview)">
+        <fieldset>
+        <legend><xar:mlstring>Preview</xar:mlstring></legend>
+        <div class="xar-form-input-wrapper">
+            <xar:data-display object="$object" />
+        </div>
+    </xar:if>
+    <form method="post" action="&xar-modurl-sigmapersonnel-admin-create;">
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <fieldset>
+            <legend><xar:mlstring>Add new parameter</xar:mlstring></legend>
+            <div class="xar-form-input-wrapper">
                 <xar:data-form object="$object" />
-                <tr>
-                    <td colspan="2" align="center">
-                        <input type="hidden" name="itemtype" value="#$itemtype#" />
-                        <input type="submit" name="preview" value="#xarML('Preview')#" />
-                        &nbsp;&nbsp;&nbsp;
-                        <input type="submit" name="create" value="#xarML('Create')#" />
-                    </td>
-                </tr>
-            </table>
-        </form>
-    </div>
+            </div>
+            <div class="xar-form-input-wrapper-after">
+                <input type="hidden" name="itemtype" value="#$itemtype#" />
+                <input type="submit" name="preview" value="#xarML('Preview')#" />
+                <input type="submit" name="create" value="#xarML('Create')#" />
+            </div>
+        </fieldset>
+    </form>
 </div>

@@ -30,9 +30,9 @@
             <input type="hidden" name="authid" id="authid" value="#$authid#" />
             <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
             <input type="hidden" name="itemtype" id="itemtype" value="#$itemtype#" />
-                        <input type="submit" name="preview" value="#xarML('Preview')#" />
-                        &nbsp;&nbsp;&nbsp;
-                        <input type="submit" value="#xarML('Update')#" />
+            <input type="submit" name="preview" value="#xarML('Preview')#" />
+            &nbsp;&nbsp;&nbsp;
+            <input type="submit" value="#xarML('Update')#" />
         </form>
     </div>
 </div>

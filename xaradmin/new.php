@@ -3,7 +3,7 @@
  * Create a Dyn Data item from SIGMAPersonnel
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -12,12 +12,13 @@
  * @author SIGMAPersonnel Module Development Team
  */
 /**
- * add new item
+ * add new dd item
+ * @author MichelV <michelv@xarayahosting.nl>
  */
 function sigmapersonnel_admin_new()
 {
     if (!xarVarFetch('itemtype', 'int:1:', $itemtype, '', XARVAR_GET_OR_POST)) return;
-    if (!xarVarFetch('preview', 'str::', $preview, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('preview',  'str::',  $preview,  '', XARVAR_NOT_REQUIRED)) return;
 
     if (empty($itemtype)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
