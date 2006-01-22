@@ -14,7 +14,7 @@ function julian_admin_main()
 {
 
 // Security Check
-    if (!xarSecurityCheck('EditJulian')) return;
+    if (!xarSecurityCheck('Editjulian')) return;
 
     if (xarModGetVar('adminpanels', 'overview') == 0){
         $welcome = '';
