@@ -2,12 +2,13 @@
 /**
  * Get all persons in the database
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Sigmapersonnel Module
+ * @link http://xaraya.com/index.php/release/418.html
  * @author Michel V.
  */
 /**
@@ -16,7 +17,8 @@
  * @author the Michel V.
  * @param int numitems $ the number of items to retrieve (default -1 = all)
  * @param int startnum $ start with this item number (default 1)
- * @param str $sortby
+ * @param str $sortby enum('firstname','lastname','pnumber','persstatus')
+ * @param int catid
  * @returns array
  * @return array of items, or false on failure
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
