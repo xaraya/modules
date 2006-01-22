@@ -1,4 +1,4 @@
-<object name="courses_studstatus">
+<object name="studentstatus">
   <objectid>42</objectid>
   <label>Student Status</label>
   <moduleid>179</moduleid>
@@ -9,7 +9,7 @@
   <isalias>0</isalias>
   <properties>
     <property name="statusid">
-      <id>114</id>
+      <id></id>
       <label>Statusid</label>
       <type>itemid</type>
       <default></default>
@@ -19,7 +19,7 @@
       <validation>int (11)</validation>
     </property>
     <property name="studstatus">
-      <id>115</id>
+      <id></id>
       <label>Studstatus</label>
       <type>textbox</type>
       <default></default>
@@ -30,4 +30,3 @@
     </property>
   </properties>
 </object>
-           

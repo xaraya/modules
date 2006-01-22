@@ -1,18 +1,18 @@
 <items>
-  <courses_studstatus itemid="1">
-    <statusid></statusid>
+  <studentstatus itemid="1">
+    <statusid>1</statusid>
     <studstatus>Enrolled</studstatus>
-  </courses_studstatus>
-  <courses_studstatus itemid="2">
-    <statusid></statusid>
+  </studentstatus>
+  <studentstatus itemid="2">
+    <statusid>2</statusid>
     <studstatus>Cancelled</studstatus>
-  </courses_studstatus>
-  <courses_studstatus itemid="3">
-    <statusid></statusid>
+  </studentstatus>
+  <studentstatus itemid="3">
+    <statusid>3</statusid>
     <studstatus>Passed</studstatus>
-  </courses_studstatus>
-  <courses_studstatus itemid="4">
-    <statusid></statusid>
+  </studentstatus>
+  <studentstatus itemid="4">
+    <statusid>4</statusid>
     <studstatus>Failed</studstatus>
-  </courses_studstatus>
+  </studentstatus>
 </items>

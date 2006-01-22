@@ -2,14 +2,14 @@
 /**
  * Courses initialization functions
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Courses Module
  * @link http://xaraya.com/index.php/release/179.html
- * @author XarayaGeek, Michel V.
+ * @author original idea: XarayaGeek, MichelV.
  */
 
 /**
@@ -17,6 +17,8 @@
  *
  * This function is only ever called once during the lifetime of a particular
  * module instance
+ *
+ * @author MichelV <michelv@xarayahosting.nl>
  */
 function courses_init()
 {
@@ -251,7 +253,7 @@ function courses_init()
         ,array(
             'hookModName'       => 'categories'
             ,'callerModName'    => 'courses'));
-    // Hook for Dynamic Data
+/*    // Hook for Dynamic Data
     xarModAPIFunc(
         'modules'
         ,'admin'
@@ -259,23 +261,38 @@ function courses_init()
         ,array(
             'hookModName'       => 'dynamicdata'
             ,'callerModName'    => 'courses'));
-
-    /* FIXME: does generate errors
+*/
+    /*
      *
      * REGISTER THE TABLES AT DYNAMICDATA
-
+     */
     $path = "modules/courses/xardata/";
-
+    // Course levels
     $objectid = xarModAPIFunc('dynamicdata','util','import',array('file'  => $path . '/courses_levels.xml'));
 
     if (empty($objectid)) return;
     xarModSetVar('courses','levelsobjectid',$objectid);
 
     $objectid = xarModAPIFunc('dynamicdata','util','import',array('file'  => $path . '/courses_levels_data.xml'));
+    if (empty($objectid)) return;
+
+    // Student status
+    $objectid = xarModAPIFunc('dynamicdata','util','import',array('file'  => $path . '/courses_studstatus.xml'));
 
     if (empty($objectid)) return;
-    */
+    xarModSetVar('courses','studstatusobjectid',$objectid);
 
+    $objectid = xarModAPIFunc('dynamicdata','util','import',array('file'  => $path . '/courses_studstatus_data.xml'));
+    if (empty($objectid)) return;
+
+    // Course levels
+    $objectid = xarModAPIFunc('dynamicdata','util','import',array('file'  => $path . '/courses_years.xml'));
+
+    if (empty($objectid)) return;
+    xarModSetVar('courses','yearsobjectid',$objectid);
+
+    $objectid = xarModAPIFunc('dynamicdata','util','import',array('file'  => $path . '/courses_years_data.xml'));
+    if (empty($objectid)) return;
     /**
      * Define instances for this module
      * Format is
@@ -616,6 +633,7 @@ function courses_upgrade($oldversion)
             if (!$result) return;
             return courses_upgrade('0.1.4');
         case '0.1.4':
+        case '0.2.0':
             break;
     }
     // Update successful
@@ -723,6 +741,21 @@ function courses_delete()
         xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
     }
 
+    /* Drop the Dyn data objects */
+    $objectid = xarModGetVar('courses','studstatusobjectid');
+    if (!empty($objectid)) {
+        xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
+    }
+    /* Drop the Dyn data objects */
+    $objectid = xarModGetVar('courses','levelsobjectid');
+    if (!empty($objectid)) {
+        xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
+    }
+    /* Drop the Dyn data objects */
+    $objectid = xarModGetVar('courses','yearsobjectid');
+    if (!empty($objectid)) {
+        xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
+    }
     // Deletion successful
     return true;
 }

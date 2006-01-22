@@ -1,0 +1,23 @@
+<items>
+  <courseyears itemid="1">
+    <yearid>1</yearid>
+    <year>2004-2005</year>
+  </courseyears>
+  <courseyears itemid="2">
+    <yearid>2</yearid>
+    <year>2005-2006</year>
+  </courseyears>
+  <courseyears itemid="3">
+    <yearid>3</yearid>
+    <year>2006-2007</year>
+  </courseyears>
+  <courseyears itemid="4">
+    <yearid>4</yearid>
+    <year>2007-2008</year>
+  </courseyears>
+  <courseyears itemid="5">
+    <yearid>5</yearid>
+    <year>historical</year>
+  </courseyears>
+</items>
+

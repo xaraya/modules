@@ -213,7 +213,7 @@ class Dynamic_CourseList_Property extends Dynamic_Select_Property
         }
         */
 
-        return xarTplProperty('roles', 'userlist', 'showoutput', $data);
+        return xarTplProperty('courses', 'courselist', 'showoutput', $data);
     }
 
     function parseValidation($validation = '')
@@ -258,13 +258,13 @@ class Dynamic_CourseList_Property extends Dynamic_Select_Property
     {
         $baseInfo = array(
                           'id'         => 37,
-                          'name'       => 'userlist',
-                          'label'      => 'User List',
+                          'name'       => 'courselist',
+                          'label'      => 'Course List',
                           'format'     => '37',
                           'validation' => '',
                           'source'     => '',
-                          'dependancies' => '',
-                          'requiresmodule' => 'roles',
+                          'dependancies' => '147',
+                          'requiresmodule' => 'courses',
                           'aliases' => '',
                           'args'         => '',
                           // ...

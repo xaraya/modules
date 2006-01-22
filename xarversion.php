@@ -2,7 +2,7 @@
 /**
  * Courses information file
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -14,7 +14,7 @@
 
 $modversion['name']           = 'courses';
 $modversion['id']             = '179';
-$modversion['version']        = '0.1.4';
+$modversion['version']        = '0.2.0';
 $modversion['displayname']    = xarML('Courses');
 $modversion['description']    = 'Course Offerings and Registration';
 $modversion['credits']        = 'xardocs/credits.txt';

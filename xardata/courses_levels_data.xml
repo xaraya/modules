@@ -1,14 +1,14 @@
 <items>
-  <courses_levels itemid="1">
-    <lid></lid>
+  <courselevels itemid="1">
+    <lid>1</lid>
     <level>Beginner</level>
-  </courses_levels>
-  <courses_levels itemid="2">
-    <lid></lid>
+  </courselevels>
+  <courselevels itemid="2">
+    <lid>2</lid>
     <level>Intermediate</level>
-  </courses_levels>
-  <courses_levels itemid="3">
-    <lid></lid>
+  </courselevels>
+  <courselevels itemid="3">
+    <lid>3</lid>
     <level>Advanced</level>
-  </courses_levels>
+  </courselevels>
 </items>
