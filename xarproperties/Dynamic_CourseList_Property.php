@@ -24,10 +24,10 @@ include_once "modules/base/xarproperties/Dynamic_Select_Property.php";
 class Dynamic_CourseList_Property extends Dynamic_Select_Property
 {
     var $catlist = array();
-    var $userstate = -1;
     var $showlist = array();
     var $orderlist = array();
     var $typelist = array();
+    var $levellist = array();
     var $showglue = '; ';
 
     /*
@@ -115,8 +115,9 @@ class Dynamic_CourseList_Property extends Dynamic_Select_Property
                 $select_options['type'] = implode(',', $this->typelist);
             }
             $courses = xarModAPIFunc('courses', 'user', 'getall', $select_options);
-
+            $options[] = array('id' => 0, 'name' => xarML('Please choose a course'));
             // Loop for each course retrieved and populate the options array.
+            // TODO: have options show usefull info
             if (empty($this->showlist)) {
                 // Simple case (default) -
                 foreach ($courses as $course) {
@@ -188,8 +189,11 @@ class Dynamic_CourseList_Property extends Dynamic_Select_Property
             // An option comes in two parts: option-type:option-value
             if (strchr($option, ':')) {
                 list($option_type, $option_value) = explode(':', $option, 2);
-                if ($option_type == 'state' && is_numeric($option_value)) {
-                    $this->userstate = $option_value;
+                if ($option_type == 'level' && is_numeric($option_value)) {
+                    $this->level = $option_value;
+                }
+                if ($option_type == 'type') {
+                    $this->type = $option_value;
                 }
                 if ($option_type == 'showglue') {
                     $this->showglue = $option_value;
@@ -201,7 +205,8 @@ class Dynamic_CourseList_Property extends Dynamic_Select_Property
                     $this->showlist = array_merge($this->showlist, explode(',', $option_value));
                     // Remove invalid elements (fields that are not valid).
                     $showfilter = create_function(
-                        '$a', 'return preg_match(\'/^[-]?(name|uname|email|uid|state|date_reg)$/\', $a);'
+                    // TODO: improve this listing
+                        '$a', 'return preg_match(\'/^[-]?(name|credits|mincredit|desc)$/\', $a);'
                     );
                     $this->showlist = array_filter($this->showlist, $showfilter);
                 }
