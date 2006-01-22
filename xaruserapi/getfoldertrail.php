@@ -6,17 +6,17 @@
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  * @subpackage photoshare
  * @author Chris van de Steeg
  */
- 
+
 
 function photoshare_userapi_getfoldertrail($args)
 {
     extract($args);
-    
+
         // Argument check
     if (!isset($folderID) || !is_numeric($folderID)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
@@ -39,10 +39,10 @@ function photoshare_userapi_getfoldertrail($args)
         return;
     else if ($tmp === false)
         return array();
-    
+
     // Add "top" link to trail
     //$trail[] = array( 'id' => -1, 'title' => xarMl('Top'));
-    
+
     return array_reverse($trail);
 }
 

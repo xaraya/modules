@@ -6,7 +6,7 @@
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  * @subpackage photoshare
  * @author Chris van de Steeg
@@ -15,14 +15,14 @@
 function photoshare_init()
 {
     // Verify that we have the GD extension installed
-    if (!extension_loaded('gd')) 
+    if (!extension_loaded('gd'))
     {
         $msg=xarML('Your server does unfortunately not have the image library "GD" installed, so Photoshare cannot be installed. Please contact your web administrator in order to get GD installed.');
         xarErrorSet(XAR_SYSTEM_EXCEPTION,'MODULE_DEPENDENCY',
                         new SystemException($msg));
         return;
     }
-    
+
     $dbconn =& xarDBGetConn();
     $xartables =& xarDBGetTables();
     xarDBLoadTableMaintenanceAPI();
@@ -53,10 +53,10 @@ function photoshare_init()
 
     $query = xarDBCreateTable($folderTable,$fields);
     if (empty($query)) return; // throw back
-    
+
     $result =& $dbconn->Execute($query);
     if (!$result) return;
-        
+
     $index = array(
         'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_owner',
         'fields'    => array('ps_owner'),
@@ -92,7 +92,7 @@ function photoshare_init()
 
     $query = xarDBCreateTable($imagetable,$fields);
     if (empty($query)) return; // throw back
-    
+
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
@@ -126,10 +126,10 @@ function photoshare_init()
         );
     $query = xarDBCreateTable($setuptable,$fields);
     if (empty($query)) return; // throw back
-        
+
     $result =& $dbconn->Execute($query);
     if (!$result) return;
-    
+
     $index = array(
         'name'      => 'i_' . xarDBGetSiteTablePrefix() . 'psstorage',
         'fields'    => array('ps_storage'),
@@ -139,7 +139,7 @@ function photoshare_init()
     if (empty($query)) return; // throw back
     $result =& $dbconn->Execute($query);
     if (!$result) return;
-    
+
     $index = array(
         'name'      => 'i_' . xarDBGetSiteTablePrefix() . 'ps_id',
         'fields'    => array('ps_id'),
@@ -198,7 +198,7 @@ function photoshare_init()
             )
         );
     xarDefineInstance('photoshare', 'item', $instances);
-    
+
     xarRegisterMask('ViewFolder', 'All', 'photoshare', 'folder', 'All:All:All', 'ACCESS_OVERVIEW');
     xarRegisterMask('ReadFolder', 'All', 'photoshare', 'folder', 'All:All:All', 'ACCESS_READ');
     xarRegisterMask('EditFolder', 'All', 'photoshare', 'folder', 'All:All:All', 'ACCESS_EDIT');
@@ -211,9 +211,9 @@ function photoshare_init()
     xarRegisterMask('AddPhoto', 'All', 'photoshare', 'item', 'All:All:All', 'ACCESS_ADD');
     xarRegisterMask('DeletePhoto', 'All', 'photoshare', 'item', 'All:All:All', 'ACCESS_DELETE');
     xarRegisterMask('AdminPhoto', 'All', 'photoshare', 'item', 'All:All:All', 'ACCESS_ADMIN');
-    
+
     xarRegisterPrivilege('AdminOwnItems', 'All', 'photoshare', 'All', 'All:MySelf:All', 'ACCESS_ADMIN');
-    
+
     // Initialisation successful
     return true;
 }
@@ -240,7 +240,7 @@ function photoshare_delete()
 
     xarDBLoadTableMaintenanceAPI();
     // Generate the SQL to drop the table using the API
-    
+
     $query = xarDBDropTable($xartables['photoshare_folders']);
     if (empty($query)) return; // throw back
     $result = &$dbconn->Execute($query);

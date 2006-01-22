@@ -6,12 +6,12 @@
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  * @subpackage photoshare
  * @author Chris van de Steeg
  */
- 
+
 function photoshare_user_view()
 {
     if (!xarSecurityCheck('EditFolder')) return;
@@ -105,7 +105,7 @@ function photoshare_user_view()
     $data['$photoshareClipboard'] = xarSessionGetVar('photoshareClipboard');
     if (!isset($data['$photoshareClipboard']))
         $data['$photoshareClipboard'] = false;
-    
+
     $userInfo = xarModAPIFunc('photoshare', 'user', 'getuserinfo');
       if (!isset($userInfo))
           return;

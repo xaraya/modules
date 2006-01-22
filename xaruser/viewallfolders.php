@@ -6,12 +6,12 @@
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  * @subpackage photoshare
  * @author Chris van de Steeg
  */
- 
+
 function photoshare_user_viewallfolders()
 {
     if (!xarSecurityCheck('ViewFolder')) return;
@@ -20,11 +20,11 @@ function photoshare_user_viewallfolders()
     if(!xarVarFetch('order', 'str', $order,  'title', XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('fid', 'int', $topFolderID,  NULL, XARVAR_NOT_REQUIRED | XARVAR_DONT_SET)) {return;}
     $user = xarUserGetVar('uid');
-    
-    xarTplSetPageTitle(xarVarPrepForDisplay(xarML('View all folders'))); 
-    
+
+    xarTplSetPageTitle(xarVarPrepForDisplay(xarML('View all folders')));
+
     $listName = xarModGetVar('photoshare', 'mainlist');
-    
+
     if (substr($listName, 0, 6) == 'nested') {
         $folders =  xarModAPIFunc('photoshare', 'user', 'getfolders',
                                  array('user'            => $user,
@@ -89,7 +89,7 @@ function photoshare_user_viewallfolders()
         $data['title'] = '('.xarMl('No album selected').')';
 
     $data['top'] = xarModUrl('photoshare', 'user', 'viewallfolders');
-    
+
     return xarTplModule('photoshare', 'user', 'list', $data, $listName);
 }
 ?>

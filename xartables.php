@@ -6,7 +6,7 @@
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  * @subpackage photoshare
  * @author Chris van de Steeg
@@ -22,7 +22,7 @@ function photoshare_xartables()
   $xartable['photoshare_folders'] = xarDBGetSiteTablePrefix() . '_photoshare_folders';
   $xartable['photoshare_images'] = xarDBGetSiteTablePrefix() . '_photoshare_images';
   $xartable['photoshare_setup'] = xarDBGetSiteTablePrefix() . '_photoshare_setup';
-  
+
   return $xartable;
 }
 

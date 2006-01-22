@@ -6,7 +6,7 @@
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  * @subpackage photoshare
  * @author Chris van de Steeg
@@ -30,14 +30,14 @@ function photoshare_userapi_getfolders($args)
 
     $dbconn =& xarDBGetConn();
     $xartables =& xarDBGetTables();
-    
+
     $whereSQL = ($getForList ? "NOT f.ps_blockfromlist " : "");
     //TODO : topics
     //$topicRestriction = (isset($topic) ? "ps_topic = ? ": '');
     // $bindvars ADAPT NEEDED
-    
+
     $topicsJoin = "";
-    
+
     // Get order by clause
     $orderBySQL = "ORDER BY f.ps_title";
     if (isset($order)) {
@@ -68,14 +68,14 @@ function photoshare_userapi_getfolders($args)
         $whereSQL .= "f.ps_id = ?";
         $bindvars[] = $folderID;
     }
-    
+
     if (isset($ownerID)){
         if (strlen($whereSQL) > 0)
             $whereSQL .= " AND ";
         $whereSQL .= "f.ps_owner = ?";
         $bindvars[] = $ownerID;
     }
-    
+
     if (isset($parentFolderID)) {
         if (strlen($whereSQL) > 0)
             $whereSQL .= " AND ";
@@ -87,7 +87,7 @@ function photoshare_userapi_getfolders($args)
     //if ($topicRestriction)
     //  $whereSQL .= " AND $topicRestriction";
     //}
-    
+
     $sql = 'SELECT     f.ps_id,
                     f.ps_title,
                     f.ps_owner,
@@ -106,7 +106,7 @@ function photoshare_userapi_getfolders($args)
     if ($countSubFolders) {
         $sql .= ", count(subFolders.ps_id)";
     }
-    
+
     $sql.=  '     FROM '.$xartables['photoshare_folders'].' f
                 LEFT JOIN '.$xartables['photoshare_images'].' i ON (f.ps_id=i.ps_parentfolder)
                 INNER JOIN '.$xartables['roles'].' u ON (f.ps_owner = u.xar_uid)';
