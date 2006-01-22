@@ -55,7 +55,7 @@ function julian_user_edit()
    //set events table
    $event_table = $xartable['julian_events'];
    //retrieve the data from the db for a specific event
-   $query = "SELECT *,if(recur_until LIKE '0000%',0,1) as hasRecurDate FROM " . $event_table . " WHERE `event_id`='".$id."'";
+   $query = "SELECT *,if(recur_until LIKE '0000%',0,1) as hasRecurDate FROM " . $event_table . " WHERE  event_id ='".$id."'";
    $result = $dbconn->Execute($query);
    $edit_obj = $result->FetchObject(false);
    // determine the end date for a recurring event

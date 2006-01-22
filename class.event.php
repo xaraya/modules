@@ -16,7 +16,7 @@ class Event
     var $repeatfreq;        // frequency of the repeating
     var $repeattype;        // frequency type
     var $repeatonnum;       // repeat on 1st,2nd,3rd,4th,Last
-    var $repeatonday;       // 
+    var $repeatonday;       //
 
     function Event()
     {   // set the author
@@ -68,21 +68,21 @@ class Event
     {
     //Get variables
        $dateformat=xarModGetVar('julian', 'dateformat');
-    
+
       /*create a unique index for sorting using the timestamp for this
         event and then concat the event id with a dash inbetween to guarantee uniqueness. This will allow ordering
         by timestamp then event_id with the all day events being listed first. If there
         is more than one event for any given time (or all day), the
         event id makes the index unique.*/
       $index=strtotime($event_obj->dtstart) ."-".$event_obj->event_id;
-      
+
         // Default color: black.
       $color = "#000000";
 
         // Sad and slow: we need to do database lookups, first to find the category of the event
         // (in table categories_linkage, done by categories_userapi_getlinks), then to find the color
         // of the category in table julian_category_properties... *sigh*
-        
+
         // Get categories belonging to this event (via categories_user_getlinks).
         $links = xarModAPIFunc('categories', 'user', 'getlinks',
                                        array('iids' => array($event_obj->event_id),
@@ -96,7 +96,7 @@ class Event
             $xartable = xarDBGetTables();
             $julian_category_properties = $xartable['julian_category_properties'];
             $cids = implode(",", array_keys($links)); // The category-ids we want colors for.
-             $query_color = "SELECT `color` FROM $julian_category_properties WHERE `cid` IN ($cids)";
+             $query_color = "SELECT color FROM $julian_category_properties WHERE cid IN ($cids)";
                $result_color = $dbconn->Execute($query_color);
             if ($result_color && !$result_color->EOF)    $color = $result_color->fields[0];    // we found at least one color; use it.
       }
@@ -126,24 +126,24 @@ class Event
       $sortArray=$event_data[$event_date];
       ksort($sortArray);
       //reset the event array for this date to the sorted array for this event date
-      $event_data[$event_date]=$sortArray; 
+      $event_data[$event_date]=$sortArray;
     }
-     
+
     function setLinkedEventData(&$event_data,$event_date,$event_obj)
     {
       //Get variables
       $dateformat=xarModGetVar('julian', 'dateformat');
-        
+
       $event_obj->event_id .= "_link";
-    
+
       // Generate unique id for event that allows for time/date-based sorting.
       $index=strtotime($event_obj->dtstart) ."-".$event_obj->event_id;
-      
+
       // Default color: black.
       $color = "#000000";
 
       $event_data[$event_date][$index] = array();
-        
+
       //Set the data for the event
       $event_data[$event_date][$index]['event_id'] = $event_obj->event_id;
       $event_data[$event_date][$index]['class'] = 0;
@@ -175,9 +175,9 @@ class Event
       $sortArray=$event_data[$event_date];
       ksort($sortArray);
       //reset the event array for this date to the sorted array for this event date
-      $event_data[$event_date]=$sortArray; 
+      $event_data[$event_date]=$sortArray;
     }
-     
+
     function setStartTime($time)
     {
         $this->starttime = $time;
@@ -187,17 +187,17 @@ class Event
     {
         $this->endtime = $time;
     }
-    
+
     function setStartDate($date)
     {
         $this->startdate = $date;
     }
-    
+
     function setEndDate($date)
     {
         $this->enddate = $date;
     }
-    
+
     function setDuration($days,$hours,$minutes)
     {
         $seconds = (int) ($days * 24 * 60 * 60) ;
@@ -205,27 +205,27 @@ class Event
         $seconds += (int) ($minutes * 60) ;
         $this->duration = $seconds;
     }
-    
+
     function setRepeat($repeat)
     {
         $this->repeat = $repeat;
     }
-    
+
     function setRepeatFreq($freq)
     {
         $this->repeatfreq = $freq;
     }
-    
+
     function setRepeatType($type)
     {
         $this->repeattype = $type;
     }
-    
+
     function setRepeatOnNum($on)
     {
         $this->repeatonnum = $on;
     }
-    
+
     function setRepeatOnDay($day)
     {
         $this->repeatonday = $day;
@@ -244,12 +244,12 @@ class Event
        while(!$haveStartDate)
        {
           /*calculate when this event would occur first. Check the current month first and if this event would occur
-            in the current month sometime after the start date, set the start date to the current month's first occurence. 
+            in the current month sometime after the start date, set the start date to the current month's first occurence.
             Otherwise, add the frequency to get the next occurrence of this event until one is found that occurs after the start date
             entered by the user.*/
           if ($interval < 5 && $interval != 0)
           {
-             /*event repeats 1st, 2nd, 3rd or 4th day of the week every so many month(s) (i.e. 2nd Sunday every 3 months)*/   
+             /*event repeats 1st, 2nd, 3rd or 4th day of the week every so many month(s) (i.e. 2nd Sunday every 3 months)*/
              $newTS = strtotime($interval ." ". $day_array[$count], $newTS);
              if($newTS >= strtotime($selectedstartdate))
              {
@@ -275,7 +275,7 @@ class Event
                 $haveStartDate=1;
              }
              else
-                $newTS = strtotime(date("Y-m",$newTS)."-01 +".$freq." month"); 
+                $newTS = strtotime(date("Y-m",$newTS)."-01 +".$freq." month");
           }
        }
        return $eventstartdate;

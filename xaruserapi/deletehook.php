@@ -9,16 +9,16 @@
  *
  * @subpackage Julian
  * @link  link to information for the subpackage
- * @author Julian development Team 
+ * @author Julian development Team
  */
- 
+
 /**
  * Delete an item via a hook
  *
  * process deletion of item - hook for ('item','delete','API')
  *
  * @author  Jorn, MichelV. <michelv@xarayahosting.nl>
- * @access  public 
+ * @access  public
  * @param   array $extrainfo Whatever you need
  * @param   ID objectid ID of the item to delete
  * @return  array ExtraInfo
@@ -26,7 +26,7 @@
 function julian_userapi_deletehook($args)
 {
     extract($args);
-    
+
      // extra info as supplied by the hooking module.
     if (!isset($extrainfo) || !is_array($extrainfo)) {
         $extrainfo = array();
@@ -53,7 +53,7 @@ function julian_userapi_deletehook($args)
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
-     
+
     // Get item type.
      if (isset($extrainfo['itemtype']) && is_numeric($extrainfo['itemtype'])) {
         $itemtype = $extrainfo['itemtype'];
@@ -65,9 +65,9 @@ function julian_userapi_deletehook($args)
    $dbconn = xarDBGetConn();
    $xartable = xarDBGetTables();
    $event_linkage_table = $xartable['julian_events_linkage'];
-   $query = "DELETE FROM $event_linkage_table WHERE (`hook_modid`=$modid AND `hook_itemtype`=$itemtype AND `hook_iid`=$objectid)";
+   $query = "DELETE FROM $event_linkage_table WHERE ( hook_modid =$modid AND  hook_itemtype =$itemtype AND  hook_iid =$objectid)";
    $result = $dbconn->Execute($query);
-     
+
    return $extrainfo;
 }
 

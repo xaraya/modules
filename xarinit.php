@@ -383,7 +383,7 @@ function julian_upgrade($oldversion)
             $categories_table = $xartable['julian_categories'];
 
             // Get existing categories.
-            $query = "SELECT `cat_id`,`cat_name`,`color` FROM " . $categories_table;
+            $query = "SELECT cat_id,cat_name,color FROM " . $categories_table;
             $result = $dbconn->Execute($query);
             if (!$result) return;
 
@@ -398,14 +398,14 @@ function julian_upgrade($oldversion)
                                                 'parent_id' => $mastercid));
 
                 // Link existing color to newly migrated category.
-                $query = "INSERT INTO $category_properties_table (`cid`,`color`) VALUES ($newcid,'$color')";
+                $query = "INSERT INTO $category_properties_table ( cid , color ) VALUES ($newcid,'$color')";
                 $result_catprop = $dbconn->Execute($query);
                 if (!$result_catprop) {
                     return;
                 }
 
                 // Get ids of the events that belong to this category.
-                $query_events = "SELECT `event_id` FROM $events_table WHERE `categories`='$oldcid'";
+                $query_events = "SELECT  event_id  FROM $events_table WHERE  categories ='$oldcid'";
                 $result_events = $dbconn->Execute($query_events);
                 if (!$result_events) return;
 

@@ -59,7 +59,7 @@ function julian_admin_modifycategories()
 
     //add and add cancel actions
     if (!strcmp($addaction,"Add")) {
-        $query = "SELECT * FROM `$category_properties_table` WHERE `cid`='$cid'";
+        $query = "SELECT * FROM  $category_properties_table  WHERE  cid ='$cid'";
         $result = $dbconn->Execute($query);
         if (!$result->EOF) {
             // This category was already linked to properties. Throw an error.
@@ -68,7 +68,7 @@ function julian_admin_modifycategories()
             return;
         }
 
-        $query = "INSERT INTO " . $category_properties_table . " (`cid`,`color`) VALUES (?,?)";
+        $query = "INSERT INTO " . $category_properties_table . " ( cid , color ) VALUES (?,?)";
         $bindvars = array($cid,$color);
         $result = $dbconn->Execute($query, $bindvars);
         xarResponseRedirect(xarModURL('julian', 'admin', 'modifycategories'));
@@ -82,7 +82,7 @@ function julian_admin_modifycategories()
 
     else if (!strcmp($action,"Delete"))
     {
-        $query = "DELETE FROM ".$category_properties_table." WHERE `cid` = '".$cid."'";
+        $query = "DELETE FROM ".$category_properties_table." WHERE  cid  = '".$cid."'";
         $result = $dbconn->Execute($query);
         xarResponseRedirect(xarModURL('julian', 'admin', 'modifycategories'));
     }
@@ -93,7 +93,7 @@ function julian_admin_modifycategories()
         xarResponseRedirect(xarModURL('julian', 'admin', 'modifycategories'));
     }
     else if (!strcmp($editaction,"Modify")){
-        $query = "UPDATE `$category_properties_table` SET `color` = ? WHERE `cid` = '$cid'";
+        $query = "UPDATE  $category_properties_table  SET  color  = ? WHERE  cid  = '$cid'";
         $bindvars = array($color);
         $result = $dbconn->Execute($query, $bindvars);
         $data['edit_cond'] = '';
