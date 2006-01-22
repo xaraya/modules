@@ -81,7 +81,7 @@ function maxercalls_admin_create($args)
     // create the item here
     $itemid = $object->createItem();
     if (empty($itemid)) return; // throw back
-
+    xarSessionSetVar('statusmsg', xarML('Item successfully created!'));
     // let's go back to the admin view
     xarResponseRedirect(xarModURL('maxercalls', 'admin', 'view', array('itemtype' => $itemtype)));
 
