@@ -13,7 +13,7 @@ var translations = {
 </script>
 </xar:if>
 <xar:comment>TODO: prevent to have own styles as much as possible</xar:comment>
-<xar:set name="dummy">xarTplAddStyleLink('photoshare', 'style')</xar:set>
+<xar:style scope="module" />
 
 <table class="photoshare-header">
     <tr class="photoshare-header-title">
@@ -51,42 +51,42 @@ var translations = {
             <div class="psmenu" id="psmenu-image" onmouseout="psmenu.onMouseOutDiv(this)">
                 <table>
                     <tr class="psmenu-menuItem" onmouseover="psmenu.onMouseOver(this)" onmouseout="psmenu.onMouseOut(this)"" onmousedown="psmenu.onMouseDown(this)">
-                        <td class="psmenu-icon"><img 
+                        <td class="psmenu-icon"><img
                               src="#xarServerGetBaseURL()#modules/photoshare/xarimages/magnify.gif"
                               alt="#xarMl('Show image')#" title="#xarMl('Show image')#"
                               ></td>
                          <td class="psmenu-title"><nowrap><xar:mlstring>Show image</xar:mlstring></nowrap></td>
                      </tr>
                     <tr class="psmenu-menuItem" onmouseover="psmenu.onMouseOver(this)" onmouseout="psmenu.onMouseOut(this)"" onmousedown="psmenu.onMouseDown(this)">
-                        <td class="psmenu-icon"><img 
+                        <td class="psmenu-icon"><img
                               src="#xarServerGetBaseURL()#modules/photoshare/xarimages/setting.gif"
                               alt="#xarMl('Edit image')#" title="#xarMl('Edit image')#"
                               ></td>
                          <td class="psmenu-title"><nowrap><xar:mlstring>Edit image</xar:mlstring></nowrap></td>
                      </tr>
                     <tr class="psmenu-menuItem" onmouseover="psmenu.onMouseOver(this)" onmouseout="psmenu.onMouseOut(this)"" onmousedown="psmenu.onMouseDown(this)">
-                        <td class="psmenu-icon"><img 
+                        <td class="psmenu-icon"><img
                               src="#xarServerGetBaseURL()#modules/photoshare/xarimages/delete.gif"
                               alt="#xarMl('Delete image')#" title="#xarMl('Delete image')#"
                               ></td>
                          <td class="psmenu-title"><nowrap><nowrap><xar:mlstring>Delete image</xar:mlstring></nowrap><nowrap></td>
                      </tr>
                     <tr class="psmenu-menuItem" onmouseover="psmenu.onMouseOver(this)" onmouseout="psmenu.onMouseOut(this)"" onmousedown="psmenu.onMouseDown(this)">
-                        <td class="psmenu-icon"><img 
+                        <td class="psmenu-icon"><img
                               src="#xarServerGetBaseURL()#modules/photoshare/xarimages/rotatec.gif"
                               alt="#xarMl('Rotate clockwise')#" title="#xarMl('Rotate clockwise')#"
                               ></td>
                          <td class="psmenu-title"><nowrap><xar:mlstring>Rotate clockwise</xar:mlstring></nowrap></td>
                      </tr>
                     <tr class="psmenu-menuItem" onmouseover="psmenu.onMouseOver(this)" onmouseout="psmenu.onMouseOut(this)"" onmousedown="psmenu.onMouseDown(this)">
-                        <td class="psmenu-icon"><img 
+                        <td class="psmenu-icon"><img
                               src="#xarServerGetBaseURL()#modules/photoshare/xarimages/rotatecc.gif"
                               alt="#xarMl('Rotate counter clockwise')#" title="#xarMl('Rotate counter clockwise')#"
                               ></td>
                          <td class="psmenu-title"><nowrap><xar:mlstring>Rotate counter clockwise</xar:mlstring></nowrap></td>
                      </tr>
                     <tr class="psmenu-menuItem" onmouseover="psmenu.onMouseOver(this)" onmouseout="psmenu.onMouseOut(this)"" onmousedown="psmenu.onMouseDown(this)">
-                        <td class="psmenu-icon"><img 
+                        <td class="psmenu-icon"><img
                               src="#xarServerGetBaseURL()#modules/photoshare/xarimages/greendot.gif"
                               alt="#xarMl('Set image as main image')#" title="#xarMl('Set image as main image')#"
                               ></td>

@@ -1,6 +1,6 @@
 <xar:template file="header" />
 <xar:template file="folderinfo" />
-<form action="#xarModUrl('photoshare', 'user', 'uploadimages')#" method="post" enctype="multipart/form-data">
+<form action="&xar-modurl-photoshare-user-uploadimages;" method="post" enctype="multipart/form-data">
     <input type="hidden" name="fid" value="#$folder.id#" />
     <input type="hidden" name="imagenum" value="#$imagenum#" />
     <input type="hidden" name="authid" value="#xarSecGenAuthKey()#" />
