@@ -23,7 +23,7 @@ include_once "modules/base/xarproperties/Dynamic_Select_Property.php";
 
 class Dynamic_CourseList_Property extends Dynamic_Select_Property
 {
-    var $grouplist = array();
+    var $catlist = array();
     var $userstate = -1;
     var $showlist = array();
     var $orderlist = array();
@@ -51,8 +51,7 @@ class Dynamic_CourseList_Property extends Dynamic_Select_Property
     {
         // Don't initialise the parent class as it handles the
         // validation in an inappropriate way for user lists.
-        // $this->Dynamic_Select_Property($args);
-        $this->Dynamic_Property($args);
+        $this->Dynamic_Select_Property($args);
 
         // Initialise the select option list.
         $this->options = array();
@@ -71,8 +70,8 @@ class Dynamic_CourseList_Property extends Dynamic_Select_Property
         }
         if (!empty($value)) {
             // check if this is a valid user id
-            $uname = xarUserGetVar('uname', $value);
-            if (isset($uname)) {
+            $course = xarModApiFunc('courses','user','get',array('courseid'=>$value));
+            if (isset($course)) {
                 $this->value = $value;
                 return true;
             } else {
@@ -103,9 +102,9 @@ class Dynamic_CourseList_Property extends Dynamic_Select_Property
             $options = $this->options;
         }
         if (count($options) == 0) {
-            if ($this->levels <> -1) {
+           /* if ($this->levels <> -1) {
                 $select_options['level'] = $this->levels;
-            }
+            }*/
             if (!empty($this->orderlist)) {
                 $select_options['order'] = implode(',', $this->orderlist);
             }
@@ -117,7 +116,7 @@ class Dynamic_CourseList_Property extends Dynamic_Select_Property
             }
             $courses = xarModAPIFunc('courses', 'user', 'getall', $select_options);
 
-            // Loop for each user retrived and populate the options array.
+            // Loop for each course retrieved and populate the options array.
             if (empty($this->showlist)) {
                 // Simple case (default) -
                 foreach ($courses as $course) {
@@ -154,29 +153,7 @@ class Dynamic_CourseList_Property extends Dynamic_Select_Property
         $data['tabindex']=!empty($tabindex) ? $tabindex : 0;
         $data['invalid']=!empty($this->invalid) ? xarML('Invalid #(1)', $this->invalid) : '';
 
-        /*$out = '<select' .
-               ' name="' . $name . '"' .
-               ' id="'. $id . '"' .
-               (!empty($tabindex) ? ' tabindex="'.$tabindex.'" ' : '') .
-               '>';
-
-        foreach ($options as $option) {
-            $out .= '<option';
-            if (empty($option['id']) || $option['id'] != $option['name']) {
-                $out .= ' value="'.$option['id'].'"';
-            }
-            if ($option['id'] == $value) {
-                $out .= ' selected="selected">'.$option['name'].'</option>';
-            } else {
-                $out .= '>'.$option['name'].'</option>';
-            }
-        }
-
-        $out .= '</select>' .
-               (!empty($this->invalid) ? ' <span class="xar-error">'.xarML('Invalid #(1)', $this->invalid) .'</span>' : '');
-       */
-
-        return xarTplProperty('roles', 'userlist', 'showinput', $data);
+        return xarTplProperty('courses', 'courselist', 'showinput', $data);
     }
 
     // TODO: format the output according to the 'showlist'.
@@ -184,36 +161,23 @@ class Dynamic_CourseList_Property extends Dynamic_Select_Property
     // in a link or not.
     function showOutput($args = array())
     {
-        extract($args);
-        $data= array();
+         extract($args);
+         $data = array();
 
-        if (!isset($value)) {
-            $value = $this->value;
-        }
+         if (isset($value)) {
+             $data['value']=xarVarPrepHTMLDisplay($value);
+         } else {
+             $data['value']=xarVarPrepHTMLDisplay($this->value);
+         }
+         if (isset($name)) {
+           $data['name']=$name;
+         }
+         if (isset($courseid)) {
+             $data['courseid']=$courseid;
+         }
+         $template="";
+         return xarTplProperty('courses', 'courselist', 'showoutput', $data);
 
-        if (empty($value)) {
-            $user = '';
-        } else {
-            $user = xarUserGetVar('name', $value);
-            if (empty($user)) {
-                if (!isset($user)) xarErrorHandled();
-                $user = xarUserGetVar('uname', $value);
-                if (!isset($user)) xarErrorHandled();
-            }
-        }
-        $data['value']=$value;
-        $data['user']=$user;
-        /*
-        if ($value > 1) {
-            return '<a href="'.xarModURL('roles', 'user', 'display',
-                                         array('uid' => $value))
-                    . '">'.xarVarPrepForDisplay($user).'</a>';
-        } else {
-            return xarVarPrepForDisplay($user);
-        }
-        */
-
-        return xarTplProperty('courses', 'courselist', 'showoutput', $data);
     }
 
     function parseValidation($validation = '')
@@ -257,16 +221,16 @@ class Dynamic_CourseList_Property extends Dynamic_Select_Property
     function getBasePropertyInfo()
     {
         $baseInfo = array(
-                          'id'         => 37,
-                          'name'       => 'courselist',
-                          'label'      => 'Course List',
-                          'format'     => '37',
-                          'validation' => '',
-                          'source'     => '',
-                          'dependancies' => '147',
-                          'requiresmodule' => 'courses',
-                          'aliases' => '',
-                          'args'         => '',
+                          'id'              => 179,
+                          'name'            => 'courselist',
+                          'label'           => 'Dropdown list of Courses',
+                          'format'          => '179',
+                          'validation'      => '',
+                          'source'          => '',
+                          'dependancies'    => '',
+                          'requiresmodule'  => 'courses',
+                          'aliases'         => '',
+                          'args'            => ''
                           // ...
                          );
         return $baseInfo;
@@ -312,7 +276,7 @@ class Dynamic_CourseList_Property extends Dynamic_Select_Property
         if (!isset($template)) {
             $template = '';
         }
-        return xarTplProperty('roles', 'userlist', 'validation', $data);
+        return xarTplProperty('courses', 'courselist', 'validation', $data);
     }
 
     /**

@@ -28,19 +28,20 @@ function courses_init()
     // The courses table
     $coursestable = $xartable['courses'];
     xarDBLoadTableMaintenanceAPI();
-    $fields = array('xar_courseid' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
-        'xar_name' => array('type' => 'varchar', 'size' => 100, 'null' => false),
-        'xar_number' => array('type' => 'varchar', 'size' => 5, 'null' => false),
-        'xar_type' => array('type' => 'varchar', 'size' => 10, 'default' => 'NULL'),
-        'xar_level' => array('type' => 'varchar', 'size' => 20, 'default' => 'NULL'),
-        'xar_shortdesc'=>array('null'=>FALSE, 'type'=>'text'),
+    $fields = array(
+        'xar_courseid'      => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
+        'xar_name'          => array('type' => 'varchar', 'size' => 100, 'null' => false),
+        'xar_number'        => array('type' => 'varchar', 'size' => 5, 'null' => false),
+        'xar_type'          => array('type' => 'varchar', 'size' => 10, 'default' => 'NULL'),
+        'xar_level'         => array('type' => 'varchar', 'size' => 20, 'default' => 'NULL'),
+        'xar_shortdesc'     => array('null'=>FALSE, 'type'=>'text'),
         'xar_intendedcredits' => array('type' => 'integer', 'size' => 30, 'default' => 'NULL'),
 //        'xar_language'=>array('null'=>TRUE, 'type'=>'text'),
-        'xar_freq' =>array('null'=>TRUE, 'type' => 'varchar', 'size' => 20, 'default' => 'NULL'),
-        'xar_contactuid' => array('type' => 'integer', 'size' => 'medium', 'null' => true, 'default' => 'NULL'),
-        'xar_contact' => array('null'=>TRUE, 'type' => 'varchar', 'size' => 255, 'default' => 'NULL'),
-        'xar_hidecourse' => array('type' => 'integer', 'size' => 'tiny', 'null' => false, 'default' => '0'),
-        'xar_last_modified'=>array('type'=>'datetime','null'=>FALSE)
+        'xar_freq'          => array('null'=>TRUE, 'type' => 'varchar', 'size' => 20, 'default' => 'NULL'),
+        'xar_contactuid'    => array('type' => 'integer', 'size' => 'medium', 'null' => true, 'default' => 'NULL'),
+        'xar_contact'       => array('null'=>TRUE, 'type' => 'varchar', 'size' => 255, 'default' => 'NULL'),
+        'xar_hidecourse'    => array('type' => 'integer', 'size' => 'tiny', 'null' => false, 'default' => '0'),
+        'xar_last_modified' => array('type'=>'datetime','null'=>FALSE)
         );
 
      $query = xarDBCreateTable($coursestable, $fields);
@@ -51,32 +52,33 @@ function courses_init()
     if (!$result) return;
     // The course will be planned for each occurence
     $courses_planning = $xartable['courses_planning'];
-    $fields = array('xar_planningid' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
-        'xar_courseid' => array('type' => 'integer', 'null' => false),
-        'xar_credits' => array('type' => 'integer', 'size' => 'tiny', 'unsigned'=>TRUE, 'null' => false, 'default' => '0'),
-        'xar_creditsmin' => array('type' => 'integer', 'size' => 'tiny', 'unsigned'=>TRUE, 'null' => false, 'default' => '0'),
-        'xar_creditsmax' => array('type' => 'integer', 'size' => 'tiny', 'unsigned'=>TRUE, 'null' => false, 'default' => '0'),
-        'xar_courseyear' => array('type' => 'integer', 'size' => 'small', 'null' => false, 'default' => '0'),
-        'xar_startdate'=>array('type'=>'date', 'default' => '00-00-0000','null'=>FALSE),
-        'xar_enddate'=>array('type'=>'date','default' => '00-00-0000','null'=>FALSE),
-        'xar_prerequisites'=>array('null'=>FALSE, 'type'=>'text'),
-        'xar_aim'=>array('null'=>TRUE, 'type'=>'text'),
-        'xar_method'=>array('null'=>TRUE, 'type'=>'text'),
-        'xar_language'=>array('null'=>TRUE, 'type'=>'varchar', 'size'=>100),
-        'xar_longdesc'=>array('null'=>FALSE, 'type'=>'text'),
-        'xar_costs'=>array('null'=>FALSE, 'type'=>'varchar','size'=>255, 'default'=>''),
-        'xar_committee'=>array('null'=>TRUE, 'type'=>'text',),
-        'xar_coordinators'=>array('null'=>TRUE, 'type'=>'text'),
-        'xar_lecturers'=>array('null'=>TRUE, 'type'=>'text'),
-        'xar_location'=>array('null'=>TRUE, 'type'=>'text',),
-        'xar_material'=>array('null'=>TRUE, 'type'=>'text'),
-        'xar_info'=>array('null'=>TRUE, 'type'=>'text'),
-        'xar_program'=>array('null'=>TRUE, 'type'=>'text'),
-        'xar_hideplanning' => array('type' => 'integer', 'size' => 'tiny', 'null' => false, 'default' => '0'),
+    $fields = array(
+        'xar_planningid'    => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
+        'xar_courseid'      => array('type' => 'integer', 'null' => false),
+        'xar_credits'       => array('type' => 'integer', 'size' => 'tiny', 'unsigned'=>TRUE, 'null' => false, 'default' => '0'),
+        'xar_creditsmin'    => array('type' => 'integer', 'size' => 'tiny', 'unsigned'=>TRUE, 'null' => false, 'default' => '0'),
+        'xar_creditsmax'    => array('type' => 'integer', 'size' => 'tiny', 'unsigned'=>TRUE, 'null' => false, 'default' => '0'),
+        'xar_courseyear'    => array('type' => 'integer', 'size' => 'small', 'null' => false, 'default' => '0'),
+        'xar_startdate'     => array('type'=>'date', 'default' => '00-00-0000','null'=>FALSE),
+        'xar_enddate'       => array('type'=>'date','default' => '00-00-0000','null'=>FALSE),
+        'xar_prerequisites' => array('null'=>FALSE, 'type'=>'text'),
+        'xar_aim'           => array('null'=>TRUE, 'type'=>'text'),
+        'xar_method'        => array('null'=>TRUE, 'type'=>'text'),
+        'xar_language'      => array('null'=>TRUE, 'type'=>'varchar', 'size'=>100),
+        'xar_longdesc'      => array('null'=>FALSE, 'type'=>'text'),
+        'xar_costs'         => array('null'=>FALSE, 'type'=>'varchar','size'=>255, 'default'=>''),
+        'xar_committee'     => array('null'=>TRUE, 'type'=>'text',),
+        'xar_coordinators'  => array('null'=>TRUE, 'type'=>'text'),
+        'xar_lecturers'     => array('null'=>TRUE, 'type'=>'text'),
+        'xar_location'      => array('null'=>TRUE, 'type'=>'text',),
+        'xar_material'      => array('null'=>TRUE, 'type'=>'text'),
+        'xar_info'          => array('null'=>TRUE, 'type'=>'text'),
+        'xar_program'       => array('null'=>TRUE, 'type'=>'text'),
+        'xar_hideplanning'  => array('type' => 'integer', 'size' => 'tiny', 'null' => false, 'default' => '0'),
         'xar_minparticipants' => array('type' => 'integer', 'size' => 'small', 'null' => false, 'default' => '0'),
         'xar_maxparticipants' => array('type' => 'integer', 'size' => 'small', 'null' => false, 'default' => '0'),
-        'xar_closedate'=>array('type'=>'date'),
-        'xar_last_modified'=>array('type'=>'datetime','null'=>FALSE)
+        'xar_closedate'     => array('type'=>'date'),
+        'xar_last_modified' => array('type'=>'datetime','null'=>FALSE)
         );
 
      $query = xarDBCreateTable($courses_planning, $fields);
@@ -195,8 +197,11 @@ function courses_init()
     // If your module supports short URLs, the website administrator should
     // be able to turn it on or off in your module administration
     xarModSetVar('courses', 'SupportShortURLs', 0);
+    // Amount of days for the upcoming block to look ahead
     xarModSetVar('courses', 'BlockDays', 7);
-
+    // Messages
+    xarModSetVar('courses', 'hidecoursemsg', 'This course is currently hidden for display');
+    xarModSetVar('courses', 'hideplanningmsg', 'This occurence is currently hidden for display');
     // Register Block types (this *should* happen at activation/deactivation)
     if (!xarModAPIFunc('blocks',
             'admin',
@@ -216,7 +221,7 @@ function courses_init()
             array('modName' => 'courses',
                 'blockType' => 'upcoming'))) return;
     // Register our hooks that we are providing to other modules.  The course
-    // module shows ahook in the form of the user menu that shows the user the courses
+    // module shows a hook in the form of the user menu that shows the user the courses
     // he or she is enrolled in.
     if (!xarModRegisterHook('item', 'usermenu', 'GUI',
             'courses', 'user', 'usermenu')) {
@@ -269,7 +274,6 @@ function courses_init()
     $path = "modules/courses/xardata/";
     // Course levels
     $objectid = xarModAPIFunc('dynamicdata','util','import',array('file'  => $path . '/courses_levels.xml'));
-
     if (empty($objectid)) return;
     xarModSetVar('courses','levelsobjectid',$objectid);
 
@@ -278,7 +282,6 @@ function courses_init()
 
     // Student status
     $objectid = xarModAPIFunc('dynamicdata','util','import',array('file'  => $path . '/courses_studstatus.xml'));
-
     if (empty($objectid)) return;
     xarModSetVar('courses','studstatusobjectid',$objectid);
 
@@ -287,12 +290,12 @@ function courses_init()
 
     // Course levels
     $objectid = xarModAPIFunc('dynamicdata','util','import',array('file'  => $path . '/courses_years.xml'));
-
     if (empty($objectid)) return;
     xarModSetVar('courses','yearsobjectid',$objectid);
 
     $objectid = xarModAPIFunc('dynamicdata','util','import',array('file'  => $path . '/courses_years_data.xml'));
     if (empty($objectid)) return;
+
     /**
      * Define instances for this module
      * Format is
@@ -451,8 +454,7 @@ function courses_upgrade($oldversion)
             return courses_upgrade('0.0.5');
 
        case '0.0.5':
-         xarModSetVar('courses', 'HideEmptyFields', 0);
-
+            xarModSetVar('courses', 'HideEmptyFields', 0);
             return courses_upgrade('0.0.6');
        case '0.0.6':
             if (!xarModRegisterHook('item', 'search', 'GUI',
@@ -601,7 +603,6 @@ function courses_upgrade($oldversion)
         case '0.1.1':
             $dbconn =& xarDBGetConn();
             $xartable =& xarDBGetTables();
-            // Using the Datadict method to be up to date ;)
             $datadict =& xarDBNewDataDict($dbconn, 'CREATE');
             $coursestable = $xartable['courses'];
             // Apply changes
@@ -620,11 +621,9 @@ function courses_upgrade($oldversion)
                                      'blockType' => 'upcoming'))) return;
             xarModSetVar('courses', 'BlockDays', 7);
             return courses_upgrade('0.1.3');
-
         case '0.1.3':
             $dbconn =& xarDBGetConn();
             $xartable =& xarDBGetTables();
-            // Using the Datadict method to be up to date ;)
             $datadict =& xarDBNewDataDict($dbconn, 'CREATE');
             $planningtable = $xartable['courses_planning'];
             // Apply changes
@@ -634,6 +633,10 @@ function courses_upgrade($oldversion)
             return courses_upgrade('0.1.4');
         case '0.1.4':
         case '0.2.0':
+            xarModSetVar('courses', 'hidecoursemsg', 'This course is currently hidden for display');
+            xarModSetVar('courses', 'hideplanningmsg', 'This occurence is currently hidden for display');
+            return courses_upgrade('0.2.1');
+        case '0.2.1':
             break;
     }
     // Update successful

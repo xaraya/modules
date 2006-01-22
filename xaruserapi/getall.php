@@ -17,7 +17,10 @@
  * @author the Courses module development team
  * @param numitems $ the number of items to retrieve (default -1 = all)
  * @param startnum $ start with this item number (default 1)
- * @param sortby $ the parameter to sort by (default name)
+ * @param sortby $ the parameter to sort by (default name) enum 'name','shortdesc','number'
+ * @param id catid category id
+ * @param id level courselevelid
+ * @param id type coursetypeid
  * @returns array
  * @return array of items, or false on failure
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
@@ -27,7 +30,8 @@ function courses_userapi_getall($args)
     extract($args);
     if (!xarVarFetch('startnum', 'int:1:',         $startnum, 1,     XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('numitems', 'int:1:',         $numitems, -1,    XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('level',    'int:1:',         $level, '',    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('level',    'int:1:',         $level,    '',    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('type',     'int:1:',         $type,     '',    XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('sortby',   'str:1:',         $sortby,   'name',  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('sortorder','enum:DESC:ASC:', $sortorder,'DESC',  XARVAR_NOT_REQUIRED)) return;
 
@@ -87,6 +91,10 @@ function courses_userapi_getall($args)
     // Level selection
     if (!empty ($level) && is_numeric($level)) {
         $query .= " AND xar_level = $level ";
+    }
+    // Level selection
+    if (!empty ($type)) {
+        $query .= " AND xar_type = $type ";
     }
     $query .= " ORDER BY $coursestable.xar_" . $sortby;
     $query .= " $sortorder";
