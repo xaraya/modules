@@ -41,7 +41,7 @@ function courses_init()
         'xar_contactuid'    => array('type' => 'integer', 'size' => 'medium', 'null' => true, 'default' => 'NULL'),
         'xar_contact'       => array('null'=>TRUE, 'type' => 'varchar', 'size' => 255, 'default' => 'NULL'),
         'xar_hidecourse'    => array('type' => 'integer', 'size' => 'tiny', 'null' => false, 'default' => '0'),
-        'xar_last_modified' => array('type'=>'datetime','null'=>FALSE)
+        'xar_last_modified' => array('type'=>'integer','size' => 11,'null'=>FALSE)
         );
 
      $query = xarDBCreateTable($coursestable, $fields);
@@ -77,8 +77,8 @@ function courses_init()
         'xar_hideplanning'  => array('type' => 'integer', 'size' => 'tiny', 'null' => false, 'default' => '0'),
         'xar_minparticipants' => array('type' => 'integer', 'size' => 'small', 'null' => false, 'default' => '0'),
         'xar_maxparticipants' => array('type' => 'integer', 'size' => 'small', 'null' => false, 'default' => '0'),
-        'xar_closedate'     => array('type'=>'date'),
-        'xar_last_modified' => array('type'=>'datetime','null'=>FALSE)
+        'xar_closedate'     => array('type'=>'integer','size' => 11,'null'=>FALSE, 'default' => '0'),
+        'xar_last_modified' => array('type'=>'integer','size' => 11,'null'=>FALSE, 'default' => '0')
         );
 
      $query = xarDBCreateTable($courses_planning, $fields);
@@ -96,7 +96,7 @@ function courses_init()
         'xar_userid' => array('type' => 'integer', 'size' => 'small', 'null' => false, 'default' => '0'),
         'xar_planningid' => array('type' => 'integer', 'size' => 'small', 'null' => false, 'default' => '0'),
         'xar_status' => array('type' => 'integer', 'size' => 'small', 'null' => false, 'default' => '0'),
-        'xar_regdate'=>array('type'=>'datetime','null'=>FALSE)
+        'xar_regdate'=>array('type'=>'integer','size' => 11,'null'=>FALSE)
         );
 
     $query = xarDBCreateTable($courses_students, $fields);
@@ -635,8 +635,29 @@ function courses_upgrade($oldversion)
         case '0.2.0':
             xarModSetVar('courses', 'hidecoursemsg', 'This course is currently hidden for display');
             xarModSetVar('courses', 'hideplanningmsg', 'This occurence is currently hidden for display');
+
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+            $datadict =& xarDBNewDataDict($dbconn, 'CREATE');
+            $coursestable = $xartable['courses'];
+            // Apply change to int for time() functions
+            xarDBLoadTableMaintenanceAPI();
+            $result = $datadict->alterColumn($coursestable, 'xar_last_modified I4 null default 0');
+            if (!$result) return;
+
+            $courses_students = $xartable['courses_students'];
+            $result = $datadict->alterColumn($courses_students, 'xar_regdate I4 null default 0');
+            if (!$result) return;
+
+            $courses_planning = $xartable['courses_planning'];
+            $result = $datadict->alterColumn($courses_planning, 'xar_last_modified I4 null default 0');
+            if (!$result) return;
+            $result = $datadict->alterColumn($courses_planning, 'xar_closedate I4 null default 0');
+            if (!$result) return;
             return courses_upgrade('0.2.1');
         case '0.2.1':
+            return courses_upgrade('0.2.2');
+        case '0.2.2':
             break;
     }
     // Update successful

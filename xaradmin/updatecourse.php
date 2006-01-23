@@ -127,7 +127,7 @@ function courses_admin_updatecourse($args)
                                 'invalid' => $invalid));
     }
 
-    $last_modified = date("Y-m-d H:i:s");
+
     // The API function is called.
     if (!xarModAPIFunc('courses',
                        'admin',
@@ -142,7 +142,6 @@ function courses_admin_updatecourse($args)
                              'contact' => $contact,
                              'contactuid' => $contactuid,
                              'hidecourse' => $hidecourse,
-                             'last_modified' => $last_modified,
                              'intendedcredits' => $intendedcredits))) {
         return false; // throw back
     }

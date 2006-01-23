@@ -52,6 +52,8 @@ function courses_userapi_create_enroll($args)
     if (!xarSecurityCheck('ReadCourses', 1, 'Course', "All:$planningid:All")) {
         return;
     }
+
+    $regdate = time();
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 

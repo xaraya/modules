@@ -63,6 +63,9 @@ function courses_adminapi_updateplanned($args)
     if (!xarSecurityCheck('EditCourses', 1, 'Course', "$courseid:$planningid:All")) {
         return;
     }
+
+    $last_modified = time();
+
     // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();

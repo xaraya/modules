@@ -1,7 +1,7 @@
 <?php
 /**
  * Standard function to update a current course
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -9,12 +9,12 @@
  *
  * @subpackage Courses Module
  * @link http://xaraya.com/index.php/release/179.html
- * @author Courses module development team 
+ * @author Courses module development team
  */
 /**
  * This is a standard function that is called with the results of the
  * form supplied by xarModFunc('courses','admin','modifycourse') to update a current item
- * 
+ *
  * @param  $ 'planningid' the id of the course to be updated
  * @param  $ 'name' the name of the course to be updated
  * @param  $ 'number' the number of the course to be updated
@@ -71,7 +71,7 @@ function courses_admin_updateplanned($args)
           $invalid['minparticipants'] = $minparticipants;
           }
     }
-    
+
     if (empty($nameid)) {
         $data['name'] = '';
     } else {
@@ -148,15 +148,14 @@ function courses_admin_updateplanned($args)
                                 'material' => $material,
                                 'info' => $info,
                                 'program' => $program,
-                                'minparticipants' => $minparticipants, 
+                                'minparticipants' => $minparticipants,
                                 'maxparticipants' => $maxparticipants,
                                 'closedate' => $closedate,
                                 'hideplanning' => $hideplanning,
                                 'last_modified' => $last_modified,
                                 'invalid' => $invalid));
     }
-    $last_modified = '';
-    $last_modified = date("Y-m-d H:i:s");
+
     // The API function is called.
     if (!xarModAPIFunc('courses',
                        'admin',
@@ -181,13 +180,12 @@ function courses_admin_updateplanned($args)
                                 'material' => $material,
                                 'info' => $info,
                                 'program' => $program,
-                                'minparticipants' => $minparticipants, 
+                                'minparticipants' => $minparticipants,
                                 'maxparticipants' => $maxparticipants,
                                 'closedate' => $closedate,
-                                'last_modified' => $last_modified,
                                 'hideplanning' => $hideplanning))) {
         return; // throw back
-    } 
+    }
     xarSessionSetVar('statusmsg', xarML('Planned Course Was Successfully Updated!'));
     // This function generated no output, and so now it is complete we redirect
     // the user to an appropriate page for them to carry on their work

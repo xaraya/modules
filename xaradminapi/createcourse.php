@@ -45,6 +45,8 @@ function courses_adminapi_createcourse($args)
     if (!xarSecurityCheck('AddCourses', 1, 'Course', "All:All:All")) {
         return;
     }
+
+    $last_modified = time();
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $coursestable = $xartable['courses'];

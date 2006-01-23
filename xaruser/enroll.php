@@ -72,17 +72,17 @@ function courses_user_enroll($args)
     // Get status of student; for the moment standard status is 1
     // TODO: make admin configurable
     $studstatus = 1;
-    $regdate = date("Y-m-d H:i:s");
+
 
     $enrollid = xarModAPIFunc('courses',
                               'user',
                               'create_enroll',
                               array('uid'        => $uid,
                                     'planningid' => $planningid,
-                                    'studstatus' => $studstatus,
-                                    'regdate'    => $regdate));
+                                    'studstatus' => $studstatus));
     if (!isset($enrollid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-
+    // TODO: make this a better one
+    $regdate = date("Y-m-d H:i:s");
     // Call sendconfirm messages
     $confirm = xarModFunc('courses',
                               'user',

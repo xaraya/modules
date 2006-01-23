@@ -61,6 +61,8 @@ function courses_adminapi_updatecourse($args)
     if (!xarSecurityCheck('EditCourses', 1, 'Course', "$courseid:All:All")) {
         echo "here";
     }
+
+    $last_modified = time();
     // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();

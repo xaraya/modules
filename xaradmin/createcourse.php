@@ -76,7 +76,7 @@ function courses_admin_createcourse($args)
     }
     // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) return;
-    $last_modified = date("Y-m-d H:i:s");
+
     $courseid = xarModAPIFunc('courses',
                           'admin',
                           'createcourse',
@@ -89,8 +89,7 @@ function courses_admin_createcourse($args)
                                 'freq' => $freq,
                                 'contact' => $contact,
                                 'contactuid' => $contactuid,
-                                'hidecourse' => $hidecourse,
-                                'last_modified' => $last_modified));
+                                'hidecourse' => $hidecourse));
     // The return value of the function is checked here, and if the function
     // succeeded then an appropriate message is posted.
     if (!isset($courseid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back

@@ -1,7 +1,7 @@
 <?php
 /**
  * Create a new planning item
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -56,7 +56,7 @@ function courses_admin_createplanning($args)
                           'validatecourse',
                           array('name' => $name,
                                 'number' => $number));
-    
+
     if (!isset($name) || !is_string($name)) {
         $invalid[] = 'name';
     }
@@ -73,13 +73,13 @@ function courses_admin_createplanning($args)
 
     // Argument check
     $invalid = array();
-    
+
     if (isset($minparticipants) || isset($maxparticipants)) {
         if ($minparticipants > $maxparticipants) {
           $invalid['minparticipants'] = $minparticipants;
           }
     }
-    
+
     // check if we have any errors
     if (count($invalid) > 0) {
         // call the admin_newcourse function and return the template vars
@@ -112,7 +112,7 @@ function courses_admin_createplanning($args)
     }
     // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) return;
-    $last_modified = date("Y-m-d H:i:s");
+
     // Create planning and get planningid
     $planningid = xarModAPIFunc('courses',
                           'admin',
@@ -139,8 +139,7 @@ function courses_admin_createplanning($args)
                                 'hideplanning' => $hideplanning,
                                 'minparticipants'=> $minparticipants,
                                 'maxparticipants'=> $maxparticipants,
-                                'closedate'=> $closedate,
-                                'last_modified' => $last_modified));
+                                'closedate'=> $closedate));
     //Check returnvalue
     if (!isset($planningid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     // This function generated no output, and so now it is complete we redirect
