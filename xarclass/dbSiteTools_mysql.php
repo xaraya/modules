@@ -28,15 +28,22 @@ class dbSiteTools_mysql extends dbSiteTools
         $gain=0;
         $rowinfo['total_gain']=0;
         $rowinfo['total_kbs']=0;
+        $version=substr(mysql_get_server_info(),0,3);
         $local_query = 'SHOW TABLE STATUS FROM '.$this->dbname;
         $result      = @mysql_query($local_query);
         if (@mysql_num_rows($result)) {
             while ($row = mysql_fetch_array($result)) {
-                $rowdata[]=array('rowname' => $row[0],
-                                 'totaldata'  => $row[5],
-                                 'totalidx'   => $row[7],
-                                 'gain'       => $row[8]);
-                                                                                       
+                if ($version>='4.1') {
+                  $rowdata[]=array('rowname' => $row[0],
+                                    'totaldata'  => $row[6],
+                                    'totalidx'   => $row[8],
+                                    'gain'       => $row[9]);
+                } else {
+                   $rowdata[]=array('rowname' => $row[0],
+                                    'totaldata'  => $row[5],
+                                    'totalidx'   => $row[7],
+                                    'gain'       => $row[8]);
+                }
                 $local_query = 'OPTIMIZE TABLE '.$row[0];
                 $resultat  = mysql_query($local_query);
            }
