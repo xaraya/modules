@@ -267,6 +267,34 @@ function courses_init()
             'hookModName'       => 'dynamicdata'
             ,'callerModName'    => 'courses'));
 */
+
+    /*
+     * Nasty trick to get the itemtype id above 10: generate ten ids
+     */
+    $dbconn =& xarDBGetConn();
+    for($i = 0; $i < 11; $i++) {
+
+        $nextId = $dbconn->GenId($coursestable);
+        // Add item
+        $name='fillup';
+        $query = "INSERT INTO $coursestable (
+                  xar_courseid,
+                  xar_name)
+                  VALUES (?,?)";
+
+        $bindvars = array($nextId, $name);
+        $result = &$dbconn->Execute($query, $bindvars);
+        if (!$result) return;
+    }
+    // Get rid of the dummy courses
+    $name='fillup';
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+    $coursestable = $xartable['courses'];
+    // Delete the item
+    $query = "DELETE FROM $coursestable
+            WHERE xar_name = ?";
+    $result = &$dbconn->Execute($query, array($name));
     /*
      *
      * REGISTER THE TABLES AT DYNAMICDATA
@@ -690,6 +718,23 @@ function courses_delete()
      $result = $datadict->dropTable($xartable[$basename . '_' . $table]);
     }
 
+    /* Drop the Dyn data objects */
+    $objectid = xarModGetVar('courses','studstatusobjectid');
+    if (!empty($objectid)) {
+        xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
+    }
+    /* Drop the Dyn data objects */
+    $objectid = xarModGetVar('courses','levelsobjectid');
+    if (!empty($objectid)) {
+        xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
+    }
+    /* Drop the Dyn data objects */
+    $objectid = xarModGetVar('courses','yearsobjectid');
+    if (!empty($objectid)) {
+        xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
+    }
+
+
     // Delete any module variables
     xarModDelAllVars('courses');
 
@@ -746,7 +791,7 @@ function courses_delete()
      * REMOVE all comments (which are stored via the comments api)
      */
     xarModAPIFunc('comments','admin','delete_module_nodes',array('modid' => xarModGetIDFromName('courses')));
-
+/*
    // remove the table from dynamic data
     $objectinfo = xarModAPIFunc(
         'dynamicdata'
@@ -764,22 +809,8 @@ function courses_delete()
     if (!empty($objectid)) {
         xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
     }
+*/
 
-    /* Drop the Dyn data objects */
-    $objectid = xarModGetVar('courses','studstatusobjectid');
-    if (!empty($objectid)) {
-        xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
-    }
-    /* Drop the Dyn data objects */
-    $objectid = xarModGetVar('courses','levelsobjectid');
-    if (!empty($objectid)) {
-        xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
-    }
-    /* Drop the Dyn data objects */
-    $objectid = xarModGetVar('courses','yearsobjectid');
-    if (!empty($objectid)) {
-        xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
-    }
     // Deletion successful
     return true;
 }
