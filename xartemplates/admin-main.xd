@@ -43,17 +43,18 @@
     </ul>
 
    <h3><xar:mlstring>Further Information</xar:mlstring></h3>
-   <p>
-      <xar:mlstring>Further information on the Files module can be found at</xar:mlstring>
-   </p>
+
    <ul style="list-style: disc;">
-      <li><a title="#xarML('Highlight Module - Xaraya Extension 554')#" href="http://www.xaraya.com/index.php/release/554.html" target="_blank">Xaraya Extension and Releases</a> - <xar:mlstring>Files module's extension page.  Click on the Version History tab at the bottom to get the latest release information.</xar:mlstring>
+      <li><xar:mlstring>Documentation folder: <code>modules/files/xardocs/</code></xar:mlstring>
       </li>
-      <li><a href="http://www.curtisfarnham.com/" target="_blank">www.curtisfarnham.com</a> - <xar:mlstring>Author's website</xar:mlstring>
+      <li><xar:mlstring>This module's page at Xaraya.com: <a href="http://www.xaraya.com/index.php/release/554.html" target="_blank">Xaraya Extension and Releases</a></xar:mlstring>
+      </li>
+      <li><xar:mlstring>Bugs and feature requests: <a href="http://bugs.xaraya.com/" target="_blank">Xaraya Bug Tracker</a></xar:mlstring>
+      </li>
+      <li><xar:mlstring>Support issues of general interest: <a href="http://xaraya.curtisfarnham.com/forums/" target="_blank">Forums at the author's website</a></xar:mlstring>
+      </li>
+      <li><xar:mlstring>Everything else: <a href="http://xaraya.curtisfarnham.com/contact/" target="_blank">Contact form at the author's website</a></xar:mlstring>
       </li>
   </ul>
-  <p class="xar-sub">
-    <strong>&nbsp;<xar:mlstring>Files module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 0.4.0&nbsp; 2005-11-13
-  </p>
 </div>
 </div>
