@@ -46,6 +46,7 @@ function files_userapi_getall($args)
     $dirs = $files = array();
     while (false !== ($file = readdir($hd))) {
         if ($file == '..' && $path == '/') continue;
+        if (!is_readable("$realpath/$file")) continue;
         is_dir("$realpath/$file") ? $dirs[] = $file : $files[] = $file;
     }
 
@@ -69,12 +70,12 @@ function files_userapi_getall($args)
     $units = array(xarML(''), xarML('K'), xarML('M'), xarML('G'));
     foreach ($list as $index => $item) {
 
-        // don't show anything outside of archive dir
-        if ($path == '/' && $item == '..') {
+        // don't show anything above archive dir
+        if ($item == '..' && ($path == '' || $path == '/')) {
             continue;
         }
 
-        // generate paths to item
+        // generate paths to item, replacing double slashes
         $fullrealpath = preg_replace("/\/+/", '/', "$realpath/$item");
         $fullviewpath = preg_replace("/\/+/", '/', "$viewpath/$item");
 
@@ -82,6 +83,12 @@ function files_userapi_getall($args)
         if ($item == '.') {
             $fullrealpath = $realpath;
             $fullviewpath = $viewpath;
+        }
+
+        // parent dir is a special case...
+        if ($item == '..') {
+            $fullrealpath = dirname($realpath);
+            $fullviewpath = dirname($viewpath);
         }
 
         // get mime type and image

@@ -3,31 +3,31 @@
 <xar:if condition="xarTplAddStyleLink('files', 'navtabs')"></xar:if>
 <dl class="xar-tabs">
     <dt class="help">
-        <xar:mlstring>Actions</xar:mlstring>: 
+        <xar:mlstring>Actions</xar:mlstring>:
     </dt>
 
-	<xar:if condition="$options['add']">
-		<dd><a href="#xarModURL('files', 'user', 'new', array('path' => $urlpath, 'itemtype' => 'folder'))#">
-			<xar:mlstring>New Folder</xar:mlstring></a>
-		</dd>
-		<dd><a href="#xarModURL('files', 'user', 'new', array('path' => $urlpath, 'itemtype' => 'file'))#">
-			<xar:mlstring>New File</xar:mlstring></a>
-		</dd>
-		<dd><a href="#xarModURL('files', 'user', 'upload', array('path' => $urlpath))#">
-			<xar:mlstring>Upload File</xar:mlstring></a>
-		</dd>
-	</xar:if>
+    <xar:if condition="!empty($options['add'])">
+        <dd><a href="#xarModURL('files', 'user', 'new', array('path' => $urlpath, 'itemtype' => 'folder'))#">
+            <xar:mlstring>New Folder</xar:mlstring></a>
+        </dd>
+        <dd><a href="#xarModURL('files', 'user', 'new', array('path' => $urlpath, 'itemtype' => 'file'))#">
+            <xar:mlstring>New File</xar:mlstring></a>
+        </dd>
+        <dd><a href="#xarModURL('files', 'user', 'upload', array('path' => $urlpath))#">
+            <xar:mlstring>Upload File</xar:mlstring></a>
+        </dd>
+    </xar:if>
 
-	<xar:comment>
-	<xar:if condition="$options['delete']">
-		<dd><a href="#xarModURL('files', 'user', 'rename', array('path' => $urlpath))#">
-			<xar:mlstring>Rename</xar:mlstring></a>
-		</dd>
-		<dd><a href="#xarModURL('files', 'user', 'delete', array('path' => $urlpath))#">
-			<xar:mlstring>Delete</xar:mlstring></a>
-		</dd>
-	</xar:if>
-	</xar:comment>
+    <xar:comment>
+    <xar:if condition="!empty($options['delete'])">
+        <dd><a href="#xarModURL('files', 'user', 'rename', array('path' => $urlpath))#">
+            <xar:mlstring>Rename</xar:mlstring></a>
+        </dd>
+        <dd><a href="#xarModURL('files', 'user', 'delete', array('path' => $urlpath))#">
+            <xar:mlstring>Delete</xar:mlstring></a>
+        </dd>
+    </xar:if>
+    </xar:comment>
 
 </dl>
 <br />

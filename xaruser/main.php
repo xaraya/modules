@@ -38,6 +38,14 @@ function files_user_main($args)
     // get other vars
     $archive_dir = xarModGetVar('files', 'archive_dir');
 
+    if (empty($archive_dir)) {
+        $msg = xarML('Empty archive directory for #(1) function #(2)() in module #(3)',
+            'user', 'main', 'Files');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+            new SystemException($msg));
+        return;
+    }
+
     // if path exists but is a regular file, redirect to display function
     if (!is_dir("$archive_dir/$path")) {
         xarResponseRedirect(xarModURL('files', 'user', 'display', array('path' => $path)));

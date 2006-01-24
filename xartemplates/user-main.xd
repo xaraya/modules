@@ -22,15 +22,19 @@
             <a href="#xarModURL('files', 'user', 'display', array('path' => $item['urlpath']))#" title="#xarML('Details')#"><img src="#xarTplGetImage('fs-directory-13x16.png')#" alt="#xarML('dir')#" width="13" height="16" /></a>
         </td>
         <td>
-            <a href="#xarModURL('files', 'user', 'main', array('path' => $item['urlpath']))#" title="#xarML('Enter this directory')#">
-                <xar:if condition="$item['file'] eq '.'">
+            <xar:if condition="$item['file'] eq '.'">
+                <a href="#xarModURL('files', 'user', 'main', array('path' => $item['urlpath']))#" title="#xarML('Enter this directory')#">
                     <xar:mlstring>(Current Directory)</xar:mlstring>
-                <xar:elseif condition="$item['file'] eq '..'" />
+                </a>
+            <xar:elseif condition="$item['file'] eq '..'" />
+                <a href="#xarModURL('files', 'user', 'main', array('path' => $item['urlpath']))#" title="#xarML('Enter this directory')#">
                     <xar:mlstring>(Parent Directory)</xar:mlstring>
-                <xar:else />
+                </a>
+            <xar:else />
+                <a href="#xarModURL('files', 'user', 'main', array('path' => $item['urlpath']))#" title="#xarML('Enter this directory')#">
                     #$item['file']#
-                </xar:if>
-            </a>
+                </a>
+            </xar:if>
         </td>
     <xar:else />
         <td width="13">
