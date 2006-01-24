@@ -43,5 +43,18 @@ See eBulletin Admin -> Overview for usage details.  See contrib/sample.xd for
 more template documentation.
 
 
+Support
 ---------------
-Curtis Farnham - http://www.curtisfarnham.com/
+Bugs and feature requests:
+    http://bugs.xaraya.com/
+
+Support issues of general interest:
+    http://xaraya.curtisfarnham.com/forums/
+
+Everything else:
+    http://xaraya.curtisfarnham.com/contact/
+
+
+---------------
+Curtis Farnham - http://xaraya.curtisfarnham.com/
+
