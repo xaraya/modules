@@ -133,5 +133,17 @@ This module also includes a block for displaying random Bible verses.  See
 xardocs/randomblock.txt for important usage information.
 
 
+Support
+---------------
+Bugs and feature requests:
+    http://bugs.xaraya.com/
+
+Support issues of general interest:
+    http://xaraya.curtisfarnham.com/forums/
+
+Everything else:
+    http://xaraya.curtisfarnham.com/contact/
+
+
 ---------------
 Curtis Farnham - http://xaraya.curtisfarnham.com/

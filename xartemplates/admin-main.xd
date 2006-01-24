@@ -10,7 +10,7 @@
     <p>
         <xar:mlstring>Bible is a search engine and reference tool for the Holy Bible, featuring:</xar:mlstring>
     </p>
-    <ul>
+    <ul style="list-style: disc;">
         <li><xar:mlstring>Searching by keyword</xar:mlstring></li>
         <li><xar:mlstring>Looking up passages directly</xar:mlstring></li>
         <li><xar:mlstring>Table of Contents displaying all books and chapters for quick reference</xar:mlstring></li>
@@ -25,26 +25,27 @@
     </p>
 
     <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
-    <ul>
+    <ul style="list-style: disc;">
         <li><xar:mlstring>random - Display random Bible passages from selected texts and verse lists.  <em>NOTE: See <a href="modules/bible/xardocs/randomblock.txt" target="_blank">modules/bible/xardocs/randomblock.txt</a> for important usage information</xar:mlstring>.</em></li>
     </ul>
 
     <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
-    <ul>
+    <ul style="list-style: disc;">
         <li><xar:mlstring>None</xar:mlstring></li>
     </ul>
 
    <h3><xar:mlstring>Further Information</xar:mlstring></h3>
-   <p>
-      <xar:mlstring>Further information on the Bible module can be found at</xar:mlstring>
-   </p>
+
    <ul style="list-style: disc;">
-      <li><a title="#xarML('Bible Module - Xaraya Extension 550')#" href="http://www.xaraya.com/index.php/release/550.html" target="_blank">Xaraya Extension and Releases</a> - <xar:mlstring>Bible module's extension page.  Click on the Version History tab at the bottom to get the latest release information.</xar:mlstring>
+      <li><xar:mlstring>Documentation folder: <code>modules/bible/xardocs/</code></xar:mlstring>
       </li>
-      <li><a href="http://xaraya.curtisfarnham.com/" target="_blank">www.curtisfarnham.com</a> - <xar:mlstring>Author's website</xar:mlstring>
+      <li><xar:mlstring>This module's page at Xaraya.com: <a href="http://www.xaraya.com/index.php/release/550.html" target="_blank">Xaraya Extension and Releases</a></xar:mlstring>
+      </li>
+      <li><xar:mlstring>Bugs and feature requests: <a href="http://bugs.xaraya.com/" target="_blank">Xaraya Bug Tracker</a></xar:mlstring>
+      </li>
+      <li><xar:mlstring>Support issues of general interest: <a href="http://xaraya.curtisfarnham.com/forums/" target="_blank">Forums at the author's website</a></xar:mlstring>
+      </li>
+      <li><xar:mlstring>Everything else: <a href="http://xaraya.curtisfarnham.com/contact/" target="_blank">Contact form at the author's website</a></xar:mlstring>
       </li>
   </ul>
-  <p class="xar-sub">
-    <strong>&nbsp;<xar:mlstring>Bible module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 0.9.6&nbsp; 2005-12-02
-  </p>
 </div>
