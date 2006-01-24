@@ -315,7 +315,7 @@
                             <xar:mlstring>Date last modified</xar:mlstring>
                             </span>
                         </label>
-                         #xarLocaleFormatDate($planneddata['last_modified'])#
+                         #xarlocalegetformatteddate('medium',$planneddata['last_modified'])#
                     </div>
                </fieldset>
               <xar:if condition="!empty($hooks)">

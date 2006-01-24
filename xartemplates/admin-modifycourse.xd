@@ -142,7 +142,7 @@
                             <label for="last_modified" class="xar-form-label" title="#xarML('Date of last modification.')#">
                                 #$lastmodilabel#
                             </label>
-                            #$coursedata['last_modified']#
+                            #xarlocalegetformatteddate('medium',$coursedata['last_modified'])#
                         </div>
                    </fieldset>
                 <xar:if condition="!empty($hookoutput)">

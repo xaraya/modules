@@ -302,7 +302,7 @@
                             <xar:mlstring>Date last modified</xar:mlstring>
                             </span>
                         </label>
-                        #$item.last_modified#
+                        #xarlocalegetformatteddate('medium',$item.last_modified)#
                     </div>
                </fieldset>
                <fieldset>
