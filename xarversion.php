@@ -1,3 +1,4 @@
+
 <?php
 /**
 * Highlight - versatile syntax highlighting
@@ -22,7 +23,7 @@ $modversion['changelog']      = 'xardocs/changelog.txt';
 $modversion['license']        = 'xardocs/license.txt';
 $modversion['official']       = 0;
 $modversion['author']         = 'Curtis Farnham';
-$modversion['contact']        = 'curtis@farnham.com, http://www.curtisfarnham.com/';
+$modversion['contact']        = 'curtis@farnham.com, http://xaraya.curtisfarnham.com/';
 $modversion['admin']          = 1;
 $modversion['user']           = 1;
 $modversion['class']          = 'Utility';
