@@ -19,7 +19,7 @@ Usage
 ---------------
 The Highlight hook will ONLY transform segments of your content that are
 contained in an HTML tag that has the attribute specified in Modify Config.
-The attribute's value must be a coding language listed on Highlight's 
+The attribute's value must be a coding language listed on Highlight's
 Admin => Languages page.  So, for example, say your attribute name is set to
 code' and you want to highlight some PHP code.  The segment in your article
 must be labeled:
@@ -30,5 +30,19 @@ must be labeled:
     }
     </pre>
 
+
+Support
 ---------------
-Curtis Farnham - http://www.curtisfarnham.com/
+Bugs and feature requests:
+    http://bugs.xaraya.com/
+
+Support issues of general interest:
+    http://xaraya.curtisfarnham.com/forums/
+
+Everything else:
+    http://xaraya.curtisfarnham.com/contact/
+
+
+---------------
+Curtis Farnham - http://xaraya.curtisfarnham.com/
+
