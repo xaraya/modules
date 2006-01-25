@@ -7,40 +7,42 @@
 <h3 class="xar-align-center"><xar:mlstring>Confirm unsubscribing?</xar:mlstring></h3>
 <form method="post" action="&xar-modurl-ebulletin-admin-deletesubscribers;">
 
-        <fieldset>
-            <legend>
-                <xar:mlstring>Recipients to be unsubscribed</xar:mlstring>
-            </legend>
+    <fieldset>
+        <legend>
+            <xar:mlstring>Recipients to be unsubscribed</xar:mlstring>
+        </legend>
 
-            <table>
+        <table>
+        <tr>
+            <th class="xar-padding-thicksides"><xar:mlstring>Name</xar:mlstring></th>
+            <th class="xar-padding-thicksides"><xar:mlstring>Publication</xar:mlstring></th>
+            <th class="xar-padding-thicksides"><xar:mlstring>Email</xar:mlstring></th>
+        <xar:loop name="$subscribers">
             <tr>
-                <th class="xar-padding-thicksides"><xar:mlstring>Name</xar:mlstring></th>
-                <th class="xar-padding-thicksides"><xar:mlstring>Publication</xar:mlstring></th>
-                <th class="xar-padding-thicksides"><xar:mlstring>Email</xar:mlstring></th>
-            <xar:loop name="$subscribers">
-                <tr>
-                    <td class="xar-padding-thicksides">#$loop:item.name#</td>
-                    <td class="xar-padding-thicksides">#$loop:item.pubname#</td>
-                    <td class="xar-padding-thicksides">#$loop:item.email#</td>
-                </tr>
-                <input type="hidden" name="unsub[#$loop:item.id#]" id="unsub[#$loop:item.id#]" value="1" />
-            </xar:loop>
-            </table>
-        </fieldset>
+                <td class="xar-padding-thicksides">#$loop:item.name#</td>
+                <td class="xar-padding-thicksides">#$loop:item.pubname#</td>
+                <td class="xar-padding-thicksides">#$loop:item.email#</td>
+            </tr>
+            <input type="hidden" name="unsub[#$loop:item.id#]" id="unsub[#$loop:item.id#]" value="1" />
+        </xar:loop>
+        </table>
+    </fieldset>
 
-        <fieldset>
-            <div class="xar-form-input-wrapper-after">
-                <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                <input type="hidden" name="confirm" id="confirm" value="true" />
-                <input type="submit" value="#xarML('Confirm')#" />
-            </div>
+    <fieldset>
+        <div class="xar-form-input-wrapper-after">
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="hidden" name="confirm" id="confirm" value="true" />
+            <input type="submit" value="#xarML('Confirm')#" />
+        </div>
 
-            <div class="xar-form-input-wrapper-before">
-            <a href="&xar-modurl-ebulletin-admin-viewsubscribers;">
-                <xar:mlstring>Cancel and Return</xar:mlstring>
-            </a>
-            </div>
-        </fieldset>
+        <div class="xar-form-input-wrapper-before">
+        <a href="&xar-modurl-ebulletin-admin-viewsubscribers;">
+            <xar:mlstring>Cancel and Return</xar:mlstring>
+        </a>
+        </div>
+    </fieldset>
+
+    <input type="hidden" name="return" value="#$return#" />
 
 </form>
 </div>

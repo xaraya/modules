@@ -28,26 +28,20 @@ function ebulletin_admin_createsubscribers($args)
 
     // get HTTP vars
     if (!xarVarFetch('pid', 'id', $pid, $pid, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('registered', 'array', $registered, $registered, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('unregistered', 'str:1:', $unregistered, $unregistered, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('stype', 'enum:reg:non', $stype, 'reg', XARVAR_NOT_REQUIRED)) return;
 
-    // set defaults
-    if (empty($unregistered)) $unregistered = '';
-    if (empty($registered)) $registered = array();
-
-    // validate inputs
-    if (!isset($pid) || !is_numeric($pid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-            'publication ID', 'admin', 'createsubscribers', 'eBulletin');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return;
+    // get names based on subscription type
+    if (empty($stype) || $stype == 'reg') {
+        if (!xarVarFetch('names', 'array', $names, $names, XARVAR_NOT_REQUIRED)) return;
+    } elseif ($stype == 'non') {
+        if (!xarVarFetch('names', 'str:0:', $names, $names, XARVAR_NOT_REQUIRED)) return;
     }
 
     // call API function to do the subscribing
     $results = xarModAPIFunc('ebulletin', 'admin', 'createsubscribers', array(
         'pid' => $pid,
-        'registered' => $registered,
-        'unregistered' => $unregistered
+        'stype' => $stype,
+        'names' => $names
     ));
     if (empty($results) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
@@ -56,6 +50,7 @@ function ebulletin_admin_createsubscribers($args)
 
     // set temmplate vars
     $data['results'] = $results;
+    $data['stype']   = $stype;
 
     // success (or otherwise)
     return $data;

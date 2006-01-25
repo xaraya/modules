@@ -25,18 +25,33 @@ function ebulletin_admin_deletesubscribers($args)
     extract($args);
 
     // get HTTP vars
+    if (!xarVarFetch('id', 'int:1:', $id, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('unsub', 'array', $unsub, array(), XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('stype', 'enum:non:reg', $stype, 'reg', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('return', 'str:1:', $return, '', XARVAR_NOT_REQUIRED)) return;
 
     // set defaults
     if (empty($unsub)) $unsub = array();
+    if (!empty($id)) $unsub = array($id => 1);
 
     // Check for confirmation.
     if (empty($confirm)) {
 
-        $subscribers = xarModAPIFunc('ebulletin', 'user', 'getallsubscribers',
-            array('ids' => array_keys($unsub))
-        );
+        switch($stype) {
+        case 'non':
+            $subscribers = xarModAPIFunc('ebulletin', 'user', 'getallsubscribers_non',
+                array('ids' => array_keys($unsub))
+            );
+            break;
+        case 'reg':
+        default:
+            $subscribers = xarModAPIFunc('ebulletin', 'user', 'getallsubscribers_reg',
+                array('ids' => array_keys($unsub))
+            );
+            break;
+
+        }
 
         // initialize template data
         $data = xarModAPIFunc('ebulletin', 'admin', 'menu');
@@ -47,6 +62,7 @@ function ebulletin_admin_deletesubscribers($args)
         // set template data
         $data['subscribers'] = $subscribers;
         $data['authid'] = $authid;
+        $data['return'] = $return;
 
         return $data;
     }
@@ -60,8 +76,9 @@ function ebulletin_admin_deletesubscribers($args)
     )) return;
 
     // set status message and return to view
-    xarSessionSetVar('statusmsg', xarML('Recipients successfully unsubscribed!'));
-    xarResponseRedirect(xarModURL('ebulletin', 'admin', 'viewsubscribers'));
+    xarSessionSetVar('statusmsg', xarML('Successfully unsubscribed!'));
+    if (empty($return)) $return = xarModURL('ebulletin', 'admin', 'viewsubscribers');
+    xarResponseRedirect($return);
 
     // success
     return true;

@@ -19,18 +19,25 @@ function ebulletin_adminapi_createsubscribers($args)
 {
     extract($args);
 
+    // set defaults
+    if (empty($stype)) $stype = 'reg';
+
     // validate vars
     $invalid = array();
     if (empty($pid) || !is_numeric($pid)) {
         $invalid[] = 'pid';
     }
-    if (!empty($registered) && !is_array($registered)) {
-        $invalid[] = 'registered users list';
+    if (empty($stype) ||
+        !is_string($stype) ||
+        ($stype != 'reg' && $stype != 'non')) {
+        $invalid[] = 'subscription type';
     }
-    if (!empty($unregistered) && !is_string($unregistered)) {
-        $invalid[] = 'unregistered names list';
+    if (!empty($names) &&
+        ($stype == 'reg' && !is_array($names)) ||
+        ($stype == 'non' && !is_string($names))
+    ) {
+        $invalid[] = 'names';
     }
-
     // throw error if bad data
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
@@ -40,6 +47,11 @@ function ebulletin_adminapi_createsubscribers($args)
         return;
     }
 
+    // if no names given, just return
+    if (empty($names)) {
+        return array();
+    }
+
     // get publication
     $pub = xarModAPIFunc('ebulletin', 'user', 'get', array('id' => $pid));
     if (empty($pub) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
@@ -47,27 +59,23 @@ function ebulletin_adminapi_createsubscribers($args)
     // security check
     if (!xarSecurityCheck('AddeBulletin', 1, 'Publication', "$pub[name]:$pid")) return;
 
-    // set defaults
-    if (empty($unregistered)) $unregistered = '';
-    if (empty($registered)) $registered = array();
-
     // initialize lists
     $msgs = array();
     $subs = array();
 
-    // prepare to scan for users
+    // we need this for both subscription types!
     $roles = new xarRoles();
 
-    // parse unregistered string
-    if (!empty($unregistered)) {
+    switch($stype) {
+    case 'non':
 
         // trim off all delineators and split into lines
-        $unreg = preg_replace("/[\>\<\,\;\" ]+/", ' ', $unregistered);
-        $unreg = trim($unreg);
-        $lines = preg_split("/\s*(\r\n|\n\r|\n|\r)+\s*/", $unreg);
+        $names = trim(preg_replace("/[\>\<\,\;\" ]+/", ' ', $names));
+        $lines = preg_split("/\s*(\r\n|\n\r|\n|\r)+\s*/", $names);
 
         // prepare to validate emails
-        $email_regexp = '/^[a-z0-9]+([_\\.-][a-z0-9]+)*@([a-z0-9]+([\.-][a-z0-9]+)*)+\\.[a-z]{2,}$/i';
+        $email_regexp = '/^[a-z0-9]+([_\\.-][a-z0-9]+)*@'
+            . '([a-z0-9]+([\.-][a-z0-9]+)*)+\\.[a-z]{2,}$/i';
 
         // process lines one by one
         foreach ($lines as $line) {
@@ -79,8 +87,7 @@ function ebulletin_adminapi_createsubscribers($args)
 
             // validate offset
             if (!$offset) {
-                $msgs[] = array('error', xarML('Not Valid'), $line);
-
+                $msgs[] = array('error', xarML('No name given.'), $line);
                 continue;
             }
 
@@ -94,18 +101,21 @@ function ebulletin_adminapi_createsubscribers($args)
                 continue;
             }
 
-            // check if this email belongs to a registered user
-            // TODO: find a Xar-sanctified way of locating a role without calling
-            // a private function (only alternative right now seems to be
-            // querying the xar_roles table directly)
-            $user = $roles->_lookuprole('xar_email', $email);
-            if ($user) {
-                // don't send an error!  just put their UID into the
-                // $registered list
-                $registered[] = $user->getID();
+            // check if this user is actually registered
+            if ($roles->_lookuprole('xar_email', $email)) {
+                $msgs[] = array(
+                    'error',
+                    xarML('Registered User'),
+                    xarML(
+                        '#(1) &lt;#(2)&gt; is a registered user.  Please subscribe'
+                            . ' this person through the Registered Users screen.',
+                        $roles->getName(),
+                        $roles->getEmail()
+                    )
+                );
                 continue;
             }
-
+            // validate email
             if (!$email || !preg_match($email_regexp, $email)) {
                 $msgs[] = array('error', xarML('Invalid Email'), $line);
                 continue;
@@ -116,36 +126,66 @@ function ebulletin_adminapi_createsubscribers($args)
                 continue;
             }
             // we made it!  put into array
-            $subs[$email] = array($pid, $name, $email);
+            $subs[$email] = array($name, $email, '');
         }
 
-    }
+        break;
+    case 'reg':
+    default:
 
-    // add registered users
-    if ($registered) {
-        $roles = new xarRoles();
-        foreach ($registered as $uid) {
+        foreach ($names as $uid) {
 
             // make sure user exists
             if (!$roles->getRole($uid)) {
-                $msgs[] = array('error', xarML('Invalid User ID'), xarML('User ID #(1).', $uid));
+                $msgs[] = array(
+                    'error',
+                    xarML('Invalid User ID'),
+                    xarML('User ID #(1).', $uid)
+                );
                 continue;
             }
             // look out for duplicates
             if (isset($subs[$uid])) {
-                $msgs[] = array('warn', xarML('Duplicate Entry'), xarML('#(1) &lt;#(2)&gt;', $roles->getName(), $roles->getEmail()));
+                $msgs[] = array(
+                    'warn',
+                    xarML('Duplicate Entry'),
+                    xarML('#(1) &lt;#(2)&gt;', $roles->getName(), $roles->getEmail()));
                 continue;
             }
             // we made it!  put into array
-            $subs[$uid] = array($pid, '', $uid);
+            $subs[$uid] = array('', '', $uid);
         }
+
     }
 
-    // check who's already subscribed
-    $subscribed = xarModAPIFunc('ebulletin', 'user', 'getallsubscribers', array('emails' => array_keys($subs)));
+    // return now if all names failed
+    if (empty($subs)) return $msgs;
+
+    /** check who's already subscribed **/
+
+    // get list of all subscribed users for this publication
+    if ($stype == 'non') {
+        $subscribed = xarModAPIFunc('ebulletin', 'user', 'getallsubscribers_non',
+            array('emails' => array_keys($subs), 'pid' => $pid)
+        );
+    } elseif ($stype == 'reg') {
+        $subscribed = xarModAPIFunc('ebulletin', 'user', 'getallsubscribers_reg',
+            array('uids' => array_keys($subs), 'pid' => $pid)
+        );
+    }
     if (empty($subscribed) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+
+    // take care of subscribers one by one...
     foreach ($subscribed as $sub) {
-        $msgs[] = array('warn', xarML('Already Subscribed'), xarML('#(1) &lt;#(2)&gt;', $sub['name'], $sub['email']));
+
+        // add warning
+        $msgs[] = array(
+            'warn',
+            xarML('Already Subscribed'),
+            xarML('#(1) &lt;#(2)&gt;', $sub['name'], $sub['email'])
+        );
+
+        // remove from to-be-stored-in-db list
         if (!empty($sub['uid'])) {
             unset($subs[$sub['uid']]);
         } elseif (isset($subs[$sub['email']])) {
@@ -153,7 +193,7 @@ function ebulletin_adminapi_createsubscribers($args)
         }
     }
 
-    // store into database if anything is left
+    // store into database anyone who's left
     if (!empty($subs)) {
         // prepare for database
         $dbconn = xarDBGetConn();
@@ -161,11 +201,16 @@ function ebulletin_adminapi_createsubscribers($args)
         $substable = $xartable['ebulletin_subscriptions'];
 
         // generate query
-        $query = "INSERT INTO $substable (xar_pid, xar_name, xar_email) VALUES ";
+        $query = "
+            INSERT INTO $substable
+                (xar_pid, xar_name, xar_email, xar_uid)
+            VALUES
+        ";
         $queryparts = array();
         $bindvars = array();
         foreach ($subs as $sub) {
-            $queryparts[] = "(?,?,?)";
+            $queryparts[] = "(?,?,?,?)";
+            $bindvars[] = $pid;
             $bindvars[] = $sub[0];
             $bindvars[] = $sub[1];
             $bindvars[] = $sub[2];
@@ -177,13 +222,15 @@ function ebulletin_adminapi_createsubscribers($args)
         if (!$result) return;
     }
 
-    // record success messages
-    foreach ($subs as $sub) {
-        if (is_numeric($sub[2])) {
+    // add success messages
+    if ($stype == 'non') {
+        foreach ($subs as $sub) {
+            $msgs[] = array('success', 'Successfully subscribed', xarML('#(1) &lt;#(2)&gt;', $sub[0], $sub[1]));
+        }
+    } elseif ($stype == 'reg') {
+        foreach ($subs as $sub) {
             $user = $roles->getRole($sub[2]);
-            $msgs[] = array('success', 'Subscribed', xarML('#(1) &lt;#(2)&gt;', $user->getName(), $user->getEmail()));
-        } else {
-            $msgs[] = array('success', 'Subscribed', xarML('#(1) &lt;#(2)&gt;', $sub[1], $sub[2]));
+            $msgs[] = array('success', 'Successfully subscribed', xarML('#(1) &lt;#(2)&gt;', $user->getName(), $user->getEmail()));
         }
     }
 

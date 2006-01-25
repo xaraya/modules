@@ -1,6 +1,6 @@
 <?php
 /**
-* Get all subscribers
+* Get all non-registered subscribers
 *
 * @package unassigned
 * @copyright (C) 2002-2005 by The Digital Development Foundation
@@ -12,14 +12,14 @@
 * @author Curtis Farnham <curtis@farnham.com>
 */
 /**
-* get all subscribers
+* get all non-registered subscribers
 *
 * pid optional
 * state optional (registered vs not)
 * ids optional
 * emails optional
 */
-function ebulletin_userapi_getallsubscribers($args)
+function ebulletin_userapi_getallsubscribers_non($args)
 {
     // security check
     if (!xarSecurityCheck('EditeBulletin')) return;
@@ -32,7 +32,9 @@ function ebulletin_userapi_getallsubscribers($args)
     if (empty($order)) $order = 'name';
     if (empty($sort)) $sort = 'ASC';
     if (empty($ids)) $ids = array();
+    if (empty($pid)) $pid = '';
     if (empty($emails)) $emails = array();
+    if (empty($filter)) $filter = array();
 
     // validate vars
     $invalid = array();
@@ -42,7 +44,7 @@ function ebulletin_userapi_getallsubscribers($args)
     if (empty($numitems) || !is_numeric($numitems)) {
         $invalid[] = 'numitems';
     }
-    if (isset($order) && !in_array($order, array('id', 'pid', 'name', 'email'))) {
+    if (isset($order) && !in_array($order, array('name', 'pubname', 'email'))) {
         $invalid[] = 'order';
     }
     if (isset($sort) && ($sort != 'ASC' && $sort != 'DESC')) {
@@ -51,12 +53,18 @@ function ebulletin_userapi_getallsubscribers($args)
     if (isset($ids) && !is_array($ids)) {
         $invalid[] = 'subscriber IDs';
     }
+    if (!empty($pid) && !is_numeric($pid)) {
+        $invalid[] = 'publication ID';
+    }
     if (isset($emails) && !is_array($emails)) {
         $invalid[] = 'emails';
     }
+    if (isset($filter) && !is_array($filter)) {
+        $invalid[] = 'filter';
+    }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-            join(', ', $invalid), 'userapi', 'getallsubscribers', 'eBulletin');
+            join(', ', $invalid), 'userapi', 'getallsubscribers_non', 'eBulletin');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
@@ -76,32 +84,72 @@ function ebulletin_userapi_getallsubscribers($args)
             $substable.xar_email,
             $pubstable.xar_name as pubname
         FROM $substable, $pubstable
-        WHERE $substable.xar_pid = $pubstable.xar_id ";
-    $bindvars = array();
+        WHERE $substable.xar_pid = $pubstable.xar_id
+        AND $substable.xar_uid = ?
+    ";
+    $bindvars = array('');
+    if ($filter) {
+        switch($filter['type']) {
+        case 'starts':
+                $test_pre = '';
+                $test_post = '%';
+            break;
+        case 'ends':
+                $test_pre = '%';
+                $test_post = '';
+            break;
+        case 'equals':
+                $test_pre = '';
+                $test_post = '';
+            break;
+        case 'contains':
+        default:
+                $test_pre = '%';
+                $test_post = '%';
+        }
+        switch($filter['col']) {
+        case 'pubname':
+            $query .= "AND $pubstable.xar_name LIKE ?\n";
+            $bindvars[] = "$test_pre$filter[text]$test_post";
+            break;
+        case 'email':
+            $query .= "AND $substable.xar_email LIKE ?\n";
+            $bindvars[] = "$test_pre$filter[text]$test_post";
+            break;
+        case 'name':
+        default:
+            $query .= "AND $substable.xar_name LIKE ?\n";
+            $bindvars[] = "$test_pre$filter[text]$test_post";
+        }
+    }
+    if ($pid) {
+        $query .= "AND $substable.xar_pid = ?\n";
+        $bindvars[] = $pid;
+    }
     if ($ids) {
         $query_ors = array();
         foreach ($ids as $id) {
             $query_ors[] = "$substable.xar_id = ?";
             $bindvars[] = $id;
         }
-        $query .= 'AND ('.join(" OR\n", $query_ors).')';
+        $query .= "AND (".join(" OR\n", $query_ors).")\n";
     } elseif ($emails) {
         $query_ors = array();
         foreach ($emails as $email) {
             $query_ors[] = "$substable.xar_email = ?";
             $bindvars[] = $email;
         }
-        $query .= 'AND ('.join(" OR\n", $query_ors).')';
+        $query .= "AND (".join(" OR\n", $query_ors).")\n";
     }
     switch($order) {
         case 'pub': case 'pid': case 'pubname':
-            $query .= "ORDER BY $substable.xar_pid $sort, $substable.xar_name ASC ";
+            $query .= "ORDER BY $substable.xar_pid $sort, $substable.xar_name ASC\n";
             break;
         case 'email':
-            $query .= "ORDER BY $substable.xar_email $sort ";
+            $query .= "ORDER BY $substable.xar_email $sort\n";
             break;
         case 'name': default:
-            $query .= "ORDER BY $substable.xar_name $sort, $substable.xar_pid ASC ";
+            $query .= "ORDER BY $substable.xar_name $sort, $substable.xar_pid ASC\n";
             break;
     }
 
@@ -117,31 +165,12 @@ function ebulletin_userapi_getallsubscribers($args)
         // extract this row
         list($id, $pid, $name, $email, $pubname) = $result->fields;
 
-        // if subscriber is a user of this site, get from Roles
-        $registered = false;
-        if (is_numeric($email)) {
-
-            $registered = true;
-
-            // get user data
-            $uid = $email;
-            $user = $roles->getRole($uid);
-
-            // only include if user is active
-            if ($user->getState() != 3) continue;
-
-            // retrieve name and email
-            $email = $user->getEmail();
-            $name = $user->getName();
-        }
         $subs[] = array(
             'id' => $id,
             'pid' => $pid,
             'name' => $name,
             'email' => $email,
-            'pubname' => $pubname,
-            'registered' => $registered,
-            'uid' => ($registered) ? $uid : NULL
+            'pubname' => $pubname
         );
     }
     $result->Close();

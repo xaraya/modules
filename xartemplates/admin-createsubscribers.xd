@@ -29,7 +29,7 @@
 </fieldset>
 <fieldset>
     <div class="xar-form-input-wrapper-after">
-        <a href="&xar-modurl-ebulletin-admin-viewsubscribers;"><xar:mlstring>Return to subscribers list</xar:mlstring></a>
+        <a href="#xarModURL('ebulletin', 'admin', 'viewsubscribers', array('stype' => $stype))#"><xar:mlstring>Return to subscribers list</xar:mlstring></a>
     </div>
 </fieldset>
 
