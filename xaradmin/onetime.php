@@ -61,7 +61,7 @@ function ebulletin_admin_onetime($args)
     }
 
     // security check
-#    if (!xarSecConfirmAuthKey()) return;
+    if (!xarSecConfirmAuthKey()) return;
 
     // get additional HTTP vars
     if (!xarVarFetch('body_html', 'str:0:', $body_html, '', XARVAR_NOT_REQUIRED)) return;

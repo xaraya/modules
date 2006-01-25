@@ -12,12 +12,14 @@
     <tr>
         <th><xar:mlstring>Name</xar:mlstring></th>
         <th><xar:mlstring>Description</xar:mlstring></th>
+        <th><xar:mlstring>Public?</xar:mlstring></th>
         <th><xar:mlstring>Options</xar:mlstring></th>
     </tr>
     <xar:foreach in="$pubs" value="$pub">
     <tr>
         <td>#$pub['name']#</td>
         <td>#$pub['desc']#</td>
+        <td>#$pub['hr_public']#</td>
         <td>
             <xar:loop name="$pub['urls']">
                 <a href="#$loop:item.url#" title="#$loop:item.title#">

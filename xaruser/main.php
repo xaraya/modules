@@ -13,11 +13,6 @@
 */
 /**
  * the main user function
- * This function is the default function, and is called whenever the module is
- * initiated without defining arguments.  As such it can be used for a number
- * of things, but most commonly it either just shows the module menu and
- * returns or calls whatever the module designer feels should be the default
- * function (often this is the view() function)
  */
 function ebulletin_user_main($args)
 {
@@ -33,15 +28,24 @@ function ebulletin_user_main($args)
 
     // get vars
     $loggedin = xarUserIsLoggedIn();
-    $uid = xarUserGetVar('uid');
-    if (empty($name)) $name = xarVarPrepForDisplay(xarUserGetVar('name'));
-    $email = ($loggedin) ? xarVarPrepEmailDisplay(xarUserGetVar('email')) : '';
-    $authid = xarSecGenAuthKey('ebulletin');
+    if ($loggedin) {
+        $uid = xarUserGetVar('uid');
+        $name = xarUserGetVar('name');
+        $email = xarUserGetVar('email');
+    } else {
+        // try to retrieve from session
+        $uid = '';
+        $name = xarSessionGetVar('ebulletin_name');
+        $email = xarSessionGetVar('ebulletin_email');
+    }
 
+    $authid = xarSecGenAuthKey('ebulletin');
     $accounturl = xarModURL('roles', 'user', 'account', array('moduleload' => 'roles'));
 
     // get user's subscriptions
-    $subs = xarModAPIFunc('ebulletin', 'user', 'getsubscriber');
+    $subs = xarModAPIFunc('ebulletin', 'user', 'getsubscriber',
+        array('uid' => $uid, 'name' => $name, 'email' => $email)
+    );
     if (empty($subs) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
     // get public publications
@@ -65,8 +69,8 @@ function ebulletin_user_main($args)
     $data = xarModAPIFunc('ebulletin', 'user', 'menu');
 
      // set template vars
-    $data['name']       = $name;
-    $data['email']      = $email;
+    $data['ebulletin_name']  = $name;
+    $data['ebulletin_email'] = $email;
     $data['uid']        = $uid;
     $data['pubs']       = $pubs;
     $data['hidden']     = $hidden;

@@ -23,12 +23,15 @@ function ebulletin_admin_view()
     $pubs = xarModAPIFunc('ebulletin', 'user', 'getall');
     if (empty($pub) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
+    // get additional vars
+    $yes = xarML('Yes');
+    $no = xarML('No');
+
     // generate list of options for each publication
     foreach ($pubs as $index => $pub) {
 
-        $pubs[$index]['editurl'] = '';
-        $pubs[$index]['deleteurl'] = '';
-        $pubs[$index]['issueurl'] = '';
+        // add some vars
+        $pubs[$index]['hr_public'] = $pub['public'] ? $yes : $no;
 
         if (xarSecurityCheck('EditeBulletin', 0, 'Publication', "$pub[name]:$pub[id]")) {
 

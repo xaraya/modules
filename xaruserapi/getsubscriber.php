@@ -23,38 +23,54 @@ function ebulletin_userapi_getsubscriber($args)
 
     extract($args);
 
-    // get user id
-    if (empty($uid)) $uid = xarUserGetVar('uid');
+    /**
+    * if we have nothing, return nothing (garbage in, garbage out)
+    * otherwise, do what we can
+    */
 
-    // validate inputs
-    if (!isset($uid) || !is_numeric($uid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-            'user ID', 'user', 'getsubscriber', 'eBulletin');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return;
-    }
+    // no email or uid, we're sunk
+    if (empty($uid) && empty($email)) return array();
 
     // prepare for database query
     $dbconn = xarDBGetConn();
     $xartable = xarDBGetTables();
     $pubstable = $xartable['ebulletin'];
     $substable = $xartable['ebulletin_subscriptions'];
+    $rolestable = $xartable['roles'];
 
     // generate query
+    $bindvars = array();
     $query = "
         SELECT
             $substable.xar_id,
             $substable.xar_pid,
             $substable.xar_name,
             $substable.xar_email,
-            $pubstable.xar_name as pubname
+            $pubstable.xar_name AS xar_pubname,
+            $substable.xar_uid,
+            $rolestable.xar_name AS xar_rolename,
+            $rolestable.xar_email AS xar_roleemail
         FROM $substable, $pubstable
+        LEFT JOIN $rolestable
+            ON $substable.xar_uid = $rolestable.xar_uid
         WHERE $substable.xar_pid = $pubstable.xar_id
-        AND $substable.xar_email = ?
-        ORDER BY $substable.xar_pid ASC ";
+        AND ($rolestable.xar_state IS NULL OR $rolestable.xar_state = ?)
+    ";
+    $bindvars[] = 3;
+
+    if (!empty($uid)) {
+        $query .= "AND $substable.xar_uid = ?";
+        $bindvars[] = $uid;
+    }
+    if (empty($uid) && !empty($email)) {
+        $query .= "AND $substable.xar_email LIKE ?";
+        $bindvars[] = $email;
+    }
+    $query .= "ORDER BY $substable.xar_pid ASC\n";
 
     // perform query
-    $result = $dbconn->Execute($query, array($uid));
+    $result = $dbconn->Execute($query, $bindvars);
+
     if (!$result) return;
 
     // assemble results
@@ -64,35 +80,20 @@ function ebulletin_userapi_getsubscriber($args)
     for (; !$result->EOF; $result->MoveNext()) {
 
         // extract this row
-        list($id, $pid, $name, $email, $pubname) = $result->fields;
+        list($id, $pid, $name, $email, $pubname, $uid, $rolename, $roleemail) = $result->fields;
 
-        // if subscriber is a user of this site, get from Roles
-        $registered = false;
-        if (is_numeric($email)) {
-
-            $registered = true;
-
-            // get user data
-            $uid = $email;
-            $user = $roles->getRole($uid);
-
-            // only include if user is active
-            if ($user->getState() != 3) continue;
-
-            // retrieve name and email
-            // note: an error is thrown if we try to get email and we're not
-            // logged in.  but to see subscriber list, you have to be logged
-            // in anyway, unless your permissions are insane!!!
-            $email = xarUserIsLoggedIn() ? $user->getEmail() : '';
-            $name = $user->getName();
+        if (!empty($uid)) {
+            $name = $rolename;
+            $email = $roleemail;
         }
+
         $subs[] = array(
-            'id' => $id,
-            'pid' => $pid,
-            'name' => $name,
-            'email' => $email,
+            'id'      => $id,
+            'pid'     => $pid,
+            'name'    => $name,
+            'email'   => $email,
             'pubname' => $pubname,
-            'reg' => $registered
+            'uid'     => $uid
         );
     }
     $result->Close();

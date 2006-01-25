@@ -45,7 +45,8 @@ function ebulletin_user_validatesubscriber($args)
 
             // validate vars
             $invalid = array();
-            $email_regexp = '/^[a-z0-9]+([_\\.-][a-z0-9]+)*@([a-z0-9]+([\.-][a-z0-9]+)*)+\\.[a-z]{2,}$/i';
+            $email_regexp = '/^[a-z0-9]+([_\\.-][a-z0-9]+)*'
+                . '@([a-z0-9]+([\.-][a-z0-9]+)*)+\\.[a-z]{2,}$/i';
             if (!preg_match($email_regexp, $email)) {
                 $invalid['email'] = 1;
             }
@@ -72,13 +73,13 @@ function ebulletin_user_validatesubscriber($args)
             xarModSetVar('ebulletin', $code, serialize($inputs));
 
             // get vars
-            $adminname = xarModGetVar('mail', 'adminname');
+            $adminname  = xarModGetVar('mail', 'adminname');
             $adminemail = xarModGetVar('mail', 'adminmail');
-            $sitename = xarModGetVar('themes', 'SiteName');
+            $sitename   = xarModGetVar('themes', 'SiteName');
             $siteslogan = xarModGetVar('themes', 'SiteSlogan');
-            $footer = xarModGetVar('themes', 'Footer');
-            $baseurl = xarServerGetBaseURL();
-            $subject = xarML('Your subscription change at #(1)', $sitename);
+            $footer     = xarModGetVar('themes', 'Footer');
+            $baseurl    = xarServerGetBaseURL();
+            $subject    = xarML('Your subscription change at #(1)', $sitename);
 
             // generate validation URL
             $validateurl = $baseurl;
@@ -88,28 +89,28 @@ function ebulletin_user_validatesubscriber($args)
 
             // generate message
             $message = xarTplModule('ebulletin', 'user', 'getvalidationemail', array(
-                'adminname' => $adminname,
-                'adminemail' => $adminemail,
-                'name' => $name,
-                'email' => $email,
+                'adminname'   => $adminname,
+                'adminemail'  => $adminemail,
+                'name'        => $name,
+                'email'       => $email,
                 'validateurl' => $validateurl,
-                'subject' => $subject,
-                'sitename' => $sitename,
-                'siteslogan' => $siteslogan,
-                'footer' => $footer,
-                'baseurl' => $baseurl
+                'subject'     => $subject,
+                'sitename'    => $sitename,
+                'siteslogan'  => $siteslogan,
+                'footer'      => $footer,
+                'baseurl'     => $baseurl
             ));
 
             // send email
             $mail = array();
-            $mail['info'] = $email;
-            $mail['name'] = $name;
-            $mail['from'] = $adminemail;
-            $mail['fromname'] = $adminname;
-            $mail['subject'] = $subject;
-            $mail['message'] = strip_tags($message);
+            $mail['info']        = $email;
+            $mail['name']        = $name;
+            $mail['from']        = $adminemail;
+            $mail['fromname']    = $adminname;
+            $mail['subject']     = $subject;
+            $mail['message']     = strip_tags($message);
             $mail['htmlmessage'] = $message;
-            $mail['priority'] = 1;
+            $mail['priority']    = 1;
 
             // try sending mail
             if (!xarModAPIFunc('mail', 'admin', 'sendhtmlmail', $mail)) return;
@@ -118,13 +119,13 @@ function ebulletin_user_validatesubscriber($args)
             $data = xarModAPIFunc('ebulletin', 'user', 'menu');
 
             // set template vars
-            $data = array_merge($data, $inputs);
-            $data['email'] = xarVarPrepEmailDisplay($email);
-            $data['name'] = xarVarPrepForDisplay($name);
-            $data['adminname'] = xarVarPrepForDisplay($adminname);
+            $data               = array_merge($data, $inputs);
+            $data['email']      = xarVarPrepEmailDisplay($email);
+            $data['name']       = xarVarPrepForDisplay($name);
+            $data['adminname']  = xarVarPrepForDisplay($adminname);
             $data['adminemail'] = xarVarPrepEmailDisplay($adminemail);
-            $data['subject'] = $subject;
-            $data['phase'] = $phase;
+            $data['subject']    = $subject;
+            $data['phase']      = $phase;
 
             return $data;
             break;
@@ -148,10 +149,10 @@ function ebulletin_user_validatesubscriber($args)
             $data = xarModAPIFunc('ebulletin', 'user', 'menu');
 
             // set template vars
-            $data = array_merge($data, $request);
+            $data          = array_merge($data, $request);
             $data['phase'] = $phase;
             $data['email'] = xarVarPrepEmailDisplay($request['email']);
-            $data['name'] = xarVarPrepForDisplay($request['name']);
+            $data['name']  = xarVarPrepForDisplay($request['name']);
 
             return $data;
             break;

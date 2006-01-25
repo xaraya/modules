@@ -33,13 +33,13 @@ function ebulletin_userapi_getall($args)
     $pubtable = $xartable['ebulletin'];
 
     // generate query
-    $query = "SELECT * FROM $pubtable ";
+    $query = "SELECT * FROM $pubtable\n";
     $bindvars = array();
     if (isset($public)) {
-        $query .= "WHERE xar_public = ?";
+        $query .= "WHERE xar_public = ?\n";
         $bindvars[] = ($public) ? 1 : 0;
     }
-    $query .= " ORDER BY xar_name";
+    $query .= "ORDER BY xar_name\n";
 
     // execute query
     $result = $dbconn->Execute($query, $bindvars);

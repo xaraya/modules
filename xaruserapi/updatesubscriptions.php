@@ -28,12 +28,18 @@ function ebulletin_userapi_updatesubscriptions($args)
 
     // process vars
     $loggedin = xarUserIsLoggedIn();
-    $email = ($loggedin) ? xarUserGetVar('uid') : $email;
-    $name = ($loggedin) ? '' : $name;
+    if ($loggedin) {
+        $uid = xarUserGetVar('uid');
+        $email = '';
+        $name = '';
+    } else {
+        $uid = '';
+    }
 
     // validate vars
     $invalid = array();
-    $email_regexp = '/^[a-z0-9]+([_\\.-][a-z0-9]+)*@([a-z0-9]+([\.-][a-z0-9]+)*)+\\.[a-z]{2,}$/i';
+    $email_regexp = '/^[a-z0-9]+([_\\.-][a-z0-9]+)*'
+        . '@([a-z0-9]+([\.-][a-z0-9]+)*)+\\.[a-z]{2,}$/i';
     if (!empty($subscriptions) && !is_array($subscriptions)) {
         $invalid[] = 'subscriptions';
     }
@@ -69,13 +75,18 @@ function ebulletin_userapi_updatesubscriptions($args)
     if ($subscriptions) {
 
         // now insert new values into table
-        $query = "INSERT INTO $substable (xar_pid, xar_name, xar_email) VALUES ";
+        $query = "
+            INSERT INTO $substable (
+                xar_pid, xar_name, xar_email, xar_uid)
+            VALUES
+        ";
         $queries = $bindvars = array();
         foreach ($subscriptions as $pid => $value) {
-            $queries[] = "(?,?,?)";
+            $queries[] = "(?,?,?,?)";
             $bindvars[] = $pid;
             $bindvars[] = $name;
             $bindvars[] = $email;
+            $bindvars[] = $uid;
         }
         $query .= join(', ', $queries);
 

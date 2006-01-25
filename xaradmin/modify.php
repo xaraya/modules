@@ -28,7 +28,7 @@ function ebulletin_admin_modify($args)
     if (!xarVarFetch('invalid', 'array', $invalid, $invalid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('name', 'str:1:', $name, $name, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('desc', 'str:1:', $desc, $desc, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('public', 'checkbox', $public, $public, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('public', 'checkbox', $public, $public, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('to', 'str:1:', $to, $to, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('toname', 'str:1:', $toname, $toname, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('from', 'str:1:', $from, $from, XARVAR_NOT_REQUIRED)) return;
@@ -58,7 +58,7 @@ function ebulletin_admin_modify($args)
     // get publication vars
     if (!isset($name))         $name = $pub['name'];
     if (!isset($desc))         $desc = $pub['desc'];
-    if (!isset($public))       $public = $pub['public'];
+    if (empty($public))        $public = $pub['public'];
     if (!isset($to))           $to = $pub['to'];
     if (!isset($toname))       $toname = $pub['toname'];
     if (!isset($from))         $from = $pub['from'];

@@ -74,13 +74,15 @@ function ebulletin_user_usermenu($args)
             xarSessionSetVar('statusmsg', '');
 
             // get compiled template output
-            $args = array('name' => $name,
-                          'uid' => $uid,
-                          'statusmsg' => $statusmsg,
-                          'pubs' => $pubs,
-                          'hidden' => $hidden,
-                          'subs' => $pubs,
-                          'authid' => $authid);
+            $args = array(
+                'name'      => $name,
+                'uid'       => $uid,
+                'statusmsg' => $statusmsg,
+                'pubs'      => $pubs,
+                'hidden'    => $hidden,
+                'subs'      => $pubs,
+                'authid'    => $authid
+            );
             $data = xarTplModule('ebulletin', 'user', 'usermenu_form', $args);
             break;
 

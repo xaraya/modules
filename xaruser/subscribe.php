@@ -34,7 +34,8 @@ function ebulletin_user_subscribe($args)
 
     // validate vars
     $invalid = array();
-    $email_regexp = '/^[a-z0-9]+([_\\.-][a-z0-9]+)*@([a-z0-9]+([\.-][a-z0-9]+)*)+\\.[a-z]{2,}$/i';
+    $email_regexp = '/^[a-z0-9]+([_\\.-][a-z0-9]+)*'
+        . '@([a-z0-9]+([\.-][a-z0-9]+)*)+\\.[a-z]{2,}$/i';
     if (!$loggedin && !preg_match($email_regexp, $email)) {
         $invalid['email'] = 1;
     }
@@ -81,6 +82,12 @@ function ebulletin_user_subscribe($args)
             $data['email'] = $email;
 
             return $data;
+        }
+
+        // store name and email for session use (future: cookies?)'
+        if (!$loggedin) {
+            xarSessionSetVar('ebulletin_name', $name);
+            xarSessionSetVar('ebulletin_email', $email);
         }
 
         // handle validation if required

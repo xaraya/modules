@@ -65,9 +65,18 @@ function ebulletin_subscriptionblock_display($blockinfo)
 
     // get vars
     $loggedin = xarUserIsLoggedIn();
-    $uid = xarUserGetVar('uid');
-    if (empty($name)) $name = xarVarPrepForDisplay(xarUserGetVar('name'));
-    $email = ($loggedin) ? xarVarPrepEmailDisplay(xarUserGetVar('email')) : '';
+    if ($loggedin) {
+        $uid = xarUserGetVar('uid');
+        $name = xarUserGetVar('name');
+        $email = xarUserGetVar('email');
+    } else {
+        // try to retrieve from session
+        $uid = '';
+        $name = xarSessionGetVar('ebulletin_name');
+        $email = xarSessionGetVar('ebulletin_email');
+    }
+
+    // auth code
     $authid = xarSecGenAuthKey('ebulletin');
 
     // get some urls
@@ -75,7 +84,9 @@ function ebulletin_subscriptionblock_display($blockinfo)
     $moreurl = xarModURL('ebulletin', 'user', 'main');
 
     // get user's subscriptions
-    $subs = xarModAPIFunc('ebulletin', 'user', 'getsubscriber');
+    $subs = xarModAPIFunc('ebulletin', 'user', 'getsubscriber',
+        array('uid' => $uid, 'name' => $name, 'email' => $email)
+    );
     if (empty($subs) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
     // get public publications
@@ -96,8 +107,8 @@ function ebulletin_subscriptionblock_display($blockinfo)
     $data = array();
 
      // set template vars
-    $data['name']       = $name;
-    $data['email']      = $email;
+    $data['ebulletin_name']  = $name;
+    $data['ebulletin_email'] = $email;
     $data['uid']        = $uid;
     $data['pubs']       = $pubs;
     $data['hidden']     = $hidden;

@@ -3,7 +3,7 @@
 <form action="&xar-modurl-ebulletin-user-subscribe;" method="post">
 <input type="hidden" name="authid" id="authid" value="#$authid#" />
 
-<p><xar:mlstring>Please subscribe me to:</xar:mlstring></p>
+<p class="xar-margin-thick"><xar:mlstring>My Subscriptions:</xar:mlstring></p>
 
 <xar:if condition="empty($pubs)">
     <xar:mlstring><em>No publications!</em></xar:mlstring>
@@ -19,16 +19,21 @@
         </label><br />
     </xar:foreach>
 </xar:if>
-<br />
 <xar:if condition="!$loggedin">
-    <xar:mlstring>Full Name:</xar:mlstring><br />
-    <input type="text" name="name" id="name" maxlength="255" class="xar-form-textlong" /><br />
-    <xar:mlstring>Email Address:</xar:mlstring><br />
-    <input type="text" name="email" id="email" maxlength="255" class="xar-form-textlong" /><br />
-    <br />
+    <table class="xar-margin-thick">
+    <tr><td>
+        <xar:mlstring>Name:</xar:mlstring><br />
+        <input type="text" name="name" id="name" value="#$ebulletin_name#" maxlength="255" size="12" />
+    </td><td>
+        <xar:mlstring>Email Address:</xar:mlstring><br />
+        <input type="text" name="email" id="email" value="#$ebulletin_email#" maxlength="255" size="12" />
+    </td></tr>
+    </table>
 </xar:if>
 
-<input type="submit" value="#xarML('Update')#" /> &nbsp; <a href="#$moreurl#">More Info...</a>
+<div>
+    <input type="submit" value="#xarML('Update')#" /> &nbsp; <a href="#$moreurl#">More Info...</a>
+</div>
 
 
 

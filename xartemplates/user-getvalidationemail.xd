@@ -1,15 +1,11 @@
 Dear #$name#,<br /><br />
 
-<p>There has been a request at #$sitename# (<a href="#$baseurl#">#$baseurl#</a>) to modify newsletter subscriptions belonging to this email address.  If this is NOT your desire, you may disregard and delete this message.</p>
+<p>This is an automated response.  You or someone on your behalf has attempted to update your newsletter subscription(s) at <a href="&xar-baseurl;">&xar-baseurl;</a>.</p>
 
-<p>To complete this request, you MUST visit the following web address:<br />
+<p>This update will NOT apply until you visit the following web address:<br />
 <a href="#$validateurl#">#$validateurl#</a></p>
 
-<p>Depending on your email reader software, you might be able to just click the link above.  If not, try copying it and pasting it into your web browser.</p>
+<p>If you do not desire to complete this change, you may safely ignore and delete this message.  Please report any problems to the website administrator.</p>
 
 Thank You,<br />
-#$adminname#<br /><br />
-
-#$sitename# Administrator<br />
-<a href="#$baseurl#">#$baseurl#</a>
-
+The newsletter system at &xar-baseurl;

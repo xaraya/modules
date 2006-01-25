@@ -11,23 +11,14 @@
     </xar:ml>
 </p>
 
-<xar:if condition="$loggedin">
-    <p><xar:mlstring><em>To unsubscribe</em>, uncheck the boxes and press the Update Subscriptions button.</xar:mlstring></p>
-<xar:else />
-    <p><xar:mlstring><em>To unsubscribe</em>, use the same name and email as before.  Just leave the boxes unchecked and press the Update Subscriptions button.</xar:mlstring></p>
-</xar:if>
-
 
 <form action="&xar-modurl-ebulletin-user-subscribe;" method="post">
 <input type="hidden" name="authid" id="authid" value="#$authid#" />
 
 <fieldset>
-    <legend><xar:mlstring>Subscription Options</xar:mlstring></legend>
+    <legend><xar:mlstring>My Subscriptions</xar:mlstring></legend>
 
     <div class="xar-form-input-wrapper">
-        <span class="xar-form-label" title="#xarML('Publications to subscribe to')#">
-            <xar:mlstring>Please subscribe me to:</xar:mlstring>
-        </span><br /><br />
         <xar:if condition="empty($pubs)">
             <xar:mlstring><em>Sorry, no publications are available at this time.</em></xar:mlstring>
         <xar:else />
@@ -50,24 +41,21 @@
     </div>
 
 </fieldset>
+
+<xar:if condition="!$loggedin">
 <fieldset>
     <legend><xar:mlstring>Identification</xar:mlstring></legend>
 
-
     <div class="xar-form-input-wrapper">
         <label for="name" class="xar-form-label" title="#xarML('Your Name')#">
-            <xar:mlstring>Full Name:</xar:mlstring>
+            <xar:mlstring>Name:</xar:mlstring>
         </label>
-        <xar:if condition="$loggedin">
-            #$name#
-        <xar:else />
-            <input type="text" name="name" id="name" maxlength="255" class="xar-form-textlong" />
-            <span class="xar-sub"><xar:mlstring>(Required)</xar:mlstring></span>
-            <xar:if condition="!empty($invalid['name'])">
-                <div class="xar-error">
-                    <xar:mlstring>ERROR! Name cannot be blank.</xar:mlstring>
-                </div>
-            </xar:if>
+        <input type="text" name="name" id="name" maxlength="255" value="#$ebulletin_name#" class="xar-form-textlong" />
+        <span class="xar-sub"><xar:mlstring>(Required)</xar:mlstring></span>
+        <xar:if condition="!empty($invalid['name'])">
+            <div class="xar-error">
+                <xar:mlstring>ERROR! Name cannot be blank.</xar:mlstring>
+            </div>
         </xar:if>
     </div>
 
@@ -75,28 +63,17 @@
         <label for="email" class="xar-form-label" title="#xarML('Your Email Address')#">
             <xar:mlstring>Email Address:</xar:mlstring>
         </label>
-        <xar:if condition="$loggedin">
-            #$email#
-        <xar:else />
-            <input type="text" name="email" id="email" maxlength="255" class="xar-form-textlong" />
-            <span class="xar-sub"><xar:mlstring>(Required)</xar:mlstring></span>
-            <xar:if condition="!empty($invalid['name'])">
-                <div class="xar-error">
-                    <xar:mlstring>ERROR! Email blank or invalid.</xar:mlstring>
-                </div>
-            </xar:if>
+        <input type="text" name="email" id="email" maxlength="255" value="#$ebulletin_email#" class="xar-form-textlong" />
+        <span class="xar-sub"><xar:mlstring>(Required)</xar:mlstring></span>
+        <xar:if condition="!empty($invalid['name'])">
+            <div class="xar-error">
+                <xar:mlstring>ERROR! Email blank or invalid.</xar:mlstring>
+            </div>
         </xar:if>
     </div>
 
-    <xar:if condition="$loggedin">
-        <div class="xar-form-input-wrapper xar-sub">
-            <xar:ml>
-                <xar:mlstring>To modify this information, please visit your <a href="#(1)">account settings</a> page.</xar:mlstring>
-                <xar:mlvar>#$accounturl#</xar:mlvar>
-            </xar:ml>
-        </div>
-    </xar:if>
 </fieldset>
+</xar:if>
 
 <fieldset>
         <div class="xar-form-input-wrapper-after">
