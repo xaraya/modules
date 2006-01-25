@@ -3,7 +3,7 @@
  * Create a new itsp plan item
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -31,12 +31,12 @@ function itsp_adminapi_create_pitem($args)
     if (!isset($pitemname) || !is_string($pitemname)) {
         $invalid[] = 'pitemname';
     }
-    if (!isset($credits) || !is_numeric($credits)) {
-        $invalid[] = 'credits';
+    if (!isset($mincredit) || !is_numeric($mincredit)) {
+        $invalid[] = 'mincredit';
     }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-            join(', ', $invalid), 'admin', 'create', 'ITSP');
+            join(', ', $invalid), 'admin', 'create_pitem', 'ITSP');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException($msg));
         return;

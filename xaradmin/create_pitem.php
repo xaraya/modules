@@ -1,6 +1,6 @@
 <?php
 /**
- * Create a new pitem
+ * Create a new plan item
  *
  * @package modules
  * @copyright (C) 2002-2006 The Digital Development Foundation
@@ -12,30 +12,35 @@
  * @author ITSP Module Development Team
  */
 /**
- * Create a new pitem
+ * Create a new plan item
  *
  * Standard function to create a new pitem
  * This is a standard function that is called with the results of the
  * form supplied by xarModFunc('itsp','admin','new') to create a new item
  *
  * @author ITSP module development team
- * @param  $ 'name' the name of the item to be created
- * @param  $ 'number' the number of the item to be created
+ * @param  $ 'pitemname' the name of the item to be created
+ * @param  $ 'pitemdesc' the description of the item to be created
  */
 function itsp_admin_create_pitem($args)
 {
     extract($args);
 
     // Get parameters from whatever input we need.
-    if (!xarVarFetch('pitemid',     'id',     $pitemid,     $pitemid,    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('pitemid',    'id',     $pitemid,     $pitemid,    XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('objectid',   'id',     $objectid,   $objectid,  XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('pitemname',   'str:1:', $pitemname,   $pitemname,  XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('pitemdesc',   'str:1:', $pitemdesc,   $pitemdesc,  XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('pitemrules',  'str:1:', $pitemrules,  $pitemrules, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('pitemname',  'str:1:', $pitemname,   $pitemname,  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('pitemdesc',  'str:1:', $pitemdesc,   $pitemdesc,  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('pitemrules', 'str:1:', $pitemrules,  $pitemrules, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('credits',    'int:1:', $credits,    $credits,   XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('mincredit',  'int:1:', $mincredit,  $mincredit, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('dateopen',   'int:1:', $dateopen,   $dateopen,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('dateclose',  'int:1:', $dateclose,  $dateclose, XARVAR_NOT_REQUIRED)) return;
+
+    if (!xarVarFetch('rule_cat',   'int:1:', $rule_cat,    $rule_cat,   XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('rule_type',  'str:1:', $rule_type,    $rule_type,   XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('rule_source','enum:internal:external:open', $rule_source,    $rule_source,   XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('rule_level', 'int:1:', $rule_level,    $rule_level,   XARVAR_NOT_REQUIRED)) return;
 
     if (!xarVarFetch('invalid', 'array',  $invalid, $invalid, XARVAR_NOT_REQUIRED)) return;
 
@@ -48,8 +53,8 @@ function itsp_admin_create_pitem($args)
      */
     // Argument check
     $invalid = array();
-    if (empty($credits) || !is_numeric($credits)) {
-        $invalid['credits'] = 1;
+    if (empty($mincredit) || !is_numeric($mincredit)) {
+        $invalid['mincredit'] = 1;
         $number = '';
     }
     if (empty($pitemname) || !is_string($pitemname)) {
@@ -71,11 +76,23 @@ function itsp_admin_create_pitem($args)
                                 'credits' => $credits,
                                 'mincredit' => $mincredit,
                                 'dateopen' => $dateopen,
-                                'dateclose' => $dateclose));
+                                'dateclose' => $dateclose,
+                                'rule_cat' => $rule_cat,
+                                'rule_type' => $rule_type,
+                                'rule_level' => $rule_level,
+                                'rule_course' => $rule_source));
     }
 
      /* Confirm authorisation code. */
     if (!xarSecConfirmAuthKey()) return;
+
+    // Format the rule
+    $pitemrules = "type:$rule_type;level:$rule_level;category:$rule_cat;source:$rule_source";
+
+    if(empty($credits)) {
+        $credits = '';
+    }
+
     /* The API function is called. */
     $pitemid = xarModAPIFunc('itsp',
                           'admin',
@@ -95,7 +112,7 @@ function itsp_admin_create_pitem($args)
     /* This function generated no output, and so now it is complete we redirect
      * the user to an appropriate page for them to carry on their work
      */
-    xarResponseRedirect(xarModURL('itsp', 'admin', 'view'));
+    xarResponseRedirect(xarModURL('itsp', 'admin', 'view_pitems'));
     /* Return true, in this case */
     return true;
 }

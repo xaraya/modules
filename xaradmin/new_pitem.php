@@ -3,7 +3,7 @@
  * Add new planitem
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -34,17 +34,22 @@ function itsp_admin_new_pitem($args)
     if (!xarVarFetch('dateopen',   'int:1:', $dateopen,   $dateopen,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('dateclose',  'int:1:', $dateclose,  $dateclose, XARVAR_NOT_REQUIRED)) return;
 
+    if (!xarVarFetch('rule_cat',    'int:1:', $rule_cat,    $rule_cat,   XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('rule_type',   'str:1:', $rule_type,    $rule_type,   XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('rule_source', 'enum:internal:external:open', $rule_source,    $rule_source,   XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('rule_level',   'int:1:', $rule_level,    $rule_level,   XARVAR_NOT_REQUIRED)) return;
+
     if (!xarVarFetch('invalid', 'array',  $invalid, $invalid, XARVAR_NOT_REQUIRED)) return;
-    /* Initialise the $data variable that will hold the data to be used in
-     * the blocklayout template, and get the common menu configuration - it
-     * helps if all of the module pages have a standard menu at the top to
-     * support easy navigation
-     */
+    // Add the admin menu
     $data = xarModAPIFunc('itsp', 'admin', 'menu');
     /* Security check - important to do this as early as possible to avoid
      * potential security holes or just too much wasted processing
      */
     if (!xarSecurityCheck('AddITSPPlan')) return;
+    // get the levels in courses
+    $data['levels'] = xarModAPIFunc('courses', 'user', 'gets',
+                                      array('itemtype' => 3));
+
 
     /* Generate a one-time authorisation code for this operation */
     $data['authid'] = xarSecGenAuthKey();
@@ -102,6 +107,27 @@ function itsp_admin_new_pitem($args)
         $data['dateclose'] = '';
     } else {
         $data['dateclose'] = $dateclose;
+    }
+
+    if (empty($rule_type)) {
+        $data['rule_type'] = '';
+    } else {
+        $data['rule_type'] = $rule_type;
+    }
+    if (empty($rule_source)) {
+        $data['rule_source'] = '';
+    } else {
+        $data['rule_source'] = $rule_source;
+    }
+    if (empty($rule_level)) {
+        $data['rule_level'] = '';
+    } else {
+        $data['rule_level'] = $rule_level;
+    }
+    if (empty($rule_cat)) {
+        $data['rule_cat'] = '';
+    } else {
+        $data['rule_cat'] = $rule_cat;
     }
 
     /* Return the template variables defined in this function */

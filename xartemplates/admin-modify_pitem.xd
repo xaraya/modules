@@ -62,7 +62,8 @@
                  <label for="pitemrules" class="xar-form-label" title="#xarML('This is the rule that applies to this pitem')#">
                         <xar:mlstring>Rules for this pitem:</xar:mlstring>
                  </label>
-                 <p>coursetype:;Level:;Category:;source:internal/external/open;</p>
+                 <p><em><xar:mlstring>Use the following format</xar:mlstring>:</em></p>
+                 <p>Coursetype:;Level:;Category:;source:internal/external/open;</p>
                  <div class="xar-form-input-wrapper-after">
                     <xar:if condition = "!empty($pitemrules)">
                         <input type="text" name="pitemrules" id="pitemrules" value="#$pitemrules#" maxlength="255" class="xar-form-textmedium" />

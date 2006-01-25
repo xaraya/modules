@@ -6,9 +6,9 @@
 <script type="text/javascript">
 <!--
     // Enter name of mandatory fields
-    var fieldRequired = Array("name", "number");
+    var fieldRequired = Array("name");
     // Enter field description to appear in the dialog box
-    var fieldDescription = Array("Name", "Number");
+    var fieldDescription = Array("Name");
 //-->
 </script>
 <div class="xar-mod-head">
@@ -28,10 +28,11 @@
             <legend>
                 <xar:mlstring>Item to Modify</xar:mlstring>
             </legend>
-blabal
+                Some text
         </fieldset>
         <xar:comment>Add a chooser here for the type of pitem to modify in this ITSP</xar:comment>
-    <xar:template type="module" file="user-courselinks" />
+
+        <xar:template type="module" file="user-courselinks" />
 
 
 
@@ -39,29 +40,12 @@ blabal
         <fieldset>
             <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
                 <xar:foreach in="$hooks" key="$hookmodule">
-                <!--
-                You can display individual hooks if you want using xar:if statements
-
-                <xar:if condition="($hookmodule eq 'categories') and !empty($hookmodule)">
-                    #$hooks['categories']#
-                </xar:if>
-
-                or display them all with one command as follows
-                -->
-                #$hooks[$hookmodule]#
-
-
-               </xar:foreach>
+                   #$hooks[$hookmodule]#
+                </xar:foreach>
         </fieldset>
          </xar:if>
         <fieldset>
             <div class="xar-form-input-wrapper-after">
-        <!--
-            * Add an authorisation ID - this adds a hidden field in the form that
-            * contains an authorisation ID.  The authorisation ID is very important in
-            * preventing certain attacks on the website
-            <input type="hidden" name="pitemid" id="pitemid" value="#$pitemid#" />
-        -->
                <input type="hidden" name="authid" id="authid" value="#$authid#" />
                <input type="hidden" name="pitemid" id="pitemid" value="#$pitemid#" />
                <input type="submit" value="#xarML('Update')#" />

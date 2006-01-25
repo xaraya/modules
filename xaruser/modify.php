@@ -3,18 +3,18 @@
  * Modify an ITSP
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage ITSP Module
- * @link http://xaraya.com/index.php/release/36.html
+ * @link http://xaraya.com/index.php/release/572.html
  * @author ITSP Module Development Team
  */
 /**
  * Modify an ITSP
  *
- * This is a standard function that is called whenever an useristrator
+ * This is a standard function that is called whenever a user
  * wishes to modify a current module item
  *
  * @author ITSP Module Development Team
@@ -25,9 +25,9 @@ function itsp_user_modify($args)
 {
     extract($args);
 
-    if (!xarVarFetch('itspid',   'id',   $itspid, $itspid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('itspid',   'id',    $itspid, $itspid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('objectid', 'id',    $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('pitemid',  'id',     $pitemid, $pitemid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('pitemid',  'id',    $pitemid, $pitemid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('invalid',  'array', $invalid, array(), XARVAR_NOT_REQUIRED)) return;
 
     /* At this stage we check to see if we have been passed $objectid
