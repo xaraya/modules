@@ -33,12 +33,13 @@ class Dynamic_CourseList_Property extends Dynamic_Select_Property
     /*
     * Options available to course selection
     * ===================================
+    * $pitemrules = "type:$rule_type;level:$rule_level;category:$rule_cat;source:$rule_source";
     * Options take the form:
     *   option-type:option-value;
+    * We ignore source, only take 'internal' requests ;)
     * option-types:
-    * coursetype:;Level:;Category:;source:internal/external/open; (not relevant here)
-    *   catid:catid[,catid] - select only courses who are members of the given category(ies)
-    *   level:value - select only courses of the given value
+    *   category:catid[,catid] - select only courses who are members of the given category(ies)
+    *   level:value - select only courses of the given level (int)
     *   type:value - select only courses of the given value for type (varchar)
     *   show:field[,field] - show the specified field(s) in the select item
     *   showglue:string - string to join multiple fields together
@@ -91,7 +92,7 @@ class Dynamic_CourseList_Property extends Dynamic_Select_Property
         $select_options = array();
 
         extract($args);
-
+        $courses=array();
         $data= array();
         //$users=array(0;
 
@@ -109,7 +110,7 @@ class Dynamic_CourseList_Property extends Dynamic_Select_Property
                 $select_options['order'] = implode(',', $this->orderlist);
             }
             if (!empty($this->catlist)) {
-                $select_options['catid'] = implode(',', $this->catlist);
+                $select_options['category'] = implode(',', $this->catlist);
             }
             if (!empty($this->typelist)) {
                 $select_options['type'] = implode(',', $this->typelist);
