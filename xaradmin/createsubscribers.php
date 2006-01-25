@@ -21,7 +21,7 @@
 function ebulletin_admin_createsubscribers($args)
 {
     // security checks
-#    if (!xarSecConfirmAuthKey()) return;
+    if (!xarSecConfirmAuthKey()) return;
     if (!xarSecurityCheck('AddeBulletin', 0)) return;
 
     extract($args);

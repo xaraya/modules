@@ -1,11 +1,10 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
 <div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Publish Issue</xar:mlstring></h2>
+<div class="xar-mod-body"><h2><xar:mlstring>Send Test</xar:mlstring></h2>
 <div style="margin: auto;"><xar:template file="statusmsg" type="module" />
 
-<h3 class="xar-align-center"><xar:mlstring>Confirm publishing this issue?</xar:mlstring></h3>
-<form method="post" action="&xar-modurl-ebulletin-admin-publishissue;">
+<form method="post" action="&xar-modurl-ebulletin-admin-sendtest;">
 
         <fieldset>
             <legend><xar:mlstring>Issue details</xar:mlstring></legend>
@@ -45,14 +44,6 @@
             </div>
 
             <div class="xar-form-input-wrapper">
-                <label for="to"  class="xar-form-label"  title="#xarML('To')#">
-                    <xar:mlstring>To:</xar:mlstring>
-                </label>
-                #$pub['to']#
-                <xar:if condition="!empty($pub['toname'])">&lt;#$pub['toname']#&gt;</xar:if>
-            </div>
-
-            <div class="xar-form-input-wrapper">
                 <label for="replyto"  class="xar-form-label"  title="#xarML('Reply To')#">
                     <xar:mlstring>Reply To:</xar:mlstring>
                 </label>
@@ -65,28 +56,14 @@
             </div>
 
             <div class="xar-form-input-wrapper">
-                <label for="replyto"  class="xar-form-label"  title="#xarML('Reply To')#">
-                    <xar:mlstring>Subscribers:</xar:mlstring>
+                <label for="to"  class="xar-form-label"  title="#xarML('To')#">
+                    <xar:mlstring>To:</xar:mlstring>
                 </label>
-                <xar:if condition="empty($subscribers)">
-                    <xar:mlstring>None</xar:mlstring>
-                <xar:else />
-                    <div class="xar-form-input-wrapper">
-                        <xar:if condition="count($subscribers) lt 5">
-                            <xar:foreach in="$subscribers" key="$email" value="$emailname">
-                                <xar:if condition="empty($emailname)">
-                                    #$email#
-                                <xar:else />
-                                    #$emailname# &lt;#$email#&gt;
-                                </xar:if><br />
-                            </xar:foreach>
-                        <xar:else />
-                                #$subscriberscount# <xar:mlstring>addresses</xar:mlstring>:<br />
-                                <textarea rows="5" cols="60"><xar:foreach in="$subscribers" key="$email" value="$emailname"><xar:if condition="empty($emailname)">#$email#<xar:else />#$emailname# &lt;#$email#&gt;
-</xar:if></xar:foreach></textarea>
-                        </xar:if>
-                    </div>
-                </xar:if>
+                <xar:mlstring>Name (optional): </xar:mlstring>
+                <input type="text" name="toname" class="xar-form-textmedium" />
+                &nbsp;
+                <xar:mlstring>Email: </xar:mlstring>
+                <input type="text" name="to" class="xar-form-textmedium" />
             </div>
 
         </fieldset>
@@ -129,7 +106,7 @@
                 <input type="hidden" name="authid" id="authid" value="#$authid#" />
                 <input type="hidden" name="confirm" id="confirm" value="true" />
                 <input type="hidden" name="id" id="id" value="#$id#" />
-                <input type="submit" name="send" value="#xarML('Send')#" />
+                <input type="submit" name="send" value="#xarML('Test Send')#" />
 
             </div>
 

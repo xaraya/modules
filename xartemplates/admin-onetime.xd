@@ -1,34 +1,19 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
 <div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Publish Issue</xar:mlstring></h2>
+<div class="xar-mod-body"><h2><xar:mlstring>One-Time Message</xar:mlstring></h2>
 <div style="margin: auto;"><xar:template file="statusmsg" type="module" />
 
-<h3 class="xar-align-center"><xar:mlstring>Confirm publishing this issue?</xar:mlstring></h3>
-<form method="post" action="&xar-modurl-ebulletin-admin-publishissue;">
+<form method="post" action="&xar-modurl-ebulletin-admin-onetime;">
 
         <fieldset>
-            <legend><xar:mlstring>Issue details</xar:mlstring></legend>
-
-            <div class="xar-form-input-wrapper">
-             <label for="itemid" class="xar-form-label" title="#xarML('Issue ID')#">
-                <xar:mlstring>ID:</xar:mlstring>
-             </label>
-              #$id#
-            </div>
+            <legend><xar:mlstring>Publication Details</xar:mlstring></legend>
 
             <div class="xar-form-input-wrapper">
                 <label for="itemname"  class="xar-form-label"  title="#xarML('Parent Publication')#">
-                    <xar:mlstring>Parent Publication:</xar:mlstring>
+                    <xar:mlstring>Name:</xar:mlstring>
                 </label>
-                 #$issue['pubname']#
-            </div>
-
-            <div class="xar-form-input-wrapper">
-                <label for="itemname"  class="xar-form-label"  title="#xarML('Issue Date')#">
-                    <xar:mlstring>Issue Date:</xar:mlstring>
-                </label>
-                 #$issue['issuedate']#
+                 #$pub['name']#
             </div>
 
         </fieldset>
@@ -92,34 +77,26 @@
         </fieldset>
 
         <fieldset>
-            <legend><xar:mlstring>Message details</xar:mlstring></legend>
+            <legend><xar:mlstring>Message Details</xar:mlstring></legend>
 
             <div class="xar-form-input-wrapper">
-                <label for="itemname"  class="xar-form-label"  title="#xarML('Subject')#">
+                <label for="subject" class="xar-form-label"  title="#xarML('Subject')#">
                     <xar:mlstring>Subject:</xar:mlstring>
                 </label>
-                 #$issue['subject']#
+                <input type="text" name="subject" id="subject" value="#$pub['name']#" class="xar-form-textlong" />
             </div>
 
             <div class="xar-form-input-wrapper">
                 <label for="body_html"  class="xar-form-label"  title="#xarML('HTML Body')#">
                     <xar:mlstring>HTML Body:</xar:mlstring>
                 </label>
-                <xar:if condition="empty($issue['body_html'])">
-                    <xar:mlstring>None</xar:mlstring>
-                <xar:else />
-                    #$htmlsize#
-                </xar:if>
+                <textarea name="body_html" id="body_html" rows="20" cols="60"></textarea>
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="body_txt"  class="xar-form-label"  title="#xarML('TXT Body')#">
                     <xar:mlstring>TXT Body:</xar:mlstring>
                 </label>
-                <xar:if condition="empty($issue['body_txt'])">
-                    <xar:mlstring>None</xar:mlstring>
-                <xar:else />
-                    #$txtsize#
-                </xar:if>
+                <textarea name="body_txt" id="body_html" rows="20" cols="60"></textarea>
             </div>
 
         </fieldset>
@@ -128,13 +105,13 @@
             <div class="xar-form-input-wrapper-after">
                 <input type="hidden" name="authid" id="authid" value="#$authid#" />
                 <input type="hidden" name="confirm" id="confirm" value="true" />
-                <input type="hidden" name="id" id="id" value="#$id#" />
+                <input type="hidden" name="pid" id="pid" value="#$pid#" />
                 <input type="submit" name="send" value="#xarML('Send')#" />
 
             </div>
 
             <div class="xar-form-input-wrapper-before">
-             <a href="&xar-modurl-ebulletin-admin-viewissues;">
+             <a href="&xar-modurl-ebulletin-admin-view;">
                  <xar:mlstring>Cancel and Return</xar:mlstring>
              </a>
              </div>

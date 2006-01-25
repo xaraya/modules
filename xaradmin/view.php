@@ -30,22 +30,49 @@ function ebulletin_admin_view()
         $pubs[$index]['deleteurl'] = '';
         $pubs[$index]['issueurl'] = '';
 
-        // Modify
         if (xarSecurityCheck('EditeBulletin', 0, 'Publication', "$pub[name]:$pub[id]")) {
-            $pubs[$index]['editurl'] = xarModURL('ebulletin', 'admin', 'modify',
-                                                 array('id' => $pub['id']));
+
+            // edit
+            $pubs[$index]['urls'][] = array(
+                'url' => xarModURL('ebulletin', 'admin', 'modify',
+                     array('id' => $pub['id'])
+                ),
+                'title' => xarML('Modify this publication'),
+                'label' => xarML('Edit')
+            );
         }
 
-        // New Issue
         if (xarSecurityCheck('AddeBulletin', 0, 'Publication', "$pub[name]:All:$pub[id]")) {
-            $pubs[$index]['issueurl'] = xarModURL('ebulletin', 'admin', 'newissue',
-                                                  array('pid' => $pub['id']));
+
+            // new issue
+            $pubs[$index]['urls'][] = array(
+                'url' => xarModURL('ebulletin', 'admin', 'newissue',
+                    array('pid' => $pub['id'])
+                ),
+                'title' => xarML('Create a new issue for this publication.'),
+                'label' => xarML('New Issue')
+            );
+
+            // one-time message
+            $pubs[$index]['urls'][] = array(
+                'url' => xarModURL('ebulletin', 'admin', 'onetime',
+                    array('pid' => $pub['id'])
+                ),
+                'title' => xarML('Send one-time message to this publication\'s distribution list'),
+                'label' => xarML('One-time Message')
+            );
         }
 
-        // Delete
         if (xarSecurityCheck('DeleteeBulletin', 0, 'Publication', "$pub[name]:All:$pub[id]")) {
-            $pubs[$index]['deleteurl'] = xarModURL('ebulletin', 'admin', 'delete',
-                                                   array('id' => $pub['id']));
+
+            // delete
+            $pubs[$index]['urls'][] = array(
+                'url' => xarModURL('ebulletin', 'admin', 'delete',
+                    array('id' => $pub['id'])
+                ),
+                'title' => xarML('Delete this publication'),
+                'label' => xarML('Delete')
+            );
         }
 
     }

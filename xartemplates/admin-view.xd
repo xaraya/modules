@@ -19,17 +19,12 @@
         <td>#$pub['name']#</td>
         <td>#$pub['desc']#</td>
         <td>
-           <xar:if condition="!empty($pub['editurl'])">
-               <a href="#$pub['editurl']#"><xar:mlstring>Edit</xar:mlstring></a>
-           </xar:if>
-           &nbsp;
-           <xar:if condition="!empty($pub['deleteurl'])">
-               <a href="#$pub['deleteurl']#"><xar:mlstring>Delete</xar:mlstring></a>
-           </xar:if>
-           &nbsp;
-           <xar:if condition="!empty($pub['issueurl'])">
-               <a href="#$pub['issueurl']#"><xar:mlstring>New Issue...</xar:mlstring></a>
-           </xar:if>
+            <xar:loop name="$pub['urls']">
+                <a href="#$loop:item.url#" title="#$loop:item.title#">
+                    #$loop:item.label#
+                </a>
+                <xar:if condition="$loop:index+1 lt count($pub['urls'])">|</xar:if>
+            </xar:loop>
         </td>
     </tr>
     </xar:foreach>

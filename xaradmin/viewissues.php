@@ -21,22 +21,41 @@ function ebulletin_admin_viewissues()
 
     // get HTTP vars
     if (!xarVarFetch('startnum', 'str:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('numitems', 'str:1:', $numitems, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('order', 'enum:id:pubname:subject:date:published', $order, 'date', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('sort', 'enum:ASC:DESC', $sort, 'DESC', XARVAR_NOT_REQUIRED)) return;
 
     // get other vars
-    $itemsperpage = xarModGetVar('ebulletin', 'admin_issuesperpage');
+    if (empty($numitems) || !is_numeric($numitems)) {
+        $numitems = xarSessionGetVar('ebulletin_issuesperpage');
+        if (empty($numitems)) {
+            $numitems = xarModGetVar('ebulletin', 'admin_issuesperpage');
+        }
+    } else {
+        xarSessionSetVar('ebulletin_issuesperpage', $numitems);
+    }
+
+    $nextsort = ($sort == 'ASC') ? 'DESC' : 'ASC';
+    $sort_img = xarTplGetImage('s_'.strtolower($sort).'.png');
+    $currenturl = xarServerGetCurrentURL();
 
     // get pager
     $pager = xarTplGetPager(
         $startnum,
         xarModAPIFunc('ebulletin', 'user', 'countissues'),
         xarServerGetCurrentURL(array('startnum' => '%%')),
-        $itemsperpage
+        $numitems
     );
     if (empty($pager) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
     // get issues
     $issues = xarModAPIFunc('ebulletin', 'user', 'getallissues',
-         array('startnum' => $startnum, 'numitems' => $itemsperpage)
+        array(
+            'startnum' => $startnum,
+            'numitems' => $numitems,
+            'order'    => $order,
+            'sort'     => $sort
+        )
     );
     if (empty($issues) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
@@ -47,39 +66,79 @@ function ebulletin_admin_viewissues()
         $issue['published_string'] = ($issue['published']) ? xarML('Yes') : xarML('No');
         $issue['issuedate'] = xarLocaleGetFormattedDate('short', strtotime($issue['issuedate']));
 
-        // view
         if (xarSecurityCheck('VieweBulletin', 0, 'Publication', "$issue[pubname]:$issue[pid]")) {
-            $issue['viewurl'] = xarModURL('ebulletin', 'admin', 'display',
-                array('id' => $issue['id'])
+
+            // view
+            $issue['urls'][] = array(
+                'url' => xarModURL('ebulletin', 'admin', 'display',
+                    array('id' => $issue['id'])
+                ),
+                'title' => xarML('View this issue'),
+                'label' => xarML('View')
             );
         }
 
-        // edit and regenerate
         if (xarSecurityCheck('EditeBulletin', 0, 'Publication', "$issue[pubname]:$issue[pid]")) {
 
-            $issue['editurl'] = xarModURL('ebulletin', 'admin', 'modifyissue',
-                array('id' => $issue['id'])
+            // edit
+            $issue['urls'][] = array(
+                'url' => xarModURL('ebulletin', 'admin', 'modifyissue',
+                    array('id' => $issue['id'])
+                ),
+                'title' => xarML('Edit this issue'),
+                'label' => xarML('Edit'),
+                'onclick' => $issue['published'] ? 'return confirm(\''.xarML('This issue has already been published.  Are you sure you want to edit it?').'\');' : ''
             );
-            $issue['regenerateurl'] = xarModURL('ebulletin', 'admin', 'regenerateissue', array(
-                'id' => $issue['id'],
-                'authid' => xarSecGenAuthKey(),
-                'return' => xarModURL('ebulletin', 'admin', 'viewissues'))
+
+            // regenerate
+            $issue['urls'][] = array(
+                'url' => xarModURL('ebulletin', 'admin', 'regenerateissue', array(
+                    'id' => $issue['id'],
+                    'authid' => xarSecGenAuthKey(),
+                    'return' => xarModURL('ebulletin', 'admin', 'viewissues')
+                )),
+                'title' => xarML('Regenerate this issue.'),
+                'label' => xarML('Regenerate'),
+                'onclick' => $issue['published'] ? 'return confirm(\''.xarML('This issue has already been published.  Are you sure you want to regenerate it?').'\');' : ''
             );
         }
 
-        // delete
         if (xarSecurityCheck('DeleteeBulletin', 0, 'Publication', "$issue[pubname]:$issue[pid]")) {
-            $issue['deleteurl'] = xarModURL('ebulletin', 'admin', 'deleteissue', array(
-                'id' => $issue['id'])
+
+            // delete
+            $issue['urls'][] = array(
+                'url' => xarModURL('ebulletin', 'admin', 'deleteissue', array(
+                    'id' => $issue['id'])
+                ),
+                'title' => xarML('Delete this issue.'),
+                'label' => xarML('Delete'),
+                'onclick' => $issue['published'] ? 'return confirm(\''.xarML('This issue has already been published.  Are you sure you want to delete it?').'\');' : ''
             );
         }
 
-        // publish
         if (xarSecurityCheck('AddeBulletin', 0, 'Publication', "$issue[pubname]:$issue[pid]")) {
-            $issue['publishurl'] = xarModURL('ebulletin', 'admin', 'publishissue', array(
-                'id' => $issue['id'])
+
+            // publish
+            $issue['urls'][] = array(
+                'url' => xarModURL('ebulletin', 'admin', 'publishissue', array(
+                    'id' => $issue['id']
+                )),
+                'title' => xarML('Publish this issue to its regular distribution list.'),
+                'label' => xarML('Publish'),
+                'onclick' => $issue['published'] ? 'return confirm(\''.xarML('This issue has already been published.  Are you sure you want to publish it again?').'\');' : ''
+            );
+
+            // test
+            $issue['urls'][] = array(
+                'url' => xarModURL('ebulletin', 'admin', 'sendtest', array(
+                    'id' => $issue['id']
+                )),
+                'title' => xarML('Test sending this message to a single address.'),
+                'label' => xarML('Send Test')
             );
         }
+
+        // add modified issue back into array
         $issues[$index] = $issue;
 
     }
@@ -92,9 +151,15 @@ function ebulletin_admin_viewissues()
     $data = xarModAPIFunc('ebulletin', 'admin', 'menu');
 
     // set template vars
-    $data['issues'] = $issues;
-    $data['pubs'] = $pubs;
-    $data['pager'] = $pager;
+    $data['issues']     = $issues;
+    $data['pubs']       = $pubs;
+    $data['pager']      = $pager;
+    $data['sort']       = $sort;
+    $data['nextsort']   = $nextsort;
+    $data['sort_img']   = $sort_img;
+    $data['order']      = $order;
+    $data['currenturl'] = $currenturl;
+    $data['numitems']   = $numitems;
 
     return $data;
 

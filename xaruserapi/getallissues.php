@@ -31,7 +31,7 @@ function ebulletin_userapi_getallissues($args)
     // set defaults
     if (empty($startnum)) $startnum = 1;
     if (empty($numitems)) $numitems = -1;
-    if (empty($order)) $order = 'issuedate';
+    if (empty($order)) $order = 'date';
     if (empty($sort)) $sort = 'DESC';
 
     // validate vars
@@ -42,7 +42,7 @@ function ebulletin_userapi_getallissues($args)
     if (empty($numitems) || !is_numeric($numitems)) {
         $invalid[] = 'numitems';
     }
-    if (isset($order) && !in_array($order, array('id', 'pid', 'issuedate', 'name'))) {
+    if (isset($order) && !in_array($order, array('id', 'pubname', 'subject', 'date', 'published'))) {
         $invalid[] = 'order';
     }
     if (isset($sort) && ($sort != 'ASC' && $sort != 'DESC')) {
@@ -72,9 +72,24 @@ function ebulletin_userapi_getallissues($args)
             $pubstable.xar_name AS pubname
         FROM $issuestable, $pubstable
         WHERE $pubstable.xar_id = $issuestable.xar_pid
-        ORDER BY $issuestable.xar_$order $sort
     ";
-
+    switch($order) {
+    case 'id':
+        $query .= "ORDER BY $issuestable.xar_id $sort\n";
+        break;
+    case 'pubname':
+        $query .= "ORDER BY $pubstable.xar_name $sort\n";
+        break;
+    case 'subject':
+        $query .= "ORDER BY $issuestable.xar_subject $sort\n";
+        break;
+    case 'published':
+        $query .= "ORDER BY $issuestable.xar_published $sort\n";
+        break;
+    case 'date':
+    default:
+        $query .= "ORDER BY $issuestable.xar_issuedate $sort\n";
+    }
     // perform query
     $result = $dbconn->SelectLimit($query, $numitems, $startnum-1);
     if (!$result) return;

@@ -27,6 +27,19 @@ function ebulletin_admin_newsubscribers($args)
     // get HTTP vars
     if (!xarVarFetch('pid', 'id', $pid, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('stype', 'enum:reg:non', $stype, 'reg', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('startnum', 'str:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('numitems', 'str:1:', $numitems, '', XARVAR_NOT_REQUIRED)) return;
+
+    // get other vars
+    if (empty($numitems) || !is_numeric($numitems)) {
+        $numitems = xarSessionGetVar('ebulletin_subsperpage');
+        if (empty($numitems)) {
+            $numitems = xarModGetVar('ebulletin', 'admin_subsperpage');
+        }
+    } else {
+        xarSessionSetVar('ebulletin_subsperpage', $numitems);
+    }
+
 
     // get other vars
     $authid = xarSecGenAuthKey();
@@ -43,6 +56,7 @@ function ebulletin_admin_newsubscribers($args)
     $data['pubs']   = $pubs;
     $data['pid']    = $pid;
     $data['stype']  = $stype;
+    $data['numitems']    = $numitems;
 
     // handle items specific to subscriber type
     switch($stype) {
@@ -52,17 +66,13 @@ function ebulletin_admin_newsubscribers($args)
     case 'reg':
     default:
 
-        if (!xarVarFetch('startnum', 'str:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
-
-        // get other vars
-        $subsperpage = xarModGetVar('ebulletin', 'admin_subsperpage');
-
         // get users
         $users = xarModAPIFunc('roles', 'user', 'getall', array(
             'include_myself' => false,
             'include_anonymous' => false,
+            'state' => 3,
             'startnum' => $startnum,
-            'numitems' => $subsperpage
+            'numitems' => $numitems
         ));
         if (empty($users) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
@@ -71,14 +81,13 @@ function ebulletin_admin_newsubscribers($args)
             $startnum,
             xarModAPIFunc('roles', 'user', 'countall'),
             xarServerGetCurrentURL(array('startnum' => '%%')),
-            $subsperpage
+            $numitems
         );
         if (empty($pager) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
         // set additional template vars
         $data['pager']       = $pager;
         $data['users']       = $users;
-        $data['subsperpage'] = $subsperpage;
 
     }
 

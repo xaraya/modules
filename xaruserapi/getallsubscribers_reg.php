@@ -169,12 +169,13 @@ function ebulletin_userapi_getallsubscribers_reg($args)
         // extract this row
         list($id, $pid, $name, $email, $pubname, $uid) = $result->fields;
 
-        $subs[$uid] = array(
+        $subs[] = array(
             'id' => $id,
             'pid' => $pid,
             'name' => $name,
             'email' => $email,
-            'pubname' => $pubname
+            'pubname' => $pubname,
+            'uid' => $uid
         );
     }
     $result->Close();

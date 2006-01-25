@@ -20,11 +20,18 @@
         <dd class="active"><a href="#xarServerGetCurrentURL(array('stype' => 'non', 'startnum' => ''))#"><xar:mlstring>Non-registered</xar:mlstring></a></dd>
     </xar:if>
 </dl>
-<br />
 
 <xar:base-include-javascript module="ebulletin" filename="checkall.js" position="head" />
 
-<form method="get" class="xar-align-right" style="float: right;">
+<xar:if condition="$showaddlink">
+    <p style="float: left;">
+        <a href="#xarModURL('ebulletin', 'admin', 'newsubscribers', array('stype' => $stype))#">
+            <xar:mlstring>Add Subscribers</xar:mlstring>
+        </a>
+    </p>
+</xar:if>
+
+<form method="get" class="xar-align-right">
 
     <xar:comment>
         ***SIGH*** To make filter play nicely with other links on this page,
@@ -37,6 +44,11 @@
     <input type="hidden" name="stype" value="#$stype#" />
     <input type="hidden" name="order" value="#$order#" />
     <input type="hidden" name="sort" value="#$sort#" />
+
+    <xar:mlstring>Items per page:</xar:mlstring>
+    <input type="text" name="numitems" value="#$numitems#" size="3" />
+    <input type="submit" value="#xarML('Update')#" />
+    &nbsp;
 
     <xar:mlstring>Filter: </xar:mlstring> &nbsp;
     <select name="filter_col" id="filter_col">
@@ -68,14 +80,7 @@
 
 </form>
 
-<xar:if condition="$showaddlink">
-    <p>
-        <a href="#xarModURL('ebulletin', 'admin', 'newsubscribers', array('stype' => $stype))#">
-            <xar:mlstring>Add Subscribers</xar:mlstring>
-        </a>
-    </p>
-</xar:if>
-
+<div class="xar-clearboth"></div>
 
 <form method="post" action="&xar-modurl-ebulletin-admin-deletesubscribers;" name="ebulletin_form">
 

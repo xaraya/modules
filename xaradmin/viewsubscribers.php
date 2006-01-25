@@ -21,6 +21,7 @@ function ebulletin_admin_viewsubscribers()
 
     // get HTTP vars
     if (!xarVarFetch('startnum', 'str:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('numitems', 'str:1:', $numitems, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('order', 'enum:name:pubname:email', $order, 'name', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('sort', 'enum:ASC:DESC', $sort, 'ASC', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('stype', 'enum:reg:non', $stype, 'reg', XARVAR_NOT_REQUIRED)) return;
@@ -29,7 +30,14 @@ function ebulletin_admin_viewsubscribers()
     if (!xarVarFetch('filter_text', 'str:0:', $filter_text, '', XARVAR_NOT_REQUIRED)) return;
 
     // get other vars
-    $numitems = xarModGetVar('ebulletin', 'admin_subsperpage');
+    if (empty($numitems) || !is_numeric($numitems)) {
+        $numitems = xarSessionGetVar('ebulletin_subsperpage');
+        if (empty($numitems)) {
+            $numitems = xarModGetVar('ebulletin', 'admin_subsperpage');
+        }
+    } else {
+        xarSessionSetVar('ebulletin_subsperpage', $numitems);
+    }
 
     // assemble filter
     if (empty($filter_text)) {
@@ -125,6 +133,7 @@ function ebulletin_admin_viewsubscribers()
     $data['filter_cols']  = $filter_cols;
     $data['filter_types'] = $filter_types;
     $data['filter_text']  = $filter_text;
+    $data['numitems']     = $numitems;
 
     return $data;
 

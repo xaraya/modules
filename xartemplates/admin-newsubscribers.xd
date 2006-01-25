@@ -19,7 +19,28 @@
         <dd class="active"><a href="#xarServerGetCurrentURL(array('stype' => 'non', 'startnum' => ''))#"><xar:mlstring>Non-registered</xar:mlstring></a></dd>
     </xar:if>
 </dl>
-<br />
+
+<form method="get" class="xar-align-right" style="float: right;">
+
+<xar:comment>
+    ***SIGH*** To make filter play nicely with other links on this page,
+    we need to use GET protocol, which means defining all the URL's other
+    params using <input type="hidden" /> values.
+</xar:comment>
+<input type="hidden" name="module" value="ebulletin" />
+<input type="hidden" name="type" value="admin" />
+<input type="hidden" name="func" value="newsubscribers" />
+<input type="hidden" name="stype" value="#$stype#" />
+<input type="hidden" name="startnum" value="1" />
+
+<xar:mlstring>Items per page:</xar:mlstring>
+<input type="text" name="numitems" value="#$numitems#" size="3" />
+<input type="submit" value="#xarML('Update')#" />
+
+</form>
+
+
+<p><a href="#xarModURL('ebulletin', 'admin', 'viewsubscribers', array('stype' => $stype))#"><xar:mlstring>View Subscribers</xar:mlstring></a></p>
 
 <form method="post" action="&xar-modurl-ebulletin-admin-createsubscribers;" name="ebulletin_form">
 
@@ -68,7 +89,7 @@
                         <label for="names[#$loop:item['uid']#]" class="xar-nowrap">#$loop:item['name']#</label>
                     </td>
                 </tr>
-                <xar:if condition="($loop:index+1) % round($subsperpage/4) eq 0 and ($loop:index+1) ne count($users)">
+                <xar:if condition="($loop:index+1) % round($numitems/4) eq 0 and ($loop:index+1) ne count($users)">
                     </table>
                 </td><td valign="top">
                     <table width="20%">

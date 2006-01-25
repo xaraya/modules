@@ -14,7 +14,7 @@
 /**
  * Regenerate issue
  *
- * @param  $args['iid'] the issue to regenerate
+ * @param  $args['id'] the issue to regenerate
  */
 function ebulletin_admin_regenerateissue($args)
 {

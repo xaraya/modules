@@ -52,8 +52,9 @@ function ebulletin_userapi_countsubscribers_reg($args)
         WHERE $substable.xar_uid > ?
         AND $substable.xar_pid = $pubstable.xar_id
         AND $substable.xar_uid = $rolestable.xar_uid
+        AND $rolestable.xar_state = ?
     ";
-    $bindvars = array(0);
+    $bindvars = array(0, 3);
     if ($filter) {
         switch($filter['type']) {
         case 'starts':

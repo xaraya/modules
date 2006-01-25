@@ -102,15 +102,16 @@ function ebulletin_adminapi_createsubscribers($args)
             }
 
             // check if this user is actually registered
-            if ($roles->_lookuprole('xar_email', $email)) {
+            $user = $roles->_lookuprole('xar_email', $email);
+            if ($user) {
                 $msgs[] = array(
                     'error',
                     xarML('Registered User'),
                     xarML(
                         '#(1) &lt;#(2)&gt; is a registered user.  Please subscribe'
                             . ' this person through the Registered Users screen.',
-                        $roles->getName(),
-                        $roles->getEmail()
+                        $user->getName(),
+                        $user->getEmail()
                     )
                 );
                 continue;
@@ -155,72 +156,88 @@ function ebulletin_adminapi_createsubscribers($args)
             // we made it!  put into array
             $subs[$uid] = array('', '', $uid);
         }
-
     }
 
     // return now if all names failed
     if (empty($subs)) return $msgs;
 
-    /** check who's already subscribed **/
-
-    // get list of all subscribed users for this publication
+    // give errors for those who are already subscribed
     if ($stype == 'non') {
+
+        // get subscribers
         $subscribed = xarModAPIFunc('ebulletin', 'user', 'getallsubscribers_non',
             array('emails' => array_keys($subs), 'pid' => $pid)
         );
+        if (empty($subscribed) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+
+        // scan list and give warnings as necessary
+        foreach ($subs as $email => $sub) {
+            foreach ($subscribed as $scr) {
+                if ($scr['email'] == $email) {
+                    $msgs[] = array(
+                        'warn',
+                        xarML('Already Subscribed'),
+                        xarML('#(1) &lt;#(2)&gt;', $sub[0], $email)
+                    );
+                    unset($subs[$email]);
+                    break;
+                }
+            }
+        }
     } elseif ($stype == 'reg') {
+
+        // get subscribers
         $subscribed = xarModAPIFunc('ebulletin', 'user', 'getallsubscribers_reg',
             array('uids' => array_keys($subs), 'pid' => $pid)
         );
-    }
-    if (empty($subscribed) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+        if (empty($subscribed) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
-    // take care of subscribers one by one...
-    foreach ($subscribed as $sub) {
-
-        // add warning
-        $msgs[] = array(
-            'warn',
-            xarML('Already Subscribed'),
-            xarML('#(1) &lt;#(2)&gt;', $sub['name'], $sub['email'])
-        );
-
-        // remove from to-be-stored-in-db list
-        if (!empty($sub['uid'])) {
-            unset($subs[$sub['uid']]);
-        } elseif (isset($subs[$sub['email']])) {
-            unset($subs[$sub['email']]);
+        // scan list and give warnings as necessary
+        foreach ($subs as $uid => $sub) {
+            foreach ($subscribed as $scr) {
+                if ($scr['uid'] == $uid) {
+                    $msgs[] = array(
+                        'warn',
+                        xarML('Already Subscribed'),
+                        xarML('#(1) &lt;#(2)&gt;', $scr['name'], $scr['email'])
+                    );
+                    unset($subs[$uid]);
+                    break;
+                }
+            }
         }
     }
 
-    // store into database anyone who's left
-    if (!empty($subs)) {
-        // prepare for database
-        $dbconn = xarDBGetConn();
-        $xartable = xarDBGetTables();
-        $substable = $xartable['ebulletin_subscriptions'];
+    /** the only subs remaining now are the ones we need to add. **/
 
-        // generate query
-        $query = "
-            INSERT INTO $substable
-                (xar_pid, xar_name, xar_email, xar_uid)
-            VALUES
-        ";
-        $queryparts = array();
-        $bindvars = array();
-        foreach ($subs as $sub) {
-            $queryparts[] = "(?,?,?,?)";
-            $bindvars[] = $pid;
-            $bindvars[] = $sub[0];
-            $bindvars[] = $sub[1];
-            $bindvars[] = $sub[2];
-        }
-        $query .= join(",\n", $queryparts);
+    // return if nothing left
+    if (empty($subs)) return $msgs;
 
-        // insert new records
-        $result = $dbconn->Execute($query, $bindvars);
-        if (!$result) return;
+    // prepare for database
+    $dbconn = xarDBGetConn();
+    $xartable = xarDBGetTables();
+    $substable = $xartable['ebulletin_subscriptions'];
+
+    // generate query
+    $query = "
+        INSERT INTO $substable
+            (xar_pid, xar_name, xar_email, xar_uid)
+        VALUES
+    ";
+    $queryparts = array();
+    $bindvars = array();
+    foreach ($subs as $sub) {
+        $queryparts[] = "(?,?,?,?)";
+        $bindvars[] = $pid;
+        $bindvars[] = $sub[0];
+        $bindvars[] = $sub[1];
+        $bindvars[] = $sub[2];
     }
+    $query .= join(",\n", $queryparts);
+
+    // insert new records
+    $result = $dbconn->Execute($query, $bindvars);
+    if (!$result) return;
 
     // add success messages
     if ($stype == 'non') {

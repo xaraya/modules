@@ -26,13 +26,32 @@ function ebulletin_userapi_getsubscriberemails($args)
     // prepare for database query
     $dbconn = xarDBGetConn();
     $xartable = xarDBGetTables();
-    $subtable = $xartable['ebulletin_subscriptions'];
+    $substable = $xartable['ebulletin_subscriptions'];
+    $rolestable = $xartable['roles'];
 
     // get subscribers
     $bindvars = array();
-    $query = "SELECT xar_name, xar_email FROM $subtable ";
+    $query = "
+        SELECT
+            $substable.xar_name,
+            $substable.xar_email,
+            $substable.xar_uid,
+            $rolestable.xar_name AS xar_rolename,
+            $rolestable.xar_email AS xar_roleemail
+, $substable.xar_pid
+        FROM $substable
+        LEFT JOIN $rolestable
+            ON $substable.xar_uid = $rolestable.xar_uid
+        WHERE 1
+        AND (
+            $rolestable.xar_state IS NULL
+            OR $rolestable.xar_state = ?
+        )
+    ";
+    $bindvars[] = 3;
+
     if (isset($pid)) {
-        $query .= " WHERE xar_pid = ?";
+        $query .= "AND $substable.xar_pid = ?\n";
         $bindvars[] = $pid;
     }
     $result = $dbconn->Execute($query, $bindvars);
@@ -42,22 +61,14 @@ function ebulletin_userapi_getsubscriberemails($args)
     $subs = array();
     $roles = new xarRoles();
     for (; !$result->EOF; $result->MoveNext()) {
-        list($name, $email) = $result->fields;
+        list($name, $email, $uid, $rolename, $roleemail) = $result->fields;
 
-        // if subscriber is a user of this site, get from Roles
-        if (is_numeric($email)) {
-
-            // get user data
-            $uid = $email;
-            $user = $roles->getRole($uid);
-
-            // only include if user is active
-            if ($user->getState() != 3) continue;
-
-            // retrieve name and email
-            $email = $user->getEmail();
-            $name = $user->getName();
+        // account for subscribed users
+        if (!empty($uid)) {
+            $email = $roleemail;
+            $name = $rolename;
         }
+
         $subs[strtolower($email)] = $name;
     }
     $result->Close();

@@ -6,13 +6,6 @@
 
 <xar:style scope="module" file="messages" module="ebulletin" />
 
-<xar:if condition="count($results) gt 15">
-    <fieldset>
-        <div class="xar-form-input-wrapper-after">
-            <a href="&xar-modurl-ebulletin-admin-viewsubscribers;"><xar:mlstring>Return to subscribers list</xar:mlstring></a>
-        </div>
-    </fieldset>
-</xar:if>
 <fieldset>
     <legend><xar:mlstring>Messages Returned</xar:mlstring></legend>
 
