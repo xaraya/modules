@@ -1,4 +1,4 @@
-* Version 1.x.x 25 Jan 06
+* Version 1.0.2 25 Jan 06
 - Added fixes release in tinymce 2.0.2
 - Set usewysiwyg var in include template fixing bug for those not using DD
 - Some minor documentation updates
