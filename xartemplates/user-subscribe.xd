@@ -2,7 +2,7 @@
 
 <div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>Already Registered?</xar:mlstring></h2>
-<div style="margin: auto;"><xar:template file="statusmsg" type="module" />
+<div style="margin: auto;"><xar:template file="user-menu" type="module" />
 
 <p>
     <xar:ml>

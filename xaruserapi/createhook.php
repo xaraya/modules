@@ -82,10 +82,10 @@ function ebulletin_userapi_createhook($args)
     $uid = $objectid;
 
     // now insert new values into table
-    $query = "INSERT INTO $substable (xar_pid, xar_email) VALUES ";
+    $query = "INSERT INTO $substable (xar_pid, xar_uid) VALUES ";
     $queries = $bindvars = array();
     foreach ($pubs as $pid => $pub) {
-        $queries[] = "(?, ?)";
+        $queries[] = "(?,?)";
         $bindvars[] = $pid;
         $bindvars[] = $uid;
     }

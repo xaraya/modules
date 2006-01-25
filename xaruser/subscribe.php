@@ -76,7 +76,7 @@ function ebulletin_user_subscribe($args)
         // if we found a user, tell them to log in
         if (!empty($user)) {
             // initialize template vars
-            $data = xarModAPIFunc('ebulletin', 'user', 'menu');
+            $data = xarModAPIFunc('ebulletin', 'user', 'menu', array('tab' => 'subscriptions'));
 
             // set template vars
             $data['email'] = $email;

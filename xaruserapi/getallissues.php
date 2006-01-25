@@ -29,10 +29,12 @@ function ebulletin_userapi_getallissues($args)
     extract($args);
 
     // set defaults
-    if (empty($startnum)) $startnum = 1;
-    if (empty($numitems)) $numitems = -1;
-    if (empty($order)) $order = 'date';
-    if (empty($sort)) $sort = 'DESC';
+    if (empty($startnum))  $startnum = 1;
+    if (empty($numitems))  $numitems = -1;
+    if (empty($order))     $order = 'date';
+    if (empty($sort))      $sort = 'DESC';
+    if (empty($pid))       $pid = '';
+    if (empty($published)) $published = null;
 
     // validate vars
     $invalid = array();
@@ -48,6 +50,9 @@ function ebulletin_userapi_getallissues($args)
     if (isset($sort) && ($sort != 'ASC' && $sort != 'DESC')) {
         $invalid[] = 'sort';
     }
+    if (isset($pid) && !is_numeric($pid)) {
+        $invalid[] = 'pid';
+    }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
             join(', ', $invalid), 'userapi', 'getall', 'eBulletin');
@@ -62,6 +67,7 @@ function ebulletin_userapi_getallissues($args)
     $issuestable = $xartable['ebulletin_issues'];
 
     // generate query
+    $bindvars = array();
     $query = "
         SELECT
             $issuestable.xar_id,
@@ -73,6 +79,19 @@ function ebulletin_userapi_getallissues($args)
         FROM $issuestable, $pubstable
         WHERE $pubstable.xar_id = $issuestable.xar_pid
     ";
+    if (!empty($pid)) {
+        $query .= "AND $issuestable.xar_pid = ?\n";
+        $bindvars[] = $pid;
+    }
+    if (!is_null($published)) {
+        if ($published) {
+            $query .= "AND $issuestable.xar_published = ?\n";
+            $bindvars[] = 1;
+        } else {
+            $query .= "AND $issuestable.xar_published = ?\n";
+            $bindvars[] = 0;
+        }
+    }
     switch($order) {
     case 'id':
         $query .= "ORDER BY $issuestable.xar_id $sort\n";
@@ -91,7 +110,7 @@ function ebulletin_userapi_getallissues($args)
         $query .= "ORDER BY $issuestable.xar_issuedate $sort\n";
     }
     // perform query
-    $result = $dbconn->SelectLimit($query, $numitems, $startnum-1);
+    $result = $dbconn->SelectLimit($query, $numitems, $startnum-1, $bindvars);
     if (!$result) return;
 
     // assemble results

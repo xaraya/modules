@@ -66,7 +66,7 @@ function ebulletin_user_main($args)
     xarTplSetPageTitle(xarVarPrepForDisplay(xarML('eBulletin')));
 
     // initialize template data
-    $data = xarModAPIFunc('ebulletin', 'user', 'menu');
+    $data = xarModAPIFunc('ebulletin', 'user', 'menu', array('tab' => 'subscriptions'));
 
      // set template vars
     $data['ebulletin_name']  = $name;

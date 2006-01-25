@@ -1,9 +1,9 @@
 Description
 ---------------
-The eBulletin module is an increasingly robust email newsletter system that
-exclusively uses Blocklayout to generate newsletters using content that's
-already on your site.  This gives you the power of determining exactly what
-content is included and how it is formatted.
+The eBulletin module is an email newsletter system that exclusively uses
+Blocklayout to generate newsletters using content that's already on your
+site.  This gives you the power of determining exactly what content is
+included and how it is formatted.
 
 
 Dependencies
@@ -13,11 +13,10 @@ mail (regid 771) - sending newsletters
 
 Upgrading
 ---------------
-Many things changed in the 0.9.7 release.  There is unfortunately no upgrade
-option, and you will have to completely uninstall the old module BEFORE
-upgrading to the new.  When you have removed all of the prior version's
-database tables AND files (you can keep your custom templates, though), then
-follow the Installation instructions below.
+1. Back up your modules/ebulletin/ directory.
+2. Delete modules/ebulletin/
+3. Unpack the new version into the same location.
+4. Go to Modules Admin, refresh the modules list, and perform the upgrade.
 
 
 Installation

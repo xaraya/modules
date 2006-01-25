@@ -8,7 +8,7 @@
 
     <h3><xar:mlstring>What is it?</xar:mlstring></h3>
     <p>
-        <xar:mlstring>The eBulletin module is an increasingly robust email newsletter system that
+        <xar:mlstring>The eBulletin module is an email newsletter system that
         exclusively uses Blocklayout to generate newsletters using content that's
         already on your site.  This gives you the power of determining exactly what
         content is included and how it is formatted.</xar:mlstring>

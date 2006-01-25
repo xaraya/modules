@@ -34,7 +34,7 @@ function ebulletin_user_displayissue()
     if ($displaytype == 'html') {
         echo $issue['body_html'];
     } else {
-        echo $issue['body_txt'];
+        echo nl2br(htmlspecialchars($issue['body_txt']));
     }
 
     // make sure Xaraya doesn't try to display something

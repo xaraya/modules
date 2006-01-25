@@ -19,16 +19,38 @@
  * @return number of items held by this module
  * @raise DATABASE_ERROR
  */
-function ebulletin_userapi_countissues()
+function ebulletin_userapi_countissues($args)
 {
+    extract($args);
+
+    // set defaults
+    if (empty($pid))       $pid = '';
+    if (empty($published)) $published = NULL;
+
     // prepare for database
     $dbconn = xarDBGetConn();
     $xartable = xarDBGetTables();
     $issuestable = $xartable['ebulletin_issues'];
 
     // get count
-    $query = "SELECT COUNT(1) FROM $issuestable";
-    $result = $dbconn->Execute($query,array());
+    $bindvars = array();
+    $query = "SELECT COUNT(1) FROM $issuestable WHERE 1\n";
+
+    if (!empty($pid)) {
+        $query .= "AND xar_pid = ?\n";
+        $bindvars[] = $pid;
+    }
+    if (!is_null($published)) {
+        if ($published) {
+            $query .= "AND xar_published = ?\n";
+            $bindvars[] = 1;
+        } else {
+            $query .= "AND xar_published = ?\n";
+            $bindvars[] = 0;
+        }
+    }
+
+    $result = $dbconn->Execute($query, $bindvars);
     if (!$result) return;
     list($numitems) = $result->fields;
     $result->Close();

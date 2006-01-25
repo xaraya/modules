@@ -116,7 +116,7 @@ function ebulletin_user_validatesubscriber($args)
             if (!xarModAPIFunc('mail', 'admin', 'sendhtmlmail', $mail)) return;
 
             // initialize template vars
-            $data = xarModAPIFunc('ebulletin', 'user', 'menu');
+            $data = xarModAPIFunc('ebulletin', 'user', 'menu', array('tab' => 'subscriptions'));
 
             // set template vars
             $data               = array_merge($data, $inputs);
@@ -146,7 +146,7 @@ function ebulletin_user_validatesubscriber($args)
             if (!xarModAPIFunc('ebulletin', 'user', 'updatesubscriptions', $request)) return;
 
             // initialize template vars
-            $data = xarModAPIFunc('ebulletin', 'user', 'menu');
+            $data = xarModAPIFunc('ebulletin', 'user', 'menu', array('tab' => 'subscriptions'));
 
             // set template vars
             $data          = array_merge($data, $request);

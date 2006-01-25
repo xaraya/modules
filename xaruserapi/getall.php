@@ -57,7 +57,7 @@ function ebulletin_userapi_getall($args)
         ) = $result->fields;
 
         // security check
-        if (xarSecurityCheck('VieweBulletin', 0, 'Publication', "$name:All:$id")) {
+        if (xarSecurityCheck('VieweBulletin', 0, 'Publication', "$name:$id")) {
 
             // assemble row of data
             $row = array(

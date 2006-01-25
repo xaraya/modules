@@ -14,18 +14,24 @@
 /**
  * generate the common menu configuration
  */
-function ebulletin_userapi_menu()
+function ebulletin_userapi_menu($args)
 {
+    extract($args);
+
     // get status message
     $statusmsg = xarSessionGetVar('statusmsg');
     xarSessionSetVar('statusmsg', '');
+
+    if (empty($tab)) $tab = 'subscriptions';
 
     // initialize menu data
     $menu = array();
 
     // set menu vars
+    $menu['menulinks'] = xarModAPIFunc('ebulletin', 'user', 'getmenulinks');
     $menu['menutitle'] = xarML('eBulletin');
     $menu['statusmsg'] = $statusmsg;
+    $menu['tab']     = $tab;
 
     return $menu;
 

@@ -1,7 +1,10 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
 <h2><xar:mlstring>Newsletter Information for</xar:mlstring> #$name#</h2>
-<xar:template file="statusmsg" type="module" module="ebulletin" />
+
+<xar:if condition="$statusmsg">
+    <p class="xar-accent xar-align-center">#$statusmsg#</p>
+</xar:if>
 
 <form action="&xar-modurl-ebulletin-user-usermenu;" method="post">
 <input type="hidden" name="authid" id="authid" value="#$authid#" />
