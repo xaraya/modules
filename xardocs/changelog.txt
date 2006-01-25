@@ -1,3 +1,10 @@
+Version 1.0.0 2006-01-25
+    - Major overhaul of admin subscription section -- added filtering and sorting too
+    - Added publication archive
+    - Added capability for sending one-time messages
+    - Added "send test" to check how an issue will appear
+    - Many other small tweaks and GUI improvements
+
 Version 0.9.8 2005-11-26
     - GUI tweaks
     - documentation of date replacement feature in subject line
