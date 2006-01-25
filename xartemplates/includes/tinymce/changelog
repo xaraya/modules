@@ -1,15 +1,50 @@
-Version 2.0.2 (2005-xx-xx)
+Version 2.0.2 (2006-01-24)
 	Added updated Danish language pack contributed by Jan Moelgaard, John Dalsgaard and Bo Frederiksen.
+	Added updated Czech language pack contributed by michi aka mishal.
+	Added new Slovenian language pack contributed by Domen Kosir.
+	Added new Turkish language pack contributed by Engin Dumlu.
 	Added new save_onsavecallback option to the save plugin, this function is called on save.
 	Added new save_enablewhendirty option to the save plugin, this will disable the button until changes are made.
 	Added new onpageload callback event, this event is called when the page is loaded but before instances are made.
+	Added new accessibility_focus option, this enables you to control if buttons should be tab focusable or not.
+	Added new greek alpha character to charmap dialog.
+	Added new Scaron,scaron,Alpha entities to the default value of the entities option thanks to Kevin Rodgers.
+	Added new contextmenu items link.unlink,advhr contributed by Speednet.
+	Added new paste_insert_word_content_callback option for the paste plugin.
+	Added new cleanup plugin, this will replace the one inside the core ones it's considered stable.
+	Added cancel button to color picker contributed by Speednet.
 	Fixed various documentation errors and typos, modified the FAQ.
 	Fixed issue where the first handleNodeChange call was done to early in initialization.
 	Fixed issue with Dutch language pack for advlink plugin.
+	Fixed issue where dialogs was to short when dialog_type option was set to modal in MSIE.
+	Fixed bug where insert image under Gecko resulted in a broken image if it was inserted a the beginning of a element.
 	Fixed bug where mceVisualAid class wasn't removed from TH elements on save.
 	Fixed bug where the href attribute area elements gets converted to xhref.
 	Fixed bug with document relative anchors being forced absolute even when the convert_urls was set to false.
+	Fixed bug where some plugins produced &gr; intead of &gt; entities on string encoding.
+	Fixed bug where some characters in charmap dialog was double encoded in Firefox/Gecko.
+	Fixed bug with XML core entities wasn't encoded when using raw or numeric value in entity_encoding option.
+	Fixed bug where classes was removed from table,td,th elements when the verify_css_classes option was enabled.
+	Fixed bug where elements was getting a visual aid class if a default or force class attribute value rule was used.
+	Fixed bug where strong/em rules didn't handle the -/+ prefixes correctly under Firefox/Mozilla.
+	Fixed bug where non textarea elements didn't work when submiting content.
+	Fixed bug where a access denied error was produced when using contextmenu together with modal dialogs under MSIE.
+	Fixed bug where fullscreen plugin didn't call custom cleanup functions when passing content back and forth.
+	Fixed issue where default rule for font tags didn't have a + prefix in valid_elements.
 	Fixed issue with CSS where "arrow" was used instead of "default" for cursor replacement.
+	Fixed issue where the replace button replaced the current selection first time it was used.
+	Fixed issue with missing title for the advhr dialog.
+	Fixed issue with div not beeing usable in the theme_advanced_blockformats option.
+	Fixed issue in with translation in the German language pack.
+	Fixed so the word wrap toggle for source view functions in Firefox/Mozilla.
+	Fixed so title attribute of emotion images gets inserted aswell as alt.
+	Fixed so the insert return on popups is checked by default in advlink.
+	Fixed so url gets filled when empty if a user selects a popup url.
+	Fixed so some init settings gets trimmed from whitespace.
+	Fixed so charmap closes when a char is selected since most of the time users only need one char.
+	Fixed so the link and image dialogs of advanced theme are styled with the new 2.x layout.
+	Fixed accessibility issuew with the link, image and advhr dialogs.
+	Fixed so the advhr dialog uses the new 2.x layout.
 	Fixed XHTML compliance for Preview plugin contributed by Bo Frederiksen.
 	Fixed entity decoding problem with insert button of the advhr plugin contributed by Bo Frederiksen.
 Version 2.0.1 (2005-12-02)

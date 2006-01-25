@@ -39,8 +39,25 @@ tinyMCE.init({
 	paste_auto_cleanup_on_paste : true,
 	paste_convert_middot_lists : false,
 	paste_unindented_list_class : "unindentedList",
-	paste_convert_headers_to_strong : true
+	paste_convert_headers_to_strong : true,
+	paste_insert_word_content_callback : "convertWord"
 });
+
+function convertWord(type, content) {
+	switch (type) {
+		// Gets executed before the built in logic performes it's cleanups
+		case "before":
+			content = content.toLowerCase(); // Some dummy logic
+			break;
+
+		// Gets executed after the built in logic performes it's cleanups
+		case "after":
+			content = content.toLowerCase(); // Some dummy logic
+			break;
+	}
+
+	return content;
+}
 </pre>
 	</div>
 	</p>
@@ -92,6 +109,11 @@ tinyMCE.init({
 				<li>none - will not strip any class attributes from the pasted content.</li>
 				<li>mso - will strip out all of the class attribute values that start with "Mso", but retain all others.</li>
 			</ul>
+		</td>
+	</tr>
+	<tr>
+		<td>[paste_insert_word_content_callback]</td>
+		<td>This option enables you to specify a callback function. This callback is executed when the user pastes word content, the return value of this function will be the new content string. Check the example above for more details.
 		</td>
 	</tr>
 	</table>

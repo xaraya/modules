@@ -1,7 +1,7 @@
 /**
  * $RCSfile: tiny_mce_src.js,v $
- * $Revision: 1.294 $
- * $Date: 2006/01/13 21:17:50 $
+ * $Revision: 1.298 $
+ * $Date: 2006/01/24 15:27:46 $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004, Moxiecode Systems AB, All rights reserved.
@@ -10,7 +10,7 @@
 function TinyMCE() {
 	this.majorVersion = "2";
 	this.minorVersion = "0.2";
-	this.releaseDate = "2005-xx-xx";
+	this.releaseDate = "2006-01-24";
 
 	this.instances = new Array();
 	this.stickyClassesLookup = new Array();
@@ -743,9 +743,6 @@ TinyMCE.prototype.setupContent = function(editor_id) {
 			document.frames[editor_id].document.styleSheets[0].addRule("p", "margin: 0;");
 
 		var body = document.frames[editor_id].document.body;
-
-		tinyMCE.addEvent(body, "beforepaste", TinyMCE.prototype.eventPatch);
-		tinyMCE.addEvent(body, "beforecut", TinyMCE.prototype.eventPatch);
 
 		body.editorId = editor_id;
 	}
@@ -3619,7 +3616,7 @@ TinyMCE.prototype.fixGeckoBaseHREFBug = function(m, e, h) {
 
 			return h;
 		} else {
-			var el = new Array('a','img','select','area','iframe','base','input','script','embed','object');
+			var el = new Array('a','img','select','area','iframe','base','input','script','embed','object','link');
 
 			for (var a=0; a<el.length; a++) {
 				var n = e.getElementsByTagName(el[a]);
@@ -5010,8 +5007,12 @@ TinyMCEControl.prototype.execCommand = function(command, user_interface, value) 
 
 				if (elm)
 					this.execCommand("mceRemoveNode", false, elm);
-			} else
+			} else {
+				if (value == '<div>' && tinyMCE.isGecko)
+					value = 'div';
+
 				this.getDoc().execCommand("FormatBlock", false, value);
+			}
 
 			tinyMCE.triggerNodeChange();
 
