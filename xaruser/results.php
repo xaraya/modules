@@ -13,8 +13,10 @@
 
 /**
  * show results
- * This is a standard function to provide detailed informtion on a single item
- * available from the module.
+ *
+ * Show the results for a single poll
+ *
+ * @param id $pid poll id
  */
 function polls_user_results($args)
 {
@@ -22,7 +24,7 @@ function polls_user_results($args)
      if (!xarVarFetch('pid', 'id', $pid, XARVAR_DONT_SET)) return;
 
     extract($args);
-
+    // TODO: implement check on this specific poll?
     if(!xarSecurityCheck('ViewPolls')){
         return;
     }

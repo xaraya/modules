@@ -1,6 +1,5 @@
 <?php
-/*
- *
+/**
  * Polls Module
  *
  * @package Xaraya eXtensible Management System
@@ -12,6 +11,9 @@
  * @author Jim McDonalds, dracos, mikespub et al.
  */
 
+/**
+ * @deprecated 2005?
+ */
 function polls_admin_display()
 {
     if (!xarVarFetch('pid', 'id', $pid)) return;

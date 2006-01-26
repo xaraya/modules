@@ -1,6 +1,5 @@
 <?php
-/*
- *
+/**
  * Polls Module
  *
  * @package Xaraya eXtensible Management System
@@ -13,7 +12,7 @@
  */
 
 /**
- * get a specific item
+ * get a specific poll
  * @param $args['pid'] id of poll to get (optional)
  * @returns array
  * @return item array, or false on failure
@@ -23,7 +22,7 @@ function polls_userapi_get($args)
     // Get arguments from argument array
     extract($args);
 
-    // Get datbase setup
+    // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $pollstable = $xartable['polls'];

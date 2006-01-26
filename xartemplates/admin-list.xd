@@ -1,7 +1,7 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:style scope="common" />
 <xar:base-include-javascript module="base" filename="confirmlink.js" />
-<xar:comment><xar:if condition="xarTplAddStyleLink('polls', 'forms')"></xar:if></xar:comment>
+
 <div class="xar-mod-head">
   <span class="xar-mod-title">
     <xar:mlstring>Polls Administration</xar:mlstring>
@@ -15,7 +15,7 @@
     <fieldset>
       <legend>
         <xar:mlstring>Choose polls status</xar:mlstring>
-      </legend>        
+      </legend>
       <div class="xar-form-input-wrapper">
         <label for="status" class="xar-form-label">
           <xar:mlstring> Status</xar:mlstring>
@@ -46,7 +46,7 @@
                 upcoming
               </xar:mlstring>
             </option>
-          </xar:if>                 
+          </xar:if>
           <xar:if condition="$status eq 3">
             <option value="3" selected="selected">
               <xar:mlstring>
@@ -72,12 +72,12 @@
                 all
               </xar:mlstring>
             </option>
-          </xar:if>               
+          </xar:if>
         </select>
       </div>
     </fieldset>
-    
-    
+
+
     <xar:if condition="!isset($polls)">
       <p>
         <xar:mlstring>There are no polls available</xar:mlstring>
@@ -111,7 +111,7 @@
             <xar:mlstring>
               Open
             </xar:mlstring>
-          </th>  
+          </th>
           <th rowspan="2">
             <xar:mlstring>
               Votes
@@ -155,7 +155,7 @@
             </td>
             <td>
               <xar:if condition="$loop:item['end_date']">
-                #xarLocaleGetFormattedDate('short',$loop:item['end_date'])# 
+                #xarLocaleGetFormattedDate('short',$loop:item['end_date'])#
               </xar:if>
             </td>
             <td class="xar-align-center">
@@ -198,7 +198,7 @@
                 </xar:mlstring>
               </a>
             </td>
-          </tr>                
+          </tr>
         </xar:loop>
       </table>
     </xar:if>

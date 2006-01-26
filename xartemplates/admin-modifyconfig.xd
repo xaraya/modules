@@ -1,5 +1,5 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:if condition="xarTplAddStyleLink('polls', 'forms')"></xar:if>
+
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:mlstring>Polls Administration</xar:mlstring>
@@ -16,22 +16,22 @@
             </legend>
             <input type="hidden" name="authid" value="#$authid#"/>
             <div class="xar-form-input-wrapper">
-                        <label for="barscale" title="#xarML('Scale of result bar')#" class="xar-form-label">
-                            <xar:mlstring>Scale of result bar</xar:mlstring>
+                <label for="barscale" title="#xarML('Scale of result bar')#" class="xar-form-label">
+                      <xar:mlstring>Scale of result bar</xar:mlstring>
                 </label>
-                        <input type="text" name="barscale" id="barscale" value="#$barscale#" size="4" maxlength="3"/>
+                <input type="text" name="barscale" id="barscale" value="#$barscale#" size="4" maxlength="3"/>
             </div>
             <div class="xar-form-input-wrapper">
-                        <label for="defaultopts" title="#xarML('Default number of options for poll')#" class="xar-form-label">
-                            <xar:mlstring>Options for new polls</xar:mlstring>
+                <label for="defaultopts" title="#xarML('Default number of options for poll')#" class="xar-form-label">
+                      <xar:mlstring>Options for new polls</xar:mlstring>
                 </label>
-                        <input type="text" name="defaultopts" id="defaultopts" value="#$defaultopts#"/>
+                <input type="text" name="defaultopts" id="defaultopts" value="#$defaultopts#"/>
             </div>
             <div class="xar-form-input-wrapper">
-                        <label for="imggraph" title="#xarML('Use an image for displayng poll result')#" class="xar-form-label">
-                            <xar:mlstring>Use images for graph display</xar:mlstring>
+                <label for="imggraph" title="#xarML('Use an image for displayng poll result')#" class="xar-form-label">
+                       <xar:mlstring>Use images for graph display</xar:mlstring>
                 </label>
-                        <select name="imggraph" id="imggraph">
+                       <select name="imggraph" id="imggraph">
                             <xar:foreach in="$imggraphs" value="$v" key="$k">
                                 <xar:if condition="$imggraph eq $k">
                                     <option value="#$k#" selected="selected">
@@ -43,13 +43,13 @@
                                     </option>
                                 </xar:if>
                             </xar:foreach>
-                        </select>
+                       </select>
             </div>
             <div class="xar-form-input-wrapper">
-                        <label for="voteinterval" title="#xarML('How many time every user can vote')#" class="xar-form-label">
-                            <xar:mlstring>Allow users to vote (per poll)</xar:mlstring>
+                <label for="voteinterval" title="#xarML('How many time every user can vote')#" class="xar-form-label">
+                       <xar:mlstring>Allow users to vote (per poll)</xar:mlstring>
                 </label>
-                        <select name="voteinterval" id="voteinterval">
+                       <select name="voteinterval" id="voteinterval">
                             <xar:foreach in="$voteintervals" value="$v" key="$k">
                                 <xar:if condition="$voteinterval eq $k">
                                     <option value="#$k#" selected="selected">
@@ -61,11 +61,11 @@
                                     </option>
                                 </xar:if>
                             </xar:foreach>
-                        </select>
+                       </select>
             </div>
             <div class="xar-form-input-wrapper">
-                        <label for="previewresults" title="#xarML('Users can view results before voting')#" class="xar-form-label">
-                            <xar:mlstring>Allow users to see results before voting?</xar:mlstring>
+                <label for="previewresults" title="#xarML('Users can view results before voting')#" class="xar-form-label">
+                       <xar:mlstring>Allow users to see results before voting?</xar:mlstring>
                 </label>
                         <xar:if condition="$previewresults == 1">
                             <input type="checkbox" name="previewresults" id="previewresults" value="1" checked="checked"/>
@@ -74,8 +74,8 @@
                         </xar:if>
             </div>
             <div class="xar-form-input-wrapper">
-                        <label for="showtotalvotes" title="#xarML('Users can view total number of votes')#" class="xar-form-label">
-                            <xar:mlstring>Allow users to see total votes?</xar:mlstring>
+                <label for="showtotalvotes" title="#xarML('Users can view total number of votes')#" class="xar-form-label">
+                        <xar:mlstring>Allow users to see total votes?</xar:mlstring>
                 </label>
                         <xar:if condition="$showtotalvotes == 1">
                             <input type="checkbox" name="showtotalvotes" id="showtotalvotes" value="1" checked="checked"/>
@@ -84,8 +84,8 @@
                         </xar:if>
             </div>
             <div class="xar-form-input-wrapper">
-                        <label for="shorturl" title="#xarML('Use short urls for the polls')#" class="xar-form-label">
-                            <xar:mlstring>Enable Short URLs?</xar:mlstring>
+                <label for="shorturl" title="#xarML('Use short urls for the polls')#" class="xar-form-label">
+                        <xar:mlstring>Enable Short URLs?</xar:mlstring>
                 </label>
                         <xar:if condition="$shorturl == 1">
                             <input type="checkbox" name="shorturl" id="shorturl" value="1" checked="checked"/>
@@ -94,13 +94,13 @@
                         </xar:if>
             </div>
         </fieldset>
-                <xar:if condition="!empty($hooks)">
-            <div class="xar-form-input-wrapper">
+            <xar:if condition="!empty($hooks)">
+                <div class="xar-form-input-wrapper">
                     #$hooks#
-            </div>
-                </xar:if>
+                </div>
+            </xar:if>
         <div class="xar-form-input-wrapper-after">
             <input type="submit" value="#xarML('Save config')#" />
         </div>
-        </form>
-    </div>
+    </form>
+</div>

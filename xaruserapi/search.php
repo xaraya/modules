@@ -1,6 +1,5 @@
 <?php
-/*
- *
+/**
  * Polls Module
  *
  * @package Xaraya eXtensible Management System

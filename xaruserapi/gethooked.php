@@ -1,6 +1,5 @@
 <?php
-/*
- *
+/**
  * Polls Module
  *
  * @package Xaraya eXtensible Management System
@@ -39,7 +38,7 @@ function polls_userapi_gethooked($args)
         $objectid = 0;
     }
 
-    // Get datbase setup
+    // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $pollstable = $xartable['polls'];

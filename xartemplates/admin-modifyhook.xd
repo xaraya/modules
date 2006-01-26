@@ -1,54 +1,54 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-standard-box-padding">
-<fieldset>
-    <legend>
-        <xar:mlstring>Add a poll to this item</xar:mlstring>
-    </legend>
-    <div class="xar-form-input-wrapper">
-            <label for="poll_title" title="#xarML('The name of the  poll')#" class="xar-form-label">
-                <xar:mlstring>Poll title</xar:mlstring>:
-            </label>
-            <input type="text" name="poll[title]" id="poll_title" size="50" maxlength="100" value="#$poll['title']#"/>
-    </div>
-    <div class="xar-form-input-wrapper">
-         <label for="polltype" title="#xarML('The type of the poll')#" class="xar-form-label">
-            <xar:mlstring>Poll type</xar:mlstring>:
-        </label>
-        <xar:if condition="!empty($poll['type']) and $poll['type'] eq 'single'">
-            <input type="radio" name="poll[type]" id="poll_type_single" value="single" checked="checked" />
-        <xar:else />
-            <input type="radio" name="poll[type]" id="poll_type_single" value="single" />
-        </xar:if>
-        &nbsp;
-        <xar:mlstring>Single Choice</xar:mlstring>
-        <xar:if condition="!empty($poll['type']) and $poll['type'] eq 'multi'">
-            <input type="radio" name="poll[type]" id="poll_type_multi" value="multi" checked="checked" />
-        <xar:else />
-            <input type="radio" name="poll[type]" id="poll_type_multi" value="multi" />
-        </xar:if>
-        &nbsp;
-        <xar:mlstring>Multiple Choice</xar:mlstring>
-    </div>
-   <xar:comment>
-    <div class="xar-form-input-wrapper">
-            <label for="poll_private" title="#xarML('Restrict view to the result of poll')#" class="xar-form-label">
-                <xar:mlstring>Private Poll</xar:mlstring>:
-            </label>
-            <xar:if condition="!empty($poll['private'])">
-                <input type="checkbox" name="poll[private]" id="poll_private" value="1" checked="checked" />
-            <xar:else />
-                <input type="checkbox" name="poll[private]" id="poll_private" value="1" />
-            </xar:if>
-    </div>
-    </xar:comment>
-    <xar:for start="$i = 1" test="$i le $optcount" iter="$i++">
+    <fieldset>
+        <legend>
+            <xar:mlstring>Add a poll to this item</xar:mlstring>
+        </legend>
         <div class="xar-form-input-wrapper">
-            <label for="poll_options_#$i#" class="xar-form-label">
-                <xar:mlstring>Options</xar:mlstring>
-                #$i#
-            </label>
-            <input type="text" name="poll[options][#$i#]" id="poll_options_#$i#" value="#$poll['options'][$i]#" size="50" maxlength="50"/>
+                <label for="poll_title" title="#xarML('The name of the  poll')#" class="xar-form-label">
+                    <xar:mlstring>Poll title</xar:mlstring>:
+                </label>
+                <input type="text" name="poll[title]" id="poll_title" size="50" maxlength="100" value="#$poll['title']#"/>
         </div>
-    </xar:for>
-</fieldset>
+        <div class="xar-form-input-wrapper">
+             <label for="polltype" title="#xarML('The type of the poll')#" class="xar-form-label">
+                <xar:mlstring>Poll type</xar:mlstring>:
+            </label>
+            <xar:if condition="!empty($poll['type']) and $poll['type'] eq 'single'">
+                <input type="radio" name="poll[type]" id="poll_type_single" value="single" checked="checked" />
+            <xar:else />
+                <input type="radio" name="poll[type]" id="poll_type_single" value="single" />
+            </xar:if>
+            &nbsp;
+            <xar:mlstring>Single Choice</xar:mlstring>
+            <xar:if condition="!empty($poll['type']) and $poll['type'] eq 'multi'">
+                <input type="radio" name="poll[type]" id="poll_type_multi" value="multi" checked="checked" />
+            <xar:else />
+                <input type="radio" name="poll[type]" id="poll_type_multi" value="multi" />
+            </xar:if>
+            &nbsp;
+            <xar:mlstring>Multiple Choice</xar:mlstring>
+        </div>
+       <xar:comment>
+        <div class="xar-form-input-wrapper">
+                <label for="poll_private" title="#xarML('Restrict view to the result of poll')#" class="xar-form-label">
+                    <xar:mlstring>Private Poll</xar:mlstring>:
+                </label>
+                <xar:if condition="!empty($poll['private'])">
+                    <input type="checkbox" name="poll[private]" id="poll_private" value="1" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="poll[private]" id="poll_private" value="1" />
+                </xar:if>
+        </div>
+        </xar:comment>
+        <xar:for start="$i = 1" test="$i le $optcount" iter="$i++">
+            <div class="xar-form-input-wrapper">
+                <label for="poll_options_#$i#" class="xar-form-label">
+                    <xar:mlstring>Options</xar:mlstring>
+                    #$i#
+                </label>
+                <input type="text" name="poll[options][#$i#]" id="poll_options_#$i#" value="#$poll['options'][$i]#" size="50" maxlength="50"/>
+            </div>
+        </xar:for>
+    </fieldset>
 </div>

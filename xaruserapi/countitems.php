@@ -1,10 +1,9 @@
 <?php
-/*
- *
+/**
  * Polls Module
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -19,11 +18,7 @@
  */
 function polls_userapi_countitems()
 {
-    // Get datbase setup - note that both xarDBGetConn() and xarDBGetTables()
-    // return arrays but we handle them differently.  For xarDBGetConn() we
-    // currently just want the first item, which is the official database
-    // handle.  For xarDBGetTables() we want to keep the entire tables array
-    // together for easy reference later on
+    // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
@@ -31,10 +26,7 @@ function polls_userapi_countitems()
     // getting - $table and $column don't cut it in more complex modules
     $pollstable = $xartable['polls'];
 
-    // Get item - the formatting here is not mandatory, but it does make the
-    // SQL statement relatively easy to read.  Also, separating out the sql
-    // statement from the Execute() command allows for simpler debug operation
-    // if it is ever needed
+    // Get number of items
     $sql = "SELECT COUNT(1)
             FROM $pollstable
             WHERE xar_itemid = 0

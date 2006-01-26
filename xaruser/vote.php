@@ -1,10 +1,9 @@
 <?php
-/*
- *
+/**
  * Polls Module
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -13,7 +12,11 @@
  */
 
 /**
- * vote on an item
+ * vote on a poll
+ *
+ * @param id $pid
+ * @param returnurl
+ * @param callingmod the module where the user comes from
  */
 function polls_user_vote($args)
 {
@@ -48,7 +51,7 @@ function polls_user_vote($args)
     }
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;
-
+    // Get the poll
     $poll = xarModAPIFunc('polls',
                      'user',
                      'get',
@@ -87,7 +90,7 @@ function polls_user_vote($args)
         return;
     }
 
-    // Pass to API
+    // Pass vote to API
     $vote = xarModAPIFunc('polls',
                      'user',
                      'vote',

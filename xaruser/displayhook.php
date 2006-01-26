@@ -1,10 +1,9 @@
 <?php
-/*
- *
+/**
  * Polls Module
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -91,7 +90,7 @@ function polls_user_displayhook($args)
         }
     }
     } else {
-        // controllo autorizzazione a vedere polls
+        // Security check to see this poll
         if (xarSecurityCheck('ViewPolls',0,'Polls',"$poll[title]:$poll[type]")) {
             return xarModFunc('polls',
                               'user',

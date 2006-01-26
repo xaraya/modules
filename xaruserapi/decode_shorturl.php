@@ -1,6 +1,5 @@
 <?php
-/*
- *
+/**
  * Polls Module
  *
  * @package Xaraya eXtensible Management System
@@ -8,7 +7,7 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage polls
+ * @subpackage Polls module
  * @author Jim McDonalds, dracos, mikespub et al.
  */
 
@@ -16,7 +15,7 @@
  * extract function and arguments from short URLs for this module, and pass
  * them back to xarGetRequestInfo()
  *
- * @author the Example module development team
+ * @author the Polls module development team
  * @param  $params array containing the different elements of the virtual path
  * @returns array
  * @return array containing func the function to be called and args the query

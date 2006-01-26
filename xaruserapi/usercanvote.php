@@ -1,6 +1,5 @@
 <?php
-/*
- *
+/**
  * Polls Module
  *
  * @package Xaraya eXtensible Management System
@@ -15,8 +14,10 @@
 /**
  * utility function to determine if current user has voted
  * @param $args['pid'] id of poll to vote on
- * @returns integer
+ * @return bool
  * @return user vote status for a poll
+ *          true user can vote
+ *          false user cannot vote
  */
 function polls_userapi_usercanvote($args)
 {

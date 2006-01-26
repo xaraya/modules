@@ -1,10 +1,9 @@
 <?php
-/*
+/**
+ * Display a single poll
  *
- * Polls Module
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -13,9 +12,13 @@
  */
 
 /**
- * display item
- * This is a standard function to provide detailed informtion on a single item
- * available from the module.
+ * Display poll
+ *
+ * This is a standard function to provide detailed information on a single poll
+ * When a user is allowed to vote, a vote link is presented
+ * When a user is allowed to see the results, a result link is presented
+ *
+ * @param id $pid Poll id
  */
 function polls_user_display($args)
 {

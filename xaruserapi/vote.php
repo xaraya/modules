@@ -1,10 +1,9 @@
 <?php
-/*
- *
+/**
  * Polls Module
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -15,7 +14,7 @@
 /**
  * vote on an item
  * @param $args['pid'] id of poll to vote on
- * @param $args['opteselect'] id of poll to vote on
+ * @param $args['options'] options with vote information
  * @returns array
  * @return item array, or false on failure
  */
