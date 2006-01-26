@@ -1,3 +1,7 @@
+Version 1.0.1 2006-01-26
+	- Update Short URLs for new user functions
+	- Fix 'invalid $pid' error in admin viewissues
+
 Version 1.0.0 2006-01-25
     - Major overhaul of admin subscription section -- added filtering and sorting too
     - Added publication archive
