@@ -2,8 +2,8 @@
 /**
  * Get all presence items for a certain user
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -86,7 +86,8 @@ function sigmapersonnel_userapi_getallpresence($args)
     if (!$result) return;
     for (; !$result->EOF; $result->MoveNext()) {
         list($pid, $userid, $personid, $start, $end, $typeid) = $result->fields;
-
+        // Get the typename
+        $typename = xarModApiFunc('sigmapersonnel','user','getprestype',array('type'=>$typeid));
         //Order: pid, userid, typeid
         if (xarSecurityCheck('ViewSIGMAPresence', 0, 'PresenceItem', "$pid:All:$typeid")) {
             $items[] = array('pid'      => $pid,
@@ -94,7 +95,8 @@ function sigmapersonnel_userapi_getallpresence($args)
                              'personid' => $personid,
                              'start'    => $start,
                              'end'      => $end,
-                             'typeid'   => $typeid);
+                             'typeid'   => $typeid,
+                             'typename' => $typename);
         }
     }
 

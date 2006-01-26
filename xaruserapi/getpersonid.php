@@ -3,7 +3,7 @@
  * Get a specific person id
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -18,7 +18,7 @@
  * @param $args ['uid'] uid of sigmapersonnel item to get
  * @param $args ['firstname'] ?First name of person to get?
  * @returns array
- * @return array $item ['personid', [persstatus'], or false on failure
+ * @return array $item ['personid', ['persstatus'], or false on failure
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function sigmapersonnel_userapi_getpersonid($args)

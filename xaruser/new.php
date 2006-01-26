@@ -45,11 +45,14 @@ function sigmapersonnel_user_new($args)
     $personid = xarModAPIFunc('sigmapersonnel', 'user', 'getpersonid',
                                       array('uid' => xarUserGetVar('uid')));
     if (!empty($personid)) {
-        $data['personid'] = $personid;
+        $data['personid'] = $personid['personid'];
     } else {
         xarSessionSetVar('statusmsg', xarML('You are not known in the personnel database. Please contact the administration!'));
         return xarTplModule('sigmapersonnel', 'user', 'main', $data);; // TODO: add nice goodbye
     }
+    // get the entered presenceitems for this person to display
+    $presitems = xarModApiFunc('sigmapersonnel','user','getallpresence',array('personid'=>$data['personid']));
+    $data['presitems'] = $presitems;
 
     $item = array();
     $item['module'] = 'sigmapersonnel';
