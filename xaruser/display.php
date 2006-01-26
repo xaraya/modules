@@ -32,32 +32,6 @@ function ebulletin_user_display($args)
     $issue['published_string'] = ($issue['published']) ? xarML('Yes') : xarML('No');
     $issue['issuedate'] = xarLocaleGetFormattedDate('short', strtotime($issue['issuedate']));
 
-    // url for edit and regenerate
-    if (xarSecurityCheck('EditeBulletin', 0, 'Publication', "$issue[pubname]:$issue[pid]")) {
-        $issue['editurl'] = xarModURL('ebulletin', 'user', 'modifyissue',
-            array('id' => $issue['id'])
-        );
-        $issue['regenerateurl'] = xarModURL('ebulletin', 'user', 'regenerateissue', array(
-            'id' => $issue['id'],
-            'authid' => xarSecGenAuthKey(),
-            'return' => xarServerGetCurrentURL()
-        ));
-    }
-
-    // url for delete
-    if (xarSecurityCheck('DeleteeBulletin', 0, 'Publication', "$issue[pubname]:$issue[pid]")) {
-        $issue['deleteurl'] = xarModURL('ebulletin', 'user', 'deleteissue', array(
-            'id' => $issue['id'])
-        );
-    }
-
-    // url for publish
-    if (xarSecurityCheck('AddeBulletin', 0, 'Publication', "$issue[pubname]:$issue[pid]")) {
-        $issue['publishurl'] = xarModURL('ebulletin', 'user', 'publishissue', array(
-            'id' => $issue['id'])
-        );
-    }
-
     // links for the iframe
     if (!empty($issue['body_html'])) {
         $htmlurl = xarModURL('ebulletin', 'user', 'displayissue',

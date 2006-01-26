@@ -26,10 +26,31 @@ function ebulletin_userapi_decode_shorturl($params)
     $args = array();
 
     if (empty($params[1])) {
+        // nothing specified -> go to the main function
         return array('main', $args);
-    } elseif (!empty($params[1])) {
-        return array($params[1], array_slice($params, 2));
+
+    } elseif (preg_match('/^view$/i', $params[1])) {
+        return array('view', $args);
+
+    } elseif (preg_match('/^display$/i', $params[1]) && !empty($params[2]) && is_numeric($params[2])) {
+        $args['id'] = $params[2];
+        return array('display', $args);
+
+    } elseif (preg_match('/^displayissue$/i', $params[1]) && !empty($params[2]) && is_numeric($params[2])) {
+        $args['id'] = $params[2];
+        if (!empty($params[3])) {
+            $args['displaytype'] = $params[3];
+        }
+        return array('displayissue', $args);
+
+    } elseif (preg_match('/^viewissues$/i', $params[1]) && !empty($params[2]) && is_numeric($params[2])) {
+        $args['pid'] = $params[2];
+        return array('viewissues', $args);
+
+    } elseif (preg_match('/^subscribe$/i', $params[1])) {
+        return array('subscribe', $args);
     }
+
 
 }
 

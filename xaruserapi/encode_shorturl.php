@@ -32,15 +32,27 @@ function ebulletin_userapi_encode_shorturl($args)
     $aliasname = xarModGetVar('ebulletin', 'aliasname');
     $module = ($usemodulealias) ? $aliasname : 'ebulletin';
 
-    // set path vars
-    $path = '';
+    // set basic path vars
+    $path = ($func == 'main') ? "/$module/" : "/$module/$func/";
     $join = '?';
 
-    // encode to the level of func name, and append all other vars as $_GET args
-    $path = "/$module/";
-    if ($func != 'main') $path .= "$func/";
+    // add params according to function name
+    if ($func == 'display' && !empty($id)) {
+        $path .= "$id/";
+        unset($args['id']);
+    } elseif ($func == 'displayissue' && !empty($id)) {
+        $path .= "$id/";
+        unset($args['id']);
+        if (!empty($displaytype)) {
+            $path .= "$displaytype/";
+            unset($args['displaytype']);
+        }
+    } elseif ($func == 'viewissues' && !empty($pid)) {
+        $path .= "$pid/";
+        unset($args['pid']);
+    }
 
-    // remove module from args
+    // append all other args as GET vars
     unset($args['func']);
     foreach ($args as $key => $value) {
         $path .= "$join$key=$value";
