@@ -1,7 +1,7 @@
 /**
  * $RCSfile: editor_plugin_src.js,v $
- * $Revision: 1.5 $
- * $Date: 2006/01/23 18:01:36 $
+ * $Revision: 1.6 $
+ * $Date: 2006/01/25 15:39:31 $
  *
  * Experimental plugin for new Cleanup routine, this logic will be moved into the core ones it's stable enougth.
  *
@@ -38,7 +38,8 @@ function TinyMCE_cleanup_initInstance(inst) {
 		entities : s.entities,
 		entity_encoding : s.entity_encoding,
 		debug : s.cleanup_debug,
-		url_converter : 'TinyMCE_cleanup_urlConverter'
+		url_converter : 'TinyMCE_cleanup_urlConverter',
+		internal_classes : '(mceItem[a-zA-Z0-9]*|' + s.visual_table_class + ')'
 	});
 
 	inst.cleanup = c;
@@ -55,24 +56,35 @@ TinyMCE.prototype.getContent = function(editor_id) {
 };
 
 TinyMCE.prototype._cleanupHTML = function(inst, doc, config, element, visual, on_save) {
-	var h, st, c, s;
+	var h, d, t1, t2, t3, t4, t5, c, s;
 
 	on_save = typeof(on_save) == 'undefined' ? false : on_save;
 
 	c = inst.cleanup;
 	s = inst.settings;
+	d = c.settings.debug;
 
-	if (c.settings.debug)
-		st = new Date().getTime();
+	if (d)
+		t1 = new Date().getTime();
 
 	// Call custom cleanup code
 	tinyMCE._customCleanup(inst, on_save ? "get_from_editor_dom" : "insert_to_editor_dom", doc.body);
+
+	if (d)
+		t2 = new Date().getTime();
 
 	c.settings.on_save = on_save;
 	//for (var i=0; i<100; i++)
 
 	c.idCount = 0;
-	h = c.serializeNode(element);
+
+	if (s.cleanup_serializer == "xml")
+		h = c.serializeNodeAsXML(element);
+	else
+		h = c.serializeNodeAsHTML(element);
+
+	if (d)
+		t3 = new Date().getTime();
 
 	// Post processing
 	h = h.replace(/<\/?(body|head|html)[^>]*>/gi, '');
@@ -102,19 +114,20 @@ TinyMCE.prototype._cleanupHTML = function(inst, doc, config, element, visual, on
 	// Call custom cleanup code
 	h = tinyMCE._customCleanup(inst, on_save ? "get_from_editor" : "insert_to_editor", h);
 
-	if (on_save) {
-		h = h.replace(new RegExp('(class=".*?) ?(mceItem[a-zA-Z0-9]*|' + s.visual_table_class + ') ?(.*?")', 'g'), '$1$3');
-		h = h.replace(new RegExp(' ?class=""', 'g'), '');
-	}
-
 	if (s.remove_linebreaks)
 		h = h.replace(/\n|\r/g, ' ');
+
+	if (d)
+		t4 = new Date().getTime();
 
 	if (on_save && !s.remove_linebreaks && s.cleanup_indent)
 		h = c.formatHTML(h);
 
+	if (d)
+		t5 = new Date().getTime();
+
 	if (c.settings.debug)
-		tinyMCE.debug("Cleanup process executed in: " + (new Date().getTime()-st) + " ms.");
+		tinyMCE.debug("Cleanup in ms: Pre=" + (t2-t1) + ", Serialize: " + (t3-t2) + ", Post: " + (t4-t3) + ", Format: " + (t5-t4) + ", Sum: " + (t5-t1) + ".");
 
 	return h;
 };
@@ -138,12 +151,13 @@ function TinyMCE_Cleanup() {
 		entity_encoding : 'raw',
 		valid_elements : '*[*]',
 		entities : "160,nbsp,161,iexcl,162,cent,163,pound,164,curren,165,yen,166,brvbar,167,sect,168,uml,169,copy,170,ordf,171,laquo,172,not,173,shy,174,reg,175,macr,176,deg,177,plusmn,178,sup2,179,sup3,180,acute,181,micro,182,para,183,middot,184,cedil,185,sup1,186,ordm,187,raquo,188,frac14,189,frac12,190,frac34,191,iquest,192,Agrave,193,Aacute,194,Acirc,195,Atilde,196,Auml,197,Aring,198,AElig,199,Ccedil,200,Egrave,201,Eacute,202,Ecirc,203,Euml,204,Igrave,205,Iacute,206,Icirc,207,Iuml,208,ETH,209,Ntilde,210,Ograve,211,Oacute,212,Ocirc,213,Otilde,214,Ouml,215,times,216,Oslash,217,Ugrave,218,Uacute,219,Ucirc,220,Uuml,221,Yacute,222,THORN,223,szlig,224,agrave,225,aacute,226,acirc,227,atilde,228,auml,229,aring,230,aelig,231,ccedil,232,egrave,233,eacute,234,ecirc,235,euml,236,igrave,237,iacute,238,icirc,239,iuml,240,eth,241,ntilde,242,ograve,243,oacute,244,ocirc,245,otilde,246,ouml,247,divide,248,oslash,249,ugrave,250,uacute,251,ucirc,252,uuml,253,yacute,254,thorn,255,yuml,402,fnof,913,Alpha,914,Beta,915,Gamma,916,Delta,917,Epsilon,918,Zeta,919,Eta,920,Theta,921,Iota,922,Kappa,923,Lambda,924,Mu,925,Nu,926,Xi,927,Omicron,928,Pi,929,Rho,931,Sigma,932,Tau,933,Upsilon,934,Phi,935,Chi,936,Psi,937,Omega,945,alpha,946,beta,947,gamma,948,delta,949,epsilon,950,zeta,951,eta,952,theta,953,iota,954,kappa,955,lambda,956,mu,957,nu,958,xi,959,omicron,960,pi,961,rho,962,sigmaf,963,sigma,964,tau,965,upsilon,966,phi,967,chi,968,psi,969,omega,977,thetasym,978,upsih,982,piv,8226,bull,8230,hellip,8242,prime,8243,Prime,8254,oline,8260,frasl,8472,weierp,8465,image,8476,real,8482,trade,8501,alefsym,8592,larr,8593,uarr,8594,rarr,8595,darr,8596,harr,8629,crarr,8656,lArr,8657,uArr,8658,rArr,8659,dArr,8660,hArr,8704,forall,8706,part,8707,exist,8709,empty,8711,nabla,8712,isin,8713,notin,8715,ni,8719,prod,8721,sum,8722,minus,8727,lowast,8730,radic,8733,prop,8734,infin,8736,ang,8743,and,8744,or,8745,cap,8746,cup,8747,int,8756,there4,8764,sim,8773,cong,8776,asymp,8800,ne,8801,equiv,8804,le,8805,ge,8834,sub,8835,sup,8836,nsub,8838,sube,8839,supe,8853,oplus,8855,otimes,8869,perp,8901,sdot,8968,lceil,8969,rceil,8970,lfloor,8971,rfloor,9001,lang,9002,rang,9674,loz,9824,spades,9827,clubs,9829,hearts,9830,diams,34,quot,38,amp,60,lt,62,gt,338,OElig,339,oelig,352,Scaron,353,scaron,376,Yuml,710,circ,732,tilde,8194,ensp,8195,emsp,8201,thinsp,8204,zwnj,8205,zwj,8206,lrm,8207,rlm,8211,ndash,8212,mdash,8216,lsquo,8217,rsquo,8218,sbquo,8220,ldquo,8221,rdquo,8222,bdquo,8224,dagger,8225,Dagger,8240,permil,8249,lsaquo,8250,rsaquo,8364,euro",
-		url_converter : ''
+		url_converter : '',
+		internal_classes : ''
 	};
 
 	this.vElements = new Array();
 	this.vElementsRe = '';
-	this.closeElements = /^(IMG|BR|HR|LINK|META|BASE)$/;
+	this.closeElementsRe = /^(IMG|BR|HR|LINK|META|BASE)$/;
 	this.codeElementsRe = /^(SCRIPT|STYLE)$/;
 	this.mceAttribs = {
 		href : 'mce_href',
@@ -193,6 +207,7 @@ TinyMCE_Cleanup.prototype = {
 		this.fillStr = this.xmlEncode(String.fromCharCode(160));
 
 		this.idCount = 0;
+		this.internalClassesRe = new RegExp(s.internal_classes, 'g');
 	},
 
 	arrayToRe : function(a, op, be, af) {
@@ -329,7 +344,79 @@ TinyMCE_Cleanup.prototype = {
 		return or;
 	},
 
-	serializeNode : function(n) {
+	serializeNodeAsXML : function(n, m) {
+		var s, b;
+
+		if (!this.xmlDoc) {
+			if (this.isMSIE) {
+				try {this.xmlDoc = new ActiveXObject('MSXML2.DOMDocument');} catch (e) {}
+
+				if (!this.xmlDoc)
+					try {this.xmlDoc = new ActiveXObject('Microsoft.XmlDom');} catch (e) {}
+			} else
+				this.xmlDoc = document.implementation.createDocument('', '', null);
+
+			if (!this.xmlDoc)
+				alert("Error XML Parser could not be found.");
+		}
+
+		if (this.xmlDoc.firstChild)
+			this.xmlDoc.removeChild(this.xmlDoc.firstChild);
+
+		b = this.xmlDoc.createElement("html");
+		b = this.xmlDoc.appendChild(b);
+
+		this._convertToXML(n, b);
+
+		if (this.isMSIE)
+			return this.xmlDoc.xml;
+		else
+			return new XMLSerializer().serializeToString(this.xmlDoc);
+	},
+
+	_convertToXML : function(n, xn) {
+		var xd, el, i, l, cn, at, no, hc = false;
+
+		xd = this.xmlDoc;
+
+		switch (n.nodeType) {
+			case 1: // Element
+				hc = n.hasChildNodes();
+
+				el = xd.createElement(n.nodeName.toLowerCase());
+
+				at = n.attributes;
+				for (i=at.length-1; i>-1; i--) {
+					no = at[i];
+
+					if (no.specified && no.nodeValue)
+						el.setAttribute(no.nodeName.toLowerCase(), no.nodeValue);
+				}
+
+				if (!hc && !this.closeElementsRe.test(n.nodeName))
+					el.appendChild(xd.createTextNode(""));
+
+				xn = xn.appendChild(el);
+				break;
+
+			case 3: // Text
+				xn.appendChild(xd.createTextNode(n.nodeValue));
+				return;
+
+			case 8: // Comment
+				xn.appendChild(xd.createComment(n.nodeValue));
+				return;
+		}
+
+		if (hc) {
+			cn = n.childNodes;
+
+			for (i=0, l=cn.length; i<l; i++)
+				this._convertToXML(cn[i], xn);
+		}
+	},
+
+	serializeNodeAsHTML : function(n) {
 		var en, no, h = '', i, l, r, cn, va = false, f = false, at, hc;
 
 		switch (n.nodeType) {
@@ -381,7 +468,7 @@ TinyMCE_Cleanup.prototype = {
 					}
 
 					// Close these
-					if (this.closeElements.test(n.nodeName))
+					if (this.closeElementsRe.test(n.nodeName))
 						return h + ' />';
 
 					h += '>';
@@ -405,7 +492,7 @@ TinyMCE_Cleanup.prototype = {
 			cn = n.childNodes;
 
 			for (i=0, l=cn.length; i<l; i++)
-				h += this.serializeNode(cn[i]);
+				h += this.serializeNodeAsHTML(cn[i]);
 		}
 
 		// Fill empty nodes
@@ -450,17 +537,6 @@ TinyMCE_Cleanup.prototype = {
 			return " " + an + "=" + '"' + this.xmlEncode(av) + '"';
 
 		return "";
-	},
-
-	cleanupNode : function(n) {
-		var t, h;
-
-		this.idCount = 0;
-
-		h = this.serializeNode(n);
-		h = this.formatHTML(h);
-
-		return h;
 	},
 
 	formatHTML : function(h) {
@@ -560,6 +636,9 @@ TinyMCE_Cleanup.prototype = {
 
 		if (n == "class" && !v)
 			v = e.className;
+
+		if (n == "class" && this.settings.on_save)
+			v = v.replace(this.internalClassesRe, '');
 
 		if (this.isMSIE && n == "http-equiv")
 			v = e.httpEquiv;
