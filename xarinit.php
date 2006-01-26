@@ -1,11 +1,10 @@
 <?php
 /**
- * File: $Id: xarinit.php 1.27 05/02/04 12:42:43+01:00 alberto@ftb. $
- *
  * Polls initialization functions
  *
- * @copyright (C) 2003 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  * @subpackage polls
  * @author Jim McDonalds, dracos, mikespub et al.
@@ -16,7 +15,7 @@
  */
 function polls_init()
 {
-    // Get datbase setup
+    // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     xarDBLoadTableMaintenanceAPI();
@@ -407,14 +406,14 @@ function polls_upgrade($oldversion)
         if (!$result) return;
 
         case '1.4.0':
-            xarModSetVar('polls', 'showtotalvotes', 1);          
-        
+            xarModSetVar('polls', 'showtotalvotes', 1);
+
         case '1.4.1':
-        
+
         $dbconn =& xarDBGetConn();
         $xartable =& xarDBGetTables();
         $pollstable = $xartable['polls'];
-        
+
             //Load Table Maintenance API
         xarDBLoadTableMaintenanceAPI();
 
@@ -439,18 +438,18 @@ function polls_upgrade($oldversion)
 
             $result =& $dbconn->Execute($query);
             if (!$result) return;
-            
+
             $sql = 'update ' . $pollstable . ' set xar_start_date = '. time() . ' , xar_end_date = 0 where xar_open = 1';
             $result =& $dbconn->Execute($sql);
             if (!$result) return;
-            
+
             $sql = 'update ' . $pollstable . ' set xar_start_date = '. time() . ' , xar_end_date = '. time() . ' where xar_open = 0';
             $result =& $dbconn->Execute($sql);
             if (!$result) return;
-            
+
             xarUnregisterMask('ViewResultsPolls');
-            xarUnregisterMask('CommentPolls'); 
-            xarRemoveInstances('polls'); 
+            xarUnregisterMask('CommentPolls');
+            xarRemoveInstances('polls');
             $query1 = "SELECT DISTINCT xar_title FROM ".xarDBGetSiteTablePrefix()."_polls";
             $query2 = "SELECT DISTINCT xar_type FROM ".xarDBGetSiteTablePrefix()."_polls";
             $instances = array(
@@ -463,8 +462,8 @@ function polls_upgrade($oldversion)
                                 'limit' => 20
                             )
                     );
-            xarDefineInstance('polls', 'Polls', $instances);          
-        
+            xarDefineInstance('polls', 'Polls', $instances);
+
         case 2.0:
             // Code to upgrade from version 2.0 goes here
             break;
@@ -479,7 +478,7 @@ function polls_upgrade($oldversion)
  */
 function polls_delete()
 {
-    // Get datbase setup
+    // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     xarDBLoadTableMaintenanceAPI();
@@ -496,13 +495,7 @@ function polls_delete()
     if (!$result) return;
 
     // Delete any module variables
-    xarModDelVar('polls', 'barscale');
-    xarModDelVar('polls', 'defaultopts');
-    xarModDelVar('polls', 'imggraph');
-    xarModDelVar('polls', 'voteinterval');
-    xarModDelVar('polls', 'previewresults');
-    xarModDelVar('polls', 'uservotes');
-    xarModDelVar('polls', 'SupportShortURLs');
+    xarModDelAllVars('polls');
 
     // Register blocks
     if (!xarModAPIFunc('blocks',

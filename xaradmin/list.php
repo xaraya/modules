@@ -5,7 +5,7 @@
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 The Digital Development Foundation
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage polls
@@ -47,7 +47,7 @@ function polls_admin_list()
     $data['polls'] = array();
 
     foreach ($polls as $poll) {
-        
+
         $row = array();
         $options = array();
 
@@ -94,7 +94,7 @@ function polls_admin_list()
         }
 
 
-        if ($row['end_date'] > time() || $row['end_date'] == 0)  {  
+        if ($row['end_date'] > time() || $row['end_date'] == 0)  {
             $row['close_confirm'] = xarML('Are you sure to close poll "#(1)"', addslashes($poll['title']));
             $row['action_close'] = xarModURL('polls',
                                                'admin',
@@ -107,7 +107,7 @@ function polls_admin_list()
                                                'modify',
                                                array('pid' => $poll['pid']));
         }
-        
+
         if ($row['votes'] > 0 && ($row['end_date'] > time() || $row['end_date'] == 0)) {
             $row['action_reset'] = xarModURL('polls',
                                                'admin',
@@ -119,7 +119,7 @@ function polls_admin_list()
                                                'modify',
                                                array('pid' => $poll['pid']));
         }
-        
+
         $row['delete_confirm'] = xarML('Are you sure to delete poll "#(1)"', addslashes($poll['title']));
         $row['action_delete'] = xarModURL('polls',
                                            'admin',

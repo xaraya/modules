@@ -5,7 +5,7 @@
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 The Digital Development Foundation
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage polls
@@ -47,7 +47,7 @@ function polls_adminapi_create($args)
     if (!isset($end_date) || !is_numeric($end_date)) {
         $end_date = 0;
         }
-    
+
     // Security check
     if (!xarSecurityCheck('AddPolls')) {
         return;

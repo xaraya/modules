@@ -5,7 +5,7 @@
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 The Digital Development Foundation
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage polls
@@ -51,8 +51,8 @@ function polls_admin_modify()
     $data['start_date'] = $poll['start_date'];
     $data['end_date'] = $poll['end_date'];
 
-/* start options */ 
-   
+/* start options */
+
     $data['uplabel'] = xarML('Up');
     $data['downlabel'] = xarML('Down');
     $data['newurl'] = xarModURL('polls',
@@ -64,7 +64,7 @@ function polls_admin_modify()
                                  'list');
 
     $data['options'] = array();
-    
+
     $rownum = 1;
     foreach ($poll['options'] as $opt => $optinfo) {
         $row = array();
@@ -83,7 +83,7 @@ function polls_admin_modify()
                              array('pid' => $pid,
                                    'opt' => $opt,
                                    'authid' => $data['authid']));
-        
+
         if (count($poll['options']) > 1) {
             switch($rownum) {
                 case 1:
@@ -96,11 +96,11 @@ function polls_admin_modify()
                     $row['down'] = $downurl;
                     $row['up'] = $upurl;
             }
-        }                                
+        }
         $row['name'] = $optinfo['name'];
 
-        $row['votes'] = $optinfo['votes'];                                
-                                        
+        $row['votes'] = $optinfo['votes'];
+
         if (xarSecurityCheck('EditPolls',0,'Polls',"$poll[title]:$poll[type]")) {
             $row['modify'] = xarModURL('polls',
                                                'admin',
@@ -120,7 +120,7 @@ function polls_admin_modify()
                                         array('pid' => $pid,
                                               'authid' => $data['authid'],
                                               'opt' => $opt,
-                                              'votes' => $row['votes']));                                
+                                              'votes' => $row['votes']));
         }
         $data['options'][] = $row;
         $rownum++;

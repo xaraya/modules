@@ -5,7 +5,7 @@
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 The Digital Development Foundation
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage polls
@@ -38,7 +38,7 @@ function polls_userapi_getall($args)
     $bindvars = array();
 
     if (isset($status) && is_numeric($status)) {
-       
+
         if ($status == 1) {
             $where = " WHERE $pollstable.xar_start_date <= ? and ($pollstable.xar_end_date >= ? or $pollstable.xar_end_date = 0)";
             $bindvars[]= (int) time();
@@ -47,22 +47,22 @@ function polls_userapi_getall($args)
                 $where .= " AND $pollstable.xar_itemid = ?";
                 $bindvars[]= (int) $hook;
                 }
-        } elseif ($status == 2) { 
+        } elseif ($status == 2) {
             $where = " WHERE $pollstable.xar_start_date >= ?";
             $bindvars[]= time();
             if (isset($hook) && is_numeric($hook)) {
                 $where .= " AND $pollstable.xar_itemid = ?";
                 $bindvars[]= (int) $hook;
                 }
-        } elseif ($status == 3) { 
+        } elseif ($status == 3) {
             $where = " WHERE $pollstable.xar_end_date <= ? and $pollstable.xar_end_date > 0";
             $bindvars[]= time();
         if (isset($hook) && is_numeric($hook)) {
             $where .= " AND $pollstable.xar_itemid = ?";
             $bindvars[]= (int) $hook;
             }
-        }                                      
-       
+        }
+
     } else {
         if (isset($modid) && is_numeric($modid)) {
         $where = " WHERE $pollstable.xar_modid = ?";

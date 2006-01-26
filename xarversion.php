@@ -4,8 +4,9 @@
  *
  * Polls version information
  *
- * @copyright (C) 2003 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  * @subpackage polls
  * @author Jim McDonalds, dracos, mikespub et al.
@@ -24,7 +25,6 @@ $modversion['author'] = 'Jim McDonald';
 $modversion['contact'] = 'http://www.mcdee.net/';
 $modversion['admin'] = 1;
 $modversion['user'] = 1;
-$modversion['securityschema'] = array('Polls::' => 'Poll name::Poll ID');
 $modversion['class'] = 'Complete';
 $modversion['category'] = 'Content';
 

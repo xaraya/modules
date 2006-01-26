@@ -5,7 +5,7 @@
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 The Digital Development Foundation
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage polls
@@ -52,7 +52,7 @@ function polls_user_display($args)
 
     // See if user is allowed to vote
     if (xarSecurityCheck('VotePolls',0,'Polls',"$poll[title]:$poll[type]")){
-        
+
         if ((xarModAPIFunc('polls', 'user', 'usercanvote', array('pid' => $pid)))) {
             // They have not voted yet, display voting options
             $data['canvote'] = 1;

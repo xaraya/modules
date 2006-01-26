@@ -1,11 +1,10 @@
 <?php
-/*
- *
+/**
  * Polls Module
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage polls
@@ -63,13 +62,13 @@ function polls_user_list($args)
             $poll['open'] = 0;
         }
         if (xarSecurityCheck('VotePolls',0,'Polls',"$item[pid]:$item[type]")) {
-        
-            
+
+
             $poll['canvote'] = xarModAPIFunc('polls',
                                              'user',
                                              'usercanvote',
                                              array('pid' => $item['pid']));
-                                             
+
             $poll['action_vote'] = xarModURL('polls', 'user', 'display',
                                              array('pid' => $item['pid']));
         } else {

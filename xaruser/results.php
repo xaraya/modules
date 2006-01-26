@@ -1,11 +1,10 @@
 <?php
-/*
- *
+/**
  * Polls Module
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage polls
@@ -40,7 +39,6 @@ function polls_user_results($args)
         xarResponseRedirect(xarModURL('polls', 'user', 'display',
                                array('pid' => $pid)));
     }
-
 
     $data = array();
 
