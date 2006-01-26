@@ -50,7 +50,7 @@ function ebulletin_userapi_getallissues($args)
     if (isset($sort) && ($sort != 'ASC' && $sort != 'DESC')) {
         $invalid[] = 'sort';
     }
-    if (isset($pid) && !is_numeric($pid)) {
+    if (!empty($pid) && !is_numeric($pid)) {
         $invalid[] = 'pid';
     }
     if (count($invalid) > 0) {
