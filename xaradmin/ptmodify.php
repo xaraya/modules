@@ -12,6 +12,7 @@ function netquery_admin_ptmodify()
         default:
             $data = xarModAPIFunc('netquery', 'admin', 'getport', array('port_id' => $port_id));
             if ($data == false) return;
+            $data['stylesheet'] = xarModGetVar('netquery', 'stylesheet');
             $data['flags'] = xarModAPIFunc('netquery', 'user', 'getflags');
             if ($data['flags'] == false) return;
             $data['pflag'] = $pflag;

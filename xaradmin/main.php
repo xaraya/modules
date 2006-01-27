@@ -19,6 +19,7 @@ function netquery_admin_main()
     $data['hlplink'] = Array('url'   => 'modules/netquery/xardocs/manual.html#admin',
                              'title' => xarML('Netquery online manual'),
                              'label' => xarML('Online Manual'));
+    $data['stylesheet'] = xarModGetVar('netquery', 'stylesheet');
     if (!xarSecurityCheck('AdminNetquery')) return;
     if (xarModGetVar('adminpanels', 'overview') == 0) {
         return $data;

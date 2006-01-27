@@ -1,125 +1,57 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 
 <head>
 <title>Netquery Manual</title>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta name="keywords" content="netquery, whois, whois ip, multiwhois, dns, dig, dns dig, port, port number, http, http request, ping, traceroute, looking glass, php, sql, mysql, nuke, postnuke, xaraya, xoops, software, script, module, opensource, open source, gpl, free, network information, toolkit, virtech, rvirtue, richard virtue" />
+<meta name="description" content="VIRtech Netquery PHP-SQL toolkit of network information utilities" />
 <style type="text/css">
-body {
-  font-family: "trebuchet ms", "luxi sans", verdana, helvetica, sans-serif;
-  font-size: 90.01%;
-  line-height: 125%;
-  margin: 5px 1%;
-  padding: 0;
-  color: #000000;
-  background-color: #FFFFFF;
-  text-align: left;
-}
-a:link {
-  color: #003366;
-  text-decoration: none;
-}
-a:visited {
-  color: #323232;
-  text-decoration: none;
-}
-a:link:hover {
-  text-decoration: underline;
-}
-a:visited:hover {
-  text-decoration: underline;
-}
-a:link:active {
-  color: #800000;
-  text-decoration: underline;
-}
-a:visited:active {
-  color: red;
-  text-decoration: underline;
-}
-h1 {
-  text-align: center;
-}
-h3 {
-  background-color: #A0C0F0;
-  color: #000000;
-  width: 98%;
-  padding: 3px 6px;
-}
-img {
-  border-style: none;
-  margin: 2px 2px 2px 2px;
-}
-img.zero {
-  border-style: none;
-  margin: 0 0 0 0;
-}
-img.floatright {
-  border-style: outset;
-  border-width: 4px;
-  border-color: #CCCC99;
-  padding: 0;
-  margin: 0 20 0 0;
-  float: right;
-}
-img.outset {
-  border-style: outset;
-  border-width: 4px;
-  border-color: #CCCC99;
-  padding: 0;
-  margin: 0 0 0 0;
-}
-table {
-  text-align: left;
-  margin-left: 10px;
-  background-color: #D0E0F0;
-  border-collapse: collapse;
-}
-th {
-  border-bottom: 1px solid #404050;
-  border-right: 1px dotted #606070;
-  border-top: none;
-  border-left: none;
-  padding: 0px 5px 1px 5px;
-  font-weight: bold;
-  background-color: #A0C0F0;
-}
-td {
-  padding: 0px 5px 1px 5px;
-  border-right: 1px dotted #606070;
-  border-left: none;
-  border-bottom: none;
-  border-top: none;
-}
-.help-topic {
-  font-weight : bold;
-  font-size : 1em;
-  color : black;
-  background-color : #A0C0F0;
-}
-.item-heading {
-  font-weight : bold;
-  vertical-align : top;
-  text-align : center;
-  background-color: #CCCC99;
-}
-.item {
-}
-.item-desc {
-}
+  body {font-family: "trebuchet ms", "luxi sans", verdana, helvetica, sans-serif; font-size: 90.01%; line-height: 125%; text-align: left; color: #000000; background-color: #F8F8F8; padding: 0; margin: 5px 1%;}
+  a:link {color: #003366; background-color: transparent; text-decoration: none;}
+  a:visited {color: #323232; background-color: transparent; text-decoration: none;}
+  a:link:hover {text-decoration: underline;}
+  a:visited:hover {text-decoration: underline;}
+  a:link:active {color: #800000; background-color: transparent; text-decoration: underline;}
+  a:visited:active {color: #C00000; background-color: transparent; text-decoration: underline;}
+  p.smallcenter {font-size: 11px; text-align: center;}
+  img.banner {height: 60px; width: 600px; border: 0; padding: 0; margin: 2px 2px 2px 2px;}
+  img.footer {vertical-align : middle; height: 15px; width: 80px; border: 0; padding: 0; margin: 2px 2px 2px 2px;}
+  img.footline {height: 10px; width: 600px; border: 0; padding: 0; margin: 2px 0 2px 0;}
+  img.floatright {float: right; height: 111px; width: 225px; border-style: outset; border-color: #CCCC99; border-width: 4px; padding: 0; margin: 2px 20px 0 0;}
+  table {text-align: left; color : #000000; background-color: #D0E0F0; margin-left: 10px; border-collapse: collapse;}
+  th {font-weight: bold; color : #000000; background-color: #A0C0F0; border-top: none; border-right: 1px solid #606070; border-bottom: 1px solid #404050; border-left: none; padding: 0px 5px 1px 5px;}
+  td {border-top: none; border-right: 1px solid #606070; border-bottom: none; border-left: none; padding: 0px 5px 1px 5px;}
+  .vt-center {text-align : center;}
+  .help-topic {font-weight : bold; font-size : 1em; color : black; background-color : #A0C0F0;}
+  .item-heading {font-weight : bold; vertical-align : top; text-align : center; background-color: #CCCC99;}
+  .item {}
+  .item-desc {}
 </style>
+<script type="text/javascript"><!--
+function newWindow(sLink) {
+ window.open(sLink);
+}
+// --></script>
 </head>
 
 <body>
-<h1><a name="top">Netquery Manual</a></h1>
+<h1 class="vt-center"><a id="top">Netquery Manual</a></h1>
 
-<h2><a name="summary">Summary</a></h2>
+<h2><a id="summary">Summary</a></h2>
 
 <p>Netquery, the complete PHP/SQL toolkit of network information utilities, includes the following
 major features:</p><ul>
-<li>client &quot;sniffer&quot; with GeoIP option,</li>
-<a href="http://www.virtech.org/tools/"><img class="floatright" src="../xarimages/nqtoppix.gif" width="225" height="111" alt="" /></a>
+<li>client &quot;sniffer&quot; with GeoIP option,
+<script type="text/javascript"><!--
+ var imagedir = '../images';
+ var docURL = document.URL;
+ if (docURL.indexOf("pndocs",0) > 0)  imagedir = '../pnimages';
+ if (docURL.indexOf("xardocs",0) > 0)  imagedir = '../xarimages';
+ document.write('<a href="http://www.virtech.org/tools/"><img class="floatright" src="' + imagedir + '/nqtoppix.gif" alt="" /></a>');
+// --></script>
+</li>
 <li>multidomain &amp; IP/AS whois lookups,</li>
 <li>autodiscovery for whois TLD server,</li>
 <li>DNS and Dig (ANY, SOA, NS, MX) queries,</li>
@@ -133,7 +65,7 @@ major features:</p><ul>
 <li>updateable GeoIP &amp; ports data paks,</li>
 <li>user inputs with admin notice &amp; approval,</li>
 <li>multi-instance sideblocks in CMS editions,</li>
-<li>full XHTML 1.0 Strict &amp; CSS compliance.</li></ul>
+<li>full W3C XHTML 1.1 &amp; CSS compliance.</li></ul>
 
 <p>Netquery is fully configurable. The administrator can enable or disable each feature individually
 and can select local execution and/or a remote server script for the ping and traceroute features.
@@ -146,15 +78,15 @@ Optional GeoIP and ports data tables can be downloaded and installed independent
 <p>A standlone edition and three CMS module editions of Netquery are available for download from the
 home site or from their respective CMS development project sites.  Live test installations and
 user-to-user discussion and help forums are also available on line as follows:</p><ul>
-<li><a href="http://www.virtech.org/tools/" target="_top">Netquery Home &amp; Downloads</a>
- ~ <a href="http://www.virtech.org/netquery/" target="_top">Standalone Edition Live</a></li>
-<li><a href="http://noc.postnuke.com/projects/netquery/" target="_top">Postnuke Project</a>
- ~ <a href="http://postnuke.virtech.org/index.php?module=Netquery" target="_top">Postnuke Edition Live</a></li>
-<li><a href="http://www.xaraya.com/index.php/release/91.html" target="_top">Xaraya Project</a>
- ~ <a href="http://xaraya.virtech.org/index.php?module=netquery" target="_top">Xaraya Edition Live</a></li>
-<li><a href="http://dev.xoops.org/modules/xfmod/project/?mwr-netquery" target="_top">Xoops Project</a>
- ~ <a href="http://xoops.virtech.org/modules/netquery/" target="_top">Xoops Edition Live</a></li>
-<li><a href="http://www.virtech.org/phpbb2/" target="_top">Discussion &amp; Help Forums</a></li>
+<li><a href="javascript:newWindow('http://www.virtech.org/tools/');">Netquery Home &amp; Downloads</a>
+ ~ <a href="javascript:newWindow('http://www.virtech.org/netquery/');">Standalone Edition Live</a></li>
+<li><a href="javascript:newWindow('http://noc.postnuke.com/projects/netquery/');">Postnuke Project</a>
+ ~ <a href="javascript:newWindow('http://postnuke.virtech.org/index.php?module=Netquery');">Postnuke Edition Live</a></li>
+<li><a href="javascript:newWindow('http://www.xaraya.com/index.php/release/91.html');">Xaraya Project</a>
+ ~ <a href="javascript:newWindow('http://xaraya.virtech.org/index.php?module=netquery');">Xaraya Edition Live</a></li>
+<li><a href="javascript:newWindow('http://dev.xoops.org/modules/xfmod/project/?mwr-netquery');">Xoops Project</a>
+ ~ <a href="javascript:newWindow('http://xoops.virtech.org/modules/netquery/');">Xoops Edition Live</a></li>
+<li><a href="javascript:newWindow('http://www.virtech.org/phpbb2/');">Discussion &amp; Help Forums</a></li>
 </ul>
 
 <h3>Download Notes</h3>
@@ -168,11 +100,11 @@ do not make a right.)</p>
 <p>(2) Only the Netquery standalone download contains basic administrator login authentication of its own.
 (The CMS editions rely upon module security provided by the CMS.) If you want to control user access for the
 standalone edition, authentication add-ons are readily available from open source PHP script sites, including
-<a href="http://www.hotscripts.com/PHP/Scripts_and_Programs/User_Authentication/?RID=N282832">HotScripts</a>
-and the <a href="http://php.resourceindex.com/Complete_Scripts/User_Management/">PHP Resource Index</a>.</p>
+<a href="javascript:newWindow('http://www.hotscripts.com/PHP/Scripts_and_Programs/User_Authentication/?RID=N282832');">HotScripts</a>
+and the <a href="javascript:newWindow('http://php.resourceindex.com/Complete_Scripts/User_Management/');">PHP Resource Index</a>.</p>
 
 
-<h2><a name="whatfor">What Can Netquery Do For Me?</a></h2>
+<h2><a id="whatfor">What Can Netquery Do For Me?</a></h2>
 
 <p>Netquery has been designed and developed with site administrators, hosting service providers and
 other technically inclined users clearly in mind.  In particular, every effort has been made to keep
@@ -195,7 +127,7 @@ growing world of "always connected" Internet access and are concerned about whet
 gamer who worries about "lag times" and would like to know where those game-losing extra milliseconds
 are coming from.  Netquery can answer all those questions and more.  Read on.</p>
 
-<h2><a name="startup">Getting Started</a></h2>
+<h2><a id="startup">Getting Started</a></h2>
 
 <p>Getting started with Netquery is about as easy as anything could possibly be.  Just install it and
 take a quick look at its pre-set admin options to see if you want to change any of them.  Depending
@@ -205,9 +137,9 @@ reconfigured to suit your needs and preferences.</p>
 
 <p>The following table summarizes the set-up steps and all available administrative options.</p>
 
-<table class="main" cellpadding="4" cellspacing="1">
+<table>
     <tr class="help-topic">
-        <td class="help-topic" colspan="2"><a name="admin">Netquery Administration</a></td>
+        <td class="help-topic" colspan="2"><a id="admin">Netquery Administration</a></td>
     </tr>
     <tr><td class="item-heading" colspan="2">Installation of the Standalone Edition</td></tr>
     <tr>
@@ -251,7 +183,7 @@ reconfigured to suit your needs and preferences.</p>
     </tr>
     <tr><td class="item-heading" colspan="2">Netquery Options Configuration</td></tr>
     <tr>
-        <td class="item">Execution &amp Startup Page</td>
+        <td class="item">Execution &amp; Startup Page</td>
         <td class="item-desc">Enable execution timer and select the default query type for startup.</td>
     </tr>
     <tr>
@@ -380,15 +312,15 @@ reconfigured to suit your needs and preferences.</p>
     </tr>
 </table>
 
-<h3><a name="adminnotes">Administrator Items</a></h3>
+<h3><a id="adminnotes">Administrator Items</a></h3>
 
 <p>In many cases, unless you need to use other external scripts or have special path requirements, you
 won't need to change any configuration settings. <b>However</b>, unless you run your own web server and
 can set permissions on its system executables, you will probably need to disable the local execution ping
 and traceroute features and not enable Windows nslookup for email checking. Very few hosting services allow
 the read/execute permissions required for those local functions. A listing of alternative server scripts
-for use with the external traceroute and ping features can be found at <a href="http://www.traceroute.org/"
-target="_blank">Traceroute.org</a></p>
+for use with the external traceroute and ping features can be found at
+<a href="javascript:newWindow('http://www.traceroute.org/');">Traceroute.org</a></p>
 
 <p>In Netquery's administrator interface for Whois TLD-Server links, if the server entry is left blank
 when adding or editing items, Netquery will try autodiscovery using whois-servers.net data.  Autodiscovery
@@ -397,12 +329,12 @@ manually based on that found for the top level domain (TLD).</p>
 
 <p>When Netquery is initially installed, its whois and looking glass data tables contain only a few
 commonly used examples. To assist with populating your whois data table, you can look for TLD server
-information at <a href="http://www.internic.net/whois.html" target="_blank">Internic</a> which contains
+information at <a href="javascript:newWindow('http://www.internic.net/whois.html');">Internic</a> which contains
 the integrated database of all the global top level domains.  You may also wish to refer to the
-<a href="http://www.iana.org/cctld/cctld-whois.htm">IANA</a> list of country registrars.  To assist with
+<a href="javascript:newWindow('http://www.iana.org/cctld/cctld-whois.htm');">IANA</a> list of country registrars.  To assist with
 populating the looking glass data table you can find lists of routers at
-<a href="http://www.nanog.org/lookingglass.html" target="_blank">Nanog.org</a> and at
-<a href="http://www.bgp4.net/rs" target="_blank">Bgp4.net</a>.</p>
+<a href="javascript:newWindow('http://www.nanog.org/lookingglass.html');">Nanog.org</a> and at
+<a href="javascript:newWindow('http://www.bgp4.net/rs');">Bgp4.net</a>.</p>
 
 <p>In setting the maximum allowed number of simultaneous whois lookup entries, administrators should
 be aware that whois server operators may set their own limits. If a whois server limit is execeeded,
@@ -415,7 +347,7 @@ they may be accessed ONLY via the [Allow User Submissions ~ ## New for Reflaggin
 Netquery admin panel.  For comparison and variants checking, a popup list of other entries for the same
 port is available while reflagging and editing new submissions.</p>
 
-<p>GeoIP and ports data installer options are available from <a href="http://www.virtech.org/tools/" target="_blank">VIRtech
+<p>GeoIP and ports data installer options are available from <a href="javascript:newWindow('http://www.virtech.org/tools/');">VIRtech
 Tools</a>. Please note that data installation replaces all existing data in the affected tables.  Unless it has
 been backed up, any previously entered data will be lost.</p>
 
@@ -428,7 +360,7 @@ port" entry will be used.) For enabled/disabled items, disabling the main config
 it for all routers. (For example, if "Use bgpd" has been enabled (checked) in the main configuration
 for looking glass, it can be disabled for an individual router, but NOT vice versa.)</p>
 
-<h2><a name="using">Using Netquery</a></h2>
+<h2><a id="using">Using Netquery</a></h2>
 
 <p>It is beyond this manual's scope to provide a complete background course on the Internet itself and
 on the entire range of issues involved in examining various aspects of its complex structure, topology
@@ -438,7 +370,7 @@ like to pursue some of the underlying issues in greater depth.  Let it suffice t
 one understands those issues and their impacts on both service providers and end users, the more useful
 Netquery becomes.</p>
 
-<h3><a name="whois">Whois Lookups</a></h3>
+<h3><a id="whois">Whois Lookups</a></h3>
 <p>All domain names on the Internet are registered with "domain name registrars".  Domain name
 registrars are entities which have been allocated the authority to register names for a specific
 subset of domain names. Most Domain name registrars provide a "whois" function, where you can ask
@@ -455,16 +387,16 @@ web site's purposes and its users. If the TLD you're looking for is not availabl
 listing, you can ask the administrator to add it if an associated whois server is available.</p>
 
 <p>More info:
-<a href="http://www.icann.org/" target="_blank">ICANN</a></p>
+<a href="javascript:newWindow('http://www.icann.org/');">ICANN</a></p>
 
-<h3><a name="whoisip">Whois IP Lookups</a></h3>
+<h3><a id="whoisip">Whois IP Lookups</a></h3>
 <p>This Netquery feature provides owner-registrar information on a particular IP address, useful
 when you do not have the domain information needed to use the Whois Lookup feature described above.</p>
 
 <p>More info:
-<a href="http://www.arin.net/whois/" target="_blank">ARIN</a></p>
+<a href="javascript:newWindow('http://www.arin.net/whois/');">ARIN</a></p>
 
-<h3><a name="dnslookup">DNS Lookups</a></h3>
+<h3><a id="dnslookup">DNS Lookups</a></h3>
 <p>DNS stands for Domain Name System. This system is used to associate a domain name
 (e.g. www.mydomainname.com) with one or multiple IP addresses. Now, an IP (Internet Protocol) address
 is like a phone number to a computer. Every computer has one but just like a phone number, sometimes
@@ -480,20 +412,20 @@ name, it will be resolved to its IP address.  If the user enters an IP address, 
 domain name, if one has been allocated and propagated for that IP address.</p>
 
 <p>More info:
-<a href="http://www.phpwebhosting.biz/faq_dns.php" target="_blank">phpweb</a>
-<a href="http://www.simplehost.com/tutorials/dns.htm" target="_blank">simplehost</a>
-<a href="http://www.insan.co.id/tutor.eng/dns.html" target="_blank">tutor</a></p>
+<a href="javascript:newWindow('http://www.phpwebhosting.biz/faq_dns.php');">phpweb</a>
+<a href="javascript:newWindow('http://www.simplehost.com/tutorials/dns.htm');">simplehost</a>
+<a href="javascript:newWindow('http://www.insan.co.id/tutor.eng/dns.html');">tutor</a></p>
 
-<h3><a name="dnsdig">DNS Dig Queries</a></h3>
+<h3><a id="dnsdig">DNS Dig Queries</a></h3>
 <p>Netquery's Dig tool is available only on web sites that run on UNIX/Linux servers. Microsoft Windows
 servers do not support this feature.  Where available, it provides essentially the same functionality
 as the DNS lookup feature, but uses the UNIX/Linux command set to execute the actual function.</p>
 
 <p>More info:
-<a href="http://www.oreilly.com/catalog/dns3/chapter/ch02.html" target="_blank">oreilly</a>
-<a href="http://www.isi.edu/in-notes/rfc1591.txt" target="_blank">ISI Text</a></p>
+<a href="javascript:newWindow('http://www.oreilly.com/catalog/dns3/chapter/ch02.html');">oreilly</a>
+<a href="javascript:newWindow('http://www.isi.edu/in-notes/rfc1591.txt');">ISI Text</a></p>
 
-<h3><a name="port">Validate Email Address</a></h3>
+<h3><a id="email">Validate Email Address</a></h3>
 <p>This allows site administrators and users to check the validity of any email address.  The first test
 checks for a properly formatted address.  Then, if running on a UNIX/Linux system or if Windows nslookup
 is accessible, it checks the domain name system for proper MX and other DNS records.  Lastly, if the
@@ -501,10 +433,10 @@ option has been enabled by the site administrator, it queries the mail exchange 
 or reject the address entered.  Note that no email message is actually sent to anyone.</p>
 
 <p>More info:
-<a href="http://www.faqs.org/rfcs/rfc822.html" target="_blank">RFC822</a>
-<a href="http://www.private.org.il/harvest.html" target="_blank">Spammers</a></p>
+<a href="javascript:newWindow('http://www.faqs.org/rfcs/rfc822.html');">RFC822</a>
+<a href="javascript:newWindow('http://www.private.org.il/harvest.html');">Spammers</a></p>
 
-<h3><a name="port">Port Checks</a></h3>
+<h3><a id="port">Port Checks</a></h3>
 <p>Port checks can be an important part of securing your computing system, especially for those who
 operate with "always connected" (cable, ADSL, etc) Internet services.</p>
 
@@ -517,33 +449,33 @@ the specified port is open and accepting connections.</p>
 for the administrator's attention to be added to the listing upon acceptance.</p>
 
 <p>More info:
-<a href="http://www.iana.org/assignments/port-numbers" target="_blank">IANA</a>
-<a href="http://advice.networkice.com/advice/Exploits/Ports/default.htm" target="_blank">UDP</a>
-<a href="http://www.chebucto.ns.ca/~rakerman/port-table.html" target="_blank">TCP-IP</a>
-<a href="http://www.portsdb.org/" target="_blank">Ports dB</a>
-<a href="http://www.sans.org/newsletters/" target="_blank">SANS</a>
-<a href="http://www.grc.com/su-reading.htm" target="_blank">Shields Up</a>
-<a href="http://www.auditmypc.com/" target="_blank">PC Audit</a></p>
+<a href="javascript:newWindow('http://www.iana.org/assignments/port-numbers');">IANA</a>
+<a href="javascript:newWindow('http://advice.networkice.com/advice/Exploits/Ports/default.htm');">UDP</a>
+<a href="javascript:newWindow('http://www.chebucto.ns.ca/~rakerman/port-table.html');">TCP-IP</a>
+<a href="javascript:newWindow('http://www.portsdb.org/');">Ports dB</a>
+<a href="javascript:newWindow('http://www.sans.org/newsletters/');">SANS</a>
+<a href="javascript:newWindow('http://www.grc.com/su-reading.htm');">Shields Up</a>
+<a href="javascript:newWindow('http://www.auditmypc.com/');">PC Audit</a></p>
 
-<h3><a name="port">HTTP Requests</a></h3>
+<h3><a id="httpreq">HTTP Requests</a></h3>
 <p>Hypertext transport protocol (HTTP) is the languange used by web browsers and web servers to
 communicate with and respond to each other across the internet.  Using this function, you can
 send an HTTP request (HEAD or GET) directly to a server specifying a particular object with a
 complete URL and examine the server's response "in the raw".</p>
 <p>More info:
-<a href="http://www.faqs.org/rfcs/rfc2068.html" target="_blank">RFC2068</a></p>
+<a href="javascript:newWindow('http://www.faqs.org/rfcs/rfc2068.html');">RFC2068</a></p>
 
-<h3><a name="ping">ICMP Pings</a></h3>
+<h3><a id="ping">ICMP Pings</a></h3>
 <p>As its name suggests, the ping feature can be compared to a submariner's sonar. It is a utility
 that simply checks whether the target computer is currently connected to the internet and responding.
 You should be aware that some servers (e.g., microsoft.com) are deliberately configured so that they
 do not respond to ICMP pings.</p>
 
 <p>More info:
-<a href="http://ftp.arl.mil/~mike/ping.html" target="_blank">mike</a>
-<a href="http://www.cymru.com/Documents/icmp-messages.html" target="_blank">ICMP</a></p>
+<a href="javascript:newWindow('http://ftp.arl.mil/~mike/ping.html');">mike</a>
+<a href="javascript:newWindow('http://www.cymru.com/Documents/icmp-messages.html');">ICMP</a></p>
 
-<h3><a name="traceroute">Traceroutes</a></h3>
+<h3><a id="traceroute">Traceroutes</a></h3>
 <p>Traceroute can be used to show you how a site is physically connected to the Internet.  Along the
 way you will also gain an understanding of how networks inter-connect. Traceroute can be used to
 determine the specific network route taken to reach a specific remote host.</p>
@@ -562,10 +494,10 @@ destination. For each hop, traceroute then displays the RTT, Round Trip Time, or
 between when the probe was sent from traceroute and the time the response arrived for each packet.</p>
 
 <p>More info:
-<a href="http://www.cisco.com/warp/public/63/ping_traceroute.html" target="_blank">Cisco</a>
-<a href="http://www.visualware.com/whitepapers/tutorials/tracert.html" target="_blank">visualware</a></p>
+<a href="javascript:newWindow('http://www.cisco.com/warp/public/63/ping_traceroute.html');">Cisco</a>
+<a href="javascript:newWindow('http://www.visualware.com/whitepapers/tutorials/tracert.html');">visualware</a></p>
 
-<h3><a name="port">Looking Glass</a></h3>
+<h3><a id="lg">Looking Glass</a></h3>
 <p>Looking glass extends Netquery's scope by providing capabilities for interrogating routers (Cisco,
 Zebra, Juniper) used in wide area networks that comprise the Internet. It is intended for advanced
 users who have an in-depth understanding of network topology and router functions. The looking glass
@@ -573,18 +505,16 @@ feature in Netquery contains the following commands for both IPv4 and IPv6: OSPF
 BGP neighborship, OSPF RT, BGP RR, Zebra Any RR, and Zebra Interface Info.</p>
 
 <p>More info:
-<a href="http://www.bind.com/routing.html" target="_blank">Bind.com</a>
-<a href="http://www.bgpexpert.com/resources.php" target="_blank">BGP Expert</a>
-<a href="http://www.routeviews.org/" target="_blank">Routeviews</a></p>
+<a href="javascript:newWindow('http://www.bind.com/routing.html');">Bind.com</a>
+<a href="javascript:newWindow('http://www.bgpexpert.com/resources.php');">BGP Expert</a>
+<a href="javascript:newWindow('http://www.routeviews.org/');">Routeviews</a></p>
 
-<h2><a name="datetime">Appendix 1</a>: Log Datetime Formatting</h2>
+<h2><a id="datetime">Appendix 1</a>: Log Datetime Formatting</h2>
 
 <p>The following table lists recognized characters for use in the datetime format configuration string.
 Any other unrecognized characters included in the string are recorded as is.</p>
 
-<table
-class="main"
->
+<table>
 <col /><col /><col />
 <thead
 ><tr
@@ -938,8 +868,7 @@ class="literal"
 ></td
 ><td
 ><a
-href="http://www.faqs.org/rfcs/rfc2822"
-target="_blank"
+href="javascript:newWindow('http://www.faqs.org/rfcs/rfc2822');"
 >RFC 2822</a
 > formatted date</td
 ><td
@@ -1037,8 +966,7 @@ class="literal"
 >Seconds since the Unix Epoch (January 1 1970 00:00:00 GMT)</td
 ><td
 >See also <a
-href="http://www.php.net/manual/en/function.time.php"
-target="_blank"
+href="javascript:newWindow('http://www.php.net/manual/en/function.time.php');"
 ><b
 class="function"
 >time()</b

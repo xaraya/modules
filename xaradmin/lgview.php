@@ -1,9 +1,10 @@
 <?php
 function netquery_admin_lgview()
 {
-    if(!xarSecurityCheck('EditNetquery')) return;
-    if(!xarVarFetch('startnum', 'isset', $startnum, 1, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarSecurityCheck('EditNetquery')) return;
+    if (!xarVarFetch('startnum', 'isset', $startnum, 1, XARVAR_NOT_REQUIRED)) {return;}
     $data['items'] = array();
+    $data['stylesheet'] = xarModGetVar('netquery', 'stylesheet');
     $data['authid'] = xarSecGenAuthKey();
     $routers = xarModAPIFunc('netquery', 'user', 'getlgrouters', array('startnum' => $startnum));
     if (empty($routers)) {
@@ -15,16 +16,18 @@ function netquery_admin_lgview()
         $router = $routers[$i];
         if (xarSecurityCheck('EditNetquery',0)) {
             $routers[$i]['editurl'] = xarModURL('netquery', 'admin', 'lgmodify', array('router_id' => $router['router_id']));
+            $routers[$i]['edittitle'] = xarML('Edit');
         } else {
             $routers[$i]['editurl'] = '';
+            $routers[$i]['edittitle'] = '----';
         }
-        $routers[$i]['edittitle'] = xarML('Edit');
         if (xarSecurityCheck('DeleteNetquery',0) && $router['router'] != 'default') {
             $routers[$i]['deleteurl'] = xarModURL('netquery', 'admin', 'lgdelete', array('router_id' => $router['router_id']));
+            $routers[$i]['deletetitle'] = xarML('Delete');
         } else {
             $routers[$i]['deleteurl'] = '';
+            $routers[$i]['deletetitle'] = '------';
         }
-        $routers[$i]['deletetitle'] = xarML('Delete');
     }
     $data['items'] = $routers;
     $data['cfglink'] = Array('url'   => xarModURL('netquery', 'admin', 'config'),

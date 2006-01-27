@@ -1,5 +1,8 @@
 <script type="text/javascript" src="modules/netquery/xartemplates/popup.js"></script>
 
+<xar:if condition="xarTplAddStyleLink('netquery', $stylesheet)">
+</xar:if>
+
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>Netquery Administration</xar:mlstring></span>
 </div>
@@ -7,27 +10,23 @@
 <div class="xar-mod-body">
 <div style="margin: auto;">
 
-<h2><xar:mlstring>Modify Netquery Configuration</xar:mlstring>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <a href="javascript:popUp('#$hlplink.url#','console','400','600');"><img style="vertical-align:top;" src="modules/netquery/xarimages/btn_help.gif" alt="#$hlplink.label#" /></a>
-</h2>
-
-<form action="#xarModURL('netquery', 'admin', 'config')#" method="post" enctype="application/x-www-form-urlencoded">
-<table>
-  <tr>
-    <td>
+<div class="nq-center">
+<h2><xar:mlstring>Modify Netquery Configuration</xar:mlstring></h2>
+<form class="nqadmin" action="#xarModURL('netquery', 'admin', 'config')#" method="post" enctype="application/x-www-form-urlencoded">
       <input type="hidden" name="authid" id="authid" value="#$authid#" />
       <input type="hidden" name="phase" id="phase" value="update" />
-    </td>
-  </tr>
-  <tr align="left">
-    <td colspan="2">
+  <fieldset>
+      <legend>
+      <a href="javascript:popUp('#$hlplink.url#','console','400','600');"><img class="floatbutton" src="modules/netquery/xarimages/btn_help.gif" alt="#$hlplink.label#" /></a>
+      <xar:mlstring>Options</xar:mlstring>
+      </legend>
       <xar:if condition="$exec_timer_enabled">
         <input type="checkbox" name="exec_timer_enabled" id="exec_timer_enabled" value="1" checked="checked" />
       <xar:else />
         <input type="checkbox" name="exec_timer_enabled" id="exec_timer_enabled" value="1" />
       </xar:if>
-      <xar:mlstring>Enable Execution Timer</xar:mlstring> ~ 
-      <xar:mlstring>Default Query Type:</xar:mlstring> 
+      <label for="exec_timer_enabled"><xar:mlstring>Enable Execution Timer</xar:mlstring></label>
+      ~ <label for="querytype_default"><xar:mlstring>Default Query Type</xar:mlstring></label>:
       <select name="querytype_default" id="querytype_default">
         <xar:foreach in="$startoptions" value="$startoption">
           <xar:if condition="!empty($startoption.value)">
@@ -39,53 +38,56 @@
           </xar:if>
         </xar:foreach>
       </select>
-    </td>
-  </tr>
-  <tr align="left">
-    <td colspan="2">
+      <br /><span class="nq-indent">
+      <span class="help" title="#xarML('CSS file for interface style elements')#"><label for="stylesheet"><xar:mlstring>Stylesheet</xar:mlstring></label></span>:
+      <select name="stylesheet" id="stylesheet">
+        <xar:foreach in="$cssfiles" value="$cssfile">
+          <xar:if condition="!empty($cssfile)">
+            <xar:if condition="$cssfile eq $stylesheet">
+              <option selected="selected" value="#$cssfile#">#$cssfile#</option>
+            <xar:else />
+              <option value="#$cssfile#">#$cssfile#</option>
+            </xar:if>
+          </xar:if>
+        </xar:foreach>
+      </select>
+  </fieldset>
+  <fieldset><legend><xar:mlstring>Logging</xar:mlstring></legend>
       <xar:if condition="xarModGetVar('netquery', 'capture_log_enabled')">
         <input type="checkbox" name="capture_log_enabled" id="capture_log_enabled" value="1" checked="checked" />
       <xar:else />
         <input type="checkbox" name="capture_log_enabled" id="capture_log_enabled" value="1" />
       </xar:if>
-      <xar:mlstring>Enable Netquery Log</xar:mlstring> ~ 
+      <label for="capture_log_enabled"><xar:mlstring>Enable Netquery Log</xar:mlstring></label> 
       <xar:if condition="xarModGetVar('netquery', 'capture_log_allowuser')">
-        <input type="checkbox" name="capture_log_allowuser" id="capture_log_allowuser" value="1" checked="checked" />
+        ~ <input type="checkbox" name="capture_log_allowuser" id="capture_log_allowuser" value="1" checked="checked" />
       <xar:else />
-        <input type="checkbox" name="capture_log_allowuser" id="capture_log_allowuser" value="1" />
+        ~ <input type="checkbox" name="capture_log_allowuser" id="capture_log_allowuser" value="1" />
       </xar:if>
-      <xar:mlstring>Allow User View</xar:mlstring>
+      <label for="capture_log_allowuser"><xar:mlstring>Allow User View</xar:mlstring></label>
       <xar:if condition="!empty($loglink)">
         ~ <a href="javascript:popUp('#$loglink.url#','console','400','600');">#$loglink.label#</a>
         ~ <a href="#$clearlog.url#">#$clearlog.label#</a>
       </xar:if>
-    </td>
-  </tr>
-  <tr>
-    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <span class="help" title="#xarML('Netquery capture log PATH/FILENAME')#"><label for="capture_log_filepath"><xar:mlstring>At Filepath:</xar:mlstring></label></span>
+      <br /><span class="nq-indent">
+      <span class="help" title="#xarML('Netquery capture log PATH/FILENAME')#"><label for="capture_log_filepath"><xar:mlstring>At Filepath</xar:mlstring></label></span>:
       <input type="text" name="capture_log_filepath" id="capture_log_filepath" value="#$capture_log_filepath#" size="30" maxlength="100" />
-       ~
-      <span class="help" title="#xarML('FORMAT for log date-time entries')#"><label for="capture_log_dtformat"><xar:mlstring>Datetime:</xar:mlstring></label></span>
+      ~ <span class="help" title="#xarML('FORMAT for log date-time entries')#"><label for="capture_log_dtformat"><xar:mlstring>Datetime</xar:mlstring></label></span>:
       <input type="text" name="capture_log_dtformat" id="capture_log_dtformat" value="#$capture_log_dtformat#" size="11" maxlength="100" />
-    </td>
-  </tr>
-  <tr align="left">
-    <td colspan="2">
+      </span>
+  </fieldset>
+  <fieldset><legend><xar:mlstring>Client Info</xar:mlstring></legend>
       <xar:if condition="$clientinfo_enabled">
         <input type="checkbox" name="clientinfo_enabled" id="clientinfo_enabled" value="1" checked="checked" />
       <xar:else />
         <input type="checkbox" name="clientinfo_enabled" id="clientinfo_enabled" value="1" />
       </xar:if>
-      <xar:mlstring>Enable Client Info (Main Interface)</xar:mlstring>
+      <label for="clientinfo_enabled"><xar:mlstring>Enable Client Info (Main Interface)</xar:mlstring></label>
       <xar:if condition="!empty($xaglink)">
         ~ <a href="#$xaglink.url#">#$xaglink.label#</a>
       </xar:if>
-    </td>
-  </tr>
-  <tr>
-    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <span class="help" title="#xarML('Site to use for GeoIP mapping')#"><label for="mapping_site"><xar:mlstring>Mapping Site:</xar:mlstring></label></span>
+      <br /><span class="nq-indent">
+      <span class="help" title="#xarML('Site to use for GeoIP mapping')#"><label for="mapping_site"><xar:mlstring>Mapping Site</xar:mlstring></label></span>:
       <select name="mapping_site" id="mapping_site">
       <xar:foreach in="$mappingsites" value="$mappingsite">
         <xar:if condition="!empty($mappingsite.name)">
@@ -97,8 +99,7 @@
         </xar:if>
       </xar:foreach>
       </select>
-      ~
-      <span class="help" title="#xarML('Maximum top countries to display')#"><label for="topcountries_limit"><xar:mlstring>Top Countries:</xar:mlstring></label></span>
+      ~ <span class="help" title="#xarML('Maximum top countries to display')#"><label for="topcountries_limit"><xar:mlstring>Top Countries</xar:mlstring></label></span>:
       <select name="topcountries_limit" id="topcountries_limit">
       <xar:foreach in="$topcountries" value="$topcountry">
         <xar:if condition="!empty($topcountry.value)">
@@ -110,22 +111,18 @@
         </xar:if>
       </xar:foreach>
       </select>
-    </td>
-  </tr>
-  <tr align="left">
-    <td colspan="2">
+      </span>
+  </fieldset>
+  <fieldset><legend><xar:mlstring>Whois</xar:mlstring></legend>
       <xar:if condition="$whois_enabled">
         <input type="checkbox" name="whois_enabled" id="whois_enabled" value="1" checked="checked" />
       <xar:else />
         <input type="checkbox" name="whois_enabled" id="whois_enabled" value="1" />
       </xar:if>
-      <xar:mlstring>Enable Whois Search</xar:mlstring>
+      <label for="whois_enabled"><xar:mlstring>Enable Whois Search</xar:mlstring></label>
       ~ <a href="#$wivlink.url#">#$wivlink.label#</a>
-    </td>
-  </tr>
-  <tr>
-    <td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <span class="help" title="#xarML('Maximum simultaneous whois lookups')#"><label for="whois_max_limit"><xar:mlstring>Max Entries:</xar:mlstring></label></span>
+      <br /><span class="nq-indent">
+      <span class="help" title="#xarML('Maximum simultaneous whois lookups')#"><label for="whois_max_limit"><xar:mlstring>Max Entries</xar:mlstring></label></span>:
       <select name="whois_max_limit" id="whois_max_limit">
       <xar:foreach in="$whoislimits" value="$whoislimit">
         <xar:if condition="!empty($whoislimit)">
@@ -137,8 +134,7 @@
         </xar:if>
       </xar:foreach>
       </select>
-      ~
-      <span class="help" title="#xarML('Default TLD for whois lookups')#"><label for="whois_default"><xar:mlstring>Default TLD:</xar:mlstring></label></span>
+      ~ <span class="help" title="#xarML('Default TLD for whois lookups')#"><label for="whois_default"><xar:mlstring>Default TLD</xar:mlstring></label></span>:
       <select name="whois_default" id="whois_default">
       <xar:foreach in="$links" value="$link">
         <xar:if condition="!empty($link.whois_ext)">
@@ -150,189 +146,147 @@
         </xar:if>
       </xar:foreach>
       </select>
-    </td>
-  </tr>
-  <tr align="left">
-    <td colspan="2">
+      </span>
+      <br />
       <xar:if condition="$whoisip_enabled">
         <input type="checkbox" name="whoisip_enabled" id="whoisip_enabled" value="1" checked="checked" />
       <xar:else />
         <input type="checkbox" name="whoisip_enabled" id="whoisip_enabled" value="1" />
       </xar:if>
-      <xar:mlstring>Enable Whois IP Search</xar:mlstring>
-    </td>
-  </tr>
-  <tr align="left">
-    <td colspan="2">
+      <label for="whoisip_enabled"><xar:mlstring>Enable Whois IP Search</xar:mlstring></label>
+  </fieldset>
+  <fieldset><legend><xar:mlstring>DNS Lookup</xar:mlstring></legend>
       <xar:if condition="$dns_lookup_enabled">
         <input type="checkbox" name="dns_lookup_enabled" id="dns_lookup_enabled" value="1" checked="checked" />
       <xar:else />
         <input type="checkbox" name="dns_lookup_enabled" id="dns_lookup_enabled" value="1" />
       </xar:if>
-      <xar:mlstring>Enable DNS Lookup</xar:mlstring>
-    </td>
-  </tr>
-  <tr align="left">
-    <td colspan="2">
+      <label for="dns_lookup_enabled"><xar:mlstring>Enable DNS Lookup</xar:mlstring></label>
+      <br />
       <xar:if condition="$dns_dig_enabled">
         <input type="checkbox" name="dns_dig_enabled" id="dns_dig_enabled" value="1" checked="checked" />
       <xar:else />
         <input type="checkbox" name="dns_dig_enabled" id="dns_dig_enabled" value="1" />
       </xar:if>
-      <xar:mlstring>Enable Dig (UNIX/Linux) or NSLookup (Windows)</xar:mlstring>
-    </td>
-  </tr>
-  <tr>
-    <td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <span class="help" title="#xarML('Local DNS lookup EXECUTABLE including path if necessary')#"><label for="digexec_local"><xar:mlstring>Executable:</xar:mlstring></label></span>
+      <label for="dns_dig_enabled"><xar:mlstring>Enable Dig (UNIX/Linux) or NSLookup (Windows)</xar:mlstring></label>
+      <br /><span class="nq-indent">
+      <span class="help" title="#xarML('Local DNS lookup EXECUTABLE including path if necessary')#"><label for="digexec_local"><xar:mlstring>Executable</xar:mlstring></label></span>:
       <input type="text" name="digexec_local" id="digexec_local" value="#$digexec_local#" size="30" maxlength="100" />
-    </td>
-  </tr>
-  <tr align="left">
-    <td colspan="2">
+      </span>
+  </fieldset>
+  <fieldset><legend><xar:mlstring>Validate Email</xar:mlstring></legend>
       <xar:if condition="$email_check_enabled">
         <input type="checkbox" name="email_check_enabled" id="email_check_enabled" value="1" checked="checked" />
       <xar:else />
         <input type="checkbox" name="email_check_enabled" id="email_check_enabled" value="1" />
       </xar:if>
-      <xar:mlstring>Enable Email Validation</xar:mlstring> ~ 
+      <label for="email_check_enabled"><xar:mlstring>Enable Email Validation</xar:mlstring></label>
       <xar:if condition="$query_email_server">
-        <input type="checkbox" name="query_email_server" id="query_email_server" value="1" checked="checked" />
+        ~ <input type="checkbox" name="query_email_server" id="query_email_server" value="1" checked="checked" />
       <xar:else />
-        <input type="checkbox" name="query_email_server" id="query_email_server" value="1" />
+        ~ <input type="checkbox" name="query_email_server" id="query_email_server" value="1" />
       </xar:if>
-      <xar:mlstring>Query MX Server</xar:mlstring>
-    </td>
-  </tr>
-  <tr align="left">
-    <td colspan="2">
+      <label for="query_email_server"><xar:mlstring>Query MX Server</xar:mlstring></label>
+  </fieldset>
+  <fieldset><legend><xar:mlstring>Port Services</xar:mlstring></legend>
       <xar:if condition="$port_check_enabled">
         <input type="checkbox" name="port_check_enabled" id="port_check_enabled" value="1" checked="checked" />
       <xar:else />
         <input type="checkbox" name="port_check_enabled" id="port_check_enabled" value="1" />
       </xar:if>
-      <xar:mlstring>Enable Port Check</xar:mlstring>
+      <label for="port_check_enabled"><xar:mlstring>Enable Port Check</xar:mlstring></label>
       ~ <a href="#$ptvlink.url#">#$ptvlink.label#</a>
       <xar:if condition="!empty($xaplink)">
         ~ <a href="#$xaplink.url#">#$xaplink.label#</a>
       </xar:if>
-    </td>
-  </tr>
-  <tr>
-    <td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <br /><span class="nq-indent">
       <xar:if condition="$user_submissions">
         <input type="checkbox" name="user_submissions" id="user_submissions" value="1" checked="checked" />
       <xar:else />
         <input type="checkbox" name="user_submissions" id="user_submissions" value="1" />
       </xar:if>
-      <xar:mlstring>Allow User Submissions</xar:mlstring>
+      <label for="user_submissions"><xar:mlstring>Allow User Submissions</xar:mlstring></label>
       <xar:if condition="$portsubmits gt 0">
-        ~ <a href="#$p99link.url#">#$p99link.title#</a>
+        ~ <a class="nq-red" href="#$p99link.url#">#$p99link.title#</a>
       <xar:else />
         ~ #$p99link.label#
       </xar:if>
       ~ <a href="#$flvlink.url#">#$flvlink.label#</a>
-    </td>
-  </tr>
-  <tr align="left">
-    <td colspan="2">
+      </span>
+  </fieldset>
+  <fieldset><legend><xar:mlstring>HTTP Request</xar:mlstring></legend>
       <xar:if condition="$http_req_enabled">
         <input type="checkbox" name="http_req_enabled" id="http_req_enabled" value="1" checked="checked" />
       <xar:else />
         <input type="checkbox" name="http_req_enabled" id="http_req_enabled" value="1" />
       </xar:if>
-      <xar:mlstring>Enable HTTP Request</xar:mlstring>
-    </td>
-  </tr>
-  <tr align="left">
-    <td colspan="2">
+      <label for="http_req_enabled"><xar:mlstring>Enable HTTP Request</xar:mlstring></label>
+  </fieldset>
+  <fieldset><legend><xar:mlstring>Ping Host</xar:mlstring></legend>
       <xar:if condition="$ping_enabled">
         <input type="checkbox" name="ping_enabled" id="ping_enabled" value="1" checked="checked" />
       <xar:else />
         <input type="checkbox" name="ping_enabled" id="ping_enabled" value="1" />
       </xar:if>
-      <xar:mlstring>Enable Local ICMP Ping</xar:mlstring>
-    </td>
-  </tr>
-  <tr>
-    <td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <span class="help" title="#xarML('Local ping EXECUTABLE including path if necessary')#"><label for="pingexec_local"><xar:mlstring>Executable:</xar:mlstring></label></span>
+      <label for="ping_enabled"><xar:mlstring>Enable Local ICMP Ping</xar:mlstring></label>
+      <br /><span class="nq-indent">
+      <span class="help" title="#xarML('Local ping EXECUTABLE including path if necessary')#"><label for="pingexec_local"><xar:mlstring>Executable</xar:mlstring></label></span>:
       <input type="text" name="pingexec_local" id="pingexec_local" value="#$pingexec_local#" size="30" maxlength="100" />
-    </td>
-  </tr>
-  <tr align="left">
-    <td colspan="2">
+      </span>
+      <br />
       <xar:if condition="$ping_remote_enabled">
         <input type="checkbox" name="ping_remote_enabled" id="ping_remote_enabled" value="1" checked="checked" />
       <xar:else />
         <input type="checkbox" name="ping_remote_enabled" id="ping_remote_enabled" value="1" />
       </xar:if>
-      <xar:mlstring>Enable Remote ICMP Ping</xar:mlstring>
-    </td>
-  </tr>
-  <tr>
-    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <span class="help" title="#xarML('URL for remote system ping script')#"><label for="pingexec_remote"><xar:mlstring>Script URL:</xar:mlstring></label></span>
+      <label for="ping_remote_enabled"><xar:mlstring>Enable Remote ICMP Ping</xar:mlstring></label>
+      <br /><span class="nq-indent">
+      <span class="help" title="#xarML('URL for remote system ping script')#"><label for="pingexec_remote"><xar:mlstring>Script URL</xar:mlstring></label></span>:
       <input type="text" name="pingexec_remote" id="pingexec_remote" value="#$pingexec_remote#" size="30" maxlength="100" />
-      ~
-      <span class="help" title="#xarML('Remote ping script url?PARAM=target')#"><label for="pingexec_remote_t"><xar:mlstring>Target Param:</xar:mlstring></label></span>
+      ~ <span class="help" title="#xarML('Remote ping script url?PARAM=target')#"><label for="pingexec_remote_t"><xar:mlstring>Target Param</xar:mlstring></label></span>:
       <input type="text" name="pingexec_remote_t" id="pingexec_remote_t" value="#$pingexec_remote_t#" size="6" maxlength="10" />
-    </td>
-  </tr>
-  <tr align="left">
-    <td colspan="2">
+      </span>
+  </fieldset>
+  <fieldset><legend><xar:mlstring>Traceroute</xar:mlstring></legend>
       <xar:if condition="$trace_enabled">
         <input type="checkbox" name="trace_enabled" id="trace_enabled" value="1" checked="checked" />
       <xar:else />
-          <input type="checkbox" name="trace_enabled" id="trace_enabled" value="1" />
+        <input type="checkbox" name="trace_enabled" id="trace_enabled" value="1" />
       </xar:if>
-      <xar:mlstring>Enable Local Traceroute</xar:mlstring>
-    </td>
-  </tr>
-  <tr>
-    <td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <span class="help" title="#xarML('Local traceroute EXECUTABLE including path if necessary')#"><label for="traceexec_local"><xar:mlstring>Executable:</xar:mlstring></label></span>
+      <label for="trace_enabled"><xar:mlstring>Enable Local Traceroute</xar:mlstring></label>
+      <br /><span class="nq-indent">
+      <span class="help" title="#xarML('Local traceroute EXECUTABLE including path if necessary')#"><label for="traceexec_local"><xar:mlstring>Executable</xar:mlstring></label></span>:
       <input type="text" name="traceexec_local" id="traceexec_local" value="#$traceexec_local#" size="30" maxlength="100" />
-    </td>
-  </tr>
-  <tr align="left">
-    <td colspan="2">
+      </span>
+      <br />
       <xar:if condition="$trace_remote_enabled">
         <input type="checkbox" name="trace_remote_enabled" id="trace_remote_enabled" value="1" checked="checked" />
       <xar:else />
         <input type="checkbox" name="trace_remote_enabled" id="trace_remote_enabled" value="1" />
       </xar:if>
-      <xar:mlstring>Enable Remote Traceroute</xar:mlstring>
-    </td>
-  </tr>
-  <tr>
-    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <span class="help" title="#xarML('URL for remote system traceroute script')#"><label for="traceexec_remote"><xar:mlstring>Script URL:</xar:mlstring></label></span>
+      <label for="trace_remote_enabled"><xar:mlstring>Enable Remote Traceroute</xar:mlstring></label>
+      <br /><span class="nq-indent">
+      <span class="help" title="#xarML('URL for remote system traceroute script')#"><label for="traceexec_remote"><xar:mlstring>Script URL</xar:mlstring></label></span>:
       <input type="text" name="traceexec_remote" id="traceexec_remote" value="#$traceexec_remote#" size="30" maxlength="100" />
-      ~
-      <span class="help" title="#xarML('Remote script traceroute url?PARAM=target')#"><label for="traceexec_remote_t"><xar:mlstring>Target Param:</xar:mlstring></label></span>
+      ~ <span class="help" title="#xarML('Remote script traceroute url?PARAM=target')#"><label for="traceexec_remote_t"><xar:mlstring>Target Param</xar:mlstring></label></span>:
       <input type="text" name="traceexec_remote_t" id="traceexec_remote_t" value="#$traceexec_remote_t#" size="6" maxlength="10" />
-    </td>
-  </tr>
-  <tr align="left">
-    <td colspan="2">
+      </span>
+  </fieldset>
+  <fieldset><legend><xar:mlstring>Looking Glass</xar:mlstring></legend>
       <xar:if condition="$looking_glass_enabled">
         <input type="checkbox" name="looking_glass_enabled" id="looking_glass_enabled" value="1" checked="checked" />
       <xar:else />
         <input type="checkbox" name="looking_glass_enabled" id="looking_glass_enabled" value="1" />
       </xar:if>
-      <xar:mlstring>Enable Looking Glass</xar:mlstring>
+      <label for="looking_glass_enabled"><xar:mlstring>Enable Looking Glass</xar:mlstring></label>
       ~ <a href="#$lgvlink.url#">#$lgvlink.label#</a>
-    </td>
-  </tr>
-  <tr>
-    <td colspan="2">
+  </fieldset>
+  <p>
       <input type="submit" name="Submit" id="Submit" value="#$submitlabel#" />
       <input type="submit" name="Cancel" id="Cancel" value="#$cancellabel#" />
-    </td>
-  </tr>
-</table>
+  </p>
 </form>
+</div>
 
 </div>
 </div>

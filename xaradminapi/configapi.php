@@ -5,6 +5,7 @@ function netquery_adminapi_configapi()
     $data['authid'] = xarSecGenAuthKey();
     $data['querytype_default'] = xarModGetVar('netquery', 'querytype_default');
     $data['exec_timer_enabled'] = xarModGetVar('netquery', 'exec_timer_enabled');
+    $data['stylesheet'] = xarModGetVar('netquery', 'stylesheet');
     $data['capture_log_enabled'] = xarModGetVar('netquery', 'capture_log_enabled');
     $data['capture_log_allowuser'] = xarModGetVar('netquery', 'capture_log_allowuser');
     $data['capture_log_filepath'] = xarModGetVar('netquery', 'capture_log_filepath');
@@ -38,6 +39,7 @@ function netquery_adminapi_configapi()
     $data['submitlabel'] = xarML('Submit');
     $data['cancellabel'] = xarML('Cancel');
     $data['links'] = xarModAPIFunc('netquery', 'user', 'getlinks');
+    $data['cssfiles'] = xarModAPIFunc('netquery', 'admin', 'getcssfiles', './modules/netquery/xarstyles');
     $data['portsubmits'] = xarModAPIFunc('netquery', 'admin', 'countportflag', array('flag' => '99'));
     $mappingsites = array();
       $mappingsites[] = array('name' => 'None', 'value' => 0);
@@ -91,7 +93,7 @@ function netquery_adminapi_configapi()
                              'title' => xarML('Edit services/exploits'),
                              'label' => xarML('Edit Port Services'));
     $data['p99link'] = Array('url'   => xarModURL('netquery', 'admin', 'ptview', array('pflag' => '99')),
-                             'title' => '<font color="red">'.xarML($data['portsubmits'].' New for Reflagging').'</font>',
+                             'title' => $data['portsubmits'].' '. xarML('New for Reflagging'),
                              'label' => xarML('None for Reflagging'));
     if (file_exists('modules/netquery/xaradmin/xaports.php')) {
         $data['xaplink'] = Array('url'   => xarModURL('netquery', 'admin', 'xaports'),

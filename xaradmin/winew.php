@@ -7,6 +7,7 @@ function netquery_admin_winew()
     switch(strtolower($phase)) {
         case 'form':
         default:
+            $data['stylesheet'] = xarModGetVar('netquery', 'stylesheet');
             $data['authid']         = xarSecGenAuthKey();
             $data['submitlabel']    = xarML('Submit');
             $data['cancellabel']    = xarML('Cancel');

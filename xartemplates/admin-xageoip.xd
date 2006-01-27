@@ -1,10 +1,11 @@
+<xar:if condition="xarTplAddStyleLink('netquery', $stylesheet)">
+</xar:if>
+
 <div class="xar-mod-head">
-<span class="xar-mod-title"><xar:mlstring>Netquery Administration</xar:mlstring></span>
+  <span class="xar-mod-title"><xar:mlstring>Netquery Administration</xar:mlstring></span>
 </div>
+
 <div class="xar-mod-body">
-
-<h2><xar:mlstring>Netquery GeoIP Table Setup: Step </xar:mlstring>#$step#</h2>
-
-<p>#$body#</p>
-
+  <h2><xar:mlstring>Netquery GeoIP Table Setup: Step </xar:mlstring>#$step#</h2>
+  <p>#$body#</p>
 </div>

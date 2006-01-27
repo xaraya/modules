@@ -1,9 +1,10 @@
 <?php
 function netquery_admin_wiview()
 {
-    if(!xarSecurityCheck('EditNetquery')) return;
-    if(!xarVarFetch('startnum', 'isset', $startnum, 1, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarSecurityCheck('EditNetquery')) return;
+    if (!xarVarFetch('startnum', 'isset', $startnum, 1, XARVAR_NOT_REQUIRED)) {return;}
     $data['items'] = array();
+    $data['stylesheet'] = xarModGetVar('netquery', 'stylesheet');
     $data['authid'] = xarSecGenAuthKey();
     $links = xarModAPIFunc('netquery', 'user', 'getlinks', array('startnum' => $startnum));
     if (empty($links)) {

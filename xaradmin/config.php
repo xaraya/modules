@@ -15,6 +15,7 @@ function netquery_admin_config()
             }
             if (!xarVarFetch('querytype_default', 'str:1:', $querytype_default, 'whois', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('exec_timer_enabled', 'checkbox', $exec_timer_enabled, '0', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('stylesheet', 'str:1:', $stylesheet, 'xaraya_greybuttons', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('capture_log_enabled', 'checkbox', $capture_log_enabled, '0', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('capture_log_allowuser', 'checkbox', $capture_log_allowuser, '0', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('capture_log_filepath', 'str:1:', $capture_log_filepath, 'var/logs/netquery.log', XARVAR_NOT_REQUIRED)) return;
@@ -48,6 +49,7 @@ function netquery_admin_config()
             if (!xarSecConfirmAuthKey()) return;
             xarModSetVar('netquery', 'querytype_default', $querytype_default);
             xarModSetVar('netquery', 'exec_timer_enabled', $exec_timer_enabled);
+            xarModSetVar('netquery', 'stylesheet', $stylesheet);
             xarModSetVar('netquery', 'capture_log_enabled', $capture_log_enabled);
             xarModSetVar('netquery', 'capture_log_allowuser', $capture_log_allowuser);
             xarModSetVar('netquery', 'capture_log_filepath', $capture_log_filepath);

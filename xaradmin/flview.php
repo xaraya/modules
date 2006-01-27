@@ -1,8 +1,9 @@
 <?php
 function netquery_admin_flview()
 {
-    if(!xarSecurityCheck('EditNetquery')) return;
+    if (!xarSecurityCheck('EditNetquery')) return;
     $data['items'] = array();
+    $data['stylesheet'] = xarModGetVar('netquery', 'stylesheet');
     $data['authid'] = xarSecGenAuthKey();
     $flags = xarModAPIFunc('netquery', 'user', 'getflags');
     if (empty($flags)) {
@@ -14,16 +15,18 @@ function netquery_admin_flview()
         $flag = $flags[$i];
         if (xarSecurityCheck('EditNetquery',0)) {
             $flags[$i]['editurl'] = xarModURL('netquery', 'admin', 'flmodify', array('flag_id' => $flag['flag_id']));
+            $flags[$i]['edittitle'] = xarML('Edit');
         } else {
             $flags[$i]['editurl'] = '';
+            $flags[$i]['edittitle'] = '----';
         }
-        $flags[$i]['edittitle'] = xarML('Edit');
         if (xarSecurityCheck('DeleteNetquery',0) && $flag['flagnum'] != 99) {
             $flags[$i]['deleteurl'] = xarModURL('netquery', 'admin', 'fldelete', array('flag_id' => $flag['flag_id']));
+            $flags[$i]['deletetitle'] = xarML('Delete');
         } else {
             $flags[$i]['deleteurl'] = '';
+            $flags[$i]['deletetitle'] = '------';
         }
-        $flags[$i]['deletetitle'] = xarML('Delete');
     }
     $data['items'] = $flags;
     $data['cfglink'] = Array('url'   => xarModURL('netquery', 'admin', 'config'),

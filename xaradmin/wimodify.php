@@ -10,6 +10,7 @@ function netquery_admin_wimodify()
         default:
             $data = xarModAPIFunc('netquery', 'admin', 'getlink', array('whois_id' => $whois_id));
             if ($data == false) return;
+            $data['stylesheet'] = xarModGetVar('netquery', 'stylesheet');
             $data['authid']         = xarSecGenAuthKey();
             $data['submitlabel']    = xarML('Submit');
             $data['cancellabel']    = xarML('Cancel');

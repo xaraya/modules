@@ -10,6 +10,7 @@ function netquery_admin_ptnew()
         default:
             $data['flags'] = xarModAPIFunc('netquery', 'user', 'getflags');
             if ($data['flags'] == false) return;
+            $data['stylesheet'] = xarModGetVar('netquery', 'stylesheet');
             $data['portnum']        = $portnum;
             $data['authid']         = xarSecGenAuthKey();
             $data['submitlabel']    = xarML('Submit');

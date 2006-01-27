@@ -1,6 +1,6 @@
 <div style="text-align:center">
   <h4><xar:mlstring>List of Services and Exploits for Port </xar:mlstring>#$portnum#</h4>
-  <table>
+  <table class="nqinput">
     <tr>
       <th>
         <xar:mlstring>Protocol</xar:mlstring>

@@ -45,3 +45,16 @@ Version 3.20 2006-01-08
    - dig command vulnerability corrected
    - all <a> tag target attributes dropped (XHTML 1.0 Strict)
    - all $_HTTP vars dropped (Requires PHP 4.10 or later)
+   - GeoIP data and flag images updated (MaxMind 2006-01-01)
+Version 3.30 2006-02-08
+   - Modified GeoIP data pak array handling (now 2 files only)
+   - Added more GeoIP country flags (AC, CS, GG, IM, JE, PN, SU)
+   - Added more help entries to language files
+   - Revised some UTF-8 header items for W3C XHTML 1.1 compliance
+   - Replaced user & admin entry tables by forms/fieldsets
+   - Fieldset legends display links to "top countries" and help
+   - Selection of "top countries" now works like other query types
+   - Modified output table templates for consistent displays
+   - Revised manual styles, links and ID tags for user help
+   - Made CSS stylesheet selection an admin config option
+   - Interface styles more readily adaptable to various CMS themes

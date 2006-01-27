@@ -31,6 +31,7 @@ function netquery_userapi_mainapi()
     $data['lgrouterlabel'] = xarVarPrepForDisplay(xarML('Router'));
     $data['querytype_default'] = xarModGetVar('netquery', 'querytype_default');
     $data['exec_timer_enabled'] = xarModGetVar('netquery', 'exec_timer_enabled');
+    $data['stylesheet'] = xarModGetVar('netquery', 'stylesheet');
     $data['capture_log_enabled'] = xarModGetVar('netquery', 'capture_log_enabled');
     $data['capture_log_allowuser'] = xarModGetVar('netquery', 'capture_log_allowuser');
     $data['capture_log_filepath'] = xarModGetVar('netquery', 'capture_log_filepath');
@@ -118,19 +119,19 @@ function netquery_userapi_mainapi()
     xarVarFetch('router', 'str:1:', $data['router'], 'ATT Public', XARVAR_NOT_REQUIRED);
     xarVarFetch('querytype', 'str:1:', $data['querytype'], 'none', XARVAR_NOT_REQUIRED);
     xarVarFetch('formtype', 'str:1:', $data['formtype'], $data['querytype'], XARVAR_NOT_REQUIRED);
-    if (isset($_REQUEST['b1']) || isset($_REQUEST['b1_x'])) {$data['formtype'] = 'whois';}
-    if (isset($_REQUEST['b2']) || isset($_REQUEST['b2_x'])) {$data['formtype'] = 'whoisip';}
-    if (isset($_REQUEST['b3']) || isset($_REQUEST['b3_x'])) {$data['formtype'] = 'lookup';}
-    if (isset($_REQUEST['b4']) || isset($_REQUEST['b4_x'])) {$data['formtype'] = 'dig';}
-    if (isset($_REQUEST['b5']) || isset($_REQUEST['b5_x'])) {$data['formtype'] = 'port';}
-    if (isset($_REQUEST['b6']) || isset($_REQUEST['b6_x'])) {$data['formtype'] = 'http';}
-    if (isset($_REQUEST['b7']) || isset($_REQUEST['b7_x'])) {$data['formtype'] = 'ping';}
-    if (isset($_REQUEST['b8']) || isset($_REQUEST['b8_x'])) {$data['formtype'] = 'pingrem';}
-    if (isset($_REQUEST['b9']) || isset($_REQUEST['b9_x'])) {$data['formtype'] = 'trace';}
-    if (isset($_REQUEST['b10']) || isset($_REQUEST['b10_x'])) {$data['formtype'] = 'tracerem';}
-    if (isset($_REQUEST['b11']) || isset($_REQUEST['b11_x'])) {$data['formtype'] = 'lgquery';}
-    if (isset($_REQUEST['b12']) || isset($_REQUEST['b12_x'])) {$data['formtype'] = 'email';}
-    if ($data['formtype'] == 'none') {$data['formtype'] = $data['querytype_default'];}
+    if ($data['formtype'] == 'none' || $data['formtype'] == 'countries') {$data['formtype'] = $data['querytype_default'];}
+    if (isset($_REQUEST['b1']) || isset($_REQUEST['b1_x'])) {$data['formtype'] = 'whois'; $data['querytype'] = 'none';}
+    if (isset($_REQUEST['b2']) || isset($_REQUEST['b2_x'])) {$data['formtype'] = 'whoisip'; $data['querytype'] = 'none';}
+    if (isset($_REQUEST['b3']) || isset($_REQUEST['b3_x'])) {$data['formtype'] = 'lookup'; $data['querytype'] = 'none';}
+    if (isset($_REQUEST['b4']) || isset($_REQUEST['b4_x'])) {$data['formtype'] = 'dig'; $data['querytype'] = 'none';}
+    if (isset($_REQUEST['b5']) || isset($_REQUEST['b5_x'])) {$data['formtype'] = 'port'; $data['querytype'] = 'none';}
+    if (isset($_REQUEST['b6']) || isset($_REQUEST['b6_x'])) {$data['formtype'] = 'http'; $data['querytype'] = 'none';}
+    if (isset($_REQUEST['b7']) || isset($_REQUEST['b7_x'])) {$data['formtype'] = 'ping'; $data['querytype'] = 'none';}
+    if (isset($_REQUEST['b8']) || isset($_REQUEST['b8_x'])) {$data['formtype'] = 'pingrem'; $data['querytype'] = 'none';}
+    if (isset($_REQUEST['b9']) || isset($_REQUEST['b9_x'])) {$data['formtype'] = 'trace'; $data['querytype'] = 'none';}
+    if (isset($_REQUEST['b10']) || isset($_REQUEST['b10_x'])) {$data['formtype'] = 'tracerem'; $data['querytype'] = 'none';}
+    if (isset($_REQUEST['b11']) || isset($_REQUEST['b11_x'])) {$data['formtype'] = 'lgquery'; $data['querytype'] = 'none';}
+    if (isset($_REQUEST['b12']) || isset($_REQUEST['b12_x'])) {$data['formtype'] = 'email'; $data['querytype'] = 'none';}
     $data['b1class']  = ($data['formtype'] == 'whois') ? 'inset' : 'outset';
     $data['b2class']  = ($data['formtype'] == 'whoisip') ? 'inset' : 'outset';
     $data['b3class']  = ($data['formtype'] == 'lookup') ? 'inset' : 'outset';
@@ -146,7 +147,7 @@ function netquery_userapi_mainapi()
     $data['clrlink'] = Array('url' => xarModURL('netquery', 'user', 'main', array('formtype' => $data['formtype'])),
                              'title' => xarML('Clear results and return'),
                              'label' => xarML('Clear'));
-    $data['countrieslink'] = Array('url' => xarModURL('netquery', 'user', 'main', array('formtype' => 'countries')),
+    $data['countrieslink'] = Array('url' => xarModURL('netquery', 'user', 'main', array('querytype' => 'countries')),
                              'title' => xarML('Display top user countries'),
                              'label' => xarML('Top Countries'));
     $data['returnlink'] = Array('url' => xarModURL('netquery', 'user', 'main'),
@@ -158,6 +159,7 @@ function netquery_userapi_mainapi()
     $data['hlplink'] = Array('url' => 'modules/netquery/xardocs/manual.html#using',
                              'title' => xarML('Netquery online user manual'),
                              'label' => xarML('Online Manual'));
+    $data['manlink'] = 'modules/netquery/xardocs/manual.html';
     if (file_exists($data['capture_log_filepath'])) {
         $data['loglink'] = Array('url'   => xarML($data['capture_log_filepath']),
                                  'title' => xarML('View operations logfile'),

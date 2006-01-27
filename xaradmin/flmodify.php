@@ -10,6 +10,7 @@ function netquery_admin_flmodify()
         default:
             $data = xarModAPIFunc('netquery', 'admin', 'getflag', array('flag_id' => $flag_id));
             if ($data == false) return;
+            $data['stylesheet'] = xarModGetVar('netquery', 'stylesheet');
             $data['colors'] = array('black', 'blue', 'purple', 'red', 'brown', 'orange', 'yellow', 'green', 'cyan', 'violet');
             $data['authid']         = xarSecGenAuthKey();
             $data['submitlabel']    = xarML('Submit');

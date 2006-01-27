@@ -1,4 +1,8 @@
 All Netquery download packages include two zipped sets of query selector button
-images (blue and grey) and two CSS stylesheet layouts (vertical and horizontal)
-for each button set.  Just overwrite the netquery.css file with your stylesheet
-choice, or "roll your own" CSS stylesheet.
+images (blue and grey) and eight CSS stylesheets (one for each button set for each
+of the four Netquery standalone and CMS environments).
+
+Stylesheet selection is an administrator option in Netquery's configuration panel.
+You can use the CSS files provided as examples to create your own stylesheets.  If
+you do, they must be located in the same Netquery styles subfolder to be listed with
+the other options for selection.

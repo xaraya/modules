@@ -1,3 +1,6 @@
+<xar:if condition="xarTplAddStyleLink('netquery', $stylesheet)">
+</xar:if>
+
 <script type="text/javascript" src="modules/netquery/xartemplates/popup.js"></script>
 
 <div class="xar-mod-head">
@@ -5,101 +8,100 @@
 </div>
 
 <div class="xar-mod-body">
-
-<h2><xar:mlstring>Netquery Port Services Configuration</xar:mlstring>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <a href="javascript:popUp('#$hlplink.url#','console','400','600');"><img style="vertical-align:top;" src="modules/netquery/xarimages/btn_help.gif" alt="#$hlplink.label#" /></a>
-</h2>
-
-<h4><xar:mlstring>Flag ## entry overrides port ## entry</xar:mlstring></h4>
-
-<form action="#xarModURL('netquery', 'admin', 'ptview')#" method="post" enctype="application/x-www-form-urlencoded" >
-<table width="100%" border="0" cellspacing="0" cellpadding="4">
-    <tr>
-        <td>
-        <input type="hidden" name="authid" id="authid" value="#$authid#" />
-        <label for="portnum">#$portnumlabel#</label>
-        <input type="text" name="portnum" id="portnum" value="#$portnum#" size="3" maxlength="10" />
-        <label for="pflag">#$pflaglabel#</label>
-        <input type="text" name="pflag" id="pflag" value="#$pflag#" size="3" maxlength="4" />
-        <input type="image" style="vertical-align:top;" src="modules/netquery/xarimages/btn_go.gif" alt="Go" />
-        </td>
-    </tr>
-</table>
-</form>
-
 <div class="xar-accent">
-<table width="100%" border="0" cellspacing="0" cellpadding="4">
+  <table class="nqinput">
     <tr>
-        <th>
-            <xar:mlstring>Port</xar:mlstring>
-        </th>
-        <th>
-            <xar:mlstring>Protocol</xar:mlstring>
-        </th>
-        <th>
-            <xar:mlstring>Service</xar:mlstring>
-        </th>
-        <th>
-            <xar:mlstring>Options</xar:mlstring>
-        </th>
+      <th colspan="4">
+          <a href="javascript:popUp('#$hlplink.url#','console','400','600');"><img class="floatbutton" src="modules/netquery/xarimages/btn_help.gif" alt="#$hlplink.label#" /></a>
+          <xar:mlstring>Netquery Port Services Configuration</xar:mlstring><br />
+          <xar:mlstring>Flag ## entry overrides port ## entry</xar:mlstring>
+      </th>
+    </tr>
+    <tr>
+      <td colspan="4">
+        <form action="#xarModURL('netquery', 'admin', 'ptview')#" method="post" enctype="application/x-www-form-urlencoded" ><fieldset>
+          <input type="hidden" name="authid" id="authid" value="#$authid#" />
+          <label for="portnum">#$portnumlabel#</label>
+          <input type="text" name="portnum" id="portnum" value="#$portnum#" size="3" maxlength="10" />
+          <label for="pflag">#$pflaglabel#</label>
+          <input type="text" name="pflag" id="pflag" value="#$pflag#" size="3" maxlength="4" />
+          <input type="image" class="gobutton" src="modules/netquery/xarimages/btn_go.gif" alt="Go" /></fieldset>
+        </form>
+      </td>
+    </tr>
+    <tr>
+      <th>
+        <xar:mlstring>Port</xar:mlstring>
+      </th>
+      <th>
+        <xar:mlstring>Protocol</xar:mlstring>
+      </th>
+      <th>
+        <xar:mlstring>Service</xar:mlstring>
+      </th>
+      <th>
+        <xar:mlstring>Options</xar:mlstring>
+      </th>
     </tr>
     <xar:loop name="$items">
     <xar:if condition="(($loop:index + 1) % 2)">
-    <tr>
+      <tr>
         <td class="xar-norm">
-            #$loop:item.port#
+          #$loop:item.port#
         </td>
         <td class="xar-norm">
-            #$loop:item.protocol#
+          #$loop:item.protocol#
         </td>
         <td class="xar-norm">
-            #$loop:item.service#
+          #$loop:item.service#
         </td>
         <td class="xar-norm">
-           <xar:if condition="empty($loop:item.editurl)">
-               #$edittitle#
-               <xar:else />
-                   <a href="#$loop:item.editurl#">#$loop:item.edittitle#</a>
-           </xar:if>
-           |
-           <xar:if condition="empty($loop:item.deleteurl)">
-               #$loop:item.deletetitle#
-               <xar:else />
-                   <a href="#$loop:item.deleteurl#">#$loop:item.deletetitle#</a>
-           </xar:if>
+          <xar:if condition="empty($loop:item.editurl)">
+             #$edittitle#
+          <xar:else />
+             <a href="#$loop:item.editurl#">#$loop:item.edittitle#</a>
+          </xar:if>
+          |
+          <xar:if condition="empty($loop:item.deleteurl)">
+             #$loop:item.deletetitle#
+          <xar:else />
+             <a href="#$loop:item.deleteurl#">#$loop:item.deletetitle#</a>
+          </xar:if>
         </td>
-    </tr>
+      </tr>
     <xar:else />
-    <tr>
+      <tr>
         <td class="xar-accent">
-            #$loop:item.port#
+          #$loop:item.port#
         </td>
         <td class="xar-accent">
-            #$loop:item.protocol#
+          #$loop:item.protocol#
         </td>
         <td class="xar-accent">
-            #$loop:item.service#
+          #$loop:item.service#
         </td>
         <td class="xar-accent">
-           <xar:if condition="empty($loop:item.editurl)">
-               #$loop:item.edittitle#
-               <xar:else />
-                   <a href="#$loop:item.editurl#">#$loop:item.edittitle#</a>
-           </xar:if>
-           |
-           <xar:if condition="empty($loop:item.deleteurl)">
-               #$loop:item.deletetitle#
-               <xar:else />
-                   <a href="#$loop:item.deleteurl#">#$loop:item.deletetitle#</a>
-           </xar:if>
+          <xar:if condition="empty($loop:item.editurl)">
+             #$loop:item.edittitle#
+          <xar:else />
+             <a href="#$loop:item.editurl#">#$loop:item.edittitle#</a>
+          </xar:if>
+          |
+          <xar:if condition="empty($loop:item.deleteurl)">
+             #$loop:item.deletetitle#
+          <xar:else />
+             <a href="#$loop:item.deleteurl#">#$loop:item.deletetitle#</a>
+          </xar:if>
         </td>
-    </tr>
+      </tr>
     </xar:if>
     </xar:loop>
-</table>
+    <tr>
+      <th class="nq-center" colspan="4">
+        <a href="#$ptalink.url#">#$ptalink.title#</a> -
+        <a href="#$cfglink.url#">#$cfglink.title#</a>
+      </th>
+    </tr>
+  </table>
 </div>
-
-<p><a href="#$ptalink.url#">#$ptalink.title#</a> -
-<a href="#$cfglink.url#">#$cfglink.title#</a></p>
-
 </div>

@@ -8,6 +8,7 @@ function netquery_admin_ptdelete()
     if (!xarVarFetch('Submit', 'str:1:100', $Submit, 'Cancel', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
     $data = xarModAPIFunc('netquery', 'admin', 'getport', array('port_id' => $port_id));
     if ($data == false) return;
+    $data['stylesheet'] = xarModGetVar('netquery', 'stylesheet');
     $data['pflag'] = $pflag;
     $data['confirminfo'] = xarML('Port').": ".$data['port']." - ".xarML('Protocol').": ".$data['protocol']." - ".xarML('Service').": ".$data['service'];
     $data['submitlabel'] = xarML('Confirm');

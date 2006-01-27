@@ -7,6 +7,7 @@ function netquery_admin_fldelete()
     if (!xarVarFetch('Submit', 'str:1:100', $Submit, 'Cancel', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
     $data = xarModAPIFunc('netquery', 'admin', 'getflag', array('flag_id' => $flag_id));
     if ($data == false) return;
+    $data['stylesheet'] = xarModGetVar('netquery', 'stylesheet');
     $data['confirminfo'] = xarML('Keyword').": ".$data['keyword']." - ".xarML('Font').": ".$data['fontclr'];
     $data['submitlabel'] = xarML('Confirm');
     $data['cancellabel'] = xarML('Cancel');

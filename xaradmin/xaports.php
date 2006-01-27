@@ -4,6 +4,7 @@ function netquery_admin_xaports()
     if (!xarSecurityCheck('EditRole')) return;
     if (!xarVarFetch('step', 'int:1:100', $step, '1', XARVAR_NOT_REQUIRED)) return;
     $data = array();
+    $data['stylesheet'] = xarModGetVar('netquery', 'stylesheet');
     $data['step'] = $step;
     switch ($step) {
         case '1':

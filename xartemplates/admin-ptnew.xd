@@ -1,18 +1,20 @@
+<xar:if condition="xarTplAddStyleLink('netquery', $stylesheet)">
+</xar:if>
+
 <div class="xar-mod-head">
   <span class="xar-mod-title"><xar:mlstring>Netquery Administration</xar:mlstring></span>
 </div>
 
 <div class="xar-mod-body">
-  <h2><xar:mlstring>Add New Port Service or Exploit</xar:mlstring></h2>
-  
   <form action="#xarModURL('netquery', 'admin', 'ptnew')#" method="post" enctype="application/x-www-form-urlencoded" >
-    <table>
+    <table class="nqinput">
       <tr>
-        <td>
+        <th colspan="5">
+          <xar:mlstring>Add New Port Service or Exploit</xar:mlstring>
           <input type="hidden" name="authid" value="#$authid#" />
           <input type="hidden" name="phase" id="phase" value="update" />
           <input type="hidden" name="portnum" id="portnum" value="#$portnum#" />
-        </td>
+        </th>
       </tr>
       <tr>
         <td>
@@ -50,7 +52,7 @@
               <xar:if condition="!empty($flagg.keyword)">
                 <xar:if condition="$flagg.flagnum eq 0">
                   <option selected="selected" value="#$flagg.flagnum#">#$flagg.keyword#</option>
-                  <xar:else />
+                <xar:else />
                   <option value="#$flagg.flagnum#">#$flagg.keyword#</option>
                 </xar:if>
               </xar:if>
@@ -59,7 +61,7 @@
         </td>
       </tr>
       <tr>
-        <td colspan="4">
+        <td colspan="5">
           <input type="submit" name="Submit" id="Submit" value="#$submitlabel#" />
           <input type="submit" name="Cancel" id="Cancel" value="#$cancellabel#" />
         </td>
@@ -67,4 +69,3 @@
     </table>
   </form>
 </div>
-

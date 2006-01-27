@@ -1,10 +1,11 @@
 <?php
 function netquery_admin_ptview()
 {
-    if(!xarSecurityCheck('EditNetquery')) return;
+    if (!xarSecurityCheck('EditNetquery')) return;
     if (!xarVarFetch('portnum', 'int:1:100000', $portnum, '80', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
     if (!xarVarFetch('pflag', 'int:0:200', $pflag, '-1', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
     $data['items'] = array();
+    $data['stylesheet'] = xarModGetVar('netquery', 'stylesheet');
     $data['authid'] = xarSecGenAuthKey();
     if ($pflag >= 0) {
         $portdata = xarModAPIFunc('netquery', 'admin', 'getportflag', array('flag' => $pflag));

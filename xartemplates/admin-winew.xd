@@ -1,42 +1,42 @@
+<xar:if condition="xarTplAddStyleLink('netquery', $stylesheet)">
+</xar:if>
+
 <div class="xar-mod-head">
-    <span class="xar-mod-title"><xar:mlstring>Netquery Administration</xar:mlstring></span>
+  <span class="xar-mod-title"><xar:mlstring>Netquery Administration</xar:mlstring></span>
 </div>
 
 <div class="xar-mod-body">
-
-<h2><xar:mlstring>Add a New Whois Lookup Link</xar:mlstring></h2>
-
-<form action="#xarModURL('netquery', 'admin', 'winew')#" method="post" enctype="application/x-www-form-urlencoded" >
-<table>
-<tr>
-  <td>
-    <input type="hidden" name="authid" value="#$authid#" />
-    <input type="hidden" name="phase" id="phase" value="update" />
-  </td>
-</tr>
-<tr>
-  <td>
-    <span class="help" title="#xarML('The .ext part of domainname.ext including the dot')#"><label for="whois_ext"><xar:mlstring>.ext</xar:mlstring></label></span>
-  </td>
-  <td>
-    <span class="help" title="#xarML('The whois lookup server - Leave blank for autodiscovery')#"><label for="whois_server"><xar:mlstring>Server</xar:mlstring></label></span>
-  </td>
-</tr>
-<tr>
-  <td>
-    <input type="text" name="whois_ext" id="whois_ext" value="" size="10" maxlength="10" />
-  </td>
-  <td>
-    <input type="text" name="whois_server" id="whois_server" value="" size="30" maxlength="100" />
-  </td>
-</tr>
-<tr>
-  <td colspan="2">
-    <input type="submit" name="Submit" id="Submit" value="#$submitlabel#" />
-    <input type="submit" name="Cancel" id="Cancel" value="#$cancellabel#" />
-  </td>
-</tr>
-</table>
-</form>
-
+  <form action="#xarModURL('netquery', 'admin', 'winew')#" method="post" enctype="application/x-www-form-urlencoded" >
+    <table class="nqinput">
+      <tr>
+        <th colspan="2">
+          <xar:mlstring>Add a New Whois Lookup Link</xar:mlstring>
+          <input type="hidden" name="authid" value="#$authid#" />
+          <input type="hidden" name="phase" id="phase" value="update" />
+        </th>
+      </tr>
+      <tr>
+        <td>
+          <span class="help" title="#xarML('The .ext part of domainname.ext including the dot')#"><label for="whois_ext"><xar:mlstring>.ext</xar:mlstring></label></span>
+        </td>
+        <td>
+          <span class="help" title="#xarML('The whois lookup server - Leave blank for autodiscovery')#"><label for="whois_server"><xar:mlstring>Server</xar:mlstring></label></span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input type="text" name="whois_ext" id="whois_ext" value="" size="10" maxlength="10" />
+        </td>
+        <td>
+          <input type="text" name="whois_server" id="whois_server" value="" size="30" maxlength="100" />
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <input type="submit" name="Submit" id="Submit" value="#$submitlabel#" />
+          <input type="submit" name="Cancel" id="Cancel" value="#$cancellabel#" />
+        </td>
+      </tr>
+    </table>
+  </form>
 </div>

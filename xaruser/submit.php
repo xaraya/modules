@@ -1,6 +1,7 @@
 <?php
 function netquery_user_submit()
 {
+    $data['stylesheet'] = xarModGetVar('netquery', 'stylesheet');
     if (!xarSecurityCheck('OverviewNetquery')) return;
     if (!xarVarFetch('phase', 'str:1:100', $phase, 'form', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
     if (!xarVarFetch('Submit', 'str:1:100', $Submit, 'Cancel', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;

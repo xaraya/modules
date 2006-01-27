@@ -10,6 +10,7 @@ function netquery_admin_lgmodify()
         default:
             $data = xarModAPIFunc('netquery', 'admin', 'getrouter', array('router_id' => $router_id));
             if ($data == false) return;
+            $data['stylesheet'] = xarModGetVar('netquery', 'stylesheet');
             $data['authid']         = xarSecGenAuthKey();
             $data['submitlabel']    = xarML('Submit');
             $data['cancellabel']    = xarML('Cancel');
