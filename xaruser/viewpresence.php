@@ -35,7 +35,7 @@ function sigmapersonnel_user_viewpresence($args)
     $data['pager'] = '';
     // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing
-
+/*
     $uid = xarUserGetVar('uid');
     $items = xarModAPIFunc('sigmapersonnel',
                            'user',
@@ -89,7 +89,16 @@ function sigmapersonnel_user_viewpresence($args)
     // Then determine the itemtypeid of that one = currentpresence
     // If not set, then presence is unknown (safest)
 
-
+*/      $lists = xarModAPIfunc(
+            'lists', 'user', 'getlistitems',
+            array(
+                'lid' => 5
+            )
+        );
+        if(empty($list)) {
+            echo "shit"; return;
+        }
+    $data['list'] = $lists;
     // Same as above.  We are changing the name of the page to raise
     // better search engine compatibility.
     xarTplSetPageTitle(xarVarPrepForDisplay(xarML('View Current presence')));
