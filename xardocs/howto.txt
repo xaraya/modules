@@ -12,3 +12,14 @@ $list = xarModAPIfunc(
         'lang_suffix' => $this->lang_suffix
     )
 );
+
+Full entry (from header):
+
+ * @param $args['lid'] list ID (optional)
+ * @param $args['list_name'] list name (optional)
+ * @param $args['tid'] list type ID (optional)
+ * @param $args['type_name'] list type name (optional)
+ * @param $args['itemkey'] key for item list array [id]|code (optional)
+ * @param $args['order_columns'] over-ride list and list type default ordering (optional)
+ * @param $args['items_only'] return just the items, without the list details (default: false)
+ * @param $args['lang_suffix'] if set, then any field ending in this value will be copied to same field without suffix (optional)
