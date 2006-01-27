@@ -144,6 +144,8 @@ function netquery_userapi_mainapi()
     $data['b10class'] = ($data['formtype'] == 'tracerem') ? 'inset' : 'outset';
     $data['b11class'] = ($data['formtype'] == 'lgquery') ? 'inset' : 'outset';
     $data['b12class'] = ($data['formtype'] == 'email') ? 'inset' : 'outset';
+    list($data['buttondir'], $wasted) = split('[_-]', $data['stylesheet'], 2);
+    if (!file_exists($data['buttondir'] = 'modules/netquery/xarimages/'.$data['buttondir'])) $data['buttondir'] = 'modules/netquery/xarimages/greybuttons';
     $data['clrlink'] = Array('url' => xarModURL('netquery', 'user', 'main', array('formtype' => $data['formtype'])),
                              'title' => xarML('Clear results and return'),
                              'label' => xarML('Clear'));
