@@ -98,10 +98,17 @@ function authentication_user_login()
                 break;
 
             case 'authsystem':
-
+ 
                 // Still need to check if user exists as the user may be
                 // set to inactive in the user table
-
+                //Get and check last resort first before going to db table
+                if (xarModGetVar('privileges','lastresort')) {
+                    $secret = unserialize(xarModGetVar('privileges','lastresort'));
+                    if ($secret['name'] == MD5($uname) && $secret['password'] == MD5($pass)) {
+                        $state = ROLES_STATE_ACTIVE;
+                        break; //let's go straight to login api
+                    }
+                }
                 // check for user and grab uid if exists
                 $user = xarModAPIFunc('roles',
                             'user',
@@ -253,6 +260,7 @@ function authentication_user_login()
                     return;
                 }
             }
+
             xarResponseRedirect($redirecturl);
             return true;
             break;
