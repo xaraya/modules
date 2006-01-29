@@ -23,16 +23,6 @@
  */
 function julian_init()
 {
-/*
-    // check if categories module is available
-    // Deprec Replaced in xarversion dependencies
-    if (!xarModIsAvailable('categories')) {
-        $msg = xarML('The module [#(1)] should be activated first.', 'categories');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'MODULE_DEPENDENCY', new SystemException($msg));
-        return;
-    }
-*/
-
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $event_table = $xartable['julian_events'];
@@ -85,8 +75,6 @@ function julian_init()
     if (!$result) {return;}
 
 //default '0000-00-00 00:00:00'
-
-
 
     xarDBLoadTableMaintenanceAPI();
     $dbconn =& xarDBGetConn();
@@ -548,10 +536,6 @@ function julian_upgrade($oldversion)
             return julian_upgrade('0.2.7');
         case '0.2.7':
 
-
-
-
-
             break;
     }
     // Update successful
@@ -577,7 +561,6 @@ function julian_delete()
     /* Drop the tables */
      $result = $datadict->dropTable($xartable[$basename . '_' . $table]);
     }
-
 
     // UnRegister blocks
     if (!xarModAPIFunc('blocks',
