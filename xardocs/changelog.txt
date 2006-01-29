@@ -29,6 +29,7 @@ Adding DataDict to xarinit.
 
 Table definitions are here for the moment for reference:
 
+0.2.7 Changed the tables. Upgrade should be ok, original description below:
 /*
     xarDBLoadTableMaintenanceAPI();
     $dbconn =& xarDBGetConn();
@@ -62,10 +63,10 @@ Table definitions are here for the moment for reference:
         // CONTACT::event contact
         'contact'=>array('type'=>'text','null'=>TRUE),
 
-        // URL::event url
+        // URL::event url TO C(200)
         'url'=>array('type'=>'text','size'=>'tiny','null'=>TRUE),
 
-        // SUMMARY::the event title / one line summary
+        // SUMMARY::the event title / one line summary TO C(255)
         'summary'=>array('type'=>'varchar','size'=>'80','null'=>TRUE),
 
         // DESCRIPTION::the event description
@@ -132,13 +133,13 @@ Table definitions are here for the moment for reference:
         // FEE::the fee for the event
         'fee'=>array('type'=>'varchar','size'=>'10','null'=>TRUE),
 
-        // EXDATE::event exceptions YYYYMMDDHHMMSS,YYYYMMDDHHMMSS,etc.
+        // EXDATE::event exceptions YYYYMMDDHHMMSS,YYYYMMDDHHMMSS,etc. TO NOTNULL
         'exdate'=>array('type'=>'text','null'=>TRUE),
 
         // CATEGORIES::event category
         'categories'=>array('type'=>'text','null'=>TRUE),
 
-        // RRULE::event recurrence rule
+        // RRULE::event recurrence rule TO I NOTNULL DEFAULT 0
         // TODO::Break this out into its components
         // FREQ::Recurrence Frequency
         // 0 = NO REPEATING
@@ -151,7 +152,7 @@ Table definitions are here for the moment for reference:
         // RECUR_FREQ::how often to repeat rule
         'recur_freq'=>array('type'=>'integer','null'=>TRUE,'default'=>'0'),
 
-        // UNTIL::Recurrence End Date (YYYYMMDDHHMMSS)
+        // UNTIL::Recurrence End Date (YYYYMMDDHHMMSS) TO T NULL
         // This should always be stored as UTC
         // Can not exist if COUNT is not null
         // MODIFIED: Changed type from varchar(14) to datetime ~DS
@@ -178,11 +179,11 @@ Table definitions are here for the moment for reference:
         // 5 = LAST
         'recur_interval'=>array('type'=>'integer','null'=>TRUE,'default'=>'0'),
 
-        // DTSTART::event start date/time
+        // DTSTART::event start date/time TO T NULL
         // MODIFIED: Changed type from varchar(14) to datetime ~DS
         'dtstart'=>array('type'=>'datetime','size'=>'','null'=>FALSE),// Bug 4942 removed ,'default'=>''
 
-        // DTEND::event end date/time
+        // DTEND::event end date/time TO T NULL
         // MODIFIED: Changed type from varchar(14) to datetime ~DS
         'dtend'=>array('type'=>'datetime','size'=>'','null'=>FALSE),// Bug 4942 removed ,'default'=>''
 
@@ -195,7 +196,7 @@ Table definitions are here for the moment for reference:
         // FREEBUSY::freebusy information
         'freebusy'=>array('type'=>'text','null'=>TRUE),
 
-        // DUE::This property defines the date and time that a to-do is expected to be completed.
+        // DUE::This property defines the date and time that a to-do is expected to be completed. TO T NULL
         // MODIFIED: Changed type from varchar(14) to datetime ~DS
         'due'=>array('type'=>'datetime','size'=>'','null'=>FALSE),// Bug 4942 removed ,'default'=>''
 
@@ -204,11 +205,11 @@ Table definitions are here for the moment for reference:
         // 1 = CAL_TRANSP_TRANSPARENT (DEFAULT)
         'transp'=>array('type'=>'integer','null'=>FALSE,'default'=>'1'),
 
-        // CREATED::the date/time the event was created
+        // CREATED::the date/time the event was created TODO: TO I(11) DEFAULT 0
         // MODIFIED: Changed type from varchar(20) to datetime ~DS
         'created'=>array('type'=>'varchar','size'=>'20','null'=>FALSE,'default'=>''),
 
-        // LAST-MODIFED::the date/time the event was last modified
+        // LAST-MODIFED::the date/time the event was last modified TODO: TO I(11) DEFAULT 0
         // MODIFIED: Changed type from varchar(14) to datetime ~DS
         'last_modified'=>array('type'=>'datetime','size'=>'','null'=>FALSE)// Bug 4942 removed ,'default'=>''
     );
@@ -326,3 +327,5 @@ Removed the following table, keeping here for reference:
     if (empty($sql)) return; // throw back
     if (!$dbconn->Execute($sql)) return;
 */
+
+0.2.8

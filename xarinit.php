@@ -35,9 +35,7 @@ function julian_init()
 
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-
     $event_table = $xartable['julian_events'];
-    //summary was C(80)
     // Get a data dictionary object with all the item create methods in it
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
     $fields = "
@@ -47,7 +45,7 @@ function julian_init()
               organizer     I       NOTNULL default 0,
               contact       X       NOTNULL default '',
               url           C(200)  DEFAULT '',
-              summary       C(255)  default NULL,
+              summary       C(255)  default '',
               description   X       NOTNULL default '',
               related_to    I       NULL,
               reltype       I       NULL,
@@ -472,55 +470,16 @@ function julian_upgrade($oldversion)
              $event_linkage_fields = array(
                       // UID::the linked-event id, auto-increment
                       'event_id'=>array('type'=>'integer','size'=>'medium','unsigned'=>TRUE,'null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
-
-                      // Hooked item details:
-                      // - ID of external module
-                      // - type of external item (one module can harbour different item types)
-                      // - ID of external item
                       'hook_modid'   =>array('type'=>'integer','null'=>FALSE,'default'=>'0'),
                       'hook_itemtype'=>array('type'=>'integer','null'=>FALSE,'default'=>'0'),
                       'hook_iid'     =>array('type'=>'integer','null'=>FALSE,'default'=>'0'),
-
-                      // DTSTART::event start date/time
                       'dtstart'=>array('type'=>'datetime','size'=>'','null'=>FALSE,'default'=>''),
-
-                      // DURATION::how long the event lasts
                       'duration'=>array('type'=>'varchar','size'=>'50','null'=>TRUE),
-
-                      // ISALLDAY::boolean flag indicating if event is all day
                       'isallday'=>array('type'=>'integer','size'=>'tiny','default'=>'0'),
-
-                      // RRULE::event recurrence rule
-                      // 0 = NO REPEATING
-                      // 1 = CAL_RECUR_FREQ_DAILY
-                      // 2 = CAL_RECUR_FREQ_WEEKLY
-                      // 3 = CAL_RECUR_FREQ_MONTHLY
-                      // 4 = CAL_RECUR_FREQ_YEARLY
                       'rrule'=>array('type'=>'text','null'=>TRUE),
-
-                      // RECUR_FREQ::how often to repeat rule
                       'recur_freq'=>array('type'=>'integer','null'=>TRUE,'default'=>'0'),
-
-                      // COUNT::Recurrence Count
-                      // Can not exist if UNTIL is not null
-                      // 0 = NO REPEATING
-                      // 1 = SUNDAY
-                      // ...
-                      // 7 = SATURDAY
                       'recur_count'=>array('type'=>'integer','null'=>TRUE,'default'=>'0'),
-
-                      // INTERVAL::Recurrence Interval
-                      // 0 = NO REPEATING
-                      // 1 = FIRST
-                      // 2 = SECOND
-                      // 3 = THIRD
-                      // 4 = FOURTH
-                      // 5 = LAST
                       'recur_interval'=>array('type'=>'integer','null'=>TRUE,'default'=>'0'),
-
-                      // UNTIL::Recurrence End Date (YYYYMMDDHHMMSS)
-                      // This should always be stored as UTC
-                      // Can not exist if COUNT is not null
                       'recur_until'=>array('type'=>'datetime','size'=>'','null'=>FALSE,'default'=>''),
              );
              $sql = xarDBCreateTable($event_linkage_table,$event_linkage_fields);
@@ -560,6 +519,39 @@ function julian_upgrade($oldversion)
             xarModSetVar('julian','aliasname','');
             return julian_upgrade('0.2.6');
         case '0.2.6':
+            /*
+             * We have changed a lot of fields to be compatible with PostGres
+             * This upgrade will introduce NULLs
+             * Still left the time fields to do, will change later to int(11)
+             */
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+            $datadict = xarDBNewDataDict($dbconn, 'CREATE');
+            $juliantable = xarDBgetSiteTablePrefix() . '_julian_events';
+            // Apply changes
+            xarDBLoadTableMaintenanceAPI();
+            $result = $datadict->alterColumn($juliantable, 'url C(200) Default '' ');
+            if (!$result) return;
+            $result = $datadict->alterColumn($juliantable, 'summary C(255) Default '' ');
+            if (!$result) return;
+            $result = $datadict->alterColumn($juliantable, 'exdate X NOTNULL DEFAULT '' ');
+            if (!$result) return;
+            $result = $datadict->alterColumn($juliantable, 'recur_until T NULL ');
+            if (!$result) return;
+            $result = $datadict->alterColumn($juliantable, 'dtstart T NULL ');
+            if (!$result) return;
+            $result = $datadict->alterColumn($juliantable, 'dtend T NULL ');
+            if (!$result) return;
+            $result = $datadict->alterColumn($juliantable, 'due T NULL ');
+            if (!$result) return;
+
+            return julian_upgrade('0.2.7');
+        case '0.2.7':
+
+
+
+
+
             break;
     }
     // Update successful
