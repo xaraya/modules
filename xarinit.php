@@ -530,11 +530,11 @@ function julian_upgrade($oldversion)
             $juliantable = xarDBgetSiteTablePrefix() . '_julian_events';
             // Apply changes
             xarDBLoadTableMaintenanceAPI();
-            $result = $datadict->alterColumn($juliantable, 'url C(200) Default '' ');
+            $result = $datadict->alterColumn($juliantable, 'url C(200) Default "" ' );
             if (!$result) return;
-            $result = $datadict->alterColumn($juliantable, 'summary C(255) Default '' ');
+            $result = $datadict->alterColumn($juliantable, 'summary C(255) Default "" ');
             if (!$result) return;
-            $result = $datadict->alterColumn($juliantable, 'exdate X NOTNULL DEFAULT '' ');
+            $result = $datadict->alterColumn($juliantable, 'exdate X NOTNULL DEFAULT "" ');
             if (!$result) return;
             $result = $datadict->alterColumn($juliantable, 'recur_until T NULL ');
             if (!$result) return;
