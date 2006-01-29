@@ -2,7 +2,7 @@
 /**
  * Hook for create Julian
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -58,9 +58,9 @@ function julian_userapi_createhook($args)
    $event_linkage_table = $xartable['julian_events_linkage'];
 
     // Try to find the link for the current module, item type and item id.
-   $query = "SELECT  event_id  FROM $event_linkage_table WHERE ( hook_modid =$modid AND  hook_itemtype =$itemtype AND  hook_iid =$objectid)";
+   $query = "SELECT event_id  FROM $event_linkage_table WHERE ( hook_modid =$modid AND  hook_itemtype =$itemtype AND  hook_iid =$objectid)";
    $result = $dbconn->Execute($query);
-    $id = "";
+   $id = '';
    if (!empty($result)) {
         if (!$result->EOF) $id=$result->fields[0];
         $result->Close();
@@ -154,8 +154,8 @@ function julian_userapi_createhook($args)
             break;
     }
 
-   if(strcmp($id,"")!=0) {
-        // Link already exists; update it.
+   if(!empty($id)) {
+      // Link already exists; update it.
       $query = "UPDATE " .  $event_linkage_table . "
                 SET hook_modid=?,
                      hook_itemtype=?,
@@ -168,7 +168,7 @@ function julian_userapi_createhook($args)
                      recur_count=?,
                      recur_interval=?,
                      recur_until=?
-                WHERE event_id= ?";
+                WHERE event_id= $id";
                 $bindvars = array ($modid,                            // hooking module id
                                          $itemtype,                   // hooking module item type
                                          $objectid,                   // hooking module item id

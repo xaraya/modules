@@ -72,8 +72,7 @@ function julian_calmonthblock_display($blockinfo)
 {
     // Security Check
     if (!xarSecurityCheck('Viewjulian', 0)) return;
-    // Enable this to see if this helps when using OverLib for template and having troubles with it.
-    // xarModAPILoad('overlib');
+
     /* Get variables from content block.
      * Content is a serialized array for legacy support, but will be
      * an array (not serialized) once all blocks have been converted.

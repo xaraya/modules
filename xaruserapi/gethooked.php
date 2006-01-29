@@ -66,7 +66,7 @@ function julian_userapi_gethooked($args)
             $event_startdate = strtotime($edit_obj->dtstart);
             $event_enddate   = strtotime($edit_obj->recur_until);
 
-            $item['event_startdate'] = date("F j, Y",$event_startdate);
+            $item['event_startdate'] = date("F j, Y",$event_startdate);// TODO: use xar Locale formatting
             $item['event_starttime'] = date("g:i A",$event_startdate);
             $item['event_enddate'] = strcmp($event_enddate,'')==0 ? '' : date("F j, Y",$event_enddate);
 

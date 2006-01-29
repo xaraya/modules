@@ -1,8 +1,8 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-
-<div style="clear: both; padding-top: 10px;">
+<xar:if condition="!empty($event_startdate)" >
+<div>
      <xar:mlstring>Start</xar:mlstring>: #$event_startdate#.<br>
-     <xar:mlstring>Duration</xar:mlstring>: 
+     <xar:mlstring>Duration</xar:mlstring>:
      <xar:if condition="$event_allday">
          <xar:mlstring>all day.</xar:mlstring>
      <xar:else />
@@ -14,7 +14,7 @@
          </xar:ml>
      </xar:if>
      <br>
-     
+
      <xar:if condition="$event_repeat==1">
      <xar:mlstring>Event recurs every</xar:mlstring>: #$event_repeat_every_freq#
      <xar:if condition="$event_repeat_every_type==1"><xar:mlstring>day(s)</xar:mlstring>,</xar:if>
@@ -24,13 +24,13 @@
      <xar:else />
          <xar:if condition="$event_repeat==2">
          <xar:mlstring>Event recurs every</xar:mlstring>
-         
+
          <xar:if condition="$event_repeat_on_num==1"><xar:mlstring>first</xar:mlstring></xar:if>
          <xar:if condition="$event_repeat_on_num==2"><xar:mlstring>second</xar:mlstring></xar:if>
          <xar:if condition="$event_repeat_on_num==3"><xar:mlstring>third</xar:mlstring></xar:if>
          <xar:if condition="$event_repeat_on_num==4"><xar:mlstring>fourth</xar:mlstring></xar:if>
          <xar:if condition="$event_repeat_on_num==5"><xar:mlstring>last</xar:mlstring></xar:if>
-         
+
          <xar:if condition="$event_repeat_on_day==1"><xar:mlstring>Sunday</xar:mlstring></xar:if>
          <xar:if condition="$event_repeat_on_day==2"><xar:mlstring>Monday</xar:mlstring></xar:if>
          <xar:if condition="$event_repeat_on_day==3"><xar:mlstring>Tuesday</xar:mlstring></xar:if>
@@ -55,3 +55,4 @@
      </xar:if>
      <br>
 </div>
+</xar:if>

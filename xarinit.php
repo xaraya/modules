@@ -96,63 +96,23 @@ function julian_init()
 
     // Create separate table to store event information (date, time, etc.) for external (hooked) items.
     $event_linkage_table = $xartable['julian_events_linkage'];
-    $event_linkage_fields = array(
-        // UID::the linked-event id, auto-increment
-        'event_id'=>array('type'=>'integer','size'=>'medium','unsigned'=>TRUE,'null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+    $event_linkage_fields = "
+              event_id        I   AUTO    PRIMARY,
+              hook_modid      I   NOTNULL DEFAULT 0,
+              hook_itemtype   I   NOTNULL DEFAULT 0,
+              hook_iid        I   NOTNULL DEFAULT 0,
+              dtstart         T   NULL,
+              duration        C(50)   NULL,
+              isallday        L   DEFAULT 0,
+              rrule           I   NOTNULL DEFAULT 0,
+              recur_freq      I   DEFAULT 0,
+              recur_count     I   DEFAULT 0,
+              recur_interval  I   DEFAULT 0,
+              recur_until     T   NULL
+              ";
+    $result = $datadict->changeTable($event_linkage_table, $event_linkage_fields);
+    if (!$result) {return;}
 
-                  // Hooked item details:
-                  // - ID of external module
-                  // - type of external item (one module can harbour different item types)
-                  // - ID of external item
-                  'hook_modid'   =>array('type'=>'integer','null'=>FALSE,'default'=>'0'),
-                  'hook_itemtype'=>array('type'=>'integer','null'=>FALSE,'default'=>'0'),
-                  'hook_iid'     =>array('type'=>'integer','null'=>FALSE,'default'=>'0'),
-
-        // DTSTART::event start date/time
-        'dtstart'=>array('type'=>'datetime','size'=>'','null'=>FALSE),// Bug 4942 removed ,'default'=>''
-
-        // DURATION::how long the event lasts
-        'duration'=>array('type'=>'varchar','size'=>'50','null'=>TRUE),
-
-        // ISALLDAY::boolean flag indicating if event is all day
-        'isallday'=>array('type'=>'integer','size'=>'tiny','default'=>'0'),
-
-        // RRULE::event recurrence rule
-        // 0 = NO REPEATING
-        // 1 = CAL_RECUR_FREQ_DAILY
-        // 2 = CAL_RECUR_FREQ_WEEKLY
-        // 3 = CAL_RECUR_FREQ_MONTHLY
-        // 4 = CAL_RECUR_FREQ_YEARLY
-        'rrule'=>array('type'=>'text','null'=>TRUE),
-
-        // RECUR_FREQ::how often to repeat rule
-        'recur_freq'=>array('type'=>'integer','null'=>TRUE,'default'=>'0'),
-
-        // COUNT::Recurrence Count
-        // Can not exist if UNTIL is not null
-        // 0 = NO REPEATING
-        // 1 = SUNDAY
-        // ...
-        // 7 = SATURDAY
-        'recur_count'=>array('type'=>'integer','null'=>TRUE,'default'=>'0'),
-
-        // INTERVAL::Recurrence Interval
-        // 0 = NO REPEATING
-        // 1 = FIRST
-        // 2 = SECOND
-        // 3 = THIRD
-        // 4 = FOURTH
-        // 5 = LAST
-        'recur_interval'=>array('type'=>'integer','null'=>TRUE,'default'=>'0'),
-
-        // UNTIL::Recurrence End Date (YYYYMMDDHHMMSS)
-        // This should always be stored as UTC
-        // Can not exist if COUNT is not null
-        'recur_until'=>array('type'=>'datetime','size'=>'','null'=>FALSE),// Bug 4942 removed ,'default'=>''
-    );
-    $sql = xarDBCreateTable($event_linkage_table,$event_linkage_fields);
-    if (empty($sql)) return; // throw back
-    if (!$dbconn->Execute($sql)) return;
 
      // Create the master category for Julian (in the categories module that will be hooked)
      $mastercid = xarModAPIFunc('categories', 'admin', 'create',
@@ -531,6 +491,14 @@ function julian_upgrade($oldversion)
             $result = $datadict->alterColumn($juliantable, 'dtend T NULL ');
             if (!$result) return;
             $result = $datadict->alterColumn($juliantable, 'due T NULL ');
+            if (!$result) return;
+
+            $event_linkage_table = $xartable['julian_events_linkage'];
+            $result = $datadict->alterColumn($event_linkage_table, 'dtstart T NULL ');
+            if (!$result) return;
+            $result = $datadict->alterColumn($event_linkage_table, 'rrule I NOTNULL DEFAULT 0 ');
+            if (!$result) return;
+            $result = $datadict->alterColumn($event_linkage_table, 'recur_until T NULL ');
             if (!$result) return;
 
             return julian_upgrade('0.2.7');

@@ -16,7 +16,7 @@
  * Get all Julian Calendar Event items.
  *
  * This functions returns an array with a listing of events. The events
- * are not formatted for display. When a calendar oriented listing is needed, 
+ * are not formatted for display. When a calendar oriented listing is needed,
  * use xaruser-getall.php
  *
  * @param $args an array of arguments
@@ -118,12 +118,12 @@ function julian_userapi_getevents($args)
                      $event_table.rrule,
                      $event_table.isallday,
                      $event_table.fee";
-              
+
     // Select on categories
     if (xarModIsHooked('categories','julian')) {
         // Get the LEFT JOIN ... ON ...  and WHERE parts from categories
         $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
-                                       array('modid' => 
+                                       array('modid' =>
                                               xarModGetIDFromName('julian'),
                                              'catid' => $catid));
         $query .= " FROM ( $event_table
@@ -132,9 +132,9 @@ function julian_userapi_getevents($args)
                   $categoriesdef[more]
                   WHERE $categoriesdef[where] ";
     } else {
-        $query .= " FROM $event_table "; 
+        $query .= " FROM $event_table ";
     }
-    
+
     if (xarModIsHooked('categories','julian') && (!empty($startdate))&& (!empty($enddate))) {
         $query .= " AND ";
     }
@@ -179,10 +179,10 @@ function julian_userapi_getevents($args)
 
     // Put items into result array
     for (; !$result->EOF; $result->MoveNext()) {
-        list($eID, 
+        list($eID,
              $eName,
              $eDescription,
-             $eStreet1, 
+             $eStreet1,
              $eStreet2,
              $eCity,
              $eState,
@@ -202,7 +202,7 @@ function julian_userapi_getevents($args)
              $eFee) = $result->fields;
 
           // Change date formats from UNIX timestamp to something readable.
-          if ($eStart['timestamp'] == 0) {
+          if ($eStart['timestamp'] == 0 || empty($eStart['timestamp'])) {
               $eStart['mon'] = "";
               $eStart['day'] = "";
               $eStart['year'] = "";
@@ -210,15 +210,15 @@ function julian_userapi_getevents($args)
               $eStart['linkdate'] = date("Ymd",strtotime($eStart['timestamp']));
               $eStart['viewdate'] = date("m-d-Y",strtotime($eStart['timestamp']));
           }
-          if ($eRecur['timestamp'] == 0) {
+          if ($eRecur['timestamp'] == 0 || empty($eRecur['timestamp'])) {
               $eRecur['mon'] = "";
               $eRecur['day'] = "";
               $eRecur['year'] = "";
           } else {
-              $eRecur['linkdate'] = date("Ymd",strtotime($eDue['timestamp']));
-              $eRecur['viewdate'] = date("m-d-Y",strtotime($eDue['timestamp']));
+              $eRecur['linkdate'] = date("Ymd",strtotime($eRecur['timestamp']));//eDue?
+              $eRecur['viewdate'] = date("m-d-Y",strtotime($eRecur['timestamp']));
           }
-          if ($eDue['timestamp'] == 0) {
+          if ($eDue['timestamp'] == 0 || empty($eDue['timestamp'])) {
               $eDue['mon'] = "";
               $eDue['day'] = "";
               $eDue['year'] = "";
@@ -252,28 +252,28 @@ function julian_userapi_getevents($args)
 /*
     // TODO: include linked events
     // Get the linked events
-    
+
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $event_linkage_table = $xartable['julian_events_linkage'];
     $query_linked = "SELECT DISTINCT event_id,
-    					 hook_modid,
-    					 hook_itemtype,
-    					 hook_iid,
-    					 dtstart,
-    					 duration,
-    					 isallday,
-    					 rrule,
-    					 recur_freq,
-    					 recur_count,
-    					 recur_until,
-    					 if(recur_until LIKE '0000%','',recur_until) as fRecurUntil,
-    					 recur_interval,
-    					 if(isallday,'',DATE_FORMAT(dtstart,'%l:%i %p')) as fStartTime,
-    					 DATE_FORMAT(dtstart,'%Y-%m-%d') as fStartDate
-    			 FROM $event_linkage_table 
-    			 WHERE (1) ".$condition."
-    			 ORDER BY dtstart ASC;";
+                         hook_modid,
+                         hook_itemtype,
+                         hook_iid,
+                         dtstart,
+                         duration,
+                         isallday,
+                         rrule,
+                         recur_freq,
+                         recur_count,
+                         recur_until,
+                         if(recur_until LIKE '0000%','',recur_until) as fRecurUntil,
+                         recur_interval,
+                         if(isallday,'',DATE_FORMAT(dtstart,'%l:%i %p')) as fStartTime,
+                         DATE_FORMAT(dtstart,'%Y-%m-%d') as fStartDate
+                 FROM $event_linkage_table
+                 WHERE (1) ".$condition."
+                 ORDER BY dtstart ASC;";
     $result_linked =& $dbconn->Execute($query_linked);
     if (!$result_linked) return;
 
@@ -285,10 +285,10 @@ function julian_userapi_getevents($args)
 
     // Put items into result array
     for (; !$result->EOF; $result->MoveNext()) {
-        list($eID, 
+        list($eID,
         //     $eName,
         //     $eDescription,
-        //     $eStreet1, 
+        //     $eStreet1,
         //     $eStreet2,
         //     $eCity,
         //     $eState,
