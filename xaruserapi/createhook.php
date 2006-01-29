@@ -168,7 +168,7 @@ function julian_userapi_createhook($args)
                      recur_count=?,
                      recur_interval=?,
                      recur_until=?
-                WHERE event_id=$id";
+                WHERE event_id= ?";
                 $bindvars = array ($modid,                            // hooking module id
                                          $itemtype,                   // hooking module item type
                                          $objectid,                   // hooking module item id
@@ -179,33 +179,46 @@ function julian_userapi_createhook($args)
                                          $recur_freq,                 // repetition frequency
                                          $event_repeat_on_day,        // day of the week
                                          $event_repeat_on_num,        // month-based instance of weekday (1st, 2nd, ..., last=5)
-                                         $event_enddate);             // event end date (may be '')
+                                         $event_enddate.              // event end date (may be '')
+                                         $id);                        // Event ID
              $result = $dbconn->Execute($query, $bindvars);
    } else {
         // Link does not yet exist; create it.
       $query = "INSERT INTO " .  $event_linkage_table . "
-                SET hook_modid=?,
-                     hook_itemtype=?,
-                     hook_iid=?,
-                     dtstart=?,
-                     duration=?,
-                     isallday=?,
-                     rrule=?,
-                     recur_freq=?,
-                     recur_count=?,
-                     recur_interval=?,
-                     recur_until=?";
-                $bindvars = array ($modid,                            // hooking module id
-                                         $itemtype,                   // hooking module item type
-                                         $objectid,                   // hooking module item id
-                                         $event_startdate,            // event start date/time
-                                         $event_duration,             // event duration (hh:mm)
-                                         $event_allday,               // event takes all day (0 = false, 1 = true)
-                                         $event_repeat_every_type,    // unit of repetition frequency (day, week, month, year)
-                                         $recur_freq,                 // repetition frequency
-                                         $event_repeat_on_day,        // day of the week
-                                         $event_repeat_on_num,        // month-based instance of weekday (1st, 2nd, ..., last=5)
-                                         $event_enddate);             // event end date (may be '')
+                ( hook_modid,
+                  hook_itemtype,
+                  hook_iid,
+                  dtstart,
+                  duration,
+                  isallday,
+                  rrule,
+                  recur_freq,
+                  recur_count,
+                  recur_interval,
+                  recur_until
+                ) VALUES (
+                  ?,
+                  ?,
+                  ?,
+                  ?,
+                  ?,
+                  ?,
+                  ?,
+                  ?,
+                  ?,
+                  ?,
+                  ?)";
+                $bindvars = array ($modid,                      // hooking module id
+                                   $itemtype,                   // hooking module item type
+                                   $objectid,                   // hooking module item id
+                                   $event_startdate,            // event start date/time
+                                   $event_duration,             // event duration (hh:mm)
+                                   $event_allday,               // event takes all day (0 = false, 1 = true)
+                                   $event_repeat_every_type,    // unit of repetition frequency (day, week, month, year)
+                                   $recur_freq,                 // repetition frequency
+                                   $event_repeat_on_day,        // day of the week
+                                   $event_repeat_on_num,        // month-based instance of weekday (1st, 2nd, ..., last=5)
+                                  $event_enddate);              // event end date (may be '')
                 $result = $dbconn->Execute($query, $bindvars);
             $id = $dbconn->Insert_ID();
    }
