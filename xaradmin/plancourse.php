@@ -109,7 +109,7 @@ function courses_admin_plancourse($args)
 
     $item = array();
     $item['module'] = 'courses';
-    $item['itemtype'] = 2;
+    $item['itemtype'] = $courseid;
     $hooks = xarModCallHooks('item', 'new', '', $item);
 
     if (empty($hooks)) {

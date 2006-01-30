@@ -2,12 +2,13 @@
 /**
  * Upcoming courses block initialisation
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Courses
+ * @subpackage Courses module
+ * @link http://xaraya.com/index.php/release/179.html
  * @author Courses module development team
  */
 
@@ -113,9 +114,9 @@ function courses_upcomingblock_display($blockinfo)
     // Display each item, permissions permitting
     for (; !$result->EOF; $result->MoveNext()) {
         list($planningid, $courseid, $startdate, $enddate) = $result->fields;
-
-        if (xarSecurityCheck('ViewCourses', 0, 'Course', "All:All:All")) { // TODO: privileges
-            if (xarSecurityCheck('ReadCourses', 0, 'Course', "All:All:All")) { // TODO: privileges
+    // $courseid:$planningid:All
+        if (xarSecurityCheck('ViewCourses', 0, 'Course', "$courseid:$planningid:All")) { // TODO: privileges
+            if (xarSecurityCheck('ReadCourses', 0, 'Course', "$courseid:$planningid:All")) { // TODO: privileges
                 $item = array();
                 $item['link'] = xarModURL('courses', 'user', 'displayplanned',
                                           array('planningid' => $planningid));

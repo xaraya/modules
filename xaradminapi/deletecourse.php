@@ -57,7 +57,7 @@ function courses_adminapi_deletecourse($args)
     // delete hook we're not passing any extra info
     // xarModCallHooks('item', 'delete', $exid, '');
     $item['module'] = 'courses';
-    $item['itemtype']=1;
+    $item['itemtype']=$courseid;
     $item['itemid'] = $courseid;
     xarModCallHooks('item', 'delete', $courseid, $item);
     // Let the calling process know that we have finished successfully

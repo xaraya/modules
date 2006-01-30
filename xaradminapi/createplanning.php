@@ -80,7 +80,7 @@ function courses_adminapi_createplanning($args)
     // xarModCallHooks('item', 'create', $planningid, 'planningid');
     $item = $args;
     $item['module'] = 'courses';
-    $item['itemtype'] = 2;
+    $item['itemtype'] = $courseid;
     $item['itemid'] = $planningid;
     xarModCallHooks('item', 'create', $planningid, $item);
     // Return the id of the newly created item to the calling process

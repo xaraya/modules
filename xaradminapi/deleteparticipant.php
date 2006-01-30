@@ -58,10 +58,10 @@ function courses_adminapi_deleteparticipant($args)
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
     if (!$result) return;
-    // Let any hooks know that we have deleted an item.
+    /* Let any hooks know that we have deleted an item.
     $item['module'] = 'courses';
     $item['itemid'] = $sid;
-    xarModCallHooks('item', 'delete', $sid, $item);
+    xarModCallHooks('item', 'delete', $sid, $item);*/
     // Let the calling process know that we have finished successfully
     return true;
 }

@@ -1,7 +1,7 @@
 <?php
 /**
  * Delete a teacher
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -9,12 +9,12 @@
  *
  * @subpackage Courses Module
  * @link http://xaraya.com/index.php/release/179.html
- * @author MichelV. 
+ * @author MichelV.
  */
 /**
  * delete a teacher
- * 
- * @author the courses module development team 
+ *
+ * @author the courses module development team
  * @param  $args ['tid'] ID of the teacher item
  * @returns bool
  * @return true on success, false on failure
@@ -58,11 +58,11 @@ function courses_adminapi_deleteteacher($args)
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
     if (!$result) return;
-    
-    // Let any hooks know that we have deleted an item.
+
+    /* Let any hooks know that we have deleted an item.
     $item['module'] = 'courses';
     $item['itemid'] = $tid;
-    xarModCallHooks('item', 'delete', $tid, $item);
+    xarModCallHooks('item', 'delete', $tid, $item); */
     // Let the calling process know that we have finished successfully
     return true;
 }

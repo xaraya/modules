@@ -111,7 +111,7 @@ function courses_adminapi_updateplanned($args)
     $item = $args;
     $item['module'] = 'courses';
     $item['itemid'] = $planningid;
-    $item['itemtype']=2;
+    $item['itemtype']=$courseid;
     xarModCallHooks('item', 'update', $planningid, $item);
     // Let the calling process know that we have finished successfully
     return true;

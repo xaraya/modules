@@ -92,19 +92,11 @@ function courses_adminapi_updatecourse($args)
     }
     // Let any hooks know that we have updated an item.  As this is an
     // update hook we're passing the updated $item array as the extra info
+    $item = $args;
     $item['module'] = 'courses';
     $item['itemid'] = $courseid;
-    $item['itemtype']=1;
-    $item['name'] = $name;
-    $item['number'] = $number;
-    $item['level'] =$level;
-    $item['shortdesc'] = $shortdesc;
-    $item['freq'] = $freq;
-    $item['intendedcredits'] = $intendedcredits;
-    $item['contact'] = $contact;
-    $item['contactuid'] = $contactuid;
-    $item['hidecourse'] = $hidecourse;
-    $item['last_modified'] =$last_modified;
+    $item['itemtype']=$courseid;
+
     xarModCallHooks('item', 'update', $courseid, $item);
     // Let the calling process know that we have finished successfully
     return true;

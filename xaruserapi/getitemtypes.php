@@ -20,7 +20,7 @@
  */
 function courses_userapi_getitemtypes($args)
 {
-    $itemtypes = array();
+/*  $itemtypes = array();
 
     // Let's see if this is usefull
     $itemtypes[1] = array('label' => xarVarPrepForDisplay(xarML('Courses')),
@@ -31,6 +31,20 @@ function courses_userapi_getitemtypes($args)
                           'title' => xarVarPrepForDisplay(xarML('Planned Course')),
                           'url'   => xarModURL('courses','user','displayplanned'));
 
+*/
+    $itemtypes = array();
+
+    $courses = xarModAPIFunc('courses',
+                            'user',
+                            'getall');
+
+    foreach($courses as $course){
+        $itemtypevalue = $course['courseid'];
+        $itemtypes[$itemtypevalue] = array('label' => $course['number'] . ' ' .$course['name'],
+                                           'title' => xarML('Course'),
+                                           'url' => xarModURL('courses','user','display',array('courseid' => $course['courseid'])));
+    }
+    return $itemtypes;
 
     return $itemtypes;
 }

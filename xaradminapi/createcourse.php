@@ -76,7 +76,7 @@ function courses_adminapi_createcourse($args)
     // Let any hooks know that we have created a new item.
     $item = $args;
     $item['module'] = 'courses';
-    $item['itemtype'] = 1;
+    $item['itemtype'] = $courseid;
     $item['itemid'] = $courseid;
     xarModCallHooks('item', 'create', $courseid, $item);
     // Return the id of the newly created item to the calling process

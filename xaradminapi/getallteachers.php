@@ -1,7 +1,7 @@
 <?php
 /**
  * Get all teachers for one planned course
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -9,12 +9,12 @@
  *
  * @subpackage Courses Module
  * @link http://xaraya.com/index.php/release/179.html
- * @author Courses module development team 
+ * @author Courses module development team
  */
 /**
  * get all teachers for a planned course
- * 
- * @author the Courses module development team 
+ *
+ * @author the Courses module development team
  * @param numitems $ the number of items to retrieve (default -1 = all)
  * @param startnum $ start with this item number (default 1)
  * @param planningid $ ID of planned course
@@ -26,20 +26,13 @@ function courses_adminapi_getallteachers($args)
 {
     extract($args);
     // Optional arguments.
-    // FIXME: (!isset($startnum)) was ignoring $startnum as it contained a null value
-    // replaced it with ($startnum == "") (thanks for the talk through Jim S.) NukeGeek 9/3/02
-    // if (!isset($startnum)) {
     if (!isset($startnum)) {
         $startnum = 1;
     }
     if (!isset($numitems)) {
         $numitems = -1;
     }
-    // Argument check - make sure that all required arguments are present and
-    // in the right format, if not then set an appropriate error message
-    // and return
-    // Note : since we have several arguments we want to check here, we'll
-    // report all those that are invalid at the same time...
+    // Argument check
     $invalid = array();
     if (!isset($startnum) || !is_numeric($startnum)) {
         $invalid[] = 'startnum';
@@ -74,8 +67,6 @@ function courses_adminapi_getallteachers($args)
             WHERE xar_planningid = $planningid
             ORDER BY xar_tid";
     $result = $dbconn->SelectLimit($query, $numitems, $startnum-1);
-    // Check for an error with the database code, adodb has already raised
-    // the exception so we just return
     if (!$result) return;
     // Put items into result array.
     for (; !$result->EOF; $result->MoveNext()) {
