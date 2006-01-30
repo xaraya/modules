@@ -2,8 +2,8 @@
 /**
  * Standard all planned courses
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -27,12 +27,12 @@
  */
 function courses_admin_viewallplanned()
 {
-    if (!xarVarFetch('startnum', 'int:1:', $startnum,  '1',            XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('catid',    'isset',  $catid,     NULL,           XARVAR_DONT_SET))     return;
-    if (!xarVarFetch('sortby',   'str:1:', $sortby,    'planningid',   XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('sortorder','enum:DESC:ASC:', $sortorder,'DESC',  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('startnum', 'int:1:',          $startnum,  1,            XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('catid',    'isset',           $catid,     NULL,           XARVAR_DONT_SET))     return;
+    if (!xarVarFetch('sortby',   'str:1:',          $sortby,    'planningid',   XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('sortorder','enum:DESC:ASC:',  $sortorder,'DESC',  XARVAR_NOT_REQUIRED)) return;
 
-    // Initialise the $data variable
+    // Add the admin menu
     $data = xarModAPIFunc('courses', 'admin', 'menu');
     // Initialise the variable that will hold the items, so that the template
     // doesn't need to be adapted in case of errors
@@ -43,10 +43,10 @@ function courses_admin_viewallplanned()
     // Call the xarTPL helper function to produce a pager in case
     $data['pager'] = xarTplGetPager($startnum,
         xarModAPIFunc('courses', 'user', 'countplanned', array('catid' => $catid)),
-        xarModURL('courses', 'admin', 'viewallplanned', array('startnum' => '%%',
-                                                              'catid' => $catid,
+        xarModURL('courses', 'admin', 'viewallplanned', array('startnum'  => '%%',
+                                                              'catid'     => $catid,
                                                               'sortorder' =>$sortorder,
-                                                              'sortby' =>$sortby)),
+                                                              'sortby'    =>$sortby)),
         xarModGetVar('courses', 'itemsperpage'));
     // Security check - High level because we are nearly admin here
     if (!xarSecurityCheck('EditCourses')) return;
@@ -60,13 +60,15 @@ function courses_admin_viewallplanned()
                                  'sortorder' => $sortorder,
                                  'sortby'    => $sortby,
                                  'catid'     => $catid
-                                 ));
+                                 )
+                           );
     // Check for exceptions
     if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     // Quick check for emptyness...
     if (count($items) == 0) {
         // This causes a weird empty page...
-        return;
+        $data['items'] = $items;
+        return $data;
     } else {
         // Check individual permissions for Edit / Delete
         for ($i = 0; $i < count($items); $i++) {
