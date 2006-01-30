@@ -65,9 +65,9 @@ function sigmapersonnel_statusallblock_display($blockinfo)
     if (empty($vars['numitems'])) {
         $vars['numitems'] = 5;
     }
-
+    if (!xarVarFetch('catid', 'int:1:', $catid, 0, XARVAR_DONT_SET)) return;
     // Get all persons
-    $items = xarModApiFunc('sigmapersonnel', 'user', 'getall');
+    $items = xarModApiFunc('sigmapersonnel', 'user', 'getall', array('catid' => $catid));
 
     if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) {
         return $blockinfo; // throw back

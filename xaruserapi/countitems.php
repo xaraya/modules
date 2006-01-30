@@ -33,10 +33,7 @@ function sigmapersonnel_userapi_countitems($args)
     // It's good practice to name the table and column definitions you are
     // getting - $table and $column don't cut it in more complex modules
     $sigmapersonneltable = $xartable['sigmapersonnel_person'];
-    // Get item - the formatting here is not mandatory, but it does make the
-    // SQL statement relatively easy to read.  Also, separating out the sql
-    // statement from the Execute() command allows for simpler debug operation
-    // if it is ever needed
+    // Count the items
     $query = "SELECT COUNT(1) ";
 
     // catid is not empty
@@ -55,13 +52,14 @@ function sigmapersonnel_userapi_countitems($args)
                         $query .= " AND ";
                     }
     } else {
-        $query .= " FROM $sigmapersonneltable";
+        $query .= " FROM $sigmapersonneltable
+                    WHERE ";
     }
     if (!empty($persstatus) && empty($catid)) {
-        $query .= " WHERE xar_persstatus = $persstatus";
-    } elseif (!empty($persstatus) && !empty($catid)) {
-        // AND has been added
         $query .= " xar_persstatus = $persstatus";
+    } elseif (!empty($persstatus) && !empty($catid)) {
+            // AND has been added, but not always
+            $query .= " xar_persstatus = $persstatus";
     }
 
     // If there are no variables you can pass in an empty array for bind variables
