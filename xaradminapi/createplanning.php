@@ -2,7 +2,7 @@
 /**
  * Create a new planned course
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -32,6 +32,17 @@ function courses_adminapi_createplanning($args)
         return;
     }
 
+    // Convert date strings to int format
+    if (!empty($startdate) && !is_numeric($startdate)) {
+        $startdate = strtotime($startdate);
+    }
+    if (!empty($enddate) && !is_numeric($enddate)) {
+        $enddate = strtotime($enddate);
+    }
+    if (!empty($closedate) && !is_numeric($closedate)) {
+        $closedate = strtotime($closedate);
+    }
+    // Set last modification
     $last_modified = time();
     // Get database setup
     $dbconn =& xarDBGetConn();
@@ -77,7 +88,7 @@ function courses_adminapi_createplanning($args)
     // Get the ID of the item that we inserted.
     $planningid = $dbconn->PO_Insert_ID($planningtable, 'xar_planningid');
     // Let any hooks know that we have created a new item.
-    // xarModCallHooks('item', 'create', $planningid, 'planningid');
+
     $item = $args;
     $item['module'] = 'courses';
     $item['itemtype'] = $courseid;

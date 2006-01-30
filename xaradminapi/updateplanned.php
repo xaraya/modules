@@ -42,14 +42,12 @@ function courses_adminapi_updateplanned($args)
     if (!xarVarFetch('location', 'str:1:', $location, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('costs', 'str:1:', $costs, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('material', 'str:1:', $material, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('startdate', 'str:1:', $startdate, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('enddate', 'str:1:', $enddate, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('hideplanning', 'int:1:', $hideplanning, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('info', 'str:1:', $info, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('invalid', 'str::', $invalid, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('minparticipants', 'int::', $minparticipants, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('maxparticipants', 'int::', $maxparticipants, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('closedate', 'str::', $closedate, '', XARVAR_NOT_REQUIRED)) return;
+
 
     // The user API function is called.
     $item = xarModAPIFunc('courses',
@@ -63,7 +61,16 @@ function courses_adminapi_updateplanned($args)
     if (!xarSecurityCheck('EditCourses', 1, 'Course', "$courseid:$planningid:All")) {
         return;
     }
-
+    // Convert date strings to int format
+    if (!empty($startdate) && !is_numeric($startdate)) {
+        $startdate = strtotime($startdate);
+    }
+    if (!empty($enddate) && !is_numeric($enddate)) {
+        $enddate = strtotime($enddate);
+    }
+    if (!empty($closedate) && !is_numeric($closedate)) {
+        $closedate = strtotime($closedate);
+    }
     $last_modified = time();
 
     // Get database setup

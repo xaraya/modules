@@ -685,8 +685,21 @@ function courses_upgrade($oldversion)
             if (!$result) return;
             return courses_upgrade('0.2.1');
         case '0.2.1':
+            // Change lay out of date fields to time() format
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+            $datadict =& xarDBNewDataDict($dbconn, 'CREATE');
+            xarDBLoadTableMaintenanceAPI();
+            $courses_planning = $xartable['courses_planning'];
+            $result = $datadict->alterColumn($courses_planning, 'xar_last_modified I4 null default 0');
+            if (!$result) return;
+            $result = $datadict->alterColumn($courses_planning, 'xar_closedate I4 null default 0');
+            if (!$result) return;
+            $result = $datadict->alterColumn($courses_planning, 'xar_startdate I4 null default 0');
+            if (!$result) return;
             return courses_upgrade('0.2.2');
         case '0.2.2':
+        case '0.2.3':
             break;
     }
     // Update successful

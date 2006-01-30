@@ -38,7 +38,6 @@ function courses_admin_updatecourse($args)
     if (!xarVarFetch('contact',         'str:1:', $contact, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('contactuid',      'int:1:', $contactuid,'', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('hidecourse',      'int:1:', $hidecourse, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('last_modified',   'str:1:', $last_modified, '', XARVAR_NOT_REQUIRED)) return;
     // At this stage we check to see if we have been passed $objectid, the
     // generic item identifier.
     if (!empty($objectid)) {
