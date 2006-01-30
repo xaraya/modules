@@ -1,6 +1,6 @@
 <?php
 /**
- * Standard Utility function pass individual menu items to the main menu
+ * Pass individual menu items to the admin menu
  *
  * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
@@ -13,10 +13,9 @@
  */
 
 /**
- * Standard Utility function pass individual menu items to the main menu
+ * Pass individual menu items to the admin  menu
  *
  * @author the Example module development team
- * @returns array
  * @return array containing the menulinks for the main menu items.
  */
 function example_adminapi_getmenulinks()
@@ -49,7 +48,7 @@ function example_adminapi_getmenulinks()
     /* Show an overview menu option here if you like */
 
     if (xarSecurityCheck('AddExample', 0)) {
-    $menulinks[] = Array('url' => xarModURL('example','admin','overview'),
+    $menulinks[] = array('url' => xarModURL('example','admin','overview'),
 
             'title' => xarML('Example Overview'),
             'label' => xarML('Overview'));
@@ -57,7 +56,7 @@ function example_adminapi_getmenulinks()
 
     if (xarSecurityCheck('AddExample', 0)) {
 
-        $menulinks[] = Array('url' => xarModURL('example','admin','new'),
+        $menulinks[] = array('url' => xarModURL('example','admin','new'),
             /* In order to display the tool tips and label in any language,
              * we must encapsulate the calls in the xarML in the API.
              */
@@ -70,7 +69,7 @@ function example_adminapi_getmenulinks()
          * This creates the tree view for each item. Obviously, we don't need to add every
          * function, but we do need to have a way to navigate through the module.
          */
-        $menulinks[] = Array('url' => xarModURL('example','admin','view'),
+        $menulinks[] = array('url' => xarModURL('example','admin','view'),
             /* In order to display the tool tips and label in any language,
              * we must encapsulate the calls in the xarML in the API.
              */
@@ -83,7 +82,7 @@ function example_adminapi_getmenulinks()
          * This creates the tree view for each item. Obviously, we don't need to add every
          * function, but we do need to have a way to navigate through the module.
          */
-        $menulinks[] = Array('url' => xarModURL('example','admin','modifyconfig'),
+        $menulinks[] = array('url' => xarModURL('example','admin','modifyconfig'),
             /* In order to display the tool tips and label in any language,
              * we must encapsulate the calls in the xarML in the API.
              */

@@ -1,6 +1,6 @@
 <?php
 /**
- * Example table definition functions
+ * Table definition functions
  *
  * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
@@ -12,7 +12,8 @@
  * @author Example Module Development Team
  */
 /**
- * Example table definition functions
+ * Table definition functions
+ *
  * Return example table names to xaraya
  *
  * This function is called internally by the core whenever the module is
