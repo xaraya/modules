@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Categories module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Categories Module
+ * @link http://xaraya.com/index.php/release/147.html
+ * @author Categories module development team
+ */
 /**
  * udpate item from categories_admin_modify
  */
@@ -72,7 +83,7 @@ function categories_admin_modifycatbase()
             'categories', 'user', 'getallcatbases',
             array('modid' => $modid, 'itemtype' => $itemtype, 'order' => 'order')
         );
-        
+
         // TODO: config hooks for the category base and modify hooks for the category base item
 
     } else {

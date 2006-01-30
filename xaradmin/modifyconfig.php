@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Categories module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Categories Module
+ * @link http://xaraya.com/index.php/release/147.html
+ * @author Categories module development team
+ */
 /**
  * modify configuration
  */
@@ -12,7 +23,7 @@ function categories_admin_modifyconfig()
 
     switch (strtolower($phase)) {
         case 'modify':
-        default: 
+        default:
             $catsperpage = xarModGetVar('categories','catsperpage');
             if (!$catsperpage) {
                 $catsperpage = 10;
@@ -64,9 +75,9 @@ function categories_admin_modifyconfig()
             xarResponseRedirect(xarModUrl('categories','admin','modifyconfig',array()));
 
             break;
-    } 
+    }
 
     return true;
-} 
+}
 
 ?>

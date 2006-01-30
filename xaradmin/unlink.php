@@ -1,17 +1,28 @@
 <?php
-
+/**
+ * Categories module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Categories Module
+ * @link http://xaraya.com/index.php/release/147.html
+ * @author Categories module development team
+ */
 /**
  * Delete category links of module items
  */
 function categories_admin_unlink()
-{ 
+{
     // Security Check
     if(!xarSecurityCheck('AdminCategories')) return;
 
     if(!xarVarFetch('modid',    'isset', $modid,     NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('itemtype', 'isset', $itemtype,  NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('itemid',   'isset', $itemid,    NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return; 
+    if(!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return;
 
     // Check for confirmation.
     if (empty($confirm)) {
@@ -37,12 +48,12 @@ function categories_admin_unlink()
                 }
             }
         }
-        $data['confirmbutton'] = xarML('Confirm'); 
+        $data['confirmbutton'] = xarML('Confirm');
         // Generate a one-time authorisation code for this operation
-        $data['authid'] = xarSecGenAuthKey(); 
+        $data['authid'] = xarSecGenAuthKey();
         // Return the template variables defined in this function
         return $data;
-    } 
+    }
 
     if (!xarSecConfirmAuthKey()) return;
     if (!xarModAPIFunc('categories','admin','unlink',

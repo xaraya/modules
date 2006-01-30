@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Categories module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Categories Module
+ * @link http://xaraya.com/index.php/release/147.html
+ * @author Categories module development team
+ */
 /**
  * delete a category
  * @param $args['cid'] the ID of the category
@@ -12,7 +23,7 @@ function categories_adminapi_deletecat($args)
     extract($args);
     // Argument check
     if (empty($cid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)', 
+        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                      'cid', 'admin', 'deletecat', 'categories');
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return false;
@@ -27,7 +38,7 @@ function categories_adminapi_deletecat($args)
                  );
     $cat = xarModAPIFunc('categories', 'user', 'getcatinfo', $args);
     if ($cat == false) {
-        $msg = xarML('Category does not exist. Invalid #(1) for #(2) function #(3)() in module #(4)', 
+        $msg = xarML('Category does not exist. Invalid #(1) for #(2) function #(3)() in module #(4)',
                      'category', 'admin', 'deletecat', 'categories');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
@@ -41,7 +52,7 @@ function categories_adminapi_deletecat($args)
                                 'getcat',
                                 $args);
     if ($categories == false || count($categories) == 0) {
-        $msg = xarML('Category does not exist. Invalid #(1) for #(2) function #(3)() in module #(4)', 
+        $msg = xarML('Category does not exist. Invalid #(1) for #(2) function #(3)() in module #(4)',
                      'category', 'admin', 'deletecat', 'categories');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
@@ -49,7 +60,7 @@ function categories_adminapi_deletecat($args)
     // Useful Variables set...
 
     // Security check
-    // Don´t check by name anything! That´s evil... Unique ID is the way to go.
+    // Don?t check by name anything! That?s evil... Unique ID is the way to go.
     if(!xarSecurityCheck('DeleteCategories',1,'category',"All:$cid")) return;
 
     // Get database setup
@@ -60,10 +71,10 @@ function categories_adminapi_deletecat($args)
 
     //There are two possibilities when deleting a set:
     //1 - Destroy every child inside it
-    //2 - Destroy the parent, and make the parent´s parent inherity the children
+    //2 - Destroy the parent, and make the parent?s parent inherity the children
     //As this model has the moving feature, i think the best option is '1'
 
-    // This part was mostly taken from Joe Celko´s article SQL for Smarties on DBMS, April 1996
+    // This part was mostly taken from Joe Celko?s article SQL for Smarties on DBMS, April 1996
 
     // So deleting all the subtree
 

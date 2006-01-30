@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Categories module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Categories Module
+ * @link http://xaraya.com/index.php/release/147.html
+ * @author Categories module development team
+ */
 /**
  * update a category
  *
@@ -10,7 +21,7 @@
  * @param $args['image'] the (optional) modified image for the category
  * @param $args['moving'] = 1 means the category can move around
  *
- * If $args['moving'] != 1 then these shouldn´t be set:
+ * If $args['moving'] != 1 then these shouldn?t be set:
  *
  *    @param $args['refcid'] the ID of the reference category
  *
@@ -103,7 +114,7 @@ function categories_adminapi_updatecat($args)
        $distance = $point_of_insertion - $cat['left'];
 
        // If necessary to move then evaluate
-       if ($distance != 0) { // It´s Moving, baby!  Do the Evolution!
+       if ($distance != 0) { // It?s Moving, baby!  Do the Evolution!
           if ($distance > 0)
           { // moving forward
               $distance = $point_of_insertion - $cat['right'] - 1;

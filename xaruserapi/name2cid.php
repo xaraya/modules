@@ -1,6 +1,8 @@
 <?php
 
-/* test function for DMOZ-style short URLs in xaruser.php */
+/**
+ * test function for DMOZ-style short URLs in xaruser.php
+ */
 
 function categories_userapi_name2cid ($args)
 {

@@ -1,7 +1,18 @@
 <?php
-
 /**
- * find the correct point of insertion for a node in Celko´s model for
+ * Categories module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Categories Module
+ * @link http://xaraya.com/index.php/release/147.html
+ * @author Categories module development team
+ */
+/**
+ * find the correct point of insertion for a node in Celko?s model for
  * hierarchical SQL Trees.
  *
  *  -- INPUT --
@@ -14,7 +25,7 @@
  * @returns int
  * @return value of left for the new category on success, false on failure
  */
-function categories_adminapi_find_point_of_insertion($args) 
+function categories_adminapi_find_point_of_insertion($args)
 {
 
     extract($args);

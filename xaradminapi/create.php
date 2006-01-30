@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Categories module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Categories Module
+ * @link http://xaraya.com/index.php/release/147.html
+ * @author Categories module development team
+ */
 /**
  * creates a category using the parent model
  *
@@ -46,7 +57,7 @@ function categories_adminapi_create ($args)
        if ($cat == false)
        {
           xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-          new SystemException(__FILE__.'('.__LINE__.'): Unable to load the categories module´s user API'));
+          new SystemException(__FILE__.'('.__LINE__.'): Unable to load the categories module?s user API'));
           return false;
        }
 //       $point_of_insertion = $cat['left'] + 1;

@@ -1,13 +1,16 @@
 <?php
-// File: $Id$
-// ----------------------------------------------------------------------
-// Xaraya eXtensible Management System
-// Copyright (C) 2002 by the Xaraya Development Team.
-// http://www.xaraya.org
-// ----------------------------------------------------------------------
-// Original Author of file: Jim McDonald
-// Purpose of file: Categories Navigation Block
-// ----------------------------------------------------------------------
+/**
+ * Categories module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Categories Module
+ * @link http://xaraya.com/index.php/release/147.html
+ * @author Categories module development team
+ */
 
 /**
  * initialise block
@@ -842,7 +845,7 @@ function categories_navigationblock_display($blockinfo)
                                 continue;
                             }
                         }
-                        
+
                         $label = xarVarPrepForDisplay($cat['name']);
                         $link = xarModURL(
                             $modname, $type, $func,
@@ -851,8 +854,8 @@ function categories_navigationblock_display($blockinfo)
                                 'catid' => $cat['cid']
                             )
                         );
-                        
-                        
+
+
                         $savecid = $cat['cid'];
                         $catchildren = array();
                         if ($cat['cid'] == $cid) {

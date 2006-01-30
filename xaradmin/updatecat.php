@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Categories module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Categories Module
+ * @link http://xaraya.com/index.php/release/147.html
+ * @author Categories module development team
+ */
 /**
  * udpate item from categories_admin_modify
  */
@@ -82,8 +93,8 @@ function categories_admin_updatecat()
         /*Not working, let's come back to it.
         // TODO allow input transforms
         $description[$cid]['transform'] = array($description);
-        $description[$cid] = xarModCallHooks('item', 'transform-input', 0, $description, 
-                                             'categories', 0); 
+        $description[$cid] = xarModCallHooks('item', 'transform-input', 0, $description,
+                                             'categories', 0);
         */
         // Pass to API
         if (!$creating) {

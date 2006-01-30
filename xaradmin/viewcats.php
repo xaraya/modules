@@ -1,7 +1,22 @@
 <?php
-
 /**
- * create item from xarModFunc('categories','admin','viewcat')
+ * Categories module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Categories Module
+ * @link http://xaraya.com/index.php/release/147.html
+ * @author Categories module development team
+ */
+/**
+ * View the categories in the system
+ *
+ * @param pagerstart
+ * @param catsperpage
+ * @param useJSdisplay
  */
 function categories_admin_viewcats()
 {
@@ -52,7 +67,7 @@ function categories_admin_viewcats()
 
     if (!$useJSdisplay) {
         xarModLoad('categories','renderer');
-    
+
         foreach ($categories as $category) {
             $category['xar_pid'] = $category['parent'];
             $category['xar_cid'] = $category['cid'];

@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Categories module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Categories Module
+ * @link http://xaraya.com/index.php/release/147.html
+ * @author Categories module development team
+ */
 /**
  * Delete all links for a specific Item ID
  * @param $args['iid'] the ID of the item
@@ -38,7 +49,7 @@ function categories_adminapi_unlink($args)
                                         'reverse' => 0));
 
     // Note : this is a feature, not a bug in this case :-)
-        // If Link doesn´t exist then
+        // If Link doesn?t exist then
         if ($childiids == Array()) {
             return true;
         }

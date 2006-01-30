@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Categories module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Categories Module
+ * @link http://xaraya.com/index.php/release/147.html
+ * @author Categories module development team
+ */
 /**
  * creates a category
  *
@@ -65,7 +76,7 @@ function categories_adminapi_createcat($args)
        $n = xarModAPIFunc('categories', 'user', 'countcats', Array());
 
        if ($n == 0) {
-               // Editing database doesn´t need to have a great performance
+               // Editing database doesn?t need to have a great performance
             // So the 2 extras updates are OK...
             return xarModAPIFunc('categories','admin','createcatdirectly',
                 Array

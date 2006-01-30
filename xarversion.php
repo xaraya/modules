@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id: s.xarinit.php 1.22 03/01/26 20:03:00-05:00 John.Cox@mcnabb. $
- *
  * Categories System
  *
  * @package Xaraya eXtensible Management System
@@ -9,7 +7,7 @@
  * @link http://www.xaraya.com
  *
  * @subpackage categories module
- * @author Jim McDonald, Flávio Botelho <nuncanada@xaraya.com>, mikespub <postnuke@mikespub.net>
+ * @author Jim McDonald, Fl?vio Botelho <nuncanada@xaraya.com>, mikespub <postnuke@mikespub.net>
 */
     $modversion['name'] = 'categories';
     $modversion['id'] = '147';

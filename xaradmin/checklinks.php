@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Categories module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Categories Module
+ * @link http://xaraya.com/index.php/release/147.html
+ * @author Categories module development team
+ */
 /**
  * Check category links for orphans
  */
@@ -127,7 +138,7 @@ function categories_admin_checklinks()
             $data['catinfo'] = array();
         }
 
-        if(!xarVarFetch('confirm',  'str:1:', $confirm,    '', XARVAR_NOT_REQUIRED)) return; 
+        if(!xarVarFetch('confirm',  'str:1:', $confirm,    '', XARVAR_NOT_REQUIRED)) return;
         if (!empty($seencid) && !empty($confirm)) {
             if (!xarSecConfirmAuthKey()) return;
             if (!xarModAPIFunc('categories','admin','unlinkcids',
@@ -141,7 +152,7 @@ function categories_admin_checklinks()
         }
 
         // Generate a one-time authorisation code for this operation
-        $data['authid'] = xarSecGenAuthKey(); 
+        $data['authid'] = xarSecGenAuthKey();
     }
 
     return $data;

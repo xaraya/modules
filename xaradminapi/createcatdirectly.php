@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Categories module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Categories Module
+ * @link http://xaraya.com/index.php/release/147.html
+ * @author Categories module development team
+ */
 function categories_adminapi_createcatdirectly($args)
 {
     // Get arguments from argument array
@@ -68,7 +79,7 @@ function categories_adminapi_createcatdirectly($args)
 
     // Call create hooks for categories, hitcount etc.
     $cid = $dbconn->PO_Insert_ID($categoriestable, 'xar_cid');
-    
+
     //Hopefully Hooks will work-out better these args in the near future
     $args['module'] = 'categories';
     $args['itemtype'] = 0;

@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id$
- *
  * Dynamic Categories Property
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @package modules
+ * @copyright (C) 2002-2006 by the Xaraya Development Team.
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -19,7 +17,7 @@
  *
  */
 include_once "modules/dynamicdata/class/properties.php";
- 
+
 class Dynamic_Categories_Property extends Dynamic_Property
 {
     /**
