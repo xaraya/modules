@@ -1,3 +1,4 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Categories Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
 <xar:if condition="$extcomponent eq 'Link'">
@@ -92,7 +93,7 @@
             <option value="500" selected="selected"><xar:mlstring>Modify (Edit)</xar:mlstring></option>
         <xar:else />
             <option value="500"><xar:mlstring>Modify (Edit)</xar:mlstring></option>
-        </xar:if>    
+        </xar:if>
         <xar:if condition="$extlevel eq 700">
             <option value="700" selected="selected"><xar:mlstring>Delete All</xar:mlstring></option>
         <xar:else />
