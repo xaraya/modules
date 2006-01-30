@@ -179,7 +179,7 @@ function julian_userapi_createhook($args)
                                          $recur_freq,                 // repetition frequency
                                          $event_repeat_on_day,        // day of the week
                                          $event_repeat_on_num,        // month-based instance of weekday (1st, 2nd, ..., last=5)
-                                         $event_enddate.              // event end date (may be '')
+                                         $event_enddate,              // event end date (may be '')
                                          $id);                        // Event ID
              $result = $dbconn->Execute($query, $bindvars);
    } else {
