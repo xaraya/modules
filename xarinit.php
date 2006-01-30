@@ -36,7 +36,6 @@ function courses_init()
         'xar_level'         => array('type' => 'varchar', 'size' => 20, 'default' => 'NULL'),
         'xar_shortdesc'     => array('null'=>FALSE, 'type'=>'text'),
         'xar_intendedcredits' => array('type' => 'integer', 'size' => 30, 'default' => 'NULL'),
-//        'xar_language'=>array('null'=>TRUE, 'type'=>'text'),
         'xar_freq'          => array('null'=>TRUE, 'type' => 'varchar', 'size' => 20, 'default' => 'NULL'),
         'xar_contactuid'    => array('type' => 'integer', 'size' => 'medium', 'null' => true, 'default' => 'NULL'),
         'xar_contact'       => array('null'=>TRUE, 'type' => 'varchar', 'size' => 255, 'default' => 'NULL'),
@@ -369,15 +368,15 @@ function courses_init()
      * Format is
      * xarregisterMask(Name,Realm,Module,Component,Instance,Level,Description)
      */
-    // The block will be maybe be used
     // The courses themselves need to be adminable
     xarRegisterMask('ReadCoursesBlock', 'All', 'courses', 'Block', 'All', 'ACCESS_OVERVIEW');
-    xarRegisterMask('ViewCourses', 'All', 'courses', 'Course', 'All:All:All', 'ACCESS_OVERVIEW');
-    xarRegisterMask('ReadCourses', 'All', 'courses', 'Course', 'All:All:All', 'ACCESS_READ');
-    xarRegisterMask('EditCourses', 'All', 'courses', 'Course', 'All:All:All', 'ACCESS_EDIT');
-    xarRegisterMask('AddCourses', 'All', 'courses', 'Course', 'All:All:All', 'ACCESS_ADD');
-    xarRegisterMask('DeleteCourses', 'All', 'courses', 'Course', 'All:All:All', 'ACCESS_DELETE');
-    xarRegisterMask('AdminCourses', 'All', 'courses', 'Course', 'All:All:All', 'ACCESS_ADMIN');
+    // courseid:planningid:yearid
+    xarRegisterMask('ViewCourses',      'All', 'courses', 'Course', 'All:All:All', 'ACCESS_OVERVIEW');
+    xarRegisterMask('ReadCourses',      'All', 'courses', 'Course', 'All:All:All', 'ACCESS_READ');
+    xarRegisterMask('EditCourses',      'All', 'courses', 'Course', 'All:All:All', 'ACCESS_EDIT');
+    xarRegisterMask('AddCourses',       'All', 'courses', 'Course', 'All:All:All', 'ACCESS_ADD');
+    xarRegisterMask('DeleteCourses',    'All', 'courses', 'Course', 'All:All:All', 'ACCESS_DELETE');
+    xarRegisterMask('AdminCourses',     'All', 'courses', 'Course', 'All:All:All', 'ACCESS_ADMIN');
     // Initialisation successful
     return true;
 }
@@ -791,25 +790,6 @@ function courses_delete()
      * REMOVE all comments (which are stored via the comments api)
      */
     xarModAPIFunc('comments','admin','delete_module_nodes',array('modid' => xarModGetIDFromName('courses')));
-/*
-   // remove the table from dynamic data
-    $objectinfo = xarModAPIFunc(
-        'dynamicdata'
-        ,'user'
-        ,'getobjectinfo'
-        ,array(
-            'modid'     => xarModGetIDFromName('courses' )
-            ,'itemtype' => 0 ));
-
-    if (!isset($objectinfo) || empty($objectinfo['objectid'])) {
-        return;
-    }
-    $objectid = $objectinfo['objectid'];
-
-    if (!empty($objectid)) {
-        xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
-    }
-*/
 
     // Deletion successful
     return true;
