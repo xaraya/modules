@@ -683,6 +683,8 @@ function courses_upgrade($oldversion)
             if (!$result) return;
             $result = $datadict->alterColumn($courses_planning, 'xar_startdate I4 null default 0');
             if (!$result) return;
+            $result = $datadict->alterColumn($courses_planning, 'xar_enddate I4 null default 0');
+            if (!$result) return;
             return courses_upgrade('0.2.1');
         case '0.2.1':
             // Change lay out of date fields to time() format
@@ -696,6 +698,8 @@ function courses_upgrade($oldversion)
             $result = $datadict->alterColumn($courses_planning, 'xar_closedate I4 null default 0');
             if (!$result) return;
             $result = $datadict->alterColumn($courses_planning, 'xar_startdate I4 null default 0');
+            if (!$result) return;
+            $result = $datadict->alterColumn($courses_planning, 'xar_enddate I4 null default 0');
             if (!$result) return;
             return courses_upgrade('0.2.2');
         case '0.2.2':
