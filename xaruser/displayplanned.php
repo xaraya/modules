@@ -195,6 +195,11 @@ function courses_user_displayplanned($args)
         $data['hookoutput'] = $hooks;
     }
 
+    $data['catid'] = xarModAPIFunc('categories','user','getitemcats',
+                                   array('itemid' => $planningid,
+                                         'modid' => xarModGetIDFromName('courses'),
+                                         'itemtype' => $courseid));
+
     $data['authid'] = xarSecGenAuthKey();
     // Set the page name according to the coursename
     xarTplSetPageTitle(xarVarPrepForDisplay($course['name']));

@@ -51,11 +51,12 @@ function courses_user_display($args)
     $data['courseid'] = $courseid;
     $data['item'] = $item;
     $data['HideEmptyFields'] = xarModGetVar('courses', 'HideEmptyFields');
-/*
+
     $data['catid'] = xarModAPIFunc('categories','user','getitemcats',
                                    array('itemid' => $courseid,
-                                         'modid' => xarModGetIDFromName('courses')));
-*/
+                                         'modid' => xarModGetIDFromName('courses'),
+                                         'itemtype' => $courseid));
+
      // Get the username so we can pass it to the enrollment function
     $uid = xarUserGetVar('uid');
     $data['levelname'] = xarModAPIFunc('courses', 'user', 'getlevel',

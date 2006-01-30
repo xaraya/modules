@@ -90,6 +90,7 @@ function courses_adminapi_updatecourse($args)
     if (!$result) {
         return false;
     }
+    /*
     // Let any hooks know that we have updated an item.  As this is an
     // update hook we're passing the updated $item array as the extra info
     $item = $args;
@@ -98,6 +99,7 @@ function courses_adminapi_updatecourse($args)
     $item['itemtype']=$courseid;
 
     xarModCallHooks('item', 'update', $courseid, $item);
+    */
     // Let the calling process know that we have finished successfully
     return true;
 }

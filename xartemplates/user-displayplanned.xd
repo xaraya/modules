@@ -9,6 +9,10 @@
     <a href="#$editlink#"><xar:mlstring>Edit this planned course</xar:mlstring></a>
 </xar:if>
 
+    <xar:if condition="xarModIsHooked('categories','courses')">
+      <xar:categories-navigation layout="trails" showchildren="1" module="courses" catid="$catid" type="user" func="displayplanned" />
+    </xar:if>
+
 <div class="xar-mod-body">
     <div class="xar-courses-contents">
         <xar:if condition="$item['hideplanning'] eq 1">

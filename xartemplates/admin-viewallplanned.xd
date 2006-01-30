@@ -8,7 +8,9 @@
     <xar:if condition="xarSessionGetVar('statusmsg') ne ''">
         <div class="xar-mod-statusmsg">#xarSessionGetVar('statusmsg')#</div>
     </xar:if>
-
+    <xar:if condition="xarModIsHooked('categories','courses')">
+      <xar:categories-navigation layout="trails" showchildren="1" module="courses" catid="$catid" type="admin" func="viewallplanned" />
+    </xar:if>
     <table>
         <tr>
             <th><xar:mlstring>Name</xar:mlstring></th>

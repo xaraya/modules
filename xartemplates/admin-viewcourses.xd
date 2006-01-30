@@ -9,7 +9,7 @@
     </xar:if>
 
     <xar:if condition="xarModIsHooked('categories','courses')">
-      <xar:categories-navigation layout="trails" showchildren="1" module="courses" catid="$catid" />
+      <xar:categories-navigation layout="trails" showchildren="1" module="courses" catid="$catid" type="admin" func="viewcourses" />
     </xar:if>
 
     <table width="100%" border="1" cellspacing="0" cellpadding="4">

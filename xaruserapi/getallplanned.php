@@ -31,7 +31,7 @@ function courses_userapi_getallplanned($args)
     if (!xarVarFetch('numitems', 'int:1:',         $numitems, -1,           XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('sortby',   'str:1:',         $sortby,   'planningid', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('sortorder','enum:DESC:ASC:', $sortorder,'DESC',       XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('catid',    'int:1:',         $catid,    '',           XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('catid',    'int:1:',         $catid,    NULL,           XARVAR_DONT_SET)) return;
 
     $items = array();
     // Security check

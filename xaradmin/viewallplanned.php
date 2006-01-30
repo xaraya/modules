@@ -36,6 +36,9 @@ function courses_admin_viewallplanned()
     $data = xarModAPIFunc('courses', 'admin', 'menu');
     // Initialise the variable that will hold the items, so that the template
     // doesn't need to be adapted in case of errors
+
+    $data['catid'] = $catid;
+
     $data['items'] = array();
     // Call the xarTPL helper function to produce a pager in case
     $data['pager'] = xarTplGetPager($startnum,
@@ -115,8 +118,8 @@ function courses_admin_viewallplanned()
 
             $course = xarModAPIFunc('courses','user','get',array('courseid' => $item['courseid']));
             $items[$i]['name'] = xarVarPrepForDisplay($course['name']);
-            $items[$i]['startdate'] = xarVarPrepForDisplay(xarLocaleFormatDate($items[$i]['startdate']));
-            $items[$i]['enddate'] = xarVarPrepForDisplay(xarLocaleFormatDate($items[$i]['enddate']));
+            $items[$i]['startdate'] = $items[$i]['startdate'];
+            $items[$i]['enddate'] = $items[$i]['enddate'];
         // End for()
         }
 
