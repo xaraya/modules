@@ -1,14 +1,17 @@
 <?php
 /**
- * Categories System
+ * Categories module
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage categories module
+ * @subpackage Categories Module
+ * @link http://xaraya.com/index.php/release/147.html
+ * @author Categories module development team
  * @author Jim McDonald, Fl?vio Botelho <nuncanada@xaraya.com>, mikespub <postnuke@mikespub.net>
-*/
+ */
     $modversion['name'] = 'categories';
     $modversion['id'] = '147';
     $modversion['version'] = '2.3.1';
@@ -25,6 +28,5 @@
     $modversion['user'] = 0;
     $modversion['class'] = 'Utility';
     $modversion['category'] = 'Content';
-    $modversion['securityschema'] = array('categories::category' => 'Category name::Category ID',
-                                      'categories::item' => 'Category ID:Module ID:Item ID');
+
 ?>

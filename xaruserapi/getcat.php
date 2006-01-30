@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Categories module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Categories Module
+ * @link http://xaraya.com/index.php/release/147.html
+ * @author Categories module development team
+ */
 /**
  * get categories
  *
@@ -194,8 +205,8 @@ function categories_userapi_getcat($args)
     if (!$result) return;
 
     if ($result->EOF) {
-        //It´s ok.. no category found
-        // The user doesn´t need to be informed, he will see it....
+        //It?s ok.. no category found
+        // The user doesn?t need to be informed, he will see it....
 //        xarSessionSetVar('statusmsg', xarML('No category found'));
         return Array();
     }

@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Categories module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Categories Module
+ * @link http://xaraya.com/index.php/release/147.html
+ * @author Categories module development team
+ */
 /**
  * count number of categories (optionally below some category)
  * Usage : $num = xarModAPIFunc('categories', 'user', 'countcats', $cat);
@@ -24,7 +35,7 @@ function categories_userapi_countcats($args)
     $xartable =& xarDBGetTables();
     $categoriestable = $xartable['categories'];
     $bindvars = array();
-    
+
     // Get number of categories
     if (!empty($left) && is_numeric($left) &&
         !empty($right) && is_numeric($right)) {

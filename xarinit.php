@@ -1,24 +1,21 @@
 <?php
 /**
- * File: $Id: s.xarinit.php 1.22 03/01/26 20:03:00-05:00 John.Cox@mcnabb. $
+ * Categories module
  *
- * Categories System
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage categories module
- * @author Jim McDonald, Flávio Botelho <nuncanada@xaraya.com>, mikespub <postnuke@mikespub.net>
-*/
-
-//Load Table Maintainance API
-xarDBLoadTableMaintenanceAPI();
+ * @subpackage Categories Module
+ * @link http://xaraya.com/index.php/release/147.html
+ * @author Categories module development team
+ */
 
 /**
  * Initialise the categories module
  *
- * @author  Jim McDonald, Flávio Botelho <nuncanada@xaraya.com>, mikespub <postnuke@mikespub.net>
+ * @author  Jim McDonald, Fl?vio Botelho <nuncanada@xaraya.com>, mikespub <postnuke@mikespub.net>
  * @access  public
  * @param   none
  * @return  true on success or void or false on failure
@@ -27,6 +24,9 @@ xarDBLoadTableMaintenanceAPI();
 */
 function categories_init()
 {
+    //Load Table Maintainance API
+    xarDBLoadTableMaintenanceAPI();
+
     // Get database information
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -275,7 +275,7 @@ function categories_init()
 /**
  * Upgrade the categories module from an old version
  *
- * @author  Jim McDonald, Flávio Botelho <nuncanada@xaraya.com>, mikespub <postnuke@mikespub.net>
+ * @author  Jim McDonald, Fl?vio Botelho <nuncanada@xaraya.com>, mikespub <postnuke@mikespub.net>
  * @access  public
  * @param   $oldVersion
  * @return  true on success or false on failure
@@ -451,7 +451,7 @@ function categories_upgrade($oldversion)
 /**
  * Delete the categories module
  *
- * @author  Jim McDonald, Flávio Botelho <nuncanada@xaraya.com>, mikespub <postnuke@mikespub.net>
+ * @author  Jim McDonald, Fl?vio Botelho <nuncanada@xaraya.com>, mikespub <postnuke@mikespub.net>
  * @access  public
  * @param   no parameters
  * @return  true on success or false on failure

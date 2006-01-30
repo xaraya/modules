@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Categories module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Categories Module
+ * @link http://xaraya.com/index.php/release/147.html
+ * @author Categories module development team
+ */
 /**
  * Get a category base
  *
@@ -11,7 +22,7 @@
  * @return category base
  */
 
-/*
+/**
  * NOTE:
  * The modid and itemtype are only needed for the moment while
  * base IDs are not unique across the system.
@@ -29,7 +40,7 @@ function categories_userapi_getcatbase($args)
         $modinfo = xarModGetInfo($modid);
         $module = $modinfo['name'];
     }
-    
+
     // Security check
     // TODO: add a security check on each category base too.
     if(!xarSecurityCheck('ViewCategories')) {return;}

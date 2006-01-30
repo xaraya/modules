@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Categories module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Categories Module
+ * @link http://xaraya.com/index.php/release/147.html
+ * @author Categories module development team
+ */
 /**
  * get category bases
  *
@@ -12,14 +23,14 @@
  * @return list of category bases
  */
 
-/*
+/**
  * Explanation of the output formats:
  * 'cids': an array of category ids only; zero-indexed numeric keys
  * 'tree': a comprehensive array of category base details; more information below
  * 'flat': an array of category-base arrays; zero-indexed numeric keys
  */
 
-/*
+/**
  * NOTE:
  * This function is over-complicated at the moment as it uses module
  * variables to store its info. It will be greatly implified when the
@@ -219,7 +230,7 @@ function categories_userapi_getallcatbases($args)
     if (empty($result)) {
         return;
     }
-    
+
     // Do some final ordering.
     // When table-based, this can be done in the query.
     if ($format != 'tree') {

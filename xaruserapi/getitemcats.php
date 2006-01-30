@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Categories module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Categories Module
+ * @link http://xaraya.com/index.php/release/147.html
+ * @author Categories module development team
+ */
 /**
  * Get an array of assigned category details for a specific item, limiting by a base cid if required.
  * @param $args['basecid'] optional base cid under which the returned categories must lie

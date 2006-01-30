@@ -1,23 +1,34 @@
 <?php
-
+/**
+ * Categories module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Categories Module
+ * @link http://xaraya.com/index.php/release/147.html
+ * @author Categories module development team
+ */
 function categories_userapi_countitems_deprecated($args)
 {
     // Get arguments from argument array
     extract($args);
-    
+
     // Optional arguments
     if (!isset($cids)) {
         $cids = array();
     }
-    
+
     // Security check
     if(!xarSecurityCheck('ViewCategoryLink')) return;
-    
+
     // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $categorieslinkagetable = $xartable['categories_linkage'];
-    
+
     // Check if we have active CIDs
     $bindvars = array();
     if (count($cids) > 0) {
@@ -32,7 +43,7 @@ function categories_userapi_countitems_deprecated($args)
             $sql .= "LEFT JOIN $table ON $field = xar_iid;";
         }
         $sql .= "  WHERE ";
-        
+
         $allcids = join(', ', $cids);
         $bindmarkers - '?' . str_repeat(',?',count($cids)-1);
         $bindvars = $cids;

@@ -1,8 +1,19 @@
 <?php
-
+/**
+ * Categories module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Categories Module
+ * @link http://xaraya.com/index.php/release/147.html
+ * @author Categories module development team
+ */
 /**
  * show some categories navigation in a template
-// TODO: clean up all those ways to get parameters + better templating
+ * @TODO: clean up all those ways to get parameters + better templating
  *
  * @param $args['module'] string module that you want to navigate in (default current module)
  * @param $args['itemtype'] integer item type of the module items (default none)
@@ -33,7 +44,7 @@ function categories_userapi_navigation($args)
     if (!empty($template)) {
         $template_override = $template;
     }
-    
+
     // Get requested layout
     if (empty($layout)) {
         $layout = 2; // breadcrumb trails
@@ -775,7 +786,7 @@ function categories_userapi_navigation($args)
                                 continue;
                             }
                         }
-                        
+
                         $label = xarVarPrepForDisplay($cat['name']);
                         $urlargs['catid'] = $cat['cid'];
                         $link = xarModURL(
@@ -844,7 +855,7 @@ function categories_userapi_navigation($args)
                     $children = xarModAPIFunc('categories','user','getchildren',
                                              array('cid' => $cid,
                                                    'return_itself' => true));
-                    
+
                     foreach ($children as $cat) {
                         if (!empty($catcount[$cat['cid']])) {
                             $count = $catcount[$cat['cid']];

@@ -1,21 +1,22 @@
 <?php
 /**
- * File: $Id: s.xarinit.php 1.22 03/01/26 20:03:00-05:00 John.Cox@mcnabb. $
+/**
+ * Categories module
  *
- * Categories System
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage categories module
- * @author Jim McDonald, Flávio Botelho <nuncanada@xaraya.com>, mikespub <postnuke@mikespub.net>
-*/
+ * @subpackage Categories Module
+ * @link http://xaraya.com/index.php/release/147.html
+ * @author Categories module development team
+ */
 
 /**
  * specifies module tables namees
  *
- * @author  Jim McDonald, Flávio Botelho <nuncanada@xaraya.com>, mikespub <postnuke@mikespub.net>
+ * @author  Jim McDonald, Fl?vio Botelho <nuncanada@xaraya.com>, mikespub <postnuke@mikespub.net>
  * @access  public
  * @param   none
  * @return  $xartable array
@@ -41,7 +42,7 @@ function categories_xartables()
                                           'parent'      => $categories . '.xar_parent',
                                           'left'        => $categories . '.xar_left',
                                           'right'       => $categories . '.xar_right');
-                                            
+
     // Clean names, necessarry for self-join statements
     $xartable['categories_column_clean'] = array('cid'         => 'xar_cid',
                                                 'name'        => 'xar_name',

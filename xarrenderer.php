@@ -1,20 +1,21 @@
 <?php
-
 /**
- * File: $Id$
- *
- * Render functions for the categories module
+ * Categories module
  *
  * @package modules
- * @copyright (C) 2002 by the Xaraya Development Team.
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage categories
- * @author Carl P. Corlis
+ * @subpackage Categories Module
+ * @link http://xaraya.com/index.php/release/147.html
+ * @author Categories module development team
  */
-
 /**
  * Inclusion of common defines
+ * Render functions for the categories module
+ *
+ * @author Carl P. Corlis
  */
 include_once('modules/categories/xarincludes/common/defines.php');
 
@@ -77,9 +78,9 @@ define('_CAT_CUTOFF_CONNECTOR',8);
  * @returns bool true on success, false otherwise
  *
  */
-function categories_renderes_array_markdepths_bychildren(&$comments_list) 
+function categories_renderes_array_markdepths_bychildren(&$comments_list)
 {
-    
+
     // check to make sure we got passed an array,
     // return false if we got no array or it has no items in it
     if (!is_array($comments_list) || !count($comments_list))
@@ -87,7 +88,7 @@ function categories_renderes_array_markdepths_bychildren(&$comments_list)
 
     // figure out how man total nodes are in this array,
     $total_nodes = count($comments_list);
-    
+
     // check to see if this array has the depth field in it already,
     // if not, it's the first time this array has been parsed through
     // this function so initialize each node to have a depth of zero:
@@ -96,7 +97,7 @@ function categories_renderes_array_markdepths_bychildren(&$comments_list)
             $comments_list[$node]['depth'] = 0;
         }
     }
-    
+
     for ( $node = 0; $node < $total_nodes ; $node++) {
 
         // if the current node has zero (or less) children,
@@ -130,7 +131,7 @@ function categories_renderes_array_markdepths_bychildren(&$comments_list)
  * @param array   &$comments_list    an array of related (array) items - each item -must- contain a parent id field
  * @returns bool True on success, False otherwise
  */
-function categories_renderer_array_markdepths_bypid(&$comments_list) 
+function categories_renderer_array_markdepths_bypid(&$comments_list)
 {
 
     if (empty($comments_list) || !count($comments_list)) {
@@ -144,21 +145,21 @@ function categories_renderer_array_markdepths_bypid(&$comments_list)
     $parents = array();
     $new_list = array();
     $prep_list = array();
-    
+
     // Initialize parents array and make the first key in it equal
     // to the first node in the array's parentid
     $parents["PID_{$comments_list[0]['xar_pid']}"] = $depth;
-    
-    // setup the keys for each comment so that we can 
+
+    // setup the keys for each comment so that we can
     // easily reference them further down
     foreach($comments_list as $node) {
         $new_list[$node['xar_cid']] = $node;
-    } 
+    }
     $comments_list = $new_list;
-    
+
     // re-initialize the new_list array
     $new_list = array();
-    
+
     // foreach node in the array, check to see if we
     // have it's parent id marked in memory and, if so
     // set the current nodes depth equal to that of
@@ -174,7 +175,7 @@ function categories_renderer_array_markdepths_bypid(&$comments_list)
                 $comments_list[$node['xar_pid']]['xar_pid'] = 0;
                 $comments_list[$node['xar_pid']]['xar_cid'] = 0;
                 $comments_list[$node['xar_pid']]['remove'] = 'remove';
-                $parents["PID_".$node['xar_pid']] = -1;                
+                $parents["PID_".$node['xar_pid']] = -1;
             }
             $ppidkey = "PID_".$comments_list[$node['xar_pid']]['xar_pid'];
         // CHECKME: when we start with a category 2+ levels deep, $parents['PID_0'] is undefined here
@@ -205,8 +206,8 @@ function categories_renderer_array_markdepths_bypid(&$comments_list)
          } else {
             $prep_list[$key]['children'] = 0;
          }
-         
-         
+
+
     }
     // now we go through and find all the nodes that were marked
     // as parent nodes and add the 'haschildren' field to them
@@ -226,14 +227,14 @@ function categories_renderer_array_markdepths_bypid(&$comments_list)
     */
 
     $comments_list = '';
-   
+
     // remove any items that aren't really a part of the array
     // and are just excess baggage from previous code
     foreach ($prep_list as $node) {
         if (!array_key_exists('remove',$node)) {
             $comments_list[] = $node;
         }
-    } 
+    }
     // free up the variables that we
     // created for this function...
     unset($new_list);
@@ -250,8 +251,8 @@ function categories_renderer_array_markdepths_bypid(&$comments_list)
  * Remove any comments from the list with a depth greater than
  * the cutoff point. If the depth of any particular node is equal
  * to (cutoff + 1), then just the cid and the depth for that particular
- * node are included in the array. Reason: it allows us to show that 
- * there are more comments in that direction. This is used by 
+ * node are included in the array. Reason: it allows us to show that
+ * there are more comments in that direction. This is used by
  * comments_userapi_get() to limit the comments pulled by depth.
  *
  * @access private
@@ -260,15 +261,15 @@ function categories_renderer_array_markdepths_bypid(&$comments_list)
  * @param integer    $args['cutoff']        depth cutoff point
  * @returns void if no array is passed or the array has no nodes return void
  */
-function categories_renderer_array_prune_excessdepth($args) 
+function categories_renderer_array_prune_excessdepth($args)
 {
-    
+
     extract($args);
     if (!is_array($array_list) || !count($array_list)) {
         // TODO: raise exception
         return;
     }
-    
+
     $new_list = array();
     foreach ($array_list as $node) {
         if ($cutoff == $node['depth']) {
@@ -280,7 +281,7 @@ function categories_renderer_array_prune_excessdepth($args)
 
                 $new_list[] = array('xar_cid'   => $node['xar_cid'],
                                     'xar_branchout' => true,
-                                    'depth'     => $node['depth'], 
+                                    'depth'     => $node['depth'],
                                     'children'  => (int) '-1',
                                     'xar_subject'   => $new_subject,
                                     'xar_author'=> $node['xar_author'],
@@ -298,7 +299,7 @@ function categories_renderer_array_prune_excessdepth($args)
             $new_list[] = $node;
         }
     }
-    
+
     $array_list = $new_list;
     unset($new_list);
 
@@ -317,20 +318,20 @@ function categories_renderer_array_prune_excessdepth($args)
  * @returns bool true if the specified depth is set, false otherwise
  */
 
-function categories_renderer_array_depthbuoy($action, $depth, $value=true) 
+function categories_renderer_array_depthbuoy($action, $depth, $value=true)
 {
-    
+
     static $matrix = array();
-    
+
     if (empty($matrix)) {
         $matrix = array_pad(array(0=>0), _CAT_MAX_DEPTH, _CAT_NO_CONNECTOR);
     }
-    
+
     if (strtolower($action) == 'set') {
         $matrix[($depth)] = (bool) $value;
     }
-    
-    if ($depth < 0) { 
+
+    if ($depth < 0) {
         return 0;
     } else {
         return $matrix[($depth)];
@@ -348,7 +349,7 @@ function categories_renderer_array_depthbuoy($action, $depth, $value=true)
  *               that's contains the visual representation for that particular node
  */
 
-function categories_renderer_array_maptree($CommentList) 
+function categories_renderer_array_maptree($CommentList)
 {
 
     // if $CommentList isn't an array or it is empty,
@@ -389,7 +390,7 @@ function categories_renderer_array_maptree($CommentList)
 
     $listsize = (count($CommentList) - 1);
     $total = count($CommentList);
-    
+
     // create the matrix starting from the end and working our way towards
     // the beginning.
     for ($counter = $listsize; $counter >= 0; ($counter = $counter - 1)) {
@@ -490,9 +491,9 @@ function categories_renderer_array_maptree($CommentList)
  * @returns string    a visual (html'ified) map of the matrix
  */
 
-function categories_renderer_array_image_substitution($node) 
+function categories_renderer_array_image_substitution($node)
 {
-    
+
     switch ($node) {
     case _CAT_O_CONNECTOR:
         $map = '<img style="vertical-align: top; border: 0" height="21" src="modules/categories/xarimages/n_nosub.gif" alt="0" width="9" />';
@@ -539,12 +540,12 @@ function categories_renderer_array_image_substitution($node)
  * @returns integer  -1 if a < b, 0 if a == b, 1 if a > b
  *
  */
-function categories_renderer_array_fieldrelation_compare ($a, $b) 
+function categories_renderer_array_fieldrelation_compare ($a, $b)
 {
 
     // get the sort value
     $sort = categories_renderer_array_sortvalue();
-    
+
     // first we start off by putting the array key into
     // array format with each id that makes up
     // the lineage having it's own array index.
@@ -552,10 +553,10 @@ function categories_renderer_array_fieldrelation_compare ($a, $b)
     // are for each Lineage.
     $Family_A = explode(':',$a);
     $Family_A_count = count($Family_A);
-    
+
     $Family_B = explode(':',$b);
     $Family_B_count = count($Family_B);
-    
+
     // We need the lineage with the least amount of id's in
     // it for use in our for loop.
     if ($Family_A_count == $Family_B_count) {
@@ -596,7 +597,7 @@ function categories_renderer_array_fieldrelation_compare ($a, $b)
                 return strcasecmp($Family_A[0], $Family_B[0]);
             }
         }
-    }        
+    }
     // now we do an id to id comparison but only up to the number of
     // elements (comment ids) of the smallest lineage.
     for ($i = 1; $i < $members_count; $i++) {
@@ -604,7 +605,7 @@ function categories_renderer_array_fieldrelation_compare ($a, $b)
             return ((int) $Family_A[$i] < (int) $Family_B[$i]) ? -1 : 1;
         }
     }
-    
+
     // Since we are here it means that both lineages matched up to the
     // length of the smallest lineage soo-, the one that has the most
     // elements (comment ids) is obviously of higher value. If however they
@@ -627,10 +628,10 @@ function categories_renderer_array_fieldrelation_compare ($a, $b)
  * @returns  string  The current sort value
  *
  */
-function categories_renderer_array_sortvalue($value=NULL) 
+function categories_renderer_array_sortvalue($value=NULL)
 {
     static $sort;
-    
+
     if ($value != NULL) {
         switch (strtolower($value)) {
         case _CAT_SORT_DESC:
@@ -655,21 +656,21 @@ function categories_renderer_array_sortvalue($value=NULL)
  * @returns   void    nothing
  */
 
-function  categories_renderer_array_sort( &$comment_list, $sortby, $direction) 
+function  categories_renderer_array_sort( &$comment_list, $sortby, $direction)
 {
-    
+
     if (!isset($comment_list) || !is_array($comment_list)) {
         $msg = xarML('Missing or invalid arguement [#(1)] for #(2) function #(3) in module #(4)',
                                  'comment_list','renderer','array_sort','comments');
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException(__FILE__.' ('.__LINE__.'):  '.$msg));
         return false;
     }
-    
-    $index      = array(); 
-    $new_list   = array();    
-    
+
+    $index      = array();
+    $new_list   = array();
+
     categories_renderer_array_sortvalue($direction);
-    
+
     if ($sortby == _CAT_SORTBY_THREAD) {
         foreach ($comment_list as $node) {
 
@@ -683,10 +684,10 @@ function  categories_renderer_array_sort( &$comment_list, $sortby, $direction)
             $new_list[$key] = $node;
         }
     } else {
-        // Initial presort for non threaded sort - We do a presort to 
-        // get all the comments in order by the key that we're sorting 
-        // by -- otherwise, when we assign parents and children 
-        // (further below) there will  be a chance that some will be 
+        // Initial presort for non threaded sort - We do a presort to
+        // get all the comments in order by the key that we're sorting
+        // by -- otherwise, when we assign parents and children
+        // (further below) there will  be a chance that some will be
         // out of order and mess up the rendering
         foreach ($comment_list as $node) {
             switch($sortby) {
@@ -710,7 +711,7 @@ function  categories_renderer_array_sort( &$comment_list, $sortby, $direction)
 
         uksort($comment_list, 'categories_renderer_array_fieldrelation_compare');
         // End of PreSORT
-        
+
         foreach ($comment_list as $node) {
             switch($sortby) {
                 case _CAT_SORTBY_TOPIC:
@@ -740,9 +741,9 @@ function  categories_renderer_array_sort( &$comment_list, $sortby, $direction)
                 $new_list[$key.":0"]['children'] += 1;
             }
         }
-    }    
+    }
     $comment_list = $new_list;
-    
+
     uksort($comment_list, 'categories_renderer_array_fieldrelation_compare');
 
     // reset the indexes on the comments_list
@@ -750,17 +751,17 @@ function  categories_renderer_array_sort( &$comment_list, $sortby, $direction)
     foreach ($comment_list as $comment) {
         $comments[] = $comment;
     }
-    
+
     $comment_list = $comments;
     unset($comments);
-    
+
     return $comment_list;
 }
 
-function categories_renderer_wrap_words(&$str, $chars) 
+function categories_renderer_wrap_words(&$str, $chars)
 {
     $str = preg_replace('/([^\s\<\>]{'.$chars.','.$chars.'})/', '\1 ', $str);
 }
- 
+
 
 ?>

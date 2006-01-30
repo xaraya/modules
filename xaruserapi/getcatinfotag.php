@@ -1,12 +1,23 @@
 <?php
-
+/**
+ * Categories module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Categories Module
+ * @link http://xaraya.com/index.php/release/147.html
+ * @author Categories module development team
+ */
 /**
  * Handle <xar:categories-catinfo ...> template tags
  * Format : <xar:categories-catinfo module="modulename" itemtype="itemtype" itemid="itemid" base="base-cat-id"/>
  * Default module is the module in which the template tag is called.
  *
  * Example:
- * The following tag, used in the user-display[-pubtype].xd template of articles, will display the name of the 
+ * The following tag, used in the user-display[-pubtype].xd template of articles, will display the name of the
  * category for the current item that has category 59 as an ancestor:
  *
  * <xar:categories-catinfo module="articles" itemtype="$itemtype" itemid="$aid" base="59" ifempty="not known"/>

@@ -1,10 +1,21 @@
 <?php
-
+/**
+ * Categories module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Categories Module
+ * @link http://xaraya.com/index.php/release/147.html
+ * @author Categories module development team
+ */
 /**
  * count number of items
  * @param $args['cids'] optional array of cids we're counting for (OR/AND)
  * @param $args['andcids'] true means AND-ing categories listed in cids
- * @param $args['modid'] module´s ID
+ * @param $args['modid'] module?s ID
  * @param $args['itemtype'] item type
  * @returns int
  * @return number of items

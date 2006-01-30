@@ -1,19 +1,20 @@
 <?php
 /**
- * File: $Id: $
+ * Categories module
  *
- * Categories System
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
- * @subpackage category module
- * @author Michel Dalle <mikespub@xaraya.com>
+ *
+ * @subpackage Categories Module
+ * @link http://xaraya.com/index.php/release/147.html
+ * @author Categories module development team
  */
 
 /**
  * get category by name
+ * @author Michel Dalle <mikespub@xaraya.com>
  *
  * @param $args['name'] name of the category to retrieve
  * @param $args['return_itself'] =Boolean= return the cid itself (default true)
@@ -22,7 +23,7 @@
  * @returns array
  * @return array of category info arrays, false on failure
  */
-function categories_userapi_getcatbyname($args) 
+function categories_userapi_getcatbyname($args)
 {
     // Extract arguments
     extract($args);
@@ -35,7 +36,7 @@ function categories_userapi_getcatbyname($args)
                         new SystemException($msg));
        return false;
     }
-    
+
     // Check for optional arguments
     if (!isset($return_itself)) {
         $return_itself = true;
@@ -69,7 +70,7 @@ function categories_userapi_getcatbyname($args)
 
     // Obtain the owner information from the result set
     list($cid) = $result->fields;
-                                                                                
+
     // Close result set
     $result->Close();
 

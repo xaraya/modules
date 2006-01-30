@@ -1,7 +1,18 @@
 <?php
-
 /**
- * TODO: point 'getparents()' to this function.
+ * Categories module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Categories Module
+ * @link http://xaraya.com/index.php/release/147.html
+ * @author Categories module development team
+ */
+/**
+ * @TODO: point 'getparents()' to this function.
  * Get ancestors (starting with parent, working towards root) of a specific
  * [list of] category. This function used to be 'getparents', the new name
  * being less ambiguous (see XLST AxisNames for examples).
@@ -82,7 +93,7 @@ function categories_userapi_getancestors($args)
         // xar VarPrepForStore() only helps us if the cid is enclosed
         // in single quotes, i.e. is a string. We have already checked
         // it is numeric further up, so we don't need a further check.
-        
+
         if (count($dbcids) > 1) {
             $SQLquery .= ' AND P2.xar_cid in (' . implode(', ', $dbcids) . ')';
         } else {
@@ -166,7 +177,7 @@ function categories_userapi_getancestors($args)
         }
 
     }
-    
+
     if ($order == 'root') {
         // The ancestors need to be returned in order, oldest first.
         // We build the list starting at self, so we walk the tree

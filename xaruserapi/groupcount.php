@@ -1,9 +1,20 @@
 <?php
-
+/**
+ * Categories module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Categories Module
+ * @link http://xaraya.com/index.php/release/147.html
+ * @author Categories module development team
+ */
 /**
  * count number of items per category, or number of categories for each item
  * @param $args['groupby'] group entries by 'category' or by 'item'
- * @param $args['modid'] module´s ID
+ * @param $args['modid'] module?s ID
  * @param $args['itemid'] optional item ID that we are selecting on
  * @param $args['itemids'] optional array of item IDs that we are selecting on
  * @param $args['itemtype'] item type
@@ -44,7 +55,7 @@ function categories_userapi_groupcount($args)
             $where[] = $categoriesdef['iid'] . ' in (' . explode(', ', $itemids) . ')';
         }
     }
-    
+
     // Filter by single itemid.
     if (!empty($itemid) && is_numeric($itemid)) {
         $where[] = $categoriesdef['iid'] . '=' . $itemid;

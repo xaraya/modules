@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Categories module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Categories Module
+ * @link http://xaraya.com/index.php/release/147.html
+ * @author Categories module development team
+ */
 /**
  * get parents of a specific (list of) category
  *
@@ -60,7 +71,7 @@ function categories_userapi_getparents($args)
              $result->MoveNext();
              continue;
         }
-        
+
         if(($cid == $pid && $return_itself) || ($cid != $pid)) {
             $info[$pid] = Array(
                                 "cid"         => $pid,
