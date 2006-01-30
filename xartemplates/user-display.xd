@@ -89,9 +89,9 @@
                 </tr>
                 <xar:foreach in="$items" value="$item">
                 <tr>
-                    <td>#$item.startdate#</td>
-                    <td>#$item.location#</td>
-                    <td>#$item.credits#</td>
+                    <td>#xarlocalegetformatteddate('medium',$item.startdate)#</td>
+                    <td>#xarlocalegetformatteddate('medium',$item.location)#</td>
+                    <td>#xarlocalegetformatteddate('medium',$item.credits)#</td>
                     <td>
                        <xar:if condition="!empty($item['enrollurl'])">
                            <a href="#$item['enrollurl']#">#$item['enrolltitle']#</a>

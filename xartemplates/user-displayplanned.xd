@@ -54,7 +54,7 @@
                             <xar:mlstring>Starts on</xar:mlstring>
                             </span>
                         </label>
-                        #$item.startdate#
+                        #xarlocalegetformatteddate('medium',$item.startdate)#
                     </div>
                     <div class="xar-form-input-wrapper">
                         <label for="enddate" class="xar-form-label">
@@ -62,7 +62,7 @@
                             <xar:mlstring>Ends on</xar:mlstring>
                             </span>
                         </label>
-                        #xarLocaleFormatDate($item.enddate)#
+                        #xarlocalegetformatteddate('medium',$item.enddate)#
                     </div>
                 <xar:if condition="!empty($course['shortdesc']) OR $HideEmptyFields == '0'">
                     <div class="xar-form-input-wrapper">
@@ -228,7 +228,7 @@
                             <xar:mlstring>Closing date for registration</xar:mlstring>
                             </span>
                         </label>
-                        #$item.closedate#
+                        #xarlocalegetformatteddate('medium',$item.closedate)#
                     </div>
                  </xar:if>
                 <xar:if condition="!empty($item['costs']) OR $HideEmptyFields == '0'">
@@ -331,7 +331,7 @@
                 </tr>
                 <xar:foreach in="$items" value="$item">
                 <tr>
-                    <td>#$item['startdate']#</td>
+                    <td>#xarlocalegetformatteddate('medium',$item['startdate'])#</td>
                     <td>#$item['location']#</td>
                     <td>#$item['credits']#</td>
                     <td>

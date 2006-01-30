@@ -46,13 +46,13 @@ function courses_admin_updateplanned($args)
     if (!xarVarFetch('location', 'str:1:', $location, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('costs', 'str:1:', $costs, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('material', 'str:1:', $material, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('startdate', 'int', $startdate, 0, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('enddate', 'int', $enddate, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('startdate', 'str::', $startdate, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('enddate', 'str::', $enddate, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('info', 'str:1:', $info, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('invalid', 'array::', $invalid, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('minparticipants', 'int::', $minparticipants, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('maxparticipants', 'int::', $maxparticipants, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('closedate', 'int', $closedate, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('closedate', 'str::', $closedate, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('hideplanning', 'int:1:', $hideplanning, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('last_modified', 'int', $last_modified, time(), XARVAR_NOT_REQUIRED)) return;
     // At this stage we check to see if we have been passed $objectid, the

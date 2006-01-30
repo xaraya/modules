@@ -73,8 +73,7 @@ function courses_user_displayplanned($args)
         // See if the date for enrollment is surpassed
         $closedate = $item['closedate'];
         $timenow = time();
-        $closetime = strtotime($closedate);
-        if((int)$closetime > (int)$timenow) {
+        if($closedate > $timenow) {
             $data['closed'] = false;
             // See if student is already enrolled
             $enrolled = xarModAPIFunc('courses',
@@ -133,8 +132,7 @@ function courses_user_displayplanned($args)
             // See if the date for enrollment is surpassed
             $closedate = $planitem['closedate'];
             $timenow = time();
-            $closetime = strtotime($closedate);
-            if((int)$closetime > (int)$timenow) {
+            if($closedate > $timenow) {
                 // Add check for already enrolled
                 $enrolled = xarModAPIFunc('courses',
                               'user',

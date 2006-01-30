@@ -72,10 +72,17 @@ function courses_upcomingblock_display($blockinfo)
         $BlockDays = 7;
     }
     $args['BlockDays'] = $BlockDays;
+    /*
     $today=date("Y-m-d");
     $tomorrow=date("Y-m-d",strtotime("tomorrow"));
     $endblockdate=date("Y-m-d",strtotime("+$BlockDays days"));
     $beginblockdate=date("Y-m-d",strtotime("-$BlockDays days"));
+    */
+    // In int
+    $today=strtotime('today');
+    $tomorrow=strtotime("tomorrow");
+    $endblockdate=strtotime("+$BlockDays days");
+    $beginblockdate=strtotime("-$BlockDays days");
     // Database information
     xarModDBInfoLoad('courses');
     $dbconn =& xarDBGetConn();
@@ -126,7 +133,7 @@ function courses_upcomingblock_display($blockinfo)
             $coursename = xarModAPIFunc('courses', 'user', 'getcoursename', array('courseid'=>$courseid));
             $item['coursename'] = $coursename;
             //string substr ( string string, int start [, int length] )
-            $item['trimname'] = substr ( $coursename['name'], 0, 10).'...';
+            $item['trimname'] = substr ( $coursename, 0, 10).'...';
         }
         $items[] = $item;
     }
