@@ -26,8 +26,11 @@ function courses_upcomingblock_modify($blockinfo)
     if (!isset($vars['BlockDays'])) {
         $vars['BlockDays'] = 7;
     }
+    if (!isset($vars['DateFormat'])) {
+        $vars['DateFormat'] = 'short';
+    }
     // Send content to template
-    $output = xarTplBlock('courses', 'modify-upcoming', array('numitems' => $vars['numitems'], 'blockid' => $blockinfo['bid'], 'BlockDays' => $vars['BlockDays']));
+    $output = xarTplBlock('courses', 'modify-upcoming', array('numitems' => $vars['numitems'], 'blockid' => $blockinfo['bid'], 'BlockDays' => $vars['BlockDays'], 'DateFormat' => $vars['DateFormat']));
     // Return output
     return $output;
 }
@@ -39,7 +42,7 @@ function courses_upcomingblock_update($blockinfo)
 {
     if (!xarVarFetch('numitems', 'isset', $vars['numitems'], NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('BlockDays', 'int', $vars['BlockDays'], 0, XARVAR_NOT_REQUIRED)) return;
-
+    if (!xarVarFetch('DateFormat', 'str', $vars['DateFormat'], 'short', XARVAR_NOT_REQUIRED)) return;
     // Define a default block title
     if (empty($blockinfo['title'])) {
         $blockinfo['title'] = xarML('Current and upcoming courses');

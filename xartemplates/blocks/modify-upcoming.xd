@@ -8,6 +8,14 @@
     </label>
     <input type="text" name="BlockDays" id="BlockDays" value="#$BlockDays#" size="2" />
 </div>
+<div class="xar-form-input-wrapper">
+    <label for="DateFormat" class="xar-form-label required" title="#xarML('short, medium or long.')#">
+        <xar:mlstring>
+            Length of date display:
+        </xar:mlstring>
+    </label>
+    <input type="text" name="DateFormat" id="DateFormat" value="#$DateFormat#" size="10" />
+</div>
 <xar:comment>
 <div class="xar-form-input-wrapper">
     <label for="CatAware#$blockid#" title="#xarML('Make this block category aware?')#" class="xar-form-label">

@@ -10,9 +10,9 @@
     <xar:if condition="count($items) ge 1">
         <xar:foreach in="$items" value="$item">
             <xar:if condition="empty($item.link)">
-                <li>#xarlocalegetformatteddate('medium',$item.startdate)# #xarVarPrepForDisplay($item.trimname)#<br /></li>
+                <li>#xarlocalegetformatteddate($DateFormat,$item.startdate)# #xarVarPrepForDisplay($item.trimname)#<br /></li>
             <xar:else />
-               <li><a href="#$item.link#" title="#$item.coursename#">#xarlocalegetformatteddate('medium',$item.startdate)# #xarVarPrepForDisplay($item.trimname)#</a><br /></li>
+               <li><a href="#$item.link#" title="#$item.coursename#">#xarlocalegetformatteddate($DateFormat,$item.startdate)# #xarVarPrepForDisplay($item.trimname)#</a><br /></li>
             </xar:if>
         </xar:foreach>
     </xar:if>

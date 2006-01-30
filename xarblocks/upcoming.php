@@ -29,9 +29,9 @@ function courses_upcomingblock_info()
 {
     // Values
     return array(
-        'text_type' => 'Upcoming',
+        'text_type' => xarML('Upcoming'),
         'module' => 'courses',
-        'text_type_long' => 'Show upcoming and current courses',
+        'text_type_long' => xarML('Show upcoming and current courses'),
         'allow_multiple' => true,
         'form_content' => false,
         'form_refresh' => false,
@@ -72,12 +72,13 @@ function courses_upcomingblock_display($blockinfo)
         $BlockDays = 7;
     }
     $args['BlockDays'] = $BlockDays;
-    /*
-    $today=date("Y-m-d");
-    $tomorrow=date("Y-m-d",strtotime("tomorrow"));
-    $endblockdate=date("Y-m-d",strtotime("+$BlockDays days"));
-    $beginblockdate=date("Y-m-d",strtotime("-$BlockDays days"));
-    */
+    // Format of the date
+    if (!empty($vars['DateFormat'])) {
+        $DateFormat = $vars['DateFormat'];
+    } else {
+        $DateFormat = 'short';
+    }
+    $args['DateFormat'] = $DateFormat;
     // In int
     $today=strtotime('today');
     $tomorrow=strtotime("tomorrow");
@@ -137,7 +138,7 @@ function courses_upcomingblock_display($blockinfo)
         }
         $items[] = $item;
     }
-    $blockinfo['content'] = array('items' => $items,'BlockDays'=> $BlockDays, 'numitems' => $vars['numitems']);
+    $blockinfo['content'] = array('items' => $items,'BlockDays'=> $BlockDays, 'numitems' => $vars['numitems'], 'DateFormat' => $DateFormat);
 
     return $blockinfo;
 }
