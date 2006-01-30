@@ -1,15 +1,15 @@
 <?php
 /**
  * View a list of courses
- * 
- * @package Xaraya eXtensible Management System
+ *
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Courses Module
  * @link http://xaraya.com/index.php/release/179.html
- * @author Courses module development team 
+ * @author Courses module development team
  */
 /**
  * view a list of courses
@@ -18,6 +18,8 @@
  * @author MichelV <michelv@xarayahosting.nl>
  * @param catid
  * @param sortby Sortby parameter (standard on name)
+ *
+ * @todo MichelV Call the next date this course will be taking place
  */
 function courses_user_view()
 {
@@ -66,15 +68,14 @@ function courses_user_view()
 
     // Loop through each item and display it.
     foreach ($items as $item) {
-         $name=$item['name'];
-         $courseid = $item['courseid'];
+        $name=$item['name'];
+        $courseid = $item['courseid'];
+        // Security. User should be able to see the link via a read mask
         if (xarSecurityCheck('ReadCourses', 0, 'Course', "$courseid:All:All")) {
             $item['link'] = xarModURL('courses',
                 'user',
                 'display',
                 array('courseid' => $item['courseid']));
-            // Security check 2 - else only display the item name (or whatever is
-            // appropriate for your module)
         } else {
             $item['link'] = '';
         }

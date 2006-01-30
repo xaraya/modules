@@ -55,15 +55,15 @@ function courses_user_usermenu($args)
                     'numitems' => xarModGetUserVar('courses',
                     'itemsperpage', $uid)));
                    if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-                   
+
             // Count teaching activities: TODO Where is the error?
             //$numteaching = xarModAPIFunc('courses', 'userapi', 'countteaching',
             //                          array('uid' => xarUserGetVar('uid')));
-                   
+
          // Transform display
          // TODO define SecCheck
              foreach ($items as $item) {
-                if (xarSecurityCheck('ReadCourses', 0, 'Course', "All:All:All")) { 
+                if (xarSecurityCheck('ReadCourses', 0, 'Course', "All:All:All")) {
                     $item['link'] = xarModURL('courses',
                         'user',
                         'displayplanned',
@@ -92,11 +92,11 @@ function courses_user_usermenu($args)
                        'numitems' => xarModGetUserVar('courses',
                        'itemsperpage', $uid)));
                    if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-                   
+
              // Transform display
              // TODO define SecCheck
              foreach ($titems as $item) {
-                if (xarSecurityCheck('ReadCourses', 0, 'Course', "All:All:All")) { 
+                if (xarSecurityCheck('ReadCourses', 0, 'Course', "All:All:All")) {
                     $item['tlink'] = xarModURL('courses',
                         'user',
                         'displayplanned',
@@ -140,8 +140,7 @@ function courses_user_usermenu($args)
             if (!xarSecConfirmAuthKey()) return;
 
             xarModSetUserVar('courses', 'itemsperpage', $itemsperpage, $uid);
-            // Redirect back to the account page.  We could also redirect back to our form page as
-            // well by adding the phase variable to the array.
+            // Redirect back to the account page.
             xarResponseRedirect(xarModURL('roles', 'user', 'account', array('moduleload' => 'courses')));
 
             break;

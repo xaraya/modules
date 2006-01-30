@@ -58,8 +58,8 @@ function courses_init()
         'xar_creditsmin'    => array('type' => 'integer', 'size' => 'tiny', 'unsigned'=>TRUE, 'null' => false, 'default' => '0'),
         'xar_creditsmax'    => array('type' => 'integer', 'size' => 'tiny', 'unsigned'=>TRUE, 'null' => false, 'default' => '0'),
         'xar_courseyear'    => array('type' => 'integer', 'size' => 'small', 'null' => false, 'default' => '0'),
-        'xar_startdate'     => array('type'=>'date', 'default' => '00-00-0000','null'=>FALSE),
-        'xar_enddate'       => array('type'=>'date','default' => '00-00-0000','null'=>FALSE),
+        'xar_startdate'     => array('type'=>'integer','size' => 11,'null'=>FALSE, 'default' => '0'),
+        'xar_enddate'       => array('type'=>'integer','size' => 11,'null'=>FALSE, 'default' => '0'),
         'xar_prerequisites' => array('null'=>FALSE, 'type'=>'text'),
         'xar_aim'           => array('null'=>TRUE, 'type'=>'text'),
         'xar_method'        => array('null'=>TRUE, 'type'=>'text'),
@@ -680,6 +680,8 @@ function courses_upgrade($oldversion)
             $result = $datadict->alterColumn($courses_planning, 'xar_last_modified I4 null default 0');
             if (!$result) return;
             $result = $datadict->alterColumn($courses_planning, 'xar_closedate I4 null default 0');
+            if (!$result) return;
+            $result = $datadict->alterColumn($courses_planning, 'xar_startdate I4 null default 0');
             if (!$result) return;
             return courses_upgrade('0.2.1');
         case '0.2.1':

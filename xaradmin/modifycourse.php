@@ -49,7 +49,7 @@ function courses_admin_modifycourse($args)
     }
     // Call hooks
     $coursedata['module'] = 'courses';
-   // $coursedata['itemtype'] = 1;
+    $coursedata['itemtype'] = $courseid;
     $hooks = xarModCallHooks('item', 'modify', $courseid, $coursedata);
     if (empty($hooks)) {
         $data['hookoutput'] = array();

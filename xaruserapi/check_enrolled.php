@@ -12,12 +12,12 @@
  * @author XarayaGeek, Michel V.
  */
 /**
- * see if there is already a link between the current user and a planned course
+ * Check if there is already a link between the current user and a planned course
  *
- * @author Michel V.
+ * @author MichelV <michelv@xarayahosting.nl>
  * @param id planningid The ID of the planned course
  * @param id uid. The ID of the user to check for.
- * @return empty array with items found or nothing
+ * @return array with items found or false
  */
 function courses_userapi_check_enrolled($args)
 {
@@ -42,15 +42,16 @@ function courses_userapi_check_enrolled($args)
     $xartable =& xarDBGetTables();
     $courses_studentstable = $xartable['courses_students'];
     $sql = "SELECT xar_userid, xar_planningid
-    FROM $courses_studentstable
-    WHERE xar_userid = $uid
-    AND xar_planningid = $planningid";
+            FROM $courses_studentstable
+            WHERE xar_userid = $uid
+            AND xar_planningid = $planningid
+            ";
     $result = $dbconn->Execute($sql);
     // Nothing found: return empty
     $items=array();
 
     if (!$result) {
-        return;
+        return false;
     } else {
     for (; !$result->EOF; $result->MoveNext()) {
         list($userid, $planningid) = $result->fields;

@@ -1,7 +1,7 @@
 <?php
 /**
  * Get a planned course
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -9,11 +9,11 @@
  *
  * @subpackage Courses Module
  * @link http://xaraya.com/index.php/release/179.html
- * @author Courses module development team 
+ * @author Courses module development team
  */
 /**
  * get a specific planned course
- * 
+ *
  * @author Michel V.
  * @param planningid $ ID of a specific planned course
  * @returns array
@@ -32,17 +32,17 @@ function courses_userapi_getplanned($args)
     }
 
     $items = array();
-    
+
     // Security check
     if (!xarSecurityCheck('ReadCourses', '0', 'Course', "All:$planningid:All")) return;
-    
+
     // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $planningtable = $xartable['courses_planning'];
-    
+
     // TODO: implement security check when this item is hidden from display
-    // Get item 
+    // Get item
         $query = "SELECT xar_planningid,
                    xar_courseid,
                    xar_credits,
@@ -79,34 +79,35 @@ function courses_userapi_getplanned($args)
         list($planningid, $courseid, $credits, $creditsmin, $creditsmax, $courseyear, $startdate, $enddate,
          $prerequisites, $aim, $method, $language, $longdesc, $costs, $committee, $coordinators, $lecturers,
           $location, $material, $info, $program, $hideplanning, $minparticipants, $maxparticipants, $closedate, $last_modified) = $result->fields;
-        if (xarSecurityCheck('ReadCourses', 0, 'Course', "$courseid:$planningid:All")) {
+        if (xarSecurityCheck('ReadCourses', 0, 'Course', "$courseid:$planningid:$courseyear")) {
             $item = array(
-            'planningid' => $planningid,
-            'courseid'   => $courseid,
-            'credits'    => $credits,
-            'creditsmin' => $creditsmin,
-            'creditsmax' => $creditsmax,
-            'courseyear' => $courseyear,
-            'startdate'  => $startdate,
-            'enddate'    => $enddate,
-            'prerequisites' => $prerequisites,
-            'aim'        => $aim,
-            'method'     => $method,
-            'language'   => $language,
-            'longdesc'   => $longdesc,
-            'costs'      => $costs,
-            'committee'  => $committee,
-            'coordinators' => $coordinators,
-            'lecturers'  => $lecturers,
-            'location'   => $location,
-            'material'   => $material,
-            'info'       => $info,
-            'program'    => $program,
-            'hideplanning' => $hideplanning,
-            'minparticipants' => $minparticipants,
-            'maxparticipants' => $maxparticipants,
-            'closedate' => $closedate,
-            'last_modified' => $last_modified);
+                        'planningid'    => $planningid,
+                        'courseid'      => $courseid,
+                        'credits'    => $credits,
+                        'creditsmin' => $creditsmin,
+                        'creditsmax' => $creditsmax,
+                        'courseyear' => $courseyear,
+                        'startdate'  => $startdate,
+                        'enddate'    => $enddate,
+                        'prerequisites' => $prerequisites,
+                        'aim'        => $aim,
+                        'method'     => $method,
+                        'language'   => $language,
+                        'longdesc'   => $longdesc,
+                        'costs'      => $costs,
+                        'committee'  => $committee,
+                        'coordinators' => $coordinators,
+                        'lecturers'  => $lecturers,
+                        'location'   => $location,
+                        'material'   => $material,
+                        'info'       => $info,
+                        'program'    => $program,
+                        'hideplanning' => $hideplanning,
+                        'minparticipants' => $minparticipants,
+                        'maxparticipants' => $maxparticipants,
+                        'closedate' => $closedate,
+                        'last_modified' => $last_modified
+                        );
         }
     //}
     // All successful database queries produce a result set, and that result

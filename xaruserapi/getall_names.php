@@ -1,7 +1,7 @@
 <?php
 /**
  * Get all names of courses
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -9,12 +9,12 @@
  *
  * @subpackage Courses Module
  * @link http://xaraya.com/index.php/release/179.html
- * @author Courses module development team 
+ * @author Courses module development team
  */
 /**
  * get the names of all courses
- * 
- * @author the Courses module development team 
+ *
+ * @author the Courses module development team
  * @param numitems $ the number of items to retrieve (default -1 = all)
  * @param startnum $ start with this item number (default 1)
  * @returns array
@@ -42,7 +42,7 @@ function courses_userapi_getall_names($args)
 
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-            join(', ', $invalid), 'user', 'getall_enrolled', 'courses');
+            join(', ', $invalid), 'user', 'getall_names', 'courses');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException($msg));
         return;
@@ -54,15 +54,10 @@ function courses_userapi_getall_names($args)
     $xartable =& xarDBGetTables();
     $coursestable = $xartable['courses'];
     $uid = xarUserGetVar('uid');
-    // TODO: how to select by cat ids (automatically) when needed ???
-    // Get items - the formatting here is not mandatory, but it does make the
-    // SQL statement relatively easy to read.  Also, separating out the sql
-    // statement from the SelectLimit() command allows for simpler debug
-    // operation if it is ever needed
     $query = "SELECT xar_name
             FROM $coursestable
             WHERE xar_courseid = ?";
-    $result = $dbconn->SelectLimit($query, $numitems, $startnum-1, array((int)$courseid));
+    $result = $dbconn->SelectLimit($query, $numitems, $startnum-1, array($courseid));
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
     if (!$result) return;

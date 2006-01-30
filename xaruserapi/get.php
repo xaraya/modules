@@ -2,7 +2,7 @@
 /**
  * Get a specific course
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -59,6 +59,7 @@ function courses_userapi_get($args)
     $result = &$dbconn->Execute($query, array((int)$courseid));
     if (!$result) return;
     // Check for no rows found, and if so, close the result set and return an exception
+    // TODO: allow for empty result when the user is not allowed to get this course ($where)
     if ($result->EOF) {
         $result->Close();
         $msg = xarML('This course does not exists');

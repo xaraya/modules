@@ -53,10 +53,12 @@ function courses_user_displayplanned($args)
     // Let any transformation hooks know that we want to transform some text
     //TODO: necessary?
     $item['transform'] = array('name','lecturers');
+    $item['itemtype'] = $courseid;
     $item = xarModCallHooks('item',
         'transform',
         $planningid,
         $item);
+
     // Fill in the details of the item.
     $data['planningid'] = $planningid;
     $data['item'] = $item;
@@ -64,7 +66,8 @@ function courses_user_displayplanned($args)
     $data['course'] = $course;
     $data['levelname'] = xarModAPIFunc('courses', 'user', 'getlevel',
                                       array('level' => $course['level']));
-     // Get the username so we can pass it to the enrollment function
+
+    // Get the username so we can pass it to the enrollment function
     $uid = xarUserGetVar('uid');
     if (xarSecurityCheck('ReadCourses', 0, 'Course', "$courseid:$planningid:All")) {
         // See if the date for enrollment is surpassed
@@ -180,21 +183,22 @@ function courses_user_displayplanned($args)
     // You should use this -instead of globals- if you want to make
     // information available elsewhere in the processing of this page request
     xarVarSetCached('Blocks.courses', 'planningid', $planningid);
-    // Let any hooks know that we are displaying an item.
+
+    // Call the hooks
     $item['returnurl'] = xarModURL('courses',
         'user',
         'displayplanned',
         array('planningid' => $planningid));
-    $item['itemtype']=2;
+    $item['itemtype']=$courseid;
     $hooks = xarModCallHooks('item','display',$planningid,$item);
     if (empty($hooks)) {
         $data['hookoutput'] = array();
     } else {
         $data['hookoutput'] = $hooks;
     }
+
     $data['authid'] = xarSecGenAuthKey();
-    // Once again, we are changing the name of the title for better
-    // Search engine capability.
+    // Set the page name according to the coursename
     xarTplSetPageTitle(xarVarPrepForDisplay($course['name']));
     // Return the template variables defined in this function
     return $data;

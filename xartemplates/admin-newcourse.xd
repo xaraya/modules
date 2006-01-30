@@ -50,9 +50,11 @@
                     <span style="color: red"><xar:mlstring>ERROR! This course number already exists</xar:mlstring></span>
                   </xar:if>
                 </div>
-                <div class="xar-form-input-wrapper">
-                  #$hookoutput['categories']#
-                </div>
+                <xar:if condition="!empty($hookoutput['categories'])">
+                    <div class="xar-form-input-wrapper">
+                        #$hookoutput['categories']#
+                    </div>
+                </xar:if>
                 <div class="xar-form-input-wrapper">
                   <label for="coursetype" class="xar-form-label">
                      <span class="help" title="#xarML('Enter the type of course.')#">

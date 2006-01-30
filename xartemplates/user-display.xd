@@ -14,7 +14,7 @@
             #xarModGetVar('courses','hidecoursemsg')#
         <xar:else />
             <xar:if condition="xarModIsHooked('categories','courses')">
-              <xar:categories-navigation layout="trail" itemid="$courseid" module="courses" />
+              <xar:categories-navigation layout="trail" itemid="$courseid" itemtype="$courseid" module="courses" />
             </xar:if>
             <form method="post" action="&xar-modurl-courses-user-enroll;">
                <fieldset>

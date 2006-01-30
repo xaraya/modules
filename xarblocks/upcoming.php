@@ -124,7 +124,7 @@ function courses_upcomingblock_display($blockinfo)
             $item['startdate'] = $startdate;
             $item['enddate'] = $enddate;
             $coursename = xarModAPIFunc('courses', 'user', 'getcoursename', array('courseid'=>$courseid));
-            $item['coursename'] = $coursename['name'];
+            $item['coursename'] = $coursename;
             //string substr ( string string, int start [, int length] )
             $item['trimname'] = substr ( $coursename['name'], 0, 10).'...';
         }

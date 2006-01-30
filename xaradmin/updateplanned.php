@@ -54,7 +54,7 @@ function courses_admin_updateplanned($args)
     if (!xarVarFetch('maxparticipants', 'int::', $maxparticipants, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('closedate', 'str::', $closedate, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('hideplanning', 'int:1:', $hideplanning, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('last_modified', 'str::', $last_modified, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('last_modified', 'isset', $last_modified, time(), XARVAR_NOT_REQUIRED)) return;
     // At this stage we check to see if we have been passed $objectid, the
     // generic item identifier.
     if (!empty($objectid)) {

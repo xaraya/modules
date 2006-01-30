@@ -345,9 +345,7 @@
             <xar:comment> Show hooked items, like keywords here</xar:comment>
             <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
                 <xar:foreach in="$hookoutput" key="$hookmodule">
-                <xar:if condition="!($hookmodule eq 'categories') and !empty($hookmodule)">
                     #$hookoutput[$hookmodule]#
-                </xar:if>
                 </xar:foreach>
           </fieldset>
         </xar:if>

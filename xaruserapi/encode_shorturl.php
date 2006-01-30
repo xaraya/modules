@@ -1,21 +1,21 @@
 <?php
 /**
  * Support for short URLs (user functions)
- * 
- * @package Xaraya eXtensible Management System
+ *
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Courses Module
  * @link http://xaraya.com/index.php/release/179.html
- * @author Courses module development team 
+ * @author Courses module development team
  */
 
 /**
  * return the path for a short URL to xarModURL for this module
- * 
- * @author the Courses module development team 
+ *
+ * @author the Courses module development team
  * @param  $args the function and arguments passed to xarModURL
  * @returns string
  * @return path to be added to index.php for a short URL, or empty if failed
@@ -28,7 +28,7 @@ function courses_userapi_encode_shorturl($args)
     if (!isset($func)) {
         return;
     }
-    
+
     /* Check if we have module alias set or not */
     $aliasisset = xarModGetVar('courses', 'useModuleAlias');
     $aliasname = xarModGetVar('courses','aliasname');
@@ -37,7 +37,7 @@ function courses_userapi_encode_shorturl($args)
     } else{
         $usealias = false;
     }
-    
+
     // Note : make sure you don't pass the following variables as arguments in
     // your module too - adapt here if necessary
     // default path is empty -> no short URL

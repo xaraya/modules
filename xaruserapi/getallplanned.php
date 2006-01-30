@@ -2,8 +2,8 @@
 /**
  * Get all planned courses
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -114,7 +114,7 @@ function courses_userapi_getallplanned($args)
         list($planningid, $courseid, $credits, $creditsmin, $creditsmax, $courseyear, $startdate, $enddate,
          $prerequisites, $aim, $method, $language, $longdesc, $costs, $committee, $coordinators, $lecturers,
           $location, $material, $info, $program, $hideplanning, $minparticipants, $maxparticipants, $closedate, $hideplanning, $last_modified) = $result->fields;
-        if (xarSecurityCheck('ReadCourses', 0, 'Course', "$courseid:$planningid:All")){
+        if (xarSecurityCheck('ReadCourses', 0, 'Course', "$courseid:$planningid:$courseyear")){
 
             $items[] = array(
             'planningid' => $planningid,

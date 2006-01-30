@@ -2,7 +2,7 @@
 /**
  * Enroll into a course
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -76,10 +76,10 @@ function courses_userapi_create_enroll($args)
     // Let any hooks know that we have created a new item.
 
     // TODO: evaluate
-    $item = $args;
+    /*$item = $args;
     $item['module'] = 'courses';
     $item['itemid'] = $enrollid;
-    xarModCallHooks('item', 'create', $enrollid, $item);
+    xarModCallHooks('item', 'create', $enrollid, $item);*/
 
     // Return the id of the newly created item to the calling process
     return $enrollid;

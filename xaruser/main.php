@@ -1,7 +1,7 @@
 <?php
 /**
  * Courses main user function
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -9,7 +9,7 @@
  *
  * @subpackage Courses Module
  * @link http://xaraya.com/index.php/release/179.html
- * @author Courses module development team 
+ * @author Courses module development team
  */
 /**
  * the main user function
@@ -34,7 +34,7 @@ function courses_user_main()
     // Return the template variables defined in this function
     //return $data;
     /* redirect to the main user page */
-     xarResponseRedirect(xarModURL('courses', 'user', 'view'));
+    xarResponseRedirect(xarModURL('courses', 'user', 'view'));
 
 }
 

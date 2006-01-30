@@ -39,21 +39,22 @@ function courses_admin_modifyplanned($args)
                                  'getplanned',
                                   array('planningid' => $planningid));
     if (!isset($planneddata) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-
+    $courseid = $planneddata['courseid'];
+    $yearid = $planneddata['courseyear'];
     // Security check
-    if (!xarSecurityCheck('EditCourses', 1, 'Course', "All:$planningid:All")) {
+    if (!xarSecurityCheck('EditCourses', 1, 'Course', "$courseid:$planningid:$yearid")) {
         return;
     }
     // Coursedata
     $coursedata = xarModAPIFunc('courses',
                                 'user',
                                 'get',
-                                 array('courseid' => $planneddata['courseid']));
+                                 array('courseid' => $courseid));
     if (!isset($coursedata) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     // Get menu variables
     $planneddata['module'] = 'courses';
-    $planneddate['itemtype'] = 2;
+    $planneddate['itemtype'] = $courseid;
     $hooks = array();
     $hooks = xarModCallHooks('item', 'modify', $planningid, $planneddata); //Correct?
 
@@ -61,7 +62,7 @@ function courses_admin_modifyplanned($args)
     $data['planningid']     = $planningid;
     $data['coursedata']     = $coursedata;
     // Extra labels
-    $data['coursetypelabel'] = xarVarPrepForDisplay(xarML('Course Type (Category)'));
+    $data['coursetypelabel'] = xarVarPrepForDisplay(xarML('Course Type'));
     $data['levellabel']     = xarVarPrepForDisplay(xarML('Course Level'));
     $data['contactlabel']   = xarVarPrepForDisplay(xarML('Course Contact details'));
 

@@ -29,8 +29,8 @@ function courses_userapi_countparticipants($args)
     $xartable =& xarDBGetTables();
     $studentstable = $xartable['courses_students'];
     $query = "SELECT COUNT(*)
-            FROM $studentstable
-            WHERE xar_planningid = $planningid";
+              FROM $studentstable
+              WHERE xar_planningid = $planningid";
     $result = &$dbconn->Execute($query);
     if (!$result) return;
 

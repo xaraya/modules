@@ -2,8 +2,8 @@
 /**
  * Get a course name
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 by the Xaraya Development Team.
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -18,7 +18,7 @@
  * @author the Courses module development team
  * @param  $args ['courseid'] The ID of the coursename to get
  * @returns array
- * @return array of items, or false on failure
+ * @return $name
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function courses_userapi_getcoursename($args)
@@ -57,10 +57,7 @@ function courses_userapi_getcoursename($args)
     }
     list($name) = $result->fields;
     $result->Close();
-    $item = array('courseid' => $courseid, // Is this necessary?
-                  'name'     => $name);
-
-    return $item;
+    return $name;
 }
 
 ?>

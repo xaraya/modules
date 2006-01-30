@@ -2,8 +2,8 @@
 /**
  * Get all courses for one student
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -15,7 +15,7 @@
 /**
  * Get all courses that a student is enrolled to
  *
- * @author Michel V.
+ * @author MichelV <michelv@xarayahosting.nl>
  * @param numitems $ the number of items to retrieve (default -1 = all)
  * @param startnum $ start with this item number (default 1)
  * @returns array

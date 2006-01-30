@@ -2,7 +2,7 @@
 /**
  * Get the id of a course when the number is known
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -44,8 +44,8 @@ function courses_userapi_getcourseid($args)
     $coursestable = $xartable['courses'];
     $query = "SELECT xar_courseid,
                      xar_hidecourse
-            FROM $coursestable
-            WHERE xar_number = ? AND xar_hidecourse in ($where)";
+              FROM $coursestable
+              WHERE xar_number = ? AND xar_hidecourse in ($where)";
     $result = &$dbconn->Execute($query, array($number));
     if (!$result) return;
     // Check for no rows found, and if so, close the result set and return an exception
