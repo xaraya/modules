@@ -5,8 +5,7 @@
 <div style="margin: auto;"><xar:template file="statusmsg" type="module" />
 
 <h3 class="xar-align-center"><xar:mlstring>Confirm publishing this issue?</xar:mlstring></h3>
-<form method="post" action="&xar-modurl-ebulletin-admin-publishissue;">
-
+<form method="post" action="&xar-modurl-ebulletin-admin-publishissue;" onsubmit="return window.confirm('#xarML('Ready to publish?')#');">
         <fieldset>
             <legend><xar:mlstring>Issue details</xar:mlstring></legend>
 
@@ -129,7 +128,7 @@
                 <input type="hidden" name="authid" id="authid" value="#$authid#" />
                 <input type="hidden" name="confirm" id="confirm" value="true" />
                 <input type="hidden" name="id" id="id" value="#$id#" />
-                <input type="text" name="send" value="#xarML('Send')#" onclick="this.disabled=true;"/>
+                <input type="submit" name="send" id="send" value="#xarML('Send')#" />
 
             </div>
 
