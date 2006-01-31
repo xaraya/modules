@@ -125,11 +125,18 @@ function sigmapersonnel_statusallblock_display($blockinfo)
             } else {
                 $item['link'] = '';
             }
-
+            //$presencenow = '';
+            //$presencenow = xarModApiFunc('sigmapersonnel','user','presencenow',array('personid' => $item['personid']));
+            //$item['presencenow'] = $presencenow;
             // Add this item to the list of items to be displayed
             $data['items'][] = $item;
         }
     }
+
+
+
+
+
     $data['blockid'] = $blockinfo['bid'];
 
 
