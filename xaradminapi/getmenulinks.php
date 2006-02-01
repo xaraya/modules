@@ -23,20 +23,26 @@ function polls_adminapi_getmenulinks()
 {
     $menulinks = array();
 
+    if (xarSecurityCheck('AdminPolls',0)) {
+    	$menulinks[] = Array('url' => xarModURL('polls','admin','overview'),
+                             'title' => xarML('Polls Overview'),
+                             'label' => xarML('Overview'));
+    }
+    
+    if (xarSecurityCheck('EditPolls',0)) {
+        $menulinks[] = Array('url'   => xarModURL('polls','admin','list'),
+                              'title' => xarML('View, edit or create Polls'),
+                              'label' => xarML('Manage Polls'));
+    }
+    
     if (xarSecurityCheck('AddPolls',0)) {
-        $menulinks[] = Array('url'   => xarModURL('polls',
-                                                   'admin',
-                                                   'new'),
+    	
+        $menulinks[] = Array('url'   => xarModURL('polls','admin','new'),
                               'title' => xarML('Create a New Poll'),
                               'label' => xarML('New Poll'));
     }
-    if (xarSecurityCheck('EditPolls',0)) {
-        $menulinks[] = Array('url'   => xarModURL('polls',
-                                                   'admin',
-                                                   'list'),
-                              'title' => xarML('View a list of previous polls'),
-                              'label' => xarML('List Polls'));
-    }
+ 
+    
     if (xarSecurityCheck('AdminPolls',0)) {
         $menulinks[] = Array('url' => xarModURL('polls',
                                                    'admin',

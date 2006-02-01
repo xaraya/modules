@@ -22,12 +22,18 @@ function polls_admin_update()
     if (!xarVarFetch('pid', 'id', $pid)) return;
     if (!xarVarFetch('polltype', 'str:1:', $type, 'single', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('private', 'int:0:1', $private, 0, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('title', 'str:1:', $title, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('title', 'str:1:', $title, NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('start_date', 'str:1:', $start_date, time(), XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('end_date', 'str:1:', $end_date, NULL, XARVAR_NOT_REQUIRED)) return;
 
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;
+
+     if (!isset($title)){
+        $msg = xarML('Missing required field title');
+        xarErrorSet(XAR_USER_EXCEPTION,'MISSING_DATA',new DefaultUserException($msg));
+        return;
+    }
 
     if($private != 1){
         $private = 0;

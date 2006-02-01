@@ -99,9 +99,18 @@
       </li>
     </ul>
   </p>
-</div>
-<div class="xar-mod-foot xar-align-center xar-padding-thick">
+    <h3><xar:mlstring>Further Information</xar:mlstring></h3>
   <p>
-    <xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring>
+       <xar:mlstring>Extended information about this module can be found at </xar:mlstring><a title="#xarML('Polls Module - Xaraya Extension 23')#" href="http://www.xaraya.com/index.php/release/23.html">Xaraya Extension and Releases</a>.
   </p>
+      <ul>
+          <li><xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+          </li>
+          <li><xar:mlstring>Related tutorials and documentation on Polls found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/polls/" title="#xarML('Related documentation on Polls')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+          </li>
+      </ul>
+      <p class="xar-sub">
+         <strong>&nbsp;<xar:mlstring>Polls modules - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.5.0&nbsp; #xarLocaleGetFormattedDate('short','1130972400')#
+      </p>
+
 </div>
