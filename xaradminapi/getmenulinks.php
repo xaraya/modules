@@ -7,7 +7,7 @@
  * Converted to Xaraya by John Cox
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -26,6 +26,11 @@ function bbcode_adminapi_getmenulinks()
 {
     // Security Check
     if (xarSecurityCheck('EditBBCode', 0)) {
+    	
+    	$menulinks[] = Array('url' => xarModURL('bbcode','admin','overview'),
+                            'title' => xarML('Bbcode Overview'),
+                            'label' => xarML('Overview'));
+                            
         $menulinks[] = Array('url' => xarModURL('bbcode',
                 'admin',
                 'modifyconfig'),
