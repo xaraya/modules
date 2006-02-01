@@ -717,7 +717,7 @@
                 <label for="tinybuild3" class="xar-form-label" title="#xarML('Restrict buttons for Line 3 to these buttons only')#">
                     <xar:mlstring>Row 3</xar:mlstring>
                 </label>
-                <input type="text" name="tinybuild3" id="tinybuttons3" value="#$tinybuild3#" size="60" maxlength="250" />
+                <input type="text" name="tinybuild3" id="tinybuild3" value="#$tinybuild3#" size="60" maxlength="250" />
             </div>
        </fieldset>
        <fieldset>
