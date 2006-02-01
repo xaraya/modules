@@ -24,6 +24,13 @@
  */
 function html_adminapi_getmenulinks()
 {
+    if (xarSecurityCheck('AdminHTML')) {
+    	 $menulinks[] = Array('url' => xarModURL('html','admin','overview'),
+                            'title' => xarML('HTML Overview'),
+                            'label' => xarML('Overview'));
+
+    }
+    
     if (xarSecurityCheck('AddHTML')) {
 
         $menulinks[] = Array('url'   => xarModURL('html',
