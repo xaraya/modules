@@ -22,6 +22,13 @@ function categories_adminapi_getmenulinks()
 {
     $menulinks = array();
 
+     if (xarSecurityCheck('AdminCategories')) {
+       $menulinks[] = Array('url' => xarModURL('categories','admin','overview'),
+                            'title' => xarML('Categories Overview'),
+                            'label' => xarML('Overview'));
+
+    }
+
 // Security Check
     if (xarSecurityCheck('AddCategories',0)) {
 
