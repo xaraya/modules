@@ -17,6 +17,13 @@
 function headlines_adminapi_getmenulinks()
 {
 
+     if (xarSecurityCheck('AdminHeadlines')) {
+       $menulinks[] = Array('url' => xarModURL('headlines','admin','overview'),
+                            'title' => xarML('Headlines Overview'),
+                            'label' => xarML('Overview'));
+
+    }
+    
     // Security Check
     if(xarSecurityCheck('AddHeadlines')) {
 
