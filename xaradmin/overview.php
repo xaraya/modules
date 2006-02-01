@@ -32,7 +32,7 @@ function bbcode_admin_overview()
      * else just call the main function that usually displays the overview
      */
 
-    return xarTplModule('html', 'admin', 'main', $data, 'main');
+    return xarTplModule('bbcode', 'admin', 'main', $data, 'main');
 }
 
 ?>
