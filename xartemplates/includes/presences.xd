@@ -1,0 +1,22 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<table>
+    <tr>
+        <th><xar:mlstring>Presencetype</xar:mlstring></th>
+        <th><xar:mlstring>Start</xar:mlstring></th>
+        <th><xar:mlstring>End</xar:mlstring></th>
+    </tr>
+
+    <xar:foreach in="$presitems" value="$item">
+    <tr>
+        <td>
+            #$item.typename#
+        </td>
+        <td>
+            #xarlocalegetformatteddate('medium',$item.start)#
+        </td>
+        <td>
+            #xarlocalegetformatteddate('medium',$item.end)#
+        </td>
+    </tr>
+    </xar:foreach>
+</table>
