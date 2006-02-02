@@ -177,9 +177,10 @@ function sigmapersonnel_userapi_get($args)
     list($year1, $month, $day) = split('-', $bdate);
     $year = $year1 -50;
     $birthdate = mktime(0,0,0,$month,$day,$year);*/
-    //$bdate = strtotime($birthdate);
-        $birthdate = $birthdate-1576800000;
-
+    /*$bdate = strtotime($birthdate);
+    $offset = 1576800000;
+        $birthdate = ($birthdate-$offset);
+*/
     // Create the item array
     $item = array(
         'personid'      => $personid,

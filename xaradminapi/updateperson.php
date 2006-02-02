@@ -14,7 +14,7 @@
 /**
  * update an sigmapersonnel item
  *
- * @author the Michel V.
+ * @author the MichelV <michelv@xaraya.com>
  * @param  $args ['personid'] the ID of the item
  * @param  $args ['firstname'] the first name of the person
  * @param  $args ['pnumber'] the new person number of the item
@@ -209,16 +209,17 @@ function sigmapersonnel_adminapi_updateperson($args)
         $educationremarks = $item['educationremarks'];
     }
     // dateformatting
-
+/*
     if (!empty($birthdate) && is_string($birthdate)) {
         // Work around for failing calendar property
         list($year1, $month, $day) = split('-', $birthdate);
         $year = $year1+100;
         $birthdate = mktime(1576800000,0,0,$month,$day,$year);
-        /*$bdate = strtotime($birthdate);
-        $birthdate = $bdate+1576800000;*/
-    }
+*/
 
+
+      $birthdate = safestrtotime($birthdate);
+      //  $birthdate = $bdate+1576800000;
     if (!empty($ehbodate) && !is_numeric($ehbodate)) {
         $ehbodate = strtotime($ehbodate);
     }
@@ -376,5 +377,45 @@ function sigmapersonnel_adminapi_updateperson($args)
 
     return true;
 }
-
+function safestrtotime($strInput)
+{
+   $iVal = -1;
+   for ($i=1900; $i<=1969; $i++) {
+       // Check for this year string in date
+       $strYear = (string)$i;
+       if (!(strpos($strInput, $strYear)===false)) {
+           $replYear = $strYear;
+           $yearSkew = 1970 - $i;
+           $strInput = str_replace($strYear, "1970", $strInput);
+       };
+   };
+   $iVal = strtotime($strInput);
+   if ($yearSkew > 0) {
+       $numSecs = (60 * 60 * 24 * 365 * $yearSkew);
+       $iVal = $iVal - $numSecs;
+       $numLeapYears = 0;
+       // Work out number of leap years in period
+       for ($j=$replYear; $j<=1969; $j++) {
+           $thisYear = $j;
+           $isLeapYear = false;
+           // Is div by 4?
+           if (($thisYear % 4) == 0) {
+               $isLeapYear = true;
+           };
+           // Is div by 100?
+           if (($thisYear % 100) == 0) {
+               $isLeapYear = false;
+           };
+           // Is div by 1000?
+           if (($thisYear % 1000) == 0) {
+               $isLeapYear = true;
+           };
+           if ($isLeapYear == true) {
+               $numLeapYears++;
+           };
+       };
+       $iVal = $iVal - (60 * 60 * 24 * $numLeapYears);
+   };
+   return($iVal);
+};
 ?>

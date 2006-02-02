@@ -334,7 +334,7 @@
                             <xar:mlstring>Birthdate</xar:mlstring>
                             </span>
                         </label>
-                        #$item.birthdate#
+                        #xarlocalegetformatteddate('medium',$item.birthdate)#
                         <xar:data-input name="birthdate" type="calendar" value="$item['birthdate']" validation="date" />
                       <xar:if condition="!empty($invalid['birthdate'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid birthdate</xar:mlstring></span>

@@ -3,7 +3,7 @@
  * Create a new person
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -15,6 +15,7 @@
  * This is a standard function that is called with the results of the
  * form supplied by xarModFunc('sigmapersonnel','admin','new') to create a new item
  *
+ * @author MichelV
  * @param  $ 'name' the name of the item to be created
  * @param  $ 'number' the number of the item to be created
  */
