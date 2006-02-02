@@ -34,6 +34,7 @@ function sigmapersonnel_userapi_countitems($args)
     // It's good practice to name the table and column definitions you are
     // getting - $table and $column don't cut it in more complex modules
     $sigmapersonneltable = $xartable['sigmapersonnel_person'];
+    $where = '';
     // Count the items
     $query = "SELECT COUNT(1) ";
 
@@ -51,24 +52,48 @@ function sigmapersonnel_userapi_countitems($args)
                     WHERE $categoriesdef[where]";
 
     } else {
-        $query .= " FROM $sigmapersonneltable
+        $query .= " FROM $sigmapersonneltable WHERE (
                     ";
     }
-    if(!empty($persstatus)) {
-        $query .= " AND ";
+
+    $bindvars = array();
+
+    if (isset($persstatus)) {
+        $query .= "xar_persstatus LIKE ?";
+        $bindvars[] = $persstatus;
     }
 
-    // Status asked is not empty
-    if (!empty($persstatus) && empty($catid)) {
-        $query .= " xar_persstatus = $persstatus";
-    } elseif (!empty($persstatus) && !empty($catid)) {
-            // AND has been added, but not always
-            $query .= " xar_persstatus = $persstatus";
+    if (isset($oncall)) {
+        if (isset($persstatus)) {
+            $query .= " OR ";
+        }
+        $query .= "xar_persstatus = ? ";
+        $bindvars[] = $persstatus;
     }
+/*
+    if (isset($regname)) {
+        if (isset($rid) || isset($tid)) {
+            $sql .= " OR ";
+        }
+        $sql .= " xar_regname LIKE ?";
+
+        $bindvars[] = '%'.$regname.'%';
+    }
+   if (isset($displname)) {
+        if (isset($rid) || isset($tid) || isset($regname)) {
+            $sql .= " OR ";
+        }
+        $sql .= " xar_displname LIKE ?";
+        $bindvars[] = '%'.$displname.'%';
+    }
+*/
+    $query .= ") ";
+
+
 
     // If there are no variables you can pass in an empty array for bind variables
     // or no parameter.
-    $result = &$dbconn->Execute($query,array());
+    $result = &$dbconn->Execute($query,$bindvars);
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
     if (!$result) return;
