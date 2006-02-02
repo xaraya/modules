@@ -16,5 +16,7 @@
     #$status['statustype']#:  #$status['count']#<br />
 
 </xar:foreach>
-Total persons:
+<xar:if condition="!empty($totalnumber)">
+Total persons: #$totalnumber#
+</xar:if>
 

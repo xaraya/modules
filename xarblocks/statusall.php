@@ -133,8 +133,10 @@ function sigmapersonnel_statusallblock_display($blockinfo)
         }
     }
 
-
-
+    $totalnumber = xarModApiFunc('sigmapersonnel', 'user', 'countitems');
+    if (!empty($totalnumber)) {
+        $data['totalnumber'] = $totalnumber;
+    }
 
 
     $data['blockid'] = $blockinfo['bid'];
