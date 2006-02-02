@@ -24,21 +24,21 @@
         <xar:else />
             <dd><a href="#$navNewUrl#"><xar:mlstring>Add your presence</xar:mlstring></a></dd>
         </xar:if>
-		<xar:sec mask="Deletesigmapersonnel" catch="false">
+        <xar:sec mask="Deletesigmapersonnel" catch="false">
         <xar:if condition="$whatFunc eq 'viewpersons'">
             <dd class="active"><a href="#$navAdminAllUrl#"><xar:mlstring>View All Persons</xar:mlstring></a></dd>
         <xar:else />
             <dd><a href="#$navAdminAllUrl#"><xar:mlstring>View All Persons</xar:mlstring></a></dd>
         </xar:if>
-		</xar:sec>
-		
-		<xar:comment>		
+        </xar:sec>
+
+        <xar:comment>
         <xar:if condition="$whatFunc eq 'year'">
             <dd class="active"><a href="#$navYearUrl#"><xar:mlstring>Year</xar:mlstring></a></dd>
         <xar:else />
             <dd><a href="#$navYearUrl#"><xar:mlstring>Year</xar:mlstring></a></dd>
         </xar:if>
-    
+
         <xar:if condition="xarUserIsLoggedIn()">
             <xar:if condition="$whatFunc eq 'alerts'">
                 <dd class="active"><a href="#$navAlertsUrl#"><xar:mlstring>Alerts</xar:mlstring></a></dd>
@@ -46,7 +46,7 @@
                 <dd><a href="#$navAlertsUrl#"><xar:mlstring>Alerts</xar:mlstring></a></dd>
             </xar:if>
         </xar:if>
-		</xar:comment>
+        </xar:comment>
     </dl>
 
 </div>

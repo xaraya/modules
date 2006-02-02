@@ -87,8 +87,7 @@ function sigmapersonnel_statusallblock_display($blockinfo)
     $data['items'] = array();
     // Get the standard status indicators
     // TODO: what is the on call/not on call status?
-    $statusses = xarModAPIFunc('sigmapersonnel', 'user', 'gets',
-                                      array('itemtype' => 6));
+    $statusses = xarModAPIFunc('sigmapersonnel', 'user', 'gets', array('itemtype' => 6));
 
     // returns array statusid-> statustype
 
@@ -125,9 +124,9 @@ function sigmapersonnel_statusallblock_display($blockinfo)
             } else {
                 $item['link'] = '';
             }
-            //$presencenow = '';
-            //$presencenow = xarModApiFunc('sigmapersonnel','user','presencenow',array('personid' => $item['personid']));
-            //$item['presencenow'] = $presencenow;
+            $presencenow = '';
+            $presencenow = xarModApiFunc('sigmapersonnel','user','presencenow',array('personid' => $item['personid']));
+            $item['presencenow'] = $presencenow;
             // Add this item to the list of items to be displayed
             $data['items'][] = $item;
         }

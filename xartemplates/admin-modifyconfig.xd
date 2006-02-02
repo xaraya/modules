@@ -1,7 +1,5 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
-<!-- common admin menu for this module - remove link to the current function -->
-<!-- the variables used in this menu come from example_admin_menu() -->
 <div class="xar-mod-head">
   <span class="xar-mod-title"><xar:mlstring>SIGMAPersonnel Administration</xar:mlstring></span>
 </div>
@@ -18,21 +16,10 @@
     <fieldset>
       <legend><xar:mlstring>Display Options</xar:mlstring></legend>
       <div class="xar-form-input-wrapper">
-        <label for="bold" class="xar-form-label" title="#xarML('Use bold for items.')#">
-          <xar:mlstring>Display Items In Bold?</xar:mlstring>
-        </label>
-        <xar:if condition="$boldchecked">
-          <input type="checkbox" name="bold" id="bold" value="1" checked="checked"/>
-          <xar:else/>
-          <input type="checkbox" name="bold" id="bold" value="1" />
-        </xar:if>
-      </div>
-
-      <div class="xar-form-input-wrapper">
-        <label for="itemsperpage" class="xar-form-label" title="#xarML('Number of example items per page')#">
+        <label for="itemsperpage" class="xar-form-label" title="#xarML('Number of items per page')#">
           <xar:mlstring>Items Per Page:</xar:mlstring>
         </label>
-        <input type="text" name="itemsperpage" id="itemsperpage" value="#$itemsvalue#" maxlength="3" class="xar-form-textshort" />
+        <input type="text" name="itemsperpage" id="itemsperpage" value="#xarModGetVar('sigmapersonnel', 'itemsperpage')#" maxlength="3" class="xar-form-textshort" />
       </div>
     </fieldset>
     <fieldset>
@@ -67,19 +54,27 @@
             Module Alias Name
           </xar:mlstring>
         </label>
-        <input type="text" name="aliasname" id="aliasname" value="#xarModGetVar('example', 'aliasname')#" size="32" maxlength="100" />
+        <input type="text" name="aliasname" id="aliasname" value="#xarModGetVar('sigmapersonnel', 'aliasname')#" size="32" maxlength="100" />
       </div>
 
     </fieldset>
     <fieldset>
       <legend><xar:mlstring>Data options</xar:mlstring></legend>
       <div class="xar-form-input-wrapper">
-        <label for="OnCallID" class="xar-form-label" title="#xarML('The presence item that denotes an on call status.')#">
+        <label for="OnCallID" class="xar-form-label" title="#xarML('The presence item that denotes the On Call status.')#">
           <xar:mlstring>
-            On Call Status ID
+            On Call Status
           </xar:mlstring>
         </label>
-        <input type="text" name="OnCallID" id="OnCallID" value="#xarModGetVar('sigmapersonnel', 'OnCallID')#" size="2" maxlength="5" />
+        <select name="OnCallID">
+        <xar:loop name="$persstatusses">
+            <xar:if condition="$loop:item['statusid'] == $OnCallID">
+                <option value="#$loop:item['statusid']#" selected="selected">#$loop:item['statustype']#</option>
+            <xar:else />
+                <option value="#$loop:item['statusid']#">#$loop:item['statustype']#</option>
+            </xar:if>
+        </xar:loop>
+        </select>
       </div>
     </fieldset>
 

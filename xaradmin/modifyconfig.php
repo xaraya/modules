@@ -29,10 +29,14 @@ function sigmapersonnel_admin_modifyconfig()
 
     // Generate a one-time authorisation code for this operation
     $data['authid'] = xarSecGenAuthKey();
-    // Specify some labels and values for display
 
-    $data['boldchecked'] = xarModGetVar('sigmapersonnel', 'bold') ? true : false;
+
+    //$data['boldchecked'] = xarModGetVar('sigmapersonnel', 'bold') ? true : false;
     // ID of item being on call
+
+    $data['persstatusses'] = xarModAPIFunc('sigmapersonnel', 'user', 'gets',
+                                      array('itemtype' => 6));
+
     $data['OnCallID'] = xarModGetVar('sigmapersonnel', 'OnCallID');
     // Note : if you don't plan on providing encode/decode functions for
     // short URLs (see xaruserapi.php), you should remove these from your
