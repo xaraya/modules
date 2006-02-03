@@ -17,7 +17,7 @@
  *
  * This is a standard function to update the configuration parameters of the
  * module given the information passed back by the modification form
- * 
+ *
  * This package (Julian):
  * @copyright (C) 2004 by Metrostat Technologies, Inc.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -29,9 +29,11 @@
  */
 
 function julian_admin_updateconfig($args)
-{ 
+{
     // Security Check
-    if (!xarSecurityCheck('Adminjulian')) return;
+    if (!xarSecurityCheck('AdminJulian')) {
+        return;
+    }
 
     extract($args);
 
@@ -49,9 +51,9 @@ function julian_admin_updateconfig($args)
     if (!xarVarFetch('modulealias',     'checkbox', $modulealias,   false,XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('DurMinInterval',  'int:1:15', $DurMinInterval,15, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('StartMinInterval','int:1:15', $StartMinInterval,15, XARVAR_NOT_REQUIRED)) return;
-    
+
     if (!xarSecConfirmAuthKey()) return;
-    
+
     xarModSetVar('julian','ical_links',$ical_links);
     xarModSetVar('julian','share_group',$share_group);
     xarmodSetVar('julian','from_name',$from_name);
@@ -97,7 +99,7 @@ function julian_admin_updateconfig($args)
     xarModCallHooks('module','updateconfig','julian', array('module' => 'julian'));
 
     xarSessionSetVar('statusmsg',xarML('Configuration Updated'));
-    xarResponseRedirect(xarModURL('julian', 'admin', 'modifyconfig')); 
+    xarResponseRedirect(xarModURL('julian', 'admin', 'modifyconfig'));
     return true;
-} 
+}
 ?>

@@ -145,6 +145,16 @@ function julian_init()
     if (!$dbconn->Execute($sql)) return;
     */
 
+     // Register hooks: julian can couple a date+time to any item from any module, provided
+     // the module in question calls (Julian's) hooks when editing items.
+    if (!xarModRegisterHook('item', 'new',    'GUI', 'julian', 'user', 'newhook'))     return false;
+    if (!xarModRegisterHook('item', 'create', 'API', 'julian', 'user', 'createhook'))  return false;
+    if (!xarModRegisterHook('item', 'modify', 'GUI', 'julian', 'user', 'modifyhook'))  return false;
+    if (!xarModRegisterHook('item', 'update', 'API', 'julian', 'user', 'updatehook'))  return false;
+    if (!xarModRegisterHook('item', 'delete', 'API', 'julian', 'user', 'deletehook'))  return false;
+    if (!xarModRegisterHook('item', 'display','GUI', 'julian', 'user', 'displayhook')) return false;
+
+
     // Register blocks
     if (!xarModAPIFunc('blocks',
             'admin',
@@ -188,24 +198,75 @@ function julian_init()
     xarModSetVar('julian', 'useModuleAlias',false);
     xarModSetVar('julian','aliasname','');
 
-// TODO Figure out all the permissions stuff
-// Should be based in event id , catid, and class? For cat_id we will probably need a wizard.
+    /**
+     * Define instances for this module
+     * Format is
+     * setInstance(Module,Type,ModuleTable,IDField,NameField,ApplicationVar,LevelTable,ChildIDField,ParentIDField)
+     */
 
+    $query1 = "SELECT DISTINCT event_id FROM " . $event_table;
+    $query2 = "SELECT DISTINCT organizer FROM " . $event_table;
+    $query3 = "SELECT DISTINCT class FROM " . $event_table;
+    $query4 = "SELECT DISTINCT calendar_id FROM " . $event_table;
+    $instances = array(
+        array('header' => 'Event ID:',
+            'query' => $query1,
+            'limit' => 20
+            ),
+        array('header' => 'Organizer uid:',
+            'query' => $query2,
+            'limit' => 20
+            ),
+        array('header' => 'Class of calendar:',
+            'query' => $query3,
+            'limit' => 20
+            ),
+        array('header' => 'Calendar ID:',
+            'query' => $query4,
+            'limit' => 20
+            )
+        );
+    xarDefineInstance('julian', 'Item', $instances);
+/*
     // allow users to see the calendar w/ events
     xarRegisterMask('Viewjulian','All','julian','All','All','ACCESS_READ');
     // allows users to add events, but not categories
     xarRegisterMask('Editjulian','All','julian','All','All','ACCESS_EDIT');
     // allow full admin of the calendar
     xarRegisterMask('Adminjulian','All','julian','All','All','ACCESS_ADMIN');
+*/
 
-     // Register hooks: julian can couple a date+time to any item from any module, provided
-     // the module in question calls (Julian's) hooks when editing items.
-    if (!xarModRegisterHook('item', 'new',    'GUI', 'julian', 'user', 'newhook'))     return false;
-    if (!xarModRegisterHook('item', 'create', 'API', 'julian', 'user', 'createhook'))  return false;
-    if (!xarModRegisterHook('item', 'modify', 'GUI', 'julian', 'user', 'modifyhook'))  return false;
-    if (!xarModRegisterHook('item', 'update', 'API', 'julian', 'user', 'updatehook'))  return false;
-    if (!xarModRegisterHook('item', 'delete', 'API', 'julian', 'user', 'deletehook'))  return false;
-    if (!xarModRegisterHook('item', 'display','GUI', 'julian', 'user', 'displayhook')) return false;
+    $instancestable = $xartable['block_instances'];
+    $typestable = $xartable['block_types'];
+    $query = "SELECT DISTINCT i.xar_title FROM $instancestable i, $typestable t WHERE t.xar_id = i.xar_type_id AND t.xar_module = 'julian'";
+    $instances = array(
+        array('header' => 'Julian Block Title:',
+            'query' => $query,
+            'limit' => 20
+            )
+        );
+    xarDefineInstance('julian', 'Block', $instances);
+
+    /**
+     * Register the module components that are privileges objects
+     * Format is
+     * xarregisterMask(Name,Realm,Module,Component,Instance,Level,Description)
+     */
+
+
+    // Block persmissions
+    xarRegisterMask('ReadJulianBlock', 'All', 'julian', 'Block', 'All', 'ACCESS_OVERVIEW');
+
+    // New Masks $event_id:$organizer:$class:$calendar_id:$catid
+    // calendar_id is not in use yet
+    xarRegisterMask('ViewJulian', 'All', 'julian', 'Item', 'All:All:All:All:All', 'ACCESS_OVERVIEW');
+    xarRegisterMask('ReadJulian', 'All', 'julian', 'Item', 'All:All:All:All:All', 'ACCESS_READ');
+    xarRegisterMask('EditJulian', 'All', 'julian', 'Item', 'All:All:All:All:All', 'ACCESS_EDIT');
+    xarRegisterMask('AddJulian', 'All', 'julian', 'Item', 'All:All:All:All:All', 'ACCESS_ADD');
+    xarRegisterMask('DeleteJulian', 'All', 'julian', 'Item', 'All:All:All:All:All', 'ACCESS_DELETE');
+    xarRegisterMask('AdminJulian', 'All', 'julian', 'Item', 'All:All:All:All:All', 'ACCESS_ADMIN');
+
+
 
     return true;
 }
@@ -503,7 +564,83 @@ function julian_upgrade($oldversion)
 
             return julian_upgrade('0.2.7');
         case '0.2.7':
+            // Remove Masks and Instances
+            xarRemoveMasks('julian');
+            xarRemoveInstances('julian');
+            /**
+             * Define instances for this module
+             * Format is
+             * setInstance(Module,Type,ModuleTable,IDField,NameField,ApplicationVar,LevelTable,ChildIDField,ParentIDField)
+             */
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+            $datadict = xarDBNewDataDict($dbconn, 'CREATE');
+            $event_table = xarDBgetSiteTablePrefix() . '_julian_events';
 
+            $query1 = "SELECT DISTINCT event_id FROM " . $event_table;
+            $query2 = "SELECT DISTINCT organizer FROM " . $event_table;
+            $query3 = "SELECT DISTINCT class FROM " . $event_table;
+            $query4 = "SELECT DISTINCT calendar_id FROM " . $event_table;
+            $instances = array(
+                array('header' => 'Event ID:',
+                    'query' => $query1,
+                    'limit' => 20
+                    ),
+                array('header' => 'Organizer uid:',
+                    'query' => $query2,
+                    'limit' => 20
+                    ),
+                array('header' => 'Class of calendar:',
+                    'query' => $query3,
+                    'limit' => 20
+                    ),
+                array('header' => 'Calendar ID:',
+                    'query' => $query4,
+                    'limit' => 20
+                    )
+                );
+            xarDefineInstance('julian', 'Item', $instances);
+        /*
+            // allow users to see the calendar w/ events
+            xarRegisterMask('Viewjulian','All','julian','All','All','ACCESS_READ');
+            // allows users to add events, but not categories
+            xarRegisterMask('Editjulian','All','julian','All','All','ACCESS_EDIT');
+            // allow full admin of the calendar
+            xarRegisterMask('Adminjulian','All','julian','All','All','ACCESS_ADMIN');
+        */
+
+            $instancestable = $xartable['block_instances'];
+            $typestable = $xartable['block_types'];
+            $query = "SELECT DISTINCT i.xar_title FROM $instancestable i, $typestable t WHERE t.xar_id = i.xar_type_id AND t.xar_module = 'julian'";
+            $instances = array(
+                array('header' => 'Julian Block Title:',
+                    'query' => $query,
+                    'limit' => 20
+                    )
+                );
+            xarDefineInstance('julian', 'Block', $instances);
+
+            /**
+             * Register the module components that are privileges objects
+             * Format is
+             * xarregisterMask(Name,Realm,Module,Component,Instance,Level,Description)
+             */
+
+
+            // Block persmissions
+            xarRegisterMask('ReadJulianBlock', 'All', 'julian', 'Block', 'All', 'ACCESS_OVERVIEW');
+
+            // New Masks $event_id:$organizer:$class:$calendar_id:$catid
+            // calendar_id is not in use yet
+            xarRegisterMask('ViewJulian', 'All', 'julian', 'Item', 'All:All:All:All:All', 'ACCESS_OVERVIEW');
+            xarRegisterMask('ReadJulian', 'All', 'julian', 'Item', 'All:All:All:All:All', 'ACCESS_READ');
+            xarRegisterMask('EditJulian', 'All', 'julian', 'Item', 'All:All:All:All:All', 'ACCESS_EDIT');
+            xarRegisterMask('AddJulian', 'All', 'julian', 'Item', 'All:All:All:All:All', 'ACCESS_ADD');
+            xarRegisterMask('DeleteJulian', 'All', 'julian', 'Item', 'All:All:All:All:All', 'ACCESS_DELETE');
+            xarRegisterMask('AdminJulian', 'All', 'julian', 'Item', 'All:All:All:All:All', 'ACCESS_ADMIN');
+
+            return julian_upgrade('0.2.8');
+        case '0.2.8':
             break;
     }
     // Update successful

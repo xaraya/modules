@@ -28,7 +28,9 @@
 function julian_admin_modifycategories()
 {
     // Security Check
-    if (!xarSecurityCheck('Adminjulian')) return;
+    if (!xarSecurityCheck('AdminJulian')) {
+        return;
+    }
 
     //get post/get vars
     if (!xarVarFetch('cal_date','int:0:8',$cal_date,date("Ymd"))) return;

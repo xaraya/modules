@@ -1,7 +1,7 @@
 <?php
 /**
  * Let user set which categorical events this user wants to be alerted about via email.
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -12,12 +12,12 @@
 
 /**
  * Let user set which categorical events this user wants to be alerted about via email.
- * 
+ *
  * @copyright (C) 2004 by Metrostat Technologies, Inc.
  * @link http://www.metrostat.net
  *
  * initial template: Roger Raymond
- * 
+ *
  * @author Jodie Razdrh/John Kevlin/David St.Clair/MichelV
  * @param $action
  * @param $cats
@@ -26,7 +26,7 @@
 function julian_user_alerts($args)
 {
     extract ($args);
-    
+
     if (!xarVarFetch('action',   'str',    $action,   '')) return;
     //Get the categories from the form.
     if (!xarVarFetch('cats',     'array',  $cats,     array(),     XARVAR_NOT_REQUIRED)) return;
@@ -34,7 +34,7 @@ function julian_user_alerts($args)
     if (!xarVarFetch('cal_date', 'int:0:8',$cal_date, date("Ymd"), XARVAR_NOT_REQUIRED)) return;
 
     // Security check
-    if (!xarSecurityCheck('Viewjulian')) return; 
+    if (!xarSecurityCheck('ReadJulian')) return;
 
     //store the categories the user has selected for alerts
     if (!strcmp($action,'update')) {
@@ -53,29 +53,29 @@ function julian_user_alerts($args)
         xarResponseRedirect($back_link);
     }
     // View the form
-    
+
     // Replace this with xarModGetUserVar
     //$useralerts = xarModAPIFunc('julian','user','getsubscriptions');
     $useralerts = array();
     $useralerts = xarModGetUserVar('julian','alerts');
-    
+
     if (!empty($useralerts)) {
         $useralerts = unserialize($useralerts);
     } else {
         $useralerts = array();
     }
-    
-    // Get the categories of Julian  
+
+    // Get the categories of Julian
     $categories = xarModAPIFunc('julian','user','getcategories');
     foreach ($categories as $cid => $info) {
        $categories[$cid]['checked'] = in_array($cid, $useralerts) ? true  : false;
     }
-    
+
     $data = array();
     $data['categories'] = $categories;
     // TODO: Where is this good for? remove?
     $data['cal_date']   = $cal_date;
-    
+
     return $data;
 }
 ?>

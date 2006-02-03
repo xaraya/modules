@@ -15,7 +15,7 @@
 /**
  * initialise block
  * Metrostat Calendar of Events
- * 
+ *
  * This module:
  * @copyright (C) 2004 by Metrostat Technologies, Inc.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -25,29 +25,29 @@
  * @author Jodie Razdrh/John Kevlin/David St.Clair
  * @author MichelV michelv@xarayahosting.nl
  *
- * @access public 
- * @param none $ 
- * @return nothing 
+ * @access public
+ * @param none $
+ * @return nothing
  * @throws no exceptions
  * @todo nothing
  */
 function julian_caleventblock_init()
 {
     return true;
-} 
+}
 
 /**
  * get information on block
- * 
- * @author David St.Clair 
- * @access public 
- * @param none $ 
+ *
+ * @author David St.Clair
+ * @access public
+ * @param none $
  * @return data array
  * @throws no exceptions
  * @todo nothing
  */
 function julian_caleventblock_info()
-{ 
+{
     // Values
     return array('text_type'        => 'Calendar',
         'module'                    => 'julian',
@@ -56,30 +56,30 @@ function julian_caleventblock_info()
         'form_content'              => false,
         'form_refresh'              => false,
         'show_preview'              => true);
-} 
+}
 
 /**
  * display calevent block
- * 
+ *
  * @author David St.Clair, MichelV
- * @access public 
- * @param none $ 
+ * @access public
+ * @param none $
  * @return data array on success or void on failure
  * @throws no exceptions
  * @todo implement centre menu position
  */
 function julian_caleventblock_display($blockinfo)
-{ 
+{
     // Security Check
-    if (!xarSecurityCheck('Viewjulian', 0)) return;
-    
+    if (!xarSecurityCheck('ReadJulianBlock', 0, 'Block', $blockinfo['title'])) {return;}
+
     // Break out options from our content field
     if (!is_array($blockinfo['content'])) {
         $vars = unserialize($blockinfo['content']);
     } else {
         $vars = $blockinfo['content'];
     }
-    
+
     //set the selected date parts, timestamp, and cal_date in the data array
     $args = xarModAPIFunc('julian','user','getUserDateTimeInfo');
     //load calendar class
@@ -93,31 +93,31 @@ function julian_caleventblock_display($blockinfo)
     $today=date('Y-m-d');
     $tomorrow=date("Y-m-d",strtotime("tomorrow"));
     $endweek=date("Y-m-d",strtotime("+$EventBlockDays days"));
-    
+
     if (isset ($vars['CatAware'])) {
         $CatAware = $vars['CatAware'];
     } else {
         $CatAware = 0;
     }
-    
+
     // Bug 5115 If we don't want to have this block use categories, set the array empty
     if ($CatAware == 0 ) {
         // Set the catid empty
-        // Get today's events: start and enddate are the same  
+        // Get today's events: start and enddate are the same
         $args['todaysevents']= xarModApiFunc('julian','user','getall', array('startdate'=>$today, 'enddate'=>$today, 'catid' => ''));
         // Get the events for the next $EventBlockDays days
         $args['upcomingevents'] = xarModApiFunc('julian','user','getall', array('startdate'=>$tomorrow, 'enddate'=>$endweek, 'catid' => ''));
     } else {
-        // Get today's events: start and enddate are the same  
+        // Get today's events: start and enddate are the same
         $args['todaysevents']= xarModApiFunc('julian','user','getall', array('startdate'=>$today, 'enddate'=>$today));
         // Get the events for the next $EventBlockDays days
         $args['upcomingevents'] = xarModApiFunc('julian','user','getall', array('startdate'=>$tomorrow, 'enddate'=>$endweek));
     }
-   
+
     //set the required block data
     if (empty($blockinfo['title'])) {
        $blockinfo['title'] = xarML('Events');
-    } 
+    }
     if (empty($blockinfo['template'])) {
         $template = 'calevent';
     } else {
@@ -125,7 +125,7 @@ function julian_caleventblock_display($blockinfo)
     }
     $args['Bullet'] = '&'.xarModGetVar('julian', 'BulletForm').';';
     $blockinfo['content'] = xarTplBlock('julian', $template, $args);
-    
+
     return $blockinfo;
 }
 ?>

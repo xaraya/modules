@@ -28,8 +28,6 @@
  */
 function julian_user_edit()
   {
-    //This prevents users from viewing something they are not suppose to.
-    if (!xarSecurityCheck('Editjulian')) return;
 
     if (!xarVarFetch('id',      'id',    $id)) return;
     if (!xarVarFetch('objectid', 'id',   $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
@@ -74,7 +72,10 @@ function julian_user_edit()
 */
    // Get event the decent way
    $item = xarModAPIFunc('julian', 'user', 'get', array('event_id' => $id));
-
+   // Security check
+   if (!xarSecurityCheck('EditJulian', 1, 'Item', "$id:$item[organizer]:$item[class]:$item[calendar_id]:All")) {
+       return;
+   }
 
    $event_endyear='';
    $event_endmonth='';

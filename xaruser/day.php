@@ -1,7 +1,7 @@
 <?php
 /**
  * View one day
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -11,9 +11,9 @@
  * @link http://xaraya.com/index.php/release/319.html
  * @author Julian Module Development Team
  */
- 
+
 /**
- * 
+ *
  * This function gets the events for a particular day.
  *
  * This module:
@@ -29,19 +29,19 @@
 function julian_user_day()
 {
     // Security check
-    if (!xarSecurityCheck('Viewjulian')) return; 
-    if (!xarVarFetch('catid', 'int:1:', $catid, '', XARVAR_NOT_REQUIRED)) return;    
+    if (!xarSecurityCheck('ReadJulian')) return;
+    if (!xarVarFetch('catid', 'int:1:', $catid, '', XARVAR_NOT_REQUIRED)) return;
     //get post/get vars
     xarVarFetch('cal_sdow','int:0:6',$cal_sdow,xarModGetVar('julian','startDayOfWeek'));
-    
+
     //load the calendar class
     $c = xarModAPIFunc('julian','user','factory','calendar');
     //set the selected date parts, timestamp, and cal_date in the data array
     $bl_data = xarModAPIFunc('julian','user','getUserDateTimeInfo');
     $bl_data['month'] = $c->getCalendarMonth($bl_data['selected_year'].$bl_data['selected_month']);
     $bl_data['longDayNames'] = $c->getLongDayNames($cal_sdow);
-    $bl_data['calendar'] = $c;  
-    //set the start date 
+    $bl_data['calendar'] = $c;
+    //set the start date
     $startdate = $bl_data['selected_year']."-".$bl_data['selected_month']."-".$bl_data['selected_day'];
     //get the events for the selected day
     $bl_data['event_array']=xarModApiFunc('julian','user','getall', array('startdate'=>$startdate, 'enddate'=>$startdate));

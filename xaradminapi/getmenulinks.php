@@ -18,10 +18,10 @@
  * This function return the menu links for the admin section in Xaraya.
  *
  * @author Jodie Razdrh/John Kevlin/David St.Clair/ Michel V.
- * @access  private 
- * @param   
+ * @access  private
+ * @param
  * @return  array $menulinks
- * @todo    MichelV. <#> 
+ * @todo    MichelV. <#>
  * @copyright (C) 2005 by Metrostat Technologies, Inc.
  * initial template: Roger Raymond
  */
@@ -39,24 +39,24 @@ function julian_adminapi_getmenulinks()
                          'title'=>xarML('View queued events'),
                          'label'=>xarML('View Queue'));
     */
-    
-    
-    if (xarSecurityCheck('Adminjulian', 0)) {
+
+
+    if (xarSecurityCheck('AdminJulian', 0)) {
         $menulinks[] = Array('url' => xarModURL('julian',
                 'admin',
                 'modifycategories'),
             'title' => xarML('Modify Categories'),
             'label' => xarML('Modify Categories'));
     }
-    
-    if (xarSecurityCheck('Adminjulian', 0)) {
+
+    if (xarSecurityCheck('AdminJulian', 0)) {
         $menulinks[] = Array('url' => xarModURL('julian',
                 'admin',
                 'modifyconfig'),
             'title' => xarML('Modify Config'),
             'label' => xarML('Modify Config'));
     }
-    
+
     return $menulinks;
 }
 ?>

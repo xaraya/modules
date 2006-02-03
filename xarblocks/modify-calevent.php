@@ -30,6 +30,10 @@ function julian_caleventblock_modify($blockinfo)
     } else {
         $vars = $blockinfo['content'];
     }
+    // Security check. Need to be admin
+    if (!xarSecurityCheck('AdminJulian', 1)) {
+        return;
+    }
 
     // Defaults
     if (!isset($vars['EventBlockDays'])) {
@@ -38,7 +42,7 @@ function julian_caleventblock_modify($blockinfo)
     /* Defaults */
     if (empty($vars['CatAware'])) {
         $vars['CatAware'] = false;
-    } 
+    }
     $vars['blockid'] = $blockinfo['bid'];
     return $vars;
 }
@@ -48,6 +52,12 @@ function julian_caleventblock_modify($blockinfo)
  */
 function julian_caleventblock_update($blockinfo)
 {
+
+    // Security check. Need to be admin
+    if (!xarSecurityCheck('AdminJulian', 1)) {
+        return;
+    }
+
     $vars = array();
     if (!xarVarFetch('EventBlockDays', 'int', $vars['EventBlockDays'], 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('CatAware', 'checkbox', $vars['CatAware'], FALSE, XARVAR_NOT_REQUIRED)) return;

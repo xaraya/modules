@@ -28,7 +28,7 @@ function julian_user_addevent($args)
     extract ($args);
 
     //This prevents users from viewing something they are not suppose to.
-    if (!xarSecurityCheck('Editjulian')) return;
+    if (!xarSecurityCheck('AddJulian')) return;
 
     if (!xarVarFetch('cal_date','int::',$cal_date)) return;
 

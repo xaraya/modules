@@ -390,7 +390,8 @@ Original table:
     if (empty($sql)) return; // throw back
     if (!$dbconn->Execute($sql)) return;
 
-
+version 0.2.7
+    -Finegrained privileges. Now possible on event_id, category, class, calendar_id and submitter
 
 
 

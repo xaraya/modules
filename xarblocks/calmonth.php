@@ -3,7 +3,7 @@
  * Month Block  - standard Initialization function
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -71,7 +71,7 @@ function julian_calmonthblock_info()
 function julian_calmonthblock_display($blockinfo)
 {
     // Security Check
-    if (!xarSecurityCheck('Viewjulian', 0)) return;
+    if (!xarSecurityCheck('ReadJulianBlock', 0, 'Block', $blockinfo['title'])) {return;}
 
     /* Get variables from content block.
      * Content is a serialized array for legacy support, but will be

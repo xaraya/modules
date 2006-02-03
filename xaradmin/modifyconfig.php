@@ -25,7 +25,9 @@
 function julian_admin_modifyconfig()
 {
     // Security Check
-    if (!xarSecurityCheck('Adminjulian')) return;
+    if (!xarSecurityCheck('AdminJulian')) {
+        return;
+    }
 
     $data=array();
     $data['share_group'] = xarModGetVar('julian','share_group');
