@@ -34,6 +34,6 @@ $modversion['admin']          = 1;
 $modversion['user']           = 1;
 $modversion['class']          = 'Utility';
 $modversion['category']       = 'Users & Groups';
-$modversion['dependency'] = array(27);
-$modversion['dependencyinfo'] = array(27 => 'roles');
+$modversion['dependency'] = array(27,42);
+$modversion['dependencyinfo'] = array(27 => 'roles',42=>'authsystem');
 ?>
