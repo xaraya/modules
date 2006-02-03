@@ -1,28 +1,23 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Authentication</xar:mlstring></span></div>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Registration and Login</xar:mlstring></span></div>
 <div class="xar-mod-body">
-  <form action="&xar-modurl-authentication-user-login;" method="post" enctype="application/x-www-form-urlencoded">
+  <form action="&xar-modurl-authsystem-user-login;" method="post" enctype="application/x-www-form-urlencoded">
     <fieldset>
-      <legend><xar:mlstring>Registration / Login</xar:mlstring></legend>
-      
+      <legend><xar:mlstring>Login</xar:mlstring></legend>
+
       <input type="hidden" name="redirecturl" id="returnurl" value="index.php" />
-      
+
       <div class="xar-form-input-wrapper">
         <label for="username" class="xar-form-label"><xar:mlstring>Username</xar:mlstring></label>
         <input type="text" name="uname" id="username" maxlength="255" size="20" tabindex="1" />
-        <xar:if condition="xarModGetVar('authentication', 'minage') eq 0">
-          <a href="&xar-modurl-authentication-user-register;&amp;phase=registerform"><xar:mlstring>Want to register?</xar:mlstring></a>
-          <xar:else />
-          <a href="&xar-modurl-authentication-user-register;&amp;phase=checkage"><xar:mlstring>Want to register?</xar:mlstring></a>
-        </xar:if>
       </div>
       <div class="xar-form-input-wrapper">
         <label for="password" class="xar-form-label"><xar:mlstring>Password</xar:mlstring></label>
         <input type="password" name="pass" id="password" maxlength="64" size="20" tabindex="2" />
-        <a href="&xar-modurl-authentication-user-lostpassword;"><xar:mlstring>Forget your password?</xar:mlstring></a>
+        <a href="&xar-modurl-roles-user-lostpassword;"><xar:mlstring>Forget your password?</xar:mlstring></a>
       </div>
       <div class="xar-form-input-wrapper-after">
-        <input type="checkbox" name="rememberme" id="remembermeform" value="1" tabindex="3" /> 
+        <input type="checkbox" name="rememberme" id="remembermeform" value="1" tabindex="3" />
         <label for="remembermeform"><xar:mlstring>Remember me</xar:mlstring></label>
       </div>
     </fieldset>

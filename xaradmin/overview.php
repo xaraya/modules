@@ -7,7 +7,7 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Authentication module
+ * @subpackage Registration module
  * @link http://xaraya.com/index.php/release/27.html
  */
 
@@ -20,10 +20,10 @@
  * @return array containing the menulinks for the overview item on the main manu
  * @since 2 Nov 2005
  */
-function authentication_admin_overview()
+function registration_admin_overview()
 {
    /* Security Check */
-    if (!xarSecurityCheck('EditAuthentication')) return;
+    if (!xarSecurityCheck('EditRegistration')) return;
 
     $data=array();
 
@@ -31,7 +31,7 @@ function authentication_admin_overview()
      * else just call the main function that usually displays the overview
      */
 
-    return xarTplModule('authentication', 'admin', 'main', $data,'main');
+    return xarTplModule('registration', 'admin', 'main', $data,'main');
 }
 
 ?>

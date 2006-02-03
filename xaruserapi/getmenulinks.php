@@ -7,34 +7,34 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Authentication module
+ * @subpackage Registration module
  */
 /*
  * Standard function to get main menu links
  * @author Marc Lutolf <marcinmilan@xaraya.com>
  */
-function authentication_userapi_getmenulinks()
+function registration_userapi_getmenulinks()
 {
 
-    if (xarModGetVar('authentication', 'allowregistration')){
+    if (xarModGetVar('registration', 'allowregistration')){
     // Security check
 		if (!xarUserIsLoggedIn()){
-			$menulinks[] = array('url'   => xarModURL('authentication',
+			$menulinks[] = array('url'   => xarModURL('registration',
 													  'user',
 													  'register'),
-								 'title' => xarML('Log in'),
-								 'label' => xarML('Log in'));
+								 'title' => xarML('Register'),
+								 'label' => xarML('Register'));
 		}
     }
-    if (xarModGetVar('authentication', 'showprivacy')){
-        $menulinks[] = array('url'   => xarModURL('authentication',
+    if (xarModGetVar('registration', 'showprivacy')){
+        $menulinks[] = array('url'   => xarModURL('registration',
                                                   'user',
                                                   'privacy'),
                              'title' => xarML('Privacy Policy for this Website'),
                              'label' => xarML('Privacy Policy'));
     }
-    if (xarModGetVar('authentication', 'showterms')){
-        $menulinks[] = array('url'   => xarModURL('authentication',
+    if (xarModGetVar('registration', 'showterms')){
+        $menulinks[] = array('url'   => xarModURL('registration',
                                                   'user',
                                                   'terms'),
                              'title' => xarML('Terms of Use for this website'),

@@ -1,7 +1,7 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Create User Account</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>Confirm Registration</xar:mlstring></h2>
-<form action="&xar-modurl-authentication-user-register;" method="post" enctype="application/x-www-form-urlencoded">
+<form action="&xar-modurl-registration-user-register;" method="post" enctype="application/x-www-form-urlencoded">
 <div>
 <table border="0" cellpadding="2" cellspacing="0">
     <tr>
@@ -16,7 +16,7 @@
         <td><xar:mlstring>E-mail Address</xar:mlstring>:</td>
         <td>#xarVarPrepForDisplay($email)#</td>
     </tr>
-<xar:if condition="xarModGetVar('authentication', 'showdynamic')" >
+<xar:if condition="xarModGetVar('registration', 'showdynamic')" >
     <xar:if condition="isset($properties)" >
         <xar:foreach in="$properties" key="$name">
             <tr>

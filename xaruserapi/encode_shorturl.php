@@ -7,7 +7,7 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Roles module
+ * @subpackage Registration module
  */
 /**
  * return the path for a short URL to xarModURL for this module
@@ -43,7 +43,7 @@
  * @returns string
  * @return path to be added to index.php for a short URL, or empty if failed
  */
-function roles_userapi_encode_shorturl($args)
+function registration_userapi_encode_shorturl($args)
 {
     // Get arguments from argument array
     extract($args);
@@ -58,7 +58,7 @@ function roles_userapi_encode_shorturl($args)
     $path = array();
 
     // we can't rely on xarModGetName() here -> you must specify the modname.
-    $module = 'roles';
+    $module = 'registration';
 
     switch($func) {
         case 'main':

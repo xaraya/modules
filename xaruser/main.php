@@ -7,7 +7,7 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Authentication module
+ * @subpackage Registration module
  */
 /**
  * the main user function
@@ -16,21 +16,21 @@
  * and returns user to correct location.
  * @author  Marc Lutolf <marcinmilan@xaraya.com>
 */
-function authentication_user_main()
+function registration_user_main()
 {
 
-    $allowregistration = xarModGetVar('authentication', 'allowregistration');
+    $allowregistration = xarModGetVar('registration', 'allowregistration');
 
 	if (xarUserIsLoggedIn()) {
-	   xarResponseRedirect(xarModURL('authentication',
+	   xarResponseRedirect(xarModURL('registration',
 									 'user',
 									 'terms'));
 	} elseif ($allowregistration != true) {
-		xarResponseRedirect(xarModURL('authentication',
+		xarResponseRedirect(xarModURL('authsystem',
 									  'user',
 									  'showloginform'));
 	} else {
-		xarResponseRedirect(xarModURL('authentication',
+		xarResponseRedirect(xarModURL('registration',
 									  'user',
 									  'register'));
 

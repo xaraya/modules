@@ -5,7 +5,7 @@
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:mlstring>
-            Authentication Administration 
+            User Registration Administration 
         </xar:mlstring>
     </span>
 </div>
@@ -24,7 +24,7 @@
             </dt>
             <xar:if condition="$tab eq 'general'">
                 <dd class="active">
-                    <a href="&xar-modurl-authentication-admin-modifyconfig;&amp;tab=general">
+                    <a href="&xar-modurl-registration-admin-modifyconfig;&amp;tab=general">
                         <xar:mlstring>
                             General 
                         </xar:mlstring>
@@ -32,7 +32,7 @@
                 </dd>
                 <xar:else />
                 <dd>
-                    <a href="&xar-modurl-authentication-admin-modifyconfig;&amp;tab=general">
+                    <a href="&xar-modurl-registration-admin-modifyconfig;&amp;tab=general">
                         <xar:mlstring>
                             General 
                         </xar:mlstring>
@@ -41,7 +41,7 @@
             </xar:if>
             <xar:if condition="$tab eq 'registration'">
                 <dd class="active">
-                    <a href="&xar-modurl-authentication-admin-modifyconfig;&amp;tab=registration">
+                    <a href="&xar-modurl-registration-admin-modifyconfig;&amp;tab=registration">
                         <xar:mlstring>
                             Registration 
                         </xar:mlstring>
@@ -49,7 +49,7 @@
                 </dd>
                 <xar:else />
                 <dd>
-                    <a href="&xar-modurl-authentication-admin-modifyconfig;&amp;tab=registration">
+                    <a href="&xar-modurl-registration-admin-modifyconfig;&amp;tab=registration">
                         <xar:mlstring>
                             Registration 
                         </xar:mlstring>
@@ -58,7 +58,7 @@
             </xar:if>
             <xar:if condition="$tab eq 'filtering'">
                 <dd class="active">
-                    <a href="&xar-modurl-authentication-admin-modifyconfig;&amp;tab=filtering">
+                    <a href="&xar-modurl-registration-admin-modifyconfig;&amp;tab=filtering">
                         <xar:mlstring>
                             Filtering 
                         </xar:mlstring>
@@ -66,7 +66,7 @@
                 </dd>
                 <xar:else />
                 <dd>
-                    <a href="&xar-modurl-authentication-admin-modifyconfig;&amp;tab=filtering">
+                    <a href="&xar-modurl-registration-admin-modifyconfig;&amp;tab=filtering">
                         <xar:mlstring>
                             Filtering 
                         </xar:mlstring>
@@ -79,52 +79,15 @@
         ------------------- Begin General Options --------------------- 
     </xar:comment>
     <xar:if condition="$tab eq 'general'">
-        <form method="post" action="&xar-modurl-authentication-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
-            <fieldset>
-                <legend>
-                    <xar:mlstring>
-                        Login Security Options 
-                    </xar:mlstring>
-                </legend>
-                <div class="xar-form-input-wrapper-after">
-                    <xar:if condition="xarModGetVar('authentication', 'uselockout')">
-                        <input type="checkbox" name="uselockout" id="uselockout" value="1" checked="checked" />
-                        <xar:else />
-                        <input type="checkbox" name="uselockout" id="uselockout" value="1" />
-                    </xar:if>
-                    <label for="uselockout">
-                        <xar:mlstring>
-                            Use lockout time on incorrect login attempts? 
-                        </xar:mlstring>
-                    </label>
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label for="lockouttries" class="xar-form-label">
-                        <xar:mlstring>
-                            Number of attempts before lockout 
-                        </xar:mlstring>
-                        : 
-                    </label>
-                    <input type="text" name="lockouttries" id="lockouttries" value="#xarModGetVar('authentication', 'lockouttries')#" size="2" maxlength="2" />
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label for="lockouttime" class="xar-form-label">
-                        <xar:mlstring>
-                            Length of time for lockout (minutes) 
-                        </xar:mlstring>
-                        : 
-                    </label>
-                    <input type="text" name="lockouttime" id="lockouttime" value="#xarModGetVar('authentication', 'lockouttime')#" size="2" maxlength="2" />
-                </div>
-            </fieldset>
-            <fieldset>
+        <form method="post" action="&xar-modurl-registration-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
+                      <fieldset>
                 <legend>
                     <xar:mlstring>
                         Service/Privacy 
                     </xar:mlstring>
                 </legend>
                 <div class="xar-form-input-wrapper-after">
-                    <xar:if condition="xarModGetVar('authentication', 'showterms')">
+                    <xar:if condition="xarModGetVar('registration', 'showterms')">
                         <input type="checkbox" name="showterms" id="showterms" value="1" checked="checked" />
                         <xar:else />
                         <input type="checkbox" name="showterms" id="showterms" value="1" />
@@ -136,7 +99,7 @@
                     </label>
                 </div>
                 <div class="xar-form-input-wrapper-after">
-                    <xar:if condition="xarModGetVar('authentication', 'showprivacy')">
+                    <xar:if condition="xarModGetVar('registration', 'showprivacy')">
                         <input type="checkbox" name="showprivacy" id="showprivacy" value="1" checked="checked" />
                     <xar:else />
                         <input type="checkbox" name="showprivacy" id="showprivacy" value="1" />
@@ -161,7 +124,7 @@
             ----------------- Begin Registration Options ------------------- 
         </xar:comment>
         <xar:elseif condition="$tab eq 'registration'" />
-        <form method="post" action="&xar-modurl-authentication-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
+        <form method="post" action="&xar-modurl-registration-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
             <fieldset>
                 <legend>
                     <xar:mlstring>
@@ -189,7 +152,7 @@
                     </select>
                 </div>
                 <div class="xar-form-input-wrapper-after">
-                    <xar:if condition="xarModGetVar('authentication', 'allowregistration')">
+                    <xar:if condition="xarModGetVar('registration', 'allowregistration')">
                         <input type="checkbox" name="allowregistration" id="allowregistration" value="1" checked="checked" />
                         <xar:else />
                         <input type="checkbox" name="allowregistration" id="allowregistration" value="1" />
@@ -200,17 +163,17 @@
                         </xar:mlstring>
                     </label>
                 </div>
-                <xar:if condition="xarModGetVar('authentication', 'allowregistration')">
+                <xar:if condition="xarModGetVar('registration', 'allowregistration')">
                     <div class="xar-form-input-wrapper">
                         <label for="minage" title="#xarML('Users need to be this age or older to register')#" class="xar-form-label">
                             <xar:mlstring>
                                 Minimum Age To Be A User: 
                             </xar:mlstring>
                         </label>
-                        <input type="text" name="minage" id="minage" value="#xarModGetVar('authentication', 'minage')#" maxlength="3" class="xar-form-textshort" />
+                        <input type="text" name="minage" id="minage" value="#xarModGetVar('registration', 'minage')#" maxlength="3" class="xar-form-textshort" />
                     </div>
                     <div class="xar-form-input-wrapper-after">
-                        <xar:if condition="xarModGetVar('authentication', 'chooseownpassword')">
+                        <xar:if condition="xarModGetVar('registration', 'chooseownpassword')">
                             <input type="checkbox" name="chooseownpassword" id="chooseownpassword" value="1" checked="checked" />
                             <xar:else />
                             <input type="checkbox" name="chooseownpassword" id="chooseownpassword" value="1" />
@@ -221,18 +184,18 @@
                             </xar:mlstring>
                         </label>
                     </div>
-                    <xar:if condition="xarModGetVar('authentication', 'chooseownpassword')">
+                    <xar:if condition="xarModGetVar('registration', 'chooseownpassword')">
                         <div class="xar-form-input-wrapper">
                             <label for="minpasslength" title="#xarML('Users must choose passwords with at least this many characters')#" class="xar-form-label">
                                 <xar:mlstring>
                                     Minimum Password Length: 
                                 </xar:mlstring>
                             </label>
-                            <input type="text" name="minpasslength" id="minpasslength" value="#xarModGetVar('authentication', 'minpasslength')#" maxlength="3" class="xar-form-textshort" />
+                            <input type="text" name="minpasslength" id="minpasslength" value="#xarModGetVar('registration', 'minpasslength')#" maxlength="3" class="xar-form-textshort" />
                         </div>
                     </xar:if>
                     <div class="xar-form-input-wrapper-after">
-                        <xar:if condition="xarModGetVar('authentication', 'sendnotice')">
+                        <xar:if condition="xarModGetVar('registration', 'sendnotice')">
                             <input type="checkbox" name="sendnotice" id="sendnotice" value="1" checked="checked" />
                             <xar:else />
                             <input type="checkbox" name="sendnotice" id="sendnotice" value="1" />
@@ -244,7 +207,7 @@
                         </label>
                     </div>
                     <div class="xar-form-input-wrapper-after">
-                        <xar:if condition="xarModGetVar('authentication', 'explicitapproval')">
+                        <xar:if condition="xarModGetVar('registration', 'explicitapproval')">
                             <input type="checkbox" name="explicitapproval" id="explicitapproval" value="1" checked="checked" />
                             <xar:else />
                             <input type="checkbox" name="explicitapproval" id="explicitapproval" value="1" />
@@ -256,7 +219,7 @@
                         </label>
                     </div>
                     <div class="xar-form-input-wrapper-after">
-                        <xar:if condition="xarModGetVar('authentication', 'requirevalidation')">
+                        <xar:if condition="xarModGetVar('registration', 'requirevalidation')">
                             <input type="checkbox" name="requirevalidation" id="requirevalidation" value="1" checked="checked" />
                             <xar:else />
                             <input type="checkbox" name="requirevalidation" id="requirevalidation" value="1" />
@@ -268,7 +231,7 @@
                         </label>
                     </div>
                     <div class="xar-form-input-wrapper-after">
-                        <xar:if condition="xarModGetVar('authentication', 'showdynamic')">
+                        <xar:if condition="xarModGetVar('registration', 'showdynamic')">
                             <input type="checkbox" name="showdynamic" id="showdynamic" value="1" checked="checked" />
                             <xar:else />
                             <input type="checkbox" name="showdynamic" id="showdynamic" value="1" />
@@ -280,7 +243,7 @@
                         </label>
                     </div>
                     <div class="xar-form-input-wrapper-after">
-                        <xar:if condition="xarModGetVar('authentication', 'sendwelcomeemail')">
+                        <xar:if condition="xarModGetVar('registration', 'sendwelcomeemail')">
                             <input type="checkbox" name="sendwelcomeemail" id="sendwelcomeemail" value="1" checked="checked" />
                             <xar:else />
                             <input type="checkbox" name="sendwelcomeemail" id="sendwelcomeemail" value="1" />
@@ -292,7 +255,7 @@
                         </label>
                     </div>
                     <div class="xar-form-input-wrapper-after">
-                        <xar:if condition="xarModGetVar('authentication', 'uniqueemail')">
+                        <xar:if condition="xarModGetVar('registration', 'uniqueemail')">
                             <input type="checkbox" name="uniqueemail" id="uniqueemail" value="1" checked="checked" />
                             <xar:else />
                             <input type="checkbox" name="uniqueemail" id="uniqueemail" value="1" />
@@ -305,7 +268,7 @@
                     </div>
                     <xar:comment>
                         <div class="xar-form-input-wrapper-after">
-                            <xar:if condition="xarModGetVar('authentication', 'allowinvisible')">
+                            <xar:if condition="xarModGetVar('registration', 'allowinvisible')">
                                 <input type="checkbox" name="allowinvisible" id="allowinvisible" value="1" checked="checked" tabindex="1" />
                                 <xar:else />
                                 <input type="checkbox" name="allowinvisible" id="allowinvisible" value="1" tabindex="1" />
@@ -330,8 +293,8 @@
             ----------------- Begin Filtering Options ------------------- 
         </xar:comment>
         <xar:elseif condition="$tab eq 'filtering'" />
-        <xar:if condition="xarModGetVar('authentication', 'allowregistration')">
-            <form method="post" action="&xar-modurl-authentication-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
+        <xar:if condition="xarModGetVar('registration', 'allowregistration')">
+            <form method="post" action="&xar-modurl-registration-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
                 <fieldset>
                     <legend>
                         <xar:mlstring>
@@ -389,7 +352,7 @@
                         <input type="hidden" name="authid" id="authid" value="#$authid#" />
                         <input type="hidden" name="phase" id="phase" value="update" />
                         <input type="hidden" name="tab" id="tab" value="#$tab#" />
-                        <input type="submit" value="#xarML('Update Authentication Configuration')#" />
+                        <input type="submit" value="#xarML('Update Registration Configuration')#" />
                     </div>
                 </fieldset>
             </form>

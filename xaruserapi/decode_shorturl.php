@@ -7,7 +7,7 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Roles module
+ * @subpackage Registration module
  */
 /**
  * extract function and arguments from short URLs for this module, and pass
@@ -41,7 +41,7 @@
  * @return array containing func the function to be called and args the query
  *         string arguments, or empty if it failed
  */
-function roles_userapi_decode_shorturl($params)
+function registration_userapi_decode_shorturl($params)
 {
     // Initialise the argument list we will return
     $args = array();

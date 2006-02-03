@@ -7,7 +7,7 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Authentication module
+ * @subpackage Registration module
  */
 /**
  * expire non-validated accounts or whatever (executed by the scheduler module)
@@ -15,7 +15,7 @@
  * @author Marc Lutolf <marcinmilan@xaraya.com>
  * @access private
  */
-function authentication_schedulerapi_expire($args)
+function registration_schedulerapi_expire($args)
 {
 
 // TODO: get some configuration info here if necessary

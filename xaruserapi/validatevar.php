@@ -6,7 +6,7 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Authentication module
+ * @subpackage Registration module
  */
 
 /**
@@ -22,7 +22,7 @@
  * @return true if the validation was successful, false otherwise
  * @todo move this to xarVar* api
  */
-function authentication_userapi_validatevar($args)
+function registration_userapi_validatevar($args)
 {
 
     extract($args);

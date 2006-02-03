@@ -7,8 +7,8 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Authentication module
- * @link http://xaraya.com/index.php/release/27.html
+ * @subpackage Registration module
+ * @link http://xaraya.com/index.php/release/30205.html
  */
 /**
  * utility function pass individual menu items to the main menu
@@ -17,21 +17,21 @@
  * @returns array
  * @return array containing the menulinks for the main menu items.
  */
-function authentication_adminapi_getmenulinks()
+function registration_adminapi_getmenulinks()
 {
     $menulinks = array();
-    if (xarSecurityCheck('EditAuthentication',0)) {
-        $menulinks[] = Array('url' => xarModURL('authentication','admin','overview'),
-                               'title' => xarML('Authentication Overview'),
+    if (xarSecurityCheck('EditRegistration',0)) {
+        $menulinks[] = Array('url' => xarModURL('registration','admin','overview'),
+                               'title' => xarML('Registration Overview'),
                               'label' => xarML('Overview'));
 
     }
 
-    if (xarSecurityCheck('AdminAuthentication',0)) {
-        $menulinks[] = Array('url'   => xarModURL('authentication',
+    if (xarSecurityCheck('AdminRegistration',0)) {
+        $menulinks[] = Array('url'   => xarModURL('registration',
                                                   'admin',
                                                   'modifyconfig'),
-                              'title' => xarML('Modify the authentication module configuration'),
+                              'title' => xarML('Modify the registration module configuration'),
                               'label' => xarML('Modify Config'));
     }
     return $menulinks;

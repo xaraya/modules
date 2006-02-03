@@ -7,7 +7,7 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Authentication module
+ * @subpackage Registration module
  */
 /**
  * getvalidation validates a new user into the system
@@ -19,16 +19,17 @@
  * @param   phase is the point in the function to return
  * @return  true if valcode matches valcode in user status table
  * @raise   exceptions raised valcode does not match
+ * @TODO jojodee - rethink to provide cleaner separation between roles, authentication and registration
  */
-function authentication_user_getvalidation()
+function registration_user_getvalidation()
 {
     // Security check
-    if (!xarSecurityCheck('ViewAuthentication')) return;
+    if (!xarSecurityCheck('ViewRegistration')) return;
 
     //If a user is already logged in, no reason to see this.
     //We are going to send them to their account.
     if (xarUserIsLoggedIn()) {
-       xarResponseRedirect(xarModURL('authentication',
+       xarResponseRedirect(xarModURL('roles',
                                      'user',
                                      'account',
                                       array('uid' => xarUserGetVar('uid'))));
@@ -47,7 +48,7 @@ function authentication_user_getvalidation()
         case 'startvalidation':
         default:
 
-            $data = xarTplModule('authentication','user', 'startvalidation', array('phase'   => $phase,
+            $data = xarTplModule('registration','user', 'startvalidation', array('phase'   => $phase,
                                                                           'uname'   => $uname,
                                                                           'sent'    => $sent,
                                                                           'valcode' => $valcode,
@@ -65,7 +66,7 @@ function authentication_user_getvalidation()
 
             // Trick the system when a user has double validated.
             if (empty($status['valcode'])){
-                $data = xarTplModule('authentication','user', 'getvalidation');
+                $data = xarTplModule('registration','user', 'getvalidation');
                 return $data;
             }
 
@@ -76,7 +77,7 @@ function authentication_user_getvalidation()
                 return;
             }
 
-            $pending = xarModGetVar('authentication', 'explicitapproval');
+            $pending = xarModGetVar('registration', 'explicitapproval');
             if ($pending == 1 && ($status['uid'] != xarModGetVar('roles','admin')))
             {
                 // Update the user status table to reflect a pending account.
@@ -104,10 +105,10 @@ function authentication_user_getvalidation()
                                     array('uname' => $uname,
                                           'state' => ROLES_STATE_ACTIVE))) return;
                 //send welcome email (option)
-                if (xarModGetVar('authentication', 'sendwelcomeemail')) {
-                    if (!xarModAPIFunc( 'authentication',
-                                    'admin',
-                                    'senduseremail',
+                if (xarModGetVar('registration', 'sendwelcomeemail')) {
+                    if (!xarModAPIFunc('roles',
+                                       'admin',
+                                       'senduseremail',
                                     array('uid' => array($status['uid'] => '1'),
                                           'mailtype' => 'welcome'))) {
                         $msg = xarML('Problem sending welcome email');
@@ -115,13 +116,13 @@ function authentication_user_getvalidation()
                     }
                 }
 
-                $url = xarModUrl('authentication', 'user', 'register');
+                $url = xarModUrl('registration', 'user', 'register');
                 $time = '3';
                 xarVarSetCached('Meta.refresh','url', $url);
                 xarVarSetCached('Meta.refresh','time', $time);
             }
 
-            if (xarModGetVar('authentication', 'sendnotice')){
+            if (xarModGetVar('registration', 'sendnotice')){
 
                 $adminname = xarModGetVar('mail', 'adminname');
                 $adminemail = xarModGetVar('mail', 'adminmail');
@@ -142,7 +143,7 @@ function authentication_user_getvalidation()
 
             xarModSetVar('roles', 'lastuser', $status['uid']);
 
-            $data = xarTplModule('authentication','user', 'getvalidation');
+            $data = xarTplModule('registration','user', 'getvalidation');
 
             break;
 
@@ -152,7 +153,7 @@ function authentication_user_getvalidation()
                                     'user',
                                     'get',
                                     array('uname' => $uname));
-            if (!xarModAPIFunc( 'authentication',
+            if (!xarModAPIFunc( 'roles',
                                 'admin',
                                 'senduseremail',
                                 array('uid' => array($status['uid'] => '1'),
@@ -163,10 +164,10 @@ function authentication_user_getvalidation()
                     xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
                 }
 
-            $data = xarTplModule('authentication','user', 'getvalidation');
+            $data = xarTplModule('registration','user', 'getvalidation');
 
             // Redirect
-            xarResponseRedirect(xarModURL('authentication', 'user', 'getvalidation',array('sent' => 1)));
+            xarResponseRedirect(xarModURL('registration', 'user', 'getvalidation',array('sent' => 1)));
 
     }
     return $data;

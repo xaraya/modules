@@ -11,9 +11,10 @@
         <xar:set name="enc_type">'application/x-www-form-urlencoded'</xar:set>
     </xar:if>
 
-    <form method="post" id="post" action="&xar-modurl-authentication-user-register;" enctype="#$enc_type#">
+    <form method="post" id="post" action="&xar-modurl-registration-user-register;" enctype="#$enc_type#">
         <fieldset>
         <legend><xar:mlstring>Registration Requirements</xar:mlstring></legend>
+            <!-- Removed  - no USERTYPE or property defined in this scenario
             <div class="xar-form-input-wrapper">
                 <label for="itemtype" class="xar-form-label" title="#xarML('Choose the type of registration')#">
                        <xar:mlstring>Register as a:</xar:mlstring>:
@@ -24,6 +25,7 @@
                     <span class="xar-error">#$invalid['itemtype']#</span>
                 </xar:if>
             </div>
+            -->
             <div class="xar-form-input-wrapper">
                 <label for="username" class="xar-form-label" title="#xarML('Enter user name')#">
                        <xar:mlstring>Username</xar:mlstring>:
@@ -51,7 +53,7 @@
                     <span class="xar-error">#$invalid['email']#</span>
                 </xar:if>
             </div>
-            <xar:if condition="xarModGetVar('authentication', 'chooseownpassword')" >
+            <xar:if condition="xarModGetVar('registration', 'chooseownpassword')" >
             <div class="xar-form-input-wrapper">
                 <label for="pass1" class="xar-form-label" title="#xarML('Enter a password')#">
                        <xar:mlstring>Password</xar:mlstring>:
@@ -71,40 +73,40 @@
                 </xar:if>
             </div>
             </xar:if>
-            <xar:if condition="xarModGetVar('authentication','showterms') eq 0 and xarModGetVar('authentication','showprivacy') eq 1">
+            <xar:if condition="xarModGetVar('registration','showterms') eq 0 and xarModGetVar('registration','showprivacy') eq 1">
             <div class="xar-form-input-wrapper">
                 <span class="xar-form-label-short">
                     <input type="checkbox" name="agreetoterms" id="agreetoterms" value="1" />
                 </span>
                 <label for="agreetoterms"  title="#xarML('Please check to agree to the website requirements')#">
                     <xar:mlstring>I agree to be bound by this website's </xar:mlstring>
-                    <a href="&xar-modurl-authentication-user-privacy;"><xar:mlstring>Privacy Policy</xar:mlstring></a>.
+                    <a href="&xar-modurl-registration-user-privacy;"><xar:mlstring>Privacy Policy</xar:mlstring></a>.
                 </label>
                     <xar:if condition="!empty($invalid['agreetoterms'])">
                         <span class="xar-error">#$invalid['agreetoterms']#</span>
                     </xar:if>
             </div>
-            <xar:elseif condition="xarModGetVar('authentication','showprivacy') eq 0 and xarModGetVar('authentication','showterms') eq 1" />
+            <xar:elseif condition="xarModGetVar('registration','showprivacy') eq 0 and xarModGetVar('registration','showterms') eq 1" />
             <div class="xar-form-input-wrapper">
                 <span class="xar-form-label-short">
                     <input type="checkbox" name="agreetoterms" id="agreetoterms" value="1" />
                 </span>
                 <label for="agreetoterms" title="#xarML('Please check to agree to the website requirements')#">
                     <xar:mlstring>I agree to be bound by this website's </xar:mlstring>
-                    <a href="&xar-modurl-authentication-user-terms;"><xar:mlstring>Terms of Use</xar:mlstring></a>.
+                    <a href="&xar-modurl-registration-user-terms;"><xar:mlstring>Terms of Use</xar:mlstring></a>.
                 </label>
                 <xar:if condition="!empty($invalid['agreetoterms'])">
                     <span class="xar-error">#$invalid['agreetoterms']#</span>
                 </xar:if>
             </div>
-            <xar:elseif condition="xarModGetVar('authentication','showprivacy') eq 1 and xarModGetVar('authentication','showterms') eq 1" />
+            <xar:elseif condition="xarModGetVar('registration','showprivacy') eq 1 and xarModGetVar('registration','showterms') eq 1" />
             <div class="xar-form-input-wrapper">
                 <span class="xar-form-label-short">
                     <input type="checkbox" name="agreetoterms" id="agreetoterms" value="1" />
                 </span>
                 <label for="agreetoterms"  title="#xarML('Please check to agree to the website requirements')#">
                     <xar:mlstring>I agree to be bound by this website's </xar:mlstring>
-                    <a href="&xar-modurl-authentication-user-terms;"><xar:mlstring>Terms of Use</xar:mlstring></a> <xar:mlstring>and</xar:mlstring> <a href="&xar-modurl-authentication-user-privacy;"><xar:mlstring>Privacy Policy</xar:mlstring></a>.
+                    <a href="&xar-modurl-registration-user-terms;"><xar:mlstring>Terms of Use</xar:mlstring></a> <xar:mlstring>and</xar:mlstring> <a href="&xar-modurl-registration-user-privacy;"><xar:mlstring>Privacy Policy</xar:mlstring></a>.
                  </label>
                  <xar:if condition="!empty($invalid['agreetoterms'])">
                      <span class="xar-error">#$invalid['agreetoterms']#</span>
@@ -114,7 +116,7 @@
             <input type="hidden" name="agreetoterms" id="agreetoterms" value="1" />
             </xar:if>
         </fieldset>
-        <xar:if condition="xarModGetVar('authentication', 'showdynamic')" >
+        <xar:if condition="xarModGetVar('registration', 'showdynamic')" >
             <xar:if condition="isset($properties)">
             <fieldset>
                 <legend><xar:mlstring>User Details</xar:mlstring></legend>

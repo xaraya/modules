@@ -7,19 +7,19 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Authentication module
+ * @subpackage Registration module
  */
 /**
- * the main administration function
+ * the main registration function
  */
-function authentication_admin_main()
+function registration_admin_main()
 {
     // Security Check
-    if (!xarSecurityCheck('EditAuthentication')) return;
+    if (!xarSecurityCheck('EditRegistration')) return;
     if (xarModGetVar('adminpanels', 'overview') == 0) {
         return array();
     } else {
-        xarResponseRedirect(xarModURL('authentication', 'admin', 'modifyconfig'));
+        xarResponseRedirect(xarModURL('registration', 'admin', 'modifyconfig'));
     }
     // success
     return true;

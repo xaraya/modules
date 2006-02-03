@@ -3,7 +3,7 @@
 <div class="xar-mod-body"><h2><xar:mlstring>Welcome Email</xar:mlstring></h2>
     <p><xar:mlstring>This email will be sent to users to welcome them.</xar:mlstring></p>
     <p><xar:mlstring>The welcome email is plain text</xar:mlstring></p>
-    <form action="&xar-modurl-authentication-admin-welcomeemail;" method="post" enctype="application/x-www-form-urlencoded">
+    <form action="&xar-modurl-registration-admin-welcomeemail;" method="post" enctype="application/x-www-form-urlencoded">
              <div>
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <input type="hidden" name="phase" id="phase" value="update" />
