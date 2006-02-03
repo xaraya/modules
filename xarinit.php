@@ -1,55 +1,58 @@
 <?php
 /**
- * Initialise the authentication module
+ * Initialise the registration module
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Authentication module
+ * @subpackage Registration module
  * @author Jan Schrage, John Cox, Gregor Rothfuss
  */
 
 /**
- * Initialise the authentication module
+ * Initialise the registration module
  *
  * @access public
  * @param none $
  * @returns bool
  */
-function authentication_init()
+function registration_init()
 {
 # --------------------------------------------------------
 #
 # Set up masks
 #
-    xarRegisterMask('ViewAuthentication','All','authentication','All','All','ACCESS_OVERVIEW');
-    xarRegisterMask('EditAuthentication','All','authentication','All','All','ACCESS_EDIT');
-    xarRegisterMask('AdminAuthentication','All','authentication','All','All','ACCESS_ADMIN');
+    xarRegisterMask('ViewRegistration','All','registration','All','All','ACCESS_OVERVIEW');
+    xarRegisterMask('ViewRegistrationLogin','All','registration','Block','rlogin:Login:All','ACCESS_OVERVIEW');
+    xarRegisterMask('EditRegistration','All','registration','All','All','ACCESS_EDIT');
+    xarRegisterMask('AdminRegistration','All','registration','All','All','ACCESS_ADMIN');
 
 # --------------------------------------------------------
 #
 # Set up privileges
 #
-    xarRegisterPrivilege('AdminAuthentication','All','vendors','All','All','ACCESS_ADMIN');
+    xarRegisterPrivilege('AdminRegistration','All','registration','All','All','ACCESS_ADMIN');
+    xarRegisterPrivilege('ViewRegistrationLogin','All','registration','Block','rlogin:Login:All','ACCESS_OVERVIEW','View the User Access block');
+    xarRegisterPrivilege('ViewRegistration','All','registration','All','All','ACCESS_OVERVIEW','View the User Access block');
 
 # --------------------------------------------------------
 #
 # Define modvars
 #
-    xarModSetVar('authentication', 'allowregistration', 1);
-    xarModSetVar('authentication', 'requirevalidation', 1);
-    xarModSetVar('authentication', 'uniqueemail', 1);
-    xarModSetVar('authentication', 'askwelcomeemail', 1);
-    xarModSetVar('authentication', 'askvalidationemail', 1);
-    xarModSetVar('authentication', 'askdeactivationemail', 1);
-    xarModSetVar('authentication', 'askpendingemail', 1);
-    xarModSetVar('authentication', 'askpasswordemail', 1);
-    xarModSetVar('authentication', 'defaultgroup', 'Users');
-	xarModSetVar('authentication', 'lockouttime', 15);
-	xarModSetVar('authentication', 'lockouttries', 3);
-    xarModSetVar('authentication', 'minage', 13);
+    xarModSetVar('registration', 'allowregistration', 1);
+    xarModSetVar('registration', 'requirevalidation', 1);
+    xarModSetVar('registration', 'uniqueemail', 1);
+    xarModSetVar('registration', 'askwelcomeemail', 1);
+    xarModSetVar('registration', 'askvalidationemail', 1);
+    xarModSetVar('registration', 'askdeactivationemail', 1);
+    xarModSetVar('registration', 'askpendingemail', 1);
+    xarModSetVar('registration', 'askpasswordemail', 1);
+    //xarModSetVar('registration', 'defaultgroup', 'Users'); //Use the Roles modvar
+	//xarModSetVar('registration', 'lockouttime', 15); // to authsystem
+	//xarModSetVar('registration', 'lockouttries', 3); // to authsystem
+    xarModSetVar('registration', 'minage', 13);
 
 /*---------------------------------------------------------------
 * Set disallowed names
@@ -58,33 +61,33 @@ function authentication_init()
 Root
 Linux';
     $disallowednames = serialize($names);
-    xarModSetVar('authentication', 'disallowednames', $disallowednames);
+    xarModSetVar('registration', 'disallowednames', $disallowednames);
 
     $emails = 'none@none.com
 president@whitehouse.gov';
     $disallowedemails = serialize($emails);
-    xarModSetVar('authentication', 'disallowedemails', $disallowedemails);
+    xarModSetVar('registration', 'disallowedemails', $disallowedemails);
 
 /*---------------------------------------------------------------
 * Set disallowed IPs
 */
     $ips = '';
     $disallowedips = serialize($ips);
-    xarModSetVar('authentication', 'disallowedips', $disallowedips);
+    xarModSetVar('registration', 'disallowedips', $disallowedips);
 
     // Register blocks
     $tid = xarModAPIFunc('blocks',
             'admin',
             'register_block_type',
-            array('modName' => 'authentication',
-                'blockType' => 'login'));
+            array('modName' => 'registration',
+                'blockType' => 'rlogin'));
     if (!$tid) return;
 
 
-    if (!xarModAPIFunc('blocks', 'user', 'get', array('name'  => 'login'))) {
+    if (!xarModAPIFunc('blocks', 'user', 'get', array('name'  => 'rlogin'))) {
         $rightgroup = xarModAPIFunc('blocks', 'user', 'getgroup', array('name'=> 'right'));
         if (!xarModAPIFunc('blocks', 'admin', 'create_instance',
-                           array('title'    => 'Login',
+                           array('title'    => 'User Access',
                                  'name'     => 'login',
                                  'type'     => $tid,
                                  'groups'    => array($rightgroup),
@@ -93,32 +96,52 @@ president@whitehouse.gov';
             return;
         }
     }
+    //Let's check for an authsystem login block
+    $dbconn =& xarDBGetConn();
+    $tables =& xarDBGetTables();
 
-	// Make this the default authentication module
-	xarModSetVar('roles', 'defaultauthmodule', xarModGetIDFromName('authentication'));
+    $sitePrefix = xarDBGetSiteTablePrefix();
+    $blocktypeTable = $sitePrefix .'_block_types';
+        $query = "SELECT xar_id,
+                         xar_type,
+                         xar_module
+                         FROM $blocktypeTable
+                 WHERE xar_type='login' and xar_module='authsystem'";
+        $result =& $dbconn->Execute($query);
+        if (!$result) return;
+        list($blockid,$blocktype,$module)= $result->fields;
+        $blocktype = array('id' => $blockid,
+                           'blocktype' => $blocktype,
+                           'module'=> $module);
+
+       if (is_array($blocktype) && $blocktype['module']=='authsystem') {
+       $blockid=$blocktype['id'];
+       // remove this login block type and block from authsystem
+    	$result = xarModAPIfunc('blocks', 'admin', 'delete_instance', array('bid'=>$blockid));
+       }
 
     return true;
 }
 
-function authentication_activate()
+function registration_activate()
 {
     return true;
 }
 
 /**
- * Upgrade the authentication module from an old version
+ * Upgrade the registration module from an old version
  *
  * @access public
  * @param oldVersion $
  * @returns bool
  */
-function authentication_upgrade($oldVersion)
+function registration_upgrade($oldVersion)
 {
     // Upgrade dependent on old version number
     switch ($oldVersion) {
-        case 1.01:
+        case '1.0.0':
             break;
-        case 2.0:
+        case '1.2.0':
             // Code to upgrade from version 2.0 goes here
             break;
     }
@@ -127,13 +150,13 @@ function authentication_upgrade($oldVersion)
 }
 
 /**
- * Delete the authentication module
+ * Delete the registration module
  *
  * @access public
  * @param none $
  * @returns bool
  */
-function authentication_delete()
+function registration_delete()
 {
 # --------------------------------------------------------
 #
@@ -141,7 +164,7 @@ function authentication_delete()
 #
     $blocktypes = xarModAPIfunc(
         'blocks', 'user', 'getallblocktypes',
-        array('module' => 'authentication')
+        array('module' => 'registration')
     );
 
     // Delete block types.
@@ -156,9 +179,9 @@ function authentication_delete()
     /**
      * Remove modvars, instances and masks
      */
-    xarModDelAllVars('authentication');
-    xarRemoveMasks('authentication');
-    xarRemoveInstances('authentication');
+    xarModDelAllVars('registration');
+    xarRemoveMasks('registration');
+    xarRemoveInstances('registration');
 
     // Deletion successful
     return true;
