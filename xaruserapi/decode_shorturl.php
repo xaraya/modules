@@ -47,6 +47,9 @@ function ebulletin_userapi_decode_shorturl($params)
         $args['pid'] = $params[2];
         return array('viewissues', $args);
 
+    } elseif (preg_match('/^validatesubscriber$/i', $params[1])) {
+        return array('validatesubscriber', $args);
+
     } elseif (preg_match('/^subscribe$/i', $params[1])) {
         return array('subscribe', $args);
     }

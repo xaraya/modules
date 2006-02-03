@@ -1,8 +1,6 @@
 Dear #$name#,<br />
 
-<p>This is an automated response.  You or someone on your behalf has attempted to update your newsletter subscription(s) at <a href="&xar-baseurl;">&xar-baseurl;</a>.</p>
-
-<p>This update will NOT apply until you visit the following web address:<br />
+<p>This is an automated response which is sent for security purposes.  You or someone on your behalf has requested to change your newsletter subscription(s) at <a href="&xar-baseurl;">&xar-baseurl;</a>.  Please visit the following web page to confirm your request:<br />
 <a href="#$validateurl#">#$validateurl#</a></p>
 
 <p>If you do not desire to complete this change, you may safely ignore and delete this message.  Please report any problems to the website administrator.</p>
