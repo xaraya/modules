@@ -1,19 +1,16 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
-    <span class="xar-mod-title">
-        <xar:mlstring>Administration - Uploads</xar:mlstring>
-    </span>
+  <span class="xar-mod-title"><xar:mlstring>Uploads Administration</xar:mlstring></span>
 </div>
 <div class="xar-mod-body">
-    <h2><xar:mlstring>Overview</xar:mlstring></h2>
-    <div style="padding: 1px;" class="xar-norm-outline">
-        <div style="float:right;padding:10px;">
-            <img src="modules/adminpanels/xarimages/admin.gif" alt="official icon" width="96" height="96" />
-        </div>
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>What is it?</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+  <img src="#xarTplGetImage('admin_generic.gif', 'base')#" alt="official icon" width="96" height="96" class="xar-module-icon" />
+  <h2>
+    <xar:mlstring>Overview</xar:mlstring>
+  </h2>
+  <h3>
+    <xar:mlstring>What is it?</xar:mlstring>
+  </h3>
+  <p>
             <em><xar:mlstring>Uploads is a Xaraya Utility Module.</xar:mlstring></em>
             <xar:mlstring>It is currently responsible for accomplishing these tasks:</xar:mlstring>
             <ul>
@@ -21,16 +18,15 @@
                 <li><xar:mlstring>Allows the managing of access to files via privileges.</xar:mlstring></li>
                 <li>...</li>
             </ul>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>How to use it?</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <h3>
+        </p>
+        <h3>
+    <xar:mlstring>How to use it?</xar:mlstring>
+  </h3>
+  <p>
+            <h4>
                 <xar:mlstring>External Imports and Uploads</xar:mlstring>
-            </h3>
+            </h4>
+            </p>
             <p>
                 <xar:mlstring>
                     Files that are uploaded or imported from external locations can be saved in the database (DB) 
@@ -77,24 +73,29 @@
                     sandbox can be seen in the 'Import Local Files' form immediately upon adding them.
                 </xar:mlstring>
             </p>
-
-        
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>Included Blocks</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+ <h3>
+    <xar:mlstring>Included Blocks</xar:mlstring>
+  </h3>
+  <p>
             <xar:mlstring>There are no included blocks.</xar:mlstring>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>Included Hooks</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+ </p>
+  <h3>
+    <xar:mlstring>Included Hooks</xar:mlstring>
+  </h3>
+  <p>
             .. To be filled in ..
-        </div>
-    </div>
+        </p>
+ <h3><xar:mlstring>Further Information</xar:mlstring></h3>
+  <p>
+       <xar:mlstring>Extended information about this module can be found at </xar:mlstring><a title="#xarML('Uploads Module - Xaraya Extension 666')#" href="http://www.xaraya.com/index.php/release/666.html">Xaraya Extension and Releases</a>.
+       </p>
+      <ul>
+          <li><xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+          </li>
+          <li><xar:mlstring>Related tutorials and documentation on Uploads found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/uploads/" title="#xarML('Related documentation on Uploads')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+          </li>
+      </ul>
+      <p class="xar-sub">
+         <strong>&nbsp;<xar:mlstring>Uploads module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; #xarLocaleGetFormattedDate('short','1130972400')#
+  </p>
 </div>
