@@ -4,83 +4,73 @@
         <xar:mlstring>Julian</xar:mlstring>
     </span>
 </div>
-<div class="xar-mod-body" style="display:block;">
+<div class="xar-mod-body">
     <h2><xar:mlstring>Overview</xar:mlstring></h2>
-    <div style="border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 1px;">
-        <div style="float:right;display:block;background-color:#ffffff;padding:10px;">
-            <img src="modules/julian/xarimages/metrostat_logo.jpg" alt="official icon" width="170" height="54" />
-        </div>
-        <div class="xar-mod-title" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
-            <xar:mlstring>What is it?</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <em><xar:mlstring>Basic Calendar for Xaraya.</xar:mlstring></em>
-            <xar:mlstring>It is currently responsible for accomplishing these tasks:</xar:mlstring>
-            <ul>
-                <li><xar:mlstring>Display a calendar for day, week, month or year.</xar:mlstring></li>
-                <li><xar:mlstring>Display events for a given date.</xar:mlstring></li>
-                <li><xar:mlstring>Send out an alert with the upcoming events</xar:mlstring></li>
-            </ul>
-        </div>
-        <br />
-        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
-            <xar:mlstring>How to use it?</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <p><xar:mlstring>Use it like a calendar.</xar:mlstring></p>
-
-            <br><xar:mlstring>Julian has some requirements at this moment.</xar:mlstring></br>
-            <br><xar:mlstring>The dependancies should have been resolved at installation, otherwise you are not seeing this page.</xar:mlstring></br>
-        </div>
-        <br />
-        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
-            <xar:mlstring>Included Blocks</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <ul>
-                <li><xar:mlstring>Month Calendar</xar:mlstring></li>
-                <li><xar:mlstring>Today's Events and Upcoming Events</xar:mlstring></li>
-            </ul>
-        </div>
-        <br />
-        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
-            <xar:mlstring>Security</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-           <xar:mlstring>There are three levels: read, add event and admin Julian.</xar:mlstring><br /> 
-           <ul>
-             <li><xar:mlstring>To allow users to see the calendar and its events, you should give the read access.</xar:mlstring></li>
-             <li><xar:mlstring>Edit access is needed for adding and edit events.</xar:mlstring></li>
-             <li><xar:mlstring>Admin access is needed to access admin functions/change the general settings of Julian.</xar:mlstring></li>
-           </ul>
-        </div>
-        <br />
-        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
-            <xar:mlstring>Included Hooks</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-           <xar:mlstring>None</xar:mlstring>
-        </div>
-        <br />        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
-            <xar:mlstring>Known Bugs</xar:mlstring>
-        </div>
-
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-        <ul>
-            <li><xar:mlstring>Program can't view dates in the year 2038 or beyond on 32bit *nix machines.</xar:mlstring></li>
-            <li><xar:mlstring>The choice for bullet form doesn't function in version 0.2.1.</xar:mlstring></li>
-            <li><xar:mlstring>The alert subscriptions cannot be migrated from earlier version to 0.2.1. Users need to subscribe again.</xar:mlstring></li>
-        </ul>
-        </div>
-        <br />
-        <div class="xar-accent" style="text-align: center; border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
-            <xar:mlstring>Extended information about this module can be found at</xar:mlstring> 
-            <a href="http://sourceforge.net/projects/julian/">http://sourceforge.net/projects/julian/</a>
-        </div>
+    <div style="float:right;display:block;background-color:#ffffff;padding:10px;">
+        <img src="modules/julian/xarimages/metrostat_logo.jpg" alt="official icon" width="170" height="54" />
     </div>
+    <div class="xar-mod-title">
+        <xar:mlstring>What is it?</xar:mlstring>
+    </div>
+    <p><em><xar:mlstring>Julian is the Basic Calendar for Xaraya.</xar:mlstring></em></p>
+    <p>
+        <xar:mlstring>It is currently responsible for accomplishing these tasks:</xar:mlstring>
+        <ul>
+            <li><xar:mlstring>Display a calendar for day, week, month or year.</xar:mlstring></li>
+            <li><xar:mlstring>Display events for a given date.</xar:mlstring></li>
+            <li><xar:mlstring>Send out an alert with the upcoming events</xar:mlstring></li>
+        </ul>
+    </p>
+    <h3>
+        <xar:mlstring>How to use it?</xar:mlstring>
+    </h3>
+        <p><xar:mlstring>Use it like a calendar.</xar:mlstring></p>
+
+        <xar:mlstring>Julian has some requirements at this moment.</xar:mlstring></br>
+        <xar:mlstring>The dependancies should have been resolved at installation, otherwise you are not seeing this page.</xar:mlstring></br>
+    <h3>
+        <xar:mlstring>Included Blocks</xar:mlstring>
+    </h3>
+    <ul>
+        <li><xar:mlstring>Month Calendar</xar:mlstring></li>
+        <li><xar:mlstring>Today's Events and Upcoming Events</xar:mlstring></li>
+    </ul>
+    <h3><xar:mlstring>Security</xar:mlstring></h3>
+    <p>
+    <xar:mlstring>Julian has a full set of security levels. The checks are carried out on:</xar:mlstring><br />
+    </p>
+    <ul>
+        <li><xar:mlstring>Event ID.</xar:mlstring></li>
+        <li><xar:mlstring>Calendar ID (not in use at present).</xar:mlstring></li>
+        <li><xar:mlstring>Category ID. This check works together with the category privileges. You will need to give users read or edit level access to the Julian categories as well.</xar:mlstring></li>
+        <li><xar:mlstring>Owner ID. This is the user that has entered the ID. In future we will implement the use of 'MYSELF' as a check.</xar:mlstring></li>
+    </ul>
+    <br />
+    <h3>
+        <xar:mlstring>Included Hooks</xar:mlstring>
+    </h3>
+    <p>
+       <xar:mlstring>Julian offer a hook to categories</xar:mlstring><br/>
+       <xar:mlstring>You can attach this hook to your own publication type</xar:mlstring><br/>
+       <xar:mlstring>In your pubtype, you can then add the data needed by Julian to show the even in the calendar</xar:mlstring><br/>
+       <xar:mlstring>Note that the hook only works for categories (version 0.2.8)</xar:mlstring>
+    </p>
+    <h3><xar:mlstring>Known Bugs</xar:mlstring></h3>
+    <ul>
+        <li><xar:mlstring>Program can't view dates in the year 2038 or beyond on 32bit *nix machines.</xar:mlstring></li>
+        <li><xar:mlstring>The alert subscriptions cannot be migrated from earlier version to 0.2.1. Users need to subscribe again.</xar:mlstring></li>
+    </ul>
+    <p>
+        <xar:mlstring>Further information on the Julian module can be found at</xar:mlstring>
+    </p>
+    <ul>
+        <li><xar:mlstring>Julian Extension page at</xar:mlstring> <a title="#xarML('Julian Module - Xaraya Extension 319')#" href="http://www.xaraya.com/index.php/release/319.html">Xaraya Extension and Releases</a>.
+          <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+        </li>
+        <li><xar:mlstring>Related documentation on Julian can be found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/julian/" title="#xarML('Related documentation on Julian')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+        </li>
+    </ul>
+    <p class="xar-sub">
+        <strong>&nbsp;<xar:mlstring>Julian Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.3&nbsp; 2006-02-03
+    </p>
 </div>

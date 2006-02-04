@@ -390,7 +390,7 @@ Original table:
     if (empty($sql)) return; // throw back
     if (!$dbconn->Execute($sql)) return;
 
-version 0.2.7
+
     -Finegrained privileges. Now possible on event_id, category, class, calendar_id and submitter
     -NOTICE: you will have to redefine your privileges for Julian. The new privileges can be upgraded by simply going to the privilege and press update.
 
@@ -402,4 +402,5 @@ version 0.2.7
         "
         ,then you will need to upgrade that privilege (ViewJulian in this error)
 
+Bugs 5349, 5240 and others
 0.2.8

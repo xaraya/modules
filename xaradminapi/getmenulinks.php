@@ -3,7 +3,7 @@
  * Administration menu links.
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -21,7 +21,9 @@
  * @access  private
  * @param
  * @return  array $menulinks
- * @todo    MichelV. <#>
+ * @todo    MichelV. <michelv@xaraya.com>
+ *
+ * This module:
  * @copyright (C) 2005 by Metrostat Technologies, Inc.
  * initial template: Roger Raymond
  */
@@ -31,15 +33,14 @@ function julian_adminapi_getmenulinks()
 {
 
     $menulinks = '';
-    /*
-    $menulinks[] = Array('url'=>xarModURL('calendar','admin','modifyconfig'),
-                         'title'=>xarML('Modify the configuration for Calendar'),
-                         'label'=>xarML('Modify Config'));
-    $menulinks[] = Array('url'=>xarModURL('calendar','admin','view'),
-                         'title'=>xarML('View queued events'),
-                         'label'=>xarML('View Queue'));
-    */
 
+    if (xarSecurityCheck('AdminJulian', 0)) {
+        $menulinks[] = Array('url' => xarModURL('julian',
+                'admin',
+                'main'),
+            'title' => xarML('Julian Overview'),
+            'label' => xarML('Overview'));
+    }
 
     if (xarSecurityCheck('AdminJulian', 0)) {
         $menulinks[] = Array('url' => xarModURL('julian',
