@@ -48,7 +48,6 @@ function courses_adminapi_updateplanned($args)
     if (!xarVarFetch('minparticipants', 'int::', $minparticipants, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('maxparticipants', 'int::', $maxparticipants, '', XARVAR_NOT_REQUIRED)) return;
 
-
     // The user API function is called.
     $item = xarModAPIFunc('courses',
         'user',
