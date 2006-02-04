@@ -96,6 +96,9 @@ function articles_admin_exportpubtype($args)
         } else {
             $specs['input'] = 1;
         }
+        if (!isset($specs['validation'])) {
+            $specs['validation'] = '';
+        }
         $data['xml'] .= '    <property name="' . $field . '">
       <id>' . $id . '</id>
       <label>' . $specs['label'] . '</label>
@@ -104,6 +107,7 @@ function articles_admin_exportpubtype($args)
       <source>xar_articles.xar_' . $field . '</source>
       <input>' . $specs['input'] . '</input>
       <status>' . $status . '</status>
+      <validation>' . xarVarPrepForDisplay($specs['validation']) . '</validation>
     </property>
 ';
         // $specs['type'] = fixed for articles fields + unused in DD
@@ -151,7 +155,7 @@ function articles_admin_exportpubtype($args)
       <source>' . $info['source'] . '</source>
       <status>' . $info['status'] . '</status>
       <order>' . $info['order'] . '</order>
-      <validation>' . $info['validation'] . '</validation>
+      <validation>' . xarVarPrepForDisplay($info['validation']) . '</validation>
     </property>
 ';
         }

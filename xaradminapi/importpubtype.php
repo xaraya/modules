@@ -207,9 +207,13 @@ function articles_adminapi_importpubtype($args)
                             if (empty($property['status'])) {
                                 $property['label'] = '';
                             }
+                            if (!isset($property['validation'])) {
+                                $property['validation'] = '';
+                            }
                             $fields[$field] = array('label' => $property['label'],
                                                     'format' => $property['type'],
                                                     'input' => $property['input'],
+                                                    'validation' => $property['validation'],
                                                     );
                             break;
 
