@@ -126,7 +126,11 @@ function articles_adminapi_update($args)
     }
 
     $args['module'] = 'articles';
-    $args['itemtype'] = $ptid;
+    if (isset($ptid)) {
+        $args['itemtype'] = $ptid;
+    } elseif (isset($pubtypeid)) {
+        $args['itemtype'] = $pubtypeid;
+    }
     $args['cids'] = $cids;
     xarModCallHooks('item', 'update', $aid, $args);
 

@@ -41,6 +41,8 @@ function articles_adminapi_delete($args)
     $args['itemid'] = $aid;
     if (isset($ptid)) {
         $args['itemtype'] = $ptid;
+    } elseif (isset($pubtypeid)) {
+        $args['itemtype'] = $pubtypeid;
     }
     xarModCallHooks('item', 'delete', $aid, $args);
 
