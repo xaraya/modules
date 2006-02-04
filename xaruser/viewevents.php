@@ -31,18 +31,18 @@ function julian_user_viewevents($args)
     extract ($args);
 
     // Get parameters from the input.
-    if (!xarVarFetch('startnum', 'int:0:', $startnum, 1)) return;
-    if (!xarVarFetch('sortby', 'str:1:', $sortby, 'eventDate')) return;
-    if (!xarVarFetch('orderby', 'str:1:', $orderby, 'ASC')) return;
-    if (!xarVarFetch('event_id', 'int:0:', $event_id, 0)) return;
-    if (!xarVarFetch('startmonth','str',$startmonth, '')) return;
-    if (!xarVarFetch('startday','str',$startday, '')) return;
-    if (!xarVarFetch('startyear','str',$startyear, '')) return;
-    if (!xarVarFetch('endmonth','str',$endmonth, '')) return;
-    if (!xarVarFetch('endday','str',$endday, '')) return;
-    if (!xarVarFetch('endyear','str',$endyear, '')) return;
-    if (!xarVarFetch('cal_date','str',$caldate, '')) return;
-    if (!xarVarFetch('catid', 'int:1:', $catid, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('startnum',    'int:0:', $startnum,    1, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('sortby',      'str:1:', $sortby,      'eventDate', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('orderby',     'str:1:', $orderby,     'DESC', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('event_id',    'int:0:', $event_id,    0)) return;
+    if (!xarVarFetch('startmonth',  'str::',  $startmonth,  '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('startday',    'str::',  $startday,    '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('startyear',   'str::',  $startyear,   '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('endmonth',    'str::',  $endmonth,    '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('endday',      'str::',  $endday,      '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('endyear',     'str::',  $endyear,     '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('cal_date',    'str::',  $caldate,     '')) return;
+    if (!xarVarFetch('catid',       'int:1:', $catid,       '', XARVAR_NOT_REQUIRED)) return;
 
    // Security check
    if (!xarSecurityCheck('ViewJulian', 1, 'Item', "All:All:All:$catid")) {
@@ -118,14 +118,14 @@ function julian_user_viewevents($args)
     $events = xarModAPIFunc('julian',
                             'user',
                             'getevents',
-                            array('startnum' => $startnum,
-                                  'numitems' => xarModGetVar('julian','itemsperpage'),
-                                  'sortby'   => $sortby,
-                                  'orderby'  => $orderby,
+                            array('startnum'  => $startnum,
+                                  'numitems'  => xarModGetVar('julian','itemsperpage'),
+                                  'sortby'    => $sortby,
+                                  'orderby'   => $orderby,
                                   'startdate' => $startdate,
-                                  'enddate'  => $enddate,
-                                  'event_id' => $event_id,
-                                  'catid'    => $catid));
+                                  'enddate'   => $enddate,
+                                  'event_id'  => $event_id,
+                                  'catid'     => $catid));
 
     // Check for exceptions.
     if (!isset($events) && xarCurrentErrorType() != XAR_NO_EXCEPTION) {
@@ -220,9 +220,10 @@ function julian_user_viewevents($args)
                                               'user',
                                               'viewevents',
                                               array('startnum' => '%%',
-                                                    'sortby' => $sortby,
+                                                    'sortby'   => $sortby,
                                                     'event_id' => $event_id,
-                                                    'catid' => $catid)),
+                                                    'catid'    => $catid,
+                                                    'orderby'  => $orderby)),
                                     xarModGetVar('julian', 'itemsperpage'));
     $bl_data['catid'] = $catid;
     // Return the template variables defined in this function.
