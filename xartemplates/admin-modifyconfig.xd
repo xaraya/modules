@@ -122,6 +122,7 @@
                             Enable full-text search in MySQL
                         </xar:mlstring>
                     </label> 
+                    [<a href="http://dev.mysql.com/doc/refman/4.1/en/fulltext-restrictions.html"><xar:mlstring>with restrictions</xar:mlstring></a>]
                 </div>
                 </xar:if>
             </fieldset>
