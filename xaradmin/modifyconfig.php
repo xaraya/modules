@@ -16,14 +16,16 @@ function registration_admin_modifyconfig()
 {
     // Security Check
     if (!xarSecurityCheck('AdminRegistration')) return;
-    if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-    if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'general', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('phase',    'str:1:100', $phase,      'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+    if (!xarVarFetch('shorturls','checkbox',  $shorturls,   false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('tab',      'str:1:100', $data['tab'], 'general', XARVAR_NOT_REQUIRED)) return;
     switch (strtolower($phase)) {
         case 'modify':
         default:
             $data['authid'] = xarSecGenAuthKey();
             switch ($data['tab']) {
                 case 'general':
+                    $data['shorturlschecked'] = xarModGetVar('registration', 'SupportShortURLs') ? true : false;
 					$data['uselockout'] =  xarModGetVar('registration', 'uselockout') ? 'checked' : '';
 					$data['lockouttime'] = xarModGetVar('registration', 'lockouttime')? xarModGetVar('registration', 'lockouttime'): 15; //minutes
 					$data['lockouttries'] = xarModGetVar('registration', 'lockouttries') ? xarModGetVar('registration', 'lockouttries'): 3;
@@ -73,7 +75,7 @@ function registration_admin_modifyconfig()
                     if (!xarVarFetch('uselockout', 'checkbox', $uselockout, true, XARVAR_NOT_REQUIRED)) return;
                     if (!xarVarFetch('lockouttime', 'int:1:', $lockouttime, 15, XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
                     if (!xarVarFetch('lockouttries', 'int:1:', $lockouttries, 3, XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-
+                    xarModSetVar('registration', 'SupportShortURLs', $shorturls);
                     xarModSetVar('registration', 'showterms', $showterms);
                     xarModSetVar('registration', 'showprivacy', $showprivacy);
                     xarModSetVar('registration', 'uselockout', $uselockout);
