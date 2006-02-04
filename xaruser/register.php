@@ -405,7 +405,7 @@ function registration_user_register()
                 if ($uid == 0) return;
 
                 //Insert the user into the default users role
-                $userRole = xarModGetVar('registration', 'defaultgroup');
+                $userRole = xarModGetVar('roles', 'defaultgroup');
 
                 // Get the group id
                 $defaultRole = xarModAPIFunc('roles', 'user', 'get',
