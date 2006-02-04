@@ -128,7 +128,7 @@ function articles_userapi_decode_shorturl($params)
                 $args['ptid'] = $id;
 
                 if (!empty($params[2])) {
-                    if (preg_match('/^(\d+)/',$params[2],$matches)) {
+                    if (preg_match('/^(\d+)$/',$params[2],$matches)) {
                         $aid = $matches[1];
                         $args['aid'] = $aid;
                         return array('display', $args);
@@ -327,7 +327,9 @@ function articles_decodeAIDUsingTitle( $params, $ptid = '', $decodeUsingTitle = 
             case 'Ignore':
             default:
                 // Just use the first one that came back
-                $theArticle = $articles[0];
+                if (!empty($articles)) {
+                    $theArticle = $articles[0];
+                }
         }
     }
 
