@@ -86,15 +86,16 @@
                     General Options
                 </xar:mlstring>
             </legend>
-            <div class="xar-form-input-wrapper">
-                <label for="shorturls" class="xar-form-label" title="#xarML('Enable short URLS?')#">
-                    <xar:mlstring>Enable short URLs?</xar:mlstring>
-                </label>
-                <xar:if condition="$shorturlschecked">
+            <div class="xar-form-input-wrapper-after">
+               <xar:if condition="$shorturlschecked">
                     <input type="checkbox" name="shorturls" id="shorturls" value="1" checked="checked" />
                 <xar:else/>
                     <input type="checkbox" name="shorturls" id="shorturls" value="1" />
                  </xar:if>
+                <label for="shorturls" title="#xarML('Enable short URLS?')#">
+                    <xar:mlstring>Enable short URLs?</xar:mlstring>
+                </label>
+
              </div>
         </fieldset>
         <fieldset>
