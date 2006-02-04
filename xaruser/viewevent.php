@@ -184,6 +184,21 @@ function julian_user_viewevent()
    // Set the url to this page in session as the last page viewed
    $lastview=xarModURL('julian','user','viewevent',array('cal_date'=>$cal_date,'event_id'=>$event_id));
    xarSessionSetVar('lastview',$lastview);
+   $uid = xarUserGetVar('uid');
+   // Priv $event_id:$organizer:$calendar_id:$catid
+   if (xarSecurityCheck('EditJulian', 0, 'Item', "$event_id:$uid:$bl_data[calendar_id]:All")) {
+       // Add edit link
+       $bl_data['editlink'] = xarModURL('julian','user','edit',array('cal_date'=>$cal_date,'id'=> $event_id));
+   } else {
+       $bl_data['editlink'] = '';
+   }
+   if (xarSecurityCheck('DeleteJulian', 0, 'Item', "$event_id:$uid:$bl_data[calendar_id]:All")) {
+       // Add delete link
+       $bl_data['deletelink'] = xarModURL('julian','admin','deleteevent',array('cal_date'=>$cal_date,'event_id'=> $event_id, 'authid' =>$bl_data['authid']));
+   } else {
+       $bl_data['deletelink'] = '';
+   }
+
    return $bl_data;
 }
 ?>

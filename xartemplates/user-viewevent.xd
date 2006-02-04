@@ -3,19 +3,19 @@
     <xar:template file="header" />
 
     <div class="xar-julian-contents">
-
         <div class="xar-julian-contents-icons">
-        <xar:sec id="unique1" mask="Editjulian" catch="false">
-            <a href="#xarModURL('julian','user','edit',array('cal_date'=>$cal_date,'id'=> $id, 'authid' => $authid))#">
-                <xar:mlstring>Edit</xar:mlstring>
-            </a>
-            <a href="#xarModURL('julian','admin','deleteevent',array('cal_date'=>$cal_date,'event_id'=> $id, 'authid' =>$authid))#"
-               onclick="answer=confirm('#$deletesummary#\n#xarML('Are you sure you want to delete this event?')#');if(!answer) return false;">
-                <xar:mlstring>Delete</xar:mlstring>
-            </a>
-        </xar:sec>
+            <xar:if condition="!empty($editlink)">
+                <a href="#$editlink#">
+                    <xar:mlstring>Edit</xar:mlstring>
+                </a>
+            </xar:if>
+            <xar:if condition="!empty($deletelink)">
+                <a href="#$deletelink#"
+                   onclick="answer=confirm('#$deletesummary#\n#xarML('Are you sure you want to delete this event?')#');if(!answer) return false;">
+                   <xar:mlstring>Delete</xar:mlstring>
+                </a>
+            </xar:if>
         </div>
-
         <h2>#$summary#</h2>
 
         <ul class="xar-julian-eventlist">

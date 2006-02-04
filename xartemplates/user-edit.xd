@@ -523,6 +523,7 @@
                 </fieldset>
             <div class="xar-form-input-wrapper-after">
                 <input type="hidden" name="is_update" value="1" />
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
                 <input type="hidden" name="id" value="#$event_id#" />
                 <input type="hidden" name="data_loaded" value="1" />
                 <input type="submit" name="submit" value="#xarML('Update')#">

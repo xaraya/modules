@@ -73,11 +73,14 @@ function julian_user_updateevent()
    if (!xarVarFetch('class',            'int:1:',   $class,         0, XARVAR_NOT_REQUIRED)) return;
    if (!xarVarFetch('share_uids',       'array',    $share_uids,    array(), XARVAR_NOT_REQUIRED)) return;
 
-   if (!xarSecurityCheck('EditJulian')) { // TODO: improve
+   if (!xarSecurityCheck('EditJulian', 1, 'Item', "$id:All:All:All")) { // TODO: improve
        return;
    }
 
-   //if this is an event that repeats "on", the rrule is always 3 which is the representative of monthly.
+    // Confirm authorisation code.
+    if (!xarSecConfirmAuthKey()) return;
+
+    //if this is an event that repeats "on", the rrule is always 3 which is the representative of monthly.
    //the 'on' events are always repeated every so many months
    if($recur_count && $recur_freq1) {
       $rrule="3";

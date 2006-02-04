@@ -343,6 +343,8 @@ function julian_user_edit()
     } else {
         $data['hooks'] = $hooks;
     }
+
+    $data['authid']=xarSecGenAuthKey();
     return $data;
 
 /*
