@@ -4,25 +4,17 @@ Terminology:
 *course: a set of lessons with one theme. A course must be given a unique code, and can be planned.
 *planned course: an occurence of one particular course
 
-There is at this moment (0.1.4) no mechanism to group courses in an educational plan. 
-This is performed by the separate module 'ITSP' (will be developed for this)
+There is at this moment (0.3.0) no mechanism to group courses in an educational plan.
+This is performed by the separate module 'ITSP' (will be developed for this) with id 572
 
 INSTALLATION
 
 Make sure you have categories and keywords installed.
 Copy all the files in /courses to modules/courses
 Go to admin>modules>view all to install the courses module.
-Go to dynamic data to import the courses tables for the course parameters
-Admin>Dynamic Data>Utilities>Meta definitions
-Choose the tables studstatus, courselevel and courseyear
-Import them one by one
-Adjust the properties of these objects so they are managed by courses and have the correct itemtype number
 
 GENERAL USE
 Adjust the course parameters. All of these need at least one item in them
-Levels can be intermediate, starter
-Year can be 2005-2006
-Status can be enrolled, passed, failed.
 
 Create a course. This basic item in the module is the basis.
 Then, after creation, you can add an occurence of the course.
