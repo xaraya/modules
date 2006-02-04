@@ -87,6 +87,7 @@ function courses_adminapi_createplanning($args)
     if (!$result) return;
     // Get the ID of the item that we inserted.
     $planningid = $dbconn->PO_Insert_ID($planningtable, 'xar_planningid');
+/*
     // Let any hooks know that we have created a new item.
 
     $item = $args;
@@ -94,6 +95,7 @@ function courses_adminapi_createplanning($args)
     $item['itemtype'] = $courseid;
     $item['itemid'] = $planningid;
     xarModCallHooks('item', 'create', $planningid, $item);
+*/
     // Return the id of the newly created item to the calling process
     return $planningid;
 }

@@ -112,13 +112,7 @@ function courses_adminapi_updateplanned($args)
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
     if (!$result) return;
-    // Let any hooks know that we have updated an item.  As this is an
-    // update hook we're passing the updated $item array as the extra info
-    $item = $args;
-    $item['module'] = 'courses';
-    $item['itemid'] = $planningid;
-    $item['itemtype']=$courseid;
-    xarModCallHooks('item', 'update', $planningid, $item);
+
     // Let the calling process know that we have finished successfully
     return true;
 }

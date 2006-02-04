@@ -73,14 +73,13 @@ function courses_adminapi_createcourse($args)
 
     // Get the ID of the item that we inserted.
     $courseid = $dbconn->PO_Insert_ID($coursestable, 'xar_courseid');
-    /*
+
     // Let any hooks know that we have created a new item.
     $item = $args;
     $item['module'] = 'courses';
-    $item['itemtype'] = $courseid;
+    $item['itemtype'] = $coursetype;
     $item['itemid'] = $courseid;
     xarModCallHooks('item', 'create', $courseid, $item);
-    */
     // Return the id of the newly created item to the calling process
     return $courseid;
 }

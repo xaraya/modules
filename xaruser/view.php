@@ -123,10 +123,7 @@ function courses_user_view()
         xarModAPIFunc('courses', 'user', 'countitems', array('catid' => $catid)),
         xarModURL('courses', 'user', 'view', array('startnum' => '%%','sortby' => $sortby, 'catid' => $catid)),
         xarModGetUserVar('courses', 'itemsperpage', $uid));
-
     $data['ShowShortDescchecked'] = xarModGetVar('courses', 'ShowShortDesc') ? 'checked="checked"' : '';
-
-
     // Changing the name of the page
     xarTplSetPageTitle(xarVarPrepForDisplay(xarML('View Courses')));
     return $data;

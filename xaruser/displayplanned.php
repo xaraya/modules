@@ -50,7 +50,7 @@ function courses_user_displayplanned($args)
     // Let any transformation hooks know that we want to transform some text
     //TODO: necessary?
     $item['transform'] = array('name','lecturers');
-    $item['itemtype'] = $courseid;
+    $item['itemtype'] = $course['coursetype'];
     $item = xarModCallHooks('item', 'transform', $planningid, $item);
 
     // Fill in the details of the item.
@@ -181,19 +181,11 @@ function courses_user_displayplanned($args)
         'user',
         'displayplanned',
         array('planningid' => $planningid));
-    $item['itemtype']=$courseid;
-    $hooks = xarModCallHooks('item','display',$planningid,$item);
-    if (empty($hooks)) {
-        $data['hookoutput'] = array();
-    } else {
-        $data['hookoutput'] = $hooks;
-    }
-/*
+
     $data['catid'] = xarModAPIFunc('categories','user','getitemcats',
-                                   array('itemid' => $planningid,
+                                   array('itemid' => $courseid,
                                          'modid' => xarModGetIDFromName('courses'),
-                                         'itemtype' => $courseid));
-*/
+                                         'itemtype' => $course['coursetype']));
     $data['authid'] = xarSecGenAuthKey();
     // Set the page name according to the coursename
     xarTplSetPageTitle(xarVarPrepForDisplay($course['name']));

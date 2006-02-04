@@ -31,10 +31,8 @@ function courses_admin_deletecourse($args)
     xarSessionSetVar('statusmsg','');
 
     // Get the course.
-    $item = xarModAPIFunc('courses',
-        'user',
-        'get',
-        array('courseid' => $courseid));
+    $item = xarModAPIFunc('courses', 'user', 'get',
+                        array('courseid' => $courseid));
     // Check for exceptions
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 

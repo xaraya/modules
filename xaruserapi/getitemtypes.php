@@ -34,19 +34,18 @@ function courses_userapi_getitemtypes($args)
 */
     $itemtypes = array();
 
-    $courses = xarModAPIFunc('courses',
+    $types = xarModAPIFunc('courses',
                             'user',
-                            'getall');
+                            'getall_coursetypes');
 
-    foreach($courses as $course){
-        $itemtypevalue = $course['courseid'];
-        $itemtypes[$itemtypevalue] = array('label' => $course['number'] . ' ' .$course['name'],
+    foreach($types as $type){
+        $itemtypevalue = $type['tid'];
+        $itemtypes[$itemtypevalue] = array('label' => $type['type'],
                                            'title' => xarML('Course'),
-                                           'url' => xarModURL('courses','user','display',array('courseid' => $course['courseid'])));
+                                           'url' => xarModURL('courses','user','displaytype',array('tid' => $type['tid'])));
     }
     return $itemtypes;
 
-    return $itemtypes;
 }
 
 ?>

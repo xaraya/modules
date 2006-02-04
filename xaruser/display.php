@@ -147,7 +147,7 @@ function courses_user_display($args)
         'user',
         'display',
         array('courseid' => $courseid));
-    $item['itemtype'] =$courseid;
+    $item['itemtype'] =$item['coursetype'];
     $hooks = xarModCallHooks('item',
         'display',
         $courseid,

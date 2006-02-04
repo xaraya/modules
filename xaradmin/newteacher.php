@@ -52,7 +52,7 @@ function courses_admin_newteacher($args)
 
     // If user is not a teacher yet go ahead and create the teacher id
     // Create the teacher
-    $type = 1;
+    $type = 1; // TODO set types of teachers
     $tid = xarModAPIFunc('courses',
                          'admin',
                          'create_teacher',

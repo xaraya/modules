@@ -54,7 +54,7 @@ function courses_admin_modifyplanned($args)
 
     // Get menu variables
     $planneddata['module'] = 'courses';
-    $planneddate['itemtype'] = $courseid;
+    $planneddate['itemtype'] = $coursedata['coursetype'];
     $hooks = array();
     $hooks = xarModCallHooks('item', 'modify', $planningid, $planneddata); //Correct?
 
