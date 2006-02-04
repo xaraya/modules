@@ -161,12 +161,14 @@ function uploads_adminapi_showinput($args)
                                   array('value' => $value, 'style' => 'icon', 'multiple' => $multiple));
 
             foreach ($aList as $fileId) {
-                if (isset($data['storedList'][$fileId])) {
+                if (!empty($data['storedList'][$fileId])) {
                     $data['storedList'][$fileId]['selected'] = TRUE;
-                } else {
-                // add it to the list (e.g. from another user's upload directory - we need this when editing)
+                } elseif (!empty($data['Attachments'][$fileId])) {
+                    // add it to the list (e.g. from another user's upload directory - we need this when editing)
                     $data['storedList'][$fileId] = $data['Attachments'][$fileId];
                     $data['storedList'][$fileId]['selected'] = TRUE;
+                } else {
+                    // missing data for $fileId
                 }
             }
         }
