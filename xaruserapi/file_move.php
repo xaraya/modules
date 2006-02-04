@@ -78,8 +78,9 @@ function uploads_userapi_file_move( $args )
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_WRITE', new SystemException($msg));
         return FALSE;
     }        
-        
-    if (disk_free_space($dirDest) <= filesize($fileSrc)) {
+
+    $freespace = @disk_free_space($dirDest);
+    if (!empty($freespace) && $freespace <= filesize($fileSrc)) {
         $msg = xarML('Unable to move file - Destination drive does not have enough free space!');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_SPACE', new SystemException($msg));
         return FALSE;
