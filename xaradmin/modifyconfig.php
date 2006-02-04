@@ -50,7 +50,7 @@ function example_admin_modifyconfig()
      */
     $data['shorturlschecked'] = xarModGetVar('example', 'SupportShortURLs') ? true : false;
 
-    /* If you plan to use alias names for you module then you should use the next two alias vars
+    /* If you plan to use alias names for you module then you can use the next two alias vars
      * You must also use short URLS for aliases, and provide appropriate encode/decode functions.
      */
     $data['useAliasName'] = xarModGetVar('example', 'useModuleAlias');
