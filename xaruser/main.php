@@ -23,8 +23,7 @@ function courses_user_main()
 {
     // Security check
     if (!xarSecurityCheck('ViewCourses')) return;
-    // Initialise the $data variable that will hold the data to be used in
-    // the blocklayout template, and get the common menu configuration
+    // Initialise the $data variable that will hold the data to be used
     $data = xarModAPIFunc('courses', 'user', 'menu');
     // Specify some other variables used in the blocklayout template
     $data['welcome'] = xarML('Welcome to the Courses module...');

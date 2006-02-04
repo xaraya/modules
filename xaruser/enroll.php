@@ -24,16 +24,16 @@
  */
 function courses_user_enroll($args)
 {
- // User must be logged in and have privilege
- if (!xarSecurityCheck('ReadCourses', 0) ||!xarUserIsLoggedIn()) {
+    // User must be logged in and have privilege
+    if (!xarSecurityCheck('ReadCourses', 0) ||!xarUserIsLoggedIn()) {
         return $data['error'] = xarML('You must be logged in to enroll in this course. Please register and login');
     }
 
- extract($args);
+    extract($args);
 
-  if (!xarVarFetch('planningid', 'id', $planningid, NULL, XARVAR_DONT_SET)) return;
-  if (!xarVarFetch('objectid', 'id', $objectid, '', XARVAR_NOT_REQUIRED)) return;
-  if (!xarVarFetch('message', 'str:1:', $message, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('planningid', 'id',     $planningid, NULL, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('objectid',   'id',     $objectid,   '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('message',    'str:1:', $message,    '', XARVAR_NOT_REQUIRED)) return;
 
     //check for override by objectid
     if (!empty($objectid)) {
@@ -55,7 +55,7 @@ function courses_user_enroll($args)
                               array('uid' => $uid,
                                     'planningid' => $planningid));
     if (count($enrolled)!=0) {
-    $msg = xarML('You are already enrolled in this course');
+        $msg = xarML('You are already enrolled in this course');
         xarErrorSet(XAR_USER_EXCEPTION, 'ALREADY_ENROLLED', // Or other exception here?
             new SystemException(__FILE__ . '(' . __LINE__ . '): ' . $msg));
         return;

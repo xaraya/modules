@@ -81,7 +81,7 @@ function courses_userapi_getplandates($args)
         list($planningid, $courseid, $credits, $creditsmin, $creditsmax, $courseyear, $startdate, $enddate,
          $prerequisites, $aim, $method, $language, $longdesc, $costs, $committee, $coordinators, $lecturers,
           $location, $material, $info, $program, $hideplanning, $last_modified, $closedate) = $result->fields;
-        if (xarSecurityCheck('ReadCourses', 0, 'Course', "$courseid:$planningid:All")) {
+        if (xarSecurityCheck('ReadCourses', 0, 'Course', "$courseid:$planningid:$courseyear")) {
             $items[] = array(
             'planningid' => $planningid,
             'courseid'   => $courseid,

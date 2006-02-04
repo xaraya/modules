@@ -2,7 +2,7 @@
 /**
  * Get a specific teacher
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2005 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com

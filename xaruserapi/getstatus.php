@@ -1,15 +1,15 @@
 <?php
 /**
  * Utility function to get DD item for status
- * 
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Courses Module
  * @link http://xaraya.com/index.php/release/179.html
- * @author Courses module development team 
+ * @author Courses module development team
  */
 /**
  * Gets items of a DynamicData object 'status'
@@ -21,7 +21,7 @@
 function courses_userapi_getstatus($args)
 {
     extract($args);
-    
+
     $modid = xarModGetIDFromName('courses');
 
     $info = array();
@@ -30,7 +30,7 @@ function courses_userapi_getstatus($args)
     $info['itemid'] = $status;
     $info['name'] = 'studstatus';
     $item = xarModAPIFunc('dynamicdata', 'user', 'getfield', $info);
-    
+
     return $item;
 }
 ?>

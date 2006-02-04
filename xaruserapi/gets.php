@@ -1,15 +1,15 @@
 <?php
 /**
  * Utility function to get DD items
- * 
- * @package Xaraya eXtensible Management System
+ *
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Courses Module
  * @link http://xaraya.com/index.php/release/179.html
- * @author Courses module development team 
+ * @author Courses module development team
  */
 /**
  * Gets items of a DynamicData object
@@ -20,15 +20,15 @@
 function courses_userapi_gets($args)
 {
     extract($args);
-    
+
     $modid = xarModGetIDFromName('courses');
 
     $info = array();
     $info['modid'] = $modid;
     $info['itemtype'] = $itemtype;
-            
+
     $items = xarModAPIFunc('dynamicdata', 'user', 'getitems', $info);
-    
+
     return $items;
 }
 ?>

@@ -2,8 +2,8 @@
 /**
  * Display the user menu hook
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -23,8 +23,8 @@ function courses_user_usermenu($args)
     if (!xarSecurityCheck('ViewCourses')) return;
     extract($args);
 
-    if (!xarVarFetch('phase', 'str:1:100', $phase, 'menu', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('startnum', 'int:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('phase',    'str:1:100', $phase,    'menu', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('startnum', 'int:1:',    $startnum, '1', XARVAR_NOT_REQUIRED)) return;
 
     // Now we need to get the course information that the user is enrolled in so we can
     // pass the information to the template
