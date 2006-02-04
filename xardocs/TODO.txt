@@ -20,4 +20,7 @@
 14. Check all security functions
 15. Short URLs.
 16. Integration with categories(done, needs checking)
-17. Redefine itemtypes
+17. Redefine itemtypes for coursetypes.
+
+ad 17. Courses that are itemtypes are not the solution
+    the level needs to be higher. Therefor we need to add real course types. Those can have different behaviours.

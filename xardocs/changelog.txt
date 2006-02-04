@@ -1,6 +1,6 @@
 Version 0.3.0
-Initial release of this alpha module
+Initial release of this beta module
 
-Please read: ALPHA! Meaning there is no real life example of it working on a life site... although that will come soon!
+Please read: BETA! Meaning there is no real life example of it working on a life site... although that will come soon!
 The use of itemtypes is still very dodgy, as are the security checks
 

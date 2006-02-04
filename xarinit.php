@@ -120,6 +120,18 @@ function courses_init()
     $result = &$dbconn->Execute($query);
     if (!$result) return;
 
+    //Table for Course type
+    //These types will be the itemtypes
+    $courses_types = $xartable['courses_types'];
+    $fields = array('xar_tid' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
+        'xar_type'=>array('null'=>FALSE, 'type'=>'varchar','size'=>50, 'default'=>'0')
+        );
+    // Create the Table
+    $query = xarDBCreateTable($courses_types, $fields);
+    if (empty($query)) return; // throw back
+
+    $result = &$dbconn->Execute($query);
+    if (!$result) return;
 
     //Table for Course levels
     //This will be taken to dyn data.
@@ -704,6 +716,21 @@ function courses_upgrade($oldversion)
             return courses_upgrade('0.2.2');
         case '0.2.2':
         case '0.2.3':
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+            xarDBLoadTableMaintenanceAPI();
+            //Table for Course type
+            //These types will be the itemtypes
+            $courses_types = $xartable['courses_types'];
+            $fields = array('xar_tid' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
+                'xar_type'=>array('null'=>FALSE, 'type'=>'varchar','size'=>50, 'default'=>'0')
+                );
+            // Create the Table
+            $query = xarDBCreateTable($courses_types, $fields);
+            if (empty($query)) return; // throw back
+
+            $result = &$dbconn->Execute($query);
+            if (!$result) return;
         case '0.3.0':
             break;
     }
