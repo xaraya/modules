@@ -22,6 +22,7 @@
  * @param   array $extrainfo Whatever you need
  * @param   ID objectid ID of the item to delete
  * @return  array ExtraInfo
+ * @todo security checks in here
  */
 function julian_userapi_deletehook($args)
 {

@@ -392,7 +392,14 @@ Original table:
 
 version 0.2.7
     -Finegrained privileges. Now possible on event_id, category, class, calendar_id and submitter
+    -NOTICE: you will have to redefine your privileges for Julian. The new privileges can be upgraded by simply going to the privilege and press update.
 
+        If you get an error like this one:
+        "System Error
+        Bad Parameter
 
+        ReadJulian and ViewJulian do not have the same instances. 200,all,julian,item,all,all,all,all | 100,all,julian,item,all,all,all,all | ViewJulian-100:all:julian:item:all:all:all|ReadJulian-200:all:julian:item:all:all:all:all
+        "
+        ,then you will need to upgrade that privilege (ViewJulian in this error)
 
 0.2.8

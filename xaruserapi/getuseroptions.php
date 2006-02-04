@@ -19,7 +19,7 @@
  * @author  Julian Development Team, <michelv@xarayahosting.nl>
  * @author  initial template: Roger Raymond
  * @access  private
- * @param   uids 
+ * @param   uids
  * @return  $options
  * @todo    MichelV. <#> Check this function and it functioning. Deprecate hopefully
  */
@@ -33,9 +33,9 @@ function julian_userapi_getuseroptions($args)
       $users=split(",",$uids);
 
    //build an array of users who belong to the specified group
-   $dbconn = xarDBGetConn();
+   $dbconn =& xarDBGetConn();
    //get db tables
-   $xartable = xarDBGetTables();
+   $xartable =& xarDBGetTables();
    //set roles table
    $roles_table = $xartable['roles'];
    //set rolemembers table

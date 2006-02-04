@@ -1,7 +1,7 @@
 <?php
 /**
  * View one month
- * 
+ *
  * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -31,10 +31,10 @@ function julian_user_month($args)
     extract ($args);
 
     if (!xarVarFetch('catid', 'int:1:', $catid, '', XARVAR_NOT_REQUIRED)) return;
-    
+
     // Security check
-    if (!xarSecurityCheck('Viewjulian')) return; 
-    
+    if (!xarSecurityCheck('ReadJulian')) return;
+
     //get post/get vars
     $cal_sdow = xarModGetVar('julian','startDayOfWeek');
     //set the selected date parts, timestamp and cal_date in the data array

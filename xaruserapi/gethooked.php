@@ -29,6 +29,9 @@
  */
 function julian_userapi_gethooked($args)
 {
+    if (!xarSecurityCheck('ReadJulian')) {
+        return;
+    }
     extract($args);
     /* Argument check - make sure that all required arguments are present and
      * in the right format, if not then set an appropriate error message
@@ -108,10 +111,6 @@ function julian_userapi_gethooked($args)
     } else {
         return false;
         //return xarML('There is no event hooked to this item.');
-    }
-
-    if (!xarSecurityCheck('Viewjulian')) { // TODO
-        return;
     }
     // Return the item array
     return $item;

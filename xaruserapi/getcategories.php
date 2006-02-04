@@ -1,13 +1,13 @@
 <?php
-/*
+/**
  * Get all calendar categorie's id and its info
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2004 by Metrostat Technologies, Inc.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.metrostat.net
  *
- * @subpackage julian
+ * @subpackage Julian module
  * initial template: Roger Raymond
  * @author Jodie Razdrh/John Kevlin/David St.Clair
  *
@@ -16,9 +16,9 @@
 function julian_userapi_getcategories()
 {
     // establish a db connection
-    $dbconn = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     //get db tables
-    $xartable = xarDBGetTables();
+    $xartable =& xarDBGetTables();
     $category_properties_table = $xartable['julian_category_properties'];
 
     $categories = array();
@@ -35,7 +35,7 @@ function julian_userapi_getcategories()
             $categories[$cid]['cid']   = $cid;
             $categories[$cid]['name']  = $catinfo['name'];
             $categories[$cid]['color'] = $result->fields[1];
-        }else {
+        } else {
             // This category does no longer exist; delete the corresponding properties.
             // It would be nicer to do this when the category was deleted, but unfortunately,
             // we cannot know when that happens (we cannot hook that event).

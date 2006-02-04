@@ -28,7 +28,7 @@
 function julian_userapi_countevents($args)
 {
     // Security check
-    if (!xarSecurityCheck('Viewjulian')) return;
+    if (!xarSecurityCheck('ViewJulian')) return;
 
     // Get arguments from argument array
     extract($args);

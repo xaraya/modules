@@ -25,8 +25,6 @@
  */
 function julian_user_updateevent()
 {
-   //This prevents users from viewing something they are not suppose to.
-   if (!xarSecurityCheck('Editjulian')) return;
    if (!xarVarFetch('cancel','str',$cancel,'')) return;
    //If Cancel was pressed, go back to previous page
    if (strcmp($cancel,''))
@@ -74,6 +72,10 @@ function julian_user_updateevent()
    if (!xarVarFetch('event_repeat_freq','int:1:',   $recur_freq2,   0, XARVAR_NOT_REQUIRED)) return;
    if (!xarVarFetch('class',            'int:1:',   $class,         0, XARVAR_NOT_REQUIRED)) return;
    if (!xarVarFetch('share_uids',       'array',    $share_uids,    array(), XARVAR_NOT_REQUIRED)) return;
+
+   if (!xarSecurityCheck('EditJulian')) { // TODO: improve
+       return;
+   }
 
    //if this is an event that repeats "on", the rrule is always 3 which is the representative of monthly.
    //the 'on' events are always repeated every so many months
@@ -142,7 +144,7 @@ function julian_user_updateevent()
     // Load up database
     $dbconn =& xarDBGetConn();
     //get db tables
-    $xartable = xarDBGetTables();
+    $xartable =& xarDBGetTables();
     //set events table
     $event_table = $xartable['julian_events'];
 
@@ -185,6 +187,10 @@ function julian_user_updateevent()
         $hooks = xarModCallHooks('item', 'update', $id, $item);
 
     } else {
+        $uidnow = xarUserGetVar('uid');
+        if (!xarSecurityCheck('AddJulian', 1, 'Item', "All:$uidnow:All:All")) { // TODO: improve
+            return;
+        }
         $query = "INSERT INTO " .  $event_table . " (
                 calendar_id,
                 isallday,
@@ -248,7 +254,7 @@ function julian_user_updateevent()
                 ?,
                 ?);";
                 $created =date("Y-m-d H:i:s");
-                $uidnow = xarUserGetVar('uid');
+
                 $bindvars = array (0
                                   , $event_allday
                                   , (int) $uidnow

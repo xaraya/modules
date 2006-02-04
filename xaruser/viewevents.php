@@ -44,11 +44,10 @@ function julian_user_viewevents($args)
     if (!xarVarFetch('cal_date','str',$caldate, '')) return;
     if (!xarVarFetch('catid', 'int:1:', $catid, '', XARVAR_NOT_REQUIRED)) return;
 
-    // Security check. - Important to do this as early as possible to avoid
-    // potential security holes or just too much wasted processing.
-    if (!xarSecurityCheck('Viewjulian')) return;
-    /* Do we need the following section?
-    */
+   // Security check
+   if (!xarSecurityCheck('ViewJulian', 1, 'Item', "All:All:All:$catid")) {
+       return;
+   }
     // Get the Start Day Of Week value.
     $cal_sdow = xarModGetVar('julian','startDayOfWeek');
     // Load the calendar class

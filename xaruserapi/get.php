@@ -2,8 +2,8 @@
 /**
  * Get an event.
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -108,13 +108,13 @@ function julian_userapi_get($args)
     // Security checks
     // TODO make these work
     // For this function, the user must *at least* have READ access to this item
-    // if (!xarSecurityCheck('ReadJulian', 1, 'Item', "event_id:All:All")) {
-    //    return;
-    //    }
+    if (!xarSecurityCheck('ReadJulian', 1, 'Item', "event_id:All:All:All")) {
+        return;
+    }
 
     $item = array(
             'event_id'      =>$event_id,
-            'calendar'      =>$calendar_id,
+            'calendar_id'   =>$calendar_id,
             'type'          =>$type,
             'organizer'     =>$organizer,
             'contact'       =>$contact,

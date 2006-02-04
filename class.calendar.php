@@ -2,25 +2,25 @@
 /**
   * Class to gather data for a specific calendar view
   *
-  * @package Xaraya eXtensible Management System
+  * @package modules
   * @copyright (C) 2005 by Metrostat Technologies, Inc.
   * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
   * @link http://www.metrostat.net
   *
-  * @subpackage julian
+  * @subpackage Julian module
   * initial template: Roger Raymond
-  * @author Julian development Team   
+  * @author Julian development Team
   */
 
 class Calendar
 {
     var $startDayOfWeek;
-    var $monthNamesLong = array();    
+    var $monthNamesLong = array();
     var $monthNamesShort = array();
     var $dayNamesLong = array();
     var $dayNamesMedium = array();
     var $dayNamesShort = array();
-    
+
     /**
      *    constructor
      */
@@ -45,7 +45,7 @@ class Calendar
             $localeData["/dateSymbols/months/11/full"],
             $localeData["/dateSymbols/months/12/full"]
         );
-        
+
         // short month names from locale.xml
         $this->monthNamesShort = array(
             $localeData["/dateSymbols/months/1/short"],
@@ -61,8 +61,8 @@ class Calendar
             $localeData["/dateSymbols/months/11/short"],
             $localeData["/dateSymbols/months/12/short"]
         );
-        
-        // long day names from locale.xml                    
+
+        // long day names from locale.xml
         $this->dayNamesLong = array(
             $localeData["/dateSymbols/weekdays/1/full"],
             $localeData["/dateSymbols/weekdays/2/full"],
@@ -72,8 +72,8 @@ class Calendar
             $localeData["/dateSymbols/weekdays/6/full"],
             $localeData["/dateSymbols/weekdays/7/full"]
         );
-        
-        // short day names from locale.xml            
+
+        // short day names from locale.xml
         $this->dayNamesMedium = array(
             $localeData["/dateSymbols/weekdays/1/short"],
             $localeData["/dateSymbols/weekdays/2/short"],
@@ -82,21 +82,21 @@ class Calendar
             $localeData["/dateSymbols/weekdays/5/short"],
             $localeData["/dateSymbols/weekdays/6/short"],
             $localeData["/dateSymbols/weekdays/7/short"]
-        );    
+        );
 
-        // returns just the first letter from the shortDayNames                        
+        // returns just the first letter from the shortDayNames
         $this->dayNamesShort = array(substr($this->dayNamesMedium[0],0,1),
                                      substr($this->dayNamesMedium[1],0,1),
                                      substr($this->dayNamesMedium[2],0,1),
                                      substr($this->dayNamesMedium[3],0,1),
                                      substr($this->dayNamesMedium[4],0,1),
                                      substr($this->dayNamesMedium[5],0,1),
-                                     substr($this->dayNamesMedium[6],0,1));    
+                                     substr($this->dayNamesMedium[6],0,1));
     }
 
     /**
      *  creates an array used to build the final output
-     *  @param string $d optional date of the week to build [ YYYYMMDD ] 
+     *  @param string $d optional date of the week to build [ YYYYMMDD ]
      */
     function &getCalendarWeek($d=null)
     {
@@ -104,34 +104,34 @@ class Calendar
         $year = substr($d,0,4);
         $month = substr($d,4,2);
         $day = substr($d,6,2);
-        
+
         $month = $this->getCalendarMonth($year.$month);
-        
+
         foreach($month as $week) {
             if(in_array($d,$week)) {
                 $week_array = $week;
                 break;
             }
         }
-        
+
         return $week;
     }
-    
+
     /**
      *  creates an array used to build the final output
-     *  @param string $d optional date of the month to build [ YYYYMM ] 
+     *  @param string $d optional date of the month to build [ YYYYMM ]
      */
     function &getCalendarMonth($d=null)
     {
         if(!isset($d)) $d = xarModAPIFunc('julian','user','createUserDateTime','Ym');
         $year  = substr($d,0,4);
         $month = substr($d,4,2);
-        
+
         $month_array = array();
         $numDays = gmdate('t',gmmktime(0,0,0,$month,1,$year));
         $dowFirstDay = gmdate('w',gmmktime(0,0,0,$month,1,$year));
         $dowLastDay = gmdate('w',gmmktime(0,0,0,$month,$numDays,$year));
-        
+
         // calculate the days needed for a full starting week
         if($dowFirstDay < $this->startDayOfWeek) {
             $pastDays = $dowFirstDay - $this->startDayOfWeek + 7;
@@ -139,7 +139,7 @@ class Calendar
             $pastDays = $dowFirstDay - $this->startDayOfWeek;
         }
         if($pastDays < 0) $pastDays = -$pastDays;
-        
+
         // calculate the days needed for a full ending week
         if($dowLastDay < $this->startDayOfWeek) {
             $nextDays = $this->startDayOfWeek - $dowLastDay - 1;
@@ -147,12 +147,12 @@ class Calendar
             $nextDays = $dowLastDay - $this->startDayOfWeek - 6;
         }
         if($nextDays < 0) $nextDays = -$nextDays;
-        
+
         $start = gmdate('Ymd',gmmktime(0,0,0,$month,1-$pastDays,$year));
         $last = gmdate('Ymd',gmmktime(0,0,0,$month,$numDays+$nextDays,$year));
         $numWeeks = ceil(($this->dateToDays($last) - $this->dateToDays($start))/7);
         $current_day = $this->dateToDays($start);
-        
+
         // build the month array
         for($i=0; $i<$numWeeks; $i++) {
             for($d=0; $d<7; $d++) {
@@ -161,18 +161,18 @@ class Calendar
                 $current_day++;
             }
         }
-        
+
         return $month_array;
     }
-    
+
     /**
      *  creates an array used to build the final output
-     *  @param string $d optional date of the year to build [ YYYY ] 
+     *  @param string $d optional date of the year to build [ YYYY ]
      */
     function &getCalendarYear($y=null)
     {
         if(!isset($y)) $y = xarModAPIFunc('julian','user','createUserDateTime','Y');
-        
+
         $year_array = array();
         // year month loops
         for($i=1;$i<=12;$i++) {
@@ -184,7 +184,7 @@ class Calendar
 
     /**
      *  Returns the day the calendar starts on (0=Sunday through 6=Saturday)
-     *  @return bool if the day is 
+     *  @return bool if the day is
      */
     function dayIs($dow=0,$date=null)
     {
@@ -197,78 +197,78 @@ class Calendar
         }
         return false;
     }
-    
-    function &getLongMonthNames() 
-    { 
-        return $this->monthNamesLong; 
+
+    function &getLongMonthNames()
+    {
+        return $this->monthNamesLong;
     }
-    
-    function &getShortMonthNames() 
-    { 
-        return $this->monthNamesShort; 
+
+    function &getShortMonthNames()
+    {
+        return $this->monthNamesShort;
     }
-    
-    function &getLongDayNames($sdow=0) 
+
+    function &getLongDayNames($sdow=0)
     {
         if($sdow == 0) return $this->dayNamesLong;
         $ordered_array = array();
         for($i=0;$i<7;$i++) {
             $ordered_array[] = $this->dayNamesLong[$sdow];
             if(++$sdow > 6) $sdow=0;
-        } 
-        return $ordered_array; 
+        }
+        return $ordered_array;
     }
-    
-    function &getMediumDayNames($sdow=0) 
-    { 
+
+    function &getMediumDayNames($sdow=0)
+    {
         if($sdow == 0) return $this->dayNamesMedium;
         $ordered_array = array();
         for($i=0;$i<7;$i++) {
             $ordered_array[] = $this->dayNamesMedium[$sdow];
             if(++$sdow > 6) $sdow=0;
         }
-        return $ordered_array; 
+        return $ordered_array;
     }
-    
-    function &getShortDayNames($sdow=0) 
-    { 
-        if($sdow == 0) return $this->dayNamesShort; 
+
+    function &getShortDayNames($sdow=0)
+    {
+        if($sdow == 0) return $this->dayNamesShort;
         $ordered_array = array();
         for($i=0;$i<7;$i++) {
             $ordered_array[] = $this->dayNamesShort[$sdow];
             if(++$sdow > 6) $sdow=0;
-        } 
-        return $ordered_array; 
+        }
+        return $ordered_array;
     }
-    
+
     function &MonthLong($month=1)
     {
-        return $this->monthNamesLong[--$month];    
+        return $this->monthNamesLong[--$month];
     }
     function &MonthShort($month=1)
     {
-        return $this->monthNamesLong[--$month];    
+        return $this->monthNamesLong[--$month];
     }
     function &DayLong($day)
     {
         if(!isset($day)) $day = 0;
-        return $this->dayNamesLong[$day];        
+        return $this->dayNamesLong[$day];
     }
     function &DayMedium($day)
     {
         if(!isset($day)) $day = 0;
-        return $this->dayNamesMedium[$day];        
+        return $this->dayNamesMedium[$day];
     }
     function &DayShort($day)
     {
         if(!isset($day)) $day = 0;
-        return $this->dayNamesShort[$day];        
+        return $this->dayNamesShort[$day];
     }
     function &FormatDate($date)
     {
         return true;
     }
-    
+
     /**
      *  dateToDays
      *    borrowed from Date_Calc class
@@ -333,7 +333,7 @@ class Calendar
       //check to see if this day is on a Saturday (6) or Sunday (0)
       $isweekend=date('w',$dateTS)==0 || date('w',$dateTS)==6 ?1:0;
       return $isweekend;
-   
-   }     
+
+   }
 }
 ?>

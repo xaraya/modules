@@ -1,7 +1,7 @@
 <?php
 /**
  * View one year
- * 
+ *
  * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -11,7 +11,7 @@
  * @link http://xaraya.com/index.php/release/319.html
  * @author Julian Module Development Team
  */
- 
+
 /**
  *
  * This function gets the events for the selected year.
@@ -35,8 +35,10 @@ function julian_user_year($args)
     if (!xarVarFetch('catid', 'int:1:', $catid, '', XARVAR_NOT_REQUIRED)) return;
 
     // Security check
-    if (!xarSecurityCheck('Viewjulian')) return; 
-    // Starting day of the week   
+    if (!xarSecurityCheck('ViewJulian', 1, 'Item', "All:All:All:$catid")) {
+       return;
+    }
+    // Starting day of the week
     $cal_sdow = xarModGetVar('julian','startDayOfWeek');
     // load the calendar class
     $c = xarModAPIFunc('julian','user','factory','calendar');
@@ -45,8 +47,8 @@ function julian_user_year($args)
     $data['year'] = $c->getCalendarYear($data['selected_year']);
     $data['shortDayNames'] = $c->getShortDayNames($cal_sdow);
     $data['calendar'] = $c;
-    
-    // set the start day to the first month and day of the selected year  
+
+    // set the start day to the first month and day of the selected year
     $startdate=$data['selected_year']."-01-01";
     // set the end date to the last month and last day of the selected year
     $enddate=$data['selected_year']."-12-31";
@@ -54,9 +56,9 @@ function julian_user_year($args)
     $data['event_array']=xarModApiFunc('julian','user','getall', array('startdate'=>$startdate, 'enddate'=>$enddate, 'catid' => $catid));
     // set the url to this page in session as the last page viewed
     $lastview=xarModURL('julian','user','year',array('cal_date'=>$data['cal_date']));
-    
+
     xarSessionSetVar('lastview',$lastview);
-    
+
     return $data;
 }
 ?>

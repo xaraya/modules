@@ -3,7 +3,7 @@
  * Get the configuration of all users which categories the user wants to
  * recieve alerts for.
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2004 by Metrostat Technologies, Inc.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.metrostat.net

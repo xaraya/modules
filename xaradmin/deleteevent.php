@@ -40,7 +40,7 @@ function julian_admin_deleteevent($args)
     // Check for exceptions
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
-    if (!xarSecurityCheck('DeleteJulian', 1, 'Item', "$event_id:$item[organizer]:$item[class]:$item[calendar_id]:All")) {
+    if (!xarSecurityCheck('DeleteJulian', 1, 'Item', "$event_id:$item[organizer]:$item[calendar_id]:All")) {
         return;
     }
     if (!xarSecConfirmAuthKey()) return;

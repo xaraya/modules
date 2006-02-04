@@ -15,7 +15,7 @@
 /**
  * Get information on linked event. Currently assumes linking module = articles
  *
- * @author Jorn, MichelV. michelv@xarayahosting.nl
+ * @author Jorn, MichelV. <michelv@xarayahosting.nl>
  *
  * @param id  iid id of hooked item (in hooking module, e.g. an article id)
  * @param itemtype: type of hooked item

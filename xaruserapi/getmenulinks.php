@@ -2,8 +2,8 @@
 /**
  * Decode the short URLs for Julian
  *
- * @package julian
- * @copyright (C) 2005 by the Xaraya Development Team.
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -24,28 +24,28 @@ function julian_userapi_getmenulinks()
     // First we need to do a security check to ensure that we only return menu items
     // that we are suppose to see.
 
-    if (xarSecurityCheck('Viewjulian', 0)) {
+    if (xarSecurityCheck('ViewJulian', 0)) {
         $menulinks[] = Array('url' => xarModURL('julian',
                 'user',
                 'day'),
             'title' => xarML('Day view'),
             'label' => xarML('Day'));
     }
-    if (xarSecurityCheck('Viewjulian', 0)) {
+    if (xarSecurityCheck('ViewJulian', 0)) {
         $menulinks[] = Array('url' => xarModURL('julian',
                 'user',
                 'week'),
             'title' => xarML('Week view'),
             'label' => xarML('Week'));
     }
-    if (xarSecurityCheck('Viewjulian', 0)) {
+    if (xarSecurityCheck('ViewJulian', 0)) {
         $menulinks[] = Array('url' => xarModURL('julian',
                 'user',
                 'month'),
             'title' => xarML('Month view'),
             'label' => xarML('Month'));
     }
-    if (xarSecurityCheck('Viewjulian', 0)) {
+    if (xarSecurityCheck('ViewJulian', 0)) {
         $menulinks[] = Array('url' => xarModURL('julian',
                 'user',
                 'year'),

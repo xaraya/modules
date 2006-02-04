@@ -73,7 +73,7 @@ function julian_user_edit()
    // Get event the decent way
    $item = xarModAPIFunc('julian', 'user', 'get', array('event_id' => $id));
    // Security check
-   if (!xarSecurityCheck('EditJulian', 1, 'Item', "$id:$item[organizer]:$item[class]:$item[calendar_id]:All")) {
+   if (!xarSecurityCheck('EditJulian', 1, 'Item', "$id:$item[organizer]:$item[calendar_id]:All")) {
        return;
    }
 

@@ -2,16 +2,16 @@
 /**
  * Calculates the new date for the next view.
  *
- * @package julian
+ * @package modules
  * @copyright (C) 2005 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Julian
+ * @subpackage Julian module
  * @link  link to information for the subpackage
  * @author Julian development Team
  */
-/*
+/**
  *  Calculates the new date for the next view. The view or "cal_type" is incremented by
  *  an interval of "cal_interval" starting from "cal_date".
  *

@@ -23,7 +23,7 @@ function julian_user_export()
 {
   if (!xarVarFetch('event_id','str', $event_id)) return;
 
-   if (!xarSecurityCheck('ReadJulian', 1, 'Item', "$event_id:All:All:All:All")) {
+   if (!xarSecurityCheck('ReadJulian', 1, 'Item', "$event_id:All:All:All")) {
        return;
    }
 

@@ -10,8 +10,8 @@
  * @subpackage Julian Module
  * @copyright (C) 2004 by Metrostat Technologies, Inc.
  */
- 
-/*
+
+/**
  * Emails alerts re: events to the user based on which categories the user has selected to recieve.
  * This script is intended to be run via the scheduler module. It should be run once a day.
  *
@@ -39,12 +39,12 @@ function julian_userapi_email_alerts()
     //set the from email address and name. These variables are configurable.
     $from_email = xarModGetVar('julian','from_email');
     $from_name =  xarModGetVar('julian','from_name');
-    
+
     //For each user
     foreach ($allsubscriptions as $uid => $subscriptions)
     {
         $alertevents = array();
-        
+
         //For each day
         foreach ($events as $key=>$val)
         {
@@ -60,12 +60,12 @@ function julian_userapi_email_alerts()
                         $alertevents[] = $events[$key][$key2];
                     }
                 }
-            } 
+            }
         }
-        
+
         if (!empty($alertevents)) {
             //send mail
-            
+
             // TODO; creation of message in a template?
             $message = "The following events are scheduled for ".date('m-d-Y',strtotime($startdate)).":";
             $txtmessage  = $message."<br /><br />";
@@ -81,13 +81,13 @@ function julian_userapi_email_alerts()
                                   'event_id' => $event['event_id']
                              )).
                     '">'.$event['summary'].'</a><br />'.
-                    '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.$event['description'].'<br />';          
+                    '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.$event['description'].'<br />';
                 //text message
                 $txtmessage .=
                     $time." ".$event['summary']."\n".
-                    "     ".$event['description']."\n"; 
+                    "     ".$event['description']."\n";
             }
-            
+
             // send mail with mail module
             if (!xarModAPIFunc('mail', 'admin', 'sendmail',
                      array('from'        => $from_email,
@@ -99,11 +99,11 @@ function julian_userapi_email_alerts()
                 return;
             }
         }
-       
+
     }
-    
+
     return 1;
-    
+
     /*//replacement above
     //establish a db connection
     $dbconn = xarDBGetConn();
@@ -114,7 +114,7 @@ function julian_userapi_email_alerts()
 
     //load the calendar class
     $c = xarModAPIFunc('julian','user','factory','calendar');
-    
+
     //get tomorrow's events
     $startdate = date("Y-m-d",strtotime("tomorrow"));
     $events    = $c->getEvents($startdate);
@@ -124,7 +124,7 @@ function julian_userapi_email_alerts()
     //set the from email address and name. These variables are configurable.
     $from_email = xarModGetVar('julian','from_email');
     $from_name =  xarModGetVar('julian','from_name');
-    
+
     //begin the mail message content
     $message = "The following events are scheduled for ".date('m-d-Y',strtotime($startdate)).":";
     //determine who wants to be alerted re: calendar events and for which event categories
@@ -132,8 +132,8 @@ function julian_userapi_email_alerts()
     $rs = $dbconn->Execute($sql);
     $txtmessage = '';
     $htmlmessage = '';
-    
-    //For each user  
+
+    //For each user
     while (!$rs->EOF) {
        $hasMail = 0;
        $row = $rs->FetchObject(false);
@@ -157,15 +157,15 @@ function julian_userapi_email_alerts()
                        $time = strcmp($events[$key][$key2]['time'],'')?$events[$key][$key2]['time']:"All Day Event:";
                        //html message
                        $htmlmessage.= $time." <a href=\"".xarServerGetBaseURL()."/index.php?module=julian&func=view&cal_date=" . date("Ymd",strtotime("tomorrow"))."&event_id=".$events[$key][$key2]['event_id']."\">".$events[$key][$key2]['summary']."</a><br />";
-                       $htmlmessage.= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$events[$key][$key2]['description']."<br />";          
+                       $htmlmessage.= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$events[$key][$key2]['description']."<br />";
                        //text message
                        $txtmessage.= $time." ".$events[$key][$key2]['summary']."\n";
-                       $txtmessage.= "     ".$events[$key][$key2]['description']."\n";          
+                       $txtmessage.= "     ".$events[$key][$key2]['description']."\n";
                        $hasMail = 1;
                    }
                }
-           } 
-       }    
+           }
+       }
        if ($hasMail) {
            $htmlmessage=$message."<br /><br />".$htmlmessage;
            $txtmessage=$message."\n\n".$txtmessage;
@@ -185,5 +185,5 @@ function julian_userapi_email_alerts()
     }
     return 1;
     */
-} 
+}
 ?>

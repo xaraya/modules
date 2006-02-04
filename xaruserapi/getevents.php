@@ -2,7 +2,7 @@
 /**
  * Get all events.
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2004 by Metrostat Technologies, Inc.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.metrostat.net
@@ -98,6 +98,7 @@ function julian_userapi_getevents($args)
 
     // Get items.
     $query = "SELECT DISTINCT $event_table.event_id,
+                     $event_table.calendar_id,
                      $event_table.summary,
                      $event_table.description,
                      $event_table.street1,
@@ -180,6 +181,7 @@ function julian_userapi_getevents($args)
     // Put items into result array
     for (; !$result->EOF; $result->MoveNext()) {
         list($eID,
+             $eCalendarID,
              $eName,
              $eDescription,
              $eStreet1,
@@ -200,54 +202,56 @@ function julian_userapi_getevents($args)
              $eRrule,
              $eIsallday,
              $eFee) = $result->fields;
+          // Security check
+          if (xarSecurityCheck('ReadJulian', 1, 'Item', "$event_id:$eOrganizer:$eCalendarID:All")) {
+              // Change date formats from UNIX timestamp to something readable.
+              if ($eStart['timestamp'] == 0 || empty($eStart['timestamp'])) {
+                  $eStart['mon'] = "";
+                  $eStart['day'] = "";
+                  $eStart['year'] = "";
+              } else {
+                  $eStart['linkdate'] = date("Ymd",strtotime($eStart['timestamp']));
+                  $eStart['viewdate'] = date("m-d-Y",strtotime($eStart['timestamp']));
+              }
+              if ($eRecur['timestamp'] == 0 || empty($eRecur['timestamp'])) {
+                  $eRecur['mon'] = "";
+                  $eRecur['day'] = "";
+                  $eRecur['year'] = "";
+              } else {
+                  $eRecur['linkdate'] = date("Ymd",strtotime($eRecur['timestamp']));//eDue?
+                  $eRecur['viewdate'] = date("m-d-Y",strtotime($eRecur['timestamp']));
+              }
+              if ($eDue['timestamp'] == 0 || empty($eDue['timestamp'])) {
+                  $eDue['mon'] = "";
+                  $eDue['day'] = "";
+                  $eDue['year'] = "";
+              } else {
+                  $eDue['linkdate'] = date("Ymd",strtotime($eDue['timestamp']));
+                  $eDue['viewdate'] = date("m-d-Y",strtotime($eDue['timestamp']));
+              }
 
-          // Change date formats from UNIX timestamp to something readable.
-          if ($eStart['timestamp'] == 0 || empty($eStart['timestamp'])) {
-              $eStart['mon'] = "";
-              $eStart['day'] = "";
-              $eStart['year'] = "";
-          } else {
-              $eStart['linkdate'] = date("Ymd",strtotime($eStart['timestamp']));
-              $eStart['viewdate'] = date("m-d-Y",strtotime($eStart['timestamp']));
+             $items[] = array('eID' => $eID,
+                              'eName' => $eName,
+                              'eDescription' => $eDescription,
+                              'eStreet1' => $eStreet1,
+                              'eStreet2' => $eStreet2,
+                              'eCity' => $eCity,
+                              'eState' => $eState,
+                              'eZip' => $eZip,
+                              'eEmail' => $eEmail,
+                              'ePhone' => $ePhone,
+                              'eLocation' => $eLocation,
+                              'eUrl' => $eUrl,
+                              'eContact' => $eContact,
+                              'eOrganizer' => $eOrganizer,
+                              'eStart' => $eStart,
+                              'eRecur' => $eRecur,
+                              'eDue' => $eDue,
+                              'eDuration' => $eDuration,
+                              'eRrule' => $eRrule,
+                              'eIsallday' => $eIsallday,
+                              'eFee' => $eFee);
           }
-          if ($eRecur['timestamp'] == 0 || empty($eRecur['timestamp'])) {
-              $eRecur['mon'] = "";
-              $eRecur['day'] = "";
-              $eRecur['year'] = "";
-          } else {
-              $eRecur['linkdate'] = date("Ymd",strtotime($eRecur['timestamp']));//eDue?
-              $eRecur['viewdate'] = date("m-d-Y",strtotime($eRecur['timestamp']));
-          }
-          if ($eDue['timestamp'] == 0 || empty($eDue['timestamp'])) {
-              $eDue['mon'] = "";
-              $eDue['day'] = "";
-              $eDue['year'] = "";
-          } else {
-              $eDue['linkdate'] = date("Ymd",strtotime($eDue['timestamp']));
-              $eDue['viewdate'] = date("m-d-Y",strtotime($eDue['timestamp']));
-          }
-
-         $items[] = array('eID' => $eID,
-                          'eName' => $eName,
-                          'eDescription' => $eDescription,
-                          'eStreet1' => $eStreet1,
-                          'eStreet2' => $eStreet2,
-                          'eCity' => $eCity,
-                          'eState' => $eState,
-                          'eZip' => $eZip,
-                          'eEmail' => $eEmail,
-                          'ePhone' => $ePhone,
-                          'eLocation' => $eLocation,
-                          'eUrl' => $eUrl,
-                          'eContact' => $eContact,
-                          'eOrganizer' => $eOrganizer,
-                          'eStart' => $eStart,
-                          'eRecur' => $eRecur,
-                          'eDue' => $eDue,
-                          'eDuration' => $eDuration,
-                          'eRrule' => $eRrule,
-                          'eIsallday' => $eIsallday,
-                          'eFee' => $eFee,);
     }
 /*
     // TODO: include linked events

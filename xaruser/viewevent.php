@@ -36,7 +36,10 @@ function julian_user_viewevent()
     if (!xarVarFetch('cal_date','int',$cal_date)) return; // str here?
 
     // Security check
-    if (!xarSecurityCheck('Viewjulian')) return;
+
+    if (!xarSecurityCheck('ReadJulian', 1, 'Item', "$event_id:All:All:All")) { // TODO: improve
+        return;
+    }
     // TODO: make this an API for linked event
     // establish a db connection
     $dbconn =& xarDBGetConn();
@@ -87,6 +90,10 @@ function julian_user_viewevent()
    // We use event_id here
    $bl_data = array();
    $bl_data = xarModAPIFunc('julian','user','get',array('event_id'=>$event_id));
+   // Security check
+   if (!xarSecurityCheck('ReadJulian', 1, 'Item', "$event_id:$bl_data[organizer]:$bl_data[calendar_id]:All")) {
+        return;
+   }
 
    // Make an admin adjustable time format
    $dateformat=xarModGetVar('julian', 'dateformat');
