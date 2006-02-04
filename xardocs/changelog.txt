@@ -327,6 +327,8 @@ Removed the following table, keeping here for reference:
     if (empty($sql)) return; // throw back
     if (!$dbconn->Execute($sql)) return;
 
+0.2.8
+
 -Replace creation of event linkage table with DataDict
 
 Original table:
@@ -403,4 +405,4 @@ Original table:
         ,then you will need to upgrade that privilege (ViewJulian in this error)
 
 Bugs 5349, 5240 and others
-0.2.8
+
