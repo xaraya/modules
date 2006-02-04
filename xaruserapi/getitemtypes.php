@@ -20,20 +20,22 @@
  */
 function courses_userapi_getitemtypes($args)
 {
-/*  $itemtypes = array();
-
-    // Let's see if this is usefull
-    $itemtypes[1] = array('label' => xarVarPrepForDisplay(xarML('Courses')),
-                          'title' => xarVarPrepForDisplay(xarML('All Courses')),
-                          'url'   => xarModURL('courses','user','view'));
-
-    $itemtypes[2] = array('label' => xarVarPrepForDisplay(xarML('Planned Courses')),
-                          'title' => xarVarPrepForDisplay(xarML('Planned Course')),
-                          'url'   => xarModURL('courses','user','displayplanned'));
-
-*/
     $itemtypes = array();
 
+    // Let's see if this is usefull
+    $itemtypes[3] = array('label' => xarVarPrepForDisplay(xarML('Course levels')),
+                          'title' => xarVarPrepForDisplay(xarML('Courselevels')),
+                          'url'   => xarModURL('courses','admin','view', array('itemtype' => 3))
+                          );
+
+    $itemtypes[4] = array('label' => xarVarPrepForDisplay(xarML('Student stati')),
+                          'title' => xarVarPrepForDisplay(xarML('Studentstati')),
+                          'url'   => xarModURL('courses','admin','view', array('itemtype' => 4))
+                          );
+    $itemtypes[5] = array('label' => xarVarPrepForDisplay(xarML('Course years')),
+                          'title' => xarVarPrepForDisplay(xarML('Courseyears')),
+                          'url'   => xarModURL('courses','admin','view', array('itemtype' => 5))
+                          );
     $types = xarModAPIFunc('courses',
                             'user',
                             'getall_coursetypes');

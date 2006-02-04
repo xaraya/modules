@@ -281,7 +281,7 @@ function courses_init()
 
     /*
      * Nasty trick to get the itemtype id above 10: generate ten ids
-     */
+
     $dbconn =& xarDBGetConn();
     for($i = 0; $i < 11; $i++) {
 
@@ -306,6 +306,8 @@ function courses_init()
     $query = "DELETE FROM $coursestable
             WHERE xar_name = ?";
     $result = &$dbconn->Execute($query, array($name));
+
+     */
     /*
      *
      * REGISTER THE TABLES AT DYNAMICDATA
@@ -758,7 +760,7 @@ function courses_delete()
     // Initialise table array
     $basename = 'courses';
 
-    foreach(array('students', 'planning', 'teachers') as $table) {
+    foreach(array('students', 'planning', 'teachers', 'types') as $table) {
 
     /* Drop the tables */
      $result = $datadict->dropTable($xartable[$basename . '_' . $table]);
