@@ -92,7 +92,10 @@ function stats_eventapi_OnServerRequest($arg)
         $result = $dbconn->Execute($query);
 
         // Check for an error with the database code
-        if (!$result) return;
+        if (!$result) {
+            // mid-air collision between two inserts - ignore
+            xarErrorFree();
+        }
     }
 
     // return true to indicate a successful count
