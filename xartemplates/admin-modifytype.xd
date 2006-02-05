@@ -1,0 +1,72 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<!-- This Javascript will check for required fields before the form is submitted. -->
+
+<xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
+<script type="text/javascript">
+<!--
+    // Enter name of mandatory fields
+    var fieldRequired = Array("coursetype");
+    // Enter field description to appear in the dialog box
+    var fieldDescription = Array("Course Type");
+//-->
+</script>
+
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Courses Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Modify</xar:mlstring></h2>
+
+    <xar:if condition="xarSessionGetVar('statusmsg') ne ''">
+        <p>#xarSessionGetVar('statusmsg')#</p>
+    </xar:if>
+
+
+    <form method="post" action="&xar-modurl-courses-admin-updatetype;" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
+        <fieldset>
+            <legend>
+                <xar:mlstring>Item to Modify</xar:mlstring>
+            </legend>
+
+            <div class="xar-form-input-wrapper">
+                <label for="coursetype" class="xar-form-label" title="#xarML('This is the tool tip help for this item.')#">
+                       <xar:mlstring>Course Type:</xar:mlstring>
+                </label>
+                <xar:if condition="isset($coursetype)">
+                    <input type="text" name="coursetype" id="coursetype" value="#$coursetype#" maxlength="100" class="xar-form-textlong" />
+                <xar:else />
+                    <input type="text" name="coursetype" id="coursetype" value="#$item.coursetype#" maxlength="100" class="xar-form-textlong" />
+                </xar:if>
+                <xar:if condition="!empty($invalid['coursetype'])">
+                    <p class="xar-error">
+                        <xar:mlstring>ERROR! This is not a valid coursetype</xar:mlstring>
+                    </p>
+                </xar:if>
+            </div>
+        </fieldset>
+
+        <xar:if condition="!empty($hooks)">
+        <fieldset>
+            <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
+                <xar:foreach in="$hooks" key="$hookmodule">
+                #$hooks[$hookmodule]#
+               </xar:foreach>
+        </fieldset>
+         </xar:if>
+        <fieldset>
+            <div class="xar-form-input-wrapper-after">
+               <input type="hidden" name="authid" id="authid" value="#$authid#" />
+               <input type="hidden" name="tid" id="tid" value="#$item.tid#" />
+               <input type="submit" value="#xarML('Update Course type')#" />
+            </div>
+
+            <div class="xar-form-input-wrapper-before">
+             <a href="&xar-modurl-courses-admin-view;">
+                 <xar:mlstring>Cancel and Return</xar:mlstring>
+             </a>
+             </div>
+        </fieldset>
+    </form>
+</div>
+<xar:if condition="xarSessionSetVar('statusmsg', '')"></xar:if>

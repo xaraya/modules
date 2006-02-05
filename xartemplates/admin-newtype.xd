@@ -1,0 +1,59 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
+<script type="text/javascript">
+<!--
+    // Enter name of mandatory fields
+    var fieldRequired = Array("coursetype");
+    // Enter field description to appear in the dialog box
+    var fieldDescription = Array("Type Name");
+// -->
+</script>
+
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Courses Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>New Course Type</xar:mlstring></h2>
+
+    <form method="post" action="&xar-modurl-courses-admin-createtype;" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
+        <fieldset>
+            <legend><xar:mlstring>Creating a new item</xar:mlstring></legend>
+
+            <div class="xar-form-input-wrapper">
+                 <label for="coursetype" class="xar-form-label" title="#xarML('This is the course type name')#">
+                        <xar:mlstring>Course Type Name:</xar:mlstring>
+                 </label>
+             <xar:if condition="isset($coursetype)">
+                 <input type="text" name="coursetype" id="coursetype" value="#$coursetype#" maxlength="100" class="xar-form-textlong" />
+             <xar:else />
+                 <input type="text" name="coursetype" id="coursetype" value="#$item.coursetype#" maxlength="100" class="xar-form-textlong" />
+             </xar:if>
+             <xar:if condition="!empty($invalid['coursetype'])">
+                 <div class="xar-error">
+                        <xar:mlstring>ERROR! This is not a valid courses type</xar:mlstring>
+                 </div>
+             <xar:elseif condition="!empty($invalid['duplicate'])"/>
+                 <div class="xar-error">
+                        <xar:mlstring>ERROR! This is a duplicate type</xar:mlstring>
+                 </div>
+             </xar:if>
+            </div>
+
+        </fieldset>
+        <xar:if condition="!empty($hookoutput)">
+         <fieldset>
+            <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
+                <xar:foreach in="$hookoutput" key="$hookmodule">
+                #$hookoutput[$hookmodule]#
+                </xar:foreach>
+        </fieldset>
+        </xar:if>
+        <fieldset>
+            <div class="xar-form-input-wrapper-after">
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <input type="submit" value="#xarML('Add Course Type')#" />
+            </div>
+        </fieldset>
+    </form>
+</div>

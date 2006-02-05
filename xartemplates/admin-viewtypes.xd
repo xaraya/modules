@@ -1,0 +1,58 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Courses Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Course types</xar:mlstring></h2>
+
+    <!--
+        // display a status message to the user if an action has been
+        // taken on an item
+    -->
+    <xar:if condition="xarSessionGetVar('statusmsg') != ''">
+        <p>#xarSessionGetVar('statusmsg')#</p>
+    </xar:if>
+   <!-- the specific template for the current admin function comes here -->
+
+    <table class="xar-fullwidth">
+        <tr>
+            <th>
+                <xar:mlstring>Type ID</xar:mlstring>
+            </th>
+            <th>
+                <xar:mlstring>Type Name</xar:mlstring>
+            </th>
+            <th>
+                <xar:mlstring>Options</xar:mlstring>
+            </th>
+        </tr>
+        <xar:foreach in="$items" value="$item">
+        <tr>
+            <td>
+                #$item.tid#
+            </td>
+            <td>
+                #$item.coursetype#
+            </td>
+            <td class="xar-align-center">
+               <xar:if condition="empty($item['editurl'])">
+                   <xar:mlstring>Edit</xar:mlstring>
+               <xar:else />
+                   <a href="#$item.editurl#"><xar:mlstring>Edit</xar:mlstring></a>
+               </xar:if>
+               |
+               <xar:if condition="empty($item['deleteurl'])">
+                   <xar:mlstring>Delete</xar:mlstring>
+               <xar:else />
+                   <a href="#$item.deleteurl#"><xar:mlstring>Delete</xar:mlstring></a>
+               </xar:if>
+            </td>
+        </tr>
+        </xar:foreach>
+    </table>
+</div>
+
+<a href="&xar-modurl-courses-admin-newtype;"><xar:mlstring>Create new course type</xar:mlstring></a>
+
+<xar:if condition="xarSessionSetVar('statusmsg', '')"></xar:if>
