@@ -47,6 +47,7 @@ function courses_xartables()
     $courses_levels = xarDBGetSiteTablePrefix() . '_courses_levels';
         // Set the table name
     $xarTables['courses_levels'] = $courses_levels;
+
     $courses_types = xarDBGetSiteTablePrefix() . '_courses_types';
         // Set the table name
     $xarTables['courses_types'] = $courses_types;

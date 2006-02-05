@@ -26,7 +26,7 @@ function courses_admin_createcourse($args)
     // Get parameters from whatever input we need.
     if (!xarVarFetch('name',        'str:1:', $name, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('number',      'str:1:', $number, '',XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('coursetype',  'str:1:', $coursetype, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('coursetype',  'int:1:', $coursetype, 10, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('level',       'isset', $level, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('shortdesc',   'str:1:', $shortdesc, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('intendedcredits', 'int:1:30', $intendedcredits, '', XARVAR_NOT_REQUIRED)) return;
@@ -80,16 +80,16 @@ function courses_admin_createcourse($args)
     $courseid = xarModAPIFunc('courses',
                           'admin',
                           'createcourse',
-                          array('name' => $name,
-                                'number' => $number,
-                                'coursetype' => $coursetype,
-                                'level' => $level,
-                                'shortdesc' => $shortdesc,
+                          array('name'           => $name,
+                                'number'         => $number,
+                                'coursetype'     => $coursetype,
+                                'level'          => $level,
+                                'shortdesc'      => $shortdesc,
                                 'intendedcredits' => $intendedcredits,
-                                'freq' => $freq,
-                                'contact' => $contact,
-                                'contactuid' => $contactuid,
-                                'hidecourse' => $hidecourse));
+                                'freq'           => $freq,
+                                'contact'        => $contact,
+                                'contactuid'     => $contactuid,
+                                'hidecourse'     => $hidecourse));
     // The return value of the function is checked here, and if the function
     // succeeded then an appropriate message is posted.
     if (!isset($courseid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back

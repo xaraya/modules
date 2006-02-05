@@ -1,7 +1,7 @@
 <?php
 /**
  * Utility function to get DD item for level
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -9,7 +9,7 @@
  *
  * @subpackage Courses Module
  * @link http://xaraya.com/index.php/release/179.html
- * @author Courses module development team 
+ * @author Courses module development team
  */
 /**
  * Gets items of a DynamicData object 'level'
@@ -21,16 +21,16 @@
 function courses_userapi_getlevel($args)
 {
     extract($args);
-    
+
     $modid = xarModGetIDFromName('courses');
 
     $info = array();
     $info['modid'] = $modid;
-    $info['itemtype'] = 3;
+    $info['itemtype'] = 1003;
     $info['itemid'] = $level;
     $info['name'] = 'level';
     $item = xarModAPIFunc('dynamicdata', 'user', 'getfield', $info);
-    
+
     return $item;
 }
 ?>

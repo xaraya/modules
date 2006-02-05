@@ -31,7 +31,7 @@ function courses_userapi_gettype($args)
     }
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-    $table = $xartable['courses_type'];
+    $table = $xartable['courses_types'];
     /* Get item */
     $query = "SELECT xar_tid,
                      xar_type
@@ -51,7 +51,7 @@ function courses_userapi_gettype($args)
         return;
     }
     /* Obtain the item information from the result set */
-    list($name, $number) = $result->fields;
+    list($tid, $coursetype) = $result->fields;
     /* All successful database queries produce a result set, and that result
      * set should be closed when it has been finished with
      */
@@ -63,7 +63,7 @@ function courses_userapi_gettype($args)
     }
     /* Create the item array */
     $item = array('tid'   => $tid,
-                  'type'  => $type);
+                  'coursetype'  => $coursetype);
     /* Return the item array */
     return $item;
 }

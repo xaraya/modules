@@ -1,7 +1,7 @@
 <?php
 /**
  * Utility function to pass menu items to the main menu
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -9,12 +9,12 @@
  *
  * @subpackage Courses Module
  * @link http://xaraya.com/index.php/release/179.html
- * @author Courses module development team 
+ * @author Courses module development team
  */
 /**
  * utility function pass individual menu items to the main menu
- * 
- * @author the Courses module development team 
+ *
+ * @author the Courses module development team
  * @returns array
  * @return array containing the menulinks for the main menu items.
  */
@@ -40,6 +40,13 @@ function courses_adminapi_getmenulinks()
                 'viewallplanned'),
             'title' => xarML('View all planned courses.'),
             'label' => xarML('Planning'));
+    }
+    if (xarSecurityCheck('AdminCourses', 0)) {
+        $menulinks[] = Array('url' => xarModURL('courses',
+                'admin',
+                'viewtypes'),
+            'title' => xarML('Modify the courses types'),
+            'label' => xarML('Course types'));
     }
     if (xarSecurityCheck('AdminCourses', 0)) {
         $menulinks[] = Array('url' => xarModURL('courses',

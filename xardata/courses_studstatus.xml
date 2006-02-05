@@ -2,7 +2,7 @@
   <objectid>42</objectid>
   <label>Student Status</label>
   <moduleid>179</moduleid>
-  <itemtype>4</itemtype>
+  <itemtype>1004</itemtype>
   <urlparam>itemid</urlparam>
   <maxid>4</maxid>
   <config></config>

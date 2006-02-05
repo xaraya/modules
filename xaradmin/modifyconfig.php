@@ -41,7 +41,7 @@ function courses_admin_modifyconfig()
     $data['aliasname ']= xarModGetVar('courses','aliasname');
     // TODO: call hook for each itemtype
     $hooks = xarModCallHooks('module', 'modifyconfig', 'courses',
-                       array('module' => 'courses'));
+                       array('module' => 'courses', 'itemtype' => NULL));
     if (empty($hooks)) {
         $data['hookoutput'] = array('categories' => xarML('You can assign base categories by enabling the categories hooks for this module'));
     } else {

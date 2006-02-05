@@ -2,7 +2,7 @@
   <objectid>43</objectid>
   <label>Courses Years</label>
   <moduleid>179</moduleid>
-  <itemtype>5</itemtype>
+  <itemtype>1005</itemtype>
   <urlparam>itemid</urlparam>
   <maxid>5</maxid>
   <config></config>

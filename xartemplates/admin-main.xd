@@ -13,17 +13,18 @@
     <em><xar:mlstring>Courses is the documented Xaraya Courses Module.</xar:mlstring></em>
     <xar:mlstring>It is currently responsible for accomplishing these main tasks:</xar:mlstring>
   </p>
-            <ul>
-                <li><xar:mlstring>Manages the course offerings to students.</xar:mlstring></li>
-                <li><xar:mlstring>Users can enroll into courses.</xar:mlstring></li>
-                <li><xar:mlstring>Produces overviews of courses, participants and the planning.</xar:mlstring></li>
-                <li><xar:mlstring>Sends out registration emails.</xar:mlstring></li>
-                <li><xar:mlstring>Allow teachers to be attached to a course, so they can manage their own course.</xar:mlstring></li>
-            </ul>
+        <ul>
+            <li><xar:mlstring>Manages the course offerings to students.</xar:mlstring></li>
+            <li><xar:mlstring>Users can enroll into courses.</xar:mlstring></li>
+            <li><xar:mlstring>Produces overviews of courses, participants and the planning.</xar:mlstring></li>
+            <li><xar:mlstring>Sends out registration emails.</xar:mlstring></li>
+            <li><xar:mlstring>Allow teachers to be attached to a course, so they can manage their own course.</xar:mlstring></li>
+        </ul>
   <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
   <p>
-            <xar:mlstring>To set up the course offerings you will need to understand the way courses are setup.</xar:mlstring>
-            <xar:mlstring>Courses are single entities that are present in the system. The information regarding a course is rather fixed. Courses are offered to users in Xaraya, this means they are planned.</xar:mlstring>
+    <xar:mlstring> First define at least one coursetype. Most of the time you will only need one type: your own. However, you can define other ones, like external courses that you want to display as well. In the future, you can save settings for these types, at the moment the coursetype serves as a holder for attached hooks. So categories are taking the pubtype settings as the main setting.</xar:mlstring><br />
+            <xar:mlstring>To set up the course offerings you will need to understand the way courses are setup.</xar:mlstring><br />
+            <xar:mlstring>Courses are single entities that are present in the system. The information regarding a course is rather fixed. Courses are offered to users in Xaraya, this means they are planned. Another word for this planning can be a delivered course.</xar:mlstring><br />
             <xar:mlstring>Once the course is planned, you can attach more information to the planned course like a start date, maximum number of participants, location etc.</xar:mlstring>
   </p>
 

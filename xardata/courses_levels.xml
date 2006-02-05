@@ -2,7 +2,7 @@
   <objectid>41</objectid>
   <label>Course Levels</label>
   <moduleid>179</moduleid>
-  <itemtype>3</itemtype>
+  <itemtype>1003</itemtype>
   <urlparam>itemid</urlparam>
   <maxid>3</maxid>
   <config></config>

@@ -124,7 +124,9 @@ function courses_init()
     //These types will be the itemtypes
     $courses_types = $xartable['courses_types'];
     $fields = array('xar_tid' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
-        'xar_type'=>array('null'=>FALSE, 'type'=>'varchar','size'=>50, 'default'=>'0')
+        'xar_type'=>array('null'=>FALSE, 'type'=>'varchar','size'=>50, 'default'=>''),
+        'xar_descr'=>array('null'=>FALSE, 'type'=>'varchar','size'=>255, 'default'=>''),
+        'xar_settings'=>array('null'=>FALSE, 'type'=>'varchar','size'=>255, 'default'=>'')
         );
     // Create the Table
     $query = xarDBCreateTable($courses_types, $fields);
@@ -725,8 +727,10 @@ function courses_upgrade($oldversion)
             //These types will be the itemtypes
             $courses_types = $xartable['courses_types'];
             $fields = array('xar_tid' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
-                'xar_type'=>array('null'=>FALSE, 'type'=>'varchar','size'=>50, 'default'=>'0')
-                );
+                            'xar_type'=>array('null'=>FALSE, 'type'=>'varchar','size'=>50, 'default'=>''),
+                            'xar_descr'=>array('null'=>FALSE, 'type'=>'varchar','size'=>255, 'default'=>''),
+                            'xar_settings'=>array('null'=>FALSE, 'type'=>'varchar','size'=>255, 'default'=>'')
+                            );
             // Create the Table
             $query = xarDBCreateTable($courses_types, $fields);
             if (empty($query)) return; // throw back

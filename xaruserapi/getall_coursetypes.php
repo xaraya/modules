@@ -25,10 +25,7 @@
 function courses_userapi_getall_coursetypes($args)
 {
     extract($args);
-    /* Optional arguments.
-     * FIXME: (!isset($startnum)) was ignoring $startnum as it contained a null value
-     * replaced it with ($startnum == "") (thanks for the talk through Jim S.) NukeGeek 9/3/02
-     * if (!isset($startnum)) { */
+
     if (!isset($startnum)) {
         $startnum = 1;
     }
@@ -38,12 +35,7 @@ function courses_userapi_getall_coursetypes($args)
     if (!isset($catid)) {
         $catid = 0;
     }
-    /* Argument check - make sure that all required arguments are present and
-     * in the right format, if not then set an appropriate error message
-     * and return
-     * Note : since we have several arguments we want to check here, we'll
-     * report all those that are invalid at the same time...
-     */
+    /* Argument check */
     $invalid = array();
     if (!isset($startnum) || !is_numeric($startnum)) {
         $invalid[] = 'startnum';
@@ -84,7 +76,7 @@ function courses_userapi_getall_coursetypes($args)
     for (; !$result->EOF; $result->MoveNext()) {
         list($tid, $type) = $result->fields;
         $items[] = array('tid'   => $tid,
-                         'type'   => $type);
+                         'coursetype'  => $type);
     }
     /* All successful database queries produce a result set, and that result
      * set should be closed when it has been finished with
