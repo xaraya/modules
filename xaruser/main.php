@@ -14,6 +14,8 @@ function search_user_main()
     // Security Check
     if (!xarSecurityCheck('ReadSearch')) return;
 
+    $separator = "LINESPLIT";
+
     // E_ALL Check for an empty array or insert latest search.
     $oldsearch = xarModGetVar('search', 'lastsearch');
     if (empty($oldsearch)){
@@ -41,19 +43,22 @@ function search_user_main()
         $searchitems = array();
         // Similar to what we are doing to display, only we are just creating a single
         // entity of the old search terms.
-        $searchlines = explode("LINESPLIT", $oldsearch);
+        $searchlines = explode($separator, $oldsearch);
         foreach ($searchlines as $searchline) {
             $link = explode('|', $searchline);
-            $content[] .= $link[0] . '|' . $link[1] . '|' . $link[2];
+            if (count($link) < 3) continue;
+            $content[] = $link[0] . '|' . $link[1] . '|' . $link[2];
         }
         // Now we are just processing the new search terms.
-        $content[] .= $insert['term'] . '|' . $insert['date'] . '|' . $insert['uid'];
+        if ($insert['term'] != $separator) {
+            $content[] = $insert['term'] . '|' . $insert['date'] . '|' . $insert['uid'];
+        }
         // While we are in a readible array, we might as well pop it now.
         $searchnum = count($content);
         if ($searchnum >= 10) {
             $dropsearch = array_shift($content);
         }
-        $newsearch = implode("LINESPLIT", $content);
+        $newsearch = implode($separator, $content);
         $newsearch = serialize($newsearch);
         xarModSetVar('search', 'lastsearch', $newsearch);
     }
@@ -66,9 +71,10 @@ function search_user_main()
     $searchitems = array();
 
     if (!empty($search)) {
-        $searchlines = explode("LINESPLIT", $search);
+        $searchlines = explode($separator, $search);
         foreach ($searchlines as $searchline) {
             $link = explode('|', $searchline);
+            if (count($link) < 3) continue;
             $term = xarVarPrepForDisplay($link[0]);
             $date = xarVarPrepForDisplay($link[1]);
             $name  = xarVarPrepForDisplay($link[2]);
