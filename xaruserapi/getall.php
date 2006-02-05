@@ -76,7 +76,7 @@ function julian_userapi_getall($args)
     // build a day array
     $day_array = array("1"=>xarML('Sunday'),"2"=>xarML('Monday'),"3"=>xarML('Tuesday'),"4"=>xarML('Wednesday'),"5"=>xarML('Thursday'),"6"=>xarML('Friday'),"7"=>xarML('Saturday'));
     // build an array of units that coincides with an interval rule
-    $units = array("1"=>xarML('days'),"2"=>xarML('weeks'),"3"=>xarML)('months'),"4"=>xarML('years'));
+    $units = array("1"=>xarML('days'),"2"=>xarML('weeks'),"3"=>xarML('months'),"4"=>xarML('years'));
     $startdate=date('Y-m-d',strtotime($startdate));
     if(strcmp($enddate,"")) {
      $enddate=date('Y-m-d',strtotime($enddate));
