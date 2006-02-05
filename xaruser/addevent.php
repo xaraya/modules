@@ -96,7 +96,8 @@ function julian_user_addevent($args)
         $dur_minute_options.='>'.$j.'</option>';
     }
     $data['dur_minute_options'] = $dur_minute_options;
-
+    // Add authentication
+    $data['authid']=xarSecGenAuthKey();
     return $data;
 }
 ?>

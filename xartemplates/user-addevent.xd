@@ -511,7 +511,8 @@
                 <input type="hidden" name="is_update" value="" />
                 <input type="hidden" name="pc_event_id" value="" />
                 <input type="hidden" name="data_loaded" value="1" />
-                <input type="submit" name="submit" value="#xarML('Update')#">
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <input type="submit" name="submit" value="#xarML('Add')#">
                 <input type="submit" name="cancel" value="#xarML('Cancel')#" onclick="isCancel=1" />
             </div>
         </form>
