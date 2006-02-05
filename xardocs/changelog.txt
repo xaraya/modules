@@ -406,3 +406,4 @@ Original table:
 
 Bugs 5349, 5240 and others
 
+0.2.9 Fix two bugs: forgotten authid and a typo in getall.
