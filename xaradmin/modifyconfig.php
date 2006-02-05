@@ -85,6 +85,7 @@ function tinymce_admin_modifyconfig()
     if (!isset($data['multiconfig'])){
         $data['multiconfig']='';
     }
+
     if (!isset($data['tinybrowsers'])){
         $data['tinybrowsers']='msie,gecko,opera';
     }
@@ -101,16 +102,17 @@ function tinymce_admin_modifyconfig()
         height: "100px",
         theme : "simple"
     });';
-    
+
     /* prepare multiconfig for display */
     $data['multiconfig']=trim($data['multiconfig']);
-    if ($data['dousemulticonfig']){
+    if ($data['dousemulticonfig']==true && !empty($data['multiconfig'])){
      $multiconfig=$data['multiconfig'];
 
     } else  {
       $data['multiconfig']=$examplestring;
       $multiconfig='';
     }
+
     if (!isset($data['usebutton'])) {
       $data['usebutton']=false;
     }

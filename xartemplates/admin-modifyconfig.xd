@@ -294,25 +294,25 @@
                     <xar:mlstring>Prompt to use WYSIWYG?</xar:mlstring>
                 </label>
                 <select name="tinyask" id="tinyask" size="1" onchange="submit();">
-                <xar:if condition="$tinyask eq 'false'">
+                <xar:if condition="$tinyask eq '0'">
                     <option value="false" selected="selected"><xar:mlstring>No</xar:mlstring></option>
                     <option value="true"><xar:mlstring>Yes</xar:mlstring></option>
-                <xar:elseif condition="$tinyask eq 'true'" />
+                <xar:elseif condition="$tinyask eq '1'" />
                     <option value="false"><xar:mlstring>No</xar:mlstring></option>
                     <option value="true" selected="selected"><xar:mlstring>Yes</xar:mlstring></option>
                 </xar:if>
                 </select>
             </div>
-            <xar:if condition="xarModGetVar('tinymce','tinyask') eq 'true' and xarModGetVar('tinymce','tinymode') eq 'specific_textareas'">
+            <xar:if condition="xarModGetVar('tinymce','tinyask') eq '1' and xarModGetVar('tinymce','tinymode') eq 'specific_textareas'">
            <div class="xar-form-input-wrapper">
                 <label for="usebutton" class="xar-form-label" title="#xarML('Use a button to prompt for WYSIWYG or default to popup')#">
                     <xar:mlstring>Button instead of popup?</xar:mlstring>
                 </label>
                 <select name="usebutton" id="usebutton" size="1" >
-                <xar:if condition="$usebutton ne 'true'">
+                <xar:if condition="$usebutton ne '1'">
                     <option value="false" selected="selected"><xar:mlstring>No</xar:mlstring></option>
                     <option value="true"><xar:mlstring>Yes</xar:mlstring></option>
-                <xar:elseif condition="$usebutton eq 'true'" />
+                <xar:elseif condition="$usebutton eq '1'" />
                     <option value="false"><xar:mlstring>No</xar:mlstring></option>
                     <option value="true" selected="selected"><xar:mlstring>Yes</xar:mlstring></option>
                 </xar:if>
@@ -328,10 +328,10 @@
                     <xar:mlstring>Use icon map?</xar:mlstring>
                 </label>
                 <select name="tinytilemap" id="tinytilemap" size="1" >
-                <xar:if condition="$tinytilemap ne 'true'">
+                <xar:if condition="$tinytilemap ne '1'">
                     <option value="false" selected="selected"><xar:mlstring>No</xar:mlstring></option>
                     <option value="true"><xar:mlstring>Yes</xar:mlstring></option>
-                <xar:elseif condition="$tinytilemap eq 'true'" />
+                <xar:elseif condition="$tinytilemap eq '1'" />
                     <option value="false"><xar:mlstring>No</xar:mlstring></option>
                     <option value="true" selected="selected"><xar:mlstring>Yes</xar:mlstring></option>
                 </xar:if>
@@ -344,10 +344,10 @@
                       <xar:mlstring>Use compressor?:</xar:mlstring>
                 </label>
                 <select name="tinycompressor" id="tinycompressor" size="1">
-                <xar:if condition="$tinycompressor eq 'false'">
+                <xar:if condition="$tinycompressor eq '0'">
                     <option value="false" selected="selected"><xar:mlstring>No</xar:mlstring></option>
                     <option value="true"><xar:mlstring>Yes</xar:mlstring></option>
-                <xar:elseif condition="$tinycompressor eq 'true'" />
+                <xar:elseif condition="$tinycompressor eq '1'" />
                     <option value="false"><xar:mlstring>No</xar:mlstring></option>
                     <option value="true" selected="selected"><xar:mlstring>Yes</xar:mlstring></option>
                 </xar:if>
@@ -382,7 +382,7 @@
                     <xar:mlstring>Use cleanup?</xar:mlstring>
                 </label>
                 <select name="tinycleanup" id="tinycleanup" size="1" >
-                <xar:if condition="$tinycleanup eq 'false'">
+                <xar:if condition="$tinycleanup eq '0'">
                     <option value="false" selected="selected"><xar:mlstring>No</xar:mlstring></option>
                     <option value="true"><xar:mlstring>Yes</xar:mlstring></option>
                 <xar:else />
@@ -398,10 +398,10 @@
                     <xar:mlstring>Force all Returns to &lt;br /&gt;:</xar:mlstring>
                 </label>
                 <select name="tinybr" id="tinybr" size="1">
-                <xar:if condition="$tinybr eq 'false'">
+                <xar:if condition="$tinybr eq '0'">
                     <option value="false" selected="selected"><xar:mlstring>No</xar:mlstring></option>
                     <option value="true"><xar:mlstring>Yes</xar:mlstring></option>
-                <xar:elseif condition="$tinybr eq 'true'" />
+                <xar:elseif condition="$tinybr eq '1'" />
                     <option value="false"><xar:mlstring>No</xar:mlstring></option>
                     <option value="true" selected="selected"><xar:mlstring>Yes</xar:mlstring></option>
                 </xar:if>
@@ -413,10 +413,10 @@
                </label>
 
                 <select name="tinypara" id="tinypara" size="1">
-                <xar:if condition="$tinypara eq 'false'">
+                <xar:if condition="$tinypara eq '0'">
                     <option value="false" selected="selected"><xar:mlstring>No</xar:mlstring></option>
                     <option value="true"><xar:mlstring>Yes</xar:mlstring></option>
-                <xar:elseif condition="$tinypara eq 'true'" />
+                <xar:elseif condition="$tinypara eq '1'" />
                     <option value="false"><xar:mlstring>No</xar:mlstring></option>
                     <option value="true" selected="selected"><xar:mlstring>Yes</xar:mlstring></option>
                 </xar:if>
@@ -446,10 +446,10 @@
                     <xar:mlstring>Attributes to inline style?</xar:mlstring>
                 </label>
                 <select name="tinyinlinestyle" id="tinyinlinestyle" size="1">
-                <xar:if condition="$tinyinlinestyle eq 'false'">
+                <xar:if condition="$tinyinlinestyle eq '0'">
                     <option value="false" selected="selected"><xar:mlstring>No</xar:mlstring></option>
                     <option value="true"><xar:mlstring>Yes</xar:mlstring></option>
-                <xar:elseif condition="$tinyinlinestyle eq 'true'" />
+                <xar:elseif condition="$tinyinlinestyle eq '1'" />
                     <option value="false"><xar:mlstring>No</xar:mlstring></option>
                     <option value="true" selected="selected"><xar:mlstring>Yes</xar:mlstring></option>
                 </xar:if>
@@ -747,7 +747,6 @@
                         <input type="checkbox" name="dousemulticonfig" id="dousemulticonfig" value="1" />
                     </xar:if>
             </div>
-
             <p>
                 <xar:mlstring>Enter code for multiple configuration instances of tinymce.
                 In each configuration you must have at least</xar:mlstring>
@@ -760,6 +759,7 @@
                 <label for="multiconfig" class="xar-form-label" title="#xarML('Enter additional individual custom config options here')#">
                         <xar:mlstring>Custom Config options:</xar:mlstring>
                 </label>
+
                 <textarea class="mceNoEditor" name="multiconfig" id="multiconfig" cols="50" rows="10" >#$multiconfig#</textarea>
            </div>
 

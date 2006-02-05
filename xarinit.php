@@ -25,7 +25,7 @@ function tinymce_init()
    xarModSetVar('tinymce', 'tinytheme', 'advanced');
    xarModSetVar('tinymce', 'tinylang', 'en');
    xarModSetVar('tinymce', 'tinymode', 'specific_textareas');
-   xarModSetVar('tinymce', 'tinyask', 'true');
+   xarModSetVar('tinymce', 'tinyask', 1);
    xarModSetVar('tinymce', 'tinybuttonsremove', '');
    xarModSetVar('tinymce', 'tinyexstyle', 'heading 1=head1,heading 2=head2,heading 3=head3,heading 4=head4');
    xarModSetVar('tinymce', 'tinyextended', 'span[*],p[*],code,pre,blockquote/quote,+a[*],img[*]');
@@ -37,7 +37,7 @@ function tinymce_init()
    xarModSetVar('tinymce', 'tinyheight','');
    xarModSetVar('tinymce', 'tinydirection','ltr');
    //xarModSetVar('tinymce', 'tinyencode','');
-   xarModSetVar('tinymce', 'tinyinlinestyle','true');
+   xarModSetVar('tinymce', 'tinyinlinestyle',1);
    xarModSetVar('tinymce', 'tinyundolevel',10);
    xarModSetVar('tinymce', 'tinyplugins', 'searchreplace,print,advimage,advlink,table,paste,fullscreen,emotions');
    xarModSetVar('tinymce', 'tinybuttons', 'search,replace,pastetext,pasteword');
@@ -48,24 +48,24 @@ function tinymce_init()
    xarModSetVar('tinymce', 'tinybuild3', '');
     xarModSetVar('tinymce','tinydate', '');
     xarModSetVar('tinymce','tinytime', '');
-    xarModSetVar('tinymce', 'tinybr', 'false');
-    xarModSetVar('tinymce', 'tinypara', 'true');
+    xarModSetVar('tinymce', 'tinybr', 0);
+    xarModSetVar('tinymce', 'tinypara', 1);
     xarModSetVar('tinymce', 'tinyinvalid', '');    
     xarModSetVar('tinymce', 'tinyadvformat', '');
-    //xarModSetVar('tinymce', 'useibrowser', 'false');
+    //xarModSetVar('tinymce', 'useibrowser', 0);
     xarModSetVar('tinymce', 'tinyeditorcss','');
-    //xarModSetVar('tinymce', 'tinynowrap','false');
+    //xarModSetVar('tinymce', 'tinynowrap',0);
     xarModSetVar('tinymce', 'tinyloadmode','manual');
     xarModSetVar('tinymce', 'multiconfig','');
-    xarModSetVar('tinymce', 'usemulticonfig','false');
-    xarModSetVar('tinymce', 'tinyadvresize','true');
-    xarModSetVar('tinymce', 'tinytilemap','true');
-    xarModSetVar('tinymce', 'tinyenablepath','true');
-    xarModSetVar('tinymce', 'tinyresizehorizontal','false');
+    xarModSetVar('tinymce', 'usemulticonfig',0);
+    xarModSetVar('tinymce', 'tinyadvresize',1);
+    xarModSetVar('tinymce', 'tinytilemap',1);
+    xarModSetVar('tinymce', 'tinyenablepath',1);
+    xarModSetVar('tinymce', 'tinyresizehorizontal',0);
     xarModSetVar('tinymce', 'tinyeditorselector','mceEditor');
     xarModSetVar('tinymce', 'tinyeditordeselector','');
-    xarModSetVar('tinymce', 'tinycompressor','false');
-    xarModSetVar('tinymce', 'tinycleanup','true');
+    xarModSetVar('tinymce', 'tinycompressor',0);
+    xarModSetVar('tinymce', 'tinycleanup',1);
    /* Set masks */
     xarRegisterMask('ViewTinyMCE','All','tinymce','All','All:All','ACCESS_OVERVIEW');
     xarRegisterMask('ReadTinyMCE','All','tinymce','All','All:All','ACCESS_READ');
@@ -115,7 +115,7 @@ function tinymce_upgrade($oldversion)
     break;
     case '0.0.3':
         /* Set up new module vars */
-        xarModSetVar('tinymce', 'tinyinlinestyle','true');
+        xarModSetVar('tinymce', 'tinyinlinestyle',1);
         xarModSetVar('tinymce', 'tinyundolevel',10);
         return tinymce_upgrade('0.1.0');
     break;
@@ -135,7 +135,7 @@ function tinymce_upgrade($oldversion)
         xarModSetVar('tinymce', 'tinybuild3', '');
         xarModSetVar('tinymce', 'tinydate', '');
         xarModSetVar('tinymce', 'tinytime', '');
-        xarModSetVar('tinymce', 'tinybr', 'false');
+        xarModSetVar('tinymce', 'tinybr', 0);
         return tinymce_upgrade('0.1.2');
         break;
     case '0.1.2':
@@ -152,7 +152,7 @@ function tinymce_upgrade($oldversion)
         return tinymce_upgrade('0.2.1');
         break;
     case '0.2.1':
-        xarModSetVar('tinymce', 'tinypara', 'true');
+        xarModSetVar('tinymce', 'tinypara', 1);
         xarModSetVar('tinymce', 'tinyshowpath','bottom');
         return tinymce_upgrade('0.3.0');
         break;
@@ -182,7 +182,7 @@ function tinymce_upgrade($oldversion)
     case '0.4.0':
         /* Current version */
         xarModSetVar('tinymce', 'tinycontentcss','');
-        xarModSetVar('tinymce', 'tinynowrap','false');
+        xarModSetVar('tinymce', 'tinynowrap',0);
 
         return tinymce_upgrade('0.4.1');
 
@@ -194,12 +194,12 @@ function tinymce_upgrade($oldversion)
 
     case '0.5.0':
         xarModSetVar('tinymce', 'multiconfig','');
-        xarModSetVar('tinymce', 'usemulticonfig','false');
+        xarModSetVar('tinymce', 'usemulticonfig',0);
 
         return tinymce_upgrade('0.6.0');
 
     case '0.6.1':
-        xarModSetVar('tinymce', 'usebutton','false');
+        xarModSetVar('tinymce', 'usebutton',0);
         xarModSetVar('tinymce', 'buttonstring','');
         xarModSetVar('tinymce', 'tinybrowsers','msie,gecko,opera');
 
@@ -210,10 +210,10 @@ function tinymce_upgrade($oldversion)
         return tinymce_upgrade('0.7.0');
 
     case '0.7.0':
-        xarModSetVar('tinymce', 'tinyadvresize','true');
-        xarModSetVar('tinymce', 'tinytilemap','true');
-        xarModSetVar('tinymce', 'tinyenablepath','true');
-        xarModSetVar('tinymce', 'tinyresizehorizontal','false');
+        xarModSetVar('tinymce', 'tinyadvresize',1);
+        xarModSetVar('tinymce', 'tinytilemap',1);
+        xarModSetVar('tinymce', 'tinyenablepath',1);
+        xarModSetVar('tinymce', 'tinyresizehorizontal',0);
         return tinymce_upgrade('0.9.0');
 
     case '0.9.0':
@@ -222,8 +222,8 @@ function tinymce_upgrade($oldversion)
     case '0.9.2':
             return tinymce_upgrade('1.0.0');
     case '1.0.0':
-            xarModSetVar('tinymce', 'tinycompressor','false');
-            xarModSetVar('tinymce', 'tinycleanup','true');
+            xarModSetVar('tinymce', 'tinycompressor',0);
+            xarModSetVar('tinymce', 'tinycleanup',1);
             xarModDelVar('tinymce', 'useibrowser');
             xarModDelVar('tinymce', 'tinynowrap');
             xarModDelVar('tinymce', 'tinyencode');

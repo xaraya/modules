@@ -1,4 +1,4 @@
-// UK lang variables
+// Sweedish lang variables
 
 tinyMCE.addToLang('liststyle',{
 desc : 'Välj list typ',
