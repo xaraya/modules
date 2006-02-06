@@ -59,9 +59,7 @@ function courses_admin_updatetype($args)
                                 'invalid'    => $invalid));
     }
 
-    /* The API function is called. Note that the name of the API function and
-
-     */
+    /* The API function is called. Note that the name of the API function and  */
     if (!xarModAPIFunc('courses',
                        'admin',
                        'updatetype',
