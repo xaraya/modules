@@ -1,26 +1,30 @@
 <?php
 /**
  * Standard function to view courses and their planning
- * 
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 by the Xaraya Development Team.
+ *
+ * @package modules
+ * @copyright (C) 2005-2006 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Courses Module
  * @link http://xaraya.com/index.php/release/179.html
- * @author Courses module development team 
+ * @author Courses module development team
  */
- 
+
 /**
  * view course parameters
  * Parameters are derived from Dynamic Data
+ *
+ * @author MichelV <michelv@xaraya.com>
+ * @param itemtype
+ * @param startnum
  */
 function courses_admin_view()
 {
     // Get Vars
-    if (!xarVarFetch('itemtype', 'int:1:', $itemtype, '3', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('startnum', 'int:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('itemtype', 'int:1:', $itemtype, 1003, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
 
     $data = xarModAPIFunc('courses', 'admin', 'menu');
     $data['items'] = array();
@@ -40,10 +44,6 @@ function courses_admin_view()
     }
     if (!xarSecurityCheck('EditCourses')) return;
 
-    // Specify some labels for display
-    //$data['namelabel'] = xarVarPrepForDisplay(xarML('Course Name'));
-    //$data['numberlabel'] = xarVarPrepForDisplay(xarML('Course Number'));
-    //$data['optionslabel'] = xarVarPrepForDisplay(xarML('Course Options'));
     // Return the template variables defined in this function
     return $data;
 }
