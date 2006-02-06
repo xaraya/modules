@@ -12,21 +12,23 @@
  * @author Courses module development team
  */
 /**
- * Add new item
+ * Add new type of course
  *
- * This is a standard function that is called whenever an administrator
- * wishes to create a new module item
+ * A coursetype is a general type of courses that is used to determine the general lay-out and functioning of this coursetype
+ * You can add courses in this type later
  *
- * @author Example module development team
+ * @author MichelV <michelv@xaraya.com>
  * @return array
  */
 function courses_admin_newtype($args)
 {
     extract($args);
 
- //   if (!xarVarFetch('number',  'int:1:', $number,  $number,  XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('coursetype',    'str:1:', $coursetype,    $coursetype,    XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('invalid', 'array',  $invalid, $invalid, XARVAR_NOT_REQUIRED)) return;
+
+    if (!xarVarFetch('coursetype', 'str:1:',    $coursetype, $coursetype, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('descr',      'str:1:255', $descr,      $descr,      XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('settings',   'str:1:255', $settings,   $settings,   XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('invalid',    'array',     $invalid,    $invalid,    XARVAR_NOT_REQUIRED)) return;
 
     $data = xarModAPIFunc('courses', 'admin', 'menu');
     /* Security check - important to do this as early as possible to avoid
@@ -56,7 +58,16 @@ function courses_admin_newtype($args)
     } else {
         $data['coursetype'] = $coursetype;
     }
-
+    if (empty($descr)) {
+        $data['descr'] = '';
+    } else {
+        $data['descr'] = $descr;
+    }
+    if (empty($settings)) {
+        $data['settings'] = '';
+    } else {
+        $data['settings'] = $settings;
+    }
     /* Return the template variables defined in this function */
     return $data;
 }
