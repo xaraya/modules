@@ -239,12 +239,11 @@ function articles_user_search($args)
         $data['searchtype'] = $searchtype;
     }
     if ($isadmin) {
-        $data['statuslist'] = array(
-                                    array('id' => 0, 'name' => xarML('Submitted'), 'checked' => in_array(0,$status)),
-                                    array('id' => 1, 'name' => xarML('Rejected'), 'checked' => in_array(1,$status)),
-                                    array('id' => 2, 'name' => xarML('Approved'), 'checked' => in_array(2,$status)),
-                                    array('id' => 3, 'name' => xarML('Front Page'), 'checked' => in_array(3,$status)),
-                                   );
+        $states = xarModAPIFunc('articles','user','getstates');
+        $data['statuslist'] = array();
+        foreach ($states as $id => $name) {
+            $data['statuslist'][] = array('id' => $id, 'name' => $name, 'checked' => in_array($id,$status));
+        }
     // TODO: show field labels when we're dealing with only 1 pubtype
         $data['fieldlist'] = array(
                                     array('id' => 'title', 'name' => xarML('title'), 'checked' => in_array('title',$fieldlist)),

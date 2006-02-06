@@ -146,9 +146,10 @@ function articles_admin_view($args)
                   //&& (!is_array($status) || !isset($status[0]));
     $data['showstatus'] = $showstatus;
 
+    $data['states'] = xarModAPIFunc('articles','user','getstates');
+
     $items = array();
     if ($articles != false) {
-        $statuslabel = array(xarML('Submitted'),xarML('Rejected'),xarML('Approved'),xarML('Frontpage'));
         foreach ($articles as $article) {
 
             $item = array();
@@ -162,7 +163,7 @@ function articles_admin_view($args)
                 $item['pubdate'] = $article['pubdate']; //strftime('%x %X %z', $article['pubdate']);
             }
             if ($showstatus) {
-                $item['status'] = $statuslabel[$article['status']];
+                $item['status'] = $data['states'][$article['status']];
                 // pre-select all submitted items
                 if ($article['status'] == 0) {
                     $item['selected'] = 'checked';
@@ -267,35 +268,19 @@ function articles_admin_view($args)
     // Create filters based on article status
     $statusfilters = array();
     if (!empty($labels['status'])) {
-    $statusfilters[] = array('stitle' => xarML('All'),
-                             'slink' => !is_array($status) ? '' :
-                                            xarModURL('articles','admin','view',
-                                                     array('ptid' => $ptid,
-                                                           'catid' => $catid)));
-    $statusfilters[] = array('stitle' => xarML('Submitted'),
-                             'slink' => (is_array($status) && $status[0] == 0) ? '' :
-                                            xarModURL('articles','admin','view',
-                                                     array('ptid' => $ptid,
-                                                           'catid' => $catid,
-                                                     'status' => array(0))));
-    $statusfilters[] = array('stitle' => xarML('Rejected'),
-                             'slink' => (is_array($status) && $status[0] == 1) ? '' :
-                                            xarModURL('articles','admin','view',
-                                                     array('ptid' => $ptid,
-                                                           'catid' => $catid,
-                                                     'status' => array(1))));
-    $statusfilters[] = array('stitle' => xarML('Approved'),
-                             'slink' => (is_array($status) && $status[0] == 2) ? '' :
-                                            xarModURL('articles','admin','view',
-                                                     array('ptid' => $ptid,
-                                                           'catid' => $catid,
-                                                     'status' => array(2))));
-    $statusfilters[] = array('stitle' => xarML('Frontpage'),
-                             'slink' => (is_array($status) && $status[0] == 3) ? '' :
-                                            xarModURL('articles','admin','view',
-                                                     array('ptid' => $ptid,
-                                                           'catid' => $catid,
-                                                     'status' => array(3))));
+        $statusfilters[] = array('stitle' => xarML('All'),
+                                 'slink' => !is_array($status) ? '' :
+                                                xarModURL('articles','admin','view',
+                                                          array('ptid' => $ptid,
+                                                                'catid' => $catid)));
+        foreach ($data['states'] as $id => $name) {
+            $statusfilters[] = array('stitle' => $name,
+                                     'slink' => (is_array($status) && $status[0] == $id) ? '' :
+                                                    xarModURL('articles','admin','view',
+                                                              array('ptid' => $ptid,
+                                                                    'catid' => $catid,
+                                                                    'status' => array($id))));
+        }
     }
     $data['statusfilters'] = $statusfilters;
     $data['changestatuslabel'] = xarML('Change Status');

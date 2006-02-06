@@ -252,12 +252,11 @@ function articles_admin_modifyconfig()
         }
     }
 
-    $data['statusoptions'] = array(
-                                   array('value' => 0, 'label' => xarML('Submitted')),
-                                   array('value' => 1, 'label' => xarML('Rejected')),
-                                   array('value' => 2, 'label' => xarML('Approved')),
-                                   array('value' => 3, 'label' => xarML('Front Page')),
-                                  );
+    $data['statusoptions'] = array();
+    $states = xarModAPIFunc('articles','user','getstates');
+    foreach ($states as $id => $name) {
+        $data['statusoptions'][] = array('value' => $id, 'label' => $name);
+    }
 
     // Module alias for short URLs
     if (!empty($ptid)) {

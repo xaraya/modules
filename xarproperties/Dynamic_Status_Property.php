@@ -30,12 +30,11 @@ class Dynamic_Status_Property extends Dynamic_Select_Property
     {
         $this->Dynamic_Select_Property($args);
         if (count($this->options) == 0) {
-            $this->options = array(
-                                 array('id' => 0, 'name' => xarML('Submitted')),
-                                 array('id' => 1, 'name' => xarML('Rejected')),
-                                 array('id' => 2, 'name' => xarML('Approved')),
-                                 array('id' => 3, 'name' => xarML('Front Page')),
-                             );
+            $states = xarModAPIFunc('articles','user','getstates');
+            $this->options = array();
+            foreach ($states as $id => $name) {
+                array_push($this->options, array('id' => $id, 'name' => $name));
+            }
         }
     }
 

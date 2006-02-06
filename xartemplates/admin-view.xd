@@ -155,28 +155,25 @@
                                 </xar:mlstring>
                             </option>
                         </xar:if>
-                            <option value="0">
-                                <xar:mlstring>
-                                    Submitted
-                                </xar:mlstring>
-                            </option>
-                            <option value="1">
-                                <xar:mlstring>
-                                    Rejected
-                                </xar:mlstring>
-                            </option>
-                            <option value="2" selected="selected">
-                                <xar:mlstring>
-                                    Approved
-                                </xar:mlstring>
-                            </option>
-                            <xar:if condition="xarModGetVar('articles','defaultpubtype') eq $ptid or xarModGetVar('articles','defaultpubtype') eq ''">
-                                <option value="3">
-                                    <xar:mlstring>
-                                        Front Page
-                                    </xar:mlstring>
+                        <xar:foreach in="$states" key="$id" value="$name">
+                            <xar:if condition="$id eq 2">
+                                <xar:comment>Approved</xar:comment>
+                                <option value="#$id#" selected="selected">
+                                    #$name#
+                                </option>
+                            <xar:elseif condition="$id eq 3"/>
+                                <xar:comment>Frontpage</xar:comment>
+                                <xar:if condition="xarModGetVar('articles','defaultpubtype') eq $ptid or xarModGetVar('articles','defaultpubtype') eq ''">
+                                    <option value="#$id#">
+                                        #$name#
+                                    </option>
+                                </xar:if>
+                            <xar:else/>
+                                <option value="#$id#">
+                                    #$name#
                                 </option>
                             </xar:if>
+                        </xar:foreach>
                         </select>
                         <input type="submit" value="#$changestatuslabel#" />
 <script language="JavaScript" type="text/javascript">
