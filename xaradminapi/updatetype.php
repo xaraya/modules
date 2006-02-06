@@ -7,9 +7,9 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Example Module
- * @link http://xaraya.com/index.php/release/36.html
- * @author Example Module Development Team
+ * @subpackage Courses Module
+ * @link http://xaraya.com/index.php/release/179.html
+ * @author Courses module development team
  */
 /**
  * Update an courses item
@@ -60,9 +60,11 @@ function courses_adminapi_updatetype($args)
      * debug operation if it is ever needed
      */
     $query = "UPDATE $typestable
-            SET xar_type =?
+            SET xar_type =?,
+                xar_descr =?,
+                xar_settings =?
             WHERE xar_tid = ?";
-    $bindvars = array($coursetype, $tid);
+    $bindvars = array($coursetype, $descr, $settings, $tid);
     $result = &$dbconn->Execute($query,$bindvars);
     /* Check for an error with the database code, adodb has already raised
      * the exception so we just return

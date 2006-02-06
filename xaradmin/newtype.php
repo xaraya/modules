@@ -39,7 +39,7 @@ function courses_admin_newtype($args)
     /* Generate a one-time authorisation code for this operation */
     $data['authid'] = xarSecGenAuthKey();
     $data['invalid'] = $invalid;
-
+/*
     $item = array();
     $item['module'] = 'courses';
     $hooks = xarModCallHooks('item', 'new', '', $item);
@@ -50,9 +50,11 @@ function courses_admin_newtype($args)
         $data['hookoutput'] = $hooks;
     }
     $data['hooks'] = '';
+*/
     /* For E_ALL purposes, we need to check to make sure the vars are set.
      * If they are not set, then we need to set them empty to surpress errors
      */
+
     if (empty($coursetype)) {
         $data['coursetype'] = '';
     } else {

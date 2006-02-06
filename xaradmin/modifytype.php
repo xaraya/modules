@@ -7,9 +7,9 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Example Module
- * @link http://xaraya.com/index.php/release/36.html
- * @author Example Module Development Team
+ * @subpackage Courses Module
+ * @link http://xaraya.com/index.php/release/179.html
+ * @author Courses module development team
  */
 
 /**
@@ -28,8 +28,9 @@ function courses_admin_modifytype($args)
     if (!xarVarFetch('tid',     'id',     $tid)) return;
     if (!xarVarFetch('objectid', 'id',     $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('invalid',  'array', $invalid, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('coursetype',   'str::',    $coursetype, $coursetype,XARVAR_NOT_REQUIRED)) return;
-   // if (!xarVarFetch('name',     'str:1:', $name, $name, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('coursetype', 'str:1:',    $coursetype, $coursetype, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('descr',      'str:1:255', $descr,      $descr,      XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('settings',   'str:1:255', $settings,   $settings,   XARVAR_NOT_REQUIRED)) return;
 
     if (!empty($objectid)) {
         $tid = $objectid;
@@ -78,10 +79,12 @@ function courses_admin_modifytype($args)
 */
     /* Return the template variables defined in this function */
     $data['authid']   = xarSecGenAuthKey();
-     $data['coursetype']   = $coursetype;
-     $data['invalid']      = $invalid;
-     $data['item']         = $item;
+    $data['coursetype']   = $coursetype;
+    $data['descr']        = $descr;
+    $data['settings']     = $settings;
+    $data['invalid']      = $invalid;
+    $data['item']         = $item;
 
-     return $data;
+    return $data;
 }
 ?>

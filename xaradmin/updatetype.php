@@ -7,9 +7,9 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Example Module
- * @link http://xaraya.com/index.php/release/36.html
- * @author Example Module Development Team
+ * @subpackage Courses Module
+ * @link http://xaraya.com/index.php/release/179.html
+ * @author Courses module development team
  */
 /**
  * Standard function to update a current item
@@ -29,8 +29,9 @@ function courses_admin_updatetype($args)
     if (!xarVarFetch('tid',     'id',     $tid,     $tid,     XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('objectid', 'id',     $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('invalid',  'array',  $invalid,  $invalid,        XARVAR_NOT_REQUIRED)) return;
-//    if (!xarVarFetch('number',   'int:1:', $number,   $number,   XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('coursetype',     'str:1:', $coursetype,     $coursetype,     XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('coursetype', 'str:1:',    $coursetype, $coursetype, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('descr',      'str:1:255', $descr,      $descr,      XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('settings',   'str:1:255', $settings,   $settings,   XARVAR_NOT_REQUIRED)) return;
 
     if (!empty($objectid)) {
         $tid = $objectid;
@@ -52,8 +53,10 @@ function courses_admin_updatetype($args)
          * (you need to copy admin-new.xd to admin-create.xd here)
          */
         return xarModFunc('courses', 'admin', 'modifytype',
-                          array('coursetype'     => $coursetype,
-                                'invalid'  => $invalid));
+                          array('coursetype' => $coursetype,
+                                'descr'      => $descr,
+                                'settings'   => $settings,
+                                'invalid'    => $invalid));
     }
 
     /* The API function is called. Note that the name of the API function and
@@ -63,7 +66,10 @@ function courses_admin_updatetype($args)
                        'admin',
                        'updatetype',
                        array('tid'   => $tid,
-                             'coursetype'   => $coursetype))) {
+                             'coursetype'   => $coursetype,
+                             'descr'        => $descr,
+                             'settings'     => $settings)
+                             )) {
         return; /* throw back */
     }
     // Call updateconfig hooks with module + itemtype

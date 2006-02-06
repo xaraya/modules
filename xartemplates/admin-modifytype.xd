@@ -33,7 +33,7 @@
                 <label for="coursetype" class="xar-form-label" title="#xarML('This is the tool tip help for this item.')#">
                        <xar:mlstring>Course Type:</xar:mlstring>
                 </label>
-                <xar:if condition="isset($coursetype)">
+                <xar:if condition="!empty($coursetype)">
                     <input type="text" name="coursetype" id="coursetype" value="#$coursetype#" maxlength="100" class="xar-form-textlong" />
                 <xar:else />
                     <input type="text" name="coursetype" id="coursetype" value="#$item.coursetype#" maxlength="100" class="xar-form-textlong" />
@@ -44,8 +44,41 @@
                     </p>
                 </xar:if>
             </div>
+            <div class="xar-form-input-wrapper">
+                 <label for="descr" class="xar-form-label" title="#xarML('This is the course type description')#">
+                        <xar:mlstring>Description</xar:mlstring>
+                 </label>
+             <xar:if condition="!empty($descr)">
+                <span class="fullright">
+                    <textarea class="fullright"  name="descr" id="descr" wrap="virtual" rows="5" cols="40">#$descr#</textarea>
+                </span>
+             <xar:else />
+                <span class="fullright">
+                    <textarea class="fullright"  name="descr" id="descr" wrap="virtual" rows="5" cols="40">#$item['descr']#</textarea>
+                </span>
+             </xar:if>
+             <xar:if condition="!empty($invalid['descr'])">
+                 <div class="xar-error">
+                        <xar:mlstring>ERROR! This is not a valid courses description</xar:mlstring>
+                 </div>
+             </xar:if>
+            </div>
+            <div class="xar-form-input-wrapper">
+                 <label for="settings" class="xar-form-label" title="#xarML('This is the course type name')#">
+                        <xar:mlstring>Settings</xar:mlstring>
+                 </label>
+             <xar:if condition="!empty($settings)">
+                 <input type="text" name="settings" id="settings" value="#$settings#" maxlength="100" class="xar-form-textlong" />
+             <xar:else />
+                 <input type="text" name="settings" id="settings" value="#$item.settings#" maxlength="100" class="xar-form-textlong" />
+             </xar:if>
+             <xar:if condition="!empty($invalid['settings'])">
+                 <div class="xar-error">
+                        <xar:mlstring>ERROR! This is not a valid courses type</xar:mlstring>
+                 </div>
+             </xar:if>
+            </div>
         </fieldset>
-
         <xar:if condition="!empty($hooks)">
         <fieldset>
             <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
