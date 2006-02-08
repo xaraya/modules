@@ -1,3 +1,4 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <table border="1" width="100%" cellpadding="2" cellspacing="0">
     <tr>
         <th align="center">#$menutitle#</th>
@@ -48,8 +49,8 @@
             </xar:if>
         </xar:foreach>
         <td>
-            <a href="#xarModURL('dyn_example','user','display',array('itemid' => $itemid))#"><xar:mlstring>View</xar:mlstring></a> | 
-            <a href="#xarModURL('dyn_example','admin','modify',array('itemid' => $itemid))#"><xar:mlstring>Edit</xar:mlstring></a> | 
+            <a href="#xarModURL('dyn_example','user','display',array('itemid' => $itemid))#"><xar:mlstring>View</xar:mlstring></a> |
+            <a href="#xarModURL('dyn_example','admin','modify',array('itemid' => $itemid))#"><xar:mlstring>Edit</xar:mlstring></a> |
             <a href="#xarModURL('dyn_example','admin','delete',array('itemid' => $itemid))#"><xar:mlstring>Delete</xar:mlstring></a>
         </td>
     </tr>
@@ -91,8 +92,8 @@
             <td>#$value#</td>
         </xar:foreach>
         <td>
-            <a href="#xarModURL('dyn_example','user','display',array('itemid' => $itemid))#"><xar:mlstring>View</xar:mlstring></a> | 
-            <a href="#xarModURL('dyn_example','admin','modify',array('itemid' => $itemid))#"><xar:mlstring>Edit</xar:mlstring></a> | 
+            <a href="#xarModURL('dyn_example','user','display',array('itemid' => $itemid))#"><xar:mlstring>View</xar:mlstring></a> |
+            <a href="#xarModURL('dyn_example','admin','modify',array('itemid' => $itemid))#"><xar:mlstring>Edit</xar:mlstring></a> |
             <a href="#xarModURL('dyn_example','admin','delete',array('itemid' => $itemid))#"><xar:mlstring>Delete</xar:mlstring></a>
         </td>
     </tr>

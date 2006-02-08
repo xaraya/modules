@@ -1,3 +1,4 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <table border="1" width="100%" cellpadding="2" cellspacing="0">
   <tr>
     <th align="center">#$menutitle#</th>
@@ -38,7 +39,7 @@
 
 <p><xar:mlstring>You can then use those variables to build your own layout. The &lt;xar:data-label ...&gt; and &lt;xar:data-output ...&gt; tags allow you to show individual labels or value outputs in the template.</xar:mlstring></p>
 
-<p><xar:mlstring>See the admin list for an example... We'll skip this one here, since we'll be retrieving 'properties' and 'values' 
+<p><xar:mlstring>See the admin list for an example... We'll skip this one here, since we'll be retrieving 'properties' and 'values'
     via the module code instead, with the next approach.</xar:mlstring></p>
 
 <!--xar:data-getitems name="$properties" value="$values" module="dyn_example" itemtype="0" catid="$catid" numitems="$itemsperpage" startnum="$startnum" /-->

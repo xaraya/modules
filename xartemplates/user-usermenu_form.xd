@@ -1,6 +1,7 @@
-<h2>#$name# <xar:mlstring>Example Information</xar:mlstring></h2> 
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<h2>#$name# <xar:mlstring>Example Information</xar:mlstring></h2>
 <form action="#xarModURL('example', 'user', 'usermenu')#" method="post" enctype="application/x-www-form-urlencoded">
-<input type="hidden" name="authid" id="authid" value="#$authid#" />    
+<input type="hidden" name="authid" id="authid" value="#$authid#" />
 <input type="hidden" name="phase" id="phase" value="update" />
 
 <p><xar:mlstring>This is only an example of hooking the user menu.  You may or may not need this functionality for your module.</xar:mlstring></p>
