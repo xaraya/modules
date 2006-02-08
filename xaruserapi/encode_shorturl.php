@@ -1,9 +1,20 @@
 <?php
-
+/**
+ * Initialization functions
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Images Module
+ * @link http://xaraya.com/index.php/release/152.html
+ * @author Images Module Development Team
+ */
 /**
  * return the path for a short URL to xarModURL for this module
  *
- * @author the Example module development team
+ * @author the Images module development team
  * @param $args the function and arguments passed to xarModURL
  * @returns string
  * @return path to be added to index.php for a short URL, or empty if failed
@@ -33,7 +44,9 @@ function images_userapi_encode_shorturl($args)
 
         // get the mime type from the database (urgh)
         } else {
-            $image = end(xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $fileId)));
+            // Bug 5410 Make a two step process
+            $imageinfo = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' =>$fileId));
+            $image = end($imageinfo);
 
             if (empty($image)) {
                 // fileId is nonexistant...

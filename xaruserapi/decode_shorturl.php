@@ -1,10 +1,21 @@
 <?php
-
+/**
+ * Initialization functions
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Images Module
+ * @link http://xaraya.com/index.php/release/152.html
+ * @author Images Module Development Team
+ */
 /**
  * extract function and arguments from short URLs for this module, and pass
  * them back to xarGetRequestInfo()
  *
- * @author the Example module development team
+ * @author the Images module development team
  * @param $params array containing the different elements of the virtual path
  * @returns array
  * @return array containing func the function to be called and args the query
