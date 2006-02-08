@@ -1,3 +1,4 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <table border="1" width="100%" cellpadding="2" cellspacing="0">
     <tr>
         <th align="center">#$menutitle#</th>
@@ -17,8 +18,6 @@
 <p><xar:mlstring>If you want to provide your own presentation here, you can specify a
      different layout="..." to use in the default template, or you can specify your
      own template="..." here as well.</xar:mlstring></p>
-
-
 
 <p><b><xar:mlstring>APPROACH # 2 : the &lt;xar:data-getitem ...&gt; tag</xar:mlstring></b></p>
 
@@ -99,9 +98,9 @@
 
 <!-- add the output from the different display hooks here -->
 <xar:if condition="!empty($hookoutput)">
-<br />
-<xar:foreach in="$hookoutput" key="$hookmodule">
-    #$hookoutput[$hookmodule]#
-</xar:foreach>
+    <br />
+    <xar:foreach in="$hookoutput" key="$hookmodule">
+        #$hookoutput[$hookmodule]#
+    </xar:foreach>
 </xar:if>
 
