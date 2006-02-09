@@ -75,8 +75,8 @@ class xmlrpc_server {
         } else {
             $payload .= $r;
         }
-        Header("Content-type: text/xml\r\nContent-length: " . 
-               strlen($payload));
+        Header("Content-type: text/xml");
+        Header("Content-length: " . strlen($payload));
         // even in debugging this might be too much
         //xarLogMessage("PAYLOAD:" . $payload, XARLOG_LEVEL_WARNING);
         print $payload;
