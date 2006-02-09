@@ -73,13 +73,6 @@ function courses_userapi_create_enroll($args)
     if (!$result) return;
     // Get the ID of the item that we inserted.
     $enrollid = $dbconn->PO_Insert_ID($studentstable, 'xar_sid');
-    // Let any hooks know that we have created a new item.
-
-    // TODO: evaluate
-    /*$item = $args;
-    $item['module'] = 'courses';
-    $item['itemid'] = $enrollid;
-    xarModCallHooks('item', 'create', $enrollid, $item);*/
 
     // Return the id of the newly created item to the calling process
     return $enrollid;

@@ -1,8 +1,8 @@
 <?php
  /**
- * Enroll student in course
+ * Add a teacher to a course
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -18,7 +18,7 @@
  * @param  $args an array of arguments (if called by other modules)
  * @param  $args an array of arguments (if called by other modules)
  * @param  $args ['userid'] the uid of the role to be treated as a teacher
- * @param  $args ['planningid'] the planned course ID that the user will enroll to
+ * @param  $args ['planningid'] the planned course ID that the teacher will get attached to
  */
 function courses_admin_newteacher($args)
 {
@@ -52,13 +52,13 @@ function courses_admin_newteacher($args)
 
     // If user is not a teacher yet go ahead and create the teacher id
     // Create the teacher
-    $type = 1; // TODO set types of teachers
+    $teachertype = 1; // TODO set types of teachers
     $tid = xarModAPIFunc('courses',
                          'admin',
                          'create_teacher',
                          array('userid'     => $userid,
                                'planningid' => $planningid,
-                               'type' => $type));
+                               'teachertype' => $teachertype));
 
     if (!isset($tid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 /*

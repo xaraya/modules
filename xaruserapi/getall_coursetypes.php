@@ -52,9 +52,7 @@ function courses_userapi_getall_coursetypes($args)
     }
 
     $items = array();
-    /* Security check - important to do this as early on as possible to
-     * avoid potential security holes or just too much wasted processing
-     */
+    // Security check
     if (!xarSecurityCheck('ViewCourses')) return;
     /* Get database setup
      */

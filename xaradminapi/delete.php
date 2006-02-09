@@ -1,22 +1,21 @@
 <?php
 /**
- * File: $Id:
- * 
- * Delete an example item
- * 
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * Delete a course
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage example
- * @author Example module development team 
+ * @subpackage Courses Module
+ * @link http://xaraya.com/index.php/release/179.html
+ * @author Courses Module Development Team
  */
 /**
- * delete an example item
- * 
- * @author the Example module development team 
- * @param  $args ['exid'] ID of the item
+ * Delete a course
+ *
+ * @author the Courses module development team
+ * @param  $args ['courseid'] ID of the item
  * @returns bool
  * @return true on success, false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
@@ -49,8 +48,9 @@ function courses_adminapi_delete($args)
     $xartable =& xarDBGetTables();
     $coursestable = $xartable['courses'];
     // Delete the item
-    $query = "DELETE FROM $coursestable
-            WHERE xar_courseid = ?";
+    $query = "DELETE
+              FROM $coursestable
+              WHERE xar_courseid = ?";
     $result = &$dbconn->Execute($query, array((int)$courseid));
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
@@ -60,6 +60,7 @@ function courses_adminapi_delete($args)
     // xarModCallHooks('item', 'delete', $exid, '');
     $item['module'] = 'courses';
     $item['itemid'] = $courseid;
+    $item['itemtype'] = $item['coursetype'];
     xarModCallHooks('item', 'delete', $courseid, $item);
     // Let the calling process know that we have finished successfully
     return true;

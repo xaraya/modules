@@ -1,7 +1,7 @@
 <?php
-/** 
+/**
  * Get a specific participant
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -9,12 +9,12 @@
  *
  * @subpackage Courses Module
  * @link http://xaraya.com/index.php/release/179.html
- * @author Courses module development team 
+ * @author Courses module development team
  */
 /**
  * get a single participant of a planned course
- * 
- * @author the Courses module development team 
+ *
+ * @author the Courses module development team
  * @param sid $ the ID of the student/participant
  * @returns array
  * @return array of items, or false on failure
@@ -39,7 +39,7 @@ function courses_userapi_getparticipant($args)
                      xar_regdate
             FROM $studentstable
             WHERE xar_sid = ?";
-            
+
     $result = $dbconn->Execute($query, array((int)$sid));
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
@@ -52,12 +52,12 @@ function courses_userapi_getparticipant($args)
     }
     // Put item into result array.
     for (; !$result->EOF; $result->MoveNext()) {
-        list($sid, $userid, $planningid, $status, $regdate) = $result->fields;
+        list($sid, $userid, $planningid, $studstatus, $regdate) = $result->fields;
         if (xarSecurityCheck('ReadCourses', 0, 'Course', "All:$planningid:All")) { //TODO
             $item = array('sid'        => $sid,
                           'userid'     => $userid,
                           'planningid' => $planningid,
-                          'status'     => $status,
+                          'studstatus' => $studstatus,
                           'regdate'    => $regdate);
         }
     }

@@ -17,8 +17,8 @@
  * This function is called with the results of the
  * form supplied by xarModFunc('courses','admin','modify') to update a current item
  *
- * @author Example module development team
- * @param  $ 'exid' the id of the item to be updated
+ * @author MichelV <michelv@xaraya.com>
+ * @param  $ 'tid' the id of the type to be updated
  * @param  $ 'name' the name of the item to be updated
  * @param  $ 'number' the number of the item to be updated
  */
@@ -26,9 +26,9 @@ function courses_admin_updatetype($args)
 {
     extract($args);
 
-    if (!xarVarFetch('tid',     'id',     $tid,     $tid,     XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('objectid', 'id',     $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('invalid',  'array',  $invalid,  $invalid,        XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('tid',        'id',     $tid,     $tid,     XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('objectid',   'id',     $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('invalid',    'array',  $invalid,  $invalid,        XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('coursetype', 'str:1:',    $coursetype, $coursetype, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('descr',      'str:1:255', $descr,      $descr,      XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('settings',   'str:1:255', $settings,   $settings,   XARVAR_NOT_REQUIRED)) return;

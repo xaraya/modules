@@ -103,10 +103,10 @@ function courses_admin_plancourse($args)
     $data['cancelbutton'] = xarVarPrepForDisplay(xarML('Cancel'));
 
     $data['level'] = xarModAPIFunc('courses', 'user', 'gets',
-                                      array('itemtype' => 3));
+                                      array('itemtype' => 1003));
     $data['year'] = xarModAPIFunc('courses', 'user', 'gets',
-                                      array('itemtype' => 5));
-
+                                      array('itemtype' => 1005));
+/*
     $item = array();
     $item['module'] = 'courses';
     $item['itemtype'] = $coursedata['coursetype'];
@@ -115,13 +115,10 @@ function courses_admin_plancourse($args)
     if (empty($hooks)) {
         $data['hookoutput'] = array();
     } else {
-        /* You can use the output from individual hooks in your template too, e.g. with
-         * $hookoutput['categories'], $hookoutput['dynamicdata'], $hookoutput['keywords'] etc.
-         */
         $data['hookoutput'] = $hooks;
     }
 
-    $data['item'] = $item;
+    $data['item'] = $item;*/
     // For E_ALL purposes, we need to check to make sure the vars are set.
     // If they are not set, then we need to set them empty to surpress errors
 

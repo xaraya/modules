@@ -79,7 +79,7 @@ function courses_admin_participants()
     }
 
     $data['status'] = xarModAPIFunc('courses', 'user', 'gets',
-                                      array('itemtype' => 4));
+                                      array('itemtype' => 1004));
 
     // Add the array of items to the template variables
     $data['items'] = $items;

@@ -1,21 +1,21 @@
 <?php
 /**
  * Get all participants for one planned course
- * 
- * @package Xaraya eXtensible Management System
+ *
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Courses Module
  * @link http://xaraya.com/index.php/release/179.html
- * @author Courses module development team 
+ * @author Courses module development team
  */
 
 /**
  * get all participants for a planned course
- * 
- * @author the Courses module development team 
+ *
+ * @author the Courses module development team
  * @author MichelV <michelv@xarayahosting.nl>
  * @param numitems $ the number of items to retrieve (default -1 = all)
  * @param startnum $ start with this item number (default 1)
@@ -53,7 +53,7 @@ function courses_adminapi_getallparticipants($args)
     // Put items into result array.
     for (; !$result->EOF; $result->MoveNext()) {
         list($sid, $userid, $planningid, $status, $regdate) = $result->fields;
-        if (xarSecurityCheck('EditCourses', 0, 'Course', "All:$planningid:All")) { 
+        if (xarSecurityCheck('EditCourses', 0, 'Course', "All:$planningid:All")) {
             $items[] = array('sid'        => $sid,
                              'userid'     => $userid,
                              'planningid' => $planningid,

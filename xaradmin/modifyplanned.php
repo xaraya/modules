@@ -3,7 +3,7 @@
  * Modify a planned course
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -68,9 +68,9 @@ function courses_admin_modifyplanned($args)
 
     $data['cancelbutton']   = xarVarPrepForDisplay(xarML('Cancel'));
     $data['level'] = xarModAPIFunc('courses', 'user', 'gets',
-                                      array('itemtype' => 3));
+                                      array('itemtype' => 1003));
     $data['year'] = xarModAPIFunc('courses', 'user', 'gets',
-                                      array('itemtype' => 5));
+                                      array('itemtype' => 1005));
     $data['authid']         = xarSecGenAuthKey();
     $data['menutitle']      = xarVarPrepForDisplay(xarML('Edit a planned course'));
     $data['updatebutton']   = xarVarPrepForDisplay(xarML('Update Planned Course'));

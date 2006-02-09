@@ -39,13 +39,6 @@ function courses_user_enroll($args)
     if (!empty($objectid)) {
         $planningid = $objectid;
     }
-    /* What does this do?
-    $courses['transform'] = array('name');
-    $item = xarModCallHooks('item',
-        'transform',
-        $planningid,
-        $courses);
-    */
     // Get the username so we can pass it to the enrollment function
     $uid = xarUserGetVar('uid');
     //Check to see if this user is already enrolled in this course
@@ -82,7 +75,7 @@ function courses_user_enroll($args)
                                     'studstatus' => $studstatus));
     if (!isset($enrollid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     // TODO: make this a better one
-    $regdate = date("Y-m-d H:i:s");
+    $regdate = time();
     // Call sendconfirm messages
     $confirm = xarModFunc('courses',
                               'user',

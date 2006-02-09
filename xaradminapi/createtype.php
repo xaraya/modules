@@ -7,9 +7,9 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Example Module
- * @link http://xaraya.com/index.php/release/36.html
- * @author Example Module Development Team
+ * @subpackage Courses Module
+ * @link http://xaraya.com/index.php/release/179.html
+ * @author Courses Module Development Team
  */
 
 /**
@@ -17,7 +17,7 @@
  *
  * This is a standard adminapi function to create a module item
  *
- * @author the Example module development team
+ * @author the Courses module development team
  * @param  $args ['name'] name of the item
  * @param  $args ['number'] number of the item
  * @returns int
@@ -52,11 +52,6 @@ function courses_adminapi_createtype($args)
      * out in a database-portable fashion
      */
     $nextId = $dbconn->GenId($table);
-    /* Add item - the formatting here is not mandatory, but it does make
-     * the SQL statement relatively easy to read. Also, separating out
-     * the sql statement from the Execute() command allows for simpler
-     * debug operation if it is ever needed
-     */
     $query = "INSERT INTO $table (
               xar_tid,
               xar_type)
@@ -71,17 +66,6 @@ function courses_adminapi_createtype($args)
 
     $tid = $dbconn->PO_Insert_ID($table, 'xar_tid');
 
-    /* Let any hooks know that we have created a new item. As this is a
-     * create hook we're passing 'exid' as the extra info, which is the
-     * argument that all of the other functions use to reference this
-     * item
-     * TODO: evaluate
-     * xarModCallHooks('item', 'create', $exid, 'exid');
-
-    $item = $args;
-    $item['module'] = 'courses';
-    $item['itemid'] = $tid;
-    xarModCallHooks('item', 'create', $tid, $item);     */
     /* Return the id of the newly created item to the calling process */
     return $tid;
 }

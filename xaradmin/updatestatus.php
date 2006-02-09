@@ -1,7 +1,7 @@
 <?php
 /**
  * Update status for student
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -9,7 +9,7 @@
  *
  * @subpackage Courses Module
  * @link http://xaraya.com/index.php/release/179.html
- * @author Courses module development team 
+ * @author Courses module development team
  */
 /**
  * update participant item from courses_admin_modify
@@ -39,19 +39,6 @@ function courses_admin_updatestatus()
                        new DefaultUserException($msg));
         return;
     }
-/* We don't need this here
-    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
-    if (!empty($ptid)) {
-        $descr = $pubtypes[$ptid]['descr'];
-    } else {
-        $descr = xarML('Articles');
-        $ptid = null;
-    }
-*/
-    // We need to tell some hooks that we are coming from the update status screen
-    // and not the update the actual article screen.  Right now, the keywords vanish
-    // into thin air.  Bug 1960 and 3161
-    xarVarSetCached('Hooks.all','noupdate',1);
 
     foreach ($sids as $sid => $val) {
         if ($val != 1) {
@@ -62,7 +49,7 @@ function courses_admin_updatestatus()
                                  'user',
                                  'getparticipant',
                                  array('sid' => $sid));
-                                 
+
         if (!isset($participant) || !is_array($participant)) {
             $msg = xarML('Unable to find #(1) item #(2)',
                          $descr, xarVarPrepForDisplay($sid));
@@ -70,10 +57,10 @@ function courses_admin_updatestatus()
                            new SystemException($msg));
             return;
         }
-        
+
         // $article['ptid'] = $article['pubtypeid'];// Need equivalent?
         // Security check
-        
+
 /* Needs rewrite
         $input = array();
         $input['article'] = $article;

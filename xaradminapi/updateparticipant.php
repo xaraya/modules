@@ -67,12 +67,7 @@ function courses_adminapi_updateparticipant($args)
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
     if (!$result) return;
-    /* Let any hooks know that we have created a new item.
-    // TODO: evaluate
-    $item = $args;
-    $item['module'] = 'courses';
-    $item['itemid'] = $sid;
-    xarModCallHooks('item', 'update', $sid, $item); */
+
     // Return the id of the newly created item to the calling process
     return $sid;
 }

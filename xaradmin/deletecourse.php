@@ -65,9 +65,9 @@ function courses_admin_deletecourse($args)
     // Get the dates this course is planned
 
     $countplanned = count(xarModAPIFunc('courses',
-            'user',
-            'getplandates',
-            array('courseid' => $courseid)));
+                                        'user',
+                                        'getplandates',
+                                        array('courseid' => $courseid)));
 
     if (($countplanned) > 0) {
         xarSessionSetVar('statusmsg', xarML('This course has been planned for #(1) times', $countplanned));

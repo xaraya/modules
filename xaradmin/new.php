@@ -2,7 +2,7 @@
 /**
  * Standard function to create a new module item
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -24,7 +24,7 @@ function courses_admin_new($args)
     extract($args);
 
     // Get parameters for the dyn data objects.
-    if (!xarVarFetch('itemtype', 'int:1:', $itemtype, 3, XARVAR_GET_OR_POST)) return;
+    if (!xarVarFetch('itemtype', 'int:1:', $itemtype, 1003, XARVAR_GET_OR_POST)) return;
     if (!xarVarFetch('preview',  'str', $preview, '', XARVAR_NOT_REQUIRED)) return;
     if (empty($itemtype)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',

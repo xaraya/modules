@@ -13,7 +13,7 @@
  */
 
 /**
- * display a course
+ * display a planned course
  *
  * This is the function to provide detailed information on a single course
  * and show the details of all planned occurences
@@ -46,13 +46,13 @@ function courses_user_displayplanned($args)
     $courseid = $item['courseid'];
     $course = xarModAPIFunc('courses','user','get', array('courseid' => $courseid));
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-
+/*
     // Let any transformation hooks know that we want to transform some text
     //TODO: necessary?
     $item['transform'] = array('name','lecturers');
     $item['itemtype'] = $course['coursetype'];
     $item = xarModCallHooks('item', 'transform', $planningid, $item);
-
+*/
     // Fill in the details of the item.
     $data['planningid'] = $planningid;
     $data['item'] = $item;
@@ -171,9 +171,6 @@ function courses_user_displayplanned($args)
     $data['items'] = $items;
 
     // Save the currently displayed item ID in a temporary variable cache
-    // for any blocks that might be interested (e.g. the Others block)
-    // You should use this -instead of globals- if you want to make
-    // information available elsewhere in the processing of this page request
     xarVarSetCached('Blocks.courses', 'planningid', $planningid);
 
     // Call the hooks

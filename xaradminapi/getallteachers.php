@@ -2,8 +2,8 @@
 /**
  * Get all teachers for one planned course
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -70,12 +70,12 @@ function courses_adminapi_getallteachers($args)
     if (!$result) return;
     // Put items into result array.
     for (; !$result->EOF; $result->MoveNext()) {
-        list($tid, $userid, $planningid, $type) = $result->fields;
+        list($tid, $userid, $planningid, $teachertype) = $result->fields;
         if (xarSecurityCheck('EditCourses', 0, 'Course', "All:$planningid:All")) { //TODO
             $items[] = array('tid' => $tid,
                 'userid'           => $userid,
                 'planningid'       => $planningid,
-                'type'             => $type);
+                'teachertype'      => $teachertype);
         }
     }
     // All successful database queries produce a result set, and that result

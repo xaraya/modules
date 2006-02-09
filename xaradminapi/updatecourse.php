@@ -2,8 +2,8 @@
 /**
  * Update a course
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 by the Xaraya Development Team.
+ * @package modules
+ * @copyright (C) 2002-2006 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -24,11 +24,6 @@
 function courses_adminapi_updatecourse($args)
 {
     extract($args);
-
-    if (!xarVarFetch('courseid', 'id', $courseid)) return;
-    if (!xarVarFetch('objectid', 'id', $objectid, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('name', 'str:1:', $name)) return;
-    if (!xarVarFetch('number', 'str:1:', $number)) return;
 
     // Argument check
     // TODO: should these be in other place? Non-API?
@@ -91,8 +86,7 @@ function courses_adminapi_updatecourse($args)
         return false;
     }
 
-    // Let any hooks know that we have updated an item.  As this is an
-    // update hook we're passing the updated $item array as the extra info
+    // Let any hooks know that we have updated an item.
     $item = $args;
     $item['module'] = 'courses';
     $item['itemid'] = $courseid;

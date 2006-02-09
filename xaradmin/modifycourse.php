@@ -2,8 +2,8 @@
 /**
  * Modify a course
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -61,7 +61,7 @@ function courses_admin_modifycourse($args)
     }
 
     $levels = array();
-    $levels = xarModAPIFunc('courses', 'user', 'gets', array('itemtype' => 3));
+    $levels = xarModAPIFunc('courses', 'user', 'gets', array('itemtype' => 1003));
 
     // Return the template variables defined in this function
     // TODO: rewrite to $data

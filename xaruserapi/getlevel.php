@@ -2,8 +2,8 @@
 /**
  * Utility function to get DD item for level
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -21,7 +21,9 @@
 function courses_userapi_getlevel($args)
 {
     extract($args);
-
+    if (!isset($level) || !is_numeric($level)) {
+        return false;
+    }
     $modid = xarModGetIDFromName('courses');
 
     $info = array();

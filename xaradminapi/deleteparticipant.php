@@ -2,7 +2,7 @@
 /**
  * Delete a student item
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -14,7 +14,7 @@
 /**
  * delete a student
  *
- * @author the courses module development team
+ * @author the Courses module development team
  * @param  $args ['sid'] ID of the student item
  * @returns bool
  * @return true on success, false on failure
@@ -52,16 +52,13 @@ function courses_adminapi_deleteparticipant($args)
     // are getting - $table and $column don't cut it in more complex
     // modules
     $studentstable = $xartable['courses_students'];
-    $query = "DELETE FROM $studentstable
-            WHERE xar_sid = ?";
+    $query = "DELETE
+              FROM $studentstable
+              WHERE xar_sid = ?";
     $result = &$dbconn->Execute($query, array((int)$sid));
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
     if (!$result) return;
-    /* Let any hooks know that we have deleted an item.
-    $item['module'] = 'courses';
-    $item['itemid'] = $sid;
-    xarModCallHooks('item', 'delete', $sid, $item);*/
     // Let the calling process know that we have finished successfully
     return true;
 }

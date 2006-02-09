@@ -1,6 +1,6 @@
 <?php
 /**
- * Update an courses item
+ * Update an course type
  *
  * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
@@ -12,12 +12,12 @@
  * @author Courses module development team
  */
 /**
- * Update an courses item
+ * Update an course type
  *
- * @author the Example module development team
- * @param  $args ['exid'] the ID of the item
+ * @author the Courses module development team
+ * @param  $args ['tid'] the ID of the item
  * @param  $args ['name'] the new name of the item
- * @param  $args ['number'] the new number of the item
+ * @param  $args ['descr'] the new number of the item
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function courses_adminapi_updatetype($args)
@@ -70,15 +70,7 @@ function courses_adminapi_updatetype($args)
      * the exception so we just return
      */
     if (!$result) return;
-    /* Let any hooks know that we have updated an item. As this is an
-     * update hook we're passing the updated $item array as the extra info
 
-    $item['module'] = 'courses';
-    $item['itemid'] = $tid;
-    $item['coursetype'] = $coursetype;
-    $item['itemtype'] = $tid;
-    xarModCallHooks('module', 'update', $tid, $item);
-     */
     /* Let the calling process know that we have finished successfully */
     return true;
 }

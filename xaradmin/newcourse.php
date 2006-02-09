@@ -25,7 +25,7 @@ function courses_admin_newcourse($args)
     // Get parameters from whatever input we need.
     if (!xarVarFetch('name', 'str:1:', $name, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('number', 'str:1:', $number, '',XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('coursetype', 'int:1:', $coursetype, 10, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('coursetype', 'int:1:', $coursetype, 1, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('shortdesc', 'str:1:', $shortdesc, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('intendedcredits', 'str:1:30', $intendedcredits, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('freq', 'str:1:', $freq, '', XARVAR_NOT_REQUIRED)) return;
