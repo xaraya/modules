@@ -1,0 +1,70 @@
+<xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Owner module overview</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <h3><xar:mlstring>Overview</xar:mlstring></h3>
+
+    <h4><xar:mlstring>What is it?</xar:mlstring></h4>
+    <p>
+        <xar:mlstring>
+            The Owner module is a simple utility module, which has no
+            direct user interface. The module operates entirely
+            through the hooks system. 
+        </xar:mlstring>
+        <xar:mlstring>
+            The functionality it provides is enabled by hooking the
+            owner module into another module. By doing so, the hooks
+            from this module will run when you create, update or
+            display an item in those modules. (the modify and delete
+            hooks are TODO )
+        </xar:mlstring>
+        <xar:mlstring>
+            On the create operation the owner module registers the user id
+            from the account which creates an item and logs the
+            module and item identification of that operation in the
+            database. This information is also created when updating
+            an which does not have an owner yet.
+        </xar:mlstring>
+    </p>
+    <p>
+        <xar:mlstring>
+            This means that for each item created in the hooked
+            modules there is a linkage between the user account
+            performing the operation and the module item to which it
+            applied. This linkage <em>could</em> be interpreted as
+            ownership, but how the information is actually used is up
+            to the creator of other modules.
+        </xar:mlstring>
+    </p>
+    <p>
+        <xar:mlstring>
+            The maintenance of the linkage, after you hook the owner
+            module into another module is automatically performed by
+            the module in cooperation with the hooks system.
+        </xar:mlstring>
+        <xar:mlstring>
+            The owner module API furthermore exposes a 'get' and a
+            'getall' method to retrieve the <em>ownership</em>
+            information on a certain item of a specific itemtype in a
+            particular module used in your application, which you can
+            retrieve for further processing.
+        </xar:mlstring>
+    </p>
+    <p>
+        <xar:mlstring>
+            That's it, plain and simple.
+        </xar:mlstring>
+    </p>
+    <h4><xar:mlstring>Ideas for further work</xar:mlstring></h4>
+    <p>
+        The modify and delete hook should really be implemented to
+        make the story complete here where the behaviour would be
+        roughly:
+        <ul>
+            <li>on deletion: remove the linkage information</li>
+            <li>on modification: allow to change ownership of an item
+            by priviledged accounts</li>
+        </ul>
+    </p>
+</div>
