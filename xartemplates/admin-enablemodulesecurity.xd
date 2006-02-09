@@ -6,11 +6,7 @@
         
         <div class="xar-form-input-wrapper">
             <label class="xar-form-label">Module :</label>
-            <select name="mod" class="xar-form-textlong">
-            <xar:foreach in="$modules" key="$name" value="$mod">
-            <option value="#$name#"><xar:var name="mod.name" /></option>
-            </xar:foreach>
-            </select>
+            <xar:data-input name="mod" type="module" value="$modid" />
         </div>
         <div class="xar-form-input-wrapper">
             <label class="xar-form-label">Table :</label>
@@ -30,11 +26,7 @@
         </div>
          <div class="xar-form-input-wrapper">
             <label class="xar-form-label">User Group :</label>
-            <select name="group" class="xar-form-textlong">
-            <xar:foreach in="$groups" key="$key" value="$group">
-            <option value="#$group.uid#"><xar:var name="group.name" /></option>
-            </xar:foreach>
-            </select>
+            <xar:data-input name="group" type="grouplist" value="$gid"/>
         </div>
     </fieldset>
     <fieldset>
