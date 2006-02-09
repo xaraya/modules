@@ -1,12 +1,10 @@
 <?php
 /**
- * File: $Id: input2numeric.php,v 1.2 2003/12/22 07:12:50 garrett Exp $
- *
  * AddressBook utility functions
  *
  * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage AddressBook Module
@@ -22,7 +20,6 @@
  */
 function addressbook_utilapi_input2numeric($args)
 {
-
     $num = 0;
 
     extract($args);
