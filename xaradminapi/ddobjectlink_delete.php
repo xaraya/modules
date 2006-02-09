@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Subitems module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Subitems Module
+ * @link http://xaraya.com/index.php/release/9356.html
+ * @author Subitems Module Development Team
+ */
 /**
  * delete a subitems item
  *
@@ -21,7 +32,7 @@ function subitems_adminapi_ddobjectlink_delete($args)
             new SystemException($msg));
         return;
     }
-   
+
     $item = xarModAPIFunc('subitems','user', 'ddobjectlink_get', $args);
     // Check for exceptions
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back

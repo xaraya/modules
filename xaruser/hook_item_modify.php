@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Subitems module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Subitems Module
+ * @link http://xaraya.com/index.php/release/9356.html
+ * @author Subitems Module Development Team
+ */
 function subitems_user_hook_item_modify($args)
 {
     extract($args);
@@ -18,7 +29,7 @@ function subitems_user_hook_item_modify($args)
     if(!$ddobjectlink = xarModAPIFunc('subitems','user','ddobjectlink_get',$extrainfo)) return '';
     // nothing to see here
     if (empty($ddobjectlink)) return '';
-    
+
     $data = array();
     foreach($ddobjectlink as $index => $subobjectlink) {
         $subobjectid = $subobjectlink['objectid'];
@@ -27,7 +38,7 @@ function subitems_user_hook_item_modify($args)
         $subobject = xarModAPIFunc('dynamicdata','user','getobject',
                                 array('objectid' => $subobjectid, 'status' => 1));
         if (!isset($subobject)) return '';
-    
+
         // get existing subitems
         $ids = xarModAPIFunc('subitems','user','dditems_getids',array('objectid' => $subobjectid,'itemid' => $extrainfo['itemid']));
         if(!isset($ids)) return '';
@@ -65,7 +76,7 @@ function subitems_user_hook_item_modify($args)
         $data['subitems'][$subobjectid]['object'] = $subobject;
         $data['subitems'][$subobjectid]['ids'] = $ids;
     }
-    
+
     return xarTplModule('subitems','user','hook_item_modify',$data,$template);
 }
 

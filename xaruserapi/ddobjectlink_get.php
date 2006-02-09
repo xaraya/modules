@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Subitems module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Subitems Module
+ * @link http://xaraya.com/index.php/release/9356.html
+ * @author Subitems Module Development Team
+ */
 /**
  * get a specific item
  *
@@ -33,7 +44,7 @@ function subitems_userapi_ddobjectlink_get($args)
         $where = "xar_module = ? AND xar_itemtype = ?";
         $bindvars = array((string) $module, (int) $itemtype);
     }
-    
+
     $query = "SELECT xar_objectid,xar_module,xar_itemtype,xar_template,xar_sort
               FROM {$xartable['subitems_ddobjects']}
               WHERE $where";
@@ -44,7 +55,7 @@ function subitems_userapi_ddobjectlink_get($args)
     $items = array();
     while(!$result->EOF) {
         list($objectid, $module,$itemtype,$template,$sort) = $result->fields;
-    
+
         // Create the item array
         if (empty($sort)) {
             $sort = array();
@@ -52,7 +63,7 @@ function subitems_userapi_ddobjectlink_get($args)
             $sort = @unserialize($sort);
             if (!is_array($sort)) $sort = array();
         }
-        
+
         $item = array(
             'objectid' => $objectid,
             'module' => $module,

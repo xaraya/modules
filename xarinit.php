@@ -1,12 +1,15 @@
 <?php
 /**
- * subitems initialization functions
+ * Subitems initialization functions
  *
- * @copyright (C) 2003 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
- * @subpackage subitems
- * @author subitems module development team
+ *
+ * @subpackage Subitems Module
+ * @link http://xaraya.com/index.php/release/9356.html
+ * @author Subitems Module Development Team
  */
 
 /**
@@ -52,7 +55,7 @@ function subitems_init()
     // Pass the Table Create DDL to adodb to create the table and send exception if unsuccessful
     $result = &$dbconn->Execute($query);
     if (!$result) return;
-    
+
     $subitemstable = $xartable['subitems_ddids'];
     $p = xarDBGetSiteTablePrefix();
     // Add some indexes, we're dealing with O(n^2) records here.
@@ -117,7 +120,7 @@ function subitems_upgrade($oldversion)
     $xartable =& xarDBGetTables();
     $table = $xartable['subitems_ddobjects'];
     $subitemstable = $xartable['subitems_ddids'];
-    
+
     xarDBLoadTableMaintenanceAPI();
     // Upgrade dependent on old version number
     switch ($oldversion) {
@@ -151,7 +154,7 @@ function subitems_upgrade($oldversion)
             if(empty($query)) return; // no good
             $result =& $dbconn->Execute($query);
             if(!$result) return;
-                
+
             $p = xarDBGetSiteTablePrefix();
             // Add some indexes, we're dealing with O(n^2) records here.
             $query = xarDBCreateIndex($subitemstable,array('name'=> 'i_'.$p.'_subitems_itemid',  'fields' => array('xar_itemid')));

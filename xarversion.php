@@ -1,12 +1,15 @@
 <?php
 /**
- * Subitem module version info
+ * Subitems module version info
  *
- * @copyright (C) 2003 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
- * @subpackage example
- * @author Example module development team
+ *
+ * @subpackage Subitems Module
+ * @link http://xaraya.com/index.php/release/9356.html
+ * @author Subitems Module Development Team
  */
 $modversion['name']           = 'subitems';
 $modversion['id']             = '9356';
@@ -22,7 +25,6 @@ $modversion['author']         = 'Georg Schnattinger';
 $modversion['contact']        = 'http://www.ice-clanpage.com/';
 $modversion['admin']          = 1;
 $modversion['user']           = 0;
-$modversion['securityschema'] = array('' => '');
 $modversion['class']          = 'Miscellaneous';
 $modversion['category']       = 'Miscellaneous';
 ?>

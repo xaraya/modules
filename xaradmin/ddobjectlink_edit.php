@@ -1,12 +1,23 @@
 <?php
-
+/**
+ * Subitems module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Subitems Module
+ * @link http://xaraya.com/index.php/release/9356.html
+ * @author Subitems Module Development Team
+ */
 function subitems_admin_ddobjectlink_edit($args)
 {
     extract($args);
-    
+
     // The subobject which is linked to a parent
     if(!xarVarFetch('objectid','int:1:',$subobjectid)) return;
-    
+
     if(!xarVarFetch('confirm','str:0',$confirm,'',XARVAR_NOT_REQUIRED)) return;
     if(!xarVarFetch('reload','str:0',$reloaded,'',XARVAR_NOT_REQUIRED)) return;
 
@@ -31,7 +42,7 @@ function subitems_admin_ddobjectlink_edit($args)
             $result_array['sort'] = array('value' => array(),
                                           'error' => '');
         } else {
-            $result_array['sort'] = array('value' => 
+            $result_array['sort'] = array('value' =>
                                             array($result_array['sortby']['value'] => $result_array['sortmode']['value']),
                                           'error' => '');
         }
@@ -41,15 +52,15 @@ function subitems_admin_ddobjectlink_edit($args)
         $result_array['itemtype'] = array('value' => $subobjectlink['itemtype'],'error' => '');
         $result_array['template'] = array('value' => $subobjectlink['template'],'error' => '');
         $result_array['sort'] = array('value' => $subobjectlink['sort'],'error' => '');
-    }    
-    
+    }
+
     $modInfo = xarModGetInfo($result_array['module']['value']);
     $result_array['module_name'] = $modInfo['name'];
-    
+
     if(($result_array['no_errors'] == true) && !empty($confirm))    {
         if (!xarSecConfirmAuthKey()) return;
 
-        
+
         if(!xarModAPIFunc('subitems','admin','ddobjectlink_update',array(
                 "objectid" => $subobjectid,
                 "module" => $modInfo['name'],
@@ -61,22 +72,22 @@ function subitems_admin_ddobjectlink_edit($args)
         xarResponseRedirect(xarModURL('subitems','admin','ddobjectlink_view'));
         return true;
     }
-    
+
     // get the Dynamic Object defined for this module (and itemtype, if relevant)
     $subobject = xarModAPIFunc('dynamicdata','user','getobject',
                              array('objectid' => $subobjectid,
                                      'status' => 1));
     if (!isset($subobject)) return;
-    
+
     $data = xarModAPIFunc('subitems','admin','menu');
     $data = array_merge($result_array,$data);
     $data['properties'] =  $subobject->getProperties();
     $subobjectinfo = xarModAPIFunc('dynamicdata','user','getobjectinfo',
                                 array('objectid' => $subobjectid));
- 
+
     $data['label'] = xarML('Unknown');
     if (!empty($subobjectinfo)) $data['label'] = $subobjectinfo['label'];
-    
+
     $data['objectid'] = $subobjectid;
 
     return $data;

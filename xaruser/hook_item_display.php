@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Subitems module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Subitems Module
+ * @link http://xaraya.com/index.php/release/9356.html
+ * @author Subitems Module Development Team
+ */
 function subitems_user_hook_item_display($args)
 {
     extract($args);
@@ -22,7 +33,7 @@ function subitems_user_hook_item_display($args)
     if(!$ddobjectlink = xarModAPIFunc('subitems','user','ddobjectlink_get',$param)) return '';
     // nothing to see here
     if (empty($ddobjectlink)) return '';
-        
+
     $data = array();
     foreach($ddobjectlink as $index => $subobjectlink) {
         $subobjectid = $subobjectlink['objectid'];

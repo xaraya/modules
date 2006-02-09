@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Subitems module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Subitems Module
+ * @link http://xaraya.com/index.php/release/9356.html
+ * @author Subitems Module Development Team
+ */
 function subitems_userapi_hook_item_delete($args)
 {
     extract($args);
@@ -18,10 +29,10 @@ function subitems_userapi_hook_item_delete($args)
     if(!$ddobjectlink = xarModAPIFunc('subitems','user','ddobjectlink_get',$extrainfo)) return $extrainfo;
     // nothing to see here
     if (empty($ddobjectlink)) return $extrainfo;
-        
+
     // TODO: support multiple items too here? (perhaps not needed)
     $ddobjectlink = $ddobjectlink[0];
-        
+
     $objectid = $ddobjectlink['objectid'];
 
     // get the Dynamic Object defined for this module (and itemtype, if relevant)

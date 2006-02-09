@@ -1,12 +1,23 @@
 <?php
-
+/**
+ * Subitems module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Subitems Module
+ * @link http://xaraya.com/index.php/release/9356.html
+ * @author Subitems Module Development Team
+ */
 function subitems_admin_ddobjectlink_new($args)
 {
     extract($args);
 
     if(!xarVarFetch('confirm','str:1',$confirm,'')) return;
     if(!xarVarFetch('reload','str:1',$reloaded,'')) return;
-    
+
     // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing
     if (!xarSecurityCheck('AdminSubitems')) return;
@@ -26,14 +37,14 @@ function subitems_admin_ddobjectlink_new($args)
         $result_array['template'] = array('value' => '','error' => '');
         $result_array['objectid'] = array('value' => '','error' => '');
     }
-    
+
     $modInfo = xarModGetInfo($result_array['module']['value']);
     $result_array['module_name'] = $modInfo['name'];
-    
+
     // if(!xarVarFetch('objectid','int:1:',$objectid)) return;
     if(($result_array['no_errors'] == true) && !empty($confirm))    {
         if (!xarSecConfirmAuthKey()) return;
-        
+
         if(!xarModAPIFunc('subitems','admin','ddobjectlink_create',array(
                 "objectid" => $result_array['objectid']['value'],
                 "module" => $modInfo['name'],

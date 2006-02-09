@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Subitems module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Subitems Module
+ * @link http://xaraya.com/index.php/release/9356.html
+ * @author Subitems Module Development Team
+ */
 /**
  * create a new subitems item
  *
@@ -14,7 +25,7 @@ function subitems_adminapi_ddobjectlink_create($args)
 {
     extract($args);
 
-    
+
     $invalid = array();
     if (!isset($objectid) ||!is_numeric($objectid))
         $invalid[] = 'objectid';
@@ -33,11 +44,11 @@ function subitems_adminapi_ddobjectlink_create($args)
         return;
     }
 
-    
+
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
-    $query = "INSERT 
+    $query = "INSERT
                 INTO {$xartable['subitems_ddobjects']} (
                        xar_objectid,
                        xar_module,
@@ -45,9 +56,9 @@ function subitems_adminapi_ddobjectlink_create($args)
                        xar_template)
              VALUES (?, ?, ?, ?)";
 
-    $bindvars = array((int) $objectid, 
-                      (string) $module, 
-                      (int) $itemtype, 
+    $bindvars = array((int) $objectid,
+                      (string) $module,
+                      (int) $itemtype,
                       (string) $template);
 
     $result = &$dbconn->Execute($query, $bindvars);

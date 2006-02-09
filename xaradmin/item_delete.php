@@ -1,7 +1,18 @@
 <?php
-
 /**
- * add new item
+ * Subitems module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Subitems Module
+ * @link http://xaraya.com/index.php/release/9356.html
+ * @author Subitems Module Development Team
+ */
+/**
+ * Delete an item
  */
 function subitems_admin_item_delete($args)
 {
@@ -9,10 +20,10 @@ function subitems_admin_item_delete($args)
 
     // The subobject we're deleting an item from
     if(!xarVarFetch('objectid','int:',$subobjectid)) return;
-    
+
     // The item id withing this subobject
     if(!xarVarFetch('ddid','int:',$ddid)) return;
-    
+
     if(!xarVarFetch('redirect','str:1',$redirect,xarServerGetVar('HTTP_REFERER'),XARVAR_NOT_REQUIRED)) return;
     if(!xarVarFetch('delete','str:1',$delete,'',XARVAR_NOT_REQUIRED)) return;
     if(!xarVarFetch('confirm','str:1',$confirm,'',XARVAR_NOT_REQUIRED)) return;

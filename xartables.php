@@ -1,16 +1,19 @@
 <?php
 /**
- * table definitions function
+ * Subitems initialization functions
  *
- * @copyright (C) 2003 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
- * @subpackage example
- * @author Example module development team
+ *
+ * @subpackage Subitems Module
+ * @link http://xaraya.com/index.php/release/9356.html
+ * @author Subitems Module Development Team
  */
 
 /**
- * Return example table names to xaraya
+ * Return Subitems table names to xaraya
  *
  * This function is called internally by the core whenever the module is
  * loaded.  It is loaded by xarMod__loadDbInfo().
