@@ -1,3 +1,4 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:template type="module" file="menu" />
 
 <div class="xar-mod-body">
@@ -6,19 +7,19 @@
     </h2><br />
     <table width="100%" border="0" cellspacing="1" cellpadding="8">
         <form action="&xar-modurl-subitems-admin-ddobjectlink_new;" method="POST" enctype="multipart/form-data">
-            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />    
+            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
             <tr>
                 <td><xar:mlstring>Which object contains the subitems?</xar:mlstring></td>
                 <td>
                     <xar:data-input name="objectid" value="$objectid['value']" type="object" />
                     <xar:if condition="!empty($objectid['error'])">
-                        <span style="color:red">#$objectid.error:msg#</span>    
+                        <span style="color:red">#$objectid.error:msg#</span>
                     </xar:if>
                 </td>
             </tr>
             <tr>
                 <td><xar:mlstring>Which module contains the parent items?</xar:mlstring></td>
-                <td>    
+                <td>
                     <xar:data-input name="modid" type="module" value="$module['value']" />
                     <input type="submit" name="reload" value="#xarML('Reload itemtypes')#"/>
                     <xar:if condition="!empty($module['error'])">

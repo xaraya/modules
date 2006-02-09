@@ -1,3 +1,4 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:template type="module" file="menu" />
 
 <div class="xar-mod-body">
@@ -9,8 +10,8 @@
     </h2><br />
     <table width="100%" border="0" cellspacing="1" cellpadding="8">
         <form action="&xar-modurl-subitems-admin-ddobjectlink_edit;" method="POST" enctype="multipart/form-data">
-            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />    
-            <input type="hidden" name="objectid" id="objectid" value="#$objectid#" />    
+            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+            <input type="hidden" name="objectid" id="objectid" value="#$objectid#" />
             <tr>
                 <td><xar:mlstring>Which module contains the parent item?</xar:mlstring></td>
                 <td>
@@ -41,10 +42,10 @@
             </tr>
             <tr>
                 <td><xar:mlstring>Sorting:</xar:mlstring></td>
-                <td>    
+                <td>
                     <select name="sortby">
                         <option value=""></option>
-                        <xar:foreach in="$properties" key="$name" value="$property" >    
+                        <xar:foreach in="$properties" key="$name" value="$property" >
                             <xar:if condition="array_key_exists($name,$sort['value'])">
                                 <option value="#$name#" selected="selected"><xar:data-label property="$properties[$name]" /></option>
                             <xar:else />
@@ -59,10 +60,10 @@
                             <option value="ASC" ><xar:mlstring>Ascending</xar:mlstring></option>
                         </xar:if>
                         <xar:if condition="in_array('DESC',$sort['value'])">
-                            <option value="DESC" selected="selected"><xar:mlstring>Descending</xar:mlstring></option>        
+                            <option value="DESC" selected="selected"><xar:mlstring>Descending</xar:mlstring></option>
                         <xar:else />
-                            <option value="DESC"><xar:mlstring>Descending</xar:mlstring></option>        
-                        </xar:if>        
+                            <option value="DESC"><xar:mlstring>Descending</xar:mlstring></option>
+                        </xar:if>
                     </select>
                     <xar:if condition="!empty($sort['error'])">
                         <span style="color:red">#$sort.error:msg#</span>

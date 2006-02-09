@@ -1,5 +1,4 @@
-<!-- common admin menu for this module - remove link to the current function -->
-<!-- the variables used in this menu come from example_admin_menu() -->
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Wars Administration</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2>#$action#</h2><br />
   <div style="margin: auto;">
@@ -20,7 +19,7 @@
           -->
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <input type="hidden" name="noinit" id="noinit" value="true" />
-        <xar:if condition="isset($warid)">    
+        <xar:if condition="isset($warid)">
           <input type="hidden" name="warid" id="warid" value="#$warid#" />
         </xar:if>
 

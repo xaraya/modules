@@ -1,5 +1,4 @@
-<!-- This is a standard template for the module overview  -->
-<!-- Each Module Should have an overview explaining exactly what it does, and giving an overview of the blocks and hooks that it includes or accepts. -->
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Administration - Subitems</xar:mlstring></span></div>
 <div class="xar-mod-body" style="display:block;">
     <h2><xar:mlstring>Overview</xar:mlstring></h2>
@@ -13,14 +12,14 @@
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
             <em><xar:mlstring>This module allows you to create and display sub-items for any module item. In the words of the author :</xar:mlstring></em>
-            <p><xar:mlstring>For example, if you want to have a publication type (pubtype) "cooking recipe". This pubtype could be to store the ingredients of the meal, thus there would be required a list of input fields: ingredient1, quantity1, 
+            <p><xar:mlstring>For example, if you want to have a publication type (pubtype) "cooking recipe". This pubtype could be to store the ingredients of the meal, thus there would be required a list of input fields: ingredient1, quantity1,
             pic1(extended info :-) ) , ingredient2, quantity2, pic2,...</xar:mlstring></p>
-            <p><xar:mlstring>The disadvantage of this is the high number of fields. To ensure that your users aren't going against the limit there... Furthermore all input fields would always be displayed. That is of course not a very nice 
+            <p><xar:mlstring>The disadvantage of this is the high number of fields. To ensure that your users aren't going against the limit there... Furthermore all input fields would always be displayed. That is of course not a very nice
             way to accomplish this.</xar:mlstring></p>
-            <p><xar:mlstring>As I didn't know how to do this better, I had a dream about a module, which can be hooked from any other module and which is able to display / 
-            provide editing / etc. subitems to an item. I had a dream about a table, which saves the information, which DD-Object stores the subitems 
-            of "module" / "itemtype" combination and another table containing which DD-Itemids belong to "module" / "itemtype" / "itemid" in this DD-Object 
-            (1 to n Relation). I had the dream to share my module with the community. Now, the module is here, and all dreams got true. If you didn't get my 
+            <p><xar:mlstring>As I didn't know how to do this better, I had a dream about a module, which can be hooked from any other module and which is able to display /
+            provide editing / etc. subitems to an item. I had a dream about a table, which saves the information, which DD-Object stores the subitems
+            of "module" / "itemtype" combination and another table containing which DD-Itemids belong to "module" / "itemtype" / "itemid" in this DD-Object
+            (1 to n Relation). I had the dream to share my module with the community. Now, the module is here, and all dreams got true. If you didn't get my
             technical information, don't worry. </xar:mlstring></p>
         </div>
         <br />
@@ -31,7 +30,7 @@
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
             <ol>
             <li><xar:mlstring>Install the module (done by now, as you are seeing this page)</xar:mlstring> </li>
-            <li><xar:mlstring>Go to Admin > DynamicData > View Objects > </xar:mlstring><a href="&xar-modurl-dynamicdata-admin-new;"><xar:mlstring>Create New </xar:mlstring></a>. <xar:mlstring>There, create a new dynamic data object 
+            <li><xar:mlstring>Go to Admin > DynamicData > View Objects > </xar:mlstring><a href="&xar-modurl-dynamicdata-admin-new;"><xar:mlstring>Create New </xar:mlstring></a>. <xar:mlstring>There, create a new dynamic data object
             , which should hold the subitem information.</xar:mlstring> </li>
             <li><xar:mlstring>Go to Dynamic Data > View Objects > Edit [YOUR OBJECT] > Modify Dynamic Properties and add properties (fields). You must have at least one field with a chosen label, Property Type of ItemID, default of 0 and Status of Display Only. </xar:mlstring></li>
             <li><xar:mlstring>Go to Admin > Subitems module (admin area) > Add link. There, choose the object you have just created, the module and the itemtype that you will attach this property to.</xar:mlstring></li>

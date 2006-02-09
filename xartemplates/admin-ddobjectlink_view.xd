@@ -1,3 +1,4 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:template type="module" file="menu" />
 
 <div class="xar-mod-body">
@@ -5,7 +6,7 @@
 
     <fieldset>
         <legend><xar:mlstring>List of all registered subitem links</xar:mlstring></legend>
-        
+
         <table  class="xar-fullwidth">
             <thead>
                 <tr>
@@ -35,7 +36,7 @@
                     <td>
                         <a href="&xar-modurl-subitems-admin-ddobjectlink_edit;&amp;objectid=#$ddobject.objectid#">
                             <xar:mlstring>Edit</xar:mlstring>
-                        </a> | 
+                        </a> |
                         <a href="&xar-modurl-subitems-admin-ddobjectlink_delete;&amp;objectid=#$ddobject.objectid#">
                             <xar:mlstring>Delete</xar:mlstring>
                         </a>

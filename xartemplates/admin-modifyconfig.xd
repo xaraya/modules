@@ -1,4 +1,4 @@
-
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:template type="module" file="menu" />
 
 <div class="xar-mod-body"><h2>#$menutitle#</h2><br />

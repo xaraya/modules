@@ -1,3 +1,4 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <tr><td colspan="2">
 <h3 align="center">Das sind die gespielten Matches</h3>
 <table cellpadding="4" width="100%" border="5">
@@ -7,26 +8,26 @@
         <th align="center" class="xar-normal" style="text-align: center;">
         <xar:data-label property="$properties[$name]" />
         </th>
-    </xar:foreach>                
-    
+    </xar:foreach>
+
 </tr>
 </thead>
-<tbody>    
+<tbody>
 <xar:foreach in="$values" key="$uid">
 
     <tr>
-    
+
     <xar:foreach in="$properties" key="$name">
     <td>
-    
+
     <xar:if condition="isset($values[$uid][$name])">
     <xar:data-output property="$properties[$name]" value="$values[$uid][$name]" />
     <xar:else />
             &nbsp;
     </xar:if>
-    
+
     </td>
-    </xar:foreach>    
+    </xar:foreach>
     </tr>
 </xar:foreach>
 </tbody>

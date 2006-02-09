@@ -1,3 +1,4 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:foreach in="$subitems" key="$objectid" value="$object">
     <h3 align="center">#$object.object:label#:</h3>
     <table cellpadding="4" width="100%">
@@ -7,10 +8,10 @@
                 <th align="center" class="xar-normal" style="text-align: center;">
                     <xar:data-label property="$object['properties'][$name]" />
                 </th>
-            </xar:foreach>                
+            </xar:foreach>
         </tr>
         </thead>
-        <tbody>    
+        <tbody>
             <xar:foreach in="$object.values" key="$uid">
                 <tr>
                 <xar:foreach in="$object.properties" key="$name">
@@ -21,7 +22,7 @@
                             &nbsp;
                         </xar:if>
                     </td>
-                </xar:foreach>    
+                </xar:foreach>
                 </tr>
             </xar:foreach>
         </tbody>

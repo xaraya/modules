@@ -1,3 +1,4 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:template type="module" file="menu" />
 
 <div class="xar-mod-body">
@@ -5,7 +6,7 @@
     <table width="100%" border="0" cellspacing="1" cellpadding="8">
         <form action="&xar-modurl-subitems-admin-ddobjectlink_delete;" method="POST" enctype="multipart/form-data">
             <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-            <input type="hidden" name="objectid" id="objectid" value="#$objectid#"/>   
+            <input type="hidden" name="objectid" id="objectid" value="#$objectid#"/>
             <tr>
                 <td><xar:mlstring>Subitems Object:</xar:mlstring></td>
                 <td>(#$objectid#) #$label#</td>
