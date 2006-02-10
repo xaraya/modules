@@ -31,10 +31,10 @@ function dyn_example_admin_delete($args)
     if (!empty($objectid)) {
         $itemid = $objectid;
     }
-
+    // Show an error when the itemid is still not set
     if (empty($itemid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'item id', 'admin', 'update', 'dyn_example');
+                    'item id', 'admin', 'delete', 'dyn_example');
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return $msg;
@@ -61,7 +61,7 @@ function dyn_example_admin_delete($args)
     if (empty($confirm)) {
         // No confirmation yet - display a suitable form to obtain confirmation
         // of this action from the user
-
+        // Get the menu
         $data = xarModAPIFunc('dyn_example','admin','menu');
 
         // Specify for which item you want confirmation
@@ -73,12 +73,13 @@ function dyn_example_admin_delete($args)
     }
 
     // If we get here it means that the user has confirmed the action
-
+    // Check for a valid Authentication Key
     if (!xarSecConfirmAuthKey()) return;
-
+    // Now, delete the item
     $itemid = $object->deleteItem();
     if (empty($itemid)) return;
 
+    // Redirect to the main view function of this module after success
     xarResponseRedirect(xarModURL('dyn_example', 'admin', 'view'));
 
     // Return

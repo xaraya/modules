@@ -13,6 +13,8 @@
  */
 /**
  * create an item
+ *
+ * @param str preview When this parameter is set, a preview of the new item is shown.
  */
 function dyn_example_admin_create($args)
 {
@@ -53,6 +55,7 @@ function dyn_example_admin_create($args)
     }
 
     // create the item here
+    // For this function, we use the dynamic data function
     $itemid = $object->createItem();
     if (empty($itemid)) return; // throw back
 

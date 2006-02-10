@@ -13,17 +13,23 @@
  */
 /**
  * modify an item
+ *
+ * This function shows a form in which the user can modify the item
+ *
+ * @param id itemid The id of the dynamic data item to modify
  */
 function dyn_example_admin_modify($args)
 {
-    if(!xarVarFetch('itemid',   'id', $itemid,   NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('objectid', 'id', $objectid, NULL, XARVAR_DONT_SET)) {return;}
     extract($args);
 
+    if(!xarVarFetch('itemid',   'id', $itemid,   NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('objectid', 'id', $objectid, NULL, XARVAR_DONT_SET)) {return;}
+
+    // See if we have to use the universal objectid
     if (!empty($objectid)) {
         $itemid = $objectid;
     }
-
+    // Check if we still have no id of the item to modify.
     if (empty($itemid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'item id', 'admin', 'modify', 'dyn_example');
@@ -42,8 +48,11 @@ function dyn_example_admin_modify($args)
     $newid = $object->getItem();
     if (!isset($newid) || $newid != $itemid) return;
 
+    // Check if the user can Edit in the dyn_example module, and then specifically for this item.
+    // We pass the itemid to the SecurityCheck
     if (!xarSecurityCheck('EditDynExample',1,'Item',$itemid)) return;
 
+    // Add the admin menu
     $data = xarModAPIFunc('dyn_example','admin','menu');
     $data['itemid'] = $itemid;
     $data['object'] =& $object;
