@@ -12,21 +12,21 @@
  * @author Categories module development team
  */
 /**
- * udpate item from categories_admin_modify
+ * udpate the base category from categories_admin_modifycatbase
  */
 function categories_admin_updatecatbase()
 {
     // Get parameters
 
     //Checkbox work for submit buttons too
-    if (!xarVarFetch('bid', 'id', $pbid, false, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('name', 'str:1:100', $name, '', XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('bid',         'id', $pbid, false, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('name',        'str:1:100', $name, '', XARVAR_NOT_REQUIRED)) {return;}
 
-    if (!xarVarFetch('modid', 'id', $modid, false, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('itemtype', 'int:0', $itemtype, false, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('modid',       'id', $modid, false, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('itemtype',    'int:0', $itemtype, false, XARVAR_NOT_REQUIRED)) {return;}
 
-    if (!xarVarFetch('multiple', 'checkbox', $multiple, false, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('display', 'checkbox', $display, false, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('multiple',    'checkbox', $multiple, false, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('display',     'checkbox', $display, false, XARVAR_NOT_REQUIRED)) {return;}
 
     if (!xarVarFetch('orderresult', 'str', $order, 'x', XARVAR_NOT_REQUIRED)) {return;}
 

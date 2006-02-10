@@ -14,7 +14,7 @@
     <div style="margin: auto;">
         <p><xar:mlstring>Module:</xar:mlstring> #$module#; <xar:mlstring>Item type:</xar:mlstring> #$itemtype#</p>
 
-        <form action="#xarModURL('categories', 'admin', 'updatecatbase')#" method="post">
+        <form action="&xar-modurl-categories-admin-updatecatbase;" method="post">
             <p>
                 <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                 <input type="hidden" name="bid" id="bid" value="#$bid#" />

@@ -12,7 +12,7 @@
  * @author Categories module development team
  */
 /**
- * get direct children of a specific (list of) category
+ * Find out if the category exists from a $path
  *
  * @param $args['cid'] id of category to get children for, or
  * @param $args['cids'] array of category ids to get children for
@@ -22,7 +22,6 @@
  */
 function categories_userapi_categoryexists( $args )
 {
-
     extract($args);
 
     $path_array = explode("/", $path);
@@ -47,7 +46,7 @@ function categories_userapi_categoryexists( $args )
             ));
         foreach ($categories as $category) {
             if ($category['name'] == $cat_name) {
-                //Found the category we are loking for
+                //Found the category we are looking for
                 array_shift($path_array);
                 $cid = $category["cid"];
             }

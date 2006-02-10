@@ -11,6 +11,13 @@
  * @link http://xaraya.com/index.php/release/147.html
  * @author Categories module development team
  */
+/**
+ * Delete a category
+ *
+ * This function also shows a count on the number of child categories of the current category
+ * @param id cid
+ * @param str confirm
+ */
 function categories_admin_deletecat()
 {
     if (!xarVarFetch('cid','int:1:',$cid)) return;

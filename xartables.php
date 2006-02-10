@@ -1,6 +1,5 @@
 <?php
 /**
-/**
  * Categories module
  *
  * @package modules
@@ -22,7 +21,7 @@
  * @return  $xartable array
  * @throws  no exceptions
  * @todo    nothing
-*/
+ */
 function categories_xartables()
 {
     // Initialise table array
@@ -59,9 +58,9 @@ function categories_xartables()
     $xartable['categories_linkage'] = $categories_linkage;
 
     // Column names
-    $xartable['categories_linkage_column'] = array('cid' => $categories_linkage . '.xar_cid',
-                                                  'iid' => $categories_linkage . '.xar_iid',
-                                                  'modid' => $categories_linkage . '.xar_modid');
+    $xartable['categories_linkage_column'] = array('cid'   => $categories_linkage . '.xar_cid',
+                                                   'iid'   => $categories_linkage . '.xar_iid',
+                                                   'modid' => $categories_linkage . '.xar_modid');
 
     // Return table information
     return $xartable;
