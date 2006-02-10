@@ -29,7 +29,7 @@ function todolist_adminapi_getmenulinks()
 
     /* The main menu will look for this  menulinks array and return it for a tree view of the module
 // Main administration menu
-  
+
     $output = new pnHTML();
 
     $authid = pnSecGenAuthKey();
@@ -53,16 +53,16 @@ function todolist_adminapi_getmenulinks()
     $output->TableStart(xarML('Todolist administration'), '', 1);
     $output->TableRowStart();
     $output->TableColStart();
-    $output->URL(pnModURL('todolist','admin','viewusers'),xarML('Users')); 
+    $output->URL(pnModURL('todolist','admin','viewusers'),xarML('Users'));
     $output->TableColEnd();
     $output->TableColStart();
-    $output->URL(pnModURL('todolist','admin','viewgroups'),xarML('Groups')); 
+    $output->URL(pnModURL('todolist','admin','viewgroups'),xarML('Groups'));
     $output->TableColEnd();
     $output->TableColStart();
-    $output->URL(pnModURL('todolist','admin','viewprojects'),xarML('Projects')); 
+    $output->URL(pnModURL('todolist','admin','viewprojects'),xarML('Projects'));
     $output->TableColEnd();
     $output->TableColStart();
-    $output->URL(pnModURL('todolist','admin','modifyconfig'),xarML('Edit Configuration')); 
+    $output->URL(pnModURL('todolist','admin','modifyconfig'),xarML('Edit Configuration'));
     $output->TableColEnd();
     $output->TableRowEnd();
     $output->TableEnd();
@@ -70,7 +70,7 @@ function todolist_adminapi_getmenulinks()
     return $output->GetOutput();
 
      */
-    
+
     /* We usually display the menu links in a standard order
      * An optional Overview link -
      *  - overview shows by default immediately admin chooses the module with overviews switched on
@@ -83,14 +83,14 @@ function todolist_adminapi_getmenulinks()
 
     /* Show an overview menu option here if you like */
 
-    if (xarSecurityCheck('AddExample', 0)) {
+    if (xarSecurityCheck('AddTodoList', 0)) {
     $menulinks[] = Array('url' => xarModURL('example','admin','overview'),
 
-            'title' => xarML('Example Overview'),
+            'title' => xarML('TodoList Overview'),
             'label' => xarML('Overview'));
     }
-   
-    if (xarSecurityCheck('AddExample', 0)) {
+
+    if (xarSecurityCheck('AddTodoList', 0)) {
 
         $menulinks[] = Array('url' => xarModURL('example','admin','new'),
             /* In order to display the tool tips and label in any language,
@@ -100,7 +100,7 @@ function todolist_adminapi_getmenulinks()
             'label' => xarML('Add Item'));
     }
     /* Security Check */
-    if (xarSecurityCheck('EditExample', 0)) {
+    if (xarSecurityCheck('EditTodoList', 0)) {
         /* We do the same for each new menu item that we want to add to our admin panels.
          * This creates the tree view for each item.  Obviously, we don't need to add every
          * function, but we do need to have a way to navigate through the module.
@@ -113,7 +113,7 @@ function todolist_adminapi_getmenulinks()
             'label' => xarML('View Items'));
     }
     /* Security Check */
-    if (xarSecurityCheck('AdminExample', 0)) {
+    if (xarSecurityCheck('AdminTodoList', 0)) {
         /* We do the same for each new menu item that we want to add to our admin panels.
          * This creates the tree view for each item.  Obviously, we don't need to add every
          * function, but we do need to have a way to navigate through the module.

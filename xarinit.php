@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Todolist initialization functions
  *
@@ -32,11 +32,11 @@ function todolist_init()
      * are using - $table doesn't cut it in more complex modules
      */
     $group_memberstable = $xartable['todolist_group_members'];
-    
+
     $fields = "xar_group_id I KEY default 0,
                xar_member_id I KEY default 0
               ";
-            
+
     /* Create or alter the table as necessary */
     $result = $datadict->changeTable($group_memberstable, $fields);
     if (!$result) {return;}
@@ -46,13 +46,13 @@ function todolist_init()
     $fields = "xar_id I PRIMARY auto,
                xar_group_name C(30) default NULL,
                xar_description C(200) default NULL,
-               xar_group_leader I default NULL,
+               xar_group_leader I default NULL
                ";
     /* Create or alter the table as necessary */
     $result = $datadict->changeTable($groupstable, $fields);
     if (!$result) {return;}
-    
-    /* Can't we do this with comments ??? 
+
+    /* Can't we do this with comments ???
     $notestable = $xartable['todolist_notes'];
     $fields = "xar_todo_id I unsigned NOTNULL default 0,
             xar_note_id I unsigned PRIMARY auto,
@@ -60,7 +60,7 @@ function todolist_init()
             xar_usernr I default NULL,
             xar_date I NOTNULL default 0
             "; // Shouldn't date be a datetype?
-    // Create or alter the table as necessary 
+    // Create or alter the table as necessary
     $result = $datadict->changeTable($notestable, $fields);
     if (!$result) {return;}
 */
@@ -96,7 +96,7 @@ function todolist_init()
     $responsible_personstable = $xartable['todolist_responsible_persons'];
 
     $fields = "xar_todo_id I PRIMARY default 0,
-               xar_user_id I PRIMARY default 0,
+               xar_user_id I PRIMARY default 0
               ";
     /* Create or alter the table as necessary */
     $result = $datadict->changeTable($responsible_groupstable, $fields);
@@ -114,7 +114,7 @@ function todolist_init()
             xar_date_created I NOTNULL default 0,
             xar_date_changed I NOTNULL default 0,
             xar_changed_by I NOTNULL default 0,
-            xar_status I2 NOTNULL default 0,
+            xar_status I2 NOTNULL default 0
             ";
     /* Create or alter the table as necessary */
     $result = $datadict->changeTable($todostable, $fields);
@@ -200,7 +200,7 @@ function todolist_upgrade($oldversion)
         case '0.9.13':
             // Code to upgrade from version 0.9.13 goes here
             xarModSetVar('todolist','userpref','1;all;0;1');
-            
+
             $dbconn =& xarDBGetConn();;
             $todolist_users = pnConfigGetVar('prefix') . '_todolist_users';
             $sql = "DROP TABLE $todolist_users";
@@ -229,8 +229,8 @@ function todolist_delete()
     // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-    
-    $group_memberstable = $xartable['todolist_group_members'];    
+
+    $group_memberstable = $xartable['todolist_group_members'];
     $groupstable = $xartable['todolist_groups'];
     $notestable = $xartable['todolist_notes'];
     $project_memberstable = $xartable['todolist_project_members'];
@@ -245,7 +245,7 @@ function todolist_delete()
     /* Drop the tables */
      $result = $datadict->dropTable($group_memberstable);
      $result = $datadict->dropTable($groupstable);
-     $result = $datadict->dropTable($notestable);  
+     $result = $datadict->dropTable($notestable);
      $result = $datadict->dropTable($project_memberstable);
      $result = $datadict->dropTable($projectstable);
      $result = $datadict->dropTable($responsible_groupstable);
@@ -254,7 +254,7 @@ function todolist_delete()
 
     // Delete any module variables
     xarModDelAllVars('todolist');
-    
+
     /* Remove Masks and Instances
      */
     xarRemoveMasks('todolist');

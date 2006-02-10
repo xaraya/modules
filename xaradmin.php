@@ -26,7 +26,7 @@
 // Purpose of file:  todolist administration display functions
 // ----------------------------------------------------------------------
 
-$modinfo = pnModGetInfo(pnModGetIDFromName('todolist'));
+$modinfo = xarModGetInfo(xarModGetIDFromName('todolist'));
 
 /**
  * creates a HTML-dropdownbox with the availible Users
@@ -51,7 +51,7 @@ function makeUserDropdownList($myname,$selected_names,$selected_project, $emty_c
        $result = $dbconn->Execute("SELECT xar_uid, xar_uname FROM $pntable[roles] ORDER BY xar_uname");
        $usercnt = $result->PO_RecordCount();
     } else {
-       $todolist_project_members_column = &$pntable['todolist_project_members_column'];    
+       $todolist_project_members_column = &$pntable['todolist_project_members_column'];
        $result = $dbconn->Execute("SELECT DISTINCT $todolist_project_members_column[member_id] FROM $pntable[todolist_project_members]");
        $usercnt = $result->PO_RecordCount();
     }
@@ -81,7 +81,7 @@ function makeUserDropdownList($myname,$selected_names,$selected_project, $emty_c
         } else {
             $str .= '<option value="">';
         }
-    } 
+    }
     if ($usercnt > 0)
     {
         for (;!$result->EOF;$result->MoveNext())
@@ -220,7 +220,7 @@ function todolist_admin_viewprojects()
 // create new group
 function todolist_admin_creategroup($args)
 {
-    list($group_name,$group_description,$group_leader) = 
+    list($group_name,$group_description,$group_leader) =
         pnVarCleanFromInput('group_name','group_description','group_leader');
     extract($args);
 
@@ -257,11 +257,11 @@ function todolist_admin_creategroup($args)
 // @param 'number' the number of the item to be updated
 function todolist_admin_updategroup($args)
 {
-    list($group_id,$group_name,$group_description,$group_leader,$group_members) = 
+    list($group_id,$group_name,$group_description,$group_leader,$group_members) =
          pnVarCleanFromInput('new_group_id','new_group_name','new_group_description','new_group_leader','new_group_members');
 
     extract($args);
-                            
+
     if (!pnSecConfirmAuthKey()) {
         pnSessionSetVar('errormsg', xarML('Bad Auth Key'));
         pnRedirect(pnModURL('todolist', 'admin', 'viewgroups'));
@@ -286,7 +286,7 @@ function todolist_admin_updategroup($args)
 
 function todolist_admin_deletegroup($args)
 {
-    list($group_id, $confirmation) = 
+    list($group_id, $confirmation) =
         pnVarCleanFromInput('group_id','confirmation');
 
     extract($args);
@@ -343,14 +343,14 @@ function todolist_admin_deletegroup($args)
     }
 
     pnRedirect(pnModURL('todolist', 'admin', 'viewgroups'));
-    
+
     return true;
 }
 
 // add new user
 function todolist_admin_createuser($args)
 {
-    list($user_id, $user_email_notify, $user_primary_project, $user_my_tasks, $user_show_icons) = 
+    list($user_id, $user_email_notify, $user_primary_project, $user_my_tasks, $user_show_icons) =
         pnVarCleanFromInput('user_id', 'user_email_notify', 'user_primary_project', 'user_my_tasks','user_show_icons');
     extract($args);
 
@@ -472,7 +472,7 @@ function todolist_admin_modifyuser($args)
     $output->Linebreak(2);
     $output->FormSubmit(xarML('Update'));
     $output->FormEnd();
-    
+
     return $output->GetOutput();
 }
 
@@ -483,11 +483,11 @@ function todolist_admin_modifyuser($args)
 // @param 'number' the number of the item to be updated
 function todolist_admin_updateuser($args)
 {
-    list($user_id, $user_email_notify, $user_primary_project, $user_my_tasks, $user_show_icons) = 
+    list($user_id, $user_email_notify, $user_primary_project, $user_my_tasks, $user_show_icons) =
         pnVarCleanFromInput('new_user_id', 'new_user_email_notify', 'new_user_primary_project', 'new_user_my_tasks','new_user_show_icons');
 
     extract($args);
-                            
+
     if (!pnSecConfirmAuthKey()) {
         pnSessionSetVar('errormsg', xarML('Bad Auth Key'));
         pnRedirect(pnModURL('todolist', 'admin', 'viewusers'));
@@ -513,7 +513,7 @@ function todolist_admin_updateuser($args)
 
 function todolist_admin_deleteuser($args)
 {
-    list($user_id, $confirmation) = 
+    list($user_id, $confirmation) =
         pnVarCleanFromInput('user_id','confirmation');
 
     extract($args);
@@ -570,7 +570,7 @@ function todolist_admin_deleteuser($args)
     }
 
     pnRedirect(pnModURL('todolist', 'admin', 'viewusers'));
-    
+
     return true;
 }
 

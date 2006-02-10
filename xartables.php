@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Todolist table definition functions
  *
@@ -27,37 +27,37 @@ function todolist_xartables()
 {
     // Initialise table array
     $xarTables = array();
-    
-    $group_memberstable = xarDBGetSiteTablePrefix() . '_todolist_group_members';
-    $xarTables['todolist_group_members'] = $todolist_group_members;
+
+    $group_members = xarDBGetSiteTablePrefix() . '_todolist_group_members';
+    $xarTables['todolist_group_members'] = $group_members;
 
 
-    $groupstable = xarDBGetSiteTablePrefix() . '_todolist_groups';
-    $xarTables['todolist_groups'] = $todolist_groups;
+    $groups = xarDBGetSiteTablePrefix() . '_todolist_groups';
+    $xarTables['todolist_groups'] = $groups;
 
 /* Notes are moved to comments
-    $notestable = xarDBGetSiteTablePrefix() . '_todolist_notes';
-    $xarTables['todolist_notes'] = $todolist_notes;
+    $notes = xarDBGetSiteTablePrefix() . '_todolist_notes';
+    $xarTables['todolist_notes'] = $notes;
 */
 
-    $memberstable = xarDBGetSiteTablePrefix() . '_todolist_project_members';
-    $xarTables['todolist_project_members'] = $todolist_project_members;
+    $project_members = xarDBGetSiteTablePrefix() . '_todolist_project_members';
+    $xarTables['todolist_project_members'] = $project_members;
 
 
-    $projectstable = xarDBGetSiteTablePrefix() . '_todolist_projects';
-    $xarTables['todolist_projects'] = $todolist_projects;
+    $projects = xarDBGetSiteTablePrefix() . '_todolist_projects';
+    $xarTables['todolist_projects'] = $projects;
 
 
-    $responsible_groupstable = xarDBGetSiteTablePrefix() . '_todolist_responsible_groups';
-    $xarTables['todolist_responsible_groups'] = $todolist_responsible_groups;
+    $responsible_groups = xarDBGetSiteTablePrefix() . '_todolist_responsible_groups';
+    $xarTables['todolist_responsible_groups'] = $responsible_groups;
 
 
-    $responsible_personstable = xarDBGetSiteTablePrefix() . '_todolist_responsible_persons';
-    $xarTables['todolist_responsible_persons'] = $todolist_responsible_persons;
+    $responsible_persons = xarDBGetSiteTablePrefix() . '_todolist_responsible_persons';
+    $xarTables['todolist_responsible_persons'] = $responsible_persons;
 
 
-    $todostable = xarDBGetSiteTablePrefix() . '_todolist_todos';
-    $xarTables['todolist_todos'] = $todolist_todos;
+    $todos = xarDBGetSiteTablePrefix() . '_todolist_todos';
+    $xarTables['todolist_todos'] = $todos;
 
 
     // Return the table information
