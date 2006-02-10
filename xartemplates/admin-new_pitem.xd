@@ -104,12 +104,11 @@
                  <label for="rule_type" class="xar-form-label" title="#xarML('This is the type rule that applies to this plan item')#">
                         <xar:mlstring>Type Rule</xar:mlstring>
                  </label>
-                 <input type="text" name="rule_type" id="rule_type" value="#$rule_type#" maxlength="15" class="xar-form-textshort" />
-                 <xar:if condition="!empty($invalid['rule_type'])">
-                     <div class="xar-error">
-                            <xar:mlstring>ERROR! This is not a valid type</xar:mlstring>
-                     </div>
-                 </xar:if>
+                 <select name="rule_type">
+                    <xar:loop name="$coursetypes">
+                        <option value="#$loop:item['tid']#">#$loop:item['coursetype']#</option>
+                    </xar:loop>
+                 </select>
             </div>
             <div class="xar-form-input-wrapper">
                  <label for="rule_source" class="xar-form-label" title="#xarML('Choose from internal or external or open')#">
