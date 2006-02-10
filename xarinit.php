@@ -163,11 +163,12 @@ function commerce_init()
     /*
       Our list of objects
     */
-    $ice_objects = array('ice_countries', 'ice_currencies', 'ice_taxclasses',
+    $ice_objects = array( 'ice_countries', 'ice_currencies', 'ice_taxclasses',
                          'ice_taxrates', 'ice_languages', 'ice_zones',
                          'ice_taxzones', 'ice_taxzonemapping', 'ice_addressformats',
                          'ice_configuration', 'ice_config_groups',
-                         'ice_roles');
+                         'ice_roles'
+                         );
 
     // Treat destructive right now
     $existing_objects  = xarModApiFunc('dynamicdata','user','getobjects');
@@ -186,6 +187,7 @@ function commerce_init()
 
     // TODO: This will bomb out if the object already exists
 	$objects = array();
+
     foreach($ice_objects as $ice_object) {
         $def_file = 'modules/commerce/xardata/'.$ice_object.'-def.xml';
         $dat_file = 'modules/commerce/xardata/'.$ice_object.'-data.xml';
@@ -203,31 +205,6 @@ function commerce_init()
 	xarModSetVar('commerce','ice_objects',serialize($objects));
 
     /** END ICE MODEL **/
-
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_customers_basket";
-    if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_commerce_customers_basket (
-      customers_basket_id int NOT NULL auto_increment,
-      customers_id int NOT NULL,
-      products_id tinytext NOT NULL,
-      customers_basket_quantity int(2) NOT NULL,
-      final_price decimal(15,4) NOT NULL,
-      customers_basket_date_added char(8),
-      PRIMARY KEY (customers_basket_id)
-    )";
-    if (!$q->run($query)) return;
-
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_customers_basket_attributes";
-    if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_commerce_customers_basket_attributes (
-      customers_basket_attributes_id int NOT NULL auto_increment,
-      customers_id int NOT NULL,
-      products_id tinytext NOT NULL,
-      products_options_id int NOT NULL,
-      products_options_value_id int NOT NULL,
-      PRIMARY KEY (customers_basket_attributes_id)
-    )";
-    if (!$q->run($query)) return;
 
     $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_customers_ip";
     if (!$q->run($query)) return;
