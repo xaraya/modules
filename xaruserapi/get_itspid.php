@@ -12,13 +12,13 @@
  * @author ITSP Module Development Team
  */
 /**
- * Get a specific ITSP id by userid
+ * Get a specific ITSP (id) by userid
  *
- * Standard function of a module to retrieve a specific item
+ * This takes the uid and returns the itsp
  *
  * @author the ITSP module development team
  * @param  $args ['userid'] id of the user to get the itsp for
- * @returns array
+ * @returns array with the itsp for this userid
  * @return item array, or false on failure
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */

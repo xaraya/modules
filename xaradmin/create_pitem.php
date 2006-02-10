@@ -27,18 +27,18 @@ function itsp_admin_create_pitem($args)
     extract($args);
 
     // Get parameters from whatever input we need.
-    if (!xarVarFetch('pitemid',    'id',     $pitemid,     $pitemid,    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('pitemid',    'id',     $pitemid,    $pitemid,    XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('objectid',   'id',     $objectid,   $objectid,  XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('pitemname',  'str:1:', $pitemname,   $pitemname,  XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('pitemdesc',  'str:1:', $pitemdesc,   $pitemdesc,  XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('pitemrules', 'str:1:', $pitemrules,  $pitemrules, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('pitemname',  'str:1:', $pitemname,  $pitemname,  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('pitemdesc',  'str:1:', $pitemdesc,  $pitemdesc,  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('pitemrules', 'str:1:', $pitemrules, $pitemrules, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('credits',    'int:1:', $credits,    $credits,   XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('mincredit',  'int:1:', $mincredit,  $mincredit, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('dateopen',   'int:1:', $dateopen,   $dateopen,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('dateclose',  'int:1:', $dateclose,  $dateclose, XARVAR_NOT_REQUIRED)) return;
 
-    if (!xarVarFetch('rule_cat',   'int:1:', $rule_cat,    $rule_cat,   XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('rule_type',  'str:1:', $rule_type,    $rule_type,   XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('rule_cat',   'int:1:', $rule_cat,     $rule_cat,   XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('rule_type',  'str:1:', $rule_type,    $rule_type,   XARVAR_NOT_REQUIRED)) return; // The coursetype
     if (!xarVarFetch('rule_source','enum:internal:external:open', $rule_source,    $rule_source,   XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('rule_level', 'int:1:', $rule_level,    $rule_level,   XARVAR_NOT_REQUIRED)) return;
 

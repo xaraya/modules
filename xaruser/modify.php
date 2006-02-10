@@ -20,6 +20,8 @@
  * @author ITSP Module Development Team
  * @param  $ 'itspid' the id of the itsp to be modified
  * @param  $ 'pitemid' the id of the plan item to be modified
+ * @todo add test for already followed courses
+ *       add checks for types of planitems
  */
 function itsp_user_modify($args)
 {
@@ -113,6 +115,7 @@ function itsp_user_modify($args)
 
     $item['module'] = 'itsp';
     $item['itemid'] = 2;
+    $hooks = array();
     $hooks = xarModCallHooks('item', 'modify', $itspid, $item);
 
     /* Return the template variables defined in this function */

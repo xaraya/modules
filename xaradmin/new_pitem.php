@@ -26,18 +26,18 @@ function itsp_admin_new_pitem($args)
 
 
     // Get parameters from whatever input we need.
-    if (!xarVarFetch('pitemname',   'str:1:', $pitemname,   $pitemname,  XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('pitemdesc',   'str:1:', $pitemdesc,   $pitemdesc,  XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('pitemrules',  'str:1:', $pitemrules,  $pitemrules, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('credits',    'int:1:', $credits,    $credits,   XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('mincredit',  'int:1:', $mincredit,  $mincredit, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('dateopen',   'int:1:', $dateopen,   $dateopen,  XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('dateclose',  'int:1:', $dateclose,  $dateclose, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('pitemname',  'str:1:', $pitemname,   $pitemname,  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('pitemdesc',  'str:1:', $pitemdesc,   $pitemdesc,  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('pitemrules', 'str:1:', $pitemrules,  $pitemrules, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('credits',    'int:1:', $credits,     $credits,    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('mincredit',  'int:1:', $mincredit,   $mincredit,  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('dateopen',   'int:1:', $dateopen,    $dateopen,   XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('dateclose',  'int:1:', $dateclose,   $dateclose,  XARVAR_NOT_REQUIRED)) return;
 
-    if (!xarVarFetch('rule_cat',    'int:1:', $rule_cat,    $rule_cat,   XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('rule_type',   'str:1:', $rule_type,    $rule_type,   XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('rule_source', 'enum:internal:external:open', $rule_source,    $rule_source,   XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('rule_level',   'int:1:', $rule_level,    $rule_level,   XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('rule_cat',    'int:1:', $rule_cat,           $rule_cat,     XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('rule_type',   'str:1:', $rule_type,          $rule_type,    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('rule_source', 'enum:internal:external:open', $rule_source,  $rule_source,   XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('rule_level',  'int:1:', $rule_level,         $rule_level,   XARVAR_NOT_REQUIRED)) return;
 
     if (!xarVarFetch('invalid', 'array',  $invalid, $invalid, XARVAR_NOT_REQUIRED)) return;
     // Add the admin menu
@@ -48,8 +48,9 @@ function itsp_admin_new_pitem($args)
     if (!xarSecurityCheck('AddITSPPlan')) return;
     // get the levels in courses
     $data['levels'] = xarModAPIFunc('courses', 'user', 'gets',
-                                      array('itemtype' => 3));
-
+                                      array('itemtype' => 1003));
+    // Get the coursetypes for the types rule
+    $data['coursetypes'] = xarModAPIFunc('courses', 'user', 'getall_coursetypes');
 
     /* Generate a one-time authorisation code for this operation */
     $data['authid'] = xarSecGenAuthKey();

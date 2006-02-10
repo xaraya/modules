@@ -16,21 +16,22 @@
  *
  * @author the ITSP module development team
  * @return array containing the item types and their description
+ * @todo decide on the setup in here
  */
 function itsp_userapi_getitemtypes($args)
 {
     $itemtypes = array();
 
-   /*  do not use this if you only handle one type of items in your module */
-   $itemtypes[1] = array('label' => xarVarPrepForDisplay(xarML('ITSP Plans')),
+    /*  do not use this if you only handle one type of items in your module */
+    $itemtypes[1] = array('label' => xarVarPrepForDisplay(xarML('ITSP Plans')),
                       'title' => xarVarPrepForDisplay(xarML('View ITSP Plans')),
                       'url'   => xarModURL('itsp','user','view'));
 
-   $itemtypes[2] = array('label' => xarVarPrepForDisplay(xarML('ITSPs')),
+    $itemtypes[2] = array('label' => xarVarPrepForDisplay(xarML('ITSPs')),
                       'title' => xarVarPrepForDisplay(xarML('View ITSPs')),
                       'url'   => xarModURL('itsp','user','viewitsp'));
 
-   $itemtypes[3] = array('label' => xarVarPrepForDisplay(xarML('ITSP Planitems')),
+    $itemtypes[3] = array('label' => xarVarPrepForDisplay(xarML('ITSP Planitems')),
                       'title' => xarVarPrepForDisplay(xarML('View ITSP Planitems')),
                       'url'   => xarModURL('itsp','user','view'));
     return $itemtypes;
