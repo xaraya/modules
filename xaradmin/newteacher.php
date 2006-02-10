@@ -24,19 +24,16 @@ function courses_admin_newteacher($args)
 {
     extract($args);
 
-    if (!xarVarFetch('planningid', 'id', $planningid, NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('userid',     'int::', $userid, NULL, XARVAR_DONT_SET)) return;
-    // if (!xarVarFetch('extpid',       'isset', $extpid,       NULL, XARVAR_DONT_SET)) {return;}
-    // Check to see if this user is already enrolled in this course
+    if (!xarVarFetch('planningid',   'id',    $planningid,  NULL, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('userid',       'int::', $userid,      NULL, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('teachertype',  'int',   $teachertype, NULL, XARVAR_DONT_SET)) {return;}
+    // Check if this teacher is already a teacher
     $check = xarModAPIFunc('courses',
                            'admin',
                            'check_teacher',
                            array('userid' => $userid,
                                  'planningid' => $planningid));
 
-    //if (!isset($courses) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-
-    // Check if this teacher is already a teacher
     if (count($check)!=0) {
     $msg = xarML('This teacher has already been assigned to this course');
         xarErrorSet(XAR_USER_EXCEPTION, 'ALREADY_TEACHER',
@@ -52,7 +49,10 @@ function courses_admin_newteacher($args)
 
     // If user is not a teacher yet go ahead and create the teacher id
     // Create the teacher
-    $teachertype = 1; // TODO set types of teachers
+
+    if (!$teachertype) {
+        $teachertype = 1; // TODO set types of teachers
+    }
     $tid = xarModAPIFunc('courses',
                          'admin',
                          'create_teacher',

@@ -29,13 +29,6 @@ function courses_admin_teachers()
     // doesn't need to be adapted in case of errors
     $data['items'] = array();
 
-    // Call the xarTPL helper function to produce a pager in case of there
-    // being many items to display.
-    $data['pager'] = xarTplGetPager($startnum,
-        xarModAPIFunc('courses', 'user', 'countitems'), //TODO make count function
-        xarModURL('courses', 'admin', 'teachers', array('startnum' => '%%')),
-        xarModGetVar('courses', 'itemsperpage'));
-
     // Security check
     if (!xarSecurityCheck('EditCourses', 0, 'Course', 'All:$planningid:All')) return;
 
@@ -95,5 +88,4 @@ function courses_admin_teachers()
     // Return the template variables defined in this function
     return $data;
 }
-
 ?>

@@ -69,6 +69,3 @@
     <input type="submit" value="#$addbutton#" />
     </form>
 <br />
-
-<!-- add the pager here -->
-#$pager#
