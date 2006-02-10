@@ -47,9 +47,9 @@
             </xar:mlstring>
             :&nbsp;
             <xar:comment>
-                <select name="statusid">
-                <xar:loop name="$status">
-                    <option value="#$loop:item['statusid']#">#$loop:item['studstatus']#</option>
+                <select name="tstatusid">
+                <xar:loop name="$tstatus">
+                    <option value="#$loop:item['tstatusid']#">#$loop:item['tstatus']#</option>
                 </xar:loop>
                 </select>
             </xar:comment>
@@ -65,6 +65,7 @@
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <input type="hidden" name="planningid" id="planningid" value="#$planningid#" />
     <xar:mlstring>Add the following user as a teacher:</xar:mlstring>
+    <!-- Add a user dropdown to select -->
     <xar:data-input name="userid" type="37" value="userid" />
     <input type="submit" value="#$addbutton#" />
     </form>
