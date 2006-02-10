@@ -48,7 +48,7 @@ function courses_admin_newcourse($args)
     $data['cancelbutton'] = xarVarPrepForDisplay(xarML('Cancel'));
 
     $data['level'] = xarModAPIFunc('courses', 'user', 'gets',
-                                      array('itemtype' => 3));
+                                      array('itemtype' => 1003));
 
     // Call hooks
     $item = array();
