@@ -3,7 +3,7 @@
  * Modify module's configuration
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -20,14 +20,10 @@
  *
  * @author ITSP module development team
  * @return array
+ * @todo everything
  */
 function itsp_admin_modifyconfig()
 {
-    /* Initialise the $data variable that will hold the data to be used in
-     * the blocklayout template, and get the common menu configuration - it
-     * helps if all of the module pages have a standard menu at the top to
-     * support easy navigation
-     */
     $data = array();
 
     /* common menu configuration */

@@ -16,11 +16,16 @@
  *
  * Standard function to create a new pitem
  * This is a standard function that is called with the results of the
- * form supplied by xarModFunc('itsp','admin','new') to create a new item
+ * form supplied by xarModFunc('itsp','admin','new_pitem') to create a new plan item
  *
  * @author ITSP module development team
  * @param  $ 'pitemname' the name of the item to be created
  * @param  $ 'pitemdesc' the description of the item to be created
+ * @param $ 'mincredit'
+ * @param $ 'credits'
+ * @param $ 'rule_cat'
+ * @param $ 'rule_level'
+ * @param $ 'rule_type'
  */
 function itsp_admin_create_pitem($args)
 {
@@ -37,10 +42,10 @@ function itsp_admin_create_pitem($args)
     if (!xarVarFetch('dateopen',   'int:1:', $dateopen,   $dateopen,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('dateclose',  'int:1:', $dateclose,  $dateclose, XARVAR_NOT_REQUIRED)) return;
 
-    if (!xarVarFetch('rule_cat',   'int:1:', $rule_cat,     $rule_cat,   XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('rule_type',  'str:1:', $rule_type,    $rule_type,   XARVAR_NOT_REQUIRED)) return; // The coursetype
+    if (!xarVarFetch('rule_cat',   'int:1:', $rule_cat,    $rule_cat,   XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('rule_type',  'int::', $rule_type,    $rule_type,   XARVAR_NOT_REQUIRED)) return; // The coursetype
     if (!xarVarFetch('rule_source','enum:internal:external:open', $rule_source,    $rule_source,   XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('rule_level', 'int:1:', $rule_level,    $rule_level,   XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('rule_level', 'int::', $rule_level,   $rule_level,   XARVAR_NOT_REQUIRED)) return;
 
     if (!xarVarFetch('invalid', 'array',  $invalid, $invalid, XARVAR_NOT_REQUIRED)) return;
 
@@ -69,17 +74,17 @@ function itsp_admin_create_pitem($args)
     // check if we have any errors
     if (count($invalid) > 0) {
         return xarModFunc('itsp', 'admin', 'new_pitem',
-                          array('invalid' => $invalid,
-                                'pitemname' => $pitemname,
-                                'pitemdesc' => $pitemdesc,
-                                'pitemrules' => $pitemrules,
-                                'credits' => $credits,
-                                'mincredit' => $mincredit,
-                                'dateopen' => $dateopen,
-                                'dateclose' => $dateclose,
-                                'rule_cat' => $rule_cat,
-                                'rule_type' => $rule_type,
-                                'rule_level' => $rule_level,
+                          array('invalid'     => $invalid,
+                                'pitemname'   => $pitemname,
+                                'pitemdesc'   => $pitemdesc,
+                                'pitemrules'  => $pitemrules,
+                                'credits'     => $credits,
+                                'mincredit'   => $mincredit,
+                                'dateopen'    => $dateopen,
+                                'dateclose'   => $dateclose,
+                                'rule_cat'    => $rule_cat,
+                                'rule_type'   => $rule_type,
+                                'rule_level'  => $rule_level,
                                 'rule_course' => $rule_source));
     }
 

@@ -12,10 +12,10 @@
  * @author ITSP Module Development Team
  */
 /**
- * Standard function to update a current item
+ * Standard function to update a plan
  *
  * This function is called with the results of the
- * form supplied by xarModFunc('itsp','admin','modify') to update a current item
+ * form supplied by xarModFunc('itsp','admin','modify') to update a current plan
  *
  * @author ITSP module development team
  * @param  $ 'planid' the id of the item to be updated
@@ -38,16 +38,6 @@ function itsp_admin_update($args)
     if (!xarVarFetch('dateopen',   'int:1:', $dateopen,   $dateopen,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('dateclose',  'int:1:', $dateclose,  $dateclose, XARVAR_NOT_REQUIRED)) return;
 
-    /* At this stage we check to see if we have been passed $objectid, the
-     * generic item identifier.  This could have been passed in by a hook or
-     * through some other function calling this as part of a larger module, but
-     * if it exists it overrides $exid
-     *
-     * Note that this module couuld just use $objectid everywhere to avoid all
-     * of this munging of variables, but then the resultant code is less
-     * descriptive, especially where multiple objects are being used.  The
-     * decision of which of these ways to go is up to the module developer
-     */
     if (!empty($objectid)) {
         $planid = $objectid;
     }
@@ -87,7 +77,7 @@ function itsp_admin_update($args)
                                 'dateclose' => $dateclose));
     }
 
-    /* The API function is called: update item.
+    /* The API function is called: update plan
      */
     if (!xarModAPIFunc('itsp',
                        'admin',

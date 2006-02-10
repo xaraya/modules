@@ -24,7 +24,6 @@ function itsp_admin_new_pitem($args)
 {
     extract($args);
 
-
     // Get parameters from whatever input we need.
     if (!xarVarFetch('pitemname',  'str:1:', $pitemname,   $pitemname,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('pitemdesc',  'str:1:', $pitemdesc,   $pitemdesc,  XARVAR_NOT_REQUIRED)) return;

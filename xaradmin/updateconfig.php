@@ -21,29 +21,14 @@
  */
 function itsp_admin_updateconfig()
 {
-    /* Get parameters from whatever input we need.  All arguments to this
-     * function should be obtained from xarVarFetch(). xarVarFetch allows
-     * the checking of the input variables as well as setting default
-     * values if needed.  Getting vars from other places such as the
-     * environment is not allowed, as that makes assumptions that will
-     * not hold in future versions of Xaraya
-     */
     if (!xarVarFetch('bold',         'checkbox', $bold, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('itemsperpage', 'int',      $itemsperpage, 10, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('shorturls',    'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('aliasname',    'str:1:',   $aliasname, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('modulealias',  'checkbox', $modulealias,false,XARVAR_NOT_REQUIRED)) return;
 
-    /* Confirm authorisation code.  This checks that the form had a valid
-     * authorisation code attached to it.  If it did not then the function will
-     * proceed no further as it is possible that this is an attempt at sending
-     * in false data to the system
-     */
-
     if (!xarSecConfirmAuthKey()) return;
-    /* Update module variables.  Note that the default values are set in
-     * xarVarFetch when recieving the incoming values, so no extra processing
-     * is needed when setting the variables here.
+    /* Update module variables.
      */
     xarModSetVar('itsp', 'bold', $bold);
     xarModSetVar('itsp', 'itemsperpage', $itemsperpage);
@@ -77,7 +62,7 @@ function itsp_admin_updateconfig()
 
     xarModCallHooks('module','updateconfig','itsp',
                    array('module' => 'itsp'));
-
+    xarSessionSetVar('statusmsg', xarML('Module configuration was successfully updated!'));
     /* This function generated no output, and so now it is complete we redirect
      * the user to an appropriate page for them to carry on their work
      */

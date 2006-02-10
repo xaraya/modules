@@ -38,16 +38,11 @@ function itsp_admin_update_pitem($args)
     if (!xarVarFetch('dateopen',   'isset',  $dateopen,   $dateopen,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('dateclose',  'isset',  $dateclose,  $dateclose, XARVAR_NOT_REQUIRED)) return;
 
-    /* At this stage we check to see if we have been passed $objectid, the
-     * generic item identifier.  This could have been passed in by a hook or
-     * through some other function calling this as part of a larger module, but
-     * if it exists it overrides $exid
-     *
-     * Note that this module couuld just use $objectid everywhere to avoid all
-     * of this munging of variables, but then the resultant code is less
-     * descriptive, especially where multiple objects are being used.  The
-     * decision of which of these ways to go is up to the module developer
-     */
+    if (!xarVarFetch('rule_cat',   'int:1:', $rule_cat,    $rule_cat,   XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('rule_type',  'int::', $rule_type,    $rule_type,   XARVAR_NOT_REQUIRED)) return; // The coursetype
+    if (!xarVarFetch('rule_source','enum:internal:external:open', $rule_source,    $rule_source,   XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('rule_level', 'int::', $rule_level,   $rule_level,   XARVAR_NOT_REQUIRED)) return;
+
     if (!empty($objectid)) {
         $pitemid = $objectid;
     }
@@ -76,15 +71,15 @@ function itsp_admin_update_pitem($args)
          * (you need to copy admin-new.xd to admin-create.xd here)
          */
         return xarModFunc('itsp', 'admin', 'modify_pitem',
-                          array('invalid'   => $invalid,
+                          array('invalid'    => $invalid,
                                 'pitemid'    => $pitemid,
                                 'pitemname'  => $pitemname,
                                 'pitemdesc'  => $pitemdesc,
                                 'pitemrules' => $pitemrules,
-                                'credits'   => $credits,
-                                'mincredit' => $mincredit,
-                                'dateopen'  => $dateopen,
-                                'dateclose' => $dateclose));
+                                'credits'    => $credits,
+                                'mincredit'  => $mincredit,
+                                'dateopen'   => $dateopen,
+                                'dateclose'  => $dateclose));
     }
 
     /* The API function is called: update item.
@@ -102,10 +97,10 @@ function itsp_admin_update_pitem($args)
                              'pitemname'  => $pitemname,
                              'pitemdesc'  => $pitemdesc,
                              'pitemrules' => $pitemrules,
-                             'credits'   => $credits,
-                             'mincredit' => $mincredit,
-                             'dateopen'  => $dateopen,
-                             'dateclose' => $dateclose
+                             'credits'    => $credits,
+                             'mincredit'  => $mincredit,
+                             'dateopen'   => $dateopen,
+                             'dateclose'  => $dateclose
                              )
                        )) {
         return; /* throw back */
