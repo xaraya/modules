@@ -3,7 +3,7 @@
  * Support for short URLs (user functions)
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -66,24 +66,24 @@ function courses_userapi_encode_shorturl($args)
         // URL parameter
         // you might have some additional parameter that you want to use to
         // create different virtual paths here - for example a category name
-        // if (!empty($cid) && is_numeric($cid)) {
-        // // use a cache to avoid re-querying for each URL in the same cat
-        // static $catcache = array();
-        // if (xarModAPILoad('categories','user')) {
-        // if (isset($catcache[$cid])) {
-        // $cat = $catcache[$cid];
-        // } else {
-        // $cat = xarModAPIFunc('categories','user','getcatinfo',
-        // array('cid' => $cid));
-        // // put the category in cache
-        // $catcache[$cid] = $cat;
-        // }
-        // if (!empty($cat) && !empty($cat['name'])) {
-        // // use the category name as part of the path here
-        // $path = '/' . $module . '/' . rawurlencode($cat['name']);
-        // }
-        // }
-        // }
+        if (!empty($cid) && is_numeric($cid)) {
+            // use a cache to avoid re-querying for each URL in the same cat
+            static $catcache = array();
+            if (xarModAPILoad('categories','user')) {
+               if (isset($catcache[$cid])) {
+                  $cat = $catcache[$cid];
+               } else {
+                  $cat = xarModAPIFunc('categories','user','getcatinfo',
+                                        array('cid' => $cid));
+                   // put the category in cache
+                  $catcache[$cid] = $cat;
+               }
+               if (!empty($cat) && !empty($cat['name'])) {
+                   // use the category name as part of the path here
+                   $path = '/' . $module . '/' . rawurlencode($cat['name']);
+               }
+             }
+         }
         // if you have some additional parameters that you want to keep as
         // regular URL parameters - example for an array :
         // if (isset($other) && is_array($other) && count($other) > 0) {
@@ -141,5 +141,4 @@ function courses_userapi_encode_shorturl($args)
 
     return $path;
 }
-
 ?>
