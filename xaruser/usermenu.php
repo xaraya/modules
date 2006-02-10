@@ -25,7 +25,7 @@ function dyn_example_user_usermenu($args)
     // link to display the details of the item
     if (!xarSecurityCheck('ViewDynExample')) return;
 
-    // First, lets find out where we are in our logic.  If the phase
+    // First, lets find out where we are in our logic. If the phase
     // variable is set, we will load the correct page in the loop.
     if(!xarVarFetch('phase','str', $phase, 'menu', XARVAR_NOT_REQUIRED)) {return;}
 

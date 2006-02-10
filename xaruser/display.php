@@ -18,10 +18,11 @@
  *
  * @param $args an array of arguments (if called by other modules)
  * @param $args['objectid'] a generic object id (if called by other modules)
- * @param $args['exid'] the item id used for this example module
+ * @param $args['itemid'] the item id used for this dyn_example module
  */
 function dyn_example_user_display($args)
 {
+    // TODO: add reason for DONT_SET
     if(!xarVarFetch('itemid',   'id', $itemid,   NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('objectid', 'id', $objectid, NULL, XARVAR_DONT_SET)) {return;}
 
@@ -38,7 +39,7 @@ function dyn_example_user_display($args)
                        new SystemException($msg));
         return $msg;
     }
-
+    // Add the user menu to the data array
     $data = xarModAPIFunc('dyn_example','user','menu');
 
 /* start APPROACH # 1 and # 2 : retrieve the item directly in the template */

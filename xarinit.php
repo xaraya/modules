@@ -13,7 +13,7 @@
  */
 
 /**
- * initialise the example module
+ * initialise the dyn_example module
  * This function is only ever called once during the lifetime of a particular
  * module instance
  */
@@ -294,7 +294,7 @@ function dyn_example_upgrade($oldversion)
 }
 
 /**
- * delete the example module
+ * delete the dyn_example module
  * This function is only ever called once during the lifetime of a particular
  * module instance
  */

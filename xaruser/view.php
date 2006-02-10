@@ -15,6 +15,10 @@
  * view a list of items
  * This is a standard function to provide an overview of all of the items
  * available from the module.
+ *
+ * @param startnum
+ * @param catid
+ * @return array
  */
 function dyn_example_user_view()
 {
@@ -25,6 +29,7 @@ function dyn_example_user_view()
 
     // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing
+    // We check here to see that the current user has the privilege to view items in the module
     if (!xarSecurityCheck('ViewDynExample')) return;
 
     // get user settings for 'itemsperpage'
@@ -35,7 +40,11 @@ function dyn_example_user_view()
     //       <xar:data-view ... /> tag do that in the template itself
 /* end APPROACH # 1 and # 2 : retrieve the items directly in the template */
 
-/* start APPROACH # 3 : getting the object list via API */
+/* start APPROACH # 3 : getting the object list via API
+ *
+ * Here we retreive all items via an API call to dynamic data itself
+ * We need to pass all variables we need to get a correct listing
+ */
     $mylist = xarModAPIFunc('dynamicdata','user','getitems',
                              array('module'    => 'dyn_example',
                                    'itemtype'  => 0,
@@ -79,7 +88,7 @@ function dyn_example_user_view()
     // TODO: add a pager here (needed for this approach)
 /* end APPROACH # 4 : getting only the raw item values via API */
 
-    // Same as above.  We are changing the name of the page to raise
+    // We are changing the name of the page to raise
     // better search engine compatibility.
     xarTplSetPageTitle(xarVarPrepForDisplay(xarML('View Dynamic Examples')));
 
