@@ -13,6 +13,11 @@
  */
 /**
  * generate the common admin menu configuration
+ *
+ * This function is called by most admin display functions
+ * An additional function of it is to create the array
+ *
+ * @return array
  */
 function dyn_example_adminapi_menu()
 {

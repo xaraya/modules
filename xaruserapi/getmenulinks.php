@@ -12,16 +12,20 @@
  * @author mikespub <mikespub@xaraya.com>
  */
 /**
- * utility function pass individual menu items to the main menu
+ * utility function pass individual menu items to the main user menu
  *
- * @author the Example module development team
+ * This function helps the xaraya to build a menu. It checks for the privileges of the current user\
+ * and will prevent the user from seeing links he can't enter.
+ *
+ * @author the Dyn_Example module development team
  * @returns array
  * @return array containing the menulinks for the main menu items.
  */
 function dyn_example_userapi_getmenulinks()
 {
     $menulinks = array();
-
+    // Check for the privilege of the current user
+    // We hide a possible error
     if (xarSecurityCheck('ViewDynExample',0)) {
 
         $menulinks[] = Array('url'   => xarModURL('dyn_example',
@@ -43,7 +47,7 @@ function dyn_example_userapi_getmenulinks()
                                  'label' => xarML('Settings'));
         }
     }
-
+    // Return all the links to the menu
     return $menulinks;
 }
 

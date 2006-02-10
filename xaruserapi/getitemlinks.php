@@ -31,16 +31,18 @@ function dyn_example_userapi_getitemlinks($args)
     if (empty($field)) {
         $field = 'name'; // adapt as needed for your own objects
     }
+    // Get all the items
     $items = xarModAPIFunc('dynamicdata','user','getitems',
                            array('module'    => 'dyn_example',
                                  'itemtype'  => $itemtype,
                                  'itemids'   => $itemids,
                                  'fieldlist' => array($field)));
     if (empty($items)) {
+        // if none are found, we pass an empty array. This will prevent errors in the calling modules
         return array();
     }
 
-    // if we didn't have a list of itemids, return all the items we found
+    // if we didn't have a list of itemids, return all the ids of the items we found
     if (empty($itemids)) {
         $itemids = array_keys($items);
     }
@@ -51,12 +53,14 @@ function dyn_example_userapi_getitemlinks($args)
         } else {
             $label = xarML('Item #(1)',$itemid);
         }
+        // Set the link to this specific item
         $itemlinks[$itemid] = array('url'   => xarModURL('dyn_example', 'user', 'display',
                                                          array('itemtype' => empty($itemtype) ? null : $itemtype,
                                                                'itemid' => $itemid)),
                                     'title' => xarML('Display Item'),
                                     'label' => $label);
     }
+    // Return all the links we have created
     return $itemlinks;
 }
 

@@ -14,13 +14,17 @@
 /**
  * utility function pass individual menu items to the main menu
  *
- * @author the Example module development team
+ * This function will create the links that are shown in the admin menu
+ * @author the Dyn_Example module development team
  * @returns array
  * @return array containing the menulinks for the main menu items.
  */
 function dyn_example_adminapi_getmenulinks()
 {
     $menulinks = array();
+    // Add a security check, so only admins can see this link
+    // Hide the possible error
+    // By convention, the first link should provide an admin overview
     if (xarSecurityCheck('AdminDynExample',0)) {
 
         $menulinks[] = Array('url'   => xarModURL('dyn_example',
@@ -55,7 +59,8 @@ function dyn_example_adminapi_getmenulinks()
     }
 
     if (xarSecurityCheck('AdminDynExample',0)) {
-
+        // Add a link to the module's configuration.
+        // We place this link last in the list so have a similar menu for all modules
         $menulinks[] = Array('url'   => xarModURL('dyn_example',
                                                    'admin',
                                                    'modifyconfig'),

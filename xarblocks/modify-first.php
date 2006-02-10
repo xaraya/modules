@@ -14,9 +14,11 @@
 
 /**
  * modify block settings
+ * This function is called via the blocks module. It shows a form in the block instance screen
+ * @return array
  */
 function dyn_example_firstblock_modify($blockinfo)
-{ 
+{
     // Get current content
     if (!is_array($blockinfo['content'])) {
         $vars = unserialize($blockinfo['content']);
@@ -27,22 +29,25 @@ function dyn_example_firstblock_modify($blockinfo)
     // Defaults
     if (empty($vars['numitems'])) {
         $vars['numitems'] = 5;
-    } 
+    }
 
     // Send content to template
     return array('numitems' => $vars['numitems'], 'blockid' => $blockinfo['bid']);
-} 
+}
 
 /**
  * update block settings
+ *
+ * @param numitems The number of items to show
  */
 function dyn_example_firstblock_update($blockinfo)
 {
+    We get the numitems. It is placed into $vars['numitems']
     if (!xarVarFetch('numitems', 'int:0', $vars['numitems'], 5, XARVAR_DONT_SET)) {return;}
 
     $blockinfo['content'] = $vars;
 
     return $blockinfo;
-} 
+}
 
 ?>

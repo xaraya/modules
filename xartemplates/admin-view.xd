@@ -102,9 +102,9 @@
         <xar:foreach in="$fields" key="$name">
             <td>&nbsp;</td>
         </xar:foreach>
-        <td><a href="#xarModURL('dyn_example','admin','new')#"><xar:mlstring>New</xar:mlstring></a></td>
+        <td><a href="&xar-modurl-dyn_example-admin-new;"><xar:mlstring>New</xar:mlstring></a></td>
     </tr>
     </table>
 <xar:else/>
-    <a href="#xarModURL('dyn_example','admin','new')#"><xar:mlstring>New</xar:mlstring></a>
+    <a href="&xar-modurl-dyn_example-admin-new;"><xar:mlstring>New</xar:mlstring></a>
 </xar:if>
