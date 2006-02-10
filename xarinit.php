@@ -45,16 +45,16 @@ function tasks_init()
                      'xar_creator'           => array('type'=>'integer','null'=>false,'default'=>'0'),
                      'xar_owner'             => array('type'=>'integer','null'=>false,'default'=>'0'),
                      'xar_assigner'          => array('type'=>'integer','null'=>false,'default'=>'0'),
-                     'xar_date_created'      => array('type'=>'integer'   ,'null'=>false,'default'=>''),
-                     'xar_date_approved'     => array('type'=>'integer'   ,'null'=>false,'default'=>''),
-                     'xar_date_changed'      => array('type'=>'integer'   ,'null'=>false,'default'=>''),
-                     'xar_date_start_planned'=> array('type'=>'integer'   ,'null'=>false,'default'=>''),
-                     'xar_date_start_actual' => array('type'=>'integer'   ,'null'=>false,'default'=>''),
-                     'xar_date_end_planned'  => array('type'=>'integer'   ,'null'=>false,'default'=>''),
-                     'xar_date_end_actual'   => array('type'=>'integer'   ,'null'=>false,'default'=>''),
-                     'xar_hours_planned'     => array('type'=>'float'  ,'null'=>false,'default'=>'0.0','width'=>8,'decimals'=>2),
-                     'xar_hours_spent'       => array('type'=>'float'  ,'null'=>false,'default'=>'0.0','width'=>8,'decimals'=>2),
-                     'xar_hours_remaining'   => array('type'=>'float'  ,'null'=>false,'default'=>'0.0','width'=>8,'decimals'=>2)
+                     'xar_date_created'      => array('type'=>'integer','null'=>false,'default'=>'0'),
+                     'xar_date_approved'     => array('type'=>'integer','null'=>false,'default'=>'0'),
+                     'xar_date_changed'      => array('type'=>'integer','null'=>false,'default'=>'0'),
+                     'xar_date_start_planned'=> array('type'=>'integer','null'=>false,'default'=>'0'),
+                     'xar_date_start_actual' => array('type'=>'integer','null'=>false,'default'=>'0'),
+                     'xar_date_end_planned'  => array('type'=>'integer','null'=>false,'default'=>'0'),
+                     'xar_date_end_actual'   => array('type'=>'integer','null'=>false,'default'=>'0'),
+                     'xar_hours_planned'     => array('type'=>'integer','null'=>false,'default'=>'0'),
+                     'xar_hours_spent'       => array('type'=>'integer','null'=>false,'default'=>'0'),
+                     'xar_hours_remaining'   => array('type'=>'integer','null'=>false,'default'=>'0'),
                      );
 
     $query = xarDBCreateTable($tasktable, $fields);

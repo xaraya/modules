@@ -46,31 +46,11 @@ function tasks_user_view($args)
     $data['modname'] = (empty($module)) ? '' : $module;
     $data['objectid'] =(empty($objectid)) ? 0 : $objectid;
 
-    $filters = array(xarML("Default"),
-                     xarML("My tasks"),
-                     xarML("Available tasks"),
-                     xarML("Priority list"),
-                     xarML("Recent activity")
-                     );
-
-    // Construct the filter options
-    $filteroptions = array();
-    $filter = xarSessionGetVar('filter');
-    foreach($filters as $filterid=>$filtername) {
-        $filteroptions[] = array('id' => $filterid,
-                                'name' => $filtername,
-                                'selected' => ($filterid == $filter ? 1 : 0));
-    }
-    $data['filteroptions']=$filteroptions;
     $data['filter']=$filter;
 
     // Construct the depth dropdown
     $depthdropdown = array();
     $maxdepth = xarModGetVar('tasks', 'maxdisplaydepth');
-    for($x=1; $x<=$maxdepth; $x++) {
-        $depthdropdown[] = array('id'=>$x, 'name'=>$x);
-    }
-    $data['depthdropdown']=$depthdropdown;
     $data['maxdepth']= xarSessionGetVar('maxlevel');
     $data['filtersubmit']=xarML("Filter");
 
@@ -136,6 +116,7 @@ function tasks_user_view($args)
                         xarmodurl('tasks', 'admin', 'unpublish',array('id' => $task['id'])): // Unpublish
                         xarmodurl('tasks', 'admin', 'publish',array('id' => $task['id'])); // Publish
                     $tasks[$key]['options']=$options;
+                    $data['options'] = $options;
                 }
             }
         }
@@ -145,7 +126,7 @@ function tasks_user_view($args)
     $taskoptionslist = array(
         1 => xarML("Surface tasks"),
         2 => xarML("Delete") . ' (' . xarML("delete subtasks") . ')',
-        3 => xarML("Delete") . ' (' . xarML("surface subtasks"). ')');
+        3 => xarML("Surface subs") . ' (' . xarML("surface subtasks"). ')');
     $taskoptions = array();
     foreach($taskoptionslist as $optionid=>$option) {
         $taskoptions[] = array('id' => $optionid,

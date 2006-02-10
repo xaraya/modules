@@ -15,21 +15,15 @@
       <tr align="left" valign="middle">
         <td><xar:mlstring>Status</xar:mlstring></td>
         <td>
-          <select name="status" id="status" size="1" tabindex="2">
-            <xar:loop name="$statusoptions">
-              <option value="#$loop:item['id']#">#$loop:item['name']#</option>
-            </xar:loop>
-          </select>
+            <xar:set name="$options">xarModAPIFunc('tasks','user','getstatusoptions')</xar:set>
+            <xar:data-input type="dropdown" name="status" tabindex="2" options="$options" />
         </td>
       </tr>
       <tr align="left" valign="middle">
         <td><xar:mlstring>Priority</xar:mlstring></td>
         <td>
-          <select name="priority" id="priority" size="1" tabindex="3">
-            <xar:loop name="$prioritydropdown">
-              <option value="#$loop:item['id']#">#$loop:item['name']#</option>
-            </xar:loop>
-          </select>
+            <xar:set name="$options">xarModAPIFunc('tasks','user','getpriorities')</xar:set>
+            <xar:data-input type="dropdown" name="priority" tabindex="3" options="$options" />
         </td>
       </tr>
       <tr align="left" valign="middle">

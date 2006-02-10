@@ -13,30 +13,16 @@
 
 <!-- Filter form -->
 <form action="#$filterformtarget#" method="post" enctype="application/x-www-form-urlencoded">
-  <input type="hidden" name="id" id="id" value="#$parentid#" />
-  <input type="hidden" name="modname" id="modname" value="#$modname#" />
-  <input type="hidden" name="objectid" id="objectid" value="#$objectid#" />
+    <input type="hidden" name="id" id="id" value="#$parentid#" />
+    <input type="hidden" name="modname" id="modname" value="#$modname#" />
+    <input type="hidden" name="objectid" id="objectid" value="#$objectid#" />
 
-  <select name="displaydepth" id="displaydepth" size="1" tabindex="1">
-    <xar:loop name="$depthdropdown">
-      <xar:if condition="$loop:item['id'] eq $maxdepth">
-        <option value="#$loop:item['id']#" selected="selected">#$loop:item['name']#</option>
-      <xar:else/>
-        <option value="#$loop:item['id']#" selected="selected">#$loop:item['name']#</option>
-      </xar:if>
-    </xar:loop>
-  </select>
+    <xar:set name="$options">xarModAPIFunc('tasks','user','getdepthoptions')</xar:set>
+    <xar:data-input type="dropdown" name="displaydepth" tabindex="1" options="$options" value="$maxdepth" />
 
-  <select name="filter" id="filter" size="1" tabindex="2">
-    <xar:loop name="$filteroptions">
-      <xar:if condition="$loop:item['id'] eq $filter">
-        <option value="#$loop:item['id']#" selected="selected">#$loop:item['name']#</option>
-      <xar:else/>
-        <option value="#$loop:item['id']#" selected="selected">#$loop:item['name']#</option>
-      </xar:if>
-    </xar:loop>
-  </select>
-  <input type="submit" value="#$filtersubmit#"  tabindex="3" />
+    <xar:set name="$options">xarModAPIFunc('tasks','user','getfilteroptions')</xar:set>
+    <xar:data-input type="dropdown" name="filter" tabindex="2" options="$options" value="$filter" />
+    <input type="submit" value="#$filtersubmit#"  tabindex="3" />
 </form>
 
 <!-- Migrate form -->
