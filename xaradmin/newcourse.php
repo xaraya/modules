@@ -23,18 +23,18 @@ function courses_admin_newcourse($args)
     extract($args);
 
     // Get parameters from whatever input we need.
-    if (!xarVarFetch('name', 'str:1:', $name, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('number', 'str:1:', $number, '',XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('coursetype', 'int:1:', $coursetype, 1, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('shortdesc', 'str:1:', $shortdesc, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('name',            'str:1:', $name,        '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('number',          'str:1:', $number,      '',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('coursetype',      'int:1:', $coursetype,  1, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('shortdesc',       'str:1:', $shortdesc,   '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('intendedcredits', 'str:1:30', $intendedcredits, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('freq', 'str:1:', $freq, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('contact', 'str:1:', $contact, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('contactuid', 'int:1:', $contactuid, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('hidecourse', 'int:1:', $hidecourse, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('freq',            'str:1:', $freq,        '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('contact',         'str:1:', $contact,     '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('contactuid',      'int:1:', $contactuid,  '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('hidecourse',      'int:1:', $hidecourse,  '', XARVAR_NOT_REQUIRED)) return;
     //if (!xarVarFetch('level', 'isset::', $level, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('invalid', 'array', $invalid, '', XARVAR_NOT_REQUIRED)) return;
-
+    if (!xarVarFetch('invalid',         'array',  $invalid,     array(), XARVAR_NOT_REQUIRED)) return;
+    // TODO: make the menu usefull
     $data = xarModAPIFunc('courses', 'admin', 'menu');
 
     // Security check
@@ -50,7 +50,7 @@ function courses_admin_newcourse($args)
     $data['level'] = xarModAPIFunc('courses', 'user', 'gets',
                                       array('itemtype' => 1003));
 
-    // Call hooks
+    // Call hooks for new course, with coursetype as the itemtype
     $item = array();
     $item['module'] = 'courses';
     $item['returnurl'] = xarModURL('courses', 'admin', 'newcourse');
@@ -59,8 +59,6 @@ function courses_admin_newcourse($args)
     if (empty($hooks)) {
         $data['hookoutput'] = array();
     } else {
-        // You can use the output from individual hooks in your template too, e.g. with
-        // $hookoutput['categories'], $hookoutput['dynamicdata'], $hookoutput['keywords'] etc.
         $data['hookoutput'] = $hooks;
     }
     $data['hooks'] = '';
