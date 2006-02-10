@@ -25,6 +25,7 @@ function courses_admin_updateconfig()
     if (!xarVarFetch('hidecoursemsg',   'str::',    $hidecoursemsg, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('AlwaysNotify',    'str::',    $AlwaysNotify, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('hideplanningmsg', 'str::',    $hideplanningmsg, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('DefaultTeacherType', 'int',    $DefaultTeacherType, 1, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('ShowShortDesc',   'checkbox', $ShowShortDesc, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('aliasname',       'str:1:',   $aliasname, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('modulealias',     'checkbox', $modulealias,false,XARVAR_NOT_REQUIRED)) return;
@@ -39,6 +40,7 @@ function courses_admin_updateconfig()
     xarModSetVar('courses', 'hideplanningmsg', $hideplanningmsg);
     xarModSetVar('courses', 'AlwaysNotify', $AlwaysNotify);
     xarModSetVar('courses', 'ShowShortDesc', $ShowShortDesc);
+    xarModSetVar('courses', 'DefaultTeacherType', $DefaultTeacherType);
     // Alias name
     if (isset($aliasname) && trim($aliasname)<>'') {
         xarModSetVar('courses', 'useModuleAlias', $modulealias);

@@ -30,6 +30,7 @@ function courses_admin_modifyconfig()
     $data['hidecoursemsg']          = xarModGetVar('courses', 'hidecoursemsg');
     $data['itemsvalue']             = xarModGetVar('courses', 'itemsperpage');
     $data['ShowShortDescchecked']   = xarModGetVar('courses', 'ShowShortDesc') ? 'checked="checked"' : '';
+    $data['DefaultTeacherType']     = xarModGetVar('courses','DefaultTeacherType');
     $data['updatebutton']           = xarVarPrepForDisplay(xarML('Update Configuration'));
     $data['AlwaysNotify']           = xarModGetVar('courses', 'AlwaysNotify');
     // Short URL support

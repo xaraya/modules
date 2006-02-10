@@ -78,6 +78,7 @@ function courses_admin_teachers()
     $data['authid'] = xarSecGenAuthKey();
     $data['items'] = $items;
     $data['planningid'] = $planningid;
+    $data['coursename'] = xarModApiFunc('courses','user','getcoursename',array('planningid' => $planningid));
     // Specify some labels for display
     $data['namelabel'] = xarVarPrepForDisplay(xarML('Teacher Name'));
     $data['emaillabel'] = xarVarPrepForDisplay(xarML('E-mail address'));

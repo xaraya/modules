@@ -51,7 +51,7 @@ function courses_admin_newteacher($args)
     // Create the teacher
 
     if (!$teachertype) {
-        $teachertype = 1; // TODO set types of teachers
+        $teachertype = 1; // TODO set types of teachers xarModGetVar('courses','DefaultTeacherType'),
     }
     $tid = xarModAPIFunc('courses',
                          'admin',

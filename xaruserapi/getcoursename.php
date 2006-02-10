@@ -17,15 +17,18 @@
  * @author Michel V.
  * @author the Courses module development team
  * @param  $args ['courseid'] The ID of the coursename to get
- * @returns array
+ * @param $args['planningid'] The ID of the planning, if courseid is not set
+ * @return string
  * @return $name
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function courses_userapi_getcoursename($args)
 {
+    if (!xarSecurityCheck('ViewCourses')) return;    
+
     extract($args);
-    if (!isset($courseid) || !is_numeric($courseid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
+    if ((!isset($courseid) || !is_numeric($courseid)) && (!isset($planningid) || !is_numeric($planningid))) {
+        $msg = xarML('Invalid or Missing #(1) for #(2) function #(3)() in module #(4)',
             'item ID', 'user', 'getcoursename', 'courses');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException($msg));
@@ -37,8 +40,11 @@ function courses_userapi_getcoursename($args)
     $where = "0";
     }
 
-    if (!xarSecurityCheck('ViewCourses')) return;
-    $item = array();
+    if (!empty($planningid) && empty($courseid)) {
+        $planning = xarModApiFunc('courses','user','getplanned',array('planningid' => $planningid));
+        $courseid = $planning['courseid'];
+    }
+
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $coursestable = $xartable['courses'];
@@ -59,5 +65,4 @@ function courses_userapi_getcoursename($args)
     $result->Close();
     return $name;
 }
-
 ?>
