@@ -33,11 +33,11 @@ function itsp_admin_new_pitem($args)
     if (!xarVarFetch('mincredit',  'int:1:', $mincredit,   $mincredit,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('dateopen',   'int:1:', $dateopen,    $dateopen,   XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('dateclose',  'int:1:', $dateclose,   $dateclose,  XARVAR_NOT_REQUIRED)) return;
-
-    if (!xarVarFetch('rule_cat',    'int:1:', $rule_cat,           $rule_cat,     XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('rule_type',   'str:1:', $rule_type,          $rule_type,    XARVAR_NOT_REQUIRED)) return;
+    // Rules can start with an int of 0, meaning ALL
+    if (!xarVarFetch('rule_cat',    'int::', $rule_cat,           $rule_cat,     XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('rule_type',   'int::', $rule_type,          $rule_type,    XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('rule_source', 'enum:internal:external:open', $rule_source,  $rule_source,   XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('rule_level',  'int:1:', $rule_level,         $rule_level,   XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('rule_level',  'int::', $rule_level,         $rule_level,   XARVAR_NOT_REQUIRED)) return;
 
     if (!xarVarFetch('invalid', 'array',  $invalid, $invalid, XARVAR_NOT_REQUIRED)) return;
     // Add the admin menu
@@ -51,7 +51,6 @@ function itsp_admin_new_pitem($args)
                                       array('itemtype' => 1003));
     // Get the coursetypes for the types rule
     $data['coursetypes'] = xarModAPIFunc('courses', 'user', 'getall_coursetypes');
-
     /* Generate a one-time authorisation code for this operation */
     $data['authid'] = xarSecGenAuthKey();
     $data['invalid'] = $invalid;
@@ -111,7 +110,7 @@ function itsp_admin_new_pitem($args)
     }
 
     if (empty($rule_type)) {
-        $data['rule_type'] = '';
+        $data['rule_type'] = 0;
     } else {
         $data['rule_type'] = $rule_type;
     }
@@ -121,7 +120,7 @@ function itsp_admin_new_pitem($args)
         $data['rule_source'] = $rule_source;
     }
     if (empty($rule_level)) {
-        $data['rule_level'] = '';
+        $data['rule_level'] = 0;
     } else {
         $data['rule_level'] = $rule_level;
     }

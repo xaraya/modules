@@ -84,6 +84,7 @@
                         <xar:mlstring>Level Rule</xar:mlstring>
                  </label>
                  <select name="rule_level">
+                    <option value="0">ALL</option>
                     <xar:loop name="$levels">
                         <option value="#$loop:item['lid']#">#$loop:item['level']#</option>
                     </xar:loop>
@@ -105,6 +106,7 @@
                         <xar:mlstring>Type Rule</xar:mlstring>
                  </label>
                  <select name="rule_type">
+                    <option value="0">ALL</option>
                     <xar:loop name="$coursetypes">
                         <option value="#$loop:item['tid']#">#$loop:item['coursetype']#</option>
                     </xar:loop>
