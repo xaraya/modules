@@ -21,11 +21,10 @@ function tasks_user_display($args)
     // where to unset?
     // set session var for displayed and for module name
     // if module name is different, unset displayed
-    
+
     extract($args);
-    
+
     if(empty($mainid) || !is_numeric($mainid)) {
-        xarSessionSetVar('errormgs', xarGetStatusMsg() . '<br>' . xarML("Module argument error") . ': tasks_user_display');
         xarResponseRedirect(xarmodurl('tasks', 'user', 'view'));
         return;
     } elseif(empty($id)) {
@@ -62,8 +61,8 @@ function tasks_user_display($args)
     // IS CLIENT OR MEMBER AND TASK IS PUBLIC
     // IS CREATOR/OWNER/ASSIGNER OF PRIVATE TASK?
     // IS MODERATOR / PM
-    //     if ((/*!xarSecAuthAction(0, 'tasks::task', '$task[modname]:$task[objectid]:$task[basetaskid]', ACCESS_READ) && */ $task['private'] == 0) && 
-    //         /*(!xarSecAuthAction(0, 'tasks::task', '$task[modname]:$task[objectid]:$task[basetaskid]', ACCESS_COMMENT) && */ 
+    //     if ((/*!xarSecAuthAction(0, 'tasks::task', '$task[modname]:$task[objectid]:$task[basetaskid]', ACCESS_READ) && */ $task['private'] == 0) &&
+    //         /*(!xarSecAuthAction(0, 'tasks::task', '$task[modname]:$task[objectid]:$task[basetaskid]', ACCESS_COMMENT) && */
     //          ($task['creator'] == $userID || $task['owner'] == $userID || $task['assigner'] == $userID) /* && */
     //         /*(!xarSecAuthAction(0, 'tasks::task', '$task[modname]:$task[objectid]:$task[basetaskid]', ACCESS_MODERATE))*/ ) {
     //         xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_NOAUTH);
@@ -82,16 +81,16 @@ function tasks_user_display($args)
                 $data['displaybase'] = xarModFunc('tasks', 'user', 'display', array('id' => $task['basetaskid']));
             }
         }
-    
+
         if($task['ttlsubtasks'] > 0) {
             $data['subtaskview'] = xarModFunc('tasks','user','view',array('parentid' => $id,'filter' => $filter));
         } else {
             $data['subtaskview'] = '';
         }
-    
+
         // Add form for adding a new task
         xarModLoad('tasks','admin');
-        $data['addtaskform'] = xarModFunc('tasks', 'admin', 'new', array('parentid' => $id));           
+        $data['addtaskform'] = xarModFunc('tasks', 'admin', 'new', array('parentid' => $id));
     }
 
     $options = array();
@@ -101,7 +100,7 @@ function tasks_user_display($args)
     // if assigned to current user, or after accepted, must be approved before re-assignment (see below)
     $options['accept']['link'] = xarmodurl('tasks','admin','accept', array('id' => $task['id']));
     $options['accept']['label'] = xarML('Accept task');
-   
+
     // this forces approval before re-assignment
     // need to implement user list for re-assignment
     // pull all members of groups *other* than primary user group *unless* current
@@ -128,7 +127,7 @@ function tasks_user_display($args)
         $options['publish']['link'] = xarmodurl('tasks','admin','publish', array('id' => $task['id']));
         $options['publish']['label'] = xarML('Publish task');
     }
-    
+
     $data['options'] = $options;
     $data['task']=$task;
     $data['id']=$id;

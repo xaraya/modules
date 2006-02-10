@@ -2,5 +2,4 @@
   <span class="xar-mod-title"><xar:mlstring>Add new task</xar:mlstring></span>
 </div>
 
-
 <xar:template file="task-form" type="module"/>

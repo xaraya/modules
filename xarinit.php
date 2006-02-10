@@ -8,7 +8,7 @@
  * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
- * 
+ *
  * @subpackage tasks
  */
 
@@ -28,10 +28,10 @@ function tasks_init()
 
     $dbconn =& xarDBGetConn();
     $xartables =& xarDBGetTables();
-    
+
     $tasktable = $xartables['tasks'];
     $taskcolumn = &$xartables['tasks_columns'];
-    
+
     $fields = array (
                      'xar_id'                => array('type'=>'integer','null'=>false, 'increment'=>true,'primary_key'=>true),
                      'xar_parentid'          => array('type'=>'integer','null'=>false, 'default'=>'0'),
@@ -45,13 +45,13 @@ function tasks_init()
                      'xar_creator'           => array('type'=>'integer','null'=>false,'default'=>'0'),
                      'xar_owner'             => array('type'=>'integer','null'=>false,'default'=>'0'),
                      'xar_assigner'          => array('type'=>'integer','null'=>false,'default'=>'0'),
-                     'xar_date_created'      => array('type'=>'date'   ,'null'=>false,'default'=>''),
-                     'xar_date_approved'     => array('type'=>'date'   ,'null'=>false,'default'=>''),
-                     'xar_date_changed'      => array('type'=>'date'   ,'null'=>false,'default'=>''),
-                     'xar_date_start_planned'=> array('type'=>'date'   ,'null'=>false,'default'=>''),
-                     'xar_date_start_actual' => array('type'=>'date'   ,'null'=>false,'default'=>''),
-                     'xar_date_end_planned'  => array('type'=>'date'   ,'null'=>false,'default'=>''),
-                     'xar_date_end_actual'   => array('type'=>'date'   ,'null'=>false,'default'=>''),
+                     'xar_date_created'      => array('type'=>'integer'   ,'null'=>false,'default'=>''),
+                     'xar_date_approved'     => array('type'=>'integer'   ,'null'=>false,'default'=>''),
+                     'xar_date_changed'      => array('type'=>'integer'   ,'null'=>false,'default'=>''),
+                     'xar_date_start_planned'=> array('type'=>'integer'   ,'null'=>false,'default'=>''),
+                     'xar_date_start_actual' => array('type'=>'integer'   ,'null'=>false,'default'=>''),
+                     'xar_date_end_planned'  => array('type'=>'integer'   ,'null'=>false,'default'=>''),
+                     'xar_date_end_actual'   => array('type'=>'integer'   ,'null'=>false,'default'=>''),
                      'xar_hours_planned'     => array('type'=>'float'  ,'null'=>false,'default'=>'0.0','width'=>8,'decimals'=>2),
                      'xar_hours_spent'       => array('type'=>'float'  ,'null'=>false,'default'=>'0.0','width'=>8,'decimals'=>2),
                      'xar_hours_remaining'   => array('type'=>'float'  ,'null'=>false,'default'=>'0.0','width'=>8,'decimals'=>2)
@@ -68,7 +68,7 @@ function tasks_init()
     xarModSetVar('tasks', 'returnfromsurface', 1);
     xarModSetVar('tasks', 'returnfrommigrate', 0);
     xarModSetVar('tasks', 'maxdisplaydepth', 9);
-    
+
     return true;
 }
 
@@ -100,13 +100,7 @@ function tasks_delete()
     $res =& $dbconn->Execute($query);
     if (!$res) return;
 
-    xarModDelVar('tasks', 'dateformat');
-    xarModDelVar('tasks', 'showoptions');
-    xarModDelVar('tasks', 'returnfromadd');
-    xarModDelVar('tasks', 'returnfromedit');
-    xarModDelVar('tasks', 'returnfromsurface');
-    xarModDelVar('tasks', 'returnfrommigrate');
-    xarModDelVar('tasks', 'maxdisplaydepth');
+    xarModDelAllVars('simpleadmin');
 
     return true;
 }

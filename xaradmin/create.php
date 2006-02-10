@@ -5,24 +5,15 @@
  */
 function tasks_admin_create($args)
 {
-    list($parentid,
-        $modname,
-        $objectid,
-        $name,
-        $description,
-        $status,
-        $priority) =    xarVarCleanFromInput('parentid',
-                                            'modname',
-                                            'objectid',
-                                            'name',
-                                            'description',
-                                            'status',
-                                            'priority');
+    if (!xarVarFetch('parentid',    'int:1', $parentid,    0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('modname',     'str:1', $modname,     '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('objectid',    'int:1', $objectid,    0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('name',        'str:1', $name,        '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('description', 'str:1', $description, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('status',      'int:1', $status,      0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('priority',     'int:1', $priority,   0, XARVAR_NOT_REQUIRED)) return;
 
     extract($args);
-
-    // SECAUTH KEY CHECK REMOVED DUE TO MULTIPLE FORM OCCURRENCES CONFLICTING ON KEY USAGE
-    // PERMISSIONS CHECK SHOULD BE SUFFICIENT TO PREVENT MALICIOUS USAGE
 
     $returnid = xarModAPIFunc('tasks','admin','create',
                         array('parentid'     => $parentid,
@@ -40,8 +31,8 @@ function tasks_admin_create($args)
     }
 
     xarResponseRedirect(xarModURL('tasks', 'user', 'display', array('id' => $returnid,
+    																'parentid' => $parentid,
                                                             '' => '#addtask')));
-
     return true;
 }
 

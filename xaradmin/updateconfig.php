@@ -29,18 +29,18 @@ function tasks_admin_updateconfig()
     if (!xarVarFetch('returnfromadd', 'int', $returnfromadd, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('returnfromedit', 'int', $returnfromedit, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('returnfromsurface', 'int', $returnfromsurface, 0, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('returnfrommigrate', 'int', $returnfrommigrate, 0, XARVAR_NOT_REQUIRED)) return;   
-    if (!xarVarFetch('maxdisplaydepth', 'int', $maxdisplaydepth, 5, XARVAR_NOT_REQUIRED)) return;   
+    if (!xarVarFetch('returnfrommigrate', 'int', $returnfrommigrate, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('maxdisplaydepth', 'int', $maxdisplaydepth, 5, XARVAR_NOT_REQUIRED)) return;
 
     if (!xarSecConfirmAuthKey()) return;
 
     xarModSetVar('tasks', 'dateformat', $dateformat);
     xarModSetVar('tasks', 'showoptions', $showoptions);
-    xarModSetVar('tasks', 'returnfromadd', $returnfromadd);
+/*    xarModSetVar('tasks', 'returnfromadd', $returnfromadd);
     xarModSetVar('tasks', 'returnfromedit', $returnfromedit);
     xarModSetVar('tasks', 'returnfromsurface', $returnfromsurface);
     xarModSetVar('tasks', 'returnfrommigrate', $returnfrommigrate);
-    xarModSetVar('tasks', 'maxdisplaydepth', $maxdisplaydepth);
+*/    xarModSetVar('tasks', 'maxdisplaydepth', $maxdisplaydepth);
 
     xarResponseRedirect(xarModURL('tasks', 'admin', 'modifyconfig'));
 

@@ -7,7 +7,7 @@ function tasks_admin_modify($args)
 {
     $data=array();
     if (!xarVarFetch('id', 'int:1', $id)) return;
-                           
+
     extract($args);
 
     $task = xarModAPIFunc('tasks','user','get', array('id' => $id));
@@ -27,7 +27,7 @@ function tasks_admin_modify($args)
     $data['prioritydropdown'] = $prioritydropdown;
 
     $data['id'] = $id;
- 
+
     $dateformatlist = xarModAPIFunc('tasks','user','dateformatlist');
     $dateformat = $dateformatlist[xarModGetVar('tasks', 'dateformat')];
     $formsize = strlen($dateformat) * 2;
@@ -41,7 +41,7 @@ function tasks_admin_modify($args)
                                 'name' => strftime($dateformat,$x));
         $x += $oneday;
     }
-    $data['start_planned_dropdown'] =$datedropdown;
+    $data['start_planned_dropdown'] = $datedropdown;
     $data['start_actual_dropdown'] = $datedropdown;
     $data['end_planned_dropdown']=$datedropdown;
     $data['end_actual_dropdown'] = $datedropdown;

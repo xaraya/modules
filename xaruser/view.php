@@ -6,12 +6,12 @@
 function tasks_user_view($args)
 {
     $data = array();
-    if (!xarVarFetch('parentid', 'int:1', $parentid, 0, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('module', 'str:1:', $module, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('type', 'str:1:', $type, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('func', 'str:1:', $func, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('filter', 'str:1:', $filter, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('displaydepth', 'int:1', $displaydepth, -1, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('parentid',     'int:1',  $parentid, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('module',       'str:1:', $module, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('type',         'str:1:', $type, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('func',         'str:1:', $func, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('filter',       'str:1:', $filter, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('displaydepth', 'int:1',  $displaydepth, -1, XARVAR_NOT_REQUIRED)) return;
     extract($args);
 
     if (isset($filter)) {
