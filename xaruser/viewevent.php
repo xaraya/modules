@@ -49,7 +49,7 @@ function julian_user_viewevent()
     $matches = array();
     if (preg_match("/^(\d+)_link$/",$event_id,$matches)) {
         $linkid = $matches[1];
-        $query = "SELECT  hook_modid , hook_itemtype , hook_iid  FROM  ".$xartable['julian_events_linkage']."  WHERE event_id=?";
+        $query = "SELECT  hook_modid, hook_itemtype, hook_iid  FROM  ".$xartable['julian_events_linkage']."  WHERE event_id=?";
         $result = &$dbconn->Execute($query,array($linkid));
 /*
         'event_id'=>array('type'=>'integer','size'=>'medium','unsigned'=>TRUE,'null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),

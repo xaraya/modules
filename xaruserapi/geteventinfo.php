@@ -36,7 +36,7 @@ function julian_userapi_geteventinfo($args)
 
     // Load up database
     $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+  //  $xartable =& xarDBGetTables();
     $sitePrefix = xarDBGetSiteTablePrefix();
     // Name for articles database entities
     $articlestable = $sitePrefix . '_articles';
