@@ -28,7 +28,7 @@ function registration_init()
     xarRegisterMask('ViewRegistrationLogin','All','registration','Block','rlogin:Login:All','ACCESS_OVERVIEW');
     xarRegisterMask('EditRegistration','All','registration','All','All','ACCESS_EDIT');
     xarRegisterMask('AdminRegistration','All','registration','All','All','ACCESS_ADMIN');
-
+    xarRegisterMask('AdminPanel','All','registration','All','All','ACCESS_ADMIN');
 # --------------------------------------------------------
 #
 # Set up privileges
