@@ -34,22 +34,36 @@ function julian_userapi_geteventinfo($args)
         return;
     }
 
-    // Load up database
-    $dbconn =& xarDBGetConn();
-  //  $xartable =& xarDBGetTables();
-    $sitePrefix = xarDBGetSiteTablePrefix();
-    // Name for articles database entities
-    $articlestable = $sitePrefix . '_articles';
-    // Try to find the link for the current module, item type and item id.
-    $query = "SELECT xar_title, xar_summary, xar_status FROM $articlestable WHERE xar_aid=$iid"; //Only select approved and frontpage articles
-    $result = $dbconn->Execute($query);
-    if (!empty($result)) {
-        if (!$result->EOF) {
-            $obj = $result->FetchObject(false);
-            $event['summary'] = $obj->xar_title;
-            $event['description'] = $obj->xar_summary;
-            $event['artstatus'] = $obj->xar_status;
-            $event['viewURL'] = xarModURL('articles','user','display',array('aid'=>$iid));
+    /*
+     * Get the event via getitemlinks
+     * @param $args['itemtype'] item type (optional)
+     * @param $args['itemids'] array of item ids to get
+     * @param $args['field'] field to return as label in the list (default 'title')
+
+        $itemlinks[$itemid] = array('url'   => xarModURL('articles', 'user', 'display',
+                                                                 array('ptid' => $article['pubtypeid'],
+                                                                       'aid' => $article['aid'])),
+                                            'title' => xarML('Display Article'),
+                                            'label' => xarVarPrepForDisplay($article[$field]));
+
+     */
+    $event =array();
+    $event['viewUrl']='';
+    $event['summary']='';
+    $event['description'] = '';
+    $event['artstatus'] = 1;
+    $field = 'title';
+    $item = xarModApiFunc('articles','user','getitemlinks',array('itemids'=> array($iid),'field'=> $field));
+
+    if (empty($item[$iid]['url'])) {
+        return array();
+    } else {
+        $event['viewURL'] = $item[$iid]['url'];
+        $event['summary'] = $item[$iid]['title'];
+        if (!empty($item[$iid]['label'])) {
+            $event['description'] = $item[$iid]['label'];
+        } else {
+            $event['description'] = xarML('No description entered');
         }
     }
 

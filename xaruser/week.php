@@ -53,11 +53,11 @@ function julian_user_week($args)
     $enddate = date("Y-m-d",strtotime($bl_data['week'][6]));
 
     //get the events for the selected week
-    $bl_data['event_array']=xarModApiFunc('julian','user','getall', array('startdate'=>$startdate, 'enddate'=>$enddate, 'catid' => $catid));
+    $bl_data['event_array'] = xarModApiFunc('julian','user','getall', array('startdate'=>$startdate, 'enddate'=>$enddate, 'catid' => $catid));
     $bl_data['Bullet'] = '&'.xarModGetVar('julian', 'BulletForm').';';
 
     //set the url to this page in session as the last page viewed
-    $lastview=xarModURL('julian','user','week',array('cal_date'=>$bl_data['cal_date'], 'catid'=> $catid));
+    $lastview = xarModURL('julian','user','week',array('cal_date'=>$bl_data['cal_date'], 'catid'=> $catid));
     xarSessionSetVar('lastview',$lastview);
 
     return $bl_data;

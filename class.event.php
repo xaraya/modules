@@ -17,6 +17,7 @@ class Event
     var $repeattype;        // frequency type
     var $repeatonnum;       // repeat on 1st,2nd,3rd,4th,Last
     var $repeatonday;       //
+    var $color;
 
     function Event()
     {   // set the author
@@ -92,8 +93,8 @@ class Event
 
         if (!empty($links) && is_array($links) && count($links) > 0) {
             // One or more categories are coupled to this event; try to find corresponding colors.
-            $dbconn = xarDBGetConn();
-            $xartable = xarDBGetTables();
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
             $julian_category_properties = $xartable['julian_category_properties'];
             $cids = implode(",", array_keys($links)); // The category-ids we want colors for.
              $query_color = "SELECT color FROM $julian_category_properties WHERE cid IN ($cids)";
@@ -139,17 +140,23 @@ class Event
       // Generate unique id for event that allows for time/date-based sorting.
       $index=strtotime($event_obj->dtstart) ."-".$event_obj->event_id;
 
+      $event_data[$event_date][$index] = array();
+      $event_data[$event_date][$index] = xarModAPIFunc('julian', 'user', 'geteventinfo',
+                                                         array('event'   => $event_data[$event_date][$index],
+                                                               'iid'     => $event_obj->hook_iid,
+                                                               'itemtype'=> $event_obj->hook_itemtype,
+                                                               'modid'   => $event_obj->hook_modid));
+
+
       // Default color: black.
       $color = "#000000";
-
-      $event_data[$event_date][$index] = array();
 
       //Set the data for the event
       $event_data[$event_date][$index]['event_id'] = $event_obj->event_id;
       $event_data[$event_date][$index]['class'] = 0;
       $event_data[$event_date][$index]['organizer'] = 0;
       $event_data[$event_date][$index]['summary'] = $event_obj->summary;
-      $event_data[$event_date][$index]['description'] = xarML('This item does not belong to julian. It has been hooked to julian by another module.');
+ //     $event_data[$event_date][$index]['description'] = xarML('This item does not belong to julian. It has been hooked to julian by another module.');
       $event_data[$event_date][$index]['isallday'] = $event_obj->isallday;
       $event_data[$event_date][$index]['color'] = $color;
       $event_data[$event_date][$index]['time'] = $event_obj->fStartTime;
@@ -157,14 +164,8 @@ class Event
       $event_data[$event_date][$index]['linkdate'] = date("Ymd",strtotime($event_date));
       $event_data[$event_date][$index]['startdate'] = date("m-d-Y",strtotime($event_date));
       // Get additional event information for hooking module.
-      $event_data[$event_date][$index] = xarModAPIFunc('julian', 'user', 'geteventinfo',
-                                                         array('event'   => $event_data[$event_date][$index],
-                                                               'iid'     => $event_obj->hook_iid,
-                                                               'itemtype'=> $event_obj->hook_itemtype,
-                                                               'modid'   => $event_obj->hook_modid));
 
       //popover posted information
-
       //multiple event in a day popup
       $event_data[$event_date][$index]['multipopover'] = $event_obj->fStartTime . " " . addslashes($event_data[$event_date][$index]['summary']);
       //single event popup

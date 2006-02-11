@@ -1,5 +1,4 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-
 <div class="xar-julian xar-julian-user-week">
 <xar:comment> Include the header file which also loads the css for Julian</xar:comment>
     <xar:template file="header" />
