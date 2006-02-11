@@ -4,16 +4,16 @@
  *    @params $startdate string valid date as YYYY-MM-DD
  *    @params $enddate string valid date as YYYY-MM-DD
  *    @return array events for the range specified
-* @package Xaraya eXtensible Management System
-* @copyright (C) 2004 by Metrostat Technologies, Inc.
-* @license GPL {@link http://www.gnu.org/licenses/gpl.html}
-* @link http://www.metrostat.net
-*
-* @subpackage julian
-* initial template: Roger Raymond
-*
-* @TODO
-*/
+ * @package modules
+ * @copyright (C) 2004 by Metrostat Technologies, Inc.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.metrostat.net
+ *
+ * @subpackage Julian Module
+ * @link http://xaraya.com/index.php/release/319.html
+ * @author Julian Module Development Team
+ *
+ */
 
 /**
  * Get all events
@@ -22,7 +22,8 @@
  * Events are formatted for display
  *
  * @author Jodie Razdrh/John Kevlin/David St.Clair MichelV (Michelv@xarayahosting.nl)
- * @deprec  date since deprecated <insert this if function is deprecated>
+ * initial template: Roger Raymond
+
  * @access  public / private / protected
  * @param   int $startnum Description of parameter 1
  * @param   int $numitems Description of parameter 2

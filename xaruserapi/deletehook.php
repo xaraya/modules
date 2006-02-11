@@ -2,7 +2,7 @@
 /**
  * Delete and item via a hook
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -22,6 +22,7 @@
  * @param   array $extrainfo Whatever you need
  * @param   ID objectid ID of the item to delete
  * @return  array ExtraInfo
+ * @since May 2005
  * @todo security checks in here
  */
 function julian_userapi_deletehook($args)
@@ -63,8 +64,8 @@ function julian_userapi_deletehook($args)
     }
 
     // Delete the links to the specified object + itemtype + module.
-   $dbconn = xarDBGetConn();
-   $xartable = xarDBGetTables();
+   $dbconn =& xarDBGetConn();
+   $xartable =& xarDBGetTables();
    $event_linkage_table = $xartable['julian_events_linkage'];
    $query = "DELETE FROM $event_linkage_table WHERE ( hook_modid =$modid AND  hook_itemtype =$itemtype AND  hook_iid =$objectid)";
    $result = $dbconn->Execute($query);

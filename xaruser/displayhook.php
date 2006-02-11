@@ -22,6 +22,7 @@
  * @param   id $objectid
  * @param   array $extrainfo
  * @return  array
+ * @since May 2005
  * @todo    nothing
  */
 function julian_user_displayhook($args)

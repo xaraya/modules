@@ -25,6 +25,7 @@
  * @returns array
  * @return item array, or false on failure
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
+ * @since May 2005
  * @TODO MichelV: <1> Extend so this hook doesn't only work for articles
  */
 function julian_userapi_gethooked($args)
