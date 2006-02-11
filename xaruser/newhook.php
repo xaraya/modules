@@ -2,13 +2,13 @@
 /**
  * New event hook
  *
- * @package julian
- * @copyright (C) 2005 by the Xaraya Development Team.
+ * @package modules
+ * @copyright (C) 2005-2006 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Julian
- * @link  link to information for the subpackage
+ * @subpackage Julian module
+ * @link http://xaraya.com/index.php/release/319.html
  * @author Julian development Team
  */
 
@@ -21,40 +21,40 @@
  * @access  public
  * @param   $extrainfo
  * @return  array tplinfo
- * @todo    MichelV. <#>
+ * @todo    MichelV. <#> Use xarVarFetch
  */
 function julian_user_newhook($args)
 {
     extract($args);
+    if (!xarVarFetch('summary', 'str:1:100', $summary, xarML('Not Entered'), XARVAR_NOT_REQUIRED)) return;
 
     if (!isset($extrainfo)) {
         $extrainfo = array();
     }
 
     $data = array();
-
+    $data['summary'] = $summary;
     $event_startdate = time();
     $event_enddate = time();
 
-   $data['event_month'] = 1;
-   $data['event_year'] = 1;
-   $data['event_day'] = 1;
+    $data['event_month'] = 1;
+    $data['event_year'] = 1;
+    $data['event_day'] = 1;
 
-   $data['event_allday'] = true;
+    $data['event_allday'] = true;
 
-   list($data['event_year'],   $data['event_month'],   $data['event_day'])    = explode("-",date("Y-m-d",$event_startdate));
-   list($data['event_endyear'],$data['event_endmonth'],$data['event_endday']) = explode("-",date("Y-m-d",$event_enddate));
+    list($data['event_year'],   $data['event_month'],   $data['event_day'])    = explode("-",date("Y-m-d",$event_startdate));
+    list($data['event_endyear'],$data['event_endmonth'],$data['event_endday']) = explode("-",date("Y-m-d",$event_enddate));
 
-   // Building start hour options (default = 12)
-   $start_hour_options = '';
-   for($i = 1;$i <= 12; $i++)
-   {
-     $j = str_pad($i,2,"0",STR_PAD_LEFT);
-     $start_hour_options.='<option value="'.$i.'"';
-     if ($i == 12) $start_hour_options.= " SELECTED";
-      $start_hour_options.='>'.$j.'</option>';
-   }
-   $data['start_hour_options'] = $start_hour_options;
+    // Building start hour options (default = 12)
+    $start_hour_options = '';
+    for($i = 1;$i <= 12; $i++) {
+        $j = str_pad($i,2,"0",STR_PAD_LEFT);
+        $start_hour_options.='<option value="'.$i.'"';
+        if ($i == 12) $start_hour_options.= " SELECTED";
+        $start_hour_options.='>'.$j.'</option>';
+    }
+    $data['start_hour_options'] = $start_hour_options;
 
     // Building duration minute options
     // Get the interval
@@ -101,18 +101,17 @@ function julian_user_newhook($args)
     // Start AM/PM (default = AM)
     $data['event_startampm'] = false;    // true=PM, false=AM
 
-   // Building duration hour options (default = 1)
-   $dur_hour_options = '';
-   for($i = 0;$i <= 24; $i++)
-   {
-     $j = str_pad($i,2,"0",STR_PAD_LEFT);
-     $dur_hour_options.='<option value="'.$i.'"';
-     if ($i == 1) $dur_hour_options.= " selected";
-     $dur_hour_options.='>'.$j.'</option>';
-   }
-   $data['dur_hour_options'] = $dur_hour_options;
+    // Building duration hour options (default = 1)
+    $dur_hour_options = '';
+    for($i = 0;$i <= 24; $i++) {
+        $j = str_pad($i,2,"0",STR_PAD_LEFT);
+        $dur_hour_options.='<option value="'.$i.'"';
+        if ($i == 1) $dur_hour_options.= " selected";
+        $dur_hour_options.='>'.$j.'</option>';
+    }
+    $data['dur_hour_options'] = $dur_hour_options;
 
-   // Type of recurrence (0=none, 1=every, 2=on)
+    // Type of recurrence (0=none, 1=every, 2=on)
     $data['event_repeat'] = 0;
 
     // Repeat-every defaults.

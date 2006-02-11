@@ -66,7 +66,7 @@ function julian_userapi_gethooked($args)
         if (!$result->EOF) {
             $edit_obj = $result->FetchObject(false);
 
-            $summary = $edit_obj->summary;
+            $item['event_summary'] = $edit_obj->summary;
 
             // Start/end date (and time)
             $event_startdate = strtotime($edit_obj->dtstart);
@@ -96,13 +96,13 @@ function julian_userapi_gethooked($args)
             //Depending on which recurrence rule was used, set the appropriate form fields.
             switch ($item['event_repeat']) {
                 case 1:
-                    $item['event_repeat_every_freq'] = $edit_obj->recur_freq;    // time unit (1=day, 2=week, 3=month, 4=year)
-                    $item['event_repeat_every_type'] = $edit_obj->rrule;        // every n time units
+                    $item['event_repeat_every_freq'] = $edit_obj->recur_freq;  // time unit (1=day, 2=week, 3=month, 4=year)
+                    $item['event_repeat_every_type'] = $edit_obj->rrule;       // every n time units
                     break;
                 case 2:
-                    $item['event_repeat_on_day'] = $edit_obj->recur_count;       // day of the week (mon-sun)
-                    $item['event_repeat_on_num'] = $edit_obj->recur_interval;    // instance within month (1=1st, 2=2nd, ..., 5=last)
-                    $item['event_repeat_on_freq'] = $edit_obj->recur_freq;       // every n months
+                    $item['event_repeat_on_day'] = $edit_obj->recur_count;     // day of the week (mon-sun)
+                    $item['event_repeat_on_num'] = $edit_obj->recur_interval;  // instance within month (1=1st, 2=2nd, ..., 5=last)
+                    $item['event_repeat_on_freq'] = $edit_obj->recur_freq;     // every n months
                     break;
             }
 

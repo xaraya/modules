@@ -67,7 +67,7 @@ function julian_userapi_createhook($args)
         $result->Close();
    }
    // Give the summary (aka title) of event
-   if (!xarVarFetch('summary', 'str:1:', $summary, 'Not Entered', XARVAR_NOT_REQUIRED)) return;
+   if (!xarVarFetch('summary', 'str:1:', $summary, xarML('Not Entered'), XARVAR_NOT_REQUIRED)) return;
     // start date
    if (!xarVarFetch('event_month','str',$event_month,'')) return;
    if (!xarVarFetch('event_day',  'int',$event_day,  '')) return;
@@ -171,7 +171,7 @@ function julian_userapi_createhook($args)
                     recur_count=?,
                     recur_interval=?,
                     recur_until=?
-                WHERE event_id= $id";
+                WHERE event_id= ?";
                 $bindvars = array ($modid,                      // hooking module id
                                    $itemtype,                   // hooking module item type
                                    $objectid,                   // hooking module item id
@@ -225,7 +225,7 @@ function julian_userapi_createhook($args)
                                    $recur_freq,                 // repetition frequency
                                    $event_repeat_on_day,        // day of the week
                                    $event_repeat_on_num,        // month-based instance of weekday (1st, 2nd, ..., last=5)
-                                  $event_enddate);              // event end date (may be '')
+                                   $event_enddate);             // event end date (may be '')
                 $result = $dbconn->Execute($query, $bindvars);
             $id = $dbconn->Insert_ID();
    }

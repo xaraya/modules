@@ -8,6 +8,8 @@
  * @link http://www.xaraya.com
  *
  * @subpackage Julian Module
+ * @link http://xaraya.com/index.php/release/319.html
+ * @author Julian Module Development Team
  */
 
 /**
@@ -53,6 +55,8 @@ function julian_user_modifyhook($args)
 
     $data = array();
 
+    $data['summary'] = xarML('Not Entered');
+
     // Date/time defaults
     $event_startdate = time();
     $event_enddate = time();
@@ -87,7 +91,8 @@ function julian_user_modifyhook($args)
    if (!empty($result)) {
         if (!$result->EOF) {
             $edit_obj = $result->FetchObject(false);
-
+            // Summary aka Title
+            $summary = $edit_obj->summary;
             // Start/end date (and time)
             $event_startdate = strtotime($edit_obj->dtstart);
             $event_enddate   = strtotime($edit_obj->recur_until);
@@ -202,6 +207,8 @@ function julian_user_modifyhook($args)
         $dur_minute_options.='>'.$j.'</option>';
     }
     $data['dur_minute_options'] = $dur_minute_options;
+
+    $data['summary'] = $summary;
 
     return xarTplModule('julian','user','edithook',$data);
 }

@@ -1,6 +1,7 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:if condition="!empty($event_startdate)" >
 <div>
+     <h3><xar:mlstring>Title</xar:mlstring>: #$event_summary#.</h3>
      <xar:mlstring>Start</xar:mlstring>: #$event_startdate#.<br>
      <xar:mlstring>Duration</xar:mlstring>:
      <xar:if condition="$event_allday">
