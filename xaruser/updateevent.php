@@ -151,7 +151,6 @@ function julian_user_updateevent()
     //set events table
     $event_table = $xartable['julian_events'];
 
-
     if(strcmp($id,"")) {
         $now = "now()";
         $query = "UPDATE " .  $event_table . "
@@ -190,6 +189,7 @@ function julian_user_updateevent()
         $hooks = xarModCallHooks('item', 'update', $id, $item);
 
     } else {
+        // Event doesn't exist yet. Create one
         $uidnow = xarUserGetVar('uid');
         if (!xarSecurityCheck('AddJulian', 1, 'Item', "All:$uidnow:All:All")) { // TODO: improve
             return;

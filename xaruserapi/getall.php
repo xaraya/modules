@@ -80,12 +80,12 @@ function julian_userapi_getall($args)
     $units = array("1"=>xarML('days'),"2"=>xarML('weeks'),"3"=>xarML('months'),"4"=>xarML('years'));
     $startdate=date('Y-m-d',strtotime($startdate));
     if(strcmp($enddate,"")) {
-     $enddate=date('Y-m-d',strtotime($enddate));
-     $condition=" AND ((DATE_FORMAT(dtstart,'%Y-%m-%d')>='" . $startdate . "' AND DATE_FORMAT(dtstart,'%Y-%m-%d') <='" . $enddate . "') OR recur_freq>0) ";
+        $enddate=date('Y-m-d',strtotime($enddate));
+        $condition=" AND ((DATE_FORMAT(dtstart,'%Y-%m-%d')>='" . $startdate . "' AND DATE_FORMAT(dtstart,'%Y-%m-%d') <='" . $enddate . "') OR recur_freq>0) ";
     } else {
-     $condition = " AND (DATE_FORMAT(dtstart,'%Y-%m-%d') ='". $startdate  ."' OR recur_freq>0)";
-     //set the end date to the start date for recurring events
-     $enddate=$startdate;
+        $condition = " AND (DATE_FORMAT(dtstart,'%Y-%m-%d') ='". $startdate  ."' OR recur_freq>0)";
+        // set the end date to the start date for recurring events
+        $enddate=$startdate;
     }
 
     $event_data = array();
@@ -198,6 +198,7 @@ function julian_userapi_getall($args)
                          hook_modid,
                          hook_itemtype,
                          hook_iid,
+                         summary,
                          dtstart,
                          duration,
                          isallday,

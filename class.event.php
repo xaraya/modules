@@ -67,17 +67,17 @@ class Event
     function setEventData(&$event_data,$event_date,$event_obj)
     {
     //Get variables
-       $dateformat=xarModGetVar('julian', 'dateformat');
+        $dateformat=xarModGetVar('julian', 'dateformat');
 
-      /*create a unique index for sorting using the timestamp for this
+        /*create a unique index for sorting using the timestamp for this
         event and then concat the event id with a dash inbetween to guarantee uniqueness. This will allow ordering
         by timestamp then event_id with the all day events being listed first. If there
         is more than one event for any given time (or all day), the
         event id makes the index unique.*/
-      $index=strtotime($event_obj->dtstart) ."-".$event_obj->event_id;
+        $index=strtotime($event_obj->dtstart) ."-".$event_obj->event_id;
 
         // Default color: black.
-      $color = "#000000";
+        $color = "#000000";
 
         // Sad and slow: we need to do database lookups, first to find the category of the event
         // (in table categories_linkage, done by categories_userapi_getlinks), then to find the color
@@ -90,7 +90,7 @@ class Event
                                              'modid' => xarModGetIDFromName('julian'),
                                              'reverse' => 0));
 
-      if (!empty($links) && is_array($links) && count($links) > 0) {
+        if (!empty($links) && is_array($links) && count($links) > 0) {
             // One or more categories are coupled to this event; try to find corresponding colors.
             $dbconn = xarDBGetConn();
             $xartable = xarDBGetTables();
@@ -99,34 +99,34 @@ class Event
              $query_color = "SELECT color FROM $julian_category_properties WHERE cid IN ($cids)";
                $result_color = $dbconn->Execute($query_color);
             if ($result_color && !$result_color->EOF)    $color = $result_color->fields[0];    // we found at least one color; use it.
-      }
+        }
 
-      //Set the data for the event
-      $event_data[$event_date][$index]['event_id'] = $event_obj->event_id;
-      $event_data[$event_date][$index]['class'] = $event_obj->class;
-      $event_data[$event_date][$index]['organizer'] = $event_obj->organizer;
-      $event_data[$event_date][$index]['summary'] = $event_obj->summary;
-      $event_data[$event_date][$index]['description'] = $event_obj->description;
-      $event_data[$event_date][$index]['isallday'] = $event_obj->isallday;
-      $event_data[$event_date][$index]['color'] = $color;
-      $event_data[$event_date][$index]['time'] = $event_obj->fStartTime;
-      $event_data[$event_date][$index]['categories'] = $event_obj->categories;
-      $event_data[$event_date][$index]['linkdate'] = date("Ymd",strtotime($event_date));
-      $event_data[$event_date][$index]['startdate'] = date("m-d-Y",strtotime($event_date));
-      //popover posted information
-      $postedby="Posted By: ".addslashes(xarUserGetVar('name',$event_obj->organizer));
-      $postedon=" on ".date($dateformat).' '.date('h:s a',strtotime($event_obj->created));
-      //multiple event in a day popup
-      $event_data[$event_date][$index]['multipopover'] = $event_obj->fStartTime . " " . addslashes($event_obj->summary) . "-" .$postedby;
-      //single event popup
-      $event_data[$event_date][$index]['singlepopover'] = addslashes($event_obj->description) . "<br>".$postedby.$postedon;
-      //$event_data[$event_date][$index]['singlepopover'] = addslashes($event_obj->description);
-      $event_data[$event_date][$index]['singlepopovercaption'] = addslashes($event_obj->summary)." " . $event_obj->fStartTime;
-      //sort the array for this event date by the unique timestamp index which is the key for this array
-      $sortArray=$event_data[$event_date];
-      ksort($sortArray);
-      //reset the event array for this date to the sorted array for this event date
-      $event_data[$event_date]=$sortArray;
+        //Set the data for the event
+        $event_data[$event_date][$index]['event_id'] = $event_obj->event_id;
+        $event_data[$event_date][$index]['class'] = $event_obj->class;
+        $event_data[$event_date][$index]['organizer'] = $event_obj->organizer;
+        $event_data[$event_date][$index]['summary'] = $event_obj->summary;
+        $event_data[$event_date][$index]['description'] = $event_obj->description;
+        $event_data[$event_date][$index]['isallday'] = $event_obj->isallday;
+        $event_data[$event_date][$index]['color'] = $color;
+        $event_data[$event_date][$index]['time'] = $event_obj->fStartTime;
+        $event_data[$event_date][$index]['categories'] = $event_obj->categories;
+        $event_data[$event_date][$index]['linkdate'] = date("Ymd",strtotime($event_date));
+        $event_data[$event_date][$index]['startdate'] = date("m-d-Y",strtotime($event_date));
+        //popover posted information
+        $postedby="Posted By: ".addslashes(xarUserGetVar('name',$event_obj->organizer));
+        $postedon=" on ".date($dateformat).' '.date('h:s a',strtotime($event_obj->created));
+        //multiple event in a day popup
+        $event_data[$event_date][$index]['multipopover'] = $event_obj->fStartTime . " " . addslashes($event_obj->summary) . "-" .$postedby;
+        //single event popup
+        $event_data[$event_date][$index]['singlepopover'] = addslashes($event_obj->description) . "<br>".$postedby.$postedon;
+        //$event_data[$event_date][$index]['singlepopover'] = addslashes($event_obj->description);
+        $event_data[$event_date][$index]['singlepopovercaption'] = addslashes($event_obj->summary)." " . $event_obj->fStartTime;
+        //sort the array for this event date by the unique timestamp index which is the key for this array
+        $sortArray=$event_data[$event_date];
+        ksort($sortArray);
+        //reset the event array for this date to the sorted array for this event date
+        $event_data[$event_date]=$sortArray;
     }
 
     function setLinkedEventData(&$event_data,$event_date,$event_obj)
@@ -148,8 +148,8 @@ class Event
       $event_data[$event_date][$index]['event_id'] = $event_obj->event_id;
       $event_data[$event_date][$index]['class'] = 0;
       $event_data[$event_date][$index]['organizer'] = 0;
-      $event_data[$event_date][$index]['summary'] = 'external item (hooked)';
-      $event_data[$event_date][$index]['description'] = 'This item does not belong to julian. It has been hooked to julian by another module.';
+      $event_data[$event_date][$index]['summary'] = $event_obj->summary;
+      $event_data[$event_date][$index]['description'] = xarML('This item does not belong to julian. It has been hooked to julian by another module.');
       $event_data[$event_date][$index]['isallday'] = $event_obj->isallday;
       $event_data[$event_date][$index]['color'] = $color;
       $event_data[$event_date][$index]['time'] = $event_obj->fStartTime;
@@ -247,38 +247,34 @@ class Event
             in the current month sometime after the start date, set the start date to the current month's first occurence.
             Otherwise, add the frequency to get the next occurrence of this event until one is found that occurs after the start date
             entered by the user.*/
-          if ($interval < 5 && $interval != 0)
-          {
+          if ($interval < 5 && $interval != 0) {
              /*event repeats 1st, 2nd, 3rd or 4th day of the week every so many month(s) (i.e. 2nd Sunday every 3 months)*/
              $newTS = strtotime($interval ." ". $day_array[$count], $newTS);
-             if($newTS >= strtotime($selectedstartdate))
-             {
+             if($newTS >= strtotime($selectedstartdate)) {
                 $eventstartdate=date("Y-m-d",$newTS);
                 $haveStartDate=1;
-             }
-             else
+             } else {
                 $newTS = strtotime(date("Y-m",$newTS)."-01 +" . $freq . " month");
-          }
-          else if ($interval == 5)
-          {
+             }
+          } else if ($interval == 5) {
              /*event repeats a certain day the last week every so many month(s) (i.e. last Monday every two months)*/
              $endMonthTS=strtotime(date('Y-m',$newTS)."-".date('t',$newTS));
              $newTS= strtotime("next " . $day_array[$count],strtotime("last week",$endMonthTS));
              /*if determining the last occurrence in the month takes you to the next month, use 'this' instead of 'next
              in the strtotime function to create the next date for comparison. This is required for this to calculate
              the correct date when the last occurrence is on the last day of the month*/
-             if(strcmp(date('m',$newTS),date('m')))
+             if(strcmp(date('m',$newTS),date('m'))) {
                 $newTS=strtotime("this " . $day_array[$count],strtotime("last week",$endMonthTS));
-             if($newTS >= strtotime($selectedstartdate))
-             {
+             }
+             if($newTS >= strtotime($selectedstartdate)) {
                 $eventstartdate=date("Y-m-d",$newTS);
                 $haveStartDate=1;
-             }
-             else
+             } else {
                 $newTS = strtotime(date("Y-m",$newTS)."-01 +".$freq." month");
+             }
           }
        }
        return $eventstartdate;
-     }
+    }
 }
 ?>
