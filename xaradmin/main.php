@@ -16,7 +16,7 @@ function registration_admin_main()
 {
     // Security Check
     if (!xarSecurityCheck('EditRegistration')) return;
-    if (xarModGetVar('adminpanels', 'overview') == 0) {
+    if (xarModGetVar('modules', 'disableoverview') == 0) {
         return array();
     } else {
         xarResponseRedirect(xarModURL('registration', 'admin', 'modifyconfig'));

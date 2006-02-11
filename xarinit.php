@@ -33,7 +33,7 @@ function registration_init()
 #
 # Set up privileges
 #
-    xarRegisterPrivilege('AdminRegistration','All','registration','All','All','ACCESS_ADMIN');
+    xarRegisterPrivilege('AdminRegistration','All','registration','All','All','ACCESS_ADMIN','Admin the Registration module');
     xarRegisterPrivilege('ViewRegistrationLogin','All','registration','Block','rlogin:Login:All','ACCESS_OVERVIEW','View the User Access block');
     xarRegisterPrivilege('ViewRegistration','All','registration','All','All','ACCESS_OVERVIEW','View the User Access block');
 
