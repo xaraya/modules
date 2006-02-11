@@ -57,57 +57,83 @@
                     </div>
                 </xar:if>
             </div>
+        </fieldset>
+        <fieldset>
+            <legend><xar:mlstring>Rules for this item</xar:mlstring></legend>
 
             <div class="xar-form-input-wrapper">
-                 <label for="pitemrules" class="xar-form-label" title="#xarML('This is the rule that applies to this pitem')#">
-                        <xar:mlstring>Rules for this pitem:</xar:mlstring>
+                 <label for="rule_level" class="xar-form-label" title="#xarML('Choose the level for this item')#">
+                        <xar:mlstring>Level Rule</xar:mlstring>
                  </label>
-                 <p><em><xar:mlstring>Use the following format</xar:mlstring>:</em></p>
-                 <p>Coursetype:;Level:;Category:;source:internal/external/open;</p>
-                 <div class="xar-form-input-wrapper-after">
-                    <xar:if condition = "!empty($pitemrules)">
-                        <input type="text" name="pitemrules" id="pitemrules" value="#$pitemrules#" maxlength="255" class="xar-form-textmedium" />
-                    <xar:else />
-                        <input type="text" name="pitemrules" id="pitemrules" value="#$item.pitemrules#" maxlength="255" class="xar-form-textmedium" />
-                    </xar:if>
-                     <xar:if condition="!empty($invalid['pitemrules'])">
-                         <div class="xar-error">
-                                <xar:mlstring>ERROR! This is not a valid rule</xar:mlstring>
-                         </div>
-                     </xar:if>
-                 </div>
+                 <select name="rule_level">
+                    <xar:loop name="$levels">
+                        <option value="#$loop:item['lid']#">#$loop:item['level']#</option>
+                    </xar:loop>
+                 </select>
+            </div>
+            <div class="xar-form-input-wrapper">
+                 <label for="rule_cat" class="xar-form-label" title="#xarML('This is the category rule that applies to this plan item')#">
+                        <xar:mlstring>Category Rule</xar:mlstring>
+                 </label>
+                 <input type="text" name="rule_cat" id="rule_cat" value="#$rule_cat#" maxlength="5" class="xar-form-textshort" />
+                 <xar:if condition="!empty($invalid['rule_cat'])">
+                     <div class="xar-error">
+                            <xar:mlstring>ERROR! This is not a valid category</xar:mlstring>
+                     </div>
+                 </xar:if>
+            </div>
+            <div class="xar-form-input-wrapper">
+                 <label for="rule_type" class="xar-form-label" title="#xarML('This is the type rule that applies to this plan item')#">
+                        <xar:mlstring>Type Rule</xar:mlstring>
+                 </label>
+                 <input type="text" name="rule_type" id="rule_type" value="#$rule_type#" maxlength="15" class="xar-form-textshort" />
+                 <xar:if condition="!empty($invalid['rule_type'])">
+                     <div class="xar-error">
+                            <xar:mlstring>ERROR! This is not a valid type</xar:mlstring>
+                     </div>
+                 </xar:if>
+            </div>
+            <div class="xar-form-input-wrapper">
+                 <label for="rule_source" class="xar-form-label" title="#xarML('Choose from internal or external or open')#">
+                        <xar:mlstring>Source Rule</xar:mlstring>
+                 </label>
+                 <input type="text" name="rule_source" id="rule_source" value="#$rule_source#" maxlength="15" class="xar-form-textshort" />
+                 <xar:if condition="!empty($invalid['rule_source'])">
+                     <div class="xar-error">
+                            <xar:mlstring>ERROR! This is not a valid source</xar:mlstring>
+                     </div>
+                 </xar:if>
+            </div>
+            <xar:comment>
+                <p><em><xar:mlstring>Use the following format</xar:mlstring>:</em></p>
+                <p>Coursetype:;(Level:;)Category:;source:internal/external/open;</p>
+            </xar:comment>
+            <div class="xar-form-input-wrapper">
+                 <label for="mincredit" class="xar-form-label" title="#xarML('This is the minimum number of credits that need to be obtained in the pitem')#">
+                      <xar:mlstring>Minimum credits:</xar:mlstring>
+                 </label>
+                 <input type="text" name="mincredit" id="mincredit" value="#$mincredit#" maxlength="32" class="xar-form-textshort" />
+                 <xar:if condition="!empty($invalid['mincredit'])">
+                     <div class="xar-error">
+                            <xar:mlstring>ERROR! This is not a valid mincredits</xar:mlstring>
+                     </div>
+                 </xar:if>
             </div>
             <div class="xar-form-input-wrapper">
                  <label for="credits" class="xar-form-label" title="#xarML('This is the credits that need to be obtained in the pitem')#">
                         <xar:mlstring>Credits:</xar:mlstring>
                  </label>
-                 <xar:if condition = "!empty($credits)">
-                    <input type="text" name="credits" id="credits" value="#$credits#" maxlength="32" class="xar-form-textshort" />
-                 <xar:else />
-                    <input type="text" name="credits" id="credits" value="#$item.credits#" maxlength="32" class="xar-form-textshort" />
-                 </xar:if>
+                 <input type="text" name="credits" id="credits" value="#$credits#" maxlength="32" class="xar-form-textshort" />
                  <xar:if condition="!empty($invalid['credits'])">
                      <div class="xar-error">
                             <xar:mlstring>ERROR! This is not a valid credits</xar:mlstring>
                      </div>
                  </xar:if>
             </div>
-            <div class="xar-form-input-wrapper">
-                 <label for="mincredit" class="xar-form-label" title="#xarML('This is the mincredits that need to be obtained in the pitem')#">
-                      <xar:mlstring>Mincredits:</xar:mlstring>
-                 </label>
-                 <xar:if condition = "!empty($mincredit)">
-                    <input type="text" name="mincredit" id="mincredit" value="#$mincredit#" maxlength="32" class="xar-form-textshort" />
-                 <xar:else />
-                    <input type="text" name="mincredit" id="mincredit" value="#$item.mincredit#" maxlength="32" class="xar-form-textshort" />
-                 </xar:if>
-                 <xar:if condition="!empty($invalid['mincredits'])">
-                     <div class="xar-error">
-                            <xar:mlstring>ERROR! This is not a valid mincredits</xar:mlstring>
-                     </div>
-                 </xar:if>
-            </div>
 
+        </fieldset>
+        <fieldset>
+            <legend><xar:mlstring>Dates</xar:mlstring></legend>
             <div class="xar-form-input-wrapper">
                  <label for="dateopen" class="xar-form-label" title="#xarML('This is the date this pitem can be applied to')#">
                         <xar:mlstring>Date to open the plan item:</xar:mlstring>
