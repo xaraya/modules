@@ -74,6 +74,38 @@ president@whitehouse.gov';
     $ips = '';
     $disallowedips = serialize($ips);
     xarModSetVar('registration', 'disallowedips', $disallowedips);
+   //Let's check for an authsystem login block
+    $dbconn =& xarDBGetConn();
+    $tables =& xarDBGetTables();
+
+    $sitePrefix = xarDBGetSiteTablePrefix();
+    $blocktypeTable = $sitePrefix .'_block_types';
+    $blockinstanceTable = $sitePrefix .'_block_instances';
+        $query = "SELECT xar_id,
+                         xar_type,
+                         xar_module
+                         FROM $blocktypeTable
+                 WHERE xar_type='login' and xar_module='authsystem'";
+        $result =& $dbconn->Execute($query);
+        if (!$result) return;
+        list($blocktypeid,$blocktype,$module)= $result->fields;
+        $blocktype = array('id' => $blocktypeid,
+                           'blocktype' => $blocktype,
+                           'module'=> $module);
+
+       if (is_array($blocktype) && $blocktype['module']=='authsystem') {
+       $blocktypeid=$blocktype['id'];
+       //Find the block instance
+       $query = "SELECT xar_id
+                         FROM $blockinstanceTable
+                 WHERE xar_type_id=?";
+        $result =& $dbconn->Execute($query,array($blocktypeid));
+        list($blockid)= $result->fields;
+        if (isset($blockid)) {
+           // remove this login block type and block from authsystem
+    	    $result = xarModAPIfunc('blocks', 'admin', 'delete_instance', array('bid'=>$blockid));
+        }
+       }
 
     // Register blocks
     $tid = xarModAPIFunc('blocks',
@@ -88,7 +120,7 @@ president@whitehouse.gov';
         $rightgroup = xarModAPIFunc('blocks', 'user', 'getgroup', array('name'=> 'right'));
         if (!xarModAPIFunc('blocks', 'admin', 'create_instance',
                            array('title'    => 'User Access',
-                                 'name'     => 'login',
+                                 'name'     => 'rlogin',
                                  'type'     => $tid,
                                  'groups'    => array($rightgroup),
                                  'template' => '',
@@ -96,29 +128,6 @@ president@whitehouse.gov';
             return;
         }
     }
-    //Let's check for an authsystem login block
-    $dbconn =& xarDBGetConn();
-    $tables =& xarDBGetTables();
-
-    $sitePrefix = xarDBGetSiteTablePrefix();
-    $blocktypeTable = $sitePrefix .'_block_types';
-        $query = "SELECT xar_id,
-                         xar_type,
-                         xar_module
-                         FROM $blocktypeTable
-                 WHERE xar_type='login' and xar_module='authsystem'";
-        $result =& $dbconn->Execute($query);
-        if (!$result) return;
-        list($blockid,$blocktype,$module)= $result->fields;
-        $blocktype = array('id' => $blockid,
-                           'blocktype' => $blocktype,
-                           'module'=> $module);
-
-       if (is_array($blocktype) && $blocktype['module']=='authsystem') {
-       $blockid=$blocktype['id'];
-       // remove this login block type and block from authsystem
-    	$result = xarModAPIfunc('blocks', 'admin', 'delete_instance', array('bid'=>$blockid));
-       }
 
     return true;
 }
