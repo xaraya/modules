@@ -65,7 +65,8 @@ function julian_userapi_createhook($args)
         if (!$result->EOF) $id=$result->fields[0];
         $result->Close();
    }
-
+   // Give the summary (aka title) of event
+   if (!xarVarFetch('summary', 'str:1:', $summary, 'Not Entered', XARVAR_NOT_REQUIRED)) return;
     // start date
    if (!xarVarFetch('event_month','str',$event_month,'')) return;
    if (!xarVarFetch('event_day',  'int',$event_day,  '')) return;
@@ -158,29 +159,31 @@ function julian_userapi_createhook($args)
       // Link already exists; update it.
       $query = "UPDATE " .  $event_linkage_table . "
                 SET hook_modid=?,
-                     hook_itemtype=?,
-                     hook_iid=?,
-                     dtstart=?,
-                     duration=?,
-                     isallday=?,
-                     rrule=?,
-                     recur_freq=?,
-                     recur_count=?,
-                     recur_interval=?,
-                     recur_until=?
+                    hook_itemtype=?,
+                    hook_iid=?,
+                    summary =?,
+                    dtstart=?,
+                    duration=?,
+                    isallday=?,
+                    rrule=?,
+                    recur_freq=?,
+                    recur_count=?,
+                    recur_interval=?,
+                    recur_until=?
                 WHERE event_id= $id";
-                $bindvars = array ($modid,                            // hooking module id
-                                         $itemtype,                   // hooking module item type
-                                         $objectid,                   // hooking module item id
-                                         $event_startdate,            // event start date/time
-                                         $event_duration,             // event duration (hh:mm)
-                                         $event_allday,               // event takes all day (0 = false, 1 = true)
-                                         $event_repeat_every_type,    // unit of repetition frequency (day, week, month, year)
-                                         $recur_freq,                 // repetition frequency
-                                         $event_repeat_on_day,        // day of the week
-                                         $event_repeat_on_num,        // month-based instance of weekday (1st, 2nd, ..., last=5)
-                                         $event_enddate,              // event end date (may be '')
-                                         $id);                        // Event ID
+                $bindvars = array ($modid,                      // hooking module id
+                                   $itemtype,                   // hooking module item type
+                                   $objectid,                   // hooking module item id
+                                   $summary,                    // The title of the hooked event
+                                   $event_startdate,            // event start date/time
+                                   $event_duration,             // event duration (hh:mm)
+                                   $event_allday,               // event takes all day (0 = false, 1 = true)
+                                   $event_repeat_every_type,    // unit of repetition frequency (day, week, month, year)
+                                   $recur_freq,                 // repetition frequency
+                                   $event_repeat_on_day,        // day of the week
+                                   $event_repeat_on_num,        // month-based instance of weekday (1st, 2nd, ..., last=5)
+                                   $event_enddate,              // event end date (may be '')
+                                   $id);                        // Event ID
              $result = $dbconn->Execute($query, $bindvars);
    } else {
         // Link does not yet exist; create it.
@@ -188,6 +191,7 @@ function julian_userapi_createhook($args)
                 ( hook_modid,
                   hook_itemtype,
                   hook_iid,
+                  summary,
                   dtstart,
                   duration,
                   isallday,
@@ -207,10 +211,12 @@ function julian_userapi_createhook($args)
                   ?,
                   ?,
                   ?,
+                  ?,
                   ?)";
                 $bindvars = array ($modid,                      // hooking module id
                                    $itemtype,                   // hooking module item type
                                    $objectid,                   // hooking module item id
+                                   $summary,                    // The title of the hooked event
                                    $event_startdate,            // event start date/time
                                    $event_duration,             // event duration (hh:mm)
                                    $event_allday,               // event takes all day (0 = false, 1 = true)

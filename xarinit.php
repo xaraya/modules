@@ -25,6 +25,9 @@ function julian_init()
 {
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
+    xarDBLoadTableMaintenanceAPI();
+
+    // The actual events table
     $event_table = $xartable['julian_events'];
     // Get a data dictionary object with all the item create methods in it
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
@@ -74,12 +77,6 @@ function julian_init()
     $result = $datadict->changeTable($event_table, $fields);
     if (!$result) {return;}
 
-//default '0000-00-00 00:00:00'
-
-    xarDBLoadTableMaintenanceAPI();
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
-
     // Create new table for category-to-color linkage
     // cid: The category id (conforming to the 'categories' module.
     // Color: The category color for giving a visual to the user of the type of event
@@ -101,6 +98,7 @@ function julian_init()
               hook_modid      I   NOTNULL DEFAULT 0,
               hook_itemtype   I   NOTNULL DEFAULT 0,
               hook_iid        I   NOTNULL DEFAULT 0,
+              summary         C(255)      default '',
               dtstart         T   NULL,
               duration        C(50)   NULL,
               isallday        L   DEFAULT 0,
@@ -634,6 +632,18 @@ function julian_upgrade($oldversion)
 
             return julian_upgrade('0.2.8');
         case '0.2.8':
+        case '0.2.9':
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+            $datadict = xarDBNewDataDict($dbconn, 'CREATE');
+
+            // Add column to hold a summary, so we don't need to call categories anymore.
+            $event_linkage_table = $xartable['julian_events_linkage'];
+            $event_linkage_fields = "summary         C(255)      default '' ";
+            $result = $datadict->changeTable($event_linkage_table, $event_linkage_fields);
+            if (!$result) {return;}
+            return julian_upgrade('0.4.0');
+        case '0.4.0':
             break;
     }
     // Update successful

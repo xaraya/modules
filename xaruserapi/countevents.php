@@ -12,7 +12,6 @@
 * @author Jodie Razdrh/John Kevlin/David St.Clair
 */
 
-
 /**
  * Utility function to count the number of Events in the Calendar.
  *
