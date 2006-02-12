@@ -23,9 +23,9 @@
     <xar:if condition="$tinyloaded ne 1">
         <xar:comment>Include the static JavaScript</xar:comment>
         <xar:if condition="!$compressit">
-            <xar:base-include-javascript position="head" module="tinymce" filename="tinymce/jscripts/tiny_mce/tiny_mce.js" />
+            <xar:base-include-javascript position="head" module="tinymce" filename="../../xarincludes/tiny_mce.js" />
         <xar:else />
-            <xar:base-include-javascript position="head" module="tinymce" filename="tinymce/jscripts/tiny_mce/tiny_mce_gzip.php" />
+            <xar:base-include-javascript position="head" module="tinymce" filename="../../xarincludes/tiny_mce_gzip.php" />
         </xar:if>
         <xar:set name="jsstring">xarModGetVar('tinymce','jstext')</xar:set>
         <xar:set name="jsconfigstring">xarModGetVar('tinymce','multiconfig')</xar:set>

@@ -155,7 +155,9 @@ function tinymce_admin_modifyconfig()
         $data['tinycustom']='';
     }
     /* get list of valid themes */
-    $tinythemepath="./modules/tinymce/xartemplates/includes/tinymce/jscripts/tiny_mce/themes";
+    //$tinythemepath="./modules/tinymce/xartemplates/includes/tinymce/jscripts/tiny_mce/themes";
+     $tinythemepath="./modules/tinymce/xarincludes/themes";
+
     $themelist=array();
     $handle=opendir($tinythemepath);
     $skip_array = array('.','..','SCCS','CVS','index.htm','index.html','readme.txt');
@@ -167,8 +169,8 @@ function tinymce_admin_modifyconfig()
     }
     closedir($handle);
     /* get list of valid languages */
-    $tinylangpath="./modules/tinymce/xartemplates/includes/tinymce/jscripts/tiny_mce/langs";
-
+    //$tinylangpath="./modules/tinymce/xartemplates/includes/tinymce/jscripts/tiny_mce/langs";
+    $tinylangpath="./modules/tinymce/xarincludes/langs";
     $langlist=array();
     $handle=opendir($tinylangpath);
     while (false !== ($file = readdir($handle))) {

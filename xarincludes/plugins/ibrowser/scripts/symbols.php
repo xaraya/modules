@@ -43,7 +43,7 @@
         include_once $realpath.'/var/ibrowser/ibrowserconfig.inc';
    } else {
         // look in the templates directory of this module for the default file
-        include_once '../../../../../../ibrowserconfig.inc';
+        include_once '../../../ibrowserconfig.inc';
    }
 	//-------------------------------------------------------------------------
 	// include configuration settings

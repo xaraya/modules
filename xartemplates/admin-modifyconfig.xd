@@ -202,7 +202,7 @@
       </fieldset>
        <fieldset>
            <div class="xar-form-input-wrapper-after">
-                <xar:mlstring>See the detailed </xar:mlstring><a href ="modules/tinymce/xartemplates/includes/tinymce/docs/index.html"><xar:mlstring>usage instructions</xar:mlstring></a><xar:mlstring> for more detail on options.</xar:mlstring>
+                <xar:mlstring>See the detailed </xar:mlstring><a href ="modules/tinymce/xarincludes/docs/index.html"><xar:mlstring>usage instructions</xar:mlstring></a><xar:mlstring> for more detail on options.</xar:mlstring>
            </div>
            <div class="xar-form-input-wrapper-after">
             <input type="submit" value="#$updatebutton#" />
@@ -744,7 +744,7 @@
             </legend>
             <p class="xar-padding-medium">
               <xar:mlstring>This option allows you to add additional custom configuration options that are added to the DEFAULT tinymce configuration string. </xar:mlstring>
-                <xar:mlstring>Please refer to the TinyMCE </xar:mlstring><a href="modules/tinymce/xartemplates/includes/tinymce/docs/index.html"><xar:mlstring>Usage Documentation</xar:mlstring></a>.
+                <xar:mlstring>Please refer to the TinyMCE </xar:mlstring><a href="modules/tinymce/xarincludes/docs/index.html"><xar:mlstring>Usage Documentation</xar:mlstring></a>.
 
             </p>
             <p class="xar-padding-medium"><xar:mlstring>Each option should be on a separate line, ending in a comma, in the format</xar:mlstring>: <code>option : "value",</code>
