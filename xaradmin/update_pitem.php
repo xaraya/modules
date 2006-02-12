@@ -38,9 +38,9 @@ function itsp_admin_update_pitem($args)
     if (!xarVarFetch('dateopen',   'isset',  $dateopen,   $dateopen,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('dateclose',  'isset',  $dateclose,  $dateclose, XARVAR_NOT_REQUIRED)) return;
 
-    if (!xarVarFetch('rule_cat',   'int:1:', $rule_cat,    $rule_cat,   XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('rule_cat',   'int::', $rule_cat,    $rule_cat,   XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('rule_type',  'int::', $rule_type,    $rule_type,   XARVAR_NOT_REQUIRED)) return; // The coursetype
-    if (!xarVarFetch('rule_source','enum:internal:external:open', $rule_source,    $rule_source,   XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('rule_source','enum:internal:external:open:all', $rule_source,    $rule_source,   XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('rule_level', 'int::', $rule_level,   $rule_level,   XARVAR_NOT_REQUIRED)) return;
 
     if (!empty($objectid)) {
@@ -71,15 +71,19 @@ function itsp_admin_update_pitem($args)
          * (you need to copy admin-new.xd to admin-create.xd here)
          */
         return xarModFunc('itsp', 'admin', 'modify_pitem',
-                          array('invalid'    => $invalid,
-                                'pitemid'    => $pitemid,
-                                'pitemname'  => $pitemname,
-                                'pitemdesc'  => $pitemdesc,
-                                'pitemrules' => $pitemrules,
-                                'credits'    => $credits,
-                                'mincredit'  => $mincredit,
-                                'dateopen'   => $dateopen,
-                                'dateclose'  => $dateclose));
+                          array('pitemid'     => $pitemid,
+                                'invalid'     => $invalid,
+                                'pitemname'   => $pitemname,
+                                'pitemdesc'   => $pitemdesc,
+                                'pitemrules'  => $pitemrules,
+                                'credits'     => $credits,
+                                'mincredit'   => $mincredit,
+                                'dateopen'    => $dateopen,
+                                'dateclose'   => $dateclose,
+                                'rule_cat'    => $rule_cat,
+                                'rule_type'   => $rule_type,
+                                'rule_level'  => $rule_level,
+                                'rule_course' => $rule_source));
     }
 
     /* The API function is called: update item.
@@ -90,18 +94,21 @@ function itsp_admin_update_pitem($args)
     if ((!empty($dateclose)) && !is_numeric($dateclose)) {
          $dateopen = strtotime($dateclose);
     }
+    // Format the rule
+    $pitemrules = "type:$rule_type;level:$rule_level;category:$rule_cat;source:$rule_source";
+
     if (!xarModAPIFunc('itsp',
                        'admin',
                        'update_pitem',
                        array('pitemid'    => $pitemid,
-                             'pitemname'  => $pitemname,
-                             'pitemdesc'  => $pitemdesc,
-                             'pitemrules' => $pitemrules,
-                             'credits'    => $credits,
-                             'mincredit'  => $mincredit,
-                             'dateopen'   => $dateopen,
-                             'dateclose'  => $dateclose
-                             )
+                            'pitemname'   => $pitemname,
+                            'pitemdesc'   => $pitemdesc,
+                            'pitemrules'  => $pitemrules,
+                            'credits'     => $credits,
+                            'mincredit'   => $mincredit,
+                            'dateopen'    => $dateopen,
+                            'dateclose'   => $dateclose
+                            )
                        )) {
         return; /* throw back */
     }

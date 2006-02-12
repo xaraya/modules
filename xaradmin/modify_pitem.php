@@ -34,15 +34,15 @@ function itsp_admin_modify_pitem($args)
     if (!xarVarFetch('pitemname',   'str:1:', $pitemname,  '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('pitemdesc',   'str:1:', $pitemdesc,  '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('pitemrules',  'str:1:', $pitemrules, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('credits',     'int:1:', $credits,    '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('credits',     'int:0:', $credits,    '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('mincredit',   'int:1:', $mincredit,  '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('dateopen',    'int:1:', $dateopen,   '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('dateclose',   'int:1:', $dateclose,  '', XARVAR_NOT_REQUIRED)) return;
 
-    if (!xarVarFetch('rule_cat',    'int:1:',                      $rule_cat,    $rule_cat,    XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('rule_type',   'str:1:',                      $rule_type,   $rule_type,   XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('rule_source', 'enum:internal:external:open', $rule_source, $rule_source, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('rule_level',  'int:1:',                      $rule_level,  $rule_level,  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('rule_cat',    'int::',                      $rule_cat,    $rule_cat,    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('rule_type',   'int::',                       $rule_type,   $rule_type,   XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('rule_source', 'enum:internal:external:open:all', $rule_source, $rule_source, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('rule_level',  'int::',                      $rule_level,  $rule_level,  XARVAR_NOT_REQUIRED)) return;
 
     if (!empty($objectid)) {
         $pitemid = $objectid;
