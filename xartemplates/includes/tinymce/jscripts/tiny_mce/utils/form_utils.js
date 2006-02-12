@@ -1,12 +1,12 @@
 /**
  * $RCSfile: form_utils.js,v $
- * $Revision: 1.7 $
- * $Date: 2006/01/13 21:17:50 $
+ * $Revision: 1.8 $
+ * $Date: 2006/02/06 20:11:09 $
  *
  * Various form utilitiy functions.
  *
  * @author Moxiecode
- * @copyright Copyright © 2005, Moxiecode Systems AB, All rights reserved.
+ * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
  */
 
 function getColorPickerHTML(id, target_form_element) {

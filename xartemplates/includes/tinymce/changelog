@@ -1,3 +1,45 @@
+Version 2.0.3 (2006-0x-xx)
+	Added missing buttons to button reference page in documentation.
+	Added dt,dl,dd elements to default_valid elements config value.
+	Added new support for self registrering plugins.
+	Added new callback for themes and plugins handleEvent and the handle_event_callback option.
+	Added new execcommand_callback option, this enables you to add custom execcommand logic on page level.
+	Added new custom_shortcuts option, this enables you to disable plugin/theme specific keyboard shortcuts.
+	Added new addShortcut to TinyMCE_Control, this enables plugin to register custom keyboard shortcuts.
+	Added new getButtonHTML function to TinyMCE core, this function makes it easier for plugins/themes to make buttons.
+	Added more documentation on how to write plugins and updated the _template plugin.
+	Added more documentation on how to write custom themes.
+	Fixed so all internal plugins use the new auto registration and separation logic.
+	Fixed so all internal themes use the new auto registration and separation logic.
+	Fixed so the Safari warning is switched off by default.
+	Fixed so cursor position isn't moved when performing a cleanup.
+	Fixed so cursor position is correct when performing undo/redo actions.
+	Fixed so all themes/plugins now use a:hover to produce the mouse over button effect.
+	Fixed so it uses the DOMContentLoaded and onreadystatechange instead of onload.
+	Fixed callback handling to reduce logic, improve performance and flexibility.
+	Fixed documentarion error for the paste plugin, contributed by Jochen Metzger.
+	Fixed bug that made the cleanup process to hang MSIE on specific content.
+	Fixed bug with absolute to relative URL convertion logic if the absolute URL didn't have a path.
+	Fixed bug where about.htm in advanced theme refered to a non existing css file.
+	Fixed bug with defParam and the event_elements option.
+	Fixed bug where fullscreen plugin wasn't correctly setup with editor contents.
+	Fixed bug where paste/drop converted relative URLs incorrectly in MSIE.
+	Fixed bug with inlinepopups not restoring selection on close window in MSIE.
+	Fixed bug where selection was lost when a new column/row was inserted in a table running in Gecko.
+	Fixed bug where save plugin wasn't working in fullscreen mode.
+	Fixed bug where fullscreen plugin wasn't working in Opera.
+	Fixed bug where editor resizing in advanced theme wasn't working in Opera.
+	Fixed bug where cursor position was placed at the end of instance on word paste.
+	Fixed bug where a tinyMCE is undefined error was reported in Firefox.
+	Fixed compatiblity issues with new cleanup plugin and the prototype.js library.
+	Renamed the mceItemEditable/mceItemNonEditable to mceEditable/mceNonEditable.
+	Renamed the TinyMCEControl class to TinyMCE_Control, TinyMCE_ is the valid class prefix.
+	Removed the getInsertLinkTemplate and getInsertImageTemplate functions from themes and from API.
+	Removed insertImage and insertLink from TinyMCE core, they are moved to the advanced theme.
+	Removed opacity workaround made for Opera Preview 1, download Opera Preview 2 instead.
+	Marked insertlink_callback, insertimage_callback options as deprecated these can be replaced with execcommand_callback.
+	Moved selection specific methods to a new class. For example inst.selectNode is now inst.selection.selectNode.
+	Updated German language pack, contributed by Ace Man.
 Version 2.0.2 (2006-01-24)
 	Added updated Danish language pack contributed by Jan Moelgaard, John Dalsgaard and Bo Frederiksen.
 	Added updated Czech language pack contributed by michi aka mishal.

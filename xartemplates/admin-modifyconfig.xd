@@ -2,7 +2,6 @@
 
 <xar:comment> ************************ Setup Tabs************************</xar:comment>
 <xar:style scope="module" module="base" file="navtabs" />
-
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:mlstring>XarTinyMCE Editor Administration</xar:mlstring>
@@ -51,13 +50,13 @@
                 </a>
             </dd>
         </xar:if>
-        <xar:if condition="$tab eq 'customadvanced'">
+        <xar:if condition="$tab eq 'customadvanced' and $tinytheme eq 'advanced'">
             <dd class="active">
                 <a href="&xar-modurl-tinymce-admin-modifyconfig;&amp;tab=customadvanced">
                      <xar:mlstring>Custom Advanced Theme</xar:mlstring>
                 </a>
             </dd>
-        <xar:else />
+        <xar:elseif condition="$tinytheme eq 'advanced'"/>
             <dd>
                 <a href="&xar-modurl-tinymce-admin-modifyconfig;&amp;tab=customadvanced">
                     <xar:mlstring>Custom Advanced Theme</xar:mlstring>
@@ -98,12 +97,12 @@
         </fieldset>
         <fieldset>
             <legend>
-               <strong><xar:mlstring>2. Set default editor and Flush DD Cache</xar:mlstring></strong>
+               <strong><xar:mlstring>2. Set default editor</xar:mlstring></strong>
             </legend>
 
            <div class="xar-form-input-wrapper">
                 <label for="defaulteditor" class="xar-form-label" title="#xarML('Set xartinymce as default so it activates automatically')#">
-                        <xar:mlstring>Set XarTinyMCE as default WYSIWYG editor: </xar:mlstring>
+                        <xar:mlstring>TinyMCE as default editor?</xar:mlstring>
                 </label>
                 <select name="defaulteditor" id="defaulteditor" size="1">
                 <xar:if condition="$defaulteditor eq 'tinymce'">
@@ -115,15 +114,6 @@
                </xar:if>
                </select>
            </div>
-           <div class="xar-form-input-wrapper-after">
-            <xar:mlstring>(You can also set installed editors in </xar:mlstring><a href="&xar-modurl-base-admin-modifyconfig;&amp;tab=other" rel="ext"><xar:mlstring>Base Module - Modify Config - Other Tab</xar:mlstring></a>)
-           </div>
-           <div class="xar-form-input-wrapper-after">
-            <p>
-            <xar:mlstring>To ensure the tinymce DD Property is available, flush the DD property cache at </xar:mlstring><a href="&xar-modurl-dynamicdata-admin-modifyconfig;" rel="external"><xar:mlstring>Dynamicdata - Property Types - Flush Property Cache</xar:mlstring></a>)
-            </p>
-           </div>
-
          </fieldset>
         <fieldset class="formelements xar-norm">
             <legend>
@@ -151,23 +141,22 @@
 
         <ol style="list-style-type:lower-alpha; ">
           <li>
-                <xar:mlstring><strong>All Text Areas Mode</strong>: every textarea will be WYSIWYG enabled. 
-                Best used with a Prompt for WYSIWYG usage, or turn off WYSIWYG in a specific textarea by adding 
-                the special reserved class <strong><code>class="mceNoEditor"</code></strong> to the textarea.
-                This acts as a marker that tells xartinymce NOT to activate WYSIWYG for this textarea.</xar:mlstring><br /><br />
+                <xar:mlstring><strong>All Text Areas Mode</strong>: every textarea will be WYSIWYG enabled by default. 
+                Turn off WYSIWYG in a specific div or textarea by adding the reserved class </xar:mlstring><strong><code>class="mceNoEditor"</code></strong>
+                <xar:mlstring>to the textarea. You can also use a toggle or popup prompt for WYSIWYG. This option can affect performance as the javascript is loaded on every page.</xar:mlstring><br /><br />
           </li>
           <li><xar:mlstring><strong>Special Labelled Only</strong>: Only textareas that are specially labelled with the
-              specific trigger class eg <strong><code>class="mceEditor"</code></strong> are activated.
-              You can do this manually by adding the attribute to any textarea in your templates,
-              or add a  <strong>xarTinyMCE GUI Dynamic Data Property field</strong> to your Article pubtypes or
-              xarPages Page Type, or anywhere else you need a WYSIWYG input area.
-            This DD Property automatically marks the div or textarea of the field with the special trigger
-            class <strong><code>class="mceEditor"</code></strong> that acts as the marker for the WYSIWYG conversion.
-            You can set row height and column width in the DD validation field. eg 20:80 for 20 rows high, 80 columns wide.
-            If you can't see the xarTinyMCE GUI DD property in your DD list </xar:mlstring>
-          <a href="#$ddflushurl#"><xar:mlstring>flush the Property Cache</xar:mlstring></a>
-        </li>
+              trigger class eg </xar:mlstring><strong><code>class="mceEditor"</code></strong> <xar:mlstring>are WYSIWYG activated.
+              You can do this in two main ways:</xar:mlstring><br />
+              <ul class="list-type-style:none;">
+              <li><xar:mlstring>Add a  <strong>xarTinyMCE GUI Dynamic Data Property field</strong> to your Article pubtypes or
+              xarPages Page Type, or anywhere else you need a WYSIWYG input area.</xar:mlstring></li>
+              <li><xar:mlstring>Manually add the class and attribute to any textarea (if activation is Auto this is all you need do else you'll have to add the template snippet below to the top of your template).</xar:mlstring><br /></li>
+              </ul>
+              <xar:mlstring>You can set row height and column width in the DD validation field. eg 20:80 for 20 rows high, 80 columns wide. Alternatively use the resizing options available in other Modify Config Tabs.</xar:mlstring>
+              </li>
        </ol>
+
        </fieldset>
        <fieldset>
             <legend>
@@ -192,8 +181,10 @@
              <xar:mlstring><strong>Automatic</strong>: xarTinyMce is automatically activated when mode is 
              set to All TextAreas without the need to use tinymce DD properties or configure anything further. The disadvantage is that tinymce is loaded on every page. </xar:mlstring><br /><br />
          </li>
-         <li class="xar-norm" ><xar:mlstring><strong>Manual Override</strong>: turns off automatic activation (xarTinyMCE DD properties are still active). You can then manually override the loading of the WYSIWYG by adding your specific template snippet code, as below, to your page or other specific templates.
-           All textareas contained or included in the template where you have the XarTinymce tags are converted to WYSIWYG according to the "All Text Area" or "Special Labelled Only" setting above. Advantages are that tinymce is only loaded when required rather than every page or in every textarea.
+         <li class="xar-norm" ><xar:mlstring><strong>Manual Override</strong>: turns off automatic activation. xarTinyMCE DD properties are an exception and are still activated with this set as manual.
+            Alternatively, specify where wysiwyg should or should not be activated by adding the specific template snippet code as shown below, to your page or other specific templates.
+            All textareas contained or included in the template where you have the XarTinymce tags are converted to WYSIWYG according to the "All Text Area" or "Special Labelled Only" setting above.
+            Advantages are that tinymce is only loaded when required rather than every page or in every textarea.
            </xar:mlstring>
          </li>
       </ol>
@@ -204,8 +195,7 @@
      </pre>
      <p><xar:mlstring><strong>HINT:</strong> Copy <code>modules/tinymce/xartemplates/properties/showinput-tinymce.xd</code>
         to your own theme's <code>themes/yourtheme/modules/base/properties/showinput-textarea.xt</code> as a DD textarea override 
-        and set Specially Labelled and Manual loading mode. This way you can have all
-        your pubtype or xarpages or other DD property textarea fields
+        and set to Specially Labelled and Manual loading mode. This way you can have all your pubtype or xarpages or other DD property textarea fields
         automatically converted to wysiwyg with or without button prompt, and tinymce is loaded on a page only when needed.</code>
      </xar:mlstring>
      </p>
@@ -268,7 +258,7 @@
                 <label for="tinytheme" class="xar-form-label" title="#xarML('Select default Theme Edit Panel for TinyMCE')#">
                     <xar:mlstring>Default Theme Editor Panel</xar:mlstring>
                 </label>
-                <select name="tinytheme" id="tinytheme" size="1">
+                <select name="tinytheme" id="tinytheme" size="1" onchange="submit();">
                 <xar:foreach in="$themelist" value="$v" key="$k">
                     <xar:if condition="$v eq $tinytheme">
                         <option value="#$v#" selected="selected">#$v#</option>
@@ -277,7 +267,10 @@
                     </xar:if>
                 </xar:foreach>
                 </select>
-               <xar:mlstring>See </xar:mlstring><a href ="modules/tinymce/xartemplates/includes/tinymce/docs/customization_themes.html"><xar:mlstring>theme instructions</xar:mlstring></a><xar:mlstring> to code your own.</xar:mlstring>
+                <xar:mlstring>Extra options Tab appears for Advanced Theme</xar:mlstring>
+               <!--
+               <xar:mlstring>See </xar:mlstring><a href ="modules/tinymce/xartemplates/includes/tinymce/docs/customization_themes.html">
+               <xar:mlstring>theme instructions</xar:mlstring></a><xar:mlstring> to code your own.</xar:mlstring>-->
            </div>
 
         <xar:comment> Remove until supported
@@ -289,70 +282,53 @@
            </div>
         </xar:comment>
 
-           <div class="xar-form-input-wrapper">
-                <label for="tinyask" class="xar-form-label" title="#xarML('Ask user if they wish to use WYSIWYG for each text area?')#">
+           <div class="xar-form-input-wrapper-after">
+                <xar:if condition="$tinyask">
+                    <input type="checkbox" name="tinyask" id="tinyask" value="1" checked="checked" onchange="submit();" />
+                <xar:else/>
+                    <input type="checkbox" name="tinyask" id="tinyask" value="1" onchange="submit();" />
+                </xar:if>
+                <label for="tinyask" title="#xarML('Ask user if they wish to use WYSIWYG for each text area?')#">
                     <xar:mlstring>Prompt to use WYSIWYG?</xar:mlstring>
                 </label>
-                <select name="tinyask" id="tinyask" size="1" onchange="submit();">
-                <xar:if condition="$tinyask eq '0'">
-                    <option value="false" selected="selected"><xar:mlstring>No</xar:mlstring></option>
-                    <option value="true"><xar:mlstring>Yes</xar:mlstring></option>
-                <xar:elseif condition="$tinyask eq '1'" />
-                    <option value="false"><xar:mlstring>No</xar:mlstring></option>
-                    <option value="true" selected="selected"><xar:mlstring>Yes</xar:mlstring></option>
-                </xar:if>
-                </select>
             </div>
-            <xar:if condition="xarModGetVar('tinymce','tinyask') eq '1' and xarModGetVar('tinymce','tinymode') eq 'specific_textareas'">
-           <div class="xar-form-input-wrapper">
-                <label for="usebutton" class="xar-form-label" title="#xarML('Use a button to prompt for WYSIWYG or default to popup')#">
-                    <xar:mlstring>Button instead of popup?</xar:mlstring>
-                </label>
-                <select name="usebutton" id="usebutton" size="1" >
-                <xar:if condition="$usebutton ne '1'">
-                    <option value="false" selected="selected"><xar:mlstring>No</xar:mlstring></option>
-                    <option value="true"><xar:mlstring>Yes</xar:mlstring></option>
-                <xar:elseif condition="$usebutton eq '1'" />
-                    <option value="false"><xar:mlstring>No</xar:mlstring></option>
-                    <option value="true" selected="selected"><xar:mlstring>Yes</xar:mlstring></option>
+            <xar:if condition="$tinyask and (xarModGetVar('tinymce','tinymode') eq 'specific_textareas')">
+            <div class="xar-form-input-wrapper-after">
+             <xar:if condition="$usebutton">
+                    <input type="checkbox" name="usebutton" id="usebutton" value="1" checked="checked"/>
+                <xar:else/>
+                    <input type="checkbox" name="usebutton" id="usebutton" value="1" />
                 </xar:if>
-                </select>
+                <label for="usebutton" title="#xarML('Use a button to prompt for WYSIWYG or default to popup')#">
+                    <xar:mlstring>Toggle button instead of popup prompt?</xar:mlstring>
+                </label>
                 <xar:mlstring>(xartinymce DD property only)</xar:mlstring>
-
             </div>
             <xar:else />
                 <xar:set name="usebutton">0</xar:set>
             </xar:if>
-           <div class="xar-form-input-wrapper">
-                <label for="tinytilemap" class="xar-form-label" title="#xarML('Use tiled images instead of individual for faster loading.')#">
+            <div class="xar-form-input-wrapper-after">
+                <xar:if condition="$tinytilemap">
+                    <input type="checkbox" name="tinytilemap" id="tinytilemap" value="1" checked="checked"/>
+                <xar:else/>
+                    <input type="checkbox" name="tinytilemap" id="tinytilemap" value="1" />
+                </xar:if>
+                <label for="tinytilemap" title="#xarML('Use tiled images instead of individual for faster loading.')#">
                     <xar:mlstring>Use icon map?</xar:mlstring>
                 </label>
-                <select name="tinytilemap" id="tinytilemap" size="1" >
-                <xar:if condition="$tinytilemap ne '1'">
-                    <option value="false" selected="selected"><xar:mlstring>No</xar:mlstring></option>
-                    <option value="true"><xar:mlstring>Yes</xar:mlstring></option>
-                <xar:elseif condition="$tinytilemap eq '1'" />
-                    <option value="false"><xar:mlstring>No</xar:mlstring></option>
-                    <option value="true" selected="selected"><xar:mlstring>Yes</xar:mlstring></option>
-                </xar:if>
-                </select>
-                <xar:mlstring>Faster loading. May not work with some DOCTYPE declarations.</xar:mlstring>
+                <xar:mlstring>(Faster loading, may not work in all setups)</xar:mlstring>
             </div>
 
-           <div class="xar-form-input-wrapper">
-                <label for="tinycompressor" class="xar-form-label" title="#xarML('Use compressed js to increase preformance?')#">
-                      <xar:mlstring>Use compressor?:</xar:mlstring>
+            <div class="xar-form-input-wrapper-after">
+              <xar:if condition="$tinycompressor">
+                  <input type="checkbox" name="tinycompressor" id="tinycompressor" value="1" checked="checked"/>
+              <xar:else/>
+                  <input type="checkbox" name="tinycompressor" id="tinycompressor" value="1" />
+              </xar:if>
+                <label for="tinycompressor" title="#xarML('Use compressed js to increase preformance?')#">
+                      <xar:mlstring>Use compressor?</xar:mlstring>
                 </label>
-                <select name="tinycompressor" id="tinycompressor" size="1">
-                <xar:if condition="$tinycompressor eq '0'">
-                    <option value="false" selected="selected"><xar:mlstring>No</xar:mlstring></option>
-                    <option value="true"><xar:mlstring>Yes</xar:mlstring></option>
-                <xar:elseif condition="$tinycompressor eq '1'" />
-                    <option value="false"><xar:mlstring>No</xar:mlstring></option>
-                    <option value="true" selected="selected"><xar:mlstring>Yes</xar:mlstring></option>
-                </xar:if>
-                </select>
-                <xar:mlstring>Compressor increases performance. Defaults to off.</xar:mlstring>
+                 <xar:mlstring>(Faster loading, may not work in all setups)</xar:mlstring>
            </div>
 
            <div class="xar-form-input-wrapper">
@@ -377,50 +353,40 @@
                 <input type="integer" name="tinyundolevel" id="tinyundolevel" value="#$tinyundolevel#" size="3" maxlength="3" />
                 <xar:mlstring>Unlimited if blank</xar:mlstring>
            </div>
-           <div class="xar-form-input-wrapper">
-                <label for="tinycleanup" class="xar-form-label" title="#xarML('Set cleanup functionality that enables you to specify what elements and attributes are allowed.')#">
-                    <xar:mlstring>Use cleanup?</xar:mlstring>
-                </label>
-                <select name="tinycleanup" id="tinycleanup" size="1" >
-                <xar:if condition="$tinycleanup eq '0'">
-                    <option value="false" selected="selected"><xar:mlstring>No</xar:mlstring></option>
-                    <option value="true"><xar:mlstring>Yes</xar:mlstring></option>
-                <xar:else />
-                    <option value="false"><xar:mlstring>No</xar:mlstring></option>
-                    <option value="true" selected="selected"><xar:mlstring>Yes</xar:mlstring></option>
+            <div class="xar-form-input-wrapper-after">
+                <xar:if condition="$tinycleanup">
+                    <input type="checkbox" name="tinycleanup" id="tinycleanup" value="1" checked="checked"/>
+                <xar:else/>
+                    <input type="checkbox" name="tinycleanup" id="tinycleanup" value="1" />
                 </xar:if>
-                </select>
-                <xar:mlstring>Set ON by default. Setting to off is not recommended.</xar:mlstring>
+                <label for="tinycleanup" title="#xarML('Set cleanup functionality that enables you to specify what elements and attributes are allowed.')#">
+                    <xar:mlstring>Use content cleanup?</xar:mlstring>
+                </label>
+                <xar:mlstring>(ON by default).</xar:mlstring>
             </div>
 
-           <div class="xar-form-input-wrapper">
-                <label for="tinybr" class="xar-form-label" title="#xarML('Force all carriage returns to &lt;br /&gt; tags instead of &lt;p&gt; tags')#">
-                    <xar:mlstring>Force all Returns to &lt;br /&gt;:</xar:mlstring>
-                </label>
-                <select name="tinybr" id="tinybr" size="1">
-                <xar:if condition="$tinybr eq '0'">
-                    <option value="false" selected="selected"><xar:mlstring>No</xar:mlstring></option>
-                    <option value="true"><xar:mlstring>Yes</xar:mlstring></option>
-                <xar:elseif condition="$tinybr eq '1'" />
-                    <option value="false"><xar:mlstring>No</xar:mlstring></option>
-                    <option value="true" selected="selected"><xar:mlstring>Yes</xar:mlstring></option>
+           <div class="xar-form-input-wrapper-after">
+                <xar:if condition="$tinybr">
+                    <input type="checkbox" name="tinybr" id="tinybr" value="1" checked="checked"/>
+                <xar:else/>
+                    <input type="checkbox" name="tinybr" id="tinybr" value="1" />
                 </xar:if>
-                </select>
-            </div>
-           <div class="xar-form-input-wrapper">
-                <label for="tinypara" class="xar-form-label" title="#xarML('Force all carriage returns to &lt;p /&gt; tags instead of &lt;br /&gt; tags')#">
-                    <xar:mlstring>Force all Returns to &lt;p /&gt;:</xar:mlstring>
+
+                <label for="tinybr" title="#xarML('Force all carriage returns to &lt;br /&gt; tags instead of &lt;p&gt; tags')#">
+                    <xar:mlstring>Force all Returns to &lt;br /&gt;</xar:mlstring>
+                </label>
+                <xar:mlstring>(OFF by default).</xar:mlstring>
+              </div>
+              <div class="xar-form-input-wrapper-after">
+                <xar:if condition="$tinypara">
+                    <input type="checkbox" name="tinypara" id="tinypara" value="1" checked="checked"/>
+                <xar:else/>
+                    <input type="checkbox" name="tinypara" id="tinypara" value="1" />
+                </xar:if>
+                <label for="tinypara" title="#xarML('Force all carriage returns to &lt;p /&gt; tags instead of &lt;br /&gt; tags')#">
+                    <xar:mlstring>Force all Returns to &lt;p /&gt;</xar:mlstring>
                </label>
-
-                <select name="tinypara" id="tinypara" size="1">
-                <xar:if condition="$tinypara eq '0'">
-                    <option value="false" selected="selected"><xar:mlstring>No</xar:mlstring></option>
-                    <option value="true"><xar:mlstring>Yes</xar:mlstring></option>
-                <xar:elseif condition="$tinypara eq '1'" />
-                    <option value="false"><xar:mlstring>No</xar:mlstring></option>
-                    <option value="true" selected="selected"><xar:mlstring>Yes</xar:mlstring></option>
-                </xar:if>
-                </select>
+                    <xar:mlstring>(ON by default).</xar:mlstring>
             </div>
            </fieldset>
        <fieldset>
@@ -441,19 +407,16 @@
             <legend>
                 <strong><xar:mlstring>Set CSS and Style Options</xar:mlstring></strong>
             </legend>
-           <div class="xar-form-input-wrapper">
-                <label for="tinyinlinestyle" class="xar-form-label" title="#xarML('Converts attributes like width, height, border, to inline styles eg style= ....')#">
-                    <xar:mlstring>Attributes to inline style?</xar:mlstring>
-                </label>
-                <select name="tinyinlinestyle" id="tinyinlinestyle" size="1">
-                <xar:if condition="$tinyinlinestyle eq '0'">
-                    <option value="false" selected="selected"><xar:mlstring>No</xar:mlstring></option>
-                    <option value="true"><xar:mlstring>Yes</xar:mlstring></option>
-                <xar:elseif condition="$tinyinlinestyle eq '1'" />
-                    <option value="false"><xar:mlstring>No</xar:mlstring></option>
-                    <option value="true" selected="selected"><xar:mlstring>Yes</xar:mlstring></option>
+           <div class="xar-form-input-wrapper-after">
+                <xar:if condition="$tinyinlinestyle">
+                    <input type="checkbox" name="tinyinlinestyle" id="tinyinlinestyle" value="1" checked="checked" />
+                <xar:else/>
+                    <input type="checkbox" name="tinyinlinestyle" id="tinyinlinestyle" value="1" />
                 </xar:if>
-                </select>
+
+                <label for="tinyinlinestyle" title="#xarML('Converts attributes like width, height, border, to inline styles eg style= ....')#">
+                    <xar:mlstring>Convert attributes to inline style?</xar:mlstring>
+                </label>
             </div>
 
             <div class="xar-form-input-wrapper">
@@ -499,11 +462,11 @@
                 <strong><xar:mlstring>Plugin Options</xar:mlstring></strong>
             </legend>
 
-            <div class="xar-form-input-wrapper-before">
+            <div class="xar-form-input-wrapper-before xar-padding-medium">
                  <xar:mlstring>To use a plugin first list it's name in the <strong>Plugins to Load</strong> field below. For some plugins you must also add the name of the plugin button to the Exta Button list in the Custom Advanced Theme Tab.</xar:mlstring>
             </div>
 
-            <div class="xar-form-input-wrapper">
+            <div class="xar-form-input-wrapper-before xar-padding-medium">
                 <label for="tinyplugins" class="xar-form-label" title="#xarML('Add names of any extra plugins you wish to load here.')#">
                     <xar:mlstring>Names of plugins to load (separated by commas):</xar:mlstring>
                 </label>
@@ -516,7 +479,7 @@
                      advimage, advlink, flash, advhr, searchreplace, print, table, xarpagebreak, contextmenu, lorem, dictionary, paste, fullscreen, directionality, liststyle, cleanup</xar:mlstring></p>
              </div>
 
-             <xar:if condition="$dateplug eq '1'">
+             <xar:if condition="$dateplug">
              <div class="xar-form-input-wrapper">
                 <label for="tinydate" class="xar-form-label" title="#xarML('Format for Date')#">
                     <xar:mlstring>Format for date</xar:mlstring>
@@ -534,20 +497,23 @@
                 <input type="text" name="tinytime" id="tinytime" value="#$tinytime#" size="15" maxlength="25" />
                 <xar:mlstring>Default is HH:MM:SS</xar:mlstring>
              </div>
-             <div class="xar-form-input-wrapper">
+             <div class="xar-form-input-wrapper-after">
                     <xar:mlstring>%H hour using a 24-hour clock, %M minute as 00-59, %S second as 00-59, %% - a literal `%' character</xar:mlstring>
              </div>
              </xar:if>
 
-        <div class="xar-form-input-wrapper-before">
-            <xar:mlstring><strong>To Use the IBROWSER image browser plugin:</strong></xar:mlstring>
-            <ul style="clear:left;">
+        <div class="xar-form-input-wrapper xar-padding-large">
+            <label for="ibrowser" class="xar-form-label"><xar:mlstring>To Use Image Browser plugin:</xar:mlstring>
+            </label>
+
+            <ul class="xar-form-input-wrapper-after">
             <li><xar:mlstring>Add <strong>ibrowser</strong> to the plugins to load list above</xar:mlstring></li>
             <li><xar:mlstring>Add <strong>ibrowser</strong> to the button list in Custom Advanced Theme tab.</xar:mlstring></li>
             <li><xar:mlstring> Update the </xar:mlstring><a href="modules/tinymce/xartemplates/includes/ibrowserconfig.inc"><xar:mlstring>configuration file at modules/tinymce/xartemplates/includes/ibrowserconfig.inc</xar:mlstring></a>
-                <xar:mlstring> for the IBrowser Plugin - then chmod 444 for added security. </xar:mlstring>
+                <xar:mlstring> for the IBrowser Plugin.</xar:mlstring>
             </li>
             </ul>
+
          </div>
          </fieldset>
          <fieldset>
@@ -579,17 +545,7 @@
                     <option value="bottom" selected="selected"><xar:mlstring>Bottom</xar:mlstring></option>
                 </xar:if>
                 </select>
-           </div>
-         <div class="xar-form-input-wrapper">
-               <label for="tinyenablepath" class="xar-form-label" title="#xarML('Enable or disable the status bar path')#">
-                       <xar:mlstring>Display status bar path?</xar:mlstring>
-               </label>
-               <xar:if condition="xarModGetVar('tinymce','tinyenablepath') eq 1">
-                   <input type="checkbox" name="tinyenablepath" id="tinyenablepath" value="1" checked="checked" />
-               <xar:else />
-                   <input type="checkbox" name="tinyenablepath" id="tinyenablepath" value="1" />
-               </xar:if>
-           </div>
+          </div>
            <div class="xar-form-input-wrapper">
                 <label for="tinyshowpath" class="xar-form-label" title="#xarML('Position of the status bar')#">
                    <xar:mlstring>Status bar display position:</xar:mlstring>
@@ -604,26 +560,37 @@
                     <option value="bottom" selected="selected"><xar:mlstring>Bottom</xar:mlstring></option>
                 </xar:if>
                 </select>
-            </div>
-            <div class="xar-form-input-wrapper">
-               <label for="tinyadvresize" class="xar-form-label" title="#xarML('Enable vertical resizing of editor?')#">
-                       <xar:mlstring>Vertical resizing of editor?</xar:mlstring>
+                &nbsp;&nbsp;
+               <xar:if condition="$tinyenablepath">
+                   <input type="checkbox" name="tinyenablepath" id="tinyenablepath" value="1" checked="checked" />
+               <xar:else />
+                   <input type="checkbox" name="tinyenablepath" id="tinyenablepath" value="1" />
+               </xar:if>
+               <label for="tinyenablepath" title="#xarML('Enable or disable the status bar path')#">
+                       <xar:mlstring>Display css rule path in status bar?</xar:mlstring>
                </label>
-               <xar:if condition="xarModGetVar('tinymce','tinyadvresize') ne 0">
+            </div>
+            <div class="xar-form-input-wrapper-after">
+               <xar:if condition="$tinyadvresize">
                    <input type="checkbox" name="tinyadvresize" id="tinyadvresize" value="1" checked="checked" />
                <xar:else />
                    <input type="checkbox" name="tinyadvresize" id="tinyadvresize" value="1" />
                </xar:if>
-           </div>
-           <div class="xar-form-input-wrapper">
-               <label for="tinyresizehorizontal" class="xar-form-label" title="#xarML('Enable horizontal resizing of editor?')#">
-                       <xar:mlstring>Horizontal resizing of editor?</xar:mlstring>
+               <label for="tinyadvresize" title="#xarML('Enable vertical resizing of editor?')#">
+                       <xar:mlstring>Allow vertical resizing of editor?</xar:mlstring>
                </label>
-               <xar:if condition="xarModGetVar('tinymce','tinyresizehorizontal') ne 0">
+
+           </div>
+           <div class="xar-form-input-wrapper-after">
+               <xar:if condition="$tinyresizehorizontal">
                    <input type="checkbox" name="tinyresizehorizontal" id="tinyresizehorizontal" value="1" checked="checked" />
                <xar:else />
                    <input type="checkbox" name="tinyresizehorizontal" id="tinyresizehorizontal" value="1" />
                </xar:if>
+               <label for="tinyresizehorizontal" title="#xarML('Enable horizontal resizing of editor?')#">
+                   <xar:mlstring>Allow horizontal resizing of editor?</xar:mlstring>
+               </label>
+
            </div>
         <xar:comment>jojodee - Fix this when i get time
         <div class="xar-form-input-wrapper">
@@ -726,6 +693,7 @@
             </div>
        </fieldset>
    </form>
+
 <xar:comment> ************************ Custom Config Option********************</xar:comment>
     <xar:elseif condition="$tab eq 'customconfig'" />
         <form action="&xar-modurl-tinymce-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded" >
@@ -735,27 +703,33 @@
             <legend>
                 <xar:mlstring>Multiple Configuration Instances</xar:mlstring>
             </legend>
-            <div class="xar-form-input-wrapper">
-                    <label for="usemulticonfig" class="xar-form-label" title="#xarML('Would you like to use multiple configuration settings?')#">
-                            <xar:mlstring>
-                                Use multiple configurations?
-                            </xar:mlstring>
-                    </label>
-                    <xar:if condition="xarModGetVar('tinymce', 'usemulticonfig')">
+            <div class="xar-form-input-wrapper xar-padding-medium">
+                    <xar:if condition="$dousemulticonfig">
                         <input type="checkbox" name="dousemulticonfig" id="dousemulticonfig" value="1" checked="checked" />
                     <xar:else />
                         <input type="checkbox" name="dousemulticonfig" id="dousemulticonfig" value="1" />
                     </xar:if>
+                    <label for="usemulticonfig" title="#xarML('Would you like to use multiple configuration settings?')#">
+                            <xar:mlstring>
+                                <strong>Use multiple configurations?</strong> (Must be checked for activation of custom config options below).
+                            </xar:mlstring>
+                    </label>
             </div>
-            <p>
-                <xar:mlstring>Enter code for multiple configuration instances of tinymce.
+            <div class="xar-form-input-wrapper xar-padding-medium" >
+                <ul>
+                <li><xar:mlstring>Enter code for multiple configuration instances of tinymce.
                 In each configuration you must have at least</xar:mlstring>
                 <br /><code>mode : "textareas",
-                   editor_selector : "yourtriggerclassname",</code><br />
-                   <xar:mlstring>The textarea trigger class can be any name but <strong>do not</strong> use the default <strong><code>class="mceEditor"</code></strong>. You can set multiple instances, but code will only take effect when the checkbox above is checked. To use a specific configuration add the trigger class name to your textarea eg</xar:mlstring> <strong><code>class="MyEditorConfig"</code></strong>
-                   <xar:mlstring>Please <strong>check the final tinymce config code</strong> in the code display at the end of this screen before use!</xar:mlstring>
-            </p>
-            <div class="xar-form-input-wrapper">
+                   editor_selector : "yourtriggerclassname",</code>
+                <br /></li>
+                <li><strong><xar:mlstring>Do not</xar:mlstring></strong><xar:mlstring> use the default </xar:mlstring>
+                   <strong><code>class="mceEditor"</code></strong><xar:mlstring> as the trigger name.</xar:mlstring><br /></li>
+                <li><xar:mlstring>You can set multiple instances here.To use a specific configuration add the trigger class name to
+                   your div or textarea where you want the wysiwyg instance eg</xar:mlstring> <strong><code>class="MyEditorConfig"</code></strong><br /></li>
+                <li><xar:mlstring>Please <strong>check the final tinymce config code</strong> in the code display at the end of this screen before use!</xar:mlstring></li>
+                </ul>
+            </div>
+            <div class="xar-form-input-wrapper xar-padding-medium">
                 <label for="multiconfig" class="xar-form-label" title="#xarML('Enter additional individual custom config options here')#">
                         <xar:mlstring>Custom Config options:</xar:mlstring>
                 </label>
@@ -768,22 +742,27 @@
             <legend>
                 <strong><xar:mlstring>Custom Configuration Code</xar:mlstring></strong>
             </legend>
-            <p>
+            <p class="xar-padding-medium">
+              <xar:mlstring>This option allows you to add additional custom configuration options that are added to the DEFAULT tinymce configuration string. </xar:mlstring>
                 <xar:mlstring>Please refer to the TinyMCE </xar:mlstring><a href="modules/tinymce/xartemplates/includes/tinymce/docs/index.html"><xar:mlstring>Usage Documentation</xar:mlstring></a>.
-                <xar:mlstring>You can add additional custom configuration options here that are added to the existing DEFAULT tinymce configuration string.
-            </xar:mlstring>
-            </p>
-            <p><xar:mlstring>Each option should be on a separate line, ending in a comma, in the format</xar:mlstring>: <code>option : "value",</code>
 
             </p>
-            <div class="xar-form-input-wrapper">
+            <p class="xar-padding-medium"><xar:mlstring>Each option should be on a separate line, ending in a comma, in the format</xar:mlstring>: <code>option : "value",</code>
+
+            </p>
+            <div class="xar-form-input-wrapper xar-padding-medium">
                 <label for="tinycustom" class="xar-form-label" title="#xarML('Enter additional config options here')#">
                         <xar:mlstring>Custom Config options:</xar:mlstring>
                 </label>
                 <textarea class="mceNoEditor"  name="tinycustom" id="tinycustom" cols="50" rows="10" >#$tinycustom#</textarea>
            </div>
+       </fieldset>
+       <fieldset>
+            <legend>
+                <strong><xar:mlstring>Current active default configuration</xar:mlstring></strong>
+            </legend>
+
             <div class="xar-form-input-wrapper-before">
-                 <p><xar:mlstring>Current wysiwyg configuration:</xar:mlstring></p>
                  <pre>#$jsstrings#</pre>
             </div>
             </fieldset>

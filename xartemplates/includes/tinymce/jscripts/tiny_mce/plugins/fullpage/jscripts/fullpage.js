@@ -39,7 +39,7 @@ var lastElementType = null;
 var topDoc;
 
 function init() {
-	var f = document.forms[0];
+	var f = document.forms['fullpage'];
 	var i, p, doctypes, encodings, mediaTypes, fonts;
 	var inst = tinyMCE.getInstanceById(tinyMCE.getWindowArg('editor_id'));
 
@@ -49,7 +49,7 @@ function init() {
 		p = doctypes[i].split('=');
 
 		if (p.length > 1)
-			addSelectValue(f, 'doctype', p[0], p[1]);
+			addSelectValue(f, 'doctypes', p[0], p[1]);
 	}
 
 	// Setup fonts select box
@@ -118,6 +118,8 @@ function init() {
 	iframe.src = tinyMCE.baseURL + "/plugins/fullpage/blank.htm";
 
 	document.body.appendChild(iframe);
+
+	tinyMCEPopup.resizeToInnerSize();
 }
 
 function setupIframe(doc) {
@@ -194,7 +196,7 @@ function setupIframe(doc) {
 		}
 	}
 
-	selectByValue(f, 'doctype', docType, true, true);
+	selectByValue(f, 'doctypes', docType, true, true);
 	selectByValue(f, 'docencoding', xmlEnc, true, true);
 	selectByValue(f, 'langdir', tinyMCE.getAttrib(doc.body, 'dir'), true, true);
 
@@ -397,7 +399,7 @@ function updateAction() {
 
 	h = h.replace(/<head.*?>/, '$&\n' + cleanup.inStr + '<title>' + cleanup.xmlEncode(f.metatitle.value) + '</title>');
 
-	if ((v = getSelectValue(f, 'doctype')) != '')
+	if ((v = getSelectValue(f, 'doctypes')) != '')
 		h = v + '\n' + h;
 
 	if (f.xml_pi.checked) {

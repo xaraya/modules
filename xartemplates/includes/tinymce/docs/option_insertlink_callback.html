@@ -7,10 +7,13 @@
 <body>
 
 <div class="header">
-	<h1>Option: insertlink_callback</h1>
+	<h1><span class="marked">(deprecated)</span> Option: insertlink_callback</h1>
 </div>
 
 <div class="content">
+	<p>
+		This callback was removed in 2.0.3, use <a href="option_execcommand_callback.html">execcommand_callback</a> instead this also enables you to override other things than the image and link dialogs.
+	</p>
 	<p>
 		This option enables you to override the built in functionality for inserting links. This option should contain a function name to be executed when a new link is inserted into TinyMCE. The format of this callback function is: insertLink(href, target, title, onclick, action). Where most of these options are self explained the action can be &quot;update&quot; or &quot;insert&quot; depending on what operation type. This function should return an array with the same values as the incomming parameters, the example below describes how this is done. This option is set to a internal TinyMCE function by default.
 	</p>

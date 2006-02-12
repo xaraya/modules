@@ -29,13 +29,14 @@ function tinymce_admin_modifyconfig()
 
     $data['authid'] = xarSecGenAuthKey();
     // Specify some labels and values for display
+    $data['updatebutton'] = xarVarPrepForDisplay(xarML('Update Configuration'));
+
     $data['tinytheme'] = xarModGetVar('tinymce', 'tinytheme');
     $data['tinylang'] = xarModGetVar('tinymce', 'tinylang');
-    $data['updatebutton'] = xarVarPrepForDisplay(xarML('Update Configuration'));
     $data['tinymode'] = xarModGetVar('tinymce', 'tinymode');
     $data['tinyinstances'] = xarModGetVar('tinymce', 'tinyinstances');
     $data['tinycsslist'] = xarModGetVar('tinymce', 'tinycsslist');
-    $data['tinyask'] = xarModGetVar('tinymce', 'tinyask');
+    $data['tinyask'] = xarModGetVar('tinymce','tinyask');
     $data['tinyextended'] = xarModGetVar('tinymce', 'tinyextended');
     $data['tinyexstyle'] = xarModGetVar('tinymce', 'tinyexstyle');
     $data['tinybuttons'] = xarModGetVar('tinymce', 'tinybuttons');
@@ -80,7 +81,7 @@ function tinymce_admin_modifyconfig()
     $data['tinycompressor']= xarModGetVar('tinymce', 'tinycompressor');
     $data['tinycleanup']= xarModGetVar('tinymce', 'tinycleanup');
     if (!isset($data['tinycleanup'])){
-        $data['tinycleanup']='true';
+        $data['tinycleanup']=1;
     }
     if (!isset($data['multiconfig'])){
         $data['multiconfig']='';
