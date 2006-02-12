@@ -50,10 +50,10 @@
         <xar:mlstring>Included Hooks</xar:mlstring>
     </h3>
     <p>
-       <xar:mlstring>Julian offer a hook to categories</xar:mlstring><br/>
-       <xar:mlstring>You can attach this hook to your own publication type</xar:mlstring><br/>
+       <xar:mlstring>Julian offers a hook that will enable you to hook any content type to the calendar</xar:mlstring><br/>
+       <xar:mlstring>The hook shows an input form with all the information needed. You can attach this hook to your own publication type for instance.</xar:mlstring><br/>
        <xar:mlstring>In your pubtype, you can then add the data needed by Julian to show the even in the calendar</xar:mlstring><br/>
-       <xar:mlstring>Note that the hook only works for categories (version 0.2.8)</xar:mlstring>
+       <xar:mlstring>The hook has been tested with various modules like articles and example. It will work with any module that provides a clear userapi-getitemlinks function</xar:mlstring>
     </p>
     <h3><xar:mlstring>Known Bugs</xar:mlstring></h3>
     <ul>
