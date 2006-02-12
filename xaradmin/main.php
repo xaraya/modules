@@ -29,7 +29,7 @@ function products_admin_main()
 
     if(!xarVarFetch('branch', 'str', $branch,   "start", XARVAR_NOT_REQUIRED)) {return;}
 
-    if (xarModGetVar('adminpanels', 'overview') == 0) {
+    if (xarModGetVar('modules', 'disableoverview') == 0) {
         return array();
     }
     else {
