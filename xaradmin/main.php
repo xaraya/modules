@@ -1,13 +1,13 @@
 <?php
 
-function foo_admin_main()
+function customers_admin_main()
 {
-    if(!xarSecurityCheck('AdminFoo')) return;
+    if(!xarSecurityCheck('AdminCustomers')) return;
 
-    if (xarModGetVar('adminpanels', 'overview') == 0) {
+    if (xarModGetVar('modules', 'disableoverview') == 0) {
         return array();
     } else {
-        xarResponseRedirect(xarModURL('foo', 'admin', 'modifyconfig'));
+        xarResponseRedirect(xarModURL('customers', 'admin', 'customers'));
     }
     // success
     return true;
