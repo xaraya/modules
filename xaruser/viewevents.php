@@ -42,7 +42,7 @@ function julian_user_viewevents($args)
     if (!xarVarFetch('endday',      'str::',  $endday,      '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('endyear',     'str::',  $endyear,     '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('cal_date',    'str::',  $caldate,     '')) return;
-    if (!xarVarFetch('catid',       'int:1:', $catid,       '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('catid',       'int:1:', $catid,       NULL, XARVAR_NOT_REQUIRED)) return;
 
    // Security check
    if (!xarSecurityCheck('ViewJulian', 1, 'Item', "All:All:All:$catid")) {
@@ -68,10 +68,10 @@ function julian_user_viewevents($args)
     }
 
     // Get the events for the selected year.
-    $bl_data['event_array'] = xarModAPIFunc('julian','user','getall', array('startdate'=>$startdate, 'enddate'=>$enddate, 'catid' => $catid));
+   // $bl_data['event_array'] = xarModAPIFunc('julian','user','getall', array('startdate'=>$startdate, 'enddate'=>$enddate, 'catid' => $catid));
     // Set the url to this page in session as the last page viewed.
-    $lastview=xarModURL('julian','user','year',array('cal_date'=>$bl_data['cal_date']));
-    xarSessionSetVar('lastview',$lastview);
+  //  $lastview=xarModURL('julian','user','year',array('cal_date'=>$bl_data['cal_date']));
+  //  xarSessionSetVar('lastview',$lastview);
 
     // Get the Event Name
     $bl_data['eventName'] = '';

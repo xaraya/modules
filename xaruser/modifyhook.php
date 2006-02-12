@@ -78,11 +78,28 @@ function julian_user_modifyhook($args)
     // Repeat-on defaults
     $data['event_repeat_on_day'] = 0;    // day of the week
     $data['event_repeat_on_num'] = 0;    // instance within month (1st, 2nd, ..., last=5)
-    $data['event_repeat_on_freq'] = '';    // frequency (every x months)
+    $data['event_repeat_on_freq'] = '';  // frequency (every x months)
+
+    // start date and time
+   $data['event_year'] ='';
+   $data['event_month'] ='';
+   $data['event_day'] = '';
+   $data['event_endyear'] ='';
+   $data['event_endmonth'] ='';
+   $data['event_endday'] = '';
+   $data['start_hour_options'] = '';
+   $data['start_minute_options'] = '';
+   // Duration options
+   $data['dur_hour_options'] = '';
+   $data['dur_minute_options'] = '';
+
+    // start time
+   list($hour, $minute) = explode(":",date("h:i",$event_startdate));
+
 
    // Load up database
-   $dbconn = xarDBGetConn();
-   $xartable = xarDBGetTables();
+   $dbconn =& xarDBGetConn();
+   $xartable =& xarDBGetTables();
    $event_linkage_table = $xartable['julian_events_linkage'];
 
     // Try to find the link for the current module, item type and item id.
@@ -92,7 +109,7 @@ function julian_user_modifyhook($args)
         if (!$result->EOF) {
             $edit_obj = $result->FetchObject(false);
             // Summary aka Title
-            $summary = $edit_obj->summary;
+            $data['summary'] = $edit_obj->summary;
             // Start/end date (and time)
             $event_startdate = strtotime($edit_obj->dtstart);
             $event_enddate   = strtotime($edit_obj->recur_until);
@@ -127,10 +144,12 @@ function julian_user_modifyhook($args)
             $result->Close();
         }
         else {
+            return xarTplModule('julian','user','edithook',$data);
             // ERROR: no link to this object was found!!!
         }
     }
     else {
+        return xarTplModule('julian','user','edithook',$data);
         // ERROR: no link to this object was found!!!
     }
 
@@ -165,7 +184,7 @@ function julian_user_modifyhook($args)
         $sminend = 46;
     }
 
-    $start_minute_options = '';
+
     for($i = 0;$i < $sminend; $i = $i + $StartMinInterval) {
         $j = str_pad($i,2,"0",STR_PAD_LEFT);
         $start_minute_options.='<option value="'.$j.'"';

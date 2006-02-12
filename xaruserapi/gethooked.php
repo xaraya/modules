@@ -16,8 +16,8 @@
  * Get a hooked item
  *
  * The data for this hook is stored inside Julian in a separate table.
+ * This function retrieves a hooked item
  * In the long run, Julian should hook to itself
- * This all has only been tested with Articles
  *
  * @author MichelV michelv@xarayahosting.nl
  * @author Jorn
@@ -27,7 +27,7 @@
  * @return item array, or false on failure
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  * @since May 2005
- * @TODO
+ * @TODO MichelV #1 Hook julian to itself, so events are only stored in one table with extra info from other modules
  */
 function julian_userapi_gethooked($args)
 {

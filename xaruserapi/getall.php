@@ -30,10 +30,10 @@
  * @param   str $sortby Sortby parameter for display in list
  * @param   date $startdate The starting date for the selection
  * @param   date $enddate The end date for the selection
- * @param orderby sortby catid
+ * @param   orderby sortby catid
  * @return  array $event_data
  * @throws  list of exception identifiers which can be thrown
- * @todo    Michel V. <#>
+ * @todo    Michel V. <#> Move the array formatting to a seperate function so this becomes a real getall
  */
 
 function julian_userapi_getall($args)

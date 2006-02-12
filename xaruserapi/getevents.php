@@ -121,7 +121,7 @@ function julian_userapi_getevents($args)
                      $event_table.fee";
 
     // Select on categories
-    if (xarModIsHooked('categories','julian')) {
+    if (xarModIsHooked('categories','julian') && !empty($catid)) {
         // Get the LEFT JOIN ... ON ...  and WHERE parts from categories
         $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
                                        array('modid' =>
@@ -253,10 +253,19 @@ function julian_userapi_getevents($args)
                               'eFee' => $eFee);
           }
     }
-/*
+    // Close first result set
+  $result->Close();
+
     // TODO: include linked events
     // Get the linked events
-
+    if(strcmp($enddate,"")) {
+        $enddate=date('Y-m-d',strtotime($enddate));
+        $condition=" AND ((DATE_FORMAT(dtstart,'%Y-%m-%d')>='" . $startdate . "' AND DATE_FORMAT(dtstart,'%Y-%m-%d') <='" . $enddate . "') OR recur_freq>0) ";
+    } else {
+        $condition = " AND (DATE_FORMAT(dtstart,'%Y-%m-%d') ='". $startdate  ."' OR recur_freq>0)";
+        // set the end date to the start date for recurring events
+        $enddate=$startdate;
+    }
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $event_linkage_table = $xartable['julian_events_linkage'];
@@ -264,6 +273,7 @@ function julian_userapi_getevents($args)
                          hook_modid,
                          hook_itemtype,
                          hook_iid,
+                         summary,
                          dtstart,
                          duration,
                          isallday,
@@ -275,20 +285,47 @@ function julian_userapi_getevents($args)
                          recur_interval,
                          if(isallday,'',DATE_FORMAT(dtstart,'%l:%i %p')) as fStartTime,
                          DATE_FORMAT(dtstart,'%Y-%m-%d') as fStartDate
-                 FROM $event_linkage_table
-                 WHERE (1) ".$condition."
-                 ORDER BY dtstart ASC;";
+                 FROM $event_linkage_table";
+
+
+    if ((!empty($startdate))&& (!empty($enddate))){
+        $query_linked .= " WHERE DATE_FORMAT($event_linkage_table.dtstart,'%Y%m%d') >= $startdate AND DATE_FORMAT($event_linkage_table.dtstart,'%Y%m%d') <= $enddate";
+    }
+
+    if (isset($sortby)) {
+        switch ($sortby) {
+            case 'eventDate':
+                $query_linked .= " ORDER BY $event_linkage_table.dtstart $orderby";
+                break;
+            case 'eventName':
+                $query_linked .= " ORDER BY $event_linkage_table.summary $orderby";
+                break;
+            case 'eventDesc':
+                $query_linked .= " ORDER BY $event_linkage_table.description $orderby";
+                break;
+            case 'eventLocn':
+                $query_linked .= " ORDER BY $event_linkage_table.location $orderby";
+                break;
+            case 'eventCont':
+                $query_linked .= " ORDER BY $event_linkage_table.contact $orderby";
+                break;
+            case 'eventFee':
+                $query_linked .= " ORDER BY $event_linkage_table.fee $orderby";
+                break;
+        }
+    }
+
     $result_linked =& $dbconn->Execute($query_linked);
-    if (!$result_linked) return;
+    if (!$result_linked) return $items;
 
     // Check for no rows found.
-    if ($result->EOF) {
-        $result->Close();
-        return;
+    if ($result_linked->EOF) {
+        $result_linked->Close();
+        return $items;
     }
 
     // Put items into result array
-    for (; !$result->EOF; $result->MoveNext()) {
+    for (; !$result_linked->EOF; $result_linked->MoveNext()) {
         list($eID,
         //     $eName,
         //     $eDescription,
@@ -306,6 +343,7 @@ function julian_userapi_getevents($args)
              $hook_modid,
              $hook_itemtype,
              $hook_iid,
+             $eSummary,
              $eStart['timestamp'],
              $eDuration,
              $eIsallday,
@@ -313,7 +351,7 @@ function julian_userapi_getevents($args)
              $eRecurFreq,
              $eRecurCount,
              $eRecurUntil
-             ) = $result->fields;
+             ) = $result_linked->fields;
 
           // Change date formats from UNIX timestamp to something readable.
           if ($eStart['timestamp'] == 0) {
@@ -341,31 +379,31 @@ function julian_userapi_getevents($args)
               $eDue['viewdate'] = date("m-d-Y",strtotime($eDue['timestamp']));
           }
 
-         $items[] = array('eID' => $eID,
-                          'eName' => $eName,
-                          'eDescription' => $eDescription,
-                          'eStreet1' => $eStreet1,
-                          'eStreet2' => $eStreet2,
-                          'eCity' => $eCity,
-                          'eState' => $eState,
-                          'eZip' => $eZip,
-                          'eEmail' => $eEmail,
-                          'ePhone' => $ePhone,
-                          'eLocation' => $eLocation,
-                          'eUrl' => $eUrl,
-                          'eContact' => $eContact,
-                          'eOrganizer' => $eOrganizer,
+         $items[] = array('eID' => $eID.'_link',
+                          'eName' => $eSummary,
+                          'eDescription' => '',
+                          'eStreet1' => '',
+                          'eStreet2' => '',
+                          'eCity' => '',
+                          'eState' => '',
+                          'eZip' => '',
+                          'eEmail' => '',
+                          'ePhone' => '',
+                          'eLocation' => '',
+                          'eUrl' => '',
+                          'eContact' => '',
+                          'eOrganizer' => '',
                           'eStart' => $eStart,
                           'eRecur' => $eRecur,
                           'eDue' => $eDue,
                           'eDuration' => $eDuration,
                           'eRrule' => $eRrule,
                           'eIsallday' => $eIsallday,
-                          'eFee' => $eFee,);
+                          'eFee' => '');
     }
-*/
-    // Close result set
-    $result->Close();
+
+    // Close linked result set
+    $result_linked->Close();
 
     // Return the items
     return $items;
