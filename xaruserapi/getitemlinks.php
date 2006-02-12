@@ -2,8 +2,8 @@
 /**
  * Utility function to pass individual item links
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -14,7 +14,7 @@
 /**
  * utility function to pass individual item links to whoever
  *
- * @param  int $args ['itemtype'] item type (optional) 1=course, 2=planned course
+ * @param  int $args ['itemtype'] item type (optional)
  * @param  array $args ['itemids'] array of item ids to get
  * @returns array
  * @return array containing the itemlink(s) for the item(s).
@@ -22,20 +22,30 @@
  */
 function courses_userapi_getitemlinks($args)
 {
+    extract ($args);
+    // Create the array
     $itemlinks = array();
     if (!xarSecurityCheck('ViewCourses', 0)) {
         return $itemlinks;
     }
-
-    foreach ($args['itemids'] as $itemid) {
-        $item = xarModAPIFunc('courses', 'user', 'get',
-            array('courseid' => $itemid));
-        if (!isset($item)) return;
-        $itemlinks[$itemid] = array('url' => xarModURL('courses', 'user', 'display',
-                array('courseid' => $itemid)),
-                      'title' => xarML('Display Course'),
-                      'label' => xarVarPrepForDisplay($item['name']));
-    }
+    if (isset($itemtype) && $itemtype <1000) {
+        foreach ($args['itemids'] as $itemid) {
+            $item = xarModAPIFunc('courses', 'user', 'get',
+                array('courseid' => $itemid));
+            if (!isset($item)) return;
+            $itemlinks[$itemid] = array('url' => xarModURL('courses', 'user', 'display',
+                                                    array('courseid' => $itemid)),
+                                        'title' => xarML('Display Course'),
+                                        'label' => xarVarPrepForDisplay($item['name']));
+        }
+    } else {
+            if (!isset($item)) return;
+            $itemlinks[$itemid] = array('url' => xarModURL('courses', 'admin', 'display',
+                                                    array('itemid'   => $itemid,
+                                                          'itemtype' => $itemtype)),
+                                        'title' => xarML('Display Course Parameter'),
+                                        'label' => xarML('Course parameter')
+                                       );
     return $itemlinks;
 }
 ?>

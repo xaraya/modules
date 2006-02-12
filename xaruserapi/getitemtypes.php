@@ -36,6 +36,7 @@ function courses_userapi_getitemtypes($args)
                           'title' => xarVarPrepForDisplay(xarML('Courseyears')),
                           'url'   => xarModURL('courses','admin','view', array('itemtype' => 1005))
                           );
+    // Use the coursetypes as itemtypes
     $types = xarModAPIFunc('courses',
                             'user',
                             'getall_coursetypes');
