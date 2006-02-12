@@ -15,7 +15,7 @@
  * Display the user menu hook
  * This is a standard function to provide a link in the "Your Account Page"
  *
- * @author the MichelV
+ * @author the MichelV <michelv@xarayahosting.nl>
  * @param  $phase is the which part of the loop you are on
  */
 function sigmapersonnel_user_usermenu($args)
