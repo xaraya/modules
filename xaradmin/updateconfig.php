@@ -203,8 +203,8 @@ function tinymce_admin_updateconfig()
     if (xarModGetVar('tinymce','tinyask')==1){
         $jstext .='ask : "true",';
     }
-    if (xarModGetVar('tinymce','tinyinlinestyle')){
-        $jstext .='inline_styles : "'.xarModGetVar('tinymce','tinyinlinestyle').'", ';
+    if (xarModGetVar('tinymce','tinyinlinestyle')==1){
+        $jstext .='inline_styles : "true", ';
     }
     if (xarModGetVar('tinymce','tinyundolevel') > 0){
         $jstext .='custom_undo_redo_levels : "'.xarModGetVar('tinymce','tinyundolevel').'", ';

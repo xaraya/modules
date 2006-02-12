@@ -4,6 +4,7 @@
         <xar:set name="setbrowsers">xarModSetVar('tinymce','tinybrowsers','msie,gecko')</xar:set>
     </xar:if>
     <xar:set name="compressit">xarModGetVar('tinymce','tinycompressor')</xar:set>
+
     <xar:set name="tinybrowsers">explode(',',xarModGetVar('tinymce','tinybrowsers'))</xar:set>
 
 
@@ -19,10 +20,9 @@
 
     <xar:comment>Include the dynamic JavaScript, if not already included.</xar:comment>
     <xar:set name="tinyloaded">xarTplGetJavaScript('head', 'tinymce')</xar:set>
-
-    <xar:if condition="empty($tinyloaded)">
+    <xar:if condition="$tinyloaded ne 1">
         <xar:comment>Include the static JavaScript</xar:comment>
-        <xar:if condition="$compressit eq 'false'">
+        <xar:if condition="!$compressit">
             <xar:base-include-javascript position="head" module="tinymce" filename="tinymce/jscripts/tiny_mce/tiny_mce.js" />
         <xar:else />
             <xar:base-include-javascript position="head" module="tinymce" filename="tinymce/jscripts/tiny_mce/tiny_mce_gzip.php" />

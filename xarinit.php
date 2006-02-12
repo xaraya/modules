@@ -39,7 +39,6 @@ function tinymce_init()
    xarModSetVar('tinymce', 'tinyencode','');
    xarModSetVar('tinymce', 'tinyentities','');
    xarModSetVar('tinymce', 'tinyentity_encoding','raw');
-   xarModSetVar('tinymce', 'debug',0);
    xarModSetVar('tinymce', 'tinyinlinestyle',1);
    xarModSetVar('tinymce', 'tinyundolevel',10);
    xarModSetVar('tinymce', 'tinyplugins', 'searchreplace,print,advimage,advlink,table,paste,fullscreen,emotions');
@@ -126,7 +125,6 @@ function tinymce_upgrade($oldversion)
     case '1.0.1': 
          return tinymce_upgrade('1.0.2');
     case '1.0.2':
-           xarModSetVar('tinymce', 'debug',0); //default
            xarModSetVar('tinymce', 'tinyentities','');
            xarModSetVar('tinymce', 'tinyentity_encoding','raw');
 

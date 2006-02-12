@@ -168,6 +168,7 @@ function tinymce_admin_modifyconfig()
     closedir($handle);
     /* get list of valid languages */
     $tinylangpath="./modules/tinymce/xartemplates/includes/tinymce/jscripts/tiny_mce/langs";
+
     $langlist=array();
     $handle=opendir($tinylangpath);
     while (false !== ($file = readdir($handle))) {
