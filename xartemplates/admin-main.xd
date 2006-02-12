@@ -32,8 +32,8 @@
         <xar:mlstring>Included Blocks</xar:mlstring>
     </h3>
     <ul>
-        <li><xar:mlstring>Month Calendar</xar:mlstring></li>
-        <li><xar:mlstring>Today's Events and Upcoming Events</xar:mlstring></li>
+        <li><xar:mlstring>Month Calendar. This block shows a graphical representation of the current month.</xar:mlstring></li>
+        <li><xar:mlstring>Today's Events and Upcoming Events. This block shows a short list of the events of today and for the upcoming X days. You can set the amount of days in the future you want the block to show.</xar:mlstring></li>
     </ul>
     <h3><xar:mlstring>Security</xar:mlstring></h3>
     <p>
@@ -71,6 +71,6 @@
         </li>
     </ul>
     <p class="xar-sub">
-        <strong>&nbsp;<xar:mlstring>Julian Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.3&nbsp; 2006-02-03
+        <strong>&nbsp;<xar:mlstring>Julian Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.4&nbsp; 2006-02-12
     </p>
 </div>
