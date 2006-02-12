@@ -3,7 +3,7 @@
  * Get a hooked item
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -15,18 +15,19 @@
 /**
  * Get a hooked item
  *
- * The data for this hook is stored inside Julian in a seperate table.
+ * The data for this hook is stored inside Julian in a separate table.
  * In the long run, Julian should hook to itself
  * This all has only been tested with Articles
  *
  * @author MichelV michelv@xarayahosting.nl
  * @author Jorn
  * @param  $args ['objectid'] id of item to get
+ * @param  $args ['modid'] module id
  * @returns array
  * @return item array, or false on failure
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  * @since May 2005
- * @TODO MichelV: <1> Extend so this hook doesn't only work for articles
+ * @TODO
  */
 function julian_userapi_gethooked($args)
 {
@@ -60,12 +61,12 @@ function julian_userapi_gethooked($args)
 
     // Try to find the link for the current module, item type and item id.
     // TODO: make this a cleaner call
-   $query = "SELECT * FROM " .  $event_linkage_table . " WHERE ( hook_modid =$modid AND  hook_itemtype =$itemtype AND  hook_iid =$objectid)";
+   $query = "SELECT * FROM " .  $event_linkage_table . " WHERE ( hook_modid =$modid AND hook_itemtype = $itemtype AND hook_iid = $objectid)";
    $result = $dbconn->Execute($query);
    if (!empty($result)) {
         if (!$result->EOF) {
             $edit_obj = $result->FetchObject(false);
-
+            // The local stored summary
             $item['event_summary'] = $edit_obj->summary;
 
             // Start/end date (and time)
