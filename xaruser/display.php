@@ -3,7 +3,7 @@
  * Display a course
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -93,8 +93,7 @@ function courses_user_display($args)
             // See if the date for enrollment is surpassed
             $closedate = $planitem['closedate'];
             $timenow = time();
-            $closetime = strtotime($closedate);
-            if((int)$closetime > (int)$timenow) {
+            if($closedate > $timenow) {
                 // Add check for already enrolled
                 $enrolled = xarModAPIFunc('courses',
                               'user',

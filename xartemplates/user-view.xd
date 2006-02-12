@@ -2,10 +2,10 @@
 
 <div class="xar-courses xar-courses-user-view">
     <xar:template file="header" />
-    
+
     <div class="xar-courses-contents">
         <h1>#$menutitle#</h1>
-    
+
         <xar:if condition="xarSessionGetVar('statusmsg') ne ''">
             <div class="xar-mod-statusmsg">#xarSessionGetVar('statusmsg')#</div>
         </xar:if>
@@ -13,36 +13,42 @@
         <table>
         <tr>
             <xar:if condition="$snumberlink != ''">
-                <th><a href="#$snumberlink#">#$numberlabel#</a></th>
+                <th><a href="#$snumberlink#"><xar:mlstring>Course Code</xar:mlstring></a></th>
             <xar:else />
-                <th>#$numberlabel#</th>
+                <th><xar:mlstring>Course Code</xar:mlstring></th>
             </xar:if>
             <xar:if condition="$snamelink != ''">
-                <th><a href="#$snamelink#">#$namelabel#</a></th>
+                <th><a href="#$snamelink#"><xar:mlstring>Course name</xar:mlstring></a></th>
             <xar:else />
-                <th>#$namelabel#</th>
+                <th><xar:mlstring>Course name</xar:mlstring></th>
             </xar:if>
             <xar:if condition="$ShowShortDescchecked">
                 <xar:if condition="$sdesclink != ''">
-                    <th><a href="#$sdesclink#">#$shortdesclabel#</a></th>
+                    <th><a href="#$sdesclink#"><xar:mlstring>Short Course Description</xar:mlstring></a></th>
                 <xar:else />
-                    <th>#$shortdesclabel#</th>
+                    <th><xar:mlstring>Short Course Description</xar:mlstring></th>
                 </xar:if>
             </xar:if>
+            <th><xar:mlstring>Next course starts</xar:mlstring></th>
         </tr>
-    
+
         <xar:foreach in="$items" value="$item">
             <tr>
-            <td>#$item['number']#</td>
+            <td>#$item.number#</td>
             <td>
                 <xar:if condition="empty($item['link'])">
-                    #$item['name']#
+                    #$item.name#
                 <xar:else />
                     <a href="#$item['link']#">#$item['name']#</a>
                 </xar:if>
              </td>
-             <xar:if condition="$ShowShortDescchecked">                 
-             <td>#$item['shortdesc']#</td>
+             <xar:if condition="$ShowShortDescchecked">
+             <td>#$item.shortdesc#</td>
+             </xar:if>
+             <xar:if condition="!empty($item.upcomingdate)" >
+                <td>#xarlocalegetformatteddate('medium',$item['upcomingdate'])#</td>
+             <xar:else />
+                <td><xar:mlstring>Not planned</xar:mlstring></td>
              </xar:if>
            </tr>
         </xar:foreach>

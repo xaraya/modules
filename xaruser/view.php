@@ -33,8 +33,7 @@ function courses_user_view()
     // Prepare the array variable that will hold all items for display
     $data['items'] = array();
     // Specify some other variables for use in the function template
-    $data['namelabel'] = xarVarPrepForDisplay(xarML('Course Name'));
-    $data['numberlabel'] = xarVarPrepForDisplay(xarML('Course Number'));
+
     $data['coursetypelabel'] = xarVarPrepForDisplay(xarML('Course Type (Category)'));
     $data['levellabel'] = xarVarPrepForDisplay(xarML('Course Level'));
     $data['creditslabel'] = xarVarPrepForDisplay(xarML('Course Credits'));
@@ -46,7 +45,6 @@ function courses_user_view()
     $data['methodlabel'] = xarVarPrepForDisplay(xarML('Course Method'));
     $data['intendedcreditslabel'] = xarVarPrepForDisplay(xarML('Course credits'));
     $data['freqlabel'] = xarVarPrepForDisplay(xarML('Course Frequency'));
-    $data['startdate_label'] = xarVarPrepForDisplay(xarML('Course Start Date'));
     $data['enddate_label'] = xarVarPrepForDisplay(xarML('Course End Date'));
     $data['shortdesc_label'] = xarVarPrepForDisplay(xarML('Short Course Description'));
     $data['longdesc_label'] = xarVarPrepForDisplay(xarML('Course Description:'));
@@ -68,7 +66,6 @@ function courses_user_view()
 
     // Loop through each item and display it.
     foreach ($items as $item) {
-        $name=$item['name'];
         $courseid = $item['courseid'];
         // Security. User should be able to see the link via a read mask
         if (xarSecurityCheck('ReadCourses', 0, 'Course', "$courseid:All:All")) {
@@ -82,6 +79,16 @@ function courses_user_view()
         // Clean up the item text before display
         $item['name'] = xarVarPrepForDisplay($item['name']);
         $item['shortdesc'] = xarVarPrepHTMLDisplay($item['shortdesc']);
+
+        // Add the next date this course is planned
+        $plandates = xarModAPIFunc('courses', 'user', 'getplandates',
+                                   array('courseid' => $courseid, 'startafter' => time())
+                                   );
+        if (!empty($plandates)) {
+            $item['upcomingdate'] = $plandates[0]['startdate'];
+        } else {
+            $item['upcomingdate'] = '';
+        }
         // Add this item to the list of items to be displayed
         $data['items'][] = $item;
     }
