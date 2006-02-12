@@ -173,7 +173,7 @@
                             <textarea name="event_desc" id="event_desc" wrap="virtual" rows="15" cols="40">#$event_desc#</textarea>
                     </div>
                     <div class="xar-form-input-wrapper">
-                        #$hooks['categories']#
+                        #$hookoutput['categories']#
                     </div>
                     <div class="xar-form-input-wrapper">
                         <label for="month" class="required xar-form-label">
@@ -521,6 +521,16 @@
                         <input type="text" name="fee" id="fee" value="#$fee#" onkeyup="checkNumericy(this);" maxlength="255" class="xar-form-textmedium" />
                     </div>
                 </fieldset>
+                <xar:if condition="!empty($hookoutput) AND (count($hookoutput) gt 1)">
+                 <fieldset>
+                    <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
+                        <xar:foreach in="$hookoutput" key="$hookmodule">
+                        <xar:if condition="$hookmodule ne 'categories'">
+                        #$hookoutput[$hookmodule]#
+                        </xar:if>
+                        </xar:foreach>
+                </fieldset>
+                </xar:if>
             <div class="xar-form-input-wrapper-after">
                 <input type="hidden" name="is_update" value="1" />
                 <input type="hidden" name="authid" id="authid" value="#$authid#" />

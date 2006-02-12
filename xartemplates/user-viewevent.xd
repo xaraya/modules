@@ -105,6 +105,12 @@
                      </td>
                 </tr>
          </table>
-
+        <xar:if condition="!empty($hookoutput)">
+            <xar:foreach in="$hookoutput" key="$hookmodule">
+                #$hookoutput[$hookmodule]#
+            </xar:foreach>
+        <xar:else />
+        error@
+        </xar:if>
     </div>
 </div>

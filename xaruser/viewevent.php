@@ -184,6 +184,7 @@ function julian_user_viewevent()
    // Set the url to this page in session as the last page viewed
    $lastview=xarModURL('julian','user','viewevent',array('cal_date'=>$cal_date,'event_id'=>$event_id));
    xarSessionSetVar('lastview',$lastview);
+
    $uid = xarUserGetVar('uid');
    // Priv $event_id:$organizer:$calendar_id:$catid
    if (xarSecurityCheck('EditJulian', 0, 'Item', "$event_id:$uid:$bl_data[calendar_id]:All")) {
@@ -198,6 +199,24 @@ function julian_user_viewevent()
    } else {
        $bl_data['deletelink'] = '';
    }
+   // This doesn't work yet.
+    $item = $bl_data;
+    $item['returnurl'] = $lastview;
+    $item['module'] = 'julian';
+    $item['itemtype'] = NULL;
+    $hooks = xarModCallHooks('item',
+        'display',
+        $event_id,
+        $item);
+    if (empty($hooks)) {
+        $bl_data['hookoutput'] = array();
+    } else {
+        /* You can use the output from individual hooks in your template too, e.g. with
+         * $hookoutput['comments'], $hookoutput['hitcount'], $hookoutput['ratings'] etc.
+         */
+        $bl_data['hookoutput'] = $hooks;
+    }
+
 
    return $bl_data;
 }

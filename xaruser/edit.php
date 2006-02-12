@@ -339,9 +339,9 @@ function julian_user_edit()
 
     // Deal with no-hook scenario (the template then must get an empty hook-array)
      if (empty($hooks)) {
-        $data['hooks'] = array();
+        $data['hookoutput'] = array();
     } else {
-        $data['hooks'] = $hooks;
+        $data['hookoutput'] = $hooks;
     }
 
     $data['authid']=xarSecGenAuthKey();

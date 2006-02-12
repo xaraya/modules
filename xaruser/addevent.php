@@ -44,9 +44,9 @@ function julian_user_addevent($args)
 
     // Deal with no-hook scenario (the template then must get an empty hook-array)
      if (empty($hooks)) {
-        $data['hooks'] = array();
+        $data['hookoutput'] = array();
     } else {
-        $data['hooks'] = $hooks;
+        $data['hookoutput'] = $hooks;
     }
 
     $data['todays_month'] = date("n",strtotime($cal_date));
