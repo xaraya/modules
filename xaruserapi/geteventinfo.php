@@ -1,9 +1,9 @@
 <?php
 /**
- * Get information on a linked event from articles
+ * Get information on a linked event
  *
  * @package modules
- * @copyright (C) 2002-2005 by the Xaraya Development Team.
+ * @copyright (C) 2002-2006 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -13,9 +13,11 @@
  */
 
 /**
- * Get information on linked event. Currently assumes linking module = articles
+ * Get information on linked event.
  *
- * @author Jorn, MichelV. <michelv@xarayahosting.nl>
+ * This function uses the general module information to get links to hooked events
+ *
+ * @author Jorn, MichelV <michelv@xaraya.com>
  *
  * @param id  iid id of hooked item (in hooking module, e.g. an article id)
  * @param itemtype: type of hooked item
@@ -33,6 +35,8 @@ function julian_userapi_geteventinfo($args)
             new SystemException($msg));
         return;
     }
+    $modinfo = xarModGetInfo($modid);
+    $modname = $modinfo['name'];
 
     /*
      * Get the event via getitemlinks
@@ -51,10 +55,10 @@ function julian_userapi_geteventinfo($args)
     $event['viewUrl']='';
     $event['summary']='';
     $event['description'] = '';
-    $event['artstatus'] = 1;
+   // $event['artstatus'] = 1;
     $field = 'title';
-    $item = xarModApiFunc('articles','user','getitemlinks',array('itemids'=> array($iid),'field'=> $field));
-
+    $item = xarModApiFunc($modname,'user','getitemlinks',array('itemids'=> array($iid),'field'=> $field));
+    // Check the output
     if (empty($item[$iid]['url'])) {
         return array();
     } else {

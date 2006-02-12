@@ -219,7 +219,7 @@ function julian_userapi_getall($args)
         $eventObj = $result_linked->FetchObject(false);
         // first check to see if the current item can be viewed
         // On a return of false, we move to the next date
-        $linkedcheck = xarModApiFunc('julian','user','geteventinfo', array('iid'=>$eventObj->hook_iid, 'itemtype' =>$eventObj->hook_itemtype));
+        $linkedcheck = xarModApiFunc('julian','user','geteventinfo', array('iid'=>$eventObj->hook_iid, 'itemtype' =>$eventObj->hook_itemtype, 'modid' => $eventObj->hook_modid));
         if ($linkedcheck) {
             if (!$eventObj->recur_freq) {
                 // this is a non-repeating event and falls in the current date range...add to the events array
