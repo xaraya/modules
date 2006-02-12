@@ -25,7 +25,7 @@ function commerce_user_main()
     xarSessionSetVar('commerce_statusmsg', xarML('Commerce Main Menu',
                     'commerce'));
 
-    if (xarModGetVar('adminpanels', 'overview') == 0 && !isset($branch)) {
+    if (xarModGetVar('modules', 'disableoverview') == 0 && !isset($branch)) {
         return array();
     } else {
         if(!xarVarFetch('branch', 'str', $branch,   "start", XARVAR_NOT_REQUIRED)) {return;}

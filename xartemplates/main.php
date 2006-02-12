@@ -29,7 +29,7 @@ function commerce_admin_main()
 
     $branch = xarVarCleanFromInput('branch');
 
-    if (xarModGetVar('adminpanels', 'overview') == 0 && !isset($branch)) {
+    if (xarModGetVar('modules', 'disableoverview') == 0 && !isset($branch)) {
         return array();
     } else {
 
