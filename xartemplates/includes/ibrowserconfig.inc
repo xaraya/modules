@@ -25,13 +25,15 @@
     *
     * 1. Copy this file to var/ibrowser/ibrowserconfig.inc
     * 2. Please make sure you check all configurations settings
-    * 3. Update the configurations
-    * 4. Make sure  $cfg['base_url'] below is set correctly
-    * 4. Enter the name and directories of your image libraries
-    *     Make sure the directories exist and are writeable!!
-	* 	  - image libraries (chmod 0755 or 0777) eg $cfg['ilibs'] and $cfg['ilibs_dir'] and
+    * 3. Update the configurations especially:
+    *     - $cfg['thumbs'] - set your sizes for image uploads and uncomment where necessary
+    *     - $cfg['ilibs'] - **VERY IMPORTANT*** make sure you set these to browse and upload images
+    *     - $cfg['ilibs_dir']  - set this if you want DYNAMIC image directory browsing/creation
+    *     - $cfg['ilibs_inc'] - make sure you uncomment this line for DYNAMIC image directory browsing
+    * 4. Check directories exist and are writeable (eg chmod 0755 or 0777) else it WILL NOT WORK!!
+	* 	  - $cfg['ilibs'] and $cfg['ilibs_dir'] and
     *       the dynamic library directory if used ...$cfg['ilibs_inc']. Uncomment this for dynamic image dirs
-	* 	  - ibrowser/scripts/phpThumb/cache  (chmod 0755 or 0777)
+    *     - $PHPTHUMB_CONFIG['cache_directory'] as set below
 	*     - $cfg['temp'] eg var/cache as set below
     */
 	//-------------------------------------------------------------------------
@@ -108,27 +110,28 @@
 	// use static image libraries	
 	$cfg['ilibs'] = array (																// image library path with slashes; absolute to root directory - please make sure that the directories have write permissions	
 		array (																		
-			'value'   	=> '/xar10x/html/var/images//',
-			'text'    	=> 'Tutorials',
+			'value'   	=> '/yourwebroot/subdir_if_exists/var/images/',
+			'text'    	=> 'Stock Images',
 		),
 
 				array (
-			'value'   	=> '/xar10x/html/var/uploads/',
-			'text'    	=> 'Module Overview',
+			'value'   	=> '/yourwebroot/subdir_if_exists/var/images/library/',
+			'text'    	=> 'Image Library',
 		),
 	);
 	//-------------------------------------------------------------------------
 	// use dynamic image libraries - if $cfg['ilibs_inc'] is set, static image libraries above are ignored
 	// image directories to be scanned
-	$cfg['ilibs_dir'] 	   = array('/xar10x/html/var/images/');						   	// image library path with slashes; absolute to root directory - please make sure that the directories have write permissions
+	$cfg['ilibs_dir'] 	   = array('/yourwebroot/subdir_if_exists/var/images/');						   	// image library path with slashes; absolute to root directory - please make sure that the directories have write permissions
 	$cfg['ilibs_dir_show'] = true;														// show main library (true) or only sub-dirs (false)
      //You must uncomment the following to get dynamic library creation and scanning
 	$cfg['ilibs_inc']      = 'scripts/rdirs.php';  	// uncomment to allow dynamic file library
 
-    //-------------------------------------------------------------------------
-	// you shouldn't need to make any changes to the config variable beyond this line!
-	//-------------------------------------------------------------------------
-	/**** START XARAYA MODIFICATION ****/
+    /* -------------------------------------------------------------------------
+	 * NOTE: You should usually  ****NOT*** need to make changes to variables beyond this line!
+     * -------------------------------------------------------------------------
+     */
+    /**** START XARAYA MODIFICATION ****/
     // we need to find the directory our server is opperating in
     // hopefully this is complete :)
     if(isset($_SERVER['DOCUMENT_ROOT'])) {
@@ -154,7 +157,7 @@
 
   	/**** END XARAYA MODIFICATION ****/
 	$osslash = ((strtoupper(substr(PHP_OS, 0, 3)) == 'WIN') ? '\\' : '/');
-	$cfg['ver'] 		= '1.3 - build 08122005';										// iBrowser version	
+	$cfg['ver'] 		= '1.3 - build 08122005';										// iBrowser version
 	//$cfg['root_dir']	= realpath((getenv('DOCUMENT_ROOT') && ereg('^'.preg_quote(realpath(getenv('DOCUMENT_ROOT'))), realpath(__FILE__))) ? getenv('DOCUMENT_ROOT') : str_replace(dirname(@$_SERVER['PHP_SELF']), '', str_replace($osslash, '/', dirname(__FILE__))));
 	$cfg['root_dir']    = ((@$_SERVER['DOCUMENT_ROOT'] && file_exists(@$_SERVER['DOCUMENT_ROOT'] . $_SERVER['PHP_SELF'])) ? $_SERVER['DOCUMENT_ROOT'] : str_replace(dirname(@$_SERVER['PHP_SELF']), '', str_replace('\\', '/', realpath('.'))));
 	$cfg['base_url'] 	= 'http://' . $_SERVER['SERVER_NAME']; 							// base url; e.g. 'http://localhost/'
@@ -162,5 +165,5 @@
     $cfg['scripts']  	= $cfg['main_dir'] . '/scripts/'; 								// scripts dir; e.g. '/home/domain/public_html/ibrowser/scripts/'
 	$cfg['pop_url']    	= $cfg['scripts'] . 'popup.php'; 								// popup dir; relative to 'script' dir
     $cfg['temp']     	= $realpath.'/var/cache'; 					// temp dir; e.g. 'D:/www/temp'
-    $PHPTHUMB_CONFIG['cache_directory'] = $realpath.'/var/cache/templates'; //only used by phpthumbs
+    $PHPTHUMB_CONFIG['cache_directory'] = $realpath.'/var/cache/templates'; // used by phpthumbs in ibrowser for image caching
 ?>

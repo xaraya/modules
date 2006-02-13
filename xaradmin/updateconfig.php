@@ -119,7 +119,7 @@ function tinymce_admin_updateconfig()
             if (!xarVarFetch('tinyresizehorizontal','checkbox',$tinyresizehorizontal,false,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinyenablepath','str:1:',$tinyenablepath,1,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinytime', 'str:1:', $tinytime, '', XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('tinydate', 'str:1:', $tinydate, '', XARVAR_NOT_REQUIRED)) return;            
+            if (!xarVarFetch('tinydate', 'str:1:', $tinydate, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinyinvalid', 'str:1:', $tinyinvalid, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinyplugins','str:1:',$tinyplugins,'',XARVAR_NOT_REQUIRED)) return;
 
@@ -160,7 +160,8 @@ function tinymce_admin_updateconfig()
     }
 
     $xarbaseurl=xarServerGetBaseURL();
-    $tinybasepath="'.$xarbaseurl.'modules/tinymce/xartemplates/includes/tinymce/jscripts/tiny_mce/tiny_mce.js";
+    //This is not used anymore we use the loading in the include template
+    $tinybasepath="'.$xarbaseurl.'modules/tinymce/xarincludes/tiny_mce.js";
 
 
     /* Turn our settings into javascript for insert into template
