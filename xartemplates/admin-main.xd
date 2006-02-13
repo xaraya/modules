@@ -132,7 +132,7 @@
                <li><xar:mlstring>Paste - text and MS Word paste plugin.</xar:mlstring></li>
                <li><xar:mlstring>Directionality - plug in for better support of right to left languages.</xar:mlstring></li>
                <li><xar:mlstring>Xaraya Page Break - icon click to add a Xaraya new page break to any of your publication type articles. Add <strong>xarpagebreak</strong> to Plugins, and <strong>xarpagebreak</strong> to Additional Tags configuration. Make sure you also allow images and appropriate attributes to view the pagebreak icon in your articles.</xar:mlstring></li>
-               <li><xar:mlstring>List Styles - add list style types to your lists.</xar:mlstring></li>
+               <li><xar:mlstring>[List Styles - add list style types to your lists] Removed - waiting on compatible version</xar:mlstring></li>
                <li><xar:mlstring>Cleanup - cleanup pluging with high performance and flexibility takes the place of core cleanup function.</xar:mlstring></li>
 
             </ol>
@@ -179,6 +179,6 @@ tinyMCE.init({
                  <li><xar:mlstring>Related tutorials and documentation on xarTinyMCE found at </xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/xartinymce/" title="#xarML('Related documentation on XarTinyMCE')#"><xar:mlstring>Xaraya Documentation</xar:mlstring></a>
                  </li>
              </ul>
-            <p style="font-size:smaller;"><strong>&nbsp;<xar:mlstring>xarTinyMCE WYSIWYG Editor - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 2.9.1&nbsp; 2006-01-25 jojodee
+            <p style="font-size:smaller;"><strong>&nbsp;<xar:mlstring>xarTinyMCE WYSIWYG Editor - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 2.9.2&nbsp; 2006-02-xx
             </p>
    </div>
