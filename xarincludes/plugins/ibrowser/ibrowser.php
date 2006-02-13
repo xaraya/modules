@@ -49,7 +49,7 @@
    } else {
         // look in the templates directory of this module for the default file
         //include_once '../../../../../ibrowserconfig.inc';
-        include_once '../../xartemplates/includes/ibrowserconfig.inc';
+        include_once '../../../xartemplates/includes/ibrowserconfig.inc';
    }
 
 	//-------------------------------------------------------------------------
