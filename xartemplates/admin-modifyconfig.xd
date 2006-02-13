@@ -14,13 +14,13 @@
           <dt class="help" title="Choose a set of configuration options"><xar:mlstring>Actions</xar:mlstring> :</dt>
         <xar:if condition="$tab eq 'basic'">
             <dd class="active"><a href="&xar-modurl-tinymce-admin-modifyconfig;&amp;tab=basic">
-                    <xar:mlstring>Installation</xar:mlstring>
+                    <xar:mlstring>Install Options</xar:mlstring>
                 </a>
             </dd>
         <xar:else />
             <dd>
                 <a href="&xar-modurl-tinymce-admin-modifyconfig;&amp;tab=basic">
-                    <xar:mlstring>Installation</xar:mlstring>
+                    <xar:mlstring>Install Options</xar:mlstring>
                 </a>
             </dd>
         </xar:if>
@@ -40,39 +40,39 @@
         <xar:if condition="$tab eq 'cssplug'">
             <dd class="active">
                 <a href="&xar-modurl-tinymce-admin-modifyconfig;&amp;tab=cssplug">
-                    <xar:mlstring>Styles and Plugins</xar:mlstring>
+                    <xar:mlstring>Attributes &amp; Styles</xar:mlstring>
                 </a>
             </dd>
         <xar:else />
             <dd>
                 <a href="&xar-modurl-tinymce-admin-modifyconfig;&amp;tab=cssplug">
-                    <xar:mlstring>Styles and Plugins</xar:mlstring>
+                    <xar:mlstring>Attributes &amp;  Styles</xar:mlstring>
                 </a>
             </dd>
         </xar:if>
         <xar:if condition="$tab eq 'customadvanced' and $tinytheme eq 'advanced'">
             <dd class="active">
                 <a href="&xar-modurl-tinymce-admin-modifyconfig;&amp;tab=customadvanced">
-                     <xar:mlstring>Custom Advanced Theme</xar:mlstring>
+                     <xar:mlstring>Advanced Theme Options</xar:mlstring>
                 </a>
             </dd>
         <xar:elseif condition="$tinytheme eq 'advanced'"/>
             <dd>
                 <a href="&xar-modurl-tinymce-admin-modifyconfig;&amp;tab=customadvanced">
-                    <xar:mlstring>Custom Advanced Theme</xar:mlstring>
+                    <xar:mlstring>Advanced Theme Options</xar:mlstring>
                 </a>
             </dd>
         </xar:if>
     <xar:if condition="$tab eq 'customconfig'">
             <dd class="active">
                 <a href="&xar-modurl-tinymce-admin-modifyconfig;&amp;tab=customconfig">
-                     <xar:mlstring>Advanced Options</xar:mlstring>
+                     <xar:mlstring>Advanced Config</xar:mlstring>
                 </a>
             </dd>
         <xar:else />
             <dd>
                 <a href="&xar-modurl-tinymce-admin-modifyconfig;&amp;tab=customconfig">
-                    <xar:mlstring>Advanced Options</xar:mlstring>
+                    <xar:mlstring>Advanced Config</xar:mlstring>
                 </a>
             </dd>
         </xar:if>
@@ -310,14 +310,14 @@
                     <xar:mlstring>Override width:</xar:mlstring>
                 </label>
                 <input type="text" name="tinywidth" id="tinywidth" value="#$tinywidth#" size="8" maxlength="8" />
-                <xar:mlstring>Affects all textareas. Eg "110%" or "450" for px. </xar:mlstring>
+                 <xar:mlstring>Affects all textareas (enter in px eg 450). Turn off resizing.</xar:mlstring>
             </div>
            <div class="xar-form-input-wrapper">
                 <label for="tinyheight" class="xar-form-label" title="#xarML('Defaults to height of individual textareas if left blank')#">
                     <xar:mlstring>Override height:</xar:mlstring>
             </label>
                 <input type="text" name="tinyheight" id="tinyheigh" value="#$tinyheight#" size="8" maxlength="8" />
-                <xar:mlstring>Affects all textareas Eg "110%" or "450" for px. </xar:mlstring>
+                <xar:mlstring>Affects all textareas (enter in px eg 450). Turn off resizing.</xar:mlstring>
            </div>
 
            <div class="xar-form-input-wrapper">
@@ -492,80 +492,22 @@
 
             <div class="xar-form-input-wrapper">
                 <label for="tinycsslist" class="xar-form-label" title="#xarML('CSS file name for content and class dropdown list, relative to index.php')#">
-                    <xar:mlstring>Content and style list CSS</xar:mlstring>
+                    <xar:mlstring>Content and Style list CSS</xar:mlstring>
                 </label>
                 <input type="text" name="tinycsslist" id="tinycsslist" value="#$tinycsslist#" size="60" maxlength="120" />
             </div>
             <div class="xar-form-input-wrapper-after">
-               <xar:mlstring>Classes defined in this file will appear in the Style dropdown list.</xar:mlstring>
+               <xar:mlstring>Classes defined in this file will appear in the Style dropdown list and affect content.</xar:mlstring>
             </div>
             <div class="xar-form-input-wrapper">
                <label for="editorcss" class="xar-form-label" title="#xarML('CSS file name for editor and toolbar/user interface, relative to index.php')#">
-                    <xar:mlstring>Layout/user interface CSS</xar:mlstring>
+                    <xar:mlstring>Editor UI CSS File</xar:mlstring>
                 </label>
-              <input type="text" name="editorcss" id="editorcss" value="#$editorcss#" size="65" maxlength="120" /><br />
-              <xar:mlstring>Style used here affect the editor layout, toolbars and user inteface.</xar:mlstring>
+              <input type="text" name="editorcss" id="editorcss" value="#$editorcss#" size="60" maxlength="120" /><br />
+              <xar:mlstring>Affects the editor layout, toolbars and general look of the editor itself.</xar:mlstring>
             </div>
         </fieldset>
-        <fieldset>
-            <legend>
-                <strong><xar:mlstring>Plugin Options</xar:mlstring></strong>
-            </legend>
 
-            <div class="xar-form-input-wrapper-before xar-padding-medium">
-                 <xar:mlstring>To use a plugin first list it's name in the <strong>Plugins to Load</strong> field below. For some plugins you must also add the name of the plugin button to the Exta Button list in the Custom Advanced Theme Tab.</xar:mlstring>
-            </div>
-
-            <div class="xar-form-input-wrapper-before xar-padding-medium">
-                <label for="tinyplugins" class="xar-form-label" title="#xarML('Add names of any extra plugins you wish to load here.')#">
-                    <xar:mlstring>Names of plugins to load (separated by commas):</xar:mlstring>
-                </label>
-               <input type="text" name="tinyplugins" id="tinyplugins" value="#$tinyplugins#" size="65" maxlength="240" />
-
-            </div>
-
-             <div class="xar-form-input-wrapper-after">
-                    <p><xar:mlstring><strong>Available plugins (bundled):</strong> save, ibrowser, emotions, iespell (IE only), insertdatetime, preview, zoom,
-                     advimage, advlink, flash, advhr, searchreplace, print, table, xarpagebreak, contextmenu, lorem, dictionary, paste, fullscreen, directionality, liststyle, cleanup, fullpage</xar:mlstring></p>
-             </div>
-
-             <xar:if condition="$dateplug">
-             <div class="xar-form-input-wrapper">
-                <label for="tinydate" class="xar-form-label" title="#xarML('Format for Date')#">
-                    <xar:mlstring>Format for date</xar:mlstring>
-                </label>
-                <input type="text" name="tinydate" id="tinydate" value="#$tinydate#" size="15" maxlength="25" />
-                <xar:mlstring>Default is YYYY-MM-DD</xar:mlstring>
-             </div>
-             <div class="xar-form-input-wrapper-after">
-                    <xar:mlstring>%y as year range 00 to 99, %Y as year YYYY, %d day range 01 to 31, %m month range 01 to 12, %D same as %m/%d/%y</xar:mlstring>
-             </div>
-             <div class="xar-form-input-wrapper">
-                <label for="tinytime" class="xar-form-label" title="#xarML('Format for Time')#">
-                    <xar:mlstring>Format for time :</xar:mlstring>
-                </label>
-                <input type="text" name="tinytime" id="tinytime" value="#$tinytime#" size="15" maxlength="25" />
-                <xar:mlstring>Default is HH:MM:SS</xar:mlstring>
-             </div>
-             <div class="xar-form-input-wrapper-after">
-                    <xar:mlstring>%H hour using a 24-hour clock, %M minute as 00-59, %S second as 00-59, %% - a literal `%' character</xar:mlstring>
-             </div>
-             </xar:if>
-
-        <div class="xar-form-input-wrapper xar-padding-large">
-            <label for="ibrowser" class="xar-form-label"><xar:mlstring>To Use Image Browser plugin:</xar:mlstring>
-            </label>
-
-            <ul class="xar-form-input-wrapper-after">
-            <li><xar:mlstring>Add <strong>ibrowser</strong> to the plugins to load list above</xar:mlstring></li>
-            <li><xar:mlstring>Add <strong>ibrowser</strong> to the button list in Custom Advanced Theme tab.</xar:mlstring></li>
-            <li><xar:mlstring> Update the </xar:mlstring><a href="modules/tinymce/xartemplates/includes/ibrowserconfig.inc"><xar:mlstring>configuration file at modules/tinymce/xartemplates/includes/ibrowserconfig.inc</xar:mlstring></a>
-                <xar:mlstring> for the IBrowser Plugin.</xar:mlstring>
-            </li>
-            </ul>
-
-         </div>
-         </fieldset>
          <fieldset>
             <div class="xar-form-input-wrapper-after">
                  <input type="submit" value="#$updatebutton#" />
@@ -580,7 +522,7 @@
         <input type="hidden" name="tab" id="tab" value="#$tab#" />
         <fieldset>
             <legend>
-                <strong><xar:mlstring>Options for Advanced Theme Only</xar:mlstring></strong>
+                <strong><xar:mlstring>Advanced Theme Editor Options</xar:mlstring></strong>
             </legend>
         <div class="xar-form-input-wrapper">
                 <label for="tinytoolbar" class="xar-form-label" title="#xarML('Position of the editor toolbar at top or bottom of text input area')#">
@@ -660,10 +602,68 @@
            <xar:mlstring>These default to p, address, pre, h1, h2, h3, h4, h5 and h6 if left blank.</xar:mlstring>
         </div>
         </fieldset>
+       <fieldset>
+            <legend>
+                <strong><xar:mlstring>Plugin Options</xar:mlstring></strong>
+            </legend>
 
+            <div class="xar-form-input-wrapper-before xar-padding-medium">
+                 <xar:mlstring>To use a plugin first list it's name in the <strong>Plugins to Load</strong> field below. For some plugins you must also add the name of the plugin BUTTON to the Button Layout below.</xar:mlstring>
+            </div>
+
+            <div class="xar-form-input-wrapper-before xar-padding-medium">
+                <label for="tinyplugins" class="xar-form-label" title="#xarML('Add names of any extra plugins you wish to load here.')#">
+                    <xar:mlstring>Names of plugins to load (separated by commas):</xar:mlstring>
+                </label>
+               <input type="text" name="tinyplugins" id="tinyplugins" value="#$tinyplugins#" size="70" maxlength="250" />
+
+            </div>
+
+             <div class="xar-form-input-wrapper-after">
+                    <p><xar:mlstring><strong>Available plugins (bundled):</strong> save, ibrowser, emotions, iespell (IE only), insertdatetime, preview, zoom,
+                     advimage, advlink, flash, advhr, searchreplace, print, table, xarpagebreak, contextmenu, lorem, dictionary, paste, fullscreen, directionality, liststyle, cleanup, fullpage</xar:mlstring></p>
+             </div>
+
+             <xar:if condition="$dateplug">
+             <div class="xar-form-input-wrapper">
+                <label for="tinydate" class="xar-form-label" title="#xarML('Format for Date')#">
+                    <xar:mlstring>Format for date</xar:mlstring>
+                </label>
+                <input type="text" name="tinydate" id="tinydate" value="#$tinydate#" size="15" maxlength="25" />
+                <xar:mlstring>Default is YYYY-MM-DD</xar:mlstring>
+             </div>
+             <div class="xar-form-input-wrapper-after">
+                    <xar:mlstring>%y as year range 00 to 99, %Y as year YYYY, %d day range 01 to 31, %m month range 01 to 12, %D same as %m/%d/%y</xar:mlstring>
+             </div>
+             <div class="xar-form-input-wrapper">
+                <label for="tinytime" class="xar-form-label" title="#xarML('Format for Time')#">
+                    <xar:mlstring>Format for time :</xar:mlstring>
+                </label>
+                <input type="text" name="tinytime" id="tinytime" value="#$tinytime#" size="15" maxlength="25" />
+                <xar:mlstring>Default is HH:MM:SS</xar:mlstring>
+             </div>
+             <div class="xar-form-input-wrapper-after">
+                    <xar:mlstring>%H hour using a 24-hour clock, %M minute as 00-59, %S second as 00-59, %% - a literal `%' character</xar:mlstring>
+             </div>
+             </xar:if>
+
+        <div class="xar-form-input-wrapper xar-padding-large">
+            <label for="ibrowser" class="xar-form-label"><xar:mlstring>To Use Image Browser plugin:</xar:mlstring>
+            </label>
+
+            <ul class="xar-form-input-wrapper-after">
+            <li><xar:mlstring>Add <strong>ibrowser</strong> to the plugins to load list above</xar:mlstring></li>
+            <li><xar:mlstring>Add <strong>ibrowser</strong> to the button list in Custom Advanced Theme tab.</xar:mlstring></li>
+            <li><xar:mlstring> Update the </xar:mlstring><a href="modules/tinymce/xartemplates/includes/ibrowserconfig.inc"><xar:mlstring>configuration file at modules/tinymce/xartemplates/includes/ibrowserconfig.inc</xar:mlstring></a>
+                <xar:mlstring> for the IBrowser Plugin.</xar:mlstring>
+            </li>
+            </ul>
+
+         </div>
+         </fieldset>
         <fieldset>
             <legend>
-                 <xar:mlstring>Customize Advanced Theme Layout</xar:mlstring>
+                 <xar:mlstring>Advanced Theme Button Layout</xar:mlstring>
            </legend>
         <div class="xar-form-input-wrapper-before">
              <p><xar:mlstring>If you wish to change the DEFAULTS then you can add or remove buttons, or define

@@ -44,8 +44,8 @@ function tinymce_admin_updateconfig()
             if (!xarVarFetch('tinyundolevel','int:1:3',$tinyundolevel,'',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinydirection','str:1:3',$tinydirection,'ltr',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinyinstances', 'str:1:', $tinyinstances, '', XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('tinywidth','str:1:',$tinywidth,'',XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('tinyheight','str:1:',$tinyheight,'',XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('tinywidth','int:1:',$tinywidth,'',XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('tinyheight','int:1:',$tinyheight,'',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinylang','str:1:',$tinylang,'',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinybr','checkbox',$tinybr,false,XARVAR_NOT_REQUIRED)) return;
             //if (!xarVarFetch('tinynowrap','str:1:',$tinynowrap,'false',XARVAR_NOT_REQUIRED)) return;
@@ -89,28 +89,21 @@ function tinymce_admin_updateconfig()
         case 'cssplug':
             if (!xarVarFetch('tinyextended','str:1:',$tinyextended,'code,pre,blockquote/quote',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinyinlinestyle','checkbox',$tinyinlinestyle,true,XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('tinyplugins','str:1:',$tinyplugins,'',XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('tinyencode','str:0:',$tinyencode,'',XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('tinyentities','str:0:',$tinyentities,'',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinycsslist', 'str:1:', $tinycsslist, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinydate', 'str:1:', $tinydate, '', XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('tinytime', 'str:1:', $tinytime, '', XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('tinyinvalid', 'str:1:', $tinyinvalid, '', XARVAR_NOT_REQUIRED)) return;
             //if (!xarVarFetch('useibrowser','int:1:',$useibrowser,0,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('editorcss','str:1:',$editorcss,'',XARVAR_NOT_REQUIRED)) return;
 
-                 xarModSetVar('tinymce', 'tinyextended', $tinyextended);
+                xarModSetVar('tinymce', 'tinyextended', $tinyextended);
                 xarModSetVar('tinymce', 'tinyinlinestyle',$tinyinlinestyle);
-                xarModSetVar('tinymce','tinyplugins', $tinyplugins);
                 xarModSetVar('tinymce', 'tinycsslist', $tinycsslist);
-                xarModSetVar('tinymce','tinydate', $tinydate);
-                xarModSetVar('tinymce','tinytime', $tinytime);
                 xarModSetVar('tinymce','tinyinvalid', $tinyinvalid);
                 /* xarModSetVar('tinymce', 'useibrowser', $useibrowser); deprecated version 0.9.2 */
                xarModSetVar('tinymce', 'tinyeditorcss', $editorcss);
 
             break;
         case 'customadvanced':
+
             if (!xarVarFetch('tinytoolbar','str:1:',$tinytoolbar,'',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinybuttons','str:1:',$tinybuttons,'',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinybuttons2','str:1:',$tinybuttons2,'',XARVAR_NOT_REQUIRED)) return;
@@ -125,6 +118,13 @@ function tinymce_admin_updateconfig()
             if (!xarVarFetch('tinyadvresize','checkbox',$tinyadvresize,true,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinyresizehorizontal','checkbox',$tinyresizehorizontal,false,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinyenablepath','str:1:',$tinyenablepath,1,XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('tinytime', 'str:1:', $tinytime, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('tinyinvalid', 'str:1:', $tinyinvalid, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('tinyplugins','str:1:',$tinyplugins,'',XARVAR_NOT_REQUIRED)) return;
+
+               xarModSetVar('tinymce','tinyplugins', $tinyplugins);
+               xarModSetVar('tinymce','tinydate', $tinydate);
+               xarModSetVar('tinymce','tinytime', $tinytime);
                xarModSetVar('tinymce', 'tinyexstyle', $tinyexstyle); //not used at this stage
                xarModSetVar('tinymce', 'tinytoolbar', $tinytoolbar);
                xarModSetVar('tinymce', 'tinybuttons', $tinybuttons);
