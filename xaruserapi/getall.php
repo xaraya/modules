@@ -30,9 +30,9 @@ function courses_userapi_getall($args)
     extract($args);
     if (!xarVarFetch('startnum', 'int:1:',         $startnum, 1,     XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('numitems', 'int:1:',         $numitems, -1,    XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('level',    'int:1:',         $level,    '',    XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('type',     'int:1:',         $type,     '',    XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('catid',    'int:1:',         $catid,     '',    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('level',    'int:1:',         $level,    0,    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('type',     'int:1:',         $type,     0,    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('catid',    'int:1:',         $catid,    '',    XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('sortby',   'str:1:',         $sortby,   'name',  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('sortorder','enum:DESC:ASC:', $sortorder,'DESC',  XARVAR_NOT_REQUIRED)) return;
 
@@ -90,11 +90,11 @@ function courses_userapi_getall($args)
                     WHERE xar_hidecourse in ($where)";
      }
     // Level selection
-    if (!empty ($level) && is_numeric($level)) {
+    if (($level > 0) && is_numeric($level)) {
         $query .= " AND xar_level = $level ";
     }
     // Level selection
-    if (!empty ($type)) {
+    if (($type > 0) && is_numeric($type)) {
         $query .= " AND xar_type = $type ";
     }
     $query .= " ORDER BY $coursestable.xar_" . $sortby;

@@ -14,8 +14,9 @@
 /**
  * Dynamic courselist property
  * based on work of:
- * @author mikespub <mikespub@xaraya.com>
+ * @author DD: mikespub <mikespub@xaraya.com>
  * @author MichelV <michelv@xaraya.com>
+ * @todo MichelV: <1> field selection
  */
 
 /* Include the base class */
@@ -45,7 +46,7 @@ class Dynamic_CourseList_Property extends Dynamic_Select_Property
     *   showglue:string - string to join multiple fields together
     *   order:field[,field] - order the selection by the specified field
     * where
-    *   field - name|uname|email|uid
+    *   field - name|uname|email|uid TO BE DETERMINED
     */
 
     function Dynamic_CourseList_Property($args)
