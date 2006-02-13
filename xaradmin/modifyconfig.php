@@ -55,6 +55,8 @@ function tinymce_admin_modifyconfig()
     $data['tinydirection'] = xarModGetVar('tinymce','tinydirection');
     $data['tinyshowpath'] = xarModGetVar('tinymce','tinyshowpath');
     $data['tinyencode'] = xarModGetVar('tinymce','tinyencode');
+    //$data['tinyentities'] = xarModGetVar('tinymce','tinyentities'); Uses default
+    $data['tinyentity_encoding'] = xarModGetVar('tinymce','tinyentity_encoding');
     $data['tinyplugins'] = xarModGetVar('tinymce','tinyplugins');
     $data['tinydate']=xarModGetVar('tinymce', 'tinydate');
     $data['tinytime']=xarModGetVar('tinymce', 'tinytime');
@@ -155,7 +157,6 @@ function tinymce_admin_modifyconfig()
         $data['tinycustom']='';
     }
     /* get list of valid themes */
-    //$tinythemepath="./modules/tinymce/xartemplates/includes/tinymce/jscripts/tiny_mce/themes";
      $tinythemepath="./modules/tinymce/xarincludes/themes";
 
     $themelist=array();
@@ -169,7 +170,6 @@ function tinymce_admin_modifyconfig()
     }
     closedir($handle);
     /* get list of valid languages */
-    //$tinylangpath="./modules/tinymce/xartemplates/includes/tinymce/jscripts/tiny_mce/langs";
     $tinylangpath="./modules/tinymce/xarincludes/langs";
     $langlist=array();
     $handle=opendir($tinylangpath);

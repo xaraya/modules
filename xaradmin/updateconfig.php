@@ -55,6 +55,9 @@ function tinymce_admin_updateconfig()
             if (!xarVarFetch('tinyeditordeselector','str:1:',$tinyeditordeselector,'',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinycleanup','checkbox',$tinycleanup,true,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinycompressor','checkbox',$tinycompressor,false,XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('tinyentity_encoding','str:1:',$tinyentity_encoding,'raw',XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('tinyencode','checkbox',$tinyencode,false,XARVAR_NOT_REQUIRED)) return;
+            //if (!xarVarFetch('tinyentities','str:0:',$tinyentities,'',XARVAR_NOT_REQUIRED)) return; Not specifically used - default string is used if entity_encoding is set to 'named'
                xarModSetVar('tinymce', 'tinytheme', $tinytheme);
                xarModSetVar('tinymce', 'tinyask', ($tinyask?1:0));
                xarModSetVar('tinymce', 'tinyundolevel',$tinyundolevel);
@@ -71,6 +74,8 @@ function tinymce_admin_updateconfig()
                xarModSetVar('tinymce', 'usebutton', ($usebutton?1:0));
                xarModSetVar('tinymce', 'tinybrowsers', $tinybrowsers);
                xarModSetVar('tinymce', 'tinytilemap', ($tinytilemap?1:0));
+               xarModSetVar('tinymce','tinyencode', ($tinyencode?1:0));
+               xarModSetVar('tinymce','tinyentity_encoding', $tinyentity_encoding);
                $tinyeditorselector = trim($tinyeditorselector);
                if ($tinyeditorselector ==''){
                    xarModSetVar('tinymce','tinyeditorselector','mceEditor');
@@ -87,7 +92,6 @@ function tinymce_admin_updateconfig()
             if (!xarVarFetch('tinyplugins','str:1:',$tinyplugins,'',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinyencode','str:0:',$tinyencode,'',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinyentities','str:0:',$tinyentities,'',XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('tinyentity_encoding','strlist:,:pre:lower:trim:passthru:enum:raw:numeric:named',$tinyentity_encoding,'raw',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinycsslist', 'str:1:', $tinycsslist, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinydate', 'str:1:', $tinydate, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinytime', 'str:1:', $tinytime, '', XARVAR_NOT_REQUIRED)) return;
@@ -97,7 +101,6 @@ function tinymce_admin_updateconfig()
 
                  xarModSetVar('tinymce', 'tinyextended', $tinyextended);
                 xarModSetVar('tinymce', 'tinyinlinestyle',$tinyinlinestyle);
-                xarModSetVar('tinymce','tinyencode', $tinyencode); /* not used at this stage */
                 xarModSetVar('tinymce','tinyplugins', $tinyplugins);
                 xarModSetVar('tinymce', 'tinycsslist', $tinycsslist);
                 xarModSetVar('tinymce','tinydate', $tinydate);
@@ -309,15 +312,23 @@ function tinymce_admin_updateconfig()
             $jstext .='elements : "'.xarModGetVar('tinymce','tinyinstances').'", ';
     }
 
-    if (xarModGetVar('tinymce','tinyencode')){
-        $jstext .='encoding : "'.xarModGetVar('tinymce','tinyencode').'", ';
-    }
     if (strlen(trim(xarModGetVar('tinymce','tinycustom')))>0) {
        $jstext .=xarModGetVar('tinymce','tinycustom');
     }
 
     /* $jstext .='force_br_newlines : "",';   //works only for IE at the moment */
     $jstext .='directionality : "'.xarModGetVar('tinymce','tinydirection').'",';
+    
+    /*language options */
+    if (xarModGetVar('tinymce','tinyencode')<>0){
+        $jstext .='encoding : "xml", ';
+    }
+    $entity_encoding=xarModGetVar('tinymce','tinyentity_encoding');
+    if (!isset($entity_encoding) || empty($entity_encoding)) {
+        $jstext .='entity_encoding : "raw", ';
+    }else {
+         $jstext .='entity_encoding : "'.$entity_encoding.'",';
+    }
     /* add known requirement last to ensure proper syntax with no trailing comma */
     $jstext .='language : "'.xarModGetVar('tinymce','tinylang').'" ';
 

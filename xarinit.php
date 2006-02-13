@@ -36,8 +36,8 @@ function tinymce_init()
    xarModSetVar('tinymce', 'tinywidth','');
    xarModSetVar('tinymce', 'tinyheight','');
    xarModSetVar('tinymce', 'tinydirection','ltr');
-   xarModSetVar('tinymce', 'tinyencode','');
-   xarModSetVar('tinymce', 'tinyentities','');
+   xarModSetVar('tinymce', 'tinyencode',0);
+   //xarModSetVar('tinymce', 'tinyentities',''); uses the default string if tinyeentity_encoding is named 
    xarModSetVar('tinymce', 'tinyentity_encoding','raw');
    xarModSetVar('tinymce', 'tinyinlinestyle',1);
    xarModSetVar('tinymce', 'tinyundolevel',10);
@@ -120,14 +120,11 @@ function tinymce_upgrade($oldversion)
             xarModSetVar('tinymce', 'tinycleanup',1);
             xarModDelVar('tinymce', 'useibrowser');
             xarModDelVar('tinymce', 'tinynowrap');
-            xarModDelVar('tinymce', 'tinyencode');
             return tinymce_upgrade('1.0.1');
-    case '1.0.1': 
+    case '1.0.1':
          return tinymce_upgrade('1.0.2');
     case '1.0.2':
-           xarModSetVar('tinymce', 'tinyentities','');
            xarModSetVar('tinymce', 'tinyentity_encoding','raw');
-
       return tinymce_upgrade('1.0.3');
     case '1.0.3': //current version
         break;

@@ -216,7 +216,7 @@
         <input type="hidden" name="tab" id="tab" value="#$tab#" />
         <fieldset>
             <legend>
-                <strong><xar:mlstring>Basic Configurations options</xar:mlstring></strong>
+                <strong><xar:mlstring>Basic Editor options</xar:mlstring></strong>
             </legend>
            <div class="xar-form-input-wrapper">
                 <label for="tinybrowsers" class="xar-form-label" title="#xarML('Select which browsers to use WYSIWYG - msie,gecko,opera,safari')#">
@@ -225,35 +225,9 @@
                 <input type="text" name="tinybrowsers" id="tinybrowsers" value="#$tinybrowsers#" size="20" maxlength="20" />
                 <xar:mlstring>No spaces eg msie,gecko,opera,safari. Defaults to all.</xar:mlstring>
             </div>
-           <div class="xar-form-input-wrapper">
-                <label for="tinylang" class="xar-form-label" title="#xarML('Select default language for TinyMCE')#">
-                       <xar:mlstring>Default language</xar:mlstring>
-                </label>
-            <select name="tinylang" id="tinylang" size="1">
-            <xar:foreach in="$langlist" value="$v" key="$k">
-                <xar:if condition="$v eq $tinylang">
-                    <option value="#$v#" selected="selected">#$v#</option>
-                <xar:else />
-                    <option name="langlist.#$k#" value="#$v#">#$v#</option>
-                </xar:if>
-            </xar:foreach>
-            </select>
-            </div>
 
-            <div class="xar-form-input-wrapper">
-                <label for="tinydirection" class="xar-form-label" title="#xarML('Select direction of text input - defaults left to right')#">
-                    <xar:mlstring>Text input direction</xar:mlstring>
-                </label>
-                <select name="tinydirection" id="tinydirection" size="1">
-                <xar:if condition="$tinydirection eq 'rtl'">
-                   <option value="rtl" selected="selected"><xar:mlstring>Right to left</xar:mlstring></option>
-                   <option value="ltr"><xar:mlstring>Left to right</xar:mlstring></option>
-                <xar:else />
-                   <option value="rtl"><xar:mlstring>Right to left</xar:mlstring></option>
-                   <option value="ltr" selected="selected"><xar:mlstring>Left to right</xar:mlstring></option>
-                </xar:if>
-                </select>
-           </div>
+
+
            <div class="xar-form-input-wrapper">
                 <label for="tinytheme" class="xar-form-label" title="#xarML('Select default Theme Edit Panel for TinyMCE')#">
                     <xar:mlstring>Default Theme Editor Panel</xar:mlstring>
@@ -389,6 +363,82 @@
                     <xar:mlstring>(ON by default).</xar:mlstring>
             </div>
            </fieldset>
+        <fieldset>
+            <legend>
+                <strong><xar:mlstring>Language options</xar:mlstring></strong>
+            </legend>
+           <div class="xar-form-input-wrapper">
+                <label for="tinylang" class="xar-form-label" title="#xarML('Select default language for TinyMCE')#">
+                       <xar:mlstring>Default language</xar:mlstring>
+                </label>
+            <select name="tinylang" id="tinylang" size="1">
+            <xar:foreach in="$langlist" value="$v" key="$k">
+                <xar:if condition="$v eq $tinylang">
+                    <option value="#$v#" selected="selected">#$v#</option>
+                <xar:else />
+                    <option name="langlist.#$k#" value="#$v#">#$v#</option>
+                </xar:if>
+            </xar:foreach>
+            </select>
+            <p class="xar-form-input-wrapper-after">
+               <xar:mlstring>Supplied in ISO-639-2 format. See </xar:mlstring><a href="modules/tinymce/xarincludes/docs/customization_language_packs.html"><xar:mlstring>Creating a Language Pack</xar:mlstring></a> <xar:mlstring>if you wish to edit or contribute a UTF-8 version (note that a new method is upcoming to export to any locale).</xar:mlstring>
+            </p>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="tinydirection" class="xar-form-label" title="#xarML('Select direction of text input - defaults left to right')#">
+                    <xar:mlstring>Text input direction</xar:mlstring>
+                </label>
+                <select name="tinydirection" id="tinydirection" size="1">
+                <xar:if condition="$tinydirection eq 'rtl'">
+                   <option value="rtl" selected="selected"><xar:mlstring>Right to left</xar:mlstring></option>
+                   <option value="ltr"><xar:mlstring>Left to right</xar:mlstring></option>
+                <xar:else />
+                   <option value="rtl"><xar:mlstring>Right to left</xar:mlstring></option>
+                   <option value="ltr" selected="selected"><xar:mlstring>Left to right</xar:mlstring></option>
+                </xar:if>
+                </select>
+                <xar:mlstring>Default is Left to right.</xar:mlstring>
+           </div>
+           <div class="xar-form-input-wrapper-after">
+                <xar:if condition="$tinyencode">
+                    <input type="checkbox" name="tinyencode" id="tinyencode" value="1" checked="checked"/>
+                <xar:else/>
+                    <input type="checkbox" name="tinyencode" id="tinyencode" value="1" />
+                </xar:if>
+
+                <label for="tinyencode" title="#xarML('Convert to a XML escaping entities eg ')#&amp;amp; &amp;quote; &amp;lt;">
+                    <xar:mlstring>Convert to XML escaped character entities</xar:mlstring>
+                </label>
+                <xar:mlstring>(OFF by default).</xar:mlstring>
+              </div>
+
+           <div class="xar-form-input-wrapper">
+                <label for="tinyentity_encoding" class="xar-form-label" title="#xarML('Select encoding method')#">
+                       <xar:mlstring>Entity Encoding:</xar:mlstring>
+                </label>
+                <select name="tinyentity_encoding" id="tinyentity_encoding" size="1" onchange="submit();">
+                <xar:if condition="$tinyentity_encoding eq 'raw'">
+                   <option value="raw" selected="selected"><xar:mlstring>Raw</xar:mlstring></option>
+                   <option value="numeric"><xar:mlstring>Numeric &amp;#160;</xar:mlstring></option>
+                   <option value="named"><xar:mlstring>Named &amp;nbsp;</xar:mlstring></option>
+                <xar:elseif condition="$tinyentity_encoding eq 'numeric'" />
+                   <option value="raw"><xar:mlstring>Raw</xar:mlstring></option>
+                   <option value="numeric" selected="selected"><xar:mlstring>Numeric </xar:mlstring></option>
+                   <option value="named"><xar:mlstring>Named entities</xar:mlstring></option>
+                <xar:else />
+                   <option value="raw"><xar:mlstring>Raw</xar:mlstring></option>
+                   <option value="numeric"><xar:mlstring>Numeric </xar:mlstring></option>
+                   <option value="named"  selected="selected"><xar:mlstring>Named entities</xar:mlstring></option>
+               </xar:if>
+
+                </select>
+                               <xar:mlstring>Default is Raw (none).</xar:mlstring>
+                <p class="xar-form-input-wrapper-after">
+                    <xar:mlstring>If 'named' a </xar:mlstring><a href="modules/tinymce/xarincludes/docs/option_entities.html"><xar:mlstring>default string</xar:mlstring></a> <xar:mlstring>of named entities is used.</xar:mlstring>
+                </p>
+
+           </div>
+        </fieldset>
        <fieldset>
             <div class="xar-form-input-wrapper-after">
                 <input type="submit" value="#$updatebutton#" />
