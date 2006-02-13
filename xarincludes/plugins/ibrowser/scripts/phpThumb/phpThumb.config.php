@@ -15,6 +15,46 @@ if (!file_exists(dirname(__FILE__).'/phpthumb.functions.php') || !include_once(d
 }
 ob_end_clean();
 
+ 	/**** START XARAYA MODIFICATION ****/
+    // we need to find the directory our server is opperating in
+    // hopefully this is complete :)
+    if(isset($_SERVER['DOCUMENT_ROOT'])) {
+        $root_path = $_SERVER['DOCUMENT_ROOT'];
+    } elseif(isset($HTTP_SERVER_VARS['DOCUMENT_ROOT'])) {
+        $root_path = $HTTP_SERVER_VARS['DOCUMENT_ROOT'];
+    } else {
+        $root_path = getenv('DOCUMENT_ROOT');
+    }
+    // Now for same hacking ;)
+    if(isset($_SERVER['PHP_SELF'])) {
+        $scriptpath= dirname($_SERVER['PHP_SELF']);
+    } elseif(isset($HTTP_SERVER_VARS['PHP_SELF'])) {
+        $scriptpath = dirname($HTTP_SERVER_VARS['PHP_SELF']);
+    } else {
+        $scriptpath= dirname(getenv('PHP_SELF'));
+    } 
+    //ew .. but it should work ;)
+    $scriptpath=parse_url($scriptpath);
+    $scriptbase=preg_replace("/index\.php.*|\/modules.*|/is",'',$scriptpath['path']);
+    $realpath=$root_path.$scriptbase;
+    $realpath=str_replace('//','/',$realpath); //get rid of any double slashes
+
+    // include image library config settings
+    if (is_file($realpath.'/var/ibrowser/ibrowserconfig.inc')) {
+        include_once $realpath.'/var/ibrowser/ibrowserconfig.inc';
+   } else {
+        // look in the templates directory of this module for the default file
+        //include_once '../../../../../ibrowserconfig.inc';
+        include_once '../../xartemplates/includes/ibrowserconfig.inc';
+   }
+
+	//-------------------------------------------------------------------------
+	// include configuration settings
+    //	include dirname(__FILE__) . '/config/config.inc.php';
+
+  	/**** END XARAYA MODIFICATION ****/
+
+//END XARAYA CHANGE
 // START USER CONFIGURATION SECTION:
 
 // * DocumentRoot configuration
@@ -30,10 +70,11 @@ $PHPTHUMB_CONFIG['document_root'] = realpath((getenv('DOCUMENT_ROOT') && ereg('^
 // * Cache directory configuration (choose only one of these - leave the other lines commented-out):
 // Note: this directory must be writable (usually chmod 777 is neccesary) for caching to work.
 // If the directory is not writable no error will be generated but caching will be disabled.
-$PHPTHUMB_CONFIG['cache_directory'] = dirname(__FILE__).'/cache/';                            // set the cache directory relative to the phpThumb() installation
+//$PHPTHUMB_CONFIG['cache_directory'] = dirname(__FILE__).'/cache/';                            // set the cache directory relative to the phpThumb() installation
 //$PHPTHUMB_CONFIG['cache_directory'] = $PHPTHUMB_CONFIG['document_root'].'/phpthumb/cache/'; // set the cache directory to an absolute directory for all source images
 //$PHPTHUMB_CONFIG['cache_directory'] = './cache/';                                           // set the cache directory relative to the source image - must start with '.' (will not work to cache URL- or database-sourced images, please use an absolute directory name)
 //$PHPTHUMB_CONFIG['cache_directory'] = null;                                                 // disable thumbnail caching (not recommended)
+
 
 $PHPTHUMB_CONFIG['cache_disable_warning'] = false; // If [cache_directory] is non-existant or not writable, and [cache_disable_warning] is false, an error image will be generated warning to either set the cache directory or disable the warning (to avoid people not knowing about the cache)
 

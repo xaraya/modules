@@ -149,7 +149,7 @@ function tinymce_admin_modifyconfig()
         $data['dateplug']=1;
     } else {
         $data['dateplug']=0;
-    }
+    } 
     if (!isset($data['tab'])) {
         $data['tab']='basic';
     }

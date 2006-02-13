@@ -212,9 +212,6 @@ function tinymce_admin_updateconfig()
     if (xarModGetVar('tinymce','tinyundolevel') > 0){
         $jstext .='custom_undo_redo_levels : "'.xarModGetVar('tinymce','tinyundolevel').'", ';
     }
-    if (xarModGetVar('tinymce','tinybr')==1){
-        $jstext .='force_br_newlines: "true",';
-    }
    /* deprecated 1.0.1
     if (xarModGetVar('tinymce','tinynowrap')==1){
         $jstext .='nowrap: "true",';
@@ -223,15 +220,21 @@ function tinymce_admin_updateconfig()
     if (xarModGetVar('tinymce','tinytilemap')==1){
         $jstext .='button_tile_map : "true",';
     }
-    if (xarModGetVar('tinymce','tinycleanup')==0){
+    if (xarModGetVar('tinymce','tinycleanup')!=0){
         $jstext .='cleanup: "false",';
     }else{
      $jstext .='cleanup: "true",';
     }
-   // $jstext .=	'safari_warning: "false",'; now false by default
-    
-    if (xarModGetVar('tinymce','tinypara')==1){
-        $jstext .='force_p_newlines: "true",';
+    // $jstext .=	'safari_warning: "false",'; now false by default
+
+
+    if (xarModGetVar('tinymce','tinybr')==1){
+        $jstext .='force_br_newlines: "true",';
+        //$jstext .='convert_newlines_to_brs: "true",';
+    }
+
+    if (xarModGetVar('tinymce','tinypara') !=1){ //This is true by default in tinymce
+        $jstext .='force_p_newlines: "false",';
     }
    if (trim(xarModGetVar('tinymce','tinyinvalid')) <> '') {
           $jstext .='invalid_elements  : "'.trim(xarModGetVar('tinymce','tinyinvalid')).'", ';
@@ -247,7 +250,7 @@ function tinymce_admin_updateconfig()
          $jstext .='theme_advanced_toolbar_location: "'.xarModGetVar('tinymce','tinytoolbar').'", ';
 
 
-        if (xarModGetVar('tinymce','tinyenablepath')<>1){
+        if (xarModGetVar('tinymce','tinyenablepath')!=1){
             $jstext .='theme_advanced_path: "false", ';
         } else { /* if not false set the status path location and resizing */
             $jstext .='theme_advanced_statusbar_location: "'.xarModGetVar('tinymce','tinyshowpath').'", ';
@@ -320,7 +323,7 @@ function tinymce_admin_updateconfig()
     $jstext .='directionality : "'.xarModGetVar('tinymce','tinydirection').'",';
     
     /*language options */
-    if (xarModGetVar('tinymce','tinyencode')<>0){
+    if (xarModGetVar('tinymce','tinyencode')==1){
         $jstext .='encoding : "xml", ';
     }
     $entity_encoding=xarModGetVar('tinymce','tinyentity_encoding');

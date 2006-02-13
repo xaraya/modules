@@ -45,7 +45,7 @@ textarea#'.$id.' {
 <xar:if condition="xarModGetVar('base','editor') eq 'tinymce' and xarModIsAvailable('tinymce')">
     <xar:template file="tinymce_insert" module="tinymce" type="module" />
 </xar:if>
-<xar:if condition="xarModGetVar('tinymce','usebutton') and ($usewysiwyg)">
+<xar:if condition="xarModGetVar('tinymce','usebutton') eq 1 and ($usewysiwyg eq 1)">
 <div class="xar-form-container-after">
     <textarea rows="#$rows#" cols="#$cols#" id="#$id#" name="#$name#" tabindex="#$tabindex#">#$value#</textarea>
     </div>
@@ -53,7 +53,7 @@ textarea#'.$id.' {
         <label class="xar-form-label">#$wysiwygprompt#</label>
         <input type="button" value="#$buttonon#" onclick="mce_button_toggle('#$id#', this);" />
     </div>
-<xar:elseif condition="$usewysiwyg" />
+<xar:elseif condition="$usewysiwyg eq 1" />
     <div class="xar-form-container-after">
     <textarea class="mceEditor" rows="#$rows#" cols="#$cols#" id="#$id#" name="#$name#" tabindex="#$tabindex#">#$value#</textarea>
     </div>

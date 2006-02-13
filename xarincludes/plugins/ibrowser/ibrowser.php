@@ -36,7 +36,7 @@
         $scriptpath = dirname($HTTP_SERVER_VARS['PHP_SELF']);
     } else {
         $scriptpath= dirname(getenv('PHP_SELF'));
-    }
+    } 
     //ew .. but it should work ;)
     $scriptpath=parse_url($scriptpath);
     $scriptbase=preg_replace("/index\.php.*|\/modules.*|/is",'',$scriptpath['path']);
@@ -51,6 +51,7 @@
         //include_once '../../../../../ibrowserconfig.inc';
         include_once '../../xartemplates/includes/ibrowserconfig.inc';
    }
+
 	//-------------------------------------------------------------------------
 	// include configuration settings
     //	include dirname(__FILE__) . '/config/config.inc.php';
