@@ -1,0 +1,245 @@
+<xar:set name="mastername">xarModGetVar('legis','docname')</xar:set>
+
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+    <xar:ml>
+    <xar:mlstring>#(1) Administration</xar:mlstring>
+    <xar:mlvar>#$mastername#</xar:mlvar>
+    </xar:ml>
+    </span>
+</div>
+<div class="xar-mod-body">
+<h2>
+    <xar:ml>
+    <xar:mlstring>#(1) Types</xar:mlstring>
+    <xar:mlvar>#$mastername#</xar:mlvar>
+    </xar:ml>
+</h2>
+<pre>
+<xar:set name="dummy">1;
+
+</xar:set>
+</pre>
+<xar:if condition="isset($action) and $action eq 'new'">
+    <h3 style="text-align: left;">
+    <xar:ml>
+    <xar:mlstring>New #(1) Types</xar:mlstring>
+    <xar:mlvar>#$mastername#</xar:mlvar>
+    </xar:ml>
+    </h3>
+    <form method="post" action="#$link#">
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <fieldset>
+           <legend><xar:mlstring>Definition</xar:mlstring></legend>
+
+           <div class="xar-form-input-wrapper">
+                <label for="mdname" class="xar-form-label" title="#xarML('Name for this Document Master Type')#">
+                       <xar:mlstring>Name :</xar:mlstring>
+                </label>
+                 <input type="text" name="mdname" id="mdname" value="" size="20" maxlength="50" />
+            </div>
+
+
+          <div class="xar-form-input-wrapper">
+              <label for="shorturls" class="xar-form-label" title="#xarML('Set order of subdocuments?')#">
+                  <xar:mlstring>Set order of subdocs?</xar:mlstring>
+              </label>
+              <xar:if condition="$mdorder">
+                  <input type="checkbox" name="mdorder" id="mdorder" value="1" checked="checked" />
+              <xar:else/>
+                  <input type="checkbox" name="mdorder" id="mdorder" value="1" />
+              </xar:if> TODO: Not currently used
+           </div>
+           <!--
+            <div class="xar-form-input-wrapper">
+                <label for="mddef" class="xar-form-label" title="#xarML('Definition list of doclets')#">
+                    <xar:mlstring>Doclets:</xar:mlstring>
+                </label>
+                <textarea name="mddef" id="mddef" cols="50" rows="3" >#$mddef#</textarea>
+            </div>
+            -->
+            <div class="xar-form-input-wrapper">
+                <label for="mddef" class="xar-form-label" title="#xarML('Only check doclets to use in this Master document type')#">
+                    <xar:mlstring>Check Doclets for this Type:</xar:mlstring>
+                </label>
+            <xar:foreach in="$doclets" key="$k" value="$v">
+              <p class="xar-form-container-after">
+                 <input name="mddef[]" id="mddef" type="checkbox" value="#$k#" checked="checked">#$v#
+              </p>
+            </xar:foreach>
+            </div>
+          </fieldset>
+          <fieldset>
+               <div class="xar-form-input-wrapper-after">
+                   <input type="submit" value="#$buttonlabel#" />
+              </div>
+    </form>
+    <a href="#$mastertypelink#">
+    <xar:ml>
+    <xar:mlstring>Back to Manage #(1) Item Types</xar:mlstring>
+    <xar:mlvar>#$mastername#</xar:mlvar>
+    </xar:ml>
+    </a>
+</xar:if>
+
+<xar:if condition="isset($action) and $action eq 'modify'">
+     <xar:set name="displayname">ucfirst($item['mdname']);</xar:set>
+    <h3 style="text-align: left;">
+    <xar:ml>
+    <xar:mlstring>Edit #(1) Types</xar:mlstring>
+    <xar:mlvar>#$mastername#</xar:mlvar>
+    </xar:ml>
+    </h3>
+    <form method="post" action="#$link#">
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <input type="hidden" name="mdid" id="mdid" value="#$mdid#" />
+       <input type="hidden" name="authid" id="authid" value="#$authid#" />
+
+        <fieldset>
+           <legend><xar:mlstring>Definition</xar:mlstring></legend>
+           <div class="xar-form-input-wrapper">
+                <label for="mdid" class="xar-form-label" title="#xarML('Master Document ID')#">
+                       <xar:mlstring>Master DocId :</xar:mlstring>
+                </label>
+                 #$item.mdid#
+            </div>
+
+           <div class="xar-form-input-wrapper">
+                <label for="mdname" class="xar-form-label" title="#xarML('Name for this Document Master Type')#">
+                       <xar:mlstring>Name :</xar:mlstring>
+                </label>
+                 <input type="text" name="mdname" id="mdname" value="#$displayname#" size="20" maxlength="50" />
+            </div>
+
+
+          <div class="xar-form-input-wrapper">
+              <label for="shorturls" class="xar-form-label" title="#xarML('Set order of subdocuments?')#">
+                  <xar:mlstring>Set order of subdocs?</xar:mlstring>
+              </label>
+              <xar:if condition="$item.mdorder eq 1">
+                  <input type="checkbox" name="mdorder" id="mdorder" value="1" checked="checked" />
+              <xar:else/>
+                  <input type="checkbox" name="mdorder" id="mdorder" value="1" />
+              </xar:if>TODO: Not currently used
+           </div>
+           <!--
+            <div class="xar-form-input-wrapper">
+                <label for="mddef" class="xar-form-label" title="#xarML('Definition list of doclets')#">
+                    <xar:mlstring>Doclets:</xar:mlstring>
+                </label>
+                <textarea name="mddef" id="mddef" cols="50" rows="3" >#$item.mddef#</textarea>
+            </div>
+            -->
+
+           <div class="xar-form-input-wrapper">
+                <label for="mddef" class="xar-form-label" title="#xarML('Definition list of doclets')#">
+                    <xar:mlstring>Allowable Doclets:</xar:mlstring>
+                </label>
+
+            <xar:foreach in="$doclets" key="$k" value="$v">
+              <p class="xar-form-container-after">
+                  <xar:if condition="$v['checked']">
+                      <input name="mddef[]" id="mddef" type="checkbox" value="#$v['did']#" checked="checked">#$v['doclabel']#
+                  <xar:else />
+                      <input name="mddef[]" id="mddef" type="checkbox" value="#$v['did']#">#$v['doclabel']#
+                  </xar:if>
+              </p>
+            </xar:foreach>
+            </div>
+
+          </fieldset>
+          <fieldset>
+               <div class="xar-form-input-wrapper-after">          
+                  <input type="submit" value="#$buttonlabel#" />
+               </div>
+          <fieldset>
+    
+    </form>
+    <a href="#$mastertypelink#"><xar:mlstring>Back to Manage Legislation Master Types</xar:mlstring></a>
+ </xar:if>
+
+<xar:if condition="isset($action) and $action eq 'delete'">
+    <h3>
+    <xar:ml>
+    <xar:mlstring>Delete this #(1) Type?</xar:mlstring>
+    <xar:mlvar>#$mastername#</xar:mlvar>
+    </xar:ml>
+    </h3>
+    <form method="post" action="#$link#">
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <input type="hidden" name="mdid" id="mdid" value="#$mdid#" />
+         <fieldset>
+           <legend><xar:mlstring>Definition</xar:mlstring></legend>
+           <div class="xar-form-input-wrapper">
+                <label for="mdid" class="xar-form-label" title="#xarML('Master Document ID')#">
+                       <xar:mlstring>Master DocId :</xar:mlstring>
+                </label>
+                 #$item['mdid']#
+            </div>
+
+             <div class="xar-form-input-wrapper">
+                <label for="mdname" class="xar-form-label" title="#xarML('Name for this Document Master Type')#">
+                       <xar:mlstring>Name :</xar:mlstring>
+                </label>
+                 #$item['mdname']#
+            </div>
+          </fieldset>
+          <fieldset>
+               <div class="xar-form-input-wrapper-after">
+                  <input type="submit" value="#$buttonlabel#" />
+               </div>
+          <fieldset>
+        <a href="&xar-modurl-integrator-admin-mastertypes;"><xar:mlstring>Cancel Delete</xar:mlstring></a>
+
+    </form>
+</xar:if>
+<xar:if condition="$action eq 'view'">
+   <h3 style="text-align: left;"><a href="#$newurl#">
+    <xar:ml>
+    <xar:mlstring>Create New #(1) Master Type</xar:mlstring>
+    <xar:mlvar>#$mastername#</xar:mlvar>
+    </xar:ml>
+   </a>
+   </h3>
+    <table width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent">
+        <tr>
+            <th><xar:mlstring>ID</xar:mlstring></th>
+            <th><xar:mlstring>Name</xar:mlstring></th>
+            <th><xar:mlstring>Ordered?</xar:mlstring></th>
+            <!--<th><xar:mlstring>Definition</xar:mlstring></th> -->
+            <th><xar:mlstring>Options</xar:mlstring></th>
+        </tr>
+        <xar:foreach in="$mastertypes" value="$mastertype">
+        <xar:set name="displayname">ucfirst($mastertype['mdname']);</xar:set>
+        <tr>
+            <td class="xar-norm">#$mastertype.mdid#</td>
+                   <td class="xar-norm">#$displayname#</td>
+            <td class="xar-norm">
+                <xar:if condition="$mastertype.mdorder eq 1">
+                    <xar:mlstring>Set Order</xar:mlstring>
+                <xar:else />
+                   <xar:mlstring>Freeform</xar:mlstring>
+                </xar:if>
+            </td>
+            <!--
+            <td class="xar-norm">#$mastertype.mddef#</td>
+            -->
+            <td style="text-align: center;" class="xar-norm">
+            <xar:if condition="!empty($mastertype.editurl)">
+                <a href="#$mastertype.editurl#"><xar:mlstring>Edit</xar:mlstring></a>
+            <xar:else />
+                <xar:mlstring>Edit</xar:mlstring>
+            </xar:if>
+            |
+            <xar:if condition="!empty($mastertype.deleteurl)">
+                <a href="#$mastertype.deleteurl#"><xar:mlstring>Delete</xar:mlstring></a>
+            <xar:else />
+                <xar:mlstring>Delete</xar:mlstring>
+            </xar:if>
+        </td>
+    </tr>
+    </xar:foreach>
+</table>
+</xar:if>
+</div>
+</div>

@@ -1,0 +1,125 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:set name="mastername">xarModGetVar('legis','docname')</xar:set>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+    <xar:ml>
+    <xar:mlstring>#(1) Administration</xar:mlstring>
+    <xar:mlvar>#$mastername#</xar:mlvar>
+    </xar:ml>
+    </span>
+</div>
+<div class="xar-mod-body">
+  <h2><xar:mlstring>Manage Executive Users</xar:mlstring></h2>
+<pre>
+<xar:set name="dummy">1;
+
+</xar:set>
+</pre>
+
+  <form method="post" id="post" action="&xar-modurl-legis-admin-manageusers;" enctype="application/x-www-form-urlencoded">
+  <fieldset>
+      <legend>
+      <xar:ml>
+          <xar:mlstring>#(1) User Options</xar:mlstring>
+          <xar:mlvar>#$mastername#</xar:mlvar>
+       </xar:ml>
+      </legend>
+<xar:if condition="xarSessionGetVar('statusmsg') ne ''">
+    <p class="xar-error">#xarSessionGetVar('statusmsg')#</p>
+</xar:if>
+            <div class="xar-form-input-wrapper">
+              <label for="useruid" class="xar-form-label">
+                    <span class="help" title="#xarML('Select the user')#">
+                        <xar:mlstring>Selected User:</xar:mlstring>
+                    </span>
+                </label>
+                <select name="useruid" id="useruid">
+                    <xar:foreach in="$userselectlist" key="$k" value="$v">
+                        <xar:if condition="$selecteduser['uid'] eq $k">
+                            <option id="userselectlist.#$k#" name="userselectlist.#$k#" value="#$k#" selected="selected">#$v['uname']#</option>
+                        <xar:else />
+                            <option id="userselectlist.#$k#" name="userselectlist.#$k#" value="#$k#">#$v['uname']#</option>
+                        </xar:if>
+                </xar:foreach>
+                </select>
+            </div>
+         <xar:if condition="isset($selecteduser) and $selecteduser['uid'] gt 0">
+          <div class="xar-form-input-wrapper">
+          <label for="selectedhall" class="xar-form-label">
+                    <span class="help" title="#xarML('Select the default Hall')#">
+                        <xar:mlstring>Default Hall:</xar:mlstring>
+                    </span>
+                </label>
+                <select name="selectedhall" id="selectedhall">
+                <xar:foreach in="$halls" key="$k" value="$v">
+                    <xar:set name="upperhall">ucfirst($halls[$k]['name'])</xar:set>
+                    <xar:if condition="$selecteduser['defaulthall'] eq $halls[$k]['cid']">
+                        <option id="halls.#$k#" name="halls.#$k#" value="#$v['cid']#" selected="selected">#$upperhall#</option>
+                    <xar:else />
+                        <option id="halls.#$k#" name="halls.#$k#" value="#$v['cid']#">#$upperhall#</option>
+                    </xar:if>
+                </xar:foreach>
+                </select>
+            </div>
+           <div class="xar-form-input-wrapper">
+              <label for="listlabel" class="xar-form-label">
+                    <span class="help" title="#xarML('Select the group for this user')#">
+                        <xar:mlstring>Currently Assigned Group:</xar:mlstring>
+                    </span>
+                </label>
+             <xar:foreach in="$selecteduser['parents']" key="$group" value="$v">
+
+                       #$selecteduser['parents'][$group]['parentname']# <br />
+              </xar:foreach>
+          </div>
+          <div class="xar-form-input-wrapper">
+              <label for="usergroup" class="xar-form-label">
+                    <span class="help" title="#xarML('Select the group for this user')#">
+                        <xar:mlstring>Reassign to Group:</xar:mlstring>
+                    </span>
+                </label>
+                <select name="usergroup" id="usergroup">
+                <xar:foreach in="$groupselectlist" key="$k" value="$v">
+                    <xar:if condition="$selecteduser['parents'][0]['parentid'] eq $v['uid']">
+                        <option id="groupselectlist.#$k#" name="groupselectlist.#$k#" value="#$v['uid']#" selected="selected">#$v['name']#</option>
+                    <xar:else />
+                        <option id="groupselectlist.#$k#" name="groupselectlist.#$k#" value="#$v['uid']#">#$v['name']#</option>
+                    </xar:if>
+                </xar:foreach>
+                </select>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="subscribe" class="xar-form-label" title="#xarML('Subscribe to this hall notification list')#">
+                    <xar:mlstring>Subscribe to Hall's notification list?</xar:mlstring>
+                </label>
+                <xar:if condition="$subscribechecked">
+                    <input type="checkbox" name="subscribe" id="subscribe" value="1" checked="checked"/>
+                <xar:else/>
+                   <input type="checkbox" name="subscribe" id="subscribe" value="1" />
+                </xar:if>
+                <xar:if condition="isset($currenthalllist) and trim($currenthallname) ne ''">
+                   <xar:ml>
+                       <xar:mlstring>Currently subscribed to #(1)</xar:mlstring>
+                       <xar:mlvar>#$currenthallname#</xar:mlvar>
+                   </xar:ml>
+                <xar:else />
+                  <xar:mlstring>Not currently subscribed.</xar:mlstring>
+                </xar:if>
+            </div>
+         </xar:if>
+       </fieldset>
+
+    <div class="xar-form-input-wrapper-after">
+          <input type="hidden" name="authid" id="authid" value="#$authid#" />
+         <xar:if condition="isset($selecteduser) and $selecteduser['uid'] gt 0">
+             <xar:set name="updatetext">xarML('Update User')</xar:set>
+             <input type="hidden" name="phase" id="phase" value="update" />
+          <xar:else />
+             <xar:set name="updatetext">xarML('Select User to Update')</xar:set>
+          </xar:if>
+
+     <input type="submit" value="#$updatetext#" />
+    </div>
+
+  </form>
+</div>

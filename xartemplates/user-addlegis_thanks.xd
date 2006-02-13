@@ -1,0 +1,50 @@
+<xar:set name="mastername">xarModGetVar('legis','docname')</xar:set>
+<xar:set name="addlegislink">xarModURL('legis','user','addlegis')</xar:set>
+<xar:set name="viewpendinglegislink">xarModURL('legis','user','pending')</xar:set>
+<pre>
+<xar:set name="dummy">1;
+
+</xar:set>
+</pre>
+<div class="xar-mod-head">
+   <span class="xar-mod-title">
+       #$mastername#
+   </span>
+</div>
+<div class="xar-mod-body">
+<xar:template type="module" file="user-menu" />
+<h2>
+<xar:ml>
+    <xar:mlstring>#(1) Submittal :: Thank You</xar:mlstring>
+    <xar:mlvar>#$mastername#</xar:mlvar>
+</xar:ml>
+</h2>
+
+<xar:if condition="xarUserIsLoggedIn()">
+<p>
+<xar:ml>
+    <xar:mlstring>Your #(1) has been submitted for review.
+    You can view it now in the pending document area.
+    </xar:mlstring>
+    <xar:mlvar>#$mastername#</xar:mlvar>
+</xar:ml>
+</p>
+<xar:comment>
+    <a href="#$addlegislink#">
+    <xar:ml>
+        <xar:mlstring>Submit further #(1).</xar:mlstring>
+        <xar:mlvar>#$mastername#</xar:mlvar>
+    </xar:ml>
+    </a>.
+    <a href="#$viewpendinglegislink#">
+    <xar:ml>
+        <xar:mlstring>View pending #(1).</xar:mlstring>
+        <xar:mlvar>#$mastername#</xar:mlvar>
+    </xar:ml>
+
+    </a>.
+</xar:comment>
+</xar:if>
+</div>
+
+

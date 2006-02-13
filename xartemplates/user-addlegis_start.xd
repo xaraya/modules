@@ -1,0 +1,101 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<xar:set name="mastername">xarModGetVar('legis','docname')</xar:set>
+<xar:set name="defaulthallname">ucfirst($defaulthalldata['name'])</xar:set>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:ml>
+        <xar:mlstring>#(1) Submittal for #(2)</xar:mlstring>
+        <xar:mlvar>#$mastername#</xar:mlvar>
+        <xar:mlvar>#$defaulthallname#</xar:mlvar>
+        </xar:ml>
+    </span>
+</div>
+
+<div class="xar-mod-body">
+<xar:template type="module" file="user-menu" />
+  <p>
+  <xar:ml>
+      <xar:mlstring>
+      Floor Representatives may use this page to submit #(1) for their hall to consider.
+      If you're a floor representative, just fill out the fields below.
+      </xar:mlstring>
+      <xar:mlvar>#$mastername#</xar:mlvar>
+  </xar:ml>
+  </p>
+  <p>
+  <xar:ml>
+      <xar:mlstring>If you're not a floor
+      representative, find your representative and get them to sponsor your #(1). You can
+      help write it, but if an official floor representative does not sponsor the #(1),
+      it will not be considered.
+     </xar:mlstring>
+      <xar:mlvar>#$mastername#</xar:mlvar>
+  </xar:ml>
+  </p>
+<pre>
+<xar:set name="dummy">1;
+
+</xar:set>
+</pre>
+  <form method="post" id="post" action="&xar-modurl-legis-user-addlegis;" enctype="application/x-www-form-urlencoded">
+      <fieldset>
+          <legend><xar:mlstring>Step 1: Document Options</xar:mlstring></legend>
+             <div class="xar-form-input-wrapper">
+                <label for="legistype" class="xar-form-label" title="#xarML('Select the type Legisltation you wish to submit.')#">
+                    <xar:ml>
+                    <xar:mlstring>Type of #(1)</xar:mlstring>
+                    <xar:mlvar>#$mastername#</xar:mlvar>
+                   </xar:ml>
+                </label>
+                <xar:set name="upperlegis">ucfirst($legistypes[$legistype]['mdname'])</xar:set>
+                <strong>#$upperlegis#</strong>
+              </div>
+
+            <div class="xar-form-input-wrapper">
+                <label for="contributorno" class="xar-form-label" title="#xarML('How many contributors (sponsor, author, cosponsors, coauthors)?')#">
+                        <xar:mlstring>How many contributors?</xar:mlstring>
+                </label>
+                <select name="contributorno" id="contributorno">
+                    <xar:foreach in="$contributornumbers" value="$v" key="$k">
+                        <xar:if condition="$k eq $contributorno">
+                            <option value="#$k#" selected="selected">#$v#</option>
+                        <xar:else />
+                            <option value="#$k#">#$v#</option>
+                        </xar:if>
+                    </xar:foreach>
+                </select>
+            </div>
+            <xar:foreach in="$currentdoclets" key="$key" value="$doc" >
+            <div class="xar-form-input-wrapper">
+                <label for="clauseno#$key#" class="xar-form-label" title="#xarML('How many Whereas clauses(can be updated at a later point)?')#">
+                        <xar:ml>
+                        <xar:mlstring>How many #(1) clauses?</xar:mlstring>
+                        <xar:mlvar>#$doc['label1']#</xar:mlvar>
+                        </xar:ml>
+                </label>
+                <select name="clauseno#$key#" id="clauseno#$key#">
+                    <xar:foreach in="$clausepresets" value="$v" key="$k">
+                        <xar:if condition="$k eq $doc['clauseno']">
+                            <option value="#$k#" selected="selected">#$v#</option>
+                        <xar:else />
+                            <option value="#$k#">#$v#</option>
+                        </xar:if>
+                    </xar:foreach>
+                </select>
+            </div>
+            </xar:foreach>
+
+</fieldset>
+            <div class="xar-form-input-wrapper-after">
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <input type="hidden" name="phase" id="phase" value="getdetails" />
+                 <input type="hidden" name="legistype" id="legistype" value="#$legistype#" />
+                 <input type="hidden" name="defaulthall" id="defaulthall" value="#$defaulthall#" />
+                <input type="submit" value="#xarML('Next')#" />
+            </div>
+
+    </form>
+
+
+</div>

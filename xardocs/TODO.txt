@@ -1,0 +1,50 @@
+General todo list
+======================
+2005-12-05 : jojodee
+
+Module can work with multiple document types and doclets
+
+A. General
+- Optional Template without the legal prefix clauses : could be used for more general app - TODO
+- Convert various lists and statuses to DD - TODO
+- Update the Doclet routines so real 'templates' can be used in building the documents - TODO
+- Add category hooks - will look at cat hooks later, using category in record - done (for now)
+- Extend for other types of legislation/docs - Done
+- Short urls - Done (for Users - not admin side)
+- search hook - Done
+- roles hook - Done
+- latest docs block - Done
+- adminlinks - Done
+- Executives cannot set their own hall while other users can - Done
+
+B. Admin Functionality
+- Notification of Executives for document changes - done
+- Create master doc definition - done
+- Create doclet definition - done
+- List compiled legislation - done
+- Change Pass status - done
+- Change Vote status - done
+- Change Veto statuts - done
+- Allocate numbers uniquely and sequentially to Valid docs- on a per Hall and per Doc Type basis - done
+- Common admin menu - done
+- Edit/update a document - done
+- Delete an invalid document - done
+- Insert contributor/clause - done
+- Delete contributor/clause - done
+- Context info in admin menu - done
+- Legis admin sets Executive default hall  - done
+- Legis admin moves users to relevant Executive group - done
+- Archive docs - todo (feature)
+- Add order information for doclets in Master Docs - todo (advanced feature)
+- Nominate the relevant privilege groups to roles (eg Admin to President) -todo (feature)
+
+C. User Functionality
+- List passed legislation  - done
+- List pending legislation - done
+- Submit legislation - done
+- listings by Hall - done
+- listings by document type - done
+- Set default hall and allow reset (unless and executive) - done
+- Common user menu - done
+- Context info in menu - done
+- View archived docs - todo (feature)

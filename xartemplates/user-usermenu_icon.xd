@@ -1,0 +1,13 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:set name="mastername">xarModGetVar('legis','docname')</xar:set>
+<xar:set name="compare">xarServerGetCurrentURL()</xar:set>
+<xar:set name="current">xarModURL('roles', 'user', 'account', array('moduleload' => 'legis'))</xar:set>
+<xar:if condition="$compare eq $current">
+    <dd class="active">
+        <a href="&xar-currenturl;">#$mastername#</a>
+    </dd>    
+<xar:else />
+    <dd>
+        <a href="&xar-modurl-roles-user-account;&amp;moduleload=legis">#$mastername#</a>
+    </dd>
+</xar:if>

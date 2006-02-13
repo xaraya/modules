@@ -1,0 +1,32 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<xar:set name="mastername">xarModGetVar('legis','docname')</xar:set>
+<xar:style scope="module" module="base" file="navtabs" />
+<dl class="xar-tabs">
+    <dt class="help">
+        <xar:mlstring>
+            Select A Hall
+        </xar:mlstring>
+
+    </dt>
+    <xar:foreach in="$halls" key="$k" value="$v">
+        <xar:set name="uchall">ucfirst($v['name'])</xar:set>
+            <xar:if condition="!empty($v['cid']['defaultview'])">
+            <dd>
+                <a href="#xarModURL('legis', 'user', 'main', array('defaulthall' => $v['cid']))#">#$uchall#</a>
+            </dd>
+            </xar:if>
+    </xar:foreach>
+  <!--
+    <xar:if condition="!empty($v['cid']['view'])">
+            <dd>
+                <a href="#xarModURL('legis', 'user', 'main')#">
+                    <xar:mlstring>
+                        Set Default Hall
+                    </xar:mlstring>
+                </a>
+            </dd>
+    </xar:if>
+    -->
+</dl>
+

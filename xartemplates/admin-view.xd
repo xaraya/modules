@@ -1,0 +1,121 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:set name="mastername">xarModGetVar('legis','docname')</xar:set>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+    <xar:ml>
+    <xar:mlstring>#(1) Administration</xar:mlstring>
+    <xar:mlvar>#$mastername#</xar:mlvar>
+    </xar:ml>
+    </span>
+</div>
+<pre>
+<xar:set name="dummy">1;
+
+</xar:set>
+</pre>
+<div class="xar-mod-body">
+  <xar:template type="module" file="admin-menu" />
+    <h2>
+    <xar:ml>
+        <xar:mlstring>#(1) Administration for #(2)</xar:mlstring>
+    <xar:mlvar>#$mastername#</xar:mlvar>
+    <xar:mlvar>
+    #$defaulthalldata['name']#
+    </xar:mlvar>
+    
+    </xar:ml>
+    </h2>
+   <xar:if condition="xarSessionGetVar('statusmsg') != ''">
+        <p>#xarSessionGetVar('statusmsg')#</p>
+    </xar:if>
+   <!-- the specific template for the current admin function comes here -->
+<xar:foreach in="$legistypes" key="$k" value="$v">
+<xar:set name="upperdoc">ucfirst($v['mdname'])</xar:set>
+<h4>#$upperdoc#</h4>
+
+    <table class="xar-fullwidth">
+        <tr>
+            <th>
+                <xar:mlstring>No. #</xar:mlstring>
+            </th>
+            <th class="xar-onethirdwidth">
+            <xar:ml>
+                <xar:mlstring>#(1) Name</xar:mlstring>
+                <xar:mlvar>#$mastername#</xar:mlvar>
+            </xar:ml>
+            </th>
+
+            <th>
+                <xar:mlstring>Hall</xar:mlstring>
+            </th>
+            <th><xar:mlstring>Status</xar:mlstring></th>
+            <th><xar:mlstring>Passed</xar:mlstring></th>
+            <th><xar:mlstring>Vetoed</xar:mlstring></th>
+            <th>
+                <xar:mlstring>Options</xar:mlstring>
+            </th>
+        </tr>
+        <xar:foreach in="$items" value="$item">
+        <xar:if condition="$item.mdid eq $v['mdid']">
+        <tr>
+            <td>
+                #$item.cdnum#
+            </td>
+            <td>
+                <xar:if condition="empty($item['viewurl'])">
+               #$item.cdtitle#
+               <xar:else />
+               <a href="#$item.viewurl#">#$item.cdtitle#</a>
+                </xar:if>
+            </td>
+
+            <td>
+                #$item.hallname#
+            </td>
+
+         <td>
+                <xar:if condition="empty($item.link)">
+                    #$item.docdisplaystatus#
+                <xar:else />
+                    <a href="#$item.link#">#$item.docdisplaystatus#</a>
+                </xar:if>
+            </td>
+          <td>
+                <xar:if condition="empty($item.link)">
+                    #$item.votedisplaystatus#
+                <xar:else />
+                    <a href="#$item.link#">#$item.votedisplaystatus#</a>
+                </xar:if>
+            </td>
+          <td>
+                <xar:if condition="empty($item.link)">
+                    #$item.vetodisplaystatus#
+                <xar:else />
+                    <a href="#$item.link#">#$item.vetodisplaystatus#</a>
+                </xar:if>
+            </td>
+
+            <td class="xar-align-center">
+               <xar:if condition="!empty($item['editurl'])">
+                   <a href="#$item.editurl#"><xar:mlstring>Edit</xar:mlstring></a>
+               </xar:if>
+               <xar:if condition="!empty($item['editurl']) and !empty($item['deleteurl'])">
+               |
+               </xar:if>
+               <xar:if condition="empty($item['deleteurl']) and $item.docstatus eq 2">
+               <xar:elseif condition="empty($item['deleteurl'])" />
+               <xar:else />
+                   <a href="#$item.deleteurl#"><xar:mlstring>Delete</xar:mlstring></a>
+               </xar:if>
+            </td>
+        </tr>
+        </xar:if>
+        </xar:foreach>
+    </table>
+</xar:foreach>
+    <div class="xar-align-center xar-padding-thick">
+        <!-- add the pager here -->
+        #$pager#
+    </div>
+</div>
+<xar:if condition="xarSessionSetVar('statusmsg', '')"></xar:if>

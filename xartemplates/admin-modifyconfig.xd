@@ -1,0 +1,171 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:set name="mastername">xarModGetVar('legis','docname')</xar:set>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+    <xar:ml>
+    <xar:mlstring>#(1) Administration</xar:mlstring>
+    <xar:mlvar>#$mastername#</xar:mlvar>
+    </xar:ml>
+    </span>
+</div>
+
+<div class="xar-mod-body">
+  <h2><xar:mlstring>Modify Config</xar:mlstring></h2>
+<pre>
+<xar:set name="dummy">1;
+
+</xar:set>
+</pre>
+  <xar:if condition="xarSessionGetVar('statusmsg') != ''">
+    <p>#xarSessionGetVar('statusmsg')#</p>
+  </xar:if>
+  <form method="post" id="post" action="&xar-modurl-legis-admin-updateconfig;" enctype="application/x-www-form-urlencoded">
+  <fieldset>
+      <legend><xar:mlstring>Display Options</xar:mlstring></legend>
+      
+      <div class="xar-form-input-wrapper">
+        <label for="itemsperpage" class="xar-form-label" title="#xarML('Number of items per page')#">
+          <xar:ml>
+              <xar:mlstring>#(1) Items Per Page</xar:mlstring>
+              <xar:mlvar>#$mastername#</xar:mlvar>
+          </xar:ml>
+        </label>
+        <input type="text" name="itemsperpage" id="itemsperpage" value="#$itemsvalue#" maxlength="3" class="xar-form-textshort" />
+      </div>
+     <div class="xar-form-input-wrapper">
+          <label for="defaultmaster" class="xar-form-label">
+                    <span class="help" title="#xarML('Select the default legislation type')#">
+                        <xar:mlstring>Default Document type:</xar:mlstring>
+                    </span>
+                </label>
+                <select name="defaultmaster" id="defaultmaster">
+                <xar:foreach in="$legistypes" key="$k" value="$v">
+
+                  <xar:set name="upperlegis">ucfirst($legistypes[$k]['mdname'])</xar:set>
+                    <xar:if condition="$defaultmasterdata['mdid'] eq $legistypes[$k]['mdid']">
+                        <option id="legistypes.#$k#" name="legistypes.#$k#" value="#$legistypes[$k]['mdid']#" selected="selected">#$upperlegis#</option>
+                    <xar:else />
+                        <option id="legistypes.#$k#" name="legistypes.#$k#" value="#$legistypes[$k]['mdid']#">#$upperlegis#</option>
+                    </xar:if>
+                </xar:foreach>
+                </select>
+            </div>
+      <div class="xar-form-input-wrapper">
+        <label for="docname" class="xar-form-label" title="#xarML('The name of master document types - default is Legislation.')#">
+          <xar:mlstring>
+            Master document name
+          </xar:mlstring>
+        </label>
+        <input type="text" name="docname" id="docname" value="#$docname#" size="20" maxlength="60" />
+        [<xar:mlstring>Default is Legislation</xar:mlstring>]
+      </div>
+          <div class="xar-form-input-wrapper">
+          <label for="defaulthall" class="xar-form-label">
+                    <span class="help" title="#xarML('Select the default Hall')#">
+                        <xar:mlstring>Default Hall:</xar:mlstring>
+                    </span>
+                </label>
+                <select name="defaulthall" id="defaulthall">
+                <xar:foreach in="$halls" key="$k" value="$v">
+
+                  <xar:set name="upperhall">ucfirst($halls[$k]['name'])</xar:set>
+                    <xar:if condition="$defaulthall eq $halls[$k]['cid']">
+                        <option id="halls.#$k#" name="halls.#$k#" value="#$halls[$k]['cid']#" selected="selected">#$upperhall#</option>
+                    <xar:else />
+                        <option id="halls.#$k#" name="halls.#$k#" value="#$halls[$k]['cid']#">#$upperhall#</option>
+                    </xar:if>
+                </xar:foreach>
+                </select>
+            </div>
+            <div class="xar-form-input-wrapper">
+              <label for="moderatorgroup" class="xar-form-label">
+                    <span class="help" title="#xarML('Select the group of moderators')#">
+                        <xar:mlstring>Moderators Group:</xar:mlstring>
+                    </span>
+                </label>
+                <select name="moderatorgroup" id="moderatorgroup">
+                <xar:foreach in="$usergroups" key="$k" value="$v">
+                    <xar:if condition="$moderatorgroup eq $v['uid']">
+                        <option id="moderatorgroup.#$k#" name="moderatorgroup.#$k#" value="#$v['uid']#" selected="selected">#$v['name']#</option>
+                    <xar:else />
+                        <option id="moderatorgroup.#$k#" name="moderatorgroup.#$k#" value="#$v['uid']#">#$v['name']#</option>
+                    </xar:if>
+                </xar:foreach>
+                </select> <xar:mlstring><strong>Important!</strong> Set this correctly </xar:mlstring>(<a href="&xar-modurl-legis-admin-overview;"><xar:mlstring>see the Overview</xar:mlstring></a>)
+            </div>
+           <div class="xar-form-input-wrapper">
+           <label for="allowchange" class="xar-form-label" title="#xarML('Allow moderators to change their own hall?')#">
+          <xar:mlstring>Moderators can change their Hall?</xar:mlstring>
+        </label>
+       <xar:if condition="$allowchange">
+          <input type="checkbox" name="allowchange" id="allowchange" value="1" checked="checked" />
+          <xar:else/>
+          <input type="checkbox" name="allowchange" id="allowchange" value="1" />
+        </xar:if>
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend><xar:mlstring>System Options</xar:mlstring></legend>
+      <div class="xar-form-input-wrapper">
+        <label for="shorturls" class="xar-form-label" title="#xarML('Enable short URLS?')#">
+          <xar:mlstring>Enable short URLs?</xar:mlstring>
+        </label>
+        <xar:if condition="$shorturlschecked">
+          <input type="checkbox" name="shorturls" id="shorturls" value="1" checked="checked" />
+          <xar:else/>
+          <input type="checkbox" name="shorturls" id="shorturls" value="1" />
+        </xar:if>
+      </div>
+      
+      <div class="xar-form-input-wrapper">
+        <label for = "modulealias" class="xar-form-label" title="#xarML('Use an alias instead of the module name')#">
+          <xar:mlstring>
+            Use a module alias
+          </xar:mlstring>
+        </label>
+        <xar:if condition="xarModGetVar('legis', 'useModuleAlias')">
+          <input type="checkbox" name="modulealias" id="modulealias" value="1" checked="checked" />
+          <xar:else />
+          <input type="checkbox" name="modulealias" id="modulealias" value="1" />
+        </xar:if>
+        
+      </div>
+      <div class="xar-form-input-wrapper">
+        <label for="aliasname" class="xar-form-label" title="#xarML('The name of module alias to be used.')#">
+          <xar:mlstring>
+            Module Alias Name
+          </xar:mlstring>
+        </label>
+        <input type="text" name="aliasname" id="aliasname" value="#xarModGetVar('legis', 'aliasname')#" size="32" maxlength="100" />
+      </div>
+
+    </fieldset>
+    
+    <fieldset>
+      <legend><xar:mlstring>Enabled Hooks</xar:mlstring></legend>
+      <xar:if condition="!empty($hooks)">
+        <xar:foreach in="$hooks" key="$hookmodule">
+          <!--
+              You can display individual hooks if you want using xar:if statements
+              
+              <xar:if condition="($hookmodule eq 'categories') and !empty($hookmodule)">
+                #$hooks['categories']#
+              </xar:if>
+              
+              or display them all with one command as follows
+              -->
+          #$hooks[$hookmodule]#
+        </xar:foreach>
+      </xar:if>
+    </fieldset>
+    
+    <div class="xar-form-input-wrapper-after">
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+
+        <input type="submit" value="#xarML('Update Configuration')#" />
+    </div>
+    
+  </form>
+</div>
+
+<xar:if condition="xarSessionSetVar('statusmsg', '')"></xar:if>

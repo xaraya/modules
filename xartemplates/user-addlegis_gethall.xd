@@ -1,0 +1,95 @@
+<xar:set name="mastername">xarModGetVar('legis','docname')</xar:set>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        #$mastername#
+    </span>
+</div>
+
+<div class="xar-mod-body">
+<xar:template type="module" file="user-menu" />
+<h2>
+<xar:ml>
+    <xar:mlstring>Add #(1)</xar:mlstring>
+    <xar:mlvar>#$mastername#</xar:mlvar>
+</xar:ml>
+</h2>
+
+<xar:if condition="isset($defaulthalldata['name']) and !empty($defaulthalldata['name'])">
+<xar:set name="defaulthallname">ucfirst($defaulthalldata['name'])</xar:set>
+    <p>
+    <xar:ml>
+      <xar:mlstring>You currently have <strong>#(1)</strong> set as your default Hall.</xar:mlstring>
+      <xar:mlvar>#$defaulthallname#</xar:mlvar>
+    </xar:ml>
+    </p>
+</xar:if>
+<p><xar:mlstring>If you would like to reset your default Hall, please choose from the Halls below</xar:mlstring></p>
+<pre>
+<xar:set name="dummy">1;
+
+</xar:set>
+</pre>
+<xar:ml>
+<xar:mlstring>Continue to submit #(1) for the selected Hall.</xar:mlstring>
+<xar:mlvar>#$mastername#</xar:mlvar>
+</xar:ml>
+   <form action="&xar-modurl-legis-user-addlegis;" method="post" enctype="application/x-www-form-urlencoded">
+
+        <fieldset class="formelements xar-norm">
+        <legend>
+        <xar:ml>
+        <xar:mlstring>#(1) Information</xar:mlstring>
+        <xar:mlvar>#$mastername#</xar:mlvar>
+        </xar:ml>
+        </legend>
+              <div class="xar-form-input-wrapper">
+                <label for="defaulthall" class="xar-form-label">
+                    <span class="help" title="#xarML('Enter the Hall for your legislation')#">
+                        <xar:mlstring>Choose Hall</xar:mlstring>
+                    </span>
+                </label>
+                <select name="defaulthall" id="defaulthall">
+                <xar:foreach in="$halls" key="$k" value="$v">
+                  <xar:set name="upperhall">ucfirst($halls[$k]['name'])</xar:set>
+                    <xar:if condition="$halls[$k]['cid'] eq $defaulthalldata['cid']">
+                        <option id="defaulthall.#$k#" name="defaulthall.#$k#" value="#$k#" selected="selected">#$upperhall#</option>
+                    <xar:else />
+                        <option id="defaulthall.#$k#" name="defaulthall.#$k#" value="#$k#">#$upperhall#</option>
+                    </xar:if>
+                </xar:foreach>
+                </select>
+            </div>
+          <div class="xar-form-input-wrapper">
+                <label for="legistype" class="xar-form-label" title="#xarML('Select the type Legisltation you wish to submit.')#">
+                    <xar:ml>
+                        <xar:mlstring>Which type of #(1)?</xar:mlstring>
+                        <xar:mlvar>#$mastername#</xar:mlvar>
+                    </xar:ml>
+                </label>
+                <select name="legistype" id="legistype">
+                    <option value="0">
+                    <xar:ml>
+                        <xar:mlstring>Select #(1) type</xar:mlstring>
+                        <xar:mlvar>#$mastername#</xar:mlvar>
+                    </xar:ml>
+                    </option>
+                    <xar:foreach in="$legistypes" value="$v" key="$k">
+                    <xar:set name="uppername">ucfirst($v['mdname'])</xar:set>
+                        <xar:if condition="$k eq $k['mdid']">
+                            <option value="#$v['mdid']#" selected="selected">#$uppername#</option>
+                        <xar:else />
+                            <option value="#$v['mdid']#">#$uppername#</option>
+                        </xar:if>
+                    </xar:foreach>
+                </select>
+            </div>
+        </fieldset>
+        <div class="xar-form-input-wrapper-after">
+
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="hidden" name="phase" id="phase" value="start" />
+            <input type="submit" value="#xarML('Continue '.$mastername.' Submission')#"  tabindex="6" />
+        </div>
+    </form>
+</div>
+

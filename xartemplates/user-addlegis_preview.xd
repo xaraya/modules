@@ -1,0 +1,149 @@
+<xar:set name="defaulthallname">ucfirst($defaulthalldata['name'])</xar:set>
+<xar:set name="mastername">xarModGetVar('legis','docname')</xar:set>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:ml>
+        <xar:mlstring>#(1) Submittal for #(2)</xar:mlstring>
+        <xar:mlvar>#$mastername#</xar:mlvar>
+        <xar:mlvar>#$defaulthallname#</xar:mlvar>
+        </xar:ml>
+    </span>
+</div>
+
+<pre>
+<xar:set name="dummy">1;
+
+</xar:set>
+</pre>
+<div class="xar-mod-body">
+<xar:template type="module" file="user-menu" />
+<h2><xar:ml>
+    <xar:mlstring>#(1) :: Previewing new  #(2)</xar:mlstring>
+    <xar:mlvar>#$mastername#</xar:mlvar>    
+    <xar:mlvar>
+     #$legistypes[$legistype]['mdname']#
+    </xar:mlvar>
+    </xar:ml>
+</h2>
+
+   <form action="&xar-modurl-legis-user-addlegis;" method="post" enctype="application/x-www-form-urlencoded">
+     <fieldset>
+          <legend><xar:mlstring>Step 3: Document Preview</xar:mlstring></legend>
+ <!--Preview first -->
+
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label" for="title"><xar:mlstring>Title:</xar:mlstring></label>
+        #$cdtitle#
+   </div>
+   <div class="xar-form-input-wrapper">
+       <xar:foreach in="$contributordata" key="$author" value="$authorname">
+          <div class="xar-form-input-wrapper">
+                <label for="authordata[#$author#]" class="xar-form-label">
+                #$authortypes[$authordata[$author]]#
+                </label>
+                 #$authorname# <xar:mlstring>of </xar:mlstring> 
+                 <xar:set name="formattedhall">ucfirst($halls[$authorhallname[$author]]['name'])</xar:set>
+                 #$formattedhall#
+          </div>
+       </xar:foreach>
+   </div>
+         <xar:foreach in="$currentdoclets" key="$key" value="$v" >
+           <xar:for start="$i = 1" test="$i le $v['clauseno']" iter = "$i++">
+               <div class="xar-form-input-wrapper">
+               <label for="clause#$key#_#$i#" class="xar-form-label" title="#xarML('Enter the clauses')#">
+                <xar:if condition="$i eq 1">
+                          #$v['label1']#
+                     <xar:else />
+                          #$v['label2']#
+                     </xar:if>
+                </label>
+                    #$v['data'][$i]#
+                 </div>
+
+           </xar:for>
+           </xar:foreach>
+
+<!-- end preview -->
+    <fieldset>
+             <legend><xar:mlstring>Title and Contributors</xar:mlstring></legend>
+              <div class="xar-form-input-wrapper">
+                 <label for="cdtitle" class="xar-form-labelshort" title="#xarML('Enter the title of your legislation')#">
+                      <xar:mlstring>Title:</xar:mlstring>
+                 </label>
+                     <input type="text" name="cdtitle" id="cdtitle" value="#$cdtitle#" size="80" maxlength="250" />
+              </div>
+              <xar:foreach in="$contributordata" key="$author" value="$authorname">
+                <div class="xar-form-input-wrapper-before">
+                     <label for="contributordata[#$author#]"  class="xar-form-labelshort" title="#xarML('Enter the contributor type, name and location.')#">
+                          <xar:mlstring>Contributor:</xar:mlstring>
+                     </label>
+                </div>
+
+                <div class="xar-form-input-wrapper">
+                   <select name=authordata[#$author#]" id="authordata[#$author#]">
+                      <xar:foreach in="$authortypes" value="$v" key="$k">
+                        <xar:if condition="$k eq $authordata[$author]">
+                            <option id="authordata[#$author#]" name="authordata[#$author#]" value="#$k#" selected="selected">#$v#</option>
+                        <xar:else />
+                            <option id="authordata[#$author#]" name="authordata[#$author#]" value="#$k#">#$v#</option>
+                        </xar:if>
+                      </xar:foreach>
+                    </select>
+                    <input type="text" name="contributordata[#$author#].name" id="contributordata[#$author#].name" value="#$authorname#" size="50" maxlength="100" />
+
+                    <xar:mlstring>of </xar:mlstring>
+                    <select name="authorhallname[#$author#]" id="authorhallname[#$author#]">
+                      <xar:foreach in="$halls" key="$k" value="$v">
+                      <!--<xar:set name="upperhall">ucfirst($halls[$authorhallname[$author]]['name'])</xar:set>-->
+                      <xar:set name="upperhall">ucfirst($halls[$k]['name'])</xar:set>
+                        <xar:if condition="$halls[$k]['cid'] eq $authorhallname[$author]">
+                            <option id="authorhallname[#$author#]" name="authorhallname[#$author#]" value="#$authorhallname[$author]#" selected="selected">#$upperhall#</option>
+                        <xar:else />
+                            <option id="authorhallname[#$author#]" name="authorhallname[#$author#]" value="#$authorhallname[$author]#">#$upperhall#</option>
+                        </xar:if>
+                      </xar:foreach>
+                    </select>
+
+                </div>
+            </xar:foreach>
+            </fieldset>
+           <fieldset>
+           <legend><xar:mlstring>Clauses</xar:mlstring></legend>
+              <xar:foreach in="$currentdoclets" key="$key" value="$v" >
+           <xar:for start="$i = 1" test="$i le $v['clauseno']" iter = "$i++">
+               <div class="xar-form-input-wrapper">
+               <label for="clause#$key#_#$i#" class="xar-form-label" title="#xarML('Enter the Whereas clauses')#">
+                <xar:if condition="$i eq 1">
+                          #$v['label1']#
+                     <xar:else />
+                          #$v['label2']#
+                     </xar:if>
+                </label>
+                    <textarea name="clause#$key#_#$i#" id="clause#$key#_#$i#" cols="40" rows="4">#$v['data'][$i]#</textarea>
+                 </div>
+
+           </xar:for>
+           </xar:foreach>
+           
+
+            </fieldset>
+            <div class="xar-form-input-wrapper-after">
+            <p>
+            <xar:mlstring>
+            You will not be able to edit this document once you submit it at this point, so please check it carefully.
+            </xar:mlstring>
+            </p>
+            </div>
+            <div class="xar-form-input-wrapper-after">
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                 <input type="hidden" name="phase" id="phase" value="update" />
+                 <input type="hidden" name="cdtitle" id="cdtitle" value="#$cdtitle#" />
+                 <input type="hidden" name="contributorno" id="contributorno" value="#$contributorno#" />
+                 <input type="hidden" name="defaulthall" id="defaulthall" value="#$defaulthall#" />
+                 <input type="hidden" name="legistype" id="legistype" value="#$legistype#" />
+
+                <input type="submit" value="#xarML('Submit Document')#" />
+            </div>
+
+    </form>
+</div>

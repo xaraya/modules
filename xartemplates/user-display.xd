@@ -1,0 +1,105 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:set name="mastername">xarModGetVar('legis','docname')</xar:set>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Legislation</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="user-menu" />
+
+    <xar:set name="uclegis">ucfirst($legistypedata['mdname'])</xar:set>
+    <xar:set name="uchall">ucfirst($dochallname)</xar:set>
+<h2>
+  <xar:ml>
+    <xar:mlstring>#(1) :: #(2) display for #(3)</xar:mlstring>
+    <xar:mlvar>#$mastername#</xar:mlvar>
+    <xar:mlvar>
+     #$uclegis#
+    </xar:mlvar>
+    <xar:mlvar>
+     #$uchall#
+    </xar:mlvar>
+  </xar:ml>
+</h2>
+<p><strong>Submitted  : </strong>  #xarLocaleGetFormattedDate('long', $item.submitdate)#</p>
+<p><strong>Pass Status: </strong> #$documentdata.docdisplaystatus# 
+<xar:if condition="$item.docstatus gt 1"> - #xarLocaleGetFormattedDate('long', $item.reviewdate)#</xar:if>
+</p>
+<p><strong>Vote Status: </strong>  #$documentdata.votedisplaystatus#
+<xar:if condition="$item.votestatus gt 0"> - #xarLocaleGetFormattedDate('long', $item.passdate)#</xar:if>
+</p>
+<p><strong>Veto Status: </strong>  #$documentdata.vetodisplaystatus#
+<xar:if condition="$item.vetostatus gt 0"> - #xarLocaleGetFormattedDate('long', $item.vetodate)#</xar:if>
+</p>
+
+<hr />
+
+    <xar:if condition="!empty($status)">
+        <strong>#$status#</strong>
+    <xar:else />
+<!--start display -->
+    <xar:if condition="$item.cdnum ne 0">
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label" for="title"><xar:mlstring>Doc No:</xar:mlstring></label>
+        #$item.cdnum#
+   </div>
+   </xar:if>
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label" for="title"><xar:mlstring>Title:</xar:mlstring></label>
+        #$item.cdtitle#
+        <xar:if condition="$editlink ne ''">
+    <xar:set name="editclick"><xar:mlstring>Edit</xar:mlstring></xar:set>
+    [<a href="#$editlink#">#$editclick#</a>]
+</xar:if>
+   </div>
+   <xar:foreach in="$contributors" key="$k" value="$author">
+   <div class="xar-form-input-wrapper">
+         <label for="authordata[#$k#]" class="xar-form-label">
+                #$authortypes[$author['authordata']]#
+         </label>
+         #$author['authorname']# <xar:mlstring>of </xar:mlstring>
+         <xar:set name="formattedhall">ucfirst($halls[$author['authorhallname']]['name'])</xar:set>
+         #$formattedhall#
+   </div>
+   </xar:foreach>
+
+        <xar:foreach in="$currentdoclets" key="$key" value="$v" >
+        <xar:set name="clauseno">count($v['data'])</xar:set>
+           <xar:for start="$i = 1" test="$i le $clauseno" iter = "$i++">
+               <div class="xar-form-input-wrapper">
+               <label for="clause#$key#_#$i#" class="xar-form-label" title="#xarML('Listed the clauses')#">
+                <xar:if condition="$i eq 1">
+                          #$v['label1']#
+                     <xar:else />
+                          #$v['label2']#
+                     </xar:if>
+                </label>
+                  <xar:set name="clausedata">xarModAPIFunc('html','user','transformoutput',array('extrainfo' =>'transform','text' => $v['data'][$i]))</xar:set>
+
+                 #xarVarPrepHTMLDisplay($clausedata)#
+                 </div>
+
+           </xar:for>
+           </xar:foreach>
+
+<!--end display-->
+        <xar:if condition="xarModIsHooked('dynamicdata')">
+            <!-- 1. retrieve any dynamic properties defined for this object -->
+            <xar:data-getitem name="$properties" module="legis" itemid="$cdid" />
+            <!-- 2. for each property, display its label and value in output format -->
+            <xar:if condition="isset($properties) and count($properties) gt 0">
+                <xar:foreach in="$properties" key="$name">
+                          <xar:data-label property="$properties[$name]" />:
+                        <xar:data-output property="$properties[$name]" />
+                </xar:foreach>
+            </xar:if>
+        </xar:if>
+
+    <!-- add the output from the different display hooks here -->
+    <xar:if condition="!empty($hookoutput)">
+        <xar:foreach in="$hookoutput" key="$hookmodule">
+            #$hookoutput[$hookmodule]#
+        </xar:foreach>
+    </xar:if>
+
+</xar:if>
+</div>

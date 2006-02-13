@@ -1,0 +1,115 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:set name="mastername">xarModGetVar('legis','docname')</xar:set>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+    <xar:ml>
+    <xar:mlstring>#(1) Submittal</xar:mlstring>
+    <xar:mlvar>#$mastername#</xar:mlvar>
+    </xar:ml>
+    </span>
+</div>
+
+<div class="xar-mod-body">
+  <p>
+  <xar:ml>
+      <xar:mlstring>
+      Floor Representatives may use this page to submit #(1)s for their hall to consider.
+      If you're a floor representative, just fill out the fields below. (If you're not a floor
+      representative, find your representative and get them to sponsor your #(1). You can
+      help write it, but if an official floor representative does not sponsor the #(1),
+      it will not be considered.)
+      </xarmlstring>
+      <xar:mlvar>#$mastername#</xar:mlvar>
+  </xar:ml>
+  </p>
+<xar:if condition="$phase eq 'define'">
+  <form method="post" id="post" action="&xar-modurl-legis-user-submit;" enctype="application/x-www-form-urlencoded">
+      <fieldset>
+          <legend><xar:mlstring>Step 1: Document Options</xar:mlstring></legend>
+          <xar:if condition="isset($defaulthall) and !empty($defaulthall)">
+
+          <xar:else />
+          </xar:if>
+
+            <div class="xar-form-input-wrapper">
+                <label for="legistype" class="xar-form-label" title="#xarML('Select the type Legisltation you wish to submit.')#">
+                        <xar:mlstring>Which type of legislation?</xar:mlstring>
+                </label>
+                <select name="legistype" id="legistype">
+                    <option value="0">
+                         <xar:ml>
+                         <xar:mlstring>Select #(1) type</xar:mlstring>
+                         <xar:mlvar>#$mastername#</xar:mlvar>
+                         </xar:ml>
+                    </option>
+                    <xar:foreach in="$legistypes" value="$v" key="$k">
+                    <xar:set name="uppername">ucfirst($v['mdname'])</xar:set>
+                        <xar:if condition="$k eq $legistype">
+                            <option value="#$k['mdid']#" selected="selected">#$uppername#</option>
+                        <xar:else />
+                            <option value="#$k['mdid']#">#$uppername#</option>
+                        </xar:if>
+                    </xar:foreach>
+                </select>
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                <label for="contributorno" class="xar-form-label" title="#xarML('How many contributors (sponsor, author, cosponsors, coauthors)?')#">
+                        <xar:mlstring>How many contributors?</xar:mlstring>
+                </label>
+                <select name="contributorno" id="contributorno">
+                    <xar:foreach in="$contributornumbers" value="$v" key="$k">
+                        <xar:if condition="$k eq $contributorno">
+                            <option value="#$k#" selected="selected">#$v#</option>
+                        <xar:else />
+                            <option value="#$k#">#$v#</option>
+                        </xar:if>
+                    </xar:foreach>
+                </select>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="whereasno" class="xar-form-label" title="#xarML('How many Whereas clauses(can be updated at a later point)?')#">
+                        <xar:mlstring>How many Whereas clauses?</xar:mlstring>
+                </label>
+                <select name="whereasno" id="whereasno">
+                    <xar:foreach in="$whereasnumber" value="$v" key="$k">
+                        <xar:if condition="$k eq $whereasno">
+                            <option value="#$k#" selected="selected">#$v#</option>
+                        <xar:else />
+                            <option value="#$k#">#$v#</option>
+                        </xar:if>
+                    </xar:foreach>
+                </select>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="beitno" class="xar-form-label" title="#xarML('How many Be It Therefore clauses(can be updated at a later point)?')#">
+                        <xar:mlstring>How many Be It Therefore clauses?</xar:mlstring>
+                </label>
+                <select name="beitno" id="beitno">
+
+                    <xar:foreach in="$beitnumber" value="$v" key="$k">
+                        <xar:if condition="$k eq $beitno">
+                            <option value="#$k#" selected="selected">#$v#</option>
+                        <xar:else />
+                            <option value="#$k#">#$v#</option>
+                        </xar:if>
+                    </xar:foreach>
+                </select>
+            </div>
+
+<br /><br />
+            <div class="xar-form-input-wrapper-after">
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <input type="hidden" name="phase" id="phase" value="compose" />
+                <input type="submit" value="#xarML('Next')#" />
+            </div>
+
+    </form>
+<xar:elseif condition="$phase eq 'compose'" />
+
+<xar:elseif condition="$phase eq 'preview'" />
+
+<xar:elseif condition="$phase eq 'final'" />
+</xar:if>
+</div>
+

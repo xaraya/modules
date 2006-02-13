@@ -1,0 +1,173 @@
+<xar:set name="mastername">xarModGetVar('legis','docname')</xar:set>
+
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+    <xar:ml>
+    <xar:mlstring>#(1) Administration</xar:mlstring>
+    <xar:mlvar>#$mastername#</xar:mlvar>
+    </xar:ml>
+    </span>
+</div><div class="xar-mod-body"><h2><xar:mlstring>Doclets</xar:mlstring></h2>
+
+<xar:if condition="isset($action) and $action eq 'new'">
+    <h3 style="text-align: left;"><xar:mlstring>New Doclet</xar:mlstring></h3>
+    <form method="post" action="#$link#">
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <fieldset>
+           <legend><xar:mlstring>Definition</xar:mlstring></legend>
+
+           <div class="xar-form-input-wrapper">
+                <label for="dname" class="xar-form-label" title="#xarML('Name for this Doclet')#">
+                       <xar:mlstring>Name :</xar:mlstring>
+                </label>
+                 <input type="text" name="dname" id="dname" value="" size="20" maxlength="50" />
+            </div>
+
+           <div class="xar-form-input-wrapper">
+                <label for="dlabel" class="xar-form-label" title="#xarML('Label for this Doclet')#">
+                       <xar:mlstring>Primary Label :</xar:mlstring>
+                </label>
+                 <input type="text" name="dlabel" id="dlabel" value="" size="40" maxlength="50" />
+            </div>
+           <div class="xar-form-input-wrapper">
+                <label for="dlabel2" class="xar-form-label" title="#xarML('Secondary label for this Doclet')#">
+                       <xar:mlstring>Secondary Label :</xar:mlstring>
+                </label>
+                 <input type="text" name="dlabel2" id="dlabel2" value="" size="40" maxlength="50" />
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                <label for="ddef" class="xar-form-label" title="#xarML('Definition of doclet')#">
+                    <xar:mlstring>Doclet:</xar:mlstring><br />[TODO - Not used]
+                </label>
+                <textarea name="ddef" id="ddef" cols="50" rows="3" >#$ddef#</textarea>
+
+            </div>
+          </fieldset>
+          <fieldset>
+               <div class="xar-form-input-wrapper-after">
+                   <input type="submit" value="#$buttonlabel#" />
+              </div>
+    </form>
+    <a href="#$docletlink#"><xar:mlstring>Back to Manage Doclets</xar:mlstring></a>
+</xar:if>
+
+<xar:if condition="isset($action) and $action eq 'modify'">
+    <h3 style="text-align: left;"><xar:mlstring>Edit Doclet</xar:mlstring></h3>
+    <form method="post" action="#$link#">
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <input type="hidden" name="did" id="did" value="#$did#" />
+       <input type="hidden" name="authid" id="authid" value="#$authid#" />
+
+        <fieldset>
+           <legend><xar:mlstring>Definition</xar:mlstring></legend>
+           <div class="xar-form-input-wrapper">
+                <label for="did" class="xar-form-label" title="#xarML('Doclet ID')#">
+                       <xar:mlstring>Doclet ID :</xar:mlstring>
+                </label>
+                 #$item.did#
+            </div>
+
+           <div class="xar-form-input-wrapper">
+                <label for="dname" class="xar-form-label" title="#xarML('Name for this Doclet')#">
+                       <xar:mlstring>Name :</xar:mlstring>
+                </label>
+                 <input type="text" name="dname" id="dname" value="#$item.dname#" size="20" maxlength="100" />
+            </div>
+
+           <div class="xar-form-input-wrapper">
+                <label for="dlabel" class="xar-form-label" title="#xarML('Primary Label for this Doclet')#">
+                       <xar:mlstring>Primary Label :</xar:mlstring>
+                </label>
+                 <input type="text" name="dlabel" id="dlabel" value="#$item.dlabel#" size="20" maxlength="100" />
+            </div>
+           <div class="xar-form-input-wrapper">
+                <label for="dlabel2" class="xar-form-label" title="#xarML('Label for this Doclet')#">
+                       <xar:mlstring>Label :</xar:mlstring>
+                </label>
+                 <input type="text" name="dlabel2" id="dlabel2" value="#$item.dlabel2#" size="20" maxlength="100" />
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                <label for="ddef" class="xar-form-label" title="#xarML('Definition list of doclets')#">
+                    <xar:mlstring>Doclets:</xar:mlstring>
+                </label>
+                <textarea name="ddef" id="ddef" cols="50" rows="3" >#$item.ddef#</textarea>
+            </div>
+          </fieldset>
+          <fieldset>
+               <div class="xar-form-input-wrapper-after">          
+                  <input type="submit" value="#$buttonlabel#" />
+               </div>
+          <fieldset>
+    
+    </form>
+    <a href="#$docletlink#"><xar:mlstring>Back to Manage Doclets</xar:mlstring></a>
+ </xar:if>
+
+<xar:if condition="isset($action) and $action eq 'delete'">
+    <h3><xar:mlstring>Delete this Doclet?</xar:mlstring></h3>
+    <form method="post" action="#$link#">
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <input type="hidden" name="did" id="did" value="#$did#" />
+         <fieldset>
+           <legend><xar:mlstring>Definition</xar:mlstring></legend>
+           <div class="xar-form-input-wrapper">
+                <label for="did" class="xar-form-label" title="#xarML('Doclet ID')#">
+                       <xar:mlstring>Doclet ID :</xar:mlstring>
+                </label>
+                 #$item['did']#
+            </div>
+
+             <div class="xar-form-input-wrapper">
+                <label for="dname" class="xar-form-label" title="#xarML('Name for this Doclet')#">
+                       <xar:mlstring>Name :</xar:mlstring>
+                </label>
+                 #$item['dname']#
+            </div>
+          </fieldset>
+          <fieldset>
+               <div class="xar-form-input-wrapper-after">
+                  <input type="submit" value="#$buttonlabel#" />
+               </div>
+          <fieldset>
+        <a href="&xar-modurl-integrator-admin-doclets;"><xar:mlstring>Cancel Delete</xar:mlstring></a>
+
+    </form>
+</xar:if>
+<xar:if condition="$action eq 'view'">
+   <h3 style="text-align: left;"><a href="#$newurl#"><xar:mlstring>Create New Doclet</xar:mlstring></a></h3>
+    <table width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent">
+        <tr>
+            <th><xar:mlstring>ID</xar:mlstring></th>
+            <th><xar:mlstring>Name</xar:mlstring></th>
+            <th><xar:mlstring>Label</xar:mlstring></th>
+            <th><xar:mlstring>Definition</xar:mlstring></th>
+            <th><xar:mlstring>Options</xar:mlstring></th>
+        </tr>
+        <xar:foreach in="$doclets" value="$doclet">
+        <xar:set name="displayname">ucfirst($doclet['dname']);</xar:set>
+        <tr>
+            <td class="xar-norm">#$doclet.did#</td>
+                   <td class="xar-norm">#$displayname#</td>
+            <td class="xar-norm">#$doclet.dlabel#</td>
+            <td class="xar-norm">#$doclet.ddef#</td>
+            <td style="text-align: center;" class="xar-norm">
+            <xar:if condition="!empty($doclet.editurl)">
+                <a href="#$doclet.editurl#"><xar:mlstring>Edit</xar:mlstring></a>
+            <xar:else />
+                <xar:mlstring>Edit</xar:mlstring>
+            </xar:if>
+            |
+            <xar:if condition="!empty($doclet.deleteurl)">
+                <a href="#$doclet.deleteurl#"><xar:mlstring>Delete</xar:mlstring></a>
+            <xar:else />
+                <xar:mlstring>Delete</xar:mlstring>
+            </xar:if>
+        </td>
+    </tr>
+    </xar:foreach>
+</table>
+</xar:if>
+</div>
+</div>

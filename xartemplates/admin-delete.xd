@@ -1,0 +1,56 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<!-- common admin menu for this module - remove link to the current function -->
+<!-- the variables used in this menu come from Legislation_admin_menu() -->
+<xar:set name="mastername">xarModGetVar('legis','docname')</xar:set>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+    <xar:ml>
+    <xar:mlstring>#(1)Administration</xar:mlstring>
+    <xar:mlvar>#$mastername#</xar:mlvar>
+    </xar:ml>
+    </span>
+</div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Delete</xar:mlstring></h2>
+   <h3 class="xar-align-center"><xar:mlstring>Confirm deleting this item?</xar:mlstring></h3>
+    <form method="post" action="&xar-modurl-legis-admin-delete;">
+        <fieldset>
+            <legend>
+                <xar:mlstring>Item marked for deletion</xar:mlstring>
+            </legend>
+            <div class="xar-form-input-wrapper">
+             <label for="itemid"  class="xar-form-label" title="#xarML('This is the document number')#">
+                     <xar:mlstring>System ID:</xar:mlstring>
+             </label>
+              #$item.cdid#
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                <label for="itemname"  class="xar-form-label"  title="#xarML('This is the document name')#">
+                         <xar:ml>
+                         <xar:mlstring>#(1) Name:</xar:mlstring>
+                         <xar:mlvar>#$mastername#</xar:mlvar>
+                         </xar:ml>
+                </label>
+                 #$cdtitle#
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <div class="xar-form-input-wrapper-after">
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <input type="hidden" name="confirm" id="confirm" value="true" />
+                <input type="hidden" name="cdid" id="cdid" value="#$cdid#" />
+                <input type="submit" value="#xarML('Confirm')#" />
+
+            </div>
+
+            <div class="xar-form-input-wrapper-before">
+             <a href="&xar-modurl-legis-admin-view;">
+                 <xar:mlstring>Cancel and Return</xar:mlstring>
+             </a>
+             </div>
+
+        </fieldset>
+    </form>
+</div>

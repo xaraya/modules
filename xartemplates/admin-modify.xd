@@ -1,0 +1,279 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:set name="mastername">xarModGetVar('legis','docname')</xar:set>
+<xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
+<script type="text/javascript">
+<!--
+    // Enter name of mandatory fields
+    var fieldRequired = Array("cdtitle" );
+    // Enter field description to appear in the dialog box
+    var fieldDescription = Array("Title");
+//-->
+</script>
+
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+    <xar:ml>
+    <xar:mlstring>#(1) Administration</xar:mlstring>
+    <xar:mlvar>#$mastername#</xar:mlvar>
+    </xar:ml>
+    </span>
+</div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Modify</xar:mlstring></h2>
+
+<pre>
+<xar:set name="dummy">1;
+
+</xar:set>
+</pre>
+  <xar:template type="module" file="admin-menu" />
+  <h2><xar:ml>
+    <xar:mlstring>#(1) :: Editing  #(2) for #(3)</xar:mlstring>
+    <xar:mlvar>#$mastername#</xar:mlvar>
+    <xar:mlvar>
+     #$legisname#
+    </xar:mlvar>
+    <xar:mlvar>
+    #$dochallname#
+    </xar:mlvar>
+    </xar:ml>
+  </h2>
+<xar:if condition="xarSessionGetVar('statusmsg') ne ''">
+    <p class="xar-error">#xarSessionGetVar('statusmsg')#</p>
+</xar:if>
+    <form method="post" action="&xar-modurl-legis-admin-update;" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
+     <fieldset>
+          <legend><xar:mlstring>Document Preview</xar:mlstring></legend>
+
+ <!--Preview first -->
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label" for="cdnum"><xar:mlstring>Doc No:</xar:mlstring></label>
+       <xar:if condition="$cdnum ne 0">
+        #$cdnum#
+       <xar:else />
+          <xar:mlstring>Not allocated</xar:mlstring>
+       </xar:if>
+   </div>
+   <div class="xar-form-input-wrapper">
+       <label class="xar-form-label" for="docsubmit">
+       <xar:mlstring>Submitted:</xar:mlstring>
+       </label>
+       #xarLocaleGetFormattedDate('long', $submitdate)#
+   </div>
+   <div class="xar-form-input-wrapper">
+        <label class="xar-form-label" for="docstatus">
+        <xar:mlstring>Doc Status:</xar:mlstring></label>
+        <strong>#$stateoptions[$docstatus]#</strong>
+       <xar:if condition="$docstatus gt 1"> - #xarLocaleGetFormattedDate('long', $reviewdate)#</xar:if>
+
+   </div>
+   <div class="xar-form-input-wrapper">
+        <label class="xar-form-label" for="votestatus"><xar:mlstring>Vote Status:</xar:mlstring></label>
+        <strong>#$voteoptions[$votestatus]#</strong>
+        <xar:if condition="$votestatus gt 0"> - #xarLocaleGetFormattedDate('long', $passdate)#</xar:if>
+
+   </div>
+      <div class="xar-form-input-wrapper">
+        <label class="xar-form-label" for="vetostatus"><xar:mlstring>Vetoed?:</xar:mlstring></label>
+        <strong>#$vetooptions[$vetostatus]#</strong>
+        <xar:if condition="$vetostatus gt 0"> - #xarLocaleGetFormattedDate('long', $vetodate)#</xar:if>
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label" for="authordata"><xar:mlstring>Title:</xar:mlstring></label>
+        #$cdtitle#
+   </div>
+   <xar:foreach in="$contributordata" key="$k" value="$author">
+       <div class="xar-form-input-wrapper">
+                <label for="authordata[#$k#]" class="xar-form-label">
+                 #$authortypes[$author['authordata']]#
+                </label>
+                 #$author['authorname']# <xar:mlstring>of </xar:mlstring>
+                 <xar:set name="formattedhall">ucfirst($halls[$author['authorhallname']]['name'])</xar:set>
+                 #$formattedhall#
+       </div>
+    </xar:foreach>
+     <xar:foreach in="$currentdoclets" key="$key" value="$v" >
+        <xar:set name="clauseno">count($v['data'])</xar:set>
+           <xar:for start="$i = 1" test="$i le $clauseno" iter = "$i++">
+               <div class="xar-form-input-wrapper">
+               <label for="clause#$key#_#$i#" class="xar-form-label" title="#xarML('Enter the clauses')#">
+                <xar:if condition="$i eq 1">
+                          #$v['label1']#
+                     <xar:else />
+                          #$v['label2']#
+                     </xar:if>
+                     <xar:set name="clausedata">xarModAPIFunc('html','user','transformoutput',array('extrainfo' =>'transform','text' => $v['data'][$i]))</xar:set>
+                </label>
+                    #xarVarPrepHTMLDisplay($clausedata)#
+                 </div>
+           </xar:for>
+    </xar:foreach>
+
+
+   </fieldset>
+<!-- end preview -->
+<xar:if condition="$vetostatus lt 1">
+    <fieldset>
+        <legend><xar:mlstring>Doc Status and Editor Notes</xar:mlstring></legend>
+        <div class="xar-form-input-wrapper">
+            <label for="docstatus" class="xar-form-label" title="#xarML('Select Valid or Invalid')#">
+                <xar:mlstring>Doc Validity:</xar:mlstring>
+            </label>
+            <xar:if condition="$docstatus lt 2">
+             <select name="docstatus" id="docstatus">
+                 <xar:foreach in="$stateoptions" key="$k" value="$v">
+                     <xar:if condition="$docstatus eq $k ">
+                         <option id="docstatus" name="docstatus" value="#$k#" selected="selected">#$v#</option>
+                     <xar:else />
+                         <option id="docstatus" name="docstatus" value="#$k#">#$v#</option>
+                     </xar:if>
+                 </xar:foreach>
+            </select>
+            <xar:else />
+            #$stateoptions[$docstatus]#
+            </xar:if>
+         </div>
+        <div class="xar-form-input-wrapper">
+            <label for="votestatus" class="xar-form-label" title="#xarML('Select Passed or Not Passed')#">
+                <xar:mlstring>Vote Outcome:</xar:mlstring>
+            </label>
+            <xar:if condition="($votestatus lt 1) and ($docstatus eq 2)">
+            <select name="votestatus" id="votestatus">
+                 <xar:foreach in="$voteoptions" key="$k" value="$v">
+                     <xar:if condition="$votestatus eq $k">
+                         <option id="votestatus" name="votestatus" value="#$k#" selected="selected">#$v#</option>
+                     <xar:else />
+                         <option id="votestatus" name="votestatus" value="#$k#">#$v#</option>
+                     </xar:if>
+                 </xar:foreach>
+            </select>
+            <xar:else />
+             #$voteoptions[$votestatus]#
+            </xar:if>
+         </div>
+        <div class="xar-form-input-wrapper">
+            <label for="vetostatus" class="xar-form-label" title="#xarML('Mark as Vetoed or Not Vetoed')#">
+                <xar:mlstring>Veto?:</xar:mlstring>
+            </label>
+            <xar:if condition="$vetostatus lt 1 and $votestatus gt 0">
+            <select name="vetostatus" id="vetostatus">
+                 <xar:foreach in="$vetooptions" key="$k" value="$v">
+                     <xar:if condition="$vetostatus eq $k">
+                         <option id="vetostatus" name="vetostatus" value="#$k#" selected="selected">#$v#</option>
+                     <xar:else />
+                         <option id="vetostatus" name="vetostatus" value="#$k#">#$v#</option>
+                     </xar:if>
+                 </xar:foreach>
+            </select>
+            <xar:else />
+             #$vetooptions[$vetostatus]#
+            </xar:if>
+         </div>
+
+        
+        <div class="xar-form-input-wrapper">
+                     <label for="pubnotes" class="xar-form-label" title="#xarML('Enter notes of comments - not viewable')#">
+                          <xar:mlstring>Editor Notes:</xar:mlstring>
+                     </label>
+                    <textarea name="pubnotes" id="pubnotes" cols="40" rows="4">#$pubnotes#</textarea>
+        </div>
+   </fieldset>
+   <fieldset>
+       <legend><xar:mlstring>Title and Contributors</xar:mlstring></legend>
+           <div class="xar-form-input-wrapper">
+               <label for="cdtitle" class="xar-form-labelshort" title="#xarML('Enter the title of your legislation')#">
+                      <xar:mlstring>Title:</xar:mlstring>
+               </label>
+               <input type="text" name="cdtitle" id="cdtitle" value="#$cdtitle#" size="80" maxlength="250" />
+           </div>
+           <xar:foreach in="$contributordata" key="$key" value="$author">
+           <div class="xar-form-input-wrapper-before">
+               <label for="contributordata[#$key#]"  class="xar-form-labelshort" title="#xarML('Enter the contributor type, name and location.')#">
+                          <xar:mlstring>Contributor:</xar:mlstring>
+               </label>
+                <select name="authordata[#$key#]" id="authordata[#$key#]">
+                      <xar:foreach in="$authortypes" value="$v" key="$k">
+                        <xar:if condition="$k eq $author['authordata']">
+                            <option id="authordata[#$key#]" name="authordata[#$key#]" value="#$k#" selected="selected">#$v#</option>
+                        <xar:else />
+                            <option id="authordata[#$key#]" name="authordata[#$key#]" value="#$k#">#$v#</option>
+                        </xar:if>
+                      </xar:foreach>
+                </select>
+                <input type="text" name="contributordata[#$key#].name" id="contributordata[#$key#].name" value="#$author['authorname']#" size="40" maxlength="100" />
+
+                <xar:mlstring>of </xar:mlstring>
+                <select name="authorhallname[#$key#]" id="authorhallname[#$key#]">
+                           <xar:foreach in="$halls" key="$k" value="$v">
+                      <xar:set name="upperhall">ucfirst($v['name'])</xar:set>
+
+                        <xar:if condition="$halls[$k]['cid'] eq $author['authorhallname']">
+                            <option id="authorhallname[#$key#]" name="authorhallname[#$key#]" value="#$v['cid']#" selected="selected">#$upperhall#</option>
+                        <xar:else />
+                            <option id="authorhallname[#$key#]" name="authorhallname[#$key#]" value="#$v['cid']#">#$upperhall#</option>
+                        </xar:if>
+                     </xar:foreach>
+                </select>
+                <span style="font-size:smaller;">
+                    [<a href="&xar-modurl-legis-admin-insertdelete;&amp;action=1&amp;cdid=#$cdid#&amp;clausetype=0&amp;clauseno=#$key#"><xar:mlstring>Insert</xar:mlstring></a>]
+                    <xar:if condition="$authornum gt 1">
+                    [<a href="&xar-modurl-legis-admin-insertdelete;&amp;action=2&amp;cdid=#$cdid#&amp;clausetype=0&amp;clauseno=#$key#"><xar:mlstring>Delete</xar:mlstring></a>]
+                    </xar:if>
+                </span>
+            </div>
+            </xar:foreach>
+    </fieldset>
+    <fieldset>
+        <legend><xar:mlstring>Clauses</xar:mlstring></legend>
+        
+        <xar:foreach in="$currentdoclets" key="$key" value="$v" >
+           <xar:set name="clauseno">count($v['data'])</xar:set>
+           <xar:for start="$i = 1" test="$i le $clauseno" iter = "$i++">
+               <div class="xar-form-input-wrapper">
+               <label for="clause#$key#_#$i#" class="xar-form-label" title="#xarML('Enter the Whereas clauses')#">
+                <xar:if condition="$i eq 1">
+                          #$v['label1']#
+                     <xar:else />
+                          #$v['label2']#
+                     </xar:if>
+                </label>
+        
+                    <textarea name="clause#$key#_#$i#" id="clause#$key#_#$i#" cols="40" rows="4">#$v['data'][$i]#</textarea>
+                         <span style="font-size:smaller;">
+                         [<a href="&xar-modurl-legis-admin-insertdelete;&amp;action=1&amp;cdid=#$cdid#&amp;clausetype=#$key#&amp;clauseno=#$i#"><xar:mlstring>Insert</xar:mlstring></a>]
+                         [<a href="&xar-modurl-legis-admin-insertdelete;&amp;action=2&amp;cdid=#$cdid#&amp;clausetype=#$key#&amp;clauseno=#$i#"><xar:mlstring>Delete</xar:mlstring></a>]
+                         </span>
+
+                 </div>
+           </xar:for>
+           </xar:foreach>
+
+    </fieldset>
+    <xar:if condition="!empty($hooks)">
+    <fieldset>
+            <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
+                <xar:foreach in="$hooks" key="$hookmodule">
+                #$hooks[$hookmodule]#
+               </xar:foreach>
+    </fieldset>
+    </xar:if>
+
+
+    <div class="xar-form-input-wrapper-after">
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+               <input type="hidden" name="cdid" id="cdid" value="#$cdid#" />
+               <input type="hidden" name="mdid" id="mdid" value="#$mdid#" />
+               <input type="hidden" name="dochall" id="dochall" value="#$dochall#" />
+               <input type="submit" value="#xarML('Update '.$mastername)#" />
+    </div>
+
+    <div class="xar-form-input-wrapper-before">
+             <a href="&xar-modurl-legis-admin-view;">
+                 <xar:mlstring>Cancel and Return</xar:mlstring>
+             </a>
+    </div>
+</xar:if>
+</form>
+
+</div>
+<xar:set name="dummy">xarSessionSetVar('statusmsg','')</xar:set>

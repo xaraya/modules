@@ -1,0 +1,83 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:set name="mastername">xarModGetVar('legis','docname')</xar:set>
+
+<xar:style scope="module" />
+
+<!-- This Javascript will check for required fields before the form is submitted. -->
+<xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
+<script type="text/javascript">
+<!--
+    // Enter name of mandatory fields
+    var fieldRequired = Array("name", "number");
+    // Enter field description to appear in the dialog box
+    var fieldDescription = Array("Name", "Number");
+// -->
+</script>
+
+<!-- common admin menu for this module - remove link to the current function -->
+<!-- the variables used in this menu come from Legislation_admin_menu() -->
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Legislation Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>New</xar:mlstring></h2>
+    <form method="post" action="&xar-modurl-Legislation-admin-create;" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
+        <fieldset>
+            <legend><xar:mlstring>Creating a new item</xar:mlstring></legend>
+
+            <div class="xar-form-input-wrapper">
+                 <label for="itemid"  class="xar-form-label" title="#xarML('This is the item name')#">
+                        <xar:ml>
+                        <xar:mlstring>#(1) Name:</xar:mlstring>
+                        <xar:mlvar>#$mastername#</xar:mlvar>
+                        </xar:ml>
+                 </label>
+             <xar:if condition="isset($name)">
+                 <input type="text" name="name" id="name" value="#$name#" maxlength="32" class="xar-form-textmedium" />
+             <xar:else />
+                    <input type="text" name="name" id="name" value="#$item.name#" maxlength="32" class="xar-form-textmedium" />
+             </xar:if>
+             <xar:if condition="!empty($invalid['name'])">
+                 <div class="xar-error">
+                        <xar:mlstring>ERROR! This is not a valid Legislation name</xar:mlstring>
+                 </div>
+             </xar:if>
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                 <label for="itemid"  class="xar-form-label" title="#xarML('This is the item number')#">
+                        <xar:ml>
+                        <xar:mlstring>#(1) Number:</xar:mlstring>
+                        <xar:mlvar>#$mastername#</xar:mlvar>
+                        </xar:ml>
+                </label>
+
+                <xar:if condition="isset($number)">
+                    <input type="text" name="number" id="number" value="#$number#" maxlength="5" class="xar-form-textshort" />
+                <xar:else />
+                    <input type="text" name="number" id="number" value="#$item.number#" maxlength="5" class="xar-form-textshort" />
+                </xar:if>
+                <xar:if condition="!empty($invalid['number'])">
+                    <div class="xar-error">
+                        <xar:mlstring>ERROR! This is not a valid Legislation number</xar:mlstring>
+                    </div>
+                </xar:if>
+            </div>
+        </fieldset>
+        <xar:if condition="!empty($hookoutput)">
+         <fieldset>
+            <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
+                <xar:foreach in="$hookoutput" key="$hookmodule">
+
+                #$hookoutput[$hookmodule]#
+                </xar:foreach>
+        </fieldset>
+        </xar:if>
+        <fieldset>
+            <div class="xar-form-input-wrapper-after">
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <input type="submit" value="#xarML('Add Item')#" />
+            </div>
+        </fieldset>
+    </form>
+</div>

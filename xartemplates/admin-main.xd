@@ -1,0 +1,111 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<!-- This is a standard template for the module overview  -->
+<!-- Each Module Should have an overview explaining exactly what it does, and giving an overview of the blocks and hooks that it includes or accepts. -->
+<div class="xar-mod-head">
+  <span class="xar-mod-title"><xar:mlstring>Legislation Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+  <img src="modules/legis/xarimages/admin.gif" class="xar-module-icon" alt="official icon" width="96" height="96" />
+
+  <h2><xar:mlstring>Overview</xar:mlstring></h2>
+  
+  <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+  <p>
+    <em><xar:mlstring>Legislation is a module for handling submission and administration of legislation documents.</xar:mlstring></em>
+    <xar:mlstring>It is currently responsible for accomplishing the following:</xar:mlstring>
+  </p>
+  <ol>
+    <li><xar:mlstring>Providing facilities for submitting new legislation and viewing that legislation based on Hall, and document status</xar:mlstring></li>
+    <li><xar:mlstring>Providing administration of the submitted legislation by providing means to set the document valid vs invalid, passed vs not passed, and vetoed status. Additional admin functions are also provided.</xar:mlstring></li>
+  </ol>
+  </p>
+
+  <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
+  <p>
+    <xar:mlstring>There are a number of steps to setting up your Legislation system. 
+     There are a number of Legislation components that are installed at module initialization time to ease the setup. </xar:mlstring>
+  </p>
+  <ol>
+  <li><xar:mlstring>Install the Legis module in the usual way. Make sure it is in Installed and Activated status. At install the following occurs:</xar:mlstring>
+    <ul>
+      <li><xar:mlstring><strong>Default Doclet types</strong> (phrases) are setup to be used with the master legislation types.
+      You can edit these later from the Legis Modify Configuration area</xar:mlstring></li>
+      <li><xar:mlstring><strong>Default Legislation types</strong> of Resolution, Bill and Amendement are setup. These are the "Master Document" types.
+      You can edit these later from the Legis Configuration area</xar:mlstring></li>
+      <li><xar:mlstring><strong>Default Halls</strong> are setup called Hall1, Hall2 and Hall3. These are categories under the master category group of Legislation.
+      You can edit these Hall names or reset the hall categories from the Legis Configuration Area.</xar:mlstring></li>
+      <li><xar:mlstring><strong>Default legislation</strong> type of "Resolution" is set, and <strong>default Hall</strong> of "Hall2" is set. You can change these later in the Legis Configuration Area.</xar:mlstring></li>
+      <li><xar:mlstring>The <strong>Legis roles hook is installed</strong> and activated. Users will also be able to set their default Hall from their User area unless they are Legis Executives (Default Halls must be set by the Legis Admin in this case).</xar:mlstring></li>
+      <li><xar:mlstring>A starter default <strong>LegisExecutive</strong> role is created in the default user group and assigned as the Legis module Moderator group. This can be changed later.</xar:mlstring></li>
+      <li><xar:mlstring>A <strong>LegisAdmin</strong> group is created that can be used for your Legis Module Administrators (you can change the name if you want later).</xar:mlstring></li>
+    </ul>
+  </li><br />
+  <li><xar:mlstring>Setup permissions and roles for your users. Keep in mind the following:</xar:mlstring>
+    <ul>
+    <li><xar:mlstring>The default <strong>LegisExecutive</strong> group was created at install but you can change to to some other name. This default Moderator group is a member of your default registered Users group.
+                      All your various executive groups (containing designated executive users) should be setup under this LegisExecutive group (but not your LegisAdmin Group).
+                      It is very important that you set your LegisExecutive group as the nominated <strong>Moderator Group</strong> in the Legis Modify Config area.</xar:mlstring></li>
+    <li><xar:mlstring>A default <strong>LegisAdmin</strong> group was setup at install for you in your default User group, and should contain all Legis Administrators.
+    These LegisAdmins can manage all aspects of Legis including Users and should have <strong>AdminLegis</strong> privileges.</xar:mlstring></li>
+    <li><xar:mlstring>Executives for Legis module include Senators, Protempore and Presidents and these should be
+                      setup as groups under one main Executive group (also a subgroup of Users and can be any name. The group should
+                      be nominated in the Legis Modify Config area) that is used for checking privileges.</xar:mlstring></li>
+    <li><xar:mlstring>Legis <strong>ProTempore</strong> can manage all aspects of Legis except Users and configuration options. They should have <strong>DeleteLegis</strong> privileges.</xar:mlstring></li>
+     <li><xar:mlstring>Legis <strong>Presidents</strong> can set all Legis document statuses such as valid, passed, or veto. They should have <strong>EditLegis</strong> privileges.</xar:mlstring></li>
+    <li><xar:mlstring>To <strong>view</strong> any Legislation documents, <strong>ReadLegis</strong> privileges are required. This should be assigned to normal users visiting the system.</xar:mlstring></li>
+    <li><xar:mlstring>To <strong>submit</strong> legislation, users do not have to be logged in however <strong>SubmitLegis</strong> privileges should be assigned.</xar:mlstring></li>
+    </ul>
+  </li><br />
+  <li><xar:mlstring>Edit the Legislation halls to reflect the Halls using this system. By default there are three halls installed as Hall1, Hall2 and Hall3</xar:mlstring></li><br />
+  <li><xar:mlstring>Go to the </xar:mlstring><a href="&xar-modurl-legis-admin-modifyconfig;"><xar:mlstring>Legis Modify Configuration</xar:mlstring></a><xar:mlstring> and ensure you have set all required settings before continuing.</xar:mlstring></li><br />
+  <li><xar:mlstring>Make sure you have set the category halls and default hall information, and only then, install the Legislation Links block (adminlinks) so that your Presidents and ProTempore can have easy access to the Legislation administration links.
+  A roles group (President, ProTempore) should have <strong>EditLegis</strong> Privileges to see this blocks. No special block privileges are required.</xar:mlstring></li><br />
+  <li><xar:mlstring>If required, add the Legislation Latest Posts block to your site. This requires <strong>ReadLegis</strong> permissions to read and access legislation documents through this block.</xar:mlstring></li>
+  </ol>
+
+  <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
+    <ul>
+    <li><xar:mlstring>Latest Legislation (latest)-- Displays latest valid legislation by default hall. Requires ViewLegis privileges.</xar:mlstring></li>
+    <li><xar:mlstring>Admin Legislation (adminlinks)-- A convienience block - you could use a menu block -  to display Legislation Editor links. Requires DeleteLegis privileges.</xar:mlstring></li>
+  </ul>
+  <!--
+  <ul>
+    <li><xar:mlstring>Legislation</xar:mlstring></li>
+  </ul>
+   -->
+  <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
+  <ul>
+    <li><xar:mlstring>Usermenu -- Allows interface with the Roles "My Account Page".</xar:mlstring></li>
+    <li><xar:mlstring>Search -- Allows interface with the Search Module</xar:mlstring></li>
+  </ul>
+  <p>
+    <xar:mlstring>
+      In these cases, the Legislation module provides the hook functionality.
+      To activate the hooks go to </xar:mlstring>
+    <a href="&xar-modurl-modules-admin-hooks;&amp;hook=legis"><xar:mlstring>Modules - Configure Hooks - Legislation Module</xar:mlstring></a>.
+    <xar:mlstring> From there click on the checkbox in either Roles or
+      the Search module to activate the respective hooks.
+    </xar:mlstring>
+  </p>
+
+
+  <h3>
+    <xar:mlstring>Further Information</xar:mlstring>
+  </h3>
+  <p>
+    <xar:mlstring>Further information on the Legislation module can be found at</xar:mlstring>
+  </p>
+  <ul>
+    <li><xar:mlstring>Legislation Extension page at</xar:mlstring> <a title="#xarML('Legislation Module - Xaraya Extension 593')#" href="http://www.xaraya.com/index.php/release/593.html">Xaraya Extension and Releases</a>.
+      <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+    </li>
+    <li><xar:mlstring>Related tutorials and documentation on Legislation found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/legislation/" title="#xarML('Related documentation on Legislation')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+    </li>
+    <li><a href="./modules/legis/xardocs/TODO.txt" title="#xarML('Legislation module todo list')#"><xar:mlstring>TO DO list</xar:mlstring></a>
+    </li>
+  </ul>
+  <p class="xar-sub">
+    <strong>&nbsp;<xar:mlstring>Legislation Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.1&nbsp; 2006-01-04
+  </p>
+</div>
+

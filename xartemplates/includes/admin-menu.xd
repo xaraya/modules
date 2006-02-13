@@ -1,0 +1,85 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:set name="mastername">xarModGetVar('legis','docname')</xar:set>
+<xar:style scope="module" module="base" file="navtabs" />
+<xar:set name="compare">xarServerGetCurrentURL()</xar:set>
+<dl class="xar-tabs">
+    <dt class="help">
+        <xar:mlstring>
+            Select
+        </xar:mlstring>
+
+    </dt>
+        <xar:sec mask="EditLegis" catch="false">
+           <xar:set name="viewurl">xarModURL('legis','admin','view',array('docstatus'=>2))</xar:set>
+            <xar:if condition="$compare eq $viewurl">
+               <dd class="active">
+                <a href="#xarServerGetCurrentURL()#">
+                   <xar:mlstring>View Valid Documents</xar:mlstring>
+                </a>
+               </dd>
+            <xar:else />
+            <dd>
+                <a href="#$viewurl#">
+                <xar:mlstring>View Valid Documents</xar:mlstring>
+                </a>
+            </dd>
+            </xar:if>
+             <xar:set name="pendingurl">xarModURL('legis', 'admin', 'view', array('docstatus'=>1))</xar:set>
+            <xar:if condition="$compare eq $pendingurl">
+               <dd class="active">
+                <a href="#xarServerGetCurrentURL()#">
+                   <xar:ml>
+                   <xar:mlstring>Pending #(1)</xar:mlstring>
+                   <xar:mlvar>#$mastername#</xar:mlvar>
+                   </xar:ml>
+                </a>
+               </dd>
+            <xar:else />
+            <dd>
+                <a href="#$pendingurl#">
+                   <xar:ml>
+                   <xar:mlstring>Pending #(1)</xar:mlstring>
+                   <xar:mlvar>#$mastername#</xar:mlvar>
+                   </xar:ml>
+                </a>
+            </dd>
+            </xar:if>
+        </xar:sec>
+        <xar:sec mask="DeleteLegis" catch="false">
+          <xar:set name="viewurl">xarModURL('legis','admin','view',array('docstatus'=>3))</xar:set>
+            <xar:if condition="$compare eq $viewurl">
+               <dd class="active">
+                <a href="#xarServerGetCurrentURL()#">
+                <xar:mlstring>Review Invalid For Delete</xar:mlstring>
+                </a>
+               </dd>
+            <xar:else />
+            <dd>
+                <a href="#$viewurl#">
+                <xar:mlstring>Review Invalid For Delete</xar:mlstring>
+                </a>
+            </dd>
+            </xar:if>
+         </xar:sec>
+         <xar:if condition="$cansethall">
+            <xar:set name="sethall">xarModURL('legis', 'admin', 'sethall',array('reset'=> 1))</xar:set>
+            <xar:if condition="$compare eq $sethall">
+            <dd class="active">
+                     <a href="#xarServerGetCurrentURL()#">
+                    <xar:mlstring>
+                        Set Default Hall
+                    </xar:mlstring>
+                    </a>
+            </dd>
+            <xar:else />
+            <dd>
+                <a href="&xar-modurl-legis-admin-sethall;&amp;reset=1">
+                    <xar:mlstring>
+                        Set Default Hall
+                    </xar:mlstring>
+                </a>
+            </dd>
+            </xar:if>
+         </xar:if>
+</dl>
+

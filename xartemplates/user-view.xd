@@ -1,0 +1,115 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<xar:set name="mastername">xarModGetVar('legis','docname')</xar:set>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+    <xar:ml>
+    <xar:mlstring>RIC #(1)</xar:mlstring>
+    <xar:mlvar>#$mastername#</xar:mlvar>
+    </xar:ml>
+    </span>
+</div>
+<xar:if condition="$docstatus eq 1">
+    <xar:set name="docstatusname"><xar:mlstring>Pending</xar:mlstring></xar:set>
+<xar:elseif condition="$docstatus eq 2" />
+    <xar:set name="docstatusname"><xar:mlstring>Validated</xar:mlstring></xar:set>
+<xar:else />
+    <xar:set name="docstatusname"><xar:mlstring>requested</xar:mlstring></xar:set>
+</xar:if>
+
+<div class="xar-mod-body">
+    <xar:template type="module" file="user-menu" />
+
+    <h2>
+    <xar:ml>
+    <xar:mlstring>#(1) Items</xar:mlstring>
+    <xar:mlvar>#$mastername#</xar:mlvar>
+    </xar:ml>
+    </h2>
+
+    <xar:if condition="$totalitems gt 0">
+        <h4>
+        <xar:ml>
+        <xar:mlstring>Listing of #(1) #(2) for #(3)</xar:mlstring>
+        <xar:mlvar>#$docstatusname#</xar:mlvar>
+        <xar:mlvar>#$mastername#</xar:mlvar>
+        <xar:mlvar>#$hallname#</xar:mlvar>
+        </xar:ml>
+        </h4>
+    <xar:else />
+        <h4>
+        <xar:ml>
+        <xar:mlstring>There are no #(1) items matching your request</xar:mlstring>
+        <xar:mlvar>#$mastername#</xar:mlvar>
+        </xar:ml>
+        </h4>
+    </xar:if>
+
+
+    <xar:if condition="!empty($status)">
+        <strong>#$status#</strong>
+    </xar:if>
+<xar:foreach in="$legistypes" key="$k" value="$v">
+<xar:set name="upperdoc">ucfirst($v['mdname'])</xar:set>
+<h4>#$upperdoc#</h4>
+    <table style="width:98%;">
+        <tr>
+            <xar:if condition="$docstatus gt 1">
+            <th><xar:mlstring>Doc #</xar:mlstring></th>
+            </xar:if>
+            <th>
+            <xar:ml>
+            <xar:mlstring>#(1) name</xar:mlstring>
+            <xar:mlvar>#$mastername#</xar:mlvar>
+            </xar:ml>
+            </th>
+            <th style="width:10%;"><xar:mlstring>Status</xar:mlstring></th>
+            <xar:if condition="$docstatus gt 1">
+                <th style="width:10%;"><xar:mlstring>Passed</xar:mlstring></th>
+                <th style="width:10%;"><xar:mlstring>Vetoed</xar:mlstring></th>
+            <xar:else />
+                <th style="width:15%;"><xar:mlstring>Submitted</xar:mlstring></th>
+            </xar:if>
+        </tr>
+        <xar:foreach in="$items" value="$item">
+        <xar:if condition="$item.mdid eq $v['mdid']">
+        <tr>
+            <xar:if condition="$docstatus gt 1">
+            <td>
+                    #$item.cdnum#
+            </td>
+            </xar:if>
+
+            <td style="width:50%;">
+                <xar:if condition="empty($item.link)">
+                    #$item.cdtitle#
+                <xar:else />
+                    <a href="#$item.link#">#$item.cdtitle#</a>
+                </xar:if>
+    
+            </td>
+          <td>
+                    #$item.docdisplaystatus#
+            </td>
+          <xar:if condition="$docstatus gt 1">
+          <td>
+                    #$item.votedisplaystatus#
+            </td>
+          <td>
+                    #$item.vetodisplaystatus#
+            </td>
+          <xar:else />
+                <td> #xarLocaleGetFormattedDate('long', $item.submitdate)#</td>
+          </xar:if>
+
+        </tr>
+        </xar:if>
+        </xar:foreach>
+
+    </table>
+</xar:foreach>
+    <div class="xar-align-center xar-padding-thick">
+        <!-- add the pager here -->
+        #$pager#
+    </div>
+</div>

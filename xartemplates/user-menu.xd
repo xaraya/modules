@@ -1,0 +1,25 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<!-- common user menu for this module - remove link to the current function -->
+
+<table class="xar-fullwidth">
+
+    <tr>
+        <th>#$menutitle#</th>
+    </tr>
+    <tr>
+        <td>
+            <table class="xar-fullwidth">
+                <tr>
+   
+                <td>
+                    <a href="#$menulink_view#">#$menulabel_view#</a>
+                </td>
+
+               </tr>
+            </table> 
+        </td>
+    </tr>
+</table>
+
+<!-- the specific template for the current function comes here -->
+

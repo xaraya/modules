@@ -1,0 +1,58 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:set name="mastername">xarModGetVar('legis','docname')</xar:set>
+<h2>
+    #$name#  #$mastername# <xar:mlstring>Information</xar:mlstring>
+</h2>
+<pre>
+
+<xar:set name="dummy">1;
+
+</xar:set>
+</pre>
+<form action="&xar-modurl-legis-user-usermenu;" method="post" enctype="application/x-www-form-urlencoded">
+<input type="hidden" name="authid" id="authid" value="#$authid#" />    
+<input type="hidden" name="uid" id="uid" value="#$uid#" />
+<input type="hidden" name="phase" id="phase" value="update" />
+<fieldset>
+    <legend><xar:mlstring>Display Options</xar:mlstring></legend>
+        <div class="xar-form-input-wrapper">
+            <label for="itemsperpage" class="xar-form-label" title="#xarML('Your customized number of items per page')#">
+                #$mastername# <xar:mlstring>Items Per Page:</xar:mlstring>
+            </label>
+           <input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#$value#" />
+       </div>
+              <div class="xar-form-input-wrapper">
+                <label for="defaulthall" class="xar-form-label">
+                    <span class="help" title="#xarML('Enter the Hall for your '.$mastername)#">
+                        <xar:mlstring>Choose your default Hall</xar:mlstring>
+                    </span>
+                </label>
+                <xar:if condition="$cansethall">
+                <select name="defaulthall" id="defaulthall">
+                <xar:foreach in="$halldata" key="$k" value="$v">
+                  <xar:set name="upperhall">ucfirst($halldata[$k]['name'])</xar:set>
+                    <xar:if condition="$halldata[$k]['cid'] eq $defaulthall">
+                        <option id="halldata.#$k#" name="halldata.#$k#" value="#$k#" selected="selected">#$upperhall#</option>
+                    <xar:else />
+                        <option id="halldata.#$k#" name="halldata.#$k#" value="#$k#">#$upperhall#</option>
+                    </xar:if>
+                </xar:foreach>
+                </select>
+                <xar:else />
+                <strong>#$halldata[$defaulthall]['name']#</strong>
+                <p class="xar-form-input-wrapper-after">
+                <xar:ml>
+                <xar:mlstring>Please contact #(1) Admin to change your defaulthall.</xar:mlstring>
+                <xar:mlvar>#$mastername#</xar:mlvar>
+                </xar:ml>
+                </p>
+                </xar:if>
+            </div>
+</fieldset>
+
+<fieldset>
+    <div class="xar-form-input-wrapper-after">
+         <input type="submit" value="#xarML('Modify '.$mastername.' Settings')#"  tabindex="2" />
+    </div>
+</fieldset>
+</form>
