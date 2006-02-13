@@ -65,8 +65,7 @@ ob_end_clean();
 //$PHPTHUMB_CONFIG['document_root'] = 'c:\\webroot\\example.com\\www';
 //$PHPTHUMB_CONFIG['document_root'] = $_SERVER['DOCUMENT_ROOT'];
 //$PHPTHUMB_CONFIG['document_root'] = realpath((@$_SERVER['DOCUMENT_ROOT'] && file_exists(@$_SERVER['DOCUMENT_ROOT'].$_SERVER['PHP_SELF'])) ? $_SERVER['DOCUMENT_ROOT'] : str_replace(dirname(@$_SERVER['PHP_SELF']), '', str_replace($phpThumb->osslash, '/', realpath('.'))));
-$PHPTHUMB_CONFIG['document_root'] = realpath((getenv('DOCUMENT_ROOT') && ereg('^'.preg_quote(realpath(getenv('DOCUMENT_ROOT'))), realpath(__FILE__))) ? getenv('DOCUMENT_ROOT') : str_replace(dirname(@$_SERVER['PHP_SELF']), '', str_replace($phpThumb->osslash, '/', dirname(__FILE__))));
-
+//$PHPTHUMB_CONFIG['document_root']   = ((@$_SERVER['DOCUMENT_ROOT'] && file_exists(@$_SERVER['DOCUMENT_ROOT'] . $_SERVER['PHP_SELF'])) ? $_SERVER['DOCUMENT_ROOT'] : str_replace(dirname(@$_SERVER['PHP_SELF']), '', str_replace('\\', '/', realpath('.'))));
 // * Cache directory configuration (choose only one of these - leave the other lines commented-out):
 // Note: this directory must be writable (usually chmod 777 is neccesary) for caching to work.
 // If the directory is not writable no error will be generated but caching will be disabled.

@@ -166,4 +166,5 @@
 	$cfg['pop_url']    	= $cfg['scripts'] . 'popup.php'; 								// popup dir; relative to 'script' dir
     $cfg['temp']     	= $realpath.'/var/cache'; 					// temp dir; e.g. 'D:/www/temp'
     $PHPTHUMB_CONFIG['cache_directory'] = $realpath.'/var/cache/templates'; // used by phpthumbs in ibrowser for image caching
+    $PHPTHUMB_CONFIG['document_root']=$cfg['root_dir'];
 ?>
