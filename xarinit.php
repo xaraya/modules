@@ -41,8 +41,8 @@ function products_init()
       sort_order int(3),
       products_sorting varchar(32),
       products_sorting2 varchar(32),
-      date_added datetime,
-      last_modified datetime,
+      date_added int(10) UNSIGNED,
+      last_modified int(10) UNSIGNED,
       PRIMARY KEY (categories_id),
       KEY idx_categories_parent_id (parent_id)
     )";
@@ -72,8 +72,8 @@ function products_init()
       configuration_value varchar(255) NOT NULL,
       configuration_group_id int NOT NULL,
       sort_order int(5) NULL,
-      last_modified datetime NULL,
-      date_added datetime NOT NULL,
+      last_modified int(10) UNSIGNED NULL,
+      date_added int(10) UNSIGNED NOT NULL,
       use_function varchar(255) NULL,
       set_function varchar(255) NULL,
       PRIMARY KEY (configuration_id),
@@ -93,6 +93,7 @@ function products_init()
     )";
     if (!$q->run($query)) return;
 
+    
     $query = "DROP TABLE IF EXISTS " . $prefix . "_products_products";
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_products_products (
@@ -102,20 +103,20 @@ function products_init()
       products_model varchar(12),
       group_ids TEXT,
       products_sort int(4),
-      products_image varchar(64),
       products_price decimal(15,4) NOT NULL,
       products_discount_allowed decimal(3,2) DEFAULT '0' NOT NULL,
-      products_date_added datetime NOT NULL,
-      products_last_modified datetime,
-      products_date_available datetime,
+      products_date_added int(10) UNSIGNED NOT NULL,
+      products_last_modified int(10) UNSIGNED,
+      products_date_available int(10) UNSIGNED,
       products_weight decimal(5,2) NOT NULL,
       products_status tinyint(1) NOT NULL,
       products_tax_class_id int NOT NULL,
-      product_template varchar (64),
-      options_template varchar (64),
       manufacturers_id int NULL,
       products_ordered int NOT NULL default '0',
       products_fsk18 int(1) NOT NULL DEFAULT '0',
+      xar_modid int(11) NOT NULL,
+      xar_itemid int(11) NOT NULL,
+      xar_itemtype int(11) NULL,
       PRIMARY KEY (products_id),
       KEY idx_products_date_added (products_date_added)
     )";
@@ -172,7 +173,7 @@ function products_init()
     $query = "CREATE TABLE " . $prefix . "_products_products_notifications (
       products_id int NOT NULL,
       customers_id int NOT NULL,
-      date_added datetime NOT NULL,
+      date_added int(10) UNSIGNED NOT NULL,
       PRIMARY KEY (products_id, customers_id)
     )";
     if (!$q->run($query)) return;
@@ -232,10 +233,10 @@ function products_init()
       specials_id int NOT NULL auto_increment,
       products_id int NOT NULL,
       specials_new_products_price decimal(15,4) NOT NULL,
-      specials_date_added datetime,
-      specials_last_modified datetime,
-      expires_date datetime,
-      date_status_change datetime,
+      specials_date_added int(10) UNSIGNED,
+      specials_last_modified int(10) UNSIGNED,
+      expires_date int(10) UNSIGNED,
+      date_status_change int(10) UNSIGNED,
       status int(1) NOT NULL DEFAULT '1',
       PRIMARY KEY (specials_id)
     )";
@@ -270,17 +271,17 @@ function products_init()
     if (!$q->run($query)) return;
     $query = "INSERT INTO " . $prefix . "_products_content_manager VALUES (4,0,0,1,'Contact','Contact','Put here your Contact information.',1,'',1,4,0)";
     if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_products_content_manager VALUES (5,0,0,1,'Index','Welcome','{\$greeting}<br><br> Dies ist die Standardinstallation des osCommerce Forking Projektes - XT-Commerce. Alle dargestellten Produkte dienen zur Demonstration der Funktionsweise. Wenn Sie Produkte bestellen, so werden diese weder ausgeliefert, noch in Rechnung gestellt. Alle Informationen zu den verschiedenen Produkten sind erfunden und daher kann kein Anspruch daraus abgeleitet werden.<br><br>Sollten Sie daran interessiert sein das Programm, welches die Grundlage für diesen Shop bildet, einzusetzen, so besuchen Sie bitte die Supportseite von XT-Commerce. Dieser Shop basiert auf der XT-Commerce Version Beta2.<br><br>Der hier dargestellte Text kann in der folgenden Datei einer jeden Sprache geändert werden: [Pfad zu catalog]/lang/catalog/[language]/index.php.<br><br>Das kann manuell geschehen, oder über das Administration Tool mit Sprache->[language]->Sprache definieren, oder durch Verwendung des Hilfsprogrammes->Datei Manager.',1,'',0,5,0)";
+    $query = "INSERT INTO " . $prefix . "_products_content_manager VALUES (5,0,0,1,'Index','Welcome','{\$greeting}<br><br> Dies ist die Standardinstallation des osCommerce Forking Projektes - XT-Commerce. Alle dargestellten Produkte dienen zur Demonstration der Funktionsweise. Wenn Sie Produkte bestellen, so werden diese weder ausgeliefert, noch in Rechnung gestellt. Alle Informationen zu den verschiedenen Produkten sind erfunden und daher kann kein Anspruch daraus abgeleitet werden.<br><br>Sollten Sie daran interessiert sein das Programm, welches die Grundlage fr diesen Shop bildet, einzusetzen, so besuchen Sie bitte die Supportseite von XT-Commerce. Dieser Shop basiert auf der XT-Commerce Version Beta2.<br><br>Der hier dargestellte Text kann in der folgenden Datei einer jeden Sprache geï¿½dert werden: [Pfad zu catalog]/lang/catalog/[language]/index.php.<br><br>Das kann manuell geschehen, oder ber das Administration Tool mit Sprache->[language]->Sprache definieren, oder durch Verwendung des Hilfsprogrammes->Datei Manager.',1,'',0,5,0)";
     if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_products_content_manager VALUES (6,0,0,2,'Liefer- und Versandkosten','Liefer- und Versandkosten','Fügen Sie hier Ihre Informationen über Liefer- und Versandkosten ein.',1,'',1,1,0)";
+    $query = "INSERT INTO " . $prefix . "_products_content_manager VALUES (6,0,0,2,'Liefer- und Versandkosten','Liefer- und Versandkosten','Fgen Sie hier Ihre Informationen ber Liefer- und Versandkosten ein.',1,'',1,1,0)";
     if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_products_content_manager VALUES (7,0,0,2,'Privatsphäre und Datenschutz','Privatsphäre und Datenschutz','Fügen Sie hier Ihre Informationen über Privatsphäre und Datenschutz ein.',1,'',1,2,0)";
+    $query = "INSERT INTO " . $prefix . "_products_content_manager VALUES (7,0,0,2,'Privatsphï¿½e und Datenschutz','Privatsphï¿½e und Datenschutz','Fgen Sie hier Ihre Informationen ber Privatsphï¿½e und Datenschutz ein.',1,'',1,2,0)";
     if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_products_content_manager VALUES (8,0,0,2,'Unsere AGB\'s','Allgemeine Geschäftsbedingungen','<strong>Allgemeine Gesch&auml;ftsbedingungen<br></strong><br>F&uuml;gen Sie hier Ihre allgemeinen Gesch&auml;ftsbedingungen ein.<br>1. Geltung<br>2. Angebote<br>3. Preis<br>4. Versand und Gefahr&uuml;bergang<br>5. Lieferung<br>6. Zahlungsbedingungen<br>7. Eigentumsvorbehalt <br>8. M&auml;ngelr&uuml;gen, Gew&auml;hrleistung und Schadenersatz<br>9. Kulanzr&uuml;cknahme / Annahmeverweigerung<br>10. Erf&uuml;llungsort und Gerichtsstand<br>11. Schlussbestimmungen',1,'',1,3,0)";
+    $query = "INSERT INTO " . $prefix . "_products_content_manager VALUES (8,0,0,2,'Unsere AGB\'s','Allgemeine Geschï¿½tsbedingungen','<strong>Allgemeine Gesch&auml;ftsbedingungen<br></strong><br>F&uuml;gen Sie hier Ihre allgemeinen Gesch&auml;ftsbedingungen ein.<br>1. Geltung<br>2. Angebote<br>3. Preis<br>4. Versand und Gefahr&uuml;bergang<br>5. Lieferung<br>6. Zahlungsbedingungen<br>7. Eigentumsvorbehalt <br>8. M&auml;ngelr&uuml;gen, Gew&auml;hrleistung und Schadenersatz<br>9. Kulanzr&uuml;cknahme / Annahmeverweigerung<br>10. Erf&uuml;llungsort und Gerichtsstand<br>11. Schlussbestimmungen',1,'',1,3,0)";
     if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_products_content_manager VALUES (9,0,0,2,'Kontakt','Kontakt','Fügen Sie hier Ihre Informationen über Kontakt ein.',1,'',1,4,0)";
+    $query = "INSERT INTO " . $prefix . "_products_content_manager VALUES (9,0,0,2,'Kontakt','Kontakt','Fgen Sie hier Ihre Informationen ber Kontakt ein.',1,'',1,4,0)";
     if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_products_content_manager VALUES (10,0,0,2,'Index','Willkommen','{\$greeting}<br><br> Dies ist die Standardinstallation des osCommerce Forking Projektes - XT-Commerce. Alle dargestellten Produkte dienen zur Demonstration der Funktionsweise. Wenn Sie Produkte bestellen, so werden diese weder ausgeliefert, noch in Rechnung gestellt. Alle Informationen zu den verschiedenen Produkten sind erfunden und daher kann kein Anspruch daraus abgeleitet werden.<br><br>Sollten Sie daran interessiert sein das Programm, welches die Grundlage für diesen Shop bildet, einzusetzen, so besuchen Sie bitte die Supportseite von XT-Commerce. Dieser Shop basiert auf der XT-Commerce Version Beta2.<br><br>Der hier dargestellte Text kann in der folgenden Datei einer jeden Sprache geändert werden: [Pfad zu catalog]/lang/catalog/[language]/index.php.<br><br>Das kann manuell geschehen, oder über das Administration Tool mit Sprache->[language]->Sprache definieren, oder durch Verwendung des Hilfsprogrammes->Datei Manager.',1,'',0,5,0)";
+    $query = "INSERT INTO " . $prefix . "_products_content_manager VALUES (10,0,0,2,'Index','Willkommen','{\$greeting}<br><br> Dies ist die Standardinstallation des osCommerce Forking Projektes - XT-Commerce. Alle dargestellten Produkte dienen zur Demonstration der Funktionsweise. Wenn Sie Produkte bestellen, so werden diese weder ausgeliefert, noch in Rechnung gestellt. Alle Informationen zu den verschiedenen Produkten sind erfunden und daher kann kein Anspruch daraus abgeleitet werden.<br><br>Sollten Sie daran interessiert sein das Programm, welches die Grundlage fr diesen Shop bildet, einzusetzen, so besuchen Sie bitte die Supportseite von XT-Commerce. Dieser Shop basiert auf der XT-Commerce Version Beta2.<br><br>Der hier dargestellte Text kann in der folgenden Datei einer jeden Sprache geï¿½dert werden: [Pfad zu catalog]/lang/catalog/[language]/index.php.<br><br>Das kann manuell geschehen, oder ber das Administration Tool mit Sprache->[language]->Sprache definieren, oder durch Verwendung des Hilfsprogrammes->Datei Manager.',1,'',0,5,0)";
     if (!$q->run($query)) return;
     $query = "INSERT INTO " . $prefix . "_products_content_manager VALUES (11,0,0,3,'Shipping & Returns','Shipping & Returns','Put here your Shipping & Returns information.',1,'',1,1,0)";
     if (!$q->run($query)) return;
@@ -290,7 +291,7 @@ function products_init()
     if (!$q->run($query)) return;
     $query = "INSERT INTO " . $prefix . "_products_content_manager VALUES (14,0,0,3,'Contact','Contact','Put here your Contact information.',1,'',1,4,0)";
     if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_products_content_manager VALUES (15,0,0,3,'Index','Welcome','{\$greeting}<br><br> Dies ist die Standardinstallation des osCommerce Forking Projektes - XT-Commerce. Alle dargestellten Produkte dienen zur Demonstration der Funktionsweise. Wenn Sie Produkte bestellen, so werden diese weder ausgeliefert, noch in Rechnung gestellt. Alle Informationen zu den verschiedenen Produkten sind erfunden und daher kann kein Anspruch daraus abgeleitet werden.<br><br>Sollten Sie daran interessiert sein das Programm, welches die Grundlage für diesen Shop bildet, einzusetzen, so besuchen Sie bitte die Supportseite von XT-Commerce. Dieser Shop basiert auf der XT-Commerce Version Beta2.<br><br>Der hier dargestellte Text kann in der folgenden Datei einer jeden Sprache geändert werden: [Pfad zu catalog]/lang/catalog/[language]/index.php.<br><br>Das kann manuell geschehen, oder über das Administration Tool mit Sprache->[language]->Sprache definieren, oder durch Verwendung des Hilfsprogrammes->Datei Manager.',1,'',0,5,0)";
+    $query = "INSERT INTO " . $prefix . "_products_content_manager VALUES (15,0,0,3,'Index','Welcome','{\$greeting}<br><br> Dies ist die Standardinstallation des osCommerce Forking Projektes - XT-Commerce. Alle dargestellten Produkte dienen zur Demonstration der Funktionsweise. Wenn Sie Produkte bestellen, so werden diese weder ausgeliefert, noch in Rechnung gestellt. Alle Informationen zu den verschiedenen Produkten sind erfunden und daher kann kein Anspruch daraus abgeleitet werden.<br><br>Sollten Sie daran interessiert sein das Programm, welches die Grundlage fr diesen Shop bildet, einzusetzen, so besuchen Sie bitte die Supportseite von XT-Commerce. Dieser Shop basiert auf der XT-Commerce Version Beta2.<br><br>Der hier dargestellte Text kann in der folgenden Datei einer jeden Sprache geï¿½dert werden: [Pfad zu catalog]/lang/catalog/[language]/index.php.<br><br>Das kann manuell geschehen, oder ber das Administration Tool mit Sprache->[language]->Sprache definieren, oder durch Verwendung des Hilfsprogrammes->Datei Manager.',1,'',0,5,0)";
     if (!$q->run($query)) return;
 
     # configuration_group_id 1
@@ -812,22 +813,61 @@ function products_init()
 #
     xarModSetVar('products', 'itemsperpage', 20);
 
+
+
+
 # --------------------------------------------------------
 #
-# Delete block details for this module (for now)
+# Configure Hook
 #
-    $blocktypes = xarModAPIfunc(
-        'blocks', 'user', 'getallblocktypes',
-        array('module' => 'products')
-    );
 
-    // Delete block types.
-    if (is_array($blocktypes) && !empty($blocktypes)) {
-        foreach($blocktypes as $blocktype) {
-            $result = xarModAPIfunc(
-                'blocks', 'admin', 'delete_type', $blocktype
-            );
-        }
+    // when a new module item is being specified
+    if (!xarModRegisterHook('item', 'new', 'GUI',
+                           'products', 'admin', 'newhook')) {
+        return false;
+    }
+    // when a module item is created
+    if (!xarModRegisterHook('item', 'create', 'API',
+                           'products', 'admin', 'createhook')) {
+        return false;
+    }
+    // when a module item is being modified
+    if (!xarModRegisterHook('item', 'modify', 'GUI',
+                           'products', 'admin', 'modifyhook')) {
+        return false;
+    }
+    // when a module item is updated
+    if (!xarModRegisterHook('item', 'update', 'API',
+                           'products', 'admin', 'updatehook')) {
+        return false;
+    }
+    // when a module item is deleted
+    if (!xarModRegisterHook('item', 'delete', 'API',
+                           'products', 'admin', 'deletehook')) {
+        return false;
+    }
+    // when a module configuration is being modified
+    if (!xarModRegisterHook('module', 'modifyconfig', 'GUI',
+                           'products', 'admin', 'modifyconfighook')) {
+        return false;
+    }
+    // when a module configuration is updated
+    if (!xarModRegisterHook('module', 'updateconfig', 'API',
+                           'products', 'admin', 'updateconfighook')) {
+        return false;
+    }
+    // when a whole module is removed, e.g. via the modules admin screen
+    // (set object ID to the module name !)
+    if (!xarModRegisterHook('module', 'remove', 'API',
+                           'products', 'admin', 'removehook')) {
+        return false;
+    }
+    
+    // when a whole module is displayed, e.g. via the modules admin screen
+    // (set object ID to the module name !)
+    if (!xarModRegisterHook('item', 'display', 'GUI',
+                           'products', 'user', 'displayhook')) {
+        return false;
     }
 
 # --------------------------------------------------------
@@ -887,7 +927,7 @@ function products_init()
 #
 # Add this module to the list of installed commerce suite modules
 #
-	$modules = unserialize(xarModGetVar('commerce', 'ice_modules'));
+    $modules = unserialize(xarModGetVar('commerce', 'ice_modules'));
     $info = xarModGetInfo(xarModGetIDFromName('products'));
     $modules[$info['name']] = $info['regid'];
     $result = xarModSetVar('commerce', 'ice_modules', serialize($modules));

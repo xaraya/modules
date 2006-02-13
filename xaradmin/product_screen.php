@@ -36,7 +36,7 @@ function products_admin_product_screen()
             case 'update_product':
                 if(!xarVarFetch('products_price',    'float',  $products_price, NULL, XARVAR_DONT_SET)) {return;}
                 if(!xarVarFetch('products_date_available',    'str',  $products_date_available, NULL, XARVAR_DONT_SET)) {return;}
-                // START IN-SOLUTION Zurückberechung des Nettopreises falls der Bruttopreis übergeben wurde
+                // START IN-SOLUTION Zurckberechung des Nettopreises falls der Bruttopreis bergeben wurde
                 if ($configuration['price_is_brutto'] == 'true' && $products_price){
                     $tax_rate = xarModAPIFunc('commerce','user','get_tax_rate', array('class_id' => $products_tax_class_id));
                     $products_price = ($products_price/($tax_rate+100)*100);

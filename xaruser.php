@@ -25,7 +25,7 @@ function products_user_main()
     xarSessionSetVar('products_statusmsg', xarML('Products Main Menu',
                     'products'));
 
-    if (xarModGetVar('modules', 'disableoverview') == 0 && !isset($branch)) {
+    if (xarModGetVar('adminpanels', 'overview') == 0 && !isset($branch)) {
         return array();
     } else {
         if(!xarVarFetch('branch', 'str', $branch,   "start", XARVAR_NOT_REQUIRED)) {return;}
