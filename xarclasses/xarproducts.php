@@ -1,4 +1,18 @@
 <?php
+/**
+ * File: $Id$
+ *
+ * class xarProducts
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 by WebU
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.webu.fr
+ *
+ * @subpackage Products module
+ * @author Bel Fabien fab@webu.fr
+*/
+
 //the xenQuery class for queries
 include_once 'modules/xen/xarclasses/xenquery.php';
 
