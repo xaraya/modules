@@ -3,7 +3,7 @@
  * ITSP initialization functions
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -51,7 +51,7 @@ This table holds the general plans
                xar_mincredit   I         NotNull    DEFAULT 0,
                xar_dateopen    I(11)     Null       DEFAULT NULL,
                xar_dateclose   I(11)     Null       DEFAULT NULL,
-               xar_datemodi    I(10)     Null       DEFAULT NULL,
+               xar_datemodi    I(11)     Null       DEFAULT NULL,
                xar_modiby      I         NotNull    DEFAULT 0
               ";
 
@@ -82,7 +82,7 @@ Ruleformat: (compare to privileges) coursetype:Level:Category:internal/external/
                xar_mincredit   I         NotNull    DEFAULT 0,
                xar_dateopen    I(11)     Null       DEFAULT NULL,
                xar_dateclose   I(11)     Null       DEFAULT NULL,
-               xar_datemodi    I(10)     Null       DEFAULT NULL,
+               xar_datemodi    I(11)     Null       DEFAULT NULL,
                xar_modiby      I         NotNull    DEFAULT 0
               ";
 
@@ -167,7 +167,7 @@ There are two types: fixed courses and courses that are added in a free form (co
                xar_itspid           I         NotNull    DEFAULT 0,
                xar_pitemid          I         NotNull    DEFAULT 0,
                xar_dateappr         I(11)     Null       DEFAULT NULL,
-               xar_datemodi         I(10)     Null       DEFAULT NULL,
+               xar_datemodi         I(11)     Null       DEFAULT NULL,
                xar_modiby           I         NotNull    DEFAULT 0
               ";
 
@@ -206,7 +206,7 @@ This table deals with the free courses. So: how to add the custom courses/items 
                xar_icourseresult    C(255)    NotNull    DEFAULT '',
                xar_icoursedate      I(11)     Null       DEFAULT NULL,
                xar_dateappr         I(11)     Null       DEFAULT NULL,
-               xar_datemodi         I(10)     Null       DEFAULT NULL,
+               xar_datemodi         I(11)     Null       DEFAULT NULL,
                xar_modiby           I         NotNull    DEFAULT 0
               ";
 

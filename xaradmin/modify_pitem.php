@@ -61,6 +61,27 @@ function itsp_admin_modify_pitem($args)
         return;
     }
 
+    // Splice the rule
+    if (!empty($item['pitemrules'])) {
+        list($Rtype, $Rlevel, $Rcat, $Rsource) = explode(";", $item['pitemrules']);
+
+        $rule_parts = explode(':',$Rtype);
+        $rule_type = $rule_parts[1];
+        $rule_parts = explode(':',$Rlevel);
+        $rule_level = $rule_parts[1];
+        $rule_parts = explode(':',$Rcat);
+        $rule_cat = $rule_parts[1];
+        $rule_parts = explode(':',$Rsource);
+        $rule_source = $rule_parts[1];
+    /*
+        $data['rule_type'] = split($rule_type;
+
+        $data['rule_level'] = $rule_parts[1];
+        $data['rule_cat'] = $rule_parts[2];
+        $data['rule_source'] = $rule_parts[3];
+        */
+    }
+
     // get the levels in courses
     $levels = xarModAPIFunc('courses', 'user', 'gets', array('itemtype' => 1003));
 

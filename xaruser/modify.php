@@ -71,6 +71,15 @@ function itsp_user_modify($args)
         //get planitem
         $pitem = xarModApiFunc('itsp','user','get_planitem',array('pitemid'=>$pitemid));
         $data['pitemrules'] = $pitem['pitemrules'];
+
+        // Splice the rule
+        if (!empty($pitem['pitemrules'])) {
+        $rule_parts = explode(';',$pitem['pitemrules']);
+            $data['rule_type'] = $rule_parts[0];
+            $data['rule_level'] = $rule_parts[1];
+            $data['rule_cat'] = $rule_parts[2];
+            $data['rule_source'] = $rule_parts[3];
+        }
         // get the pitem details for this itsp
         // get all linked courses
         $courselinks = xarModApiFunc('itsp','user','getall_courselinks',array('itspid'=>$pitemid));
