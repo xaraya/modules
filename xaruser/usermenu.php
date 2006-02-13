@@ -42,18 +42,21 @@ function legis_user_usermenu($args)
             $name = xarUserGetVar('name');
             $uid = xarUserGetVar('uid');
             $defaulthall = xarModGetUserVar('legis', 'defaulthall', $uid);
+            if (!isset($defaulthall)) {
+                $defaulthall=xarModGetVar('legis','defaulthall');
+            }
             $hallsparent=xarModGetVar('legis','mastercids');
             $halls=xarModApiFunc('categories','user','getchildren',array('cid'=>$hallsparent));
             $authid = xarSecGenAuthKey('legis');
             //create the hall links
             foreach ($halls as $k=>$hall) {
-            if (isset($defaulthall) && $defaulthall!='') {
-                $halls[$k]['link']=xarModURL('legis','user','view',
-                          array('hall'=>$hall['cid']));
-                }else{
-                   $halls[$k]['link']=xarModURL('legis','user','main',
-                        array('defaulthall'=>$hall['cid']));
-            }
+                if (isset($defaulthall) && $defaulthall!='') {
+                    $halls[$k]['link']=xarModURL('legis','user','view',
+                              array('hall'=>$hall['cid']));
+                    }else{
+                       $halls[$k]['link']=xarModURL('legis','user','main',
+                            array('defaulthall'=>$hall['cid']));
+                }
             }
             $value = xarModGetUserVar('legis', 'itemsperpage', $uid);
             $isexec=xarModAPIFunc('legis','user','checkexecstatus');
@@ -89,7 +92,7 @@ function legis_user_usermenu($args)
              /* Redirect back to the account page.  We could also redirect back to our form page as
              * well by adding the phase variable to the array.
              */
-            xarResponseRedirect(xarModURL('roles', 'user', 'account'));
+            xarResponseRedirect(xarModURL('roles', 'user', 'account',array('moduleload'=>'legis','phase'=>'menu')));
 
             break;
     }
