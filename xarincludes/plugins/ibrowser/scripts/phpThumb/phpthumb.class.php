@@ -572,7 +572,22 @@ class phpthumb {
 		}
 		return true;
 	}
+    /*** XARAYA INSERT *****/
+    /* thanks to Looooooka */
+    function fixslashes($unc) {
+        $unc = str_replace( "\\", "/", $unc) ;
+        $unc = str_replace( "//", "/", $unc) ;
+        $check=strpos($unc, "//");
+        if($check==false) {
+            return($unc);
+        }
+        else {
+            fixslashes($unc);
+        }
 
+    }
+
+    /************************/
 	//////////////////////////////////////////////////////////////////////
 
 	function ResolveSource() {
@@ -588,6 +603,7 @@ class phpthumb {
 			$this->DebugMessage('$this->sourceFilename set to "'.$this->sourceFilename.'"', __FILE__, __LINE__);
 		} else {
 			$this->sourceFilename = $this->ResolveFilenameToAbsolute($this->src);
+			if ($this->sourceFilename=="" OR $this->sourceFilename==null) {$this->sourceFilename=$this->fixslashes($this->src); }
 			$this->DebugMessage('$this->sourceFilename set to "'.$this->sourceFilename.'" from $this->src ('.$this->src.')', __FILE__, __LINE__);
 		}
 		if ($this->iswindows && ((substr($this->sourceFilename, 0, 2) == '//') || (substr($this->sourceFilename, 0, 2) == '\\\\'))) {
