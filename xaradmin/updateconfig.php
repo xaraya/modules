@@ -119,6 +119,7 @@ function tinymce_admin_updateconfig()
             if (!xarVarFetch('tinyresizehorizontal','checkbox',$tinyresizehorizontal,false,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinyenablepath','str:1:',$tinyenablepath,1,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinytime', 'str:1:', $tinytime, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('tinydate', 'str:1:', $tinydate, '', XARVAR_NOT_REQUIRED)) return;            
             if (!xarVarFetch('tinyinvalid', 'str:1:', $tinyinvalid, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinyplugins','str:1:',$tinyplugins,'',XARVAR_NOT_REQUIRED)) return;
 
@@ -203,7 +204,7 @@ function tinymce_admin_updateconfig()
        $jstext .='browsers : "'.xarModGetVar('tinymce','tinybrowsers').'", ';
     }
 
-    if (xarModGetVar('tinymce','tinyask')==1){
+    if (xarModGetVar('tinymce','tinyask')==1){ //defaults to false
         $jstext .='ask : "true",';
     }
     if (xarModGetVar('tinymce','tinyinlinestyle')==1){
@@ -220,17 +221,18 @@ function tinymce_admin_updateconfig()
     if (xarModGetVar('tinymce','tinytilemap')==1){
         $jstext .='button_tile_map : "true",';
     }
-    if (xarModGetVar('tinymce','tinycleanup')!=0){
+    if (xarModGetVar('tinymce','tinycleanup')!=1){
         $jstext .='cleanup: "false",';
-    }else{
-     $jstext .='cleanup: "true",';
     }
+    //else{
+    // $jstext .='cleanup: "true",';
+    //}
     // $jstext .=	'safari_warning: "false",'; now false by default
 
 
     if (xarModGetVar('tinymce','tinybr')==1){
-        $jstext .='force_br_newlines: "true",';
-        //$jstext .='convert_newlines_to_brs: "true",';
+        //$jstext .='force_br_newlines: "true",';
+        $jstext .='convert_newlines_to_brs: "true",';
     }
 
     if (xarModGetVar('tinymce','tinypara') !=1){ //This is true by default in tinymce
@@ -318,10 +320,9 @@ function tinymce_admin_updateconfig()
     if (strlen(trim(xarModGetVar('tinymce','tinycustom')))>0) {
        $jstext .=xarModGetVar('tinymce','tinycustom');
     }
-
-    /* $jstext .='force_br_newlines : "",';   //works only for IE at the moment */
-    $jstext .='directionality : "'.xarModGetVar('tinymce','tinydirection').'",';
-    
+     if (xarModGetVar('tinymce','tinydirection') != 'ltr') { //defaults to ltr
+         $jstext .='directionality : "'.xarModGetVar('tinymce','tinydirection').'",';
+     }
     /*language options */
     if (xarModGetVar('tinymce','tinyencode')==1){
         $jstext .='encoding : "xml", ';

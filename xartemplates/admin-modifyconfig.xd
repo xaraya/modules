@@ -346,8 +346,8 @@
                     <input type="checkbox" name="tinybr" id="tinybr" value="1" />
                 </xar:if>
 
-                <label for="tinybr" title="#xarML('Force all carriage returns to &lt;br /&gt; tags instead of &lt;p&gt; tags')#">
-                    <xar:mlstring>Force all Returns to &lt;br /&gt;</xar:mlstring>
+                <label for="tinybr" title="#xarML('Convert all new lines to &lt;br /&gt; tags instead of &lt;p&gt; tags')#">
+                    <xar:mlstring>Convert new lines to &lt;br /&gt;</xar:mlstring>
                 </label>
                 <xar:mlstring>(OFF by default).</xar:mlstring>
               </div>
@@ -357,8 +357,8 @@
                 <xar:else/>
                     <input type="checkbox" name="tinypara" id="tinypara" value="1" />
                 </xar:if>
-                <label for="tinypara" title="#xarML('Force all newline chars to &lt;p /&gt; tags')#">
-                    <xar:mlstring>Force all new line chars to &lt;p /&gt;</xar:mlstring>
+                <label for="tinypara" title="#xarML('Convert all newline chars to &lt;p /&gt; tags')#">
+                    <xar:mlstring>Convert all new line chars to &lt;p /&gt;</xar:mlstring>
                </label>
                     <xar:mlstring>(ON by default).</xar:mlstring>
             </div>
@@ -497,7 +497,7 @@
                 <input type="text" name="tinycsslist" id="tinycsslist" value="#$tinycsslist#" size="60" maxlength="120" />
             </div>
             <div class="xar-form-input-wrapper-after">
-               <xar:mlstring>Classes defined in this file will appear in the Style dropdown list and affect content.</xar:mlstring>
+               <xar:mlstring>Classes defined in this file appear in the Style dropdown list and affect content.</xar:mlstring>
             </div>
             <div class="xar-form-input-wrapper">
                <label for="editorcss" class="xar-form-label" title="#xarML('CSS file name for editor and toolbar/user interface, relative to index.php')#">
