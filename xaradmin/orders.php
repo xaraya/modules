@@ -15,7 +15,7 @@
 
 function commerce_admin_orders()
 {
-
+/*
    Released under the GNU General Public License
    --------------------------------------------------------------*/
 
@@ -408,7 +408,7 @@ require(DIR_WS_CLASSES . 'currencies.php');
             <td valign="top"><table border="0" width="100%" cellspacing="0" cellpadding="2">
               <tr class="dataTableHeadingRow">
                 <td class="dataTableHeadingContent"><?php echo TABLE_HEADING_CUSTOMERS; ?></td>
-                <td class="dataTableHeadingContent" align="right"><?php echo 'N°' ; ?></td>
+                <td class="dataTableHeadingContent" align="right"><?php echo 'N' ; ?></td>
                 <td class="dataTableHeadingContent" align="right"><?php echo TABLE_HEADING_ORDER_TOTAL; ?></td>
                 <td class="dataTableHeadingContent" align="center"><?php echo TABLE_HEADING_DATE_PURCHASED; ?></td>
                 <td class="dataTableHeadingContent" align="right"><?php echo TABLE_HEADING_STATUS; ?></td>

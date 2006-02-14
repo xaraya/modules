@@ -12,7 +12,7 @@ $modversion['official'] = 1;
 $modversion['author'] = 'Marc Lutolf';
 $modversion['contact'] = 'http://www.xaraya.com/';
 $modversion['admin'] = 1;
-$modversion['user'] = 0;
+$modversion['user'] = 1;
 $modversion['securityschema'] = array('Carts::' => '::');
 $modversion['class'] = 'Complete';
 $modversion['category'] = 'Content';
