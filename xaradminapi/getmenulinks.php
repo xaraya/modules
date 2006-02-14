@@ -18,11 +18,19 @@
  *
  * @return array containing the menulinks for the admin menu items.
  */
-function commerce_adminapi_getmenulinks()
+function carts_adminapi_getmenulinks()
 {
-    $menuLinks[] = array('url'   => xarModURL('commerce','admin','configuration',array('gID' => 1)),
-                         'title' => xarML('Administer the shop'),
-                         'label' => xarML('Shop'));
+   /* $menuLinks[] = array('url'   => xarModURL('carts','admin','configuration',array('gID' => 1)),
+                         'title' => xarML('Administer the basket'),
+                         'label' => xarML('basket'));*/
+
+    $menuLinks[] = array('url'   => xarModURL('carts','admin','modifyconfig'),
+                         'title' => xarML('Config users\'basket'),
+                         'label' => xarML('config'));
+
+    $menuLinks[] = array('url'   => xarModURL('carts','user','shopping_cart'),
+                         'title' => xarML('View tour basket'),
+                         'label' => xarML('View'));
 
     if (empty($menulinks)){
         $menulinks = '';

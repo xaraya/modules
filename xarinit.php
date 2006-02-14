@@ -117,6 +117,7 @@ function carts_init()
     xarRegisterMask('DeleteCartsBlock','All','carts','Block','All:All:All','ACCESS_DELETE');
     xarRegisterMask('AdminCarts','All','carts','All','All','ACCESS_ADMIN');
 
+
 # --------------------------------------------------------
 #
 # Set up modvars
@@ -168,6 +169,24 @@ function carts_init()
                                                                   'name' => 'cartscart',
                                                                   'state' => 0,
                                                                   'groups' => array($rightgroup)));
+                                                                  
+                                                                  
+# --------------------------------------------------------
+#
+# Configure Hook
+#
+
+    // when a whole module is displayed, e.g. via the modules admin screen
+    // (set object ID to the module name !)
+    if (!xarModRegisterHook('item', 'display', 'GUI',
+                           'carts', 'user', 'displayhook')) {
+        return false;
+    }
+
+    if (!xarModRegisterHook('item', 'usermenu', 'GUI',
+            'carts', 'user', 'usermenu')) {
+        return false;
+    }
 
 # --------------------------------------------------------
 #

@@ -1,43 +1,40 @@
 <?php
 /**
- * Admin interface for the commerce module
+ * The main user function
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Commerce Module
- * @author Marc Lutolf
- *  -----------------------------------------------------------------------------------------
- *  based on:
- *  (c) 2003 XT-Commerce
- *  (c) 2003  nextcommerce (product_reviews_info.php,v 1.12 2003/08/17); www.nextcommerce.org
- *  (c) 2002-2003 osCommerce(product_reviews_info.php,v 1.47 2003/02/13); www.oscommerce.com
- *  (c) 2000-2001 The Exchange Project  (earlier name of osCommerce)
-*/
+ * @subpackage Carts Module
+ * @link http://xaraya.com/index.php/release/36.html
+ * @author Bel Fabien (fab@webu.fr)
+ */
 
 /**
- * the main administration function
+ * The main user function
+ *
+ * This function is the default function, and is called whenever the module is
+ * initiated without defining arguments. As such it can be used for a number
+ * of things, but most commonly it either just shows the module menu and
+ * returns or calls whatever the module designer feels should be the default
+ * function (often this is the view() function)
+ *
+ * @author the Example module development team
  */
 function carts_user_main()
 {
-   // Security Check
-//    if(!xarSecurityCheck('EditCommerce')) return;
 
-    xarSessionSetVar('carts_statusmsg', xarML('Carts Main User Menu',
-                    'carts'));
+    if (!xarSecurityCheck('ViewCarts')) return;
 
-    if(!xarVarFetch('branch', 'str', $branch,   "start", XARVAR_NOT_REQUIRED)) {return;}
+    $data = xarModAPIFunc('example', 'user', 'menu');
+ 
+    $data['welcome'] = xarML('Welcome to this Example module...');
 
-    if (xarModGetVar('modules', 'disableoverview') == 0) {
-        return array();
-    }
-    else {
-        switch(strtolower($branch)) {
-            case 'start':
-                xarResponseRedirect(xarModURL('carts', 'user', 'start'));
-                break;
-        }
-   }
+    xarTplSetPageTitle(xarVarPrepForDisplay(xarML('Welcome')));
+
+    return $data;
+
 }
 ?>

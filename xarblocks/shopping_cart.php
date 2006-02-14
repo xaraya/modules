@@ -14,7 +14,7 @@
 /**
  * Initialise the block
  */
-function commerce_shopping_cartblock_init()
+function carts_shopping_cartblock_init()
 {
     return array(
         'content_text' => '',
@@ -31,7 +31,7 @@ function commerce_shopping_cartblock_init()
 /**
  * Get information on the block ($blockinfo array)
  */
-function commerce_shopping_cartblock_info()
+function carts_shopping_cartblock_info()
 {
     return array(
         'text_type' => 'Content',
@@ -51,39 +51,51 @@ function commerce_shopping_cartblock_info()
  * @param $blockinfo array
  * @returns $blockinfo array
  */
-function commerce_shopping_cartblock_display($blockinfo)
+function carts_shopping_cartblock_display($blockinfo)
 {
     // Security Check
-    if (!xarSecurityCheck('ViewCommerceBlocks', 0, 'Block', "content:$blockinfo[title]:All")) {return;}
+    if (!xarSecurityCheck('ViewCartsBlocks', 0, 'Block', "content:$blockinfo[title]:All")) {return;}
 
 
-    include_once 'modules/commerce/xarclasses/shopping_cart.php';
+    include_once 'modules/carts/xarclasses/shopping_cart.php';
+ 	include_once 'modules/carts/xarclasses/shopping_cart_anonymous.php';
 
-    $cart = xarSessionGetVar('cart');
-    if (!is_object($cart)) {
-        $cart = new shoppingCart();
+
+    	$user = xarModAPIFunc('roles', 'user', 'get', array ('uid' => xarSessionGetVar('uid')));
+	if ($user['uname'] == 'anonymous'){
+		$cart = new shoppingCartAnonymous();
+		$link = "shopping_cart_anonymous";
+	}
+	else{        
+        //Test if we transfer anonymous basket to login
+        if (xarSessionGetVar('basket')){
+            $cart = xarModAPIFunc('carts', 'user', 'savebasket_anonymous_to_login'); 
+        }
+        else{
+            //$cart = new shoppingCart();
+            $cart = new shoppingCart();
+            $link = "shopping_cart_login";		
+        }
     }
 
-    $products_in_cart=array();
-    if ($cart->count_contents() > 0) {
-        $products = $cart->get_products();
-        $qty=0;
-        for ($i=0, $n=sizeof($products); $i<$n; $i++) {
-            $qty += $products[$i]['quantity'];
-            $products_in_cart[]=array(
-                                    'qty'=>$products[$i]['quantity'],
-                                    'link'=>xarModURL('commerce','user','product_info',array('products_id' => $products[$i]['id'])),
-                                    'name'=>$products[$i]['name']);
-        }
-        $data['products'] = $qty;
-        $data['empty'] = 'false';
+     if ($cart->count_contents() > 0) {
+	//We get all products in the basket
+        $products_in_cart = $cart->get_products();
+        
+        //We get the total of the basket
+        $total = $cart->calculate();
+        
+
+        $data['products'] = $products_in_cart;
+        $data['total'] = $cart->show_total();
+        $data['cart_empty'] = false;
     }
     else {
         // cart empty
-        $data['empty'] = 'true';
+        $data['cart_empty'] = 'true';
     }
 
-
+/*
     if ($cart->count_contents() > 0) {
         $total_price = xarModAPIFunc('commerce','user','format_price',
                                             array('price_string' => $cart->show_total(),
@@ -102,11 +114,11 @@ function commerce_shopping_cartblock_display($blockinfo)
                                                 array('price_string' => $total_price,
                                                 'price_special' => $price_special = 1, 'calculate_surrencies' => $calculate_currencies = false));
         }
-    }
+    }*/
 
 
-    $data['link_cart'] = xarModURL('commerce','user','shopping_cart');
-    $data['products'] = $products_in_cart;
+    $data['shopping_cart'] = xarModURL('carts','user',$link);
+
 /*
     $box_shopping_cart= $box_smarty->fetch(CURRENT_TEMPLATE.'/boxes/box_cart.html');
 */
