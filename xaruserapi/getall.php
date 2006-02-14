@@ -101,13 +101,12 @@ function legis_userapi_getall($args)
       if (empty($docstatus) && empty($dochall)) {
            $query .= " xar_mdid = ?";
       } elseif (!empty($docstatus) || !empty($dochall))  {
-             $query .= " AND xar_dochall = ?";
+             $query .= " AND xar_mdid = ?";
       }
         $bindvars[]=(int)$mdid;
     }
 
     $query .=" ORDER BY xar_cdnum";
-
 
     $result = $dbconn->SelectLimit($query, $numitems, $startnum-1,$bindvars);
 

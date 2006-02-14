@@ -19,8 +19,9 @@
  * @param int startnum
  * @return array
  */
-function legis_admin_view()
+function legis_admin_view($args)
 {
+    extract($args);
    if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
    if (!xarVarFetch('docstatus', 'int:1:', $docstatus, null, XARVAR_NOT_REQUIRED)) return;
    if (!isset($docstatus)) $docstatus=1;
@@ -39,12 +40,12 @@ function legis_admin_view()
         $data['vetooptions']=$vetooptions;
     $authortypes= $statusdata['authortypes'];
         $data['authortypes']=$authortypes;
-
+/*
         $data['pager'] = xarTplGetPager($startnum,
         xarModAPIFunc('legis', 'user', 'countitems'),
         xarModURL('legis', 'admin', 'view', array('startnum' => '%%')),
         xarModGetVar('legis', 'itemsperpage'));
-    /* Security check - important to do this as early as possible to avoid
+*/    /* Security check - important to do this as early as possible to avoid
      * potential security holes or just too much wasted processing
      */
   
@@ -120,14 +121,16 @@ function legis_admin_view()
     } else {
       $data['cansethall']=false;
     }
+    $selectarray =array('startnum' => '%%',
+                        'docstatus'  => $docstatus,
+                        'dochall'=>$halldata['defaulthall']);
 
     $data['legistypes']=xarModAPIFunc('legis','user','getmastertypes');
     $uid = xarUserGetVar('uid');
     $data['pager'] = xarTplGetPager($startnum,
-        xarModAPIFunc('legis', 'user', 'countitems'),
-        xarModURL('legis', 'admin', 'view', array('startnum' => '%%')),
+        xarModAPIFunc('legis', 'user', 'countitems',$selectarray),
+        xarModURL('legis', 'user', 'view',$selectarray),
         xarModGetUserVar('legis', 'itemsperpage', $uid));
-
 
     /* Add the array of items to the template variables */
     $data['items'] = $items;

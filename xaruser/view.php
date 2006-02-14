@@ -30,7 +30,6 @@ function legis_user_view($args)
     $data = xarModAPIFunc('legis', 'user', 'menu');
     if (!isset($docstatus) || empty($docstatus)) $docstatus=2; //default to Valid
     $data['status'] = '';
-
   //Get common status information
     $statusdata=xarModAPIFunc('legis','user','getstatusinfo');
     $stateoptions=$statusdata['stateoptions'];
@@ -90,12 +89,15 @@ function legis_user_view($args)
     $data['docstatus']=$docstatus;
     $data['totalitems']=$totalitems;
     $data['hallname']=ucfirst($halldata['defaulthalldata']['name']);
+    $selectarray =array('startnum' => '%%',
+                        'docstatus'  => $docstatus,
+                        'dochall'=>$halldata['defaulthall']);
     $uid = xarUserGetVar('uid');
     $data['pager'] = xarTplGetPager($startnum,
-        xarModAPIFunc('legis', 'user', 'countitems'),
-        xarModURL('legis', 'user', 'view', array('startnum' => '%%')),
+        xarModAPIFunc('legis', 'user', 'countitems',$selectarray),
+        xarModURL('legis', 'user', 'view',$selectarray),
         xarModGetUserVar('legis', 'itemsperpage', $uid));
-   
+
     $isexec=xarModAPIFunc('legis','user','checkexecstatus');
     if (!xarUserIsLoggedIn() || !$isexec) {
       $data['cansethall']=true;
