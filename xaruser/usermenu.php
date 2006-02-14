@@ -86,7 +86,12 @@ function legis_user_usermenu($args)
             if (!xarVarFetch('defaulthall', 'int:1:', $defaulthall, $defaulthall, XARVAR_NOT_REQUIRED)) return;
              /* Confirm authorisation code. */
             if (!xarSecConfirmAuthKey()) return;
-
+            if (!isset($defaulthall)) {
+                $defaulthall = xarModGetUserVar('legis', 'defaulthall', $uid);
+                if (!isset($defaulthall)) {
+                    $defaulthall=xarModGetVar('legis','defaulthall');
+                }
+            }
             xarModSetUserVar('legis', 'itemsperpage', $itemsperpage, $uid);
             xarModSetUserVar('legis', 'defaulthall', $defaulthall, $uid);
              /* Redirect back to the account page.  We could also redirect back to our form page as
