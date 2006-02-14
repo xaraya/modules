@@ -11,9 +11,9 @@
  */
 
 /**
- * initialise the lists module
+ * Initialise the lists module
  *
- * @Original Author: Jason Judge
+ * Original Author: Jason Judge
  * @author Lists module development team 
  */
 function lists_init()
@@ -21,62 +21,68 @@ function lists_init()
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
-    $table_lists = $xartable['lists_types'];
+    xarDBLoadTableMaintenanceAPI();
+
+    $table_types = $xartable['lists_types'];
     $table_items = $xartable['lists_items'];
+    
+    $fields = array(
+        'xar_tid'               =>array('null'=>false, 'type'=>'integer','unsigned'=>true,  'increment' => true, 'primary_key' => true),
+        'xar_list_type_id'      =>array('null'=>true, 'type'=>'integer'),
+        'xar_type'              =>array('null'=>false, 'type'=>'char','size'=>1),
+        'xar_name'              =>array('null'=>false, 'type'=>'char','size'=>100, 'default'=>'name'),
+        'xar_desc'              =>array('null'=>true, 'type'=>'text','size'=>'large', 'default'=>''),
+        'xar_order_columns'     =>array('null'=>true,  'type'=>'char','size'=> 200,'default'=>'')
+    );
+    $query = xarDBCreateTable($table_types, $fields);
+    if (empty($query)) return; // throw back
+    $result = &$dbconn->Execute($query);
+    if (!$result) return;
 
-    // Get a data dictionary object with item create methods.
-    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
-
-    $fields_lists = "
-        xar_tid             I           AUTO    PRIMARY,
-        xar_list_type_id    I           Null,
-        xar_type            C(1)        NOTNULL,
-        xar_name            C(100)      NotNull DEFAULT 'name',
-        xar_desc            X(2000)     Null    DEFAULT '',
-        xar_order_columns   C(200)      Null    DEFAULT ''
-    ";
-
-    $fields_items = "
-        xar_iid             I           AUTO    PRIMARY,
-        xar_lid             I           NotNull,
-        xar_code            C(100)      NotNull DEFAULT 'code',
-        xar_short_name      C(100)      NotNull DEFAULT 'short_name',
-        xar_long_name       C(200)      Null,
-        xar_desc            X(2000)     Null    DEFAULT '',
-        xar_order           I           Null
-    ";
-
-    // Create or alter the table as necessary.
-    $result = $datadict->changeTable($table_lists, $fields_lists);
-    if (!$result) {return;}
+    $fields = array(
+        'xar_iid'               =>array('null'=>false, 'type'=>'integer','unsigned'=>true,  'increment' => true, 'primary_key' => true),
+        'xar_lid'               =>array('null'=>false, 'type'=>'integer'),
+        'xar_code'              =>array('null'=>false, 'type'=>'char','size'=>100, 'default'=>'code'),
+        'xar_short_name'        =>array('null'=>false, 'type'=>'char','size'=>100, 'default'=>'short_name'),
+        'xar_long_name'         =>array('null'=>true, 'type'=>'char','size'=>200),
+        'xar_desc'              =>array('null'=>true, 'type'=>'text','size'=>'large', 'default'=>''),
+        'xar_order'             =>array('null'=>true, 'type'=>'integer')
+    );
+    $query = xarDBCreateTable($table_items, $fields);
+    if (empty($query)) return; // throw back
+    $result = &$dbconn->Execute($query);
+    if (!$result) return;
 
     // Create a unique key on the name column.
-    $result = $datadict->createIndex(
-        'i_' . xarDBGetSiteTablePrefix() . '_lists_name',
-        $table_lists,
-        'xar_name'
+    $index = array(
+        'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_lists_name',
+        'fields'    => array('xar_name'),
+        'unique'    => true
     );
+    $query = xarDBCreateIndex($table_types,$index);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
 
-    if (!$result) {return;}
-    // Create or alter the table as necessary.
-    $result = $datadict->changeTable($table_items, $fields_items);
-    if (!$result) {return;}
-
-    // Create an index on the code column.
-    $result = $datadict->createIndex(
-        'i_' . xarDBGetSiteTablePrefix() . '_items_code',
-        $table_items,
-        'xar_code'
+    // Create a unique key on the code column.
+    $index = array(
+        'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_items_code',
+        'fields'    => array('xar_code'),
+        'unique'    => false
     );
-    if (!$result) {return;}
+    $query = xarDBCreateIndex($table_items,$index);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+    
 
     // Create a unique index on the lid and code columns.
-    $result = $datadict->createIndex(
-        'i_' . xarDBGetSiteTablePrefix() . '_u1',
-        $table_items,
-        array('xar_lid', 'xar_code')
+    $index = array(
+        'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_u1',
+        'fields'    => array('xar_lid','xar_code'),
+        'unique'    => true
     );
-    if (!$result) {return;}
+    $query = xarDBCreateIndex($table_items,$index);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
 
     // Configure module variables.
     //xarModSetVar('example', 'bold', 0);
@@ -147,25 +153,24 @@ function lists_upgrade($oldversion)
 }
 
 /**
- * delete the lists module
- * This function is only ever called once during the lifetime of a particular
- * module instance
+ * Delete the lists module
+ *
  */
 function lists_delete()
 {
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-    
-    $table_lists = $xartable['lists_types'];
-    $table_items = $xartable['lists_items'];
-    /* Get a data dictionary object with item create and delete methods */
-    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
 
-    /* Drop the lists tables */
-     $result = $datadict->dropTable($table_lists);
-     $result = $datadict->dropTable($table_items);
-     
-    // Deletion successful
+    xarDBLoadTableMaintenanceAPI();
+
+    $query = xarDBDropTable($xartable['lists_types']);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+    
+    $query = xarDBDropTable($xartable['lists_items']);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
     return true;
 }
 
