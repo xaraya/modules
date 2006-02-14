@@ -96,17 +96,28 @@
             </xar:if>
 
             <td>
+
                 <a href="#xarModURL('categories', 'admin', 'modifycat', array('cid' => $loop:item['cid']))#" title="#xarML('Modify category')#">#$loop:item['catname']#</a>
+
+
             </td>
             <td style="text-align: center;">
                 <xar:comment> Pass the module and itemtype in for now - eventually just the bid will be sufficient </xar:comment>
-                <a href="#xarModURL('categories', 'admin', 'modifycatbase', array('bid' => $loop:item['bid'], 'modid' => $loop:item['modid'], 'itemtype' => $loop:item['itemtype']))#">
+                <xar:if condition="xarSecurityCheck('EditCategories',0)">
+                    <a href="#xarModURL('categories', 'admin', 'modifycatbase', array('bid' => $loop:item['bid'], 'modid' => $loop:item['modid'], 'itemtype' => $loop:item['itemtype']))#">
+                        <xar:mlstring>Modify</xar:mlstring>
+                    </a>
+                <xar:else />
                     <xar:mlstring>Modify</xar:mlstring>
-                </a>
+                </xar:if>
                 &nbsp;|&nbsp;
+                <xar:if condition="xarSecurityCheck('DeleteCategories',0)">
                 <a href="#xarModURL('categories', 'admin', 'deletecatbase', array('bid' => $loop:item['bid'], 'modid' => $loop:item['modid'], 'itemtype' => $loop:item['itemtype']))#">
                     <xar:mlstring>Delete</xar:mlstring>
                 </a>
+                <xar:else />
+                    <xar:mlstring>Delete</xar:mlstring>
+                </xar:if>
             </td>
         </tr>
         </xar:loop>
