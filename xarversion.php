@@ -1,4 +1,16 @@
 <?php
+/**
+ * Example Module - documented module template
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Example Module
+ * @link http://xaraya.com/index.php/release/36.html
+ * @author Example Module Development Team
+ */
 $modversion['name']           = 'example'; /* lowercase, no spaces or special chars */
 $modversion['id']             = '36';
 $modversion['version']        = '1.5.0'; /* three point version number */

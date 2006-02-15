@@ -130,6 +130,7 @@ function example_user_display($args)
         'user',
         'display',
         array('exid' => $exid));
+    $item['module'] = 'example';
     $hooks = xarModCallHooks('item',
         'display',
         $exid,
