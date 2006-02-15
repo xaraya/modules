@@ -1,6 +1,6 @@
 <?php
 /**
- * Example initialization functions
+ * Module initialization functions
  *
  * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
@@ -13,6 +13,7 @@
  */
 /**
  * Initialise the module
+ *
  * This function is only ever called once during the lifetime of a particular
  * module instance
  *
