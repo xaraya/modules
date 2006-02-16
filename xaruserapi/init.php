@@ -2,7 +2,7 @@
 /**
  * Create a valid link to a particular week
  *
- * @package julian
+ * @package modules
  * @copyright (C) 2005 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
