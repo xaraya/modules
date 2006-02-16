@@ -15,14 +15,11 @@
  * Build array with visual tree of categories (&nbsp;&nbsp;--+ style)
  * for use in &lt;select&gt; or table display
  *
- *  -- INPUT --
  * @param $args['cid'] The ID of the root category used for the tree
  * @param $args['eid'] optional ID to exclude from the tree (e.g. the ID of
  *                     your current category)
  * @param $args['return_itself'] include the cid itself (default false)
  *
- *  -- OUTPUT --
- * @returns array
  * @return array of array('id' => 123, 'name' => '&nbsp;&nbsp;--+&nbsp;My Cat')
  */
 function categories_visualapi_treearray ($args)
@@ -85,21 +82,4 @@ function categories_visualapi_treearray ($args)
     return $tree_data;
 
 }
-
-/**
- * Build array with visual tree of categories (&lt;ul&gt;&lt;li&gt;...&lt;/li&gt; style)
- * for use in view maps etc.
- *
- *  -- INPUT --
- * @param $args['cid'] The ID of the root category used for the tree
- * @param $args['eid'] optional ID to exclude from the tree (e.g. the ID of
- *                     your current category)
- *
- *  -- OUTPUT --
- * @returns array
- * @return array of array('id' => 123,
- *                        'name' => 'My Cat',
- *                        'beforetags' => '&lt;ul&gt;&lt;li&gt; ',
- *                        'aftertags' => ' &lt;/li&gt;&lt;/ul&gt;&lt;/ul&gt;')
- */
 ?>
