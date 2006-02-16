@@ -514,7 +514,7 @@
     <xar:if condition="xarSessionGetVar('statusmsg') ne ''">
         <p class="xar-error">#xarSessionGetVar('statusmsg')#</p>
     </xar:if>
-    <p><xar:mlstring>NOTE: Preview here currently uses the default template only.</xar:mlstring></p>
+    <p><xar:mlstring>NOTE: The Preview link uses the default SiteContact template. If you are having troubles with a custom sitecontact form and a custom template, you can test the sitecontact form with the default system template here. </xar:mlstring></p>
     <table class="xar-fullwidth">
 
         <tr>

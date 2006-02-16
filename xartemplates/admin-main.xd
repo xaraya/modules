@@ -109,9 +109,9 @@
     <ol>
             <li><xar:mlstring><strong>Hook Dynamic Data to Site Contact forms</strong> for either individual
             forms or all of them and setup your custom dynamic data property fields for each of your sitecontact forms.
-            Your Dynamic Data fields will be <strong>included by default</strong> in display templates or outgoing emails  - no need to add them manually. </xar:mlstring></li>
+            Your Dynamic Data fields will be <strong>included by default</strong> in display templates or outgoing emails  - no need to add them manually if you use the default sitecontact system template. </xar:mlstring><br /></li>
             <li><xar:mlstring>
-            You can further template the dynamic data output in the respective user display templates, and the email templates. You can also <strong>remove</strong> fields that you do not want displayed by editing the templates, or retemplate their output. Who said simple modules aren't powerful :)
+            You can customize the dynamic data output in the respective user display templates, and the email templates. It is recommended you copy the default system template and edit that, so you can see how the dynamic data is added in the template. You can also <strong>remove</strong> fields that you do not want displayed by editing the templates, or retemplate their output. Who said simple modules aren't powerful :)
             </xar:mlstring></li>
         </ol>
     <h3>
@@ -134,7 +134,7 @@
               </li>
          </ul>
          <p class="xar-sub">
-             <strong>&nbsp;<xar:mlstring>Sitecontact Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.5.2&nbsp; 2006-01-17
+             <strong>&nbsp;<xar:mlstring>Sitecontact Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.5.3&nbsp; 2006-02-12
          </p>
       </div>
 
