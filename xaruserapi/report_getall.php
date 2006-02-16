@@ -11,7 +11,7 @@ function reports_userapi_report_getall()
     $cols = &$xartables['reports_column'];
     
     $sql = "SELECT $cols[id],$cols[name],$cols[description],$cols[conn_id],$cols[xmlfile] "
-        ."FROM $tab";
+        ."FROM $tab ORDER BY $cols[name]";
     $res= $dbconn->Execute($sql);
     if ($res) {
         $ret = array();
