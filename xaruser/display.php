@@ -131,7 +131,10 @@ function legis_user_display($args)
       $data['cansethall']=false;
     }
 
-    if (xarSecurityCheck('EditLegis',0,'Item',"$item[cdtitle]:All:$item[cdid]") && $item['vetostatus']==0) { //fix this - refine the edit check later
+    if ((xarSecurityCheck('EditLegis',0,'Item',"$item[cdtitle]:All:$item[cdid]") && $item['vetostatus']==0) ||
+       (xarSecurityCheck('AdminLegis',0,'Item',"$item[cdtitle]:All:$item[cdid]") && $item['vetostatus']==1)
+       ) 
+    {
        $editlink=xarModURL('legis','admin','modify',array('cdid'=>$cdid));
     }else {
        $editlink='';
