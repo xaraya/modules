@@ -15,13 +15,9 @@
  * Build array with visual tree of categories (&lt;ul&gt;&lt;li&gt;...&lt;/li&gt; style)
  * for use in view maps etc.
  *
- *  -- INPUT --
  * @param $args['cid'] The ID of the root category used for the tree
  * @param $args['eid'] optional ID to exclude from the tree (e.g. the ID of
  *                     your current category)
- *
- *  -- OUTPUT --
- * @returns array
  * @return array of array('id' => 123,
  *                        'name' => 'My Cat',
  *                        'beforetags' => '&lt;ul&gt;&lt;li&gt; ',
