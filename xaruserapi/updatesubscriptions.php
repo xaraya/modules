@@ -43,11 +43,13 @@ function ebulletin_userapi_updatesubscriptions($args)
     if (!empty($subscriptions) && !is_array($subscriptions)) {
         $invalid[] = 'subscriptions';
     }
-    if (!$loggedin && !preg_match($email_regexp, $email)) {
-        $invalid[] = 'email';
-    }
-    if (!$loggedin && empty($name)) {
-        $invalid[] = 'name';
+    if (!$loggedin) {
+        if (!preg_match($email_regexp, $email)) {
+            $invalid[] = 'email';
+        }
+        if (empty($name)) {
+            $invalid[] = 'name';
+        }
     }
 
     if (count($invalid) > 0) {
@@ -67,8 +69,19 @@ function ebulletin_userapi_updatesubscriptions($args)
     // (note: this also deletes subscriptions to hidden publications,
     //  so the hidden ones must also be passed if those subscriptions
     //  are to be preserved.)
-    $query = "DELETE FROM $substable WHERE xar_email = ?";
-    $result = $dbconn->Execute($query, array($email));
+    $bindvars = array();
+    $query = "
+        DELETE FROM $substable
+        WHERE 1
+    ";
+    if ($loggedin) {
+        $query .= "AND xar_uid = ?";
+        $bindvars[] = $uid;
+    } else {
+        $query .= "AND xar_email = ?";
+        $bindvars[] = $email;
+    }
+    $result = $dbconn->Execute($query, $bindvars);
     if (!$result) return;
 
     // if no new subscriptions, we're done
