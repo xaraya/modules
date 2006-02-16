@@ -138,7 +138,7 @@
             <label for="votestatus" class="xar-form-label" title="#xarML('Select Passed or Not Passed')#">
                 <xar:mlstring>Vote Outcome:</xar:mlstring>
             </label>
-            <xar:if condition="($votestatus lt 1) and ($docstatus eq 2)">
+            <xar:if condition="(($votestatus lt 1) and ($docstatus eq 2)) or ($vetoedit eq 1)">
             <select name="votestatus" id="votestatus">
                  <xar:foreach in="$voteoptions" key="$k" value="$v">
                      <xar:if condition="$votestatus eq $k">
@@ -156,7 +156,7 @@
             <label for="vetostatus" class="xar-form-label" title="#xarML('Mark as Vetoed or Not Vetoed')#">
                 <xar:mlstring>Veto?:</xar:mlstring>
             </label>
-            <xar:if condition="$vetostatus lt 1 and $votestatus gt 0">
+            <xar:if condition="($vetostatus lt 1 and $votestatus gt 0) or ($vetoedit eq 1)">
             <select name="vetostatus" id="vetostatus">
                  <xar:foreach in="$vetooptions" key="$k" value="$v">
                      <xar:if condition="$vetostatus eq $k">

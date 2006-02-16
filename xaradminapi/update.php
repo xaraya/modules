@@ -41,7 +41,7 @@ function legis_adminapi_update($args)
     /*Check for exceptions */
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
-    if (!xarSecurityCheck('EditLegis', 1, 'Item', "All:All:$cdid")) {
+    if (!xarSecurityCheck('EditLegis',0,'Item',"$item[cdtitle]:All:$item[cdid]")) {
         return;
     }
     /* What do we need to update here and what should not be allowed for update
@@ -106,7 +106,8 @@ function legis_adminapi_update($args)
     if (!isset($vetostatus)) $vetostatus=$item['vetostatus'];
     if ($item['vetostatus'] > 0 ){
        $votestatus = $item['votestatus'];
-       $vetostatus = $item['vetostatus'];
+       $vetostatus = $item['vetostatus'];  
+       $vetodate = $item['vetodate'];           
     } elseif (($vetostatus >0)&& ($vetostatus <> $item['vetostatus'])){ //it has changed  from pending to veto or not veto
        $vetodate =time();
        if ($vetostatus == 1) {

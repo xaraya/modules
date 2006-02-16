@@ -125,6 +125,12 @@ function legis_admin_modify($args)
     }else {
        $editlink='';
     }
+    if (xarSecurityCheck('AdminLegis',0,'Item',"$item[cdtitle]:All:$item[cdid]")){
+       $vetoedit=1;
+    }else {
+       $vetoedit=0;
+    }
+    $item['vetoedit']=$vetoedit;
     $item['editlink']=$editlink;
     $item['module'] = 'legis';
     $hooks = xarModCallHooks('item', 'modify', $cdid, $item);
