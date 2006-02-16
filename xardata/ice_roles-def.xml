@@ -3,7 +3,7 @@
   <label>CommerceRole</label>
   <moduleid>27</moduleid>
   <itemtype>1000</itemtype>
-  <parent>1</parent>
+  <parent>3</parent>
   <urlparam>itemid</urlparam>
   <maxid>0</maxid>
   <config></config>
