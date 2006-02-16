@@ -19,8 +19,15 @@
  * form supplied by xarModFunc('maxercalls','admin','new') to create a new item
  *
  * @author Maxercalls module development team
- * @param  $ 'name' the name of the item to be created
- * @param  $ 'number' the number of the item to be created
+ * @param array invalid
+ * @param int personid
+ * @param int ric
+ * @param int maxernumber The number to reach the maxer
+ * @param int function
+ * @param int maxerstatus The status of the maxer
+ * @param string program What is this maxer used for?
+ * @raise
+ * @return bool true or raise error
  */
 function maxercalls_admin_createmaxer($args)
 {
@@ -28,7 +35,7 @@ function maxercalls_admin_createmaxer($args)
     extract($args);
 
     if (!xarVarFetch('objectid',    'id',     $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('invalid',     'array',  $invalid,  array(), XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('invalid',     'array', $invalid,  array(), XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('personid',    'int:1:', $personid,  $personid,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('ric',         'int:1:', $ric,  $ric,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('maxernumber', 'int:1:', $maxernumber,  $maxernumber,  XARVAR_NOT_REQUIRED)) return;
