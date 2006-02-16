@@ -1,6 +1,6 @@
 <?php
 /**
- * Example property
+ * Example Module property
  *
  * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
@@ -13,7 +13,7 @@
  */
 
 /**
- * Example property - Handle the textbox property
+ * Example Module property - Handle the textbox property
  *
  * @author mikespub <mikespub@xaraya.com>
  * @author Example Module development team

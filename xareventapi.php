@@ -1,6 +1,6 @@
 <?php
 /**
- * Example event handler
+ * Example Module event handler
  *
  * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
@@ -13,9 +13,9 @@
  */
 
 /**
- * Example event handler for the system event ServerRequest
+ * Example Module event handler for the system event ServerRequest
  *
- * this function is called when the system triggers the
+ * This function is called when the system triggers the
  * event in index.php on each Server Request
  *
  * @author the Example module development team

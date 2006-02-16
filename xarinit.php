@@ -1,6 +1,6 @@
 <?php
 /**
- * Module initialization functions
+ * Example Module - initialization functions
  *
  * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation

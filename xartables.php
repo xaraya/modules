@@ -14,7 +14,7 @@
 /**
  * Table definition functions
  *
- * Return example table names to xaraya
+ * Return Example module table names to xaraya
  *
  * This function is called internally by the core whenever the module is
  * loaded. It is loaded by xarMod__loadDbInfo().

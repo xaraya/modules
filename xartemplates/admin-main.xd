@@ -5,7 +5,7 @@
   <span class="xar-mod-title"><xar:mlstring>Example Administration</xar:mlstring></span>
 </div>
 <div class="xar-mod-body">
-  <img src="modules/example/xarimages/admin.gif" class="xar-module-icon" alt="official icon" width="96" height="96" />
+  <img src="#xarTplGetImage('admin.gif','example')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
 
   <h2><xar:mlstring>Overview</xar:mlstring></h2>
 
