@@ -12,7 +12,6 @@
  * @author mikespub
  *
  */
-
 /**
  * modify block settings
  * @author Jim McDonald
@@ -48,7 +47,7 @@ function articles_topitemsblock_modify($blockinfo)
         array('id' => '2,3', 'name' => xarML('All Published')),
         array('id' => '3', 'name' => xarML('Frontpage')),
         array('id' => '2', 'name' => xarML('Approved'))
-    );                                       
+    );
 
     $vars['blockid'] = $blockinfo['bid'];
     // Return output

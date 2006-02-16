@@ -1,8 +1,19 @@
 <?php
-
+/**
+ * Articles module
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Articles Module
+ * @link http://xaraya.com/index.php/release/151.html
+ * @author mikespub
+ */
 /**
  * get array of configurable fields for publication types
-// TODO: add dynamic fields here for .81+
+ * @TODO: add dynamic fields here for .81+
  * @returns array
  * @return array('title'   => array('label'  => xarML('...'),
                                     'format' => '...',

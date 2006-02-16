@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Articles module
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Articles Module
+ * @link http://xaraya.com/index.php/release/151.html
+ * @author mikespub
+ */
 /**
  * get array of links and counts for publication types
  * @param $args['ptid'] optional publication type ID for which you *don't*
@@ -9,7 +20,6 @@
  * @param $args['status'] array of requested status(es) for the articles
  * @param $args['func'] optional function to be called with the link
  * @param $args['count'] true (default) means counting the number of articles
- * @returns array
  * @return array of array('pubtitle' => descr,
  *                        'pubid' => id,
  *                        'publink' => link,

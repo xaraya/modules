@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Articles module
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Articles Module
+ * @link http://xaraya.com/index.php/release/151.html
+ * @author mikespub
+ */
 /**
  * get overview of all articles
  * Note : the following parameters are all optional
@@ -15,7 +26,7 @@
  * @param $args['searchfields'] array of fields to search in
  * @param $args['searchtype'] start, end, like, eq, gt, ... (TODO)
  * @param $args['cids'] array of category IDs for which to get articles (OR/AND)
- *                      (for all categories don´t set it)
+ *                      (for all categories don?t set it)
  * @param $args['andcids'] true means AND-ing categories listed in cids
  * @param $args['pubdate'] articles published in a certain year (YYYY), month (YYYY-MM) or day (YYYY-MM-DD)
  * @param $args['startdate'] articles published at startdate or later
@@ -216,7 +227,7 @@ function articles_userapi_getall($args)
         $from .= ' ON ' . $usersdef['field'] . ' = ' . $articlesdef['authorid'];
         $addme = 1;
     }
-    
+
     if (!empty($required['counter']) && isset($hitcountdef)) {
         // add this for SQL compliance when there are multiple JOINs
         // bug 4429: sqlite doesnt like the parentheses

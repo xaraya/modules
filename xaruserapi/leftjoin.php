@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Articles module
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Articles Module
+ * @link http://xaraya.com/index.php/release/151.html
+ * @author mikespub
+ */
 /**
  * return the field names and correct values for querying (or joining on)
  * the articles table
@@ -216,7 +227,7 @@ function articles_userapi_leftjoin($args)
         $searchfields = array('title','summary','body');
     }
 
-    if (!empty($search)) 
+    if (!empty($search))
     {
         // TODO : improve + make use of full-text indexing for recent MySQL versions ?
 
@@ -309,7 +320,7 @@ function articles_userapi_leftjoin($args)
                 }
             }
         }
-        
+
         $whereclauses[] = '(' . join(' OR ',$find) . ')';
     }
     if (count($whereclauses) > 0) {

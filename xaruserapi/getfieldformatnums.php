@@ -1,11 +1,21 @@
 <?php
-
 /**
-// TODO: move this to some common place in Xaraya (base module ?)
-// + replace with dynamic_propertytypes table
+ * Articles module
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Articles Module
+ * @link http://xaraya.com/index.php/release/151.html
+ * @author mikespub
+ */
+/**
  * get array of field formats numbers for publication types
-// TODO: extend with other pre-defined formats
- * @returns array
+ * @TODO: move this to some common place in Xaraya (base module ?)
+ * + replace with dynamic_propertytypes table
+ * + extend with other pre-defined formats
  * @return array('static'  => 1,
                  'textbox' => 2,
                  ...);

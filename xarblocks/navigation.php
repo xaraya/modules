@@ -1,13 +1,19 @@
 <?php
-// File: $Id$
-// ----------------------------------------------------------------------
-// Xaraya eXtensible Management System
-// Copyright (C) 2002 by the Xaraya Development Team.
-// http://www.xaraya.org
-// ----------------------------------------------------------------------
-// Original Author of file: Jim McDonald
-// Purpose of file: Categories Navigation Block
-// ----------------------------------------------------------------------
+/**
+ * Articles module Categories Navigation Block
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Articles Module
+ * @link http://xaraya.com/index.php/release/151.html
+ * @author mikespub
+ */
+/**
+ * Original Author of file: Jim McDonald
+ */
 
 /**
  * initialise block
@@ -145,7 +151,7 @@ function articles_navigationblock_display($blockinfo)
                 'itemtype'=>(empty($itemtype) ? NULL : $itemtype)
             )
           );
-          
+
         if (empty($numcats)) {
             // no categories to show here -> return empty output
             return;
@@ -161,7 +167,7 @@ function articles_navigationblock_display($blockinfo)
                 'itemtype' => (empty($itemtype) ? NULL : $itemtype)
             )
         );
-        
+
         if (empty($mastercids)) {
             // no categories to show here -> return empty output
             return;
@@ -330,7 +336,7 @@ function articles_navigationblock_display($blockinfo)
             if (empty($cids) || sizeof($cids) <= 0) {
               return;
             }// if
-            
+
             $cid = current($cids);
             $data['cid'] = $cid;
 
@@ -340,11 +346,11 @@ function articles_navigationblock_display($blockinfo)
             if (empty($parents)) {
                 return;
             }// if
-            
+
             $root = '';
             $parentid = 0;
             foreach ($parents as $id => $info) {
-              $articles = xarModAPIFunc('articles', 'user', 'getall', 
+              $articles = xarModAPIFunc('articles', 'user', 'getall',
                                         array('cid'=>$info['cid'],
                                               'ptid'=>$itemtype,
                                               'fields'=>array('aid','title')
@@ -356,7 +362,7 @@ function articles_navigationblock_display($blockinfo)
               }// foreach
 
               $label = xarVarPrepForDisplay($info['name']);
-              
+
               if (isset($articles[$label])) {
                 $link = xarModURL($modname,$type,'display',
                                   array('ptid' => $itemtype,
@@ -367,7 +373,7 @@ function articles_navigationblock_display($blockinfo)
                                   array('itemtype' => $itemtype,
                                         'catid' => $info['cid']));
               }// if
-              
+
               if (empty($root)) {
                 $link = xarModURL('', '', '');
                 $root = $label;
@@ -383,12 +389,12 @@ function articles_navigationblock_display($blockinfo)
                                     'catlink' => $link,
                                     'catcount' => $count);
             }// foreach
-    
+
             $data['cattrees'][] = array('catparents' => $catparents);
             $data['crumbSeparator'] = '&nbsp;>&nbsp;';
             break;
-            
-            
+
+
 
         case 1: // tree
         default:
@@ -399,28 +405,28 @@ function articles_navigationblock_display($blockinfo)
             if (empty($cids) || sizeof($cids) <= 0) {
               return;
             }// if
-            
+
             $cid = current($cids);
-            
+
             $cat = xarModAPIFunc('categories','user','getcatinfo',
                                  array('cid' => $cid));
-                                 
+
             $blockinfo['title'] = xarVarPrepForDisplay($cat['name']);
             if (isset($cat['blockimage'])) {
               $data['catimage'] = $cat['blockimage'];
             }// if
 
-            
+
             # Get child categories
             $childrenCategories = xarModAPIFunc('categories','user','getchildren',
                                      array('cid' => $cid));
-                                     
-                                     
+
+
             # get all the pubtypes so we can digest the ids
             $pubtypes = xarModAPIFunc('articles', 'user', 'getpubtypes', array());
-            
+
             # get immediate items in current category
-            $items = xarModAPIFunc('articles', 'user', 'getall', 
+            $items = xarModAPIFunc('articles', 'user', 'getall',
                                       array('cids'=>array($cid),
                                             'fields'=>array('aid', 'pubtypeid', 'title')
                                             )
@@ -436,28 +442,28 @@ function articles_navigationblock_display($blockinfo)
                                   array('aid'       => $item['aid'],
                                         'itemtype'  => $item['pubtypeid'],
                                         'catid'     => $cid));
-                                        
+
                 $count = 0;
                 $items[$k] = array('label' => $label,
                                    'aid' => $item['aid'],
                                    'class'=>$class,
                                    'link' => $link);
-                                   
+
                 $tmpArticles[$pubtypes[$item['pubtypeid']]['descr']][] = $items[$k];
               }// if
             }// foreach
             $items = $tmpArticles;
             unset($tmpArticles);
 
-                                 
+
             if (empty($itemid) && empty($andcids)) {
                 $link = '';
             }
-            
+
             $catitems = array();
             if (!empty($childrenCategories) && count($childrenCategories) > 0) {
               foreach ($childrenCategories as $child) {
-                  $articles = xarModAPIFunc('articles', 'user', 'getall', 
+                  $articles = xarModAPIFunc('articles', 'user', 'getall',
                                             array('cid'=>$child['cid'],
                                                   'ptid'=>$itemtype,
                                                   'fields'=>array('aid','title')
@@ -467,9 +473,9 @@ function articles_navigationblock_display($blockinfo)
                     $articles[$article['title']] = $article['aid'];
                     unset($articles[$k]);
                   }// foreach
-                                            
+
                   $clabel = xarVarPrepForDisplay($child['name']);
-                
+
                   if (isset($articles[$clabel])) {
                     $clink = xarModURL($modname,$type,'display',
                                       array('ptid' => $itemtype,
@@ -480,7 +486,7 @@ function articles_navigationblock_display($blockinfo)
                                       array('itemtype' => $itemtype,
                                             'catid' => $child['cid']));
                   }// if
-                  
+
                   if (!empty($catcount[$child['cid']])) {
                       $ccount = $catcount[$child['cid']];
                   } else {
@@ -493,7 +499,7 @@ function articles_navigationblock_display($blockinfo)
                                          'catchildren'=>array());
               }// foreach
             }// if
-            
+
             if (sizeof($catitems) > 0 || sizeof($items) > 0) {
               $data['cattrees'][] = array('catitems' => $catitems,
                                           'items' => $items);

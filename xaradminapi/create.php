@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Articles module
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Articles Module
+ * @link http://xaraya.com/index.php/release/151.html
+ * @author mikespub
+ */
 /**
  * Create a new article
  * Usage : $aid = xarModAPIFunc('articles', 'admin', 'create', $article);
@@ -134,15 +145,15 @@ function articles_adminapi_create($args)
               xar_status,
               xar_language)
             VALUES (?,?,?,?,?,?,?,?,?,?)";
-    $bindvars = array($nextId, 
-                      (string)  $title, 
-                      (string)  $summary, 
-                      (string)  $body, 
-                      (int)     $authorid, 
-                      (int)     $pubdate, 
-                      (int)     $ptid, 
-                      (string)  $notes, 
-                      (int)     $status, 
+    $bindvars = array($nextId,
+                      (string)  $title,
+                      (string)  $summary,
+                      (string)  $body,
+                      (int)     $authorid,
+                      (int)     $pubdate,
+                      (int)     $ptid,
+                      (string)  $notes,
+                      (int)     $status,
                       (string)  $language);
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;

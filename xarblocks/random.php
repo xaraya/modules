@@ -12,7 +12,6 @@
  * @author mikespub
  *
  */
-
 /**
  * initialise block
  * @author Roger Keays
@@ -72,7 +71,7 @@ function articles_randomblock_display($blockinfo)
     } else {
         $vars = $blockinfo['content'];
     }
-    
+
     // frontpage or approved status
     if (empty($vars['status'])) {
             $statusarray = array(2,3);
@@ -108,9 +107,9 @@ function articles_randomblock_display($blockinfo)
     if (empty($vars['pubtypeid'])) {
         $vars['pubtypeid'] = 0;
     }
-    
+
     if (!empty($vars['catfilter'])) {
-        // use admin defined category 
+        // use admin defined category
         $cidsarray = array($vars['catfilter']);
         $cid = $vars['catfilter'];
     } else {
@@ -124,7 +123,7 @@ function articles_randomblock_display($blockinfo)
     }
 
     if (empty($vars['numitems'])) $vars['numitems'] = 1;
-    
+
     $articles = xarModAPIFunc('articles','user','getrandom',
                               array('ptid'     => $vars['pubtypeid'],
                                     'cids'     => $cidsarray,
@@ -134,7 +133,7 @@ function articles_randomblock_display($blockinfo)
                                     'numitems' => $vars['numitems'],
                                     'fields'   => $fields,
                                     'unique'   => true));
-                                    
+
     if (!isset($articles) || !is_array($articles) || count($articles) == 0) {
         return;
     } else {

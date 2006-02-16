@@ -12,7 +12,6 @@
  * @author mikespub
  *
  */
-
 /**
  * modify block settings
  * @author Roger Keays
@@ -85,7 +84,7 @@ function articles_randomblock_update($blockinfo)
     xarVarFetch('showsubmit', 'checkbox', $vars['showsubmit'], false, XARVAR_NOT_REQUIRED);
     xarVarFetch('showdynamic', 'checkbox', $vars['showdynamic'], false, XARVAR_NOT_REQUIRED);
     xarVarFetch('linkpubtype', 'checkbox', $vars['linkpubtype'], false, XARVAR_NOT_REQUIRED);
-    
+
     $vars['blockid'] = $blockinfo['bid'];
     $blockinfo['content'] = $vars;
     return $blockinfo;

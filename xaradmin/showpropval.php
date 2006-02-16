@@ -1,17 +1,16 @@
 <?php
 /**
- * File: $Id$
+ * Articles module
  *
- * Show the validation rule of some articles field
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage articles module
- * @author mikespub <mikespub@xaraya.com>
-*/
+ * @subpackage Articles Module
+ * @link http://xaraya.com/index.php/release/151.html
+ * @author mikespub
+ */
 /**
  * Show validation of some property
  */

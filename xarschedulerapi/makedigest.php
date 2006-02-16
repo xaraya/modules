@@ -1,11 +1,22 @@
 <?php
-
+/**
+ * Articles module
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Articles Module
+ * @link http://xaraya.com/index.php/release/151.html
+ * @author mikespub
+ */
 /**
  * make a digest of new articles (executed by the scheduler module)
  * e.g. for sending out to users, for use by the pubsub module, ...
- * 
+ *
  * @author mikespub
- * @access public 
+ * @access public
  */
 function articles_schedulerapi_makedigest($args)
 {

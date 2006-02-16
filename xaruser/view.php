@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Articles module
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage articles Module
+ * @link http://xaraya.com/index.php/release/151.html
+ * @author mikespub
+ */
 /**
  * view articles
  *
@@ -268,7 +279,7 @@ function articles_user_view($args)
     $data['viewpager'] = '';
 
     // Add Sort to data passed to template so that we can automatically turn on alpha pager, if needed
-    $data['sort'] = $sort;    
+    $data['sort'] = $sort;
 
     // Add current display letter, so that we can highlight the current filter in the alpha pager
     $data['letter']=$letter;
@@ -817,7 +828,7 @@ function articles_user_view($args)
         if (!isset($columns[$col])) {
             $columns[$col] = array();
         }
-        
+
         // RSS Processing
         $current_theme = xarVarGetCached('Themes.name', 'CurrentTheme');
         if (($current_theme == 'rss') or ($current_theme == 'atom')){
@@ -853,7 +864,7 @@ function articles_user_view($args)
         $columns[$col][] = xarTplModule('articles', 'user', 'summary', $article, $template);
         $number++;
     }
-    
+
     unset($articles);
     if ($showcategories) {
         unset($GLOBALS['artviewcatinfo']);
@@ -964,7 +975,7 @@ function articles_user_view($args)
  * sorting function for article categories
  */
 
-function articles_view_sortbyroot ($a,$b) 
+function articles_view_sortbyroot ($a,$b)
 {
     if ($GLOBALS['artviewcatinfo'][$a]['root'] == $GLOBALS['artviewcatinfo'][$b]['root']) {
         return articles_view_sortbyleft($a,$b);
@@ -978,7 +989,7 @@ function articles_view_sortbyleft ($a,$b)
     return ($GLOBALS['artviewcatinfo'][$a]['left'] > $GLOBALS['artviewcatinfo'][$b]['left']) ? 1 : -1;
 }
 
-function articles_view_sortbyorder ($a,$b) 
+function articles_view_sortbyorder ($a,$b)
 {
     if ($GLOBALS['artviewcatinfo'][$a]['order'] == $GLOBALS['artviewcatinfo'][$b]['order']) {
         return articles_view_sortbyleft($a,$b);

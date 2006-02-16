@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Articles module
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Articles Module
+ * @link http://xaraya.com/index.php/release/151.html
+ * @author mikespub
+ */
 /**
  * extract function and arguments from short URLs for this module, and pass
  * them back to xarGetRequestInfo()
@@ -15,7 +26,7 @@ function articles_userapi_decode_shorturl($params)
     $module = 'articles';
 
     $foundalias = 0;
-    
+
     // Check if we're dealing with an alias here
     if ($params[0] != $module) {
         $alias = xarModGetAlias($params[0]);
@@ -41,7 +52,7 @@ function articles_userapi_decode_shorturl($params)
             $settings = unserialize($string);
         }
     }
-    
+
     // check if we want to decode URLs using their titles rather then their ID
     $decodeUsingTitle = empty($settings['usetitleforurl']) ? 0 : $settings['usetitleforurl'];
 
@@ -60,7 +71,7 @@ function articles_userapi_decode_shorturl($params)
             $args['catid'] = $catid;
         }
         return array('search', $args);
- 
+
     } elseif (preg_match('/^(\d+)$/',$params[1],$matches)) {
         $aid = $matches[1];
         $args['aid'] = $aid;
@@ -101,7 +112,7 @@ function articles_userapi_decode_shorturl($params)
             }
         }
 
-        // Decode should return the same array of arguments that was passed to encode        
+        // Decode should return the same array of arguments that was passed to encode
         if( strpos($catid,'+') === FALSE )
         {
             $args['cids'] = explode('-',$catid);
@@ -109,7 +120,7 @@ function articles_userapi_decode_shorturl($params)
             $args['cids'] = explode('+',$catid);
             $args['andcids'] = TRUE;
         }
-        
+
         return array('view', $args);
 
     } elseif ($params[1] == 'c') {
@@ -135,7 +146,7 @@ function articles_userapi_decode_shorturl($params)
                     } elseif (preg_match('/^c(_?[0-9 +-]+)/',$params[2],$matches)) {
                         $catid = $matches[1];
                         $args['catid'] = $catid;
-                        // Decode should return the same array of arguments that was passed to encode        
+                        // Decode should return the same array of arguments that was passed to encode
                         if( strpos($catid,'+') === FALSE )
                         {
                             $args['cids'] = explode('-',$catid);
@@ -164,7 +175,7 @@ function articles_userapi_decode_shorturl($params)
                     } else {
                         // Now that we find out that we're in a specific pubtype, get specific pubtype settings again
                         $settings = unserialize(xarModGetVar('articles', 'settings.'.$args['ptid']));
-        
+
                         // check if we want to decode URLs using their titles rather then their ID
                         $decodeUsingTitle = empty($settings['usetitleforurl']) ? 0 : $settings['usetitleforurl'];
 
@@ -182,7 +193,7 @@ function articles_userapi_decode_shorturl($params)
                 }
             }
         }
-        
+
         // Decode using title
         if( $decodeUsingTitle )
         {
@@ -218,16 +229,16 @@ function articles_decodeAIDUsingTitle( $params, $ptid = '', $decodeUsingTitle = 
     // so some urls get cut off -- my test cases included parens and commans "this(here)" and "that,+there"
     // So lets parse the path info manually here.
     //
-    // DONE: fix xarServer.php, line 421 to properly deal with this 
+    // DONE: fix xarServer.php, line 421 to properly deal with this
     // xarServer.php[421] :: preg_match_all('|/([a-z0-9_ .+-]+)|i', $path, $matches);
     //
     // I've movded the following code into xarServer to fix this problem.
-    // 
+    //
     //     $pathInfo = xarServerGetVar('PATH_INFO');
     //     preg_match_all('|/([^/]+)|i', $pathInfo, $matches);
-    //     $params = $matches[1];                        
+    //     $params = $matches[1];
 
-    if( isset($ptid) && !empty($ptid) ) 
+    if( isset($ptid) && !empty($ptid) )
     {
         $searchArgs['ptid'] = $ptid;
         $paramidx = 2;
@@ -251,14 +262,14 @@ function articles_decodeAIDUsingTitle( $params, $ptid = '', $decodeUsingTitle = 
         }
     }
     $paramidx++;
-    
+
     $decodedTitle = str_replace("\\'","'", $decodedTitle);
     $searchArgs['search'] = $decodedTitle;
     $searchArgs['searchfields'] = array('title');
     $searchArgs['searchtype'] = 'equal whole string';
 
     $articles = xarModAPIFunc('articles', 'user', 'getall', $searchArgs);
-    
+
     if( (count($articles) == 0) && (strpos($decodedTitle,'_') !== false) )
     {
         $searchArgs['search'] = str_replace('_',' ',$decodedTitle);
@@ -266,12 +277,12 @@ function articles_decodeAIDUsingTitle( $params, $ptid = '', $decodeUsingTitle = 
         $searchArgs['searchtype'] = 'equal whole string';
         $articles = xarModAPIFunc('articles', 'user', 'getall', $searchArgs);
     }
-    
+
     if( count($articles) == 1 )
     {
         $theArticle = $articles[0];
     } else {
-        // NOTE: We could probably just loop through the various dupe detection methods rather then 
+        // NOTE: We could probably just loop through the various dupe detection methods rather then
         // pulling from a config variable.  This would allow old URLs encoded using one system
         // to keep working even if the configuration changes.
         switch( $dupeResolutionMethod )
@@ -290,7 +301,7 @@ function articles_decodeAIDUsingTitle( $params, $ptid = '', $decodeUsingTitle = 
                     }
                 }
                 break;
-                
+
             case 'Append Date':
                 // Look for date appended after title
                 if( !empty($params[$paramidx]) )
@@ -323,7 +334,7 @@ function articles_decodeAIDUsingTitle( $params, $ptid = '', $decodeUsingTitle = 
                     }
                 }
                 break;
-                
+
             case 'Ignore':
             default:
                 // Just use the first one that came back

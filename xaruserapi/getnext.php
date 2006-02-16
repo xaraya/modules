@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Articles module
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Articles Module
+ * @link http://xaraya.com/index.php/release/151.html
+ * @author mikespub
+ */
 /**
  * get next article
  * Note : the following parameters are all optional (except aid and ptid)
@@ -53,14 +64,14 @@ function articles_userapi_getnext($args)
 
     // Get current article
     $current = xarModAPIFunc('articles','user','get',array('aid' => $aid));
-    
+
      // Create the ORDER BY part
     switch($sort) {
     case 'title':
         $query .= $articlesdef['title'] . ' > ' . $dbconn->qstr($current['title']) . ' ORDER BY ' . $articlesdef['title'] . ' ASC, ' . $articlesdef['aid'] . ' ASC';
         break;
     case 'aid':
-        $query .= $articlesdef['aid'] . ' > ' . $current['aid'] . ' ORDER BY ' . $articlesdef['aid'] . ' ASC';    
+        $query .= $articlesdef['aid'] . ' > ' . $current['aid'] . ' ORDER BY ' . $articlesdef['aid'] . ' ASC';
         break;
     case 'data':
     default:
