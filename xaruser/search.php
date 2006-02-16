@@ -22,27 +22,26 @@ function legis_user_search()
     if (!xarVarFetch('q',         'isset',  $q,        NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('bool',      'isset',  $bool,     NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('sort',      'isset',  $sort,     NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('cdtitle',   'str:0:', $cdtitle  ,NULL,   XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('doccontent','str:0:', $doccontent, NULL,   XARVAR_DONT_SET)) return;
-   if (!xarVarFetch('contributors','str:0:', $contributors, NULL,   XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('cdnum',     'int:0:',   $cdnum,    NULL,    XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('cdid',      'int:0:',   $cdid,      NULL,    XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('dochall',   'str:0:',   $dochall,  NULL,    XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('docstatus', 'int:0:',   $docstatus,  NULL,    XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('cdtitle',   'checkbox', $cdtitle  , NULL,   XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('doccontent','checkbox', $doccontent,  NULL,   XARVAR_DONT_SET)) return;
+   if (!xarVarFetch('contributors','checkbox', $contributors,  NULL,   XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('cdnum',     'checkbox',   $cdnum,     NULL,    XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('cdid',      'checkbox',   $cdid,      NULL,    XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('dochall',   'checkbox',   $dochall,   NULL,    XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('docstatus', 'checkbox',   $docstatus,  NULL,    XARVAR_DONT_SET)) return;
     //if (!xarVarFetch('uid',       'id',     $uid,      NULL, XARVAR_NOT_REQUIRED)) return;
     if(!xarVarFetch('author',     'isset',  $author,   NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('authorsearch','isset',  $authorsearch,   NULL, XARVAR_DONT_SET)) {return;}
     $data       = array();
     $search     = array();
-
      if (!isset($q) || strlen(trim($q)) <= 0) {
-        if (isset($author) && strlen(trim($author)) > 0) {
+        if (isset($author) && (strlen(trim($author)) > 0) && $contributors) {
             $q = $author;
             $search['author']=$author;
             $data['authorsearch']=1;
         }
     } else {
-        $search['author']='';
+        //$search['author']=null;
         $data['authorsearch']=0;
     }
 
@@ -56,21 +55,21 @@ function legis_user_search()
     if (!isset($numitems)) {
         $numitems = 10;
     }
-    if (isset($cdnum)) {
+    if ($cdnum) {
         $search['cdnum'] = $q;
         $data['cdnum']=1;
     } else {
         $data['cdnum']=0;
         $cdnum=0;
     }
-    if (isset($docstatus)) {
+    if ($docstatus) {
         $search['docstatus'] = $q;
         $data['docstatus']=1;
     } else {
         $data['docstatus']=0;
         $docstatus=0;
     }
-    if (isset($cdtitle)) {
+    if ($cdtitle) {
         $data['cdtitle']=1;
         $search['cdtitle'] = $q;
     } else {
@@ -78,14 +77,14 @@ function legis_user_search()
         $cdtitle='';
     }
 
-    if (isset($contributors) && isset($author)) {
+    if ($contributors)  {
         $data['contributors']=1;
         $search['contributors'] = $q;
     } else {
         $data['contributors']=0;
         $contributors='';
     }
-    if (isset($doccontent)) {
+    if ($doccontent) {
          $search['doccontent'] = $q;
          $data['doccontent'] = 1;
     } else {
@@ -95,7 +94,7 @@ function legis_user_search()
     $halldata=xarModAPIFunc('legis','user','getsethall');
     $halls=$halldata['halls'];
     $data['halls']=$halls;
-    if (isset($dochall)) {
+    if ($dochall) {
       //check for a hall
          $data['dochall']=0;
          $dochall=0;
@@ -111,8 +110,8 @@ function legis_user_search()
     }
 
     //Check to see if this doc hall exists or not
-
     $search['q']=$q;
+
     $seach['modid']= xarModGetIDFromName('legis');
     /* Search for legislation information */
     $data['legis'] = xarModAPIFunc('legis','user','search',$search);

@@ -21,8 +21,9 @@
  */
 function legis_userapi_search($args)
 {
-    if (empty($args) || count($args) < 1) {
-        return;
+    $legisdocs = array();
+    if (empty($args) || count($args) <= 1 ) {
+        return false;
     }
     extract($args);
 
@@ -34,7 +35,7 @@ function legis_userapi_search($args)
     $xartable =& xarDBGetTables();
     $LegisCompiledTable = $xartable['legis_compiled'];
     $where = '';
-    $legisdocs = array();
+
     $sql = "SELECT  xar_cdid,
                     xar_cdnum,
                     xar_cdtitle,
@@ -79,21 +80,25 @@ function legis_userapi_search($args)
         $sql .= " xar_dochall = ?";
         $bindvars[] = $dochall;
     }
+
     if (isset($docstatus)) {
           if (isset($cdnum) || isset($cdtitle) || isset($doccontent) || isset($contributors) || isset($dochall)) {
             $sql .= " OR ";
         }
-        $sql .= " xar_docstatus = 1";
+        $sql .= " xar_docstatus = 1 OR xar_docstatus = 2 ";
     }
+
     if (!isset($docstatus)){
            if (isset($cdnum) || isset($cdtitle) || isset($doccontent) || isset($contributors) || isset($dochall)) {
-            $sql .= " OR ";
+            $sql .= " AND xar_docstatus = 2 ";
         }
-        $sql .= " xar_docstatus = 2";
+        //$sql .= " xar_docstatus = 2";
     }
+
     $sql .= ")  ORDER BY xar_cdid ASC";
 
     $result =& $dbconn->Execute($sql, $bindvars);
+
     if (!$result) return;
     // no results to return .. then return them :p
     if ($result->EOF) {
@@ -102,7 +107,7 @@ function legis_userapi_search($args)
     for (; !$result->EOF; $result->MoveNext()) {
         list($cdid, $cdnum, $cdtitle, $contributors, $doccontent, $dochall) = $result->fields;
         if (xarSecurityCheck('ReadLegis', 0)) {
-            $legsdocs[] = array('cdid' => $cdid,
+            $legisdocs[] = array('cdid' => $cdid,
                                 'cdnum' => $cdnum,
                                 'cdtitle' => $cdtitle,
                                 'contributors' => $contributors,
@@ -113,7 +118,7 @@ function legis_userapi_search($args)
     $result->Close();
 
     // Return the releases
-    return $legsdocs;
+    return $legisdocs;
 
 }
 ?>

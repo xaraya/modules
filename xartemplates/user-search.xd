@@ -46,7 +46,7 @@
     :
 </p>
 <p>
-    <xar:if condition="isset($cdnum) && $cdnum eq 1">
+    <xar:if condition="isset($cdnum) && $cdnum eq '1'">
         <input type="checkbox" name="cdnum" id="cdnum" value="1" checked="checked" />
     <xar:else />
         <input type="checkbox" name="cdnum" id="cdnum" value="1" />
@@ -58,7 +58,7 @@
 
 <p>
 
-    <xar:if condition="isset($cdtitle) && $cdtitle eq 1">
+    <xar:if condition="isset($cdtitle) && $cdtitle eq '1'">
     <input type="checkbox" name="cdtitle" id="cdtitle" value="1" checked="checked" />
     <xar:else />
     <input type="checkbox" name="cdtitle" id="cdtitle" value="1" />
@@ -69,7 +69,7 @@
 
 </p>
 <p>
-    <xar:if condition="isset($dochall) && $dochall eq 1">
+    <xar:if condition="isset($dochall) && $dochall eq '1'">
     <input type="checkbox" name="dochall" id="dochall" value="1" checked="checked" />
     <xar:else />
     <input type="checkbox" name="dochall" id="dochall" value="1" />
@@ -80,7 +80,7 @@
 </p>
 <p>
 
-    <xar:if condition="isset($doccontent) && $doccontent eq 1">
+    <xar:if condition="isset($doccontent) && $doccontent eq '1'">
     <input type="checkbox" name="doccontent" id="doccontent" value="1" checked="checked" />
     <xar:else />
     <input type="checkbox" name="doccontent" id="doccontent" value="1" />
@@ -92,7 +92,7 @@
 </p>
 <p>
 
-    <xar:if condition="isset($contributors) && $contributors eq 1">
+    <xar:if condition="isset($contributors) && $contributors eq '1'">
     <input type="checkbox" name="contributorst" id="contributors" value="1" checked="checked" />
     <xar:else />
     <input type="checkbox" name="contributors" id="contributors" value="1" />
@@ -103,7 +103,7 @@
 
 </p>
 <p>
-    <xar:if condition="isset($docstatus) && $docstatus eq 1">
+    <xar:if condition="isset($docstatus) && $docstatus eq '1'">
         <input type="checkbox" name="docstatus" id="docstatus" value="1" checked="checked" />
     <xar:else />
         <input type="checkbox" name="docstatus" id="docstatus" value="1" />
@@ -112,41 +112,3 @@
         Include Pending?
     </xar:mlstring>
 </p>
-<!--
-<p>
-
-    <xar:if condition="isset($displname) and $displname eq '1'">
-    <input type="checkbox" name="displname" id="displname" value="1" checked="checked" />
-    <xar:else />
-    <input type="checkbox" name="displname" id="displname" value="1" />
-    </xar:if>
-    <xar:mlstring>
-        Display Name
-    </xar:mlstring>
-
-</p>
-<p>
-
-    <xar:if condition="isset($desc) and $desc eq '1'">
-    <input type="checkbox" name="desc" id="desc" value="1" checked="checked" />
-    <xar:else />
-    <input type="checkbox" name="desc" id="desc" value="1" />
-    </xar:if>
-    <xar:mlstring>
-        Extension Description
-    </xar:mlstring>
-
-</p>
-<p>
-
-    <xar:if condition="isset($authorsearch) && $authorsearch eq 1">
-    <input type="checkbox" name="authorsearch" id="authorsearch" value="1" checked="checked" />
-    <xar:else />
-    <input type="checkbox" name="authorsearch" id="authorsearch" value="1" />
-    </xar:if>
-   <xar:mlstring>
-        Extension Author
-    </xar:mlstring>
-
-</p>
--->
