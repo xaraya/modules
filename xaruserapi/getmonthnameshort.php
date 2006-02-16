@@ -1,10 +1,8 @@
 <?php
 /**
- * File: $Id$
- *
  * Decode the short URLs for Julian
  *
- * @package julian
+ * @package modules
  * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com

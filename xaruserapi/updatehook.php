@@ -2,7 +2,7 @@
 /**
  * process date/time for the modified item - hook for ('item','update','API')
  *
- * @package julian
+ * @package modules
  * @copyright (C) 2005 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -16,6 +16,7 @@
  * process date/time for the modified item - hook for ('item','update','API')
  *
  * @author Jorn
+ * @param hook.all
  */
 function julian_userapi_updatehook($args)
 {

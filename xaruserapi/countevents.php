@@ -10,9 +10,7 @@
  * @subpackage Julian Module
  * @link http://xaraya.com/index.php/release/319.html
  * @author Julian Module Development Team
-
-*/
-
+ */
 /**
  * Utility function to count the number of Events in the Calendar.
  *

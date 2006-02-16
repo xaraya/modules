@@ -1,9 +1,7 @@
 <?PHP
 /**
- *    will return array of events for the date range specified for the current user
- *    @params $startdate string valid date as YYYY-MM-DD
- *    @params $enddate string valid date as YYYY-MM-DD
- *    @return array events for the range specified
+ * Julian module get all events and place in date array
+ *
  * @package modules
  * @copyright (C) 2004 by Metrostat Technologies, Inc.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -23,7 +21,9 @@
  *
  * @author Jodie Razdrh/John Kevlin/David St.Clair MichelV (Michelv@xarayahosting.nl)
  * initial template: Roger Raymond
-
+ *    will return array of events for the date range specified for the current user
+ *    @param $startdate string valid date as YYYY-MM-DD
+ *    @param $enddate string valid date as YYYY-MM-DD
  * @access  public / private / protected
  * @param   int $startnum Description of parameter 1
  * @param   int $numitems Description of parameter 2
@@ -31,7 +31,7 @@
  * @param   date $startdate The starting date for the selection
  * @param   date $enddate The end date for the selection
  * @param   orderby sortby catid
- * @return  array $event_data
+ * @return array events for the range specified $event_data
  * @throws  list of exception identifiers which can be thrown
  * @todo    Michel V. <#> Move the array formatting to a seperate function so this becomes a real getall
  */

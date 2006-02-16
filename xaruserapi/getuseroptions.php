@@ -2,7 +2,7 @@
 /**
  * Julian Calendar
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2005 by Metrostat Technologies, Inc.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.metrostat.net

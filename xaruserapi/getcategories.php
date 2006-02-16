@@ -13,6 +13,10 @@
  *
  * @return array array(cid => info_array)
  */
+/**
+ * get the categories stored in Julian
+ * @todo MichelV <1> Move category properties to module variables
+ */
 function julian_userapi_getcategories()
 {
     // establish a db connection
