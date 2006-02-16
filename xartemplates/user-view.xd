@@ -30,59 +30,23 @@
   <input type="hidden" name="parentid" id="parentid" value="#$parentid#" />
   <input type="hidden" name="modname" id="modname" value="#$modname#" />
   <input type="hidden" name="objectid" id="objectid" value="#$objectid#" />
-  <table border="0" width="80%">
-    <tr><th align="center"><xar:mlstring>Tasks</xar:mlstring></th></tr>
+  <table style="border: none; width: 100%">
+    <tr><th style="text-align: center;"><xar:mlstring>Tasks</xar:mlstring></th></tr>
     <tr><td>
-      <table border="1" width="100%">
+      <table style="border: 1px; width: 100%">
         <tr>
-          <th><xar:mlstring>Tasks</xar:mlstring></th>
-          <th><xar:mlstring>Description</xar:mlstring></th>
-          <th><xar:mlstring>?</xar:mlstring></th>
-          <th><xar:mlstring>!</xar:mlstring></th>
-          <th><xar:mlstring>X</xar:mlstring></th>
-          <th><xar:mlstring>X/%</xar:mlstring></th>
-          <th><xar:mlstring>Options</xar:mlstring></th>
+          <th style="text-align: left;"><xar:mlstring>Tasks</xar:mlstring></th>
+          <th style="text-align: left;"><xar:mlstring>Description</xar:mlstring></th>
+          <th style="text-align: center;"><xar:mlstring>?</xar:mlstring></th>
+          <th style="text-align: center;"><xar:mlstring>!</xar:mlstring></th>
+          <th style="text-align: center;"><xar:mlstring>X</xar:mlstring></th>
+          <th style="text-align: center;"><xar:mlstring>X/%</xar:mlstring></th>
+          <th style="text-align: center;"><xar:mlstring>Options</xar:mlstring></th>
         </tr>
         <xar:loop name="$tasks">
           <!-- TODO: base background color on depth -->
-          <tr valign="middle">
-            <td align="left" width="100%" colspan="2">
-              <b>#$loop:item['indent']#<a href="#$loop:item['url']#">#$loop:item['name']#</a></b>
-            </td>
-            <td align="center">#$loop:item['private']#</td>
-            <td align="center">#$loop:item['priority']#</td>
-            <td align="center">#$loop:item['closed']#</td>
-            <td align="center">#$loop:item['closedsubtasks']# / #$loop:item['ttlsubtasks']# </td>
-            <td align="center">
-              <input type="checkbox" name="taskcheck[#$loop:item['id']#]" id="taskcheck[#$loop:item['id']#]" value="1"/>
-              <input type="submit" name="taskfocus[#$loop:item['id']#" value=" + "/>
-            </td>
-          </tr>
-          <!-- TODO: base background color on depth -->
-          <tr>
-            <td align="left" valign="top" width="30%">
-              <xar:if condition="$loop:item['depth'] eq 1">
-                #$loop:item['indent']#[<xar:mlstring>created</xar:mlstring>:#$loop:item['date_created']#]<br/>
-                #$loop:item['indent']#[<xar:mlstring>modified</xar:mlstring>:#$loop:item['date_changed']#]<br/>
-              </xar:if>
-              <xar:if condition="$loop:item['depth'] <=2">
-                #$loop:item['indent']#[<xar:mlstring>creator</xar:mlstring>: #$loop:item['creator']#]<br/>
-                #$loop:item['indent']#[<xar:mlstring>assigned to</xar:mlstring>: #$loop:item['owner']#]
-              </xar:if>
-              &nbsp;
-            </td>
-            <td align="left" valign="top" width="100% colspan="6">
-              #$loop:item['description']#
-              <xar:if condition="xarModGetVar('tasks','showoptions')">
-                [<i>
-                <xar:foreach in="$options" value="$link">
-                  <a href="#$link#>test</a>
-                </xar:foreach>
-                </i>]
-              </xar:if>
-            </td>
-            
-          </tr>
+          <xar:set name="$task">#$loop:item#</xar:set>
+          <xar:template file="taskrow" subdata="array('task' =&gt; $task, 'options' =&gt; $options)" />
         </xar:loop>
         <tr>
           <td colspan="6" align="right">

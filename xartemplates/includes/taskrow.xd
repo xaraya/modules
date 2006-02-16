@@ -1,0 +1,45 @@
+<tr>
+    <td style="text-align: left;" colspan="2">
+        <b>#$task['indent']#<a href="#$task['url']#">#$task['name']#</a></b>
+    </td>
+    <td style="text-align: center;">
+        #$task['private']#
+    </td>
+    <td style="text-align: center;">
+        #$task['priority']#
+    </td>
+    <td style="text-align: center;">
+        #$task['closed']#
+    </td>
+    <td style="text-align: center;">
+        #$task['closedsubtasks']# / #$task['ttlsubtasks']# 
+    </td>
+    <td style="text-align: center;">
+        <input type="checkbox" name="taskcheck[#$task['id']#]" id="taskcheck[#$task['id']#]" value="1"/>
+        <input type="submit" name="taskfocus[#$task['id']#" value=" + "/>
+    </td>
+</tr>
+    <!-- TODO: base background color on depth -->
+<tr>
+    <td style="text-align: left; width: 30%" valign="top" width="30%">
+        <xar:if condition="$task['depth'] eq 1">
+            #$task['indent']#[<xar:mlstring>created</xar:mlstring>:#$task['date_created']#]<br/>
+            #$task['indent']#[<xar:mlstring>modified</xar:mlstring>:#$task['date_changed']#]<br/>
+        </xar:if>
+        <xar:if condition="$task['depth'] ge 2">
+            #$task['indent']#[<xar:mlstring>creator</xar:mlstring>: #$task['creator']#]<br/>
+            #$task['indent']#[<xar:mlstring>assigned to</xar:mlstring>: #$task['owner']#]
+        </xar:if>
+        &nbsp;
+    </td>
+    <td style="text-align: left;" valign="top" colspan="6">
+        #$task['description']#
+        <xar:if condition="xarModGetVar('tasks','showoptions')">
+            [<i>
+            <xar:foreach in="$options" value="$link">
+                <a href="#$link#">test</a>
+            </xar:foreach>
+            </i>]
+        </xar:if>
+    </td>
+</tr>
