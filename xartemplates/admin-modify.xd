@@ -112,7 +112,8 @@
 
    </fieldset>
 <!-- end preview -->
-<xar:if condition="$vetostatus lt 1">
+
+<xar:if condition="$editlink ne ''">
     <fieldset>
         <legend><xar:mlstring>Doc Status and Editor Notes</xar:mlstring></legend>
         <div class="xar-form-input-wrapper">

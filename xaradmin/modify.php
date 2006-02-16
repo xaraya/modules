@@ -116,9 +116,16 @@ function legis_admin_modify($args)
             return;
         }
     }
-    if (!xarSecurityCheck('EditLegis', 1, 'Item', "All:All:$cdid")) {
-        return;
+
+    if ((xarSecurityCheck('EditLegis',0,'Item',"$item[cdtitle]:All:$item[cdid]") && $item['vetostatus']==0) ||
+       (xarSecurityCheck('AdminLegis',0,'Item',"$item[cdtitle]:All:$item[cdid]") && $item['vetostatus']==1)
+       ) 
+    {
+       $editlink=xarModURL('legis','admin','modify',array('cdid'=>$cdid));
+    }else {
+       $editlink='';
     }
+    $item['editlink']=$editlink;
     $item['module'] = 'legis';
     $hooks = xarModCallHooks('item', 'modify', $cdid, $item);
 
