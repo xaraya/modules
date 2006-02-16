@@ -17,12 +17,11 @@
  * This is a standard adminapi function to create a module item
  *
  * @author the Maxercalls module development team
- * @param  $args ['ric'] unique number of the pager
- * @param  $args ['personid'] number of person carrying this pager
- * @param status
- * @param etc
- * @returns int
- * @return maxercalls item ID on success, false on failure
+ * @param int $args ['ric'] unique number of the pager
+ * @param int $args ['personid'] number of person carrying this pager
+ * @param int $args ['status']
+ * @param string $args['remark'] Additional info on maxer
+ * @return int maxercalls item ID on success, false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function maxercalls_adminapi_createmaxer($args)
