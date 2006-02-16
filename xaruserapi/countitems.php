@@ -17,8 +17,7 @@
  *
  * @author the Courses module development team
  * @param $catid Category id.
- * @returns integer
- * @return number of items held by this module
+ * @return integer. Number of items held by this module
  * @raise DATABASE_ERROR
  */
 function courses_userapi_countitems($args)

@@ -1,14 +1,14 @@
 <?php
 /**
  * Others block initialisation
- * 
- * @package Xaraya eXtensible Management System
+ *
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Courses
- * @author Courses module development team 
+ * @author Courses module development team
  */
 
 /**
@@ -108,12 +108,12 @@ function courses_othersblock_display($blockinfo)
                     'courses', 'user', 'display',
                     array('courseid' => $courseid)
                 );
-                
+
             }
             $item['name'] = $name;
-        } 
+        }
         $items[] = $item;
-    } 
+    }
 
     $blockinfo['content'] = array('items' => $items);
 

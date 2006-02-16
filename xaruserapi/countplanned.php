@@ -2,7 +2,7 @@
 /**
  * Utility function counts number planned courses
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -16,8 +16,7 @@
  *
  * @author the Courses module development team
  * @param $catid Category id.
- * @returns integer
- * @return number of items held by this module
+ * @return integer. Number of items held by this module
  * @raise DATABASE_ERROR
  */
 function courses_userapi_countplanned($args)

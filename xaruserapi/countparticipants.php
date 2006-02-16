@@ -2,7 +2,7 @@
 /**
  * Utility function counts number of items held by this module
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -13,11 +13,10 @@
 /**
  * utility function to count the number of participants per planned course
  *
- * @author Michel V.
+ * @author MichelV <michelv@xarayahosting.nl>
  *
  * @param planningid ID for the course
- * @returns integer
- * @return number of participants
+ * @return integer. Number of participants
  * @raise DATABASE_ERROR
  */
 function courses_userapi_countparticipants($args)

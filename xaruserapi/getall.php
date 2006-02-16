@@ -2,7 +2,7 @@
 /**
  * Get all courses
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -21,7 +21,6 @@
  * @param id catid category id
  * @param id level courselevelid
  * @param id type coursetypeid
- * @returns array
  * @return array of items, or false on failure
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */

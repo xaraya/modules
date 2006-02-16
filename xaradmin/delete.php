@@ -1,9 +1,9 @@
 <?php
 /**
- * 
+ *
  * Standard function to delete a DD item
- * 
- * @package Xaraya eXtensible Management System
+ *
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -23,8 +23,8 @@
  */
 function courses_admin_delete($args)
 {
-    extract($args);    
-    
+    extract($args);
+
     // Get Vars
     if (!xarVarFetch('itemid',    'id',    $itemid,    NULL, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('itemtype',  'id',    $itemtype,  NULL, XARVAR_NOT_REQUIRED)) {return;}
@@ -88,7 +88,7 @@ function courses_admin_delete($args)
         $data['authid']   = xarSecGenAuthKey();
         // Empty the status message
         xarSessionSetVar('statusmsg', '');
-        
+
         // Return the template variables defined in this function
         return $data;
     }
@@ -97,10 +97,10 @@ function courses_admin_delete($args)
     // so check the Auth Key
     if (!xarSecConfirmAuthKey()) return;
     /* Delete the item */
-    
+
     $itemid = $object->deleteItem();
     //if (empty($itemid)) return;
-    
+
     /* Set the session var to confirm the deletion */
     xarSessionSetVar('statusmsg', xarML('Item deleted'));
     /* Redirect back */

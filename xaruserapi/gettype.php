@@ -2,7 +2,7 @@
 /**
  * Utility function to get DD item for type
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -16,7 +16,7 @@
  *
  * @author Brian McGilligan
  * @param $args['itemtype'] - Item type
- * @returns list of items of the item type
+ * @return array list of items of the item type
  */
 function courses_userapi_gettype($args)
 {

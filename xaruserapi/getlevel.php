@@ -16,7 +16,7 @@
  *
  * @author Brian McGilligan
  * @param $args['itemtype'] - Item type
- * @returns list of items of the item type
+ * @return array list of items of the item type
  */
 function courses_userapi_getlevel($args)
 {

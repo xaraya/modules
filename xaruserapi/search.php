@@ -11,13 +11,12 @@
  * @link http://xaraya.com/index.php/release/179.html
  * @author courses Development team
  */
-
 /**
  * Searches all courses
  *
  * @author MichelV (original: J. Cox) <michelv@xaraya.com>
  * @access private
- * @returns mixed description of return
+ * @return array with courses found
  */
 function courses_userapi_search($args)
 {

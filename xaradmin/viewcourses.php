@@ -1,17 +1,17 @@
 `<?php
 /**
  * Admin function to view items
- * 
- * @package Xaraya eXtensible Management System
+ *
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Courses Module
  * @link http://xaraya.com/index.php/release/179.html
- * @author Courses module development team 
+ * @author Courses module development team
  */
- 
+
 /**
  * Admin view of all courses
  * @param ['catid'] ID of category , defaults to NULL
@@ -20,8 +20,8 @@ function courses_admin_viewcourses()
 {
     if (!xarVarFetch('startnum', 'int:1:', $startnum, '1',   XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('catid',    'isset',  $catid,    NULL,  XARVAR_DONT_SET))     return;
-    if (!xarVarFetch('sortby',   'str:1:', $sortby,   'name'))                     return; 
-    if (!xarVarFetch('sortorder','enum:DESC:ASC:', $sortorder,   'DESC',  XARVAR_NOT_REQUIRED))return;        
+    if (!xarVarFetch('sortby',   'str:1:', $sortby,   'name'))                     return;
+    if (!xarVarFetch('sortorder','enum:DESC:ASC:', $sortorder,   'DESC',  XARVAR_NOT_REQUIRED))return;
     // Initialise the $data variable
     $data = xarModAPIFunc('courses', 'admin', 'menu');
     // Initialise the variable that will hold the items, so that the template
@@ -74,7 +74,7 @@ function courses_admin_viewcourses()
             $items[$i]['editurl'] = '';
         }
         $items[$i]['edittitle'] = xarML('Edit');
-        
+
         if (xarSecurityCheck('ReadCourses', 0, 'Course', "$courseid:All:All")) {
             $items[$i]['displayurl'] = xarModURL('courses',
                 'user',
@@ -83,7 +83,7 @@ function courses_admin_viewcourses()
         } else {
             $items[$i]['displayurl'] = '';
         }
-        
+
         if (xarSecurityCheck('DeleteCourses', 0, 'Course', "$courseid:All:All")) {
             $items[$i]['deleteurl'] = xarModURL('courses',
                 'admin',
@@ -103,7 +103,7 @@ function courses_admin_viewcourses()
     $data['catid'] = $catid;
     $data['sortorder'] = $sortorder;
     $data['sortby'] = $sortby;
-    
+
     // Create sort by URLs
     if ($sortby != 'name' ) {
         $data['snamelink'] = xarModURL('courses',
@@ -122,7 +122,7 @@ function courses_admin_viewcourses()
                                        'viewcourses',
                                        array('startnum' => 1,
                                              'sortby' => 'shortdesc',
-                                             'sortorder' => $sortorder,                                             
+                                             'sortorder' => $sortorder,
                                              'catid' => $catid));
     } else {
         $data['sdesclink'] = '';
@@ -133,12 +133,12 @@ function courses_admin_viewcourses()
                                         'viewcourses',
                                         array('startnum' => 1,
                                               'sortby' => 'number',
-                                              'sortorder' => $sortorder,                                             
+                                              'sortorder' => $sortorder,
                                               'catid' => $catid));
     } else {
         $data['snumberlink'] = '';
     }
-    
+
     // Return the template variables defined in this function
     return $data;
 }

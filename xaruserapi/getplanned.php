@@ -2,7 +2,7 @@
 /**
  * Get a planned course
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2005 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -14,10 +14,9 @@
 /**
  * get a specific planned course
  *
- * @author Michel V.
+ * @author MichelV
  * @param planningid $ ID of a specific planned course
- * @returns array
- * @return item with array of parameter, or false on failure
+ * @return array item with array of parameters, or false on failure
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function courses_userapi_getplanned($args)

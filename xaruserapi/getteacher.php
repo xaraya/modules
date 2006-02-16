@@ -16,7 +16,6 @@
  *
  * @author the Courses module development team
  * @param tid $ the ID of the teacher to get
- * @returns array
  * @return array of items, or false on failure
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */

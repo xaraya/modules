@@ -20,7 +20,6 @@
  * @param int catid $ category id for this planned course
  * @param str sortby $ what to sort by (default planningid)
  * @param str sortorder $how to sort (default DESC)
- * @returns array
  * @return array of items, or false on failure
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */

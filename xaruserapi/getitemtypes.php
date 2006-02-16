@@ -14,8 +14,7 @@
 /**
  * utility function to retrieve the list of item types of this module
  *
- * @author MichelV
- * @returns array
+ * @author MichelV <michelv@xarayahosting.nl>
  * @return array containing the item types and their description
  */
 function courses_userapi_getitemtypes($args)

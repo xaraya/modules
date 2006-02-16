@@ -1,7 +1,7 @@
 <?php
 /**
  * Extract function and arguments from short URLs for this module
- * 
+ *
  * @package modules
  * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -9,15 +9,14 @@
  *
  * @subpackage Courses Module
  * @link http://xaraya.com/index.php/release/179.html
- * @author Courses module development team 
+ * @author Courses module development team
  */
 /**
  * extract function and arguments from short URLs for this module, and pass
  * them back to xarGetRequestInfo()
- * 
- * @author the Courses module development team 
+ *
+ * @author the Courses module development team
  * @param  $params array containing the different elements of the virtual path
- * @returns array
  * @return array containing func the function to be called and args the query
  *          string arguments, or empty if it failed
  */
@@ -37,7 +36,7 @@ function courses_userapi_decode_shorturl($params)
     if ($params[0] != $module) { // it's possibly some type of alias
         $aliasname = xarModGetVar('courses','aliasname');
     }
-    
+
     // Analyse the different parts of the virtual path
     // $params[1] contains the first part after index.php/example
     // In general, you should be strict in encoding URLs, but as liberal

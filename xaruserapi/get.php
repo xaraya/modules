@@ -15,9 +15,8 @@
  * get a specific course
  *
  * @author the Courses module development team
- * @param  $args ['courseid'] id of course item to get
- * @returns array
- * @return item array, or false on failure
+ * @param  id courseid id of course item to get
+ * @return array with item, or false on failure
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function courses_userapi_get($args)

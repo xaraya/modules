@@ -16,15 +16,14 @@
  *
  * @author Michel V.
  * @author the Courses module development team
- * @param  $args ['courseid'] The ID of the coursename to get
- * @param $args['planningid'] The ID of the planning, if courseid is not set
- * @return string
- * @return $name
+ * @param id courseid The ID of the coursename to get
+ * @param id planningid The ID of the planning, if courseid is not set
+ * @return string $name
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function courses_userapi_getcoursename($args)
 {
-    if (!xarSecurityCheck('ViewCourses')) return;    
+    if (!xarSecurityCheck('ViewCourses')) return;
 
     extract($args);
     if ((!isset($courseid) || !is_numeric($courseid)) && (!isset($planningid) || !is_numeric($planningid))) {

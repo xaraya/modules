@@ -16,7 +16,6 @@
  *
  * @param  int $args ['itemtype'] item type (optional)
  * @param  array $args ['itemids'] array of item ids to get
- * @returns array
  * @return array containing the itemlink(s) for the item(s).
  * @todo implement this function for planned courses and courses themselves
  */

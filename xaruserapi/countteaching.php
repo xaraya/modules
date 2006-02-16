@@ -1,24 +1,23 @@
 <?php
 /**
  * Count the number courses a user is a teacher in
- * 
- * @package Xaraya eXtensible Management System
+ *
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Courses Module
  * @link http://xaraya.com/index.php/release/179.html
- * @author Courses module development team 
+ * @author Courses module development team
  */
 /**
  * utility function to count the number courses a user is a teacher in
- * 
+ *
  * @author Michel V.
  *
  * @param uid UserID for the user that is a teacher
- * @returns integer
- * @return number of courses
+ * @return integer. Number of courses
  * @raise DATABASE_ERROR
  */
 function courses_userapi_countteaching($args)
