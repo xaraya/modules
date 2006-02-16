@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Change Log Module version information
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage changelog
+ * @link http://xaraya.com/index.php/release/185.html
+ * @author mikespub
+ */
 /**
  * create an entry for a module item - hook for ('item','create','GUI')
  * Optional $extrainfo['changelog_remark'] from arguments, or 'changelog_remark' from input
@@ -117,7 +128,7 @@ function changelog_adminapi_createhook($args)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     $bindvars = array($nextId,
-                      (int) $modid, 
+                      (int) $modid,
                       (int) $itemtype,
                       (int) $objectid,
                       (int) $editor,

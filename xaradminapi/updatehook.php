@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Change Log Module version information
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage changelog
+ * @link http://xaraya.com/index.php/release/185.html
+ * @author mikespub
+ */
 /**
  * update entry for a module item - hook for ('item','update','API')
  * Optional $extrainfo['changelog_remark'] from arguments, or 'changelog_remark' from input

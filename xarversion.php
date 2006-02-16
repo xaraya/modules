@@ -1,13 +1,14 @@
 <?php
 /**
- * File: $Id$
+ * Change Log Module version information
  *
- * Change Log initialization functions
- *
- * @copyright (C) 2003 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
+ *
  * @subpackage changelog
+ * @link http://xaraya.com/index.php/release/185.html
  * @author mikespub
  */
 $modversion['name']           = 'Change Log';
@@ -24,7 +25,6 @@ $modversion['author']         = 'mikespub';
 $modversion['contact']        = 'http://www.xaraya.com/';
 $modversion['admin']          = 1;
 $modversion['user']           = 0;
-$modversion['securityschema'] = array('ChangeLog::Item' => 'Module ID:Item Type:Item ID');
 $modversion['class']          = 'Utility';
 $modversion['category']       = 'Miscellaneous';
 ?>

@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Change Log Module version information
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage changelog
+ * @link http://xaraya.com/index.php/release/185.html
+ * @author mikespub
+ */
 /**
  * get a particular entry for a module item
  *
@@ -7,7 +18,6 @@
  * @param $args['itemtype'] item type
  * @param $args['itemid'] item id
  * @param $args['logid'] log id
- * @returns array
  * @return array of changes
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
@@ -59,7 +69,7 @@ function changelog_adminapi_getversion($args)
                   ON $changelogtable.xar_editor = $rolestable.xar_uid
                WHERE $changelogtable.xar_moduleid = ?
                  AND $changelogtable.xar_itemtype = ?
-                 AND $changelogtable.xar_itemid = ? 
+                 AND $changelogtable.xar_itemid = ?
                  AND $changelogtable.xar_logid = ?";
 
     $bindvars = array((int) $modid, (int) $itemtype, (int) $itemid, (int) $logid);

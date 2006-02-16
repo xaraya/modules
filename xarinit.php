@@ -1,16 +1,16 @@
 <?php
 /**
- * File: $Id$
+ * Change Log Module version information
  *
- * Change Log initialization functions
- *
- * @copyright (C) 2003 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
+ *
  * @subpackage changelog
+ * @link http://xaraya.com/index.php/release/185.html
  * @author mikespub
  */
-
 /**
  * initialise the changelog module
  * This function is only ever called once during the lifetime of a particular
@@ -203,7 +203,7 @@ function changelog_delete()
     if (!$result) return;
 
     // Delete any module variables
-    xarModDelVar('changelog', 'SupportShortURLs'); 
+    xarModDelVar('changelog', 'SupportShortURLs');
 
     // Remove module hooks
 /* // nothing to do here
@@ -242,15 +242,15 @@ function changelog_delete()
     if (!xarModUnregisterHook('item', 'usermenu', 'GUI',
             'changelog', 'user', 'usermenu')) {
         return false;
-    } 
+    }
 */
 
     // Remove Masks and Instances
     xarRemoveMasks('changelog');
-    xarRemoveInstances('changelog'); 
+    xarRemoveInstances('changelog');
 
     // Deletion successful
     return true;
-} 
+}
 
 ?>

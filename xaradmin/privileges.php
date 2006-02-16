@@ -1,10 +1,21 @@
 <?php
-
+/**
+ * Change Log Module version information
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage changelog
+ * @link http://xaraya.com/index.php/release/185.html
+ * @author mikespub
+ */
 /**
  * Manage definition of instances for privileges (unfinished)
  */
 function changelog_admin_privileges($args)
-{ 
+{
     // Security Check
     if (!xarSecurityCheck('AdminChangeLog')) return;
 
@@ -114,6 +125,6 @@ function changelog_admin_privileges($args)
     $data['applylabel'] = xarML('Finish and Apply to Privilege');
 
     return $data;
-} 
+}
 
 ?>

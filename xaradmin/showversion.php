@@ -1,10 +1,21 @@
 <?php
-
+/**
+ * Change Log Module version information
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage changelog
+ * @link http://xaraya.com/index.php/release/185.html
+ * @author mikespub
+ */
 /**
  * show a particular version of a module item
  */
 function changelog_admin_showversion($args)
-{ 
+{
     extract($args);
 
     if (!xarVarFetch('modid',    'isset', $modid,    NULL, XARVAR_NOT_REQUIRED)) {return;}

@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Change Log Module version information
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage changelog
+ * @link http://xaraya.com/index.php/release/185.html
+ * @author mikespub
+ */
 /**
  * get the number of changes for a list of items
  * @param $args['modname'] name of the module you want items from, or
@@ -61,7 +72,7 @@ function changelog_userapi_getitems($args)
     $changelogtable = $xartable['changelog'];
 
     // Get items
-    $query = "SELECT xar_itemid, 
+    $query = "SELECT xar_itemid,
                      COUNT(*) as numchanges
                 FROM $changelogtable
                WHERE xar_moduleid = ?

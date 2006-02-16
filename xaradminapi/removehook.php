@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Change Log Module version information
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage changelog
+ * @link http://xaraya.com/index.php/release/185.html
+ * @author mikespub
+ */
 /**
  * delete all entries for a module - hook for ('module','remove','API')
  *
@@ -47,10 +58,10 @@ function changelog_adminapi_removehook($args)
     $changelog = $xartable['changelog'];
 
     // Delete the entries
-    $queryl = "DELETE 
+    $queryl = "DELETE
                  FROM $changelog
                 WHERE xar_moduleid = ?";
-    
+
     $bindvars = array((int) $modid);
 
     $result =& $dbconn->Execute($query, $bindvars);

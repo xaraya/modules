@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Change Log Module version information
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage changelog
+ * @link http://xaraya.com/index.php/release/185.html
+ * @author mikespub
+ */
 /**
  * delete changelog entries
  *
@@ -34,7 +45,7 @@ function changelog_adminapi_delete($args)
         if (empty($itemtype) || !is_numeric($itemtype)) {
             $itemtype = 0;
         }
-        $query .= " WHERE xar_moduleid = ? 
+        $query .= " WHERE xar_moduleid = ?
                       AND xar_itemtype = ?";
 
         $bindvars[] = (int) $modid;

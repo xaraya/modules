@@ -1,17 +1,28 @@
 <?php
-
+/**
+ * Change Log Module version information
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage changelog
+ * @link http://xaraya.com/index.php/release/185.html
+ * @author mikespub
+ */
 /**
  * Delete changelog entries of module items
  */
 function changelog_admin_delete()
-{ 
+{
     // Security Check
     if(!xarSecurityCheck('AdminChangeLog')) return;
 
     if(!xarVarFetch('modid',    'isset', $modid,     NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('itemtype', 'isset', $itemtype,  NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('itemid',   'isset', $itemid,    NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return; 
+    if(!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return;
 
     // Check for confirmation.
     if (empty($confirm)) {
@@ -37,12 +48,12 @@ function changelog_admin_delete()
                 }
             }
         }
-        $data['confirmbutton'] = xarML('Confirm'); 
+        $data['confirmbutton'] = xarML('Confirm');
         // Generate a one-time authorisation code for this operation
-        $data['authid'] = xarSecGenAuthKey(); 
+        $data['authid'] = xarSecGenAuthKey();
         // Return the template variables defined in this function
         return $data;
-    } 
+    }
 
     if (!xarSecConfirmAuthKey()) return;
 
