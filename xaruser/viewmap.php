@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Articles module
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage articles Module
+ * @link http://xaraya.com/index.php/release/151.html
+ * @author mikespub
+ */
 /**
  * view article map
  */
@@ -19,7 +30,7 @@ function articles_user_viewmap($args)
     // Override if needed from argument array
     extract($args);
 
-    $default = xarModGetVar('articles','defaultpubtype'); 
+    $default = xarModGetVar('articles','defaultpubtype');
     if (empty($by)) {
         if (empty($default) && empty($ptid)) {
             $by = 'cat';
