@@ -1,17 +1,22 @@
 <?php
 /**
- * Table definition file
+ * Julian table definitions
  *
  * @package modules
- * @copyright (C) 2002 by the Xaraya Calendar Team
- * @link http://www.xarcalendar.com
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
  *
- * @author Roger Raymond <roger@asphyxia.com>
+ * @subpackage Julian Module
+ * @link http://xaraya.com/index.php/release/319.html
+ * @author Julian Module development team
  */
-
 /**
  * This function is called internally by the core
  * whenever the module is loaded.
+ * @author Roger Raymond <roger@asphyxia.com>
+ * @author MichelV <michelv@xaraya.com>
+ * @return array with all tables in this module
  */
 function julian_xartables()
 {
@@ -21,18 +26,6 @@ function julian_xartables()
     // set up the events table
     $events = xarDBGetSiteTablePrefix() . '_julian_events';
     $xartable['julian_events'] = $events;
-
-    // set up the tasks table
-    //$attendee = xarDBGetSiteTablePrefix() . '_julian_attendees';
-    //$xartable['julian_attendees'] = $attendee;
-
-    // set up the calendar share table
-    //$shares = xarDBGetSiteTablePrefix() . '_julian_shares';
-    //$xartable['julian_shares'] = $shares;
-
-    // set up the calendar alarms table
-    //$alarms = xarDBGetSiteTablePrefix() . '_julian_alarms';
-    //$xartable['julian_alarms'] = $alarms;
 
     // set up the categories table for the upgrade function
     $categories = xarDBGetSiteTablePrefix() . '_julian_categories';
