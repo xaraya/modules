@@ -1,20 +1,21 @@
 <?php
 /**
- * Dynamic Example initialization functions
+ * Logconfig initialization functions
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @package modules
+ * @copyright (C) 2003-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage logconfig
- * @author Example module development team
+ * @subpackage Logconfig Module
+ * @link http://xaraya.com/index.php/release/6969.html
+ * @author Logconfig module development team
  */
-
 /**
- * initialise the example module
+ * initialise the logconfig module
  * This function is only ever called once during the lifetime of a particular
  * module instance
+ * @return bool true on success
  */
 function logconfig_init()
 {
@@ -31,7 +32,7 @@ function logconfig_init()
 
     /**
      * import the object definition and properties from some XML file (exported from DD)
-     * FIXME: this SUCCEEDS, but the objects are not correct. The loglevel property will 
+     * FIXME: this SUCCEEDS, but the objects are not correct. The loglevel property will
      * only be available after *this* module is active, so the import makes this a 'static text' property
      * Q: it should fail?
      * Q: with a slight modification, we could use the dd api function importprops to import the property
@@ -77,6 +78,8 @@ function logconfig_init()
 /**
  * upgrade the example module from an old version
  * This function can be called multiple times
+ * @param string oldversion
+ * @return bool true on success
  */
 function logconfig_upgrade($oldversion)
 {
@@ -97,9 +100,10 @@ function logconfig_upgrade($oldversion)
 }
 
 /**
- * delete the example module
+ * delete the logconfig module
  * This function is only ever called once during the lifetime of a particular
  * module instance
+ * @return bool true on success
  */
 function logconfig_delete()
 {

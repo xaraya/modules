@@ -1,23 +1,21 @@
 <?php
 /**
- * File: $Id$
+ * Logconfig initialization functions
  *
- * Dynamic Radio Button Property
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @package modules
+ * @copyright (C) 2003-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage dynamicdata properties
- * @author nuncanada <nuncanada@xaraya.com>
-*/
-
+ * @subpackage Logconfig Module
+ * @link http://xaraya.com/index.php/release/6969.html
+ * @author Logconfig module development team
+ */
 /**
  * handle logging levels property
  * This should be in the 'Log Config' module. Alternative sources for dd properties
  * doesnt seem to be working yet?
- *
+ * @author nuncanada <nuncanada@xaraya.com>
  * @package dynamicdata
  */
 include_once "modules/dynamicdata/class/properties.php";
@@ -25,7 +23,7 @@ class Dynamic_LogLevel_Property extends Dynamic_Property
 {
     var $options = array ('Emergency', 'Alert', 'Critical', 'Error', 'Warning', 'Notice', 'Info', 'Debug');
     var $value = array();
-    
+
     function Dynamic_LogLevel_Property($args)
     {
         $this->Dynamic_Property($args);

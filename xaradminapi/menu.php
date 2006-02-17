@@ -1,12 +1,23 @@
 <?php
-
+/**
+ * Logconfig initialization functions
+ *
+ * @package modules
+ * @copyright (C) 2003-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Logconfig Module
+ * @link http://xaraya.com/index.php/release/6969.html
+ * @author Logconfig module development team
+ */
 /**
  * generate the common admin menu configuration
  */
 function logconfig_adminapi_menu()
 {
     if (!xarVarFetch('func','str',$activelink, 'main', XARVAR_NOT_REQUIRED)) return;
-  
+
     // Initialise the array that will hold the menu configuration
     $menu = array();
 
@@ -16,7 +27,7 @@ function logconfig_adminapi_menu()
     $menu['menulinks'] = xarModAPIFunc('logconfig','admin','getmenulinks');
 
     $menu['activelink'] = $activelink;
-    
+
     // Return the array containing the menu configuration
     return $menu;
 }

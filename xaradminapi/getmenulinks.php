@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Logconfig initialization functions
+ *
+ * @package modules
+ * @copyright (C) 2003-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Logconfig Module
+ * @link http://xaraya.com/index.php/release/6969.html
+ * @author Logconfig module development team
+ */
 /**
  * utility function pass individual menu items to the main menu
  *
@@ -34,7 +45,7 @@ function logconfig_adminapi_getmenulinks()
         if (!xarModAPIFunc('logconfig','admin','islogon')) {
             $menulinks[] = Array('url'   => xarModURL('logconfig',
                                                        'admin',
-                                                       'switchonoff', 
+                                                       'switchonoff',
                                                        array('authid' => xarSecGenAuthKey())),
                                   // In order to display the tool tips and label in any language,
                                   // we must encapsulate the calls in the xarML in the API.
@@ -44,7 +55,7 @@ function logconfig_adminapi_getmenulinks()
         } else {
             $menulinks[] = Array('url'   => xarModURL('logconfig',
                                                        'admin',
-                                                       'switchonoff', 
+                                                       'switchonoff',
                                                        array('authid' => xarSecGenAuthKey())),
                                   // In order to display the tool tips and label in any language,
                                   // we must encapsulate the calls in the xarML in the API.
