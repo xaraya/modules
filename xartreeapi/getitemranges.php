@@ -10,18 +10,18 @@
  * @subpackage Surveys
  * @author Surveys module development team
  */
-/*
- * Short Description [REQUIRED one line description]
+/**
+ * Get the parent/left/right values for a single item.
  *
- * Long Description [OPTIONAL one or more lines]
+* Will include the virtual item '0' if necessary.
  *
  * @author     Jason Judge <jason.judge@academe.co.uk>
  * @author     Another Author <another@example.com>          [REQURIED]
- * @param string $arg1  the string used                      [OPTIONAL A REQURIED]
- * @param int    $arg2  an integer and use description
- *                      Identing long comments               [OPTIONAL A REQURIED]
+ * @param id ID of the item.
+ * @param string tablename: name of table
+ * @param string idname: name of the ID column
  *
- * @return int  type and name returned                       [OPTIONAL A REQURIED]
+ * @return array parent, left, right or empty
  *
  * @throws      exceptionclass  [description]                [OPTIONAL A REQURIED]
  *
@@ -30,16 +30,7 @@
  * @link       link to a reference                           [OPTIONAL]
  * @see        anothersample(), someotherlinke [reference to other function, class] [OPTIONAL]
  * @since      [Date of first inclusion long date format ]   [REQURIED]
- * @deprecated Deprecated [release version here]             [AS REQUIRED]
  */
-/*
- * Get the parent/left/right values for a single item.
- * Will include the virtual item '0' if necessary.
- * id: ID of the item.
- * tablename: name of table
- * idname: name of the ID column
- */
-
 function surveys_treeapi_getitemranges($args) {
     // Expand the arguments.
     extract($args);

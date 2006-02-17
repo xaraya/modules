@@ -1,6 +1,6 @@
 <?php
 /**
- * Surveys table definitions function
+ * Prepare a tree for insering a new item.
  *
  * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
@@ -10,10 +10,16 @@
  * @subpackage Surveys
  * @author Surveys module development team
  */
-/*
- * Short Description [REQUIRED one line description]
+/**
+ * Prepare a tree for insering a new item.
  *
- * Long Description [OPTIONAL one or more lines]
+ * Basically opens a gap for the item, then returns the
+ * tree-specific values (parent, left, right) to be
+ * used when inserting the item.
+ * The function supports multiple trees. Each tree starts
+ * at a virtual 'parent' of ID 0.
+ * args: insertpoint (ID), offset ('after', 'before', 'firstchild', 'lastchild'), tablename, idname
+ * Table must have columns: xar_parent, xar_left, xar_right and a specified ID column.
  *
  * @author     Jason Judge <jason.judge@academe.co.uk>
  * @author     Another Author <another@example.com>          [REQURIED]
@@ -21,7 +27,7 @@
  * @param int    $arg2  an integer and use description
  *                      Identing long comments               [OPTIONAL A REQURIED]
  *
- * @return int  type and name returned                       [OPTIONAL A REQURIED]
+ * @return array
  *
  * @throws      exceptionclass  [description]                [OPTIONAL A REQURIED]
  *
@@ -30,19 +36,7 @@
  * @link       link to a reference                           [OPTIONAL]
  * @see        anothersample(), someotherlinke [reference to other function, class] [OPTIONAL]
  * @since      [Date of first inclusion long date format ]   [REQURIED]
- * @deprecated Deprecated [release version here]             [AS REQUIRED]
  */
-/*
- * Prepare a tree for insering a new item.
- * Basically opens a gap for the item, then returns the
- * tree-specific values (parent, left, right) to be
- * used when inserting the item.
- * The function supports multiple trees. Each tree starts
- * at a virtual 'parent' of ID 0.
- * args: insertpoint (ID), offset ('after', 'before', 'firstchild', 'lastchild'), tablename, idname
- * Table must have columns: xar_parent, xar_left, xar_right and a specified ID column.
- */
-
 function surveys_treeapi_insertprep($args) {
     // An insertion point (an ID in the table) is required.
     // Special insertion point ID is 0, which refers to the

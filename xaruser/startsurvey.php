@@ -14,14 +14,11 @@
 /**
  * Start a new survey, and take the user to the start of it.
  *
- * Long Description [OPTIONAL one or more lines]
- *
  * @author     Jason Judge <jason.judge@academe.co.uk>
  * @author     MichelV. <michelv@xaraya.com>
- * @param string $arg1  the string used                      [OPTIONAL A REQURIED]
  * @param id    $sid Survey ID?
  *
- * @return int  type and name returned                       [OPTIONAL A REQURIED]
+ * @return array redirect
  *
  * @throws      exceptionclass  [description]                [OPTIONAL A REQURIED]
  *
@@ -32,7 +29,6 @@
  * @since      [Date of first inclusion long date format ]   [REQURIED]
  *
  */
-
 function surveys_user_startsurvey()
 {
     // Need a sid.

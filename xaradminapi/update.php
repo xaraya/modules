@@ -1,6 +1,6 @@
 <?php
 /**
- * Surveys table definitions function
+ * Update function
  *
  * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
@@ -10,11 +10,18 @@
  * @subpackage Surveys
  * @author Surveys module development team
  */
-/*
- * Short Description [REQUIRED one line description]
+/**
+ * Update
  *
- * Long Description [OPTIONAL one or more lines]
- *
+ * Update any of the following:
+ * - a user survey
+ * - a question
+ * - a user response.
+ * This is a multi-purpose table update function, that handles hooks
+ * but does not contain much in the way of validation, so handle
+ * it with care.
+ * Only specified columns will be updated, other columns being left
+ * as they are.
  * @author     Jason Judge <jason.judge@academe.co.uk>
  * @author     Another Author <another@example.com>          [REQURIED]
  * @param string $arg1  the string used                      [OPTIONAL A REQURIED]
@@ -31,18 +38,6 @@
  * @see        anothersample(), someotherlinke [reference to other function, class] [OPTIONAL]
  * @since      [Date of first inclusion long date format ]   [REQURIED]
  * @deprecated Deprecated [release version here]             [AS REQUIRED]
- */
-/*
- * Update any of the following:
- * - a user survey
- * - a question
- * - a user response.
- *
- * This is a multi-purpose table update function, that handles hooks
- * but does not contain much in the way of validation, so handle
- * it with care.
- * Only specified columns will be updated, other columns being left
- * as they are.
  */
 
 function surveys_adminapi_update($args) {
