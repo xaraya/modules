@@ -1,9 +1,9 @@
 <?php
-/*
- * Example Module
+/**
+ * Search the database for example items
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -14,9 +14,14 @@
 /**
  * Searches all example items
  *
+ * This function performes the search in the database. It is set to search
+   for items that match any of the parameters in $args.
+ *
  * @author jojodee
+ * @param string name
+ * @param int number
  * @access private
- * @returns mixed description of return
+ * @return array mixed description of return
  */
 function example_userapi_search($args)
 {

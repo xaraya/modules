@@ -15,11 +15,9 @@
 /* a suite to add the tests to */
 $tmp = new xarTestSuite('Example Suite');
 
-
 /**
  * Example test class.
  *
- * @package example
  * @author Roger Keays <r.keays@ninthave.net>
  * @todo <1> Extend the documentation of this file
  *       <2> replace link to bitkeeper suite
