@@ -1,5 +1,17 @@
 <?php
 /**
+ * Julian module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Julian Module
+ * @link http://xaraya.com/index.php/release/319.html
+ * @author Julian Module Development Team
+ */
+/**
  *  Wrapper for the dayIs method of the calendar class
  *  @author Roger Raymond <roger@asphyxia.com>
  *  @version $Id: dayis.php,v 1.2 2005/01/26 08:45:26 michelv01 Exp $

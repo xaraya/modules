@@ -1,21 +1,24 @@
 <?php
-
-/*
- * This function exports an event to a ics (iCalendar) file.  It echos out the file with the mime type so
- * the browser knows what to do with the file.  The exit at the end keeps Xaraya from going to a template.
+/**
+ * Julian module
  *
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2004 by Metrostat Technologies, Inc.
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.metrostat.net
+ * @link http://www.xaraya.com
  *
- * @subpackage julian
+ * @subpackage Julian Module
+ * @link http://xaraya.com/index.php/release/319.html
+ * @author Julian Module Development Team
+ */
+/**
+ * This function exports an event to a ics (iCalendar) file. It echos out the file with the mime type so
+ * the browser knows what to do with the file. The exit at the end keeps Xaraya from going to a template.
+ *
+ * @copyright (C) 2004 by Metrostat Technologies, Inc.
+ * @link http://www.metrostat.net
  * initial template: Roger Raymond
  * @author Jodie Razdrh/John Kevlin/David St.Clair
- */
-
-/**
  * @todo change to use get.php function
  * @todo improve the security on this file
  */
@@ -28,9 +31,9 @@ function julian_user_export()
    }
 
   // Load up database
-  $dbconn = xarDBGetConn();
+  $dbconn =& xarDBGetConn();
   //get db tables
-  $xartable = xarDBGetTables();
+  $xartable =& xarDBGetTables();
   //set events table
   $event_table = $xartable['julian_events'];
 
