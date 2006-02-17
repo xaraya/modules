@@ -11,7 +11,6 @@
  * @link http://xaraya.com/index.php/release/319.html
  * @author Julian Module Development Team
  */
-
 /**
  *
  * This function manages the calendar categories.
@@ -23,8 +22,8 @@
  *
  * initial template: Roger Raymond
  * @author Jodie Razdrh/John Kevlin/David St.Clair/MichelV/Jorn Bruggeman
+ * @return array Data for the template
  */
-
 function julian_admin_modifycategories()
 {
     // Security Check

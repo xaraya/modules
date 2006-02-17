@@ -1,17 +1,30 @@
 <?php
 /**
-*
-* This function gets the color for a category and returns it as a hex number.
-*
-* @package Xaraya eXtensible Management System
-* @copyright (C) 2004 by Metrostat Technologies, Inc.
-* @license GPL {@link http://www.gnu.org/licenses/gpl.html}
-* @link http://www.metrostat.net
-*
-* @subpackage julian
-* initial template: Roger Raymond
-* @author Jodie Razdrh/John Kevlin/David St.Clair
-*/
+ * get the color for a category
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Julian Module
+ * @link http://xaraya.com/index.php/release/319.html
+ * @author Julian development Team
+ */
+/**
+ *
+ * This function gets the color for a category and returns it as a hex number.
+ *
+ * This module:
+ * @copyright (C) 2004 by Metrostat Technologies, Inc.
+ * @link http://www.metrostat.net
+ *
+ * initial template: Roger Raymond
+ * @author Jodie Razdrh/John Kevlin/David St.Clair
+ * @param int category
+ * @return string color
+ * @todo MichelV: move all this to modvars
+ */
 function julian_userapi_getcolor($args)
 {
   extract($args);

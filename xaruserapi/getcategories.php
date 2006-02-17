@@ -7,7 +7,7 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.metrostat.net
  *
- * @subpackage Julian module
+ * @subpackage Julian Module
  * initial template: Roger Raymond
  * @author Jodie Razdrh/John Kevlin/David St.Clair
  *

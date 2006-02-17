@@ -11,16 +11,15 @@
  * @link http://xaraya.com/index.php/release/319.html
  * @author Julian development Team
  */
-
 /**
  * Encode the short URLs in Julian
  *
  * The parameters are taken from the URL and coupled to functions
  *
- * @author  Julian Development Team, <michelv@xarayahosting.nl>
+ * @author  Julian Development Team, MichelV <michelv@xaraya.com>
  * @access  public
- * @param   func
- * @return  URL
+ * @param   array $args including func
+ * @return  array URL
  * @todo    MichelV. <#> Check this function and it functioning. Include Categories
  */
 

@@ -7,7 +7,7 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Julian
+ * @subpackage Julian Module
  * @link http://xaraya.com/index.php/release/319.html
  * @author Julian development Team
  */

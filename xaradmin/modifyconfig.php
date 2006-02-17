@@ -20,6 +20,7 @@
  * initial template: Roger Raymond
  * @author Jodie Razdrh/John Kevlin/David St.Clair
  * @author Michelv <MichelV@xarayahosting.nl>
+ * @return array data for template
  */
 
 function julian_admin_modifyconfig()

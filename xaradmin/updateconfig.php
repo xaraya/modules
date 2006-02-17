@@ -26,6 +26,7 @@
  * initial template: Roger Raymond
  * @author Jodie Razdrh/John Kevlin/David St.Clair
  * @author MichelV <michelv@xarayahosting.nl>
+ * @return bool true with a redirect
  */
 
 function julian_admin_updateconfig($args)

@@ -11,14 +11,15 @@
  * @link http://xaraya.com/index.php/release/319.html
  * @author Julian Module Development Team
  */
-
 /**
  * delete item
  * This is a standard function that is called whenever an administrator
  * wishes to delete a current module item.
  *
- * @param  id 'event_id' the id of the event to be deleted
- *
+ * @param  id 'event_id' the id of the event to be deleted, or
+ * @param int objectid
+ * @param string cal_date
+ * @return bool and URL redirect
  */
 function julian_admin_deleteevent($args)
 {
