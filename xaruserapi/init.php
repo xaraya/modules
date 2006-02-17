@@ -3,12 +3,12 @@
  * Create a valid link to a particular week
  *
  * @package modules
- * @copyright (C) 2005 by the Xaraya Development Team.
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Julian
- * @link  link to information for the subpackage
+ * @link http://xaraya.com/index.php/release/319.html
  * @author Julian development Team
  */
 /**

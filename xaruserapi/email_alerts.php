@@ -8,9 +8,9 @@
  * @link http://www.xaraya.com
  *
  * @subpackage Julian Module
- * @copyright (C) 2004 by Metrostat Technologies, Inc.
+ * @link http://xaraya.com/index.php/release/319.html
+ * @author Julian development Team
  */
-
 /**
  * Emails alerts re: events to the user based on which categories the user has selected to recieve.
  * This script is intended to be run via the scheduler module. It should be run once a day.
@@ -18,8 +18,10 @@
  * initial template: Roger Raymond
  * @author Jodie Razdrh/John Kevlin/David St.Clair
  * @link http://www.metrostat.net
+ * @copyright (C) 2004 by Metrostat Technologies, Inc.
  *
  * @TODO MichelV <1> Generate cleaner function to incorporate templates.
+ * @deprecated asp
  * @Legacy This function is moved to xarschedulerapi for nicer compatibility
  */
 function julian_userapi_email_alerts()

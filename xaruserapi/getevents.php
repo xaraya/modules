@@ -7,11 +7,11 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.metrostat.net
  *
- * @subpackage Julian
+ * @subpackage Julian Module
+ * @link http://xaraya.com/index.php/release/319.html
  * initial template: Roger Raymond
  * @author Jodie Razdrh/John Kevlin/David St.Clair
  */
-
 /**
  * Get all Julian Calendar Event items.
  *
@@ -19,15 +19,15 @@
  * are not formatted for display. When a calendar oriented listing is needed,
  * use xaruser-getall.php
  *
- * @param $args an array of arguments
- * @param $args['startnum'] start with this item number (default 1)
- * @param $args['numitems'] the number of items to retrieve (default -1 = all)
- * @param $args['sortby'] sort by 'date', 'eventName', 'eventCat', 'eventLocn', 'eventCont' or 'eventFee'
- * @param $args['external'] retrieve events marked external (1=true, 0=false) - ToDo:
- * @param $args['orderby'] order by 'ASC' or 'DESC' (default = ASC)
- * @param $args['catid'] int Category ID
+ * @param array $args an array of arguments
+ * @param int $args['startnum'] start with this item number (default 1)
+ * @param int $args['numitems'] the number of items to retrieve (default -1 = all)
+ * @param string $args['sortby'] sort by 'date', 'eventName', 'eventCat', 'eventLocn', 'eventCont' or 'eventFee'
+ * @param int $args['external'] retrieve events marked external (1=true, 0=false) - ToDo:
+ * @param string $args['orderby'] order by 'ASC' or 'DESC' (default = ASC)
+ * @param int $args['catid'] Category ID
  * @return array of items, or false on failure
- * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
+ * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function julian_userapi_getevents($args)
 {

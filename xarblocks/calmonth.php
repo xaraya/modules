@@ -27,7 +27,7 @@
  * @author David St.Clair
  * @access public
  * @param none $
- * @return nothing
+ * @return bool true
  * @throws no exceptions
  * @todo nothing
  */
@@ -42,7 +42,7 @@ function julian_calmonthblock_init()
  * @author David St.Clair
  * @access public
  * @param none $
- * @return data array
+ * @return array data
  * @throws no exceptions
  * @todo nothing
  */
@@ -64,7 +64,7 @@ function julian_calmonthblock_info()
  * @author David St.Clair, MichelV
  * @access public
  * @param array $blockinfo
- * @return data array on success or void on failure
+ * @return array blockinfo on success or void on failure
  * @throws no exceptions
  * @todo implement centre menu position
  */

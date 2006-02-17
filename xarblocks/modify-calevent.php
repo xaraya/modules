@@ -11,16 +11,15 @@
  * @link http://xaraya.com/index.php/release/36.html
  * @author Example Module Development Team
  */
-
 /**
  * Julian Event Block - Modify block settings
  *
  * @author Julian Module development team
- * @author MichelV MichelV@xarayahosting.nl
+ * @author MichelV <MichelV@xarayahosting.nl>
  *
  * @access  public
  * @param   $blockinfo
- * @return  $blockinfo data array
+ * @return  array $blockinfo data
 */
 function julian_caleventblock_modify($blockinfo)
 {
@@ -49,6 +48,8 @@ function julian_caleventblock_modify($blockinfo)
 
 /**
  * Updates the Block settings
+ * @param array $blockinfo
+ * @return array Blockinfo
  */
 function julian_caleventblock_update($blockinfo)
 {

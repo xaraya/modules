@@ -3,13 +3,13 @@
  * Factory method that allows the creation of new objects
  *
  * @package modules
- * @copyright (C) 2002-2005 by the Xaraya Development Team.
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Julian Module
- * @link  link to information for the subpackage
- * @author Julian development Team 
+ * @link http://xaraya.com/index.php/release/319.html
+ * @author Julian development Team
  */
 
 /**
@@ -26,13 +26,13 @@ function &julian_userapi_factory($class)
     static $exportobject;
     static $alarmobject;
     static $modinfo;
-    
+
     if(!isset($modinfo)) {
         $modInfo = xarModGetInfo(xarModGetIDFromName('julian'));
     }
-    
+
     switch(strtolower($class)) {
-    
+
         case 'calendar':
             if(!isset($calobject)) {
                 require_once("modules/$modInfo[osdirectory]/class.calendar.php");
@@ -40,7 +40,7 @@ function &julian_userapi_factory($class)
             }
             return $calobject;
             break;
-        
+
         case 'ical_parser':
             if(!isset($icalobject)) {
                 require_once("modules/$modInfo[osdirectory]/class.ical_parser.php");
@@ -48,7 +48,7 @@ function &julian_userapi_factory($class)
             }
             return $icalobject;
             break;
-        
+
         case 'event':
             if(!isset($eventobject)) {
                 require_once("modules/$modInfo[osdirectory]/class.event.php");
@@ -56,14 +56,14 @@ function &julian_userapi_factory($class)
             }
             return $eventobject;
             break;
-        
-        /*  
+
+        /*
         case 'import':
             break;
-            
+
         case 'export':
             break;
-            
+
         case 'alarm':
             break;
         */

@@ -8,7 +8,7 @@
  * @link http://www.xaraya.com
  *
  * @subpackage Julian
- * @link  link to information for the subpackage
+ * @link http://xaraya.com/index.php/release/319.html
  * @author Julian development Team
  */
 /**

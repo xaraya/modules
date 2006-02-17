@@ -11,22 +11,20 @@
  * @link http://xaraya.com/index.php/release/319.html
  * @author Julian Module Development Team
  */
-
 /**
  * initialise block
  * Metrostat Calendar of Events
  *
  * This module:
  * @copyright (C) 2004 by Metrostat Technologies, Inc.
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.metrostat.net
  *
  * initial template: Roger Raymond
  * @author Jodie Razdrh/John Kevlin/David St.Clair
- * @author MichelV michelv@xarayahosting.nl
+ * @author MichelV <michelv@xarayahosting.nl>
  *
  * @access public
- * @param none $
+ * @param none
  * @return nothing
  * @throws no exceptions
  * @todo nothing

@@ -8,10 +8,17 @@
  * @link http://www.xaraya.com
  *
  * @subpackage Julian
- * @link  link to information for the subpackage
+ * @link http://xaraya.com/index.php/release/319.html
  * @author Julian development Team
  */
-
+/**
+ * Get the long names of the month
+ *
+ * @author
+ * @param  string month
+ * @return string longname
+ * @todo MichelV deprec?
+ */
 function julian_userapi_getMonthNameLong($args)
 {
     extract($args); unset($args);

@@ -3,25 +3,22 @@
  * View all events in a list
  *
  * @package modules
- * @copyright (C) 2002-2005 by the Xaraya Development Team.
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Julian Module
- * @link  link to information for the subpackage
+ * @link http://xaraya.com/index.php/release/319.html
  * @author Julian development Team
  */
-
 /**
  * Views all events.
  *
  * This Module:
  * @copyright (C) 2004 by Metrostat Technologies, Inc.
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.metrostat.net
  *
- * initial template: Roger Raymond
- * @author
+ * @author Roger Raymond
  * @TODO MichelV: include the linked events here
  */
 

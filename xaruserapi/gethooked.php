@@ -24,7 +24,7 @@
  * @param  $args ['modid'] module id
  * @returns array
  * @return item array, or false on failure
- * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
+ * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  * @since May 2005
  * @TODO MichelV #1 Hook julian to itself, so events are only stored in one table with extra info from other modules
  */

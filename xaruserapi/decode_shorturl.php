@@ -16,13 +16,12 @@
  *
  * The parameters are taken from the URL and coupled to functions
  *
- * @author  Julian Development Team, MichelV. <michelv@xarayahosting.nl>
+ * @author  Julian Development Team, MichelV <michelv@xarayahosting.nl>
  * @access  public
- * @param   the URL
+ * @param   array $params the URL
  * @return  array
  * @todo    MichelV. <#> Check this function and it functioning. Include Categories
  */
-
 function julian_userapi_decode_shorturl($params)
 {
     $args = array();

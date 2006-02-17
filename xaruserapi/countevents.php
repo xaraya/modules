@@ -22,7 +22,7 @@
  * @param $args['external'] retrieve events marked external (1=true, 0=false) - ToDo:
  * @returns integer
  * @return number of items
- * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
+ * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  * @todo MichelV: Include count of linked items
  */
 function julian_userapi_countevents($args)
