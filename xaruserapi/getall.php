@@ -21,7 +21,7 @@
  * @param int catid
  * @returns array
  * @return array of items, or false on failure
- * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
+ * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  * @todo Add check on status, either via privileges, or via here
  */
 function sigmapersonnel_userapi_getall($args)

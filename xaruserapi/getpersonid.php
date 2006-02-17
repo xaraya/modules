@@ -19,7 +19,7 @@
  * @param $args ['firstname'] ?First name of person to get?
  * @returns array
  * @return array $item ['personid', ['persstatus'], or false on failure
- * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
+ * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function sigmapersonnel_userapi_getpersonid($args)
 {

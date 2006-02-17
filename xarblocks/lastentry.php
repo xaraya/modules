@@ -2,14 +2,14 @@
 /**
  * SIGMAPersonnel Block shows latest presence entries
  * at this moment for the current person
- * 
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ *
+ * @package modules
+ * @copyright (C) 2005-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Sigmapersonnel Module
- * @author Michel V. 
+ * @author Michel V.
  */
 
 /**
@@ -20,13 +20,13 @@ function sigmapersonnel_lastentryblock_init()
     return array(
         'numitems' => 5
     );
-} 
+}
 
 /**
  * get information on block
  */
 function sigmapersonnel_lastentryblock_info()
-{ 
+{
     // Values
     return array(
         'text_type' => 'lastentry',
@@ -37,24 +37,24 @@ function sigmapersonnel_lastentryblock_info()
         'form_refresh' => false,
         'show_preview' => true
     );
-} 
+}
 
 /**
  * display block
  */
 function sigmapersonnel_lastentryblock_display($blockinfo)
-{ 
+{
     // See if we are currently displaying a sigmapersonnel item
     // (this variable is set in the user display function)
     if (!xarVarIsCached('Blocks.sigmapersonnel', 'personid')) {
         // if not, we don't show this
         return;
-    } 
+    }
 
     $current_personid = xarVarGetCached('Blocks.sigmapersonnel', 'personid');
     if (empty($current_personid) || !is_numeric($current_personid)) {
         return;
-    } 
+    }
 
     // Security check
     if (!xarSecurityCheck('ReadSIGMAPersonnelBlock', 0, 'Block', $blockinfo['title'])) {return;}
@@ -71,14 +71,14 @@ function sigmapersonnel_lastentryblock_display($blockinfo)
     // Defaults
     if (empty($vars['numitems'])) {
         $vars['numitems'] = 3;
-    } 
+    }
     // TODO: get all presence items for the current person
     // These orders are extra, for later ;)
     $sortby = 'start';
     $sortorder = 'DESC';
     $uid = xarUserGetVar('uid');
-    $personid = xarModAPIFunc('sigmapersonnel', 
-                              'user', 
+    $personid = xarModAPIFunc('sigmapersonnel',
+                              'user',
                               'getpersonid',
                               array('uid'=>$uid));
 
@@ -88,27 +88,27 @@ function sigmapersonnel_lastentryblock_display($blockinfo)
     } else {
 
         // Create output object
-        $items = array();   
-        $items = xarModAPIFunc('sigmapersonnel', 
-                               'user', 
+        $items = array();
+        $items = xarModAPIFunc('sigmapersonnel',
+                               'user',
                                'getallpresence',
-                                array('numitems'  => $vars['numitems'], 
-                                      'personid'  => $personid, 
-                                      'sortby'    => $sortby, 
+                                array('numitems'  => $vars['numitems'],
+                                      'personid'  => $personid,
+                                      'sortby'    => $sortby,
                                       'sortorder' => $sortorder));
-        
+
         // TODO: get the current presence for a person
-        $presencenow = xarModAPIFunc('sigmapersonnel', 
-                                     'user', 
+        $presencenow = xarModAPIFunc('sigmapersonnel',
+                                     'user',
                                      'presencenow',
                                       array('personid' => $personid));
-        
+
         // TODO: cleanup
         /*
         // Display each item, permissions permitting
         for (; !$result->EOF; $result->MoveNext()) {
             list($exid, $name) = $result->fields;
-    
+
             if (xarSecurityCheck('ViewExample', 0, 'Item', "$name:All:$exid")) {
                 if (xarSecurityCheck('ReadExample', 0, 'Item', "$name:All:$exid")) {
                     $item = array();
@@ -116,17 +116,17 @@ function sigmapersonnel_lastentryblock_display($blockinfo)
                         'sigmapersonnel', 'user', 'display',
                         array('exid' => $exid)
                     );
-                    
+
                 }
                 $item['name'] = $name;
-            } 
+            }
             $items[] = $item;
-        } 
+        }
         */
-        
+
         $blockinfo['content'] = array('items' => $items, 'presencenow' => $presencenow);
     }
     return $blockinfo;
-} 
+}
 
 ?>

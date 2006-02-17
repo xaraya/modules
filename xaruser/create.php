@@ -3,12 +3,13 @@
  * Standard function to create a new item
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Sigmapersonnel Module
- * @author SIGMAPersonnel module development team
+ * @link http://xaraya.com/index.php/release/418.html
+ * @author SIGMAPersonnel Module Development Team
  */
 
 /**

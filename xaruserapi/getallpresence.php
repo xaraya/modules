@@ -18,9 +18,8 @@
  * @author MichelV (MichelV@xarayahosting.nl)
  * @param numitems $ the number of items to retrieve (default -1 = all)
  * @param startnum $ start with this item number (default 1)
- * @returns array
  * @return array of items, or false on failure
- * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
+ * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  *
  * @TODO What is the exact use of this?
  *       Do we want this function for all persons in the db, or just get all items?

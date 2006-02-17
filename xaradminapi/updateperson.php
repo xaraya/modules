@@ -2,7 +2,7 @@
 /**
  * Update a sigmapersonnel person
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -18,7 +18,7 @@
  * @param  $args ['personid'] the ID of the item
  * @param  $args ['firstname'] the first name of the person
  * @param  $args ['pnumber'] the new person number of the item
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function sigmapersonnel_adminapi_updateperson($args)
 {

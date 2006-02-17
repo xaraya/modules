@@ -2,7 +2,7 @@
 /**
  * Create a new sigma person
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -18,7 +18,7 @@
  * @param  $args ['pnumber'] number of the item
  * @returns int
  * @return sigmapersonnel item ID on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function sigmapersonnel_adminapi_createperson($args)
 {

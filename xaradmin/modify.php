@@ -3,11 +3,11 @@
  * Modify a Dyn Data item from SIGMAPersonnel
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage SIGMAPersonnel Module
+ * @subpackage Sigmapersonnel Module
  * @link http://xaraya.com/index.php/release/418.html
  * @author SIGMAPersonnel Module Development Team
  */

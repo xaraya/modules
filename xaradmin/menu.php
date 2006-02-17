@@ -1,21 +1,20 @@
 <?php
 /**
  * SIGMAPersonnel menu for admin
- * 
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ *
+ * @package modules
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Sigmapersonnel Module
- * @author SIGMAPersonnel module development team 
+ * @author SIGMAPersonnel module development team
  */
-
 /**
  *  generate menu fragments for the admin
- *  @author MichelV michelv@xarayahosting.nl
+ *  @author MichelV <michelv@xarayahosting.nl>
  *  @param $args['page'] - func calling menu (ex. main, view, etc)
- *  @return Menu template data
+ *  @return array Menu template data
  */
 function sigmapersonnel_admin_menu()
 {

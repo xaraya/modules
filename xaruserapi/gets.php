@@ -7,15 +7,15 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage SIGMAPersonnel
+ * @subpackage Sigmapersonnel Module
  * @link http://xaraya.com/index.php/release/418.html
  * @author SIGMAPersonnel module development team
  */
 /**
-  Gets items of a DynamicData object
-  @author Brian McGilligan
-  @param $args['itemtype'] - Item type
-  @returns list of items of the item type
+ * Gets items of a DynamicData object
+ * @author Brian McGilligan
+ * @param $args['itemtype'] - Item type
+ * @return array list of items of the item type
 */
 function sigmapersonnel_userapi_gets($args)
 {

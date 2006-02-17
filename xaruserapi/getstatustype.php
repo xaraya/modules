@@ -7,16 +7,16 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage SIGMAPersonnel
+ * @subpackage Sigmapersonnel Module
  * @link http://xaraya.com/index.php/release/418.html
  * @author SIGMAPersonnel module development team
  */
 /**
  * Gets items of a DynamicData object 'presencetype'
  *
- * @author
+ * @author MichelV <michelv@xarayahosting.nl>
  * @param int $type - Type id to get the name for
- * @returns list of items of the item type
+ * @return array item
  */
 function sigmapersonnel_userapi_getstatustype($args)
 {

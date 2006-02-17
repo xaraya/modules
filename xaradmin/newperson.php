@@ -2,7 +2,7 @@
 /**
  * Add new person to the database
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -15,6 +15,7 @@
  * This is a standard function that is called whenever an administrator
  * wishes to create a new module item
  * @TODO Move the labels to the template
+ * @return array $data
  */
 function sigmapersonnel_admin_newperson($args)
 {

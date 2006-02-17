@@ -3,7 +3,7 @@
  * Create a new presence item
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -21,7 +21,7 @@
  * @param  $args ['typeid'] number of the item
  * @returns int
  * @return presence item ID on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  * @TODO MichelV: ITEMTYPES
  */
 function sigmapersonnel_userapi_create($args)

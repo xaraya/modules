@@ -2,8 +2,8 @@
 /**
  * Get the current presence of a person
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -13,12 +13,10 @@
 /**
  * get the presence of a person at a given date
  *
- * @author the SIGMApersonnel module development team
- * @author MichelV (MichelV@xarayahosting.nl)
+ * @author MichelV <michelv@xarayahosting.nl>
  * @param dtasked $ the date and time we define presence for
- * @returns array
- * @return false (no presence found) or id of the presence type
- * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
+ * @return int id of the presence type or false (no presence found)
+ * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function sigmapersonnel_userapi_presencenow($args)
 {

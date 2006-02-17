@@ -20,7 +20,7 @@
  * @param enum oncall
  * @returns integer
  * @return number of items held by this module
- * @raise DATABASE_ERROR
+ * @throws DATABASE_ERROR
 
  */
 function sigmapersonnel_userapi_countitems($args)
