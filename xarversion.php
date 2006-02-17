@@ -2,14 +2,14 @@
 /**
  * Maxercalls version control
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Maxercalls Module
  * @link http://xaraya.com/index.php/release/247.html
- * @author MichelV
+ * @author MichelV <michelv@xarayahosting.nl>
  */
 $modversion['name']           = 'Maxercalls';
 $modversion['id']             = '247';
@@ -20,7 +20,7 @@ $modversion['credits']        = 'xardocs/credits.txt';
 $modversion['help']           = 'xardocs/help.txt';
 $modversion['changelog']      = 'xardocs/changelog.txt';
 $modversion['license']        = 'xardocs/license.txt';
-$modversion['official']       = 1;
+$modversion['official']       = 0;
 $modversion['author']         = 'MichelV';
 $modversion['contact']        = 'http://www.sigmautrecht.nl/';
 $modversion['admin']          = 1;

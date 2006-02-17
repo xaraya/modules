@@ -2,15 +2,15 @@
 /**
  * Update configuration parameters of the module with information passed back by the modification form
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Maxercalls module
+ * @subpackage Maxercalls Module
+ * @link http://xaraya.com/index.php/release/247.html
  * @author Maxercalls module development team
  */
-
 /**
  * Update the configuration of the module
  *
@@ -18,7 +18,9 @@
  * module given the information passed back by the modification form.
  * Main item is the category for the calls
  *
+ * @param int itemsperpage
  * @author MichelV
+ * @return bool with redirect
  */
 function maxercalls_admin_updateconfig()
 {

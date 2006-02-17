@@ -2,7 +2,7 @@
 /**
  * Maxercalls table definitions function
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -19,7 +19,7 @@
  *
  * @author MichelV <michelv@xarayahosting.nl>
  * @access private
- * @return array
+ * @return array with table names
  */
 function maxercalls_xartables()
 {

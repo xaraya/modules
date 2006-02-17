@@ -1,6 +1,6 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <!-- common admin menu for this module - remove link to the current function -->
-<!-- the variables used in this menu come from example_admin_menu() -->
+<!-- the variables used in this menu come from maxercalls_admin_menu() -->
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Maxercalls Administration</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2>#$menutitle#</h2><br />
 

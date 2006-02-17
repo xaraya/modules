@@ -2,22 +2,23 @@
 /**
  * Standard function to modify configuration parameters
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Maxercalls module
- * @author maxercalls module development team
+ * @subpackage Maxercalls Module
+ * @link http://xaraya.com/index.php/release/247.html
+ * @author Maxercalls module development team
  */
-
 /**
  * Modify the module settings
  *
  * This is a standard function to modify the configuration parameters of the
  * module
  *
- * @author MichelV
+ * @author MichelV <michelv@xarayahosting.nl>
+ * @return array with data for the template
  */
 function maxercalls_admin_modifyconfig()
 {

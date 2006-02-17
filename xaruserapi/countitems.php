@@ -2,21 +2,21 @@
 /**
  * Utility function counts number of items held by this module
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Maxercalls module
- * @author Example module development team
+ * @subpackage Maxercalls Module
+ * @link http://xaraya.com/index.php/release/247.html
+ * @author Maxercalls module development team
  */
 
 /**
  * utility function to count the number of items for one owner
  *
- * @author MichelV
- * @returns integer
- * @return number of items held by this module
+ * @author MichelV <michelv@xarayahosting.nl>
+ * @return integer number of items held by this module
  * @raise DATABASE_ERROR
  */
 function maxercalls_userapi_countitems()

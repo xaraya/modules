@@ -1,13 +1,26 @@
 <?php
-
 /**
- * display a Dynamic Data item
+ * Display a Dynamic Data item
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Maxercalls Module
+ * @link http://xaraya.com/index.php/release/247.html
+ * @author Maxercalls module development team
+ */
+/**
+ * Display a Dynamic Data item
  * This is a standard function to provide detailed informtion on a single item
  * available from the module.
  *
  * @param $args an array of arguments (if called by other modules)
- * @param $args['objectid'] a generic object id (if called by other modules)
- * @param $args['exid'] the item id used for this example module
+ * @param int $args['objectid'] a generic object id (if called by other modules)
+ * @param int $args['itemid'] the item id used for this module
+ * @param int $args['itemtype'] the item type id used for this module
+ * @return array
  */
 function maxercalls_admin_display($args)
 {
