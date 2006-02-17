@@ -22,8 +22,9 @@
  *
  * initial template: Roger Raymond
  * @author Jodie Razdrh/John Kevlin/David St.Clair
- * @author MichelV
+ * @author MichelV <michelv@xaraya.com>
  * @param int catid ID of the category to filter for
+ * @return array
  */
 
 function julian_user_day()

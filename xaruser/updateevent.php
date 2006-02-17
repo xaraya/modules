@@ -2,7 +2,7 @@
 /**
  * Inserts/Updates an event.
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2005 by Metrostat Technologies, Inc.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.metrostat.net
@@ -14,13 +14,12 @@
 /**
  * Create or update an event
  *
- *
  * @author  Jodie Razdrh/John Kevlin/David St.Clair
- * @author  Julian Development Team, MichelV. <michelv@xarayahosting.nl>
- * @author  Zsolt for PostGres competability
+ * @author  MichelV <michelv@xarayahosting.nl>
+ * @author  Zsolt for PostGres compatability
  * @access  public
- * @param   event data
- * @return  returnURL
+ * @param   array event data
+ * @return  array returnURL
  * @todo    MichelV. <#> move queries to API
  */
 function julian_user_updateevent()

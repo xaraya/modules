@@ -2,7 +2,7 @@
 /**
  * Let user set which categorical events this user wants to be alerted about via email.
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com

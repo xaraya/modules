@@ -3,7 +3,7 @@
  * Calculates the new date for the next view.
  *
  * @package modules
- * @copyright (C) 2005 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -12,14 +12,14 @@
  * @author Julian development Team
  */
 /**
- *  Calculates the new date for the next view. The view or "cal_type" is incremented by
- *  an interval of "cal_interval" starting from "cal_date".
+ * Calculates the new date for the next view.
  *
- * @Param INT $args['cal_sdow']
+ * The view or "cal_type" is incremented by an interval of "cal_interval" starting from "cal_date".
+ *
+ * @param INT $args['cal_sdow']
  * @param str $args['func'] the function of this moment
- * @return URL
+ * @return array URL
  */
-
 function julian_userapi_next($args=array())
 {
     xarVarFetch('cal_sdow', 'int:0:7', $cal_sdow, 0);

@@ -7,8 +7,9 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Julian
- * @author Julian module development team
+ * @subpackage Julian Module
+ * @link http://xaraya.com/index.php/release/319.html
+ * @author Julian Module Development Team
  */
 /**
  *
@@ -19,10 +20,11 @@
  *
  * initial template: Roger Raymond
  * @author Jodie Razdrh/John Kevlin/David St.Clair
- * @param jump_to enum day, week, month, year
- * @param jump_month int
- * @param jump_day int
- * @param jump_year int
+ * @param string jump_to enum day, week, month, year
+ * @param int jump_month
+ * @param int jump_day
+ * @param int jump_year
+ * @return array URL to jump to
  */
 
 function julian_user_jump($args)

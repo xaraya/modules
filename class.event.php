@@ -56,7 +56,7 @@ class Event
     * an event_obj which holds the data to be assigned, and an event array where the data
     * is being set (passed-by-reference). The event data is set in the event array
     *
-    * @package Xaraya eXtensible Management System
+    * @package modules
     * @copyright (C) 2004 by Metrostat Technologies, Inc.
     * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
     * @link http://www.metrostat.net

@@ -12,7 +12,6 @@
  * @author Julian Module Development Team
  */
 /**
- *
  * This function gets the events for a particular month.
  *
  * This module:
@@ -22,9 +21,10 @@
  *
  * initial template: Roger Raymond
  * @author Jodie Razdrh/John Kevlin/David St.Clair
- * @author MichelV
+ * @author MichelV <michelv@xaraya.com>
  *
  * @param int catid The ID of the category to filter for
+ * @return array
  */
 function julian_user_month($args)
 {
