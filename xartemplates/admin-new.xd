@@ -20,13 +20,13 @@
 </table>
 </xar:if>
 
-<form method="post" action="#xarModURL('logconfig','admin','create')#">
+<form method="post" action="&xar-modurl-logconfig-admin-create;">
   <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
   <input type="hidden" name="itemtype" id="itemtype" value="#$itemtype#" />
   <!-- this does most of the hard work :) -->
   <xar:data-form object="$object" />
-    
+
   <input type="submit" value="#xarML('Create')#" />
-  
+
 </form>
 

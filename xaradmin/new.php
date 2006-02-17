@@ -12,7 +12,7 @@
  * @author Logconfig module development team
  */
 /**
- * add new item
+ * add new logger
  * @return array
  */
 function logconfig_admin_new()
@@ -25,8 +25,8 @@ function logconfig_admin_new()
     // get the Dynamic Object defined for this module (and itemtype, if relevant)
     $data['object'] = xarModAPIFunc('dynamicdata','user','getobject',
                                      array('module' => 'logconfig',
-                                              'itemtype' => $itemtype));
-     $data['itemtype'] = $itemtype;
+                                           'itemtype' => $itemtype));
+    $data['itemtype'] = $itemtype;
 
     // Return the template variables defined in this function
     return $data;
