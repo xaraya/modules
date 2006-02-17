@@ -3,7 +3,7 @@
  * Julian initialization functions
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -11,7 +11,6 @@
  * @link http://xaraya.com/index.php/release/319.html
  * @author Julian Module development team
  */
-
 /**
  * Julian initialization functions
  *
@@ -20,6 +19,7 @@
  *
  * @author Julian module development team
  * @link changelog.txt for table definitions and descriptions
+ * @return bool true on success
  */
 function julian_init()
 {
@@ -125,24 +125,6 @@ function julian_init()
      // Enable hooks to the 'categories' module for Julian
      xarModAPIFunc('modules','admin','enablehooks', array('callerModName' => 'julian', 'hookModName' => 'categories'));
 
-    /*
-    // Create alerts table
-    $alerts_table = $xartable['julian_alerts'];
-    $alerts_fields = array(
-        // ID::the alert id, auto-increment
-        'id'=>array('type'=>'integer','size'=>'11','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
-
-        // UID::user id
-        'uid'=>array('type'=>'integer','size'=>'11','null'=>FALSE,'default'=>'0'),
-
-        // UID::a serialized string of all the type events (events assoc. w/specific categories) the user wants to be alerted about via email
-        'subscriptions'=>array('type'=>'varchar','size'=>'255','null'=>FALSE)
-    );
-    $sql = xarDBCreateTable($alerts_table,$alerts_fields);
-    if (empty($sql)) return; // throw back
-    if (!$dbconn->Execute($sql)) return;
-    */
-
      // Register hooks: julian can couple a date+time to any item from any module, provided
      // the module in question calls (Julian's) hooks when editing items.
     if (!xarModRegisterHook('item', 'new',    'GUI', 'julian', 'user', 'newhook'))     return false;
@@ -226,14 +208,6 @@ function julian_init()
             'limit' => 20
             )
         );
-/*
-    // allow users to see the calendar w/ events
-    xarRegisterMask('Viewjulian','All','julian','All','All','ACCESS_READ');
-    // allows users to add events, but not categories
-    xarRegisterMask('Editjulian','All','julian','All','All','ACCESS_EDIT');
-    // allow full admin of the calendar
-    xarRegisterMask('Adminjulian','All','julian','All','All','ACCESS_ADMIN');
-*/
 
     $instancestable = $xartable['block_instances'];
     $typestable = $xartable['block_types'];
@@ -267,13 +241,13 @@ function julian_init()
     xarRegisterMask('DeleteJulian', 'All', 'julian', 'Item', 'All:All:All:All', 'ACCESS_DELETE');
     xarRegisterMask('AdminJulian', 'All', 'julian', 'Item', 'All:All:All:All', 'ACCESS_ADMIN');
 
-
-
     return true;
 }
 
 /**
- *  Module Upgrade Function
+ *  Julian Module Upgrade Function
+ *
+ * @param string oldversion number of Julian
  */
 function julian_upgrade($oldversion)
 {
@@ -651,7 +625,8 @@ function julian_upgrade($oldversion)
 }
 
 /**
- *  Module Delete Function
+ * Julian Module Delete Function
+ * @return bool
  */
 function julian_delete()
 {
