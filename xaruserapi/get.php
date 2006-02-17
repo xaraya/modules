@@ -7,11 +7,10 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage julian
+ * @subpackage Julian Module
  * @link http://www.metrostat.net
  * initial template: Roger Raymond
  */
-
 /**
  * Get a single event
  *
