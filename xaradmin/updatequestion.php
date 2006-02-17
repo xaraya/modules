@@ -1,14 +1,14 @@
 <?php
 /**
  * Surveys table definitions function
- * 
- * @package Xaraya eXtensible Management System
+ *
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Surveys
- * @author Surveys module development team 
+ * @author Surveys module development team
  */
 /*
  * Update a survey question
@@ -66,7 +66,7 @@ function surveys_admin_updatequestion($args)
 
     // Throw back if update failed.
     if (!$result) {return;}
-        
+
     // Redirect if successful.
     xarResponseRedirect(xarModURL('surveys', 'admin', 'modifyquestion', array('qid'=>$qid)));
 

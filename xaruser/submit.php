@@ -1,14 +1,14 @@
 <?php
 /**
  * Surveys table definitions function
- * 
- * @package Xaraya eXtensible Management System
+ *
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Surveys
- * @author Surveys module development team 
+ * @author Surveys module development team
  */
 /*
  * Short Description [REQUIRED one line description]
@@ -61,14 +61,14 @@ function surveys_user_submit() {
     if ($stage <= 2 && $usersurvey['status'] != 'SUBMITTABLE') {
         $stage = 4;
     }
-    
+
     // Need comment privilege on the survey to submit it (and moderate
     // priv to change its status arbitrarily).
     if (!xarSecurityCheck('CommentAssessment', 0, 'Assessment', $usersurvey['sid'].':'.$usersurvey['system_status'].':'.$usersurvey['status'].':'.$usersurvey['uid'])) {
         // No read access to the survey, so zap it.
         $usersurvey = NULL;
     }
-    
+
     // If no survey, then stop with an error.
     if (empty($usersurvey)) {
         $msg = xarML('INVALID USER SURVEY ID #(1) OR NO PRIVILEGE', $usid);
@@ -130,7 +130,7 @@ function surveys_user_submit() {
         default:
             break;
     }
-    
+
     // Check the current status allows submission.
 
     return array(

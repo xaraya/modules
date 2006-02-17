@@ -1,14 +1,14 @@
 <?php
 /**
  * Surveys table definitions function
- * 
- * @package Xaraya eXtensible Management System
+ *
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Surveys
- * @author Surveys module development team 
+ * @author Surveys module development team
  */
 /*
  * Short Description [REQUIRED one line description]
@@ -60,7 +60,7 @@ function surveys_admin_importlegacy() {
         echo "Must supply 'user' parameter";
         return;
     }
-    
+
     // Database stuff.
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -316,7 +316,7 @@ function surveys_admin_importlegacy() {
                             )
                         );
                     }
-                } 
+                }
             }
 
             // Trim any leading or trailing commas from multi-choice responses.
@@ -424,8 +424,8 @@ function surveys_admin_importlegacy() {
             // Next EP1/2 question to import.
             $result->MoveNext();
         }
-        
-        
+
+
         // **************************************
         // Next the 'EP' type questions (EP3 to EP8).
         // **************************************
@@ -499,7 +499,7 @@ function surveys_admin_importlegacy() {
                 );
             }
         }
-            
+
         foreach($all_eps as $extra_blank) {
             $blank_name = $extra_blank . '-1-1';
             echo "EP: $blank_name = blank<br/>";

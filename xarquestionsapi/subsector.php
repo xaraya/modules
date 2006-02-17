@@ -1,14 +1,14 @@
 <?php
 /**
  * Class Question type 'subsector'
- * 
- * @package Xaraya eXtensible Management System
+ *
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Surveys
- * @author Surveys module development team 
+ * @author Surveys module development team
  */
 /*
  * Question type 'subsector'
@@ -254,7 +254,7 @@ class surveys_questionsapi_subsector extends surveys_questionsapi_default
                     $auto_select = $subsector_item['item_code'];
                 }
             }
-            
+
             if ($optioncount == 1) {
                 $this->response['value1'] = $auto_select;
             } else {
@@ -358,7 +358,7 @@ class surveys_questionsapi_subsector extends surveys_questionsapi_default
                 'lang_suffix' => $this->lang_suffix
             )
         );
-        
+
         if (empty($list)) {
             // TODO: the list is empty - what to do?
             return;
@@ -378,7 +378,7 @@ class surveys_questionsapi_subsector extends surveys_questionsapi_default
                 'lang_suffix' => $this->lang_suffix
             )
         );
-        
+
         if (empty($list)) {
             // TODO: the list is empty - what to do?
             return;

@@ -1,20 +1,19 @@
 <?php
 /**
- * Standard Utility function pass individual menu items to the main menu
+ * Utility function pass individual menu items to the main menu
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Example Module
+ * @subpackage Surveys
+ * @author Surveys module development team
  */
-
 /**
  * Standard Utility function pass individual menu items to the main menu
  *
- * @author the Example module development team
- * @returns array
+ * @author the Surveys module development team
  * @return array containing the menulinks for the main menu items.
  */
 function surveys_adminapi_getmenulinks()

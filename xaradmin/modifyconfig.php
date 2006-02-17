@@ -2,7 +2,7 @@
 /**
  * Modify module's configuration
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -20,12 +20,12 @@
  * @return array
  */
 function surveys_admin_modifyconfig()
-{ 
+{
     $data = array();
 
     /* common menu configuration */
     $data = xarModAPIFunc('surveys', 'admin', 'menu');
-    
+
     /* Security check - important to do this as early as possible to avoid
      * potential security holes or just too much wasted processing
      */
@@ -58,7 +58,7 @@ function surveys_admin_modifyconfig()
         $data['hooks'] = array('categories' => xarML('You can assign base categories by enabling the categories hooks for example module'));
     } else {
         $data['hooks'] = $hooks;
-    
+
          /* You can use the output from individual hooks in your template too, e.g. with
          * $hookoutput['categories'], $hookoutput['dynamicdata'], $hookoutput['keywords'] etc.
          */

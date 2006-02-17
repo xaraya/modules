@@ -1,14 +1,14 @@
 <?php
 /**
  * Surveys table definitions function
- * 
- * @package Xaraya eXtensible Management System
+ *
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Surveys
- * @author Surveys module development team 
+ * @author Surveys module development team
  */
 /*
  *  Initialise a question type.
@@ -32,7 +32,7 @@
  * @since      [Date of first inclusion long date format ]   [REQURIED]
  * @deprecated Deprecated [release version here]             [AS REQUIRED]
  */
-function surveys_admin_initquestiontype() 
+function surveys_admin_initquestiontype()
 {
     if (!xarSecurityCheck('AdminSurvey', 1, 'Survey', 'All')) {
         // No privilege for editing survey structures.

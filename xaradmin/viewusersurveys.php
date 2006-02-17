@@ -1,14 +1,14 @@
 <?php
 /**
  * Surveys overview
- * 
- * @package Xaraya eXtensible Management System
+ *
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Surveys
- * @author Surveys module development team 
+ * @author Surveys module development team
  */
 /*
  * Overview of all current user surveys.
@@ -38,7 +38,7 @@ function surveys_admin_viewusersurveys() {
     if (!xarSecurityCheck('ModerateAssessment', 1, 'Assessment', 'All:All:All:All')) {
         return;
     }
-    
+
     $order_columns = array(
         'usid', 'username', 'fullname', 'status', 'system_status', 'start_date', 'submit_date', 'closed_date', 'last_updated'
     );
@@ -99,7 +99,7 @@ function surveys_admin_viewusersurveys() {
     if (!empty($changestatus)) {
         // Request to change the status of a survey.
         $data['changestatus'] = $changestatus;
-    
+
         if (!empty($newstatus)) {
             // A new status is selected - set it.
             xarModAPIfunc(

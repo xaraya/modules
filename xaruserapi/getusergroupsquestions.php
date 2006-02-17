@@ -1,14 +1,14 @@
 <?php
 /**
  * Surveys table definitions function
- * 
- * @package Xaraya eXtensible Management System
+ *
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Surveys
- * @author Surveys module development team 
+ * @author Surveys module development team
  */
 /*
  * Short Description [REQUIRED one line description]
@@ -63,12 +63,12 @@ function surveys_userapi_getusergroupsquestions($args) {
         $bind[] = (int)$qid;
         $where[] = 'questions.xar_qid = ?';
     }
-    
+
     // If just one group asked for, then stick it in the gids array.
     if (!isset($gids)) {
         $gids = array();
     }
-    
+
     if (isset($gid)) {
         // Fix for PHP 5
         //$result = array_merge((array)$beginning, (array)$end);

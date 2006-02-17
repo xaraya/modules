@@ -1,14 +1,14 @@
 <?php
 /**
  * Surveys table definitions function
- * 
- * @package Xaraya eXtensible Management System
+ *
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Surveys
- * @author Surveys module development team 
+ * @author Surveys module development team
  */
 /*
  * Get all surveys for a user.
@@ -35,7 +35,7 @@
  * @deprecated Deprecated [release version here]             [AS REQUIRED]
  */
 
-function surveys_userapi_getusersurveys($args) 
+function surveys_userapi_getusersurveys($args)
 {
     // TODO: cache this in a global so that a user
     // survey update can flush it.
@@ -94,7 +94,7 @@ function surveys_userapi_getusersurveys($args)
     // Username matching (wildcard)
     if (isset($username)) {
         // Need to join to the roles table.
-        $extra_user .= 
+        $extra_user .=
             ' INNER JOIN ' . $xartable['roles'] . ' AS roles'
             . ' ON roles.xar_uid = user_survey.xar_user_id'
             . ' AND roles.xar_type = 0'
@@ -183,7 +183,7 @@ function surveys_userapi_getusersurveys($args)
             'start_date' => $start_date,
             'submit_date' => $submit_date,
             'closed_date' => $closed_date,
-            'last_updated' => $last_updated  
+            'last_updated' => $last_updated
         );
 
         $usersurveys[] =& $usersurvey;

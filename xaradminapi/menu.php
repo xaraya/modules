@@ -2,7 +2,7 @@
 /**
  * Generate admin menu
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -11,7 +11,7 @@
  */
 /**
  * Generate admin menu
- * 
+ *
  * Standard function to generate a common admin menu configuration for the module
  *
  * @author the Surveys module development team
@@ -19,7 +19,7 @@
  * @TODO MichelV: decide what to place here. BL menus are preferred.
  */
 function surveys_adminapi_menu()
-{ 
+{
     /*Initialise the array that will hold the menu configuration */
     $menu = array();
     /* Specify the menu title to be used in your blocklayout template */
@@ -31,5 +31,5 @@ function surveys_adminapi_menu()
 
      /* Return the array containing the menu configuration */
     return $menu;
-} 
+}
 ?>

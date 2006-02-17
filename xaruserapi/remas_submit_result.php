@@ -1,14 +1,14 @@
 <?php
 /**
  * Extract the result from a remas form POST.
- * 
- * @package Xaraya eXtensible Management System
+ *
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Surveys
- * @author Surveys module development team 
+ * @author Surveys module development team
  */
 /*
  * Extract the result from a remas form POST.
@@ -40,7 +40,7 @@
 
 function surveys_userapi_remas_submit_result($args) {
     extract($args);
-    
+
     // Split the returned page into lines.
     $lines = preg_split('/[\r\n]+|<br[\/\s]*>/i', $data);
 

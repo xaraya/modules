@@ -1,14 +1,14 @@
 <?php
 /**
  * Surveys table definitions function
- * 
- * @package Xaraya eXtensible Management System
+ *
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Surveys
- * @author Surveys module development team 
+ * @author Surveys module development team
  */
 /*
  * Short Description [REQUIRED one line description]
@@ -64,7 +64,7 @@ function surveys_admin_noresponsegaps() {
         . ' WHERE xar_user_survey_id = ? AND xar_group_id = ?';
 
     $query2 = 'SELECT count(xar_ugid)
-        FROM remas_surveys_user_groups 
+        FROM remas_surveys_user_groups
         INNER join remas_surveys_user_surveys
         ON remas_surveys_user_surveys.xar_usid = remas_surveys_user_groups.xar_user_survey_id
         AND remas_surveys_user_surveys.xar_survey_id = 2

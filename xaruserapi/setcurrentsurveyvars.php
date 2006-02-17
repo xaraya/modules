@@ -1,14 +1,14 @@
 <?php
 /**
  * Set the current survey vars for a user.
- * 
- * @package Xaraya eXtensible Management System
+ *
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Surveys
- * @author Surveys module development team 
+ * @author Surveys module development team
  */
 /*
  * Set the current survey vars for a user.
@@ -39,7 +39,7 @@ function surveys_userapi_setcurrentsurveyvars($args) {
 
     // TODO: do some checks - if we are or are not logged in, then does the
     // user ID correctly match the one we are storing against?
-    
+
     // If logged in, store the details in the user vars, else the session vars.
     if (xarUserIsLoggedIn()) {
         xarModSetUserVar('surveys', $name, serialize($args));

@@ -1,14 +1,14 @@
 <?php
 /**
  * Surveys table definitions function
- * 
- * @package Xaraya eXtensible Management System
+ *
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Surveys
- * @author Surveys module development team 
+ * @author Surveys module development team
  */
 /*
  * Short Description [REQUIRED one line description]
@@ -36,7 +36,7 @@
  * Get an item type record.
  */
 
-function surveys_userapi_gettype($args) 
+function surveys_userapi_gettype($args)
 {
     $result = xarModAPIfunc('surveys', 'user', 'gettypes', $args);
     if (empty($result)) {

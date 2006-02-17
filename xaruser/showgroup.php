@@ -1,14 +1,14 @@
 <?php
 /**
  * Surveys table definitions function
- * 
- * @package Xaraya eXtensible Management System
+ *
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Surveys
- * @author Surveys module development team 
+ * @author Surveys module development team
  */
 /*
  * Short Description [REQUIRED one line description]
@@ -91,7 +91,7 @@ function surveys_user_showgroup() {
         // No read access to the survey, so zap it.
         $usersurvey = NULL;
     }
-    
+
     if (empty($usersurvey)) {
         // Raise error - survey does not exist
         $msg = xarML('INVALID SURVEY DETAILS');
@@ -186,7 +186,7 @@ function surveys_user_showgroup() {
     // jump to the start of the survey. This can happen if dependancy rules
     // are changed mid-survey.
     if (!isset($map['items'][$current_gid]['next'])) {
-        // Set the next gid to the current invalid group, and it will be 
+        // Set the next gid to the current invalid group, and it will be
         // processed in the next step.
         $nextgid = $current_gid;
     }

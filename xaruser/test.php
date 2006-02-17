@@ -1,14 +1,14 @@
 <?php
 /**
  * Surveys table definitions function
- * 
- * @package Xaraya eXtensible Management System
+ *
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Surveys
- * @author Surveys module development team 
+ * @author Surveys module development team
  */
 /*
  * Short Description [REQUIRED one line description]
@@ -45,44 +45,44 @@ $xartable =& xarDBGetTables();
 
 // defineInstance($module,$type (AKA component),$instances,$propagate=0,$table2='',$childID='',$parentID='',$description='')
 $instances = array (
-	array (
-		'header' => 'Survey ID',
-		'query' => 'SELECT xar_sid FROM ' . $xartable['surveys_surveys'],
-		'limit' => 20
-	)
+    array (
+        'header' => 'Survey ID',
+        'query' => 'SELECT xar_sid FROM ' . $xartable['surveys_surveys'],
+        'limit' => 20
+    )
 );
 
 xarDefineInstance(
-	'surveys', 'Survey', $instances, 0, 'All', 'All', 'All',
-	xarML('Select for a specific survey')
+    'surveys', 'Survey', $instances, 0, 'All', 'All', 'All',
+    xarML('Select for a specific survey')
 );
 
 $instances = array (
-	array (
-		'header' => 'external', //'Survey ID',
-		'query' => xarModURL('surveys', 'admin', 'privileges'), //'SELECT xar_sid FROM ' . $xartable['surveys_surveys'],
-		'limit' => 20
-	),
-	array (
-		'header' => 'System status',
-		'query' => 'SELECT DISTINCT xar_system_status FROM ' . $xartable['surveys_status'] . ' WHERE xar_type = \'SURVEY\'',
-		'limit' => 20
-	),
-	array (
-		'header' => 'Status',
-		'query' => 'SELECT xar_status FROM ' . $xartable['surveys_status'] . ' WHERE xar_type = \'SURVEY\'',
-		'limit' => 20
-	),
-	array (
-		'header' => 'User ID',
-		'query' => 'SELECT DISTINCT xar_uid FROM ' . $xartable['roles'] . ' WHERE xar_type = 0',
-		'limit' => 20
-	)
+    array (
+        'header' => 'external', //'Survey ID',
+        'query' => xarModURL('surveys', 'admin', 'privileges'), //'SELECT xar_sid FROM ' . $xartable['surveys_surveys'],
+        'limit' => 20
+    ),
+    array (
+        'header' => 'System status',
+        'query' => 'SELECT DISTINCT xar_system_status FROM ' . $xartable['surveys_status'] . ' WHERE xar_type = \'SURVEY\'',
+        'limit' => 20
+    ),
+    array (
+        'header' => 'Status',
+        'query' => 'SELECT xar_status FROM ' . $xartable['surveys_status'] . ' WHERE xar_type = \'SURVEY\'',
+        'limit' => 20
+    ),
+    array (
+        'header' => 'User ID',
+        'query' => 'SELECT DISTINCT xar_uid FROM ' . $xartable['roles'] . ' WHERE xar_type = 0',
+        'limit' => 20
+    )
 );
 
 xarDefineInstance(
-	'surveys', 'Assessment', $instances, 0, 'All:All:All:All' /*'All'*/, 'All', 'All',
-	xarML('Select for a specific user survey')
+    'surveys', 'Assessment', $instances, 0, 'All:All:All:All' /*'All'*/, 'All', 'All',
+    xarML('Select for a specific user survey')
 );
 
 
@@ -102,7 +102,7 @@ xarRegisterMask('ModerateAssessment', 'All', 'surveys', 'Assessment', 'All', 'AC
 
 
 return 'xxx';
-                
+
                 $system_statuses = xarModAPIfunc(
                     'surveys', 'user', 'lookupstatus',
                     array('type' => 'SURVEY', 'status' => 'INSPECTOR', 'return' => 'system_status')

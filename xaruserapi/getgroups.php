@@ -1,14 +1,14 @@
 <?php
 /**
  * Surveys Get Groups
- * 
- * @package Xaraya eXtensible Management System
+ *
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Surveys
- * @author Surveys module development team 
+ * @author Surveys module development team
  */
 /*
  * Get Groups from db
@@ -46,12 +46,12 @@ function surveys_userapi_getgroups($args) {
         $gid = $survey['gid'];
     }
 
-    
+
     // Get the itemtype for groups
     $itemtype = xarModAPIfunc('surveys', 'user', 'gettype', array('type'=>'G'));
     if (empty($itemtype)) {return;}
 
-    
+
 
 
     // Get the group tree, complete with DD fields if hooked.

@@ -1,14 +1,14 @@
 <?php
 /**
  * Modify a question
- * 
- * @package Xaraya eXtensible Management System
+ *
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Surveys
- * @author Surveys module development team 
+ * @author Surveys module development team
  */
 /*
  * Modify a survey question
@@ -52,7 +52,7 @@ function surveys_admin_modifyquestion($args)
     }
 
     $hooks = xarModCallHooks(
-        'item', 'modify', $qid, 
+        'item', 'modify', $qid,
         array('itemtype' => $question['type_id'], 'module' => 'surveys')
     );
     $question['hooks'] = $hooks;

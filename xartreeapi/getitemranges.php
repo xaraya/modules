@@ -1,14 +1,14 @@
 <?php
 /**
  * Surveys table definitions function
- * 
- * @package Xaraya eXtensible Management System
+ *
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Surveys
- * @author Surveys module development team 
+ * @author Surveys module development team
  */
 /*
  * Short Description [REQUIRED one line description]
@@ -64,7 +64,7 @@ function surveys_treeapi_getitemranges($args) {
     } else {
         // Insert point is the virtual root.
         // This query should return EOF when the table is empty,
-        // but it doesn't (on MySQL, at least - I'm sure a MAX() of 
+        // but it doesn't (on MySQL, at least - I'm sure a MAX() of
         // no rows returns no rows in Oracle).
         $query = 'SELECT 0, MIN(xar_left)-1 as xar_left, MAX(xar_right)+1 as xar_right'
             . ' FROM ' . $tablename;

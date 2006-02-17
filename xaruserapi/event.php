@@ -1,14 +1,14 @@
 <?php
 /**
  * Surveys user events
- * 
- * @package Xaraya eXtensible Management System
+ *
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Surveys
- * @author Surveys module development team 
+ * @author Surveys module development team
  */
 /*
  * Record a survey event.
@@ -20,7 +20,7 @@
  * Options defining which events are processed and which are
  * ignored can also be coded here.
  *
- * Sends emails for events 
+ * Sends emails for events
  *
  * @author     Jason Judge <jason.judge@academe.co.uk>
  * @author     Another Author <another@example.com>          [REQURIED]
@@ -42,7 +42,7 @@
  *               <3> Store the events in a database for better review possibilities
  */
 
-function surveys_userapi_event($args) 
+function surveys_userapi_event($args)
 {
     // Cache session details, so we don't need to fetch them too
     // many times in the case of there being many events in a

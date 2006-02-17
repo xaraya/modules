@@ -1,14 +1,14 @@
 <?php
 /**
  * Surveys table definitions function
- * 
- * @package Xaraya eXtensible Management System
+ *
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Surveys
- * @author Surveys module development team 
+ * @author Surveys module development team
  */
 
 /**
@@ -18,15 +18,15 @@
 
 /**
  * Return surveys table names to xaraya
- * 
+ *
  * This function is called internally by the core whenever the module is
  * loaded.  It is loaded by xarMod__loadDbInfo().
- * 
- * @access private 
- * @return array 
+ *
+ * @access private
+ * @return array
  */
 function surveys_xartables()
-{ 
+{
     // Initialise table array
     $xarTables = array();
     $basename = 'surveys';
@@ -38,6 +38,6 @@ function surveys_xartables()
 
     // Return the table information
     return $xarTables;
-} 
+}
 
 ?>

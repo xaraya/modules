@@ -1,14 +1,14 @@
 <?php
 /**
  * Surveys table definitions function
- * 
- * @package Xaraya eXtensible Management System
+ *
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Surveys
- * @author Surveys module development team 
+ * @author Surveys module development team
  */
 /*
  * Export survey tables as SQL (for importing into Access, say).
@@ -129,7 +129,7 @@ function surveys_admin_exportsql() {
     if (!$result->EOF) {
         list($count) = $result->fields;
     }
-    
+
     // Execute the main query.
     $result = $dbconn->SelectLimit($query, -1, 0);
 

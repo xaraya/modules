@@ -1,14 +1,14 @@
 <?php
 /**
  * Start a user survey.
- * 
- * @package Xaraya eXtensible Management System
+ *
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Surveys
- * @author Surveys module development team 
+ * @author Surveys module development team
  */
 /*
  * Start a user survey.
@@ -37,7 +37,7 @@
  * @since      [Date of first inclusion long date format ]   [REQURIED]
  */
 
-function surveys_userapi_startsurvey($args) 
+function surveys_userapi_startsurvey($args)
 {
     // Expand arguments
     extract($args);

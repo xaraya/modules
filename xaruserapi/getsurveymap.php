@@ -1,14 +1,14 @@
 <?php
 /**
  * Surveys table definitions function
- * 
- * @package Xaraya eXtensible Management System
+ *
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Surveys
- * @author Surveys module development team 
+ * @author Surveys module development team
  */
 /*
  * Short Description [REQUIRED one line description]
@@ -36,7 +36,7 @@
  * Get the complete structure for a user survey map.
  * This returns the structure used to display a complete
  * map of a survey instance for a specific user.
- * 
+ *
  */
 
 function surveys_userapi_getsurveymap($args) {
@@ -122,7 +122,7 @@ function surveys_userapi_getsurveymap($args) {
             unset($map['children'][$mapitems[$countgroupid]['parent']][$countgroupid]);
         }
 
-        // Set groups with no questions of their own, but 
+        // Set groups with no questions of their own, but
         // with questions in their descendants, to 'COMPLETE' This would
         // allow nodes to hold descendant node questions, but without
         // having to be visited themselves.

@@ -1,14 +1,14 @@
 <?php
 /**
  * Surveys table definitions function
- * 
- * @package Xaraya eXtensible Management System
+ *
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Surveys
- * @author Surveys module development team 
+ * @author Surveys module development team
  */
 /*
  * Review a user survey.
@@ -51,7 +51,7 @@ function surveys_user_review() {
 
     // Increase the timeout a little.
     set_time_limit(60);
-    
+
     // User survey ID - can over-ride the 'current' survey.
     if (!xarVarFetch('usid', 'id', $usid, 0, XARVAR_NOT_REQUIRED)) {return;}
 
@@ -63,7 +63,7 @@ function surveys_user_review() {
             $usid = $usersurvey['usid'];
         }
     }
-    
+
     if (!empty($usid)) {
         // Check the user survey exists.
         // TODO: admin would not require 'current_user' to be set, otherwise
@@ -133,8 +133,8 @@ function surveys_user_review() {
         }
     }
 
-    // If the user has comment privilege on the survey, then flag this so links can be 
-    // provided on the map. 
+    // If the user has comment privilege on the survey, then flag this so links can be
+    // provided on the map.
     if (xarSecurityCheck('CommentAssessment', 0, 'Assessment', $usersurvey['sid'].':'.$usersurvey['system_status'].':'.$usersurvey['status'].':'.$usersurvey['uid'])) {
         $editable = true;
     } else {

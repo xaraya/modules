@@ -3,7 +3,7 @@
  *
  * Xaraya surveys module
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2004 Academe Computing Ltd
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.academe.co.uk

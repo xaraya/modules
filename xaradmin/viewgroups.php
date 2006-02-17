@@ -1,14 +1,14 @@
 <?php
 /**
  * View Survey groups
- * 
- * @package Xaraya eXtensible Management System
+ *
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Surveys
- * @author Surveys module development team 
+ * @author Surveys module development team
  */
 /*
  * Short Description [REQUIRED one line description]
@@ -93,7 +93,7 @@ function surveys_admin_viewgroups()
                 $groups['items'][$key]['description'] = '';
             }
         }
-   
+
         categories_renderer_array_markdepths_bypid($groups['items']);
         $groups['items'] = categories_renderer_array_maptree($groups['items']);
 

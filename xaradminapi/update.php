@@ -1,14 +1,14 @@
 <?php
 /**
  * Surveys table definitions function
- * 
- * @package Xaraya eXtensible Management System
+ *
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Surveys
- * @author Surveys module development team 
+ * @author Surveys module development team
  */
 /*
  * Short Description [REQUIRED one line description]
@@ -105,7 +105,7 @@ function surveys_adminapi_update($args) {
             $bind[] = $$parameter;
         }
     }
-    
+
     // Question.
     if (isset($qid) && is_numeric($qid)) {
         if (isset($mandatory)) {
@@ -144,7 +144,7 @@ function surveys_adminapi_update($args) {
         }
         $itemtype = $response['type_id'];
 
-        // The $status_notna will only update the status if 
+        // The $status_notna will only update the status if
         // the response is not disabled (i.e. not 'NA').
         // This is useful when importing, so that responses can be
         // imported into disabled questions without enabling them.

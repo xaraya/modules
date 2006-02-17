@@ -1,14 +1,14 @@
 <?php
 /**
  * Surveys table definitions function
- * 
- * @package Xaraya eXtensible Management System
+ *
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Surveys
- * @author Surveys module development team 
+ * @author Surveys module development team
  */
 /*
  * Short Description [REQUIRED one line description]
@@ -34,7 +34,7 @@
  */
 /*
  * Prepare a tree for insering a new item.
- * Basically opens a gap for the item, then returns the 
+ * Basically opens a gap for the item, then returns the
  * tree-specific values (parent, left, right) to be
  * used when inserting the item.
  * The function supports multiple trees. Each tree starts
@@ -52,7 +52,7 @@ function surveys_treeapi_insertprep($args) {
     extract($args);
 
     // TODO: validate params: insertpoint, offset, tablename, idname
-    
+
     // Default operation is 'before' - i.e. put the new item in the place
     // of the insertpoint and move everything to the right one place.
     if (!xarVarValidate('enum:before:after:firstchild:lastchild', $offset, true)) {

@@ -1,14 +1,14 @@
 <?php
 /**
  * Surveys table definitions function
- * 
- * @package Xaraya eXtensible Management System
+ *
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Surveys
- * @author Surveys module development team 
+ * @author Surveys module development team
  */
 /*
  * Update the internal lists, based on the imported EP data.
@@ -30,7 +30,7 @@
  * @link       link to a reference                           [OPTIONAL]
  * @see        anothersample(), someotherlinke [reference to other function, class] [OPTIONAL]
  * @since      [Date of first inclusion long date format ]   [REQURIED]
- * @deprecated Nov 2005? To be determined. 
+ * @deprecated Nov 2005? To be determined.
  */
 
 require_once "modules/surveys/convert/ConvertCharset.class.php";
@@ -61,7 +61,7 @@ function surveys_admin_updatelists() {
 
     // Get the type of list to be updated: ep or ema
     xarVarFetch('listtype', 'pre:lower:trim:enum:ema:ep:sectors', $p_listtype, NULL, XARVAR_NOT_REQUIRED);
-    
+
     // Database stuff.
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -168,7 +168,7 @@ function surveys_admin_updatelists() {
             $result->MoveNext();
         }
 
-    
+
         // **** SUB-SECTORS ****
         echo "**** SUB-SECTORS<br/>";
 
@@ -273,7 +273,7 @@ function surveys_admin_updatelists() {
 
             . ' INNER JOIN remas_ep_attributes AS attributes'
             . ' ON attributes.id = indicators.attribute_id'
-            
+
             . ' INNER JOIN remas_ep_subsector_attributes AS subsector_attributes'
             . ' ON subsector_attributes.subsector_id = subsectors.id'
             . ' AND subsector_attributes.attribute_id = attributes.id'
@@ -370,7 +370,7 @@ function surveys_admin_updatelists() {
 
                 . ' INNER JOIN remas_ep_attributes AS attributes'
                 . ' ON attributes.id = indicators.attribute_id'
-                
+
                 . ' INNER JOIN remas_ep_subsector_attributes AS subsector_attributes'
                 . ' ON subsector_attributes.subsector_id = subsectors.id'
                 . ' AND subsector_attributes.attribute_id = attributes.id'
@@ -396,7 +396,7 @@ function surveys_admin_updatelists() {
                     if (!empty($indicator_name_it)) $indicator_name_it = $encoding_object->Convert($indicator_name_it, $FromCharset, $ToCharset, 0);
                     //echo "french=$text_fr <br/>"; $result->MoveNext(); continue;
                 }
-                
+
                 //$count += 1;
                 //echo "<div>$count: $indicator_id $indicator_name</div>";
                 $newitems[$indicator_id] = array(
@@ -421,7 +421,7 @@ function surveys_admin_updatelists() {
 
                 if (!isset($listitems[$indicator_id])) { //echo " notset $indicator_id ";
                     // Add the item to the list.
-                    
+
                     $iid = xarModAPIfunc(
                         'lists', 'admin', 'createlistitem',
                         array(
@@ -610,7 +610,7 @@ function surveys_admin_updatelists() {
                     //echo "french=$text_fr <br/>"; $result->MoveNext(); continue;
                 }
 
-                
+
                 //$count += 1;
                 //echo "<div>$count: $indicator_id $indicator_name</div>";
                 $newitems[$newitem_id] = array(

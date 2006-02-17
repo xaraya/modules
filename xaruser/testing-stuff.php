@@ -1,14 +1,14 @@
 <?php
 /**
  * Surveys table definitions function
- * 
- * @package Xaraya eXtensible Management System
+ *
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Surveys
- * @author Surveys module development team 
+ * @author Surveys module development team
  */
 /*
  * Short Description [REQUIRED one line description]
@@ -42,7 +42,7 @@ function surveys_user_main()
     xarModAPIfunc('surveys', 'user', 'switchtosurvey', array('sid'=>$sid, 'uid'=>xarUserGetVar('uid'))); // ,'gid'=>60
     return 'done (created user survey number '.$sid.' for user '.xarUserGetVar('uid').')'
         . '<br/>Start survey <a href="http://remas1.acadweb.co.uk/index.php?module=surveys&amp;func=showgroup">here</a>';
-    
+
     $survey_id = 1;
     $user_id = 1;
     $group_id = 38;
@@ -82,7 +82,7 @@ function surveys_user_main()
 
     // Get the current submit group.
     $objects =& xarModAPIfunc(
-        'surveys', 'user', 'getsubmitgroup', 
+        'surveys', 'user', 'getsubmitgroup',
         array('gid'=>$group_id, 'uid'=>$user_id, 'sid'=>$survey_id)
     );
 

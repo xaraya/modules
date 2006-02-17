@@ -1,14 +1,14 @@
 <?php
 /**
  * Surveys table definitions function
- * 
- * @package Xaraya eXtensible Management System
+ *
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Surveys
- * @author Surveys module development team 
+ * @author Surveys module development team
  */
 /*
  * Short Description [REQUIRED one line description]
@@ -42,22 +42,22 @@ function surveys_userapi_getlanguagesuffix() {
     $locale = xarLocaleGetInfo(xarMLSGetCurrentLocale());
     $language = $locale['lang'];
     $country = $locale['country'];
-    
+
     if (!strcmp($language, 'en')) {
         $suffix ='_'.$language;
     } else {
         $suffix ='';
     }
-        
-    //$this->language = 
-    //$this->country 
+
+    //$this->language =
+    //$this->country
 
     // Set the language suffix to '_' + language code. Only do this
     // for non-English languages, to keep processing down a little.
     // TODO: perhaps only do this for non-site default locale languages,
     // rather than hard-coding English here.
-    
-    
+
+
     //return ($this->language <> 'en') ? '_' . $this->language : '';
     return $suffix;
 }

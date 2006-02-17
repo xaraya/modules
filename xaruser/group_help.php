@@ -1,20 +1,20 @@
 <?php
 /**
  * Surveys show help page
- * 
- * @package Xaraya eXtensible Management System
+ *
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Surveys
- * @author Surveys module development team 
+ * @author Surveys module development team
  */
 /*
  * Show help page
  *
  * Provide a help page, listing help details for the
- * specified group name. Help pages are coming from articles and 
+ * specified group name. Help pages are coming from articles and
  * can be specific for a language
  *
  * @author     Jason Judge <jason.judge@academe.co.uk>
@@ -34,7 +34,7 @@
  * @deprecated Deprecated [release version here]             [AS REQUIRED]
  */
 
-function surveys_user_group_help() 
+function surveys_user_group_help()
 {
     xarVarFetch('gid', 'id', $gid, 0, XARVAR_NOT_REQUIRED);
 
