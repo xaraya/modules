@@ -7,23 +7,27 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage SIGMA Personnel module
+ * @subpackage Sigmapersonnel Module
+ * @link http://xaraya.com/index.php/release/418.html
+ * @author SIGMAPersonnel module development team
  */
-/**
- * @author MichelV
- */
+
 include_once "modules/base/xarproperties/Dynamic_Select_Property.php";
 
 /**
  * handle the personlist property
  * This is a list type of property, it allows you to select a person from this module
  *
- * @package dynamicdata
+ * @author MichelV
  *
  */
 class Dynamic_PersonList_Property extends Dynamic_Select_Property
 {
-
+    /**
+     * Set the property
+     *
+     * @return
+     **/
     function Dynamic_PersonList_Property($args)
     {
         $this->Dynamic_Select_Property($args);
@@ -35,7 +39,11 @@ class Dynamic_PersonList_Property extends Dynamic_Select_Property
             $this->parseValidation($this->validation);
         }
     }
-
+    /**
+     * Validate a value
+     *
+     * @return bool
+     **/
     function validateValue($value = null)
     {
         if (!isset($value)) {
@@ -81,7 +89,11 @@ class Dynamic_PersonList_Property extends Dynamic_Select_Property
     }
     */
 
-//    function showInput($name = '', $value = null, $options = array(), $id = '', $tabindex = '')
+    /**
+     * Show the input form
+     *
+     * @return array with template
+     **/
     function showInput($args = array())
     {
         extract($args);
@@ -126,7 +138,11 @@ class Dynamic_PersonList_Property extends Dynamic_Select_Property
 
         //return $out;
     }
-
+    /**
+     * Show the actual output
+     *
+     * @return array
+     **/
     function showOutput($args = array())
     {
          extract($args);
@@ -151,8 +167,7 @@ class Dynamic_PersonList_Property extends Dynamic_Select_Property
     /**
      * Get the base information for this property.
      *
-     * @returns array
-     * @return base information for this property
+     * @return array with base information for this property
      **/
     function getBasePropertyInfo()
     {

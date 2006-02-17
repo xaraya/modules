@@ -7,15 +7,14 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage SIGMAPersonnel Module
+ * @subpackage Sigmapersonnel Module
  * @link http://xaraya.com/index.php/release/418.html
- * @author Michel V.
+ * @author SIGMAPersonnel module development team
  */
 /**
  * utility function pass individual menu items to the main menu
  *
  * @author MichelV.
- * @returns array
  * @return array containing the menulinks for the main menu items.
  */
 function sigmapersonnel_userapi_getmenulinks()
