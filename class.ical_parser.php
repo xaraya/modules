@@ -1,5 +1,17 @@
 <?php
 /**
+ * Julian Module : calendar with events
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Julian Module
+ * @link http://xaraya.com/index.php/release/319.html
+ * @author Julian Module development team
+ */
+/**
  *  iCalendar file parser
  */
 define('_VCALENDAR_', 0);
@@ -24,10 +36,10 @@ class iCal_Parser
     var $data;
     var $field;
     var $property;
-    
+
     // pointers
     var $vcal_pos; // what vcalendar are we parsing
-    
+
     // containers
     var $vcalendar  = array();
     //var $vtimezone  = array();
@@ -35,7 +47,7 @@ class iCal_Parser
     //var $vtodo      = array();
     //var $vfreebusy  = array();
     //var $valarm     = array();
-    
+
     /**
      *  ical_parser constructor
      *  @access public
@@ -54,11 +66,11 @@ class iCal_Parser
      *  @access public
      *  @param string $file path and name of icalendar file
      */
-    function setFile($file) 
+    function setFile($file)
     {
         $this->file = $file;
     }
-    
+
     /**
      *  Sets the icalendar file content from text
      *  @access public
@@ -73,7 +85,7 @@ class iCal_Parser
     /**
      *  Parses the icalendar content
      *  @access public
-     *  
+     *
      */
     function parse()
     {
@@ -105,7 +117,7 @@ class iCal_Parser
         $this->file_mtime = filemtime($this->file);
         $fd = fopen($this->file, 'r');
         $this->content = trim(fread($fd, filesize($this->file)));
-        fclose($fd);  
+        fclose($fd);
     }*/
 
     /**
@@ -128,15 +140,15 @@ class iCal_Parser
         }
         // we need the actual file date for icalendar compliance
         $this->file_mtime = filemtime($this->file);
-        
+
         // grab the file and parse it
         $this->ifile = fopen($this->file, 'r');
         $nextline = fgets($this->ifile, 1024);
         if(trim($nextline) != 'BEGIN:VCALENDAR') {
             $this->error = xarML('iCal_Parser Error::File is not a valid iCalendar file');
             return false;
-        } 
-        
+        }
+
         // parse the rest of the file
         while(!feof($this->ifile)) {
             $this->line = $nextline;
@@ -149,67 +161,67 @@ class iCal_Parser
                 $nextline = preg_replace('/[\r\n]/', '', $nextline);
             }
             $this->line = trim($this->line);
-            
+
             switch($this->line) {
-                
+
                 case 'BEGIN:VCALENDAR' :
                     $this->current = _VCALENDAR_;
                     $this->vcal_pos = count($this->vcalendar);
                     $this->vcalendar[$this->vcal_pos] = array();
                     break;
-                    
+
                 case 'END:VCALENDAR' :
                     $this->current = null;
                     break;
-                
+
                 case 'BEGIN:VEVENT' :
                     $this->current = _VEVENT_;
                     break;
-                    
+
                 case 'END:VEVENT' :
                     $this->current = null;
                     break;
-                    
+
                 case 'BEGIN:VTODO' :
                     $this->current = _VTODO_;
                     break;
-                
+
                 case 'END:VTODO' :
                     $this->current = null;
                     break;
-                    
+
                 case 'BEGIN:VFREEBUSY' :
                     $this->current = _VFREEBUSY_;
                     break;
-                
+
                 case 'END:VFREEBUSY' :
                     $this->current = null;
                     break;
-                    
+
                 case 'BEGIN:VALARM' :
                     $this->current = _VALARM_;
                     break;
-                
+
                 case 'END:VALARM' :
                     $this->current = null;
                     break;
-                    
+
                 case 'BEGIN:VTIMEZONE' :
                     $this->current = _VTIMEZONE_;
                     // where are we in the timezone array
                     if(!isset($this->vcalendar[$this->vcal_pos]['vtimezone'])) {
                         $this->vcalendar[$this->vcal_pos]['vtimezone'] = array();
-                    } 
+                    }
                     $this->tz_pos = count($this->vcalendar[$this->vcal_pos]['vtimezone']);
                     // create a new timezone container
                     $this->vcalendar[$this->vcal_pos]['vtimezone'][$this->tz_pos] = array();
                     break;
-                
+
                 case 'END:VTIMEZONE' :
                     $this->current = null;
                     $this->__parse_vtimezone();
                     break;
-                
+
                 case 'BEGIN:STANDARD' :
                     $this->tz_standard = true;
                     if(!isset($this->vcalendar[$this->vcal_pos]['vtimezone'][$this->tz_pos]['standard'])) {
@@ -218,12 +230,12 @@ class iCal_Parser
                     $this->tz_spos = count($this->vcalendar[$this->vcal_pos]['vtimezone'][$this->tz_pos]['standard']);
                     $this->vcalendar[$this->vcal_pos]['vtimezone'][$this->tz_pos]['standard'][$this->tz_spos] = array();
                     break;
-                    
+
                 case 'END:STANDARD' :
                     // close out the standard timezone definition
                     $this->tz_standard = false;
                     break;
-                    
+
                 case 'BEGIN:DAYLIGHT' :
                     $this->tz_daylight = true;
                     if(!isset($this->vcalendar[$this->vcal_pos]['vtimezone'][$this->tz_pos]['daylight'])) {
@@ -232,39 +244,39 @@ class iCal_Parser
                     $this->tz_dpos = count($this->vcalendar[$this->vcal_pos]['vtimezone'][$this->tz_pos]['daylight']);
                     $this->vcalendar[$this->vcal_pos]['vtimezone'][$this->tz_pos]['daylight'][$this->tz_dpos] = array();
                     break;
-                
+
                 case 'END:DAYLIGHT' :
                     // close out the daylight saving timezone definition
                     $this->tz_daylight = false;
                     break;
-                    
+
                 default:
                     $this->__parse_params();
                     break;
             }
-            
-            
+
+
         }
     }
-    
+
     function __parse_params()
     {
         $this->__get_property();
         // parse depending on where we are in the file
         switch($this->current) {
-        
+
             case _VTIMEZONE_ :
                 $this->__parse_vtimezone();
                 break;
-                
+
             case _VCALENDAR_:
             default :
                 $this->__parse_vcalendar();
                 break;
-        
+
         }
     }
-    
+
     /**
      *  Grabs the property name and and data associated with it
      */
@@ -279,7 +291,7 @@ class iCal_Parser
         if ($prop_pos !== false) $property = substr($property,0,$prop_pos);
         $this->property = strtoupper($property);
     }
-    
+
     /**
      *  Parses the information associated with the
      *  top level VCALENDAR component.
@@ -288,7 +300,7 @@ class iCal_Parser
     {
         $this->vcalendar[$this->vcal_pos][$this->property] = $this->data;
     }
-    
+
     function __parse_vtimezone()
     {
         // what object are we assigning data to?
@@ -299,26 +311,26 @@ class iCal_Parser
         } else {
             $el = $this->vcalendar[$this->vcal_pos]['vtimezone'][$this->tz_pos];
         }
-        
+
         switch ($this->property) {
             case 'TZID' :
                 // populate the current TZID for this element
                 // TODO::this element probably exists in a lot of different ways
                 $el['TZID'] = $this->data;
                 break;
-            
+
             case 'TZOFFSETFROM' :
                 $el['TZOFFSETFROM'] = $this->data;
                 break;
-                
+
             case 'TZOFFSETTO' :
                 $el['TZOFFSETTO'] = $this->data;
                 break;
-            
+
             case 'TZNAME':
                 $el['TZNAME'] = $this->data;
                 break;
-                
+
             case 'DTSTART':
                 // see if the date is represented in UTC
                 $zulu = (substr($this->data,-1)=='Z') ? true : false;
@@ -328,7 +340,7 @@ class iCal_Parser
 
                 // DTSTART for timezones should be simple and only contain a datetime
                 // without a lot of extra parameters.
-                
+
                 preg_match('/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{0,2})([0-9]{0,2})([0-9]{0,2})/', $this->data, $regs);
 // TODO: adodb_datetime functions only handle dates >= 100 A.D.
 // TODO: so, what are we going to do about that - eh!?!
@@ -349,7 +361,7 @@ class iCal_Parser
                 $start_unixtime -= $offset;
                 $el['DTSTART'] = adodb_date('Ymd\THis\Z', $start_unixtime);
                 break;
-                
+
             case 'RRULE':
                 $this->data = str_replace('RRULE:', '', $this->data);
                 $rrule = split (';', $this->data);
@@ -358,45 +370,45 @@ class iCal_Parser
                     $el['RRULE'][$match[1]] = $match[2];
                 }
                 break;
-                
+
             case 'RDATE':
                 if(!isset($el['RDATE'])) {
                     $el['RDATE'] = array();
                 }
                 $el['RDATE'][] = $this->data;
                 break;
-                
+
             default:
-                $el["$this->property"] = $this->data;    
+                $el["$this->property"] = $this->data;
                 break;
-            
+
         }
     }
-    
+
     function __parse_vevent()
     {
-    
+
     }
-    
+
     function __parse_vtodo()
     {
-    
+
     }
-    
-    function tzOffset2Seconds($offset) 
+
+    function tzOffset2Seconds($offset)
     {
         // make sure the offset starts with a + or -
         if(!preg_match('/([+-])([0-9]){2}([0-9]){2}/',$offset,$match)) {
             // we have an invalid offset, so just return zero
             return (int) 0;
-        } 
+        }
         $flag  = $match[1];
         $seconds = ($match[2] * 60 * 60) + ($match[3] * 60);
         unset($match);
         return (int) "$flag$seconds";
     }
-    
-    
+
+
 }
 
 ?>

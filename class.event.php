@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Julian Module : calendar with events
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Julian Module
+ * @link http://xaraya.com/index.php/release/319.html
+ * @author Julian Module development team
+ */
 /**
  *  xarEvent
  *  container class for event information
@@ -51,30 +62,27 @@ class Event
         $bl_data['event_exdate'] = null;
         $bl_data['event_exrrule_'] = null;
     }
-    /*
+    /**
     * This function takes an event_date, the day to set the event for,
     * an event_obj which holds the data to be assigned, and an event array where the data
     * is being set (passed-by-reference). The event data is set in the event array
     *
-    * @package modules
-    * @copyright (C) 2004 by Metrostat Technologies, Inc.
-    * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
-    * @link http://www.metrostat.net
-    *
-    * @subpackage julian
     * initial template: Roger Raymond
     * @author Jodie Razdrh/John Kevlin/David St.Clair
+    * @return
     */
     function setEventData(&$event_data,$event_date,$event_obj)
     {
     //Get variables
         $dateformat=xarModGetVar('julian', 'dateformat');
 
-        /*create a unique index for sorting using the timestamp for this
-        event and then concat the event id with a dash inbetween to guarantee uniqueness. This will allow ordering
-        by timestamp then event_id with the all day events being listed first. If there
-        is more than one event for any given time (or all day), the
-        event id makes the index unique.*/
+        /**
+         * create a unique index for sorting using the timestamp for this
+         * event and then concat the event id with a dash inbetween to guarantee uniqueness. This will allow ordering
+         * by timestamp then event_id with the all day events being listed first. If there
+         * is more than one event for any given time (or all day), the
+         * event id makes the index unique.
+         */
         $index=strtotime($event_obj->dtstart) ."-".$event_obj->event_id;
 
         // Default color: black.
@@ -129,7 +137,16 @@ class Event
         //reset the event array for this date to the sorted array for this event date
         $event_data[$event_date]=$sortArray;
     }
-
+    /**
+    * This function takes an event_date, the day to set the event for,
+    * an event_obj which holds the data to be assigned, and an event array where the data
+    * is being set (passed-by-reference). The event data is set in the event array
+    * Events are taken from the hooked events
+    *
+    * initial template: Roger Raymond
+    * @author Jodie Razdrh/John Kevlin/David St.Clair
+    * @return
+    */
     function setLinkedEventData(&$event_data,$event_date,$event_obj)
     {
       //Get variables
@@ -231,8 +248,12 @@ class Event
     {
         $this->repeatonday = $day;
     }
-    /*This function determines the start date of a recurring event based on the selected start date by the user and
-       the recurring information. The start date is returned as a string in the format of YYYY-mm-dd*/
+    /**
+     * This function determines the start date of a recurring event based on the selected start date by the user and
+     * the recurring information. The start date is returned as a string in the format of YYYY-mm-dd
+     * @param int $count the number of....
+     * @return string startdate
+     */
     function setRecurEventStartDate($selectedstartdate,$interval,$count,$freq)
     {
        $eventstartdate='';
@@ -244,12 +265,13 @@ class Event
 
        while(!$haveStartDate)
        {
-          /*calculate when this event would occur first. Check the current month first and if this event would occur
+          /* calculate when this event would occur first. Check the current month first and if this event would occur
             in the current month sometime after the start date, set the start date to the current month's first occurence.
             Otherwise, add the frequency to get the next occurrence of this event until one is found that occurs after the start date
-            entered by the user.*/
+            entered by the user.
+            */
           if ($interval < 5 && $interval != 0) {
-             /*event repeats 1st, 2nd, 3rd or 4th day of the week every so many month(s) (i.e. 2nd Sunday every 3 months)*/
+             /* event repeats 1st, 2nd, 3rd or 4th day of the week every so many month(s) (i.e. 2nd Sunday every 3 months)*/
              $newTS = strtotime($interval ." ". $day_array[$count], $newTS);
              if($newTS >= strtotime($selectedstartdate)) {
                 $eventstartdate=date("Y-m-d",$newTS);
@@ -261,9 +283,10 @@ class Event
              /*event repeats a certain day the last week every so many month(s) (i.e. last Monday every two months)*/
              $endMonthTS=strtotime(date('Y-m',$newTS)."-".date('t',$newTS));
              $newTS= strtotime("next " . $day_array[$count],strtotime("last week",$endMonthTS));
-             /*if determining the last occurrence in the month takes you to the next month, use 'this' instead of 'next
+             /* if determining the last occurrence in the month takes you to the next month, use 'this' instead of 'next
              in the strtotime function to create the next date for comparison. This is required for this to calculate
-             the correct date when the last occurrence is on the last day of the month*/
+             the correct date when the last occurrence is on the last day of the month
+             */
              if(strcmp(date('m',$newTS),date('m'))) {
                 $newTS=strtotime("this " . $day_array[$count],strtotime("last week",$endMonthTS));
              }

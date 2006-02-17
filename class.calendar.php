@@ -1,16 +1,26 @@
 <?php
 /**
-  * Class to gather data for a specific calendar view
-  *
-  * @package modules
-  * @copyright (C) 2005 by Metrostat Technologies, Inc.
-  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
-  * @link http://www.metrostat.net
-  *
-  * @subpackage Julian module
-  * initial template: Roger Raymond
-  * @author Julian development Team
-  */
+ * Julian Module : calendar with events
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Julian Module
+ * @link http://xaraya.com/index.php/release/319.html
+ * @author Julian Module development team
+ */
+/**
+ * Class to gather data for a specific calendar view
+ *
+ * @copyright (C) 2005 by Metrostat Technologies, Inc.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.metrostat.net
+ *
+ * initial template: Roger Raymond
+ * @author Julian development Team
+ */
 
 class Calendar
 {
@@ -22,7 +32,8 @@ class Calendar
     var $dayNamesShort = array();
 
     /**
-     *    constructor
+     * constructor
+     * @return array returns just the first letter from the shortDayNames
      */
     function Calendar()
     {
@@ -97,6 +108,7 @@ class Calendar
     /**
      *  creates an array used to build the final output
      *  @param string $d optional date of the week to build [ YYYYMMDD ]
+     * @return array
      */
     function &getCalendarWeek($d=null)
     {
@@ -120,6 +132,7 @@ class Calendar
     /**
      *  creates an array used to build the final output
      *  @param string $d optional date of the month to build [ YYYYMM ]
+     * @return array
      */
     function &getCalendarMonth($d=null)
     {
@@ -168,6 +181,7 @@ class Calendar
     /**
      *  creates an array used to build the final output
      *  @param string $d optional date of the year to build [ YYYY ]
+     * @return array with year
      */
     function &getCalendarYear($y=null)
     {
@@ -184,7 +198,8 @@ class Calendar
 
     /**
      *  Returns the day the calendar starts on (0=Sunday through 6=Saturday)
-     *  @return bool if the day is
+     * @return bool if the day is
+     *
      */
     function dayIs($dow=0,$date=null)
     {
@@ -295,8 +310,8 @@ class Calendar
     }
     /**
      *  daysToDate
-     *    borrowed from Date_Calc class
-     *    @access private
+     *  borrowed from Date_Calc class
+     *  @access private
      */
     function daysToDate($days)
     {
@@ -323,8 +338,11 @@ class Calendar
         $year = sprintf("%02d",$year);
         return(gmdate('Ymd',gmmktime(0,0,0,$month,$day,$century.$year)));
     }
-   /* Determines if the current day is a Saturday or Sunday. Returns true or false
+   /**
+    * Determines if the current day is a Saturday or Sunday. Returns true or false
     * The day param is expected to be a string date (i.e. YYYY-mm-dd, etc.)
+    * @param string day
+    * @return int 1 = weekend 0 is not weekend
     */
    function isWeekend($day)
    {
