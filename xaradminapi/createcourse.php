@@ -19,7 +19,7 @@
  * @param  $args ['number'] number of the course
  * @returns int
  * @return course ID on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function courses_adminapi_createcourse($args)
 {

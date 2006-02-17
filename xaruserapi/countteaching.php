@@ -18,7 +18,7 @@
  *
  * @param uid UserID for the user that is a teacher
  * @return integer. Number of courses
- * @raise DATABASE_ERROR
+ * @throws DATABASE_ERROR
  */
 function courses_userapi_countteaching($args)
 {

@@ -19,7 +19,7 @@
  * @param id courseid The ID of the coursename to get
  * @param id planningid The ID of the planning, if courseid is not set
  * @return string $name
- * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
+ * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function courses_userapi_getcoursename($args)
 {

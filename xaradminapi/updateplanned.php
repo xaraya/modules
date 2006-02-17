@@ -18,7 +18,7 @@
  * @param  $args ['planningid'] the ID of the course
  * @param  $args ['name'] the new name of the item
  * @param  $args ['number'] the new number of the item
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function courses_adminapi_updateplanned($args)
 {

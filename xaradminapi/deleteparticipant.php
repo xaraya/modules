@@ -18,7 +18,7 @@
  * @param  $args ['sid'] ID of the student item
  * @returns bool
  * @return true on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function courses_adminapi_deleteparticipant($args)
 {

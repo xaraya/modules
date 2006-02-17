@@ -17,10 +17,9 @@
  * @author the course module development team
  * @param  $args ['name'] name of the item
  * @param  $args ['number'] number of the item
- * @returns int
- * @return example item ID on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
- * @deprecated
+ * @return int item ID on success, false on failure
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @deprecated 2005
  */
 function courses_adminapi_create($args)
 {

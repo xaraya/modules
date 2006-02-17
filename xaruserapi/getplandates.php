@@ -20,7 +20,7 @@
  * @param startnum $ start with this item number (default 1)
  * @param after The date (int) for which the closedate should be after
  * @return array of items, or false on failure
- * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
+ * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function courses_userapi_getplandates($args)
 {

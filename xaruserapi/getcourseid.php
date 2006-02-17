@@ -17,7 +17,7 @@
  * @author the Courses module development team
  * @param  $args ['number'] The code of the course to get
  * @return item array with courseid and data on the hidden status, or false on failure
- * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
+ * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  * @todo MichelV: <1>Extend to search for planningid ?
  */
 function courses_userapi_getcourseid($args)

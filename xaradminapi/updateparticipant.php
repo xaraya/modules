@@ -20,7 +20,7 @@
  * @param  $args ['statusid'] status of the student enrolling
  * @returns int
  * @return enroll ID on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function courses_adminapi_updateparticipant($args)
 {

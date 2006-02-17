@@ -19,7 +19,7 @@
  * @param  $args ['name'] the new name of the item
  * @param  $args ['number'] the new number of the item
  * @param  $args all other course variables ;)
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function courses_adminapi_updatecourse($args)
 {

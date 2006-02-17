@@ -22,7 +22,7 @@
  * @param id level courselevelid
  * @param id type coursetypeid
  * @return array of items, or false on failure
- * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
+ * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function courses_userapi_getall($args)
 {

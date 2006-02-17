@@ -20,7 +20,7 @@
  * @param  $args ['type'] additional info on teacher: type
  * @returns int
  * @return teacher ID on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function courses_adminapi_create_teacher($args)
 {

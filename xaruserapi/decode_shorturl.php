@@ -18,7 +18,7 @@
  * @author the Courses module development team
  * @param  $params array containing the different elements of the virtual path
  * @return array containing func the function to be called and args the query
- *          string arguments, or empty if it failed
+ *         string arguments, or empty if it failed
  */
 function courses_userapi_decode_shorturl($params)
 {
@@ -38,7 +38,7 @@ function courses_userapi_decode_shorturl($params)
     }
 
     // Analyse the different parts of the virtual path
-    // $params[1] contains the first part after index.php/example
+    // $params[1] contains the first part after index.php/courses
     // In general, you should be strict in encoding URLs, but as liberal
     // as possible in trying to decode them...
     if (empty($params[1])) {

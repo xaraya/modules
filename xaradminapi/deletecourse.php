@@ -7,17 +7,18 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage example
- * @author Example module development team
+ * @subpackage Courses Module
+ * @link http://xaraya.com/index.php/release/179.html
+ * @author Courses module development team
  */
 /**
  * delete a course
  *
- * @author the Courses module development team
+ * @author MichelV <michelv@xaraya.com>
  * @param  $args ['courseid'] ID of the course
  * @returns bool
  * @return true on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function courses_adminapi_deletecourse($args)
 {

@@ -17,7 +17,7 @@
  * @author the Courses module development team
  * @param id sid The ID of the student/participant
  * @return array of items, or false on failure
- * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
+ * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function courses_userapi_getparticipant($args)
 {

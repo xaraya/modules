@@ -17,7 +17,7 @@
  *
  * Standard function to create a new item
  * This is a standard function that is called with the results of the
- * form supplied by xarModFunc('example','admin','new') to create a new item
+ * form supplied by xarModFunc('courses','admin','new') to create a new item
  *
  * @author MichelV
  * @param  $ 'name' the name of the item to be created

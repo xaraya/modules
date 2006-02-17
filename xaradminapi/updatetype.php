@@ -18,7 +18,7 @@
  * @param  $args ['tid'] the ID of the item
  * @param  $args ['name'] the new name of the item
  * @param  $args ['descr'] the new number of the item
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function courses_adminapi_updatetype($args)
 {

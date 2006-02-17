@@ -17,7 +17,7 @@
  * @author the Courses module development team
  * @param tid $ the ID of the teacher to get
  * @return array of items, or false on failure
- * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
+ * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function courses_userapi_getteacher($args)
 {
