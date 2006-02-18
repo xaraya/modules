@@ -1,9 +1,8 @@
 <?php
-/*
- *
+/**
  * Keywords Module
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -12,15 +11,13 @@
  * @link http://xaraya.com/index.php/release/187.html
  * @author mikespub
 */
-
 /**
  * get entries for a module item
  *
- * @param $args['modid'] module id
- * @param $args['itemtype'] itemtype
- * @returns array
+ * @param int $args['modid'] module id
+ * @param int $args['itemtype'] itemtype
  * @return array of keywords
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function keywords_adminapi_getwordslimited($args)
 {
@@ -70,7 +67,7 @@ function keywords_adminapi_getwordslimited($args)
     $delimiters = xarModGetVar('keywords','delimiters');
     $delimiter = substr($delimiters,0,1)." ";
     $keywords = implode($delimiter, $keywords);
-    
+
     return $keywords;
 }
 ?>

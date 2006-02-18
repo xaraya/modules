@@ -1,9 +1,8 @@
 <?php
-/*
- *
+/**
  * Keywords Module
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -12,17 +11,17 @@
  * @link http://xaraya.com/index.php/release/187.html
  * @author mikespub
 */
-
 /**
  * get list of keywords (from the existing assignments for now)
  *
  * @param $args['count'] if you want to count items per keyword
+ * @return array of found keywords
  */
 function keywords_userapi_getlist($args)
 {
     if (!xarSecurityCheck('ReadKeywords')) return;
-    
-    extract($args); 
+
+    extract($args);
 
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -31,31 +30,31 @@ function keywords_userapi_getlist($args)
     if (!isset($tab)){
         $tab='0';
     }
- 
-    if ($tab == '0'){ 
+
+    if ($tab == '0'){
         $where = null;
     } elseif ($tab == '1'){
         $where = " WHERE ("
         ."'A' <= ".$dbconn->substr."(".$dbconn->upperCase."(xar_keyword),1,1) AND "
         .$dbconn->substr."(".$dbconn->upperCase."(xar_keyword),1,1) <= 'F')";
-    } elseif ($tab == '2'){    
+    } elseif ($tab == '2'){
            $where = " WHERE ("
         ."'G' <= ".$dbconn->substr."(".$dbconn->upperCase."(xar_keyword),1,1) AND "
         .$dbconn->substr."(".$dbconn->upperCase."(xar_keyword),1,1) <= 'L')";
-    } elseif ($tab == '3'){    
+    } elseif ($tab == '3'){
            $where = " WHERE ("
         ."'M' <= ".$dbconn->substr."(".$dbconn->upperCase."(xar_keyword),1,1) AND "
         .$dbconn->substr."(".$dbconn->upperCase."(xar_keyword),1,1) <= 'R')";
-    } elseif ($tab == '4'){    
+    } elseif ($tab == '4'){
            $where = " WHERE ("
         ."'S' <= ".$dbconn->substr."(".$dbconn->upperCase."(xar_keyword),1,1) AND "
         .$dbconn->substr."(".$dbconn->upperCase."(xar_keyword),1,1) <= 'Z')";
-    } elseif ($tab == '5'){    
+    } elseif ($tab == '5'){
           $where = " WHERE ("
         .$dbconn->substr."(".$dbconn->upperCase."(xar_keyword),1,1) < 'A' OR "
         .$dbconn->substr."(".$dbconn->upperCase."(xar_keyword),1,1) > 'Z')";
-    }                
-     
+    }
+
 
     // Get count per keyword from the database
     if (!empty($args['count'])) {

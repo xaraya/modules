@@ -1,9 +1,8 @@
 <?php
-/*
- *
+/**
  * Keywords Module
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -11,17 +10,15 @@
  * @subpackage Keywords Module
  * @link http://xaraya.com/index.php/release/187.html
  * @author mikespub
-*/
-
-
+ */
 /**
  * modify an entry for a module item - hook for ('item','modify','GUI')
  *
- * @param $args['objectid'] ID of the object
- * @param $args['extrainfo'] extra information
+ * @param int $args['objectid'] ID of the object
+ * @param array $args['extrainfo'] extra information
  * @returns string
  * @return hook output in HTML
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function keywords_admin_modifyhook($args)
 {
@@ -43,7 +40,7 @@ function keywords_admin_modifyhook($args)
         return $msg;
     }
 
-    
+
     // When called via hooks, the module name may be empty, so we get it from
     // the current module
     if (empty($extrainfo['module'])) {
@@ -74,10 +71,10 @@ function keywords_admin_modifyhook($args)
     }
 
     if (!xarSecurityCheck('AdminKeywords',0,'Item', "$modid:$itemtype:All")) return;
-      
+
 //retrieve the list of allowed delimiters.  use the first one as the default.
     $delimiters = xarModGetVar('keywords','delimiters');
-    $delimiter = substr($delimiters,0,1);    
+    $delimiter = substr($delimiters,0,1);
 
         $restricted = xarModGetVar('keywords','restricted');
         if ($restricted == '0') {
@@ -103,7 +100,7 @@ function keywords_admin_modifyhook($args)
     if (empty($keywords)) {
         $keywords = '';
     }
-    
+
 
 
 /*
@@ -153,22 +150,22 @@ function keywords_admin_modifyhook($args)
 */
 
         } else {
-                        
+
                         $keywords = xarModAPIFunc('keywords','user','getwords',
                            array('modid' => $modid,
                                  'itemtype' => $itemtype,
                                  'itemid' => $itemid));
-        
+
                 $keywords1 = xarModAPIFunc('keywords',
                                 'user',
                                 'getwordslimited',
                                  array('moduleid' => $modid,
                  'itemtype' => $itemtype));
-                                 
-       
+
+
                         $wordlist=array_diff($keywords1,$keywords);
 
-                                 
+
                 }
 
     return xarTplModule('keywords',

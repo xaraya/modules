@@ -1,9 +1,8 @@
 <?php
-/*
- *
+/**
  * Keywords Module
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -15,9 +14,11 @@
 
 /**
  * Manage definition of instances for privileges (unfinished)
+ * @param array $args all privilege parts
+ * @return array with the new privileges
  */
 function keywords_admin_privileges($args)
-{ 
+{
     // Security Check
     if (!xarSecurityCheck('AdminKeywords')) return;
 
@@ -25,7 +26,7 @@ function keywords_admin_privileges($args)
 
     if (!xarVarFetch('moduleid',     'id', $moduleid,     NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('itemtype',     'int:1:', $itemtype,     NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('itemid',       'id', $itemid,       NULL, XARVAR_DONT_SET)) {return;}   
+    if (!xarVarFetch('itemid',       'id', $itemid,       NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('apply',        'isset', $apply,        NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('extpid',       'isset', $extpid,       NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('extname',      'isset', $extname,      NULL, XARVAR_DONT_SET)) {return;}
@@ -118,6 +119,6 @@ function keywords_admin_privileges($args)
     $data['applylabel'] = xarML('Finish and Apply to Privilege');
 
     return $data;
-} 
+}
 
 ?>

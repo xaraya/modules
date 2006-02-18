@@ -1,23 +1,24 @@
 <?php
-/*
- *
+/**
  * Keywords Module
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
+ *
+ * @subpackage Keywords Module
+ * @link http://xaraya.com/index.php/release/187.html
  * @author janez(Alberto Cazzaniga)
 */
-
 /**
  * Now using 'strlist' validation to do the hard work.
+ * @return array
  */
- 
 function keywords_adminapi_separekeywords($args)
 {
     extract($args);
- 
+
     if (!xarSecurityCheck('AdminKeywords')) return;
 
     $delimiters = xarModGetVar('keywords', 'delimiters');
@@ -32,7 +33,7 @@ function keywords_adminapi_separekeywords($args)
         // Provide a default.
         $delimiters = ';';
     }
- 
+
     // Get first delimiter for creating the array.
     $first = substr($delimiters, 0, 1);
 

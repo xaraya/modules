@@ -1,8 +1,8 @@
 <?php
-/*
+/**
  * Keywords Module
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -10,23 +10,19 @@
  * @subpackage Keywords Module
  * @link http://xaraya.com/index.php/release/187.html
  * @author mikespub
-*/
-
+ */
 /**
  * update entry for a module item - hook for ('item','update','API')
  * Optional $extrainfo['keywords'] from arguments, or 'keywords' from input
  *
- * @param $args['objectid'] ID of the object
- * @param $args['extrainfo'] extra information
- * @returns bool
- * @return true on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @param int $args['objectid'] ID of the object
+ * @param array $args['extrainfo'] extra information
+ * @return mixed true on success, false on failure. string keywords list
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function keywords_adminapi_updatehook($args)
 {
     extract($args);
-
-
 
     if (!isset($objectid) || !is_numeric($objectid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
@@ -108,12 +104,12 @@ function keywords_adminapi_updatehook($args)
                          'admin',
                          'separekeywords',
                           array('keywords' => $keywords));
-                          
+
 /*
     // get the list of delimiters to work with
     $delimiters = xarModGetVar('keywords','delimiters');
     $dellength = strlen($delimiters);
-    
+
     // extract individual keywords from the input string (comma, semi-column or space separated)
     for ($i=0; $i<$dellength; $i++) {
         $delimiter = substr($delimiters,$i,1);
@@ -127,7 +123,7 @@ function keywords_adminapi_updatehook($args)
         $words[] = $keywords;
     }
    */
-    
+
     // old way with hardcoded separators
     /*if (strstr($keywords,',')) {
         $words = explode(',',$keywords);

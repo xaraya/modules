@@ -1,9 +1,8 @@
 <?php
-/*
- *
+/**
  * Keywords Module
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -11,15 +10,18 @@
  * @subpackage Keywords Module
  * @link http://xaraya.com/index.php/release/187.html
  * @author mikespub
-*/
-
+ */
 /**
  * Update configuration
+ * @param int restricted
+ * @param int useitemtype
+ * @param array keywords
+ * @return mixed. true on succes and redirect to URL
  */
 function keywords_admin_updateconfig()
-{ 
+{
     // Confirm authorisation code
-    if (!xarSecConfirmAuthKey()) return; 
+    if (!xarSecConfirmAuthKey()) return;
     if (!xarSecurityCheck('AdminKeywords')) return;
     // Get parameters
     xarVarFetch('restricted','int:0:1',$restricted, NULL, XARVAR_DONT_SET);
@@ -59,9 +61,9 @@ function keywords_admin_updateconfig()
                               array('moduleid' => $moduleid,
                                     'keyword'  => $value,
                     'itemtype' => $itemtype));
-            } 
-        } 
-    } 
+            }
+        }
+    }
     if (empty($isalias)) {
         xarModSetVar('keywords','SupportShortURLs',0);
     } else {

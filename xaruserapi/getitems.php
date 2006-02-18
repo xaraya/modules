@@ -1,10 +1,8 @@
 <?php
-
-/*
- *
+/**
  * Keywords Module
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -25,7 +23,7 @@
  * @param $args['startnum'] starting number (optional)
  * @returns array
  * @return array of module id, item type and item id
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function keywords_userapi_getitems($args)
 {

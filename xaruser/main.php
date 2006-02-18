@@ -1,9 +1,8 @@
 <?php
-/*
- *
+/**
  * Keywords Module
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -15,6 +14,7 @@
 
 /**
  * display keywords entries
+ * @return mixed bool and redirect to url
  */
 function keywords_user_main($args)
 {
@@ -23,7 +23,7 @@ if (!xarSecurityCheck('ReadKeywords')) return;
     xarVarFetch('keyword','str',$keyword,'', XARVAR_DONT_SET);
     xarVarFetch('id','id',$id,'', XARVAR_DONT_SET);
     xarVarFetch('tab','int:0:5',$tab,'0', XARVAR_DONT_SET);
-    
+
     //extract($args);
     $displaycolumns= xarModGetVar('keywords','displaycolumns');
     if (!isset($displaycolumns) or (empty($displaycolumns))){
@@ -35,7 +35,7 @@ if (!xarSecurityCheck('ReadKeywords')) return;
         $words = xarModAPIFunc('keywords','user','getlist',
                                array('count' => 1,
                                      'tab' => $tab));
-         
+
         $items = array();
         foreach ($words as $word => $count) {
             if (empty($word)) continue;
@@ -47,17 +47,17 @@ if (!xarSecurityCheck('ReadKeywords')) return;
                 'count' => $count
             );
         }
-      
+
         return array('status' => 0,
-                     'displaycolumns' => $displaycolumns,        
+                     'displaycolumns' => $displaycolumns,
                      'items' => $items,
                      'tab' => $tab);
-                     
+
     } elseif (empty($id)) {
         // get the list of items to which this keyword is assigned
         $items = xarModAPIFunc('keywords','user','getitems',
                                array('keyword' => $keyword));
-                             
+
         if (!isset($items)) return;
 
         // build up a list of item ids per module & item type
@@ -113,7 +113,7 @@ if (!xarSecurityCheck('ReadKeywords')) return;
             }
         }
         unset($modules);
-       
+
         return array('status' => 1,
                      'displaycolumns' => $displaycolumns,
                      'keyword' => xarVarPrepForDisplay($keyword),
@@ -151,9 +151,9 @@ if (!xarSecurityCheck('ReadKeywords')) return;
                          array('itemtype' => $item['itemtype'],
                                'itemid' => $item['itemid']));
     }
-  
+
     xarResponseRedirect($url);
-    
+
     return true;
 }
 

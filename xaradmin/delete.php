@@ -1,9 +1,8 @@
 <?php
-/*
- *
+/**
  * Keywords Module
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -17,7 +16,7 @@
  * delete existing keywords assignment
  */
 function keywords_admin_delete($args)
-{ 
+{
     extract($args);
 
     if (!xarVarFetch('itemid', 'id', $itemid)) return;
@@ -36,7 +35,7 @@ function keywords_admin_delete($args)
 
     if (!empty($confirm)) {
         // Confirm authorisation code
-        if (!xarSecConfirmAuthKey()) return; 
+        if (!xarSecConfirmAuthKey()) return;
 
         // delete the item here
         $itemid = $data['object']->deleteItem();

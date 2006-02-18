@@ -1,9 +1,8 @@
 <?php
-/*
- *
+/**
  * Keywords Module
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -16,11 +15,10 @@
 /**
  * modify an entry for a module item - hook for ('item','new','GUI')
  *
- * @param $args['objectid'] ID of the object
- * @param $args['extrainfo'] extra information
- * @returns string
- * @return hook output in HTML
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @param int $args['objectid'] ID of the object
+ * @param array $args['extrainfo'] extra information
+ * @return string hook output in HTML
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function keywords_admin_newhook($args)
 {
@@ -42,7 +40,7 @@ function keywords_admin_newhook($args)
         return $msg;
     }
 
-    
+
 
     // When called via hooks, the module name may be empty, so we get it from
     // the current module
@@ -89,10 +87,10 @@ function keywords_admin_newhook($args)
 
     //retrieve the list of allowed delimiters
     $delimiters = xarModGetVar('keywords','delimiters');
-    
+
     //retrieve the list of allowed delimiters.  use the first one as the default.
     $delimiter = substr($delimiters,0,1);
-    
+
 /*
     // extract individual keywords from the input string (comma, semi-column or space separated)
     if (strstr($keywords,',')) {
@@ -150,14 +148,14 @@ function keywords_admin_newhook($args)
                             'itemtype' => $itemtype));
      }
 
-   
-   
+
+
     return xarTplModule('keywords','admin','newhook',
                         array('keywords' => $keywords,
                               //'wordlist' => $wordlist,
                               'delimiters'=>$delimiters,
                               'delimiter' => $delimiter,
-                              'restricted' => $restricted)); 
+                              'restricted' => $restricted));
 }
 
 ?>

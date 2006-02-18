@@ -1,9 +1,8 @@
 <?php
-/*
- *
+/**
  * Keywords Module
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -21,12 +20,12 @@
  * @param $args['extrainfo'] extra information
  * @returns bool
  * @return true on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function keywords_user_displayhook($args)
 {
     if (!xarSecurityCheck('ReadKeywords')) return;
-    
+
     extract($args);
 
     if (!isset($extrainfo)) {
@@ -94,10 +93,10 @@ function keywords_user_displayhook($args)
        $item['keyword'] = xarVarPrepForDisplay($word);
        $data['words'][$id] = $item;
     }
-    
+
     $keys = implode(",",$words);
     xarVarSetCached('Blocks.keywords','keys',$keys);
-    
+
     return xarTplModule('keywords', 'user', 'displayhook', $data);
 }
 

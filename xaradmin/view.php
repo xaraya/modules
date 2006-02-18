@@ -1,9 +1,8 @@
 <?php
-/*
- *
+/**
  * Keywords Module
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -15,9 +14,10 @@
 
 /**
  * show the links for module items
+ * @return array
  */
 function keywords_admin_view($args)
-{     
+{
     extract($args);
 
     if (!xarVarFetch('modid',    'id', $modid,    NULL, XARVAR_NOT_REQUIRED)) {return;}

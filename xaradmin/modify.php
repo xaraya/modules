@@ -1,9 +1,8 @@
 <?php
-/*
- *
+/**
  * Keywords Module
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -15,9 +14,13 @@
 
 /**
  * modify existing keywords assignment
+ *
+ * @param int itemid
+ * @param string confirm Confirm the modification
+ * @return array of data
  */
 function keywords_admin_modify($args)
-{ 
+{
     extract($args);
 
     if (!xarVarFetch('itemid', 'id', $itemid)) return;
@@ -36,7 +39,7 @@ function keywords_admin_modify($args)
 
     if (!empty($confirm)) {
         // Confirm authorisation code
-        if (!xarSecConfirmAuthKey()) return; 
+        if (!xarSecConfirmAuthKey()) return;
 
         // check the input values for this object
         $isvalid = $data['object']->checkInput();

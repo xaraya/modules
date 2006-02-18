@@ -1,9 +1,8 @@
 <?php
-/*
- *
+/**
  * Keywords Module
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -19,12 +18,12 @@
  * @param $args['itemid'] item id of the keywords entry
  * @returns bool
  * @return true on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function keywords_user_display($args)
 {
     if (!xarSecurityCheck('ReadKeywords')) return;
-    
+
     xarVarFetch('itemid','id',$itemid,'', XARVAR_DONT_SET);
     extract($args);
 

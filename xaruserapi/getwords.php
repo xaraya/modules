@@ -1,10 +1,8 @@
 <?php
-
-/*
- *
+/**
  * Keywords Module
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -13,21 +11,18 @@
  * @link http://xaraya.com/index.php/release/187.html
  * @author mikespub
 */
-
 /**
  * get entries for a module item
  *
- * @param $args['modid'] module id
- * @param $args['itemtype'] item type
- * @param $args['itemid'] item id
- * @param $args['numitems'] number of entries to retrieve (optional)
- * @param $args['startnum'] starting number (optional)
- * @returns array
+ * @param int $args['modid'] module id
+ * @param int $args['itemtype'] item type
+ * @param int $args['itemid'] item id
+ * @param int $args['numitems'] number of entries to retrieve (optional)
+ * @param int $args['startnum'] starting number (optional)
  * @return array of keywords
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  * @todo This is so similar to getitems, that they could be merged. It is only the format of the results that differs.
  */
-
 function keywords_userapi_getwords($args)
 {
     if (!xarSecurityCheck('ReadKeywords')) return;

@@ -1,9 +1,8 @@
 <?php
-/*
- *
+/**
  * Keywords Module
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -11,17 +10,14 @@
  * @subpackage Keywords Module
  * @link http://xaraya.com/index.php/release/187.html
  * @author mikespub
-*/
-
-
+ */
 /**
  * delete all entries for a module - hook for ('module','remove','API')
  *
  * @param $args['objectid'] ID of the object (must be the module name here !!)
  * @param $args['extrainfo'] extra information
- * @returns bool
- * @return true on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @return bool true on success, false on failure
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function keywords_adminapi_removehook($args)
 {

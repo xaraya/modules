@@ -1,9 +1,8 @@
 <?php
-/*
- *
+/**
  * Keywords Module
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -15,38 +14,35 @@
 
 /**
  * Update the configuration parameters of the module based on data from the modification form
- * 
  *
- * @subpackage Keywords Module
- * @link http://xaraya.com/index.php/release/187.html
  * @author mikespub
- * @access public 
+ * @access public
  * @param $restricted -
  * @return true on success or void on failure
  * @throws no exceptions
  * @todo nothing
  */
 function keywords_admin_modifyconfig()
-{ 
+{
     if (!xarVarFetch('restricted', 'int:0:1', $restricted, $restricted, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('useitemtype', 'int:0:1', $useitemtype, $useitemtype, XARVAR_NOT_REQUIRED)) return;
     if (!xarSecurityCheck('AdminKeywords')) return;
 
     $data = array();
-    
+
     if (isset($restricted)) {
         $data['restricted'] = $restricted;
     } else {
     $data['restricted'] = xarModGetVar('keywords','restricted');
     }
-    
+
     if (isset($useitemtype)) {
         $data['useitemtype'] = $useitemtype;
     } else {
     $data['useitemtype'] = xarModGetVar('keywords','useitemtype');
     }
-    
-    
+
+
     $data['settings'] = array();
     $keywords = xarModAPIFunc('keywords',
                               'admin',
@@ -70,11 +66,11 @@ function keywords_admin_modifyconfig()
 
     if (isset($hookedmodules) && is_array($hookedmodules)) {
         foreach ($hookedmodules as $modname => $value) {
-            
+
             if ($data['useitemtype']== 1) {
                 $modules[$modname] = xarModAPIFunc($modname,'user','getitemtypes',array(), 0);
-                if (!isset($modules[$modname])) {  
-                    $modules[$modname][0]['label']= $modname; 
+                if (!isset($modules[$modname])) {
+                    $modules[$modname][0]['label']= $modname;
                  }
                 foreach ($modules as $mod => $v1) {
                     foreach ($v1 as $itemtype => $item) {
@@ -85,7 +81,7 @@ function keywords_admin_modifyconfig()
                                                    'getwordslimited',
                                                    array('moduleid' => $moduleid,
                                 'itemtype' => $itemtype));
-                            if ($itemtype == 0) {                          
+                            if ($itemtype == 0) {
                                 $link = xarModURL($mod,'user','main');
                     } else {
                                 $link = xarModURL($mod,'user','view',array('itemtype' => $itemtype));
@@ -93,7 +89,7 @@ function keywords_admin_modifyconfig()
                             $label = $item['label'];
                             $data['settings'][$mod][$itemtype] = array('label'     => $label,
                                                                     'keywords'   => $keywords);
-                
+
              }
               }
                 }
@@ -111,7 +107,7 @@ function keywords_admin_modifyconfig()
             }
         }
     }
-    
+
     $data['isalias'] = xarModGetVar('keywords','SupportShortURLs');
     $data['showsort'] = xarModGetVar('keywords','showsort');
     $data['displaycolumns'] = xarModGetVar('keywords','displaycolumns');

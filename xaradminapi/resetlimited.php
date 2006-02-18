@@ -1,9 +1,8 @@
 <?php
-/*
- *
+/**
  * Keywords Module
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -12,8 +11,10 @@
  * @link http://xaraya.com/index.php/release/187.html
  * @author mikespub
 */
-
-//inserire controllo sicurezza
+/**
+ * @todo MichelV what is this?
+ * @todo ? inserire controllo sicurezza
+ */
 function keywords_adminapi_resetlimited($args)
 {
    if (!xarSecurityCheck('AdminKeywords')) return;

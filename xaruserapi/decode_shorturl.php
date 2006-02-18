@@ -1,9 +1,8 @@
 <?php
-/*
- *
+/**
  * Keywords Module
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -16,19 +15,19 @@
 /**
  * extract function and arguments from short URLs for this module, and pass
  * them back to xarGetRequestInfo()
- * 
- * @author the Example module development team 
+ *
+ * @author the Example module development team
  * @param  $params array containing the different elements of the virtual path
  * @returns array
  * @return array containing func the function to be called and args the query
  *          string arguments, or empty if it failed
  */
 function keywords_userapi_decode_shorturl($params)
-{ 
+{
     // Initialise the argument list we will return
-    $args = array(); 
+    $args = array();
     $module = 'keywords';
-    
+
       if (empty($params[1])) {
           return array('main', $args);
      } elseif (preg_match('/^tab[0-5]$/', $params[1])) {
@@ -42,9 +41,9 @@ function keywords_userapi_decode_shorturl($params)
         }
         return array('main',$args);
         } else {
-    
-    
+
+
     // default : return nothing -> no short URL decoded
-} 
+}
 }
 ?>

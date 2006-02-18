@@ -1,9 +1,8 @@
 <?php
-/*
- *
+/**
  * Keywords Module
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -16,12 +15,11 @@
 /**
  * get entries for a module item
  *
- * @param $args['modid'] module id
- * @param $args['itemtype'] item type
- * @param $args['objectids'] item id
- * @returns array
+ * @param int $args['modid'] module id
+ * @param int $args['itemtype'] item type
+ * @param int $args['objectids'] item id
  * @return array of keywords
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function keywords_userapi_getmultiplewords($args)
 {

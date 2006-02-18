@@ -1,9 +1,8 @@
 <?php
-/*
- *
+/**
  * Keywords Module
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -21,7 +20,7 @@
  * @param $args['extrainfo'] extra information
  * @returns array
  * @return extrainfo array
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function keywords_adminapi_createhook($args)
 {
@@ -83,7 +82,7 @@ function keywords_adminapi_createhook($args)
     // get the list of delimiters to work with
     $delimiters = xarModGetVar('keywords','delimiters');
     $dellength = strlen($delimiters);
-    
+
     // extract individual keywords from the input string (comma, semi-column or space separated)
     for ($i=0; $i<$dellength; $i++) {
         $delimiter = substr($delimiters,$i,1);
@@ -96,7 +95,7 @@ function keywords_adminapi_createhook($args)
         $words = array();
         $words[] = $keywords;
     }
-  */  
+  */
     // old way of doing it with hardcoded delimiters
     /*if (strstr($keywords,',')) {
         $words = explode(',',$keywords);
@@ -105,7 +104,7 @@ function keywords_adminapi_createhook($args)
     } else {
         $words = explode(' ',$keywords);
     }*/
-    
+
     $cleanwords = array();
     foreach ($words as $word) {
         $word = trim($word);
