@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,9 +9,7 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * Create a publication
  *
@@ -34,8 +32,7 @@
  * @param $args['subject'] email subject (title) of an issue
  * @param $args['fromname'] publication email from name (default = owner name)
  * @param $args['fromemail'] publication email from address (default = owner email)
- * @returns int
- * @return publication ID on success, false on failure
+ * @return int publication ID on success, false on failure
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function newsletter_adminapi_createpublication($args)

@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,17 +9,14 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * delete an issue
  *
  * @author Richard Cave
  * @param $args an array of arguments
  * @param $args['id'] ID of the issue
- * @returns bool
- * @return true on success, false on failure
+ * @return bool true on success, false on failure
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function newsletter_adminapi_deleteissue($args)

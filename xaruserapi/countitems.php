@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,9 +9,7 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * Utility function to count the number of items
  *
@@ -19,8 +17,7 @@
  * @param $args an array of arguments
  * @param $args['phase'] type of item to count (ie 'story', 'publcation', etc.)
  * @param $args['owner'] owner of item to count
- * @returns integer
- * @return number of items
+ * @return int number of items
  * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function newsletter_userapi_countitems($args)

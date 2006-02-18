@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,14 +9,12 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
+ */
 /**
  * Modify configuration
  *
  * @author Richard Cave
- * @returns array
- * @return $data
+ * @return array $data
  */
 function newsletter_admin_modifyconfig()
 {

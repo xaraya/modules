@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,9 +9,7 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * Import alternative subscriptions into Newsletter
  *
@@ -21,8 +19,7 @@
  * @param 'delim' the delimitor (assuming ',')
  * @param 'pids' the publication ids
  * @param 'htmlmail' send mail html or text (0 = text, 1 = html)
- * @returns array
- * @return $data
+ * @return array $data
  */
 function newsletter_admin_importaltsubscription()
 {

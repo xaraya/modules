@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,7 +9,7 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
+ */
 
 
 /*
@@ -60,7 +60,6 @@
  *
  * @author Richard Cave
  * @param $params array containing the different elements of the virtual path
- * @returns array
  * @return array containing func the function to be called and args the query
  *         string arguments, or empty if it failed
  */

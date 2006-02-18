@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,9 +9,7 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * Create a subscription
  *
@@ -20,8 +18,7 @@
  * @param $args['uid'] user id
  * @param $args['pid'] publication id
  * @param $args['htmlmail'] send mail in html or text format (1 = html, 0 = text)
- * @returns int
- * @return true on success, false on failure
+ * @return bool true on success, false on failure
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function newsletter_userapi_createsubscription($args)

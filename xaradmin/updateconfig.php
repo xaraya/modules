@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,8 +9,7 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
+ */
 /**
  * Update Newsletter admin configuration
  *
@@ -19,8 +18,7 @@
  * @param 'bulkemail' send a single email to every newsletter subscriber
  * @param 'shorturls' short URL support
  * @param 'activeusers' send email only to roles that are active
- * @returns bool
- * @return true on success, false on failure
+ * @return bool true on success, false on failure
  */
 function newsletter_admin_updateconfig()
 {

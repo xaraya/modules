@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -10,16 +10,13 @@
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
 */
-
-
 /**
  * Modify an Newsletter alternative subscription
  *
  * @public
  * @author Richard Cave
- * @param 'id' the id of the subscription
- * @returns array
- * @return $templateVarArray
+ * @param int 'id' the id of the subscription
+ * @return array $templateVarArray
  */
 function newsletter_admin_modifyaltsubscription()
 {

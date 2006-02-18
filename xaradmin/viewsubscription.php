@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,9 +9,7 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * Display subscriptions based on publication or name/email
  *
@@ -21,8 +19,7 @@
  * @param 'search' the type of search to perform ('publication', 'email' or 'name')
  * @param 'publicationId' the id of the publication to search in
  * @param 'searchname' the email or name to search for
- * @returns array
- * @return $data
+ * @return array $data
  */
 function newsletter_admin_viewsubscription($args)
 {
@@ -264,7 +261,7 @@ function newsletter_admin_viewsubscription($args)
  * @author Richard Cave
  * @param a multi-dimensional array
  * @param b multi-dimensional array
- * @returns strcmp
+ * @return bool strcmp
  */
 function nwsltr_vs__sortsubscriptionbyname ($a, $b)
 {
@@ -272,29 +269,49 @@ function nwsltr_vs__sortsubscriptionbyname ($a, $b)
     $cmp2 = trim(strtolower($b['name']));
     return strcmp($cmp1, $cmp2);
 }
-
+/**
+ * Comparision functions for sorting by username
+ *
+ * @private
+ * @author Richard Cave
+ * @param a multi-dimensional array
+ * @param b multi-dimensional array
+ * @return bool strcmp
+ */
 function nwsltr_vs__sortsubscriptionbyusername ($a, $b)
 {
     $cmp1 = trim(strtolower($a['uname']));
     $cmp2 = trim(strtolower($b['uname']));
     return strcmp($cmp1, $cmp2);
 }
-
+/**
+ * Comparision functions for sorting by email
+ *
+ * @private
+ * @author Richard Cave
+ * @param a multi-dimensional array
+ * @param b multi-dimensional array
+ * @return bool strcmp
+ */
 function nwsltr_vs__sortsubscriptionbyemail ($a, $b)
 {
     $cmp1 = trim(strtolower($a['email']));
     $cmp2 = trim(strtolower($b['email']));
     return strcmp($cmp1, $cmp2);
 }
-
+/**
+ * Comparision functions for sorting by title
+ *
+ * @private
+ * @author Richard Cave
+ * @param a multi-dimensional array
+ * @param b multi-dimensional array
+ * @return bool strcmp
+ */
 function nwsltr_vs__sortsubscriptionbypublication ($a, $b)
 {
     $cmp1 = trim(strtolower($a['title']));
     $cmp2 = trim(strtolower($b['title']));
     return strcmp($cmp1, $cmp2);
 }
-
-
-
-
 ?>

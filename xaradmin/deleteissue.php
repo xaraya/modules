@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,9 +9,7 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * Delete an Newsletter issue
  *
@@ -19,8 +17,7 @@
  * @author Richard Cave
  * @param 'id' the id of the issue to be deleted
  * @param 'confirm' confirm that this issue can be deleted
- * @returns array
- * @return $data
+ * @return array $data
  */
 function newsletter_admin_deleteissue($args)
 {

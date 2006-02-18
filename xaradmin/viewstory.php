@@ -15,13 +15,12 @@
  *
  * @public
  * @author Richard Cave
- * @param 'startnum' starting number to display
- * @param 'sortby' sort stories by 'publicaiton', 'title, 'category', 'date' or 'owner'
- * @param 'owner' show only logged user stories (1=true, 0=false)
- * @param 'display' show 'published' or 'unpublished' or 'all' stories
- * @param 'issueId' get stories for a specific issue
- * @returns array
- * @return $data
+ * @param int    'startnum' starting number to display
+ * @param string 'sortby' sort stories by 'publication', 'title, 'category', 'date' or 'owner'
+ * @param int    'owner' show only logged user stories (1=true, 0=false)
+ * @param string 'display' show 'published' or 'unpublished' or 'all' stories
+ * @param int    'issueId' get stories for a specific issue
+ * @return array $data
  */
 function newsletter_admin_viewstory($args)
 {

@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,9 +9,7 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * Utility function to count the number of stories in an issue
  *
@@ -20,8 +18,7 @@
  * @param $args['issueId'] issue the story belongs to
  * @param $args['owner'] count only logged user stories (1=true, 0=false)
  * @param $args['display'] count 'published' or 'unpublished' or 'all' stories
- * @returns integer
- * @return number of items
+ * @return int number of items
  * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function newsletter_userapi_countstories($args)

@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,15 +9,13 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
+ */
 /**
  * generate subscription menu fragments
  *
  * @author Richard Cave
  * @param $args['page'] - func calling config menu
- * @returns Menu template data
- * @return $data
+ * @returns array Menu template data
  */
 function newsletter_admin_subscriptionmenu()
 {

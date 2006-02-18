@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,16 +9,14 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
+ */
 /**
  * View a list of Newsletter owners
  *
  * @author Richard Cave
- * @param $startnum starting number to display
- * @param $sortby sort ('name' or group')
- * @returns array
- * @return $data
+ * @param int    $startnum starting number to display
+ * @param string $sortby sort ('name' or group')
+ * @return array $data
  */
 function newsletter_admin_viewusers()
 {

@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,9 +9,7 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * Update an Newsletter disclaimer
  *
@@ -20,8 +18,7 @@
  * @param 'id' the id of the disclaimer to be updated
  * @param 'title' the title of the disclaimer to be updated
  * @param 'disclaimer' the text of the disclaimer to be updated
- * @returns bool
- * @return true on success, false on failure
+ * @return bool true on success, false on failure
  */
 function newsletter_admin_updatedisclaimer()
 {

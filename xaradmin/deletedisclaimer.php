@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,18 +9,15 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * Delete an Newsletter disclaimer
  *
  * @public
  * @author Richard Cave
- * @param 'id' the id of the item to be deleted
- * @param 'confirm' confirm that this item can be deleted
- * @returns array
- * @return $data
+ * @param int 'id' the id of the item to be deleted
+ * @param string 'confirm' confirm that this item can be deleted
+ * @return array $data
  */
 function newsletter_admin_deletedisclaimer($args)
 {

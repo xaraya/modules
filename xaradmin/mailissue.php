@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,17 +9,14 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * Mail an Newsletter issue
  *
  * @public
  * @param 'issueId' the id of the issue to publish
  * @author Richard Cave
- * @returns xarTplModule('mailissue')
- * @return redirect to 'mailissue'
+ * @return array xarTplModule('mailissue') redirect to 'mailissue'
  */
 function newsletter_admin_mailissue()
 {
@@ -179,8 +176,7 @@ function newsletter_admin_mailissue()
  * @param $issue issue to email
  * @param $issueText body of issue in text format
  * @param $issueHTML body of issue in HTML format
- * @return array
- * @returns $emailResultArray
+ * @return array $emailResultArray
  */
 function newsletter__single_email($args)
 {

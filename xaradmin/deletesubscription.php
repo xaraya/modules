@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,18 +9,15 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * Delete an Newsletter subscription
  *
  * @public
  * @author Richard Cave
- * @param 'uid' the uid of the subscription
+ * @param int 'uid' the uid of the subscription
  * @param 'confirm' confirm that this item can be deleted
- * @returns array
- * @return $data
+ * @return array $data
  */
 function newsletter_admin_deletesubscription($args)
 {

@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,19 +9,16 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * View a list of Newsletter publications
  *
  * @public
  * @author Richard Cave
- * @param 'startnum' starting number to display
- * @param 'sortby' sort stories by 'title, 'category' or 'owner'
- * @param 'owner' show only logged user stories (1=true, 0=false)
- * @returns array
- * @return $data
+ * @param int 'startnum' starting number to display
+ * @param int 'sortby' sort stories by 'title, 'category' or 'owner'
+ * @param int 'owner' show only logged user stories (1=true, 0=false)
+ * @return array $data
  */
 function newsletter_admin_viewpublication($args)
 {

@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,17 +9,14 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * View a list of Newsletter owners
  *
  * @public
  * @author Richard Cave
- * @param 'startnum' starting number to display
- * @returns array
- * @return $data
+ * @param int 'startnum' starting number to display
+ * @return array $data
  */
 function newsletter_admin_viewsignature($args)
 {

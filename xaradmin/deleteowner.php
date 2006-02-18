@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,17 +9,14 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * Delete an Newsletter owner
  *
  * @author Richard Cave
  * @param 'id' the id of the item to be deleted
  * @param 'confirm' confirm that this item can be deleted
- * @returns bool
- * @return true on success, false on failure
+ * @return bool true on success, false on failure
  */
 function newsletter_admin_deleteowner()
 {

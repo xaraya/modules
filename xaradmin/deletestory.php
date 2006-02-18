@@ -17,8 +17,7 @@
  * @author Richard Cave
  * @param 'id' the id of the story to be deleted
  * @param 'confirm' confirm that this story can be deleted
- * @returns array
- * @return $data
+ * @return array $data
  */
 function newsletter_admin_deletestory($args)
 {
