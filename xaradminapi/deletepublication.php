@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,9 +9,7 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * delete a publication
  *
@@ -20,8 +18,7 @@
  * @param $args['id'] ID of the publication
  * @param $args['issues'] remove or reassign the issues/stories of the publication
  * @param $args['newpid'] if reassign, the id of the new publication
- * @returns bool
- * @return true on success, false on failure
+ * @return bool true on success, false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function newsletter_adminapi_deletepublication($args)

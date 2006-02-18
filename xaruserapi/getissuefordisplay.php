@@ -17,8 +17,7 @@
  * @author Richard Cave
  * @param $args an array of arguments
  * @param $args['issueId'] issue id
- * @returns array
- * @return $issue
+ * @return array $issue
  */
 function newsletter_userapi_getissuefordisplay($args)
 {

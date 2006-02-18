@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -13,7 +13,8 @@
 
 /**
  * This function is called internally by the core whenever the module is
- * loaded.  It adds in the information for the Newsletter tables
+ * loaded. It adds in the information for the Newsletter tables
+ * @return array
  */
 function newsletter_xartables()
 {

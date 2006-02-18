@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,9 +9,7 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * update an alternative subscription
  *
@@ -22,8 +20,7 @@
  * @param $args['email'] the email address of the subscription
  * @param $args['pid'] publication id
  * @param $args['htmlmail'] send mail in html or text format (1 = html, 0 = text)
- * @returns int
- * @return true on success, false on failure
+ * @return bool true on success, false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function newsletter_adminapi_updatealtsubscription($args)

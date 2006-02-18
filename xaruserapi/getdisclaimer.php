@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,16 +9,14 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * Get an Newsletter disclaimer by id
  *
  * @author Richard Cave
  * @param $args an array of arguments
- * @param $args['id'] id of newsletter disclaimer to get
- * @returns disclaimer array, or false on failure
+ * @param int $args['id'] id of newsletter disclaimer to get
+ * @return array disclaimer array, or false on failure
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function newsletter_userapi_getdisclaimer($args)

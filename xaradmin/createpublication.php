@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,9 +9,7 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * Create a new Newsletter publication
  *
@@ -33,8 +31,7 @@
  * @param 'subject' email subject (title) for an issue
  * @param 'fromname' publication email from name (default = owner name)
  * @param 'fromemail' publication email from address (default = owner email)
- * @returns bool
- * @return true on success, false on failure
+ * @return bool true on success, false on failure
  */
 function newsletter_admin_createpublication()
 {

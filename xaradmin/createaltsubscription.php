@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,9 +9,7 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * Create a new Newsletter subscription
  *
@@ -22,8 +20,7 @@
  * @param 'pids' the publication ids
  * @param 'htmlmail' send mail html or text (0 = text, 1 = html)
  * @param 'validate' validate email address (0 = false, 1 = true)
- * @returns bool
- * @return true on success, false on failure
+ * @return bool true on success, false on failure
  */
 function newsletter_admin_createaltsubscription()
 {

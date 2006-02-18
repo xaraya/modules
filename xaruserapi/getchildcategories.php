@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,8 +9,7 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
+ */
 /**
  * Retrieve the categories under a parent category
  *
@@ -19,8 +18,7 @@
  * @param $args an array of arguments
  * @param $args['parentcid'] the category id of the parent
  * @param $args['numcats']  number of categories
- * @returns array
- * @return $childCategories
+ * @return array $childCategories
  */
 function newsletter_userapi_getchildcategories($args)
 {

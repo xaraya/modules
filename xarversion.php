@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,7 +9,7 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
+ */
 
 $modversion['name'] = 'Newsletter';
 $modversion['id'] = '1655';
@@ -25,7 +25,6 @@ $modversion['author'] = 'Richard Cave';
 $modversion['contact'] = 'rcave@xaraya.com';
 $modversion['admin'] = 1;
 $modversion['user'] = 1;
-$modversion['securityschema'] = array('newsletter::All' => '::');
 $modversion['class'] = 'Complete';
 $modversion['category'] = 'Content';
 // this module depends on the categories module

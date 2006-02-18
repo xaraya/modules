@@ -5,3 +5,4 @@
 //   - Version 1.0 of Newsletter
 //
 // ----------------------------------------------------------------------
+Feb 2006. MichelV: added and revised PHPDoc headers

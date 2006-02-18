@@ -16,27 +16,26 @@
  *
  * @public
  * @author Richard Cave
- * @param 'ownerId' the id of the story owner (uid in roles)
- * @param 'publicationId' the publication id of the story
- * @param 'issueId' the issue id of the story
- * @param 'categoryId' the category id of the story
- * @param 'title' the title of the story
- * @param 'source' the source for the content of the story
- * @param 'content' the content of the story
- * @param 'priority' - not used currently
- * @param 'storyDateMon' the month the story was published
- * @param 'storyDateDay' the day the story was published
- * @param 'storyDateYear' the year the story was published
+ * @param int 'ownerId' the id of the story owner (uid in roles)
+ * @param int 'publicationId' the publication id of the story
+ * @param int 'issueId' the issue id of the story
+ * @param int 'categoryId' the category id of the story
+ * @param string 'title' the title of the story
+ * @param string 'source' the source for the content of the story
+ * @param string 'content' the content of the story
+ * @param string 'priority' - not used currently
+ * @param int 'storyDateMon' the month the story was published
+ * @param int 'storyDateDay' the day the story was published
+ * @param int 'storyDateYear' the year the story was published
  * @param 'altDate' alternative text date field if no publication date of story
- * @param 'fullTextLink' the full text link to the story
- * @param 'registerLink' does the link require registration to view?(0=no, 1=yes)
+ * @param string 'fullTextLink' the full text link to the story
+ * @param int 'registerLink' does the link require registration to view?(0=no, 1=yes)
  * @param 'linkExpiration' override of default publication link expiration
  * @param 'commentary' commentary on the story content
  * @param 'commentarySource' source of the commentary from dropdown list
  * @param 'newCommentarySource' new source of the commentary
- * @param 'articleid' articleid to use with story
- * @returns bool
- * @return true on success, false on failure
+ * @param int 'articleid' articleid to use with story
+ * @return bool true on success, false on failure
  */
 function newsletter_admin_createstory()
 {

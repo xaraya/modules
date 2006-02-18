@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,17 +9,14 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * unpublish a story
  *
  * @author Richard Cave
  * @param $args an array of arguments
  * @param $args['id'] id of the story
- * @returns bool
- * @return true on success , or false on failure
+ * @return bool true on success , or false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function newsletter_adminapi_unpublishstory($args)

@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,9 +9,7 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * delete a subscription
  *
@@ -19,8 +17,7 @@
  * @param $args an array of arguments
  * @param $args['uid'] uid address of the subscription
  * @param $args['pid'] publication id of the subscription - optional
- * @returns bool
- * @return true on success, false on failure
+ * @return bool true on success, false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function newsletter_adminapi_deletesubscription($args)

@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,10 +9,11 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
+ */
 
 /**
  * Initialize the Newsletter module
+ * @return bool
  */
 function newsletter_init()
 {
@@ -296,6 +297,8 @@ function newsletter_init()
 
 /**
  * Upgrade the Newsletter module from an old version
+ * @param string oldversion
+ * @return bool
  */
 function newsletter_upgrade($oldversion)
 {
@@ -488,6 +491,7 @@ function newsletter_upgrade($oldversion)
 
 /**
  * Delete the Newsletter module
+ * @return bool
  */
 function newsletter_delete()
 {

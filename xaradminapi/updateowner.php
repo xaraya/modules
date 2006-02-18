@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,9 +9,7 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * Update an Newsletter owner
  *
@@ -20,7 +18,7 @@
  * @param $args['id'] id of the owner (uid in roles)
  * @param $args['rid'] group of the owner
  * @param $args['signature'] the owner's signature
- * @returns true on success, false on failure
+ * @return bool true on success, false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function newsletter_adminapi_updateowner($args)

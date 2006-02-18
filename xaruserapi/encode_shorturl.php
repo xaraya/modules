@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,9 +9,7 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /*
  * Support for short URLs (user functions)
  *
@@ -58,8 +56,7 @@
  *
  * @author Richard Cave
  * @param $args the function and arguments passed to xarModURL
- * @returns string
- * @return path to be added to index.php for a short URL, or empty if failed
+ * @return string Path to be added to index.php for a short URL, or empty if failed
  */
 function newsletter_userapi_encode_shorturl($args)
 {

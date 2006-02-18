@@ -10,14 +10,12 @@
  * @subpackage Newsletter module
  * @author Richard Cave <rcave@xaraya.com>
  */
-
 /**
  * Retrieve a logged user's information from roles
  *
  * @private
  * @author Richard Cave
- * @returns array
- * @return $userData
+ * @return array $userData
  */
 function newsletter_userapi_getloggeduser()
 {

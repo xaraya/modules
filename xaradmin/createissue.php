@@ -23,8 +23,7 @@
  * @param 'external' flag if issue is internal/external (1 = true, 0 = false)
  * @param 'fromname' issue email from name (overrides publication from name)
  * @param 'fromemail' issue email from address (overrides publication from email)
- * @returns bool
- * @return true on success, false on failure
+ * @return bool true on success, false on failure
  */
 function newsletter_admin_createissue()
 {

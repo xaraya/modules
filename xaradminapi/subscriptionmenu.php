@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,14 +9,12 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
+ */
 /**
  * generate the common admin menu for subscriptions
  *
  * @author Richard Cave
- * @returns array
- * @return $menu
+ * @return array $menu
  */
 function newsletter_adminapi_subscriptionmenu()
 {

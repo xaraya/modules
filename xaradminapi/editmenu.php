@@ -14,8 +14,7 @@
  * generate the common admin menu configuration
  *
  * @author Richard Cave
- * @returns array
- * @return $menu
+ * @return array $menu
  */
 function newsletter_adminapi_editmenu()
 {

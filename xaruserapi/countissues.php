@@ -19,8 +19,7 @@
  * @param $args['owner'] count only logged user stories (1=true, 0=false)
  * @param $args['display'] count 'published' or 'unpublished' or 'all' stories
  * @param $args['external'] retrieve issues marked external (1=true, 0=false)
- * @returns integer
- * @return number of items
+ * @return int number of items
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function newsletter_userapi_countissues($args)

@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,14 +9,11 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * utility function pass individual menu items to the main menu
  *
  * @author Richard Cave
- * @returns array
  * @return array containing the menulinks for the main menu items.
  */
 function newsletter_userapi_getmenulinks()

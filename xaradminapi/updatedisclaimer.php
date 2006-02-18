@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,9 +9,7 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * update a disclaimer
  *
@@ -20,8 +18,7 @@
  * @param $args['id'] the id of the disclaimer
  * @param $args['title'] title of the disclaimer
  * @param $args['disclaimer'] text of the disclaimer
- * @returns bool
- * @return true on success , or false on failure
+ * @return bool true on success , or false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function newsletter_adminapi_updatedisclaimer($args)

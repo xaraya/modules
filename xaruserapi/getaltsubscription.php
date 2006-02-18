@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,9 +9,7 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * Get an Newsletter alternative subscription
  *
@@ -19,7 +17,7 @@
  * @param $args an array of arguments
  * @param $args['id'] id of the subscription to get
  * @param $args['pid'] publication id of the subscription to get - optional
- * @returns subscription array, or false on failure
+ * @return array subscription array, or false on failure
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function newsletter_userapi_getaltsubscription($args)

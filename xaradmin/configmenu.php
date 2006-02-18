@@ -15,8 +15,7 @@
  *
  * @author Richard Cave
  * @param $args['page'] - func calling config menu
- * @returns Menu template data
- * @return $data
+ * @return array Menu template data
  */
 function newsletter_admin_configmenu()
 {

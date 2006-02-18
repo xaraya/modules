@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -8,11 +8,10 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <caveman : rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * init func
+ * @return bool true on success
  */
 function newsletter_informationblock_init()
 {
@@ -22,6 +21,7 @@ function newsletter_informationblock_init()
 
 /**
  * info array
+ * @return array
  */
 function newsletter_informationblock_info()
 {
@@ -36,6 +36,7 @@ function newsletter_informationblock_info()
 
 /**
  * Display func
+ * @return array
  */
 function newsletter_informationblock_display($blockinfo)
 {

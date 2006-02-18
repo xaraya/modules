@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,17 +9,14 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * Create a new Newsletter owner
  *
  * @author Richard Cave
- * @param 'ownerid' id of the owner (uid in roles)
- * @param 'userGroup' group of the owner (rid in roles)
- * @returns bool
- * @return true on success, false on failure
+ * @param int 'ownerid' id of the owner (uid in roles)
+ * @param int 'userGroup' group of the owner (rid in roles)
+ * @return bool true on success, false on failure
  */
 function newsletter_admin_createowner()
 {

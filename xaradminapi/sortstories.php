@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,16 +9,13 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * Sort stories by category and date (newest to oldest) within a category
  *
  * @author Richard Cave
  * @param $args an array of arguments
  * @param $args['stories'] array of stories
- * @return array
  * @returns array of sorted topics
  */
 function newsletter_adminapi_sortstories ($args)

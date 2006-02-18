@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,16 +9,14 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * Get an the storeis for an issue
  *
  * @author Richard Cave
  * @param $args an array of arguments
  * @param $args['id'] id of newsletter story to get
- * @returns story array, or false on failure
+ * @return array story array, or false on failure
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function newsletter_userapi_getissuestories($args)

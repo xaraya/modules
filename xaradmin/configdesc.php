@@ -14,8 +14,7 @@
  * the main administration function
  *
  * @author Richard Cave
- * @returns array
- * @return $data
+ * @return array $data
  */
 function newsletter_admin_configdesc()
 {

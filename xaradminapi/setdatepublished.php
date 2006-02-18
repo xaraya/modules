@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,18 +9,15 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * Set the publication date of an issue and its stories
  *
  * @author Richard Cave
- * @param $args an array of arguments
- * @param $args['issue'] the issue array
- * @param $args['date'] the date that the issue/story was published
- * @returns bool
- * @return true on success, false on failure
+ * @param array $args an array of arguments
+ * @param array $args['issue'] the issue array
+ * @param       $args['date'] the date that the issue/story was published
+ * @return bool true on success, false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function newsletter_adminapi_setdatepublished($args)

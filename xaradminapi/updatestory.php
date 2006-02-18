@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,9 +9,7 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * update an story
  *
@@ -34,8 +32,7 @@
  * @param $args['commentary'] commentary for the story
  * @param $args['commentarySource'] commentary source for the story
  * @param $args['articleid'] id of the article to use in place of the story
- * @returns bool
- * @return true on success , or false on failure
+ * @return bool true on success , or false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function newsletter_adminapi_updatestory($args)

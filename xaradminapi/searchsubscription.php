@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,9 +9,7 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * search subscription by publication or user name/email
  *
@@ -22,8 +20,7 @@
  * @param $args['pid'] the publication id to search for - optional
  * @param $args['startnum'] start with this item number (default 1)
  * @param $args['numitems'] the number of items to retrieve (default -1 = all)
- * @returns array
- * @return array of items, or false on failure
+ * @return array Array of items, or false on failure
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function newsletter_adminapi_searchsubscription($args)

@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,9 +9,7 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * update a topic
  *
@@ -21,8 +19,7 @@
  * @param $args['storyId'] story id
  * @param $args['cid'] category id of the story
  * @param $args['storyOrder'] order of the story in the issue
- * @returns int
- * @return topic ID on success, false on failure
+ * @return int topic ID on success, false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function newsletter_adminapi_updatetopic($args)

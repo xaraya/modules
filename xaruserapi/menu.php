@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,15 +9,13 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
+ */
 /**
  * Generate the common menu configuration
  *
  * @public
  * @author Richard Cave
- * @returns array
- * @return $menu
+ * @return array $menu
  */
 function newsletter_userapi_menu()
 {

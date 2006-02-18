@@ -23,8 +23,7 @@
  * @param $args['issueHTML'] HTML version of the issue
  * @param $args['type'] version of the issue to send ('html' or 'text')
  * @author Richard Cave
- * @returns bool
- * @return true on success, false on failure
+ * @return bool true on success, false on failure
  */
 function newsletter_adminapi_mailissue($args)
 {

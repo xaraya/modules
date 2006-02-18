@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,17 +9,14 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * update the topics for an issue
  *
  * @author Richard Cave
  * @param $args an array of arguments
  * @param $args['issueId'] issue id
- * @returns int
- * @return topic ID on success, false on failure
+ * @return int topic ID on success, false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function newsletter_adminapi_updateissuetopics($args)

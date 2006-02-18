@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,9 +9,7 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * Create a new Newsletter disclaimer
  *
@@ -19,8 +17,7 @@
  * @author Richard Cave
  * @param 'title' the title of the disclaimer
  * @param 'disclaimer' the text of the disclaimer
- * @returns bool
- * @return true on success, false on failure
+ * @return bool true on success, false on failure
  */
 function newsletter_admin_createdisclaimer()
 {

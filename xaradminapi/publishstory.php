@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,9 +9,7 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * publish a story
  *
@@ -19,8 +17,7 @@
  * @param $args an array of arguments
  * @param $args['id'] id of the story
  * @param $args['datePublished'] the publication date of the story
- * @returns bool
- * @return true on success , or false on failure
+ * @return bool true on success , or false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function newsletter_adminapi_publishstory($args)
