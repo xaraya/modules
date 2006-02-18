@@ -1,16 +1,21 @@
 <?php
-// File: modify-keywordscategories.php
-// ----------------------------------------------------------------------
-// Xaraya eXtensible Management System
-// Copyright (C) 2002 by the Xaraya Development Team.
-// http://www.xaraya.org
-// ----------------------------------------------------------------------
-// Original Author of file:Camille Perinel
-// Mostly taken from the topitems.php block of the articles module.(See credits)
-// Purpose of file: Keyword Categories Block
-// ----------------------------------------------------------------------
-// TODO : Add multi categories support with + - ...
-
+/**
+ * Keywords Module Categories Block
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Keywords Module
+ * @link http://xaraya.com/index.php/release/187.html
+ * @author mikespub
+ */
+/**
+ * Original Author of file:Camille Perinel
+ * Mostly taken from the topitems.php block of the articles module.(See credits)
+ * @TODO : Add multi categories support with + - ...
+ */
 /**
  * initialise block
  */
@@ -22,6 +27,7 @@ function keywords_keywordscategoriesblock_init()
 
 /**
  * get information on block
+ * @return array
  */
 
 function keywords_keywordscategoriesblock_info()
@@ -40,6 +46,7 @@ function keywords_keywordscategoriesblock_info()
 
 /**
  * display block
+ * @return array with block
  */
 
 function keywords_keywordscategoriesblock_display(& $blockinfo)
@@ -54,7 +61,7 @@ function keywords_keywordscategoriesblock_display(& $blockinfo)
 
     // Allow refresh by setting refreshrandom variable
     if (!xarVarFetch('refreshrandom', 'int:1:1', $vars['refreshtime'], 0, XARVAR_DONT_SET)) return;
-   
+
     // Check cache
     $refresh = (time() - ($vars['refreshtime'] * 60));
     $varDir = xarCoreGetVarDirPath();

@@ -1,17 +1,23 @@
 <?php
-// File: modify-keywordsarticles.php
-// ----------------------------------------------------------------------
-// Xaraya eXtensible Management System
-// Copyright (C) 2002 by the Xaraya Development Team.
-// http://www.xaraya.org
-// ----------------------------------------------------------------------
-// Original Author of file: Camille Perinel
-// Mostly taken from the topitems.php block of the articles module.(See credits)
-// Purpose of file: Keyword Categories Block
-// ----------------------------------------------------------------------
-
+/**
+ * Keywords Module Categories Block
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Keywords Module
+ * @link http://xaraya.com/index.php/release/187.html
+ * @author mikespub
+ */
+/**
+ * Original Author of file: Camille Perinel
+ * Mostly taken from the topitems.php block of the articles module.(See credits)
+ */
 /**
  * modify block settings
+ * @return array with vars
  */
 function keywords_keywordscategoriesblock_modify($blockinfo)
 {
@@ -28,6 +34,7 @@ function keywords_keywordscategoriesblock_modify($blockinfo)
 
 /**
  * update block settings
+ * @return array blockinfo
  */
 function keywords_keywordscategoriesblock_update($blockinfo)
 {
@@ -41,6 +48,7 @@ function keywords_keywordscategoriesblock_update($blockinfo)
 
 /**
  * Makes sure all the required variables are set to display or modify the block
+ * @return array vars
  */
 function _keywords_keywordscategoriesblock_checkdefaults($vars)
 {

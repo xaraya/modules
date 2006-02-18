@@ -1,15 +1,20 @@
 <?php
-// File: modify-keywordsarticles.php
-// ----------------------------------------------------------------------
-// Xaraya eXtensible Management System
-// Copyright (C) 2002 by the Xaraya Development Team.
-// http://www.xaraya.org
-// ----------------------------------------------------------------------
-// Original Author of file: Camille Perinel
-// Mostly taken from the topitems.php block of the articles module.(See credits)
-// Purpose of file: Keyword Articles Block
-// ----------------------------------------------------------------------
-
+/**
+ * Keywords Module Articles Block
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Keywords Module
+ * @link http://xaraya.com/index.php/release/187.html
+ * @author mikespub
+ */
+/**
+ * Original Author of file: Camille Perinel
+ * Mostly taken from the topitems.php block of the articles module.(See credits)
+ */
 /**
  * modify block settings
  */
@@ -42,12 +47,12 @@ function keywords_keywordsarticlesblock_modify($blockinfo)
 function keywords_keywordsarticlesblock_update($blockinfo)
 {
     //MikeC: Make sure we retrieve the new pubtype from the configuration form.
-    
+
     if (!xarVarFetch('ptid', 'id', $vars['ptid'],NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('cid', 'int:1:', $vars['cid'],NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('status', 'str:1:', $vars['status'], XARVAR_DONT_SET)) return;
     if (!xarVarFetch('refreshtime', 'int:1:', $vars['refreshtime'],1,XARVAR_DONT_SET)) return;
-    
+
     $vars = _keywords_keywordsarticlesblock_checkdefaults($vars);
     $blockinfo['content'] = serialize($vars);
 

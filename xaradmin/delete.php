@@ -10,8 +10,7 @@
  * @subpackage Keywords Module
  * @link http://xaraya.com/index.php/release/187.html
  * @author mikespub
-*/
-
+ */
 /**
  * delete existing keywords assignment
  */

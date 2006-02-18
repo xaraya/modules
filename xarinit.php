@@ -1,13 +1,11 @@
 <?php
 /**
- * File: $Id$
- *
  * Keywords initialization functions
  *
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
- * @subpackage keywords
  *
  * @subpackage Keywords Module
  * @link http://xaraya.com/index.php/release/187.html
@@ -18,6 +16,7 @@
  * initialise the keywords module
  * This function is only ever called once during the lifetime of a particular
  * module instance
+ * @return bool true on success
  */
 function keywords_init()
 {
@@ -200,6 +199,7 @@ function keywords_init()
 /**
  * upgrade the keywords module from an old version
  * This function can be called multiple times
+ * @return bool
  */
 function keywords_upgrade($oldversion)
 {
@@ -242,7 +242,7 @@ function keywords_upgrade($oldversion)
                         'keywords', 'user', 'search')) {
                     return;
                 }
-                
+
         case '1.0.2':
             //Alter table restr to add itemtype
             // Get database information
@@ -286,6 +286,7 @@ function keywords_upgrade($oldversion)
  * delete the keywords module
  * This function is only ever called once during the lifetime of a particular
  * module instance
+ * @return bool true on success
  */
 function keywords_delete()
 {

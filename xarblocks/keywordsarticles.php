@@ -1,19 +1,23 @@
 <?php
-// File: keywordsarticles.php
-// ----------------------------------------------------------------------
-// Xaraya eXtensible Management System
-// Copyright (C) 2002 by the Xaraya Development Team.
-// http://www.xaraya.org
-// ----------------------------------------------------------------------
-// Original Author of file:Camille Perinel
-// Mostly taken from the topitems.php block of the articles module.(See credits)
-// Purpose of file: Keyword Articles Block
-// ----------------------------------------------------------------------
-
 /**
- * initialise block
+ * Keywords Module Articles Block
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Keywords Module
+ * @link http://xaraya.com/index.php/release/187.html
+ * @author mikespub
  */
-
+/**
+ * Initialise block
+ *
+ * Original Author of file:Camille Perinel
+ * Mostly taken from the topitems.php block of the articles module.(See credits)
+ * @return bool true on success
+ */
 function keywords_keywordsarticlesblock_init()
 {
     return true;
@@ -21,6 +25,7 @@ function keywords_keywordsarticlesblock_init()
 
 /**
  * get information on block
+ * @return array
  */
 
 function keywords_keywordsarticlesblock_info()
@@ -39,6 +44,7 @@ function keywords_keywordsarticlesblock_info()
 
 /**
  * display block
+ * @return array with the block
  */
 
 function keywords_keywordsarticlesblock_display(& $blockinfo)
@@ -52,9 +58,9 @@ function keywords_keywordsarticlesblock_display(& $blockinfo)
     //$vars = _keywords_keywordsarticlesblock_checkdefaults($vars);
 
     // Allow refresh by setting refreshrandom variable
-    
+
      if (!xarVarFetch('refreshrandom', 'int:1:1', $vars['refreshtime'], 0, XARVAR_DONT_SET)) return;
-    
+
     // Check cache
     $refresh = (time() - ($vars['refreshtime'] * 60));
     $varDir = xarCoreGetVarDirPath();
@@ -141,6 +147,7 @@ function keywords_keywordsarticlesblock_display(& $blockinfo)
 
 /**
  * built-in block help/information system.
+ * @return string empty
  */
 
 function keywords_keywordsarticlesblock_help()
