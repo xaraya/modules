@@ -1,9 +1,9 @@
 <?php
 /**
- * Get all courses for one itsp
+ * Get all externally added courses for one itsp
  *
  * @package modules
- * @copyright (C) 2005-2006 The Digital Development Foundation
+ * @copyright (C) 2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -12,17 +12,18 @@
  * @author ITSP Module Development Team
  */
 /**
- * Get all courses that have been added to an ITSP by a student
+ * Get all external courses that have been added to an ITSP by a student
  *
  * @author MichelV <michelv@xarayahosting.nl>
  * @param int numitems $ the number of items to retrieve (default -1 = all)
  * @param int startnum $ start with this item number (default 1)
  * @param int itspid The id of the ITSP to look for
  * @param int pitemid The id of the planitem to look (OPTIONAL)
+ * @since 18 feb 2006
  * @return array Empty, of items, or false on failure
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
-function itsp_userapi_getall_courselinks($args)
+function itsp_userapi_getall_itspcourses($args)
 {
     /* Get arguments from argument array */
     extract($args);
@@ -64,14 +65,20 @@ function itsp_userapi_getall_courselinks($args)
     /* It's good practice to name the table definitions you are
      * using - $table doesn't cut it in more complex modules
      */
-    $courselinkstable = $xartable['itsp_itsp_courselinks'];
-    $query = "SELECT xar_courselinkid,
-                   xar_lcourseid,
-                   xar_pitemid,
-                   xar_dateappr,
-                   xar_datemodi,
-                   xar_modiby
-              FROM $courselinkstable
+    $icoursestable = $xartable['itsp_itsp_courses'];
+    $query = "SELECT xar_icourseid,
+               xar_pitemid,
+               xar_icoursetitle,
+               xar_icourseloc,
+               xar_icoursedesc,
+               xar_icoursecredits,
+               xar_icourselevel,
+               xar_icourseresult,
+               xar_icoursedate,
+               xar_dateappr,
+               xar_datemodi,
+               xar_modiby
+              FROM $icoursestable
               WHERE xar_itspid = $itspid";
     if (!empty($pitemid)) {
        $query .= " AND xar_pitemid = $pitemid ";
@@ -81,19 +88,18 @@ function itsp_userapi_getall_courselinks($args)
      * the exception so we just return
      */
     if (!$result) return;
-    /* Put items into result array.  Note that each item is checked
-     * individually to ensure that the user is allowed *at least* OVERVIEW
-     * access to it before it is added to the results array.
-     * If more severe restrictions apply, e.g. for READ access to display
-     * the details of the item, this *must* be verified by your function.
-     */
     for (; !$result->EOF; $result->MoveNext()) {
-        list($courselinkid, $lcourseid, $pitemid, $dateappr,
-               $datemodi,$modiby) = $result->fields;
+        list($icourseid, $pitemid, $icoursetitle, $icourseloc, $icoursedesc, $icourselevel, $icourseresult,
+        $icoursedate, $dateappr, $datemodi,$modiby) = $result->fields;
         if (xarSecurityCheck('ViewITSP', 0, 'ITSP', "$itspid:All:All")) {
-            $items[] = array('courselinkid' => $courselinkid,
-                             'lcourseid'    => $lcourseid,
+            $items[] = array('icourseid'    => $icourseid,
                              'pitemid'      => $pitemid,
+                             'icoursetitle' => $icoursetitle,
+                             'icourseloc'   => $icourseloc,
+                             'icoursedesc'  => $icoursedesc,
+                             'icourselevel' => $icourselevel,
+                             'icourseresult' => $icourseresult,
+                             'icoursedate'  => $icoursedate,
                              'dateappr'     => $dateappr,
                              'datemodi'     => $datemodi,
                              'modiby'       => $modiby);
