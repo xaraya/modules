@@ -1,14 +1,15 @@
 <?php
 /**
-Map a filesystem with HTML TreeMenu
-@author Tomas V.V.Cox <cox@idecnet.com>
-*/
+ * @package HTML_TreeMenu
+ * Map a filesystem with HTML TreeMenu
+ * @author Tomas V.V.Cox <cox@idecnet.com>
+ */
 require_once '../HTML_TreeMenu/TreeMenu.php';
 $map_dir = '.';
 $menu  = new HTML_TreeMenu('menuLayer', 'images', '_self');
 $menu->addItem(recurseDir($map_dir));
 
-function &recurseDir($path) 
+function &recurseDir($path)
 {
     if (!$dir = opendir($path)) {
         return false;
