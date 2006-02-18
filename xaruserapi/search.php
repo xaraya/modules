@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Search Handler for Newsletter
  *
  * @package modules
@@ -9,7 +9,8 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
- *
+ */
+/**
  * This is the item:search:api hook function for the newsletter
  * module. Each kind of this function is supposed to do its
  * search thing specific for it's containing module and return
@@ -25,17 +26,17 @@
  * $object_id -> when not 0 a specific repository was specified
  * $terms -> string with entered search terms
  * $itemtypes = array('itemtypename' => itemtypeid, ... ,)
- *
+ * <code>
  * $results = array(
  *                  array('result' => string describing the result,
  *                        'link'   => link to the result,
- *                        'itemtype' => in which itemtype was this found (text, not
-id)
+ *                        'itemtype' => in which itemtype was this found (text, not id)
  *                        'description' => longer result text
  *                        'description' => longer result text
  *                       )
  *                  ...
  *                 )
+ * </code>
 */
 
 

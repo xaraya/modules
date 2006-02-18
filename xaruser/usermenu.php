@@ -1,20 +1,20 @@
 <?php
 /**
-* Display the user menu hook
-*
-* @package unassigned
-* @copyright (C) 2002-2005 by The Digital Development Foundation
-* @license GPL {@link http://www.gnu.org/licenses/gpl.html}
-* @link http://www.xaraya.com
-*
-* @subpackage ebulletin
-* @link http://xaraya.com/index.php/release/557.html
-* @author Curtis Farnham <curtis@farnham.com>
-*/
+ * Display the user menu hook
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 by The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage newsletter module
+ * @author Richard Cave <rcave@xaraya.com>
+
+ */
 /**
  * display the user menu hook
  * This is a standard function to provide a link in the "Your Account Page"
- *
+ * @author Curtis Farnham <curtis@farnham.com>
  * @param string $phase is the which part of the loop you are on
  */
 function newsletter_user_usermenu($args)
