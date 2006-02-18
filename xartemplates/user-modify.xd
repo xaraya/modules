@@ -21,7 +21,6 @@
     </xar:if>
     <!-- the variables used in this menu templte come from itsp_user_menu() -->
     <xar:template type="module" file="user-menu" />
-Rule: #$rule_source#
 
     <form method="post" action="&xar-modurl-itsp-user-update;" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
         <fieldset>
@@ -31,9 +30,9 @@ Rule: #$rule_source#
                 Some text
         </fieldset>
         <xar:comment>Add a chooser here for the type of pitem to modify in this ITSP</xar:comment>
-<xar:if condition="strcmp('courses',$rule_source)==0">
-        <xar:template type="module" file="user-courselinks" />
-</xar:if>
+        <xar:if condition="strcmp('courses',$rule_source)==0">
+                <xar:template type="module" file="user-courselinks" />
+        </xar:if>
 
 
         <xar:if condition="!empty($hooks)">
