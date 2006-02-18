@@ -18,9 +18,11 @@
  * form supplied by xarModFunc('itsp','admin','modify') to update a current item
  *
  * @author ITSP module development team
- * @param  $ 'pitemid' the id of the item to be updated
- * @param  $ 'pitemname' the name of the item to be updated
- * @param  $ 'pitemdesc' the description of the item to be updated
+ * @param  int  pitemid the id of the item to be updated
+ * @param  string pitemname the name of the item to be updated
+ * @param  string pitemdesc the description of the item to be updated
+ * @param string rule_source. This source of the courses a user can add
+                 Possible values: courses (xar Module), internal (self defined), external, open
  */
 function itsp_admin_update_pitem($args)
 {
@@ -40,7 +42,7 @@ function itsp_admin_update_pitem($args)
 
     if (!xarVarFetch('rule_cat',   'int::', $rule_cat,    $rule_cat,   XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('rule_type',  'int::', $rule_type,    $rule_type,   XARVAR_NOT_REQUIRED)) return; // The coursetype
-    if (!xarVarFetch('rule_source','enum:internal:external:open:all', $rule_source,    $rule_source,   XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('rule_source','enum:courses:internal:external:open:all', $rule_source,    $rule_source,   XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('rule_level', 'int::', $rule_level,   $rule_level,   XARVAR_NOT_REQUIRED)) return;
 
     if (!empty($objectid)) {

@@ -31,7 +31,7 @@
         </fieldset>
         <xar:comment>Add a chooser here for the type of pitem to modify in this ITSP</xar:comment>
         <xar:if condition="strcmp('courses',$rule_source)==0">
-                <xar:template type="module" file="user-courselinks" />
+            <xar:template type="module" file="user-courselinks" />
         </xar:if>
 
 

@@ -41,7 +41,7 @@ function itsp_admin_modify_pitem($args)
 
     if (!xarVarFetch('rule_cat',    'int::',                      $rule_cat,    $rule_cat,    XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('rule_type',   'int::',                       $rule_type,   $rule_type,   XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('rule_source', 'enum:internal:external:open:all', $rule_source, $rule_source, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('rule_source', 'enum:courses:internal:external:open:all', $rule_source, $rule_source, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('rule_level',  'int::',                      $rule_level,  $rule_level,  XARVAR_NOT_REQUIRED)) return;
 
     if (!empty($objectid)) {
