@@ -17,7 +17,7 @@
  *
  * @param int $id of the target record
  * @return array $detailValues
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function addressbook_userapi_getDetailValues($args)
 {

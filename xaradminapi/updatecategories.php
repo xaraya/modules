@@ -16,7 +16,7 @@
  *
  * @param passed in from modifycategories api
  * @return bool
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function addressbook_adminapi_updatecategories($args)
 {

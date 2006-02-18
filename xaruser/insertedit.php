@@ -11,10 +11,11 @@
  * @author Garrett Hunter <garrett@blacktower.com>
  * Based on pnAddressBook by Thomas Smiatek <thomas@smiatek.com>
  */
-
-//=========================================================================
-//  Insert/Edit form
-//=========================================================================
+/**
+ * Insert/Edit form
+ *
+ * @return array
+ */
 function addressbook_user_insertedit()
 {
 

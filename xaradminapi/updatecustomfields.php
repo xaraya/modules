@@ -16,7 +16,7 @@
  *
  * @param passed in from modifycustomfields api
  * @return bool
- * @raise GLOBALPROTECTERROR
+ * @throws GLOBALPROTECTERROR
  *        GRANTERROR
  *        SORTERROR_1
  *        SORTERROR_2

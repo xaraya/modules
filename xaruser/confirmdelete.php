@@ -12,12 +12,12 @@
  * Based on pnAddressBook by Thomas Smiatek <thomas@smiatek.com>
  */
 
-//=========================================================================
-//  Confirm deletion
-//=========================================================================
+/**
+ * Confirm deletion
+ * @return array
+ */
 function addressbook_user_confirmdelete()
 {
-
     $output = array();
 
     // preserve menu settings

@@ -11,12 +11,10 @@
  * @author Garrett Hunter <garrett@blacktower.com>
  * Based on pnAddressBook by Thomas Smiatek <thomas@smiatek.com>
  */
-
-//FIXME: <garrett> why is this not an API?
-
-//=========================================================================
-//  Delete a record
-//=========================================================================
+/**
+ * Delete a record
+ * @TODO <garrett> why is this not an API?
+ */
 function addressbook_user_dodelete()
 {
     if (!xarVarFetch ('id','int::',$id, FALSE)) return FALSE;

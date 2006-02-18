@@ -11,7 +11,10 @@
  * @author Garrett Hunter <garrett@blacktower.com>
  * Based on pnAddressBook by Thomas Smiatek <thomas@smiatek.com>
  */
-
+/**
+ * Main admin function
+ * @return array with redirect
+ */
 function addressbook_admin_main()
 {
     /**

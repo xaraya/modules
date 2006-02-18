@@ -16,7 +16,7 @@
  *
  * @param passed in from modifyconfig api
  * @return redirects back to modifyconfig page
- * @raise GLOBALPROTECTERROR
+ * @throws GLOBALPROTECTERROR
  *        GRANTERROR
  *        SORTERROR_1
  *        SORTERROR_2

@@ -11,8 +11,10 @@
  * @author Garrett Hunter <garrett@blacktower.com>
  * Based on pnAddressBook by Thomas Smiatek <thomas@smiatek.com>
  */
-
-//FIXME: until we figure out module globals
+/**
+ * Includ function
+ * @todo FIXME: until we figure out module globals
+ */
 include_once ('modules/addressbook/xarglobal.php');
 
 ?>

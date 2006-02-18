@@ -11,7 +11,10 @@
  * @author Garrett Hunter <garrett@blacktower.com>
  * Based on pnAddressBook by Thomas Smiatek <thomas@smiatek.com>
  */
-
+/**
+ * Main user function
+ * @return array with redirect URL
+ */
 function AddressBook_user_main()
 {
     $output = xarModFunc('addressbook','user','viewall');

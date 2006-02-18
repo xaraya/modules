@@ -11,7 +11,9 @@
  * @author Garrett Hunter <garrett@blacktower.com>
  * Based on pnAddressBook by Thomas Smiatek <thomas@smiatek.com>
  */
-
+/**
+ * Global define function
+ */
 // Gives a common control across the module in the strange event our external mod name needs to change
 define('__ADDRESSBOOK__', 'addressbook');
 
@@ -104,17 +106,17 @@ define('_AB_CUST_TEST_STRING',      'varchar');
 define('_AB_DEVQA_NAME',    'addressbook'."QualityControl");
 define('_AB_DEVQA_EMAIL',    'addressbook'."@blacktower.com");
 
-////////////////
-//
-// Class definitions
-//
-////////////////
+/**
+ * Class definitions
+ */
 
 class abUserException extends DefaultUserException
 {
 
     var $errCollection = array();
-
+    /**
+     * Class definitions
+     */
     function abUserException ($exc)
     {
 
@@ -129,7 +131,9 @@ class abUserException extends DefaultUserException
             $this->msg = $exc;
         }
     }
-
+    /**
+     * Class definitions
+     */
     function abExceptionRender ($format = '')
     {
         $text = '';
