@@ -19,13 +19,14 @@
  * form supplied by xarModFunc('itsp','admin','new_pitem') to create a new plan item
  *
  * @author ITSP module development team
- * @param  $ 'pitemname' the name of the item to be created
- * @param  $ 'pitemdesc' the description of the item to be created
- * @param $ 'mincredit'
- * @param $ 'credits'
- * @param $ 'rule_cat'
- * @param $ 'rule_level'
- * @param $ 'rule_type'
+ * @param  string 'pitemname' the name of the item to be created
+ * @param  string 'pitemdesc' the description of the item to be created
+ * @param int 'mincredit'
+ * @param int 'credits'
+ * @param int 'rule_cat'
+ * @param int 'rule_level'
+ * @param int 'rule_type'
+ * @return mixed true on succes, with redirect URL
  */
 function itsp_admin_create_pitem($args)
 {

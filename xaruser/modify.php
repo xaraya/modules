@@ -18,10 +18,11 @@
  * wishes to modify a current module item
  *
  * @author ITSP Module Development Team
- * @param  $ 'itspid' the id of the itsp to be modified
- * @param  $ 'pitemid' the id of the plan item to be modified
+ * @param int itspid The id of the itsp to be modified
+ * @param int pitemid The id of the plan item to be modified
  * @todo add test for already followed courses
  *       add checks for types of planitems
+ * @return array with data for template
  */
 function itsp_user_modify($args)
 {
@@ -71,15 +72,27 @@ function itsp_user_modify($args)
         //get planitem
         $pitem = xarModApiFunc('itsp','user','get_planitem',array('pitemid'=>$pitemid));
         $data['pitemrules'] = $pitem['pitemrules'];
-
         // Splice the rule
         if (!empty($pitem['pitemrules'])) {
-        $rule_parts = explode(';',$pitem['pitemrules']);
-            $data['rule_type'] = $rule_parts[0];
-            $data['rule_level'] = $rule_parts[1];
-            $data['rule_cat'] = $rule_parts[2];
-            $data['rule_source'] = $rule_parts[3];
+            list($Rtype, $Rlevel, $Rcat, $Rsource) = explode(";", $pitem['pitemrules']);
+
+            $rule_parts = explode(':',$Rtype);
+            $rule_type = $rule_parts[1];
+            $rule_parts = explode(':',$Rlevel);
+            $rule_level = $rule_parts[1];
+            $rule_parts = explode(':',$Rcat);
+            $rule_cat = $rule_parts[1];
+            $rule_parts = explode(':',$Rsource);
+            $rule_source = $rule_parts[1];
+
+            $data['rule_type'] = $rule_type;
+
+            $data['rule_level'] = $rule_level;
+            $data['rule_cat'] = $rule_cat;
+            $data['rule_source'] = $rule_source;
+
         }
+
         // get the pitem details for this itsp
         // get all linked courses
         $courselinks = xarModApiFunc('itsp','user','getall_courselinks',array('itspid'=>$pitemid));

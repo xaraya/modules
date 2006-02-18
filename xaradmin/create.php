@@ -18,9 +18,10 @@
  * This is a standard function that is called with the results of the
  * form supplied by xarModFunc('itsp','admin','new') to create a new item
  *
- * @author ITSP module development team
- * @param  $ 'name' the name of the item to be created
- * @param  $ 'number' the number of the item to be created
+ * @author michelv <michelv@xarayahosting.nl>
+ * @param  int credits
+ * @param  int mincredit
+ * @param string dateopen
  */
 function itsp_admin_create($args)
 {
