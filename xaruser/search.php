@@ -1,9 +1,9 @@
 <?php
-/*
- * Example Module
+/**
+ * Example Module User Search
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -11,15 +11,17 @@
  * @link http://xaraya.com/index.php/release/36.html
  * @author Example Module Development Team
  */
-
-/*
+/**
  * Search for an example item
- * 
- * @author Jo Dalle Nogare
- * @param q REQUIRED
- * @param bool REQUIRED
- * @param sort REQUIRED
  *
+ * This function is called via the search hook
+ *
+ * @author Jo Dalle Nogare
+ * @param string q REQUIRED
+ * @param bool   bool REQUIRED
+ * @param string sort REQUIRED
+ * @param int startnum OPTIONAL
+ * @return array with the items found, or a string explaining that nothing was found
  */
 function example_user_search()
 {
@@ -33,7 +35,7 @@ function example_user_search()
 
     /* example module fields for possible searching and identification */
     if (!xarVarFetch('name',   'str:0:', $name,   '',   XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('number', 'int:0:', $number, NULL,   XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('number', 'int:0:', $number, NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('exid',       'id', $exid,   NULL, XARVAR_NOT_REQUIRED)) return;
 
     /* example for search where an author is involved, not included in this example module */
