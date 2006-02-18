@@ -22,7 +22,7 @@
  * @param $args['display'] count 'published' or 'unpublished' or 'all' stories
  * @returns integer
  * @return number of items
- * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
+ * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function newsletter_userapi_countstories($args)
 {

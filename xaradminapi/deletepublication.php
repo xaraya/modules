@@ -19,7 +19,7 @@
  * @param $args['issues'] remove or reassign the issues/stories of the publication
  * @param $args['newpid'] if reassign, the id of the new publication
  * @return bool true on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function newsletter_adminapi_deletepublication($args)
 {

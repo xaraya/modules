@@ -33,7 +33,7 @@
  * @param $args['articleid'] article ID for the story
  * @returns int
  * @return story id , or false on failure
- * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
+ * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function newsletter_adminapi_createstory($args)
 {

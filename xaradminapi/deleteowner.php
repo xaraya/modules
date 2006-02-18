@@ -17,7 +17,7 @@
  * @param array $args an array of arguments
  * @param int   $args['id'] ID of the owner
  * @return bool true on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function newsletter_adminapi_deleteowner($args)
 {

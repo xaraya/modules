@@ -18,7 +18,7 @@
  * @param $args['id'] id of the story
  * @param $args['datePublished'] the publication date of the story
  * @return bool true on success , or false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function newsletter_adminapi_publishstory($args)
 {

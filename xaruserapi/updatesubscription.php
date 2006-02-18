@@ -19,7 +19,7 @@
  * @param $args['pid'] publication id
  * @param $args['htmlmail'] send mail in html or text format (1 = html, 0 = text)
  * @return bool true on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function newsletter_userapi_updatesubscription($args)
 {

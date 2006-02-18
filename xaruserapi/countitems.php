@@ -21,7 +21,7 @@
  * @param $args['owner'] owner of item to count
  * @returns integer
  * @return number of items
- * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
+ * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function newsletter_userapi_countitems($args)
 {

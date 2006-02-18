@@ -19,7 +19,7 @@
  * @param $args an array of arguments
  * @param $args['storyId'] id of story to get
  * @returns topic array, or false on failure
- * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
+ * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function newsletter_userapi_gettopicbystory($args)
 {

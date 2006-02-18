@@ -17,7 +17,7 @@
  * @param $args an array of arguments
  * @param $args['issueId'] issue id
  * @return int topic ID on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function newsletter_adminapi_updateissuetopics($args)
 {

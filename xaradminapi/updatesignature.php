@@ -18,7 +18,7 @@
  * @param $args['id'] the id of the owner (uid in roles)
  * @param $args['signature'] the signature block of the owner
  * @return bool true on success , or false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function newsletter_adminapi_updatesignature($args)
 {

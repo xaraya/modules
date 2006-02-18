@@ -19,7 +19,7 @@
  * @param $args['disclaimer'] text of the disclaimer
  * @returns int
  * @return disclaimer ID on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function newsletter_adminapi_createdisclaimer($args)
 {

@@ -19,7 +19,7 @@
  * @param $args['title'] title of the disclaimer
  * @param $args['disclaimer'] text of the disclaimer
  * @return bool true on success , or false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function newsletter_adminapi_updatedisclaimer($args)
 {

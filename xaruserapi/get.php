@@ -26,7 +26,7 @@
  * @param $args['issueId'] get items for a specific issue
  * @param $args['external'] get items for a external viewing in archives  (1 = true, 0 =false)
  * @return array array of items, or false on failure
- * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
+ * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function newsletter_userapi_get($args)
 {

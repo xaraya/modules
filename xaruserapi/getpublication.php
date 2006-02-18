@@ -19,7 +19,7 @@
  * @param $args an array of arguments
  * @param $args['id'] id of newsletter publication to get
  * @returns publication array, or false on failure
- * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
+ * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function newsletter_userapi_getpublication($args)
 {

@@ -18,7 +18,7 @@
  * @param $args['id'] id of the publication
  * @returns array
  * @return array of items, or false on failure
- * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
+ * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function newsletter_adminapi_countsubscriptions($args)
 {

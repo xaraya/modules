@@ -17,7 +17,7 @@
  * @param $args an array of arguments
  * @param int $args['id'] id of newsletter disclaimer to get
  * @return array disclaimer array, or false on failure
- * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
+ * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function newsletter_userapi_getdisclaimer($args)
 {

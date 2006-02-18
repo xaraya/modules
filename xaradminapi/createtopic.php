@@ -21,7 +21,7 @@
  * @param $args['storyOrder'] order of the story in the issue
  * @returns int
  * @return topic ID on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function newsletter_adminapi_createtopic($args)
 {

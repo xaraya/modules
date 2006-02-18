@@ -21,7 +21,7 @@
  * @param $args['owner'] get stories/issues for this owner (1 = true, 0 = false)
  * @param $args['sortby'] sort by 'title', 'category', 'publication', 'date' or 'owner'
  * @return array of items, or false on failure
- * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
+ * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function newsletter_userapi_getowners($args)
 {

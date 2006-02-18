@@ -25,7 +25,7 @@
  * @param $args['fromname'] issue email from name (overrides publication from name)
  * @param $args['fromemail'] issue email from address (overrides publication from email)
  * @return mixed int issue ID on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function newsletter_adminapi_updateissue($args)
 {

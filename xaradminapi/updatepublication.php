@@ -33,7 +33,7 @@
  * @param $args['fromname'] publication email from name (default = owner name)
  * @param $args['fromemail'] publication email from address (default = owner email)
  * @return int publication ID on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function newsletter_adminapi_updatepublication($args)
 {

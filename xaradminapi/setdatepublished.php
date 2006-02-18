@@ -18,7 +18,7 @@
  * @param array $args['issue'] the issue array
  * @param       $args['date'] the date that the issue/story was published
  * @return bool true on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function newsletter_adminapi_setdatepublished($args)
 {

@@ -20,7 +20,7 @@
  * @param $args['display'] count 'published' or 'unpublished' or 'all' stories
  * @param $args['external'] retrieve issues marked external (1=true, 0=false)
  * @return int number of items
- * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
+ * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function newsletter_userapi_countissues($args)
 {

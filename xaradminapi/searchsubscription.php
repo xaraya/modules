@@ -21,7 +21,7 @@
  * @param $args['startnum'] start with this item number (default 1)
  * @param $args['numitems'] the number of items to retrieve (default -1 = all)
  * @return array Array of items, or false on failure
- * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
+ * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function newsletter_adminapi_searchsubscription($args)
 {

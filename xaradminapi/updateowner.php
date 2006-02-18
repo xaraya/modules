@@ -19,7 +19,7 @@
  * @param $args['rid'] group of the owner
  * @param $args['signature'] the owner's signature
  * @return bool true on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function newsletter_adminapi_updateowner($args)
 {

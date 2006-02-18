@@ -20,7 +20,7 @@
  * @param $args['id'] ID of the disclaimer
  * @returns bool
  * @return true on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function newsletter_adminapi_deletedisclaimer($args)
 {
