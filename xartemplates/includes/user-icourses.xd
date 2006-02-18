@@ -1,13 +1,13 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
     <fieldset>
-    <xar:if condition="!empty($lcourses)">
+    <xar:if condition="!empty($icourses)">
         <legend><xar:mlstring>You have added:</xar:mlstring></legend>
-        <xar:foreach in="$lcourses" key="$lcourseid">
+        <xar:foreach in="$icourses" key="$icourseid">
             <div class="xar-form-input-wrapper">
-                 <label for="name" class="xar-form-label" title="#xarML('This is the name')#">
+                 <label for="title" class="xar-form-label" title="#xarML('These are the courses you have added before')#">
                       <xar:mlstring>Coursetitle:</xar:mlstring>
                  </label>
-                 #$lcourse.name# Credits: #$lcourse.intendedcredits# Date: Status:
+                 #$icourse.title# Credits: #$icourse.credits# Date: Status:
             </div>
         </xar:foreach>
     <xar:else />
@@ -17,7 +17,7 @@
     <fieldset>
         <legend><xar:mlstring>Add courses</xar:mlstring></legend>
         <div class="xar-form-input-wrapper">
-             <label for="courseid" class="xar-form-label" title="#xarML('Choose one of the following courses to add')#">
+             <label for="icourseid" class="xar-form-label" title="#xarML('Add an external course')#">
                   <xar:mlstring>Add course:</xar:mlstring>
              </label>
              <xar:comment>Here the dynamic property gets the list of courses one can add</xar:comment>
@@ -31,7 +31,7 @@
     -->
     <xar:if condition="xarModIsHooked('dynamicdata')">
         <!-- 1. retrieve any dynamic properties defined for this object -->
-        <xar:data-getitem name="$properties" module="itsp" itemid="$itspid" />
+        <xar:data-getitem name="$properties" module="itsp" itemid="$pitemid" />
         <!-- 2. for each property, display its label and value in output format -->
         <xar:if condition="isset($properties) and count($properties) gt 0">
             <xar:foreach in="$properties" key="$name">
