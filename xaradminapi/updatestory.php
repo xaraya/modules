@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -67,7 +67,7 @@ function newsletter_adminapi_updatestory($args)
                           array('id' => $id));
 
     // Check for exceptions
-    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
         return; // throw back
 
     // Get database setup
@@ -78,7 +78,7 @@ function newsletter_adminapi_updatestory($args)
     $nwsltrTable = $xartable['nwsltrStories'];
 
     // Update the item
-    $query = "UPDATE $nwsltrTable 
+    $query = "UPDATE $nwsltrTable
               SET xar_ownerid = ?,
                   xar_pid = ?,
                   xar_cid = ?,

@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -48,7 +48,7 @@ function newsletter_adminapi_setdatepublished($args)
     $nwsltrStoriesTable = $xartable['nwsltrStories'];
 
     // Update the issue
-    $query = "UPDATE $nwsltrIssuesTable 
+    $query = "UPDATE $nwsltrIssuesTable
                  SET xar_datepublished = ?
                WHERE xar_id = ?";
 
@@ -72,10 +72,10 @@ function newsletter_adminapi_setdatepublished($args)
 
     foreach ($topics as $topic) {
         // Update story
-        $query = "UPDATE $nwsltrStoriesTable 
+        $query = "UPDATE $nwsltrStoriesTable
                      SET xar_datepublished = ?
                    WHERE xar_id = ?";
-        
+
         $bindvars = array((int) $date, (int) $topic['storyId']);
 
         // Execute query

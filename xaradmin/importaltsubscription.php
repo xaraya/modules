@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2004 by the Xaraya Development Team
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -18,7 +18,7 @@
  * @public
  * @author Richard Cave
  * @param 'import' the CSV separate import
- * @param 'delim' the delimitor (assuming ',') 
+ * @param 'delim' the delimitor (assuming ',')
  * @param 'pids' the publication ids
  * @param 'htmlmail' send mail html or text (0 = text, 1 = html)
  * @returns array
@@ -58,7 +58,7 @@ function newsletter_admin_importaltsubscription()
     {
         // Parse each line from the import text area
         $subscriptions[] = newsletter_admin__explodeimport($importstring, $delim);
-    }        
+    }
 
     // Initialize values
     $imports_valid = array();
@@ -70,7 +70,7 @@ function newsletter_admin_importaltsubscription()
     $regexp = "^([_a-z0-9-]+)(\.[_a-z0-9-]+)*@([a-z0-9-]+)(\.[a-z0-9-]+)*(\.[a-z]{2,6})$";
 
     // MS Outlook export quotes sections that have commas as part
-    // of the string.  This may occur with the names and the 
+    // of the string.  This may occur with the names and the
     // $subscription array will only contain 2 fields
     $idx = 0;
     foreach ($subscriptions as $subscription) {
@@ -120,7 +120,7 @@ function newsletter_admin_importaltsubscription()
                                              array('id' => $pid));
 
                 // Check for exceptions
-                if (!isset($publication) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+                if (!isset($publication) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
                     return; // throw back
 
                 // Call create subscription function API
@@ -144,7 +144,7 @@ function newsletter_admin_importaltsubscription()
                     $imports_valid[$idx]['deletetitle'] = xarML('Delete');
 
                     // Create edit url
-                    if(xarSecurityCheck('EditNewsletter', 0)) { 
+                    if(xarSecurityCheck('EditNewsletter', 0)) {
                         $imports_valid[$idx]['editurl'] = xarModURL('newsletter',
                                                                     'admin',
                                                                     'modifyaltsubscription',
@@ -154,7 +154,7 @@ function newsletter_admin_importaltsubscription()
                     }
 
                     // Create delete url
-                    if(xarSecurityCheck('DeleteNewsletter', 0)) { 
+                    if(xarSecurityCheck('DeleteNewsletter', 0)) {
                         $imports_valid[$idx]['deleteurl'] = xarModURL('newsletter',
                                                                       'admin',
                                                                       'deletealtsubscription',
@@ -205,7 +205,7 @@ function newsletter_admin__explodeimport($str, $delim = ',', $qual = "\"")
     $len = strlen($str);
     $inside = false;
     $word = '';
-        
+
     // Explode import
     for ($i = 0; $i < $len; ++$i) {
         if ($str[$i]==$delim && !$inside) {

@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -38,7 +38,7 @@
  */
 function newsletter_admin_createpublication()
 {
-    // Confirm authorization key 
+    // Confirm authorization key
     if (!xarSecConfirmAuthKey()) {
         $msg = xarML('Invalid authorization key for creating new #(1) item', 'Newsletter');
         xarErrorSet(XAR_USER_EXCEPTION, 'FORBIDDEN_OPERATION', new DefaultUserException($msg));
@@ -94,7 +94,7 @@ function newsletter_admin_createpublication()
                               'get',
                                array('uid' => $ownerId));
         // Check return value
-        if (!isset($role) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+        if (!isset($role) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
             return; // throw back
 
         // Set name and/or email
@@ -116,7 +116,7 @@ function newsletter_admin_createpublication()
                                             'disclaimer' => $newdisclaimer));
 
         // Check return value
-        if (!isset($disclaimerId) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+        if (!isset($disclaimerId) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
             return; // throw back
     }
 
@@ -134,7 +134,7 @@ function newsletter_admin_createpublication()
                                  'logo' => $logo,
                                  'linkExpiration' => $linkExpiration,
                                  'linkRegistration' => $linkRegistration,
-                                 'disclaimerId' => $disclaimerId,  
+                                 'disclaimerId' => $disclaimerId,
                                  'description' => $description,
                                  'private' => $private,
                                  'subject' => $subject,
@@ -142,7 +142,7 @@ function newsletter_admin_createpublication()
                                  'fromemail' => $fromemail));
 
     // Check return value
-    if (!isset($pubId) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+    if (!isset($pubId) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
         return; // throw back
 
     // Set publication id

@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -18,7 +18,7 @@
  * @author Richard Cave
  * @param $args an array of arguments
  * @param $args['uid'] user id
- * @param $args['pid'] publication id 
+ * @param $args['pid'] publication id
  * @param $args['htmlmail'] send mail in html or text format (1 = html, 0 = text)
  * @returns int
  * @return true on success, false on failure

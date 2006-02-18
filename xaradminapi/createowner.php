@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -56,7 +56,7 @@ function newsletter_adminapi_createowner($args)
               WHERE xar_uid = ?";
 
     $result =& $dbconn->Execute($query, array((int) $id));
-    if (!$result) return false; 
+    if (!$result) return false;
 
     if ($result->RecordCount() > 0) {
         return false;  // owner already exists

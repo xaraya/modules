@@ -2,7 +2,7 @@
 /**
  * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -20,8 +20,8 @@
  */
 function newsletter_admin_modifynewsletter()
 {
-	if (!xarVarFetch('func', 'str', $data['page'],  'main', XARVAR_NOT_REQUIRED)) return;
-	
+    if (!xarVarFetch('func', 'str', $data['page'],  'main', XARVAR_NOT_REQUIRED)) return;
+
     // Security check
     if(!xarSecurityCheck('AdminNewsletter')) return;
 

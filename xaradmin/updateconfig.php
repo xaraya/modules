@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -16,7 +16,7 @@
  *
  * @public
  * @author Richard Cave
- * @param 'bulkemail' send a single email to every newsletter subscriber 
+ * @param 'bulkemail' send a single email to every newsletter subscriber
  * @param 'shorturls' short URL support
  * @param 'activeusers' send email only to roles that are active
  * @returns bool

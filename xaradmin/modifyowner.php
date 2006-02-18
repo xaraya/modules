@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -19,7 +19,7 @@
  * @returns array
  * @return $data
  */
-function newsletter_admin_modifyowner() 
+function newsletter_admin_modifyowner()
 {
     // Get parameters from input
     if (!xarVarFetch('id', 'id', $id)) return;
@@ -74,7 +74,7 @@ function newsletter_admin_modifyowner()
     $templateVarArray = array('authid' => xarSecGenAuthKey(),
             //'updatebutton' => xarVarPrepForDisplay(xarML('Update User')),
             'hooks' => $hooks,
-            // 'menu' => $menu, 
+            // 'menu' => $menu,
             'owner' => $owner);
 
     // Return the template variables defined in this function

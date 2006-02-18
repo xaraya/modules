@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -14,7 +14,7 @@
 
 /**
  * Append the child categories to the parent category ([parent]child)
- * 
+ *
  * @private
  * @author Richard Cave
  * @param $args an array of arguments
@@ -102,7 +102,7 @@ function newsletter_adminapi_appendchildcategories($args)
  * @param b multi-dimensional array
  * @returns strcmp
  */
-function acc__sortcategorybyname($a, $b) 
+function acc__sortcategorybyname($a, $b)
 {
     $cmp1 = trim(strtolower($a['name']));
     $cmp2 = trim(strtolower($b['name']));

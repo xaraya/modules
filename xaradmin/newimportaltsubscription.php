@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -43,7 +43,7 @@ function newsletter_admin_newimportaltsubscription()
                                         'sortby' => 'title'));
 
     // Check for exceptions
-    if (!isset($publications) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+    if (!isset($publications) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
         return; // throw back
 
     // Add the array of items to the template variables

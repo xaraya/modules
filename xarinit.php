@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -54,7 +54,7 @@ function newsletter_init()
         'xar_fromname'      => array('type'=>'varchar','size'=>100,'null'=>TRUE),
         'xar_fromemail'     => array('type'=>'varchar','size'=>100,'null'=>TRUE)
     );
-    
+
     // Create the table DDL
     $query = xarDBCreateTable($nwsltrPublications, $fields);
     if (empty($query)) return; // throw back
@@ -78,7 +78,7 @@ function newsletter_init()
         'xar_fromemail'     => array('type'=>'varchar','size'=>100,'null'=>TRUE)
 
     );
-    
+
     // Create the table DDL
     $query = xarDBCreateTable($nwsltrIssues,$fields);
     if (empty($query)) return; // throw back
@@ -214,15 +214,15 @@ function newsletter_init()
     if(xarModIsAvailable('categories') && xarModAPILoad('categories', 'admin'))
     {
         $mastercid = xarModAPIFunc('categories',
-                                   'admin', 
-                                   'create', 
+                                   'admin',
+                                   'create',
                                    Array('name' => 'Newsletter',
                                          'description' => 'Newsletter Categories',
                                          'parent_id' => 0));
         if (isset($mastercid))
             $numcats = 1;
 
-        // Just in case creation of category blew up, 
+        // Just in case creation of category blew up,
         // free all error exceptions
         xarErrorFree();
     }
@@ -287,7 +287,7 @@ function newsletter_init()
 
     // Define security instance definitions
     $nwsltrOwners = $xartable['nwsltrOwners'];
-    $query = "SELECT xar_title, xar_id FROM " . $nwsltrOwners; 
+    $query = "SELECT xar_title, xar_id FROM " . $nwsltrOwners;
 
     // Initialisation successful
     return true;
@@ -305,17 +305,17 @@ function newsletter_upgrade($oldversion)
     // Set up database tables
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-    
+
     // Get the newsletter tables necessary for upgrade
     $nwsltrPublications = $xartable['nwsltrPublications'];
     $nwsltrStories = $xartable['nwsltrStories'];
     $nwsltrIssues = $xartable['nwsltrIssues'];
-    
+
     // Upgrade dependent on old version number
     switch($oldversion) {
         case '1.0.0':
             // Code to upgrade from version 1.0.0 goes here
-            
+
             // Add the column 'xar_subject' to the publications table
             $query = xarDBAlterTable($nwsltrPublications,
                                      array('command' => 'add',
@@ -324,25 +324,25 @@ function newsletter_upgrade($oldversion)
                                            'size' => 'tiny',
                                            'null' => false,
                                            'default' => '0'));
-                                           
+
             $result = & $dbconn->Execute($query);
             if (!$result) return;
-            
+
             // Set current subject to 0
-            $query = "UPDATE $nwsltrPublications 
+            $query = "UPDATE $nwsltrPublications
                       SET xar_subject = 0";
 
             $result =& $dbconn->Execute($query);
             if (!$result) return;
-            
+
             // fall through to the next upgrade
 
         case '1.1.0':
             // we added support for using articles as stories.  this means that
             // an articles title and content can be used in place of story thus
             // title and content of a story can be null.  Also, we need to store the
-            // article ID of the choosen article.            
-                        
+            // article ID of the choosen article.
+
             // Add the column 'xar_articleid' to the stories table
             $query = xarDBAlterTable($nwsltrStories,
                                      array('command' => 'add',
@@ -350,7 +350,7 @@ function newsletter_upgrade($oldversion)
                                            'type' => 'integer'));
             $result = & $dbconn->Execute($query);
             if (!$result) return;
-                                           
+
             // change the title field to allow for null
             $query = xarDBAlterTable($nwsltrStories,
                                      array('command' => 'modify',
@@ -358,7 +358,7 @@ function newsletter_upgrade($oldversion)
                                            'null' => false));
             $result =& $dbconn->Execute($query);
             if (!$result) return;
-                                           
+
             // change the content field to allow for null
             $query = xarDBAlterTable($nwsltrStories,
                                      array('command' => 'modify',
@@ -368,7 +368,7 @@ function newsletter_upgrade($oldversion)
             if (!$result) return;
 
             // fall through to the next upgrade
-            
+
         case '1.1.1':
             // Code to upgrade from version 1.1.1 goes here
 
@@ -398,7 +398,7 @@ function newsletter_upgrade($oldversion)
 
             $result = & $dbconn->Execute($query);
             if (!$result) return;
-                                           
+
             // Add the column 'xar_fromname' to the issues table
             $query = xarDBAlterTable($nwsltrIssues,
                                      array('command' => 'add',
@@ -420,10 +420,10 @@ function newsletter_upgrade($oldversion)
 
             $result = & $dbconn->Execute($query);
             if (!$result) return;
-                                           
+
             // Update current publications so that the fromname and fromemail
             // fields are populated with the publication owner information
-            
+
             // Get all of the publications
             $publications = xarModAPIFunc('newsletter',
                                   'user',
@@ -464,14 +464,14 @@ function newsletter_upgrade($oldversion)
             }
 
             // fall through to the next upgrade
-            
+
         case '1.1.2':
-            
+
             if (!xarModRegisterHook('item', 'usermenu', 'GUI', 'newsletter', 'user', 'usermenu')) {
         return false;
-    		}
+            }
             break;
-            
+
         case '1.1.3':
             // Code to upgrade from version 1.1.2 goes here
             break;
@@ -568,8 +568,8 @@ function newsletter_delete()
         $mastercid = xarModGetVar('newsletter', 'mastercid');
 
         xarModAPIFunc('categories',
-                      'admin', 
-                      'deletecat', 
+                      'admin',
+                      'deletecat',
                       Array('cid' => $mastercid));
 
     }
@@ -581,7 +581,7 @@ function newsletter_delete()
                        array('modName'  => 'newsletter',
                              'blockType'=> 'information'))) return;
 
-    
+
 
  // unregister usermenu hook (give user some subscription options)
 
@@ -616,7 +616,7 @@ if (!xarModUnregisterHook('item', 'usermenu', 'GUI',
                       'deletegroup',
                       array('uid'  => $userData->uid));
     }
-    
+
     // Remove writer role
     $writerRole = xarModGetVar('newsletter', 'writer');
     $userData = xarFindRole($writerRole);

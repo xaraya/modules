@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -97,7 +97,7 @@ function newsletter_admin_createaltsubscription()
         $data['invalid'] = true;
         $data['name'] = $name;
         $data['email'] = $email;
-    
+
         // Get all the publications
         $startnum = 1;
         $publications = xarModAPIFunc('newsletter',
@@ -110,7 +110,7 @@ function newsletter_admin_createaltsubscription()
                                             'sortby' => 'title'));
 
         // Check for exceptions
-        if (!isset($publications) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+        if (!isset($publications) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
             return; // throw back
 
         // Add the array of items to the template variables
@@ -129,7 +129,7 @@ function newsletter_admin_createaltsubscription()
  * Check if an email address is valid
  *
  * @private
- * @author Richard Cave 
+ * @author Richard Cave
  * @param 'name' the name of the new subscription
  * @param 'email' the email address of the new subscription
  * @param 'pids' the publication ids
@@ -137,7 +137,7 @@ function newsletter_admin_createaltsubscription()
  * @returns bool
  * @return true on success, false on failure
  */
-function newsletter_admin__checkemail($email) 
+function newsletter_admin__checkemail($email)
 {
     // Check if the $email email address in valid format
     // Regular expression from margc's super email validation script

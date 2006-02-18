@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -44,7 +44,7 @@ function newsletter_user_deletesubscription($args)
                                         'pid' => $pid));
 
     // Check for exceptions
-    if (!isset($subscription) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+    if (!isset($subscription) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
         return; // throw back
 
     // Check for confirmation.

@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -54,7 +54,7 @@ function newsletter_admin_mailissue()
         return;
     }
 
-    // Add field to track source of issue.  This will be set to 
+    // Add field to track source of issue.  This will be set to
     // either 'web' or 'email'.  This can be used to optionally
     // track hits of issue through AWStats, etc.
     $issue['source'] = 'email';
@@ -67,7 +67,7 @@ function newsletter_admin_mailissue()
 
     if (!$publication)
         return; // throw back
-    
+
     // Get the admin edit menu
     $menu = xarModApiFunc('newsletter', 'admin', 'editmenu');
 
@@ -105,7 +105,7 @@ function newsletter_admin_mailissue()
 
     // Call blocklayout with the template to parse it and generate HTML
     $issueHTML = xarTplFile($sourceFileNameHTML, $templateVarArray);
-    
+
     // Make sure there is something to mail
     if (empty($issueHTML))
         return;
@@ -117,7 +117,7 @@ function newsletter_admin_mailissue()
                                         'gettemplatefile',
                                         array('filename' => $templateName));
 
-    // If there is no text file template, then assume 
+    // If there is no text file template, then assume
     // that we're using the HTML template
     if (!file_exists($sourceFileNameText)) {
         // We need to strip out <html>, <title>, <body>, etc
@@ -142,7 +142,7 @@ function newsletter_admin_mailissue()
         // Just in case...
         $issueText = strip_tags($issueText);
     }
-    
+
     // Send as either bulk email to all subscribers or single email
     // to each individual subscriber
     if (xarModGetVar('newsletter', 'bulkemail')) {
@@ -261,7 +261,7 @@ function newsletter__single_email($args)
     }
 
     $emailResultArray['issueCounts'] = $issueCounts;
-    
+
     return $emailResultArray;
 }
 

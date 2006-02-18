@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -98,7 +98,7 @@ function newsletter_admin_updatepublication()
                               'get',
                                array('uid' => $ownerId));
         // Check return value
-        if (!isset($role) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+        if (!isset($role) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
             return; // throw back
 
         // Set name and/or email
@@ -122,7 +122,7 @@ function newsletter_admin_updatepublication()
                                                 'disclaimer' => $editdisclaimer));
 
             // Check return value
-            if (!isset($disclaimerId) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+            if (!isset($disclaimerId) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
                 return; // throw back
         } else {
             // Get the current publication
@@ -132,7 +132,7 @@ function newsletter_admin_updatepublication()
                                          array('id' => $id));
 
             // Check for exceptions
-            if (!isset($publication) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+            if (!isset($publication) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
                 return; // throw back
 
             // Only change the disclaimer if it's the same as the publication
@@ -142,10 +142,10 @@ function newsletter_admin_updatepublication()
                                             'user',
                                             'getdisclaimer',
                                              array('id' => $disclaimerId));
-                                             
+
                 // Check for exceptions
                 if (!isset($disclaimer) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
-                    return; // throw back     
+                    return; // throw back
 
                 // Check if content of disclaimer is the same
                 if (strcmp($editdisclaimer, $disclaimer['disclaimer']) != 0) {

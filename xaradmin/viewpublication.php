@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -57,13 +57,13 @@ function newsletter_admin_viewpublication($args)
                                         'sortby' => $sortby));
 
     // Check for exceptions
-    if (!isset($publications) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+    if (!isset($publications) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
         return; // throw back
 
     // Get category name and parent category name
     $data['showcategory'] = false;
     for ($idx = 0; $idx < count($publications); $idx++) {
-            
+
         if ($publications[$idx]['cid'] != 0 ) {
             $category = xarModAPIFunc('categories',
                                       'user',
@@ -71,7 +71,7 @@ function newsletter_admin_viewpublication($args)
                                       Array('cid' => $publications[$idx]['cid']));
 
             // Check for exceptions
-            if (!isset($category) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+            if (!isset($category) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
                 return;
             // Set the category name for the story
             $publications[$idx]['categoryname'] = $category['name'];
@@ -90,9 +90,9 @@ function newsletter_admin_viewpublication($args)
         $publications[$i]['newissuestitle'] = xarML('Add Issue');
         $publications[$i]['editissuestitle'] = xarML('Edit Issues');
 
-        // Check if this is a publication and only 
+        // Check if this is a publication and only
         // allow the owner to edit/delete their own publication
-        if(xarSecurityCheck('EditNewsletter', 0)) { 
+        if(xarSecurityCheck('EditNewsletter', 0)) {
             $publications[$i]['editurl'] = xarModURL('newsletter',
                                                      'admin',
                                                      'modifypublication',
@@ -158,13 +158,13 @@ function newsletter_admin_viewpublication($args)
     $data['publications'] = $publications;
 
     $data['pager'] = xarTplGetPager($startnum,
-                                    xarModAPIFunc('newsletter', 
-                                                  'user', 
-                                                  'countitems', 
+                                    xarModAPIFunc('newsletter',
+                                                  'user',
+                                                  'countitems',
                                                   array('phase' => 'publication')),
-                                    xarModURL('newsletter', 
-                                              'admin', 
-                                              'viewpublication', 
+                                    xarModURL('newsletter',
+                                              'admin',
+                                              'viewpublication',
                                               array('startnum' => '%%',
                                                    'sortby' => $sortby)),
                                     xarModGetVar('newsletter', 'itemsperpage'));

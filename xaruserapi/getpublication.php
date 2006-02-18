@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -83,7 +83,7 @@ function newsletter_userapi_getpublication($args)
     list($id,
          $cid,
          $altcids,
-         $ownerId, 
+         $ownerId,
          $templateHTML,
          $templateText,
          $title,
@@ -121,7 +121,7 @@ function newsletter_userapi_getpublication($args)
     if (is_string($altcids)) {
         $altcids = unserialize($altcids);
     }
-                
+
     // Create the publication
     $publication = array('id' => $id,
                   'cid' => $cid,
@@ -138,10 +138,10 @@ function newsletter_userapi_getpublication($args)
                   'description' => $description,
                   'disclaimerId' => $disclaimerId,
                   'introduction' => $introduction,
-                  'private' => $private,                  
+                  'private' => $private,
                   'subject' => $subject,
                   'fromname' => $fromname,
-                  'fromemail' => $fromemail);                  
+                  'fromemail' => $fromemail);
 
     // Return the publication array
     return $publication;

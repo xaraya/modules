@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -32,7 +32,7 @@ function newsletter_admin_createdisclaimer()
     }
 
     // Get parameters from the input
-    if (!xarVarFetch('title', 'str:1:', $title)) { 
+    if (!xarVarFetch('title', 'str:1:', $title)) {
         xarErrorFree();
         $msg = xarML('You must provide a title for the disclaimer.');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
@@ -54,7 +54,7 @@ function newsletter_admin_createdisclaimer()
                                   'disclaimer' => $disclaimer));
 
     // Check return value
-    if (!isset($disclaimerId) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+    if (!isset($disclaimerId) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
         return; // throw back
 
     // Success

@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2004 by the Xaraya Development Team
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -30,20 +30,20 @@ function newsletter_admin_retrievepublication()
         xarErrorSet(XAR_USER_EXCEPTION, 'FORBIDDEN_OPERATION', new DefaultUserException($msg));
         return;
     }
-        
+
     // Get parameters from the input
     if (!xarVarFetch('publicationId', 'int:1:', $publicationId, 0)) {return;}
-    
+
     // Set stage information
     $templateVarArray = array();
-    
+
     // Check if user wants to create new publication
     if ($publicationId == 0) {
         $nextstage = 'newpublication';
     } else {
         $nextstage = 'newissue';
     }
-    
+
     // Set publicationId
     $templateVarArray['publicationId'] = $publicationId;
 

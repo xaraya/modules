@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -71,16 +71,16 @@ function newsletter_admin_updategroups()
                 return false; // throw back
             }
         }
-        
+
         // Assign publisher group to role
         xarMakeRoleMemberByName($publisherRole,$publisherGroup);
 
-        // Assign privilege 
+        // Assign privilege
         if (!xarModAPIFunc('newsletter',
                            'admin',
                            'modifyprivilege',
                             array('type' => 'add',
-                                  'mask' => $publisherMask, 
+                                  'mask' => $publisherMask,
                                   'rolename' => $publisherRole))) {
             return false; // throw back
         }
@@ -111,12 +111,12 @@ function newsletter_admin_updategroups()
         // Assign editor group to role
         xarMakeRoleMemberByName($editorRole,$editorGroup);
 
-        // Assign privilege 
+        // Assign privilege
         if (!xarModAPIFunc('newsletter',
                            'admin',
                            'modifyprivilege',
                             array('type' => 'add',
-                                  'mask' => $editorMask, 
+                                  'mask' => $editorMask,
                                   'rolename' => $editorRole))) {
             return false; // throw back
         }
@@ -143,16 +143,16 @@ function newsletter_admin_updategroups()
                 return false; // throw back
             }
         }
-    
+
         // Assign writer group to role
         xarMakeRoleMemberByName($writerRole,$writerGroup);
 
-        // Assign privilege 
+        // Assign privilege
         if (!xarModAPIFunc('newsletter',
                            'admin',
                            'modifyprivilege',
                             array('type' => 'add',
-                                  'mask' => $writerMask, 
+                                  'mask' => $writerMask,
                                   'rolename' => $writerRole))) {
             return false; // throw back
         }

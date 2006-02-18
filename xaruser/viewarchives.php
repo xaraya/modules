@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -62,16 +62,16 @@ function newsletter_user_viewarchives($args)
     $data['owner'] = $owner;
     $data['display'] = $display;
     $data['previewbrowser']   = xarModGetVar('newsletter', 'previewbrowser');
-    
+
     // Get the list of publications
     $publications = xarModAPIFunc('newsletter',
                                   'user',
                                   'get',
                                   array('phase' => 'publication',
                                         'sortby' => 'title'));
-   
+
     // Check for exceptions
-    if (!isset($publications) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+    if (!isset($publications) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
         return; // throw back
 
     $data['publications'] = $publications;
@@ -92,7 +92,7 @@ function newsletter_user_viewarchives($args)
                                   'external' => true));
 
     // Check for exceptions
-    if (!isset($issues) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+    if (!isset($issues) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
         return; // throw back
 
     // Make sure there are issues to show
@@ -104,7 +104,7 @@ function newsletter_user_viewarchives($args)
 
     // Loop through issues and check if external or private
     for ($idx = 0; $idx < count($issues); $idx++) {
-        if(xarSecurityCheck('ReadNewsletter', 0)) { 
+        if(xarSecurityCheck('ReadNewsletter', 0)) {
             // Create preview title and url
             $issues[$idx]['previewtitle'] = xarML('Preview');
             $issues[$idx]['previewurl'] = xarModURL('newsletter',
@@ -161,16 +161,16 @@ function newsletter_user_viewarchives($args)
 
     // Create pagination
     $data['pager'] = xarTplGetPager($startnum,
-                                    xarModAPIFunc('newsletter', 
-                                                  'user', 
-                                                  'countissues', 
+                                    xarModAPIFunc('newsletter',
+                                                  'user',
+                                                  'countissues',
                                                   array('owner' => $owner,
                                                         'publicationId' => $publicationId,
                                                         'display' => $display,
                                                         'external' => 1)),
-                                    xarModURL('newsletter', 
-                                              'user', 
-                                              'viewarchives', 
+                                    xarModURL('newsletter',
+                                              'user',
+                                              'viewarchives',
                                               array('startnum' => '%%',
                                                     'sortby' => $sortby,
                                                     'owner' => $owner,

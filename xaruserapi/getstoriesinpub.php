@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -14,7 +14,7 @@
 
 /**
  * Get the stories in a publication
- * 
+ *
  * @private
  * @author Richard Cave
  * @param $args an array of arguments
@@ -53,9 +53,9 @@ function newsletter_userapi_getstoriesinpub($args)
                                array('phase' => 'story',
                                      'sortby' => 'category',
                                      'display' => $display));
-    
+
     // Check for exceptions
-    if (!isset($storyList) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+    if (!isset($storyList) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
         return; // throw back
 
     // Check if we're displaying all stories
@@ -64,7 +64,7 @@ function newsletter_userapi_getstoriesinpub($args)
 
     $idx = 0;
 
-    // Loop through stories and grab the parent category of the 
+    // Loop through stories and grab the parent category of the
     // story's category - if the parent category matches the
     // publication category, then include in $stories array
     foreach ($storyList as $story) {
@@ -78,7 +78,7 @@ function newsletter_userapi_getstoriesinpub($args)
                                         //'getchildren' => false));
 
         // Check for exceptions
-        if (!isset($category) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+        if (!isset($category) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
             return;
 
         // Get category parent name and prepend
@@ -92,8 +92,8 @@ function newsletter_userapi_getstoriesinpub($args)
             if ($parent['cid'] == $publication['cid']) {
                 $stories[$idx] = $story;
                 $idx++;
-                        
-            } 
+
+            }
         }
     }
 

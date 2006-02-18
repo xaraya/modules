@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -20,7 +20,7 @@
  * @returns array
  * @return $templateVarArray
  */
-function newsletter_user_modifysubscription() 
+function newsletter_user_modifysubscription()
 {
     // Security check
     //if(!xarSecurityCheck('EditNewsletter')) return;
@@ -29,7 +29,7 @@ function newsletter_user_modifysubscription()
     $data = xarModAPIFunc('newsletter', 'user', 'menu');
 
     // Verify that the user is logged in - the user has
-    // to registered and in the roles table or else 
+    // to registered and in the roles table or else
     // subscription is not possible
     if (!xarUserIsLoggedIn()) {
         $data['uid'] = 0;
@@ -38,8 +38,8 @@ function newsletter_user_modifysubscription()
     } else {
         $data['loggedin'] = true;
 
-        // No user id was passed, so get the user id 
-        // of the current user assuming that the user is modifying 
+        // No user id was passed, so get the user id
+        // of the current user assuming that the user is modifying
         // their own subscription
         $data['uid'] = xarUserGetVar('uid');
 
@@ -53,7 +53,7 @@ function newsletter_user_modifysubscription()
                                             'sortby' => 'title'));
 
         // Check for exceptions
-        if (!isset($publications) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+        if (!isset($publications) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
             return; // throw back
 
         $data['publications'] = $publications;
@@ -61,7 +61,7 @@ function newsletter_user_modifysubscription()
 
         // See if the user is already subscribed
         for ($idx = 0; $idx < count($publications); $idx++) {
-        
+
             // The user API function is called
             $subscriptions = xarModAPIFunc('newsletter',
                                            'user',

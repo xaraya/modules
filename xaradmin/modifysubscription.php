@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -20,7 +20,7 @@
  * @returns array
  * @return $templateVarArray
  */
-function newsletter_admin_modifysubscription() 
+function newsletter_admin_modifysubscription()
 {
     // Security check
     if(!xarSecurityCheck('EditNewsletter')) return;
@@ -37,7 +37,7 @@ function newsletter_admin_modifysubscription()
                                         'sortby' => 'title'));
 
     // Check for exceptions
-    if (!isset($publications) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+    if (!isset($publications) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
         return; // throw back
 
     $data['publications'] = $publications;
@@ -47,7 +47,7 @@ function newsletter_admin_modifysubscription()
 
     // See if the user is already subscribed
     for ($idx = 0; $idx < count($publications); $idx++) {
-    
+
         // The user API function is called
         $subscriptions = xarModAPIFunc('newsletter',
                                        'user',

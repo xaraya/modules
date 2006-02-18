@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -22,14 +22,14 @@
  * @param $args['categoryId'] category id of the publication
  * @param $args['altcids'] array of alternate category ids for the publication
  * @param $args['title'] title of the publication
- * @param $args['introduction'] introduction for the publication 
- * @param $args['templateHTML'] name of the HTML template for the publication 
- * @param $args['templateText'] name of the text template for the publication 
+ * @param $args['introduction'] introduction for the publication
+ * @param $args['templateHTML'] name of the HTML template for the publication
+ * @param $args['templateText'] name of the text template for the publication
  * @param $args['logo'] logo for the publication
  * @param $args['linkExpiration'] default number of days before a story link expires
  * @param $args['linkRegistration'] default text for link registration
  * @param $args['disclaimerId'] disclaimer for the publication
- * @param $args['description'] description of the publication 
+ * @param $args['description'] description of the publication
  * @param $args['private'] publication is open for subscription or private
  * @param $args['subject'] email subject (title) of an issue
  * @param $args['fromname'] publication email from name (default = owner name)
@@ -62,7 +62,7 @@ function newsletter_adminapi_updatepublication($args)
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
-    
+
     // Alternate cids is an array so serialize
     if (is_array($altcids)) {
         $altcids = serialize($altcids);
@@ -75,7 +75,7 @@ function newsletter_adminapi_updatepublication($args)
                           array('id' => $id));
 
     // Check for exceptions
-    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
         return; // throw back
 
     // Get database setup
@@ -86,7 +86,7 @@ function newsletter_adminapi_updatepublication($args)
     $nwsltrTable = $xartable['nwsltrPublications'];
 
     // Update the item
-    $query = "UPDATE $nwsltrTable 
+    $query = "UPDATE $nwsltrTable
               SET xar_cid = ?,
                   xar_altcids = ?,
                   xar_ownerid = ?,

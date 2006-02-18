@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -17,7 +17,7 @@
  *
  * @author Richard Cave
  * @param $args an array of arguments
- * @param $args['id'] id of the subscription 
+ * @param $args['id'] id of the subscription
  * @param $args['email'] email of the subscription - optional
  * @param $args['pid'] publication id of the subscription - optional
  * @returns bool

@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -63,7 +63,7 @@ function newsletter_adminapi_createissue($args)
               WHERE xar_title = ?";
 
     $result =& $dbconn->Execute($query, array((string) $title));
-    if (!$result) return false; 
+    if (!$result) return false;
 
     // We actually don't care if there are duplicate issues as
     // the different publications could have the same issue title.
@@ -95,7 +95,7 @@ function newsletter_adminapi_createissue($args)
     $bindvars = array($nextId,
                         (int) $publicationId,
                         (string) $title,
-                        (int) $ownerId, 
+                        (int) $ownerId,
                         (int) $external,
                         (string) $editorNote,
                         (int) $tstmpDatePublished,

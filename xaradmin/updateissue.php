@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -14,7 +14,7 @@
 
 
 /**
- * Update an Newsletter issue 
+ * Update an Newsletter issue
  *
  * @public
  * @author Richard Cave
@@ -72,12 +72,12 @@ function newsletter_admin_updateissue()
     if (!xarVarFetch('fromemail', 'str:1:', $fromemail, '')) return;
 
     // Check and format datePublished - dates are stored as UNIX timestamp
-    if ($datePublishedMon == 0 || $datePublishedDay == 0 || $datePublishedYear == 0) { 
+    if ($datePublishedMon == 0 || $datePublishedDay == 0 || $datePublishedYear == 0) {
             $tstmpDatePublished =  0;
     } else {
         $tstmpDatePublished = mktime(0,0,0,$datePublishedMon,$datePublishedDay,$datePublishedYear);
     }
-    
+
     // If the fromname or fromemail fields are empty, then retrieve the information
     // from the publication
     if (empty($fromname) || empty($fromemail)) {
@@ -107,7 +107,7 @@ function newsletter_admin_updateissue()
                               array('id' => $id));
 
     // Check for exceptions
-    if (!isset($oldissue) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+    if (!isset($oldissue) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
         return; // throw back
 
     // Update the issue
@@ -132,11 +132,11 @@ function newsletter_admin_updateissue()
         $topics = xarModAPIFunc('newsletter',
                                 'user',
                                 'get',
-                                array('issueId' => $id,  
+                                array('issueId' => $id,
                                       'phase' => 'topic'));
-        
+
         // Check for exceptions
-        if (!isset($topics) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+        if (!isset($topics) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
             return; // throw back
 
         // Loop through and unpublish all stories
@@ -154,11 +154,11 @@ function newsletter_admin_updateissue()
         $topics = xarModAPIFunc('newsletter',
                                 'user',
                                 'get',
-                                array('issueId' => $id,  
+                                array('issueId' => $id,
                                       'phase' => 'topic'));
-        
+
         // Check for exceptions
-        if (!isset($topics) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+        if (!isset($topics) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
             return; // throw back
 
         // Loop through and publish all stories
@@ -173,7 +173,7 @@ function newsletter_admin_updateissue()
             }
         }
     }
-            
+
     xarSessionSetVar('statusmsg', xarML('Newsletter Story Update'));
 
     // Redirect

@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -46,7 +46,7 @@ function newsletter_admin_viewusers()
     $owners = xarModAPIFunc('newsletter',
                             'user',
                             'get',
-                            array('startnum' => 1, 
+                            array('startnum' => 1,
                                   'numitems' => xarModGetVar('newsletter',
                                                              'itemsperpage'),
                                   'phase' => 'owner'));
@@ -54,7 +54,7 @@ function newsletter_admin_viewusers()
     $roles = xarModAPIFunc('roles','user','getall');
 
     // Don't include users that have already been added
-    if (empty($owners)) { 
+    if (empty($owners)) {
         $data['roles'] = $roles;
     } else {
         $data['roles'] = array();
@@ -106,7 +106,7 @@ function newsletter_admin_viewusers()
                                  'ownersperpage')));
 
     // Check for exceptions
-    if (!isset($users) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+    if (!isset($users) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
         return; // throw back
 
     // Create sort by URLs
@@ -132,13 +132,13 @@ function newsletter_admin_viewusers()
     for ($i = 0; $i < count($users); $i++) {
         $item = $users[$i];
 
-        // Get the group for the user 
+        // Get the group for the user
         $role = xarModAPIFunc('roles',
                               'user',
                               'get',
                                array('uid' => $item['rid'],
                                      'type' => 1));
-        
+
         $users[$i]['group'] = $role['name'];
 
         // Edit URL
@@ -181,7 +181,7 @@ function newsletter_admin_viewusers()
  * @param b multi-dimensional array
  * @returns strcmp
  */
-function newsletter_admin__cmpgroup ($a, $b) 
+function newsletter_admin__cmpgroup ($a, $b)
 {
     $cmp1 = trim(strtolower($a['group']));
     $cmp2 = trim(strtolower($b['group']));

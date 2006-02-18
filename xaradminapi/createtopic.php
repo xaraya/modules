@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -18,7 +18,7 @@
  * @author Richard Cave
  * @param $args an array of arguments
  * @param $args['issueId'] issue id
- * @param $args['storyId'] story id 
+ * @param $args['storyId'] story id
  * @param $args['cid'] category id of the story
  * @param $args['storyOrder'] order of the story in the issue
  * @returns int
@@ -58,7 +58,7 @@ function newsletter_adminapi_createtopic($args)
 
     // Name the table and column definitions
     $nwsltrTable = $xartable['nwsltrTopics'];
-    
+
     // Check if that topic already exists
     $query = "SELECT xar_issueid FROM $nwsltrTable
               WHERE  xar_issueid = ?

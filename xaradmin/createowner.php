@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -23,7 +23,7 @@
  */
 function newsletter_admin_createowner()
 {
-    // Confirm authorization key 
+    // Confirm authorization key
     if (!xarSecConfirmAuthKey()) {
         $msg = xarML('Invalid authorization key for creating new #(1) item', 'Newsletter');
         xarErrorSet(XAR_USER_EXCEPTION, 'FORBIDDEN_OPERATION', new DefaultUserException($msg));
@@ -55,7 +55,7 @@ function newsletter_admin_createowner()
                                   'rid' => $role->uid));
 
     // Check return value
-    if (!isset($newOwnerId) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+    if (!isset($newOwnerId) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
         return; // throw back
 
     // Create user in new role
@@ -66,7 +66,7 @@ function newsletter_admin_createowner()
                                   'uid' => $ownerId));
 
     // Check return value
-    if (!isset($group) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+    if (!isset($group) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
         return; // throw back
 
     // Success

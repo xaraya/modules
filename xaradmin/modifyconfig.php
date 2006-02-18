@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -20,8 +20,8 @@
  */
 function newsletter_admin_modifyconfig()
 {
-	if (!xarVarFetch('func', 'str', $data['page'],  'main', XARVAR_NOT_REQUIRED)) return;
-	
+    if (!xarVarFetch('func', 'str', $data['page'],  'main', XARVAR_NOT_REQUIRED)) return;
+
     // Security check
     if(!xarSecurityCheck('AdminNewsletter')) return;
 
@@ -43,7 +43,7 @@ function newsletter_admin_modifyconfig()
         $data['hookoutput'] = $hooks;
     }
 
-    // Provide encode/decode functions forshort URLs 
+    // Provide encode/decode functions forshort URLs
     $data['bulkemail'] = xarModGetVar('newsletter','bulkemail') ? 'checked' : '';
     $data['shorturlschecked'] = xarModGetVar('newsletter','SupportShortURLs') ? 'checked' : '';
     $data['activeuserschecked'] = xarModGetVar('newsletter','activeusers') ? 'checked' : '';

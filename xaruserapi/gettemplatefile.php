@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -14,7 +14,7 @@
 
 /**
  * Get a template file from /modules/newsletter/templates
- * 
+ *
  * @private
  * @author Richard Cave
  * @param $args an array of arguments
@@ -33,10 +33,10 @@ function newsletter_userapi_gettemplatefile($args)
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return false;
     }
-    
+
     // Get the template source
     if (!($modBaseInfo = xarMod_getBaseInfo("newsletter"))) return;
-    $modOsDir = $modBaseInfo['osdirectory'];        
+    $modOsDir = $modBaseInfo['osdirectory'];
 
     // Patch from Roger Keays - see Bug #3419
     // First try the theme directory

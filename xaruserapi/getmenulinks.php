@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -25,8 +25,8 @@ function newsletter_userapi_getmenulinks()
 
     // Check if user is logged in
     if (xarUserIsLoggedIn()) {
-    	
-    	$uid = xarUserGetVar('uid');
+
+        $uid = xarUserGetVar('uid');
 
         // See if this user has already subscribed
         $subscriptions = xarModAPIFunc('newsletter',
@@ -49,11 +49,11 @@ function newsletter_userapi_getmenulinks()
                                            'label' => xarML('Modify Subscription'));
     }
     }
-    	
-    	
-    	
-    	
-   
+
+
+
+
+
 
     // Show past issues
     $menulinks[] = Array('url'   => xarModURL('newsletter',

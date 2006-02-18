@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -65,7 +65,7 @@ function newsletter_adminapi_configmenu()
     if (empty($menulinks)) {
         $menulinks = '';
     }
-    
+
     // Return the array containing the menu configuration
     return $menulinks;
 }

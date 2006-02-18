@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -19,8 +19,8 @@
  * @author Richard Cave
  * @param 'publishername' the name of the company or user that is the publisher
  * @param 'information' the text provided in the information block
- * @param 'itemsperpage' the number of items to display per page 
- * @param 'subscriptionsperpage' the number of subscriptions to display per page 
+ * @param 'itemsperpage' the number of items to display per page
+ * @param 'subscriptionsperpage' the number of subscriptions to display per page
  * @returns bool
  * @return true on success, false on failure
  */
@@ -62,11 +62,11 @@ function newsletter_admin_updatenewsletter()
     xarModSetVar('newsletter', 'categorysort', $categorysort);
 
     if (!empty($itemsperpage)) {
-        xarModSetVar('newsletter', 'itemsperpage', $itemsperpage); 
+        xarModSetVar('newsletter', 'itemsperpage', $itemsperpage);
     }
 
     if (!empty($subscriptionsperpage)) {
-        xarModSetVar('newsletter', 'subscriptionsperpage', $subscriptionsperpage); 
+        xarModSetVar('newsletter', 'subscriptionsperpage', $subscriptionsperpage);
     }
 
     xarModSetVar('newsletter', 'previewbrowser', $previewbrowser);

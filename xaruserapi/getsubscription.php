@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -55,7 +55,7 @@ function newsletter_userapi_getsubscription($args)
                      $subTable.xar_pid,
                      $subTable.xar_htmlmail
               FROM  $subTable, $rolesTable
-              WHERE $subTable.xar_uid = ? 
+              WHERE $subTable.xar_uid = ?
               AND   $subTable.xar_uid = $rolesTable.xar_uid";
 
     $bindvars[] = (int) $uid;
@@ -78,11 +78,11 @@ function newsletter_userapi_getsubscription($args)
     }
 
     // Obtain the subscription information from the result set
-    list($uid, 
-         $name, 
-         $uname, 
-         $email, 
-         $pid, 
+    list($uid,
+         $name,
+         $uname,
+         $email,
+         $pid,
          $htmlmail) = $result->fields;
 
     // Close result set

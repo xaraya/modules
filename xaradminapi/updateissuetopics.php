@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -40,14 +40,14 @@ function newsletter_adminapi_updateissuetopics($args)
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
-    
+
     // Get all the topics for this issue
     $topics = xarModAPIFunc('newsletter',
                             'user',
                             'get',
                             array('issueId' => $issueId,
                                   'phase' => 'topic'));
-                                                                                      
+
     // Check return value
     if (!isset($topics) && xarCurrentErrorType() != XAR_NO_EXCEPTION) {
         return; // throw back
@@ -95,7 +95,7 @@ function newsletter_adminapi_updateissuetopics($args)
                                         'storyId' => $topic['storyId'],
                                         'cid' => $topic['cid'],
                                         'storyOrder' => $idx));
-        
+
         // Check return value
         if (!$newtopic)
             return; // throw back

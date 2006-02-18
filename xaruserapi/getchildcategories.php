@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -13,7 +13,7 @@
 
 /**
  * Retrieve the categories under a parent category
- * 
+ *
  * @private
  * @author Richard Cave
  * @param $args an array of arguments
@@ -54,7 +54,7 @@ function newsletter_userapi_getchildcategories($args)
                                      Array('cid' => $parentcid,
                                            'return_itself' => false));
 
-    if (!$childCategories) 
+    if (!$childCategories)
         return;
 
     // Check to see if we should display the category names
@@ -77,7 +77,7 @@ function newsletter_userapi_getchildcategories($args)
  * @param b multi-dimensional array
  * @returns strcmp
  */
-function gcc__sortcategorybyname ($a, $b) 
+function gcc__sortcategorybyname ($a, $b)
 {
     $cmp1 = trim(strtolower($a['name']));
     $cmp2 = trim(strtolower($b['name']));

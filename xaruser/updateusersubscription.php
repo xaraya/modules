@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -26,7 +26,7 @@
 function newsletter_user_updateusersubscription($args)
 {
     extract($args);
-    
+
     // Confirm authorization code
    /*
     if (!xarSecConfirmAuthKey()) {
@@ -34,7 +34,7 @@ function newsletter_user_updateusersubscription($args)
                     'Newsletter', xarVarPrepForDisplay($id), 'newsletter_user_updatesubscription');
         xarErrorSet(XAR_USER_EXCEPTION, 'FORBIDDEN_OPERATION', new DefaultUserException($msg));
         return;
-    } 
+    }
     */
     include('c:\wamp\www\phpDump.class.php');
     dump($args);
@@ -42,8 +42,8 @@ function newsletter_user_updateusersubscription($args)
     if (!xarVarFetch('uid', 'id', $uid)) return;
     if (!xarVarFetch('pids', 'array:1:', $pids, array())) return;
     if (!xarVarFetch('htmlmail', 'int:0:1:', $htmlmail, 0)) return;
-    
-     
+
+
 
     // Quick and dirty - delete all subscriptions for the user
     if (!xarModAPIFunc('newsletter',
@@ -53,7 +53,7 @@ function newsletter_user_updateusersubscription($args)
                               'uid' => $uid))) {
         return false; // throw back
     }
-    
+
     // Check if any publications were selected
     if (!empty($pids)) {
         // And create again...

@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -51,7 +51,7 @@ function newsletter_admin_updateowner($args)
                            array('id' => $id));
 
     // Check for exceptions
-    if (!isset($owner) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+    if (!isset($owner) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
         return; // throw back
 
     // Get the new role
@@ -68,7 +68,7 @@ function newsletter_admin_updateowner($args)
                                       'uid' => $id));
 
         // Check return value
-        if (!isset($group) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+        if (!isset($group) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
             return; // throw back
 
         // Create user in new role
@@ -79,7 +79,7 @@ function newsletter_admin_updateowner($args)
                                       'uid' => $id));
 
         // Check return value
-        if (!isset($group) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+        if (!isset($group) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
             return; // throw back
     }
 

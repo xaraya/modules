@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -95,8 +95,8 @@ function newsletter_userapi_getowners($args)
 
     // Put items into result array
     for (; !$result->EOF; $result->MoveNext()) {
-        list($uid, 
-             $rid, 
+        list($uid,
+             $rid,
              $ownerName,
              $signature) = $result->fields;
 

@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -48,7 +48,7 @@ function newsletter_adminapi_deletetopic($args)
     $nwsltrTable = $xartable['nwsltrTopics'];
 
     // Delete the topic
-    $query = "DELETE 
+    $query = "DELETE
                 FROM $nwsltrTable
                WHERE xar_issueid = ?";
     $result =& $dbconn->Execute($query, array((int) $id));

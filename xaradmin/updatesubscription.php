@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -32,7 +32,7 @@ function newsletter_admin_updatesubscription()
         xarErrorSet(XAR_USER_EXCEPTION, 'FORBIDDEN_OPERATION', new DefaultUserException($msg));
         return;
     }
-    
+
     // Get parameters from the input
     if (!xarVarFetch('uid', 'id', $uid)) return;
     if (!xarVarFetch('pids', 'array:1:', $pids, array())) return;
@@ -46,7 +46,7 @@ function newsletter_admin_updatesubscription()
                               'uid' => $uid))) {
         return false; // throw back
     }
-    
+
     // Check if any publications were selected
     if (!empty($pids)) {
         // And create again...

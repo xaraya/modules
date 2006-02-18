@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -32,7 +32,7 @@ function newsletter_user_newsubscription()
     //$data['welcome'] = xarML('Subscribe to a Newsletter');
 
     // Verify that the user is logged in - the user has
-    // to registered and in the roles table or else 
+    // to registered and in the roles table or else
     // subscription is not possible
     if (!xarUserIsLoggedIn()) {
         $data['loggedin'] = false;
@@ -51,15 +51,15 @@ function newsletter_user_newsubscription()
                                             'sortby' => 'title'));
 
         // Check for exceptions
-        if (!isset($publications) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+        if (!isset($publications) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
             return; // throw back
 
         // Convert newlines in text to <br /> for display
         for ($idx = 0; $idx < count($publications); $idx++) {
             // may be I'm wrong here
-            //$brtext = nl2br($publications[$idx]['description']); 
+            //$brtext = nl2br($publications[$idx]['description']);
             //$publications[$idx]['description'] = $brtext;
-            $brtext = nl2br($publications[$idx]['introduction']); 
+            $brtext = nl2br($publications[$idx]['introduction']);
             $publications[$idx]['introduction'] = $brtext;
         }
 
@@ -68,7 +68,7 @@ function newsletter_user_newsubscription()
 
     // Return the template variables defined in this function
     return $data;
-    
+
 }
 
 ?>

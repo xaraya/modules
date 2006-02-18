@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -44,7 +44,7 @@ function newsletter_admin_viewowner()
                                                                                  'ownersperpage')));
 
     // Check for exceptions
-    if (!isset($owners) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+    if (!isset($owners) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
         return; // throw back
 
     // Create sort by URLs
@@ -70,13 +70,13 @@ function newsletter_admin_viewowner()
     for ($i = 0; $i < count($owners); $i++) {
         $item = $owners[$i];
 
-        // Get the group for the user 
+        // Get the group for the user
         $role = xarModAPIFunc('roles',
                               'user',
                               'get',
                                array('uid' => $item['rid'],
                                      'type' => 1));
-        
+
         $owners[$i]['group'] = $role['name'];
 
         // Edit URL
@@ -119,7 +119,7 @@ function newsletter_admin_viewowner()
  * @param b multi-dimensional array
  * @returns strcmp
  */
-function newsletter_admin__cmpgroup ($a, $b) 
+function newsletter_admin__cmpgroup ($a, $b)
 {
     $cmp1 = trim(strtolower($a['group']));
     $cmp2 = trim(strtolower($b['group']));

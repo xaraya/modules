@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -120,9 +120,9 @@ function newsletter_adminapi_searchsubscription($args)
                 $query .= " ORDER BY $nwsltrAltSubTable.xar_pid";
                 */
                 $query .= " ORDER BY xar_pid";
-   
+
             } else {
-            
+
                 // Get subscriptions by publication
                 $query = "SELECT $rolesTable.xar_uid,
                                  $nwsltrSubTable.xar_pid,
@@ -158,7 +158,7 @@ function newsletter_adminapi_searchsubscription($args)
                                   1 as xar_type,
                                   $nwsltrAltSubTable.xar_htmlmail
                            FROM   $nwsltrAltSubTable, $nwsltrPubTable
-                           WHERE  $nwsltrPubTable.xar_id = ? 
+                           WHERE  $nwsltrPubTable.xar_id = ?
                            AND    $nwsltrAltSubTable.xar_pid = $nwsltrPubTable.xar_id";
 
                 $bindvars[] = (int) $pid;
@@ -166,7 +166,7 @@ function newsletter_adminapi_searchsubscription($args)
                 if (!empty($searchname)) {
                     $query .= " AND ($nwsltrAltSubTable.xar_name LIKE '%" . $searchname . "%' OR $nwsltrAltSubTable.xar_email LIKE  '%" . $searchname . "%')";
                 }
-   
+
                 /* Bug 5194
                     $query .= " ORDER BY $nwsltrAltSubTable.xar_pid";
                 */

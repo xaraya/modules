@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -30,8 +30,8 @@
  * @param 'storyDateYear' the year the story was published
  * @param 'altDate' alternative text date field if no publication date of story
  * @param 'fullTextLink' the full text link to the story
- * @param 'registerLink' does the full text link require registration to view?(0=no, 1=yes) 
- * @param 'linkExpiration' override of default publication link expiration 
+ * @param 'registerLink' does the full text link require registration to view?(0=no, 1=yes)
+ * @param 'linkExpiration' override of default publication link expiration
  * @param 'commentary' commentary on the story content
  * @param 'commentarySource' source of the commentary
  * @param 'newCommentarySource' new source of the commentary
@@ -56,14 +56,14 @@ function newsletter_admin_updatestory()
     if (!xarVarFetch('id', 'id', $id)) return;
     if (!xarVarFetch('articleid', 'int:0:', $articleid,0)) return;
 
-    
+
     // make sure they're the owner
     if (!xarVarFetch('ownerId', 'id', $ownerId)) {
         xarErrorFree();
         $formErrorMsg['owner'] .= xarML('You must select an owner name.');
     }
 
-    
+
     if (!xarVarFetch('publicationId', 'int:0:', $publicationId, 0)) return;
     if (!xarVarFetch('priority', 'int:0:1:', $priority, 0)) return;
     if (!xarVarFetch('storyDateMon', 'int:0:', $storyDateMon, 0)) return;
@@ -112,7 +112,7 @@ function newsletter_admin_updatestory()
         $title = $_article['title'];
     }
 
-    // If commentary exists, then check that a commentary source 
+    // If commentary exists, then check that a commentary source
     // was entered
     if (!empty($commentary) && (empty($commentarySource) && empty($newCommentarySource))) {
         xarErrorFree();
@@ -124,11 +124,11 @@ function newsletter_admin_updatestory()
         // get the auth id to pas back into the modify story
         xarVarFetch('authid', 'str:1:', $authid);
         $_sendBackData=array_merge(array('formErrorMsg'=>$formErrorMsg),array('story'=>$_REQUEST));
-        
+
         // go back to modify story
         return xarModFunc('newsletter','admin','modifystory',$_sendBackData);
     }
-    
+
     // Add new commentary source if field isn't empty
     if (!empty($newCommentarySource)) {
             $newcommsource = xarModAPIFunc('newsletter',
@@ -136,7 +136,7 @@ function newsletter_admin_updatestory()
                                     'newcommentarysource',
                                     array('publicationId' => $publicationId,
                                           'newCommentarySource' => $newCommentarySource));
-            
+
             if (!empty($newcommsource)) {
                 $commentarySource = $newcommsource;
         }
@@ -150,12 +150,12 @@ function newsletter_admin_updatestory()
     }
 
     // Check and format datePublished - dates are stored as UNIX timestamp
-    if ($datePublishedMon == 0 || $datePublishedDay == 0 || $datePublishedYear == 0) { 
+    if ($datePublishedMon == 0 || $datePublishedDay == 0 || $datePublishedYear == 0) {
             $tstmpDatePublished =  0;
     } else {
         $tstmpDatePublished = mktime(0,0,0,$datePublishedMon,$datePublishedDay,$datePublishedYear);
     }
-            
+
     // Check if no link expiration was entered
     if ($linkExpiration < 0 ) {
         // Get publication link expiration
@@ -166,7 +166,7 @@ function newsletter_admin_updatestory()
                                      array('id' => $publicationId));
 
             // Check for exceptions
-            if (!isset($pubItem) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+            if (!isset($pubItem) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
                 return; // throw back
 
             $linkExpiration = $pubItem['linkExpiration'];
@@ -174,7 +174,7 @@ function newsletter_admin_updatestory()
             // Default to never expire
             $linkExpiration = 0;
         }
-    } 
+    }
 
     // Call API function
     if(!xarModAPIFunc('newsletter',
@@ -205,9 +205,9 @@ function newsletter_admin_updatestory()
                            'user',
                            'gettopicbystory',
                            array('storyId' => $id));
-    
+
     // Check for exceptions
-    if (!isset($topic) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+    if (!isset($topic) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
         return; // throw back
 
     // Resort the stories

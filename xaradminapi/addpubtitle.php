@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -14,7 +14,7 @@
 
 /**
  * For each issue, prepend the publication title
- * 
+ *
  * @private
  * @author Richard Cave
  * @param $args an array of arguments
@@ -49,7 +49,7 @@ function newsletter_adminapi_addpubtitle($args)
                                  array('id' => $issues[$idx]['pid']));
 
         // Check for exceptions
-        if (!isset($pubItem) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+        if (!isset($pubItem) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
             return; // throw back
 
         // Prepend publication title

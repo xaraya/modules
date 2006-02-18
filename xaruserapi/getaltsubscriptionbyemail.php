@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -46,7 +46,7 @@ function newsletter_userapi_getaltsubscriptionbyemail($args)
 
     // Name the table and column definitions
     $nwsltrTable = $xartable['nwsltrAltSubscriptions'];
-    $query = "SELECT xar_id, 
+    $query = "SELECT xar_id,
                      xar_name,
                      xar_email,
                      xar_pid,
@@ -74,10 +74,10 @@ function newsletter_userapi_getaltsubscriptionbyemail($args)
     }
 
     // Obtain the subscription information from the result set
-    list($id, 
-         $name, 
-         $email, 
-         $pid, 
+    list($id,
+         $name,
+         $email,
+         $pid,
          $htmlmail) = $result->fields;
 
     // Close result set

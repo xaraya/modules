@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -13,7 +13,7 @@
 
 
 /**
- * Get an the storeis for an issue 
+ * Get an the storeis for an issue
  *
  * @author Richard Cave
  * @param $args an array of arguments
@@ -112,7 +112,7 @@ function newsletter_userapi_getissuestories($args)
                 break;
         }
     }
-    
+
     if (isset($owner)) {
         if ($owner) {
             // Get current uid
@@ -149,13 +149,13 @@ function newsletter_userapi_getissuestories($args)
     // Put stories into result array
     $stories = array();
     for (; !$result->EOF; $result->MoveNext()) {
-        list($id, 
-             $ownerId, 
-             $ownerName, 
+        list($id,
+             $ownerId,
+             $ownerName,
              $pid,
              $cid,
              $categoryName,
-             $title, 
+             $title,
              $source,
              $content,
              $priority,
@@ -188,10 +188,10 @@ function newsletter_userapi_getissuestories($args)
             $datePublished['day'] = date('d', $datePublished['timestamp']);
             $datePublished['year'] = date('Y', $datePublished['timestamp']);
         }
-        
-        // no article title by 
+
+        // no article title by
         $_article['title']=NULL;
-        
+
         // if there is an article ID, get the article title
         if (!empty($articleid)){
             $_article  = xarModAPIFunc('articles','user','getAll',
@@ -202,7 +202,7 @@ function newsletter_userapi_getissuestories($args)
             $_article = current($_article);
 
         }
-        
+
         $stories[] = array('id' => $id,
                            'ownerId' => $ownerId,
                            'ownerName' => $ownerName,
@@ -222,12 +222,12 @@ function newsletter_userapi_getissuestories($args)
                            'commentarySource' => $commentarySource,
                            'articleid' => $articleid,
                            'article' => array("title"=>$_article['title']));
-                           
+
 
     }
-    
-    
-    
+
+
+
     // Close result set
     $result->Close();
 

@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -14,7 +14,7 @@
 
 /**
  * Get the contents of a single publication
- * 
+ *
  * @private
  * @author Richard Cave
  * @param $args an array of arguments
@@ -50,7 +50,7 @@ function newsletter_userapi_getpublicationfordisplay($args)
                                  array('id' => $publicationId));
 
     // Check for exceptions
-    if (!isset($publication) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+    if (!isset($publication) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
         return; // throw back
 
     // Get disclaimer
@@ -79,7 +79,7 @@ function newsletter_userapi_getpublicationfordisplay($args)
                                         //'getchildren' => false));
 
         // Check for exceptions
-        if (!isset($category) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+        if (!isset($category) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
             return; // throw back
 
         // Set category name

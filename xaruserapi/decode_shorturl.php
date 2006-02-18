@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -86,13 +86,13 @@ function newsletter_userapi_decode_shorturl($params)
         return array('main', $args);
 
     } elseif (preg_match('/^subscribe/i',$params[1])) {
-        // something that starts with 'subscribe' is probably for the 
+        // something that starts with 'subscribe' is probably for the
         // newsubscription function
         // Note : make sure your encoding/decoding is consistent ! :-)
         return array('newsubscription', $args);
 
     } elseif (preg_match('/^modify/i',$params[1])) {
-        // something that starts with 'subscribe' is probably for the 
+        // something that starts with 'subscribe' is probably for the
         // newsubscription function
         // Note : make sure your encoding/decoding is consistent ! :-)
         return array('modifysubscription', $args);

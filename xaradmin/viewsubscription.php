@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -95,7 +95,7 @@ function newsletter_admin_viewsubscription($args)
 
         // Only allow the owner or user with appropriate privileges
         // to edit/delete an subscription
-        if(xarSecurityCheck('EditNewsletter', 0)) { 
+        if(xarSecurityCheck('EditNewsletter', 0)) {
             if ($subscription['type'] == 0) {
                 // Modify a subscription
                 $subscriptions[$i]['editurl'] = xarModURL('newsletter',
@@ -113,7 +113,7 @@ function newsletter_admin_viewsubscription($args)
             $subscriptions[$i]['editurl'] = '';
         }
 
-        if(xarSecurityCheck('DeleteNewsletter', 0)) { 
+        if(xarSecurityCheck('DeleteNewsletter', 0)) {
             if ($subscription['type'] == 0) {
                 // Delete a subscription
                 $subscriptions[$i]['deleteurl'] = xarModURL('newsletter',
@@ -149,7 +149,7 @@ function newsletter_admin_viewsubscription($args)
 
         // Only allow the owner or user with appropriate privileges
         // to edit/delete an subscription
-        if(xarSecurityCheck('EditNewsletter', 0)) { 
+        if(xarSecurityCheck('EditNewsletter', 0)) {
             $altsubscriptions[$i]['editurl'] = xarModURL('newsletter',
                                                       'admin',
                                                       'modifyaltsubscription',
@@ -158,7 +158,7 @@ function newsletter_admin_viewsubscription($args)
             $altsubscriptions[$i]['editurl'] = '';
         }
 
-        if(xarSecurityCheck('DeleteNewsletter', 0)) { 
+        if(xarSecurityCheck('DeleteNewsletter', 0)) {
             $altsubscriptions[$i]['deleteurl'] = xarModURL('newsletter',
                                                         'admin',
                                                         'deletealtsubscription',
@@ -244,9 +244,9 @@ function newsletter_admin_viewsubscription($args)
                                                   'admin',
                                                   'countsubscriptions',
                                                   array('id' => $publicationId)),
-                                    xarModURL('newsletter', 
-                                              'admin', 
-                                              'viewsubscription', 
+                                    xarModURL('newsletter',
+                                              'admin',
+                                              'viewsubscription',
                                               array('startnum' => '%%',
                                                     'search' => $search,
                                                     'publicationId' => $publicationId,
@@ -266,28 +266,28 @@ function newsletter_admin_viewsubscription($args)
  * @param b multi-dimensional array
  * @returns strcmp
  */
-function nwsltr_vs__sortsubscriptionbyname ($a, $b) 
+function nwsltr_vs__sortsubscriptionbyname ($a, $b)
 {
     $cmp1 = trim(strtolower($a['name']));
     $cmp2 = trim(strtolower($b['name']));
     return strcmp($cmp1, $cmp2);
 }
 
-function nwsltr_vs__sortsubscriptionbyusername ($a, $b) 
+function nwsltr_vs__sortsubscriptionbyusername ($a, $b)
 {
     $cmp1 = trim(strtolower($a['uname']));
     $cmp2 = trim(strtolower($b['uname']));
     return strcmp($cmp1, $cmp2);
 }
 
-function nwsltr_vs__sortsubscriptionbyemail ($a, $b) 
+function nwsltr_vs__sortsubscriptionbyemail ($a, $b)
 {
     $cmp1 = trim(strtolower($a['email']));
     $cmp2 = trim(strtolower($b['email']));
     return strcmp($cmp1, $cmp2);
 }
 
-function nwsltr_vs__sortsubscriptionbypublication ($a, $b) 
+function nwsltr_vs__sortsubscriptionbypublication ($a, $b)
 {
     $cmp1 = trim(strtolower($a['title']));
     $cmp2 = trim(strtolower($b['title']));

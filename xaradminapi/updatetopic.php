@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -13,12 +13,12 @@
 
 
 /**
- * update a topic  
+ * update a topic
  *
  * @author Richard Cave
  * @param $args an array of arguments
  * @param $args['issueId'] issue id
- * @param $args['storyId'] story id 
+ * @param $args['storyId'] story id
  * @param $args['cid'] category id of the story
  * @param $args['storyOrder'] order of the story in the issue
  * @returns int
@@ -50,7 +50,7 @@ function newsletter_adminapi_updatetopic($args)
         return;
     }
 
-    // Delete topics for publication - this is the 
+    // Delete topics for publication - this is the
     // stories that are associated with the publication
     if (!xarModAPIFunc('newsletter',
                        'admin',

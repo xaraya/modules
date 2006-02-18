@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -57,7 +57,7 @@ function newsletter_adminapi_deletepublication($args)
                           array('id' => $id));
 
     // Check for exceptions
-    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
         return; // throw back
 
     // Get database setup
@@ -73,7 +73,7 @@ function newsletter_adminapi_deletepublication($args)
 
 
     // Delete the publication
-    $query = "DELETE 
+    $query = "DELETE
               FROM $publicationsTable
               WHERE xar_id = ?";
 
@@ -87,13 +87,13 @@ function newsletter_adminapi_deletepublication($args)
         case 'reassign':
             // Set all issues to publication id of new id
             $query = "UPDATE $issuesTable
-                      SET xar_pid = ? 
+                      SET xar_pid = ?
                       WHERE xar_pid = ?";
             $result =& $dbconn->Execute($query, array((int) $newpid, (int) $id));
 
             // Check for an error
             if (!$result) return;
-            
+
             // Set all stories to publication id of new id
             $query = "UPDATE $storiesTable
                       SET xar_pid = ?
@@ -102,7 +102,7 @@ function newsletter_adminapi_deletepublication($args)
 
             // Check for an error
             if (!$result) return;
-        
+
             // Delete all subscriptions for publication
             $query = "UPDATE $subsTable
                       SET xar_pid = ?
@@ -129,7 +129,7 @@ function newsletter_adminapi_deletepublication($args)
 
             // Check for an error
             if (!$result) return;
-            
+
             // Delete all stories under publication
             $query = "DELETE FROM $storiesTable
                       WHERE xar_pid = ?";

@@ -1,8 +1,8 @@
-<?php 
+<?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @link http://wwwk.schwabfoundation.org
  *
@@ -91,7 +91,7 @@ function newsletter_informationblock_display($blockinfo)
                                                    'viewarchives'),
                               'title' => xarML('View archives'),
                               'label' => xarML('View Archives'));
- 
+
     // Return content
     $blockinfo['content'] = $data;
 

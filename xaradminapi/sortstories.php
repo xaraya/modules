@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -19,9 +19,9 @@
  * @param $args an array of arguments
  * @param $args['stories'] array of stories
  * @return array
- * @returns array of sorted topics 
+ * @returns array of sorted topics
  */
-function newsletter_adminapi_sortstories ($args) 
+function newsletter_adminapi_sortstories ($args)
 {
     // Get arguments
     extract($args);
@@ -52,7 +52,7 @@ function newsletter_adminapi_sortstories ($args)
                           'storyId' => $story['id'],
                           'cid' => $story['cid'],
                           'storyDate' => $storyDate['timestamp']);
-    }    
+    }
 
     // Now the fun begins.  First sort by category.  Then sort
     // each story in a category by the story date.
@@ -75,9 +75,9 @@ function newsletter_adminapi_sortstories ($args)
  * @param a multi-dimensional array
  * @param b multi-dimensional array
  * @return array
- * @returns sorted array 
+ * @returns sorted array
  */
-function newsletter_adminapi__compare($a, $b) 
+function newsletter_adminapi__compare($a, $b)
 {
     return newsletter_adminapi__comparerecords(0, $a, $b);
 }
@@ -91,9 +91,9 @@ function newsletter_adminapi__compare($a, $b)
  * @param a multi-dimensional array
  * @param b multi-dimensional array
  * @return array
- * @returns sorted array 
+ * @returns sorted array
  */
-function newsletter_adminapi__comparerecords($i, $a, $b) 
+function newsletter_adminapi__comparerecords($i, $a, $b)
 {
     $sortArr = array('["leftcid"]', '["storyDate"]');
 

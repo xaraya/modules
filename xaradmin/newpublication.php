@@ -1,8 +1,8 @@
 <?php
 /*
- * Newsletter 
+ * Newsletter
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -65,12 +65,12 @@ function newsletter_admin_newpublication()
     }
 
     $data['categories'] = $categories;
-    
+
     // Get all categories for altcids drop down
     $data['altcategories'] = xarModAPIFunc('categories',
                                            'user',
                                            'getcat');
-                                                                                              
+
     // Check for exceptions
     if (!isset($data['altcategories']) && xarCurrentErrorType() != XAR_NO_EXCEPTION) {
         return;
@@ -81,7 +81,7 @@ function newsletter_admin_newpublication()
                                'user',
                                'get',
                                 array('phase' => 'disclaimer'));
-    
+
     // Check for exceptions
     if (!isset($data['disclaimers']) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
         return; // throw back
@@ -89,7 +89,7 @@ function newsletter_admin_newpublication()
     // Get the publication template
     $data['templateHTML'] = xarModGetVar('newsletter', 'templateHTML');
     $data['templateText'] = xarModGetVar('newsletter', 'templateText');
-    
+
     // Set private flag to 0
     $data['private'] = 0;
 
