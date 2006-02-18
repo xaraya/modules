@@ -1,5 +1,17 @@
 <?php
 /**
+ * Delete an maxercalls item
+ *
+ * @package modules
+ * @copyright (C) 2005-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Maxercalls Module
+ * @link http://xaraya.com/index.php/release/247.html
+ * @author Maxercalls module development team
+ */
+/**
  * delete a maxercall
  *
  * @author the Maxercalls module development team
@@ -11,9 +23,7 @@
 function maxercalls_adminapi_deletecall($args)
 {
     extract($args);
-    // Argument check - make sure that all required arguments are present and
-    // in the right format, if not then set an appropriate error message
-    // and return
+    // Argument check
     if (!isset($callid) || !is_numeric($callid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
             'item ID', 'admin', 'delete', 'Maxercalls');
