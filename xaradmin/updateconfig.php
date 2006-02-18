@@ -3,16 +3,18 @@
  * Update configuration parameters of the module with information passed back by the modification form
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Sigmapersonnel Module
+ * @link http://xaraya.com/index.php/release/418.html
  * @author MichelV.
  */
 /**
  * This is a standard function to update the configuration parameters of the
  * module given the information passed back by the modification form
+ * @param int itemsperpage
  * @return bool
  */
 function sigmapersonnel_admin_updateconfig()

@@ -8,7 +8,8 @@
  * @link http://www.xaraya.com
  *
  * @subpackage Sigmapersonnel Module
- * @author Michel V.
+ * @link http://xaraya.com/index.php/release/418.html
+ * @author SIGMAPersonnel module development team
  */
 /**
  * This is a standard function that is called with the results of the
@@ -20,20 +21,9 @@
  */
 function sigmapersonnel_admin_update($args)
 {
-    // Admin functions of this type can be called by other modules.  If this
-    // happens then the calling module will be able to pass in arguments to
-    // this function through the $args parameter.  Hence we extract these
-    // arguments *before* we have obtained any form-based input through
-    // xarVarFetch(), so that parameters passed by the modules can also be
-    // checked by a certain validation.
     extract($args);
 
-    // Get parameters from whatever input we need.  All arguments to this
-    // function should be obtained from xarVarFetch(), xarVarCleanFromInput()
-    // is a degraded function.  xarVarFetch allows the checking of the input
-    // variables as well as setting default values if needed.  Getting vars
-    // from other places such as the environment is not allowed, as that makes
-    // assumptions that will not hold in future versions of Xaraya
+    // Get parameters from whatever input we need.
     if (!xarVarFetch('exid', 'int:1:', $exid, $exid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('objectid', 'str:1:', $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('invalid', 'str:1:', $invalid, XARVAR_NOT_REQUIRED)) return;

@@ -9,7 +9,7 @@
  *
  * @subpackage Sigmapersonnel Module
  * @link http://xaraya.com/index.php/release/418.html
- * @author Michel V.
+ * @author MichelV
  */
 $modversion['name']           = 'SIGMApersonnel';
 $modversion['id']             = '418';

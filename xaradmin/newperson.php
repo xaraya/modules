@@ -8,13 +8,16 @@
  * @link http://www.xaraya.com
  *
  * @subpackage Sigmapersonnel Module
- * @author Michel V.
+ * @link http://xaraya.com/index.php/release/418.html
+ * @author SIGMAPersonnel module development team
  */
 /**
  * add new person
  * This is a standard function that is called whenever an administrator
  * wishes to create a new module item
- * @TODO Move the labels to the template
+ *
+ * @author MichelV <michelv@xarayahosting.nl>
+ * @TODO MichelV <1> Move the labels to the template
  * @return array $data
  */
 function sigmapersonnel_admin_newperson($args)

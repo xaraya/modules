@@ -8,10 +8,9 @@
  * @link http://www.xaraya.com
  *
  * @subpackage Sigmapersonnel Module
- * @link http://xaraya.com/index.php/release/36.html
- * @author Michel V. 
+ * @link http://xaraya.com/index.php/release/418.html
+ * @author MichelV.
  */
-
 /**
  * Standard function to view items
  *
@@ -22,34 +21,34 @@
  * @return array
  */
 function sigmapersonnel_admin_viewpersons()
-{ 
+{
     // Get parameters from whatever input we need.
-    if (!xarVarFetch('startnum', 'str:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return; 
+    if (!xarVarFetch('startnum', 'str:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
     // Catid is the group someone belongs to
     if (!xarVarFetch('catid',    'id',     $catid,    NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('sortby',   'str:1:', $sortby,   'lastname')) return;
-    
-    // Initialise the $data variable that will hold the data 
-    $data = xarModAPIFunc('sigmapersonnel', 'admin', 'menu'); 
+
+    // Initialise the $data variable that will hold the data
+    $data = xarModAPIFunc('sigmapersonnel', 'admin', 'menu');
     // Initialise the variable that will hold the items, so that the template
     // doesn't need to be adapted in case of errors
-    $data['items'] = array(); 
+    $data['items'] = array();
 
     // Call the xarTPL helper function to produce a pager
     $data['pager'] = xarTplGetPager($startnum,
         xarModAPIFunc('sigmapersonnel', 'user', 'countitems'),
         xarModURL('sigmapersonnel', 'admin', 'view', array('startnum' => '%%','sortby' => $sortby, 'catid' => $catid)),
-        xarModGetVar('sigmapersonnel', 'itemsperpage')); 
+        xarModGetVar('sigmapersonnel', 'itemsperpage'));
     // Security check
-    if (!xarSecurityCheck('EditSIGMAPersonnel')) return; 
+    if (!xarSecurityCheck('EditSIGMAPersonnel')) return;
     // The user API function is called.
     $items = xarModAPIFunc('sigmapersonnel',
                            'user',
                            'getall',
-							array('startnum' => $startnum,
-								  'numitems' => xarModGetVar('sigmapersonnel','itemsperpage'),
+                            array('startnum' => $startnum,
+                                  'numitems' => xarModGetVar('sigmapersonnel','itemsperpage'),
                                   'sortby'   => $sortby,
-                                  'catid'    => $catid)); 
+                                  'catid'    => $catid));
     // Check for exceptions
     if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
@@ -97,7 +96,7 @@ function sigmapersonnel_admin_viewpersons()
                 array('personid' => $item['personid']));
         } else {
             $items[$i]['editurl'] = '';
-        } 
+        }
         $items[$i]['edittitle'] = xarML('Edit');
         if (xarSecurityCheck('DeleteSIGMAPersonnel', 0, 'PersonnelItem', "$item[personid]:All:$item[persstatus]")) {
             $items[$i]['deleteurl'] = xarModURL('sigmapersonnel',
@@ -106,13 +105,13 @@ function sigmapersonnel_admin_viewpersons()
                 array('personid' => $item['personid']));
         } else {
             $items[$i]['deleteurl'] = '';
-        } 
+        }
         $items[$i]['deletetitle'] = xarML('Delete');
-    } 
+    }
     // Add the array of items to the template variables
-    $data['items'] = $items; 
+    $data['items'] = $items;
     $data['catid'] = $catid;
     // Return the template variables defined in this function
-    return $data; 
-} 
+    return $data;
+}
 ?>

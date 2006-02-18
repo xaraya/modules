@@ -11,13 +11,12 @@
  * @link http://xaraya.com/index.php/release/418.html
  * @author SIGMAPersonnel module development team
  */
-
 /**
  *  Create an item of item type
  *
- * @param $itemtype - type of item that is being created (required)
- * @param $itemid - item id  (optional)
- * @param $preview  - do a preview if set (optional)
+ * @param int $itemtype - type of item that is being created (required)
+ * @param int $itemid - item id  (optional)
+ * @param string $preview  - do a preview if set (optional)
  * @return true on success
  *         false on failure
  */
