@@ -15,7 +15,7 @@
  * Searches all courses
  *
  * @author MichelV (original: J. Cox) <michelv@xaraya.com>
- * @access private
+ * @access public
  * @return array with courses found
  */
 function courses_userapi_search($args)

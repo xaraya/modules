@@ -15,7 +15,7 @@
  * Gets items of a DynamicData object 'level'
  *
  * @author Brian McGilligan
- * @param $args['itemtype'] - Item type
+ * @param int $args['itemtype'] - Item type
  * @return array list of items of the item type
  */
 function courses_userapi_getlevel($args)

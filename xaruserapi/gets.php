@@ -14,8 +14,9 @@
 /**
  * Gets items of a DynamicData object
  * @author Brian McGilligan
- * @param $args['itemtype'] - Item type
- * @returns list of items of the item type
+ * @param int modid
+ * @param int $args['itemtype'] - Item type
+ * @return array List of items of the item type
  */
 function courses_userapi_gets($args)
 {

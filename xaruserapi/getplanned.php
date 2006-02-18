@@ -15,7 +15,7 @@
  * get a specific planned course
  *
  * @author MichelV
- * @param planningid $ ID of a specific planned course
+ * @param int planningid $ ID of a specific planned course
  * @return array item with array of parameters, or false on failure
  * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */

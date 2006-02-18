@@ -1,6 +1,6 @@
 <?php
 /**
- * Utility function to get DD item for type
+ * Get one coursetype
  *
  * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
@@ -12,11 +12,11 @@
  * @author Courses module development team
  */
 /**
- * Gets items of a DynamicData object 'type'
+ * Gets a specific course type
  *
- * @author Brian McGilligan
- * @param $args['itemtype'] - Item type
- * @return array list of items of the item type
+ * @author MichelV <michelv@xarayahosting.nl>
+ * @param int tid Type ID
+ * @return array item
  */
 function courses_userapi_gettype($args)
 {

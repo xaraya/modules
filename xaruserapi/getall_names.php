@@ -3,7 +3,7 @@
  * Get all names of courses
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -15,9 +15,9 @@
  * get the names of all courses
  *
  * @author the Courses module development team
- * @param numitems $ the number of items to retrieve (default -1 = all)
- * @param startnum $ start with this item number (default 1)
- * @return array of items, or false on failure
+ * @param  int numitems $ the number of items to retrieve (default -1 = all)
+ * @param  int startnum $ start with this item number (default 1)
+ * @return mixed array of items, or false on failure
  * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function courses_userapi_getall_names($args)
