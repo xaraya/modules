@@ -1,12 +1,23 @@
 <?php
 /**
-   Delete an item
-
-   @param 'itemid' the id of the item to be deleted
-   @param 'confirm' confirm that this item can be deleted
-   @return true of success
-           false on failure
-*/
+ * Delete a Dyn data item
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Maxercalls Module
+ * @link http://xaraya.com/index.php/release/247.html
+ * @author Maxercalls Module Development Team
+ */
+/**
+ * Delete an item
+ *
+ * @param int 'itemid' the id of the item to be deleted
+ * @param string 'confirm' confirm that this item can be deleted
+ * @return bool true of success false on failure
+ */
 function maxercalls_admin_delete($args)
 {
     // Get Vars
@@ -57,11 +68,7 @@ function maxercalls_admin_delete($args)
     $newid = $object->getItem();
     if (!isset($newid) || $newid != $itemid) return;
 
-    // Security check - important to do this as early as possible to avoid
-    // potential security holes or just too much wasted processing.  However,
-    // in this case we had to wait until we could obtain the item name to
-    // complete the instance information so this is the first chance we get to
-    // do the check
+    // Security check
     if (!xarSecurityCheck('AdminMaxercalls',1,'item',$itemid)) return;
 
     //$data['menu']      = xarModFunc('maxercalls','admin','menu');
@@ -87,8 +94,6 @@ function maxercalls_admin_delete($args)
 
     $itemid = $object->deleteItem();
     if (empty($itemid)) return;
-
-    
 
     // Return
     return xarModURL('maxercalls', 'admin', 'view', array('itemtype' => $itemtype));//true;
