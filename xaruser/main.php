@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,14 +9,12 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
+ */
 /**
- * The main administration function
+ * The main user function
  *
  * @author Richard Cave
- * @returns array
- * @return $data
+ * @return array $data
  */
 function newsletter_user_main()
 {

@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,9 +9,7 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * Search a topic to see if an story is in the issue
  *
@@ -21,8 +19,7 @@
  * @param $args['issueId'] the value of the issue ID
  * @param $args['storyId'] the value of the story ID to find
  * @param $args['topics'] the array of topcis to search
- * @returns bool
- * @return $inIssue
+ * @return bool $inIssue
  */
 function newsletter_adminapi_storyinissue($args)
 {

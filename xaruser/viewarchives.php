@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,9 +9,7 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * View a list of Newsletter past issues
  *
@@ -22,8 +20,7 @@
  * @param 'owner' show only logged user stories (1=true, 0=false)
  * @param 'publicationId' get issues for a specific publication
  * @param 'display' show 'published' or 'unpublished' or 'all' stories
- * @returns array
- * @return $data
+ * @return array $data
  */
 function newsletter_user_viewarchives($args)
 {

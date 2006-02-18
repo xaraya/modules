@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,9 +9,7 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * Update an Newsletter subscription
  *
@@ -20,8 +18,8 @@
  * @param 'uid' the user id of the subscription to be modified
  * @param 'pids' the publication ids
  * @param 'htmlmail' send mail html or text (0 = text, 1 = html)
- * @returns bool
- * @return true on success, false on failure
+ * @return bool true on success, false on failure
+ * @todo MichelV: authkey?
  */
 function newsletter_user_updateusersubscription($args)
 {
@@ -42,8 +40,6 @@ function newsletter_user_updateusersubscription($args)
     if (!xarVarFetch('uid', 'id', $uid)) return;
     if (!xarVarFetch('pids', 'array:1:', $pids, array())) return;
     if (!xarVarFetch('htmlmail', 'int:0:1:', $htmlmail, 0)) return;
-
-
 
     // Quick and dirty - delete all subscriptions for the user
     if (!xarModAPIFunc('newsletter',
@@ -74,5 +70,4 @@ function newsletter_user_updateusersubscription($args)
     // Return
     return true;
 }
-
 ?>

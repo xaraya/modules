@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,16 +9,13 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * Subscribe to an Newsletter
  *
  * @public
  * @author Richard Cave
- * @returns array
- * @return $data
+ * @return array $data
  */
 function newsletter_user_newsubscription()
 {
@@ -27,9 +24,6 @@ function newsletter_user_newsubscription()
 
     // Get the user menu
     //$data = xarModAPIFunc('newsletter', 'user', 'menu');
-
-    // Specify some other variables used in the blocklayout template
-    //$data['welcome'] = xarML('Subscribe to a Newsletter');
 
     // Verify that the user is logged in - the user has
     // to registered and in the roles table or else
@@ -68,7 +62,5 @@ function newsletter_user_newsubscription()
 
     // Return the template variables defined in this function
     return $data;
-
 }
-
 ?>

@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,9 +9,7 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * Get a template file from /modules/newsletter/templates
  *
@@ -19,8 +17,7 @@
  * @author Richard Cave
  * @param $args an array of arguments
  * @param $args['filename'] the template filename
- * @returns string
- * @return $sourceFile
+ * @return string $sourceFile
  */
 function newsletter_userapi_gettemplatefile($args)
 {

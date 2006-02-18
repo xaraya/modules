@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,18 +9,15 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * Get the contents of a single publication
  *
  * @private
  * @author Richard Cave
- * @param $args an array of arguments
- * @param $args['issueId'] issue id
- * @returns array
- * @return $publication
+ * @param array $args an array of arguments
+ * @param int $args['issueId'] issue id
+ * @return array $publication
  */
 function newsletter_userapi_getpublicationfordisplay($args)
 {

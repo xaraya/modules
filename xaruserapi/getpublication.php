@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,16 +9,14 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * Get an Newsletter publication by id
  *
  * @author Richard Cave
  * @param $args an array of arguments
  * @param $args['id'] id of newsletter publication to get
- * @returns publication array, or false on failure
+ * @return mixed publication array, or false on failure
  * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function newsletter_userapi_getpublication($args)

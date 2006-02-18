@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,9 +9,7 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * Get the stories in a publication
  *
@@ -20,8 +18,7 @@
  * @param $args an array of arguments
  * @param $args['display'] display 'published' or 'unpublished' stories
  * @param $args['publication']  the publication
- * @returns array
- * @return $childCategories
+ * @return array $childCategories
  */
 function newsletter_userapi_getstoriesinpub($args)
 {

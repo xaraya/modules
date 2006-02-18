@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,16 +9,13 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * Modify an Newsletter subscription
  *
  * @public
  * @author Richard Cave
- * @returns array
- * @return $templateVarArray
+ * @return array $templateVarArray
  */
 function newsletter_user_modifysubscription()
 {

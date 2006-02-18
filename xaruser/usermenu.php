@@ -15,12 +15,12 @@
  * display the user menu hook
  * This is a standard function to provide a link in the "Your Account Page"
  *
- * @param  $phase is the which part of the loop you are on
+ * @param string $phase is the which part of the loop you are on
  */
 function newsletter_user_usermenu($args)
 {
     extract($args);
-    
+
     if (!xarSecurityCheck('ReadNewsletter')) return;
 
           # use phase to decide what to do
@@ -53,11 +53,11 @@ function newsletter_user_usermenu($args)
 
             // get public publications
             $pubs = xarModAPIFunc('newsletter','user','get',array('phase' => 'publication',
-                                            					  'sortby' => 'title'));
+                                                                  'sortby' => 'title'));
             if (empty($pubs) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
-            
+
              $htmlmail = '0';
-            
+
             // get user's subscriptions
             $subs=array();
             for ($idx = 0; $idx < count($pubs); $idx++) {
@@ -68,9 +68,9 @@ function newsletter_user_usermenu($args)
                                                   'uid' => $uid,
                                                   'pid' => $pubs[$idx]['id'],
                                                   'phase' => 'subscription'));
-            
+
              if (count($subs) == 0) {
-             	$pubs[$idx]['subscribed'] = false;
+                $pubs[$idx]['subscribed'] = false;
             } else {
                 $pubs[$idx]['subscribed'] = true;
                 // Doesn't matter which subscription we grab - they
@@ -78,11 +78,11 @@ function newsletter_user_usermenu($args)
                 //$pubs[$idx]['htmlmail'] = $subs[0]['htmlmail'];
                 $htmlmail = $subs[0]['htmlmail'];
             }
-            
+
             }
-            
+
             if (empty($subs) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
-            
+
 
             // get compiled template output
             $args = array('name' => $name,
@@ -91,39 +91,36 @@ function newsletter_user_usermenu($args)
                           'subs' => $pubs,
                           'htmlmail' => $htmlmail,
                           'authid' => $authid);
-           
+
            //include('c:\wamp\www\phpDump.class.php');
            //dump($pubs);
-           
+
            $data = xarTplModule('newsletter', 'user', 'usermenu_form', $args);
 
             break;
 
         case 'update': // save options
-        
-        
-        
+
         if (!xarVarFetch('uid', 'id', $uid)) return;
         if (!xarVarFetch('htmlmail', 'int:0:1:', $htmlmail, 0)) return;
         if (!xarVarFetch('pids', 'array:1:', $pids, array(), XARVAR_NOT_REQUIRED)) return;
-       
+
            // security check
             if (!xarSecConfirmAuthKey()) return;
     $authid = xarSecGenAuthKey('newsletter');
             // save var
-            xarModFunc('newsletter', 'user', 'updateusersubscription',array('pids' => $pids, 
-            														    'uid' => $uid, 
-            														    'htmlmail' => $htmlmail,
-            														    'authid' =>  $authid));
+            xarModFunc('newsletter', 'user', 'updateusersubscription',array('pids' => $pids,
+                                                                        'uid' => $uid,
+                                                                        'htmlmail' => $htmlmail,
+                                                                        'authid' =>  $authid));
 
             // set status message and redirect
             //xarSessionSetVar('statusmsg', xarML('Subscription options successfully set!'));
             xarResponseRedirect(xarModURL('roles', 'user', 'account', array('moduleload' => 'newsletter')));
 
-            break; 
+            break;
     }
     return $data;
-    
-}
 
+}
 ?>

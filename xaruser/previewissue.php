@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Newsletter
  *
  * @package modules
@@ -9,17 +9,14 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
-
+ */
 /**
  * Preview an issue before publication
  *
  * @public
  * @author Richard Cave
- * @param 'issueId' the id of the issue to preview
- * @returns string
- * @return $issueHTML
+ * @param int 'issueId' the id of the issue to preview
+ * @return string $issueHTML
  */
 function newsletter_user_previewissue($args)
 {
