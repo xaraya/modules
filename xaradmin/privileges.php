@@ -42,7 +42,7 @@ function julian_admin_privileges($args)
     if (!empty($extinstance)) {
         $parts = explode(':',$extinstance);
         if (count($parts) > 0 && !empty($parts[0])) $event_id    = $parts[0];
-        if (count($parts) > 1 && !empty($parts[1])) $organizer   = $parts[1];
+        if (count($parts) > 1 && !empty($parts[1])) $uid         = $parts[1];
         if (count($parts) > 2 && !empty($parts[2])) $calendar_id = $parts[2];
         if (count($parts) > 3 && !empty($parts[3])) $cid         = $parts[3];
     }
@@ -78,10 +78,10 @@ function julian_admin_privileges($args)
         $event = xarModAPIFunc('julian','user','get',
                                  array('event_id' => $event_id));
         if (empty($event)) {
-            $aid = 0;
+            $event_id = 0;
         } else {
             // override whatever other params we might have here
-            $calendar_id = $article['calendar_id'];
+            $calendar_id = $event['calendar_id'];
             /*
         // TODO: review when we can handle multiple categories and/or subtrees in privilege instances
             if (!empty($article['cids']) && count($article['cids']) == 1) {
@@ -127,7 +127,7 @@ function julian_admin_privileges($args)
     // define the new instance
     $newinstance = array();
     $newinstance[] = empty($event_id) ? 'All' : $event_id;
-    $newinstance[] = empty($organizer) ? 'All' : $organizer;
+    $newinstance[] = empty($uid)   ? 'All' : $uid;
     $newinstance[] = empty($calendar_id) ? 'All' : $calendar_id;
     $newinstance[] = empty($cid) ? 'All' : $cid;
 
@@ -149,7 +149,7 @@ function julian_admin_privileges($args)
                                  array('calendar_id' => $calendar_id,
                                  // TODO: work out cids in this case
                                        'cids' => empty($cid) ? array() : array($cid)));
-    if (!empty($organizer) && isset($organizerlist[$organizer])) {
+    if (!empty($organizer) && isset($organizerlist[$uid])) {
         $organizer = '';
     }
 
@@ -163,11 +163,11 @@ function julian_admin_privileges($args)
     }
 
     $data = array(
-                  'ptid'         => $ptid,
+                  'calendar_id'  => $calendar_id,
                   'cid'          => $cid,
                   'uid'          => $uid,
                   'organizer'    => xarVarPrepForDisplay($organizer),
-                  'authorlist'   => $authorlist,
+                  'organizerlist'   => $organizerlist,
                   'event_id'     => $event_id,
                   'title'        => xarVarPrepForDisplay($title),
                   'numitems'     => $numitems,
@@ -180,35 +180,16 @@ function julian_admin_privileges($args)
                   'extinstance'  => xarVarPrepForDisplay(join(':',$newinstance)),
                  );
 
-    // Get publication types
     // TODO: implement more calendars
     $data['calendarids'] = array(1);//xarModAPIFunc('julian','user','getpubtypes');
 
     $catlist = array();
-    if (!empty($ptid)) {
-        $cidstring = xarModGetVar('julian', 'mastercids.'.$ptid);
-        if (!empty($cidstring)) {
-            $rootcats = explode (';', $cidstring);
-            foreach ($rootcats as $catid) {
-                $catlist[$catid] = 1;
-            }
+    $cidstring = xarModGetVar('julian', 'mastercids');
+    if (!empty($cidstring)) {
+        $rootcats = explode (';', $cidstring);
+        foreach ($rootcats as $catid) {
+            $catlist[$catid] = 1;
         }
-        if (empty($data['pubtypes'][$ptid]['config']['authorid']['label'])) {
-            $data['showauthor'] = 0;
-        } else {
-            $data['showauthor'] = 1;
-        }
-    } else {
-        foreach (array_keys($data['pubtypes']) as $pubid) {
-            $cidstring = xarModGetVar('julian', 'mastercids.'.$pubid);
-            if (!empty($cidstring)) {
-                $rootcats = explode (';', $cidstring);
-                foreach ($rootcats as $catid) {
-                    $catlist[$catid] = 1;
-                }
-            }
-        }
-        $data['showauthor'] = 1;
     }
 
     $seencid = array();

@@ -183,7 +183,7 @@ function julian_init()
      * Format is
      * setInstance(Module,Type,ModuleTable,IDField,NameField,ApplicationVar,LevelTable,ChildIDField,ParentIDField)
      */
-
+/*
     $event_table = xarDBgetSiteTablePrefix() . '_julian_events';
     $cattable =  $xartable['julian_category_properties'];
     $query1 = "SELECT DISTINCT event_id FROM " . $event_table;
@@ -208,6 +208,18 @@ function julian_init()
             'limit' => 20
             )
         );
+        */
+    /* You can also use some external "wizard" function to specify instances :*/
+
+      $instances = array(
+          array('header' => 'external', // this keyword indicates an external "wizard"
+                'query'  => xarModURL('julian','admin','privileges',array('foo' =>'bar')),
+                'limit'  => 0
+          )
+      );
+      xarDefineInstance('julian', 'Item', $instances);
+
+
 
     $instancestable = $xartable['block_instances'];
     $typestable = $xartable['block_types'];
@@ -256,8 +268,8 @@ function julian_upgrade($oldversion)
             // Version 0.1.0 (0.1.1) had a smaller email field, we need to upgrade to VARCHAR(70)
             // in version 0.1.2
 
-            $dbconn = xarDBGetConn();
-            $xartable = xarDBGetTables();
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
             // Using the Datadict method to be up to date ;)
             $datadict = xarDBNewDataDict($dbconn, 'CREATE');
 
@@ -274,8 +286,8 @@ function julian_upgrade($oldversion)
 
         case '0.1.1':
                         // Same as for version 0.1.0
-            $dbconn = xarDBGetConn();
-            $xartable = xarDBGetTables();
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
                         // Using the Datadict method to be up to date ;)
                         $datadict = xarDBNewDataDict($dbconn, 'CREATE');
                         $juliantable = xarDBgetSiteTablePrefix() . '_julian_events';
@@ -286,32 +298,32 @@ function julian_upgrade($oldversion)
             return julian_upgrade('0.1.2');
 
         case '0.1.2':
-           return julian_upgrade('0.1.3');
+            return julian_upgrade('0.1.3');
 
         case '0.1.3':
-                            //Set default starting day of week
-                            xarModSetVar('julian','startDayOfWeek','1');
-                    return julian_upgrade('0.1.4');
+            //Set default starting day of week
+            xarModSetVar('julian','startDayOfWeek','1');
+            return julian_upgrade('0.1.4');
 
         case '0.1.4':
-                //should upgrade the telephone field here to 25
-                        $dbconn = xarDBGetConn();
-                        $xartable = xarDBGetTables();
-                        // Using the Datadict method to be up to date ;)
-                        $datadict = xarDBNewDataDict($dbconn, 'CREATE');
-                        $juliantable = xarDBgetSiteTablePrefix() . '_julian_events';
-                        // Apply changes
-                        xarDBLoadTableMaintenanceAPI();
-                        $result = $datadict->alterColumn($juliantable, 'phone char(25) Null');
+            //should upgrade the telephone field here to 25
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+            // Using the Datadict method to be up to date ;)
+            $datadict = xarDBNewDataDict($dbconn, 'CREATE');
+            $juliantable = xarDBgetSiteTablePrefix() . '_julian_events';
+            // Apply changes
+            xarDBLoadTableMaintenanceAPI();
+            $result = $datadict->alterColumn($juliantable, 'phone char(25) Null');
             if (!$result) return;
                         return julian_upgrade('0.1.5');
 
         case '0.1.5':
             //Set type of telephone field
             xarModSetVar('julian','TelFieldType','US');
-                        //Set number of days for event list
-                        xarModSetVar('julian','EventBlockDays','7');
-                        return julian_upgrade('0.1.6');
+            //Set number of days for event list
+            xarModSetVar('julian','EventBlockDays','7');
+            return julian_upgrade('0.1.6');
 
         case '0.1.6':
             //Set number of days for event list
@@ -618,6 +630,15 @@ function julian_upgrade($oldversion)
             if (!$result) {return;}
             return julian_upgrade('0.4.0');
         case '0.4.0':
+              $instances = array(
+              array('header' => 'external', // this keyword indicates an external "wizard"
+                    'query'  => xarModURL('julian','admin','privileges',array('foo' =>'bar')),
+                    'limit'  => 0
+                    )
+              );
+              xarDefineInstance('julian', 'Item', $instances);
+            return julian_upgrade('0.4.1');
+        case '0.4.1':
             break;
     }
     // Update successful

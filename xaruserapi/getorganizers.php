@@ -24,7 +24,7 @@
  * @param int $args['external'] retrieve events marked external (1=true, 0=false) - ToDo:
  * @param int $args['catid'] Category ID
  * @since 19 Feb 2006
- * @return array of items with organizerid and calendar_id, or false on failure or false on empty result
+ * @return array of org_id -> organizername
  * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function julian_userapi_getorganizers($args)
@@ -105,16 +105,15 @@ function julian_userapi_getorganizers($args)
     // Check for no rows found.
     if ($result->EOF) {
         $result->Close();
-        return false;
+        return $items;
     }
 
     // Put items into result array
     for (; !$result->EOF; $result->MoveNext()) {
-        list($calendarID, $organizer) = $result->fields;
+        list($org_id, $calendarID) = $result->fields;
           // Security check
-          if (xarSecurityCheck('ReadJulian', 1, 'Item', "All:$organizer:$calendarID:All")) {
-             $items[] = array('organizer'   => $organizer,
-                              'calendar_id' => $calendarID);
+          if (xarSecurityCheck('ReadJulian', 1, 'Item', "All:$org_id:$calendarID:All")) {
+             $items[$org_id] = xarUserGetVar('name',$org_id);
           }
     }
     // Close first result set

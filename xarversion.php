@@ -14,7 +14,7 @@
 
 $modversion['name']           = 'Julian';
 $modversion['id']             = '319';
-$modversion['version']        = '0.4.0';
+$modversion['version']        = '0.4.1';
 $modversion['description']    = 'Event Calendar for keeping track of events';
 $modversion['credits']        = 'xardocs/credits.txt';
 $modversion['help']           = 'xardocs/help.txt';

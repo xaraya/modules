@@ -28,13 +28,6 @@
                             <option value="0">
                                 <xar:mlstring>All</xar:mlstring>
                             </option>
-                            <xar:foreach in="$pubtypes" key="$pubid" value="$pubtype">
-                                <xar:if condition="!empty($ptid) and $ptid eq $pubid">
-                                    <option value="#$pubid#" selected="selected">#$pubtype['descr']#</option>
-                                    <xar:else />
-                                    <option value="#$pubid#">#$pubtype['descr']#</option>
-                                </xar:if>
-                            </xar:foreach>
                         </select>
                     </td>
                 </tr>
@@ -48,38 +41,34 @@
                         <br /></xar:foreach>
                     </td>
                 </tr>
-                <xar:if condition="!empty($showauthor)">
-                    <tr>
-                        <th valign="top" align="right">
-                            <xar:mlstring>Author</xar:mlstring>
-                        </th>
-                        <td>
-                            <select name="uid" id="uid" onchange="javascript:this.form.submit();">
-                                <option value="0">
-                                    <xar:mlstring>All / Other --&gt;</xar:mlstring>
-                                </option>
-                                <xar:foreach in="$authorlist" key="$id">
-                                    <xar:if condition="$id eq $uid">
-                                        <option value="#$id#" selected="selected">#xarVarPrepForDisplay($authorlist[$id])#</option>
-                                        <xar:else />
-                                        <option value="#$id#">#xarVarPrepForDisplay($authorlist[$id])#</option>
-                                    </xar:if>
-                                </xar:foreach>
-                            </select>
-                            <input type="text" name="author" id="author" value="#$author#" size="15" onchange="javascript:this.form.submit();" />
-                        </td>
-                    </tr>
-                    <xar:else />
-                    <input type="hidden" name="uid" id="uid" value="0" />
-                </xar:if>
                 <tr>
                     <th valign="top" align="right">
-                        <xar:mlstring>Article</xar:mlstring>
+                        <xar:mlstring>Organizer</xar:mlstring>
                     </th>
                     <td>
-                    <xar:mlstring>Enter article number</xar:mlstring>:
+                        <select name="uid" id="uid" onchange="javascript:this.form.submit();">
+                            <option value="0">
+                                <xar:mlstring>All / Other --&gt;</xar:mlstring>
+                            </option>
+                            <xar:foreach in="$organizerlist" key="$org_id">
+                                <xar:if condition="$org_id eq $uid">
+                                    <option value="#$org_id#" selected="selected">#$organizerlist[$org_id]#</option>
+                                    <xar:else />
+                                    <option value="#$org_id#">#$organizerlist[$org_id]#</option>
+                                </xar:if>
+                            </xar:foreach>
+                        </select>
+                        <input type="text" name="organizer" id="organizer" value="#$organizer#" size="15" onchange="javascript:this.form.submit();" />
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top" align="right">
+                        <xar:mlstring>Event</xar:mlstring>
+                    </th>
+                    <td>
+                    <xar:mlstring>Enter event number</xar:mlstring>:
                     <input type="text" name="event_id" id="event_id" value="#$event_id#" size="10" onchange="javascript:this.form.submit();" />
-                    <!-- TODO: show dropdown box for all relevant Julian (if not too many) -->
+                    <!-- TODO: show dropdown box for all relevant events (if not too many) -->
                     <xar:if condition="!empty($title)">
                     <br />
                     <xar:mlstring>Title</xar:mlstring>: #$title#</xar:if></td>
