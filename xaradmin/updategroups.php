@@ -20,8 +20,7 @@
  * @param 'publisherMask' the publisher mask
  * @param 'editorMask' the editor mask
  * @param 'writerMask' the writer mask
- * @returns bool
- * @return true on success, false on failure
+ * @return bool true on success, false on failure
  */
 function newsletter_admin_updategroups()
 {

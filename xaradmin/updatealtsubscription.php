@@ -15,13 +15,12 @@
  *
  * @public
  * @author Richard Cave
- * @param 'id' id of the subscription
- * @param 'name' name of the subscription
- * @param 'email' email address of the subscription
- * @param 'htmlmail' send mail html or text (0 = text, 1 = html)
- * @param 'pids' the publication ids
- * @returns bool
- * @return true on success, false on failure
+ * @param id 'id' id of the subscription
+ * @param string 'name' name of the subscription
+ * @param string 'email' email address of the subscription
+ * @param int 'htmlmail' send mail html or text (0 = text, 1 = html)
+ * @param array 'pids' the publication ids
+ * @return bool true on success, false on failure
  */
 function newsletter_admin_updatealtsubscription()
 {
@@ -81,7 +80,6 @@ function newsletter_admin_updatealtsubscription()
                 return false; // throw back
         }
     }
-
     xarSessionSetVar('statusmsg', xarML('Newsletter Subscription Update'));
 
     // Redirect

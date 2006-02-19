@@ -32,8 +32,7 @@
  * @param 'fromname' publication email from name (default = owner name)
  * @param 'fromemail' publication email from address (default = owner email)
  * @author Richard Cave
- * @returns bool
- * @return true on success, false on failure
+ * @return bool true on success, false on failure
  */
 function newsletter_admin_updatepublication()
 {
@@ -184,7 +183,6 @@ function newsletter_admin_updatepublication()
                             'fromemail' => $fromemail))) {
         return; // throw back
     }
-
     xarSessionSetVar('statusmsg', xarML('Newsletter Story Update'));
 
     // Redirect

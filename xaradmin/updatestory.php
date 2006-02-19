@@ -37,8 +37,7 @@
  * @param 'datePublishedDay' the day the story was published
  * @param 'datePublishedYear' the year the story was published
  * @param 'articleid' articleid to use with story
- * @returns bool
- * @return true on success, false on failure
+ * @return bool true on success, false on failure
  */
 function newsletter_admin_updatestory()
 {
@@ -215,7 +214,6 @@ function newsletter_admin_updatestory()
                        array('issueId' => $topic['issueId']))) {
         return; // throw back
     }
-
     xarSessionSetVar('statusmsg', xarML('Newsletter Story Update'));
 
     // Redirect

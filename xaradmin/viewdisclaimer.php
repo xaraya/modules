@@ -16,8 +16,7 @@
  * @public
  * @author Richard Cave
  * @param 'startnum' starting number to display
- * @returns array
- * @return $data
+ * @return array $data with the disclaimers
  */
 function newsletter_admin_viewdisclaimer($args)
 {

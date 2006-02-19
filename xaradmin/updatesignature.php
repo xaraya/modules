@@ -17,8 +17,7 @@
  * @author Richard Cave
  * @param 'id' the id of the owner to be updated
  * @param 'signature' the signature of the owner
- * @returns bool
- * @return true on success, false on failure
+ * @return bool true on success, false on failure
  */
 function newsletter_admin_updatesignature()
 {
@@ -42,7 +41,6 @@ function newsletter_admin_updatesignature()
                             'signature' => $signature))) {
         return; // throw back
     }
-
     xarSessionSetVar('statusmsg', xarML('Newsletter Owner Update'));
 
     // Redirect to welcome screen

@@ -19,8 +19,7 @@
  * @param 'information' the text provided in the information block
  * @param 'itemsperpage' the number of items to display per page
  * @param 'subscriptionsperpage' the number of subscriptions to display per page
- * @returns bool
- * @return true on success, false on failure
+ * @return bool true on success, false on failure
  */
 function newsletter_admin_updatenewsletter()
 {
@@ -32,12 +31,12 @@ function newsletter_admin_updatenewsletter()
     }
 
     // Get parameters from input
-    if (!xarVarFetch('publishername', 'str:1:', $publishername, '')) return;
-    if (!xarVarFetch('information', 'str:1:', $information, '')) return;
-    if (!xarVarFetch('templateHTML', 'str:1:', $templateHTML, '')) return;
-    if (!xarVarFetch('templateText', 'str:1:', $templateText, '')) return;
-    if (!xarVarFetch('categorysort', 'int:0:1:', $categorysort, 0)) return;
-    if (!xarVarFetch('itemsperpage', 'int:0:', $itemsperpage, 10)) return;
+    if (!xarVarFetch('publishername',  'str:1:', $publishername, '')) return;
+    if (!xarVarFetch('information',    'str:1:', $information, '')) return;
+    if (!xarVarFetch('templateHTML',   'str:1:', $templateHTML, '')) return;
+    if (!xarVarFetch('templateText',   'str:1:', $templateText, '')) return;
+    if (!xarVarFetch('categorysort',   'int:0:1:', $categorysort, 0)) return;
+    if (!xarVarFetch('itemsperpage',   'int:0:', $itemsperpage, 10)) return;
     if (!xarVarFetch('subscriptionsperpage', 'int:0:', $subscriptionsperpage, 25)) return;
     if (!xarVarFetch('previewbrowser', 'int:0:1:', $previewbrowser, 0)) return;
 

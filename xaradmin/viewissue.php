@@ -20,8 +20,7 @@
  * @param 'owner' show only logged user stories (1=true, 0=false)
  * @param 'display' show 'published' or 'unpublished' or 'all' stories
  * @param 'publicationId' get issues for a specific publication
- * @returns array
- * @return $data
+ * @return array $data
  */
 function newsletter_admin_viewissue($args)
 {

@@ -17,8 +17,7 @@
  * @param 'publisherMask' the new publisher mask
  * @param 'editorMask' the new editor mask
  * @param 'writerMask' the new writer mask
- * @returns bool
- * @return true on success, false on failure
+ * @return bool true on success, false on failure
  */
 function newsletter_admin_updateprivileges()
 {

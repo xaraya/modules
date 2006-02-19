@@ -15,11 +15,10 @@
  *
  * @public
  * @author Richard Cave
- * @param 'uid' the user id of the subscription to be modified
- * @param 'pids' the publication ids
- * @param 'htmlmail' send mail html or text (0 = text, 1 = html)
- * @returns bool
- * @return true on success, false on failure
+ * @param int 'uid' the user id of the subscription to be modified
+ * @param array 'pids' the publication ids
+ * @param int 'htmlmail' send mail html or text (0 = text, 1 = html)
+ * @return bool true on success, false on failure
  */
 function newsletter_admin_updatesubscription()
 {
@@ -60,9 +59,7 @@ function newsletter_admin_updatesubscription()
             if (!$item)
                 return false; // throw back
         }
-
         xarSessionSetVar('statusmsg', xarML('Newsletter Subscription Update'));
-
         // Redirect
         xarResponseRedirect(xarModURL('newsletter', 'admin', 'viewsubscription'));
     } else {

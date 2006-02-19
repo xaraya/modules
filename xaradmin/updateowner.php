@@ -11,14 +11,13 @@
  * @author Richard Cave <rcave@xaraya.com>
  */
 /**
- * Update an Newsletter owner
+ * Update a Newsletter owner
  *
  * @author Richard Cave
  * @param 'id' the id of the item to be updated
  * @param 'groupName' the name of the group
  * @param 'signature' the signature of the owner
- * @returns bool
- * @return true on success, false on failure
+ * @return bool true on success, false on failure
  */
 function newsletter_admin_updateowner($args)
 {

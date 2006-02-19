@@ -26,8 +26,7 @@
  * @param 'datePublishedYear' the year the issue was published
  * @param 'fromname' issue email from name (overrides publication from name)
  * @param 'fromemail' issue email from address (overrides publication from email)
- * @returns bool
- * @return true on success, false on failure
+ * @return bool true on success, false on failure
  */
 function newsletter_admin_updateissue()
 {
@@ -170,7 +169,6 @@ function newsletter_admin_updateissue()
             }
         }
     }
-
     xarSessionSetVar('statusmsg', xarML('Newsletter Story Update'));
 
     // Redirect
