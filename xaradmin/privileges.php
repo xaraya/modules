@@ -97,7 +97,10 @@ function articles_admin_privileges($args)
     }
 
 // TODO: figure out how to handle groups of users and/or the current user (later)
-    if (empty($uid) || $uid == 'All' || !is_numeric($uid)) {
+    if (strtolower($uid) == 'myself') {
+        $uid = 'Myself';
+        $author = 'Myself';
+    } elseif (empty($uid) || $uid == 'All' || (!is_numeric($uid) && (strtolower($uid) != 'myself'))) {
         $uid = 0;
         if (!empty($author)) {
             $user = xarModAPIFunc('roles', 'user', 'get',
