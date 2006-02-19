@@ -17,8 +17,7 @@
  *
  * @public
  * @author Richard Cave
- * @returns array
- * @return $data
+ * @return array $data
  */
 function newsletter_admin_selectpublication()
 {
@@ -27,12 +26,9 @@ function newsletter_admin_selectpublication()
 
     // Get the admin menu
     // $data = xarModAPIFunc('newsletter', 'admin', 'menu');
-
+    $data = array();
     // Generate a one-time authorisation code for this operation
     $data['authid'] = xarSecGenAuthKey();
-
-    // Choose the publication or create a new publication
-    // $data['submitbutton'] = xarVarPrepForDisplay(xarML('Next'));
 
     // Get the list of publications
     $data['publications'] = xarModAPIFunc('newsletter',
@@ -45,10 +41,7 @@ function newsletter_admin_selectpublication()
     if (!isset($data['publications']) && xarCurrentErrorType() != XAR_NO_EXCEPTION) {
         return; // throw back
     }
-
     // Return the template variables defined in this function
     return $data;
-
 }
-
 ?>

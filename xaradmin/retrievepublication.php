@@ -15,10 +15,8 @@
  *
  * @public
  * @author Richard Cave
- * @param 'pid' the id of the publication
- * @param 'stage' the stage in creating an issue
- * @returns bool
- * @return true on success, false on failure
+ * @param int 'publicationId' the id of the publication
+ * @return bool true on success, false on failure
  */
 function newsletter_admin_retrievepublication()
 {

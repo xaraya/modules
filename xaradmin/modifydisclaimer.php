@@ -15,9 +15,8 @@
  *
  * @public
  * @author Richard Cave
- * @param 'id' the id of the disclaimer to be modified
- * @returns array
- * @return $templateVarArray
+ * @param int 'id' the id of the disclaimer to be modified
+ * @return array $templateVarArray
  */
 function newsletter_admin_modifydisclaimer()
 {

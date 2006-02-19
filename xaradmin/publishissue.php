@@ -15,9 +15,7 @@
  *
  * @public
  * @param 'issueId' the id of the issue to publish
- * @author Richard Cave
- * @returns xarTplModule('mailissue')
- * @return redirect to 'mailissue'
+ * @return mixed xarTplModule('mailissue') redirect to 'mailissue'
  */
 function newsletter_admin_publishissue()
 {
@@ -102,6 +100,4 @@ function newsletter_admin_publishissue()
     // Redirect
     xarResponseRedirect(xarModURL('newsletter', 'admin', 'mailissue', array('issueId' => $issueId)));
 }
-
-
 ?>

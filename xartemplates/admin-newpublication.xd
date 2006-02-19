@@ -52,25 +52,25 @@
                 </xar:if>
             </div>
             <div class="xar-form-input-wrapper">
-                <label for="title" title="#xarML('Pubblication title')#" class="xar-form-label">
+                <label for="title" title="#xarML('Publication title')#" class="xar-form-label">
                     <xar:mlstring>Title:</xar:mlstring>
                 </label>
                 <input type="text" name="title" id="title" size="50" maxlength="255" tabindex="4" />
             </div>
             <div class="xar-form-input-wrapper">
-                <label for="introduction" title="#xarML('Pubblication introduction')#" class="xar-form-label">
+                <label for="introduction" title="#xarML('Publication introduction')#" class="xar-form-label">
                     <xar:mlstring>Introduction:</xar:mlstring>
                 </label>
                 <textarea id="introduction" name="introduction" rows="10" cols="50" tabindex="5"></textarea>
             </div>
             <div class="xar-form-input-wrapper">
-                <label for="templateHTML" title="#xarML('HTML Pubblication template')#" class="xar-form-label">
+                <label for="templateHTML" title="#xarML('HTML Publication template')#" class="xar-form-label">
                     <xar:mlstring>HTML Template:</xar:mlstring>
                 </label>
                 <input type="text" name="templateHTML" id="templateHTML" size="50" maxlength="50" tabindex="6" value="#$templateHTML#"/>
             </div>
             <div class="xar-form-input-wrapper">
-                <label for="templateText" title="#xarML('Text Pubblication templete')#" class="xar-form-label">
+                <label for="templateText" title="#xarML('Text Pubblication template')#" class="xar-form-label">
                     <xar:mlstring>Text Template:</xar:mlstring>
                 </label>
                 <input type="text" name="templateText" id="templateText" size="50" maxlength="50" tabindex="7" value="#$templateText#"/>

@@ -14,9 +14,8 @@
  * Modify an Newsletter owner
  *
  * @author Richard Cave
- * @param 'id' the id of the owner to be modified
- * @returns array
- * @return $data
+ * @param int 'id' the id of the owner to be modified
+ * @return array $data
  */
 function newsletter_admin_modifyowner()
 {

@@ -271,8 +271,7 @@ function newsletter__single_email($args)
  * @param $issue issue to email
  * @param $issueText body of issue in text format
  * @param $issueHTML body of issue in HTML format
- * @return array
- * @returns $emailResultArray
+ * @return array $emailResultArray
  */
 function newsletter__bulk_email($args)
 {

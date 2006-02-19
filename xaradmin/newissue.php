@@ -15,10 +15,9 @@
  *
  * @public
  * @author Richard Cave
- * @param 'display' display 'published' or 'unpublished' stories
- * @param 'publication' the publication id for the issue (0 = nio publication)
- * @returns array
- * @return $data
+ * @param string 'display' display 'published' or 'unpublished' stories
+ * @param int 'publicationId' the publication id for the issue (0 = no publication)
+ * @return array $data
  */
 function newsletter_admin_newissue()
 {
@@ -31,11 +30,7 @@ function newsletter_admin_newissue()
 
     // Get the admin menu
     // $data = xarModAPIFunc('newsletter', 'admin', 'menu');
-
-    // Set template strings
-    // $data['addlabel'] = xarVarPrepForDisplay(xarML('Add Issue'));
-    // $data['itemsperpage'] = xarModGetVar('newsletter', 'itemsperpage');
-
+    $data = array();
     // Get the list of publications
     $data['publications'] = xarModAPIFunc('newsletter',
                                           'user',

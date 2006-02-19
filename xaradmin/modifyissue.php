@@ -15,10 +15,10 @@
  *
  * @public
  * @author Richard Cave
- * @param 'id' the id of the issue to be modified
- * @param 'publication' publication id of the issue
- * @returns array
- * @return $templateVarArray
+ * @param int 'id' the id of the issue to be modified
+ * @param string display
+ * @param int 'publication' publication id of the issue
+ * @return array $templateVarArray
  */
 function newsletter_admin_modifyissue()
 {

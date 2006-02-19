@@ -16,8 +16,7 @@
  * @public
  * @author Richard Cave
  * @param 'publicationId' the publication id of the story (0 = no publication)
- * @returns array
- * @return $data
+ * @return array $data
  */
 function newsletter_admin_newstory($args)
 {
@@ -47,7 +46,7 @@ function newsletter_admin_newstory($args)
 
     // Get the admin menu
     //$data = xarModAPIFunc('newsletter', 'admin', 'menu');
-
+    $data = array();
     // see if we had anything passed to us
     if (!empty($args) && is_array($args)){
         // loop through all the args passed and put them in a form accessible array
@@ -58,10 +57,6 @@ function newsletter_admin_newstory($args)
             $data[$key]=$val;
         }
     }
-
-    // Set template strings
-    //$data['addlabel'] = xarVarPrepForDisplay(xarML('Finished'));
-    //$data['nextlabel'] = xarVarPrepForDisplay(xarML('Add Another Story'));
 
     // Get the list of publications
     $data['publications'] = xarModAPIFunc('newsletter',

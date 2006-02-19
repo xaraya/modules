@@ -15,8 +15,7 @@
  *
  * @public
  * @author Richard Cave
- * @returns array
- * @return $templateVarArray
+ * @return array $templateVarArray
  */
 function newsletter_admin_modifysubscription()
 {

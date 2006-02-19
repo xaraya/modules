@@ -15,8 +15,8 @@
  *
  * @public
  * @author Richard Cave
- * @returns array
- * @return $data
+ * @param string func
+ * @return array $data
  */
 function newsletter_admin_newimportaltsubscription()
 {

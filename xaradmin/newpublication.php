@@ -15,8 +15,7 @@
  *
  * @public
  * @author Richard Cave
- * @returns array
- * @return $data
+ * @return array $data
  */
 function newsletter_admin_newpublication()
 {
@@ -25,10 +24,7 @@ function newsletter_admin_newpublication()
 
     // Get the admin menu
     //$data = xarModAPIFunc('newsletter', 'admin', 'menu');
-
-    // Set template strings
-   // $data['addlabel'] = xarVarPrepForDisplay(xarML('Add Publication'));
-
+    $data = array();
     // Get current user
     $data['loggeduser'] = xarModAPIFunc('newsletter',
                                         'user',

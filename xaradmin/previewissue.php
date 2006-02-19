@@ -15,9 +15,8 @@
  *
  * @public
  * @author Richard Cave
- * @param 'issueId' the id of the issue to preview
- * @returns string
- * @return $issueHTML
+ * @param id 'issueId' the id of the issue to preview
+ * @return string $issueHTML
  */
 function newsletter_admin_previewissue($args)
 {
