@@ -46,7 +46,7 @@ being set to blank.
         <xar:else />
             <dd><a href="#$navYearUrl#"><xar:mlstring>Year</xar:mlstring></a></dd>
         </xar:if>
-        <xar:if condition="xarSecurityCheck('AddJulian')">
+        <xar:if condition="xarSecurityCheck('AddJulian',0)">
             <xar:if condition="$whatFunc eq 'addevent'">
                 <dd class="active"><a href="#$navAddUrl#"><xar:mlstring>Add event</xar:mlstring></a></dd>
             <xar:else />

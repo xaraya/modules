@@ -55,7 +55,7 @@ function julian_user_day()
     $data['Bullet'] = '&'.xarModGetVar('julian', 'BulletForm').';';
 
     // Add the add link and include a security check
-    if (xarSecurityCheck('AddJulian')) {
+    if (xarSecurityCheck('AddJulian',0)) {
         $addlink = xarModURL('julian','user','addevent',array('cal_date'=>$data['cal_date']));
     } else {
         $addlink = '';
