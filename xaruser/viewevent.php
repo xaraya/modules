@@ -194,7 +194,7 @@ function julian_user_viewevent()
    } else {
        $bl_data['editlink'] = '';
    }
-   if (xarSecurityCheck('DeleteJulian', 0, 'Item', "$event_id:$uid:$bl_data[calendar_id]:All")) {
+   if (xarSecurityCheck('DeleteJulian', 0, 'Item', "$event_id:$bl_data[organizer]:$bl_data[calendar_id]:All")) {
        // Add delete link
        $bl_data['deletelink'] = xarModURL('julian','admin','deleteevent',array('cal_date'=>$cal_date,'event_id'=> $event_id, 'authid' =>$bl_data['authid']));
    } else {

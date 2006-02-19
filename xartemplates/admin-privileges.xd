@@ -78,6 +78,17 @@
                         <xar:mlstring>Access Level</xar:mlstring>
                     </th>
                     <td>
+                    <xar:comment>
+            ACCESS_NONE          0
+            ACCESS_OVERVIEW    100
+            ACCESS_READ        200
+            ACCESS_COMMENT     300
+            ACCESS_MODERATE    400
+            ACCESS_EDIT        500
+            ACCESS_ADD         600
+            ACCESS_DELETE      700
+            ACCESS_ADMIN       800
+            </xar:comment>
                         <select name="extlevel" id="extlevel">
                             <xar:if condition="$extlevel eq 0">
                                 <option value="0" selected="selected">
@@ -106,22 +117,22 @@
                                     <xar:mlstring>Read</xar:mlstring>
                                 </option>
                             </xar:if>
-                            <xar:if condition="$extlevel eq 300">
-                                <option value="300" selected="selected">
-                                    <xar:mlstring>Submit (Comment)</xar:mlstring>
-                                </option>
-                                <xar:else />
-                                <option value="300">
-                                    <xar:mlstring>Submit (Comment)</xar:mlstring>
-                                </option>
-                            </xar:if>
                             <xar:if condition="$extlevel eq 500">
                                 <option value="500" selected="selected">
-                                    <xar:mlstring>Edit / Approve</xar:mlstring>
+                                    <xar:mlstring>Edit</xar:mlstring>
                                 </option>
                                 <xar:else />
                                 <option value="500">
-                                    <xar:mlstring>Edit / Approve</xar:mlstring>
+                                    <xar:mlstring>Edit</xar:mlstring>
+                                </option>
+                            </xar:if>
+                            <xar:if condition="$extlevel eq 600">
+                                <option value="600" selected="selected">
+                                    <xar:mlstring>Add</xar:mlstring>
+                                </option>
+                                <xar:else />
+                                <option value="600">
+                                    <xar:mlstring>Add</xar:mlstring>
                                 </option>
                             </xar:if>
                             <xar:if condition="$extlevel eq 700">
@@ -153,7 +164,7 @@
             </table>
             <br />
             <xar:ml>
-                <xar:mlstring>There are #(1) Julian matching these selection criteria at the moment</xar:mlstring>
+                <xar:mlstring>There are #(1) events matching these selection criteria at the moment</xar:mlstring>
                 <xar:mlvar>#$numitems#</xar:mlvar>
             </xar:ml>
             <br />
@@ -164,14 +175,17 @@
             <input type="submit" name="apply" value="#$applylabel#" /></div>
         </form>
         <br />
-        <xar:mlstring>Some examples : (assuming your users have read access by default)
+        <xar:mlstring>Some examples : (assuming your users have read access by default)</xar:mlstring>
         <br />
-        <br />- In order to allow 'Friends' to submit News Julian (and only that), define a privilege 'SubmitNews' (or whatever name you prefer), and choose the publication type "News Julian" (instance 1:All:All:All) and access level "Submit (Comment)" above. Press "Finish and Apply to Privilege", and then assign that privilege to the 'Friends' role.
+        <br />- <xar:mlstring>In order to allow 'Friends' to submit events (and only that), define a privilege 'AddJulianEvent' (or whatever name you prefer), and access level "Add" above.
+              Press "Finish and Apply to Privilege", and then assign that privilege to the 'Friends' role.</xar:mlstring>
         <br />
-        <br />- In order to stop 'Strangers' from viewing Documents, define some privilege 'NoDocuments' with publication type "Documents" (instance 2:All:All:All) and access level "No Access". Then assign that privilege to the 'Strangers' role.
+        <br />- <xar:mlstring>When you want users to add events, and have them also edit or delete their own, then use the organizer (submitter) role 'Myself'. Eg All:Myself:All:All and an access level of 'Delete' will give users Delete rights to all events in all categories that they have added themselves.</xar:mlstring>
+        <br />
+        <br />- <xar:mlstring>In order to stop 'Strangers' from viewing Events, define some privilege 'DenyJulianEvents' (instance All:All:All:All) and access level "No Access". Then assign that privilege to the 'Strangers' role.</xar:mlstring>
         <br />
         <br />- ...
         <br />
-        <br /></xar:mlstring>
-        <xar:mlstring>Note: if you want to deny access to all Julian in a particular category with ID 123, you can also define a privilege for module 'categories', component 'Category', category name 'All' and category ID '123'. This will remove the category from the Julian map and categories navigation as well.</xar:mlstring>
+        <br />
+        <xar:mlstring>Note: if you want to deny access to all events in a particular category with ID 123, you can also define a privilege for module 'categories', component 'Category', category name 'All' and category ID '123'. This will remove the category from the Julian map and categories navigation as well.</xar:mlstring>
 </div>

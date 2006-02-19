@@ -3,7 +3,7 @@
  * Delete an event
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -12,13 +12,13 @@
  * @author Julian Module Development Team
  */
 /**
- * delete item
- * This is a standard function that is called whenever an administrator
- * wishes to delete a current module item.
+ * Delete an event
+ * This function takes the delete command, checks the privilege of the current user and,
+   if passed, passes the delete command to the API.
  *
  * @param  id 'event_id' the id of the event to be deleted, or
- * @param int objectid
- * @param string cal_date
+ * @param  int objectid
+ * @param  string cal_date
  * @return bool and URL redirect
  */
 function julian_admin_deleteevent($args)

@@ -20,7 +20,7 @@
  * @access  public
  * @param   array event data
  * @return  array returnURL
- * @todo    MichelV. <#> move queries to API
+ * @todo    MichelV. <1> move queries to API
  */
 function julian_user_updateevent()
 {
@@ -72,10 +72,16 @@ function julian_user_updateevent()
    if (!xarVarFetch('class',            'int:1:',   $class,         0, XARVAR_NOT_REQUIRED)) return;
    if (!xarVarFetch('share_uids',       'array',    $share_uids,    array(), XARVAR_NOT_REQUIRED)) return;
 
-   if (!xarSecurityCheck('EditJulian', 1, 'Item', "$id:All:All:All")) { // TODO: improve
-       return;
+   if(strcmp($id,"")) {
+    if (!xarSecurityCheck('EditJulian', 1, 'Item')) {
+        return;
+    }
+   } else {
+    // Event doesn't exist yet. Create one
+       if (!xarSecurityCheck('AddJulian', 1, 'Item')) { // TODO: improve
+           return;
+       }
    }
-
     // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) return;
 

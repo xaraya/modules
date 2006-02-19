@@ -101,7 +101,10 @@ function julian_admin_privileges($args)
     }
 
 // TODO: figure out how to handle groups of users and/or the current user (later)
-    if (empty($uid) || $uid == 'All' || !is_numeric($uid)) {
+    if (strtolower($uid) == 'myself') {
+        $uid = 'Myself';
+        $organizer = 'Myself';
+    } elseif (empty($uid) || $uid == 'All' || (!is_numeric($uid) && (strtolower($uid) != 'myself'))) {
         $uid = 0;
         if (!empty($organizer)) {
             $user = xarModAPIFunc('roles', 'user', 'get',
@@ -147,7 +150,7 @@ function julian_admin_privileges($args)
     // get the list of current organizers
     $organizerlist =  xarModAPIFunc('julian','user','getorganizers',
                                  array('calendar_id' => $calendar_id,
-                                 // TODO: work out cids in this case
+                                       // TODO: work out cids in this case
                                        'cids' => empty($cid) ? array() : array($cid)));
     if (!empty($organizer) && isset($organizerlist[$uid])) {
         $organizer = '';
