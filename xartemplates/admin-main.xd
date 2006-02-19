@@ -43,7 +43,7 @@
         <li><xar:mlstring>Event ID.</xar:mlstring></li>
         <li><xar:mlstring>Calendar ID (not in use at present).</xar:mlstring></li>
         <li><xar:mlstring>Category ID. This check works together with the category privileges. You will need to give users read or edit level access to the Julian categories as well.</xar:mlstring></li>
-        <li><xar:mlstring>Owner ID. This is the user that has entered the ID. In future we will implement the use of 'MYSELF' as a check.</xar:mlstring></li>
+        <li><xar:mlstring>Owner or Organizer ID. This is the user that has entered the event. In future we will implement the use of 'MYSELF' as a check.</xar:mlstring></li>
     </ul>
     <br />
     <h3>

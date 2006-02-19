@@ -33,11 +33,11 @@
                     </xar:if>
                     <td class="xar-julian-calendar-day xar-julian-days-#$daycolor#">
                         <div class="xar-julian-calendar-icons">
-                            <xar:sec id="unique1" mask="Editjulian" catch="false">
-                                <a href="#xarModURL('julian','user','addevent',array('cal_date'=>$cal_date))#">
+                            <xar:if condition="!empty($addlink)">
+                                <a href="#$addlink#">
                                     <img src="#xarTplGetImage('new.gif')#" alt="#xarML('Add Event')#" />
                                 </a>
-                            </xar:sec>
+                            </xar:if>
                         </div>
                         <xar:if condition="!empty($event_array)">
                             <xar:foreach in="$month" value="$week">

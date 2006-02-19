@@ -11,7 +11,6 @@
  * @author Julian development Team
  * initial template: Roger Raymond
  */
-
 /**
  * Edit a single event
  *

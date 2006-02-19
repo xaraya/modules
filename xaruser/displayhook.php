@@ -16,12 +16,11 @@
  *
  * show date/time/schedule for an item - hook for ('item','display','GUI')
  *
- * @author  Julian Development Team
  * @author  JornB, MichelV. <michelv@xarayahosting.nl>
  * @access  public
  * @param   id $objectid
  * @param   array $extrainfo
- * @return  array
+ * @return  array with hook template
  * @since May 2005
  * @todo    nothing
  */
@@ -48,7 +47,7 @@ function julian_user_displayhook($args)
         $modname = $extrainfo['module'];
     }
 
-     // Convert module name into module id.
+    // Convert module name into module id.
     $modid = xarModGetIDFromName($modname);
     if (empty($modid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)','module name', 'user', 'displayhook', 'julian');

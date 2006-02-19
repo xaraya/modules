@@ -109,8 +109,6 @@
             <xar:foreach in="$hookoutput" key="$hookmodule">
                 #$hookoutput[$hookmodule]#
             </xar:foreach>
-        <xar:else />
-        error@
         </xar:if>
     </div>
 </div>

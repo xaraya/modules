@@ -3,7 +3,7 @@
  * Displays an event
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -11,7 +11,6 @@
  * @link http://xaraya.com/index.php/release/319.html
  * @author Julian Module Development Team
  */
-
 /**
  * Display an event
  *
@@ -22,12 +21,13 @@
  * @link http://www.metrostat.net
  * @copyright (C) 2005 by Metrostat Technologies, Inc.
  * @author  Jodie Razdrh/John Kevlin/David St.Clair
- * @author  Julian Development Team, MichelV. <michelv@xarayahosting.nl>
+ * @author  MichelV. <michelv@xaraya.com>
  * @access  public
  * @param   ID $event_id for the event to display
  * @param   $cal_date
  * @return  array
- * @todo    MichelV. <#> Make this the display function and move queries to API
+ * @todo    MichelV. <1> Make this the display function and move queries to API
+ *                   <2> Improve ML settings
  */
 function julian_user_viewevent()
 {
@@ -107,8 +107,8 @@ function julian_user_viewevent()
 
    $bl_data['id'] = $bl_data['event_id'];
    $bl_data['deletesummary'] = xarVarPrepForDisplay($bl_data['summary']);
-   $bl_data['organizer'] = xarUserGetVar('name',$bl_data['organizer']);
-   // TODO MichelV: improve ML settings here
+
+   // TODO: MichelV: improve ML settings here
    // created = yyyy-mm-dd hh:mm:ss
    //$bl_data['datecreated'] = xarLocaleGetFormattedDate($bl_data['created']);
    $bl_data['datecreated'] = date("$dateformat_created",strtotime($bl_data['created']));
@@ -181,13 +181,14 @@ function julian_user_viewevent()
       $bl_data['time'] = date("l, $dateformat",strtotime($bl_data['dtstart'])).$duration;
    }
    $bl_data['cal_date']=$cal_date;
+
    // Set the url to this page in session as the last page viewed
    $lastview=xarModURL('julian','user','viewevent',array('cal_date'=>$cal_date,'event_id'=>$event_id));
    xarSessionSetVar('lastview',$lastview);
 
    $uid = xarUserGetVar('uid');
-   // Priv $event_id:$organizer:$calendar_id:$catid
-   if (xarSecurityCheck('EditJulian', 0, 'Item', "$event_id:$uid:$bl_data[calendar_id]:All")) {
+   // Priv checks. We add a AddJulian here because we need to check on the own events, not of others
+   if (xarSecurityCheck('EditJulian', 0, 'Item', "$event_id:$bl_data[organizer]:$bl_data[calendar_id]:All")) {
        // Add edit link
        $bl_data['editlink'] = xarModURL('julian','user','edit',array('cal_date'=>$cal_date,'id'=> $event_id));
    } else {
@@ -204,10 +205,7 @@ function julian_user_viewevent()
     $item['returnurl'] = $lastview;
     $item['module'] = 'julian';
     $item['itemtype'] = NULL;
-    $hooks = xarModCallHooks('item',
-        'display',
-        $event_id,
-        $item);
+    $hooks = xarModCallHooks('item','display', $event_id, $item);
     if (empty($hooks)) {
         $bl_data['hookoutput'] = array();
     } else {
@@ -216,8 +214,7 @@ function julian_user_viewevent()
          */
         $bl_data['hookoutput'] = $hooks;
     }
-
-
+   $bl_data['organizer'] = xarUserGetVar('name',$bl_data['organizer']);
    return $bl_data;
 }
 ?>

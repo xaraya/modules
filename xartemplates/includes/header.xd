@@ -5,7 +5,7 @@
 <script type="text/javascript" src="modules/julian/xarjavascript/utilities_lite.js"></script>
 <script type="text/javascript" src="modules/julian/xarjavascript/validateheader.js"></script>
 <xar:comment>
-This makes sure we have a valid month and day.    If not, we use today's month and day
+This makes sure we have a valid month and day. If not, we use today's month and day
 There was a problem where if you selected only a year in the "jump_to" the date
 would look something like this: 200400 instead of 20040618. The 00 is from the day
 being set to blank.
@@ -17,6 +17,7 @@ being set to blank.
 <xar:set name="$navWeekUrl">#xarModURL('julian','user','week',array('cal_date'=>$cal_date))#</xar:set>
 <xar:set name="$navMonthUrl">#xarModURL('julian','user','month',array('cal_date'=>$cal_date))#</xar:set>
 <xar:set name="$navYearUrl">#xarModURL('julian','user','year',array('cal_date'=>$cal_date))#</xar:set>
+<xar:set name="$navAddUrl">#xarModURL('julian','user','addevent',array('cal_date'=>$cal_date))#</xar:set>
 <xar:set name="$navEventsUrl">#xarModURL('julian','user','viewevents',array('cal_date'=>$cal_date))#</xar:set>
 <xar:set name="$navAlertsUrl">#xarModURL('julian','user','alerts',array('cal_date'=>$cal_date))#</xar:set>
 <xar:set name="$navCategoriesUrl">#xarModURL('julian','admin','modifycategories',array('cal_date'=>$cal_date))#</xar:set>
@@ -44,6 +45,13 @@ being set to blank.
             <dd class="active"><a href="#$navYearUrl#"><xar:mlstring>Year</xar:mlstring></a></dd>
         <xar:else />
             <dd><a href="#$navYearUrl#"><xar:mlstring>Year</xar:mlstring></a></dd>
+        </xar:if>
+        <xar:if condition="xarSecurityCheck('AddJulian')">
+            <xar:if condition="$whatFunc eq 'addevent'">
+                <dd class="active"><a href="#$navAddUrl#"><xar:mlstring>Add event</xar:mlstring></a></dd>
+            <xar:else />
+                <dd><a href="#$navAddUrl#"><xar:mlstring>Add event</xar:mlstring></a></dd>
+            </xar:if>
         </xar:if>
         <xar:if condition="$whatFunc eq 'viewevents'">
             <dd class="active"><a href="#$navEventsUrl#"><xar:mlstring>Events</xar:mlstring></a></dd>

@@ -11,20 +11,17 @@
  * @link http://xaraya.com/index.php/release/319.html
  * @author Julian Module Development Team
  */
-
 /**
- *
  * Generates a form for adding an event.
  *
  * @copyright (C) 2004 by Metrostat Technologies, Inc.
  * @link http://www.metrostat.net
  *
- * @subpackage julian
  * initial template: Roger Raymond
  * @author Jodie Razdrh/John Kevlin/David St.Clair
- * @param $cal_date
+ * @param int $cal_date The date set to add an event to
+ * @return array $data for template
  */
-
 function julian_user_addevent($args)
 {
     extract ($args);
