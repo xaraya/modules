@@ -24,7 +24,6 @@
  *                           (unix timestamp format)
  * @param $args['enddate'] articles published before enddate
  *                         (unix timestamp format)
- * @returns array
  * @return array of author id => author name
  */
 function articles_userapi_getauthors($args)
