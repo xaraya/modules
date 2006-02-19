@@ -18,12 +18,12 @@
  * @author Jodie Razdrh/John Kevlin/David St.Clair
  * @author MichelV <michelv@xaraya.com>
  * @param $args an array of arguments
- * @param $args['event_id'] The ID of the Event
- * @param $args['external'] retrieve events marked external (1=true, 0=false) - ToDo:
- * @returns integer
- * @return number of items
+ * @param int $args['event_id'] The ID of the Event
+ * @param int $args['external'] retrieve events marked external (1=true, 0=false) - ToDo:
+ * @return integer number of items
  * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  * @todo MichelV: Include count of linked items
+ *       MichelV: Include categories in the count
  */
 function julian_userapi_countevents($args)
 {

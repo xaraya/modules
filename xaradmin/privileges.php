@@ -28,7 +28,7 @@ function julian_admin_privileges($args)
     if (!xarVarFetch('cid',          'isset', $cid,          NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('cids',         'isset', $cids,         NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('uid',          'isset', $uid,          NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('author',       'isset', $author,       NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('organizer',    'isset', $organizer,    NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('event_id',     'isset', $event_id,     NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('apply',        'isset', $apply,        NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('extpid',       'isset', $extpid,       NULL, XARVAR_DONT_SET)) {return;}
@@ -144,19 +144,20 @@ function julian_admin_privileges($args)
         return true;
     }
 
-    // get the list of current authors
-    $authorlist =  xarModAPIFunc('julian','user','getauthors',
-                                 array('ptid' => $ptid,
+    // get the list of current organizers
+    $organizerlist =  xarModAPIFunc('julian','user','getorganizers',
+                                 array('calendar_id' => $calendar_id,
+                                 // TODO: work out cids in this case
                                        'cids' => empty($cid) ? array() : array($cid)));
-    if (!empty($author) && isset($authorlist[$uid])) {
-        $author = '';
+    if (!empty($organizer) && isset($organizerlist[$organizer])) {
+        $organizer = '';
     }
 
-    if (empty($aid)) {
-        $numitems = xarModAPIFunc('julian','user','countitems',
-                                  array('ptid' => $ptid,
+    if (empty($event_id)) {
+        $numitems = xarModAPIFunc('julian','user','countevents',
+                                  array('calendar_id' => $calendar_id,
                                         'cids' => empty($cid) ? array() : array($cid),
-                                        'authorid' => $uid));
+                                        'organizer' => $uid));
     } else {
         $numitems = 1;
     }
@@ -165,9 +166,9 @@ function julian_admin_privileges($args)
                   'ptid'         => $ptid,
                   'cid'          => $cid,
                   'uid'          => $uid,
-                  'author'       => xarVarPrepForDisplay($author),
+                  'organizer'    => xarVarPrepForDisplay($organizer),
                   'authorlist'   => $authorlist,
-                  'aid'          => $aid,
+                  'event_id'     => $event_id,
                   'title'        => xarVarPrepForDisplay($title),
                   'numitems'     => $numitems,
                   'extpid'       => $extpid,
@@ -180,7 +181,8 @@ function julian_admin_privileges($args)
                  );
 
     // Get publication types
-    $data['pubtypes'] = xarModAPIFunc('julian','user','getpubtypes');
+    // TODO: implement more calendars
+    $data['calendarids'] = array(1);//xarModAPIFunc('julian','user','getpubtypes');
 
     $catlist = array();
     if (!empty($ptid)) {
