@@ -13,13 +13,16 @@
  */
 /**
  * modify article
+ * @param int aid The ID of the article
+ * @param string return_url
+ * @param string preview
  */
 function articles_admin_modify($args)
 {
     extract($args);
 
     // Get parameters
-    if(!xarVarFetch('aid','isset', $aid, NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('aid','isset', $aid, NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('return_url', 'str:1', $return_url, NULL, XARVAR_NOT_REQUIRED)) {return;}
 
     if (isset($aid) && empty($preview)) {

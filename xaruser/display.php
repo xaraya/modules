@@ -12,7 +12,12 @@
  * @author mikespub
  */
 /**
- * display item
+ * Display article
+ *
+ * @param int aid
+ * @param int page
+ * @param int ptid The publication Type ID
+ * @return array with template information
  */
 function articles_user_display($args)
 {

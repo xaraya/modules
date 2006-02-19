@@ -13,6 +13,8 @@
  */
 /**
  * Manage definition of instances for privileges (unfinished)
+ *
+ * @return array for template
  */
 function articles_admin_privileges($args)
 {

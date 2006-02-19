@@ -23,8 +23,7 @@
  * @param $args['ptid'] the publication type ID (if not already included)
  * @param $args['cids'] array of additional required category checks
  *
- * @returns bool
- * @return true if OK, false if not OK
+ * @return bool true if OK, false if not OK
  */
 function articles_userapi_checksecurity($args)
 {
