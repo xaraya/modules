@@ -78,17 +78,7 @@
                         <xar:mlstring>Access Level</xar:mlstring>
                     </th>
                     <td>
-                    <xar:comment>
-            ACCESS_NONE          0
-            ACCESS_OVERVIEW    100
-            ACCESS_READ        200
-            ACCESS_COMMENT     300
-            ACCESS_MODERATE    400
-            ACCESS_EDIT        500
-            ACCESS_ADD         600
-            ACCESS_DELETE      700
-            ACCESS_ADMIN       800
-            </xar:comment>
+
                         <select name="extlevel" id="extlevel">
                             <xar:if condition="$extlevel eq 0">
                                 <option value="0" selected="selected">

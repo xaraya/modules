@@ -241,7 +241,17 @@ function julian_init()
 
     // Block persmissions
     xarRegisterMask('ReadJulianBlock', 'All', 'julian', 'Block', 'All', 'ACCESS_OVERVIEW');
-
+/*
+            ACCESS_NONE          0
+            ACCESS_OVERVIEW    100
+            ACCESS_READ        200
+            ACCESS_COMMENT     300
+            ACCESS_MODERATE    400
+            ACCESS_EDIT        500
+            ACCESS_ADD         600
+            ACCESS_DELETE      700
+            ACCESS_ADMIN       800
+*/
     // New Masks $event_id:$organizer:$calendar_id:$catid
     // calendar_id is not in use yet
     // Class doesn't make sense to use
