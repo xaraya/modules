@@ -50,6 +50,9 @@ function categories_navigationblock_info()
 
 /**
  * display block
+ * @param array blockinfo
+ * @param int layout
+ * @return array of blockinfo with the appropriate template
  */
 function categories_navigationblock_display($blockinfo)
 {
