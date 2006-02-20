@@ -22,16 +22,16 @@
  * @param int pitemid The id of the plan item to be modified
  * @todo add test for already followed courses
  *       add checks for types of planitems
- * @return array with data for template
+ * @return array with data for template. The template will include whatever is needed to add courses
  */
 function itsp_user_modify($args)
 {
     extract($args);
 
-    if (!xarVarFetch('itspid',   'id',    $itspid, $itspid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('itspid',   'id',    $itspid,   $itspid,   XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('objectid', 'id',    $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('pitemid',  'id',    $pitemid, $pitemid, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('invalid',  'array', $invalid, array(), XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('pitemid',  'id',    $pitemid,  $pitemid,  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('invalid',  'array', $invalid,  array(),   XARVAR_NOT_REQUIRED)) return;
 
     /* At this stage we check to see if we have been passed $objectid
      */
@@ -154,7 +154,102 @@ function itsp_user_modify($args)
                     /* Add this item to the list of items to be displayed */
                     $data['icourses'][] = $icourse;
                 }
+                /*
+                xar_icourseid        I         AUTO       PRIMARY,
+               xar_pitemid          I         NotNull    DEFAULT 0,
+               xar_itspid           I         NotNull    DEFAULT 0,
+               xar_icoursetitle     C(255)    NotNull    DEFAULT '',
+               xar_icourseloc       C(255)    NotNull    DEFAULT '',
+               xar_icoursedesc      X         NotNull    DEFAULT '',
+               xar_icoursecredits   I         NotNull    DEFAULT 0,
+               xar_icourselevel     C(255)    NotNull    DEFAULT '',
+               xar_icourseresult    C(255)    NotNull    DEFAULT '',
+               xar_icoursedate      I(11)     Null       DEFAULT NULL,
+               xar_dateappr         I(11)     Null       DEFAULT NULL,
+               xar_datemodi         I(11)     Null       DEFAULT NULL,
+               xar_modiby           I         NotNull    DEFAULT 0
 
+                */
+                // Set data for a new item
+                if (!xarVarFetch('icourseid',   'id',    $icourseid,   $icourseid,   XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('icoursetitle', 'str:1:255',    $icoursetitle, $icoursetitle, XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('icourseloc',  'str:1:255',    $icourseloc,  $icourseloc,  XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('icoursedesc',   'str::',    $icoursedesc,   $icoursedesc,   XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('icoursecredits',   'int::',    $icoursecredits,   $icoursecredits,   XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('icourselevel', 'str:1:255',    $icourselevel, $icourselevel, XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('icourseresult',  'str:1:255',    $icourseresult,  $icourseresult,  XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('icoursedate',   'str::',    $icoursedate,   $icoursedate,   XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('dateappr',   'str::',    $dateappr,   $dateappr,   XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('invalid',  'array', $invalid,  array(),   XARVAR_NOT_REQUIRED)) return;
+
+                //if (!xarSecurityCheck('AddITSPPlan')) return;
+                // get the levels in courses
+                $data['levels'] = xarModAPIFunc('courses', 'user', 'gets',
+                                                  array('itemtype' => 1003));
+                // Get the coursetypes for the types rule
+                $data['coursetypes'] = xarModAPIFunc('courses', 'user', 'getall_coursetypes');
+                /* Generate a one-time authorisation code for this operation */
+                $data['authid'] = xarSecGenAuthKey();
+                $data['invalid'] = $invalid;
+
+                $item = array();
+                $item['module'] = 'itsp';
+                $item['itemtype'] = 3;
+                $hooks = xarModCallHooks('item', 'new', '', $item);
+
+                if (empty($hooks)) {
+                    $data['hookoutput'] = array();
+                } else {
+                    /* You can use the output from individual hooks in your template too, e.g. with
+                     * $hookoutput['categories'], $hookoutput['dynamicdata'], $hookoutput['keywords'] etc.
+                     */
+                    $data['hookoutput'] = $hooks;
+                }
+                $data['hooks'] = '';
+                /* For E_ALL purposes, we need to check to make sure the vars are set.
+                 * If they are not set, then we need to set them empty to surpress errors
+                 */
+                if (empty($icoursetitle)) {
+                    $data['icoursetitle'] = '';
+                } else {
+                    $data['icoursetitle'] = $icoursetitle;
+                }
+
+                if (empty($icourseloc)) {
+                    $data['icourseloc'] = '';
+                } else {
+                    $data['icourseloc'] = $icourseloc;
+                }
+                if (empty($icoursedesc)) {
+                    $data['icoursedesc'] = '';
+                } else {
+                    $data['icoursedesc'] = $icoursedesc;
+                }
+                if (empty($icoursecredits)) {
+                    $data['icoursecredits'] = '';
+                } else {
+                    $data['icoursecredits'] = $icoursecredits;
+                }
+                if (empty($icourselevel)) {
+                    $data['icourselevel'] = '';
+                } else {
+                    $data['icourselevel'] = $icourselevel;
+                }
+                if (empty($icourseresult)) {
+                    $data['icourseresult'] = '';
+                } else {
+                    $data['icourseresult'] = $icourseresult;
+                }
+                if (empty($icoursedate)) {
+                    $data['icoursedate'] = '';
+                } else {
+                    $data['icoursedate'] = $icoursedate;
+                }
+                if (empty($dateappr)) {
+                    $data['dateappr'] = '';
+                } else {
+                    $data['dateappr'] = $dateappr;
+                }
         }
 
 

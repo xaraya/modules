@@ -17,13 +17,80 @@
     <fieldset>
         <legend><xar:mlstring>Add courses</xar:mlstring></legend>
         <div class="xar-form-input-wrapper">
-             <label for="icourseid" class="xar-form-label" title="#xarML('Add an external course')#">
-                  <xar:mlstring>Add course:</xar:mlstring>
+             <label for="icoursetitle" class="xar-form-label" title="#xarML('Official full title')#">
+                  <xar:mlstring>Course title</xar:mlstring>
              </label>
-             <xar:comment>Here the dynamic property gets the list of courses one can add</xar:comment>
-             <xar:data-input name="courseid" type="courselist" options="$pitemrules"/>
+             <input type="text" name="icoursetitle" id="icoursetitle" value="#$icoursetitle#" maxlength="255" class="xar-form-textlong" />
+
+             <xar:if condition="!empty($invalid['icoursetitle'])">
+                 <div class="xar-error">
+                     <xar:mlstring>ERROR! This is not a valid title</xar:mlstring>
+                 </div>
+             <xar:elseif condition="!empty($invalid['duplicate'])"/>
+                 <div class="xar-error">
+                     <xar:mlstring>ERROR! This is a duplicate title</xar:mlstring>
+                 </div>
+             </xar:if>
         </div>
+        <div class="xar-form-input-wrapper">
+             <label for="icoursetitle" class="xar-form-label" title="#xarML('The credits you will obtain with this course')#">
+                  <xar:mlstring>Credits</xar:mlstring>
+             </label>
+             <input type="text" name="icoursecredits" id="icoursecredits" value="#$icoursecredits#" maxlength="5" class="xar-form-textshort" />
+             <xar:if condition="!empty($invalid['icoursecredits'])">
+                 <div class="xar-error">
+                     <xar:mlstring>ERROR! This is not a valid amount of credits</xar:mlstring>
+                 </div>
+             </xar:if>
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label for="icourseloc" class="xar-form-label" title="#xarML('Eg the University organising this course')#">
+                <xar:mlstring>Organisor and location:</xar:mlstring>
+            </label>
+            <xar:data-input name="icourseloc" type="textarea_medium" value="$icourseloc" />
+            <xar:if condition="!empty($invalid['icourseloc'])">
+                <div class="xar-error">
+                    <xar:mlstring>ERROR! This is not a valid organisor or location</xar:mlstring>
+                </div>
+            </xar:if>
+        </div>
+<!--
+           xar_icoursetitle     C(255)    NotNull    DEFAULT '',
+           xar_icourseloc       C(255)    NotNull    DEFAULT '',
+           xar_icoursedesc      X         NotNull    DEFAULT '',
+           xar_icoursecredits   I         NotNull    DEFAULT 0,
+           xar_icourselevel     C(255)    NotNull    DEFAULT '',
+           xar_icourseresult    C(255)    NotNull    DEFAULT '',
+           xar_icoursedate      I(11)     Null       DEFAULT NULL,
+           xar_dateappr         I(11)     Null       DEFAULT NULL,
+
+-->
+        <div class="xar-form-input-wrapper">
+             <label for="icoursedate" class="xar-form-label" title="#xarML('Use the full official start date')#">
+                    <xar:mlstring>Date this course started:</xar:mlstring>
+             </label>
+             <xar:data-input name="icoursedate" type="calendar" validation="date" value="$icoursedate" />
+             <xar:if condition="!empty($invalid['icoursedate'])">
+                 <div class="xar-error">
+                        <xar:mlstring>ERROR! This is not a valid date</xar:mlstring>
+                 </div>
+             </xar:if>
+        </div>
+
+        <div class="xar-form-input-wrapper">
+             <label for="dateappr" class="xar-form-label" title="#xarML('This is the date this course has been approved')#">
+                    <xar:mlstring>Date of approval:</xar:mlstring>
+             </label>
+             <xar:data-input name="dateappr" type="calendar" validation="date" value="$dateappr" />
+             <xar:if condition="!empty($invalid['dateclose'])">
+                 <div class="xar-error">
+                        <xar:mlstring>ERROR! This is not a valid date</xar:mlstring>
+                 </div>
+             </xar:if>
+        </div>
+
     </fieldset>
+
 
     <!-- if you want to extend this module with dynamic data, you can retrieve
     //   that data in the code via APIs, or use e.g. the following BL tags here.
