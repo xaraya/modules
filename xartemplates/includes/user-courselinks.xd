@@ -1,5 +1,5 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-    <fieldset>
+<fieldset>
     <xar:if condition="!empty($lcourses)">
         <legend><xar:mlstring>You have added:</xar:mlstring></legend>
         <xar:foreach in="$lcourses" key="$lcourseid">
@@ -13,30 +13,30 @@
     <xar:else />
         <legend><xar:mlstring>You have not added any course yet</xar:mlstring></legend>
     </xar:if>
-    </fieldset>
-    <fieldset>
-        <legend><xar:mlstring>Add courses</xar:mlstring></legend>
-        <div class="xar-form-input-wrapper">
-             <label for="lcourseid" class="xar-form-label" title="#xarML('Choose one of the following courses to add')#">
-                  <xar:mlstring>Add course:</xar:mlstring>
-             </label>
-             <xar:comment>Here the dynamic property gets the list of courses one can add</xar:comment>
-             <xar:data-input name="lcourseid" type="courselist" options="$pitemrules"/>
-        </div>
-    </fieldset>
+</fieldset>
+<fieldset>
+    <legend><xar:mlstring>Add courses</xar:mlstring></legend>
+    <div class="xar-form-input-wrapper">
+         <label for="lcourseid" class="xar-form-label" title="#xarML('Choose one of the following courses to add')#">
+              <xar:mlstring>Add course:</xar:mlstring>
+         </label>
+         <xar:comment>Here the dynamic property gets the list of courses one can add</xar:comment>
+         <xar:data-input name="lcourseid" type="courselist" options="$pitemrules"/>
+    </div>
+</fieldset>
 
-    <!-- if you want to extend this module with dynamic data, you can retrieve
-    //   that data in the code via APIs, or use e.g. the following BL tags here.
-    //   For the different options, see the overview of dynamicdata...
-    -->
-    <xar:if condition="xarModIsHooked('dynamicdata')">
-        <!-- 1. retrieve any dynamic properties defined for this object -->
-        <xar:data-getitem name="$properties" module="itsp" itemid="$itspid" />
-        <!-- 2. for each property, display its label and value in output format -->
-        <xar:if condition="isset($properties) and count($properties) gt 0">
-            <xar:foreach in="$properties" key="$name">
-                      <xar:data-label property="$properties[$name]" />:
-                    <xar:data-output property="$properties[$name]" />
-            </xar:foreach>
-        </xar:if>
+<!-- if you want to extend this module with dynamic data, you can retrieve
+//   that data in the code via APIs, or use e.g. the following BL tags here.
+//   For the different options, see the overview of dynamicdata...
+-->
+<xar:if condition="xarModIsHooked('dynamicdata')">
+    <!-- 1. retrieve any dynamic properties defined for this object -->
+    <xar:data-getitem name="$properties" module="itsp" itemid="$itspid" />
+    <!-- 2. for each property, display its label and value in output format -->
+    <xar:if condition="isset($properties) and count($properties) gt 0">
+        <xar:foreach in="$properties" key="$name">
+                  <xar:data-label property="$properties[$name]" />:
+                <xar:data-output property="$properties[$name]" />
+        </xar:foreach>
     </xar:if>
+</xar:if>

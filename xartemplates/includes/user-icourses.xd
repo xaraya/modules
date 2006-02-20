@@ -1,5 +1,5 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-    <fieldset>
+<fieldset>
     <xar:if condition="!empty($icourses)">
         <legend><xar:mlstring>You have added:</xar:mlstring></legend>
         <xar:foreach in="$icourses" key="$icourseid">
@@ -13,109 +13,94 @@
     <xar:else />
         <legend><xar:mlstring>You have not added any course yet</xar:mlstring></legend>
     </xar:if>
-    </fieldset>
-    <fieldset>
-        <legend><xar:mlstring>Add courses</xar:mlstring></legend>
-        <div class="xar-form-input-wrapper">
-             <label for="icoursetitle" class="xar-form-label" title="#xarML('Official full title')#">
-                  <xar:mlstring>Course title</xar:mlstring>
-             </label>
-             <input type="text" name="icoursetitle" id="icoursetitle" value="#$icoursetitle#" maxlength="255" class="xar-form-textlong" />
+</fieldset>
+<fieldset>
+    <legend><xar:mlstring>Add courses</xar:mlstring></legend>
+    <div class="xar-form-input-wrapper">
+         <label for="icoursetitle" class="xar-form-label" title="#xarML('Official full title')#">
+              <xar:mlstring>Course title</xar:mlstring>
+         </label>
+         <input type="text" name="icoursetitle" id="icoursetitle" value="#$icoursetitle#" maxlength="255" class="xar-form-textlong" />
 
-             <xar:if condition="!empty($invalid['icoursetitle'])">
-                 <div class="xar-error">
-                     <xar:mlstring>ERROR! This is not a valid title</xar:mlstring>
-                 </div>
-             <xar:elseif condition="!empty($invalid['duplicate'])"/>
-                 <div class="xar-error">
-                     <xar:mlstring>ERROR! This is a duplicate title</xar:mlstring>
-                 </div>
-             </xar:if>
-        </div>
-        <div class="xar-form-input-wrapper">
-             <label for="icoursetitle" class="xar-form-label" title="#xarML('The credits you will obtain with this course')#">
-                  <xar:mlstring>Credits</xar:mlstring>
-             </label>
-             <input type="text" name="icoursecredits" id="icoursecredits" value="#$icoursecredits#" maxlength="5" class="xar-form-textshort" />
-             <xar:if condition="!empty($invalid['icoursecredits'])">
-                 <div class="xar-error">
-                     <xar:mlstring>ERROR! This is not a valid amount of credits</xar:mlstring>
-                 </div>
-             </xar:if>
-        </div>
-        <div class="xar-form-input-wrapper">
-            <label for="icourseloc" class="xar-form-label" title="#xarML('Eg the University organising this course')#">
-                <xar:mlstring>Organisor and location:</xar:mlstring>
-            </label>
-            <textarea name="icourseloc" id="icourseloc" class="xar-form-textareasmall" value="">#$icourseloc#</textarea>
-            <xar:if condition="!empty($invalid['icourseloc'])">
-                <div class="xar-error">
-                    <xar:mlstring>ERROR! This is not a valid organisor or location</xar:mlstring>
-                </div>
-            </xar:if>
-        </div>
-        <div class="xar-form-input-wrapper">
-            <label for="icoursedesc" class="xar-form-label" title="#xarML('Give a description of the course, or a location where the info can be found. Eg the URL')#">
-                <xar:mlstring>URL and description:</xar:mlstring>
-            </label>
-            <textarea name="icourseloc" id="icoursedesc" class="xar-form-textareasmall" value="">#$icoursedesc#</textarea>
-            <xar:if condition="!empty($invalid['icoursedesc'])">
-                <div class="xar-error">
-                    <xar:mlstring>ERROR! This is not a valid organisor or location</xar:mlstring>
-                </div>
-            </xar:if>
-        </div>
-            <div class="xar-form-input-wrapper">
-                 <label for="icourselevel" class="xar-form-label" title="#xarML('Choose the level for this course')#">
-                        <xar:mlstring>Level</xar:mlstring>
-                 </label>
-                 <select name="icourselevel">
-                    <xar:loop name="$levels">
-                        <option value="#$loop:item['lid']#">#$loop:item['level']#</option>
-                    </xar:loop>
-                 </select>
+         <xar:if condition="!empty($invalid['icoursetitle'])">
+             <div class="xar-error">
+                 <xar:mlstring>ERROR! This is not a valid title</xar:mlstring>
+             </div>
+         <xar:elseif condition="!empty($invalid['duplicate'])"/>
+             <div class="xar-error">
+                 <xar:mlstring>ERROR! This is a duplicate title</xar:mlstring>
+             </div>
+         </xar:if>
+    </div>
+    <div class="xar-form-input-wrapper">
+         <label for="icoursetitle" class="xar-form-label" title="#xarML('The credits you will obtain with this course')#">
+              <xar:mlstring>Credits</xar:mlstring>
+         </label>
+         <input type="text" name="icoursecredits" id="icoursecredits" value="#$icoursecredits#" maxlength="5" class="xar-form-textshort" />
+         <xar:if condition="!empty($invalid['icoursecredits'])">
+             <div class="xar-error">
+                 <xar:mlstring>ERROR! This is not a valid amount of credits</xar:mlstring>
+             </div>
+         </xar:if>
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label for="icourseloc" class="xar-form-label" title="#xarML('Eg the University organising this course')#">
+            <xar:mlstring>Organisor and location:</xar:mlstring>
+        </label>
+        <textarea name="icourseloc" id="icourseloc" class="xar-form-textareasmall" value="">#$icourseloc#</textarea>
+        <xar:if condition="!empty($invalid['icourseloc'])">
+            <div class="xar-error">
+                <xar:mlstring>ERROR! This is not a valid organisor or location</xar:mlstring>
             </div>
+        </xar:if>
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label for="icoursedesc" class="xar-form-label" title="#xarML('Give a description of the course, or a location where the info can be found. Eg the URL')#">
+            <xar:mlstring>URL and description:</xar:mlstring>
+        </label>
+        <textarea name="icourseloc" id="icoursedesc" class="xar-form-textareasmall" value="">#$icoursedesc#</textarea>
+        <xar:if condition="!empty($invalid['icoursedesc'])">
+            <div class="xar-error">
+                <xar:mlstring>ERROR! This is not a valid organisor or location</xar:mlstring>
+            </div>
+        </xar:if>
+    </div>
+        <div class="xar-form-input-wrapper">
+             <label for="icourselevel" class="xar-form-label" title="#xarML('Choose the level for this course')#">
+                    <xar:mlstring>Level</xar:mlstring>
+             </label>
+             <select name="icourselevel">
+                <xar:loop name="$levels">
+                    <option value="#$loop:item['lid']#">#$loop:item['level']#</option>
+                </xar:loop>
+             </select>
+        </div>
 <!--
-           xar_icourseresult    C(255)    NotNull    DEFAULT '',
+       xar_icourseresult    C(255)    NotNull    DEFAULT '',
 
 -->
-        <div class="xar-form-input-wrapper">
-             <label for="icoursedate" class="xar-form-label" title="#xarML('Use the full official start date')#">
-                    <xar:mlstring>Date this course started:</xar:mlstring>
-             </label>
-             <xar:data-input name="icoursedate" type="calendar" validation="date" value="$icoursedate" />
-             <xar:if condition="!empty($invalid['icoursedate'])">
-                 <div class="xar-error">
-                        <xar:mlstring>ERROR! This is not a valid date</xar:mlstring>
-                 </div>
-             </xar:if>
-        </div>
+    <div class="xar-form-input-wrapper">
+         <label for="icoursedate" class="xar-form-label" title="#xarML('Use the full official start date')#">
+                <xar:mlstring>Date this course started:</xar:mlstring>
+         </label>
+         <xar:data-input name="icoursedate" type="calendar" validation="date" value="$icoursedate" />
+         <xar:if condition="!empty($invalid['icoursedate'])">
+             <div class="xar-error">
+                    <xar:mlstring>ERROR! This is not a valid date</xar:mlstring>
+             </div>
+         </xar:if>
+    </div>
 
-        <div class="xar-form-input-wrapper">
-             <label for="dateappr" class="xar-form-label" title="#xarML('This is the date this course has been approved')#">
-                    <xar:mlstring>Date of approval:</xar:mlstring>
-             </label>
-             <xar:data-input name="dateappr" type="calendar" validation="date" value="$dateappr" />
-             <xar:if condition="!empty($invalid['dateclose'])">
-                 <div class="xar-error">
-                        <xar:mlstring>ERROR! This is not a valid date</xar:mlstring>
-                 </div>
-             </xar:if>
-        </div>
-    </fieldset>
+    <div class="xar-form-input-wrapper">
+         <label for="dateappr" class="xar-form-label" title="#xarML('This is the date this course has been approved')#">
+                <xar:mlstring>Date of approval:</xar:mlstring>
+         </label>
+         <xar:data-input name="dateappr" type="calendar" validation="date" value="$dateappr" />
+         <xar:if condition="!empty($invalid['dateclose'])">
+             <div class="xar-error">
+                    <xar:mlstring>ERROR! This is not a valid date</xar:mlstring>
+             </div>
+         </xar:if>
+    </div>
+</fieldset>
 
-    <!-- if you want to extend this module with dynamic data, you can retrieve
-    //   that data in the code via APIs, or use e.g. the following BL tags here.
-    //   For the different options, see the overview of dynamicdata...
-    -->
-    <xar:if condition="xarModIsHooked('dynamicdata')">
-        <!-- 1. retrieve any dynamic properties defined for this object -->
-        <xar:data-getitem name="$properties" module="itsp" itemid="$pitemid" />
-        <!-- 2. for each property, display its label and value in output format -->
-        <xar:if condition="isset($properties) and count($properties) gt 0">
-            <xar:foreach in="$properties" key="$name">
-                      <xar:data-label property="$properties[$name]" />:
-                    <xar:data-output property="$properties[$name]" />
-            </xar:foreach>
-        </xar:if>
-    </xar:if>

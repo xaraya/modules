@@ -1,7 +1,6 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
 <!-- This Javascript will check for required fields before the form is submitted. -->
-
 <xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
 <script type="text/javascript">
 <!--
@@ -29,28 +28,27 @@
             </legend>
                 Some text
         </fieldset>
-    <fieldset>
-        <legend><xar:mlstring>Information</xar:mlstring></legend>
-
-        <div class="xar-form-input-wrapper">
-             <label for="name" class="xar-form-label" title="#xarML('Name of this item')#">
-                  <xar:mlstring>Name:</xar:mlstring>
-             </label>
-             #$pitem.pitemname#
-        </div>
-        <div class="xar-form-input-wrapper">
-             <label for="name" class="xar-form-label" title="#xarML('Rules and the description')#">
-                  <xar:mlstring>Description:</xar:mlstring>
-             </label>
-             #$pitem.pitemdesc#
-        </div>
-        <div class="xar-form-input-wrapper">
-             <label for="name" class="xar-form-label" title="#xarML('The minimum amount of credits you need to pass this item')#">
-                  <xar:mlstring>Minimum credits required:</xar:mlstring>
-             </label>
-             #$pitem.mincredit#
-        </div>
-    </fieldset>
+        <fieldset>
+            <legend><xar:mlstring>Information</xar:mlstring></legend>
+            <div class="xar-form-input-wrapper">
+                 <label for="name" class="xar-form-label" title="#xarML('Name of this item')#">
+                      <xar:mlstring>Name:</xar:mlstring>
+                 </label>
+                 #$pitem.pitemname#
+            </div>
+            <div class="xar-form-input-wrapper">
+                 <label for="name" class="xar-form-label" title="#xarML('Rules and the description')#">
+                      <xar:mlstring>Description:</xar:mlstring>
+                 </label>
+                 #$pitem.pitemdesc#
+            </div>
+            <div class="xar-form-input-wrapper">
+                 <label for="name" class="xar-form-label" title="#xarML('The minimum amount of credits you need to pass this item')#">
+                      <xar:mlstring>Minimum credits required:</xar:mlstring>
+                 </label>
+                 #$pitem.mincredit#
+            </div>
+        </fieldset>
 
         <xar:comment>Add a chooser here for the type of pitem to modify in this ITSP</xar:comment>
         <xar:if condition="strcmp('courses',$rule_source)==0">
@@ -58,7 +56,6 @@
         <xar:elseif condition="strcmp('external',$rule_source)==0" />
             <xar:template type="module" file="user-icourses" />
         </xar:if>
-
 
         <xar:if condition="!empty($hooks)">
         <fieldset>
