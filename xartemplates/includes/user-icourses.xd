@@ -47,22 +47,36 @@
             <label for="icourseloc" class="xar-form-label" title="#xarML('Eg the University organising this course')#">
                 <xar:mlstring>Organisor and location:</xar:mlstring>
             </label>
-            <xar:data-input name="icourseloc" type="textarea_medium" value="$icourseloc" />
+            <textarea name="icourseloc" id="icourseloc" class="xar-form-textareasmall" value="">#$icourseloc#</textarea>
             <xar:if condition="!empty($invalid['icourseloc'])">
                 <div class="xar-error">
                     <xar:mlstring>ERROR! This is not a valid organisor or location</xar:mlstring>
                 </div>
             </xar:if>
         </div>
+        <div class="xar-form-input-wrapper">
+            <label for="icoursedesc" class="xar-form-label" title="#xarML('Give a description of the course, or a location where the info can be found. Eg the URL')#">
+                <xar:mlstring>URL and description:</xar:mlstring>
+            </label>
+            <textarea name="icourseloc" id="icoursedesc" class="xar-form-textareasmall" value="">#$icoursedesc#</textarea>
+            <xar:if condition="!empty($invalid['icoursedesc'])">
+                <div class="xar-error">
+                    <xar:mlstring>ERROR! This is not a valid organisor or location</xar:mlstring>
+                </div>
+            </xar:if>
+        </div>
+            <div class="xar-form-input-wrapper">
+                 <label for="icourselevel" class="xar-form-label" title="#xarML('Choose the level for this course')#">
+                        <xar:mlstring>Level</xar:mlstring>
+                 </label>
+                 <select name="icourselevel">
+                    <xar:loop name="$levels">
+                        <option value="#$loop:item['lid']#">#$loop:item['level']#</option>
+                    </xar:loop>
+                 </select>
+            </div>
 <!--
-           xar_icoursetitle     C(255)    NotNull    DEFAULT '',
-           xar_icourseloc       C(255)    NotNull    DEFAULT '',
-           xar_icoursedesc      X         NotNull    DEFAULT '',
-           xar_icoursecredits   I         NotNull    DEFAULT 0,
-           xar_icourselevel     C(255)    NotNull    DEFAULT '',
            xar_icourseresult    C(255)    NotNull    DEFAULT '',
-           xar_icoursedate      I(11)     Null       DEFAULT NULL,
-           xar_dateappr         I(11)     Null       DEFAULT NULL,
 
 -->
         <div class="xar-form-input-wrapper">
