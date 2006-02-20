@@ -192,11 +192,6 @@ function itsp_user_modify($args)
                 $data['authid'] = xarSecGenAuthKey();
                 $data['invalid'] = $invalid;
 
-                $item = array();
-                $item['module'] = 'itsp';
-                $item['itemtype'] = 3;
-                $hooks = xarModCallHooks('item', 'new', '', $item);
-
                 if (empty($hooks)) {
                     $data['hookoutput'] = array();
                 } else {

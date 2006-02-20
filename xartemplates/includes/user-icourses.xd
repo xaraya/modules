@@ -102,9 +102,7 @@
                  </div>
              </xar:if>
         </div>
-
     </fieldset>
-
 
     <!-- if you want to extend this module with dynamic data, you can retrieve
     //   that data in the code via APIs, or use e.g. the following BL tags here.
@@ -121,5 +119,3 @@
             </xar:foreach>
         </xar:if>
     </xar:if>
-
-    <input type="hidden" name="itspid" id="itspid" value="#$itspid#" />

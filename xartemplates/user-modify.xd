@@ -71,6 +71,7 @@
         <fieldset>
             <div class="xar-form-input-wrapper-after">
                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+               <input type="hidden" name="itspid" id="itspid" value="#$itspid#" />
                <input type="hidden" name="pitemid" id="pitemid" value="#$pitemid#" />
                <input type="submit" value="#xarML('Update')#" />
             </div>
