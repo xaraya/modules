@@ -30,13 +30,13 @@ function itsp_admin_create($args)
     // Get parameters from whatever input we need.
     if (!xarVarFetch('planid',     'id',     $planid,     $planid,    XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('objectid',   'id',     $objectid,   $objectid,  XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('planname',   'str:1:', $planname,   $planname,  XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('plandesc',   'str:1:', $plandesc,   $plandesc,  XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('planrules',  'str:1:', $planrules,  $planrules, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('credits',    'int:1:', $credits,    $credits,   XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('mincredit',  'int:1:', $mincredit,  $mincredit, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('dateopen',   'int:1:', $dateopen,   $dateopen,  XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('dateclose',  'int:1:', $dateclose,  $dateclose, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('planname',   'str:1:', $planname,   '',  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('plandesc',   'str:1:', $plandesc,   '',  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('planrules',  'str:1:', $planrules,  '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('credits',    'int:1:', $credits,    '',   XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('mincredit',  'int:1:', $mincredit,  '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('dateopen',   'int:1:', $dateopen,   '',  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('dateclose',  'int:1:', $dateclose,  '', XARVAR_NOT_REQUIRED)) return;
 
     if (!xarVarFetch('invalid', 'array',  $invalid, $invalid, XARVAR_NOT_REQUIRED)) return;
 

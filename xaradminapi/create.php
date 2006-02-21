@@ -50,10 +50,10 @@ function itsp_adminapi_create($args)
     $datemodi = time();
     $modiby = xarUserGetVar('uid');
     // Transform dates to int(11)
-    if (is_string($dateopen)) {
+    if (!empty($dateopen) && is_string($dateopen)) {
         $dateopen = strtotime($dateopen);
     }
-    if (is_string($dateclose)) {
+    if (!empty($dateclose) && is_string($dateclose)) {
         $dateclose = strtotime($dateclose);
     }
     // Get database setup

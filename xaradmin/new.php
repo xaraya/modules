@@ -17,7 +17,7 @@
  * This is a standard function that is called whenever an administrator
  * wishes to create a new module item
  *
- * @author ITSP module development team
+ * @author MichelV <michelv@xarayahosting.nl>
  * @return array
  */
 function itsp_admin_new($args)
@@ -34,11 +34,7 @@ function itsp_admin_new($args)
     if (!xarVarFetch('dateclose',  'int:1:', $dateclose,  $dateclose, XARVAR_NOT_REQUIRED)) return;
 
     if (!xarVarFetch('invalid', 'array',  $invalid, $invalid, XARVAR_NOT_REQUIRED)) return;
-    /* Initialise the $data variable that will hold the data to be used in
-     * the blocklayout template, and get the common menu configuration - it
-     * helps if all of the module pages have a standard menu at the top to
-     * support easy navigation
-     */
+    // Call in menu. Non functional yet
     $data = xarModAPIFunc('itsp', 'admin', 'menu');
     /* Security check - important to do this as early as possible to avoid
      * potential security holes or just too much wasted processing
