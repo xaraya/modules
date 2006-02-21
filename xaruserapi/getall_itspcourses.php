@@ -47,7 +47,7 @@ function itsp_userapi_getall_itspcourses($args)
     }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-            join(', ', $invalid), 'user', 'getall_courselinks', 'ITSP');
+            join(', ', $invalid), 'user', 'getall_itspcourses', 'ITSP');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException($msg));
         return;
@@ -89,20 +89,21 @@ function itsp_userapi_getall_itspcourses($args)
      */
     if (!$result) return;
     for (; !$result->EOF; $result->MoveNext()) {
-        list($icourseid, $pitemid, $icoursetitle, $icourseloc, $icoursedesc, $icourselevel, $icourseresult,
+        list($icourseid, $pitemid, $icoursetitle, $icourseloc, $icoursedesc, $icoursecredits, $icourselevel, $icourseresult,
         $icoursedate, $dateappr, $datemodi,$modiby) = $result->fields;
         if (xarSecurityCheck('ViewITSP', 0, 'ITSP', "$itspid:All:All")) {
-            $items[] = array('icourseid'    => $icourseid,
-                             'pitemid'      => $pitemid,
-                             'icoursetitle' => $icoursetitle,
-                             'icourseloc'   => $icourseloc,
-                             'icoursedesc'  => $icoursedesc,
-                             'icourselevel' => $icourselevel,
-                             'icourseresult' => $icourseresult,
-                             'icoursedate'  => $icoursedate,
-                             'dateappr'     => $dateappr,
-                             'datemodi'     => $datemodi,
-                             'modiby'       => $modiby);
+            $items[] = array('icourseid'      => $icourseid,
+                             'pitemid'        => $pitemid,
+                             'icoursetitle'   => $icoursetitle,
+                             'icourseloc'     => $icourseloc,
+                             'icoursedesc'    => $icoursedesc,
+                             'icoursecredits' => $icoursecredits,
+                             'icourselevel'   => $icourselevel,
+                             'icourseresult'  => $icourseresult,
+                             'icoursedate'    => $icoursedate,
+                             'dateappr'       => $dateappr,
+                             'datemodi'       => $datemodi,
+                             'modiby'         => $modiby);
         }
     }
     /* All successful database queries produce a result set, and that result

@@ -126,18 +126,17 @@ function itsp_user_modify($args)
                 }
             // We can have external courses
             case 'external':
-                // get all linked courses that already have been added to the ITSP for this pitemdi
-                $courselinks = xarModApiFunc('itsp','user','getall_itspcourses',array('itspid'=>$pitemid, 'pitemid' => $pitemid));
+                // get all linked courses that already have been added to the ITSP for this pitemid
+                $courselinks = xarModApiFunc('itsp','user','getall_itspcourses',array('itspid'=>$itspid, 'pitemid' => $pitemid));
                 // for each linked course get the details
                 if (!isset($courselinks) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-
                 /* TODO: check for conflicts between transformation hook output and xarVarPrepForDisplay
                  * Loop through each item and display it.
                  */
                 foreach ($courselinks as $icourse) {
                     // Add read link
-                    $courseid = $icourse['icourseid'];
-                    if (xarSecurityCheck('ReadITSPPlan', 0, 'Plan', "$planid:All:All")) {
+                    $icourseid = $icourse['icourseid'];
+                    if (xarSecurityCheck('ReadITSP', 0, 'ITSP', "$itspid:All:All")) {
                         $icourse['link'] = xarModURL('itsp',
                             'user',
                             'display_icourse',
@@ -154,22 +153,6 @@ function itsp_user_modify($args)
                     /* Add this item to the list of items to be displayed */
                     $data['icourses'][] = $icourse;
                 }
-                /*
-                xar_icourseid        I         AUTO       PRIMARY,
-               xar_pitemid          I         NotNull    DEFAULT 0,
-               xar_itspid           I         NotNull    DEFAULT 0,
-               xar_icoursetitle     C(255)    NotNull    DEFAULT '',
-               xar_icourseloc       C(255)    NotNull    DEFAULT '',
-               xar_icoursedesc      X         NotNull    DEFAULT '',
-               xar_icoursecredits   I         NotNull    DEFAULT 0,
-               xar_icourselevel     C(255)    NotNull    DEFAULT '',
-               xar_icourseresult    C(255)    NotNull    DEFAULT '',
-               xar_icoursedate      I(11)     Null       DEFAULT NULL,
-               xar_dateappr         I(11)     Null       DEFAULT NULL,
-               xar_datemodi         I(11)     Null       DEFAULT NULL,
-               xar_modiby           I         NotNull    DEFAULT 0
-
-                */
                 // Set data for a new item
                 if (!xarVarFetch('icourseid',      'id',        $icourseid,      $icourseid,      XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('icoursetitle',   'str:1:255', $icoursetitle,   $icoursetitle,   XARVAR_NOT_REQUIRED)) return;
@@ -244,8 +227,6 @@ function itsp_user_modify($args)
                     $data['dateappr'] = $dateappr;
                 }
         }
-
-
 
 
         $data['pitem'] = $pitem;

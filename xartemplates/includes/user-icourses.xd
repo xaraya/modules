@@ -2,7 +2,7 @@
 <fieldset>
     <xar:if condition="!empty($icourses)">
         <legend><xar:mlstring>You have added:</xar:mlstring></legend>
-        <xar:foreach in="$icourses" key="$icourseid">
+        <xar:foreach in="$icourses" value="$icourse">
             <div class="xar-form-input-wrapper">
                  <label for="title" class="xar-form-label" title="#xarML('These are the courses you have added before')#">
                       <xar:mlstring>Coursetitle:</xar:mlstring>
