@@ -14,9 +14,7 @@
 /**
  * Create a new external course, itsp course
  *
- * Standard function to create a new plan
- * This is a standard function that is called with the results of the
- * form supplied by xarModFunc('itsp','admin','new') to create a new item
+ * Standard function to create a new external course.
  *
  * @author michelv <michelv@xarayahosting.nl>
  * @since 21 Feb 2006

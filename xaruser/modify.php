@@ -188,8 +188,6 @@ function itsp_user_modify($args)
                                                   array('itemtype' => 1003));
                 // Get the coursetypes for the types rule
                 $data['coursetypes'] = xarModAPIFunc('courses', 'user', 'getall_coursetypes');
-                /* Generate a one-time authorisation code for this operation */
-                $data['authid'] = xarSecGenAuthKey();
                 $data['invalid'] = $invalid;
 
                 if (empty($hooks)) {

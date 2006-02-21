@@ -23,22 +23,23 @@
  * @param  int pitemid the number of the plan item to be updated
  * @param array invalid
  * @since 20 feb 2006
+ * @todo michelv: why doesn't the sec check in here work?
  */
-function itsp_user_update($args)
+function itsp_user_update()
 {
-    extract($args);
+    //extract($args);
 
     if (!xarVarFetch('itspid',   'id',    $itspid,   $itspid,   XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('objectid', 'id',    $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('pitemid',  'id',    $pitemid,  $pitemid,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('invalid',  'array', $invalid,  array(),   XARVAR_NOT_REQUIRED)) return;
-
+   // if (!xarVarFetch('authid',   'str::', $authid,  '',  XARVAR_NOT_REQUIRED)) return;
     if (!empty($objectid)) {
         $pitemid = $objectid;
     }
-// TODO: include check here for passing variables.
- //
- //   $itspid = $itsp['itspid'];
+ //   if (!xarSecConfirmAuthKey()) return;
+    // TODO: include check here for passing variables.
+    //   $itspid = $itsp['itspid'];
     // The user API function is called to get the ITSP
     $itsp = xarModAPIFunc('itsp',
                           'user',
@@ -50,7 +51,6 @@ function itsp_user_update($args)
     if (!xarSecurityCheck('ReadITSP', 1, 'ITSP', "$itspid:$planid:All")) {
         return;
     }
-    if (!xarSecConfirmAuthKey()) return;
 
     // Check to see if we are already dealing with a planitem
     if (!empty($pitemid) && is_numeric($pitemid)) {
@@ -105,7 +105,7 @@ function itsp_user_update($args)
                 if (!xarVarFetch('dateappr',   'str::',    $dateappr, '',   XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('invalid',  'array', $invalid,  array(),   XARVAR_NOT_REQUIRED)) return;
 
-                if (!xarModAPIFunc('itsp',
+                if (!xarModFunc('itsp',
                                    'admin',
                                    'create_icourse',
                                    array(
@@ -119,14 +119,17 @@ function itsp_user_update($args)
                                    'icourselevel'=> $icourselevel,
                                    'icourseresult'=> $icourseresult,
                                    'icoursedate'=> $icoursedate,
-                                   'dateappr'=> $dateappr))) {
+                                   'dateappr'=> $dateappr,
+                                   'authid' => xarSecGenAuthKey('itsp')
+                                         )
+                                )) {
                     return; /* throw back */
                 }
         }
     }
 
 
-
+/*
     $invalid = array();
     if (empty($number) || !is_numeric($number)) {
         $invalid['number'] = 1;
@@ -137,17 +140,16 @@ function itsp_user_update($args)
         $name = '';
     }
 
-    /* check if we have any errors */
+    // check if we have any errors
     if (count($invalid) > 0) {
-        /* call the user_new function and return the template vars
-         * (you need to copy user-new.xd to user-create.xd here)
-         */
+        // call the user_new function and return the template vars
+
         return xarModFunc('itsp', 'user', 'modify',
                           array('name'     => $name,
                                 'number'   => $number,
                                 'invalid'  => $invalid));
     }
-
+*/
     xarSessionSetVar('statusmsg', xarML('ITSP Item was successfully updated!'));
     /* This function generated no output, and so now it is complete we redirect
      * the user to an appropriate page for them to carry on their work
