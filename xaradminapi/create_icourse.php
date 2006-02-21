@@ -57,8 +57,8 @@ function itsp_adminapi_create_icourse($args)
     $xartable =& xarDBGetTables();
     $icoursestable = $xartable['itsp_itsp_courses'];
     /* Get next ID in table */
-    $nextId = $dbconn->GenId($planitemstable);
-    $query = "INSERT INTO $planitemstable (
+    $nextId = $dbconn->GenId($icoursestable);
+    $query = "INSERT INTO $icoursestable (
                xar_icourseid,
                xar_pitemid,
                xar_itspid,

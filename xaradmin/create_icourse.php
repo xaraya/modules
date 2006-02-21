@@ -31,9 +31,9 @@ function itsp_admin_create_icourse($args)
     extract($args);
 
     // The general parameters
-    if (!xarVarFetch('itspid',   'id',    $itspid )) return;
-    if (!xarVarFetch('pitemid',  'id',    $pitemid)) return;
-    if (!xarVarFetch('objectid', 'id',    $objectid, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('itspid',   'id', $itspid )) return;
+    if (!xarVarFetch('pitemid',  'id', $pitemid)) return;
+    if (!xarVarFetch('objectid', 'id', $objectid, '', XARVAR_NOT_REQUIRED)) return;
     // The external course data
     if (!xarVarFetch('icourseid',      'id',        $icourseid,      '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('icoursetitle',   'str:1:255', $icoursetitle,   '', XARVAR_NOT_REQUIRED)) return;
@@ -107,7 +107,7 @@ function itsp_admin_create_icourse($args)
     /* This function generated no output, and so now it is complete we redirect
      * the user to an appropriate page for them to carry on their work
      */
-    xarResponseRedirect(xarModURL('itsp', 'admin', 'view'));
+    xarResponseRedirect(xarModURL('itsp', 'user', 'modify', array('itspid' => $itspid, 'pitemid' => $pitemid)));
     /* Return true, in this case */
     return true;
 }

@@ -33,7 +33,7 @@
          </xar:if>
     </div>
     <div class="xar-form-input-wrapper">
-         <label for="icoursetitle" class="xar-form-label" title="#xarML('The credits you will obtain with this course')#">
+         <label for="icoursecredits" class="xar-form-label" title="#xarML('The credits you will obtain with this course')#">
               <xar:mlstring>Credits</xar:mlstring>
          </label>
          <input type="text" name="icoursecredits" id="icoursecredits" value="#$icoursecredits#" maxlength="5" class="xar-form-textshort" />
@@ -58,7 +58,7 @@
         <label for="icoursedesc" class="xar-form-label" title="#xarML('Give a description of the course, or a location where the info can be found. Eg the URL')#">
             <xar:mlstring>URL and description:</xar:mlstring>
         </label>
-        <textarea name="icourseloc" id="icoursedesc" class="xar-form-textareasmall" value="">#$icoursedesc#</textarea>
+        <textarea name="icoursedesc" id="icoursedesc" class="xar-form-textareasmall" value="">#$icoursedesc#</textarea>
         <xar:if condition="!empty($invalid['icoursedesc'])">
             <div class="xar-error">
                 <xar:mlstring>ERROR! This is not a valid organisor or location</xar:mlstring>

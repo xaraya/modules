@@ -108,7 +108,10 @@ function itsp_user_update($args)
                 if (!xarModAPIFunc('itsp',
                                    'admin',
                                    'create_icourse',
-                                   array('icourseid'=>$icourseid,
+                                   array(
+                                   'itspid' => $itspid,
+                                   'pitemid' => $pitemid,
+                                   'icourseid'=>$icourseid,
                                    'icoursetitle'=> $icoursetitle,
                                    'icourseloc'=>  $icourseloc,
                                    'icoursedesc'=> $icoursedesc,
