@@ -171,16 +171,16 @@ function itsp_user_modify($args)
 
                 */
                 // Set data for a new item
-                if (!xarVarFetch('icourseid',   'id',    $icourseid,   $icourseid,   XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('icoursetitle', 'str:1:255',    $icoursetitle, $icoursetitle, XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('icourseloc',  'str:1:255',    $icourseloc,  $icourseloc,  XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('icoursedesc',   'str::',    $icoursedesc,   $icoursedesc,   XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('icoursecredits',   'int::',    $icoursecredits,   $icoursecredits,   XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('icourselevel', 'str:1:255',    $icourselevel, $icourselevel, XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('icourseresult',  'str:1:255',    $icourseresult,  $icourseresult,  XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('icoursedate',   'str::',    $icoursedate,   $icoursedate,   XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('dateappr',   'str::',    $dateappr,   $dateappr,   XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('invalid',  'array', $invalid,  array(),   XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('icourseid',      'id',        $icourseid,      $icourseid,      XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('icoursetitle',   'str:1:255', $icoursetitle,   $icoursetitle,   XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('icourseloc',     'str:1:255', $icourseloc,     $icourseloc,     XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('icoursedesc',    'str::',     $icoursedesc,    $icoursedesc,    XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('icoursecredits', 'int::',     $icoursecredits, $icoursecredits, XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('icourselevel',   'str:1:255', $icourselevel,   $icourselevel,   XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('icourseresult',  'str:1:255', $icourseresult,  $icourseresult,  XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('icoursedate',    'str::',     $icoursedate,    $icoursedate,    XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('dateappr',       'str::',     $dateappr,       $dateappr,       XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('invalid',        'array',     $invalid,        array(),         XARVAR_NOT_REQUIRED)) return;
 
                 //if (!xarSecurityCheck('AddITSPPlan')) return;
                 // get the levels in courses

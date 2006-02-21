@@ -61,7 +61,7 @@ function itsp_admin_create_pitem($args)
     $invalid = array();
     if (empty($mincredit) || !is_numeric($mincredit)) {
         $invalid['mincredit'] = 1;
-        $number = '';
+        $mincredit = '';
     }
     if (empty($pitemname) || !is_string($pitemname)) {
         $invalid['pitemname'] = 1;

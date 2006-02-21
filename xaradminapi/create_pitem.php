@@ -19,8 +19,7 @@
  * @author the ITSP module development team
  * @param  $args ['name'] name of the item
  * @param  $args ['number'] number of the item
- * @returns int
- * @return itsp item ID on success, false on failure
+ * @return int itsp item ID on success, false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function itsp_adminapi_create_pitem($args)
@@ -52,15 +51,8 @@ function itsp_adminapi_create_pitem($args)
     // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-    /* It's good practice to name the table and column definitions you
-     * are getting - $table and $column don't cut it in more complex
-     * modules
-     */
     $planitemstable = $xartable['itsp_planitems'];
-    /* Get next ID in table - this is required prior to any insert that
-     * uses a unique ID, and ensures that the ID generation is carried
-     * out in a database-portable fashion
-     */
+    /* Get next ID in table */
     $nextId = $dbconn->GenId($planitemstable);
     $query = "INSERT INTO $planitemstable (
                xar_pitemid,

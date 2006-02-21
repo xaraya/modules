@@ -3,7 +3,7 @@
  * Create a new ITSP
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -14,7 +14,7 @@
 /**
  * Create a new ITSP
  *
- * Standard function to create a new item
+ * Standard function to create a new ITSP
  * This is a standard function that is called with the results of the
  * form supplied by xarModFunc('itsp','user','new') to create a new item
  *
