@@ -81,9 +81,10 @@ function itsp_user_update()
             case 'courses':
             case 'internal':
                 // Then we are adding a course, if this id is set
-                if (!xarVarFetch('lcourseid',   'id',    $icourseid, '',   XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('lcourseid',  'id',    $icourseid, '',   XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('dateappr',   'str::',    $dateappr, '',   XARVAR_NOT_REQUIRED)) return;
-                if (!empty($lcourseid)) {
+                // Make sure we will not add the empty string as a course
+                if (!empty($lcourseid) && $lcourseid > 0) {
                     // Create a new linked course
                     if (!$linkedid = xarModApiFunc('itsp','admin','create_linked',
                                                     array('itspid' =>$itspid,

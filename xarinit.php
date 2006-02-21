@@ -396,15 +396,10 @@ function itsp_upgrade($oldversion)
  *
  * This function is only ever called once during the lifetime of a particular
  * module instance
+ * @return bool
  */
 function itsp_delete()
 {
-    /* Get database setup - note that both xarDBGetConn() and xarDBGetTables()
-     * return arrays but we handle them differently.  For xarDBGetConn()
-     * we currently just want the first item, which is the official
-     * database handle.  For xarDBGetTables() we want to keep the entire
-     * tables array together for easy reference later on
-     */
     /* Get database setup */
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -435,20 +430,9 @@ function itsp_delete()
             'itsp', 'user', 'usermenu')) {
         return false;
     }
-    /* Remove Masks and Instances
-     * these functions remove all the registered masks and instances of a module
-     * from the database. This is not strictly necessary, but it's good housekeeping.
-     */
+    /* Remove Masks and Instances */
     xarRemoveMasks('itsp');
     xarRemoveInstances('itsp');
-
-    /* Category deletion?
-     *
-     * Categories can be used in more than one module.
-     * The categories originally created for this module could also have been used
-     * for other modules. If we delete the categories then we must be sure that
-     * no other modules are currently using them.
-     */
 
     /* Deletion successful*/
     return true;
