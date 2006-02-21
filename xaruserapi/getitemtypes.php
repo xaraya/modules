@@ -3,7 +3,7 @@
  * Utility function to retrieve the list of item types
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -14,7 +14,7 @@
 /**
  * Utility function to retrieve the list of item types of this module (if any)
  *
- * @author the ITSP module development team
+ * @author MichelV <michelv@xarayahosting.nl>
  * @return array containing the item types and their description
  * @todo decide on the setup in here
  */
@@ -34,6 +34,12 @@ function itsp_userapi_getitemtypes($args)
     $itemtypes[3] = array('label' => xarVarPrepForDisplay(xarML('ITSP Planitems')),
                       'title' => xarVarPrepForDisplay(xarML('View ITSP Planitems')),
                       'url'   => xarModURL('itsp','user','view'));
+    $itemtypes[4] = array('label' => xarVarPrepForDisplay(xarML('Linked Courses')),
+                      'title' => xarVarPrepForDisplay(xarML('Linked courses')),
+                      'url'   => xarModURL('itsp','user','view'));
+    $itemtypes[5] = array('label' => xarVarPrepForDisplay(xarML('External courses')),
+                      'title' => xarVarPrepForDisplay(xarML('All externally linked courses')),
+                      'url'   => xarModURL('itsp','admin','external'));
     return $itemtypes;
 }
 ?>

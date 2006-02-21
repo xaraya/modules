@@ -25,19 +25,6 @@
  */
 function itsp_adminapi_create_icourse($args)
 {
-    /*
-    'itspid' => $itspid,
-                                    'pitemid'=> $pitemid,
-                                    'icourseid'=> $icourseid,
-                                    'icoursetitle'=>$icoursetitle,
-                                    'icourseloc'=> $icourseloc,
-                                    'icoursedesc'=>  $icoursedesc,
-                                    'icoursecredits'=> $icoursecredits,
-                                    'icourselevel'=> $icourselevel,
-                                    'icourseresult'=> $icourseresult,
-                                    'icoursedate'=>  $icoursedate,
-                                    'dateappr'=>  $dateappr
-    */
     extract($args);
     /* Argument check */
     $invalid = array();
@@ -111,15 +98,13 @@ function itsp_adminapi_create_icourse($args)
 
     /* Get the ID of the item that we inserted. */
     $pitemid = $dbconn->PO_Insert_ID($icoursestable, 'xar_icourseid');
-/*
     // Let any hooks know that we have created a new item.
-    $item = $args;
+    $item = $bindvars;
     $item['module'] = 'itsp';
-    $item['itemtype'] = 3;
+    $item['itemtype'] = 5;
     $item['itemid'] = $pitemid;
     xarModCallHooks('item', 'create', $pitemid, $item);
 
-    */
     /* Return the id of the newly created item to the calling process */
     return $icourseid;
 }
