@@ -93,7 +93,7 @@ function itsp_admin_create_pitem($args)
     if (!xarSecConfirmAuthKey()) return;
 
     // Format the rule
-    $pitemrules = "type:$rule_type;level:$rule_level;category:$rule_cat;source:$rule_source";
+    $pitemrules = "coursetype:$rule_type;level:$rule_level;category:$rule_cat;source:$rule_source";
 
     if(empty($credits)) {
         $credits = '';

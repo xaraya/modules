@@ -97,7 +97,7 @@ function itsp_admin_update_pitem($args)
          $dateopen = strtotime($dateclose);
     }
     // Format the rule
-    $pitemrules = "type:$rule_type;level:$rule_level;category:$rule_cat;source:$rule_source";
+    $pitemrules = "coursetype:$rule_type;level:$rule_level;category:$rule_cat;source:$rule_source";
 
     if (!xarModAPIFunc('itsp',
                        'admin',
