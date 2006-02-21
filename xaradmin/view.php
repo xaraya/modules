@@ -30,11 +30,7 @@ function itsp_admin_view()
 
     /* Call the xarTPL helper function to produce a pager in case of there
      * being many items to display.
-     *
-     *
-     * Note that this function includes another user API function.  The
-     * function returns a simple count of the total number of items in the item
-     * table so that the pager function can do its job properly
+
      */
     $data['pager'] = xarTplGetPager($startnum,
         xarModAPIFunc('itsp', 'user', 'countitems', array('itemtype' => 1)),
@@ -44,11 +40,7 @@ function itsp_admin_view()
      * potential security holes or just too much wasted processing
      */
     if (!xarSecurityCheck('EditITSP')) return;
-    /* The user API function is called.  This takes the number of items
-     * required and the first number in the list of all items, which we
-     * obtained from the input and gets us the information on the appropriate
-     * items.
-     */
+
     $items = xarModAPIFunc('itsp',
                            'user',
                            'getall_plans',
@@ -82,10 +74,23 @@ function itsp_admin_view()
         } else {
             $items[$i]['deleteurl'] = '';
         }
+        if (xarSecurityCheck('AddITSPPlan', 0, 'Plan', "$planid:All:All")) {
+            $items[$i]['pitemurl'] = xarModURL('itsp',
+                'admin',
+                'new_pitem',
+                array('planid' => $planid));
+        } else {
+            $items[$i]['pitemurl'] = '';
+        }
     }
     /* Add the array of items to the template variables */
     $data['items'] = $items;
 
+    if (xarSecurityCheck('AddITSPPlan', 0, 'Plan')) {
+        $data['addurl'] = xarModURL('itsp','admin','new');
+    } else {
+        $data['addurl'] = '';
+    }
     /* Return the template variables defined in this function */
     return $data;
 }

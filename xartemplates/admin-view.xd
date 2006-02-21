@@ -50,6 +50,12 @@
                <xar:else />
                    <a href="#$item.deleteurl#"><xar:mlstring>Delete</xar:mlstring></a>
                </xar:if>
+               |
+               <xar:if condition="empty($item['pitemurl'])">
+                   <xar:mlstring>Add item</xar:mlstring>
+               <xar:else />
+                   <a href="#$item.pitemurl#"><xar:mlstring>Add item</xar:mlstring></a>
+               </xar:if>
             </td>
         </tr>
         </xar:foreach>
@@ -59,6 +65,10 @@
         <!-- add the pager here -->
         #$pager#
     </div>
+
+    <xar:if condition="!empty($addurl)">
+        <a href="#$addurl#"><xar:mlstring>Add a new plan</xar:mlstring></a>
+    </xar:if>
 </div>
 <!--
     // clear the status message

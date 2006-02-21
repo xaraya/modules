@@ -161,6 +161,7 @@
         </xar:if>
         <fieldset>
             <div class="xar-form-input-wrapper-after">
+                <input type="hidden" name="planid" id="planid" value="#$planid#" />
                 <input type="hidden" name="authid" id="authid" value="#$authid#" />
                 <input type="submit" value="#xarML('Add the plan item')#" />
             </div>

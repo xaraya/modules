@@ -25,6 +25,7 @@ function itsp_admin_new_pitem($args)
     extract($args);
 
     // Get parameters from whatever input we need.
+    if (!xarVarFetch('planid',     'id',     $planid,      $planid,     XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('pitemname',  'str:1:', $pitemname,   $pitemname,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('pitemdesc',  'str:1:', $pitemdesc,   $pitemdesc,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('pitemrules', 'str:1:', $pitemrules,  $pitemrules, XARVAR_NOT_REQUIRED)) return;
@@ -67,7 +68,9 @@ function itsp_admin_new_pitem($args)
          */
         $data['hookoutput'] = $hooks;
     }
-    $data['hooks'] = '';
+    // Add the planid that this planitem can already be attached to
+    $data['planid'] = $planid;
+
     /* For E_ALL purposes, we need to check to make sure the vars are set.
      * If they are not set, then we need to set them empty to surpress errors
      */

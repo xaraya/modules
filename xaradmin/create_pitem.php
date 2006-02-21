@@ -26,13 +26,14 @@
  * @param int 'rule_cat'
  * @param int 'rule_level'
  * @param int 'rule_type'
- * @return mixed true on succes, with redirect URL
+ * @return bool true on success, with redirect URL
  */
 function itsp_admin_create_pitem($args)
 {
     extract($args);
 
     // Get parameters from whatever input we need.
+    if (!xarVarFetch('planid',     'id',     $planid,     $planid,    XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('pitemid',    'id',     $pitemid,    $pitemid,    XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('objectid',   'id',     $objectid,   $objectid,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('pitemname',  'str:1:', $pitemname,  $pitemname,  XARVAR_NOT_REQUIRED)) return;
@@ -115,6 +116,19 @@ function itsp_admin_create_pitem($args)
      */
     if (!isset($pitemid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     xarSessionSetVar('statusmsg', xarML('ITSP Plan item was successfully created!'));
+
+    // Add this new plan item to the plan if planid was set
+    if($planid) {
+        if ((!xarModAPIFunc('itsp',
+                          'admin',
+                          'create_plink',
+                          array('planid'  => $planid,
+                                'pitemid'  => $pitemid)
+                                )
+                          ) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+        xarSessionSetVar('statusmsg', xarML('ITSP Plan item was successfully created and added to plan!'));
+    }
+
     /* This function generated no output, and so now it is complete we redirect
      * the user to an appropriate page for them to carry on their work
      */
