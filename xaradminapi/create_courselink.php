@@ -55,6 +55,9 @@ function itsp_adminapi_create_courselink($args)
     }
     $datemodi = time();
     $modiby = xarUserGetVar('uid');
+    if (is_string($dateappr)) {
+        $dateappr = strtotime($dateappr);
+    }
     // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();

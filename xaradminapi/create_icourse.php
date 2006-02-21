@@ -17,8 +17,9 @@
  * This is a standard adminapi function to create a module item
  *
  * @author the ITSP module development team
- * @param  $args ['name'] name of the item
- * @param  $args ['number'] number of the item
+ * @param  string icoursetitle Title of the course
+ * @param  int itspid
+ * @param  int pitemid
  * @since 21 feb 2006
  * @return int itsp item ID on success, false on failure
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
@@ -52,6 +53,13 @@ function itsp_adminapi_create_icourse($args)
     }
     $datemodi = time();
     $modiby = xarUserGetVar('uid');
+
+    if (is_string($dateappr)) {
+        $dateappr = strtotime($dateappr);
+    }
+    if (is_string($icoursedate)) {
+        $icoursedate = strtotime($icoursedate);
+    }
     // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();

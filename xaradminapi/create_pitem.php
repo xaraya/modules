@@ -17,8 +17,8 @@
  * This is a standard adminapi function to create a module item
  *
  * @author the ITSP module development team
- * @param  $args ['name'] name of the item
- * @param  $args ['number'] number of the item
+ * @param  string pitemname Name of the item
+ * @param  int mincredit number credits to be obtained
  * @return int itsp item ID on success, false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
@@ -40,14 +40,19 @@ function itsp_adminapi_create_pitem($args)
             new SystemException($msg));
         return;
     }
-    /* Security check - important to do this as early on as possible to
-     * avoid potential security holes or just too much wasted processing
-     */
+    /* Security check */
     if (!xarSecurityCheck('AddITSPPlan', 1, 'Plan', "All:All:All")) {//TODO: check
         return;
     }
     $datemodi = time();
     $modiby = xarUserGetVar('uid');
+    // Transform dates to int(11)
+    if (is_string($dateopen)) {
+        $dateopen = strtotime($dateopen);
+    }
+    if (is_string($dateclose)) {
+        $dateclose = strtotime($dateclose);
+    }
     // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();

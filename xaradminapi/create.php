@@ -1,9 +1,9 @@
 <?php
 /**
- * Create a new itsp item
+ * Create a new itsp plan
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -12,26 +12,21 @@
  * @author ITSP Module Development Team
  */
 /**
- * Create a new itsp item
+ * Create a new itsp plan
  *
- * This is a standard adminapi function to create a module item
+ * The plan is the largest component in this module
  *
  * @author the ITSP module development team
- * @param  $args ['name'] name of the item
- * @param  $args ['number'] number of the item
- * @returns int
- * @return itsp item ID on success, false on failure
+ * @param  string planname name of the plan
+ * @param  string plandesc Description of the plan
+ * @param  int credits
+ * @return int plan item ID on success, false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function itsp_adminapi_create($args)
 {
     extract($args);
-    /* Argument check - make sure that all required arguments are present
-     * and in the right format, if not then set an appropriate error
-     * message and return
-     * Note : since we have several arguments we want to check here, we'll
-     * report all those that are invalid at the same time...
-     */
+    /* Argument check */
     $invalid = array();
     if (!isset($planname) || !is_string($planname)) {
         $invalid[] = 'planname';
@@ -54,6 +49,13 @@ function itsp_adminapi_create($args)
     }
     $datemodi = time();
     $modiby = xarUserGetVar('uid');
+    // Transform dates to int(11)
+    if (is_string($dateopen)) {
+        $dateopen = strtotime($dateopen);
+    }
+    if (is_string($dateclose)) {
+        $dateclose = strtotime($dateclose);
+    }
     // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -62,16 +64,8 @@ function itsp_adminapi_create($args)
      * modules
      */
     $planstable = $xartable['itsp_plans'];
-    /* Get next ID in table - this is required prior to any insert that
-     * uses a unique ID, and ensures that the ID generation is carried
-     * out in a database-portable fashion
-     */
+
     $nextId = $dbconn->GenId($planstable);
-    /* Add item - the formatting here is not mandatory, but it does make
-     * the SQL statement relatively easy to read.  Also, separating out
-     * the sql statement from the Execute() command allows for simpler
-     * debug operation if it is ever needed
-     */
     $query = "INSERT INTO $planstable (
                xar_planid,
                xar_planname,
@@ -95,11 +89,6 @@ function itsp_adminapi_create($args)
      * the exception so we just return
      */
     if (!$result) return;
-
-    /* Get the ID of the item that we inserted.  It is possible, depending
-     * on your database, that this is different from $nextId as obtained
-     * above, so it is better to be safe than sorry in this situation
-     */
     $planid = $dbconn->PO_Insert_ID($planstable, 'xar_planid');
 
     // Let any hooks know that we have created a new item.

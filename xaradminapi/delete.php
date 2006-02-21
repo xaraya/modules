@@ -3,7 +3,7 @@
  * Delete an itsp item
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -18,8 +18,7 @@
  *
  * @author the ITSP module development team
  * @param  $args ['planid'] ID of the item
- * @returns bool
- * @return true on success, false on failure
+ * @return bool true on success, false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function itsp_adminapi_delete($args)
