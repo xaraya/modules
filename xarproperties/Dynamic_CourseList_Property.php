@@ -1,9 +1,9 @@
 <?php
 /**
- * Dynamic userlist property
+ * Dynamic Courselist Property
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -13,10 +13,10 @@
  */
 /**
  * Dynamic courselist property
- * based on work of:
- * @author DD: mikespub <mikespub@xaraya.com>
+ * based on work of mikespub <mikespub@xaraya.com>
  * @author MichelV <michelv@xaraya.com>
  * @todo MichelV: <1> field selection
+                  <2> Enable multiple categories and selections
  */
 
 /* Include the base class */
@@ -24,14 +24,14 @@ include_once "modules/base/xarproperties/Dynamic_Select_Property.php";
 
 class Dynamic_CourseList_Property extends Dynamic_Select_Property
 {
-    var $catlist = array();
+    var $catid = -1;//array();
     var $showlist = array();
     var $orderlist = array();
-    var $typelist = array();
-    var $levellist = array();
+    var $coursetype = -1;
+    var $level = -1;//array();
     var $showglue = '; ';
 
-    /*
+    /**
     * Options available to course selection
     * ===================================
     * $pitemrules = "type:$rule_type;level:$rule_level;category:$rule_cat;source:$rule_source";
@@ -41,20 +41,21 @@ class Dynamic_CourseList_Property extends Dynamic_Select_Property
     * option-types:
     *   category:catid[,catid] - select only courses who are members of the given category(ies)
     *   level:value - select only courses of the given level (int)
-    *   type:value - select only courses of the given value for type (varchar)
+    *   coursetype:value - select only courses of the given value for type (varchar)
     *   show:field[,field] - show the specified field(s) in the select item
     *   showglue:string - string to join multiple fields together
     *   order:field[,field] - order the selection by the specified field
     * where
     *   field - name|uname|email|uid TO BE DETERMINED
+    * @return none
     */
 
     function Dynamic_CourseList_Property($args)
     {
         // Don't initialise the parent class as it handles the
         // validation in an inappropriate way for user lists.
-        $this->Dynamic_Select_Property($args);
-
+        //$this->Dynamic_Select_Property($args);
+        $this->Dynamic_Property($args);
         // Initialise the select option list.
         $this->options = array();
 
@@ -63,7 +64,9 @@ class Dynamic_CourseList_Property extends Dynamic_Select_Property
             $this->parseValidation($this->validation);
         }
     }
-
+    /**
+     * @return bool
+     */
     // TODO: validate the selected user against the specified group(s).
     function validateValue($value = null)
     {
@@ -87,7 +90,10 @@ class Dynamic_CourseList_Property extends Dynamic_Select_Property
         $this->value = null;
         return false;
     }
-
+    /**
+     * Show the input dropdown
+     * @return array
+     */
     function showInput($args = array())
     {
         $select_options = array();
@@ -104,17 +110,17 @@ class Dynamic_CourseList_Property extends Dynamic_Select_Property
             $options = $this->options;
         }
         if (count($options) == 0) {
-           /* if ($this->levels <> -1) {
-                $select_options['level'] = $this->levels;
-            }*/
+            if ($this->level <> -1) {
+                $select_options['level'] = $this->level;
+            }
             if (!empty($this->orderlist)) {
                 $select_options['order'] = implode(',', $this->orderlist);
             }
-            if (!empty($this->catlist)) {
-                $select_options['category'] = implode(',', $this->catlist);
+            if ($this->catid <> -1) {
+                $select_options['catid'] = $this->catid;
             }
-            if (!empty($this->typelist)) {
-                $select_options['type'] = implode(',', $this->typelist);
+            if ($this->coursetype <> -1) {
+                $select_options['coursetype'] = $this->coursetype;
             }
             $courses = xarModAPIFunc('courses', 'user', 'getall', $select_options);
             $options[] = array('id' => 0, 'name' => xarML('Please choose a course'));
@@ -123,7 +129,7 @@ class Dynamic_CourseList_Property extends Dynamic_Select_Property
             if (empty($this->showlist)) {
                 // Simple case (default) -
                 foreach ($courses as $course) {
-                    $options[] = array('id' => $course['courseid'], 'name' => $course['name']);
+                    $options[] = array('id' => $course['courseid'], 'name' => xarVarPrepForDisplay($course['name']));
                 }
             } else {
                 // Complex case: allow specific fields to be selected.
@@ -149,7 +155,8 @@ class Dynamic_CourseList_Property extends Dynamic_Select_Property
         } else {
             $data['id']= $id;
         }
-       //$data['select_options']=$select_options;
+        $data['level']=$this->level;
+        $data['coursetype'] = $this->coursetype;
         $data['value']=$value;
         $data['options']=$options;
         $data['courses']=$courses;
@@ -158,10 +165,12 @@ class Dynamic_CourseList_Property extends Dynamic_Select_Property
 
         return xarTplProperty('courses', 'courselist', 'showinput', $data);
     }
-
-    // TODO: format the output according to the 'showlist'.
-    // TODO: provide an option to allow admin to decide whether to wrap the user
-    // in a link or not.
+    /**
+     * @return array Template output
+     * @TODO: format the output according to the 'showlist'.
+     * @TODO: provide an option to allow admin to decide whether to wrap the user
+     * in a link or not.
+     */
     function showOutput($args = array())
     {
          extract($args);
@@ -182,7 +191,10 @@ class Dynamic_CourseList_Property extends Dynamic_Select_Property
          return xarTplProperty('courses', 'courselist', 'showoutput', $data);
 
     }
-
+    /**
+     * Parse the optional validation given to the property
+     * @return none
+     */
     function parseValidation($validation = '')
     {
         foreach(preg_split('/(?<!\\\);/', $validation) as $option) {
@@ -191,17 +203,17 @@ class Dynamic_CourseList_Property extends Dynamic_Select_Property
             // An option comes in two parts: option-type:option-value
             if (strchr($option, ':')) {
                 list($option_type, $option_value) = explode(':', $option, 2);
-                if ($option_type == 'level' && is_numeric($option_value)) {
+                if ($option_type == 'level' && is_numeric($option_value) && ($option_value > 0)) {
                     $this->level = $option_value;
                 }
-                if ($option_type == 'type') {
-                    $this->type = $option_value;
+                if ($option_type == 'coursetype' && is_numeric($option_value) && ($option_value > 0)) {
+                    $this->coursetype = $option_value;
                 }
                 if ($option_type == 'showglue') {
                     $this->showglue = $option_value;
                 }
-                if ($option_type == 'catid') {
-                    $this->catlist = array_merge($this->catlist, explode(',', $option_value));
+                if ($option_type == 'category' && is_numeric($option_value) && ($option_value > 0)) {
+                    $this->catid = $option_value;
                 }
                 if ($option_type == 'show') {
                     $this->showlist = array_merge($this->showlist, explode(',', $option_value));
@@ -222,8 +234,7 @@ class Dynamic_CourseList_Property extends Dynamic_Select_Property
     /**
      * Get the base information for this property.
      *
-     * @returns array
-     * @return base information for this property
+     * @return array base information for this property
      **/
     function getBasePropertyInfo()
     {
@@ -250,7 +261,6 @@ class Dynamic_CourseList_Property extends Dynamic_Select_Property
      * @param $args['validation'] validation rule (default is the current validation)
      * @param $args['id'] id of the field
      * @param $args['tabindex'] tab index of the field
-     * @returns string
      * @return string containing the HTML (or other) text to output in the BL template
      */
     function showValidation($args = array())
@@ -292,7 +302,6 @@ class Dynamic_CourseList_Property extends Dynamic_Select_Property
      * @param $args['name'] name of the field (default is 'dd_NN' with NN the property id)
      * @param $args['validation'] validation rule (default is the current validation)
      * @param $args['id'] id of the field
-     * @returns bool
      * @return bool true if the validation rule could be processed, false otherwise
      */
     function updateValidation($args = array())
@@ -347,7 +356,6 @@ class Dynamic_CourseList_Property extends Dynamic_Select_Property
         // tell the calling function that everything is OK
         return true;
     }
-
 }
 
 ?>

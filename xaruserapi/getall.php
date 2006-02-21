@@ -27,13 +27,13 @@
 function courses_userapi_getall($args)
 {
     extract($args);
-    if (!xarVarFetch('startnum', 'int:1:',         $startnum, 1,     XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('numitems', 'int:1:',         $numitems, -1,    XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('level',    'int:1:',         $level,    0,    XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('type',     'int:1:',         $type,     0,    XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('catid',    'int:1:',         $catid,    '',    XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('sortby',   'str:1:',         $sortby,   'name',  XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('sortorder','enum:DESC:ASC:', $sortorder,'DESC',  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('startnum',   'int:1:',         $startnum,   1,     XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('numitems',   'int:1:',         $numitems,   -1,    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('level',      'int:1:',         $level,      0,    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('coursetype', 'int:1:',         $coursetype, 0,    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('catid',      'int:1:',         $catid,      '',    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('sortby',     'str:1:',         $sortby,     'name',  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('sortorder',  'enum:DESC:ASC:', $sortorder,  'DESC',  XARVAR_NOT_REQUIRED)) return;
 
     // Argument check
     $valid = array('name','shortdesc','number');
@@ -66,13 +66,18 @@ function courses_userapi_getall($args)
                    xar_hidecourse,
                    xar_last_modified";
 
-
+    if (!empty($coursetype) && ($coursetype > 0)) {
+        $itemtype = $coursetype;
+    } else {
+        $itemtype = NULL;
+    }
     // Category selection
-    if (!empty($catid) && xarModIsHooked('categories','courses')) {
+    if (!empty($catid) && xarModIsHooked('categories','courses', array('itemtype' => $itemtype)) && ($catid > 0)) {
         // Get the LEFT JOIN ... ON ...  and WHERE parts from categories
         $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
                                        array('modid' => xarModGetIDFromName('courses'),
-                                             'catid' => $catid));
+                                             'catid' => $catid,
+                                             'itemtype' => $itemtype));
         if (!empty($categoriesdef)) {
             $query .= " FROM ($coursestable
                         LEFT JOIN $categoriesdef[table]
@@ -89,12 +94,12 @@ function courses_userapi_getall($args)
                     WHERE xar_hidecourse in ($where)";
      }
     // Level selection
-    if (($level > 0) && is_numeric($level)) {
+    if (($level > 0) && is_int($level)) {
         $query .= " AND xar_level = $level ";
     }
     // Level selection
-    if (($type > 0) && is_numeric($type)) {
-        $query .= " AND xar_type = $type ";
+    if (($coursetype > 0) && is_int($coursetype)) {
+        $query .= " AND xar_type = $coursetype ";
     }
     $query .= " ORDER BY $coursestable.xar_" . $sortby;
     $query .= " $sortorder";
