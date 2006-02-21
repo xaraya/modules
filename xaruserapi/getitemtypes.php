@@ -16,7 +16,7 @@
  *
  * @author MichelV <michelv@xarayahosting.nl>
  * @return array containing the item types and their description
- * @todo decide on the setup in here
+ * @todo MichelV <1> decide on the setup in here
  */
 function itsp_userapi_getitemtypes($args)
 {

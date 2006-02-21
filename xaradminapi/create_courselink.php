@@ -16,20 +16,20 @@
  *
  * This is a standard adminapi function to create a module item
  *
- * @author the ITSP module development team
+ * @author MichelV <michelv@xarayahosting.nl>
  * @param  $args ['name'] name of the item
  * @param  $args ['number'] number of the item
  * @since 21 feb 2006
  * @return int itsp item ID on success, false on failure
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
-function itsp_adminapi_create_icourse($args)
+function itsp_adminapi_create_courselink($args)
 {
     extract($args);
     /* Argument check */
     $invalid = array();
-    if (!isset($icoursetitle) || !is_string($icoursetitle)) {
-        $invalid[] = 'icoursetitle';
+    if (!isset($lcourseid) || !is_string($lcourseid)) {
+        $invalid[] = 'lcourseid';
     }
     if (!isset($itspid) || !is_numeric($itspid)) {
         $invalid[] = 'itspid';
@@ -39,7 +39,7 @@ function itsp_adminapi_create_icourse($args)
     }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-            join(', ', $invalid), 'admin', 'create_icourse', 'ITSP');
+            join(', ', $invalid), 'admin', 'create_courselink', 'ITSP');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException($msg));
         return;
@@ -50,42 +50,33 @@ function itsp_adminapi_create_icourse($args)
     if (!xarSecurityCheck('EditITSP', 1, 'ITSP', "$itspid:All:All")) {//TODO: check
         return;
     }
+    if (!empty($dateappr) && is_string($dateappr)) {
+        $dateappr = strtotime($dateappr);
+    }
     $datemodi = time();
     $modiby = xarUserGetVar('uid');
     // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-    $icoursestable = $xartable['itsp_itsp_courses'];
+    $courselinkstable = $xartable['itsp_itsp_courselinks'];
     /* Get next ID in table */
-    $nextId = $dbconn->GenId($icoursestable);
-    $query = "INSERT INTO $icoursestable (
-               xar_icourseid,
-               xar_pitemid,
+    $nextId = $dbconn->GenId($courselinkstable);
+    $query = "INSERT INTO $courselinkstable (
+               xar_courselinkid,
+               xar_lcourseid,
                xar_itspid,
-               xar_icoursetitle,
-               xar_icourseloc,
-               xar_icoursedesc,
-               xar_icoursecredits,
-               xar_icourselevel,
-               xar_icourseresult,
-               xar_icoursedate,
+               xar_pitemid,
                xar_dateappr,
                xar_datemodi,
                xar_modiby)
-            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            VALUES (?,?,?,?,?,?,?)";
     /* Create an array of values which correspond to the order of the
      * Question marks in the statement above.
      */
     $bindvars = array($nextId,
-               $pitemid,
+               $lcourseid,
                $itspid,
-               $icoursetitle,
-               $icourseloc,
-               $icoursedesc,
-               $icoursecredits,
-               $icourselevel,
-               $icourseresult,
-               $icoursedate,
+               $pitemid,
                $dateappr,
                $datemodi,
                $modiby);
@@ -97,15 +88,15 @@ function itsp_adminapi_create_icourse($args)
     if (!$result) return;
 
     /* Get the ID of the item that we inserted. */
-    $icourseid = $dbconn->PO_Insert_ID($icoursestable, 'xar_icourseid');
+    $courselinkid = $dbconn->PO_Insert_ID($courselinkstable, 'xar_courselinkid');
     // Let any hooks know that we have created a new item.
     $item = $bindvars;
     $item['module'] = 'itsp';
-    $item['itemtype'] = 5;
+    $item['itemtype'] = 4;
     $item['itemid'] = $pitemid;
     xarModCallHooks('item', 'create', $pitemid, $item);
 
     /* Return the id of the newly created item to the calling process */
-    return $icourseid;
+    return $courselinkid;
 }
 ?>

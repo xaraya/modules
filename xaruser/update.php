@@ -23,7 +23,8 @@
  * @param  int pitemid the number of the plan item to be updated
  * @param array invalid
  * @since 20 feb 2006
- * @todo michelv: why doesn't the sec check in here work?
+ * @todo michelv: <1>why doesn't the sec check in here work?
+ *       <2> Set the correct return URL
  */
 function itsp_user_update()
 {
@@ -81,12 +82,14 @@ function itsp_user_update()
             case 'internal':
                 // Then we are adding a course, if this id is set
                 if (!xarVarFetch('lcourseid',   'id',    $icourseid, '',   XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('dateappr',   'str::',    $dateappr, '',   XARVAR_NOT_REQUIRED)) return;
                 if (!empty($lcourseid)) {
                     // Create a new linked course
                     if (!$linkedid = xarModApiFunc('itsp','admin','create_linked',
                                                     array('itspid' =>$itspid,
                                                           'pitemid' => $pitemid,
-                                                          'lcourseid' => $lcourseid)
+                                                          'lcourseid' => $lcourseid,
+                                                          'dateappr' => $dateappr)
                                                   )); {
                                                       return;
                     }
