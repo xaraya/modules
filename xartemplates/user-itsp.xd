@@ -16,12 +16,31 @@
         <strong>#$status#</strong>
     <xar:else />
 
-        <p>
-            <xar:mlstring>Your name:</xar:mlstring>
-            #xarUserGetVar('name')#
-        </p>
+    <p>
+        <xar:mlstring>Welcome</xar:mlstring>&nbsp;
+        #xarUserGetVar('name')#
+    </p>
+    <table>
+        <tr>
+            <th><xar:mlstring>Type name</xar:mlstring></th>
+            <th><xar:mlstring>Credits needed</xar:mlstring></th>
+            <th><xar:mlstring>Obtained</xar:mlstring></th>
+        </tr>
+        <xar:foreach in="$pitems" value="$item">
+        <tr>
+            <td>
+                 #$item.pitemname#
+            </td>
+            <td>
+                 #$item.mincredit#
+            </td>
+            <td>
+                 #$item.creditsnow#
+            </td>
+        </tr>
+        </xar:foreach>
 
-
+    </table>
         <!-- if you want to extend this module with dynamic data, you can retrieve
         //   that data in the code via APIs, or use e.g. the following BL tags here.
         //   For the different options, see the overview of dynamicdata...
