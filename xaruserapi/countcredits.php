@@ -14,17 +14,17 @@
 /**
  * Utility function to count the number of items held by this module
  *
- * @param itemtype
  * @author MichelV <michelv@xarayahosting.nl>
- * @return integer number of items held by this module
+ * @param int pitemid The plan item ID
+ * @return integer number of credits for this plan item
  * @throws BAD_PARAM DATABASE_ERROR
  */
-function itsp_userapi_countitems($args)
+function itsp_userapi_countcredits($args)
 {
     extract ($args);
-    if (!isset($itemtype) || !is_numeric($itemtype)) {
+    if (!isset($pitemid) || !is_numeric($pitemid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-            'item ID', 'user', 'countitems', 'ITSP');
+            'item ID', 'user', 'countcredits', 'ITSP');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException($msg));
         return;
@@ -33,31 +33,23 @@ function itsp_userapi_countitems($args)
      */
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
+    // we can only count directly in our own courses table
+    $table = $xartable['itsp_itsp_courses'];
 
-    //Switch for the itemtypes
-    switch ($itemtype) {
-        case '1':
-        $table = $xartable['itsp_plans'];
-        case '2':
-        $table = $xartable['itsp_itsp'];
-    }
-    $query = "SELECT COUNT(1)
+    $query = "SELECT SUM(xar_icoursedesc)
               FROM $table";
-    /* If there are no variables you can pass in an empty array for bind variables
-     * or no parameter.
-     */
     $result = &$dbconn->Execute($query,array());
     /* Check for an error with the database code, adodb has already raised
      * the exception so we just return
      */
     if (!$result) return;
     /* Obtain the number of items */
-    list($numitems) = $result->fields;
+    list($credits) = $result->fields;
     /* All successful database queries produce a result set, and that result
      * set should be closed when it has been finished with
      */
     $result->Close();
     /* Return the number of items */
-    return $numitems;
+    return $credits;
 }
 ?>
