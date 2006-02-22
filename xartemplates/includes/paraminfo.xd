@@ -1,0 +1,20 @@
+<!-- TODO: get rid of the private _bl_data -->
+<!-- TODO: think of some class for the lonely ),(,].[,},{'s etc -->
+<xar:foreach in="$_bl_data" key="$index" value="$param">
+    <xar:if condition="$index gt 0">
+        <span>, </span>
+    </xar:if>
+    <xar:if condition="isset($param.optional) and $param.optional">
+        <span>[</span>
+    </xar:if>
+    <xar:if condition="!empty($param.type)">#$param.type# </xar:if>
+    <xar:if condition="isset($param.byref) and $param.byref">&amp;</xar:if>
+    <xar:if condition="isset($param.name)"><span class="variable">$#$param.name#</span></xar:if>
+    <xar:if condition="isset($param.default)">
+        <span class="operator">=</span>
+        <span class="value">#$param.default#</span>
+    </xar:if>
+    <xar:if condition="isset($param.optional) and $param.optional">
+        <span>]</span>
+    </xar:if> 
+</xar:foreach>

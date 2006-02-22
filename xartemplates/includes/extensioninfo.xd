@@ -1,0 +1,45 @@
+<div class="php">
+    <xar:if condition="empty($version)">
+        <xar:set name="version">'unknown'</xar:set>
+    </xar:if>
+    <div class="keyword">
+        Extension #$name# version #$version#
+    </div>
+    <xar:foreach in="$constants" key="$name" value="$value">
+        <xar:set name="cparams">array('name'=>$name,'value'=>$value)</xar:set>
+        <xar:template file="constantinfo" subdata="$cparams"/>
+    </xar:foreach>
+    <xar:foreach in="$functions" key="$index" value="$method">
+        <div>
+            <span class="keyword">function</span>
+            <xar:if condition="#$method.returnsref#">
+                <span>&amp;</span>
+            </xar:if>
+            <span class="function">#$method.name#</span>
+            <span>(</span>
+            <xar:template file="paraminfo" subdata="$method.params"/>
+            <span>)</span>
+        </div>
+    </xar:foreach>
+    <xar:foreach in="$classes" key="$index" value="$class">
+        <div>
+            <span class="keyword">class</span>
+            <!-- TODO: get rid of the itemtype here -->
+            <xar:set name="parentitem">xarServerGetCurrentURL(array('itemtype'=>2,'scope'=> '1','itemid'=>$class['id']))</xar:set>
+            <span class="class"><a class="class" href="#$parentitem#">#$class.name#</a></span>
+            <span>()</span>
+        </div>
+    </xar:foreach>
+    <xar:if condition="!empty($inientries)"><div class="keyword">INI entries</div></xar:if>
+    <xar:foreach in="$inientries" key="$name" value="$entry">
+        <div class="indent">
+            <span class="keyword">#$name#</span>
+            <span class="operator">=</span>
+            <span class="value">#$entry#</span>
+        </div>
+    </xar:foreach>
+</div>
+
+<xar:if condition="isset($includeraw) and $includeraw">
+<pre>#$raw#</raw>
+</xar:if>

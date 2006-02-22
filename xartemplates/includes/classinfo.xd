@@ -1,0 +1,98 @@
+<div class="php">
+    <xar:if condition="!empty($extension)">
+        <xar:set name="extlink">xarServerGetCurrentUrl(array('itemtype'=>3,'scope'=>1,'itemid'=>$extensionid))</xar:set>
+        <div class="keyword">
+            <span>
+                <xar:mlstring>Defined in extension:</xar:mlstring>
+                <a class="keyword" href="#$extlink#">#$extension#</a>
+            </span>
+        </div>
+    </xar:if>
+    <div>
+        <span class="keyword">
+            <xar:if condition="$interface">
+                interface
+            <xar:else/>
+                <xar:template file="visibility" />
+                class
+            </xar:if>
+        </span>
+        <span class="class">#$name#</span>
+        <xar:if condition="$parent">
+            <span class="keyword">extends</span>
+            <xar:set name="parentitem">xarServerGetCurrentURL(array('itemid'=>$parentid))</xar:set>
+            <span class="class"><a class="class" href="#$parentitem#">#$parent#</a></span>
+        </xar:if>
+        <xar:if condition="$interfaces">
+            <span class="keyword">implements </span>
+            <xar:foreach in="$interfaces" key="$index" value="$ifInfo">
+                <xar:if condition="$index gt 0"><span>,</span></xar:if>
+                <!-- TODO: get rid of itemtype here -->
+                <xar:set name="parentitem">xarServerGetCurrentURL(array('itemtype'=>5,'itemid'=>$ifInfo['id']))</xar:set>
+                <span class="interface"><a class="interface" href="#$parentitem#">#$ifInfo.name#</a></span>
+            </xar:foreach>
+        </xar:if>
+        <span>{</span>
+    </div>
+
+    <!-- Constants defined in this class -->
+    <xar:foreach in="$constants" key="$name" value="$value">
+        <div class="indent">
+            <xar:set name="cparams">array('name'=>$name,'value'=>$value)</xar:set>
+            <xar:template file="constantinfo" subdata="$cparams"/>
+        </div>
+    </xar:foreach>
+
+    <!-- Properties -->
+    <xar:set name="overriddenheader">false</xar:set>
+    <xar:set name="inheritedheader">false</xar:set>
+    <xar:foreach in="$properties" key="$index" value="$prop">
+        <xar:if condition="$prop.declaringclass eq $name and !$overriddenheader">
+            <div class="comment indent">/* Introduced or overridden properties */</div>
+            <xar:set name="overriddenheader">true</xar:set>
+        </xar:if>
+        <xar:if condition="$prop.declaringclass ne $name and $prop.declaringclass ne $inheritedheader">
+            <xar:set name="parentitem">xarServerGetCurrentURL(array('itemid'=>$prop['declaringclassid']))</xar:set>
+            <div class="comment indent">/* Inherited properties from class <a class="comment" href="#$parentitem#">#$prop.declaringclass#</a> */</div>
+            <xar:set name="inheritedheader">#$prop.declaringclass#</xar:set>
+        </xar:if>
+        <div class="indent">
+            <xar:template file="visibility" subdata="#$prop#"/>
+            <span class="variable">$#$prop.name#</span>;
+        </div>
+    </xar:foreach>
+
+    <!-- Methods -->
+    <xar:set name="overriddenheader">false</xar:set>
+    <xar:set name="inheritedheader">false</xar:set>
+    <xar:foreach in="$methods" key="$index" value="$method">
+        <xar:if condition="$method.declaringclass eq $name and !$overriddenheader">
+            <div class="comment indent">/* Introduced or overridden methods*/</div>
+            <xar:set name="overriddenheader">true</xar:set>
+        </xar:if>
+        <xar:if condition="$method.declaringclass ne $name and $method.declaringclass ne $inheritedheader">
+            <xar:set name="parentitem">xarServerGetCurrentURL(array('itemid'=>$method['declaringclassid']))</xar:set>
+            <div class="comment indent">/* Inherited methods from class <a class="comment" href="#$parentitem#">#$method.declaringclass#</a> */</div>
+            <xar:set name="inheritedheader">#$method.declaringclass#</xar:set>
+        </xar:if>
+
+        <div class="indent">
+            <xar:template file="visibility" subdata="#$method#"/>
+            <span class="keyword">function</span>
+
+            <xar:if condition="#$method.returnsref#">&amp;</xar:if>
+            <span class="function">#$method.name#</span>
+            <span>(</span>
+            <xar:template file="paraminfo" subdata="$method.params"/>
+            <span>)</span>
+        </div>
+    </xar:foreach>
+    <div>}</div>
+</div>
+
+<pre>#$doc#</pre>
+<div>File: #$file# Lines: #$start# - #$end#</div>
+
+<xar:if condition="isset($includeraw) and $includeraw">
+<pre>#$raw#</raw>
+</xar:if>

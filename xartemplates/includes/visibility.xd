@@ -1,0 +1,8 @@
+<span class="keyword">
+    <xar:if condition="isset($final) and $final">final </xar:if>
+    <xar:if condition="isset($abstract) and $abstract">abstract </xar:if>
+    <xar:if condition="isset($public) and $public">public </xar:if>
+    <xar:if condition="isset($protected) and $protected">protected </xar:if>
+    <xar:if condition="isset($private) and $private">private </xar:if>
+    <xar:if condition="isset($static) and $static">static </xar:if>
+</span>

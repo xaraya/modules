@@ -1,0 +1,39 @@
+<div id="reflectioninfo">
+    <fieldset>
+        <legend>
+            <xar:ml>
+                <xar:mlstring>Reflection of #(1) #(2)</xar:mlstring>
+                <xar:mlvar>#$itemInfo.type#</xar:mlvar>
+                <xar:mlvar>#$itemInfo.name#</xar:mlvar>
+            </xar:ml>
+        </legend>
+        <style>
+            <xar:comment>
+                .php       { font-family: monospace;}
+                .indent    { margin-left: 4em;}
+                .keyword   { color: inherit; font-weight: bold;}
+                .function  { color: blue;}
+                .class     { color: green;}
+                .comment   { color: purple;}
+                .const     { color: darkred;}
+                .interface { color: darkorange;}
+                .variable  { color: darkred;}
+                .value     { color: darkcyan;}
+                .operator  { color: darkblue;}
+            </xar:comment>
+        </style>
+        <xar:if condition="$itemInfo.type eq 'function'">
+            <xar:template file="funcinfo" subdata="$itemInfo"/>
+            <xar:elseif condition="$itemInfo.type eq 'class'"/>
+            <xar:template file="classinfo" subdata="$itemInfo"/>
+            <xar:elseif condition="$itemInfo.type eq 'extension'"/>
+            <xar:template file="extensioninfo" subdata="$itemInfo"/>
+            <xar:elseif condition="$itemInfo.type eq 'constant'"/>
+            <xar:template file="constantinfo" subdata="$itemInfo"/>
+            <xar:elseif condition="$itemInfo.type eq 'interface'"/>
+            <xar:template file="interfaceinfo" subdata="$itemInfo"/>
+            <xar:else/>
+            <span>Hmmm, what type would this be? (#$itemtype#)</span>
+        </xar:if>
+    </fieldset>
+</div>

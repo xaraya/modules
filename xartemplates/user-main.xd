@@ -1,0 +1,18 @@
+<form action="&xar-modurl-autodoc-admin-main;" method="get">
+    <input type="hidden" name="module" value="autodoc"/>
+    <fieldset>
+        <legend><xar:mlstring>Scope</xar:mlstring></legend>
+        <div class="xar-form-input-wrapper">
+            <xar:data-input type="dropdown" name="scope" value="$scope" options="$scope_options" onchange="submit()"/>
+            <xar:data-input type="itemtype" name="itemtype" module="autodoc" value="$itemtype" onchange="submit()"/>
+            <xar:data-input type="dropdown" name="itemid" options="$items" value="$itemid" onchange="submit()"/>
+            <xar:data-input type="checkbox" name="includeraw" checked="$includeraw" onchange="submit()"/><label><xar:mlstring>Include raw output</xar:mlstring></label>
+        </div>
+    </fieldset>
+</form>
+
+<xar:foreach in="$hooks" key="$module" value="$hook">
+    #$hook#
+</xar:foreach>
+
+<xar:template type="system" file="user-display.xd"/>

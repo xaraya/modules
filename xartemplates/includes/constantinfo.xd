@@ -1,0 +1,6 @@
+<div class="php">
+    <span class="keyword">const</span>
+    <span class="const">#$name#</span>
+    <span class="operator">=</span>
+    <xar:if condition="isset($value)"><span class="value">#$value#</span></xar:if>
+</div>
