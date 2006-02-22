@@ -16,7 +16,8 @@
  *
  * This menu is used in the ITSP area for users
  *
- * @author the ITSP module development team
+ * @author MichelV <michelv@xarayahosting.nl>
+ * @return array
  */
 function itsp_userapi_menu()
 {
@@ -80,7 +81,10 @@ function itsp_userapi_menu()
                 } else {
                     $item['link'] = '';
                 }
-
+                // Add credits so we can do calculations
+                $item['mincredit'] = $pitem['mincredit'];
+                $item['credits'] = $pitem['credits'];
+                // Format the name
                 $item['pitemname'] = xarVarPrepForDisplay($pitem['pitemname']);
                 $menu['pitems'][] = $item;
             }
