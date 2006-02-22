@@ -24,7 +24,7 @@
  * @param array invalid
  * @since 20 feb 2006
  * @todo michelv: <1>why doesn't the sec check in here work?
- *       <2> Set the correct return URL
+ *                <2> Set the correct return URL
  */
 function itsp_user_update()
 {
@@ -79,25 +79,24 @@ function itsp_user_update()
         }
         switch ($rule_source) {
             case 'courses':
-            case 'internal':
                 // Then we are adding a course, if this id is set
-                if (!xarVarFetch('lcourseid',  'id',    $icourseid, '',   XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('dateappr',   'str::',    $dateappr, '',   XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('lcourseid', 'id',    $lcourseid, '', XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('dateappr',  'str::', $dateappr,  '', XARVAR_NOT_REQUIRED)) return;
                 // Make sure we will not add the empty string as a course
                 if (!empty($lcourseid) && $lcourseid > 0) {
                     // Create a new linked course
-                    if (!$linkedid = xarModApiFunc('itsp','admin','create_linked',
-                                                    array('itspid' =>$itspid,
-                                                          'pitemid' => $pitemid,
-                                                          'lcourseid' => $lcourseid,
-                                                          'dateappr' => $dateappr)
-                                                  )); {
-                                                      return;
+                    if (!xarModApiFunc('itsp','admin','create_courselink',
+                                        array('itspid' =>$itspid,
+                                              'pitemid' => $pitemid,
+                                              'lcourseid' => $lcourseid,
+                                              'dateappr' => $dateappr)
+                                        )) {
+                        return;
                     }
                 }
-
-
-            case 'external':
+                xarSessionSetVar('statusmsg', xarML('Course Item was successfully added!'));
+                break;
+            default:
                 if (!xarVarFetch('icourseid',   'id',    $icourseid, '',   XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('icoursetitle', 'str:1:255',    $icoursetitle, '', XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('icourseloc',  'str:1:255',    $icourseloc, '',  XARVAR_NOT_REQUIRED)) return;
@@ -129,6 +128,7 @@ function itsp_user_update()
                                 )) {
                     return; /* throw back */
                 }
+                xarSessionSetVar('statusmsg', xarML('ITSP Item was successfully updated!'));
         }
     }
 
@@ -154,7 +154,7 @@ function itsp_user_update()
                                 'invalid'  => $invalid));
     }
 */
-    xarSessionSetVar('statusmsg', xarML('ITSP Item was successfully updated!'));
+  //  xarSessionSetVar('statusmsg', xarML('ITSP Item was successfully updated!'));
     /* This function generated no output, and so now it is complete we redirect
      * the user to an appropriate page for them to carry on their work
      */

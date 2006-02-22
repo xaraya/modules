@@ -28,7 +28,7 @@ function itsp_adminapi_create_courselink($args)
     extract($args);
     /* Argument check */
     $invalid = array();
-    if (!isset($lcourseid) || !is_string($lcourseid)) {
+    if (!isset($lcourseid) || !is_int($lcourseid)) {
         $invalid[] = 'lcourseid';
     }
     if (!isset($itspid) || !is_numeric($itspid)) {

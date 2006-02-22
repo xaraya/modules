@@ -89,11 +89,10 @@ function itsp_user_modify($args)
             $data['rule_level'] = $rule_level;
             $data['rule_cat'] = $rule_cat;
             $data['rule_source'] = $rule_source;
-
+//echo $rule_source;
         }
         switch ($rule_source) {
             case 'courses':
-            case 'internal':
                 // get the pitem details for this itsp
                 // get all linked courses that already have been added to the ITSP for this pitemdi
                 $courselinks = xarModApiFunc('itsp','user','getall_courselinks',array('itspid'=>$pitemid, 'pitemid' => $pitemid));
@@ -111,9 +110,6 @@ function itsp_user_modify($args)
                             'user',
                             'display',
                             array('courseid' => $courseid));
-                        /* Security check 2 - else only display the item name (or whatever is
-                         * appropriate for your module)
-                         */
                     } else {
                         $lcourse['link'] = '';
                     }
@@ -143,9 +139,6 @@ function itsp_user_modify($args)
                             'user',
                             'display_icourse',
                             array('icourseid' => $icourseid));
-                        /* Security check 2 - else only display the item name (or whatever is
-                         * appropriate for your module)
-                         */
                     } else {
                         $icourse['link'] = '';
                     }
