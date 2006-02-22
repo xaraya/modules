@@ -1,42 +1,26 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <!-- common user menu for this module - remove link to the current function -->
 <div class="xar-mod-head">
-    <span class="xar-mod-title"><xar:mlstring>Example</xar:mlstring></span>
+    <span class="xar-mod-title"><xar:mlstring>ITSP Plans</xar:mlstring></span>
 </div>
 <div class="xar-mod-body">
 
     <!-- the variables used in this menu templte  come from example_user_menu() -->
     <xar:template type="module" file="user-menu" />
 
-    <h2><xar:mlstring>Example Item</xar:mlstring></h2>
+    <h2><xar:mlstring>Eduction Plan</xar:mlstring></h2>
 
-    <!-- the specific template for the current function comes here -->
-
-    <!-- some status given by the function using this template -->
-    
-    <!-- Note : we use an if/else structure here, either to show a status *or*
-         to show the details of a particular item -->
-    
     <xar:if condition="!empty($status)">
         <strong>#$status#</strong>
     <xar:else />
 
-        <!-- some item variables given by the function using this template -->
-
         <p>
-            <xar:mlstring>Example item name:</xar:mlstring> 
-
-            <!-- display depends on another variable specified by the function -->
-
-            <xar:if condition="!empty($is_bold)">
-                <strong>#$name_value#</strong> <xar:mlstring>(in bold now)</xar:mlstring>
-            <xar:else />
-                    #$name_value# <xar:mlstring>(not in bold now)</xar:mlstring>
-            </xar:if>
+            <xar:mlstring>Plan name:</xar:mlstring>
+            <strong>#$item.planname#</strong>
         </p>
         <p>
-              <xar:mlstring>Example item number:</xar:mlstring> 
-            #$number_value#
+              <xar:mlstring>id:</xar:mlstring>
+            #$item.planid#
         </p>
 
         <!-- if you want to extend this module with dynamic data, you can retrieve
