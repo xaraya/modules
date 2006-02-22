@@ -36,9 +36,10 @@ function itsp_userapi_countcredits($args)
     // we can only count directly in our own courses table
     $table = $xartable['itsp_itsp_courses'];
 
-    $query = "SELECT SUM(xar_icoursedesc)
-              FROM $table";
-    $result = &$dbconn->Execute($query,array());
+    $query = "SELECT SUM(xar_icoursecredits)
+              FROM $table
+              WHERE xar_pitemid = ?";
+    $result = &$dbconn->Execute($query,array($pitemid));
     /* Check for an error with the database code, adodb has already raised
      * the exception so we just return
      */

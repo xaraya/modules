@@ -21,7 +21,7 @@
                 <xar:if condition="(!empty($pitemid)) AND ($item.pitemid eq $pitemid)">
                     <dd class="active"><a href="#$item.link#">#$item.pitemname#</a></dd>
                 <xar:else />
-                    <dd><a href="#$item.link#">#$item.pitemname#</a></dd>
+                    <dd><a href="#$item.link#">#$item.pitemname# </a></dd>
                 </xar:if>
             </xar:foreach>
         </xar:if>

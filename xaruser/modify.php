@@ -222,6 +222,8 @@ function itsp_user_modify($args)
                     $data['dateappr'] = $dateappr;
                 }
         }
+        $creditsnow = xarModApiFunc('itsp','user','countcredits',array('uid' => xarUserGetVar('uid'), 'pitemid' => $pitemid));
+        $data['creditsnow'] = $creditsnow;
         $data['pitem'] = $pitem;
     }
 

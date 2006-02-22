@@ -26,22 +26,28 @@
         <fieldset>
             <legend><xar:mlstring>Information</xar:mlstring></legend>
             <div class="xar-form-input-wrapper">
-                 <label for="name" class="xar-form-label" title="#xarML('Name of this item')#">
+                 <label for="pitemname" class="xar-form-label" title="#xarML('Name of this item')#">
                       <xar:mlstring>Name:</xar:mlstring>
                  </label>
                  #$pitem.pitemname#
             </div>
             <div class="xar-form-input-wrapper">
-                 <label for="name" class="xar-form-label" title="#xarML('Rules and the description')#">
+                 <label for="pitemdesc" class="xar-form-label" title="#xarML('Rules and the description')#">
                       <xar:mlstring>Description:</xar:mlstring>
                  </label>
                  #$pitem.pitemdesc#
             </div>
             <div class="xar-form-input-wrapper">
-                 <label for="name" class="xar-form-label" title="#xarML('The minimum amount of credits you need to pass this item')#">
+                 <label for="mincredit" class="xar-form-label" title="#xarML('The minimum amount of credits you need to pass this item')#">
                       <xar:mlstring>Minimum credits required:</xar:mlstring>
                  </label>
                  #$pitem.mincredit#
+            </div>
+            <div class="xar-form-input-wrapper">
+                 <label for="name" class="xar-form-label" title="#xarML('The amount of credits you have entered into your ITSP')#">
+                      <xar:mlstring>Credits entered:</xar:mlstring>
+                 </label>
+                 #$creditsnow#
             </div>
         </fieldset>
 
