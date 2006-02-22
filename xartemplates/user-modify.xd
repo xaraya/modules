@@ -45,14 +45,9 @@
             </div>
         </fieldset>
 
-        <xar:comment>Add a chooser here for the type of pitem to modify in this ITSP</xar:comment>
-        <xar:if condition="strcmp('courses',$rule_source)==0">
-            <xar:template type="module" file="user-courselinks" />
-        <xar:elseif condition="strcmp('external',$rule_source)==0" />
-            <xar:template type="module" file="user-icourses" />
-        <xar:else />
-            <xar:template type="module" file="modify-$rule_source" />
-        </xar:if>
+        <xar:comment>Include the template here that will add all fields
+        The template name begins with modify- and has a suffix of the source for the courses</xar:comment>
+        <xar:template type="module" file="modify-$rule_source" />
 
         <xar:if condition="!empty($hooks)">
             <fieldset>
