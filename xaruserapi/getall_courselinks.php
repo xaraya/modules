@@ -20,7 +20,7 @@
  * @param int itspid The id of the ITSP to look for
  * @param int pitemid The id of the planitem to look (OPTIONAL)
  * @return array Empty, of items, or false on failure
- * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
+ * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function itsp_userapi_getall_courselinks($args)
 {

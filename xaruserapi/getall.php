@@ -19,7 +19,7 @@
  * @param startnum $ start with this item number (default 1)
  * @returns array
  * @return array of items, or false on failure
- * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
+ * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function itsp_userapi_getall($args)
 {

@@ -21,7 +21,7 @@
  * @param  string plandesc Description of the plan
  * @param  int credits
  * @return int plan item ID on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function itsp_adminapi_create($args)
 {

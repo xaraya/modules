@@ -21,7 +21,7 @@
  * @param  $args ['userid'] id of the user to get the itsp for
  * @returns array
  * @return item array, or false on failure
- * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
+ * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function itsp_userapi_get($args)
 {

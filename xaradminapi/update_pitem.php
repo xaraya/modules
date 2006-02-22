@@ -18,7 +18,7 @@
  * @param  $args ['pitemid'] the ID of the item
  * @param  $args ['pitemname'] the new name of the item
  * @param  $args ['pitemdesc'] the new description of the plan
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  * @return bool true on success
  */
 function itsp_adminapi_update_pitem($args)

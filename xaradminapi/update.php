@@ -18,7 +18,7 @@
  * @param  $args ['planid'] the ID of the item
  * @param  $args ['planname'] the new name of the item
  * @param  $args ['plandesc'] the new description of the plan
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  * @return bool true on success
  */
 function itsp_adminapi_update($args)

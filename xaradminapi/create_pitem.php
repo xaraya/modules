@@ -28,7 +28,7 @@
                              is coming from.
  * @param  int mincredit number credits to be obtained
  * @return int itsp item ID on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function itsp_adminapi_create_pitem($args)
 {

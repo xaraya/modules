@@ -19,7 +19,7 @@
  * @author the ITSP module development team
  * @param  $args ['planid'] ID of the item
  * @return bool true on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function itsp_adminapi_delete($args)
 {

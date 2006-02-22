@@ -22,7 +22,7 @@
  * @param  $args ['number'] number of the item
  * @returns int
  * @return itsp item ID on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function itsp_userapi_create($args)
 {

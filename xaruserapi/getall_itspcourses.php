@@ -21,7 +21,7 @@
  * @param int pitemid The id of the planitem to look (OPTIONAL)
  * @since 18 feb 2006
  * @return array Empty, of items, or false on failure
- * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
+ * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function itsp_userapi_getall_itspcourses($args)
 {
