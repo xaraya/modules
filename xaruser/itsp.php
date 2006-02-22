@@ -40,7 +40,6 @@ function itsp_user_itsp($args)
     /* Add the ITSP user menu */
     $data = xarModAPIFunc('itsp', 'user', 'menu');
 
-
     // We have a valid ITSP?
     /* The API function is called. The arguments to the function are passed in
      * as their own arguments array.

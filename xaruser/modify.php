@@ -124,6 +124,7 @@ function itsp_user_modify($args)
                     /* Add this item to the list of items to be displayed */
                     $data['lcourses'][] = $lcourse;
                 }
+                break;
             // We can have external courses
             case 'external':
                 // get all linked courses that already have been added to the ITSP for this pitemid

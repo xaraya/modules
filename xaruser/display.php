@@ -22,6 +22,7 @@
  * @param  $args an array of arguments (if called by other modules)
  * @param  $args ['objectid'] a generic object id (if called by other modules)
  * @param  int $planid the plan id used for this itsp module
+ * @return array
  */
 function itsp_user_display($args)
 {
