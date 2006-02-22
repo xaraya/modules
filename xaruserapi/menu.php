@@ -67,6 +67,7 @@ function itsp_userapi_menu()
         if (!empty($pitems)) {
             $menu['pitemnames'] = array();
             /* Enter items*/
+            $sumcreditsnow = 0;
             foreach ($pitems as $item) {
                 // Add modify link
                 $pitemid= $item['pitemid'];
@@ -86,10 +87,12 @@ function itsp_userapi_menu()
                 $item['credits'] = $pitem['credits'];
                 $creditsnow = xarModApiFunc('itsp','user','countcredits',array('uid' => xarUserGetVar('uid'), 'pitemid' => $pitemid));
                 $item['creditsnow'] = $creditsnow;
+                $sumcreditsnow = $sumcreditsnow + $creditsnow;
                 // Format the name
                 $item['pitemname'] = xarVarPrepForDisplay($pitem['pitemname']);
                 $menu['pitems'][] = $item;
             }
+            $menu['sumcreditsnow'] = $sumcreditsnow;
         }
     }
 

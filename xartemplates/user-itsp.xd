@@ -15,7 +15,6 @@
     <xar:if condition="!empty($status)">
         <strong>#$status#</strong>
     <xar:else />
-
     <p>
         <xar:mlstring>Welcome</xar:mlstring>&nbsp;
         #xarUserGetVar('name')#
@@ -39,6 +38,16 @@
             </td>
         </tr>
         </xar:foreach>
+        <tr>
+            <td>
+            Total needed/obtained
+            </td>
+            <td>
+            #$plan.mincredit#
+            </td>
+            <td>
+            #$sumcreditsnow#
+            </td>
 
     </table>
         <!-- if you want to extend this module with dynamic data, you can retrieve

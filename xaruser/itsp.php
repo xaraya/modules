@@ -73,7 +73,7 @@ function itsp_user_itsp($args)
     // Get the plan
     $plan = xarModApiFunc('itsp','user','get_plan',array('planid' => $planid));
     if (empty($plan) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-
+    $data['plan'] = $plan;
     // Get the planitems for this plan in the ITSP
     //$pitems = xarModApiFunc('itsp','user','get_planitems',array('planid'=>$planid));
     // These are already in $data
