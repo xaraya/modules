@@ -14,8 +14,8 @@
 /**
  * Modify an ITSP
  *
- * This is a standard function that is called whenever a user
- * wishes to modify a current module item
+ * This function will helpt a user with an itsp to update that itsp. It takes the itspid and the plan itemid
+   and serves the relevant modify page. The source that is defined in the planitem will determine the include template.
  *
  * @author ITSP Module Development Team
  * @param int itspid The id of the itsp to be modified
@@ -125,8 +125,9 @@ function itsp_user_modify($args)
                     $data['lcourses'][] = $lcourse;
                 }
                 break;
-            // We can have external courses
-            case 'external':
+            // The default will pull all linked courses. These can hold any type of courses
+            // The source here is the template name that will be used.
+            default:
                 // get all linked courses that already have been added to the ITSP for this pitemid
                 $courselinks = xarModApiFunc('itsp','user','getall_itspcourses',array('itspid'=>$itspid, 'pitemid' => $pitemid));
                 // for each linked course get the details
@@ -228,11 +229,7 @@ function itsp_user_modify($args)
                     $data['dateappr'] = $dateappr;
                 }
         }
-
-
         $data['pitem'] = $pitem;
-
-
     }
 
     $data['pitemid'] = $pitemid;
