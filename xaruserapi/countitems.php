@@ -15,9 +15,8 @@
  * Utility function to count the number of items held by this module
  *
  * @param itemtype
- * @author the ITSP module development team
- * @returns integer
- * @return number of items held by this module
+ * @author MichelV <michelv@xarayahosting.nl>
+ * @return integer number of items held by this module
  * @raise DATABASE_ERROR
  */
 function itsp_userapi_countitems($args)

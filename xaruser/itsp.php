@@ -14,8 +14,7 @@
 /**
  * Display the user's ITSP
  *
- * This is a standard function to provide detailed informtion on a single item
- * available from the module.
+ * Show the user the full details of the plan chosen, and the status of all items.
  *
  * @author the ITSP module development team
  * @param  $args an array of arguments (if called by other modules)
@@ -38,15 +37,10 @@ function itsp_user_itsp($args)
         $itspid = $objectid;
     }
     /* Add the ITSP user menu */
+    // This also gets already all the planitems...
     $data = xarModAPIFunc('itsp', 'user', 'menu');
 
     // We have a valid ITSP?
-    /* The API function is called. The arguments to the function are passed in
-     * as their own arguments array.
-     * Security check 1 - the get() function will fail if the user does not
-     * have at least READ access to this item (also see below).
-     */
-
     if (empty($itspid)) {
         $item = xarModAPIFunc('itsp',
                           'user',
@@ -60,23 +54,34 @@ function itsp_user_itsp($args)
                               'get_itspid',
                               array('itspid' => $itspid));
     }
-
+    $data['itspid'] = $itspid;
     // First see if there is an id to get.
-    if (empty($item)) {
-        $data['itspid'] = $itspid;
-        xarTplSetPageTitle(xarML('Individual Training and Supervision Plan'));
 
+    if (empty($item)) {
+        xarTplSetPageTitle(xarML('Individual Training and Supervision Plan'));
         return $data;
     }
+    $planid = $item['planid'];
+    // Security check
+    if (!xarSecurityCheck('ReadITSP',0,'ITSP',"$itspid:$planid:All")) {
+       return $data;
+    }
 
-     $item['itemtype'] = 2;
-     /* Security check 2 - if your API function does *not* check for the
-     * appropriate access rights, or if for some reason you require higher
-     * access than READ for this function, you *must* check this here !
-     * if (!xarSecurityCheck('CommentITSP',0,'Item',"$item[name]:All:$item[exid]")) {
-     * return $data;
-     *}
-     */
+    $item['itemtype'] = 2;
+    // Add the ITSP
+    $data['item'] = $item;
+    // Get the plan
+    $plan = xarModApiFunc('itsp','user','get_plan',array('planid' => $planid));
+    if (empty($plan) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+
+    // Get the planitems for this plan in the ITSP
+    //$pitems = xarModApiFunc('itsp','user','get_planitems',array('planid'=>$planid));
+    // These are already in $data
+
+
+    // Do this in the menu
+    // $creditsnow = xarModApiFunc('itsp','user','countcredits',array('uid' => xarUserGetVar('uid')));
+
 
     /* Let any transformation hooks know that we want to transform some text.
      * You'll need to specify the item id, and an array containing the names of all
@@ -89,8 +94,6 @@ function itsp_user_itsp($args)
     $data['name_value'] = $item['name'];
     $data['number_value'] = $item['number'];
 */
-    $data['itspid'] = $itspid;
-
     //$data['is_bold'] = xarModGetVar('itsp', 'bold');
 
     xarVarSetCached('Blocks.itsp', 'itspid', $itspid);

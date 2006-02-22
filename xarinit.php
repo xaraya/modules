@@ -353,6 +353,7 @@ This table deals with the free courses. So: how to add the custom courses/items 
     xarRegisterMask('ReadITSPBlock', 'All', 'itsp', 'Block', 'All', 'ACCESS_OVERVIEW');
     // The ITSP seen from the student.
     // $itspid:$planid
+    // TODO: add comment level
     xarRegisterMask('ViewITSP', 'All', 'itsp', 'ITSP', 'All:All:All', 'ACCESS_OVERVIEW');
     xarRegisterMask('ReadITSP', 'All', 'itsp', 'ITSP', 'All:All:All', 'ACCESS_READ');
     xarRegisterMask('EditITSP', 'All', 'itsp', 'ITSP', 'All:All:All', 'ACCESS_EDIT');
