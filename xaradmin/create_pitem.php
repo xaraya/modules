@@ -26,6 +26,8 @@
  * @param int 'rule_cat'
  * @param int 'rule_level'
  * @param int 'rule_type'
+ * @param string rule_source The source for the courses. This will tell the ITSP module where the data for the planitems
+                             is coming from.
  * @return bool true on success, with redirect URL
  */
 function itsp_admin_create_pitem($args)
@@ -46,7 +48,7 @@ function itsp_admin_create_pitem($args)
 
     if (!xarVarFetch('rule_cat',   'int:1:', $rule_cat,    $rule_cat,   XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('rule_type',  'int::', $rule_type,    $rule_type,   XARVAR_NOT_REQUIRED)) return; // The coursetype
-    if (!xarVarFetch('rule_source','enum:courses:internal:external:open:all', $rule_source,    $rule_source,   XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('rule_source','str:1:25', $rule_source,    $rule_source,   XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('rule_level', 'int::', $rule_level,   $rule_level,   XARVAR_NOT_REQUIRED)) return;
 
     if (!xarVarFetch('invalid', 'array',  $invalid, $invalid, XARVAR_NOT_REQUIRED)) return;

@@ -14,10 +14,18 @@
 /**
  * Create a new itsp plan item
  *
- * This is a standard adminapi function to create a module item
+ * This API creates a plan item. Plan items are part of the education plan, and can be seen as the seperate parts.
  *
- * @author the ITSP module development team
- * @param  string pitemname Name of the item
+ * @author MichelV <michelv@xarayahosting.nl>
+ * @param  string 'pitemname' the name of the item to be created
+ * @param  string 'pitemdesc' the description of the item to be created
+ * @param int 'mincredit'
+ * @param int 'credits'
+ * @param int 'rule_cat'
+ * @param int 'rule_level'
+ * @param int 'rule_type'
+ * @param string rule_source The source for the courses. This will tell the ITSP module where the data for the planitems
+                             is coming from.
  * @param  int mincredit number credits to be obtained
  * @return int itsp item ID on success, false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
