@@ -50,6 +50,8 @@
             <xar:template type="module" file="user-courselinks" />
         <xar:elseif condition="strcmp('external',$rule_source)==0" />
             <xar:template type="module" file="user-icourses" />
+        <xar:else />
+            <xar:template type="module" file="modify-$rule_source" />
         </xar:if>
 
         <xar:if condition="!empty($hooks)">
