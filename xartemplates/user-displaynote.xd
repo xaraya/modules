@@ -3,16 +3,16 @@
     <span class="xar-mod-title"><xar:mlstring>Xaraya Web Application Framework</xar:mlstring></span>
 </div>
 </xar:comment>
-<!-- common admin menu for this module - remove link to the current function -->
 <xar:set name="extlisturl">xarModURL('release','user','view')</xar:set>
 <xar:set name="extreleaseurl">xarModURL('release','user','viewnotes')</xar:set>
 <xar:set name="extdocsurldev">xarModURL('articles','user','view',array('itemtype'=>'9','catid'=>'87'))</xar:set>
 <xar:set name="extdocsurladm">xarModURL('articles','user','view',array('itemtype'=>'9','catid'=>'93'))</xar:set>
 <xar:set name="extdocsurlthm">xarModURL('articles','user','view',array('itemtype'=>'9','catid'=>'95'))</xar:set>
 <xar:set name="extname">ucfirst($regname)</xar:set>
+
 <div class="xar-mod-body">
-<h1><xar:mlstring>Extension Release Details</xar:mlstring></h1>
-<div class="docs-article-wrapper">
+    <h1><xar:mlstring>Extension Release Details</xar:mlstring></h1>
+    <div class="docs-article-wrapper">
 
               <h2 style="float: left; width: 20%; text-align:left;">
                       <xar:if condition="$type eq '0'">
@@ -156,7 +156,7 @@
                </div>
                </xar:if>
                <p />
-</div>
+    </div>
 <div style="clear: both; width:98%; ">
     <p style="text-align:center;">
         <a href="#$extlisturl#"><xar:mlstring>Extension List</xar:mlstring></a> ::

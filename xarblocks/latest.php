@@ -1,20 +1,19 @@
 <?php
 /**
- * File: $Id$
- * 
  * Release Block
  * 
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2003-2006 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage release
+ * @subpackage Release Module
  * @author Release module development team 
  */
 
 /**
  * initialise block
+ * @return array
  */
 function release_latestblock_init()
 {
@@ -25,6 +24,7 @@ function release_latestblock_init()
 
 /**
  * get information on block
+ * @return array
  */
 function release_latestblock_info()
 { 
@@ -40,6 +40,7 @@ function release_latestblock_info()
 
 /**
  * display block
+ * @return array
  */
 function release_latestblock_display($blockinfo)
 { 
@@ -60,11 +61,7 @@ function release_latestblock_display($blockinfo)
         $vars['numitems'] = 5;
     } 
 
-    // The API function is called.  The arguments to the function are passed in
-    // as their own arguments array.
-    // Security check 1 - the getall() function only returns items for which the
-    // the user has at least OVERVIEW access.
-    // Item must also be approved
+    // The API function is called to get all notes
     $items = xarModAPIFunc(
         'release', 'user', 'getallnotes',
         array('numitems' => $vars['numitems'],
@@ -77,17 +74,6 @@ function release_latestblock_display($blockinfo)
     $data['items'] = array();
     if (is_array($items)) {
         foreach ($items as $item) {
-            // Let any transformation hooks know that we want to transform some text
-            // You'll need to specify the item id, and an array containing all the
-            // pieces of text that you want to transform (e.g. for autolinks, wiki,
-            // smilies, bbcode, ...).
-            // Note : for your module, you might not want to call transformation
-            // hooks in this overview list, but only in the display of the details
-            // in the display() function.
-            // list($item['name']) = xarModCallHooks('item',
-            // 'transform',
-            // $item['rid'],
-            // array($item['name']));
             // Security check 2 - if the user has read access to the item, show a
             // link to display the details of the item
             if (xarSecurityCheck('OverviewRelease', 0, 'Item', "$item[rnid]:All:$item[rid]")) {

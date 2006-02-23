@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id$
- * 
  * Release Block
  * 
  * @package Xaraya eXtensible Management System
@@ -15,6 +13,7 @@
 
 /**
  * modify block settings
+ * @return array
  */
 function release_latestblock_modify($blockinfo)
 { 
@@ -36,6 +35,8 @@ function release_latestblock_modify($blockinfo)
 
 /**
  * update block settings
+ * @param int numitems
+ * @return array
  */
 function release_latestblock_update($blockinfo)
 {

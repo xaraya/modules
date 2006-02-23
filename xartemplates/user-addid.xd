@@ -18,7 +18,7 @@
          <a href="#$retryID#"><xar:mlstring>Check current registered names.</xar:mlstring></a>
  </p>
 <xar:else />
-        <form action="#xarModURL('release', 'user', 'addid')#" method="post" enctype="application/x-www-form-urlencoded">
+        <form action="&xar-modurl-release-user-addid;" method="post" enctype="application/x-www-form-urlencoded">
             <input type="hidden" name="authid" id="authid" value="#$authid#" />
             <input type="hidden" name="phase" id="phase" value="update" />
             <fieldset class="formelements xar-norm">

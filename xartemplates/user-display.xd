@@ -1,5 +1,5 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Extension Registration &amp; Release</xar:mlstring></span></div>
-<!-- common admin menu for this module - remove link to the current function -->
+
 <div class="xar-mod-body">
 <!-- Let's put non-repeating detail as header and list releases underneath -->
 <xar:set name="extname">ucfirst($regname)</xar:set>
