@@ -2,7 +2,7 @@
 <!-- This is a standard template for the module overview  -->
 <!-- Each Module Should have an overview explaining exactly what it does, and giving an overview of the blocks and hooks that it includes or accepts. -->
 <div class="xar-mod-head">
-  <span class="xar-mod-title"><xar:mlstring>Example Administration</xar:mlstring></span>
+  <span class="xar-mod-title"><xar:mlstring>ITSP Administration</xar:mlstring></span>
 </div>
 <div class="xar-mod-body">
   <img src="modules/example/xarimages/admin.gif" class="xar-module-icon" alt="official icon" width="96" height="96" />
@@ -11,25 +11,23 @@
   
   <h3><xar:mlstring>What is it?</xar:mlstring></h3>
   <p>
-    <em><xar:mlstring>Example is the documented Xaraya Example Module.</xar:mlstring></em>
+    <em><xar:mlstring>The ITSP module is a module to organise and plan Education plans.</xar:mlstring></em>
     <xar:mlstring>It is currently responsible for accomplishing two main tasks:</xar:mlstring>
   </p>
   <ol>
-    <li><xar:mlstring>Providing a simple module template with standard functions, blocks, hooks, Dynamic Data properties, and templates that Developers can use as a basis for a new module.</xar:mlstring></li>
-    <li><xar:mlstring>Providing documentation in the functions and template files for those that wish to learn about standard Xaraya Module development.</xar:mlstring></li>
-    
+    <li><xar:mlstring>Hold Education Education Plans. The plans have plan items that represent education blocks.</xar:mlstring></li>
+    <li><xar:mlstring>Let users choose an education plan that they will follow (create an ITSP).</xar:mlstring></li>
+    <li><xar:mlstring>Let those users add courses and external courses to the their ITSP.</xar:mlstring></li>
+   
   </ol>
-  <p><xar:mlstring>The example module demonstrates:</xar:mlstring>
-  </p>
-  <ul>
-    <li><xar:mlstring>examples of standard Xaraya functions commented in plain terms, and written with Xaraya coding standards.</xar:mlstring></li>
-    <li><xar:mlstring>templates with standard style classes, layouts and template requirements to meet Xaraya Block Layout coding standards.</xar:mlstring></li>
-    <li><xar:mlstring>examples of hooks, blocks, dynamic data properties, and event handlers.</xar:mlstring></li>
-  </ul>
   
   <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
   <p>
-    <xar:mlstring>This module is intended as a reference for other modules to use.  Its output is just a basic non-usable output in many cases.</xar:mlstring>
+    <xar:mlstring>Install the courses module.</xar:mlstring>
+    <xar:mlstring>Create an education plan. Decide on the parts it contains (planitems).</xar:mlstring>
+    <xar:mlstring>Create templates for each plan item that a student can add.</xar:mlstring>
+    
+    
   </p>
   
   <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
@@ -55,8 +53,7 @@
   
   <h3><xar:mlstring>Included Dynamic Data Properties</xar:mlstring></h3>
   <ul>
-    <li><xar:mlstring>Example -- Provides example code and templates for an Example property</xar:mlstring></li>
-    
+    <li><xar:mlstring>None</xar:mlstring></li>
   </ul>
   
   <h3>
@@ -66,14 +63,14 @@
     <xar:mlstring>Further information on the Example module can be found at</xar:mlstring>
   </p>
   <ul>
-    <li><xar:mlstring>Example Extension page at</xar:mlstring> <a title="#xarML('Example Module - Xaraya Extension 36')#" href="http://www.xaraya.com/index.php/release/36.html">Xaraya Extension and Releases</a>.
+    <li><xar:mlstring>ITSP Extension page at</xar:mlstring> <a title="#xarML('ITSP Module - Xaraya Extension 36')#" href="http://www.xaraya.com/index.php/release/36.html">Xaraya Extension and Releases</a>.
       <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
     </li>
-    <li><xar:mlstring>Related tutorials and documentation on Example found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/example/" title="#xarML('Related documentation on Example')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+    <li><xar:mlstring>Related tutorials and documentation on ITSP found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/example/" title="#xarML('Related documentation on Example')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
     </li>
   </ul>
   <p class="xar-sub">
-    <strong>&nbsp;<xar:mlstring>Example Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.3&nbsp; 2005-09-28
+    <strong>&nbsp;<xar:mlstring>ITSP Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2006-02-23
   </p>
 </div>
 

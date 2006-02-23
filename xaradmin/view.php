@@ -1,6 +1,6 @@
 <?php
 /**
- * Standard function to view items
+ * View all education plans
  *
  * @package modules
  * @copyright (C) 2005-2006 The Digital Development Foundation
@@ -12,9 +12,9 @@
  * @author ITSP Module Development Team
  */
 /**
- * Standard function to view items
+ * Get and show all plans
  *
- * @author ITSP module development team
+ * @author MichelV <michelv@xarayahosting.nl>
  * @param int startnum
  * @return array
  */
@@ -30,7 +30,6 @@ function itsp_admin_view()
 
     /* Call the xarTPL helper function to produce a pager in case of there
      * being many items to display.
-
      */
     $data['pager'] = xarTplGetPager($startnum,
         xarModAPIFunc('itsp', 'user', 'countitems', array('itemtype' => 1)),
