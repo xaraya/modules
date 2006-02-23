@@ -19,9 +19,9 @@
 function release_user_view()
 {
     if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('phase', 'str:1:', $phase, 'all', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('catid', 'int', $catid, null,  XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('sort', 'enum:pre:trim:lower:alnum', $sort, NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('phase',    'str:1:', $phase,    'all', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('catid',    'int',    $catid,    NULL,  XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('sort',     'enum:pre:trim:lower:alnum', $sort, NULL, XARVAR_NOT_REQUIRED)) {return;}
    // Default parameters
     if (!isset($startnum)) {
         $startnum = 1;
@@ -29,10 +29,8 @@ function release_user_view()
     // Security Check
     if(!xarSecurityCheck('OverviewRelease')) return;
 
-    //$phase = xarVarCleanFromInput('phase');
-
     $uid = xarUserGetVar('uid');
-
+    // Set the type of extension
     if (!isset($idtypes)) {
        $idtypes=1;
     }
@@ -48,17 +46,17 @@ function release_user_view()
         $sort = 'id';
     }
 
-      // The user API function is called to get all release IDs.
-      $items = xarModAPIFunc('release',
-                             'user',
-                             'getallrids',
-                       array('idtypes'  => $idtypes,
-                             'catid'    => $catid,
-                             'sort'     => $sort,
-                             'startnum' => $startnum,
-                             'numitems' => xarModGetUserVar('release',
-                                                            'itemsperpage',$uid),
-                              ));
+    // The user API function is called to get all release IDs.
+    $items = xarModAPIFunc('release',
+                         'user',
+                         'getallrids',
+                   array('idtypes'  => $idtypes,
+                         'catid'    => $catid,
+                         'sort'     => $sort,
+                         'startnum' => $startnum,
+                         'numitems' => xarModGetUserVar('release',
+                                                        'itemsperpage',$uid),
+                          ));
     //Add common definition of the extension state array
     //TODO: <jojodee> This needs to be extensible ..not hard coded here ...
     $stateoptions=array();
@@ -79,7 +77,9 @@ function release_user_view()
         $items[$i]['rid'] = xarVarPrepForDisplay($item['rid']);
         $items[$i]['regname'] = xarVarPrepForDisplay($item['regname']);
         $items[$i]['displname'] = xarVarPrepForDisplay($item['displname']);
-        /* use the xarUserGetVar func as we only want name */
+        /* use the xarUserGetVar func as we only want name 
+         * TODO: Where is this user taken to?
+         */
         $getuser = xarModAPIFunc('roles',
                                  'user',
                                  'get',
@@ -178,7 +178,7 @@ function release_user_view()
            }
        }
 
-       $allitems=  xarModAPIFunc('release', 'user', 'countitems',array('idtypes'=>$idtypes,'catid'=>$catid));
+       $allitems = xarModAPIFunc('release', 'user', 'countitems',array('idtypes'=>$idtypes,'catid'=>$catid));
 
            $data['pager'] = xarTplGetPager($startnum,
            $allitems,
