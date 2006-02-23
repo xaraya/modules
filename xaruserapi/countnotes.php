@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id:
- * 
  * Utility function counts number of noteitems held by this module
  * 
  * @package Xaraya eXtensible Management System

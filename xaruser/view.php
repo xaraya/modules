@@ -12,9 +12,9 @@
 /**
  * @author niceguyeddie
  * @author jojodee
- * @param $idtypes: 1- all, 2-themes, 3-modules
- * @param sort - sort criteria
- * TODO : sort ok but need to make sticky over categories etc ...and vice versa
+ * @param int $idtypes: 1- all, 2-themes, 3-modules
+ * @param enum sort - sort criteria
+ * @TODO : sort ok but need to make sticky over categories etc ...and vice versa
  */
 function release_user_view()
 {

@@ -1,6 +1,21 @@
 <?php
-
-
+/**
+ * Get module IDs
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Release Module
+ */
+/**
+ * Get module IDs
+ * 
+ * Original Author of file: John Cox via phpMailer Team
+ * @author Release module development team
+ * @TODO 
+ */
 function release_userapi_getallrssextnotes($args)
 {
     extract($args);
@@ -15,7 +30,7 @@ function release_userapi_getallrssextnotes($args)
     $xartable =& xarDBGetTables();
 
     $releasenotes = $xartable['release_notes'];
-    //jojodeeWe want
+    //jojodee We want
     $query = "SELECT xar_rnid,
                      xar_rid,
                      xar_type,

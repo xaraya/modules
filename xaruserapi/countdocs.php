@@ -8,13 +8,13 @@
  * @link http://www.xaraya.com
  *
  * @subpackage Release Module
+ * @author Release Module Development Team 
  */
 /**
  * count the number of docs per release
  * 
- * @param $rid ID
- * @returns integer
- * @returns number of docs for rid
+ * @param int $rid ID
+ * @return int number of docs for rid
  */
 function release_userapi_countdocs($args)
 {

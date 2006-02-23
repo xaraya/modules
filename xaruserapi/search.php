@@ -7,16 +7,15 @@
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
- * @subpackage Release
- * @author release Development team
+ * @subpackage Release Module
+ * @author Release Module Development team
  */
-
 /**
  * Searches all releases
  *
  * @author jojodee
  * @access private
- * @returns mixed description of return
+ * @return array mixed description of return
  */
 function release_userapi_search($args)
 {
@@ -105,6 +104,5 @@ function release_userapi_search($args)
 
     // Return the releases
     return $releases;
-
 }
 ?>

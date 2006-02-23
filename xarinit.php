@@ -16,6 +16,7 @@
  * module instance
  * Original Author of file: John Cox via phpMailer Team
  * @author Release module development team
+ * @return bool
  */
 
 function release_init()
@@ -510,7 +511,8 @@ function release_upgrade($oldversion)
     return true;
 }
 /**
- * delete the send to friend module
+ * delete the release module
+ * @return bool
  */
 function release_delete()
 {

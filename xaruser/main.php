@@ -14,6 +14,7 @@
  * 
  * Original Author of file: John Cox via phpMailer Team
  * @author Release module development team
+ * @return array empty
  */
 function release_user_main()
 {
