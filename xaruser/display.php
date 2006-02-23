@@ -8,6 +8,7 @@
  * @link http://www.xaraya.com
  *
  * @subpackage Release Module
+ * @author Release module development team
  */
 /**
  * Display a release
@@ -17,7 +18,6 @@
  * Original Author of file: John Cox via phpMailer Team
  * @author Release module development team
  */
- 
 function release_user_display($args)
 {
     // Security Check

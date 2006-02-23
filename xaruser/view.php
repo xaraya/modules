@@ -47,57 +47,8 @@ function release_user_view()
     if (empty($sort)) {
         $sort = 'id';
     }
-    //<jojodee> I've put all this into one function now userapi getallrids.
 
-    /*
-     switch(strtolower($phase)) {
-
-        case 'all':
-        default:
-
-            // The user API function is called.
-            $items = xarModAPIFunc('release',
-                                   'user',
-                                   'getallids',
-                                   array('idtypes' => $idtypes,
-                                         'startnum' => $startnum,
-                                         'numitems' => xarModGetUserVar('release',
-                                                                    'itemsperpage',$uid),
-                                        ));
-            $idtypes=1;
-            break;
-
-        case 'themes':
-
-            // The user API function is called.
-            $items = xarModAPIFunc('release',
-                                   'user',
-                                   'getthemeids',
-                                  array('startnum' => $startnum,
-                                         'numitems' => xarModGetUserVar('release',
-                                                                    'itemsperpage',$uid)
-                                    ));
-
-            $idtypes=2;
-            break;
-
-        case 'modules':
-
-            // The user API function is called.
-            $items = xarModAPIFunc('release',
-                                   'user',
-                                   'getmoduleids',
-                             array('startnum' => $startnum,
-                                   'numitems' => xarModGetUserVar('release',
-                                                              'itemsperpage',$uid)
-                                   ));
-            $idtypes=3;
-            break;
-    }
-
-*/ 
-
-      // The user API function is called.
+      // The user API function is called to get all release IDs.
       $items = xarModAPIFunc('release',
                              'user',
                              'getallrids',
@@ -109,7 +60,7 @@ function release_user_view()
                                                             'itemsperpage',$uid),
                               ));
     //Add common definition of the extension state array
-    //TODO <jojodee> This needs to be extensible ..not hard coded here ...
+    //TODO: <jojodee> This needs to be extensible ..not hard coded here ...
     $stateoptions=array();
     $stateoptions[0] = xarML('Planning');
     $stateoptions[1] = xarML('Alpha');
@@ -247,5 +198,4 @@ function release_user_view()
     return $data;
 
 }
-
 ?>
