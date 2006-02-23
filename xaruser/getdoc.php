@@ -8,6 +8,15 @@
  * @link http://www.xaraya.com
  *
  * @subpackage Release Module
+ * @author Release module development team
+ */
+/**
+ * Add an extension and request an ID
+ *
+ * @param enum phase Phase we are at
+ * 
+ * @return array
+ * @author Release module development team
  */
  
 function release_user_getdoc()

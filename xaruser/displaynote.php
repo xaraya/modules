@@ -1,6 +1,6 @@
 <?php
 /**
- * Display a release
+ * Display a note
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 The Digital Development Foundation
@@ -11,12 +11,13 @@
  * @author Release module development team
  */
 /**
- * Display a release
+ * Display a note
  *
- * @param rid ID
+ * @param int rnid Release Note ID
  * 
  * Original Author of file: John Cox via phpMailer Team
  * @author Release module development team
+ * @return array with notes info
  */
 function release_user_displaynote()
 {
@@ -47,16 +48,17 @@ function release_user_displaynote()
                               array('uid' => $id['uid']));
 
 
-        $hooks = xarModCallHooks('item',
-                                        'display',
-                                        $rnid,
-                                        array('itemtype'  => '2',
-                                              'returnurl' => xarModURL('release',
-                                                                       'user',
-                                                                       'displaynote',
-                                                                       array('rnid' => $rnid))
-                                             )
-                                        );
+    $hooks = xarModCallHooks('item',
+                                    'display',
+                                    $rnid,
+                                    array('itemtype'  => '2',
+                                          'returnurl' => xarModURL('release',
+                                                                   'user',
+                                                                   'displaynote',
+                                                                   array('rnid' => $rnid))
+                                         )
+                                    );
+    // TODO: MichelV rewrite hookcall to array
     if (empty($hooks)) {
         $item['hooks'] = '';
     } elseif (is_array($hooks)) {

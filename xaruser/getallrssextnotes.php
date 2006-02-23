@@ -1,6 +1,23 @@
 <?php
-
-
+/**
+ * Add a new extension
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Release Module
+ * @author Release module development team
+ */
+/**
+ * Add an extension and request an ID
+ *
+ * @param enum phase Phase we are at
+ * 
+ * @return array
+ * @author Release module development team
+ */
 function release_userapi_getallrssextnotes($args)
 {
     extract($args);

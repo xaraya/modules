@@ -1,22 +1,27 @@
 <?php
-/*
- *
+/**
  * Release Module
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
+ * @copyright (C) 2005-2006 by the Xaraya Development Team
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
  * @subpackage Release
  * @original author Jim McDonalds, dracos, mikespub et al.
  */
-
-/*
+/**
+ * Search for a release
  * @author Michel V.
  * @author jojodee
- * Search for a release
- *
+ * @since 2005
+ * @param q
+ * @param bool
+ * @param sort
+ * @param string regname
+ * @param string displname
+ * @param string desc
+ * @return array
  */
 function release_user_search()
 {
@@ -112,11 +117,9 @@ function release_user_search()
     $data['release'] = xarModAPIFunc('release','user','search',$search);
 
     if (empty($data['release'])){
-        $data['status'] = xarML('No Extension Found that matches your search');
+        $data['status'] = xarML('No extension found that matches your search');
     }
 
     return $data;
-
 }
-
 ?>

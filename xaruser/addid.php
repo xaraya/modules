@@ -1,5 +1,23 @@
 <?php
-
+/**
+ * Add a new extension
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Release Module
+ * @author Release module development team
+ */
+/**
+ * Add an extension and request an ID
+ *
+ * @param enum phase Phase we are at
+ * 
+ * @return array
+ * @author Release module development team
+ */
 function release_user_addid()
 {
     // Security Check
@@ -60,6 +78,7 @@ function release_user_addid()
                 if (!xarSecConfirmAuthKey()) return;
 
                 // The user API function is called.
+                // TODO: MichelV Why is there a fixed certified here?
                 $newrid =  xarModAPIFunc('release', 'user', 'createid',
                                     array('uid' => $uid,
                                           'regname' => $regname,
@@ -83,11 +102,8 @@ function release_user_addid()
                 }
 
                 xarResponseRedirect(xarModURL('release', 'user', 'display',array('rid'=>$newrid)));
-
                 return true;
-
                 break;
-                
         }
     } else {
         $data['message'] = xarML('You Must Be Logged In to Assign an ID');
@@ -95,5 +111,4 @@ function release_user_addid()
 
     return $data;
 }
-
 ?>
