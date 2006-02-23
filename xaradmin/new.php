@@ -2,7 +2,7 @@
 function pmember_admin_new()
 {
     // Security Check
-    if(!xarSecurityCheck('AdminPmember')) return;
+    if(!xarSecurityCheck('AdminPMember')) return;
     xarTplSetPageTitle(xarVarPrepForDisplay(xarML('Add Member Manually')));
 
     if (!xarVarFetch('phase','str:1:100',$phase,'request',XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;

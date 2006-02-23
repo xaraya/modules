@@ -1,15 +1,15 @@
 <?php
 /**
  * Update the configuration parameters of the module based on data from the modification form
- * 
+ *
  * @author John Cox
- * @access public 
+ * @access public
  * @return array
  * @throws no exceptions
  */
 function pmember_admin_modifyconfig()
-{ 
-    if (!xarSecurityCheck('AdminPmember')) return;
+{
+    if (!xarSecurityCheck('AdminPMember')) return;
     if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
     switch (strtolower($phase)) {
         case 'modify':

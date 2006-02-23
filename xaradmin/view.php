@@ -17,9 +17,9 @@ function pmember_admin_view()
                                     xarModURL('pmember', 'admin', 'view', array('startnum' => '%%')),
                                     50);
 
-    
+
     // Security Check
-    if(!xarSecurityCheck('AdminPmember')) return;
+    if(!xarSecurityCheck('AdminPMember')) return;
 
     // The user API function is called
     $links = xarModAPIFunc('pmember',

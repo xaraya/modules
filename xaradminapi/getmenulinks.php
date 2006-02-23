@@ -8,7 +8,7 @@
  */
 function pmember_adminapi_getmenulinks()
 {
-    if (xarSecurityCheck('AdminPmember', 0)) {
+    if (xarSecurityCheck('AdminPMember', 0)) {
         $menulinks[] = Array('url'   => xarModURL('pmember', 'admin', 'modifyconfig'),
                               'title' => xarML('Modify the configuration'),
                               'label' => xarML('Modify Config'));

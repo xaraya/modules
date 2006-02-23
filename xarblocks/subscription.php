@@ -26,7 +26,7 @@ function pmember_subscriptionblock_info()
 function pmember_subscriptionblock_display($blockinfo)
 {
     // Security Check
-    if(!xarSecurityCheck('ViewPmember', 0)) return;
+    if(!xarSecurityCheck('ViewPMember', 0)) return;
 
     if (empty($blockinfo['title'])){
         $blockinfor['title'] = xarML('Subscribe');
