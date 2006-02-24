@@ -68,7 +68,11 @@
                         #$plan.mincredit#
                         </td>
                         <td>
+                        <xar:if condition="$sumcreditsnow lt $plan.mincredit">
+                        <span style="color:red">#$sumcreditsnow#&nbsp;</span>
+                        <xar:else />
                         #$sumcreditsnow#
+                        </xar:if>
                         </td>
                 </table>
             </div>

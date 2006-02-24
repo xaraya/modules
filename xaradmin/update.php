@@ -18,9 +18,11 @@
  * form supplied by xarModFunc('itsp','admin','modify') to update a current plan
  *
  * @author ITSP module development team
- * @param  $ 'planid' the id of the item to be updated
- * @param  $ 'planname' the name of the item to be updated
- * @param  $ 'plandesc' the description of the item to be updated
+ * @param  int 'planid' the id of the item to be updated
+ * @param  string 'planname' the name of the item to be updated
+ * @param  string 'plandesc' the description of the item to be updated
+ * @return bool true on success
+ * @throws NOT_AUTHORIZED
  */
 function itsp_admin_update($args)
 {
@@ -79,6 +81,12 @@ function itsp_admin_update($args)
 
     /* The API function is called: update plan
      */
+    if ((!empty($dateopen)) && !is_numeric($dateopen)) {
+         $dateopen = strtotime($dateopen);
+    }
+    if ((!empty($dateclose)) && !is_numeric($dateclose)) {
+         $dateopen = strtotime($dateclose);
+    }
     if (!xarModAPIFunc('itsp',
                        'admin',
                        'update',
@@ -88,8 +96,8 @@ function itsp_admin_update($args)
                              'planrules' => $planrules,
                              'credits'   => $credits,
                              'mincredit' => $mincredit,
-                             'dateopen'  => strtotime($dateopen),
-                             'dateclose' => strtotime($dateclose)
+                             'dateopen'  => $dateopen,
+                             'dateclose' => $dateclose
                              )
                        )) {
         return; /* throw back */

@@ -16,7 +16,7 @@
  *
  * @author MichelV <michelv@xarayahosting.nl>
  * @param int pitemid The plan item ID
- * @param int itspid The ITSP ID
+ * @param int itspid The ITSP ID OPTIONAL
  * @return integer number of credits for this plan item
  * @throws BAD_PARAM DATABASE_ERROR
  */
