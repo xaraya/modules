@@ -5,7 +5,7 @@
 </div>
 <div class="xar-mod-body">
 
-    <!-- the variables used in this menu templte  come from itsp_user_menu() -->
+    <!-- the variables used in this menu template come from itsp_user_menu() -->
     <xar:template type="module" file="user-menu" />
 
     <h2><xar:mlstring>Your plan</xar:mlstring></h2>
@@ -19,37 +19,61 @@
         <xar:mlstring>Welcome</xar:mlstring>&nbsp;
         #xarUserGetVar('name')#
     </p>
-    <table>
-        <tr>
-            <th><xar:mlstring>Type name</xar:mlstring></th>
-            <th><xar:mlstring>Credits needed</xar:mlstring></th>
-            <th><xar:mlstring>Obtained</xar:mlstring></th>
-        </tr>
-        <xar:foreach in="$pitems" value="$item">
-        <tr>
-            <td>
-                 <a href="#xarModURL('itsp','user','modify',array('pitemid'=>$item['pitemid'],'itspid'=>$itspid))#">#$item.pitemname#</a>
-            </td>
-            <td>
-                 #$item.mincredit#
-            </td>
-            <td>
-                 #$item.creditsnow#
-            </td>
-        </tr>
-        </xar:foreach>
-        <tr>
-            <td>
-            Total needed/obtained
-            </td>
-            <td>
-            #$plan.mincredit#
-            </td>
-            <td>
-            #$sumcreditsnow#
-            </td>
+    <xar:comment> Show the plan details, coming from $plan</xar:comment>
 
-    </table>
+    <form>
+        <fieldset>
+            <legend><xar:mlstring>Information</xar:mlstring></legend>
+            <div class="xar-form-input-wrapper">
+                 <label for="planname" class="xar-form-label" title="#xarML('Name of the plan')#">
+                      <xar:mlstring>Name:</xar:mlstring>
+                 </label>
+                 #$plan.planname#
+            </div>
+            <div class="xar-form-input-wrapper">
+                 <label for="plandesc" class="xar-form-label" title="#xarML('Name of the plan')#">
+                      <xar:mlstring>Description:</xar:mlstring>
+                 </label>
+                 #$plan.plandesc#
+            </div>
+            <div class="xar-form-input-wrapper">
+                 <label for="planitems" class="xar-form-label" title="#xarML('Name of the plan')#">
+                      <xar:mlstring>The parts:</xar:mlstring>
+                 </label>
+
+                <table>
+                    <tr>
+                        <th><xar:mlstring>Type name</xar:mlstring></th>
+                        <th><xar:mlstring>Credits needed</xar:mlstring></th>
+                        <th><xar:mlstring>Obtained</xar:mlstring></th>
+                    </tr>
+                    <xar:foreach in="$pitems" value="$item">
+                    <tr>
+                        <td>
+                             <a href="#xarModURL('itsp','user','modify',array('pitemid'=>$item['pitemid'],'itspid'=>$itspid))#">#$item.pitemname#</a>
+                        </td>
+                        <td>
+                             #$item.mincredit#
+                        </td>
+                        <td>
+                             #$item.creditsnow#
+                        </td>
+                    </tr>
+                    </xar:foreach>
+                    <tr>
+                        <td>
+                        Total needed/obtained
+                        </td>
+                        <td>
+                        #$plan.mincredit#
+                        </td>
+                        <td>
+                        #$sumcreditsnow#
+                        </td>
+                </table>
+            </div>
+        </fieldset>
+    </form>
         <!-- if you want to extend this module with dynamic data, you can retrieve
         //   that data in the code via APIs, or use e.g. the following BL tags here.
         //   For the different options, see the overview of dynamicdata...
