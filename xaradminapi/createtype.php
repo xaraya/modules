@@ -16,9 +16,10 @@
  *
  * This is a standard adminapi function to create a module item
  *
- * @author the Courses module development team
- * @param  $args ['name'] name of the item
- * @param  $args ['number'] number of the item
+ * @author MichelV <michelv@xaraya.com>
+ * @param string coursetype
+ * @param string descr The desciption of this course type
+ * @param string settings
  * @return int item ID on success, false on failure
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
@@ -52,9 +53,11 @@ function courses_adminapi_createtype($args)
     $nextId = $dbconn->GenId($table);
     $query = "INSERT INTO $table (
               xar_tid,
-              xar_type)
-            VALUES (?,?)";
-    $bindvars = array($nextId, (string) $coursetype);
+              xar_type,
+              xar_descr,
+              xar_settings)
+            VALUES (?,?,?,?)";
+    $bindvars = array($nextId, (string) $coursetype,$descr,$settings);
     $result = &$dbconn->Execute($query,$bindvars);
 
     /* Check for an error with the database code, adodb has already raised

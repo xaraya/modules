@@ -37,7 +37,7 @@ function courses_admin_newtype($args)
     /* Security check - important to do this as early as possible to avoid
      * potential security holes or just too much wasted processing
      */
-    if (!xarSecurityCheck('AddCourses')) return;
+    if (!xarSecurityCheck('AdminCourses')) return;
 
     /* Generate a one-time authorisation code for this operation */
     $data['authid'] = xarSecGenAuthKey();

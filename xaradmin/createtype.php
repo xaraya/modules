@@ -60,7 +60,7 @@ function courses_admin_createtype($args)
                           'admin',
                           'createtype',
                           array('coursetype' => $coursetype,
-                                'desc'       => $desc,
+                                'descr'      => $descr,
                                 'settings'   => $settings));
     /* The return value of the function is checked here */
     if (!isset($tid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
