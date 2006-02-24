@@ -3,7 +3,7 @@
  * Create a new item
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -11,27 +11,30 @@
  * @link http://xaraya.com/index.php/release/179.html
  * @author Courses module development team
  */
-
 /**
- * Create a new item
+ * Create a new course type
  *
- * Standard function to create a new item
+ * Standard function to create a new course type
  * This is a standard function that is called with the results of the
- * form supplied by xarModFunc('courses','admin','new') to create a new item
+ * form supplied by xarModFunc('courses','admin','newtype') to create a new item
  *
- * @author MichelV
- * @param  $ 'name' the name of the item to be created
- * @param  $ 'number' the number of the item to be created
+ * @author MichelV <michelv@xaraya.com>
+ * @since Dec 2005
+ * @param string coursetype
+ * @param string descr The desciption of this course type
+ * @param string settings
+ * @return bool true on success
  */
 function courses_admin_createtype($args)
 {
     extract($args);
 
-    if (!xarVarFetch('tid',     'id',     $tid,     $tid, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('objectid', 'id',     $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('invalid',  'str:1:', $invalid,  '', XARVAR_NOT_REQUIRED)) return;
-//    if (!xarVarFetch('number',   'int:1:', $number,   $number, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('coursetype',     'str:1:', $coursetype,     '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('tid',        'id',        $tid,        $tid,      XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('objectid',   'id',        $objectid,   $objectid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('invalid',    'array',     $invalid,    array(),   XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('coursetype', 'str:1:',    $coursetype, '',        XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('descr',      'str:1:255', $descr,      '',        XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('settings',   'str:1:255', $settings,   '',        XARVAR_NOT_REQUIRED)) return;
 
     // Argument check
     $invalid = array();
@@ -48,18 +51,18 @@ function courses_admin_createtype($args)
          */
         return xarModFunc('courses', 'admin', 'newtype',
                           array('coursetype' => $coursetype,
+                                'desc' => $desc,
+                                'settings' => $settings,
                                 'invalid' => $invalid));
     }
     if (!xarSecConfirmAuthKey()) return;
     $tid = xarModAPIFunc('courses',
                           'admin',
                           'createtype',
-                          array('coursetype' => $coursetype));
-    /* The return value of the function is checked here, and if the function
-     * suceeded then an appropriate message is posted. Note that if the
-     * function did not succeed then the API function should have already
-     * posted a failure message so no action is required
-     */
+                          array('coursetype' => $coursetype,
+                                'desc'       => $desc,
+                                'settings'   => $settings));
+    /* The return value of the function is checked here */
     if (!isset($tid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     /* This function generated no output, and so now it is complete we redirect
      * the user to an appropriate page for them to carry on their work
