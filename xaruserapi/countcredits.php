@@ -16,6 +16,7 @@
  *
  * @author MichelV <michelv@xarayahosting.nl>
  * @param int pitemid The plan item ID
+ * @param int itspid The ITSP ID
  * @return integer number of credits for this plan item
  * @throws BAD_PARAM DATABASE_ERROR
  */
@@ -29,27 +30,43 @@ function itsp_userapi_countcredits($args)
             new SystemException($msg));
         return;
     }
-    /* Get database setup
-     */
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
-    // we can only count directly in our own courses table
-    $table = $xartable['itsp_itsp_courses'];
+    $credits = 0;
+    // See where we will get the credits from
+    $rules = xarModApiFunc('itsp','user','splitrules',array('pitemid'=>$pitemid));
+    if ($rules['rule_source'] == 'courses') {
+        //get them from courses
+        // Get the linked courses
+        $lcourses = xarModApiFunc('itsp','user','getall_courselinks',array('itspid' => $itspid, 'pitemid' => $pitemid));
+        // get the credits for the courses
+        foreach($lcourses as $lcourse) {
+            $courseid = $lcourse['lcourseid'];
+            $course = xarModApiFunc('courses','user','get',array('courseid' => $courseid));
+            $credits = $credits + $course['intendedcredits'];
+        }
 
-    $query = "SELECT SUM(xar_icoursecredits)
-              FROM $table
-              WHERE xar_pitemid = ?";
-    $result = &$dbconn->Execute($query,array($pitemid));
-    /* Check for an error with the database code, adodb has already raised
-     * the exception so we just return
-     */
-    if (!$result) return;
-    /* Obtain the number of items */
-    list($credits) = $result->fields;
-    /* All successful database queries produce a result set, and that result
-     * set should be closed when it has been finished with
-     */
-    $result->Close();
+    } else {
+        /* Get database setup
+         */
+        $dbconn =& xarDBGetConn();
+        $xartable =& xarDBGetTables();
+        // we can only count directly in our own courses table
+        $table = $xartable['itsp_itsp_courses'];
+
+        $query = "SELECT SUM(xar_icoursecredits)
+                  FROM $table
+                  WHERE xar_pitemid = ?";
+        $result = &$dbconn->Execute($query,array($pitemid));
+        /* Check for an error with the database code, adodb has already raised
+         * the exception so we just return
+         */
+        if (!$result) return;
+        /* Obtain the number of items */
+        list($credits) = $result->fields;
+        /* All successful database queries produce a result set, and that result
+         * set should be closed when it has been finished with
+         */
+        $result->Close();
+    }
     /* Return the number of items */
     return $credits;
 }

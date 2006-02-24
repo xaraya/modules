@@ -69,7 +69,6 @@ function itsp_user_modify($args)
 
     // Check to see if we are already dealing with a planitem
     if (!empty($pitemid) && is_numeric($pitemid)) {
-        $rules = xarModApiFunc('itsp','user','splitrules',array('pitemid'=>$pitemid));
         // get planitem
         $pitem = xarModApiFunc('itsp','user','get_planitem',array('pitemid'=>$pitemid));
         $data['pitem'] = $pitem;
@@ -77,29 +76,17 @@ function itsp_user_modify($args)
         $data['pitemrules'] = $pitem['pitemrules'];
         $rules = xarModApiFunc('itsp','user','splitrules',array('rules'=>$pitem['pitemrules']));
         // Splice the rule
-        /*if (!empty($pitem['pitemrules'])) {
-            list($Rtype, $Rlevel, $Rcat, $Rsource) = explode(";", $pitem['pitemrules']);
-
-            $rule_parts = explode(':',$Rtype);
-            $rule_type = $rule_parts[1];
-            $rule_parts = explode(':',$Rlevel);
-            $rule_level = $rule_parts[1];
-            $rule_parts = explode(':',$Rcat);
-            $rule_cat = $rule_parts[1];
-            $rule_parts = explode(':',$Rsource);
-            $rule_source = $rule_parts[1];
-*/
         $data['rule_type'] = $rules['rule_type'];
         $data['rule_level'] = $rules['rule_level'];
         $data['rule_cat'] = $rules['rule_cat'];
         $data['rule_source'] = $rules['rule_source'];
-//echo $rule_source;
+
 
   //      }
         switch ($rules['rule_source']) {
             case 'courses':
                 // get the pitem details for this itsp
-                // get all linked courses that already have been added to the ITSP for this pitemdi
+                // get all linked courses that already have been added to the ITSP for this pitemid
                 $courselinks = xarModApiFunc('itsp','user','getall_courselinks',array('itspid'=>$pitemid, 'pitemid' => $pitemid));
                 // for each linked course get the details
                 if (!isset($courselinks) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
@@ -107,6 +94,7 @@ function itsp_user_modify($args)
                 /* TODO: check for conflicts between transformation hook output and xarVarPrepForDisplay
                  * Loop through each item and display it.
                  */
+                 $creditsnow = 0;
                 foreach ($courselinks as $lcourse) {
                     // Add read link
                     $courseid = $lcourse['lcourseid'];
@@ -124,6 +112,7 @@ function itsp_user_modify($args)
                     $lcourse['intendedcredits'] = $course['intendedcredits'];
                     /* Add this item to the list of items to be displayed */
                     $data['lcourses'][] = $lcourse;
+                    $creditsnow = $creditsnow + $course['intendedcredits'];
                 }
                 break;
             // The default will pull all linked courses. These can hold any type of courses
@@ -226,10 +215,10 @@ function itsp_user_modify($args)
                 } else {
                     $data['dateappr'] = $dateappr;
                 }
+                $creditsnow = xarModApiFunc('itsp','user','countcredits',array('uid' => xarUserGetVar('uid'), 'pitemid' => $pitemid));
         }
-        $creditsnow = xarModApiFunc('itsp','user','countcredits',array('uid' => xarUserGetVar('uid'), 'pitemid' => $pitemid));
-        $data['creditsnow'] = $creditsnow;
         $data['pitem'] = $pitem;
+        $data['creditsnow'] = $creditsnow;
     }
 
     $data['pitemid'] = $pitemid;
