@@ -53,13 +53,14 @@ function courses_adminapi_create_teacher($args)
 
     // Get the ID of the item that we inserted.
     $tid = $dbconn->PO_Insert_ID($teacherstable, 'xar_tid');
-
+/*
     // TODO: evaluate
     // xarModCallHooks('item', 'create', $exid, 'exid');
     $item = $args;
     $item['module'] = 'courses';
     $item['itemid'] = $tid;
     xarModCallHooks('item', 'create', $tid, $item);
+    */
     // Return the id of the newly created item to the calling process
     return $tid;
 }

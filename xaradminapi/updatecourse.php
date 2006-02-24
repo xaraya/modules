@@ -3,7 +3,7 @@
  * Update a course
  *
  * @package modules
- * @copyright (C) 2002-2006 by the Xaraya Development Team.
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -14,11 +14,12 @@
 /**
  * update a course
  *
- * @author the Course module development team
- * @param  $args ['courseid'] the ID of the course
+ * @author MichelV <michelv@xaraya.com>
+ * @param  int $args ['courseid'] the ID of the course
  * @param  $args ['name'] the new name of the item
- * @param  $args ['number'] the new number of the item
+ * @param  int $args ['number'] the code for the course
  * @param  $args all other course variables ;)
+ * @return bool
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function courses_adminapi_updatecourse($args)

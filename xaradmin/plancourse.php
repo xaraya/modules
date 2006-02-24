@@ -68,6 +68,8 @@ function courses_admin_plancourse($args)
     if (!isset($coursedata) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     // Place in $data
     $data['coursedata'] = $coursedata;
+    $data['itemtype'] = $coursedata['coursetype'];
+    $data['itemid'] = $courseid;
 
     // Specify some labels for display
     $data['namelabel'] = xarVarPrepForDisplay(xarML('Course Name'));
@@ -106,11 +108,11 @@ function courses_admin_plancourse($args)
                                       array('itemtype' => 1003));
     $data['year'] = xarModAPIFunc('courses', 'user', 'gets',
                                       array('itemtype' => 1005));
-/*
+
     $item = array();
     $item['module'] = 'courses';
     $item['itemtype'] = $coursedata['coursetype'];
-    $hooks = xarModCallHooks('item', 'new', '', $item);
+    $hooks = xarModCallHooks('item', 'display', $courseid, $item);
 
     if (empty($hooks)) {
         $data['hookoutput'] = array();
@@ -118,7 +120,7 @@ function courses_admin_plancourse($args)
         $data['hookoutput'] = $hooks;
     }
 
-    $data['item'] = $item;*/
+    $data['item'] = $item;
     // For E_ALL purposes, we need to check to make sure the vars are set.
     // If they are not set, then we need to set them empty to surpress errors
 
