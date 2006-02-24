@@ -28,7 +28,7 @@
         <xar:foreach in="$pitems" value="$item">
         <tr>
             <td>
-                 #$item.pitemname#
+                 <a href="#xarModURL('itsp','user','modify',array('pitemid'=>$item['pitemid'],'itspid'=>$itspid))#">#$item.pitemname#</a>
             </td>
             <td>
                  #$item.mincredit#
