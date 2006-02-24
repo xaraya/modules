@@ -87,6 +87,7 @@ function courses_admin_participants()
     // Add the array of items to the template variables
     $data['items'] = $items;
     $data['planningid'] = $planningid;
+    $data['coursename'] = xarModApiFunc('courses','user','getcoursename',array('planningid'=> $planningid));
     // Return the template variables defined in this function
     return $data;
 }

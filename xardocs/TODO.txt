@@ -1,11 +1,11 @@
 1. Create checks for input: when is a student already enrolled, when has he enrolled in the course. (done?)
 2. Make tables for other course items eg Courseyear, Courselevel, Intended audience (?), method (?), ...; check import into Dyn Data
-3. Admin functions to adjust those dyn data values via module interface (Done)
+3. Admin functions to adjust those dyn data values via module interface [Done]
 4. Create user interface
-    -Choose a course (done)
+    -Choose a course [done]
     -Overview of courses that are planned (needs improvement)
-    -Enroll (done)
-    -Check enrolled (done)
+    -Enroll [done]
+    -Check enrolled [done]
     -Historic view (Done via usermenu)
     -Search function in course descriptions (Done for some fields, needs improvements)
 5. Think about payment options (We at SENSE don't need them)
@@ -23,4 +23,4 @@
 17. Redefine itemtypes for coursetypes.
 
 ad 17. Courses that are itemtypes are not the solution
-    the level needs to be higher. Therefor we need to add real course types. Those can have different behaviours.
+    the level needs to be higher. Therefore we need to add real course types. Those can have different behaviours [in progress].

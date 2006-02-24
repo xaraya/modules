@@ -3,7 +3,7 @@
 <xar:style scope="module" />
 <div class="xar-mod-body">
     <h2>#$menutitle#</h2>
-    These are the participants enrolled in planned course #$planningid#<br>
+    <xar:mlstring>The participants enrolled in the planned course</xar:mlstring>&nbsp;"#$coursename#"<br>
     <xar:if condition="xarSessionGetVar('statusmsg') != ''">
         <p>#xarSessionGetVar('statusmsg')#</p>
     </xar:if>
@@ -20,9 +20,9 @@
                 </tr>
                 <xar:foreach in="$items" value="$item">
                 <tr>
-                    <td>#xarUserGetVar('uname',$item['userid'])#</td>
+                    <td>#xarUserGetVar('name',$item['userid'])#</td>
                     <td>#xarUserGetVar('email',$item['userid'])#</td>
-                    <td>#$item['regdate']#</td>
+                    <td>#xarLocaleGetFormattedDate('medium', $item['regdate'])#</td>
                     <td>#$item['statusname']#</td>
                     <td class="xar-norm">
                         <xar:if condition="!empty($item['changestatusurl'])">

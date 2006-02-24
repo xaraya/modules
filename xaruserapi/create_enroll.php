@@ -3,7 +3,7 @@
  * Enroll into a course
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -14,21 +14,20 @@
 /**
  * create an enrollment for a student
  *
- * @author the Courses module development team
- * @param  $args ['uid'] uid of student
- * @param  $args ['planningid'] number of the planned course
- * @param  $args ['studstatus'] status of the student enrolling
- * @returns int
- * @return enroll ID on success, false on failure
+ * @author MichelV <michelv@xarayahosting.nl>
+ * @param  int $args ['uid'] uid of student
+ * @param  int $args ['planningid'] number of the planned course
+ * @param  int $args ['studstatus'] status of the student enrolling
+ * @return int enroll ID on success, false on failure
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function courses_userapi_create_enroll($args)
 {
     extract($args);
-    if (!xarVarFetch('planningid', 'id',     $planningid)) return;
-    if (!xarVarFetch('uid',        'int:1:', $uid)) return;
-    if (!xarVarFetch('studstatus', 'int:1:', $studstatus, '1')) return;
-    if (!xarVarFetch('regdate',    'str:1:', $regdate)) return;
+    if (!xarVarFetch('planningid', 'id',       $planningid)) return;
+    if (!xarVarFetch('uid',        'int:1:',   $uid)) return;
+    if (!xarVarFetch('studstatus', 'int:1:',   $studstatus, '1')) return;
+   // if (!xarVarFetch('regdate',    'int:1:11', $regdate)) return;
 
     $invalid = array();
      if (!isset($uid) || !is_numeric($uid)) {
