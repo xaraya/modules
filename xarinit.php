@@ -17,6 +17,7 @@
  * module instance
  *
  * @author ITSP Module Development Team
+ * @return bool true on success
  */
 function itsp_init()
 {
@@ -260,7 +261,7 @@ This table deals with the free courses. So: how to add the custom courses/items 
      * there doesn't need to be a check to see if the variable is set in
      * the rest of the code as it always will be
      */
-    xarModSetVar('itsp', 'bold', 0);
+    //xarModSetVar('itsp', 'bold', 0);
     xarModSetVar('itsp', 'itemsperpage', 10);
     /* If your module supports short URLs, the website administrator should
      * be able to turn it on or off in your module administration.
@@ -281,10 +282,10 @@ This table deals with the free courses. So: how to add the custom courses/items 
             'itsp', 'user', 'usermenu')) {
         return false;
     }
-    /* Register search hook */
+    /* Register search hook
     if (!xarModRegisterHook('item', 'search', 'GUI', 'itsp', 'user', 'search')) {
         return false;
-    }
+    } */
     /**
      * Define instances for this module
      * Format is
@@ -378,6 +379,9 @@ This table deals with the free courses. So: how to add the custom courses/items 
  * Upgrade the module from an old version
  *
  * This function can be called multiple times
+ * @author MichelV <michelv@xarayahosting.nl>
+ * @param string oldversion
+ * @return bool true on success
  */
 function itsp_upgrade($oldversion)
 {
