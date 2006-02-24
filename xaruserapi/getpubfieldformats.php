@@ -13,7 +13,7 @@
  */
 /**
  * get array of field formats for publication types
- * @TODO: move this to some common place in Xaraya (base module ?)
+ * @TODO : move this to some common place in Xaraya (base module ?)
  * + replace with dynamic_propertytypes table
  *
  * + extend with other pre-defined formats

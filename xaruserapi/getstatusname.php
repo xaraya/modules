@@ -11,6 +11,9 @@
  * @link http://xaraya.com/index.php/release/151.html
  * @author mikespub
  */
+/**
+ * Function to decode status
+ */
 function articles_userapi_getstatusname( $args )
 {
     extract($args);

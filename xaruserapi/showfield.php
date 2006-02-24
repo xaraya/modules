@@ -12,11 +12,11 @@
  * @author mikespub
  */
 /**
-// TODO: move this to some common place in Xaraya (base module ?)
  * show some predefined form field in a template
  *
  * @param $args array containing the definition of the field (type, name, value, ...)
  * @return string containing the HTML (or other) text to output in the BL template
+ * @TODO move this to some common place in Xaraya (base module ?)
  */
 function articles_userapi_showfield($args)
 {

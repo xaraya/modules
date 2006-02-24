@@ -14,11 +14,11 @@
 /**
  * get an array of root categories with links
  *
- * @param $args['ptid'] publication type ID
+ * @param int $args['ptid'] publication type ID
  * @param $args['all'] boolean if we need to return all root categories when
  *                     ptid is empty (default false)
  * @return array
- * @TODO: specify return format
+ * @TODO specify return format
  */
 function articles_userapi_getrootcats($args)
 {

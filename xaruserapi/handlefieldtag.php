@@ -18,9 +18,8 @@
  *       or <xar:articles-field name="thisname" type="thattype" value="$val" ... />
  *
  * @param $args array containing the form field definition or the type, name, value, ...
- * @returns string
- * @return the PHP code needed to invoke showfield() in the BL template
- * @TODO: move this to some common place in Xaraya (base module ?)
+ * @return string The PHP code needed to invoke showfield() in the BL template
+ * @TODO : move this to some common place in Xaraya (base module ?)
  */
 function articles_userapi_handleFieldTag($args)
 {

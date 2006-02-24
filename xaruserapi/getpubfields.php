@@ -13,8 +13,7 @@
  */
 /**
  * get array of configurable fields for publication types
- * @TODO: add dynamic fields here for .81+
- * @returns array
+ * @TODO : add dynamic fields here for .81+
  * @return array('title'   => array('label'  => xarML('...'),
                                     'format' => '...',
                                     'input'  => 1),

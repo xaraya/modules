@@ -13,7 +13,7 @@
  */
 /**
  * get array of (fixed) field types for publication types
- * @TODO: add dynamic fields here for .81+
+ * @TODO : add dynamic fields here for .81+
  * @return array('title'   => 'string',
                  'summary' => 'text',
                  ...);

@@ -11,6 +11,10 @@
  * @link http://xaraya.com/index.php/release/151.html
  * @author mikespub
  */
+/**
+ * return an array with coded states
+ * @return array
+ */
 function articles_userapi_getstates()
 {
     // Simplistic getstates function
