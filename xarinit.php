@@ -383,7 +383,9 @@ function itsp_upgrade($oldversion)
 {
     /* Upgrade dependent on old version number */
     switch ($oldversion) {
-        case '0.1':
+        case '0.1.0':
+        case '0.2.0':
+        case '0.2.5':
              return itsp_upgrade('1.0.0');
         case '1.0.0':
             break;
