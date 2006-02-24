@@ -11,7 +11,11 @@
  * @link http://xaraya.com/index.php/release/151.html
  * @author mikespub
  */
-
+/**
+ * Manage the tables in articles
+ *
+ * @return array with the tables used in articles
+ */
 function articles_xartables()
 {
     // Initialise table array

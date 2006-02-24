@@ -15,8 +15,7 @@
  * utility function to pass item field definitions to whoever
  *
  * @param $args['itemtype'] item type (optional)
- * @returns array
- * @return array containing the item field definitions
+ * @return array Array containing the item field definitions
  */
 function articles_userapi_getitemfields($args)
 {

@@ -14,7 +14,7 @@
 /**
  * utility function pass individual menu items to the main menu
  *
- * @return array containing the menulinks for the main menu items.
+ * @return array Array containing the menulinks for the main menu items.
  */
 function articles_userapi_getmenulinks()
 {

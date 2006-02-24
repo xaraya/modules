@@ -17,8 +17,7 @@
  *
  * @param $args['aid'] ID of the article
  * @param $args['ptid'] publication type ID for the item (*cough*)
- * @returns bool
- * @return true on success, false on failure
+ * @return bool true on success, false on failure
  */
 function articles_adminapi_delete($args)
 {

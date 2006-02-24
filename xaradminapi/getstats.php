@@ -14,8 +14,8 @@
 /**
  * count number of items depending on additional module criteria
  *
- * @returns array
- * @return number of items
+ * @param array group
+ * @return array number of items with descriptors
  */
 function articles_adminapi_getstats($args)
 {

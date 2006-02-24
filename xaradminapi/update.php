@@ -15,19 +15,18 @@
  * Update an article
  * Usage : if (xarModAPIFunc('articles', 'admin', 'update', $article)) {...}
  *
- * @param $args['aid'] ID of the item (mandatory argument)
- * @param $args['title'] name of the item (mandatory argument)
- * @param $args['summary'] summary of the item
- * @param $args['body'] body of the item
- * @param $args['notes'] notes for the item
+ * @param id $args['aid'] ID of the item (mandatory argument)
+ * @param string $args['title'] name of the item (mandatory argument)
+ * @param string $args['summary'] summary of the item
+ * @param string $args['body'] body of the item
+ * @param string $args['notes'] notes for the item
  * @param $args['status'] status of the item
- * @param $args['ptid'] publication type ID for the item (*cough*)
- * @param $args['pubdate'] publication date in unix time format
- * @param $args['authorid'] ID of the new author (*cough*)
+ * @param int $args['ptid'] publication type ID for the item (*cough*)
+ * @param int $args['pubdate'] publication date in unix time format
+ * @param int $args['authorid'] ID of the new author (*cough*)
  * @param $args['language'] language of the item
  * @param $args['cids'] category IDs this item belongs to
- * @returns bool
- * @return true on success, false on failure
+ * @return bool true on success, false on failure
  */
 function articles_adminapi_update($args)
 {

@@ -43,8 +43,7 @@
  *                       ones and add some optional fields with 'extra'
  * @param $args['where'] additional where clauses (e.g. myfield gt 1234)
  * @param $args['language'] language/locale (if not using multi-sites, categories etc.)
- * @returns array
- * @return array of articles, or false on failure
+ * @return array Array of articles, or false on failure
  */
 function articles_userapi_getall($args)
 {

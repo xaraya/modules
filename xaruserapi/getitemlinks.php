@@ -17,8 +17,7 @@
  * @param $args['itemtype'] item type (optional)
  * @param $args['itemids'] array of item ids to get
  * @param $args['field'] field to return as label in the list (default 'title')
- * @returns array
- * @return array containing the itemlink(s) for the item(s).
+ * @return array Array containing the itemlink(s) for the item(s).
  */
 function articles_userapi_getitemlinks($args)
 {

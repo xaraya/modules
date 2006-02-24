@@ -15,8 +15,7 @@
  * Delete a publication type
  *
  * @param $args['ptid'] ID of the publication type
- * @returns bool
- * @return true on success, false on failure
+ * @return bool true on success, false on failure
  */
 function articles_adminapi_deletepubtype($args)
 {

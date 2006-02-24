@@ -14,7 +14,7 @@
 /**
  * utility function to retrieve the list of item types of this module (if any)
  *
- * @return array containing the item types and their description
+ * @return array Array containing the item types and their description
  */
 function articles_userapi_getitemtypes($args)
 {
