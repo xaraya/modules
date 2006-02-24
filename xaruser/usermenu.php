@@ -3,7 +3,7 @@
  * Display the user menu hook
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -13,9 +13,12 @@
  */
 /**
  * display the user menu hook
+ *
  * This is a standard function to provide a link in the "Your Account Page"
  *
- * @param  $phase is the which part of the loop you are on
+ * @param string $phase is the which part of the loop you are on
+ * @param int startnum
+ * @return array with data for template
  */
 function courses_user_usermenu($args)
 {

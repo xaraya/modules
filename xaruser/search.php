@@ -4,7 +4,7 @@
  *
  * @package modules
  * @copyright (C) 2002-2006 The Digital Development Foundation
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Courses Module
@@ -12,10 +12,11 @@
  */
 
 /**
- * @author Michel V.
  * Search for a course via content description
- * @original author Jim McDonalds, dracos, mikespub et al.
  *
+ * @author Michel V.
+ * original author Jim McDonalds, dracos, mikespub et al.
+ * @return array with courses
  */
 function courses_user_search()
 {

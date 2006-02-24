@@ -3,8 +3,8 @@
  * Send confirmation emails
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @copyright (C) 2005-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.org
  *
  * @subpackage Courses Module
@@ -12,12 +12,16 @@
  * @author Courses Development team
 */
 /**
- * Send emails
+ * Send emails to confirm enrolling etc.
  *
  * Send an e-mail to the coordinator to notify about the enrollment
  * @param Takes parameters passed by user_sendtofriend to generate info used by email mod
  * @author jojodee/Michel V.
- *
+ * @param studstatus
+ * @param userid
+ * @param planningid
+ * @param enrollid
+ * @return bool true on success
  */
 function courses_user_sendconfirms($args)
 {
