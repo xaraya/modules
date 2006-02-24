@@ -19,10 +19,18 @@
             <strong>#$item.planname#</strong>
         </p>
         <p>
-              <xar:mlstring>id:</xar:mlstring>
-            #$item.planid#
+            <xar:mlstring>General description:</xar:mlstring>
+            #$item.plandesc#
+        </p>
+        <p>
+            <xar:mlstring>Minimum number of credits needed:</xar:mlstring>
+            #$item.mincredit#
         </p>
         <table>
+        <th><xar:mlstring>Item name</xar:mlstring></th>
+        <th><xar:mlstring>Description</xar:mlstring></th>
+        <th><xar:mlstring>Credits needed</xar:mlstring></th>
+        <th><xar:mlstring>Obtained</xar:mlstring></th>
         <xar:foreach in="$planitems" value="$pitem">
 
         <tr>
