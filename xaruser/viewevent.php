@@ -98,7 +98,7 @@ function julian_user_viewevent()
    // Make an admin adjustable time format
    $dateformat=xarModGetVar('julian', 'dateformat');
    $timeformat=xarModGetVar('julian', 'timeformat');
-   $dateformat_created="$dateformat $timeformat";
+   $dateformat_created=$dateformat.' '.$timeformat;
 
     // Don't like this here
     if (!isset($bl_data['recur_until']) || is_numeric($bl_data['recur_until']) || strpos($bl_data['recur_until'], '0000')!== false) {
@@ -112,7 +112,7 @@ function julian_user_viewevent()
    // created = yyyy-mm-dd hh:mm:ss
    //$bl_data['datecreated'] = xarLocaleGetFormattedDate($bl_data['created']);
    $bl_data['datecreated'] = date("$dateformat_created",strtotime($bl_data['created']));
-   $bl_data['datecreated'] = xarLocaleFormatDate($bl_data['datecreated'], $dateformat_created);
+   //$bl_data['datecreated'] = xarLocaleFormatDate($bl_data['datecreated'], $dateformat_created);
    $bl_data['fee'] = strcmp($bl_data['fee'],"")?xarLocaleFormatCurrency($bl_data['fee']):xarML('Unknown');
    $bl_data['authid'] = xarSecGenAuthKey();
    // Add obfuscator: for later Bug 4971

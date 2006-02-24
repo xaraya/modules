@@ -122,13 +122,21 @@ class Event
         $event_data[$event_date][$index]['categories'] = $event_obj->categories;
         $event_data[$event_date][$index]['linkdate'] = date("Ymd",strtotime($event_date));
         $event_data[$event_date][$index]['startdate'] = date("m-d-Y",strtotime($event_date));
+
+        // Make an admin adjustable time format
+        $dateformat=xarModGetVar('julian', 'dateformat');
+        $timeformat=xarModGetVar('julian', 'timeformat');
+        $dateformat_created=$dateformat.' '.$timeformat;
+        $datecreated = date("$dateformat_created",strtotime($event_obj->created));
+        //$bl_data['datecreated'] = xarLocaleFormatDate($bl_data['datecreated'], $dateformat_created);
+
         //popover posted information
-        $postedby="Posted By: ".addslashes(xarUserGetVar('name',$event_obj->organizer));
-        $postedon=" on ".date($dateformat).' '.date('h:s a',strtotime($event_obj->created));
+        $postedby=xarML('Posted By').': '.addslashes(xarUserGetVar('name',$event_obj->organizer));
+        $postedon=xarML('on').' '.$datecreated;//date($dateformat).' '.date('h:s a',strtotime($event_obj->created));
         //multiple event in a day popup
         $event_data[$event_date][$index]['multipopover'] = $event_obj->fStartTime . " " . addslashes($event_obj->summary) . "-" .$postedby;
         //single event popup
-        $event_data[$event_date][$index]['singlepopover'] = addslashes($event_obj->description) . "<br>".$postedby.$postedon;
+        $event_data[$event_date][$index]['singlepopover'] = addslashes($event_obj->description) . "<br>".$postedby.' '.$postedon;
         //$event_data[$event_date][$index]['singlepopover'] = addslashes($event_obj->description);
         $event_data[$event_date][$index]['singlepopovercaption'] = addslashes($event_obj->summary)." " . $event_obj->fStartTime;
         //sort the array for this event date by the unique timestamp index which is the key for this array
