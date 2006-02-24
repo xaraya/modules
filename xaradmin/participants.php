@@ -9,15 +9,18 @@
  *
  * @subpackage Courses Module
  * @link http://xaraya.com/index.php/release/179.html
+ * @author Courses module development team
  */
 /**
  * View participants for one planned course
  *
- * @author Courses module development team
- * @author MichelV <michelv@xarayahosting.nl>
+ * Display the participants and be able to change their status in one movement
  *
- * @param ['planningid'] ID of the planned course
- * @param ['startnum']
+ * @author MichelV <michelv@xarayahosting.nl>
+ * @access public
+ * @param int planningid ID of the planned course
+ * @param int startnum
+ * @return array
  */
 function courses_admin_participants()
 {
@@ -84,13 +87,6 @@ function courses_admin_participants()
     // Add the array of items to the template variables
     $data['items'] = $items;
     $data['planningid'] = $planningid;
-    // Specify some labels for display
-    $data['namelabel'] = xarVarPrepForDisplay(xarML('Participants Name'));
-    $data['emaillabel'] = xarVarPrepForDisplay(xarML('E-mail address'));
-    $data['statuslabel'] = xarVarPrepForDisplay(xarML('Status of student'));
-    $data['regilabel'] = xarVarPrepForDisplay(xarML('Date registration'));
-    $data['optionslabel'] = xarVarPrepForDisplay(xarML('Options'));
-    $data['changestatuslabel'] = xarVarPrepForDisplay(xarML('Change status'));
     // Return the template variables defined in this function
     return $data;
 }

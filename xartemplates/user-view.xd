@@ -1,10 +1,10 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
-<div class="xar-courses xar-courses-user-view">
+<div class="xar-mod-body">
     <xar:template file="header" />
 
     <div class="xar-courses-contents">
-        <h1>#$menutitle#</h1>
+        <h2>Our courses</h2>
 
         <xar:if condition="xarSessionGetVar('statusmsg') ne ''">
             <div class="xar-mod-statusmsg">#xarSessionGetVar('statusmsg')#</div>

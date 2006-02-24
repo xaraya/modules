@@ -4,19 +4,19 @@
 <div class="xar-mod-body">
     <h2>#$menutitle#</h2>
     These are the participants enrolled in planned course #$planningid#<br>
-    <xar:if condition="!empty($status)">
-        Statusmsg: #$status#
+    <xar:if condition="xarSessionGetVar('statusmsg') != ''">
+        <p>#xarSessionGetVar('statusmsg')#</p>
     </xar:if>
         <form method="post" name="participants" id="participants" action="&xar-modurl-courses-admin-updatestatus;">
         <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
         <input type="hidden" name="planningid" id="planningid" value="#$planningid#" />
             <table width="100%" border="1" cellspacing="0" cellpadding="4">
                 <tr>
-                    <th>#$namelabel#</th>
-                    <th>#$emaillabel#</th>
-                    <th>#$regilabel#</th>
-                    <th colspan="2">#$statuslabel#</th>
-                    <th>#$optionslabel#</th>
+                    <th><xar:mlstring>Full Name</xar:mlstring></th>
+                    <th><xar:mlstring>E-mail address</xar:mlstring></th>
+                    <th><xar:mlstring>Date of registration</xar:mlstring></th>
+                    <th colspan="2"><xar:mlstring>Status of student</xar:mlstring></th>
+                    <th><xar:mlstring>Options</xar:mlstring></th>
                 </tr>
                 <xar:foreach in="$items" value="$item">
                 <tr>
@@ -56,10 +56,11 @@
                     <option value="#$loop:item['statusid']#">#$loop:item['studstatus']#</option>
                 </xar:loop>
                 </select>
-                <input type="submit" value="#$changestatuslabel#" />
+                <input type="submit" value="#xarML('Change status of selected')#" />
             </p>
         </form>
     <br />
     <!-- add the pager here -->
     #$pager#
 </div>
+<xar:if condition="xarSessionSetVar('statusmsg', '')"></xar:if>

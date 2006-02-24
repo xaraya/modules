@@ -14,8 +14,8 @@
 /**
  * Get a specific courseID for a given coursenumber
  *
- * @author the Courses module development team
- * @param  $args ['number'] The code of the course to get
+ * @author michelv <michelv@xarayahosting.nl>
+ * @param  int number The code of the course to get
  * @return item array with courseid and data on the hidden status, or false on failure
  * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  * @todo MichelV: <1>Extend to search for planningid ?

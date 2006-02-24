@@ -2,9 +2,11 @@
 <xar:style scope="module" />
 
 <div class="xar-courses-head">
-    <span class="xar-mod-title">#$menutitle#</span>
+    <span class="xar-mod-title">Course details</span>
 </div>
-
+<xar:if condition="xarSessionGetVar('statusmsg') != ''">
+    <p>#xarSessionGetVar('statusmsg')#</p>
+</xar:if>
 <xar:if condition="!empty($editlink)">
     <a href="#$editlink#"><xar:mlstring>Edit this planned course</xar:mlstring></a>
 </xar:if>
@@ -375,4 +377,4 @@
         </xar:if>
     </div>
 </div>
-
+<xar:if condition="xarSessionSetVar('statusmsg', '')"></xar:if>

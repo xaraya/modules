@@ -9,19 +9,19 @@
  *
  * @subpackage Courses Module
  * @link http://xaraya.com/index.php/release/179.html
- * @author XarayaGeek, Michel V.
+ * @author Courses Development team
  */
-
 /**
- * display a planned course
+ * Display a single planned course
  *
  * This is the function to provide detailed information on a single course
  * and show the details of all planned occurences
  *
- * @author MichelV.
+ * @author MichelV <michelv@xarayahosting.nl>
  *
  * @param id $objectid A generic object id (if called by other modules)
  * @param id $planningid The ID of the planned course
+ * @return array Data for the template
  */
 function courses_user_displayplanned($args)
 {
@@ -33,7 +33,7 @@ function courses_user_displayplanned($args)
         $planningid = $objectid;
     }
     // Initialise the $data variable
-    $data = xarModAPIFunc('courses', 'user', 'menu');
+    $data = array(); //xarModAPIFunc('courses', 'user', 'menu');
     // Prepare the variable that will hold some status message if necessary
     $data['status'] = '';
     // Get the planned course details

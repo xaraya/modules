@@ -9,7 +9,7 @@
  *
  * @subpackage Courses Module
  * @link http://xaraya.com/index.php/release/179.html
- * @author XarayaGeek , Michel V.
+ * @author XarayaGeek, MichelV.
  */
 /**
  * Display a single course
@@ -17,10 +17,11 @@
  * This is the function to provide detailed information on a single course
  * and show the details of all planned occurences for this course
  *
- * @author MichelV.
+ * @author MichelV <michelv@xarayahosting.nl>
  * @param  $args an array of arguments (if called by other modules)
- * @param  $args ['objectid'] a generic object id (if called by other modules)
- * @param  $args ['courseid'] the ID of the course
+ * @param  int $args ['objectid'] a generic object id (if called by other modules)
+ * @param  int $args ['courseid'] the ID of the course
+ * @return array
  */
 function courses_user_display($args)
 {
@@ -32,7 +33,7 @@ function courses_user_display($args)
         $courseid = $objectid;
     }
     // Initialise the $data variable
-    $data = xarModAPIFunc('courses', 'user', 'menu');
+    $data = array();// xarModAPIFunc('courses', 'user', 'menu');
     // Prepare the variable that will hold some status message if necessary
     // Replace this by statusmsg
     $data['status'] = '';

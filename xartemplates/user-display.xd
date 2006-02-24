@@ -5,7 +5,7 @@
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>Course details for </xar:mlstring>#$item['name']#&nbsp;#$item['number']#</span>
 </div>
-<div class="xar-mod-body"><h2>#$menutitle#</h2>
+<div class="xar-mod-body">
     <div class="xar-courses-contents">
         <xar:if condition="xarSessionGetVar('statusmsg') != ''">
             <p>#xarSessionGetVar('statusmsg')#</p>
@@ -17,7 +17,7 @@
               <xar:categories-navigation layout="trail" itemid="$courseid" itemtype="$courseid" module="courses" />
             </xar:if>
             <form method="post" action="&xar-modurl-courses-user-enroll;">
-               <fieldset>
+                <fieldset>
                     <legend>
                         <strong><xar:mlstring>Course general details</xar:mlstring></strong>
                     </legend>
@@ -45,8 +45,8 @@
                         </label>
                         #$item['freq']#
                     </div>
-               </fieldset>
-               <fieldset>
+                </fieldset>
+                <fieldset>
                     <legend>
                         <strong><xar:mlstring>Course contents</xar:mlstring></strong>
                     </legend>
@@ -76,42 +76,42 @@
                         </label>
                         #$item.intendedcredits#
                     </div>
-               </fieldset>
+                </fieldset>
 
-            <H3><xar:mlstring>This course has been scheduled for the following periods</xar:mlstring>:</H3>
+                <H3><xar:mlstring>This course has been scheduled for the following periods</xar:mlstring>:</H3>
 
-            <table width="100%" border="1" cellspacing="0" cellpadding="4">
-                <tr>
-                    <th><xar:mlstring>Start date</xar:mlstring></th>
-                    <th><xar:mlstring>Course location</xar:mlstring></th>
-                    <th><xar:mlstring>Course Credits</xar:mlstring></th>
-                    <th><xar:mlstring>Options</xar:mlstring></th>
-                </tr>
-                <xar:foreach in="$items" value="$item">
-                <tr>
-                    <td>#xarlocalegetformatteddate('medium',$item.startdate)#</td>
-                    <td>#$item.location#</td>
-                    <td>#$item.credits#</td>
-                    <td>
-                       <xar:if condition="!empty($item['enrollurl'])">
-                           <a href="#$item['enrollurl']#">#$item['enrolltitle']#</a>
-                       </xar:if>
-                       <xar:if condition="!empty($item['detailsurl'])">
-                       |
-                           <a href="#$item['detailsurl']#">#$item['detailstitle']#</a>
-                       </xar:if>
-                       <xar:if condition="!empty($item['editurl'])">
-                       |
-                           <a href="#$item['editurl']#">#$item['edittitle']#</a>
-                       </xar:if>
-                       <xar:if condition="!empty($item['participantsurl'])">
-                       |
-                           <a href="#$item['participantsurl']#">#$item['participantstitle']#</a>
-                       </xar:if>
-                    </td>
-                </tr>
-                </xar:foreach>
-            </table>
+                <table width="100%" border="1" cellspacing="0" cellpadding="4">
+                    <tr>
+                        <th><xar:mlstring>Start date</xar:mlstring></th>
+                        <th><xar:mlstring>Course location</xar:mlstring></th>
+                        <th><xar:mlstring>Course Credits</xar:mlstring></th>
+                        <th><xar:mlstring>Options</xar:mlstring></th>
+                    </tr>
+                    <xar:foreach in="$items" value="$item">
+                    <tr>
+                        <td>#xarlocalegetformatteddate('medium',$item.startdate)#</td>
+                        <td>#$item.location#</td>
+                        <td>#$item.credits#</td>
+                        <td>
+                           <xar:if condition="!empty($item['enrollurl'])">
+                               <a href="#$item['enrollurl']#">#$item['enrolltitle']#</a>
+                           </xar:if>
+                           <xar:if condition="!empty($item['detailsurl'])">
+                           |
+                               <a href="#$item['detailsurl']#">#$item['detailstitle']#</a>
+                           </xar:if>
+                           <xar:if condition="!empty($item['editurl'])">
+                           |
+                               <a href="#$item['editurl']#">#$item['edittitle']#</a>
+                           </xar:if>
+                           <xar:if condition="!empty($item['participantsurl'])">
+                           |
+                               <a href="#$item['participantsurl']#">#$item['participantstitle']#</a>
+                           </xar:if>
+                        </td>
+                    </tr>
+                    </xar:foreach>
+                </table>
             </form>
 
             <xar:comment>Add the output from the different display hooks here </xar:comment>
@@ -123,3 +123,4 @@
         </xar:if>
     </div>
 </div>
+<xar:if condition="xarSessionSetVar('statusmsg', '')"></xar:if>
