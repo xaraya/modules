@@ -4,10 +4,10 @@
         <legend><xar:mlstring>You have added:</xar:mlstring></legend>
         <xar:foreach in="$icourses" value="$icourse">
             <div class="xar-form-input-wrapper">
-                 <label for="title" class="xar-form-label" title="#xarML('These are the courses you have added before')#">
-                      <xar:mlstring>Coursetitle:</xar:mlstring>
+                 <label for="#$icourse.title#" class="xar-form-label" title="#xarML('These are the courses you have added before')#">
+                      #$icourse.title#
                  </label>
-                 #$icourse.title# Credits: #$icourse.credits# Date: Status:
+                  Credits: #$icourse.credits# (Date:) (Status:)
             </div>
         </xar:foreach>
     <xar:else />
@@ -15,7 +15,7 @@
     </xar:if>
 </fieldset>
 <fieldset>
-    <legend><xar:mlstring>Add courses</xar:mlstring></legend>
+    <legend><xar:mlstring>Add a new course</xar:mlstring></legend>
     <div class="xar-form-input-wrapper">
          <label for="icoursetitle" class="xar-form-label" title="#xarML('Official full title')#">
               <xar:mlstring>Course title</xar:mlstring>

@@ -47,10 +47,7 @@ function itsp_user_display($args)
         array('planid' => $planid));
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; /* throw back */
 
-     /* Security check 2 - if your API function does *not* check for the
-     * appropriate access rights, or if for some reason you require higher
-     * access than READ for this function, you *must* check this here !
-     * $planid:$pitemid:*/
+     /* Security check */
      if (!xarSecurityCheck('ReadITSPPlan',0,'Plan',"$planid:All:All")) {
          return $data;
      }
@@ -72,6 +69,36 @@ function itsp_user_display($args)
     $data['item'] = $item;
     $data['planid'] = $planid;
 
+    // Get the planitems
+
+    $planitems = xarModApiFunc('itsp','user','get_planitems',array('planid'=>$planid));
+
+    foreach ($planitems as $planitem) {
+        // Add read link
+        $pitemid = $planitem['pitemid'];
+        // get the planitem
+        $pitem = xarModApiFunc('itsp','user','get_planitem',array('pitemid'=>$pitemid));
+        if (xarSecurityCheck('ReadITSPPlan', 0, 'Plan', "$planid:$pitemid:All")) {
+            $pitem['link'] = xarModURL('itsp',
+                'user',
+                'display',
+                array('pitemid' => $pitemid));
+            /* Security check 2 - else only display the item name (or whatever is
+             * appropriate for your module)
+             */
+        } else {
+            $pitem['link'] = '';
+        }
+        /* Clean up the item text before display */
+        $pitem['pitemname'] = xarVarPrepForDisplay($pitem['pitemname']);
+        $pitem['pitemdesc'] = xarVarPrepForDisplay($pitem['pitemdesc']);
+        $pitem['mincredit'] = xarVarPrepForDisplay($pitem['mincredit']);
+        /* Add this item to the list of items to be displayed */
+        $data['planitems'][] = $pitem;
+    }
+
+
+   // $data['planitems'] = $planitems;
   //  $data['is_bold'] = xarModGetVar('itsp', 'bold');
     /* Note : module variables can also be specified directly in the
      * blocklayout template by using &xar-mod-<modname>-<varname>;

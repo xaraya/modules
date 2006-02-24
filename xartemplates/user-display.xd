@@ -22,6 +22,16 @@
               <xar:mlstring>id:</xar:mlstring>
             #$item.planid#
         </p>
+        <table>
+        <xar:foreach in="$planitems" value="$pitem">
+
+        <tr>
+            <td>#$pitem.pitemname#</td>
+            <td>#$pitem.pitemdesc#</td>
+            <td>#$pitem.mincredit#</td>
+        </tr>
+        </xar:foreach>
+        </table>
 
         <!-- if you want to extend this module with dynamic data, you can retrieve
         //   that data in the code via APIs, or use e.g. the following BL tags here.

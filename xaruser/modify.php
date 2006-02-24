@@ -69,11 +69,15 @@ function itsp_user_modify($args)
 
     // Check to see if we are already dealing with a planitem
     if (!empty($pitemid) && is_numeric($pitemid)) {
-        //get planitem
+        $rules = xarModApiFunc('itsp','user','splitrules',array('pitemid'=>$pitemid));
+        // get planitem
         $pitem = xarModApiFunc('itsp','user','get_planitem',array('pitemid'=>$pitemid));
+        $data['pitem'] = $pitem;
+        if (!isset($pitem) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
         $data['pitemrules'] = $pitem['pitemrules'];
+        $rules = xarModApiFunc('itsp','user','splitrules',array('rules'=>$pitem['pitemrules']));
         // Splice the rule
-        if (!empty($pitem['pitemrules'])) {
+        /*if (!empty($pitem['pitemrules'])) {
             list($Rtype, $Rlevel, $Rcat, $Rsource) = explode(";", $pitem['pitemrules']);
 
             $rule_parts = explode(':',$Rtype);
@@ -84,14 +88,15 @@ function itsp_user_modify($args)
             $rule_cat = $rule_parts[1];
             $rule_parts = explode(':',$Rsource);
             $rule_source = $rule_parts[1];
-
-            $data['rule_type'] = $rule_type;
-            $data['rule_level'] = $rule_level;
-            $data['rule_cat'] = $rule_cat;
-            $data['rule_source'] = $rule_source;
+*/
+        $data['rule_type'] = $rules['rule_type'];
+        $data['rule_level'] = $rules['rule_level'];
+        $data['rule_cat'] = $rules['rule_cat'];
+        $data['rule_source'] = $rules['rule_source'];
 //echo $rule_source;
-        }
-        switch ($rule_source) {
+
+  //      }
+        switch ($rules['rule_source']) {
             case 'courses':
                 // get the pitem details for this itsp
                 // get all linked courses that already have been added to the ITSP for this pitemdi

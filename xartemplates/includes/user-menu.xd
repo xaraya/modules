@@ -1,6 +1,6 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:if condition="xarTplAddStyleLink('base', 'navtabs')"></xar:if>
-
+<xar:set name="$navPlanUrl">#xarModURL('itsp','user','display',array('planid'=>$planid))#</xar:set>
 <xar:set name="$navITSPUrl">#xarModURL('itsp','user','itsp')#</xar:set>
 
 <!-- the variables used in this menu come from itsp_userapi_menu()
@@ -9,11 +9,16 @@
 <div class="xar-itsp-usermenu">
     <xar:set name="$null">#xarVarFetch('func','str:1:',$whatFunc, 'itsp', XARVAR_NOT_REQUIRED)#</xar:set>
     <dl class="xar-tabs">
-        <dt class="help"><xar:mlstring>View types</xar:mlstring>:</dt>
-        <xar:if condition="$whatFunc eq 'itsp'">
-            <dd class="active"><a href="#$navITSPUrl#"><xar:mlstring>ITSP</xar:mlstring></a></dd>
+        <dt class="help"><xar:mlstring>ITSP details</xar:mlstring>:</dt>
+        <xar:if condition="$whatFunc eq 'display'">
+            <dd class="active"><a href="#$navPlanUrl#"><xar:mlstring>Plan</xar:mlstring></a></dd>
         <xar:else />
-            <dd><a href="#$navITSPUrl#"><xar:mlstring>ITSP</xar:mlstring></a></dd>
+            <dd><a href="#$navPlanUrl#"><xar:mlstring>Plan</xar:mlstring></a></dd>
+        </xar:if>
+        <xar:if condition="$whatFunc eq 'itsp'">
+            <dd class="active"><a href="#$navITSPUrl#"><xar:mlstring>Your ITSP</xar:mlstring></a></dd>
+        <xar:else />
+            <dd><a href="#$navITSPUrl#"><xar:mlstring>Your ITSP</xar:mlstring></a></dd>
         </xar:if>
 
         <xar:if condition="!empty($pitems)">
