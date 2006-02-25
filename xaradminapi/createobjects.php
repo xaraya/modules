@@ -21,7 +21,7 @@ function tasks_adminapi_createobjects($args)
 
 # --------------------------------------------------------
 #
-# Create the role object
+# Create the bare task object
 #
     $prefix = xarDBGetSiteTablePrefix();
     $itemtype = 1;
@@ -136,7 +136,7 @@ function tasks_adminapi_createobjects($args)
                                     'moduleid' => $moduleid,
                                     'itemtype' => $itemtype,
                                     'type'     => 2,
-//                                    'default'  => '',
+                                    'default'  => 'New Task',
                                     'source'   =>  $prefix . '_tasks.xar_name',
                                     'status'   => 1,
                                     'order'    => 6,
@@ -148,7 +148,7 @@ function tasks_adminapi_createobjects($args)
                                     'moduleid' => $moduleid,
                                     'itemtype' => $itemtype,
                                     'type'     => 5,
-//                                    'default'  => '',
+                                    'default'  => 'Enter a Task Description',
                                     'source'   =>  $prefix . '_tasks.xar_description',
                                     'status'   => 1,
                                     'order'    => 7,
@@ -425,7 +425,7 @@ function tasks_adminapi_createobjects($args)
                                     'moduleid' => $moduleid,
                                     'itemtype' => $itemtype,
                                     'type'     => 26,
-//                                    'default'  => '',
+                                    'default'  => 'New Activity',
                                     'source'   =>  $prefix . '_tasks.xar_name',
                                     'status'   => 1,
                                     'order'    => 6,
@@ -437,7 +437,7 @@ function tasks_adminapi_createobjects($args)
                                     'moduleid' => $moduleid,
                                     'itemtype' => $itemtype,
                                     'type'     => 5,
-//                                    'default'  => '',
+                                    'default'  => 'Enter an Activity Description',
                                     'source'   =>  $prefix . '_tasks.xar_description',
                                     'status'   => 1,
                                     'order'    => 7,

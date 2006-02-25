@@ -64,7 +64,7 @@ function tasks_init()
     if (!$res) return;
 
 # --------------------------------------------------------
-# Create wrapper DD objects for the native itemtypes of the roles module
+# Create wrapper DD objects for the native itemtypes of this module
 	if (!xarModAPIFunc('tasks','admin','createobjects')) return;
 
 # --------------------------------------------------------
