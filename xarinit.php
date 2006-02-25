@@ -37,6 +37,7 @@ function tasks_init()
                      'xar_parentid'          => array('type'=>'integer','null'=>false, 'default'=>'0'),
                      'xar_modname'           => array('type'=>'varchar','null'=>false,'default'=>'','size'=>255),
                      'xar_objectid'          => array('type'=>'integer','null'=>false,'default'=>'0'),
+                     'xar_itemtype'          => array('type'=>'integer','null'=>false,'default'=>'0'),
                      'xar_name'              => array('type'=>'varchar','null'=>false,'default'=>'','size'=>255),
                      'xar_description'       => array('type'=>'blob'),
                      'xar_status'            => array('type'=>'integer','null'=>false,'default'=>'0','size'=>'tiny'),
@@ -54,6 +55,7 @@ function tasks_init()
                      'xar_date_end_actual'   => array('type'=>'integer','null'=>false,'default'=>'0'),
                      'xar_hours_planned'     => array('type'=>'integer','null'=>false,'default'=>'0'),
                      'xar_hours_spent'       => array('type'=>'integer','null'=>false,'default'=>'0'),
+                     'xar_hours_applied'     => array('type'=>'integer','null'=>false,'default'=>'0'),
                      'xar_hours_remaining'   => array('type'=>'integer','null'=>false,'default'=>'0'),
                      );
 
@@ -61,6 +63,28 @@ function tasks_init()
     $res =& $dbconn->Execute($query);
     if (!$res) return;
 
+# --------------------------------------------------------
+# Create wrapper DD objects for the native itemtypes of the roles module
+	if (!xarModAPIFunc('tasks','admin','createobjects')) return;
+
+# --------------------------------------------------------
+#
+# Set up masks
+#
+    xarRegisterMask('ViewTask','All','tasks','All','All','ACCESS_OVERVIEW');
+    xarRegisterMask('AdminTask','All','tasks','All','All','ACCESS_ADMIN');
+
+# --------------------------------------------------------
+#
+# Set up privileges
+#
+    xarRegisterPrivilege('ViewTask','All','tasks','All','All','ACCESS_OVERVIEW');
+    xarRegisterPrivilege('AdminTask','All','tasks','All','All','ACCESS_ADMIN');
+
+# --------------------------------------------------------
+#
+# Set up modvars
+#
     xarModSetVar('tasks', 'dateformat', 0);
     xarModSetVar('tasks', 'showoptions', 0);
     xarModSetVar('tasks', 'returnfromadd', 1);
@@ -90,6 +114,14 @@ function tasks_upgrade($oldversion)
 
 function tasks_delete()
 {
+    //Remove the objects
+	$info = xarModAPIFunc('dynamicdata','user','getobjectinfo',array('moduleid' => 667, 'itemtype' => 1));
+	$result = xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $info['objectid']));
+	$info = xarModAPIFunc('dynamicdata','user','getobjectinfo',array('moduleid' => 667, 'itemtype' => 2));
+	$result = xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $info['objectid']));
+	$info = xarModAPIFunc('dynamicdata','user','getobjectinfo',array('moduleid' => 667, 'itemtype' => 3));
+	$result = xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $info['objectid']));
+
     //Load Table Maintenance API
     xarDBLoadTableMaintenanceAPI();
 
@@ -100,7 +132,9 @@ function tasks_delete()
     $res =& $dbconn->Execute($query);
     if (!$res) return;
 
-    xarModDelAllVars('simpleadmin');
+    xarRemoveMasks('tasks');
+    xarRemoveInstances('tasks');
+    xarModDelAllVars('tasks');
 
     return true;
 }
