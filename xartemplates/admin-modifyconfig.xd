@@ -477,10 +477,11 @@
                 <textarea class="mceNoEditor" name="tinyextended" id="tinyextended" cols="50" rows="3" >#$tinyextended#</textarea>
             </div>
               <div class="xar-form-input-wrapper-after">
-               <xar:mlstring>Regex for allowed tags and attributes. Separate each tag with a comma. 
-                 Ensure you have 'style' and 'class' as allowed attributes in img or a tags if you need them.
-                 *[*] allows all tags and attributes. Use with disallowed tags below. Your HTML module settings will
-                 finally filter all tags (but not attributes).</xar:mlstring>
+               <xar:mlstring>Additional regex for allowed tags and attributes. </xar:mlstring>
+               <a href="modules/tinymce/xarincludes/docs/option_valid_elements.html"><xar:mlstring>Check the Defaults</xar:mlstring></a>
+               <xar:mlstring> before adding new allowed tags and attributes here.  Any added elements here are are added to the default with the <strong>extended_valid_elements</strong>
+               config option. Separate each tag with a comma. *[*] allows all tags and attributes. If you have HTML module installed, its settings will override and 
+               filter all tags (but not individual attributes).</xar:mlstring>
             </div>
 
             <div class="xar-form-input-wrapper">

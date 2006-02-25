@@ -77,7 +77,7 @@
                 </pre>
 
                 <p>
-                    <xar:mlstring>See the detailed </xar:mlstring><a href ="modules/tinymce/xartemplates/includes/tinymce/docs/index.html"><xar:mlstring>usage instructions</xar:mlstring></a><xar:mlstring> for more detail on options.</xar:mlstring>
+                    <xar:mlstring>See the detailed </xar:mlstring><a href ="modules/tinymce/xarincludes/docs/index.html"><xar:mlstring>usage instructions</xar:mlstring></a><xar:mlstring> for more detail on options.</xar:mlstring>
                 </p>
 
     <h3>
