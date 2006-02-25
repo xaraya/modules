@@ -3,7 +3,7 @@
  * Update module configuration parameters
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -11,24 +11,21 @@
  * @link http://xaraya.com/index.php/release/319.html
  * @author Julian Module Development Team
  */
-
 /**
  * Standard function to update module configuration parameters
  *
  * This is a standard function to update the configuration parameters of the
  * module given the information passed back by the modification form
  *
- * This package (Julian):
+ * This package:
  * @copyright (C) 2004 by Metrostat Technologies, Inc.
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.metrostat.net
  *
  * initial template: Roger Raymond
  * @author Jodie Razdrh/John Kevlin/David St.Clair
- * @author MichelV <michelv@xarayahosting.nl>
- * @return bool true with a redirect
+ * @author MichelV <michelv@xaraya.com>
+ * @return bool true on success, with a redirect
  */
-
 function julian_admin_updateconfig($args)
 {
     // Security Check
@@ -52,9 +49,9 @@ function julian_admin_updateconfig($args)
     if (!xarVarFetch('modulealias',     'checkbox', $modulealias,   false,XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('DurMinInterval',  'int:1:15', $DurMinInterval,15, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('StartMinInterval','int:1:15', $StartMinInterval,15, XARVAR_NOT_REQUIRED)) return;
-
+    // Confirmation code
     if (!xarSecConfirmAuthKey()) return;
-
+    // Set the vars
     xarModSetVar('julian','ical_links',$ical_links);
     xarModSetVar('julian','share_group',$share_group);
     xarmodSetVar('julian','from_name',$from_name);
@@ -96,9 +93,9 @@ function julian_admin_updateconfig($args)
     }
     /* now set the alias modvar */
     xarModSetVar('julian', 'aliasname', $newalias);
-    // Call the hooks
+    // Call the hooks for update
     xarModCallHooks('module','updateconfig','julian', array('module' => 'julian'));
-
+    // Set status message
     xarSessionSetVar('statusmsg',xarML('Configuration Updated'));
     xarResponseRedirect(xarModURL('julian', 'admin', 'modifyconfig'));
     return true;
