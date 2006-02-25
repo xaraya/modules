@@ -407,11 +407,11 @@ Original table:
 Bugs 5349, 5240 and others
 
 0.2.9 Fix two bugs: forgotten authid and a typo in getall.
-0.4.0 Large version upgrade to show off all the changes
+0.4.0 Large version upgrade to show off all the changes in the previous versions, including db changes.
 Add field in linked events, to have a title set in every event
 Change linking to events
 Change way linked events are called
 0.4.1 Add wizard for privileges
 Privileges now also take myself, so you can add one like "Edit my own events"
-
+Using the configured date/time format now in tooltip and viewevent. (related to bug 5441)
 
