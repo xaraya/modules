@@ -93,8 +93,8 @@ function asd() {
 
         <pre class="sourceview"><span class="comment">/**
  * $RCSfile: overview-summary-TinyMCE_Event.class.js.html,v $
- * $Revision: 1.7 $
- * $Date: 2006/02/10 21:34:09 $
+ * $Revision: 1.18 $
+ * $Date: 2006/02/24 12:38:51 $
  *
  * <span class="attrib">@author</span> Moxiecode
  * <span class="attrib">@copyright</span> Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
@@ -103,7 +103,12 @@ function asd() {
 <span class="comment">/* The contents of this file will be wrapped in a class later on */</span>
 
 <span class="comment">/**
+ * Sets the enabled/disabled state of build in events on the specific node.
+ * This function is needed since some events gets executed in WYSIWYG mode.
  *
+ * <span class="attrib">@param</span> {HTMLNode} node HTML node to enable/disable events on.
+ * <span class="attrib">@param</span> {boolean} state true/false state if the events should be disabled or enabled.
+ * <span class="attrib">@private</span>
  */</span>
 TinyMCE_Engine.<span class="reserved">prototype</span>._setEventsEnabled = <span class="reserved">function</span>(node, state) {
 	var events = new Array(<span class="literal">'onfocus'</span>,<span class="literal">'onblur'</span>,<span class="literal">'onclick'</span>,<span class="literal">'ondblclick'</span>,
@@ -134,9 +139,13 @@ TinyMCE_Engine.<span class="reserved">prototype</span>._setEventsEnabled = <span
 };
 
 <span class="comment">/**
+ * Patch function for MSIE specific events, this one simply grabs the window.event object and
+ * passes it as a argument to the handleEvent function of the TinyMCE_Engine class.
  *
+ * <span class="attrib">@param</span> {string} editor_id Editor id to patch.
+ * <span class="attrib">@private</span>
  */</span>
-TinyMCE_Engine.<span class="reserved">prototype</span>.eventPatch = <span class="reserved">function</span>(editor_id) {
+TinyMCE_Engine.<span class="reserved">prototype</span>._eventPatch = <span class="reserved">function</span>(editor_id) {
 	<span class="comment">// Remove odd, error</span>
 	<span class="reserved">if</span> (typeof(tinyMCE) == <span class="literal">"undefined"</span>)
 		<span class="reserved">return</span> true;
@@ -159,25 +168,30 @@ TinyMCE_Engine.<span class="reserved">prototype</span>.eventPatch = <span class=
 };
 
 <span class="comment">/**
- *
+ * Unload document event handler function. This function will be executed when the
+ * page is unloaded, this will automaticly move the current editor contents to the textarea element this enables
+ * the editor to restore it's state when the user presses the back button in the browser.
+ * This will execute the triggerSave function.
  */</span>
 TinyMCE_Engine.<span class="reserved">prototype</span>.unloadHandler = <span class="reserved">function</span>() {
 	tinyMCE.triggerSave(true, true);
 };
 
 <span class="comment">/**
+ * Adds the handleEvent function to the specified editor instance.
  *
+ * <span class="attrib">@param</span> {string} editor_id Editor control instance to add event handler to.
  */</span>
 TinyMCE_Engine.<span class="reserved">prototype</span>.addEventHandlers = <span class="reserved">function</span>(editor_id) {
 	<span class="reserved">if</span> (tinyMCE.isMSIE) {
 		var doc = document.frames[editor_id].document;
 
 		<span class="comment">// Event patch</span>
-		tinyMCE.addEvent(doc, <span class="literal">"keypress"</span>, TinyMCE_Engine.<span class="reserved">prototype</span>.eventPatch);
-		tinyMCE.addEvent(doc, <span class="literal">"keyup"</span>, TinyMCE_Engine.<span class="reserved">prototype</span>.eventPatch);
-		tinyMCE.addEvent(doc, <span class="literal">"keydown"</span>, TinyMCE_Engine.<span class="reserved">prototype</span>.eventPatch);
-		tinyMCE.addEvent(doc, <span class="literal">"mouseup"</span>, TinyMCE_Engine.<span class="reserved">prototype</span>.eventPatch);
-		tinyMCE.addEvent(doc, <span class="literal">"click"</span>, TinyMCE_Engine.<span class="reserved">prototype</span>.eventPatch);
+		tinyMCE.addEvent(doc, <span class="literal">"keypress"</span>, TinyMCE_Engine.<span class="reserved">prototype</span>._eventPatch);
+		tinyMCE.addEvent(doc, <span class="literal">"keyup"</span>, TinyMCE_Engine.<span class="reserved">prototype</span>._eventPatch);
+		tinyMCE.addEvent(doc, <span class="literal">"keydown"</span>, TinyMCE_Engine.<span class="reserved">prototype</span>._eventPatch);
+		tinyMCE.addEvent(doc, <span class="literal">"mouseup"</span>, TinyMCE_Engine.<span class="reserved">prototype</span>._eventPatch);
+		tinyMCE.addEvent(doc, <span class="literal">"click"</span>, TinyMCE_Engine.<span class="reserved">prototype</span>._eventPatch);
 	} <span class="reserved">else</span> {
 		var inst = tinyMCE.instances[editor_id];
 		var doc = inst.getDoc();
@@ -197,13 +211,22 @@ TinyMCE_Engine.<span class="reserved">prototype</span>.addEventHandlers = <span 
 	}
 };
 
+<span class="comment">/**
+ * Mouse move handler function, this will be executed each time
+ * the mouse is moved within a editor instance. This function stores away the current selection in MSIE
+ * this will then be used when a undo/redo level is added.
+ */</span>
 TinyMCE_Engine.<span class="reserved">prototype</span>.onMouseMove = <span class="reserved">function</span>() {
 	var inst;
 
 	<span class="reserved">if</span> (!tinyMCE.hasMouseMoved) {
 		inst = tinyMCE.selectedInstance;
-		inst.undoBookmark = inst.selection.getBookmark();
-		tinyMCE.hasMouseMoved = true;
+
+		<span class="comment">// Workaround for bug #1437457 (Odd MSIE bug)</span>
+		<span class="reserved">if</span> (inst.isFocused) {
+			inst.undoBookmark = inst.selection.getBookmark();
+			tinyMCE.hasMouseMoved = true;
+		}
 	}
 
 <span class="comment">//	tinyMCE.cancelEvent(inst.getWin().event);</span>
@@ -211,7 +234,9 @@ TinyMCE_Engine.<span class="reserved">prototype</span>.onMouseMove = <span class
 };
 
 <span class="comment">/**
+ * Cancels the specified event, this will disable the event from be passed to other listeners in event chain.
  *
+ * <span class="attrib">@param</span> {DOMEvent} e Event to cancel.
  */</span>
 TinyMCE_Engine.<span class="reserved">prototype</span>.cancelEvent = <span class="reserved">function</span>(e) {
 	<span class="reserved">if</span> (tinyMCE.isMSIE) {
@@ -222,7 +247,11 @@ TinyMCE_Engine.<span class="reserved">prototype</span>.cancelEvent = <span class
 };
 
 <span class="comment">/**
+ * Adds a event handler function to the specified object.
  *
+ * <span class="attrib">@param</span> {HTMLElement} o Object to add event handler to.
+ * <span class="attrib">@param</span> {string} n Event name to listen to for example "click".
+ * <span class="attrib">@param</span> {function} h Function handler to execute when event occurs.
  */</span>
 TinyMCE_Engine.<span class="reserved">prototype</span>.addEvent = <span class="reserved">function</span>(o, n, h) {
 	<span class="reserved">if</span> (o.attachEvent)
@@ -232,12 +261,44 @@ TinyMCE_Engine.<span class="reserved">prototype</span>.addEvent = <span class="r
 };
 
 <span class="comment">/**
+ * Adds accessibility keydown handler to the specified select element.
  *
+ * <span class="attrib">@param</span> {DOMEvent} e Event that gets passed when the element is focused.
+ * <span class="attrib">@param</span> {HTMLElement} s Select element that the keydown handler gets added to.
+ * <span class="attrib">@param</span> {DOMWindow} w DOM window reference to add.
+ */</span>
+TinyMCE_Engine.<span class="reserved">prototype</span>.addSelectAccessibility = <span class="reserved">function</span>(e, s, w) {
+	<span class="comment">// Add event handlers </span>
+	<span class="reserved">if</span> (!s._isAccessible) {
+		s.onkeydown = tinyMCE.accessibleEventHandler;
+		s.onblur = tinyMCE.accessibleEventHandler;
+		s._isAccessible = true;
+		s._win = w;
+	}
+
+	<span class="reserved">return</span> false;
+};
+
+<span class="comment">/**
+ * Accessibility handler that gets executed when the user hits a key in a select element.
+ * This handler trams the enter/return or space key and then executes the onchange event handler.
+ *
+ * <span class="attrib">@param</span> {DOMEvent} e DOM event object instance.
  */</span>
 TinyMCE_Engine.<span class="reserved">prototype</span>.accessibleEventHandler = <span class="reserved">function</span>(e) {
 	var win = <span class="reserved">this</span>._win;
 	e = tinyMCE.isMSIE ? win.event : e;
 	var elm = tinyMCE.isMSIE ? e.srcElement : e.target;
+
+	<span class="comment">// Unpiggyback onchange on blur</span>
+	<span class="reserved">if</span> (e.type == <span class="literal">"blur"</span>) {
+		<span class="reserved">if</span> (elm.oldonchange) {
+			elm.onchange = elm.oldonchange;
+			elm.oldonchange = null;
+		}
+
+		<span class="reserved">return</span> true;
+	}
 
 	<span class="comment">// Piggyback onchange</span>
 	<span class="reserved">if</span> (elm.nodeName == <span class="literal">"SELECT"</span> &amp;&amp; !elm.oldonchange) {
@@ -250,20 +311,12 @@ TinyMCE_Engine.<span class="reserved">prototype</span>.accessibleEventHandler = 
 		elm.onchange = elm.oldonchange;
 		elm.onchange();
 		elm.oldonchange = null;
-		tinyMCE.cancelEvent(e);
-	}
-};
 
-<span class="comment">/**
- *
- */</span>
-TinyMCE_Engine.<span class="reserved">prototype</span>.addSelectAccessibility = <span class="reserved">function</span>(e, s, w) {
-	<span class="comment">// Add event handlers </span>
-	<span class="reserved">if</span> (!s._isAccessible) {
-		s.onkeydown = tinyMCE.accessibleEventHandler;
-		s._isAccessible = true;
-		s._win = w;
+		tinyMCE.cancelEvent(e);
+		<span class="reserved">return</span> false;
 	}
+
+	<span class="reserved">return</span> true;
 };
 </pre>
 	<hr>
@@ -323,6 +376,6 @@ TinyMCE_Engine.<span class="reserved">prototype</span>.addSelectAccessibility = 
 <font size="-1">
 
 </font>
-<div class="jsdoc_ctime">Documentation generated by <a href="http://jsdoc.sourceforge.net/" target="_parent">JSDoc</a> on Fri Feb 10 22:31:11 2006</div>
+<div class="jsdoc_ctime">Documentation generated by <a href="http://jsdoc.sourceforge.net/" target="_parent">JSDoc</a> on Fri Feb 24 13:38:20 2006</div>
 </body>
 </html>

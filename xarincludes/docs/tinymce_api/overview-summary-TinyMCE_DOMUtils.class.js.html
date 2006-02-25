@@ -93,8 +93,8 @@ function asd() {
 
         <pre class="sourceview"><span class="comment">/**
  * $RCSfile: overview-summary-TinyMCE_DOMUtils.class.js.html,v $
- * $Revision: 1.7 $
- * $Date: 2006/02/10 21:34:08 $
+ * $Revision: 1.18 $
+ * $Date: 2006/02/24 12:38:51 $
  *
  * <span class="attrib">@author</span> Moxiecode
  * <span class="attrib">@copyright</span> Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
@@ -283,6 +283,16 @@ TinyMCE_Engine.<span class="reserved">prototype</span>.getNodeTree = <span class
 	<span class="reserved">return</span> na;
 };
 
+<span class="comment">/**
+ * Returns the parent element of the specified node based on the search criteria.
+ *
+ * <span class="attrib">@param</span> {HTMLNode} node Node to get parent element of.
+ * <span class="attrib">@param</span> {string} names Comma separated list of element names to get.
+ * <span class="attrib">@param</span> {string} attrib_name Optional attribute name to match.
+ * <span class="attrib">@param</span> {string} attrib_value Optional attribute value to match.
+ * <span class="attrib">@return</span> HTMLElement or null based on search criteras.
+ * <span class="attrib">@type</span> HTMLElement
+ */</span>
 TinyMCE_Engine.<span class="reserved">prototype</span>.getParentElement = <span class="reserved">function</span>(node, names, attrib_name, attrib_value) {
 	<span class="reserved">if</span> (typeof(names) == <span class="literal">"undefined"</span>) {
 		<span class="reserved">if</span> (node.nodeType == 1)
@@ -294,14 +304,14 @@ TinyMCE_Engine.<span class="reserved">prototype</span>.getParentElement = <span 
 		<span class="reserved">return</span> node;
 	}
 
-	var namesAr = names.split(<span class="literal">','</span>);
-
 	<span class="reserved">if</span> (node == null)
 		<span class="reserved">return</span> null;
 
+	var namesAr = names.toUpperCase().split(<span class="literal">','</span>);
+
 	do {
 		<span class="reserved">for</span> (var i=0; i&lt;namesAr.length; i++) {
-			<span class="reserved">if</span> (node.nodeName.toLowerCase() == namesAr[i].toLowerCase() || names == <span class="literal">"*"</span>) {
+			<span class="reserved">if</span> (node.nodeName == namesAr[i] || names == <span class="literal">"*"</span>) {
 				<span class="reserved">if</span> (typeof(attrib_name) == <span class="literal">"undefined"</span>)
 					<span class="reserved">return</span> node;
 				<span class="reserved">else</span> <span class="reserved">if</span> (node.getAttribute(attrib_name)) {
@@ -318,6 +328,15 @@ TinyMCE_Engine.<span class="reserved">prototype</span>.getParentElement = <span 
 	<span class="reserved">return</span> null;
 };
 
+<span class="comment">/**
+ * Returns the attribute value of a element or the default value if it wasn't found.
+ *
+ * <span class="attrib">@param</span> {HTMLElement} elm HTML element to get attribute from.
+ * <span class="attrib">@param</span> {string} name Attribute name to retrive.
+ * <span class="attrib">@param</span> {string} default_value Optional default value to return, this value defaults to a empty string.
+ * <span class="attrib">@return</span> Attribute value or default value if it wasn't found in element.
+ * <span class="attrib">@type</span> string
+ */</span>
 TinyMCE_Engine.<span class="reserved">prototype</span>.getAttrib = <span class="reserved">function</span>(elm, name, default_value) {
 	<span class="reserved">if</span> (typeof(default_value) == <span class="literal">"undefined"</span>)
 		default_value = <span class="literal">""</span>;
@@ -349,6 +368,14 @@ TinyMCE_Engine.<span class="reserved">prototype</span>.getAttrib = <span class="
 	<span class="reserved">return</span> (v &amp;&amp; v != <span class="literal">""</span>) ? v : default_value;
 };
 
+<span class="comment">/**
+ * Sets the attribute value for a specific attribute.
+ *
+ * <span class="attrib">@param</span> {HTMLElement} element HTML element to set attribute on.
+ * <span class="attrib">@param</span> {string} name Attribute name to set.
+ * <span class="attrib">@param</span> {string} value Attribute value to set.
+ * <span class="attrib">@param</span> {boolean} fix_value Optional fix value state, if true only number data will be accepted.
+ */</span>
 TinyMCE_Engine.<span class="reserved">prototype</span>.setAttrib = <span class="reserved">function</span>(element, name, value, fix_value) {
 	<span class="reserved">if</span> (typeof(value) == <span class="literal">"number"</span> &amp;&amp; value != null)
 		value = <span class="literal">""</span> + value;
@@ -373,6 +400,13 @@ TinyMCE_Engine.<span class="reserved">prototype</span>.setAttrib = <span class="
 		element.removeAttribute(name);
 };
 
+<span class="comment">/**
+ * Sets a style attribute item value.
+ *
+ * <span class="attrib">@param</span> {HTMLElement} elm HTML element to set style attribute item on.
+ * <span class="attrib">@param</span> {string} name Style item name to set.
+ * <span class="attrib">@param</span> {string} value Style item value to set.
+ */</span>
 TinyMCE_Engine.<span class="reserved">prototype</span>.setStyleAttrib = <span class="reserved">function</span>(elm, name, value) {
 	eval(<span class="literal">'elm.style.'</span> + name + <span class="literal">'=value;'</span>);
 
@@ -384,6 +418,14 @@ TinyMCE_Engine.<span class="reserved">prototype</span>.setStyleAttrib = <span cl
 	}
 };
 
+<span class="comment">/**
+ * Switches the CSS class of the specified element. This method also caches the
+ * elements in a lookup table for performance. This should only be used for TinyMCE main UI controls
+ * like buttons or select elements.
+ *
+ * <span class="attrib">@param</span> {HTMLElement} ei Element to set CSS class on.
+ * <span class="attrib">@param</span> {string} c CSS class to set.
+ */</span>
 TinyMCE_Engine.<span class="reserved">prototype</span>.switchClass = <span class="reserved">function</span>(ei, c) {
 	var e;
 
@@ -392,10 +434,23 @@ TinyMCE_Engine.<span class="reserved">prototype</span>.switchClass = <span class
 	<span class="reserved">else</span>
 		e = tinyMCE.switchClassCache[ei] = document.getElementById(ei);
 
-	<span class="reserved">if</span> (e)
+	<span class="reserved">if</span> (e) {
+		<span class="comment">// Keep tile mode</span>
+		<span class="reserved">if</span> (tinyMCE.settings.button_tile_map &amp;&amp; e.className &amp;&amp; e.className.indexOf(<span class="literal">'mceTiledButton'</span>) == 0)
+			c = <span class="literal">'mceTiledButton '</span> + c;
+
 		e.className = c;
+	}
 };
 
+<span class="comment">/**
+ * Returns the absolute x, y position of a node. The position will be returned in a object with
+ * two properties absLeft and absTop.
+ *
+ * <span class="attrib">@param</span> {HTMLNode} n HTML element to get x, y position from.
+ * <span class="attrib">@return</span> Absolute position of the specified element.
+ * <span class="attrib">@type</span> TinyMCE_ElementPosition
+ */</span>
 TinyMCE_Engine.<span class="reserved">prototype</span>.getAbsPosition = <span class="reserved">function</span>(n) {
 	var p = {absLeft : 0, absTop : 0};
 
@@ -407,7 +462,6 @@ TinyMCE_Engine.<span class="reserved">prototype</span>.getAbsPosition = <span cl
 
 	<span class="reserved">return</span> p;
 };
-
 </pre>
 	<hr>
 
@@ -466,6 +520,6 @@ TinyMCE_Engine.<span class="reserved">prototype</span>.getAbsPosition = <span cl
 <font size="-1">
 
 </font>
-<div class="jsdoc_ctime">Documentation generated by <a href="http://jsdoc.sourceforge.net/" target="_parent">JSDoc</a> on Fri Feb 10 22:31:11 2006</div>
+<div class="jsdoc_ctime">Documentation generated by <a href="http://jsdoc.sourceforge.net/" target="_parent">JSDoc</a> on Fri Feb 24 13:38:20 2006</div>
 </body>
 </html>

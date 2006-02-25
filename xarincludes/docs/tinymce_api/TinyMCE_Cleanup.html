@@ -153,96 +153,28 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#_convertToXML">_convertToXML</A></B>(n, xn)
+	       <A HREF="#addRuleStr">addRuleStr</A></B>(&lt;string&gt; s)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Adds a cleanup rule string, for TinyMCE_Cleanup.prototype.example = a;[href|name|title=title|class=class1?class2?class3].
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
 	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
+	    <CODE>&nbsp;string</CODE>
 	 </FONT>
       </TD>
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#_urlConverter">_urlConverter</A></B>(c, n, v)
+	       <A HREF="#formatHTML">formatHTML</A></B>(&lt;string&gt; h)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
-      </TD>
-   </TR>
-
-   <TR BGCOLOR="white" CLASS="TableRowColor">
-      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;void</CODE>
-	 </FONT>
-      </TD>
-      <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#addRuleStr">addRuleStr</A></B>(s)
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
-      </TD>
-   </TR>
-
-   <TR BGCOLOR="white" CLASS="TableRowColor">
-      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
-	 </FONT>
-      </TD>
-      <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#arrayToRe">arrayToRe</A></B>(a, op, be, af)
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
-      </TD>
-   </TR>
-
-   <TR BGCOLOR="white" CLASS="TableRowColor">
-      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
-	 </FONT>
-      </TD>
-      <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#formatHTML">formatHTML</A></B>(h)
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
-      </TD>
-   </TR>
-
-   <TR BGCOLOR="white" CLASS="TableRowColor">
-      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
-	 </FONT>
-      </TD>
-      <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#getAttrib">getAttrib</A></B>(e, n, d)
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Applies source formatting/indentation on the specified HTML string.
       </TD>
    </TR>
 
@@ -255,130 +187,96 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#init">init</A></B>(s)
+	       <A HREF="#init">init</A></B>(&lt;Array&gt; s)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Initializes the cleanup engine with the specified config.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
 	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
+	    <CODE>&nbsp;Array</CODE>
 	 </FONT>
       </TD>
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#parseRuleStr">parseRuleStr</A></B>(s)
+	       <A HREF="#parseRuleStr">parseRuleStr</A></B>(&lt;string&gt; s)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Parses a cleanup rule string, for TinyMCE_Cleanup.prototype.example = a;[href|name|title=title|class=class1?class2?class3].
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
 	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
+	    <CODE>&nbsp;string</CODE>
 	 </FONT>
       </TD>
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#serializeAttribute">serializeAttribute</A></B>(n, r, an)
+	       <A HREF="#serializeNodeAsHTML">serializeNodeAsHTML</A></B>(&lt;HTMLNode&gt; n)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Serializes the specified node as a XHTML string.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
 	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
+	    <CODE>&nbsp;string</CODE>
 	 </FONT>
       </TD>
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#serializeNodeAsHTML">serializeNodeAsHTML</A></B>(n)
+	       <A HREF="#serializeNodeAsXML">serializeNodeAsXML</A></B>(&lt;HTMLNode&gt; n)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Serializes the specified node as a HTML string.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
 	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
+	    <CODE>&nbsp;string</CODE>
 	 </FONT>
       </TD>
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#serializeNodeAsXML">serializeNodeAsXML</A></B>(n, m)
+	       <A HREF="#split">split</A></B>(&lt;RegEx&gt; re, &lt;string&gt; s)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Splits the specified string and removed empty chunks.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
 	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
+	    <CODE>&nbsp;string</CODE>
 	 </FONT>
       </TD>
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#split">split</A></B>(re, s)
+	       <A HREF="#xmlEncode">xmlEncode</A></B>(&lt;string&gt; s)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
-      </TD>
-   </TR>
-
-   <TR BGCOLOR="white" CLASS="TableRowColor">
-      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
-	 </FONT>
-      </TD>
-      <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#wildcardToRe">wildcardToRe</A></B>(s)
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
-      </TD>
-   </TR>
-
-   <TR BGCOLOR="white" CLASS="TableRowColor">
-      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
-	 </FONT>
-      </TD>
-      <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#xmlEncode">xmlEncode</A></B>(s)
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 XML Encodes the specified string based on configured entity encoding.
       </TD>
    </TR>
 
@@ -446,60 +344,24 @@ TinyMCE_Cleanup</H3>
 
 <!-- One single method detail entry -->
 
-   <A NAME="_convertToXML"><!-- --></A>
-   <H3>_convertToXML</H3>
-   <PRE>void <B>_convertToXML</B>(n, xn)</PRE>
-   
-
-   <!-- METHOD PARAMETERS START -->
-   
-   <!-- METHOD PARAMETERS END -->
-
-   
-
-   <!-- ADDITIONAL ATTRIBUTES START -->
-   
-   <!-- ADDITIONAL ATTRIBUTES  END -->
-<HR>
-
-   <A NAME="_urlConverter"><!-- --></A>
-   <H3>_urlConverter</H3>
-   <PRE>Object <B>_urlConverter</B>(c, n, v)</PRE>
-   
-
-   <!-- METHOD PARAMETERS START -->
-   
-   <!-- METHOD PARAMETERS END -->
-
-   
-
-   <!-- ADDITIONAL ATTRIBUTES START -->
-   
-   <!-- ADDITIONAL ATTRIBUTES  END -->
-<HR>
-
    <A NAME="addRuleStr"><!-- --></A>
    <H3>addRuleStr</H3>
-   <PRE>void <B>addRuleStr</B>(s)</PRE>
+   <PRE>void <B>addRuleStr</B>(&lt;string&gt; s)</PRE>
+   
+      <UL>Adds a cleanup rule string, for TinyMCE_Cleanup.prototype.example = a;[href|name|title=title|class=class1?class2?class3].
+ These rules are then used when serializing the DOM tree as a HTML string, it gives the possibility
+ to control the valid elements and attributes and force attribute values or default them.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
    
-   <!-- METHOD PARAMETERS END -->
-
+   <UL>
+   <B>Parameters:</B>
    
-
-   <!-- ADDITIONAL ATTRIBUTES START -->
+     <UL><CODE>s</CODE> -  Rule string to parse and add to the cleanup rules array. 	   
+      </UL> 
    
-   <!-- ADDITIONAL ATTRIBUTES  END -->
-<HR>
-
-   <A NAME="arrayToRe"><!-- --></A>
-   <H3>arrayToRe</H3>
-   <PRE>Object <B>arrayToRe</B>(a, op, be, af)</PRE>
-   
-
-   <!-- METHOD PARAMETERS START -->
+   </UL>
    
    <!-- METHOD PARAMETERS END -->
 
@@ -512,29 +374,30 @@ TinyMCE_Cleanup</H3>
 
    <A NAME="formatHTML"><!-- --></A>
    <H3>formatHTML</H3>
-   <PRE>Object <B>formatHTML</B>(h)</PRE>
+   <PRE>string <B>formatHTML</B>(&lt;string&gt; h)</PRE>
+   
+      <UL>Applies source formatting/indentation on the specified HTML string.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
    
-   <!-- METHOD PARAMETERS END -->
-
+   <UL>
+   <B>Parameters:</B>
    
-
-   <!-- ADDITIONAL ATTRIBUTES START -->
+     <UL><CODE>h</CODE> -  HTML string to apply formatting to.  
+      </UL> 
    
-   <!-- ADDITIONAL ATTRIBUTES  END -->
-<HR>
-
-   <A NAME="getAttrib"><!-- --></A>
-   <H3>getAttrib</H3>
-   <PRE>Object <B>getAttrib</B>(e, n, d)</PRE>
-   
-
-   <!-- METHOD PARAMETERS START -->
+   </UL>
    
    <!-- METHOD PARAMETERS END -->
 
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        Formatted HTML string.   
+        </UL>
+   </UL>
    
 
    <!-- ADDITIONAL ATTRIBUTES START -->
@@ -544,10 +407,20 @@ TinyMCE_Cleanup</H3>
 
    <A NAME="init"><!-- --></A>
    <H3>init</H3>
-   <PRE>void <B>init</B>(s)</PRE>
+   <PRE>void <B>init</B>(&lt;Array&gt; s)</PRE>
+   
+      <UL>Initializes the cleanup engine with the specified config.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
+   
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>s</CODE> -  Name/Value array with config settings. 	   
+      </UL> 
+   
+   </UL>
    
    <!-- METHOD PARAMETERS END -->
 
@@ -560,29 +433,32 @@ TinyMCE_Cleanup</H3>
 
    <A NAME="parseRuleStr"><!-- --></A>
    <H3>parseRuleStr</H3>
-   <PRE>Object <B>parseRuleStr</B>(s)</PRE>
+   <PRE>Array <B>parseRuleStr</B>(&lt;string&gt; s)</PRE>
+   
+      <UL>Parses a cleanup rule string, for TinyMCE_Cleanup.prototype.example = a;[href|name|title=title|class=class1?class2?class3].
+ These rules are then used when serializing the DOM tree as a HTML string, it gives the possibility
+ to control the valid elements and attributes and force attribute values or default them.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
    
-   <!-- METHOD PARAMETERS END -->
-
+   <UL>
+   <B>Parameters:</B>
    
-
-   <!-- ADDITIONAL ATTRIBUTES START -->
+     <UL><CODE>s</CODE> -  Rule string to parse as a name/value rule array.  
+      </UL> 
    
-   <!-- ADDITIONAL ATTRIBUTES  END -->
-<HR>
-
-   <A NAME="serializeAttribute"><!-- --></A>
-   <H3>serializeAttribute</H3>
-   <PRE>Object <B>serializeAttribute</B>(n, r, an)</PRE>
-   
-
-   <!-- METHOD PARAMETERS START -->
+   </UL>
    
    <!-- METHOD PARAMETERS END -->
 
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        Parsed name/value rule array.   
+        </UL>
+   </UL>
    
 
    <!-- ADDITIONAL ATTRIBUTES START -->
@@ -592,13 +468,31 @@ TinyMCE_Cleanup</H3>
 
    <A NAME="serializeNodeAsHTML"><!-- --></A>
    <H3>serializeNodeAsHTML</H3>
-   <PRE>Object <B>serializeNodeAsHTML</B>(n)</PRE>
+   <PRE>string <B>serializeNodeAsHTML</B>(&lt;HTMLNode&gt; n)</PRE>
+   
+      <UL>Serializes the specified node as a XHTML string. This uses the TinyMCE serializer logic since it gives more
+ control over the output than the build in browser XML serializer.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
    
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>n</CODE> -  Node to serialize as a XHTML string.  
+      </UL> 
+   
+   </UL>
+   
    <!-- METHOD PARAMETERS END -->
 
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        Serialized XHTML string based on specified node.   
+        </UL>
+   </UL>
    
 
    <!-- ADDITIONAL ATTRIBUTES START -->
@@ -608,13 +502,31 @@ TinyMCE_Cleanup</H3>
 
    <A NAME="serializeNodeAsXML"><!-- --></A>
    <H3>serializeNodeAsXML</H3>
-   <PRE>Object <B>serializeNodeAsXML</B>(n, m)</PRE>
+   <PRE>string <B>serializeNodeAsXML</B>(&lt;HTMLNode&gt; n)</PRE>
+   
+      <UL>Serializes the specified node as a HTML string. This uses the XML parser and serializer
+ to generate a XHTML string.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
    
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>n</CODE> -  Node to serialize as a XHTML string.  
+      </UL> 
+   
+   </UL>
+   
    <!-- METHOD PARAMETERS END -->
 
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        Serialized XHTML string based on specified node.   
+        </UL>
+   </UL>
    
 
    <!-- ADDITIONAL ATTRIBUTES START -->
@@ -624,29 +536,33 @@ TinyMCE_Cleanup</H3>
 
    <A NAME="split"><!-- --></A>
    <H3>split</H3>
-   <PRE>Object <B>split</B>(re, s)</PRE>
+   <PRE>string <B>split</B>(&lt;RegEx&gt; re, &lt;string&gt; s)</PRE>
+   
+      <UL>Splits the specified string and removed empty chunks.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
    
-   <!-- METHOD PARAMETERS END -->
-
+   <UL>
+   <B>Parameters:</B>
    
-
-   <!-- ADDITIONAL ATTRIBUTES START -->
+     <UL><CODE>re</CODE> -  RegEx to split string by.  
+      </UL> 
    
-   <!-- ADDITIONAL ATTRIBUTES  END -->
-<HR>
-
-   <A NAME="wildcardToRe"><!-- --></A>
-   <H3>wildcardToRe</H3>
-   <PRE>Object <B>wildcardToRe</B>(s)</PRE>
+     <UL><CODE>s</CODE> -  String value to split.  
+      </UL> 
    
-
-   <!-- METHOD PARAMETERS START -->
+   </UL>
    
    <!-- METHOD PARAMETERS END -->
 
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        Array with parts from specified string.   
+        </UL>
+   </UL>
    
 
    <!-- ADDITIONAL ATTRIBUTES START -->
@@ -656,13 +572,31 @@ TinyMCE_Cleanup</H3>
 
    <A NAME="xmlEncode"><!-- --></A>
    <H3>xmlEncode</H3>
-   <PRE>Object <B>xmlEncode</B>(s)</PRE>
+   <PRE>string <B>xmlEncode</B>(&lt;string&gt; s)</PRE>
+   
+      <UL>XML Encodes the specified string based on configured entity encoding. The entity encoding modes
+ are raw, numeric and named. Where raw is the fastest and named is default.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
    
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>s</CODE> -  String to convert to XML.  
+      </UL> 
+   
+   </UL>
+   
    <!-- METHOD PARAMETERS END -->
 
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        Encoded XML string based on configured entity encoding.   
+        </UL>
+   </UL>
    
 
    <!-- ADDITIONAL ATTRIBUTES START -->
@@ -736,6 +670,6 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
 <FONT SIZE="-1">
 
 </FONT>
-<div class="jsdoc_ctime">Documentation generated by <a href="http://jsdoc.sourceforge.net/" target="_parent">JSDoc</a> on Fri Feb 10 22:31:11 2006</div>
+<div class="jsdoc_ctime">Documentation generated by <a href="http://jsdoc.sourceforge.net/" target="_parent">JSDoc</a> on Fri Feb 24 13:38:20 2006</div>
 </BODY>
 </HTML>

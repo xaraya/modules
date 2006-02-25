@@ -1,7 +1,7 @@
 /**
  * $RCSfile: editor_plugin_src.js,v $
- * $Revision: 1.37 $
- * $Date: 2006/02/10 16:29:40 $
+ * $Revision: 1.38 $
+ * $Date: 2006/02/11 18:53:51 $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
@@ -52,11 +52,8 @@ var TinyMCE_TablePlugin = {
 			var but = controls[i];
 			var cmd = 'tinyMCE.execInstanceCommand(\'{$editor_id}\',\'' + but[3] + '\', ' + (but.length > 4 ? but[4] : false) + (but.length > 5 ? ', \'' + but[5] + '\'' : '') + ');return false;';
 
-			if (but[0] == control_name && (tinyMCE.isMSIE || !tinyMCE.settings['button_tile_map'])) {
+			if (but[0] == control_name)
 				return tinyMCE.getButtonHTML(control_name, but[2], '{$pluginurl}/images/'+ but[1], but[3], (but.length > 4 ? but[4] : false));
-			} else if (but[0] == control_name) {
-				return '<a href="javascript:' + cmd + '" onclick="' + cmd + '" onmousedown="return false;" target="_self"><img id="{$editor_id}_' + but[0] + '" src="{$themeurl}/images/spacer.gif" style="background-image:url({$pluginurl}/images/buttons.gif); background-position: ' + ((0-(i*20)) == 0 ? '0' : (0-(i*20)) + 'px') + ' 0" title="' + but[2] + '" width="20" height="20" class="mceButtonDisabled" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" /></a>';
-			}
 		}
 
 		// Special tablecontrols

@@ -387,17 +387,16 @@ function updateAction() {
 	else
 		topDoc.body.style.backgroundImage = '';
 
-	var cleanup = new TinyMCE_Cleanup();
+	inst.cleanup.addRuleStr('-title,meta[http-equiv|name|content],base[href|target],link[href|rel|type|title|media],style[type],script[type|language|src],html[lang|xml:lang|xmlns],body[style|dir|vlink|link|text|alink],head');
 
-	cleanup.init({
-		valid_elements : 'meta[http-equiv|name|content],base[href|target],link[href|rel|type|title|media],style[type],script[type|language|src],html[lang|xml:lang|xmlns],body[style|dir|vlink|link|text|alink],head'
-	});
-
-	h = cleanup.cleanupNode(topDoc.documentElement);
+	h = inst.cleanup.serializeNodeAsHTML(topDoc.documentElement);
 
 	h = h.substring(0, h.lastIndexOf('</body>'));
 
-	h = h.replace(/<head.*?>/, '$&\n' + cleanup.inStr + '<title>' + cleanup.xmlEncode(f.metatitle.value) + '</title>');
+	if (h.indexOf('<title>') == -1)
+		h = h.replace(/<head.*?>/, '$&\n' + '<title>' + inst.cleanup.xmlEncode(f.metatitle.value) + '</title>');
+	else
+		h = h.replace(/<title>(.*?)<\/title>/, '<title>' + inst.cleanup.xmlEncode(f.metatitle.value) + '</title>');
 
 	if ((v = getSelectValue(f, 'doctypes')) != '')
 		h = v + '\n' + h;

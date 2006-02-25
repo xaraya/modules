@@ -1,13 +1,16 @@
 /**
  * $RCSfile: editor_template_src.js,v $
- * $Revision: 1.7 $
- * $Date: 2006/02/10 16:29:41 $
+ * $Revision: 1.8 $
+ * $Date: 2006/02/11 18:53:53 $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
  */
 
 var TinyMCE_SimpleTheme = {
+	// List of button ids in tile map
+	_buttonMap : 'bold,bullist,cleanup,italic,numlist,redo,strikethrough,underline,undo',
+
 	getEditorTemplate : function() {
 		var html = '';
 
@@ -17,17 +20,17 @@ var TinyMCE_SimpleTheme = {
 		html += '</td></tr>';
 		html += '<tr><td class="mceToolbar" align="center" height="1">';
 		html += tinyMCE.getButtonHTML('bold', 'lang_bold_desc', '{$themeurl}/images/{$lang_bold_img}', 'Bold');
-		html += tinyMCE.getButtonHTML('bold', 'lang_bold_desc', '{$themeurl}/images/{$lang_italic_img}', 'Italic');
-		html += tinyMCE.getButtonHTML('bold', 'lang_bold_desc', '{$themeurl}/images/{$lang_underline_img}', 'Underline');
-		html += tinyMCE.getButtonHTML('bold', 'lang_bold_desc', '{$themeurl}/images/strikethrough.gif', 'Strikethrough');
+		html += tinyMCE.getButtonHTML('italic', 'lang_italic_desc', '{$themeurl}/images/{$lang_italic_img}', 'Italic');
+		html += tinyMCE.getButtonHTML('underline', 'lang_underline_desc', '{$themeurl}/images/{$lang_underline_img}', 'Underline');
+		html += tinyMCE.getButtonHTML('strikethrough', 'lang_striketrough_desc', '{$themeurl}/images/strikethrough.gif', 'Strikethrough');
 		html += '<img src="{$themeurl}/images/separator.gif" width="2" height="20" class="mceSeparatorLine">';
-		html += tinyMCE.getButtonHTML('bold', 'lang_undo_desc', '{$themeurl}/images/undo.gif', 'Undo');
-		html += tinyMCE.getButtonHTML('bold', 'lang_redo_desc', '{$themeurl}/images/redo.gif', 'Redo');
+		html += tinyMCE.getButtonHTML('undo', 'lang_undo_desc', '{$themeurl}/images/undo.gif', 'Undo');
+		html += tinyMCE.getButtonHTML('redo', 'lang_redo_desc', '{$themeurl}/images/redo.gif', 'Redo');
 		html += '<img src="{$themeurl}/images/separator.gif" width="2" height="20" class="mceSeparatorLine">';
-		html += tinyMCE.getButtonHTML('bold', 'lang_cleanup_desc', '{$themeurl}/images/cleanup.gif', 'mceCleanup')
+		html += tinyMCE.getButtonHTML('cleanup', 'lang_cleanup_desc', '{$themeurl}/images/cleanup.gif', 'mceCleanup')
 		html += '<img src="{$themeurl}/images/separator.gif" width="2" height="20" class="mceSeparatorLine">';
-		html += tinyMCE.getButtonHTML('bold', 'lang_bullist_desc', '{$themeurl}/images/bullist.gif', 'InsertUnorderedList')
-		html += tinyMCE.getButtonHTML('bold', 'lang_numlist_desc', '{$themeurl}/images/numlist.gif', 'InsertOrderedList')
+		html += tinyMCE.getButtonHTML('bullist', 'lang_bullist_desc', '{$themeurl}/images/bullist.gif', 'InsertUnorderedList')
+		html += tinyMCE.getButtonHTML('numlist', 'lang_numlist_desc', '{$themeurl}/images/numlist.gif', 'InsertOrderedList')
 		html += '</td></tr></table>';
 
 		return {
@@ -80,3 +83,4 @@ var TinyMCE_SimpleTheme = {
 };
 
 tinyMCE.addTheme("simple", TinyMCE_SimpleTheme);
+tinyMCE.addButtonMap(TinyMCE_SimpleTheme._buttonMap);

@@ -1,7 +1,7 @@
 /**
  * $RCSfile: editor_plugin_src.js,v $
- * $Revision: 1.28 $
- * $Date: 2006/02/06 20:02:37 $
+ * $Revision: 1.29 $
+ * $Date: 2006/02/13 15:09:28 $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
@@ -282,16 +282,18 @@ TinyMCE_ContextMenu.prototype = {
 			icon = this.settings['spacer_image'];
 
 		if (!disabled)
-			html += '<tr class="contextMenuItem" onmousedown="' + onMouseDown + '" onmouseover="tinyMCE.switchClass(this,\'contextMenuItemOver\');" onmouseout="tinyMCE.switchClass(this,\'contextMenuItem\');">';
+			html += '<tr class="contextMenuItem">';
 		else
 			html += '<tr class="contextMenuItemDisabled">';
 
 		html += '<td class="contextMenuIcon"><img src="' + icon + '" width="20" height="20" class="contextMenuImage" /></td>';
 		html += '<td><div class="contextMenuText">';
+		html += '<a href="javascript:void(0);" onclick="' + onMouseDown + '" onmousedown="return false;">&nbsp;';
 
 		// Add text
 		html += title;
 
+		html += '&nbsp;</a>';
 		html += '</div></td>';
 		html += '</tr>';
 
@@ -305,7 +307,7 @@ TinyMCE_ContextMenu.prototype = {
 
 		var html = '';
 
-		html += '<table border="0" cellpadding="0" cellspacing="0">';
+		html += '<a href="#"></a><table border="0" cellpadding="0" cellspacing="0">';
 		html += this.html;
 		html += '</table>';
 

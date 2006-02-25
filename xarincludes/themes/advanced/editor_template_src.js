@@ -1,7 +1,7 @@
 /**
  * $RCSfile: editor_template_src.js,v $
- * $Revision: 1.87 $
- * $Date: 2006/02/10 16:29:41 $
+ * $Revision: 1.91 $
+ * $Date: 2006/02/15 18:42:03 $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
@@ -51,37 +51,20 @@ var TinyMCE_AdvancedTheme = {
 		['newdocument', 'newdocument.gif', 'lang_newdocument_desc', 'mceNewDocument']
 	],
 
+	_buttonMap : 'anchor,backcolor,bold,bullist,charmap,cleanup,code,copy,cut,forecolor,help,hr,image,indent,italic,justifycenter,justifyfull,justifyleft,justifyright,link,newdocument,numlist,outdent,paste,redo,removeformat,strikethrough,sub,sup,underline,undo,unlink,visualaid,advhr,ltr,rtl,emotions,flash,fullpage,fullscreen,iespell,insertdate,inserttime,pastetext,pasteword,selectall,preview,print,save,replace,search,table,cell_props,delete_col,delete_row,col_after,col_before,row_after,row_before,merge_cells,row_props,split_cells',
+
 	/**
 	 * Returns HTML code for the specificed control.
 	 */
 	getControlHTML : function(button_name) {
 		var i, x;
-		var buttonTileMap = new Array('anchor.gif','backcolor.gif','bullist.gif','justifycenter.gif',
-												'charmap.gif','cleanup.gif','code.gif','copy.gif','custom_1.gif',
-												'cut.gif','forecolor.gif','justifyfull.gif','help.gif','hr.gif',
-												'image.gif','indent.gif','justifyleft.gif','link.gif','numlist.gif',
-												'outdent.gif','paste.gif','redo.gif','removeformat.gif',
-												'justifyright.gif','strikethrough.gif','sub.gif','sup.gif','undo.gif',
-												'unlink.gif','visualaid.gif');
 
 		// Lookup button in button list
 		for (i=0; i<TinyMCE_AdvancedTheme._buttons.length; i++) {
 			var but = TinyMCE_AdvancedTheme._buttons[i];
 
-			if (but[0] == button_name) {
-				// Check for it in tilemap
-				if (tinyMCE.settings['button_tile_map']) {
-					for (x=0; !tinyMCE.isMSIE && x<buttonTileMap.length; x++) {
-						if (buttonTileMap[x] == but[1]) {
-							var cmd = 'tinyMCE.execInstanceCommand(\'{$editor_id}\',\'' + but[3] + '\',' + (but.length > 4 ? but[4] : false) + (but.length > 5 ? ',\'' + but[5] + '\'' : '') + ')';
-							return '<a href="javascript:' + cmd + '" onclick="' + cmd + ';return false;" onmousedown="return false;" target="_self"><img id="{$editor_id}_' + but[0] +'" src="{$themeurl}/images/spacer.gif" style="background-image:url({$themeurl}/images/buttons.gif); background-position: ' + ((0-(x*20)) == 0 ? '0' : ((0-(x*20)) + 'px')) + ' 0" title="' + but[2] + '" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" /></a>';
-						}
-					}
-				}
-
-				// Old style
+			if (but[0] == button_name)
 				return tinyMCE.getButtonHTML(but[0], but[2], '{$themeurl}/images/' + but[1], but[3], (but.length > 4 ? but[4] : false), (but.length > 5 ? but[5] : null));
-			}
 		}
 
 		// Custom controlls other than buttons
@@ -397,8 +380,8 @@ var TinyMCE_AdvancedTheme = {
 				var template = new Array();
 
 				template['file'] = 'source_editor.htm';
-				template['width'] = parseInt(tinyMCE.getParam("theme_advanced_source_editor_width", 500));
-				template['height'] = parseInt(tinyMCE.getParam("theme_advanced_source_editor_height", 400));
+				template['width'] = parseInt(tinyMCE.getParam("theme_advanced_source_editor_width", 720));
+				template['height'] = parseInt(tinyMCE.getParam("theme_advanced_source_editor_height", 580));
 
 				tinyMCE.openWindow(template, {editor_id : editor_id, resizable : "yes", scrollbars : "no", inline : "yes"});
 				return true;
@@ -431,7 +414,7 @@ var TinyMCE_AdvancedTheme = {
 
 			case "mceNewDocument":
 				if (confirm(tinyMCE.getLang('lang_newdocument')))
-					tinyMCE.execInstanceCommand(editor_id, 'mceSetContent', false, '');
+					tinyMCE.execInstanceCommand(editor_id, 'mceSetContent', false, ' ');
 
 				return true;
 		}
@@ -559,16 +542,12 @@ var TinyMCE_AdvancedTheme = {
 				}
 
 				// External toolbar changes
-				if (toolbarLocation == "external")
-				{
+				if (toolbarLocation == "external") {
 					var bod = document.body;
 					var elm = document.createElement ("div");
-					
-					toolbarHTML = tinyMCE.replaceVars(toolbarHTML, tinyMCE.settings);
-					toolbarHTML = tinyMCE.replaceVars(toolbarHTML, tinyMCELang);
+
 					toolbarHTML = tinyMCE.replaceVar(toolbarHTML, 'style_select_options', styleSelectHTML);
-					toolbarHTML = tinyMCE.replaceVar(toolbarHTML, "editor_id", editorId);
-					toolbarHTML = tinyMCE.applyTemplate(toolbarHTML);
+					toolbarHTML = tinyMCE.applyTemplate(toolbarHTML, {editor_id : editorId});
 
 					elm.className = "mceToolbarExternal";
 					elm.id = editorId+"_toolbar";
@@ -580,14 +559,11 @@ var TinyMCE_AdvancedTheme = {
 					tinyMCE.getInstanceById(editorId).toolbarElement = elm;
 
 					//template['html'] = '<div id="mceExternalToolbar" align="center" class="mceToolbarExternal"><table width="100%" border="0" align="center"><tr><td align="center">'+toolbarHTML+'</td></tr></table></div>' + template["html"];
-				}
-				else
-				{
+				} else {
 					tinyMCE.getInstanceById(editorId).toolbarElement = null;
 				}
 
-				if (statusbarLocation == "bottom")
-				{
+				if (statusbarLocation == "bottom") {
 					template['html'] += '<tr><td class="mceStatusbarBottom" height="1">' + statusbarHTML + '</td></tr>';
 					deltaHeight -= 23;
 				}
@@ -1429,3 +1405,6 @@ var TinyMCE_AdvancedTheme = {
 };
 
 tinyMCE.addTheme("advanced", TinyMCE_AdvancedTheme);
+
+// Add default buttons maps for advanced theme and all internal plugins
+tinyMCE.addButtonMap(TinyMCE_AdvancedTheme._buttonMap);

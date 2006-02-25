@@ -1,7 +1,7 @@
 .mceSeparatorLine {
 	border: 0;
 	padding: 0;
-	margin-left: 2px;
+	margin-left: 4px;
 	margin-right: 2px;
 }
 
@@ -77,6 +77,11 @@ a.mceButtonDisabled img {
 	opacity: 0.3;
 	border: 1px solid #F0F0EE !important;
 	cursor: default;
+}
+
+a.mceTiledButton img {
+	background-image: url('../images/buttons.gif');
+	background-repeat: no-repeat;
 }
 
 /* MSIE specific rules */

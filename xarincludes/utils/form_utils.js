@@ -1,7 +1,7 @@
 /**
  * $RCSfile: form_utils.js,v $
- * $Revision: 1.8 $
- * $Date: 2006/02/06 20:11:09 $
+ * $Revision: 1.9 $
+ * $Date: 2006/02/13 15:28:43 $
  *
  * Various form utilitiy functions.
  *
@@ -14,9 +14,9 @@ function getColorPickerHTML(id, target_form_element) {
 
 	html += '<a id="' + id + '_link" href="javascript:void(0);" onkeydown="pickColor(event,\'' + target_form_element +'\');" onmousedown="pickColor(event,\'' + target_form_element +'\');return false;">';
 	html += '<img id="' + id + '" src="../../themes/advanced/images/color.gif"';
-	html += ' onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');"';
-	html += ' onmouseout="tinyMCE.restoreClass(this);"';
-	html += ' onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');"';
+	html += ' onmouseover="this.className=\'mceButtonOver\'"';
+	html += ' onmouseout="this.className=\'mceButtonNormal\'"';
+	html += ' onmousedown="this.className=\'mceButtonDown\'"';
 	html += ' width="20" height="16" border="0" title="' + tinyMCE.getLang('lang_browse') + '"';
 	html += ' class="mceButtonNormal" alt="' + tinyMCE.getLang('lang_browse') + '" /></a>';
 
@@ -58,9 +58,9 @@ function getBrowserHTML(id, target_form_element, type, prefix) {
 
 	html += '<a id="' + id + '_link" href="javascript:openBrower(\'' + id + '\',\'' + target_form_element + '\', \'' + type + '\',\'' + option + '\');" onmousedown="return false;">';
 	html += '<img id="' + id + '" src="../../themes/advanced/images/browse.gif"';
-	html += ' onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');"';
-	html += ' onmouseout="tinyMCE.restoreClass(this);"';
-	html += ' onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');"';
+	html += ' onmouseover="this.className=\'mceButtonOver\';"';
+	html += ' onmouseout="this.className=\'mceButtonNormal\';"';
+	html += ' onmousedown="this.className=\'mceButtonDown\';"';
 	html += ' width="20" height="18" border="0" title="' + tinyMCE.getLang('lang_browse') + '"';
 	html += ' class="mceButtonNormal" alt="' + tinyMCE.getLang('lang_browse') + '" /></a>';
 

@@ -7,7 +7,7 @@
 .mceSeparatorLine {
 	border: 0;
 	padding: 0;
-	margin-left: 2px;
+	margin-left: 4px;
 	margin-right: 2px;
 }
 
@@ -157,17 +157,22 @@ a.mceButtonDisabled img {
 	cursor: default;
 }
 
+a.mceTiledButton img {
+	background-image: url('../images/buttons.gif');
+	background-repeat: no-repeat;
+}
+
 /* MSIE specific rules */
 
 * html a.mceButtonNormal img, * html a.mceButtonSelected img, * html a.mceButtonDisabled img {
-	border: 0px !important;
+	border: 0 !important;
 	margin-top: 2px;
 	margin-bottom: 1px;
 }
 
 * html a.mceButtonDisabled img {
 	filter:progid:DXImageTransform.Microsoft.Alpha(opacity=30);
-	border: 0px !important;
+	border: 0 !important;
 }
 
 * html a.mceButtonDisabled {
@@ -175,7 +180,7 @@ a.mceButtonDisabled img {
 }
 
 * html a.mceButtonNormal, * html a.mceButtonSelected {
-	border: 1px solid #F0F0EE;
+	border: 1px solid #F0F0EE !important;
 	cursor: default;
 }
 
@@ -184,7 +189,7 @@ a.mceButtonDisabled img {
 }
 
 * html a.mceButtonNormal:hover, * html a.mceButtonSelected:hover {
-	border: 1px solid #0A246A;
+	border: 1px solid #0A246A !important;
 	cursor: default;
 	background-color: #B6BDD2;
 }

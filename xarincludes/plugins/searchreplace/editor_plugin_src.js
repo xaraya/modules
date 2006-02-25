@@ -1,7 +1,7 @@
 /**
  * $RCSfile: editor_plugin_src.js,v $
- * $Revision: 1.26 $
- * $Date: 2006/02/10 16:29:40 $
+ * $Revision: 1.27 $
+ * $Date: 2006/02/13 15:09:28 $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
@@ -39,43 +39,15 @@ var TinyMCE_SearchReplacePlugin = {
 	 * Executes	the	search/replace commands.
 	 */
 	execCommand : function(editor_id, element, command,	user_interface,	value) {
+		var instance = tinyMCE.getInstanceById(editor_id);
+
 		function defValue(key, default_value) {
 			value[key] = typeof(value[key]) == "undefined" ? default_value : value[key];
 		}
 
-		function replaceSel(search_str, str) {
-			// Get current selection
-			if (!tinyMCE.isMSIE) {
-				var sel = instance.contentWindow.getSelection();
-				var rng = sel.getRangeAt(0);
-			} else {
-				var rng = instance.contentWindow.document.selection.createRange();
-			}
-
-			// Replace current one
-			if (!tinyMCE.isMSIE) {
-				var doc = instance.contentWindow.document;
-
-				// This way works when the replace doesn't contain the search string
-				if (str.indexOf(search_str) == -1) {
-					rng.deleteContents();
-					rng.insertNode(rng.createContextualFragment(str));
-					rng.collapse(false);
-				} else {
-					// Insert content ugly way! Needed to move selection to after replace item
-					doc.execCommand("insertimage", false, "#mce_temp_url#");
-					var elm = tinyMCE.getElementByAttributeValue(doc.body, "img", "src", "#mce_temp_url#");
-					elm.parentNode.replaceChild(doc.createTextNode(str), elm);
-				}
-			} else {
-				if (rng.item)
-					rng.item(0).outerHTML = str;
-				else
-					rng.pasteHTML(str);
-			}
+		function replaceSel(search_str, str, back) {
+			instance.execCommand('mceInsertContent', false, str);
 		}
-
-		var instance = tinyMCE.getInstanceById(editor_id);
 
 		if (!value)
 			value = new Array();
@@ -105,7 +77,7 @@ var TinyMCE_SearchReplacePlugin = {
 					if (value['replacestring'] != null) {
 						template['file'] = '../../plugins/searchreplace/replace.htm'; // Relative to theme
 						template['width'] = 320;
-						template['height'] = 120 + (tinyMCE.isNS7 ? 20 : 0);
+						template['height'] = 100 + (tinyMCE.isNS7 ? 20 : 0);
 						template['width'] += tinyMCE.getLang('lang_searchreplace_replace_delta_width', 0);
 						template['height'] += tinyMCE.getLang('lang_searchreplace_replace_delta_height', 0);
 					} else {
@@ -116,7 +88,15 @@ var TinyMCE_SearchReplacePlugin = {
 						template['height'] += tinyMCE.getLang('lang_searchreplace_replace_delta_height', 0);
 					}
 
-					tinyMCE.searchReplaceCount = 0;
+					instance.execCommand('SelectAll');
+
+					if (tinyMCE.isMSIE) {
+						var r = instance.selection.getRng();
+						r.collapse(true);
+						r.select();
+					} else
+						instance.selection.getSel().collapseToStart();
+
 					tinyMCE.openWindow(template, value);
 				} else {
 					var win = tinyMCE.getInstanceById(editor_id).contentWindow;
@@ -131,10 +111,7 @@ var TinyMCE_SearchReplacePlugin = {
 
 					// Handle replace current
 					if (value['replacemode'] == "current") {
-						if (tinyMCE.searchReplaceCount > 0)
-							replaceSel(value['string'], value['replacestring']);
-
-						tinyMCE.searchReplaceCount++;
+						replaceSel(value['string'], value['replacestring'], value['backwards']);
 
 						// Search next one
 						value['replacemode'] = "none";
@@ -164,7 +141,7 @@ var TinyMCE_SearchReplacePlugin = {
 								rng.scrollIntoView();
 								rng.select();
 								rng.collapse(false);
-								replaceSel(value['string'], value['replacestring']);
+								replaceSel(value['string'], value['replacestring'], value['backwards']);
 							}
 
 							alert(tinyMCE.getLang('lang_searchreplace_allreplaced'));
@@ -181,7 +158,7 @@ var TinyMCE_SearchReplacePlugin = {
 					} else {
 						if (value['replacemode'] == "all") {
 							while (win.find(value['string'], value['casesensitive'], value['backwards'], value['wrap'], value['wholeword'], false, false))
-								replaceSel(value['string'], value['replacestring']);
+								replaceSel(value['string'], value['replacestring'], value['backwards']);
 
 							alert(tinyMCE.getLang('lang_searchreplace_allreplaced'));
 							return true;

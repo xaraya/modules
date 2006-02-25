@@ -95,6 +95,14 @@ function convertWord(type, content) {
 		<td>This feature converts H1-6 elements to strong elements on paste, this is feature is disabled by default.</td>
 	</tr>
 	<tr>
+		<td>[paste_remove_spans]</td>
+		<td>This enables you to control if the word parse operation should remove or keep span elements, they will be removed by default.</td>
+	</tr>
+	<tr>
+		<td>[paste_remove_styles]</td>
+		<td>This enables you to control if the word parse operation should remove or keep style attributes, they will be removed by default.</td>
+	</tr>
+	<tr>
 		<td>[paste_replace_list]</td>
 		<td>Comma separated list of search/replace chunks. Where even items is the regexp that is to be used for the search and odd values are the contents that are to be replaced.
 		<p>This option defaults to: &quot;\u2122,&lt;sup&gt;TM&lt;/sup&gt;,\u2026,...,\u201c|\u201d,&quot;,\u2019,\',\u2013|\u2014|\u2015|\u2212,-&quot; this list replaces some  custom MS 1250 characters.
@@ -123,7 +131,7 @@ function convertWord(type, content) {
 
 <div class="footer">
 	<div class="helpindexlink"><a href="index.html">Index</a></div>
-	<div class="copyright">Copyright &copy; 2005 Moxiecode Systems AB</div>
+	<div class="copyright">Copyright &copy; 2003-2006 <a href="http://www.moxiecode.com">Moxiecode Systems AB</a></div>
 	<br style="clear: both" />
 </div>
 

@@ -110,8 +110,8 @@ function asd() {
 
         <pre class="sourceview"><span class="comment">/**
  * $RCSfile: overview-summary-TinyMCE_Engine.class.js.html,v $
- * $Revision: 1.7 $
- * $Date: 2006/02/10 21:34:09 $
+ * $Revision: 1.18 $
+ * $Date: 2006/02/24 12:38:51 $
  *
  * <span class="attrib">@author</span> Moxiecode
  * <span class="attrib">@copyright</span> Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
@@ -125,7 +125,7 @@ function asd() {
 <span class="reserved">function</span> TinyMCE_Engine() {
 	<span class="reserved">this</span>.majorVersion = <span class="literal">"2"</span>;
 	<span class="reserved">this</span>.minorVersion = <span class="literal">"0.3"</span>;
-	<span class="reserved">this</span>.releaseDate = <span class="literal">"2006-02-xx"</span>;
+	<span class="reserved">this</span>.releaseDate = <span class="literal">"2006-02-13"</span>;
 
 	<span class="reserved">this</span>.instances = new Array();
 	<span class="reserved">this</span>.switchClassCache = new Array();
@@ -150,6 +150,7 @@ function asd() {
 	<span class="reserved">this</span>.plugins = new Array();
 	<span class="reserved">this</span>.themes = new Array();
 	<span class="reserved">this</span>.loadedPlugins = new Array();
+	<span class="reserved">this</span>.buttonMap = new Array();
 	<span class="reserved">this</span>.isLoaded = false;
 
 	<span class="comment">// Fake MSIE on Opera and if Opera fakes IE, Gecko or Safari cancel those</span>
@@ -223,7 +224,7 @@ TinyMCE_Engine.<span class="reserved">prototype</span> = {
 		<span class="reserved">this</span>._def(<span class="literal">"textarea_trigger"</span>, <span class="literal">"mce_editable"</span>);
 		<span class="reserved">this</span>._def(<span class="literal">"editor_selector"</span>, <span class="literal">""</span>);
 		<span class="reserved">this</span>._def(<span class="literal">"editor_deselector"</span>, <span class="literal">"mceNoEditor"</span>);
-		<span class="reserved">this</span>._def(<span class="literal">"valid_elements"</span>, <span class="literal">"+a[id|style|rel|rev|charset|hreflang|dir|lang|tabindex|accesskey|type|name|href|target|title|class|onfocus|onblur|onclick|ondblclick|onmousedown|onmouseup|onmouseover|onmousemove|onmouseout|onkeypress|onkeydown|onkeyup],-strong/-b[class|style],-em/-i[class|style],-strike[class|style],-u[class|style],+p[style|dir|class|align],-ol[class|style],-ul[class|style],-li[class|style],br,img[id|dir|lang|longdesc|usemap|style|class|src|onmouseover|onmouseout|border=0|alt|title|hspace|vspace|width|height|align],-sub[style|class],-sup[style|class],-blockquote[dir|style],-table[border=0|cellspacing|cellpadding|width|height|class|align|summary|style|dir|id|lang|bgcolor|background|bordercolor],-tr[id|lang|dir|class|rowspan|width|height|align|valign|style|bgcolor|background|bordercolor],tbody[id|class],thead[id|class],tfoot[id|class],-td[id|lang|dir|class|colspan|rowspan|width|height|align|valign|style|bgcolor|background|bordercolor|scope],-th[id|lang|dir|class|colspan|rowspan|width|height|align|valign|style|scope],caption[id|lang|dir|class|style],-div[id|dir|class|align|style],-span[style|class|align],-pre[class|align|style],address[class|align|style],-h1[style|dir|class|align],-h2[style|dir|class|align],-h3[style|dir|class|align],-h4[style|dir|class|align],-h5[style|dir|class|align],-h6[style|dir|class|align],hr[class|style],-font[face|size|style|id|class|dir|color],dd[id|class|title|style|dir|lang],dl[id|class|title|style|dir|lang],dt[id|class|title|style|dir|lang]"</span>);
+		<span class="reserved">this</span>._def(<span class="literal">"valid_elements"</span>, <span class="literal">"+a[id|style|rel|rev|charset|hreflang|dir|lang|tabindex|accesskey|type|name|href|target|title|class|onfocus|onblur|onclick|ondblclick|onmousedown|onmouseup|onmouseover|onmousemove|onmouseout|onkeypress|onkeydown|onkeyup],-strong/-b[class|style],-em/-i[class|style],-strike[class|style],-u[class|style],#p[id|style|dir|class|align],-ol[class|style],-ul[class|style],-li[class|style],br,img[id|dir|lang|longdesc|usemap|style|class|src|onmouseover|onmouseout|border|alt=|title|hspace|vspace|width|height|align],-sub[style|class],-sup[style|class],-blockquote[dir|style],-table[border=0|cellspacing|cellpadding|width|height|class|align|summary|style|dir|id|lang|bgcolor|background|bordercolor],-tr[id|lang|dir|class|rowspan|width|height|align|valign|style|bgcolor|background|bordercolor],tbody[id|class],thead[id|class],tfoot[id|class],-td[id|lang|dir|class|colspan|rowspan|width|height|align|valign|style|bgcolor|background|bordercolor|scope],-th[id|lang|dir|class|colspan|rowspan|width|height|align|valign|style|scope],caption[id|lang|dir|class|style],-div[id|dir|class|align|style],-span[style|class|align],-pre[class|align|style],address[class|align|style],-h1[id|style|dir|class|align],-h2[id|style|dir|class|align],-h3[id|style|dir|class|align],-h4[id|style|dir|class|align],-h5[id|style|dir|class|align],-h6[id|style|dir|class|align],hr[class|style],-font[face|size|style|id|class|dir|color],dd[id|class|title|style|dir|lang],dl[id|class|title|style|dir|lang],dt[id|class|title|style|dir|lang]"</span>);
 		<span class="reserved">this</span>._def(<span class="literal">"extended_valid_elements"</span>, <span class="literal">""</span>);
 		<span class="reserved">this</span>._def(<span class="literal">"invalid_elements"</span>, <span class="literal">""</span>);
 		<span class="reserved">this</span>._def(<span class="literal">"encoding"</span>, <span class="literal">""</span>);
@@ -441,6 +442,9 @@ TinyMCE_Engine.<span class="reserved">prototype</span> = {
 	<span class="comment">/**
 	 * Assigns a default value for a specific config parameter.
 	 *
+	 * <span class="attrib">@param</span> {string} key Settings key to add default value to.
+	 * <span class="attrib">@param</span> {object} def_val Default value to assign if the settings option isn't defined.
+	 * <span class="attrib">@param</span> {boolean} t Trim all white space, if true all whitespace will be removed from option value.
 	 * <span class="attrib">@private</span>
 	 */</span>
 	_def : <span class="reserved">function</span>(key, def_val, t) {
@@ -451,27 +455,68 @@ TinyMCE_Engine.<span class="reserved">prototype</span> = {
 		<span class="reserved">this</span>.settings[key] = v;
 	},
 
+	<span class="comment">/**
+	 * Returns true/false if the specified plugin is loaded or not.
+	 *
+	 * <span class="attrib">@param</span> {string} n Plugin name to look for.
+	 * <span class="attrib">@return</span> true/false if the specified plugin is loaded or not.
+	 * <span class="attrib">@type</span> boolean
+	 */</span>
 	hasPlugin : <span class="reserved">function</span>(n) {
 		<span class="reserved">return</span> typeof(<span class="reserved">this</span>.plugins[n]) != <span class="literal">"undefined"</span> &amp;&amp; <span class="reserved">this</span>.plugins[n] != null;
 	},
 
+	<span class="comment">/**
+	 * Adds the specified plugin to the list of loaded plugins, this will also setup the baseURL
+	 * property of the plugin.
+	 *
+	 * <span class="attrib">@param</span> {string} Plugin name/id.
+	 * <span class="attrib">@param</span> {TinyMCE_Plugin} p Plugin instance to add.
+	 */</span>
 	addPlugin : <span class="reserved">function</span>(n, p) {
 		p.baseURL = tinyMCE.baseURL + <span class="literal">"/plugins/"</span> + n;
 		<span class="reserved">this</span>.plugins[n] = p;
 	},
 
+	<span class="comment">/**
+	 * Sets the baseURL of the specified plugin, this is useful if the plugin is loaded from
+	 * a external location.
+	 *
+	 * <span class="attrib">@param</span> {string} n Plugin name/id to set base URL on. This have to be added before.
+	 * <span class="attrib">@param</span> {string} u Base URL of plugin, this string should be the URL prefix for the plugin without a trailing slash.
+	 */</span>
 	setPluginBaseURL : <span class="reserved">function</span>(n, u) {
 		<span class="reserved">this</span>.plugins[n].baseURL = u;
 	},
 
+	<span class="comment">/**
+	 * Returns true/false if the specified theme is loaded or not.
+	 *
+	 * <span class="attrib">@param</span> {string} n Theme name/id to check for.
+	 * <span class="attrib">@return</span> true/false if the specified theme is loaded or not.
+	 * <span class="attrib">@type</span> boolean
+	 */</span>
 	hasTheme : <span class="reserved">function</span>(n) {
 		<span class="reserved">return</span> typeof(<span class="reserved">this</span>.themes[n]) != <span class="literal">"undefined"</span> &amp;&amp; <span class="reserved">this</span>.themes[n] != null;
 	},
 
+	<span class="comment">/**
+	 * Adds the specified theme in to the list of loaded themes.
+	 *
+	 * <span class="attrib">@param</span> {string} n Theme name/id to add the object reference to.
+	 * <span class="attrib">@param</span> {TinyMCE_Theme} t Theme instance to add to the loaded list.
+	 */</span>
 	addTheme : <span class="reserved">function</span>(n, t) {
 		<span class="reserved">this</span>.themes[n] = t;
 	},
 
+	<span class="comment">/**
+	 * Loads the specified script by writing the a script tag to the current page.
+	 * This will also check if the file has been loaded before. This function should only be used
+	 * when the page is loading.
+	 *
+	 * <span class="attrib">@param</span> {string} url Script URL to load.
+	 */</span>
 	loadScript : <span class="reserved">function</span>(url) {
 		<span class="reserved">if</span> (tinyMCE.gzipMode)
 			<span class="reserved">return</span>;
@@ -486,6 +531,13 @@ TinyMCE_Engine.<span class="reserved">prototype</span> = {
 		<span class="reserved">this</span>.loadedFiles[<span class="reserved">this</span>.loadedFiles.length] = url;
 	},
 
+	<span class="comment">/**
+	 * Loads the specified CSS by writing the a link tag to the current page.
+	 * This will also check if the file has been loaded before. This function should only be used
+	 * when the page is loading.
+	 *
+	 * <span class="attrib">@param</span> {string} url CSS file URL to load.
+	 */</span>
 	loadCSS : <span class="reserved">function</span>(url) {
 		<span class="reserved">for</span> (var i=0; i&lt;<span class="reserved">this</span>.loadedFiles.length; i++) {
 			<span class="reserved">if</span> (<span class="reserved">this</span>.loadedFiles[i] == url)
@@ -497,6 +549,13 @@ TinyMCE_Engine.<span class="reserved">prototype</span> = {
 		<span class="reserved">this</span>.loadedFiles[<span class="reserved">this</span>.loadedFiles.length] = url;
 	},
 
+	<span class="comment">/**
+	 * Imports a CSS file into a allready loaded document. This will add a link element
+	 * to the head element of the document.
+	 *
+	 * <span class="attrib">@param</span> {DOMDocument} doc DOM Document to load CSS into.
+	 * <span class="attrib">@param</span> {string} css_file CSS File URL to load.
+	 */</span>
 	importCSS : <span class="reserved">function</span>(doc, css_file) {
 		<span class="reserved">if</span> (css_file == <span class="literal">''</span>)
 			<span class="reserved">return</span>;
@@ -513,6 +572,13 @@ TinyMCE_Engine.<span class="reserved">prototype</span> = {
 			var styleSheet = doc.createStyleSheet(css_file);
 	},
 
+	<span class="comment">/**
+	 * Displays a confirm dialog when a user clicks/focus a textarea that is to be converted into
+	 * a TinyMCE instance.
+	 *
+	 * <span class="attrib">@param</span> {DOMEvent} e DOM event instance.
+	 * <span class="attrib">@param</span> {Array} settings Name/Value array of initialization settings.
+	 */</span>
 	confirmAdd : <span class="reserved">function</span>(e, settings) {
 		var elm = tinyMCE.isMSIE ? event.srcElement : e.target;
 		var elementId = elm.name ? elm.name : elm.id;
@@ -525,6 +591,12 @@ TinyMCE_Engine.<span class="reserved">prototype</span> = {
 		elm.setAttribute(<span class="literal">'mce_noask'</span>, <span class="literal">'true'</span>);
 	},
 
+	<span class="comment">/**
+	 * Moves the contents from the hidden textarea to the editor that gets inserted.
+	 *
+	 * <span class="attrib">@param</span> {string} form_element_name Form element name to move contents from.
+	 * <span class="attrib">@deprecated</span>
+	 */</span>
 	updateContent : <span class="reserved">function</span>(form_element_name) {
 		<span class="comment">// Find MCE instance linked to given form element and copy it's value</span>
 		var formElement = document.getElementById(form_element_name);
@@ -546,6 +618,13 @@ TinyMCE_Engine.<span class="reserved">prototype</span> = {
 		}
 	},
 
+	<span class="comment">/**
+	 * Adds a TinyMCE editor control instance to a specific form element.
+	 *
+	 * <span class="attrib">@param</span> {HTMLElement} replace_element HTML element object to replace.
+	 * <span class="attrib">@param</span> {string} form_element_name HTML form element name,
+	 * <span class="attrib">@param</span> {DOMDocument} target_document Target document that holds the element.
+	 */</span>
 	addMCEControl : <span class="reserved">function</span>(replace_element, form_element_name, target_document) {
 		var id = <span class="literal">"mce_editor_"</span> + tinyMCE.idCounter++;
 		var inst = new TinyMCE_Control(tinyMCE.settings);
@@ -556,6 +635,62 @@ TinyMCE_Engine.<span class="reserved">prototype</span> = {
 		inst._onAdd(replace_element, form_element_name, target_document);
 	},
 
+	<span class="comment">/**
+	 * Removes a TinyMCE editor control instance by id.
+	 *
+	 * <span class="attrib">@param</span> {string} editor_id Id of editor instance to remove.
+	 */</span>
+	removeMCEControl : <span class="reserved">function</span>(editor_id) {
+		var inst = tinyMCE.getInstanceById(editor_id);
+
+		<span class="reserved">if</span> (inst) {
+			inst.switchSettings();
+
+			editor_id = inst.editorId;
+			var html = tinyMCE.getContent(editor_id);
+
+			<span class="comment">// Remove editor instance from instances array</span>
+			var tmpInstances = new Array();
+			<span class="reserved">for</span> (var instanceName in tinyMCE.instances) {
+				var instance = tinyMCE.instances[instanceName];
+				<span class="reserved">if</span> (!tinyMCE.isInstance(instance))
+					continue;
+
+				<span class="reserved">if</span> (instanceName != editor_id)
+						tmpInstances[instanceName] = instance;
+			}
+			tinyMCE.instances = tmpInstances;
+
+			tinyMCE.selectedElement = null;
+			tinyMCE.selectedInstance = null;
+
+			<span class="comment">// Remove element</span>
+			var replaceElement = document.getElementById(editor_id + <span class="literal">"_parent"</span>);
+			var oldTargetElement = inst.oldTargetElement;
+			var targetName = oldTargetElement.nodeName.toLowerCase();
+
+			<span class="reserved">if</span> (targetName == <span class="literal">"textarea"</span> || targetName == <span class="literal">"input"</span>) {
+				<span class="comment">// Just show the old text area</span>
+				replaceElement.parentNode.removeChild(replaceElement);
+				oldTargetElement.style.display = <span class="literal">"inline"</span>;
+				oldTargetElement.value = html;
+			} <span class="reserved">else</span> {
+				oldTargetElement.innerHTML = html;
+				oldTargetElement.style.display = <span class="literal">'block'</span>;
+
+				replaceElement.parentNode.insertBefore(oldTargetElement, replaceElement);
+				replaceElement.parentNode.removeChild(replaceElement);
+			}
+		}
+	},
+
+	<span class="comment">/**
+	 * Moves the contents from a TinyMCE editor control instance to the hidden textarea
+	 * that got replaced with TinyMCE. This is executed automaticly on for example form submit.
+	 *
+	 * <span class="attrib">@param</span> {boolean} skip_cleanup Optional Skip cleanup, simply move the contents as fast as possible.
+	 * <span class="attrib">@param</span> {boolean} skip_callback Optional Skip callback, don't call the save_callback function.
+	 */</span>
 	triggerSave : <span class="reserved">function</span>(skip_cleanup, skip_callback) {
 		<span class="comment">// Cleanup and set all form fields</span>
 		<span class="reserved">for</span> (var n in tinyMCE.instances) {
@@ -603,26 +738,44 @@ TinyMCE_Engine.<span class="reserved">prototype</span> = {
 
 			<span class="reserved">if</span> (inst.formElement)
 				inst.formElement.value = htm;
+
+			<span class="reserved">if</span> (tinyMCE.isSafari &amp;&amp; inst.formElement)
+				inst.formElement.innerText = htm;
 		}
 	},
 
+	<span class="comment">/**
+	 * Resets a forms TinyMCE instances based on form index.
+	 *
+	 * <span class="attrib">@param</span> {int} form_index Form index to reset.
+	 */</span>
 	resetForm : <span class="reserved">function</span>(form_index) {
-		var formObj = document.forms[form_index];
+		var i, inst, n, formObj = document.forms[form_index];
 
-		<span class="reserved">for</span> (var n in tinyMCE.instances) {
-			var inst = tinyMCE.instances[n];
+		<span class="reserved">for</span> (n in tinyMCE.instances) {
+			inst = tinyMCE.instances[n];
+
 			<span class="reserved">if</span> (!tinyMCE.isInstance(inst))
 				continue;
 
 			inst.switchSettings();
 
-			<span class="reserved">for</span> (var i=0; i&lt;formObj.elements.length; i++) {
+			<span class="reserved">for</span> (i=0; i&lt;formObj.elements.length; i++) {
 				<span class="reserved">if</span> (inst.formTargetElementId == formObj.elements[i].name)
 					inst.getBody().innerHTML = inst.startContent;
 			}
 		}
 	},
 
+	<span class="comment">/**
+	 * Executes a command on a specific editor instance by id.
+	 *
+	 * <span class="attrib">@param</span> {string} editor_id TinyMCE editor control instance id to perform comman on.
+	 * <span class="attrib">@param</span> {string} command Command name to execute, for example mceLink or Bold.
+	 * <span class="attrib">@param</span> {boolean} user_interface True/false state if a UI (dialog) should be presented or not.
+	 * <span class="attrib">@param</span> {object} value Optional command value, this can be anything.
+	 * <span class="attrib">@param</span> {boolean} focus True/false if the editor instance should be focused first.
+	 */</span>
 	execInstanceCommand : <span class="reserved">function</span>(editor_id, command, user_interface, value, focus) {
 		var inst = tinyMCE.getInstanceById(editor_id);
 		<span class="reserved">if</span> (inst) {
@@ -645,6 +798,14 @@ TinyMCE_Engine.<span class="reserved">prototype</span> = {
 		}
 	},
 
+	<span class="comment">/**
+	 * Executes a command on the selected or last selected TinyMCE editor control instance. This function also handles
+	 * some non instance specific commands like mceAddControl, mceRemoveControl, mceHelp or mceFocus.
+	 *
+	 * <span class="attrib">@param</span> {string} command Command name to execute, for example mceLink or Bold.
+	 * <span class="attrib">@param</span> {boolean} user_interface True/false state if a UI (dialog) should be presented or not.
+	 * <span class="attrib">@param</span> {object} value Optional command value, this can be anything.
+	 */</span>
 	execCommand : <span class="reserved">function</span>(command, user_interface, value) {
 		<span class="comment">// Default input</span>
 		user_interface = user_interface ? user_interface : false;
@@ -710,6 +871,12 @@ TinyMCE_Engine.<span class="reserved">prototype</span> = {
 			alert(tinyMCELang[<span class="literal">'lang_focus_alert'</span>]);
 	},
 
+	<span class="comment">/**
+	 * Creates a iframe editor container for the specified element.
+	 *
+	 * <span class="attrib">@param</span> {HTMLElement} replace_element Element to replace with iframe element.
+	 * <span class="attrib">@private</span>
+	 */</span>
 	_createIFrame : <span class="reserved">function</span>(replace_element) {
 		var iframe = document.createElement(<span class="literal">"iframe"</span>);
 		var id = replace_element.getAttribute(<span class="literal">"id"</span>);
@@ -764,6 +931,11 @@ TinyMCE_Engine.<span class="reserved">prototype</span> = {
 			<span class="reserved">return</span> iframe;
 	},
 
+	<span class="comment">/**
+	 * Setups the contents of TinyMCE editor instance and fills it with contents.
+	 *
+	 * <span class="attrib">@param</span> {string} editor_id TinyMCE editor instance control id to fill.
+	 */</span>
 	setupContent : <span class="reserved">function</span>(editor_id) {
 		var inst = tinyMCE.instances[editor_id];
 		var doc = inst.getDoc();
@@ -898,13 +1070,13 @@ TinyMCE_Engine.<span class="reserved">prototype</span> = {
 
 		<span class="comment">// Add blur handler</span>
 		<span class="reserved">if</span> (tinyMCE.isMSIE) {
-			tinyMCE.addEvent(inst.getBody(), <span class="literal">"blur"</span>, TinyMCE_Engine.<span class="reserved">prototype</span>.eventPatch);
+			tinyMCE.addEvent(inst.getBody(), <span class="literal">"blur"</span>, TinyMCE_Engine.<span class="reserved">prototype</span>._eventPatch);
 
 			<span class="comment">// Workaround for drag drop/copy paste base href bug</span>
 			<span class="reserved">if</span> (!tinyMCE.isOpera) {
 				tinyMCE.addEvent(doc.body, <span class="literal">"mousemove"</span>, TinyMCE_Engine.<span class="reserved">prototype</span>.onMouseMove);
-				tinyMCE.addEvent(doc.body, <span class="literal">"beforepaste"</span>, TinyMCE_Engine.<span class="reserved">prototype</span>.eventPatch);
-				tinyMCE.addEvent(doc.body, <span class="literal">"drop"</span>, TinyMCE_Engine.<span class="reserved">prototype</span>.eventPatch);
+				tinyMCE.addEvent(doc.body, <span class="literal">"beforepaste"</span>, TinyMCE_Engine.<span class="reserved">prototype</span>._eventPatch);
+				tinyMCE.addEvent(doc.body, <span class="literal">"drop"</span>, TinyMCE_Engine.<span class="reserved">prototype</span>._eventPatch);
 			}
 		}
 
@@ -924,10 +1096,19 @@ TinyMCE_Engine.<span class="reserved">prototype</span> = {
 		inst.startContent = tinyMCE.trim(inst.getBody().innerHTML);
 		inst.undoRedo.add({ content : inst.startContent });
 
-		<span class="reserved">if</span> (!inst.isHidden())
-			tinyMCE.triggerNodeChange(false, true);
+		tinyMCE.selectedInstance = inst;
+		tinyMCE.triggerNodeChange(false, true);
 	},
 
+	<span class="comment">/**
+	 * Stores away the src and href attribute values in separate mce_src and mce_href attributes.
+	 * This is needed since both MSIE and Gecko messes with these attributes. The old
+	 * src and href will be intact, this simply adds them to a separate attribute.
+	 *
+	 * <span class="attrib">@param</span> {string} s HTML string to replace src and href attributes in.
+	 * <span class="attrib">@return</span> HTML string with replaced src and href attributes.
+	 * <span class="attrib">@type</span> string
+	 */</span>
 	storeAwayURLs : <span class="reserved">function</span>(s) {
 		<span class="comment">// Remove all mce_src, mce_href and replace them with new ones</span>
 	<span class="comment">//	s = s.replace(new RegExp('mce_src\\s*=\\s*\"[^ &gt;\"]*\"', 'gi'), '');</span>
@@ -941,6 +1122,13 @@ TinyMCE_Engine.<span class="reserved">prototype</span> = {
 		<span class="reserved">return</span> s;
 	},
 
+	<span class="comment">/**
+	 * Removes/disables TinyMCE built in form elements such as select boxes for font sizes etc.
+	 * These are disabled when the user submits a form so they don't get picked up by the backend script
+	 * that intercepts the contents.
+	 *
+	 * <span class="attrib">@param</span> {HTMLElement} form_obj Form object to loop through for TinyMCE specific form elements.
+	 */</span>
 	removeTinyMCEFormElements : <span class="reserved">function</span>(form_obj) {
 		<span class="comment">// Check if form is valid</span>
 		<span class="reserved">if</span> (typeof(form_obj) == <span class="literal">"undefined"</span> || form_obj == null)
@@ -967,6 +1155,14 @@ TinyMCE_Engine.<span class="reserved">prototype</span> = {
 		}
 	},
 
+	<span class="comment">/**
+	 * Event handler function that gets executed each time a event occurs in a TinyMCE editor control instance.
+	 * Todo: Fix the return statements so they return true or false.
+	 *
+	 * <span class="attrib">@param</span> {DOMEvent} e DOM event object reference.
+	 * <span class="attrib">@return</span> true - if the event is to be chained, false - if the event chain is to be canceled.
+	 * <span class="attrib">@type</span> boolean
+	 */</span>
 	handleEvent : <span class="reserved">function</span>(e) {
 		var inst = tinyMCE.selectedInstance;
 
@@ -1194,12 +1390,10 @@ TinyMCE_Engine.<span class="reserved">prototype</span> = {
 			case <span class="literal">"mouseup"</span>:
 			case <span class="literal">"click"</span>:
 			case <span class="literal">"focus"</span>:
-				<span class="reserved">if</span> (tinyMCE.selectedInstance)
+				<span class="reserved">if</span> (tinyMCE.selectedInstance) {
 					tinyMCE.selectedInstance.switchSettings();
-
-				<span class="comment">// Add first bookmark location</span>
-				<span class="reserved">if</span> (!tinyMCE.selectedInstance.undoRedo.undoLevels[0].bookmark)
-					tinyMCE.selectedInstance.undoRedo.undoLevels[0].bookmark = tinyMCE.selectedInstance.selection.getBookmark();
+					tinyMCE.selectedInstance.isFocused = true;
+				}
 
 				<span class="comment">// Check instance event trigged on</span>
 				var targetBody = tinyMCE.getParentElement(e.target, <span class="literal">"body"</span>);
@@ -1220,6 +1414,10 @@ TinyMCE_Engine.<span class="reserved">prototype</span> = {
 						break;
 					}
 				}
+
+				<span class="comment">// Add first bookmark location</span>
+				<span class="reserved">if</span> (!tinyMCE.selectedInstance.undoRedo.undoLevels[0].bookmark)
+					tinyMCE.selectedInstance.undoRedo.undoLevels[0].bookmark = tinyMCE.selectedInstance.selection.getBookmark();
 
 				<span class="reserved">if</span> (tinyMCE.isSafari) {
 					tinyMCE.selectedInstance.lastSafariSelection = tinyMCE.selectedInstance.selection.getBookmark();
@@ -1261,26 +1459,64 @@ TinyMCE_Engine.<span class="reserved">prototype</span> = {
 		}
 	},
 
+	<span class="comment">/**
+	 * Returns the HTML code for a normal button control.
+	 *
+	 * <span class="attrib">@param</span> {string} id Button control id, this will be the suffix for the element id, the prefix is the editor id.
+	 * <span class="attrib">@param</span> {string} lang Language variable key name to insert as the title/alt of the button image.
+	 * <span class="attrib">@param</span> {string} img Image URL to insert, {$themeurl} and {$pluginurl} will be replaced.
+	 * <span class="attrib">@param</span> {string} cmd Command to execute when the user clicks the button.
+	 * <span class="attrib">@param</span> {string} ui Optional user interface boolean for command.
+	 * <span class="attrib">@param</span> {string} val Optional value for command.
+	 * <span class="attrib">@return</span> HTML code for a normal button based in input information.
+	 * <span class="attrib">@type</span> string
+	 */</span>
 	getButtonHTML : <span class="reserved">function</span>(id, lang, img, cmd, ui, val) {
-		var h = <span class="literal">''</span>;
+		var h = <span class="literal">''</span>, m, x;
 
 		cmd = <span class="literal">'tinyMCE.execInstanceCommand(\'</span>{$editor_id}\<span class="literal">',\'</span><span class="literal">' + cmd + '</span>\<span class="literal">''</span>;
 
-		<span class="reserved">if</span> (typeof(ui) != <span class="literal">"undefined"</span>)
+		<span class="reserved">if</span> (typeof(ui) != <span class="literal">"undefined"</span> &amp;&amp; ui != null)
 			cmd += <span class="literal">','</span> + ui;
 
-		<span class="reserved">if</span> (typeof(val) != <span class="literal">"undefined"</span>)
+		<span class="reserved">if</span> (typeof(val) != <span class="literal">"undefined"</span> &amp;&amp; val != null)
 			cmd += <span class="literal">",'"</span> + val + <span class="literal">"'"</span>;
 
 		cmd += <span class="literal">');'</span>;
 
-		h += <span class="literal">'&lt;a id="{$editor_id}_'</span> + id + <span class="literal">'" href="javascript:'</span> + cmd + <span class="literal">'" onclick="'</span> + cmd + <span class="literal">'return false;" class="mceButtonNormal" target="_self"&gt;'</span>;
-		h += <span class="literal">'&lt;img src="'</span> + img + <span class="literal">'" title="{$'</span> + lang + <span class="literal">'}" /&gt;'</span>;
-		h += <span class="literal">'&lt;/a&gt;'</span>;
+		<span class="comment">// Use tilemaps when enabled and found and never in MSIE since it loads the tile each time from cache if cahce is disabled</span>
+		<span class="reserved">if</span> (tinyMCE.getParam(<span class="literal">'button_tile_map'</span>) &amp;&amp; (!tinyMCE.isMSIE || tinyMCE.isOpera) &amp;&amp; (m = <span class="reserved">this</span>.buttonMap[id]) != null &amp;&amp; (tinyMCE.getParam(<span class="literal">"language"</span>) == <span class="literal">"en"</span> || img.indexOf(<span class="literal">'$lang'</span>) == -1)) {
+			<span class="comment">// Tiled button</span>
+			x = 0 - (m * 20) == 0 ? <span class="literal">'0'</span> : 0 - (m * 20);
+			h += <span class="literal">'&lt;a id="{$editor_id}_'</span> + id + <span class="literal">'" href="javascript:'</span> + cmd + <span class="literal">'" onclick="'</span> + cmd + <span class="literal">'return false;" onmousedown="return false;" class="mceTiledButton mceButtonNormal" target="_self"&gt;'</span>;
+			h += <span class="literal">'&lt;img src="'</span> + <span class="reserved">this</span>.themeURL + <span class="literal">'/images/spacer.gif" style="background-position: '</span> + x + <span class="literal">'px 0" title="{$'</span> + lang + <span class="literal">'}" /&gt;'</span>;
+			h += <span class="literal">'&lt;/a&gt;'</span>;
+		} <span class="reserved">else</span> {
+			<span class="comment">// Normal button</span>
+			h += <span class="literal">'&lt;a id="{$editor_id}_'</span> + id + <span class="literal">'" href="javascript:'</span> + cmd + <span class="literal">'" onclick="'</span> + cmd + <span class="literal">'return false;" onmousedown="return false;" class="mceButtonNormal" target="_self"&gt;'</span>;
+			h += <span class="literal">'&lt;img src="'</span> + img + <span class="literal">'" title="{$'</span> + lang + <span class="literal">'}" /&gt;'</span>;
+			h += <span class="literal">'&lt;/a&gt;'</span>;
+		}
 
 		<span class="reserved">return</span> h;
 	},
 
+	<span class="comment">/**
+	 * Adds a list of buttons available in the tiled button image used by the button_tile_map option.
+	 *
+	 * <span class="attrib">@param</span> {string} m Comma separated list of buttons that are available in tiled image.
+	 */</span>
+	addButtonMap : <span class="reserved">function</span>(m) {
+		var i, a = m.replace(/\s+/, <span class="literal">''</span>).split(<span class="literal">','</span>);
+
+		<span class="reserved">for</span> (i=0; i&lt;a.length; i++)
+			<span class="reserved">this</span>.buttonMap[a[i]] = i;
+	},
+
+	<span class="comment">/**
+	 * Piggyback onsubmit event handler function, this will remove/hide the TinyMCE specific form elements
+	 * call triggerSave to fill the textarea with the correct contents then call the old piggy backed event handler.
+	 */</span>
 	submitPatch : <span class="reserved">function</span>() {
 		tinyMCE.removeTinyMCEFormElements(<span class="reserved">this</span>);
 		tinyMCE.triggerSave();
@@ -1288,6 +1524,13 @@ TinyMCE_Engine.<span class="reserved">prototype</span> = {
 		tinyMCE.isNotDirty = true;
 	},
 
+	<span class="comment">/**
+	 * Gets executed when the page loads or get intitialized. This function will then convert all textareas/divs that
+	 * is to be converted into TinyMCE editor controls.
+	 *
+	 * <span class="attrib">@return</span> true - if the event is to be chained, false - if the event chain is to be canceled.
+	 * <span class="attrib">@type</span> boolean
+	 */</span>
 	onLoad : <span class="reserved">function</span>() {
 		<span class="reserved">if</span> (tinyMCE.isMSIE &amp;&amp; !tinyMCE.isOpera &amp;&amp; window.event.type == <span class="literal">"readystatechange"</span> &amp;&amp; document.readyState != <span class="literal">"complete"</span>)
 			<span class="reserved">return</span> true;
@@ -1410,53 +1653,27 @@ TinyMCE_Engine.<span class="reserved">prototype</span> = {
 		}
 	},
 
-	removeMCEControl : <span class="reserved">function</span>(editor_id) {
-		var inst = tinyMCE.getInstanceById(editor_id);
-
-		<span class="reserved">if</span> (inst) {
-			inst.switchSettings();
-
-			editor_id = inst.editorId;
-			var html = tinyMCE.getContent(editor_id);
-
-			<span class="comment">// Remove editor instance from instances array</span>
-			var tmpInstances = new Array();
-			<span class="reserved">for</span> (var instanceName in tinyMCE.instances) {
-				var instance = tinyMCE.instances[instanceName];
-				<span class="reserved">if</span> (!tinyMCE.isInstance(instance))
-					continue;
-
-				<span class="reserved">if</span> (instanceName != editor_id)
-						tmpInstances[instanceName] = instance;
-			}
-			tinyMCE.instances = tmpInstances;
-
-			tinyMCE.selectedElement = null;
-			tinyMCE.selectedInstance = null;
-
-			<span class="comment">// Remove element</span>
-			var replaceElement = document.getElementById(editor_id + <span class="literal">"_parent"</span>);
-			var oldTargetElement = inst.oldTargetElement;
-			var targetName = oldTargetElement.nodeName.toLowerCase();
-
-			<span class="reserved">if</span> (targetName == <span class="literal">"textarea"</span> || targetName == <span class="literal">"input"</span>) {
-				<span class="comment">// Just show the old text area</span>
-				replaceElement.parentNode.removeChild(replaceElement);
-				oldTargetElement.style.display = <span class="literal">"inline"</span>;
-				oldTargetElement.value = html;
-			} <span class="reserved">else</span> {
-				oldTargetElement.innerHTML = html;
-
-				replaceElement.parentNode.insertBefore(oldTargetElement, replaceElement);
-				replaceElement.parentNode.removeChild(replaceElement);
-			}
-		}
+	<span class="comment">/**
+	 * Returns true/false if a specific object is a TinyMCE_Control instance or not.
+	 *
+	 * <span class="attrib">@param</span> {object} o Object to check.
+	 * <span class="attrib">@return</span> true/false if it's a control or not.
+	 * <span class="attrib">@type</span> boolean
+	 */</span>
+	isInstance : <span class="reserved">function</span>(o) {
+		<span class="reserved">return</span> o != null &amp;&amp; typeof(o) == <span class="literal">"object"</span> &amp;&amp; o.isTinyMCE_Control;
 	},
 
-	isInstance : <span class="reserved">function</span>(inst) {
-		<span class="reserved">return</span> inst != null &amp;&amp; typeof(inst) == <span class="literal">"object"</span> &amp;&amp; inst.isTinyMCE_Control;
-	},
-
+	<span class="comment">/**
+	 * Returns a specific configuration setting or the default value if it wasn't found.
+	 *
+	 * <span class="attrib">@param</span> {string} name Configuration setting to get.
+	 * <span class="attrib">@param</span> {string} default_value Default value to return if it wasn't found.
+	 * <span class="attrib">@param</span> {boolean} strip_whitespace Optional remove all whitespace.
+	 * <span class="attrib">@param</span> {string} split_chr Split char/regex/string.
+	 * <span class="attrib">@return</span> Number, string or other object based in parameter and default_value.
+	 * <span class="attrib">@type</span> object
+	 */</span>
 	getParam : <span class="reserved">function</span>(name, default_value, strip_whitespace, split_chr) {
 		var value = (typeof(<span class="reserved">this</span>.settings[name]) == <span class="literal">"undefined"</span>) ? default_value : <span class="reserved">this</span>.settings[name];
 
@@ -1482,6 +1699,15 @@ TinyMCE_Engine.<span class="reserved">prototype</span> = {
 		<span class="reserved">return</span> value;
 	},
 
+	<span class="comment">/**
+	 * Returns a language variable value from the language packs.
+	 *
+	 * <span class="attrib">@param</span> {string} name Name of the key to retrive.
+	 * <span class="attrib">@param</span> {string} default_value Optional default value to return if it wasn't found.
+	 * <span class="attrib">@param</span> {boolean} parse_entities Is HTML entities to be resolved or not.
+	 * <span class="attrib">@return</span> Language string value could be a number if it's a relative dimenstion.
+	 * <span class="attrib">@type</span> object
+	 */</span>
 	getLang : <span class="reserved">function</span>(name, default_value, parse_entities) {
 		var value = (typeof(tinyMCELang[name]) == <span class="literal">"undefined"</span>) ? default_value : tinyMCELang[name];
 
@@ -1491,12 +1717,25 @@ TinyMCE_Engine.<span class="reserved">prototype</span> = {
 		<span class="reserved">return</span> value;
 	},
 
+	<span class="comment">/**
+	 * HTML entity decode a string, replaces &amp;lt; with &lt;.
+	 *
+	 * <span class="attrib">@param</span> {string} s Entity string to decode into normal string.
+	 * <span class="attrib">@return</span> Entity decoded string.
+	 * <span class="attrib">@type</span> string
+	 */</span>
 	entityDecode : <span class="reserved">function</span>(s) {
 		var e = document.createElement(<span class="literal">"div"</span>);
 		e.innerHTML = s;
 		<span class="reserved">return</span> e.innerHTML;
 	},
 
+	<span class="comment">/**
+	 * Adds language items to the global language array.
+	 *
+	 * <span class="attrib">@param</span> {string} prefix Prefix string to add infront of every array item before adding it.
+	 * <span class="attrib">@param</span> {Array} ar Language item array to add to global language array.
+	 */</span>
 	addToLang : <span class="reserved">function</span>(prefix, ar) {
 		<span class="reserved">for</span> (var key in ar) {
 			<span class="reserved">if</span> (typeof(ar[key]) == <span class="literal">'function'</span>)
@@ -1509,6 +1748,13 @@ TinyMCE_Engine.<span class="reserved">prototype</span> = {
 	<span class="comment">//		tinyMCELang[(key.indexOf('lang_') == -1 ? 'lang_' : '') + (prefix != '' ? (prefix + "_") : '') + key] = "|" + ar[key] + "|";</span>
 	},
 
+	<span class="comment">/**
+	 * Triggers a nodeChange event to every theme and plugin. This will be executed when the cursor moves or
+	 * when a command that modifies the editor contents is executed.
+	 *
+	 * <span class="attrib">@param</span> {boolean} focus Optional state if the last selected editor instance is to be focused or not.
+	 * <span class="attrib">@param</span> {boolean} setup_content Optional state if it's called from setup content function or not.
+	 */</span>
 	triggerNodeChange : <span class="reserved">function</span>(focus, setup_content) {
 		<span class="reserved">if</span> (tinyMCE.selectedInstance) {
 			var inst = tinyMCE.selectedInstance;
@@ -1518,6 +1764,9 @@ TinyMCE_Engine.<span class="reserved">prototype</span> = {
 			var undoLevels = -1;
 			var anySelection = false;
 			var selectedText = inst.selection.getSelectedText();
+
+			<span class="reserved">if</span> (setup_content &amp;&amp; tinyMCE.isGecko &amp;&amp; inst.isHidden())
+				elm = inst.getBody();
 
 			inst.switchSettings();
 
@@ -1543,6 +1792,15 @@ TinyMCE_Engine.<span class="reserved">prototype</span> = {
 			<span class="reserved">this</span>.selectedInstance.contentWindow.focus();
 	},
 
+	<span class="comment">/**
+	 * Executes the custom cleanup functions on the specified content.
+	 *
+	 * <span class="attrib">@param</span> {TinyMCE_Control} inst TinyMCE editor control instance.
+	 * <span class="attrib">@param</span> {string} type Event type to call.
+	 * <span class="attrib">@param</span> {object} content DOM element or string to pass to handlers depending on type.
+	 * <span class="attrib">@return</span> string or DOM element depending on type.
+	 * <span class="attrib">@private</span>
+	 */</span>
 	_customCleanup : <span class="reserved">function</span>(inst, type, content) {
 		var pl, po, i;
 
@@ -1564,16 +1822,23 @@ TinyMCE_Engine.<span class="reserved">prototype</span> = {
 	},
 
 	<span class="comment">/**
-	 * 
+	 * Sets the HTML contents of the selected editor instance.
 	 *
+	 * <span class="attrib">@param</span> {string} h HTML contents to set in the selected instance.
+	 * <span class="attrib">@deprecated</span>
 	 */</span>
-	setContent : <span class="reserved">function</span>(html_content) {
+	setContent : <span class="reserved">function</span>(h) {
 		<span class="reserved">if</span> (tinyMCE.selectedInstance) {
-			tinyMCE.selectedInstance.execCommand(<span class="literal">'mceSetContent'</span>, false, html_content);
+			tinyMCE.selectedInstance.execCommand(<span class="literal">'mceSetContent'</span>, false, h);
 			tinyMCE.selectedInstance.repaint();
 		}
 	},
 
+	<span class="comment">/**
+	 * Loads a theme specific language pack.
+	 *
+	 * <span class="attrib">@param</span> {string} name Optional name of the theme to load language pack from.
+	 */</span>
 	importThemeLanguagePack : <span class="reserved">function</span>(name) {
 		<span class="reserved">if</span> (typeof(name) == <span class="literal">"undefined"</span>)
 			name = tinyMCE.settings[<span class="literal">'theme'</span>];
@@ -1581,6 +1846,12 @@ TinyMCE_Engine.<span class="reserved">prototype</span> = {
 		tinyMCE.loadScript(tinyMCE.baseURL + <span class="literal">'/themes/'</span> + name + <span class="literal">'/langs/'</span> + tinyMCE.settings[<span class="literal">'language'</span>] + <span class="literal">'.js'</span>);
 	},
 
+	<span class="comment">/**
+	 * Loads a plugin specific language pack.
+	 *
+	 * <span class="attrib">@param</span> {string} name Plugin name/id to load language pack for.
+	 * <span class="attrib">@param</span> {string} valid_languages Comma separated list of valid languages for the plugin.
+	 */</span>
 	importPluginLanguagePack : <span class="reserved">function</span>(name, valid_languages) {
 		var lang = <span class="literal">"en"</span>;
 
@@ -1633,6 +1904,15 @@ TinyMCE_Engine.<span class="reserved">prototype</span> = {
 		<span class="reserved">return</span> h.replace(new RegExp(<span class="literal">'{\\\$'</span> + r + <span class="literal">'}'</span>, <span class="literal">'g'</span>), v);
 	},
 
+	<span class="comment">/**
+	 * Opens a popup window based in the specified input data. This function
+	 * is used for all popup windows in TinyMCE.
+	 *
+	 * These are the current template keys: file, width, height, close_previous.
+	 *
+	 * <span class="attrib">@param</span> {Array} template Popup template data such as with, height etc.
+	 * <span class="attrib">@param</span> {Array} args Popup arguments that is to be passed to the popup such as custom data.
+	 */</span>
 	openWindow : <span class="reserved">function</span>(template, args) {
 		var html, width, height, x, y, resizable, scrollbars, url;
 
@@ -1728,10 +2008,25 @@ TinyMCE_Engine.<span class="reserved">prototype</span> = {
 		}
 	},
 
+	<span class="comment">/**
+	 * Closes the specified window. This function is deprecated and should be replaced with
+	 * tinyMCEPopup.close();.
+	 *
+	 * <span class="attrib">@param</span> {DOMWindow} win Window reference to close.
+	 * <span class="attrib">@deprecated</span>
+	 */</span>
 	closeWindow : <span class="reserved">function</span>(win) {
 		win.close();
 	},
 
+	<span class="comment">/**
+	 * Returns the visual aid class string, this will add/remove the visual aid class.
+	 *
+	 * <span class="attrib">@param</span> {string} class_name Class name value to add/remove visual aid classes from.
+	 * <span class="attrib">@param</span> {boolean} state true/false if the classes should be added or removed.
+	 * <span class="attrib">@return</span> New class value containing the visual aid classes or not.
+	 * <span class="attrib">@type</span> string
+	 */</span>
 	getVisualAidClass : <span class="reserved">function</span>(class_name, state) {
 		var aidClass = tinyMCE.settings[<span class="literal">'visual_table_class'</span>];
 
@@ -1764,6 +2059,14 @@ TinyMCE_Engine.<span class="reserved">prototype</span> = {
 		<span class="reserved">return</span> className;
 	},
 
+	<span class="comment">/**
+	 * Adds visual aid classes to all elements that need them recursive in the DOM tree.
+	 *
+	 * <span class="attrib">@param</span> {HTMLElement} el HTML element to add visual aid classes to.
+	 * <span class="attrib">@param</span> {boolean} deep Should they be added to all children aswell.
+	 * <span class="attrib">@param</span> {boolean} state Should they be added or removed.
+	 * <span class="attrib">@param</span> {TinyMCE_Control} inst TinyMCE editor control instance to add/remove them to/from.
+	 */</span>
 	handleVisualAid : <span class="reserved">function</span>(el, deep, state, inst) {
 		<span class="reserved">if</span> (!el)
 			<span class="reserved">return</span>;
@@ -1843,7 +2146,20 @@ TinyMCE_Engine.<span class="reserved">prototype</span> = {
 	},
 	*/</span>
 
+	<span class="comment">/**
+	 * Fixes a Gecko specific bug where href, src attribute values gets converted incorrectly
+	 * when inserted into editor. This function will replace all src, href with xsrc and xhref
+	 * to keep the values from chaging when they get inserted.
+	 *
+	 * <span class="attrib">@param</span> {boolean} m Mode state, true is to replace the src, href attributes to xsrc and xhref.
+	 * <span class="attrib">@param</span> {HTMLElement} e HTML element to replace them in. (Will be used if m is 0)
+	 * <span class="attrib">@param</span> {string} h HTML code to replace them in. (Will be used if m is 1)
+	 * <span class="attrib">@return</span> Converted string or the specified HTML value depending on mode.
+	 * <span class="attrib">@type</span> string
+	 */</span>
 	fixGeckoBaseHREFBug : <span class="reserved">function</span>(m, e, h) {
+		var nl, i;
+
 		<span class="reserved">if</span> (tinyMCE.isGecko) {
 			<span class="reserved">if</span> (m == 1) {
 				h = h.replace(/\ssrc=/gi, <span class="literal">" xsrc="</span>);
@@ -1856,7 +2172,7 @@ TinyMCE_Engine.<span class="reserved">prototype</span> = {
 				<span class="reserved">for</span> (var a=0; a&lt;el.length; a++) {
 					var n = e.getElementsByTagName(el[a]);
 
-					<span class="reserved">for</span> (var i=0; i&lt;n.length; i++) {
+					<span class="reserved">for</span> (i=0; i&lt;n.length; i++) {
 						var xsrc = tinyMCE.getAttrib(n[i], <span class="literal">"xsrc"</span>);
 						var xhref = tinyMCE.getAttrib(n[i], <span class="literal">"xhref"</span>);
 
@@ -1877,6 +2193,14 @@ TinyMCE_Engine.<span class="reserved">prototype</span> = {
 		<span class="reserved">return</span> h;
 	},
 
+	<span class="comment">/**
+	 * Sets the HTML code of a specific document.
+	 * Todo: Try to merge/remove this one.
+	 *
+	 * <span class="attrib">@param</span> {DOMDocument} doc DOM document to set the HTML code in.
+	 * <span class="attrib">@param</span> {string} html_content HTML contents to set in DOM document.
+	 * <span class="attrib">@private</span>
+	 */</span>
 	_setHTML : <span class="reserved">function</span>(doc, html_content) {
 		<span class="comment">// Force closed anchors open</span>
 		<span class="comment">//html_content = html_content.replace(new RegExp('&lt;a(.*?)/&gt;', 'gi'), '&lt;a$1&gt;&lt;/a&gt;');</span>
@@ -1905,24 +2229,24 @@ TinyMCE_Engine.<span class="reserved">prototype</span> = {
 
 			<span class="comment">// Content duplication bug fix (Seems to be word crap)</span>
 			var html = doc.body.innerHTML;
-
-			<span class="reserved">if</span> (html.indexOf(<span class="literal">'="mso'</span>) != -1) {
-				<span class="reserved">for</span> (var i=0; i&lt;doc.body.all.length; i++) {
+<span class="comment">/*
+			if (html.indexOf('="mso') != -1) {
+				for (var i=0; i&lt;doc.body.all.length; i++) {
 					var el = doc.body.all[i];
-					el.removeAttribute(<span class="literal">"className"</span>,<span class="literal">""</span>,0);
-					el.removeAttribute(<span class="literal">"style"</span>,<span class="literal">""</span>,0);
+					el.removeAttribute("className","",0);
+					el.removeAttribute("style","",0);
 				}
 
 				html = doc.body.innerHTML;
-				html = tinyMCE.regexpReplace(html, <span class="literal">"&lt;o:p&gt;&lt;\/o:p&gt;"</span>, <span class="literal">"&lt;br /&gt;"</span>);
-				html = tinyMCE.regexpReplace(html, <span class="literal">"&lt;o:p&gt;&amp;nbsp;&lt;\/o:p&gt;"</span>, <span class="literal">""</span>);
-				html = tinyMCE.regexpReplace(html, <span class="literal">"&lt;st1:.*?&gt;"</span>, <span class="literal">""</span>);
-				html = tinyMCE.regexpReplace(html, <span class="literal">"&lt;p&gt;&lt;\/p&gt;"</span>, <span class="literal">""</span>);
-				html = tinyMCE.regexpReplace(html, <span class="literal">"&lt;p&gt;&lt;\/p&gt;\r\n&lt;p&gt;&lt;\/p&gt;"</span>, <span class="literal">""</span>);
-				html = tinyMCE.regexpReplace(html, <span class="literal">"&lt;p&gt;&amp;nbsp;&lt;\/p&gt;"</span>, <span class="literal">"&lt;br /&gt;"</span>);
-				html = tinyMCE.regexpReplace(html, <span class="literal">"&lt;p&gt;\s*(&lt;p&gt;\s*)?"</span>, <span class="literal">"&lt;p&gt;"</span>);
-				html = tinyMCE.regexpReplace(html, <span class="literal">"&lt;\/p&gt;\s*(&lt;\/p&gt;\s*)?"</span>, <span class="literal">"&lt;/p&gt;"</span>);
-			}
+				html = tinyMCE.regexpReplace(html, "&lt;o:p&gt;&lt;\/o:p&gt;", "&lt;br /&gt;");
+				html = tinyMCE.regexpReplace(html, "&lt;o:p&gt;&amp;nbsp;&lt;\/o:p&gt;", "");
+				html = tinyMCE.regexpReplace(html, "&lt;st1:.*?&gt;", "");
+				html = tinyMCE.regexpReplace(html, "&lt;p&gt;&lt;\/p&gt;", "");
+				html = tinyMCE.regexpReplace(html, "&lt;p&gt;&lt;\/p&gt;\r\n&lt;p&gt;&lt;\/p&gt;", "");
+				html = tinyMCE.regexpReplace(html, "&lt;p&gt;&amp;nbsp;&lt;\/p&gt;", "&lt;br /&gt;");
+				html = tinyMCE.regexpReplace(html, "&lt;p&gt;\s*(&lt;p&gt;\s*)?", "&lt;p&gt;");
+				html = tinyMCE.regexpReplace(html, "&lt;\/p&gt;\s*(&lt;\/p&gt;\s*)?", "&lt;/p&gt;");
+			}*/</span>
 
 			<span class="comment">// Always set the htmlText output</span>
 			tinyMCE.setInnerHTML(doc.body, html);
@@ -1934,6 +2258,13 @@ TinyMCE_Engine.<span class="reserved">prototype</span> = {
 			tinyMCE.convertSpansToFonts(doc);
 	},
 
+	<span class="comment">/**
+	 * Returns the editor instance id of a specific form element.
+	 *
+	 * <span class="attrib">@param</span> {string} form_element Form element name to get instance id for.
+	 * <span class="attrib">@return</span> TinyMCE editor instance id or null if it wasn't found.
+	 * <span class="attrib">@type</span> string
+	 */</span>
 	getEditorId : <span class="reserved">function</span>(form_element) {
 		var inst = <span class="reserved">this</span>.getInstanceById(form_element);
 		<span class="reserved">if</span> (!inst)
@@ -1942,6 +2273,13 @@ TinyMCE_Engine.<span class="reserved">prototype</span> = {
 		<span class="reserved">return</span> inst.editorId;
 	},
 
+	<span class="comment">/**
+	 * Returns a TinyMCE editor instance by the specified editor id or null if it wasn't found.
+	 *
+	 * <span class="attrib">@param</span> {string} editor_id Editor id to get instance for.
+	 * <span class="attrib">@return</span> TinyMCE editor control instance or null if it wasn't found.
+	 * <span class="attrib">@type</span> TinyMCE_Control
+	 */</span>
 	getInstanceById : <span class="reserved">function</span>(editor_id) {
 		var inst = <span class="reserved">this</span>.instances[editor_id];
 		<span class="reserved">if</span> (!inst) {
@@ -1960,6 +2298,14 @@ TinyMCE_Engine.<span class="reserved">prototype</span> = {
 		<span class="reserved">return</span> inst;
 	},
 
+	<span class="comment">/**
+	 * Queries a command value for a specific command on a specific editor instance.
+	 *
+	 * <span class="attrib">@param</span> {string} editor_id Editor id to query command value on.
+	 * <span class="attrib">@param</span> {string} command Command to query for.
+	 * <span class="attrib">@return</span> Command value passed from browser.
+	 * <span class="attrib">@type</span> object
+	 */</span>
 	queryInstanceCommandValue : <span class="reserved">function</span>(editor_id, command) {
 		var inst = tinyMCE.getInstanceById(editor_id);
 		<span class="reserved">if</span> (inst)
@@ -1968,6 +2314,14 @@ TinyMCE_Engine.<span class="reserved">prototype</span> = {
 		<span class="reserved">return</span> false;
 	},
 
+	<span class="comment">/**
+	 * Queries a command state for a specific command on a specific editor instance.
+	 *
+	 * <span class="attrib">@param</span> {string} editor_id Editor id to query command state on.
+	 * <span class="attrib">@param</span> {string} command Command to query for.
+	 * <span class="attrib">@return</span> Command state passed from browser.
+	 * <span class="attrib">@type</span> boolean
+	 */</span>
 	queryInstanceCommandState : <span class="reserved">function</span>(editor_id, command) {
 		var inst = tinyMCE.getInstanceById(editor_id);
 		<span class="reserved">if</span> (inst)
@@ -1976,14 +2330,37 @@ TinyMCE_Engine.<span class="reserved">prototype</span> = {
 		<span class="reserved">return</span> null;
 	},
 
-	setWindowArg : <span class="reserved">function</span>(name, value) {
-		<span class="reserved">this</span>.windowArgs[name] = value;
+	<span class="comment">/**
+	 * Sets the window argument to be passed to TinyMCE popup.
+	 *
+	 * <span class="attrib">@param</span> {string} n Window argument name.
+	 * <span class="attrib">@param</span> {string} v Window argument value.
+	 */</span>
+	setWindowArg : <span class="reserved">function</span>(n, v) {
+		<span class="reserved">this</span>.windowArgs[n] = v;
 	},
 
-	getWindowArg : <span class="reserved">function</span>(name, default_value) {
-		<span class="reserved">return</span> (typeof(<span class="reserved">this</span>.windowArgs[name]) == <span class="literal">"undefined"</span>) ? default_value : <span class="reserved">this</span>.windowArgs[name];
+	<span class="comment">/**
+	 * Returns the window argument to be passed to TinyMCE popup.
+	 * Use: tinyMCEPopup.getWindowArg instead.
+	 *
+	 * <span class="attrib">@param</span> {string} n Window argument name.
+	 * <span class="attrib">@return</span> Argument value or default value if it wasn't found.
+	 * <span class="attrib">@deprecated</span>
+	 */</span>
+	getWindowArg : <span class="reserved">function</span>(n, d) {
+		<span class="reserved">return</span> (typeof(<span class="reserved">this</span>.windowArgs[n]) == <span class="literal">"undefined"</span>) ? d : <span class="reserved">this</span>.windowArgs[n];
 	},
 
+	<span class="comment">/**
+	 * Returns a array of CSS classes that is available in a document.
+	 * Todo: Fix this one, it's so ugly. :)
+	 *
+	 * <span class="attrib">@param</span> {string} editor_id Editor id to get CSS classes from.
+	 * <span class="attrib">@param</span> {DOMDocument} doc DOM document to get the CSS classes from.
+	 * <span class="attrib">@return</span> Array of CSS classes that is available in a document.
+	 * <span class="attrib">@type</span> Array
+	 */</span>
 	getCSSClasses : <span class="reserved">function</span>(editor_id, doc) {
 		var output = new Array();
 
@@ -2055,6 +2432,17 @@ TinyMCE_Engine.<span class="reserved">prototype</span> = {
 		<span class="reserved">return</span> output;
 	},
 
+	<span class="comment">/**
+	 * Regexp replaces the contents of a string. Use normal replace instead.
+	 *
+	 * <span class="attrib">@param</span> {string} in_str String to replace in.
+	 * <span class="attrib">@param</span> {string} reg_exp Regexp to replace.
+	 * <span class="attrib">@param</span> {string} replace_str String to replace with.
+	 * <span class="attrib">@param</span> {string} in_str Optional regexp options like "gi".
+	 * <span class="attrib">@return</span> Replaced string value.
+	 * <span class="attrib">@type</span> string
+	 * <span class="attrib">@deprecated</span>
+	 */</span>
 	regexpReplace : <span class="reserved">function</span>(in_str, reg_exp, replace_str, opts) {
 		<span class="reserved">if</span> (in_str == null)
 			<span class="reserved">return</span> in_str;
@@ -2066,19 +2454,43 @@ TinyMCE_Engine.<span class="reserved">prototype</span> = {
 		<span class="reserved">return</span> in_str.replace(re, replace_str);
 	},
 
-	trim : <span class="reserved">function</span>(str) {
-		<span class="reserved">return</span> str.replace(/^\s*|\s*$/g, <span class="literal">""</span>);
+	<span class="comment">/**
+	 * Removes all prefix, suffix whitespace of a string.
+	 *
+	 * <span class="attrib">@param</span> {string} s String to replace whitespace in.
+	 * <span class="attrib">@return</span> Replaced string value.
+	 * <span class="attrib">@type</span> string
+	 */</span>
+	trim : <span class="reserved">function</span>(s) {
+		<span class="reserved">return</span> s.replace(/^\s*|\s*$/g, <span class="literal">""</span>);
 	},
 
-	cleanupEventStr : <span class="reserved">function</span>(str) {
-		str = <span class="literal">""</span> + str;
-		str = str.replace(<span class="literal">'function anonymous()\n{\n'</span>, <span class="literal">''</span>);
-		str = str.replace(<span class="literal">'\n}'</span>, <span class="literal">''</span>);
-		str = str.replace(/^<span class="reserved">return</span> true;/gi, <span class="literal">''</span>); <span class="comment">// Remove event blocker</span>
+	<span class="comment">/**
+	 * Removes MSIE 5.5 specific event wrapper function form a event string.
+	 * This will also remove the event blocker if it's added in front of the event.
+	 *
+	 * <span class="attrib">@param</span> {string} s String to replace event data in.
+	 * <span class="attrib">@return</span> Replaced string value.
+	 * <span class="attrib">@type</span> string
+	 */</span>
+	cleanupEventStr : <span class="reserved">function</span>(s) {
+		s = <span class="literal">""</span> + s;
+		s = s.replace(<span class="literal">'function anonymous()\n{\n'</span>, <span class="literal">''</span>);
+		s = s.replace(<span class="literal">'\n}'</span>, <span class="literal">''</span>);
+		s = s.replace(/^<span class="reserved">return</span> true;/gi, <span class="literal">''</span>); <span class="comment">// Remove event blocker</span>
 
-		<span class="reserved">return</span> str;
+		<span class="reserved">return</span> s;
 	},
 
+	<span class="comment">/**
+	 * Returns the HTML for the specified control this will loop through
+	 * the theme and all plugins inorder to find the control. The callback for each
+	 * theme and plugin is called getControlHTML.
+	 *
+	 * <span class="attrib">@param</span> {string} c Control name/id to get HTML code for.
+	 * <span class="attrib">@return</span> HTML code for the specified control or empty string if it wasn't found.
+	 * <span class="attrib">@type</span> string
+	 */</span>
 	getControlHTML : <span class="reserved">function</span>(c) {
 		var i, l, n, o, v;
 
@@ -2097,6 +2509,15 @@ TinyMCE_Engine.<span class="reserved">prototype</span> = {
 		<span class="reserved">return</span> <span class="literal">''</span>;
 	},
 
+	<span class="comment">/**
+	 * Evaluates the specified function and uses the array of arguments.
+	 *
+	 * <span class="attrib">@param</span> {string} f Function reference to execute.
+	 * <span class="attrib">@param</span> {int} idx Index in array to start grabbing arguments from.
+	 * <span class="attrib">@param</span> {Array} a Array of function arguments.
+	 * <span class="attrib">@return</span> Value returned from the evaluated function.
+	 * <span class="attrib">@type</span> object
+	 */</span>
 	evalFunc : <span class="reserved">function</span>(f, idx, a) {
 		var s = <span class="literal">'('</span>, i;
 
@@ -2112,14 +2533,41 @@ TinyMCE_Engine.<span class="reserved">prototype</span> = {
 		<span class="reserved">return</span> eval(<span class="literal">"f"</span> + s);
 	},
 
+	<span class="comment">/**
+	 * Dispatches the specified callback on all options, plugins and themes. This will not
+	 * chain them, so all functions callbacks will be executed regardless if the return true/false.
+	 *
+	 * <span class="attrib">@param</span> {TinyMCE_Control} i TinyMCE editor control instance to execute callback on.
+	 * <span class="attrib">@param</span> {string} p TinyMCE callback parameter to execute.
+	 * <span class="attrib">@param</span> {string} n Function name to execute.
+	 * <span class="attrib">@return</span> true/false if they where dispatched.
+	 */</span>
 	dispatchCallback : <span class="reserved">function</span>(i, p, n) {
 		<span class="reserved">return</span> <span class="reserved">this</span>.callFunc(i, p, n, 0, <span class="reserved">this</span>.dispatchCallback.arguments);
 	},
 
+	<span class="comment">/**
+	 * Executes the specified callback on all options, plugins and themes. This will
+	 * chain them, so callback chain will be broken if one function returns false.
+	 *
+	 * <span class="attrib">@param</span> {TinyMCE_Control} i TinyMCE editor control instance to execute callback on.
+	 * <span class="attrib">@param</span> {string} p TinyMCE callback parameter to execute.
+	 * <span class="attrib">@param</span> {string} n Function name to execute.
+	 * <span class="attrib">@return</span> true/false if a callback was executed.
+	 */</span>
 	executeCallback : <span class="reserved">function</span>(i, p, n) {
 		<span class="reserved">return</span> <span class="reserved">this</span>.callFunc(i, p, n, 1, <span class="reserved">this</span>.executeCallback.arguments);
 	},
 
+	<span class="comment">/**
+	 * Executes the specified execcommand callback on all options, plugins and themes. This will
+	 * chain them, so callback chain will be broken if one function returns true.
+	 *
+	 * <span class="attrib">@param</span> {TinyMCE_Control} i TinyMCE editor control instance to execute callback on.
+	 * <span class="attrib">@param</span> {string} p TinyMCE callback parameter to execute.
+	 * <span class="attrib">@param</span> {string} n Function name to execute.
+	 * <span class="attrib">@return</span> true/false if a callback was executed.
+	 */</span>
 	execCommandCallback : <span class="reserved">function</span>(i, p, n) {
 		<span class="reserved">return</span> <span class="reserved">this</span>.callFunc(i, p, n, 2, <span class="reserved">this</span>.execCommandCallback.arguments);
 	},
@@ -2127,9 +2575,13 @@ TinyMCE_Engine.<span class="reserved">prototype</span> = {
 	<span class="comment">/**
 	 * Executes callback chain. Callback order: Option, Plugins, Themes.
 	 *
-	 * <span class="attrib">@param</span> p TinyMCE parameter.
-	 * <span class="attrib">@param</span> n Function name.
-	 * <span class="attrib">@param</span> m 0 = no chain, 1 = event chain, 2 = exec command chain
+	 * <span class="attrib">@param</span> {TinyMCE_Control} ins TinyMCE editor control instance to execute callback on.
+	 * <span class="attrib">@param</span> {string} p TinyMCE callback parameter name.
+	 * <span class="attrib">@param</span> {string} n Function name to execute.
+	 * <span class="attrib">@param</span> {int} m Execution mode value, 0 = no chain, 1 = event chain, 2 = execcommand chain.
+	 * <span class="attrib">@param</span> {Array} a Array with function arguments.
+	 * <span class="attrib">@return</span> true - if the callback was executed, false if it wasn't.
+	 * <span class="attrib">@type</span> boolean
 	 */</span>
 	callFunc : <span class="reserved">function</span>(ins, p, n, m, a) {
 		var l, i, on, o, s, v;
@@ -2223,6 +2675,6 @@ var tinyMCELang = {};
 <font size="-1">
 
 </font>
-<div class="jsdoc_ctime">Documentation generated by <a href="http://jsdoc.sourceforge.net/" target="_parent">JSDoc</a> on Fri Feb 10 22:31:11 2006</div>
+<div class="jsdoc_ctime">Documentation generated by <a href="http://jsdoc.sourceforge.net/" target="_parent">JSDoc</a> on Fri Feb 24 13:38:20 2006</div>
 </body>
 </html>

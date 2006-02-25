@@ -113,6 +113,14 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
    <TR BGCOLOR="white" CLASS="TableRowColor">
    <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
    <CODE>&nbsp;Object</CODE></FONT></TD>
+   <TD><CODE><B><A HREF="#buttonMap">buttonMap</A></B></CODE>
+   <BR>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+   </TR>
+   
+   <TR BGCOLOR="white" CLASS="TableRowColor">
+   <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+   <CODE>&nbsp;Object</CODE></FONT></TD>
    <TD><CODE><B><A HREF="#configs">configs</A></B></CODE>
    <BR>
    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -360,57 +368,6 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
 	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
-	 </FONT>
-      </TD>
-      <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#_cleanupHTML">_cleanupHTML</A></B>(inst, doc, config, element, visual, on_save, on_submit)
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
-      </TD>
-   </TR>
-
-   <TR BGCOLOR="white" CLASS="TableRowColor">
-      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
-	 </FONT>
-      </TD>
-      <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#_createIFrame">_createIFrame</A></B>(replace_element)
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
-      </TD>
-   </TR>
-
-   <TR BGCOLOR="white" CLASS="TableRowColor">
-      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
-	 </FONT>
-      </TD>
-      <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#_customCleanup">_customCleanup</A></B>(inst, type, content)
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
-      </TD>
-   </TR>
-
-   <TR BGCOLOR="white" CLASS="TableRowColor">
-      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
 	    <CODE>&nbsp;HTMLElement</CODE>
 	 </FONT>
       </TD>
@@ -434,11 +391,11 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#_setEventsEnabled">_setEventsEnabled</A></B>(node, state)
+	       <A HREF="#accessibleEventHandler">accessibleEventHandler</A></B>(&lt;DOMEvent&gt; e)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Accessibility handler that gets executed when the user hits a key in a select element.
       </TD>
    </TR>
 
@@ -451,11 +408,11 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#_setHTML">_setHTML</A></B>(doc, html_content)
+	       <A HREF="#addButtonMap">addButtonMap</A></B>(&lt;string&gt; m)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Adds a list of buttons available in the tiled button image used by the button_tile_map option.
       </TD>
    </TR>
 
@@ -468,11 +425,11 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#accessibleEventHandler">accessibleEventHandler</A></B>(e)
+	       <A HREF="#addEvent">addEvent</A></B>(&lt;HTMLElement&gt; o, &lt;string&gt; n, &lt;function&gt; h)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Adds a event handler function to the specified object.
       </TD>
    </TR>
 
@@ -485,11 +442,11 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#addEvent">addEvent</A></B>(o, n, h)
+	       <A HREF="#addEventHandlers">addEventHandlers</A></B>(&lt;string&gt; editor_id)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Adds the handleEvent function to the specified editor instance.
       </TD>
    </TR>
 
@@ -502,11 +459,11 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#addEventHandlers">addEventHandlers</A></B>(editor_id)
+	       <A HREF="#addMCEControl">addMCEControl</A></B>(&lt;HTMLElement&gt; replace_element, &lt;string&gt; form_element_name, &lt;DOMDocument&gt; target_document)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Adds a TinyMCE editor control instance to a specific form element.
       </TD>
    </TR>
 
@@ -519,11 +476,29 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#addMCEControl">addMCEControl</A></B>(replace_element, form_element_name, target_document)
+	       <A HREF="#addPlugin">addPlugin</A></B>(n, &lt;TinyMCE_Plugin&gt; p)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Adds the specified plugin to the list of loaded plugins, this will also setup the baseURL
+ property of the plugin.
+      </TD>
+   </TR>
+
+   <TR BGCOLOR="white" CLASS="TableRowColor">
+      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
+	 <FONT SIZE="-1">
+	    <CODE>&nbsp;Object</CODE>
+	 </FONT>
+      </TD>
+      <TD>
+	 <CODE>
+	    <B>
+	       <A HREF="#addSelectAccessibility">addSelectAccessibility</A></B>(&lt;DOMEvent&gt; e, &lt;HTMLElement&gt; s, &lt;DOMWindow&gt; w)
+	 </CODE>
+	 <BR>
+	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	 Adds accessibility keydown handler to the specified select element.
       </TD>
    </TR>
 
@@ -536,11 +511,11 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#addPlugin">addPlugin</A></B>(n, p)
+	       <A HREF="#addTheme">addTheme</A></B>(&l&lt;TinyMCE_Theme&gt; t;string&gt; n, t)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Adds the specified theme in to the list of loaded themes.
       </TD>
    </TR>
 
@@ -553,45 +528,11 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#addSelectAccessibility">addSelectAccessibility</A></B>(e, s, w)
+	       <A HREF="#addToLang">addToLang</A></B>(&lt;string&gt; prefix, &lt;Array&gt; ar)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
-      </TD>
-   </TR>
-
-   <TR BGCOLOR="white" CLASS="TableRowColor">
-      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;void</CODE>
-	 </FONT>
-      </TD>
-      <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#addTheme">addTheme</A></B>(n, t)
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
-      </TD>
-   </TR>
-
-   <TR BGCOLOR="white" CLASS="TableRowColor">
-      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;void</CODE>
-	 </FONT>
-      </TD>
-      <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#addToLang">addToLang</A></B>(prefix, ar)
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Adds language items to the global language array.
       </TD>
    </TR>
 
@@ -615,13 +556,13 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
 	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
+	    <CODE>&nbsp;boolean</CODE>
 	 </FONT>
       </TD>
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#callFunc">callFunc</A></B>(ins, p, n, m, a)
+	       <A HREF="#callFunc">callFunc</A></B>(&lt;<&lt;Array&gt; a href="TinyMCE_Control.html">TinyMCE_Control</a>&gt; ins, &lt;string&gt; p, &lt;string&gt; n, &lt;int&gt; m, a)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -638,11 +579,11 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#cancelEvent">cancelEvent</A></B>(e)
+	       <A HREF="#cancelEvent">cancelEvent</A></B>(&lt;DOMEvent&gt; e)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Cancels the specified event, this will disable the event from be passed to other listeners in event chain.
       </TD>
    </TR>
 
@@ -655,47 +596,45 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#cleanupAnchors">cleanupAnchors</A></B>(doc)
+	       <A HREF="#cleanupAnchors">cleanupAnchors</A></B>(&lt;DOMDocument&gt; doc)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Moves the contents of a anchor outside and after the anchor.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
 	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
+	    <CODE>&nbsp;string</CODE>
 	 </FONT>
       </TD>
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#cleanupEventStr">cleanupEventStr</A></B>(str)
+	       <A HREF="#cleanupEventStr">cleanupEventStr</A></B>(&lt;string&gt; s)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Removes MSIE 5.5 specific event wrapper function form a event string.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
 	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
+	    <CODE>&nbsp;string</CODE>
 	 </FONT>
       </TD>
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#cleanupHTMLCode">cleanupHTMLCode</A></B>(s)
+	       <A HREF="#cleanupHTMLCode">cleanupHTMLCode</A></B>(&lt;string&gt; s)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 $RCSfile: TinyMCE_Engine.html,v $
- $Revision: 1.7 $
- $Date: 2006/02/10 21:34:08 $
+	 Makes some preprocessing cleanup routines on the specified HTML string.
       </TD>
    </TR>
 
@@ -726,11 +665,11 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#closeWindow">closeWindow</A></B>(win)
+	       <A HREF="#closeWindow">closeWindow</A></B>(&lt;DOMWindow&gt; win)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Closes the specified window.
       </TD>
    </TR>
 
@@ -743,11 +682,11 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#compressStyle">compressStyle</A></B>(ar, pr, sf, res)
+	       <A HREF="#compressStyle">compressStyle</A></B>(&lt;Array&gt; ar, &lt;string&gt; pr, &lt;string&gt; sf, &lt;string&gt; res)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Compresses larger styles into a smaller.
       </TD>
    </TR>
 
@@ -760,24 +699,25 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#confirmAdd">confirmAdd</A></B>(e, settings)
+	       <A HREF="#confirmAdd">confirmAdd</A></B>(&lt;DOMEvent&gt; e, &lt;Array&gt; settings)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Displays a confirm dialog when a user clicks/focus a textarea that is to be converted into
+ a TinyMCE instance.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
 	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
+	    <CODE>&nbsp;string</CODE>
 	 </FONT>
       </TD>
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#convertAbsoluteURLToRelativeURL">convertAbsoluteURLToRelativeURL</A></B>(base_url, url_to_relative)
+	       <A HREF="#convertAbsoluteURLToRelativeURL">convertAbsoluteURLToRelativeURL</A></B>(&lt;string&gt; base_url, &lt;string&gt; url_to_relative)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -794,11 +734,11 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#convertAllRelativeURLs">convertAllRelativeURLs</A></B>(body)
+	       <A HREF="#convertAllRelativeURLs">convertAllRelativeURLs</A></B>(&lt;HTMLElement&gt; body)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Converts all img and a element URLs to absolute URLs.
       </TD>
    </TR>
 
@@ -811,62 +751,62 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#convertFontsToSpans">convertFontsToSpans</A></B>(doc)
+	       <A HREF="#convertFontsToSpans">convertFontsToSpans</A></B>(&lt;DOMDocument&gt; doc)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Convers fonts to spans in the specified document.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
 	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
+	    <CODE>&nbsp;string</CODE>
 	 </FONT>
       </TD>
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#convertHexToRGB">convertHexToRGB</A></B>(s)
+	       <A HREF="#convertHexToRGB">convertHexToRGB</A></B>(&lt;string&gt; s)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Returns a rgb(n,n,n) string from a hexadecimal value.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
 	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
+	    <CODE>&nbsp;string</CODE>
 	 </FONT>
       </TD>
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#convertRelativeToAbsoluteURL">convertRelativeToAbsoluteURL</A></B>(base_url, relative_url)
+	       <A HREF="#convertRelativeToAbsoluteURL">convertRelativeToAbsoluteURL</A></B>(&lt;string&gt; base_url, &lt;string&gt; relative_url)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Converts an relative path to absolute path.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
 	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
+	    <CODE>&nbsp;string</CODE>
 	 </FONT>
       </TD>
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#convertRGBToHex">convertRGBToHex</A></B>(s, k)
+	       <A HREF="#convertRGBToHex">convertRGBToHex</A></B>(&lt;string&gt; s, &lt;boolean&gt; k)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Returns a hexadecimal version of the specified rgb(1,2,3) string.
       </TD>
    </TR>
 
@@ -879,28 +819,28 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#convertSpansToFonts">convertSpansToFonts</A></B>(doc)
+	       <A HREF="#convertSpansToFonts">convertSpansToFonts</A></B>(&lt;DOMDocument&gt; doc)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Converts span elements to font elements in the specified document instance.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
 	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
+	    <CODE>&nbsp;string</CODE>
 	 </FONT>
       </TD>
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#convertURL">convertURL</A></B>(url, node, on_save)
+	       <A HREF="#convertURL">convertURL</A></B>(&lt;string&gt; url, &lt;HTMLElement&gt; node, &lt;boolean&gt; on_save)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Converts the specified URL based in TinyMCE configuration settings.
       </TD>
    </TR>
 
@@ -930,62 +870,45 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#dispatchCallback">dispatchCallback</A></B>(i, p, n)
+	       <A HREF="#dispatchCallback">dispatchCallback</A></B>(&lt;<a href="TinyMCE_Control.html">TinyMCE_Control</a>&gt; i, &lt;string&gt; p, &lt;string&gt; n)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Dispatches the specified callback on all options, plugins and themes.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
 	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
+	    <CODE>&nbsp;string</CODE>
 	 </FONT>
       </TD>
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#entityDecode">entityDecode</A></B>(s)
+	       <A HREF="#entityDecode">entityDecode</A></B>(&lt;string&gt; s)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 HTML entity decode a string, replaces &lt; with <.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
 	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
+	    <CODE>&nbsp;object</CODE>
 	 </FONT>
       </TD>
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#evalFunc">evalFunc</A></B>(f, idx, a)
+	       <A HREF="#evalFunc">evalFunc</A></B>(&lt;string&gt; f, &lt;int&gt; idx, &lt;Array&gt; a)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
-      </TD>
-   </TR>
-
-   <TR BGCOLOR="white" CLASS="TableRowColor">
-      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
-	 </FONT>
-      </TD>
-      <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#eventPatch">eventPatch</A></B>(editor_id)
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Evaluates the specified function and uses the array of arguments.
       </TD>
    </TR>
 
@@ -998,11 +921,11 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#execCommand">execCommand</A></B>(command, user_interface, value)
+	       <A HREF="#execCommand">execCommand</A></B>(&lt;string&gt; command, &lt;boolean&gt; user_interface, &lt;object&gt; value)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Executes a command on the selected or last selected TinyMCE editor control instance.
       </TD>
    </TR>
 
@@ -1015,11 +938,11 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#execCommandCallback">execCommandCallback</A></B>(i, p, n)
+	       <A HREF="#execCommandCallback">execCommandCallback</A></B>(&lt;<a href="TinyMCE_Control.html">TinyMCE_Control</a>&gt; i, &lt;string&gt; p, &lt;string&gt; n)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Executes the specified execcommand callback on all options, plugins and themes.
       </TD>
    </TR>
 
@@ -1032,11 +955,11 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#execInstanceCommand">execInstanceCommand</A></B>(editor_id, command, user_interface, value, focus)
+	       <A HREF="#execInstanceCommand">execInstanceCommand</A></B>(&lt;string&gt; editor_id, &lt;string&gt; command, &lt;boolean&gt; user_interface, &lt;object&gt; value, &lt;boolean&gt; focus)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Executes a command on a specific editor instance by id.
       </TD>
    </TR>
 
@@ -1049,147 +972,149 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#executeCallback">executeCallback</A></B>(i, p, n)
+	       <A HREF="#executeCallback">executeCallback</A></B>(&lt;<a href="TinyMCE_Control.html">TinyMCE_Control</a>&gt; i, &lt;string&gt; p, &lt;string&gt; n)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Executes the specified callback on all options, plugins and themes.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
 	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
+	    <CODE>&nbsp;string</CODE>
 	 </FONT>
       </TD>
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#fixGeckoBaseHREFBug">fixGeckoBaseHREFBug</A></B>(m, e, h)
+	       <A HREF="#fixGeckoBaseHREFBug">fixGeckoBaseHREFBug</A></B>(&lt;boolean&gt; m, &lt;HTMLElement&gt; e, &lt;string&gt; h)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Fixes a Gecko specific bug where href, src attribute values gets converted incorrectly
+ when inserted into editor.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
 	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
+	    <CODE>&nbsp;TinyMCE_ElementPosition</CODE>
 	 </FONT>
       </TD>
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#getAbsPosition">getAbsPosition</A></B>(n)
+	       <A HREF="#getAbsPosition">getAbsPosition</A></B>(&lt;HTMLNode&gt; n)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Returns the absolute x, y position of a node.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
 	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
+	    <CODE>&nbsp;string</CODE>
 	 </FONT>
       </TD>
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#getAttrib">getAttrib</A></B>(elm, name, default_value)
+	       <A HREF="#getAttrib">getAttrib</A></B>(&lt;HTMLElement&gt; elm, &lt;string&gt; name, &lt;string&gt; default_value)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Returns the attribute value of a element or the default value if it wasn't found.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
 	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
+	    <CODE>&nbsp;string</CODE>
 	 </FONT>
       </TD>
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#getButtonHTML">getButtonHTML</A></B>(id, lang, img, cmd, ui, val)
+	       <A HREF="#getButtonHTML">getButtonHTML</A></B>(&lt;string&gt; id, &lt;string&gt; lang, &lt;string&gt; img, &lt;string&gt; cmd, &lt;string&gt; ui, &lt;string&gt; val)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Returns the HTML code for a normal button control.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
 	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
+	    <CODE>&nbsp;string</CODE>
 	 </FONT>
       </TD>
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#getContent">getContent</A></B>(editor_id)
+	       <A HREF="#getContent">getContent</A></B>(&lt;string&gt; editor_id)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Returns the HTML contents of the specified editor instance id.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
 	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
+	    <CODE>&nbsp;string</CODE>
 	 </FONT>
       </TD>
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#getControlHTML">getControlHTML</A></B>(c)
+	       <A HREF="#getControlHTML">getControlHTML</A></B>(&lt;string&gt; c)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Returns the HTML for the specified control this will loop through
+ the theme and all plugins inorder to find the control.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
 	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
+	    <CODE>&nbsp;Array</CODE>
 	 </FONT>
       </TD>
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#getCSSClasses">getCSSClasses</A></B>(editor_id, doc)
+	       <A HREF="#getCSSClasses">getCSSClasses</A></B>(&lt;string&gt; editor_id, &lt;DOMDocument&gt; doc)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Returns a array of CSS classes that is available in a document.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
 	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
+	    <CODE>&nbsp;string</CODE>
 	 </FONT>
       </TD>
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#getEditorId">getEditorId</A></B>(form_element)
+	       <A HREF="#getEditorId">getEditorId</A></B>(&lt;string&gt; form_element)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Returns the editor instance id of a specific form element.
       </TD>
    </TR>
 
@@ -1230,34 +1155,34 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
 	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
+	    <CODE>&nbsp;<a href="TinyMCE_Control.html">TinyMCE_Control</a></CODE>
 	 </FONT>
       </TD>
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#getInstanceById">getInstanceById</A></B>(editor_id)
+	       <A HREF="#getInstanceById">getInstanceById</A></B>(&lt;string&gt; editor_id)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Returns a TinyMCE editor instance by the specified editor id or null if it wasn't found.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
 	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
+	    <CODE>&nbsp;object</CODE>
 	 </FONT>
       </TD>
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#getLang">getLang</A></B>(name, default_value, parse_entities)
+	       <A HREF="#getLang">getLang</A></B>(&lt;string&gt; name, &lt;string&gt; default_value, &lt;boolean&gt; parse_entities)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Returns a language variable value from the language packs.
       </TD>
    </TR>
 
@@ -1299,17 +1224,17 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
 	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
+	    <CODE>&nbsp;object</CODE>
 	 </FONT>
       </TD>
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#getParam">getParam</A></B>(name, default_value, strip_whitespace, split_chr)
+	       <A HREF="#getParam">getParam</A></B>(&lt;string&gt; name, &lt;string&gt; default_value, &lt;boolean&gt; strip_whitespace, &lt;string&gt; split_chr)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Returns a specific configuration setting or the default value if it wasn't found.
       </TD>
    </TR>
 
@@ -1333,17 +1258,34 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
 	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
+	    <CODE>&nbsp;HTMLElement</CODE>
 	 </FONT>
       </TD>
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#getParentElement">getParentElement</A></B>(node, names, attrib_name, attrib_value)
+	       <A HREF="#getParentElement">getParentElement</A></B>(&lt;HTMLNode&gt; node, &lt;string&gt; names, &lt;string&gt; attrib_name, &lt;string&gt; attrib_value)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Returns the parent element of the specified node based on the search criteria.
+      </TD>
+   </TR>
+
+   <TR BGCOLOR="white" CLASS="TableRowColor">
+      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
+	 <FONT SIZE="-1">
+	    <CODE>&nbsp;string</CODE>
+	 </FONT>
+      </TD>
+      <TD>
+	 <CODE>
+	    <B>
+	       <A HREF="#getVisualAidClass">getVisualAidClass</A></B>(&lt;string&gt; class_name, &lt;boolean&gt; state)
+	 </CODE>
+	 <BR>
+	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	 Returns the visual aid class string, this will add/remove the visual aid class.
       </TD>
    </TR>
 
@@ -1356,45 +1298,28 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#getVisualAidClass">getVisualAidClass</A></B>(class_name, state)
+	       <A HREF="#getWindowArg">getWindowArg</A></B>(&lt;string&gt; n, d)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Returns the window argument to be passed to TinyMCE popup.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
 	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
+	    <CODE>&nbsp;boolean</CODE>
 	 </FONT>
       </TD>
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#getWindowArg">getWindowArg</A></B>(name, default_value)
+	       <A HREF="#handleEvent">handleEvent</A></B>(&lt;DOMEvent&gt; e)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
-      </TD>
-   </TR>
-
-   <TR BGCOLOR="white" CLASS="TableRowColor">
-      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
-	 </FONT>
-      </TD>
-      <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#handleEvent">handleEvent</A></B>(e)
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Event handler function that gets executed each time a event occurs in a TinyMCE editor control instance.
       </TD>
    </TR>
 
@@ -1407,62 +1332,45 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#handleVisualAid">handleVisualAid</A></B>(el, deep, state, inst)
+	       <A HREF="#handleVisualAid">handleVisualAid</A></B>(&lt;HTMLElement&gt; el, &lt;boolean&gt; deep, &lt;boolean&gt; state, &lt;<a href="TinyMCE_Control.html">TinyMCE_Control</a>&gt; inst)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Adds visual aid classes to all elements that need them recursive in the DOM tree.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
 	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
+	    <CODE>&nbsp;boolean</CODE>
 	 </FONT>
       </TD>
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#hasPlugin">hasPlugin</A></B>(n)
+	       <A HREF="#hasPlugin">hasPlugin</A></B>(&lt;string&gt; n)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Returns true/false if the specified plugin is loaded or not.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
 	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
+	    <CODE>&nbsp;boolean</CODE>
 	 </FONT>
       </TD>
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#hasTheme">hasTheme</A></B>(n)
+	       <A HREF="#hasTheme">hasTheme</A></B>(&lt;string&gt; n)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
-      </TD>
-   </TR>
-
-   <TR BGCOLOR="white" CLASS="TableRowColor">
-      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;void</CODE>
-	 </FONT>
-      </TD>
-      <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#importCSS">importCSS</A></B>(doc, css_file)
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Returns true/false if the specified theme is loaded or not.
       </TD>
    </TR>
 
@@ -1475,11 +1383,11 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#importPluginLanguagePack">importPluginLanguagePack</A></B>(name, valid_languages)
+	       <A HREF="#importCSS">importCSS</A></B>(&lt;DOMDocument&gt; doc, &lt;string&gt; css_file)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Imports a CSS file into a allready loaded document.
       </TD>
    </TR>
 
@@ -1492,11 +1400,28 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#importThemeLanguagePack">importThemeLanguagePack</A></B>(name)
+	       <A HREF="#importPluginLanguagePack">importPluginLanguagePack</A></B>(&lt;string&gt; name, &lt;string&gt; valid_languages)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Loads a plugin specific language pack.
+      </TD>
+   </TR>
+
+   <TR BGCOLOR="white" CLASS="TableRowColor">
+      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
+	 <FONT SIZE="-1">
+	    <CODE>&nbsp;void</CODE>
+	 </FONT>
+      </TD>
+      <TD>
+	 <CODE>
+	    <B>
+	       <A HREF="#importThemeLanguagePack">importThemeLanguagePack</A></B>(&lt;string&gt; name)
+	 </CODE>
+	 <BR>
+	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	 Loads a theme specific language pack.
       </TD>
    </TR>
 
@@ -1554,17 +1479,17 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
 	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
+	    <CODE>&nbsp;boolean</CODE>
 	 </FONT>
       </TD>
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#isInstance">isInstance</A></B>(inst)
+	       <A HREF="#isInstance">isInstance</A></B>(&lt;object&gt; o)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Returns true/false if a specific object is a TinyMCE_Control instance or not.
       </TD>
    </TR>
 
@@ -1577,11 +1502,11 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#loadCSS">loadCSS</A></B>(url)
+	       <A HREF="#loadCSS">loadCSS</A></B>(&lt;string&gt; url)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Loads the specified CSS by writing the a link tag to the current page.
       </TD>
    </TR>
 
@@ -1594,18 +1519,18 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#loadScript">loadScript</A></B>(url)
+	       <A HREF="#loadScript">loadScript</A></B>(&lt;string&gt; url)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Loads the specified script by writing the a script tag to the current page.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
 	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
+	    <CODE>&nbsp;boolean</CODE>
 	 </FONT>
       </TD>
       <TD>
@@ -1615,7 +1540,7 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Gets executed when the page loads or get intitialized.
       </TD>
    </TR>
 
@@ -1632,7 +1557,8 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Mouse move handler function, this will be executed each time
+ the mouse is moved within a editor instance.
       </TD>
    </TR>
 
@@ -1645,28 +1571,28 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#openWindow">openWindow</A></B>(template, args)
+	       <A HREF="#openWindow">openWindow</A></B>(&lt;Array&gt; template, &lt;Array&gt; args)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Opens a popup window based in the specified input data.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
 	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
+	    <CODE>&nbsp;Array</CODE>
 	 </FONT>
       </TD>
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#parseStyle">parseStyle</A></B>(str)
+	       <A HREF="#parseStyle">parseStyle</A></B>(&lt;string&gt; str)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Parses the specified HTML style data.
       </TD>
    </TR>
 
@@ -1690,68 +1616,51 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
 	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
+	    <CODE>&nbsp;boolean</CODE>
 	 </FONT>
       </TD>
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#queryInstanceCommandState">queryInstanceCommandState</A></B>(editor_id, command)
+	       <A HREF="#queryInstanceCommandState">queryInstanceCommandState</A></B>(&lt;string&gt; editor_id, &lt;string&gt; command)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Queries a command state for a specific command on a specific editor instance.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
 	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
+	    <CODE>&nbsp;object</CODE>
 	 </FONT>
       </TD>
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#queryInstanceCommandValue">queryInstanceCommandValue</A></B>(editor_id, command)
+	       <A HREF="#queryInstanceCommandValue">queryInstanceCommandValue</A></B>(&lt;string&gt; editor_id, &lt;string&gt; command)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Queries a command value for a specific command on a specific editor instance.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
 	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
+	    <CODE>&nbsp;string</CODE>
 	 </FONT>
       </TD>
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#regexpReplace">regexpReplace</A></B>(in_str, reg_exp, replace_str, opts)
+	       <A HREF="#regexpReplace">regexpReplace</A></B>(&lt;string&gt; in_str, &lt;string&gt; reg_exp, &lt;string&gt; replace_str, opts)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
-      </TD>
-   </TR>
-
-   <TR BGCOLOR="white" CLASS="TableRowColor">
-      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;void</CODE>
-	 </FONT>
-      </TD>
-      <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#removeMCEControl">removeMCEControl</A></B>(editor_id)
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Regexp replaces the contents of a string.
       </TD>
    </TR>
 
@@ -1764,11 +1673,28 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#removeTinyMCEFormElements">removeTinyMCEFormElements</A></B>(form_obj)
+	       <A HREF="#removeMCEControl">removeMCEControl</A></B>(&lt;string&gt; editor_id)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Removes a TinyMCE editor control instance by id.
+      </TD>
+   </TR>
+
+   <TR BGCOLOR="white" CLASS="TableRowColor">
+      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
+	 <FONT SIZE="-1">
+	    <CODE>&nbsp;void</CODE>
+	 </FONT>
+      </TD>
+      <TD>
+	 <CODE>
+	    <B>
+	       <A HREF="#removeTinyMCEFormElements">removeTinyMCEFormElements</A></B>(&lt;HTMLElement&gt; form_obj)
+	 </CODE>
+	 <BR>
+	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	 Removes/disables TinyMCE built in form elements such as select boxes for font sizes etc.
       </TD>
    </TR>
 
@@ -1798,28 +1724,11 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#resetForm">resetForm</A></B>(form_index)
+	       <A HREF="#resetForm">resetForm</A></B>(&lt;int&gt; form_index)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
-      </TD>
-   </TR>
-
-   <TR BGCOLOR="white" CLASS="TableRowColor">
-      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
-	 </FONT>
-      </TD>
-      <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#serializeStyle">serializeStyle</A></B>(ar)
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Resets a forms TinyMCE instances based on form index.
       </TD>
    </TR>
 
@@ -1832,7 +1741,24 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#serializeURL">serializeURL</A></B>(up)
+	       <A HREF="#serializeStyle">serializeStyle</A></B>(&lt;Array&gt; ar)
+	 </CODE>
+	 <BR>
+	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	 Serializes the specified style item name/value array into a HTML string.
+      </TD>
+   </TR>
+
+   <TR BGCOLOR="white" CLASS="TableRowColor">
+      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
+	 <FONT SIZE="-1">
+	    <CODE>&nbsp;string</CODE>
+	 </FONT>
+      </TD>
+      <TD>
+	 <CODE>
+	    <B>
+	       <A HREF="#serializeURL">serializeURL</A></B>(&lt;TinyMCE_URL_Item&gt; up)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -1849,11 +1775,11 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#setAttrib">setAttrib</A></B>(element, name, value, fix_value)
+	       <A HREF="#setAttrib">setAttrib</A></B>(&lt;HTMLElement&gt; element, &lt;string&gt; name, &lt;string&gt; value, &lt;boolean&gt; fix_value)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Sets the attribute value for a specific attribute.
       </TD>
    </TR>
 
@@ -1866,11 +1792,11 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#setContent">setContent</A></B>(html_content)
+	       <A HREF="#setContent">setContent</A></B>(&lt;string&gt; h)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Sets the HTML contents of the selected editor instance.
       </TD>
    </TR>
 
@@ -1919,11 +1845,12 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#setPluginBaseURL">setPluginBaseURL</A></B>(n, u)
+	       <A HREF="#setPluginBaseURL">setPluginBaseURL</A></B>(&lt;string&gt; n, &lt;string&gt; u)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Sets the baseURL of the specified plugin, this is useful if the plugin is loaded from
+ a external location.
       </TD>
    </TR>
 
@@ -1936,11 +1863,11 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#setStyleAttrib">setStyleAttrib</A></B>(elm, name, value)
+	       <A HREF="#setStyleAttrib">setStyleAttrib</A></B>(&lt;HTMLElement&gt; elm, &lt;string&gt; name, &lt;string&gt; value)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Sets a style attribute item value.
       </TD>
    </TR>
 
@@ -1953,11 +1880,11 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#setupContent">setupContent</A></B>(editor_id)
+	       <A HREF="#setupContent">setupContent</A></B>(&lt;string&gt; editor_id)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Setups the contents of TinyMCE editor instance and fills it with contents.
       </TD>
    </TR>
 
@@ -1970,28 +1897,28 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#setWindowArg">setWindowArg</A></B>(name, value)
+	       <A HREF="#setWindowArg">setWindowArg</A></B>(&lt;string&gt; n, &lt;string&gt; v)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Sets the window argument to be passed to TinyMCE popup.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
 	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
+	    <CODE>&nbsp;string</CODE>
 	 </FONT>
       </TD>
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#storeAwayURLs">storeAwayURLs</A></B>(s)
+	       <A HREF="#storeAwayURLs">storeAwayURLs</A></B>(&lt;string&gt; s)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Stores away the src and href attribute values in separate mce_src and mce_href attributes.
       </TD>
    </TR>
 
@@ -2008,7 +1935,8 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Piggyback onsubmit event handler function, this will remove/hide the TinyMCE specific form elements
+ call triggerSave to fill the textarea with the correct contents then call the old piggy backed event handler.
       </TD>
    </TR>
 
@@ -2021,11 +1949,11 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#switchClass">switchClass</A></B>(ei, c)
+	       <A HREF="#switchClass">switchClass</A></B>(&lt;HTMLElement&gt; ei, &lt;string&gt; c)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Switches the CSS class of the specified element.
       </TD>
    </TR>
 
@@ -2038,11 +1966,11 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#triggerNodeChange">triggerNodeChange</A></B>(focus, setup_content)
+	       <A HREF="#triggerNodeChange">triggerNodeChange</A></B>(&lt;boolean&gt; focus, &lt;boolean&gt; setup_content)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Triggers a nodeChange event to every theme and plugin.
       </TD>
    </TR>
 
@@ -2055,28 +1983,29 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#triggerSave">triggerSave</A></B>(skip_cleanup, skip_callback)
+	       <A HREF="#triggerSave">triggerSave</A></B>(&lt;boolean&gt; skip_cleanup, &lt;boolean&gt; skip_callback)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Moves the contents from a TinyMCE editor control instance to the hidden textarea
+ that got replaced with TinyMCE.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
 	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
+	    <CODE>&nbsp;string</CODE>
 	 </FONT>
       </TD>
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#trim">trim</A></B>(str)
+	       <A HREF="#trim">trim</A></B>(&lt;string&gt; s)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Removes all prefix, suffix whitespace of a string.
       </TD>
    </TR>
 
@@ -2093,7 +2022,7 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Unload document event handler function.
       </TD>
    </TR>
 
@@ -2106,11 +2035,11 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#updateContent">updateContent</A></B>(form_element_name)
+	       <A HREF="#updateContent">updateContent</A></B>(&lt;string&gt; form_element_name)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 
+	 Moves the contents from the hidden textarea to the editor that gets inserted.
       </TD>
    </TR>
 
@@ -2132,6 +2061,15 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       </TR>
    </TABLE>
 
+   
+   <A NAME="buttonMap"><!-- --></A>
+   <H3>buttonMap</H3>
+   <PRE>Object&nbsp;<B>buttonMap</B></PRE>
+   <UL>
+   
+   
+   </UL>
+   <HR>
    
    <A NAME="configs"><!-- --></A>
    <H3>configs</H3>
@@ -2412,54 +2350,6 @@ TinyMCE_Engine</H3>
 
 <!-- One single method detail entry -->
 
-   <A NAME="_cleanupHTML"><!-- --></A>
-   <H3>_cleanupHTML</H3>
-   <PRE>Object <B>_cleanupHTML</B>(inst, doc, config, element, visual, on_save, on_submit)</PRE>
-   
-
-   <!-- METHOD PARAMETERS START -->
-   
-   <!-- METHOD PARAMETERS END -->
-
-   
-
-   <!-- ADDITIONAL ATTRIBUTES START -->
-   
-   <!-- ADDITIONAL ATTRIBUTES  END -->
-<HR>
-
-   <A NAME="_createIFrame"><!-- --></A>
-   <H3>_createIFrame</H3>
-   <PRE>Object <B>_createIFrame</B>(replace_element)</PRE>
-   
-
-   <!-- METHOD PARAMETERS START -->
-   
-   <!-- METHOD PARAMETERS END -->
-
-   
-
-   <!-- ADDITIONAL ATTRIBUTES START -->
-   
-   <!-- ADDITIONAL ATTRIBUTES  END -->
-<HR>
-
-   <A NAME="_customCleanup"><!-- --></A>
-   <H3>_customCleanup</H3>
-   <PRE>Object <B>_customCleanup</B>(inst, type, content)</PRE>
-   
-
-   <!-- METHOD PARAMETERS START -->
-   
-   <!-- METHOD PARAMETERS END -->
-
-   
-
-   <!-- ADDITIONAL ATTRIBUTES START -->
-   
-   <!-- ADDITIONAL ATTRIBUTES  END -->
-<HR>
-
    <A NAME="_getElementById"><!-- --></A>
    <H3>_getElementById</H3>
    <PRE>HTMLElement <B>_getElementById</B>(&lt;string&gt; id)</PRE>
@@ -2493,44 +2383,49 @@ TinyMCE_Engine</H3>
    <!-- ADDITIONAL ATTRIBUTES  END -->
 <HR>
 
-   <A NAME="_setEventsEnabled"><!-- --></A>
-   <H3>_setEventsEnabled</H3>
-   <PRE>Object <B>_setEventsEnabled</B>(node, state)</PRE>
-   
-
-   <!-- METHOD PARAMETERS START -->
-   
-   <!-- METHOD PARAMETERS END -->
-
-   
-
-   <!-- ADDITIONAL ATTRIBUTES START -->
-   
-   <!-- ADDITIONAL ATTRIBUTES  END -->
-<HR>
-
-   <A NAME="_setHTML"><!-- --></A>
-   <H3>_setHTML</H3>
-   <PRE>void <B>_setHTML</B>(doc, html_content)</PRE>
-   
-
-   <!-- METHOD PARAMETERS START -->
-   
-   <!-- METHOD PARAMETERS END -->
-
-   
-
-   <!-- ADDITIONAL ATTRIBUTES START -->
-   
-   <!-- ADDITIONAL ATTRIBUTES  END -->
-<HR>
-
    <A NAME="accessibleEventHandler"><!-- --></A>
    <H3>accessibleEventHandler</H3>
-   <PRE>void <B>accessibleEventHandler</B>(e)</PRE>
+   <PRE>Object <B>accessibleEventHandler</B>(&lt;DOMEvent&gt; e)</PRE>
+   
+      <UL>Accessibility handler that gets executed when the user hits a key in a select element.
+ This handler trams the enter/return or space key and then executes the onchange event handler.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
+   
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>e</CODE> -  DOM event object instance.
+      </UL> 
+   
+   </UL>
+   
+   <!-- METHOD PARAMETERS END -->
+
+   
+
+   <!-- ADDITIONAL ATTRIBUTES START -->
+   
+   <!-- ADDITIONAL ATTRIBUTES  END -->
+<HR>
+
+   <A NAME="addButtonMap"><!-- --></A>
+   <H3>addButtonMap</H3>
+   <PRE>void <B>addButtonMap</B>(&lt;string&gt; m)</PRE>
+   
+      <UL>Adds a list of buttons available in the tiled button image used by the button_tile_map option.</UL>
+   
+
+   <!-- METHOD PARAMETERS START -->
+   
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>m</CODE> -  Comma separated list of buttons that are available in tiled image. 	   
+      </UL> 
+   
+   </UL>
    
    <!-- METHOD PARAMETERS END -->
 
@@ -2543,10 +2438,26 @@ TinyMCE_Engine</H3>
 
    <A NAME="addEvent"><!-- --></A>
    <H3>addEvent</H3>
-   <PRE>void <B>addEvent</B>(o, n, h)</PRE>
+   <PRE>void <B>addEvent</B>(&lt;HTMLElement&gt; o, &lt;string&gt; n, &lt;function&gt; h)</PRE>
+   
+      <UL>Adds a event handler function to the specified object.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
+   
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>o</CODE> -  Object to add event handler to.  
+      </UL> 
+   
+     <UL><CODE>n</CODE> -  Event name to listen to for example "click".  
+      </UL> 
+   
+     <UL><CODE>h</CODE> -  Function handler to execute when event occurs.    
+      </UL> 
+   
+   </UL>
    
    <!-- METHOD PARAMETERS END -->
 
@@ -2559,10 +2470,20 @@ TinyMCE_Engine</H3>
 
    <A NAME="addEventHandlers"><!-- --></A>
    <H3>addEventHandlers</H3>
-   <PRE>void <B>addEventHandlers</B>(editor_id)</PRE>
+   <PRE>void <B>addEventHandlers</B>(&lt;string&gt; editor_id)</PRE>
+   
+      <UL>Adds the handleEvent function to the specified editor instance.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
+   
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>editor_id</CODE> -  Editor control instance to add event handler to.    
+      </UL> 
+   
+   </UL>
    
    <!-- METHOD PARAMETERS END -->
 
@@ -2575,10 +2496,26 @@ TinyMCE_Engine</H3>
 
    <A NAME="addMCEControl"><!-- --></A>
    <H3>addMCEControl</H3>
-   <PRE>void <B>addMCEControl</B>(replace_element, form_element_name, target_document)</PRE>
+   <PRE>void <B>addMCEControl</B>(&lt;HTMLElement&gt; replace_element, &lt;string&gt; form_element_name, &lt;DOMDocument&gt; target_document)</PRE>
+   
+      <UL>Adds a TinyMCE editor control instance to a specific form element.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
+   
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>replace_element</CODE> -  HTML element object to replace.  
+      </UL> 
+   
+     <UL><CODE>form_element_name</CODE> -  HTML form element name,  
+      </UL> 
+   
+     <UL><CODE>target_document</CODE> -  Target document that holds the element. 	   
+      </UL> 
+   
+   </UL>
    
    <!-- METHOD PARAMETERS END -->
 
@@ -2591,10 +2528,24 @@ TinyMCE_Engine</H3>
 
    <A NAME="addPlugin"><!-- --></A>
    <H3>addPlugin</H3>
-   <PRE>void <B>addPlugin</B>(n, p)</PRE>
+   <PRE>void <B>addPlugin</B>(n, &lt;TinyMCE_Plugin&gt; p)</PRE>
+   
+      <UL>Adds the specified plugin to the list of loaded plugins, this will also setup the baseURL
+ property of the plugin.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
+   
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>p</CODE> -  Plugin instance to add. 	   
+      </UL> 
+   
+     <UL><CODE>Plugin</CODE> -  name/id.  
+      </UL> 
+   
+   </UL>
    
    <!-- METHOD PARAMETERS END -->
 
@@ -2607,10 +2558,26 @@ TinyMCE_Engine</H3>
 
    <A NAME="addSelectAccessibility"><!-- --></A>
    <H3>addSelectAccessibility</H3>
-   <PRE>void <B>addSelectAccessibility</B>(e, s, w)</PRE>
+   <PRE>Object <B>addSelectAccessibility</B>(&lt;DOMEvent&gt; e, &lt;HTMLElement&gt; s, &lt;DOMWindow&gt; w)</PRE>
+   
+      <UL>Adds accessibility keydown handler to the specified select element.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
+   
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>e</CODE> -  Event that gets passed when the element is focused.  
+      </UL> 
+   
+     <UL><CODE>s</CODE> -  Select element that the keydown handler gets added to.  
+      </UL> 
+   
+     <UL><CODE>w</CODE> -  DOM window reference to add.
+      </UL> 
+   
+   </UL>
    
    <!-- METHOD PARAMETERS END -->
 
@@ -2623,10 +2590,23 @@ TinyMCE_Engine</H3>
 
    <A NAME="addTheme"><!-- --></A>
    <H3>addTheme</H3>
-   <PRE>void <B>addTheme</B>(n, t)</PRE>
+   <PRE>void <B>addTheme</B>(&l&lt;TinyMCE_Theme&gt; t;string&gt; n, t)</PRE>
+   
+      <UL>Adds the specified theme in to the list of loaded themes.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
+   
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>n</CODE> -  Theme name/id to add the object reference to.  
+      </UL> 
+   
+     <UL><CODE>t</CODE> -  Theme instance to add to the loaded list. 	   
+      </UL> 
+   
+   </UL>
    
    <!-- METHOD PARAMETERS END -->
 
@@ -2639,10 +2619,23 @@ TinyMCE_Engine</H3>
 
    <A NAME="addToLang"><!-- --></A>
    <H3>addToLang</H3>
-   <PRE>void <B>addToLang</B>(prefix, ar)</PRE>
+   <PRE>void <B>addToLang</B>(&lt;string&gt; prefix, &lt;Array&gt; ar)</PRE>
+   
+      <UL>Adds language items to the global language array.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
+   
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>prefix</CODE> -  Prefix string to add infront of every array item before adding it.  
+      </UL> 
+   
+     <UL><CODE>ar</CODE> -  Language item array to add to global language array. 	   
+      </UL> 
+   
+   </UL>
    
    <!-- METHOD PARAMETERS END -->
 
@@ -2691,7 +2684,7 @@ TinyMCE_Engine</H3>
 
    <A NAME="callFunc"><!-- --></A>
    <H3>callFunc</H3>
-   <PRE>Object <B>callFunc</B>(ins, p, n, m, a)</PRE>
+   <PRE>boolean <B>callFunc</B>(&lt;<&lt;Array&gt; a href="TinyMCE_Control.html">TinyMCE_Control</a>&gt; ins, &lt;string&gt; p, &lt;string&gt; n, &lt;int&gt; m, a)</PRE>
    
       <UL>Executes callback chain. Callback TinyMCE_Engine.prototype.order = Option; Plugins, Themes.</UL>
    
@@ -2701,19 +2694,32 @@ TinyMCE_Engine</H3>
    <UL>
    <B>Parameters:</B>
    
-     <UL><CODE>p</CODE> -  TinyMCE parameter.  
+     <UL><CODE>ins</CODE> -  TinyMCE editor control instance to execute callback on.  
       </UL> 
    
-     <UL><CODE>n</CODE> -  Function name.  
+     <UL><CODE>p</CODE> -  TinyMCE callback parameter name.  
       </UL> 
    
-     <UL><CODE>m</CODE> -  0 = no chain, 1 = event chain, 2 = exec command chain
+     <UL><CODE>n</CODE> -  Function name to execute.  
+      </UL> 
+   
+     <UL><CODE>m</CODE> -  Execution mode value, 0 = no chain, 1 = event chain, 2 = execcommand chain.  
+      </UL> 
+   
+     <UL><CODE>a</CODE> -  Array with function arguments.  
       </UL> 
    
    </UL>
    
    <!-- METHOD PARAMETERS END -->
 
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        true - if the callback was executed, false if it wasn't.   
+        </UL>
+   </UL>
    
 
    <!-- ADDITIONAL ATTRIBUTES START -->
@@ -2723,10 +2729,20 @@ TinyMCE_Engine</H3>
 
    <A NAME="cancelEvent"><!-- --></A>
    <H3>cancelEvent</H3>
-   <PRE>void <B>cancelEvent</B>(e)</PRE>
+   <PRE>void <B>cancelEvent</B>(&lt;DOMEvent&gt; e)</PRE>
+   
+      <UL>Cancels the specified event, this will disable the event from be passed to other listeners in event chain.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
+   
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>e</CODE> -  Event to cancel.    
+      </UL> 
+   
+   </UL>
    
    <!-- METHOD PARAMETERS END -->
 
@@ -2739,10 +2755,21 @@ TinyMCE_Engine</H3>
 
    <A NAME="cleanupAnchors"><!-- --></A>
    <H3>cleanupAnchors</H3>
-   <PRE>void <B>cleanupAnchors</B>(doc)</PRE>
+   <PRE>void <B>cleanupAnchors</B>(&lt;DOMDocument&gt; doc)</PRE>
+   
+      <UL>Moves the contents of a anchor outside and after the anchor. Only if the anchor doesn't
+ have a href.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
+   
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>doc</CODE> -  DOM document instance to fix anchors in.    
+      </UL> 
+   
+   </UL>
    
    <!-- METHOD PARAMETERS END -->
 
@@ -2755,13 +2782,31 @@ TinyMCE_Engine</H3>
 
    <A NAME="cleanupEventStr"><!-- --></A>
    <H3>cleanupEventStr</H3>
-   <PRE>Object <B>cleanupEventStr</B>(str)</PRE>
+   <PRE>string <B>cleanupEventStr</B>(&lt;string&gt; s)</PRE>
+   
+      <UL>Removes MSIE 5.5 specific event wrapper function form a event string.
+ This will also remove the event blocker if it's added in front of the event.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
    
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>s</CODE> -  String to replace event data in.  
+      </UL> 
+   
+   </UL>
+   
    <!-- METHOD PARAMETERS END -->
 
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        Replaced string value.   
+        </UL>
+   </UL>
    
 
    <!-- ADDITIONAL ATTRIBUTES START -->
@@ -2771,24 +2816,36 @@ TinyMCE_Engine</H3>
 
    <A NAME="cleanupHTMLCode"><!-- --></A>
    <H3>cleanupHTMLCode</H3>
-   <PRE>Object <B>cleanupHTMLCode</B>(s)</PRE>
+   <PRE>string <B>cleanupHTMLCode</B>(&lt;string&gt; s)</PRE>
    
-      <UL>$RCSfile: TinyMCE_Engine.html,v $
- $Revision: 1.7 $
- $Date: 2006/02/10 21:34:08 $</UL>
+      <UL>Makes some preprocessing cleanup routines on the specified HTML string.
+ This includes forcing some tags to be open so MSIE doesn't fail. Forcing other to close and
+ padding paragraphs with non breaking spaces. This function is used when the editor gets
+ initialized with content.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
    
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>s</CODE> -  HTML string to cleanup.  
+      </UL> 
+   
+   </UL>
+   
    <!-- METHOD PARAMETERS END -->
 
    
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        Cleaned HTML string.   
+        </UL>
+   </UL>
+   
 
    <!-- ADDITIONAL ATTRIBUTES START -->
-   
-   <UL>   
-   <B>Author:</B> Moxiecode  <BR/>
-   </UL>
    
    <!-- ADDITIONAL ATTRIBUTES  END -->
 <HR>
@@ -2830,10 +2887,21 @@ TinyMCE_Engine</H3>
 
    <A NAME="closeWindow"><!-- --></A>
    <H3>closeWindow</H3>
-   <PRE>void <B>closeWindow</B>(win)</PRE>
+   <PRE>void <B>closeWindow</B>(&lt;DOMWindow&gt; win)</PRE>
+   
+      <UL>Closes the specified window. This function is deprecated and should be replaced with
+ tinyMCEPopup.close();.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
+   
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>win</CODE> -  Window reference to close.  
+      </UL> 
+   
+   </UL>
    
    <!-- METHOD PARAMETERS END -->
 
@@ -2841,15 +2909,40 @@ TinyMCE_Engine</H3>
 
    <!-- ADDITIONAL ATTRIBUTES START -->
    
+   <UL>   
+   <B>Deprecated</B> <I></I><BR/><BR/>
+   </UL>
+   
    <!-- ADDITIONAL ATTRIBUTES  END -->
 <HR>
 
    <A NAME="compressStyle"><!-- --></A>
    <H3>compressStyle</H3>
-   <PRE>void <B>compressStyle</B>(ar, pr, sf, res)</PRE>
+   <PRE>void <B>compressStyle</B>(&lt;Array&gt; ar, &lt;string&gt; pr, &lt;string&gt; sf, &lt;string&gt; res)</PRE>
+   
+      <UL>Compresses larger styles into a smaller. Since MSIE automaticly converts
+ border: 1px solid red to border-left: 1px solid red, border-righ: 1px solid red and so forth.'
+ This will bundle them together again if the information is the same in each item.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
+   
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>ar</CODE> -  Style name/value array with items.  
+      </UL> 
+   
+     <UL><CODE>pr</CODE> -  Style item prefix to bundle for example border.  
+      </UL> 
+   
+     <UL><CODE>sf</CODE> -  Style item suffix to bunlde for example -width or -width.  
+      </UL> 
+   
+     <UL><CODE>res</CODE> -  Result name, for example border-width.    
+      </UL> 
+   
+   </UL>
    
    <!-- METHOD PARAMETERS END -->
 
@@ -2862,10 +2955,24 @@ TinyMCE_Engine</H3>
 
    <A NAME="confirmAdd"><!-- --></A>
    <H3>confirmAdd</H3>
-   <PRE>void <B>confirmAdd</B>(e, settings)</PRE>
+   <PRE>void <B>confirmAdd</B>(&lt;DOMEvent&gt; e, &lt;Array&gt; settings)</PRE>
+   
+      <UL>Displays a confirm dialog when a user clicks/focus a textarea that is to be converted into
+ a TinyMCE instance.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
+   
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>e</CODE> -  DOM event instance.  
+      </UL> 
+   
+     <UL><CODE>settings</CODE> -  Name/Value array of initialization settings. 	   
+      </UL> 
+   
+   </UL>
    
    <!-- METHOD PARAMETERS END -->
 
@@ -2878,15 +2985,33 @@ TinyMCE_Engine</H3>
 
    <A NAME="convertAbsoluteURLToRelativeURL"><!-- --></A>
    <H3>convertAbsoluteURLToRelativeURL</H3>
-   <PRE>Object <B>convertAbsoluteURLToRelativeURL</B>(base_url, url_to_relative)</PRE>
+   <PRE>string <B>convertAbsoluteURLToRelativeURL</B>(&lt;string&gt; base_url, &lt;string&gt; url_to_relative)</PRE>
    
       <UL>Converts an absolute path to relative path.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
    
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>base_url</CODE> -  URL to make as a base path, URLs will be converted relative from this point.  
+      </UL> 
+   
+     <UL><CODE>url_to_relative</CODE> -  URL to convert into a relative URL.  
+      </UL> 
+   
+   </UL>
+   
    <!-- METHOD PARAMETERS END -->
 
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        Relative URL based in input.   
+        </UL>
+   </UL>
    
 
    <!-- ADDITIONAL ATTRIBUTES START -->
@@ -2896,10 +3021,21 @@ TinyMCE_Engine</H3>
 
    <A NAME="convertAllRelativeURLs"><!-- --></A>
    <H3>convertAllRelativeURLs</H3>
-   <PRE>void <B>convertAllRelativeURLs</B>(body)</PRE>
+   <PRE>void <B>convertAllRelativeURLs</B>(&lt;HTMLElement&gt; body)</PRE>
+   
+      <UL>Converts all img and a element URLs to absolute URLs. This will use the mce_src or mce_href attribute values
+ if they are provided. This function is used when the editor is initialized.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
+   
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>body</CODE> -  HTML element to convert all URLs in.    
+      </UL> 
+   
+   </UL>
    
    <!-- METHOD PARAMETERS END -->
 
@@ -2912,10 +3048,21 @@ TinyMCE_Engine</H3>
 
    <A NAME="convertFontsToSpans"><!-- --></A>
    <H3>convertFontsToSpans</H3>
-   <PRE>void <B>convertFontsToSpans</B>(doc)</PRE>
+   <PRE>void <B>convertFontsToSpans</B>(&lt;DOMDocument&gt; doc)</PRE>
+   
+      <UL>Convers fonts to spans in the specified document.
+ Todo: Move this function into a XHTML plugin or simmilar.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
+   
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>doc</CODE> -  Document instance to convert fonts in.    
+      </UL> 
+   
+   </UL>
    
    <!-- METHOD PARAMETERS END -->
 
@@ -2928,13 +3075,30 @@ TinyMCE_Engine</H3>
 
    <A NAME="convertHexToRGB"><!-- --></A>
    <H3>convertHexToRGB</H3>
-   <PRE>Object <B>convertHexToRGB</B>(s)</PRE>
+   <PRE>string <B>convertHexToRGB</B>(&lt;string&gt; s)</PRE>
+   
+      <UL>Returns a rgb(n,n,n) string from a hexadecimal value.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
    
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>s</CODE> -  Hexadecimal string to parse.  
+      </UL> 
+   
+   </UL>
+   
    <!-- METHOD PARAMETERS END -->
 
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        rgb(n,n,n) string from a hexadecimal value.   
+        </UL>
+   </UL>
    
 
    <!-- ADDITIONAL ATTRIBUTES START -->
@@ -2944,13 +3108,33 @@ TinyMCE_Engine</H3>
 
    <A NAME="convertRelativeToAbsoluteURL"><!-- --></A>
    <H3>convertRelativeToAbsoluteURL</H3>
-   <PRE>Object <B>convertRelativeToAbsoluteURL</B>(base_url, relative_url)</PRE>
+   <PRE>string <B>convertRelativeToAbsoluteURL</B>(&lt;string&gt; base_url, &lt;string&gt; relative_url)</PRE>
+   
+      <UL>Converts an relative path to absolute path.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
    
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>base_url</CODE> -  URL to make as a base path, URLs will be converted absolute from this point.  
+      </UL> 
+   
+     <UL><CODE>relative_url</CODE> -  URL to convert into a absolute URL.  
+      </UL> 
+   
+   </UL>
+   
    <!-- METHOD PARAMETERS END -->
 
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        Absolute URL based in input.   
+        </UL>
+   </UL>
    
 
    <!-- ADDITIONAL ATTRIBUTES START -->
@@ -2960,13 +3144,33 @@ TinyMCE_Engine</H3>
 
    <A NAME="convertRGBToHex"><!-- --></A>
    <H3>convertRGBToHex</H3>
-   <PRE>Object <B>convertRGBToHex</B>(s, k)</PRE>
+   <PRE>string <B>convertRGBToHex</B>(&lt;string&gt; s, &lt;boolean&gt; k)</PRE>
+   
+      <UL>Returns a hexadecimal version of the specified rgb(1,2,3) string.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
    
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>s</CODE> -  RGB string to parse, if this doesn't isn't a rgb(n,n,n) it will passthrough the string.  
+      </UL> 
+   
+     <UL><CODE>k</CODE> -  Keep before/after contents. If enabled contents before after the rgb(n,n,n) will be intact.  
+      </UL> 
+   
+   </UL>
+   
    <!-- METHOD PARAMETERS END -->
 
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        Hexadecimal version of the specified rgb(1,2,3) string.   
+        </UL>
+   </UL>
    
 
    <!-- ADDITIONAL ATTRIBUTES START -->
@@ -2976,10 +3180,21 @@ TinyMCE_Engine</H3>
 
    <A NAME="convertSpansToFonts"><!-- --></A>
    <H3>convertSpansToFonts</H3>
-   <PRE>void <B>convertSpansToFonts</B>(doc)</PRE>
+   <PRE>void <B>convertSpansToFonts</B>(&lt;DOMDocument&gt; doc)</PRE>
+   
+      <UL>Converts span elements to font elements in the specified document instance.
+ Todo: Move this function into a XHTML plugin or simmilar.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
+   
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>doc</CODE> -  Document instance to convert spans in.    
+      </UL> 
+   
+   </UL>
    
    <!-- METHOD PARAMETERS END -->
 
@@ -2992,13 +3207,36 @@ TinyMCE_Engine</H3>
 
    <A NAME="convertURL"><!-- --></A>
    <H3>convertURL</H3>
-   <PRE>Object <B>convertURL</B>(url, node, on_save)</PRE>
+   <PRE>string <B>convertURL</B>(&lt;string&gt; url, &lt;HTMLElement&gt; node, &lt;boolean&gt; on_save)</PRE>
+   
+      <UL>Converts the specified URL based in TinyMCE configuration settings.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
    
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>url</CODE> -  URL to convert based on config.  
+      </UL> 
+   
+     <UL><CODE>node</CODE> -  HTML element that holds the URL.  
+      </UL> 
+   
+     <UL><CODE>on_save</CODE> -  Is this convertion the final output URL.  
+      </UL> 
+   
+   </UL>
+   
    <!-- METHOD PARAMETERS END -->
 
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        Converted URL string.   
+        </UL>
+   </UL>
    
 
    <!-- ADDITIONAL ATTRIBUTES START -->
@@ -3034,13 +3272,37 @@ TinyMCE_Engine</H3>
 
    <A NAME="dispatchCallback"><!-- --></A>
    <H3>dispatchCallback</H3>
-   <PRE>Object <B>dispatchCallback</B>(i, p, n)</PRE>
+   <PRE>Object <B>dispatchCallback</B>(&lt;<a href="TinyMCE_Control.html">TinyMCE_Control</a>&gt; i, &lt;string&gt; p, &lt;string&gt; n)</PRE>
+   
+      <UL>Dispatches the specified callback on all options, plugins and themes. This will not
+ chain them, so all functions callbacks will be executed regardless if the return true/false.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
    
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>i</CODE> -  TinyMCE editor control instance to execute callback on.  
+      </UL> 
+   
+     <UL><CODE>p</CODE> -  TinyMCE callback parameter to execute.  
+      </UL> 
+   
+     <UL><CODE>n</CODE> -  Function name to execute.  
+      </UL> 
+   
+   </UL>
+   
    <!-- METHOD PARAMETERS END -->
 
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        true/false if they where dispatched. 
+        </UL>
+   </UL>
    
 
    <!-- ADDITIONAL ATTRIBUTES START -->
@@ -3050,13 +3312,30 @@ TinyMCE_Engine</H3>
 
    <A NAME="entityDecode"><!-- --></A>
    <H3>entityDecode</H3>
-   <PRE>Object <B>entityDecode</B>(s)</PRE>
+   <PRE>string <B>entityDecode</B>(&lt;string&gt; s)</PRE>
+   
+      <UL>HTML entity decode a string, replaces &lt; with <.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
    
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>s</CODE> -  Entity string to decode into normal string.  
+      </UL> 
+   
+   </UL>
+   
    <!-- METHOD PARAMETERS END -->
 
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        Entity decoded string.   
+        </UL>
+   </UL>
    
 
    <!-- ADDITIONAL ATTRIBUTES START -->
@@ -3066,29 +3345,36 @@ TinyMCE_Engine</H3>
 
    <A NAME="evalFunc"><!-- --></A>
    <H3>evalFunc</H3>
-   <PRE>Object <B>evalFunc</B>(f, idx, a)</PRE>
+   <PRE>object <B>evalFunc</B>(&lt;string&gt; f, &lt;int&gt; idx, &lt;Array&gt; a)</PRE>
+   
+      <UL>Evaluates the specified function and uses the array of arguments.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
    
-   <!-- METHOD PARAMETERS END -->
-
+   <UL>
+   <B>Parameters:</B>
    
-
-   <!-- ADDITIONAL ATTRIBUTES START -->
+     <UL><CODE>f</CODE> -  Function reference to execute.  
+      </UL> 
    
-   <!-- ADDITIONAL ATTRIBUTES  END -->
-<HR>
-
-   <A NAME="eventPatch"><!-- --></A>
-   <H3>eventPatch</H3>
-   <PRE>Object <B>eventPatch</B>(editor_id)</PRE>
+     <UL><CODE>idx</CODE> -  Index in array to start grabbing arguments from.  
+      </UL> 
    
-
-   <!-- METHOD PARAMETERS START -->
+     <UL><CODE>a</CODE> -  Array of function arguments.  
+      </UL> 
+   
+   </UL>
    
    <!-- METHOD PARAMETERS END -->
 
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        Value returned from the evaluated function.   
+        </UL>
+   </UL>
    
 
    <!-- ADDITIONAL ATTRIBUTES START -->
@@ -3098,10 +3384,27 @@ TinyMCE_Engine</H3>
 
    <A NAME="execCommand"><!-- --></A>
    <H3>execCommand</H3>
-   <PRE>void <B>execCommand</B>(command, user_interface, value)</PRE>
+   <PRE>void <B>execCommand</B>(&lt;string&gt; command, &lt;boolean&gt; user_interface, &lt;object&gt; value)</PRE>
+   
+      <UL>Executes a command on the selected or last selected TinyMCE editor control instance. This function also handles
+ some non instance specific commands like mceAddControl, mceRemoveControl, mceHelp or mceFocus.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
+   
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>command</CODE> -  Command name to execute, for example mceLink or Bold.  
+      </UL> 
+   
+     <UL><CODE>user_interface</CODE> -  True/false state if a UI (dialog) should be presented or not.  
+      </UL> 
+   
+     <UL><CODE>value</CODE> -  Optional command value, this can be anything. 	   
+      </UL> 
+   
+   </UL>
    
    <!-- METHOD PARAMETERS END -->
 
@@ -3114,13 +3417,37 @@ TinyMCE_Engine</H3>
 
    <A NAME="execCommandCallback"><!-- --></A>
    <H3>execCommandCallback</H3>
-   <PRE>Object <B>execCommandCallback</B>(i, p, n)</PRE>
+   <PRE>Object <B>execCommandCallback</B>(&lt;<a href="TinyMCE_Control.html">TinyMCE_Control</a>&gt; i, &lt;string&gt; p, &lt;string&gt; n)</PRE>
+   
+      <UL>Executes the specified execcommand callback on all options, plugins and themes. This will
+ chain them, so callback chain will be broken if one function returns true.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
    
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>i</CODE> -  TinyMCE editor control instance to execute callback on.  
+      </UL> 
+   
+     <UL><CODE>p</CODE> -  TinyMCE callback parameter to execute.  
+      </UL> 
+   
+     <UL><CODE>n</CODE> -  Function name to execute.  
+      </UL> 
+   
+   </UL>
+   
    <!-- METHOD PARAMETERS END -->
 
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        true/false if a callback was executed. 
+        </UL>
+   </UL>
    
 
    <!-- ADDITIONAL ATTRIBUTES START -->
@@ -3130,10 +3457,32 @@ TinyMCE_Engine</H3>
 
    <A NAME="execInstanceCommand"><!-- --></A>
    <H3>execInstanceCommand</H3>
-   <PRE>void <B>execInstanceCommand</B>(editor_id, command, user_interface, value, focus)</PRE>
+   <PRE>void <B>execInstanceCommand</B>(&lt;string&gt; editor_id, &lt;string&gt; command, &lt;boolean&gt; user_interface, &lt;object&gt; value, &lt;boolean&gt; focus)</PRE>
+   
+      <UL>Executes a command on a specific editor instance by id.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
+   
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>editor_id</CODE> -  TinyMCE editor control instance id to perform comman on.  
+      </UL> 
+   
+     <UL><CODE>command</CODE> -  Command name to execute, for example mceLink or Bold.  
+      </UL> 
+   
+     <UL><CODE>user_interface</CODE> -  True/false state if a UI (dialog) should be presented or not.  
+      </UL> 
+   
+     <UL><CODE>value</CODE> -  Optional command value, this can be anything.  
+      </UL> 
+   
+     <UL><CODE>focus</CODE> -  True/false if the editor instance should be focused first. 	   
+      </UL> 
+   
+   </UL>
    
    <!-- METHOD PARAMETERS END -->
 
@@ -3146,13 +3495,37 @@ TinyMCE_Engine</H3>
 
    <A NAME="executeCallback"><!-- --></A>
    <H3>executeCallback</H3>
-   <PRE>Object <B>executeCallback</B>(i, p, n)</PRE>
+   <PRE>Object <B>executeCallback</B>(&lt;<a href="TinyMCE_Control.html">TinyMCE_Control</a>&gt; i, &lt;string&gt; p, &lt;string&gt; n)</PRE>
+   
+      <UL>Executes the specified callback on all options, plugins and themes. This will
+ chain them, so callback chain will be broken if one function returns false.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
    
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>i</CODE> -  TinyMCE editor control instance to execute callback on.  
+      </UL> 
+   
+     <UL><CODE>p</CODE> -  TinyMCE callback parameter to execute.  
+      </UL> 
+   
+     <UL><CODE>n</CODE> -  Function name to execute.  
+      </UL> 
+   
+   </UL>
+   
    <!-- METHOD PARAMETERS END -->
 
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        true/false if a callback was executed. 
+        </UL>
+   </UL>
    
 
    <!-- ADDITIONAL ATTRIBUTES START -->
@@ -3162,13 +3535,38 @@ TinyMCE_Engine</H3>
 
    <A NAME="fixGeckoBaseHREFBug"><!-- --></A>
    <H3>fixGeckoBaseHREFBug</H3>
-   <PRE>Object <B>fixGeckoBaseHREFBug</B>(m, e, h)</PRE>
+   <PRE>string <B>fixGeckoBaseHREFBug</B>(&lt;boolean&gt; m, &lt;HTMLElement&gt; e, &lt;string&gt; h)</PRE>
+   
+      <UL>Fixes a Gecko specific bug where href, src attribute values gets converted incorrectly
+ when inserted into editor. This function will replace all src, href with xsrc and xhref
+ to keep the values from chaging when they get inserted.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
    
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>m</CODE> -  Mode state, true is to replace the src, href attributes to xsrc and xhref.  
+      </UL> 
+   
+     <UL><CODE>e</CODE> -  HTML element to replace them in. (Will be used if m is 0)  
+      </UL> 
+   
+     <UL><CODE>h</CODE> -  HTML code to replace them in. (Will be used if m is 1)  
+      </UL> 
+   
+   </UL>
+   
    <!-- METHOD PARAMETERS END -->
 
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        Converted string or the specified HTML value depending on mode.   
+        </UL>
+   </UL>
    
 
    <!-- ADDITIONAL ATTRIBUTES START -->
@@ -3178,13 +3576,31 @@ TinyMCE_Engine</H3>
 
    <A NAME="getAbsPosition"><!-- --></A>
    <H3>getAbsPosition</H3>
-   <PRE>Object <B>getAbsPosition</B>(n)</PRE>
+   <PRE>TinyMCE_ElementPosition <B>getAbsPosition</B>(&lt;HTMLNode&gt; n)</PRE>
+   
+      <UL>Returns the absolute x, y position of a node. The position will be returned in a object with
+ two properties absLeft and absTop.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
    
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>n</CODE> -  HTML element to get x, y position from.  
+      </UL> 
+   
+   </UL>
+   
    <!-- METHOD PARAMETERS END -->
 
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        Absolute position of the specified element.   
+        </UL>
+   </UL>
    
 
    <!-- ADDITIONAL ATTRIBUTES START -->
@@ -3194,13 +3610,36 @@ TinyMCE_Engine</H3>
 
    <A NAME="getAttrib"><!-- --></A>
    <H3>getAttrib</H3>
-   <PRE>Object <B>getAttrib</B>(elm, name, default_value)</PRE>
+   <PRE>string <B>getAttrib</B>(&lt;HTMLElement&gt; elm, &lt;string&gt; name, &lt;string&gt; default_value)</PRE>
+   
+      <UL>Returns the attribute value of a element or the default value if it wasn't found.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
    
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>elm</CODE> -  HTML element to get attribute from.  
+      </UL> 
+   
+     <UL><CODE>name</CODE> -  Attribute name to retrive.  
+      </UL> 
+   
+     <UL><CODE>default_value</CODE> -  Optional default value to return, this value defaults to a empty string.  
+      </UL> 
+   
+   </UL>
+   
    <!-- METHOD PARAMETERS END -->
 
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        Attribute value or default value if it wasn't found in element.   
+        </UL>
+   </UL>
    
 
    <!-- ADDITIONAL ATTRIBUTES START -->
@@ -3210,13 +3649,45 @@ TinyMCE_Engine</H3>
 
    <A NAME="getButtonHTML"><!-- --></A>
    <H3>getButtonHTML</H3>
-   <PRE>Object <B>getButtonHTML</B>(id, lang, img, cmd, ui, val)</PRE>
+   <PRE>string <B>getButtonHTML</B>(&lt;string&gt; id, &lt;string&gt; lang, &lt;string&gt; img, &lt;string&gt; cmd, &lt;string&gt; ui, &lt;string&gt; val)</PRE>
+   
+      <UL>Returns the HTML code for a normal button control.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
    
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>id</CODE> -  Button control id, this will be the suffix for the element id, the prefix is the editor id.  
+      </UL> 
+   
+     <UL><CODE>lang</CODE> -  Language variable key name to insert as the title/alt of the button image.  
+      </UL> 
+   
+     <UL><CODE>img</CODE> -  Image URL to insert, {$themeurl} and {$pluginurl} will be replaced.  
+      </UL> 
+   
+     <UL><CODE>cmd</CODE> -  Command to execute when the user clicks the button.  
+      </UL> 
+   
+     <UL><CODE>ui</CODE> -  Optional user interface boolean for command.  
+      </UL> 
+   
+     <UL><CODE>val</CODE> -  Optional value for command.  
+      </UL> 
+   
+   </UL>
+   
    <!-- METHOD PARAMETERS END -->
 
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        HTML code for a normal button based in input information.   
+        </UL>
+   </UL>
    
 
    <!-- ADDITIONAL ATTRIBUTES START -->
@@ -3226,13 +3697,30 @@ TinyMCE_Engine</H3>
 
    <A NAME="getContent"><!-- --></A>
    <H3>getContent</H3>
-   <PRE>Object <B>getContent</B>(editor_id)</PRE>
+   <PRE>string <B>getContent</B>(&lt;string&gt; editor_id)</PRE>
+   
+      <UL>Returns the HTML contents of the specified editor instance id.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
    
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>editor_id</CODE> -  Editor instance id to retrive HTML code from.  
+      </UL> 
+   
+   </UL>
+   
    <!-- METHOD PARAMETERS END -->
 
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        HTML contents of editor id or null if it wasn't found.   
+        </UL>
+   </UL>
    
 
    <!-- ADDITIONAL ATTRIBUTES START -->
@@ -3242,13 +3730,32 @@ TinyMCE_Engine</H3>
 
    <A NAME="getControlHTML"><!-- --></A>
    <H3>getControlHTML</H3>
-   <PRE>Object <B>getControlHTML</B>(c)</PRE>
+   <PRE>string <B>getControlHTML</B>(&lt;string&gt; c)</PRE>
+   
+      <UL>Returns the HTML for the specified control this will loop through
+ the theme and all plugins inorder to find the control. The callback for each
+ theme and plugin is called getControlHTML.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
    
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>c</CODE> -  Control name/id to get HTML code for.  
+      </UL> 
+   
+   </UL>
+   
    <!-- METHOD PARAMETERS END -->
 
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        HTML code for the specified control or empty string if it wasn't found.   
+        </UL>
+   </UL>
    
 
    <!-- ADDITIONAL ATTRIBUTES START -->
@@ -3258,13 +3765,34 @@ TinyMCE_Engine</H3>
 
    <A NAME="getCSSClasses"><!-- --></A>
    <H3>getCSSClasses</H3>
-   <PRE>Object <B>getCSSClasses</B>(editor_id, doc)</PRE>
+   <PRE>Array <B>getCSSClasses</B>(&lt;string&gt; editor_id, &lt;DOMDocument&gt; doc)</PRE>
+   
+      <UL>Returns a array of CSS classes that is available in a document.
+ TinyMCE_Engine.prototype.Todo = Fix;this one, it's so ugly. :)</UL>
    
 
    <!-- METHOD PARAMETERS START -->
    
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>editor_id</CODE> -  Editor id to get CSS classes from.  
+      </UL> 
+   
+     <UL><CODE>doc</CODE> -  DOM document to get the CSS classes from.  
+      </UL> 
+   
+   </UL>
+   
    <!-- METHOD PARAMETERS END -->
 
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        Array of CSS classes that is available in a document.   
+        </UL>
+   </UL>
    
 
    <!-- ADDITIONAL ATTRIBUTES START -->
@@ -3274,13 +3802,30 @@ TinyMCE_Engine</H3>
 
    <A NAME="getEditorId"><!-- --></A>
    <H3>getEditorId</H3>
-   <PRE>Object <B>getEditorId</B>(form_element)</PRE>
+   <PRE>string <B>getEditorId</B>(&lt;string&gt; form_element)</PRE>
+   
+      <UL>Returns the editor instance id of a specific form element.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
    
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>form_element</CODE> -  Form element name to get instance id for.  
+      </UL> 
+   
+   </UL>
+   
    <!-- METHOD PARAMETERS END -->
 
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        TinyMCE editor instance id or null if it wasn't found.   
+        </UL>
+   </UL>
    
 
    <!-- ADDITIONAL ATTRIBUTES START -->
@@ -3374,13 +3919,30 @@ TinyMCE_Engine</H3>
 
    <A NAME="getInstanceById"><!-- --></A>
    <H3>getInstanceById</H3>
-   <PRE>Object <B>getInstanceById</B>(editor_id)</PRE>
+   <PRE><a href="TinyMCE_Control.html">TinyMCE_Control</a> <B>getInstanceById</B>(&lt;string&gt; editor_id)</PRE>
+   
+      <UL>Returns a TinyMCE editor instance by the specified editor id or null if it wasn't found.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
    
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>editor_id</CODE> -  Editor id to get instance for.  
+      </UL> 
+   
+   </UL>
+   
    <!-- METHOD PARAMETERS END -->
 
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        TinyMCE editor control instance or null if it wasn't found.   
+        </UL>
+   </UL>
    
 
    <!-- ADDITIONAL ATTRIBUTES START -->
@@ -3390,13 +3952,36 @@ TinyMCE_Engine</H3>
 
    <A NAME="getLang"><!-- --></A>
    <H3>getLang</H3>
-   <PRE>Object <B>getLang</B>(name, default_value, parse_entities)</PRE>
+   <PRE>object <B>getLang</B>(&lt;string&gt; name, &lt;string&gt; default_value, &lt;boolean&gt; parse_entities)</PRE>
+   
+      <UL>Returns a language variable value from the language packs.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
    
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>name</CODE> -  Name of the key to retrive.  
+      </UL> 
+   
+     <UL><CODE>default_value</CODE> -  Optional default value to return if it wasn't found.  
+      </UL> 
+   
+     <UL><CODE>parse_entities</CODE> -  Is HTML entities to be resolved or not.  
+      </UL> 
+   
+   </UL>
+   
    <!-- METHOD PARAMETERS END -->
 
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        Language string value could be a number if it's a relative dimenstion.   
+        </UL>
+   </UL>
    
 
    <!-- ADDITIONAL ATTRIBUTES START -->
@@ -3482,13 +4067,39 @@ TinyMCE_Engine</H3>
 
    <A NAME="getParam"><!-- --></A>
    <H3>getParam</H3>
-   <PRE>Object <B>getParam</B>(name, default_value, strip_whitespace, split_chr)</PRE>
+   <PRE>object <B>getParam</B>(&lt;string&gt; name, &lt;string&gt; default_value, &lt;boolean&gt; strip_whitespace, &lt;string&gt; split_chr)</PRE>
+   
+      <UL>Returns a specific configuration setting or the default value if it wasn't found.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
    
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>name</CODE> -  Configuration setting to get.  
+      </UL> 
+   
+     <UL><CODE>default_value</CODE> -  Default value to return if it wasn't found.  
+      </UL> 
+   
+     <UL><CODE>strip_whitespace</CODE> -  Optional remove all whitespace.  
+      </UL> 
+   
+     <UL><CODE>split_chr</CODE> -  Split char/regex/string.  
+      </UL> 
+   
+   </UL>
+   
    <!-- METHOD PARAMETERS END -->
 
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        Number, string or other object based in parameter and default_value.   
+        </UL>
+   </UL>
    
 
    <!-- ADDITIONAL ATTRIBUTES START -->
@@ -3531,13 +4142,39 @@ TinyMCE_Engine</H3>
 
    <A NAME="getParentElement"><!-- --></A>
    <H3>getParentElement</H3>
-   <PRE>Object <B>getParentElement</B>(node, names, attrib_name, attrib_value)</PRE>
+   <PRE>HTMLElement <B>getParentElement</B>(&lt;HTMLNode&gt; node, &lt;string&gt; names, &lt;string&gt; attrib_name, &lt;string&gt; attrib_value)</PRE>
+   
+      <UL>Returns the parent element of the specified node based on the search criteria.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
    
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>node</CODE> -  Node to get parent element of.  
+      </UL> 
+   
+     <UL><CODE>names</CODE> -  Comma separated list of element names to get.  
+      </UL> 
+   
+     <UL><CODE>attrib_name</CODE> -  Optional attribute name to match.  
+      </UL> 
+   
+     <UL><CODE>attrib_value</CODE> -  Optional attribute value to match.  
+      </UL> 
+   
+   </UL>
+   
    <!-- METHOD PARAMETERS END -->
 
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        HTMLElement or null based on search criteras.   
+        </UL>
+   </UL>
    
 
    <!-- ADDITIONAL ATTRIBUTES START -->
@@ -3547,13 +4184,33 @@ TinyMCE_Engine</H3>
 
    <A NAME="getVisualAidClass"><!-- --></A>
    <H3>getVisualAidClass</H3>
-   <PRE>Object <B>getVisualAidClass</B>(class_name, state)</PRE>
+   <PRE>string <B>getVisualAidClass</B>(&lt;string&gt; class_name, &lt;boolean&gt; state)</PRE>
+   
+      <UL>Returns the visual aid class string, this will add/remove the visual aid class.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
    
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>class_name</CODE> -  Class name value to add/remove visual aid classes from.  
+      </UL> 
+   
+     <UL><CODE>state</CODE> -  true/false if the classes should be added or removed.  
+      </UL> 
+   
+   </UL>
+   
    <!-- METHOD PARAMETERS END -->
 
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        New class value containing the visual aid classes or not.   
+        </UL>
+   </UL>
    
 
    <!-- ADDITIONAL ATTRIBUTES START -->
@@ -3563,29 +4220,69 @@ TinyMCE_Engine</H3>
 
    <A NAME="getWindowArg"><!-- --></A>
    <H3>getWindowArg</H3>
-   <PRE>Object <B>getWindowArg</B>(name, default_value)</PRE>
+   <PRE>Object <B>getWindowArg</B>(&lt;string&gt; n, d)</PRE>
+   
+      <UL>Returns the window argument to be passed to TinyMCE popup.
+ TinyMCE_Engine.prototype.Use = tinyMCEPopup;.getWindowArg instead.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
    
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>n</CODE> -  Window argument name.  
+      </UL> 
+   
+   </UL>
+   
    <!-- METHOD PARAMETERS END -->
 
    
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        Argument value or default value if it wasn't found.   
+        </UL>
+   </UL>
+   
 
    <!-- ADDITIONAL ATTRIBUTES START -->
+   
+   <UL>   
+   <B>Deprecated</B> <I></I><BR/><BR/>
+   </UL>
    
    <!-- ADDITIONAL ATTRIBUTES  END -->
 <HR>
 
    <A NAME="handleEvent"><!-- --></A>
    <H3>handleEvent</H3>
-   <PRE>Object <B>handleEvent</B>(e)</PRE>
+   <PRE>boolean <B>handleEvent</B>(&lt;DOMEvent&gt; e)</PRE>
+   
+      <UL>Event handler function that gets executed each time a event occurs in a TinyMCE editor control instance.
+ TinyMCE_Engine.prototype.Todo = Fix;the return statements so they return true or false.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
    
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>e</CODE> -  DOM event object reference.  
+      </UL> 
+   
+   </UL>
+   
    <!-- METHOD PARAMETERS END -->
 
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        true - if the event is to be chained, false - if the event chain is to be canceled.   
+        </UL>
+   </UL>
    
 
    <!-- ADDITIONAL ATTRIBUTES START -->
@@ -3595,10 +4292,29 @@ TinyMCE_Engine</H3>
 
    <A NAME="handleVisualAid"><!-- --></A>
    <H3>handleVisualAid</H3>
-   <PRE>void <B>handleVisualAid</B>(el, deep, state, inst)</PRE>
+   <PRE>void <B>handleVisualAid</B>(&lt;HTMLElement&gt; el, &lt;boolean&gt; deep, &lt;boolean&gt; state, &lt;<a href="TinyMCE_Control.html">TinyMCE_Control</a>&gt; inst)</PRE>
+   
+      <UL>Adds visual aid classes to all elements that need them recursive in the DOM tree.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
+   
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>el</CODE> -  HTML element to add visual aid classes to.  
+      </UL> 
+   
+     <UL><CODE>deep</CODE> -  Should they be added to all children aswell.  
+      </UL> 
+   
+     <UL><CODE>state</CODE> -  Should they be added or removed.  
+      </UL> 
+   
+     <UL><CODE>inst</CODE> -  TinyMCE editor control instance to add/remove them to/from. 	   
+      </UL> 
+   
+   </UL>
    
    <!-- METHOD PARAMETERS END -->
 
@@ -3611,13 +4327,30 @@ TinyMCE_Engine</H3>
 
    <A NAME="hasPlugin"><!-- --></A>
    <H3>hasPlugin</H3>
-   <PRE>Object <B>hasPlugin</B>(n)</PRE>
+   <PRE>boolean <B>hasPlugin</B>(&lt;string&gt; n)</PRE>
+   
+      <UL>Returns true/false if the specified plugin is loaded or not.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
    
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>n</CODE> -  Plugin name to look for.  
+      </UL> 
+   
+   </UL>
+   
    <!-- METHOD PARAMETERS END -->
 
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        true/false if the specified plugin is loaded or not.   
+        </UL>
+   </UL>
    
 
    <!-- ADDITIONAL ATTRIBUTES START -->
@@ -3627,13 +4360,30 @@ TinyMCE_Engine</H3>
 
    <A NAME="hasTheme"><!-- --></A>
    <H3>hasTheme</H3>
-   <PRE>Object <B>hasTheme</B>(n)</PRE>
+   <PRE>boolean <B>hasTheme</B>(&lt;string&gt; n)</PRE>
+   
+      <UL>Returns true/false if the specified theme is loaded or not.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
    
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>n</CODE> -  Theme name/id to check for.  
+      </UL> 
+   
+   </UL>
+   
    <!-- METHOD PARAMETERS END -->
 
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        true/false if the specified theme is loaded or not.   
+        </UL>
+   </UL>
    
 
    <!-- ADDITIONAL ATTRIBUTES START -->
@@ -3643,10 +4393,24 @@ TinyMCE_Engine</H3>
 
    <A NAME="importCSS"><!-- --></A>
    <H3>importCSS</H3>
-   <PRE>void <B>importCSS</B>(doc, css_file)</PRE>
+   <PRE>void <B>importCSS</B>(&lt;DOMDocument&gt; doc, &lt;string&gt; css_file)</PRE>
+   
+      <UL>Imports a CSS file into a allready loaded document. This will add a link element
+ to the head element of the document.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
+   
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>doc</CODE> -  DOM Document to load CSS into.  
+      </UL> 
+   
+     <UL><CODE>css_file</CODE> -  CSS File URL to load. 	   
+      </UL> 
+   
+   </UL>
    
    <!-- METHOD PARAMETERS END -->
 
@@ -3659,10 +4423,23 @@ TinyMCE_Engine</H3>
 
    <A NAME="importPluginLanguagePack"><!-- --></A>
    <H3>importPluginLanguagePack</H3>
-   <PRE>void <B>importPluginLanguagePack</B>(name, valid_languages)</PRE>
+   <PRE>void <B>importPluginLanguagePack</B>(&lt;string&gt; name, &lt;string&gt; valid_languages)</PRE>
+   
+      <UL>Loads a plugin specific language pack.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
+   
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>name</CODE> -  Plugin name/id to load language pack for.  
+      </UL> 
+   
+     <UL><CODE>valid_languages</CODE> -  Comma separated list of valid languages for the plugin. 	   
+      </UL> 
+   
+   </UL>
    
    <!-- METHOD PARAMETERS END -->
 
@@ -3675,10 +4452,20 @@ TinyMCE_Engine</H3>
 
    <A NAME="importThemeLanguagePack"><!-- --></A>
    <H3>importThemeLanguagePack</H3>
-   <PRE>void <B>importThemeLanguagePack</B>(name)</PRE>
+   <PRE>void <B>importThemeLanguagePack</B>(&lt;string&gt; name)</PRE>
+   
+      <UL>Loads a theme specific language pack.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
+   
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>name</CODE> -  Optional name of the theme to load language pack from. 	   
+      </UL> 
+   
+   </UL>
    
    <!-- METHOD PARAMETERS END -->
 
@@ -3780,13 +4567,30 @@ TinyMCE_Engine</H3>
 
    <A NAME="isInstance"><!-- --></A>
    <H3>isInstance</H3>
-   <PRE>Object <B>isInstance</B>(inst)</PRE>
+   <PRE>boolean <B>isInstance</B>(&lt;object&gt; o)</PRE>
+   
+      <UL>Returns true/false if a specific object is a TinyMCE_Control instance or not.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
    
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>o</CODE> -  Object to check.  
+      </UL> 
+   
+   </UL>
+   
    <!-- METHOD PARAMETERS END -->
 
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        true/false if it's a control or not.   
+        </UL>
+   </UL>
    
 
    <!-- ADDITIONAL ATTRIBUTES START -->
@@ -3796,10 +4600,22 @@ TinyMCE_Engine</H3>
 
    <A NAME="loadCSS"><!-- --></A>
    <H3>loadCSS</H3>
-   <PRE>void <B>loadCSS</B>(url)</PRE>
+   <PRE>void <B>loadCSS</B>(&lt;string&gt; url)</PRE>
+   
+      <UL>Loads the specified CSS by writing the a link tag to the current page.
+ This will also check if the file has been loaded before. This function should only be used
+ when the page is loading.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
+   
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>url</CODE> -  CSS file URL to load. 	   
+      </UL> 
+   
+   </UL>
    
    <!-- METHOD PARAMETERS END -->
 
@@ -3812,10 +4628,22 @@ TinyMCE_Engine</H3>
 
    <A NAME="loadScript"><!-- --></A>
    <H3>loadScript</H3>
-   <PRE>void <B>loadScript</B>(url)</PRE>
+   <PRE>void <B>loadScript</B>(&lt;string&gt; url)</PRE>
+   
+      <UL>Loads the specified script by writing the a script tag to the current page.
+ This will also check if the file has been loaded before. This function should only be used
+ when the page is loading.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
+   
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>url</CODE> -  Script URL to load. 	   
+      </UL> 
+   
+   </UL>
    
    <!-- METHOD PARAMETERS END -->
 
@@ -3828,13 +4656,23 @@ TinyMCE_Engine</H3>
 
    <A NAME="onLoad"><!-- --></A>
    <H3>onLoad</H3>
-   <PRE>Object <B>onLoad</B>()</PRE>
+   <PRE>boolean <B>onLoad</B>()</PRE>
+   
+      <UL>Gets executed when the page loads or get intitialized. This function will then convert all textareas/divs that
+ is to be converted into TinyMCE editor controls.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
    
    <!-- METHOD PARAMETERS END -->
 
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        true - if the event is to be chained, false - if the event chain is to be canceled.   
+        </UL>
+   </UL>
    
 
    <!-- ADDITIONAL ATTRIBUTES START -->
@@ -3845,6 +4683,10 @@ TinyMCE_Engine</H3>
    <A NAME="onMouseMove"><!-- --></A>
    <H3>onMouseMove</H3>
    <PRE>void <B>onMouseMove</B>()</PRE>
+   
+      <UL>Mouse move handler function, this will be executed each time
+ the mouse is moved within a editor instance. This function stores away the current selection in MSIE
+ this will then be used when a undo/redo level is added.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
@@ -3860,10 +4702,26 @@ TinyMCE_Engine</H3>
 
    <A NAME="openWindow"><!-- --></A>
    <H3>openWindow</H3>
-   <PRE>void <B>openWindow</B>(template, args)</PRE>
+   <PRE>void <B>openWindow</B>(&lt;Array&gt; template, &lt;Array&gt; args)</PRE>
+   
+      <UL>Opens a popup window based in the specified input data. This function
+ is used for all popup windows in TinyMCE.
+
+ These are the current template TinyMCE_Engine.prototype.keys = file; width, height, close_previous.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
+   
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>template</CODE> -  Popup template data such as with, height etc.  
+      </UL> 
+   
+     <UL><CODE>args</CODE> -  Popup arguments that is to be passed to the popup such as custom data. 	   
+      </UL> 
+   
+   </UL>
    
    <!-- METHOD PARAMETERS END -->
 
@@ -3876,13 +4734,31 @@ TinyMCE_Engine</H3>
 
    <A NAME="parseStyle"><!-- --></A>
    <H3>parseStyle</H3>
-   <PRE>Object <B>parseStyle</B>(str)</PRE>
+   <PRE>Array <B>parseStyle</B>(&lt;string&gt; str)</PRE>
+   
+      <UL>Parses the specified HTML style data. This will parse for example
+ "border-left: 1px; background-color: red" into an key/value array.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
    
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>str</CODE> -  Style data to parse.  
+      </UL> 
+   
+   </UL>
+   
    <!-- METHOD PARAMETERS END -->
 
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        Name/Value array of style items.   
+        </UL>
+   </UL>
    
 
    <!-- ADDITIONAL ATTRIBUTES START -->
@@ -3925,13 +4801,33 @@ TinyMCE_Engine</H3>
 
    <A NAME="queryInstanceCommandState"><!-- --></A>
    <H3>queryInstanceCommandState</H3>
-   <PRE>Object <B>queryInstanceCommandState</B>(editor_id, command)</PRE>
+   <PRE>boolean <B>queryInstanceCommandState</B>(&lt;string&gt; editor_id, &lt;string&gt; command)</PRE>
+   
+      <UL>Queries a command state for a specific command on a specific editor instance.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
    
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>editor_id</CODE> -  Editor id to query command state on.  
+      </UL> 
+   
+     <UL><CODE>command</CODE> -  Command to query for.  
+      </UL> 
+   
+   </UL>
+   
    <!-- METHOD PARAMETERS END -->
 
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        Command state passed from browser.   
+        </UL>
+   </UL>
    
 
    <!-- ADDITIONAL ATTRIBUTES START -->
@@ -3941,13 +4837,33 @@ TinyMCE_Engine</H3>
 
    <A NAME="queryInstanceCommandValue"><!-- --></A>
    <H3>queryInstanceCommandValue</H3>
-   <PRE>Object <B>queryInstanceCommandValue</B>(editor_id, command)</PRE>
+   <PRE>object <B>queryInstanceCommandValue</B>(&lt;string&gt; editor_id, &lt;string&gt; command)</PRE>
+   
+      <UL>Queries a command value for a specific command on a specific editor instance.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
    
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>editor_id</CODE> -  Editor id to query command value on.  
+      </UL> 
+   
+     <UL><CODE>command</CODE> -  Command to query for.  
+      </UL> 
+   
+   </UL>
+   
    <!-- METHOD PARAMETERS END -->
 
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        Command value passed from browser.   
+        </UL>
+   </UL>
    
 
    <!-- ADDITIONAL ATTRIBUTES START -->
@@ -3957,26 +4873,66 @@ TinyMCE_Engine</H3>
 
    <A NAME="regexpReplace"><!-- --></A>
    <H3>regexpReplace</H3>
-   <PRE>Object <B>regexpReplace</B>(in_str, reg_exp, replace_str, opts)</PRE>
+   <PRE>string <B>regexpReplace</B>(&lt;string&gt; in_str, &lt;string&gt; reg_exp, &lt;string&gt; replace_str, opts)</PRE>
+   
+      <UL>Regexp replaces the contents of a string. Use normal replace instead.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
    
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>in_str</CODE> -  String to replace in.  
+      </UL> 
+   
+     <UL><CODE>in_str</CODE> -  Optional regexp options like "gi".  
+      </UL> 
+   
+     <UL><CODE>reg_exp</CODE> -  Regexp to replace.  
+      </UL> 
+   
+     <UL><CODE>replace_str</CODE> -  String to replace with.  
+      </UL> 
+   
+   </UL>
+   
    <!-- METHOD PARAMETERS END -->
 
    
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        Replaced string value.   
+        </UL>
+   </UL>
+   
 
    <!-- ADDITIONAL ATTRIBUTES START -->
+   
+   <UL>   
+   <B>Deprecated</B> <I></I><BR/><BR/>
+   </UL>
    
    <!-- ADDITIONAL ATTRIBUTES  END -->
 <HR>
 
    <A NAME="removeMCEControl"><!-- --></A>
    <H3>removeMCEControl</H3>
-   <PRE>void <B>removeMCEControl</B>(editor_id)</PRE>
+   <PRE>void <B>removeMCEControl</B>(&lt;string&gt; editor_id)</PRE>
+   
+      <UL>Removes a TinyMCE editor control instance by id.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
+   
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>editor_id</CODE> -  Id of editor instance to remove. 	   
+      </UL> 
+   
+   </UL>
    
    <!-- METHOD PARAMETERS END -->
 
@@ -3989,10 +4945,22 @@ TinyMCE_Engine</H3>
 
    <A NAME="removeTinyMCEFormElements"><!-- --></A>
    <H3>removeTinyMCEFormElements</H3>
-   <PRE>void <B>removeTinyMCEFormElements</B>(form_obj)</PRE>
+   <PRE>void <B>removeTinyMCEFormElements</B>(&lt;HTMLElement&gt; form_obj)</PRE>
+   
+      <UL>Removes/disables TinyMCE built in form elements such as select boxes for font sizes etc.
+ These are disabled when the user submits a form so they don't get picked up by the backend script
+ that intercepts the contents.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
+   
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>form_obj</CODE> -  Form object to loop through for TinyMCE specific form elements. 	   
+      </UL> 
+   
+   </UL>
    
    <!-- METHOD PARAMETERS END -->
 
@@ -4044,10 +5012,20 @@ TinyMCE_Engine</H3>
 
    <A NAME="resetForm"><!-- --></A>
    <H3>resetForm</H3>
-   <PRE>void <B>resetForm</B>(form_index)</PRE>
+   <PRE>void <B>resetForm</B>(&lt;int&gt; form_index)</PRE>
+   
+      <UL>Resets a forms TinyMCE instances based on form index.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
+   
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>form_index</CODE> -  Form index to reset. 	   
+      </UL> 
+   
+   </UL>
    
    <!-- METHOD PARAMETERS END -->
 
@@ -4060,13 +5038,31 @@ TinyMCE_Engine</H3>
 
    <A NAME="serializeStyle"><!-- --></A>
    <H3>serializeStyle</H3>
-   <PRE>Object <B>serializeStyle</B>(ar)</PRE>
+   <PRE>string <B>serializeStyle</B>(&lt;Array&gt; ar)</PRE>
+   
+      <UL>Serializes the specified style item name/value array into a HTML string. This function
+ will force HEX colors in Firefox and convert the URL items of a style correctly.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
    
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>ar</CODE> -  Name/Value array of items to serialize.  
+      </UL> 
+   
+   </UL>
+   
    <!-- METHOD PARAMETERS END -->
 
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        Serialized HTML string containing the items.   
+        </UL>
+   </UL>
    
 
    <!-- ADDITIONAL ATTRIBUTES START -->
@@ -4076,7 +5072,7 @@ TinyMCE_Engine</H3>
 
    <A NAME="serializeURL"><!-- --></A>
    <H3>serializeURL</H3>
-   <PRE>string <B>serializeURL</B>(up)</PRE>
+   <PRE>string <B>serializeURL</B>(&lt;TinyMCE_URL_Item&gt; up)</PRE>
    
       <UL>Serializes the specified URL object into a string.</UL>
    
@@ -4086,7 +5082,7 @@ TinyMCE_Engine</H3>
    <UL>
    <B>Parameters:</B>
    
-     <UL><CODE>URL</CODE> -  object to serialize.  
+     <UL><CODE>up</CODE> -  URL object to serialize.  
       </UL> 
    
    </UL>
@@ -4109,10 +5105,29 @@ TinyMCE_Engine</H3>
 
    <A NAME="setAttrib"><!-- --></A>
    <H3>setAttrib</H3>
-   <PRE>void <B>setAttrib</B>(element, name, value, fix_value)</PRE>
+   <PRE>void <B>setAttrib</B>(&lt;HTMLElement&gt; element, &lt;string&gt; name, &lt;string&gt; value, &lt;boolean&gt; fix_value)</PRE>
+   
+      <UL>Sets the attribute value for a specific attribute.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
+   
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>element</CODE> -  HTML element to set attribute on.  
+      </UL> 
+   
+     <UL><CODE>name</CODE> -  Attribute name to set.  
+      </UL> 
+   
+     <UL><CODE>value</CODE> -  Attribute value to set.  
+      </UL> 
+   
+     <UL><CODE>fix_value</CODE> -  Optional fix value state, if true only number data will be accepted.    
+      </UL> 
+   
+   </UL>
    
    <!-- METHOD PARAMETERS END -->
 
@@ -4125,16 +5140,30 @@ TinyMCE_Engine</H3>
 
    <A NAME="setContent"><!-- --></A>
    <H3>setContent</H3>
-   <PRE>void <B>setContent</B>(html_content)</PRE>
+   <PRE>void <B>setContent</B>(&lt;string&gt; h)</PRE>
+   
+      <UL>Sets the HTML contents of the selected editor instance.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
+   
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>h</CODE> -  HTML contents to set in the selected instance.  
+      </UL> 
+   
+   </UL>
    
    <!-- METHOD PARAMETERS END -->
 
    
 
    <!-- ADDITIONAL ATTRIBUTES START -->
+   
+   <UL>   
+   <B>Deprecated</B> <I></I><BR/><BR/>
+   </UL>
    
    <!-- ADDITIONAL ATTRIBUTES  END -->
 <HR>
@@ -4201,10 +5230,24 @@ TinyMCE_Engine</H3>
 
    <A NAME="setPluginBaseURL"><!-- --></A>
    <H3>setPluginBaseURL</H3>
-   <PRE>void <B>setPluginBaseURL</B>(n, u)</PRE>
+   <PRE>void <B>setPluginBaseURL</B>(&lt;string&gt; n, &lt;string&gt; u)</PRE>
+   
+      <UL>Sets the baseURL of the specified plugin, this is useful if the plugin is loaded from
+ a external location.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
+   
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>n</CODE> -  Plugin name/id to set base URL on. This have to be added before.  
+      </UL> 
+   
+     <UL><CODE>u</CODE> -  Base URL of plugin, this string should be the URL prefix for the plugin without a trailing slash. 	   
+      </UL> 
+   
+   </UL>
    
    <!-- METHOD PARAMETERS END -->
 
@@ -4217,10 +5260,26 @@ TinyMCE_Engine</H3>
 
    <A NAME="setStyleAttrib"><!-- --></A>
    <H3>setStyleAttrib</H3>
-   <PRE>void <B>setStyleAttrib</B>(elm, name, value)</PRE>
+   <PRE>void <B>setStyleAttrib</B>(&lt;HTMLElement&gt; elm, &lt;string&gt; name, &lt;string&gt; value)</PRE>
+   
+      <UL>Sets a style attribute item value.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
+   
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>elm</CODE> -  HTML element to set style attribute item on.  
+      </UL> 
+   
+     <UL><CODE>name</CODE> -  Style item name to set.  
+      </UL> 
+   
+     <UL><CODE>value</CODE> -  Style item value to set.    
+      </UL> 
+   
+   </UL>
    
    <!-- METHOD PARAMETERS END -->
 
@@ -4233,10 +5292,20 @@ TinyMCE_Engine</H3>
 
    <A NAME="setupContent"><!-- --></A>
    <H3>setupContent</H3>
-   <PRE>void <B>setupContent</B>(editor_id)</PRE>
+   <PRE>void <B>setupContent</B>(&lt;string&gt; editor_id)</PRE>
+   
+      <UL>Setups the contents of TinyMCE editor instance and fills it with contents.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
+   
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>editor_id</CODE> -  TinyMCE editor instance control id to fill. 	   
+      </UL> 
+   
+   </UL>
    
    <!-- METHOD PARAMETERS END -->
 
@@ -4249,10 +5318,23 @@ TinyMCE_Engine</H3>
 
    <A NAME="setWindowArg"><!-- --></A>
    <H3>setWindowArg</H3>
-   <PRE>void <B>setWindowArg</B>(name, value)</PRE>
+   <PRE>void <B>setWindowArg</B>(&lt;string&gt; n, &lt;string&gt; v)</PRE>
+   
+      <UL>Sets the window argument to be passed to TinyMCE popup.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
+   
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>n</CODE> -  Window argument name.  
+      </UL> 
+   
+     <UL><CODE>v</CODE> -  Window argument value. 	   
+      </UL> 
+   
+   </UL>
    
    <!-- METHOD PARAMETERS END -->
 
@@ -4265,13 +5347,32 @@ TinyMCE_Engine</H3>
 
    <A NAME="storeAwayURLs"><!-- --></A>
    <H3>storeAwayURLs</H3>
-   <PRE>Object <B>storeAwayURLs</B>(s)</PRE>
+   <PRE>string <B>storeAwayURLs</B>(&lt;string&gt; s)</PRE>
+   
+      <UL>Stores away the src and href attribute values in separate mce_src and mce_href attributes.
+ This is needed since both MSIE and Gecko messes with these attributes. The old
+ src and href will be intact, this simply adds them to a separate attribute.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
    
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>s</CODE> -  HTML string to replace src and href attributes in.  
+      </UL> 
+   
+   </UL>
+   
    <!-- METHOD PARAMETERS END -->
 
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        HTML string with replaced src and href attributes.   
+        </UL>
+   </UL>
    
 
    <!-- ADDITIONAL ATTRIBUTES START -->
@@ -4282,6 +5383,9 @@ TinyMCE_Engine</H3>
    <A NAME="submitPatch"><!-- --></A>
    <H3>submitPatch</H3>
    <PRE>void <B>submitPatch</B>()</PRE>
+   
+      <UL>Piggyback onsubmit event handler function, this will remove/hide the TinyMCE specific form elements
+ call triggerSave to fill the textarea with the correct contents then call the old piggy backed event handler.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
@@ -4297,10 +5401,25 @@ TinyMCE_Engine</H3>
 
    <A NAME="switchClass"><!-- --></A>
    <H3>switchClass</H3>
-   <PRE>void <B>switchClass</B>(ei, c)</PRE>
+   <PRE>void <B>switchClass</B>(&lt;HTMLElement&gt; ei, &lt;string&gt; c)</PRE>
+   
+      <UL>Switches the CSS class of the specified element. This method also caches the
+ elements in a lookup table for performance. This should only be used for TinyMCE main UI controls
+ like buttons or select elements.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
+   
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>ei</CODE> -  Element to set CSS class on.  
+      </UL> 
+   
+     <UL><CODE>c</CODE> -  CSS class to set.    
+      </UL> 
+   
+   </UL>
    
    <!-- METHOD PARAMETERS END -->
 
@@ -4313,10 +5432,24 @@ TinyMCE_Engine</H3>
 
    <A NAME="triggerNodeChange"><!-- --></A>
    <H3>triggerNodeChange</H3>
-   <PRE>void <B>triggerNodeChange</B>(focus, setup_content)</PRE>
+   <PRE>void <B>triggerNodeChange</B>(&lt;boolean&gt; focus, &lt;boolean&gt; setup_content)</PRE>
+   
+      <UL>Triggers a nodeChange event to every theme and plugin. This will be executed when the cursor moves or
+ when a command that modifies the editor contents is executed.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
+   
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>focus</CODE> -  Optional state if the last selected editor instance is to be focused or not.  
+      </UL> 
+   
+     <UL><CODE>setup_content</CODE> -  Optional state if it's called from setup content function or not. 	   
+      </UL> 
+   
+   </UL>
    
    <!-- METHOD PARAMETERS END -->
 
@@ -4329,10 +5462,24 @@ TinyMCE_Engine</H3>
 
    <A NAME="triggerSave"><!-- --></A>
    <H3>triggerSave</H3>
-   <PRE>void <B>triggerSave</B>(skip_cleanup, skip_callback)</PRE>
+   <PRE>void <B>triggerSave</B>(&lt;boolean&gt; skip_cleanup, &lt;boolean&gt; skip_callback)</PRE>
+   
+      <UL>Moves the contents from a TinyMCE editor control instance to the hidden textarea
+ that got replaced with TinyMCE. This is executed automaticly on for example form submit.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
+   
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>skip_cleanup</CODE> -  Optional Skip cleanup, simply move the contents as fast as possible.  
+      </UL> 
+   
+     <UL><CODE>skip_callback</CODE> -  Optional Skip callback, don't call the save_callback function. 	   
+      </UL> 
+   
+   </UL>
    
    <!-- METHOD PARAMETERS END -->
 
@@ -4345,13 +5492,30 @@ TinyMCE_Engine</H3>
 
    <A NAME="trim"><!-- --></A>
    <H3>trim</H3>
-   <PRE>Object <B>trim</B>(str)</PRE>
+   <PRE>string <B>trim</B>(&lt;string&gt; s)</PRE>
+   
+      <UL>Removes all prefix, suffix whitespace of a string.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
    
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>s</CODE> -  String to replace whitespace in.  
+      </UL> 
+   
+   </UL>
+   
    <!-- METHOD PARAMETERS END -->
 
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        Replaced string value.   
+        </UL>
+   </UL>
    
 
    <!-- ADDITIONAL ATTRIBUTES START -->
@@ -4362,6 +5526,11 @@ TinyMCE_Engine</H3>
    <A NAME="unloadHandler"><!-- --></A>
    <H3>unloadHandler</H3>
    <PRE>void <B>unloadHandler</B>()</PRE>
+   
+      <UL>Unload document event handler function. This function will be executed when the
+ page is unloaded, this will automaticly move the current editor contents to the textarea element this enables
+ the editor to restore it's state when the user presses the back button in the browser.
+ This will execute the triggerSave function.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
@@ -4377,16 +5546,30 @@ TinyMCE_Engine</H3>
 
    <A NAME="updateContent"><!-- --></A>
    <H3>updateContent</H3>
-   <PRE>void <B>updateContent</B>(form_element_name)</PRE>
+   <PRE>void <B>updateContent</B>(&lt;string&gt; form_element_name)</PRE>
+   
+      <UL>Moves the contents from the hidden textarea to the editor that gets inserted.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
+   
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>form_element_name</CODE> -  Form element name to move contents from.  
+      </UL> 
+   
+   </UL>
    
    <!-- METHOD PARAMETERS END -->
 
    
 
    <!-- ADDITIONAL ATTRIBUTES START -->
+   
+   <UL>   
+   <B>Deprecated</B> <I></I><BR/><BR/>
+   </UL>
    
    <!-- ADDITIONAL ATTRIBUTES  END -->
 <HR>
@@ -4457,6 +5640,6 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
 <FONT SIZE="-1">
 
 </FONT>
-<div class="jsdoc_ctime">Documentation generated by <a href="http://jsdoc.sourceforge.net/" target="_parent">JSDoc</a> on Fri Feb 10 22:31:11 2006</div>
+<div class="jsdoc_ctime">Documentation generated by <a href="http://jsdoc.sourceforge.net/" target="_parent">JSDoc</a> on Fri Feb 24 13:38:20 2006</div>
 </BODY>
 </HTML>

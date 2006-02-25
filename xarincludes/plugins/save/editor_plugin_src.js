@@ -1,7 +1,7 @@
 /**
  * $RCSfile: editor_plugin_src.js,v $
- * $Revision: 1.25 $
- * $Date: 2006/02/10 16:29:40 $
+ * $Revision: 1.26 $
+ * $Date: 2006/02/13 15:09:28 $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
@@ -44,6 +44,9 @@ var TinyMCE_SavePlugin = {
 		// Handle commands
 		switch (command) {
 			case "mceSave":
+				if (tinyMCE.getParam("fullscreen_is_enabled"))
+					return true;
+
 				var inst = tinyMCE.selectedInstance;
 				var formObj = inst.formElement.form;
 
@@ -91,6 +94,11 @@ var TinyMCE_SavePlugin = {
 	},
 
 	handleNodeChange : function(editor_id, node, undo_index, undo_levels, visual_aid, any_selection) {
+		if (tinyMCE.getParam("fullscreen_is_enabled")) {
+			tinyMCE.switchClass(editor_id + '_save', 'mceButtonDisabled');
+			return true;
+		}
+
 		if (tinyMCE.getParam("save_enablewhendirty")) {
 			var inst = tinyMCE.getInstanceById(editor_id);
 
