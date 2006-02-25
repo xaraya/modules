@@ -17,7 +17,7 @@
     * @link http://www.xaraya.com
     * @subpackage xarTinyMCE
     * @author Jo Dalle Nogare <jojodee@xaraya.com>
-    * Updated for Ibrowser 1.3 on 2005/09/07
+    * Updated for Ibrowser 1.3 on 2005/09/07 and xartinymce on 2006/02/12
     */
     /** *********REMEMBER TO CHECK, COPY AND EDIT THIS FILE!!! *******************
     *
