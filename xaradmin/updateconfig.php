@@ -87,7 +87,7 @@ function tinymce_admin_updateconfig()
 
             break;
         case 'cssplug':
-            if (!xarVarFetch('tinyextended','str:1:',$tinyextended,'code,pre,blockquote/quote',XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('tinyextended','str:1:',$tinyextended,'',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinyinlinestyle','checkbox',$tinyinlinestyle,true,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinycsslist', 'str:1:', $tinycsslist, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinydate', 'str:1:', $tinydate, '', XARVAR_NOT_REQUIRED)) return;
