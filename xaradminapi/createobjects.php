@@ -45,8 +45,8 @@ function tasks_adminapi_createobjects($args)
                                     'order'    => 1,
                                     ))) return;
     if (!xarModAPIFunc('dynamicdata','admin','createproperty',array(
-                                    'name'     => 'type',
-                                    'label'    => 'Type',
+                                    'name'     => 'parentid',
+                                    'label'    => 'Parent',
                                     'objectid' => $objectid,
                                     'moduleid' => $moduleid,
                                     'itemtype' => $itemtype,
@@ -54,7 +54,7 @@ function tasks_adminapi_createobjects($args)
                                     'default'  => 1,
                                     'source'   =>  $prefix . '_tasks.xar_parentid',
                                     'status'   => 1,
-                                    'order'    => 3,
+                                    'order'    => 2,
                                     ))) {
                                     return;}
 # --------------------------------------------------------
@@ -87,7 +87,7 @@ function tasks_adminapi_createobjects($args)
                                     'objectid' => $objectid,
                                     'moduleid' => $moduleid,
                                     'itemtype' => $itemtype,
-                                    'type'     => 2,
+                                    'type'     => 15,
 //                                    'default'  => '',
                                     'source'   =>  $prefix . '_tasks.xar_parentid',
                                     'status'   => 1,
@@ -376,7 +376,7 @@ function tasks_adminapi_createobjects($args)
                                     'objectid' => $objectid,
                                     'moduleid' => $moduleid,
                                     'itemtype' => $itemtype,
-                                    'type'     => 2,
+                                    'type'     => 15,
 //                                    'default'  => '',
                                     'source'   =>  $prefix . '_tasks.xar_parentid',
                                     'status'   => 1,
