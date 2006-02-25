@@ -1,6 +1,6 @@
-INSTALLATION AND USE - XarTinyMCE Version 1.0.2
+INSTALLATION AND USE - XarTinyMCE Version 1.0.3
 
-UPGRADES to 1.0.2:
+UPGRADES to 1.0.3:
 IMPORTANT!! PLEASE SEE SPECIAL UPGRADE CONSIDERATIONS AT THE END OF THIS DOCUMENT
 
 XarTinyMCE is a configurable, lightweight WYSIWYG editor.
@@ -24,37 +24,34 @@ To INSTALL and get started:
    - Go to the Adminpanel menu -> Modules -> View All
    - Click on the "install" link of the tinymce module
 
-2. Flush the Dynamic Data Properties. As Admin:
-   - Go to Dynamic Data, Property Types -> Click Flush Property Cache
+2. Make sure you have the HTML module installed, and your allowed tags 
+   set in addition to allowing with attributes if relevant.
+   The HTML module determines what tags are allowed and *if* attributes are allowed.
+   It does not determine what attributes are allowed. Tinymce applies additional
+   filtering for tags and attributes and works with a default set (see the usage instructions).
 
 3. Go to xarTinyMCE modify config
    - Set TinyMCE as the default editor
    - Set the Mode: Optimal method is to use "Specifically labelled text areas"
      and xarTinymce GUI DD property to replace your text areas
    - Set the mode to Manual if you are using specially labelled text areas or with DD properties
+   
+4. Clear your xaraya and also your browser cache before using.
 
 Please read the Overview Documentation in the TinyMCE administration area for more detail.
 
 ******************************
 
-To UPGRADE to Version 1.0.2
-There has been a number of changes in tinymce that could BREAK COMPTIBILITY.
+To UPGRADE to Version 1.0.3:
+
+There has been a number of major changes in tinymce that could BREAK COMPTIBILITY.
 Please check the following to ensure xartinymce continues to work for you.
-
-In Version 6.2 the Dynamic Data property and its template is moved to the tinymce module.
-Make sure you have removed the file in includes/properties/Dynamic_TinyMCE_Property.php
-It should now be located in modules/tinymce/xarproperties
-
-In Version 0.9.0 the textarea_trigger setting for mceEditable = [true|false] is deprecated
-in favour of using classes to activate or inactivate the editor. Please use
-editor_selector (default to mceEditor) and editor_deselector (default to mceNoEditor) to
-set the class used to activate or deactivate your textareas in custom configurations.
-This is recommended for w3c standards support.
 
 When you are ready to upgrade your tinymce files:
 
-1. Remove all files in the tinymce module directory and all files in it and
-   replace with the upgrade module and files
+1. Remove ALL files in the tinymce module directory and subdirectories and
+   replace with the upgraded module and files. There have been major
+   changes in the file directory tree so please ensure you remove the old module.
 
 2. Go to your Administration -> Modules ->View All
    Click Upgrade
@@ -63,15 +60,24 @@ When you are ready to upgrade your tinymce files:
 3. Go to your admin Dynamic Data -> Property Types -> Flush Property Cache
 
 4. Go to Administration -> XarTinyMCE -> Modify Config
-   Go to each TAB and ensure the values are as required.
+   Go to ***each*** TAB and ensure the values are as required.
    Make sure you check any new or upgraded options are filled in.
    Click Submit button on EACH screen to confirm.
 
-5. If you are upgrading from Versions less than 0.4.0 please make sure you note the new
-   activation methods. If you have added the snippet at the top of your templates you
-   MUST set the Mode to Manual.
 
-   If you have custom configurations you must use All Textareas and Auto loading.
+MAJOR CHANGES
+*************
+In Version 1.0.3 the main tinymce project had a complete rewrite and this means some Plugins are
+not working, until the authors update these. The cleanup routine has been totally rewritten
+as has a lot of the code to use classes. Plugins known to have broken with these changes are
+removed. The IBrowser plugin has been updated for symlinks.
+
+In Version 0.9.0 the textarea_trigger setting for mceEditable = [true|false] is deprecated
+in favour of using classes to activate or inactivate the editor. Please use
+editor_selector (default to mceEditor) and editor_deselector (default to mceNoEditor) to
+set the class used to activate or deactivate your textareas in custom configurations.
+This is recommended for w3c standards support.
+
 
 IMAGE BROWSER (IBROWSER), UPLOADS MODULE, SECURITY
 ******************************

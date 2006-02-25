@@ -1,3 +1,15 @@
+* Version 1.0.3 26 Feb 06
+- Includes tinymce upstream project version 2.0.4
+- This included a major rewrite and cleanup of files so will break
+  some backward compatibility. Some plugins will not work until they are upgraded.
+- New and revamped xartinymce user interface in the admin
+- Total rearrangement of tinymce files - fully remove your old module!
+- Intereface additions including local and entity options
+- IBrowser plugin update
+- Faster loading, rewritten cleanup routines and new functionality from upstream project
+- General bugfixing
+- See the full tinymce code changes in the xarincludes/changelog file
+
 * Version 1.0.2 25 Jan 06
 - Added fixes release in tinymce 2.0.2
 - Set usewysiwyg var in include template fixing bug for those not using DD
