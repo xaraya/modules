@@ -11,7 +11,6 @@
  * @link http://xaraya.com/index.php/release/319.html
  * @author Julian development Team
  */
-
 /**
  * Decode the short URLs in Julian
  *
@@ -24,7 +23,6 @@
  * @return  array
  * @todo    MichelV. <#> Replace by Xaraya function
  */
-
 function julian_userapi_getMonthNameShort($args)
 {
     extract($args); unset($args);

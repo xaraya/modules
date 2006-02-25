@@ -14,6 +14,10 @@
 /**
  * process date/time for the new item - hook for ('item','create','API')
  * @author JornB
+ * @param array extrainfo with module name
+                               itemtype
+                               itemid
+ * @param int objectid
  */
 function julian_userapi_createhook($args)
 {
@@ -133,7 +137,7 @@ function julian_userapi_createhook($args)
         }
    }
 
-   /**
+   /*
     * Checking which event_repeat rule is being used and setting the recur_freq to the right reoccuring frequency
     * Using this because the frequence value is being written to the same place in the database, for both 'every'
     * and 'on' recurrence.

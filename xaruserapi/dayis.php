@@ -18,7 +18,7 @@
  *  @param int $day 0 - 6 [Sun - Sat]
  *  @param int $date valid date YYYYMMDD
  *  @return bool true/false depending on day looking for and the date
- * @Deprec Nov 2005
+ *  @Deprecated Nov 2005
  */
 function julian_userapi_dayIs($args)
 {

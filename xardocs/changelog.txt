@@ -414,4 +414,5 @@ Change way linked events are called
 0.4.1 Add wizard for privileges
 Privileges now also take myself, so you can add one like "Edit my own events"
 Using the configured date/time format now in tooltip and viewevent. (related to bug 5441)
+Added getitemlinks and getitemtypes for further standardization
 

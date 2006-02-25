@@ -23,7 +23,6 @@
  * @return  $options
  * @todo    MichelV. <#> Check this function and it functioning. Deprecate hopefully
  */
-
 function julian_userapi_getuseroptions($args)
 {
    extract($args);

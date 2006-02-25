@@ -23,7 +23,7 @@
  * @return integer number of items
  * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  * @todo MichelV: Include count of linked items
- *       MichelV: Include categories in the count
+ *       MichelV: Include categories in the count [done]
  */
 function julian_userapi_countevents($args)
 {

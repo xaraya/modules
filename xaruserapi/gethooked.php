@@ -3,7 +3,7 @@
  * Get a hooked item
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -18,12 +18,11 @@
  * This function retrieves a hooked item
  * In the long run, Julian should hook to itself
  *
- * @author MichelV michelv@xarayahosting.nl
+ * @author MichelV <michelv@xaraya.com>
  * @author Jorn
  * @param  $args ['objectid'] id of item to get
  * @param  $args ['modid'] module id
- * @returns array
- * @return item array, or false on failure
+ * @return array item array, or false on failure
  * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  * @since May 2005
  * @TODO MichelV #1 Hook julian to itself, so events are only stored in one table with extra info from other modules
