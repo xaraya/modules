@@ -28,7 +28,7 @@ function tinymce_init()
    xarModSetVar('tinymce', 'tinyask', 1);
    xarModSetVar('tinymce', 'tinybuttonsremove', '');
    xarModSetVar('tinymce', 'tinyexstyle', 'heading 1=head1,heading 2=head2,heading 3=head3,heading 4=head4');
-   xarModSetVar('tinymce', 'tinyextended', 'span[*],p[*],code,pre,blockquote/quote,+a[*],img[*]');
+   xarModSetVar('tinymce', 'tinyextended', '');
    xarModSetVar('tinymce', 'tinyinstances','summary,body');
    xarModSetVar('tinymce', 'tinycsslist','');
    xarModSetVar('tinymce', 'tinytoolbar','top');
@@ -37,7 +37,7 @@ function tinymce_init()
    xarModSetVar('tinymce', 'tinyheight','');
    xarModSetVar('tinymce', 'tinydirection','ltr');
    xarModSetVar('tinymce', 'tinyencode',0);
-   //xarModSetVar('tinymce', 'tinyentities',''); uses the default string if tinyeentity_encoding is named 
+   //xarModSetVar('tinymce', 'tinyentities',''); uses the default string if tinyeentity_encoding is named
    xarModSetVar('tinymce', 'tinyentity_encoding','raw');
    xarModSetVar('tinymce', 'tinyinlinestyle',1);
    xarModSetVar('tinymce', 'tinyundolevel',10);
