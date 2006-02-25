@@ -83,7 +83,7 @@ IMAGE BROWSER (IBROWSER), UPLOADS MODULE, SECURITY
 ******************************
 This is a new Ibrowser image manager plugin with version 1.0.0 of xartinymce.
 
-Please make sure you copy the ibrowser config.inc file in
+Please make sure you copy the NEW ibrowserconfig.inc file in
 modules/tinymce/xartemplates/includes/ibrowserconfig.inc to your
 var/ibrowser/ directory and update the configuration settings there.
 

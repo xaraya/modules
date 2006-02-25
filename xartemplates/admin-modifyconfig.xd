@@ -654,7 +654,7 @@
 
             <ul class="xar-form-input-wrapper-after">
             <li><xar:mlstring>Add <strong>ibrowser</strong> to the plugins to load list above</xar:mlstring></li>
-            <li><xar:mlstring>Add <strong>ibrowser</strong> to the button list in Custom Advanced Theme tab.</xar:mlstring></li>
+            <li><xar:mlstring>Add <strong>ibrowser</strong> to the button list in Advanced Theme Layout option below.</xar:mlstring></li>
             <li><xar:mlstring> Update the </xar:mlstring><a href="modules/tinymce/xartemplates/includes/ibrowserconfig.inc"><xar:mlstring>configuration file at modules/tinymce/xartemplates/includes/ibrowserconfig.inc</xar:mlstring></a>
                 <xar:mlstring> for the IBrowser Plugin.</xar:mlstring>
             </li>
