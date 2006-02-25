@@ -193,6 +193,7 @@
                         </select>
                     </div>
                 </fieldset>
+
                 <fieldset>
                     <legend>
                         <strong><xar:mlstring>Time and Location</xar:mlstring></strong>
@@ -396,13 +397,11 @@
                     </div>
                     <div class="xar-form-input-wrapper" id="share" style="visibility:hidden;">
                           <label for="share_uids" class="xar-form-label">
-                              <span class="help" title="#xarML('Share')#">
-                                  <xar:mlstring>Share:</xar:mlstring>
+                              <span class="help" title="#xarML('Choose the user you want to share this event with')#">
+                                  <xar:mlstring>Share with:</xar:mlstring>
                               </span>
                           </label>
-                          <select name="share_uids[]" id="share_uids" multiple="multiple" style="width:150px;height:100px;">
-                            <option value=""></option>#$share_options#
-                          </select>
+                          <xar:data-input name="share_uids[]" id="share_uids" multiple="multiple" type="userlist" value="" validation="$group_validation" />
                     </div>
                 </fieldset>
                 <fieldset>

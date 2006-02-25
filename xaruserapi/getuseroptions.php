@@ -21,6 +21,7 @@
  * @access  private
  * @param   uids
  * @return  $options
+ * @deprecated 25 Feb 2006
  * @todo    MichelV. <#> Check this function and it functioning. Deprecate hopefully
  */
 function julian_userapi_getuseroptions($args)

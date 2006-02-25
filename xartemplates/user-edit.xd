@@ -411,13 +411,7 @@
                       <label for="share_uids" class="xar-form-label" title="#xarML('Choose user to share this event with.')#">
                               <xar:mlstring>Share with:</xar:mlstring>
                       </label>
-                      <xar:set name="$validation">'group:'.$share_group_name</xar:set>
-                      <xar:data-input name="share_uids[]" id="share_uids" type="userlist" value="$share_uids" validation="$validation" />
-                      <xar:comment>
-                      <select name="share_uids[]" id="share_uids" multiple="multiple" style="width:150px;height:100px;">
-                        <option value=""></option>share_options
-                      </select>
-                      </xar:comment>
+                      <xar:data-input name="share_uids[]" id="share_uids" type="userlist" value="$share_uids" validation="$group_validation" />
                     </div>
                 </fieldset>
                 <fieldset>

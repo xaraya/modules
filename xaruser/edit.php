@@ -150,13 +150,12 @@ function julian_user_edit()
     $data['event_repeat_on_num'] = $item['recur_interval'];
 
     //building share options
-    $data['share_options'] = xarModAPIFunc('julian','user','getuseroptions',array('uids'=>$item['share_uids']));
     $data['share_uids'] = $item['share_uids'];
     $data['share_group'] = xarModGetVar('julian', 'share_group');
     // Build the group name. Type 1 is a group
     $group = xarModAPIFunc ('roles', 'user', 'get', array('uid'=> $data['share_group'], 'type' =>1));
-    $data['share_group_name'] = $group['name'];
 
+    $data['group_validation']= 'group:'.$group['name'];
     //Determining which end date radio to check. 0 index indicates this event has an end date and 1 index means it does not
     $event_endtype_checked[0] = '';
     $event_endtype_checked[1] = 'checked';

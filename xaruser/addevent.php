@@ -50,7 +50,18 @@ function julian_user_addevent($args)
     $data['todays_year'] = date("Y",strtotime($cal_date));
     $data['todays_day'] = date("d",strtotime($cal_date));
     //building share options
-    $data['share_options'] = xarModAPIFunc('julian','user','getuseroptions',array('uids'=>''));
+    $share_group = xarModGetVar('julian','share_group');
+    // Following is nasty thing
+    // Get the group with the id of share group
+    // Work around because roles_get is giving errors
+    $groups = xarModAPIFunc('roles','user','getallgroups');
+    foreach ($groups as $group) {
+        if ($share_group == $group['uid']) {
+            $julgroup = $group;
+        }
+    }
+    $data['group_validation']= 'group:'.$julgroup['name'];
+    //$data['share_options'] = xarModAPIFunc('julian','user','getuseroptions',array('uids'=>''));
     $data['cal_date']=$cal_date;
 
     // TODO Turn these into API functions.

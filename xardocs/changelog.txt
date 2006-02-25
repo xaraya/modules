@@ -415,4 +415,5 @@ Change way linked events are called
 Privileges now also take myself, so you can add one like "Edit my own events"
 Using the configured date/time format now in tooltip and viewevent. (related to bug 5441)
 Added getitemlinks and getitemtypes for further standardization
+Finalize using the dynamic userlist with correct group selection (validation)
 
