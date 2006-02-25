@@ -24,12 +24,6 @@ function tasks_adminapi_removeobjects($args)
 		$info = xarModAPIFunc('dynamicdata','user','getobjectinfo',array('moduleid' => $moduleid, 'itemtype' => $itemtype));
 		$result = xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $info['objectid']));
 	}
-	$info = xarModAPIFunc('dynamicdata','user','getobjectinfo',array('moduleid' => 667, 'itemtype' => 1));
-	$result = xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $info['objectid']));
-	$info = xarModAPIFunc('dynamicdata','user','getobjectinfo',array('moduleid' => 667, 'itemtype' => 2));
-	$result = xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $info['objectid']));
-	$info = xarModAPIFunc('dynamicdata','user','getobjectinfo',array('moduleid' => 667, 'itemtype' => 3));
-	$result = xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $info['objectid']));
     return true;
 }
 
