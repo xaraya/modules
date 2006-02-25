@@ -3,7 +3,7 @@
  * Get menu links
  *
  */
-function tasks_adminapi_getmenulinks() 
+function tasks_adminapi_getmenulinks()
 {
 
     $menulinks[] = Array('url'   => xarModURL('tasks',

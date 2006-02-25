@@ -92,6 +92,7 @@ function tasks_init()
     xarModSetVar('tasks', 'returnfromsurface', 1);
     xarModSetVar('tasks', 'returnfrommigrate', 0);
     xarModSetVar('tasks', 'maxdisplaydepth', 9);
+    xarModSetVar('base', 'calendarpropid', 9);
 
     return true;
 }
@@ -115,12 +116,7 @@ function tasks_upgrade($oldversion)
 function tasks_delete()
 {
     //Remove the objects
-	$info = xarModAPIFunc('dynamicdata','user','getobjectinfo',array('moduleid' => 667, 'itemtype' => 1));
-	$result = xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $info['objectid']));
-	$info = xarModAPIFunc('dynamicdata','user','getobjectinfo',array('moduleid' => 667, 'itemtype' => 2));
-	$result = xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $info['objectid']));
-	$info = xarModAPIFunc('dynamicdata','user','getobjectinfo',array('moduleid' => 667, 'itemtype' => 3));
-	$result = xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $info['objectid']));
+	if (!xarModAPIFunc('tasks','admin','removeobjects')) return;
 
     //Load Table Maintenance API
     xarDBLoadTableMaintenanceAPI();
@@ -135,6 +131,7 @@ function tasks_delete()
     xarRemoveMasks('tasks');
     xarRemoveInstances('tasks');
     xarModDelAllVars('tasks');
+    xarModDelVar('base', 'calendarpropid');
 
     return true;
 }
