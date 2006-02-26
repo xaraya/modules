@@ -163,10 +163,14 @@
 	$osslash = ((strtoupper(substr(PHP_OS, 0, 3)) == 'WIN') ? '\\' : '/');
 	$cfg['ver'] 		= '1.3 - build 08122005';										// iBrowser version
 	//$cfg['root_dir']	= realpath((getenv('DOCUMENT_ROOT') && ereg('^'.preg_quote(realpath(getenv('DOCUMENT_ROOT'))), realpath(__FILE__))) ? getenv('DOCUMENT_ROOT') : str_replace(dirname(@$_SERVER['PHP_SELF']), '', str_replace($osslash, '/', dirname(__FILE__))));
-	$cfg['root_dir']    = ((@$_SERVER['DOCUMENT_ROOT'] && file_exists(@$_SERVER['DOCUMENT_ROOT'] . $_SERVER['PHP_SELF'])) ? $_SERVER['DOCUMENT_ROOT'] : str_replace(dirname(@$_SERVER['PHP_SELF']), '', str_replace('\\', '/', realpath('.'))));
 	$cfg['base_url'] 	= 'http://' . $_SERVER['SERVER_NAME']; 							// base url; e.g. 'http://localhost/'
 	$cfg['main_dir'] 	= dirname($_SERVER['PHP_SELF']); 								// iBrowser main dir; e.g. '/home/domain/public_html/ibrowser/'
-    $cfg['scripts']  	= $cfg['main_dir'] . '/scripts/'; 								// scripts dir; e.g. '/home/domain/public_html/ibrowser/scripts/'
+	$cfg['scripts']  	= $cfg['main_dir'] . '/scripts/'; 								// scripts dir; e.g. '/home/domain/public_html/ibrowser/scripts/'
+ 	$cfg['fonts']    	= dirname($_SERVER['PHP_SELF']) . '/fonts/';					// ttf font dir; absolute path
+    $cfg['mask']     	= dirname($_SERVER['PHP_SELF']) . '/masks/'; 					// mask dir; absolute path
+	$cfg['olay']     	= dirname($_SERVER['PHP_SELF']) . '/olays/'; 					// overlay dir; absolute path
+
+    $cfg['mark']     	= dirname($_SERVER['PHP_SELF']) . '/wmarks/'; 					// watermarks dir; absolute path
 	$cfg['pop_url']    	= $cfg['scripts'] . 'popup.php'; 								// popup dir; relative to 'script' dir
     $cfg['temp']     	= $realpath.'/var/cache'; 					// temp dir; e.g. 'D:/www/temp'
     $PHPTHUMB_CONFIG['cache_directory'] = $realpath.'/var/cache/templates'; // used by phpthumbs in ibrowser for image caching
