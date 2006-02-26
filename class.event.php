@@ -110,7 +110,9 @@ class Event
                $result_color = $dbconn->Execute($query_color);
             if ($result_color && !$result_color->EOF)    $color = $result_color->fields[0];    // we found at least one color; use it.
         }
-
+        // Bug 5361
+      $fStartDate = date("Y-m-d",strtotime($event_obj->dtstart));
+      $fStartTime = date("H:i",strtotime($event_obj->dtstart));
         //Set the data for the event
         $event_data[$event_date][$index]['event_id'] = $event_obj->event_id;
         $event_data[$event_date][$index]['class'] = $event_obj->class;
@@ -119,7 +121,7 @@ class Event
         $event_data[$event_date][$index]['description'] = $event_obj->description;
         $event_data[$event_date][$index]['isallday'] = $event_obj->isallday;
         $event_data[$event_date][$index]['color'] = $color;
-        $event_data[$event_date][$index]['time'] = $event_obj->fStartTime;
+        $event_data[$event_date][$index]['time'] = $fStartTime;
         $event_data[$event_date][$index]['categories'] = $event_obj->categories;
         $event_data[$event_date][$index]['linkdate'] = date("Ymd",strtotime($event_date));
         $event_data[$event_date][$index]['startdate'] = date("m-d-Y",strtotime($event_date));
@@ -131,16 +133,16 @@ class Event
         $datecreated = date("$dateformat_created",strtotime($event_obj->created));
         //$bl_data['datecreated'] = xarLocaleFormatDate($bl_data['datecreated'], $dateformat_created);
         $event_data[$event_date][$index]['Fstartdate'] = date("$dateformat",strtotime($event_date));
-        $event_data[$event_date][$index]['Ftime'] = date("$timeformat",strtotime($event_obj->fStartTime));
+        $event_data[$event_date][$index]['Ftime'] = date("$timeformat",strtotime($fStartTime));
         //popover posted information
         $postedby=xarML('Posted By').': '.addslashes(xarUserGetVar('name',$event_obj->organizer));
         $postedon=xarML('on').' '.$datecreated;
         //multiple event in a day popup
-        $event_data[$event_date][$index]['multipopover'] = $event_obj->fStartTime . " " . addslashes($event_obj->summary) . "-" .$postedby;
+        $event_data[$event_date][$index]['multipopover'] = $fStartTime . " " . addslashes($event_obj->summary) . "-" .$postedby;
         //single event popup
         $event_data[$event_date][$index]['singlepopover'] = addslashes($event_obj->description) . "<br>".$postedby.' '.$postedon;
         //$event_data[$event_date][$index]['singlepopover'] = addslashes($event_obj->description);
-        $event_data[$event_date][$index]['singlepopovercaption'] = addslashes($event_obj->summary)." " . $event_obj->fStartTime;
+        $event_data[$event_date][$index]['singlepopovercaption'] = addslashes($event_obj->summary)." " . $fStartTime;
         //sort the array for this event date by the unique timestamp index which is the key for this array
         $sortArray=$event_data[$event_date];
         ksort($sortArray);
@@ -177,7 +179,9 @@ class Event
 
         // Default color: black.
         $color = "#000000";
-
+        // Bug 5361
+      $fStartDate = date("Y-m-d",strtotime($event_obj->dtstart));
+      $fStartTime = date("H:i",strtotime($event_obj->dtstart));
         //Set the data for the event
         $event_data[$event_date][$index]['event_id'] = $event_obj->event_id;
         $event_data[$event_date][$index]['class'] = 0;
@@ -185,7 +189,7 @@ class Event
         $event_data[$event_date][$index]['summary'] = $event_obj->summary;
         $event_data[$event_date][$index]['isallday'] = $event_obj->isallday;
         $event_data[$event_date][$index]['color'] = $color;
-        $event_data[$event_date][$index]['time'] = $event_obj->fStartTime;
+        $event_data[$event_date][$index]['time'] = $fStartTime;
         $event_data[$event_date][$index]['categories'] = '';
         $event_data[$event_date][$index]['linkdate'] = date("Ymd",strtotime($event_date));
         $event_data[$event_date][$index]['startdate'] = date("m-d-Y",strtotime($event_date));
@@ -197,10 +201,10 @@ class Event
         $event_data[$event_date][$index]['Fstartdate'] = date("$dateformat_created",strtotime($event_date));
         //popover posted information
         //multiple event in a day popup
-        $event_data[$event_date][$index]['multipopover'] = $event_obj->fStartTime . " " . addslashes($event_data[$event_date][$index]['summary']);
+        $event_data[$event_date][$index]['multipopover'] = $fStartTime . " " . addslashes($event_data[$event_date][$index]['summary']);
         //single event popup
         $event_data[$event_date][$index]['singlepopover'] = addslashes($event_data[$event_date][$index]['description']);
-        $event_data[$event_date][$index]['singlepopovercaption'] = addslashes($event_data[$event_date][$index]['summary'])." " . $event_obj->fStartTime;
+        $event_data[$event_date][$index]['singlepopovercaption'] = addslashes($event_data[$event_date][$index]['summary'])." " . $fStartTime;
 
         //sort the array for this event date by the unique timestamp index which is the key for this array
         $sortArray=$event_data[$event_date];
