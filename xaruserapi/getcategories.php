@@ -16,6 +16,7 @@
 /**
  * get the categories stored in Julian
  * @todo MichelV <1> Move category properties to module variables
+ * @return array Array with Categories and properties cid, name, color
  */
 function julian_userapi_getcategories()
 {
@@ -28,7 +29,7 @@ function julian_userapi_getcategories()
     $categories = array();
 
     //get all the calendar categories for display
-    $query = "SELECT  cid , color  FROM  $category_properties_table ";
+    $query = "SELECT cid, color FROM $category_properties_table ";
     $result = $dbconn->Execute($query);
     while(!$result->EOF) {
         $cid = $result->fields[0];

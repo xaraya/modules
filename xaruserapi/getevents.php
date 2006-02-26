@@ -19,6 +19,7 @@
  * are not formatted for display. When a calendar oriented listing is needed,
  * use xaruser-getall.php
  *
+ * @author Julian Module Development Team
  * @param array $args an array of arguments
  * @param int $args['startnum'] start with this item number (default 1)
  * @param int $args['numitems'] the number of items to retrieve (default -1 = all)
@@ -138,10 +139,12 @@ function julian_userapi_getevents($args)
 
     if (xarModIsHooked('categories','julian') && (!empty($startdate))&& (!empty($enddate))) {
         $query .= " AND ";
+    } elseif ((!xarModIsHooked('categories','julian') || empty($catid)) && (!empty($startdate))&& (!empty($enddate))) {
+        $query .= " WHERE ";
     }
-
-    if ((!empty($startdate))&& (!empty($enddate))){
-        $query .= " WHERE DATE_FORMAT($event_table.dtstart,'%Y%m%d') >= $startdate AND DATE_FORMAT($event_table.dtstart,'%Y%m%d') <= $enddate";
+    // TODO: move date_format from here
+    if ((!empty($startdate))&& (!empty($enddate))) {
+        $query .= " DATE_FORMAT($event_table.dtstart,'%Y%m%d') >= $startdate AND DATE_FORMAT($event_table.dtstart,'%Y%m%d') <= $enddate";
     }
 
     if (isset($sortby)) {
