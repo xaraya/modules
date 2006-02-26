@@ -22,6 +22,12 @@
  *
  * initial template: Roger Raymond
  * @author Jodie Razdrh/John Kevlin/David St.Clair/MichelV/Jorn Bruggeman
+ * @param string action Type of action to take
+ * @param string color
+ * @param string addaction
+ * @param string editaction
+ * @param int cid Category ID
+ * @param array new_cids OPTIONAL
  * @return array Data for the template
  */
 function julian_admin_modifycategories()
@@ -35,14 +41,14 @@ function julian_admin_modifycategories()
     if (!xarVarFetch('cal_date','int:0:8',$cal_date,date("Ymd"))) return;
     if (!xarVarFetch('color','str',$color,'')) return;
 
-    if (!xarVarFetch('editaction','str',$editaction,'')) return;
-    if (!xarVarFetch('addaction','str',$addaction,'')) return;
-    if (!xarVarFetch('action','str',$action,'')) return;
-    if (!xarVarFetch('cid','str',$cid,'')) return;
+    if (!xarVarFetch('editaction', 'str',$editaction,'')) return;
+    if (!xarVarFetch('addaction',  'str',$addaction,'')) return;
+    if (!xarVarFetch('action',     'str',$action,'')) return;
+    if (!xarVarFetch('cid',        'int',$cid,'')) return;
     if (strcmp($addaction,"Add")==0) {
         // If we are adding a new category-to-properties link, the category_id comes in
         // the format specified by categories_visual_makeselect. Convert this.
-        xarVarFetch('new_cids', 'list:int:1:', $cids, NULL, XARVAR_NOT_REQUIRED);
+        xarVarFetch('new_cids', 'array', $cids, NULL, XARVAR_NOT_REQUIRED);
         if (empty($cids) || !is_array($cids) || strcmp($cids[0],'')==0) {
           $msg = xarML('No valid category specified.');
           xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', $msg);
@@ -68,33 +74,23 @@ function julian_admin_modifycategories()
             xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', $msg);
             return;
         }
-
-        $query = "INSERT INTO " . $category_properties_table . " ( cid , color ) VALUES (?,?)";
+        $query = "INSERT INTO " . $category_properties_table . " (cid ,color) VALUES (?,?)";
         $bindvars = array($cid,$color);
         $result = $dbconn->Execute($query, $bindvars);
         xarResponseRedirect(xarModURL('julian', 'admin', 'modifycategories'));
-    }
-
-    else if (!strcmp($addaction,"Cancel"))
-    {
+    } else if (!strcmp($addaction,"Cancel")) {
         $back_link=xarSessionGetVar('lastview');
         xarResponseRedirect($back_link);
-    }
-
-    else if (!strcmp($action,"Delete"))
-    {
-        $query = "DELETE FROM ".$category_properties_table." WHERE  cid  = '".$cid."'";
+    } else if (!strcmp($action,"Delete")) {
+        $query = "DELETE FROM ".$category_properties_table." WHERE cid ='".$cid."'";
         $result = $dbconn->Execute($query);
         xarResponseRedirect(xarModURL('julian', 'admin', 'modifycategories'));
-    }
-    //Cancel and Modify edit actions
-    else if (!strcmp($editaction,"Cancel"))
-    {
+    } else if (!strcmp($editaction,"Cancel")) {
+        //Cancel and Modify edit actions
         $data['edit_cond'] = '';
         xarResponseRedirect(xarModURL('julian', 'admin', 'modifycategories'));
-    }
-    else if (!strcmp($editaction,"Modify")){
-        $query = "UPDATE  $category_properties_table  SET  color  = ? WHERE  cid  = '$cid'";
+    } else if (!strcmp($editaction,"Modify")){
+        $query = "UPDATE  $category_properties_table  SET color = ? WHERE cid = '$cid'";
         $bindvars = array($color);
         $result = $dbconn->Execute($query, $bindvars);
         $data['edit_cond'] = '';
