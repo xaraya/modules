@@ -185,8 +185,32 @@ function julian_user_updateevent()
                 dtstart= ?,
                 last_modified= ?
                 WHERE event_id =".$id."";
-                $bindvars = array ($event_allday, $contact, $website, $summary, $description, $class, $location, $share, $street1, $street2, $city, $state, $zip, $phone, $email, $fee, $category, $rrule, $recur_freq, $recur_until, $recur_count, $recur_interval, $duration, $eventstartdate, $now);
-                $result = $dbconn->Execute($query, $bindvars);
+        $bindvars = array ($event_allday
+                        , $contact
+                        , $website
+                        , $summary
+                        , $description
+                        , (int) $class
+                        , $location
+                        , $share
+                        , $street1
+                        , $street2
+                        , $city
+                        , $state
+                        , $zip
+                        , $phone
+                        , $email
+                        , $fee
+                        , $category
+                        , $rrule
+                        , (int) $recur_freq
+                        , $recur_until == '' ? NULL : $recur_until
+                        , (int) $recur_count
+                        , (int) $recur_interval
+                        , $duration
+                        , $eventstartdate == '' ? NULL : $eventstartdate
+                        , $now);
+        $result = $dbconn->Execute($query, $bindvars);
 
         // Call the hooks. Event already exists (we are just updating)
         $item = array();
