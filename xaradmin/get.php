@@ -35,7 +35,7 @@ function dailydelicious_admin_get($args)
     // Return if no entries
     if ($GLOBALS['empty']) return;
 
-    $importpubtype = xarModGetVar('pop3gateway','importpubtype');
+    $importpubtype = xarModGetVar('dailydelicious','importpubtype');
     if (empty($importpubtype)) {
         $importpubtype = xarModGetVar('articles','defaultpubtype');
         if (empty($importpubtype)) {
