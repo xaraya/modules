@@ -27,7 +27,7 @@
  * @todo    Michel V. <1> Clean up
  */
 function julian_user_edit()
-  {
+{
 
     if (!xarVarFetch('id',      'id',    $id)) return;
     if (!xarVarFetch('objectid', 'id',   $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
@@ -37,22 +37,22 @@ function julian_user_edit()
     if (!empty($objectid)) {
         $id = $objectid;
     }
-   // Get event the decent way
-   $item = xarModAPIFunc('julian', 'user', 'get', array('event_id' => $id));
-   // Security check
-   if (!xarSecurityCheck('EditJulian', 1, 'Item', "$id:$item[organizer]:$item[calendar_id]:All")) {
-       return;
-   }
+    // Get event the decent way
+    $item = xarModAPIFunc('julian', 'user', 'get', array('event_id' => $id));
+    // Security check
+    if (!xarSecurityCheck('EditJulian', 1, 'Item', "$id:$item[organizer]:$item[calendar_id]:All")) {
+        return;
+    }
 
-   $event_endyear='';
-   $event_endmonth='';
-   $event_endday='';
-   if($item['recur_until']) {
+    $event_endyear='';
+    $event_endmonth='';
+    $event_endday='';
+    if($item['recur_until']) {
        // End date and time
        // determine the end date for a recurring event
        // TODO: With the new get.php this should be rewritten
        list($event_endyear,$event_endmonth,$event_endday) = explode("-",$item['recur_until']);
-   }
+    }
 
     //Date time from item
     //setting start date time variables
@@ -64,7 +64,6 @@ function julian_user_edit()
     $data['todays_month'] = $month;
     $data['todays_year'] = $year;
     $data['todays_day'] = $day;
-
 
     // If there is not a duration, set dur_hours and dur_minutes.
     // Default for both is empty string.
@@ -154,17 +153,25 @@ function julian_user_edit()
     $data['share_group'] = xarModGetVar('julian', 'share_group');
     // Build the group name. Type 1 is a group
     $group = xarModAPIFunc ('roles', 'user', 'get', array('uid'=> $data['share_group'], 'type' =>1));
-
     $data['group_validation']= 'group:'.$group['name'];
-    //Determining which end date radio to check. 0 index indicates this event has an end date and 1 index means it does not
+
+    // Determining which end date radio to check. 0 index indicates this event has an end date and 1 index means it does not
+    // event_repeat tells the type of repeat
     $event_endtype_checked[0] = '';
     $event_endtype_checked[1] = 'checked';
-    if (strrchr($item['recur_until'], '0000') !== false) {
-    //if ($item['recur_until'] == 0000) {
+    if (($event_endyear > 0) && ($event_repeat > 0)) {
         $event_endtype_checked[0] = 'checked';
         $event_endtype_checked[1] = '';
     }
     $data['event_endtype_checked'] = $event_endtype_checked;
+
+    //determine if this is there is an enddate present
+    $data['enddatedisabled'] = 'disabled';
+    if ($event_repeat > 0) {
+        $data['enddatedisabled'] = '';
+    }
+
+    $data['cal_date'] = $cal_date;
 
     //Building start hour options
     $start_hour_options = '';
@@ -175,7 +182,7 @@ function julian_user_edit()
             $start_hour_options.= " SELECTED";
         $start_hour_options.='>'.$j.'</option>';
     }
-   $data['start_hour_options'] = $start_hour_options;
+    $data['start_hour_options'] = $start_hour_options;
 
     // Building duration minute options
     // Get the interval
@@ -240,8 +247,9 @@ function julian_user_edit()
     $data['dur_minute_options'] = $dur_minute_options;
 
    //Setting event repeat selection
-   for ($i = 0; $i < 3; $i++)
+   for ($i = 0; $i < 3; $i++) {
      $data['event_repeat_checked'][$i] = '';
+   }
    $data['event_repeat_checked'][$event_repeat] = "checked";
 
    //Setting freq type selection (days,weeks,months,years)
@@ -289,13 +297,6 @@ function julian_user_edit()
      $data['class'][0] = '';
      $data['class'][1] = 'checked ';
    }
-   //determine if this is there is an enddate present
-   $data['enddatedisabled'] = 'disabled';
-   if (isset($event_endmonth) || isset($event_endday) || isset($event_endyear)) {
-     $data['enddatedisabled'] = '';
-   }
-
-   $data['cal_date'] = $cal_date;
 
     // Get hook information for the event that we will edit.
     // Build description for the item we want the hooks (i.e. category) for.

@@ -157,29 +157,48 @@
                         <strong><xar:mlstring>Edit Event</xar:mlstring></strong>
                     </legend>
                     <div class="xar-form-input-wrapper">
-                        <label for="title" class="required xar-form-label">
-                            <span class="help" title="#xarML('Each event requires a title.')#">
-                                <xar:mlstring>Event Title:</xar:mlstring>
-                            </span>
+                        <label for="title" class="required xar-form-label" title="#xarML('Each event requires a title')#">
+                            <xar:mlstring>Event Title:</xar:mlstring>
                         </label>
                         <input type="text" name="title" id="title" maxlength="80" value="#$title#" />
                     </div>
                     <div class="xar-form-input-wrapper">
-                        <label for="event_desc" class="required xar-form-label">
-                            <span class="help" title="#xarML('Event Description.')#">
-                                <xar:mlstring>Event Description:</xar:mlstring>
-                            </span>
+                        <label for="event_desc" class="required xar-form-label" title="#xarML('The full event description')#">
+                            <xar:mlstring>Event Description:</xar:mlstring>
                         </label>
-                            <textarea name="event_desc" id="event_desc" wrap="virtual" rows="15" cols="40">#$event_desc#</textarea>
+                        <textarea name="event_desc" id="event_desc" wrap="virtual" rows="15" cols="40">#$event_desc#</textarea>
                     </div>
                     <div class="xar-form-input-wrapper">
                         #$hookoutput['categories']#
                     </div>
                     <div class="xar-form-input-wrapper">
-                        <label for="month" class="required xar-form-label">
-                            <span class="help" title="#xarML('Date the event starts.')#">
-                                <xar:mlstring>Start Date:</xar:mlstring>
-                            </span>
+                        <label for="access" class="xar-form-label" title="#xarML('Share you event (only) with:')#">
+                            <xar:mlstring>Access:</xar:mlstring> &nbsp;
+                        </label>
+                        <input type="radio" name="class" id="class1" value="0" #$class[0]# onclick="document.getElementById('share').style.visibility='hidden';document.cal_submit.elements['share_uids[]'].selectedIndex=0;">
+                        <xar:mlstring>Public</xar:mlstring>
+                        <input type="radio" name="class" id="class2" value="1" #$class[1]# onclick="document.getElementById('share').style.visibility='visible';">
+                        <xar:mlstring>Private</xar:mlstring>
+                    </div>
+                    <xar:if condition="$class[1] eq 'checked '">
+                        <xar:set name="$showshare">'visible'</xar:set>
+                    <xar:else />
+                        <xar:set name="$showshare">'hidden'</xar:set>
+                    </xar:if>
+                    <div class="xar-form-input-wrapper" id="share" style="visibility:#$showshare#;">
+                        <label for="share_uids" class="xar-form-label" title="#xarML('Choose user to share this event with.')#">
+                              <xar:mlstring>Share with:</xar:mlstring>
+                        </label>
+                        <xar:data-input name="share_uids[]" id="share_uids" type="userlist" value="$share_uids" validation="$group_validation" />
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>
+                        <strong><xar:mlstring>Date and Time</xar:mlstring></strong>
+                    </legend>
+                    <div class="xar-form-input-wrapper">
+                        <label for="month" class="required xar-form-label" title="#xarML('Date the event starts.')#">
+                            <xar:mlstring>Start Date:</xar:mlstring>
                         </label>
                         <select name="month" title="#xarML('Event Date:Month')#" onchange="populateSelect(this, this.form.day, this.form.event_year)">
                             <option value=""></option>
@@ -223,11 +242,7 @@
                         </xar:for>
                         </select>
                     </div>
-                </fieldset>
-                <fieldset>
-                    <legend>
-                        <strong><xar:mlstring>Time and Location</xar:mlstring></strong>
-                    </legend>
+
 
                     <div class="xar-form-input-wrapper">
                         <label class="required xar-form-label" title="#xarML('Duration of event: all day or partial.')#">
@@ -240,10 +255,8 @@
                     </div>
                     <div id="p_event_startdur">
                     <div class="xar-form-input-wrapper">
-                        <label for="event_starttimeh" class="xar-form-label">
-                            <span class="help" title="#xarML('Time event starts.')#">
-                                <xar:mlstring>Start Time:</xar:mlstring>
-                            </span>
+                        <label for="event_starttimeh" class="xar-form-label" title="#xarML('The time this event starts')#">
+                            <xar:mlstring>Start Time:</xar:mlstring>
                         </label>
                         <select name="event_starttimeh" id="event_starttimeh" size="1" tabindex="7">
                             #$start_hour_options#
@@ -262,10 +275,8 @@
                         </select>
                     </div>
                     <div class="xar-form-input-wrapper">
-                            <label for="event_dur_hours" class="xar-form-label">
-                                <span class="help" title="#xarML('Duration.')#">
-                                    <xar:mlstring>Duration:</xar:mlstring>
-                                </span>
+                            <label for="event_dur_hours" class="xar-form-label" title="#xarML('The duration of this event')#">
+                                <xar:mlstring>Duration:</xar:mlstring>
                             </label>
                             <select name="event_dur_hours" id="event_dur_hours">
                                 #$dur_hour_options#
@@ -279,7 +290,7 @@
                     </div>
 
                     <div class="xar-form-input-wrapper">
-                        <label for="recur" class="required xar-form-label" title="#xarML('Event Recurs.')#">
+                        <label for="recur" class="required xar-form-label" title="#xarML('Check if the event recurs')#">
                             <xar:mlstring>Event Recurs:</xar:mlstring>
                         </label>
                         <input type="radio" name="event_repeat" id="event_repeat1" value="0" #$event_repeat_checked[0]# onClick="processEventRepeat(this.form,this,'button'); document.getElementById('p_event_recurend').style.visibility='hidden';" />
@@ -289,7 +300,7 @@
                         <xar:if condition ="!$event_repeat == 1">
                         <div class="xar-form-input-wrapper-after" id="p_event_recurend" style="visibility:hidden">
                         <xar:else />
-                        <div class="xar-form-input-wrapper-after" id="p_event_recurend">
+                        <div class="xar-form-input-wrapper-after" id="p_event_recurend" >
                         </xar:if>
                             <input type="text" name="event_repeat_freq" size="4" value="#$event_repeat_freq#" onkeyup="checkNumericy(this);" onfocus="document.cal_submit.event_repeat[1].checked = 'true';processEventRepeat(this.form,document.cal_submit.event_repeat[1])" />
                             <select name="event_repeat_freq_type" onchange="document.cal_submit.event_repeat[1].checked = 'true';processEventRepeat(this.form,document.cal_submit.event_repeat[1])">
@@ -331,7 +342,7 @@
                     </div>
                     <div id="p_event_recurend">
                         <div class="xar-form-input-wrapper">
-                            <label for="enddate" class="xar-form-label" title="#xarML('Recurring End Date.')#">
+                            <label for="enddate" class="xar-form-label" title="#xarML('When the even has a recurring end date, then enter it here')#">
                                 <xar:mlstring>Recurring End Date:</xar:mlstring>
                             </label>
                             <input type="radio" name="event_endtype" id="event_endtype1" value="1" #$event_endtype_checked[0]# #$enddatedisabled#/>
@@ -385,33 +396,8 @@
                                 <xar:mlstring>No End Date:</xar:mlstring>
                             </label>
                             <xar:comment>Replace: disabled="disabled"</xar:comment>
-                            <input type="radio" name="event_endtype" id="event_endtype2" value="0" onclick="document.cal_submit.event_endmonth.value = document.cal_submit.event_endday.value = document.cal_submit.event_endyear.value = ''" />
+                            <input type="radio" name="event_endtype" id="event_endtype2" value="0" #$enddatedisabled# #$event_endtype_checked[1]# onclick="document.cal_submit.event_endmonth.value = document.cal_submit.event_endday.value = document.cal_submit.event_endyear.value = ''" />
                         </div>
-                    </div>
-                    <div class="xar-form-input-wrapper">
-                        <label for="access" class="xar-form-label" title="#xarML('Share you event (only) with:')#">
-                            <xar:mlstring>Access:</xar:mlstring>
-                        </label>
-                        <input type="radio" name="class" id="class1" value="0" #$class[0]#
-                               onclick="document.getElementById('share').style.visibility='hidden';document.cal_submit.elements['share_uids[]'].selectedIndex=0;">
-
-                            <xar:mlstring>Public</xar:mlstring>
-                        <br/>
-                        <input type="radio" name="class" id="class2" value="1" #$class[1]#
-                               onclick="document.getElementById('share').style.visibility='visible';">
-
-                            <xar:mlstring>Private</xar:mlstring>
-                    </div>
-                    <xar:if condition="$class[1] eq 'checked '">
-                        <xar:set name="$showshare">'visible'</xar:set>
-                    <xar:else />
-                        <xar:set name="$showshare">'hidden'</xar:set>
-                    </xar:if>
-                    <div class="xar-form-input-wrapper" id="share" style="visibility:#$showshare#;">
-                      <label for="share_uids" class="xar-form-label" title="#xarML('Choose user to share this event with.')#">
-                              <xar:mlstring>Share with:</xar:mlstring>
-                      </label>
-                      <xar:data-input name="share_uids[]" id="share_uids" type="userlist" value="$share_uids" validation="$group_validation" />
                     </div>
                 </fieldset>
                 <fieldset>
@@ -419,18 +405,14 @@
                         <strong><xar:mlstring>Extra Event Information</xar:mlstring></strong>
                     </legend>
                     <div class="xar-form-input-wrapper">
-                        <label for="location" class="xar-form-label">
-                            <span class="help" title="#xarML('Event Location.')#">
-                                <xar:mlstring>Event Location:</xar:mlstring>
-                            </span>
+                        <label for="location" class="xar-form-label" title="#xarML('Enter the location of the event')#">
+                            <xar:mlstring>Event Location:</xar:mlstring>
                         </label>
                         <input type="text" name="location" id="location" maxlength="255" value="#$location#" class="xar-form-textmedium" />
                     </div>
                     <div class="xar-form-input-wrapper">
-                        <label for="street1" class="xar-form-label">
-                            <span class="help" title="#xarML('Street.')#">
-                                <xar:mlstring>Street:</xar:mlstring>
-                            </span>
+                        <label for="street1" class="xar-form-label" title="#xarML('Street.')#">
+                            <xar:mlstring>Street:</xar:mlstring>
                         </label>
                             <input type="text" name="street1" id="street1" maxlength="255" value="#$street1#" class="xar-form-textmedium" /><br />
                         <div class="xar-form-input-wrapper-after">
@@ -438,42 +420,32 @@
                         </div>
                     </div>
                     <div class="xar-form-input-wrapper">
-                        <label for="city" class="xar-form-label">
-                            <span class="help" title="#xarML('City.')#">
-                                <xar:mlstring>City:</xar:mlstring>
-                            </span>
+                        <label for="city" class="xar-form-label" title="#xarML('City or town')#">
+                            <xar:mlstring>City:</xar:mlstring>
                         </label>
                         <input type="text" name="city" id="city" maxlength="255" value="#$city#" class="xar-form-textmedium" />
                     </div>
                     <div class="xar-form-input-wrapper">
-                        <label for="state" class="xar-form-label">
-                            <span class="help" title="#xarML('State.')#">
-                                <xar:mlstring>State:</xar:mlstring>
-                            </span>
+                        <label for="state" class="xar-form-label" title="#xarML('State.')#">
+                            <xar:mlstring>State:</xar:mlstring>
                         </label>
                         <input type="text" name="state" id="state" maxlength="255" value="#$state#" class="xar-form-textmedium" />
                     </div>
                     <div class="xar-form-input-wrapper">
-                        <label for="postal" class="xar-form-label">
-                            <span class="help" title="#xarML('Postal/Providence.')#">
-                                <xar:mlstring>Postal/Providence:</xar:mlstring>
-                            </span>
+                        <label for="postal" class="xar-form-label" title="#xarML('Postal/Providence.')#">
+                            <xar:mlstring>Postal/Providence:</xar:mlstring>
                         </label>
                         <input type="text" name="postal" id="postal" maxlength="255" value="#$postal#" class="xar-form-textmedium" />
                     </div>
                     <div class="xar-form-input-wrapper">
-                        <label for="contact" class="xar-form-label">
-                            <span class="help" title="#xarML('Contact.')#">
-                                <xar:mlstring>Contact:</xar:mlstring>
-                            </span>
+                        <label for="contact" class="xar-form-label" title="#xarML('Contact.')#">
+                            <xar:mlstring>Contact:</xar:mlstring>
                         </label>
                         <input type="text" name="contact" id="contact" maxlength="255" value="#$contact#" class="xar-form-textmedium" />
                     </div>
                     <div class="xar-form-input-wrapper">
-                        <label for="phone1" class="xar-form-label">
-                            <span class="help" title="#xarML('Phone.')#">
-                                <xar:mlstring>Phone:</xar:mlstring>
-                            </span>
+                        <label for="phone1" class="xar-form-label" title="#xarML('Phone.')#">
+                            <xar:mlstring>Phone:</xar:mlstring>
                         </label>
                         <xar:if condition="xarModGetVar('Julian','TelFieldType') eq 'US'">
                            <input type="text" name="phone1" id="phone1" value="#$phone1#" size="3" maxlength="3" onkeyup="checkNumericy(this);checkNumberLen(this,3,this.form.phone2)" /> -
@@ -491,44 +463,28 @@
                         </xar:if>
                     </div>
                     <div class="xar-form-input-wrapper">
-                        <label for="email" class="xar-form-label">
-                            <span class="help" title="#xarML('Email.')#">
-                                <xar:mlstring>Email:</xar:mlstring>
-                            </span>
+                        <label for="email" class="xar-form-label" title="#xarML('Email address that can serve as a contact')#">
+                            <xar:mlstring>Email:</xar:mlstring>
                         </label>
                         <input type="text" name="email" id="email" value="#$email#" maxlength="255" class="xar-form-textmedium" />
                     </div>
                     <div class="xar-form-input-wrapper">
-                        <label for="website" class="xar-form-label">
-                            <span class="help" title="#xarML('Event Website.')#">
-                                <xar:mlstring>Event Website:</xar:mlstring>
-                            </span>
+                        <label for="website" class="xar-form-label" title="#xarML('Event Website.')#">
+                            <xar:mlstring>Event Website:</xar:mlstring>
                         </label>
                         <input type="text" name="website" id="website" value="#$website#" maxlength="255" class="xar-form-textmedium" />
                     </div>
                     <div class="xar-form-input-wrapper">
-                        <label for="fee" class="xar-form-label">
-                            <span class="help" title="#xarML('Event Fee.')#">
-                                <xar:mlstring>Event Fee:</xar:mlstring>
-                            </span>
+                        <label for="fee" class="xar-form-label" title="#xarML('Event Fee that will be announced on this website')#">
+                            <xar:mlstring>Event Fee:</xar:mlstring>
                         </label>
                         <input type="text" name="fee" id="fee" value="#$fee#" onkeyup="checkNumericy(this);" maxlength="255" class="xar-form-textmedium" />
                     </div>
                 </fieldset>
-                <xar:if condition="!empty($hookoutput) AND (count($hookoutput) gt 1)">
-                 <fieldset>
-                    <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
-                        <xar:foreach in="$hookoutput" key="$hookmodule">
-                        <xar:if condition="$hookmodule ne 'categories'">
-                        #$hookoutput[$hookmodule]#
-                        </xar:if>
-                        </xar:foreach>
-                </fieldset>
-                </xar:if>
             <div class="xar-form-input-wrapper-after">
                 <input type="hidden" name="is_update" value="1" />
-                <input type="hidden" name="authid" id="authid" value="#$authid#" />
                 <input type="hidden" name="id" value="#$event_id#" />
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
                 <input type="hidden" name="data_loaded" value="1" />
                 <input type="submit" name="submit" value="#xarML('Update')#">
                 <input type="submit" name="cancel" value="#xarML('Cancel')#" onclick="isCancel=1" />
