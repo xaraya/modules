@@ -14,6 +14,7 @@
 /**
  *  xarEvent
  *  container class for event information
+ * @todo make sure we will store dates as int(11) values, so we can get rid of all the calculations
  */
 class Event
 {

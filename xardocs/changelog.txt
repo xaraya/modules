@@ -417,4 +417,5 @@ Using the configured date/time format now in tooltip and viewevent. (related to 
 Added getitemlinks and getitemtypes for further standardization
 Finalize using the dynamic userlist with correct group selection (validation)
 Fix bug 5350 regarding edit template and recurring date being checked/unchecked wrongly
+Fix bug 5384 regarding date formatting in calevent block
 

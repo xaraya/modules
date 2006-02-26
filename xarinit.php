@@ -20,6 +20,7 @@
  * @author Julian module development team
  * @link changelog.txt for table definitions and descriptions
  * @return bool true on success
+ * @todo make sure we will store dates as int(11) values, so we can get rid of all the calculations
  */
 function julian_init()
 {
