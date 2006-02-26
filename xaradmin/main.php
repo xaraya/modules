@@ -2,25 +2,24 @@
 /**
  * Main admin function
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Registration module
+ * @link http://xaraya.com/index.php/release/30205.html 
  */
 /**
+ * @author Jo Dalle Nogare <jojodee@xaraya.com>
  * the main registration function
  */
 function registration_admin_main()
 {
     // Security Check
     if (!xarSecurityCheck('EditRegistration')) return;
-    if (xarModGetVar('modules', 'disableoverview') == 0) {
-        return array();
-    } else {
-        xarResponseRedirect(xarModURL('registration', 'admin', 'modifyconfig'));
-    }
+
+    xarResponseRedirect(xarModURL('registration', 'admin', 'modifyconfig'));
     // success
     return true;
 }

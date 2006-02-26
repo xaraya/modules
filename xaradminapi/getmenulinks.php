@@ -3,7 +3,7 @@
  * Utility function pass individual menu items to the main menu
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -14,6 +14,7 @@
  * utility function pass individual menu items to the main menu
  *
  * @author Marc Lutolf <marcinmilan@xaraya.com>
+ * @author Jo Dalle Nogare <jojodee@xaraya.com>
  * @returns array
  * @return array containing the menulinks for the main menu items.
  */

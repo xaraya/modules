@@ -8,7 +8,7 @@
  * @link http://www.xaraya.com
  *
  * @subpackage Registration module
- * @link http://xaraya.com/index.php/release/42.html
+ * @link http://xaraya.com/index.php/release/30205.html
  */
 /**
  * Shows the user login form when login block is not active

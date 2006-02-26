@@ -2,16 +2,17 @@
 /**
  * Login via a block.
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Registration module
+ * @link http://xaraya.com/index.php/release/30205.html
  */
  
 /* Login via a block.
- *
+ * @author Jo Dalle Nogare <jojodee@xaraya.com>
  * @author Jim McDonald
  * initialise block
  */

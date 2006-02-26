@@ -2,18 +2,20 @@
 /**
  * Initialise the registration module
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Registration module
+ * @link http://xaraya.com/index.php/release/30205.html
  * @author Jan Schrage, John Cox, Gregor Rothfuss
  */
 
 /**
  * Initialise the registration module
  *
+ * @author jojodee
  * @access public
  * @param none $
  * @returns bool
@@ -28,7 +30,7 @@ function registration_init()
     xarRegisterMask('ViewRegistrationLogin','All','registration','Block','rlogin:Login:All','ACCESS_OVERVIEW');
     xarRegisterMask('EditRegistration','All','registration','All','All','ACCESS_EDIT');
     xarRegisterMask('AdminRegistration','All','registration','All','All','ACCESS_ADMIN');
-    xarRegisterMask('AdminPanel','All','registration','All','All','ACCESS_ADMIN');
+
 # --------------------------------------------------------
 #
 # Set up privileges
