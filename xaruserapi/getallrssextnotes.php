@@ -2,23 +2,26 @@
 /**
  * Get module IDs
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Release Module
+ * @link http://xaraya.com/index.php/release/773.html
  */
 /**
  * Get module IDs
  * 
  * Original Author of file: John Cox via phpMailer Team
+ * @author jojodee
  * @author Release module development team
- * @TODO 
+ * @param integer $releaseno
  */
 function release_userapi_getallrssextnotes($args)
 {
     extract($args);
+    //Make provision to pass in $releaseno to set defined number of items to get
 
     $releaseinfo = array();
 
@@ -30,7 +33,7 @@ function release_userapi_getallrssextnotes($args)
     $xartable =& xarDBGetTables();
 
     $releasenotes = $xartable['release_notes'];
-    //jojodee We want
+    //Need to only get the last x release notes for efficiency
     $query = "SELECT xar_rnid,
                      xar_rid,
                      xar_type,
@@ -39,7 +42,12 @@ function release_userapi_getallrssextnotes($args)
             WHERE xar_approved = 2
             ORDER by xar_time DESC";
 
-    $result =& $dbconn->Execute($query);
+
+    if (isset($releaseno) && is_numeric($releaseno)) { //unlimited if not set??
+       $result =& $dbconn->SelectLimit($query, $releaseno, 0);
+    } else {
+       $result =& $dbconn->Execute($query);
+    }
     if (!$result) return;
 
     // Put users into result array

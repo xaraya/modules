@@ -10,6 +10,7 @@
  * @subpackage Release Module
  * @author Release Module Development team
  */
+
 /**
  * Searches all releases
  *
@@ -104,5 +105,6 @@ function release_userapi_search($args)
 
     // Return the releases
     return $releases;
+
 }
 ?>
