@@ -129,10 +129,11 @@ class Event
         $dateformat_created=$dateformat.' '.$timeformat;
         $datecreated = date("$dateformat_created",strtotime($event_obj->created));
         //$bl_data['datecreated'] = xarLocaleFormatDate($bl_data['datecreated'], $dateformat_created);
-
+        $event_data[$event_date][$index]['Fstartdate'] = date("$dateformat",strtotime($event_date));
+        $event_data[$event_date][$index]['Ftime'] = date("$timeformat",strtotime($event_obj->fStartTime));
         //popover posted information
         $postedby=xarML('Posted By').': '.addslashes(xarUserGetVar('name',$event_obj->organizer));
-        $postedon=xarML('on').' '.$datecreated;//date($dateformat).' '.date('h:s a',strtotime($event_obj->created));
+        $postedon=xarML('on').' '.$datecreated;
         //multiple event in a day popup
         $event_data[$event_date][$index]['multipopover'] = $event_obj->fStartTime . " " . addslashes($event_obj->summary) . "-" .$postedby;
         //single event popup
@@ -157,51 +158,54 @@ class Event
     */
     function setLinkedEventData(&$event_data,$event_date,$event_obj)
     {
-      //Get variables
-      $dateformat=xarModGetVar('julian', 'dateformat');
+        //Get variables
+        $dateformat=xarModGetVar('julian', 'dateformat');
 
-      $event_obj->event_id .= "_link";
+        $event_obj->event_id .= "_link";
 
-      // Generate unique id for event that allows for time/date-based sorting.
-      $index=strtotime($event_obj->dtstart) ."-".$event_obj->event_id;
+        // Generate unique id for event that allows for time/date-based sorting.
+        $index=strtotime($event_obj->dtstart) ."-".$event_obj->event_id;
 
-      $event_data[$event_date][$index] = array();
-      $event_data[$event_date][$index] = xarModAPIFunc('julian', 'user', 'geteventinfo',
+        $event_data[$event_date][$index] = array();
+        $event_data[$event_date][$index] = xarModAPIFunc('julian', 'user', 'geteventinfo',
                                                          array('event'   => $event_data[$event_date][$index],
                                                                'iid'     => $event_obj->hook_iid,
                                                                'itemtype'=> $event_obj->hook_itemtype,
                                                                'modid'   => $event_obj->hook_modid));
 
 
-      // Default color: black.
-      $color = "#000000";
+        // Default color: black.
+        $color = "#000000";
 
-      //Set the data for the event
-      $event_data[$event_date][$index]['event_id'] = $event_obj->event_id;
-      $event_data[$event_date][$index]['class'] = 0;
-      $event_data[$event_date][$index]['organizer'] = 0;
-      $event_data[$event_date][$index]['summary'] = $event_obj->summary;
- //     $event_data[$event_date][$index]['description'] = xarML('This item does not belong to julian. It has been hooked to julian by another module.');
-      $event_data[$event_date][$index]['isallday'] = $event_obj->isallday;
-      $event_data[$event_date][$index]['color'] = $color;
-      $event_data[$event_date][$index]['time'] = $event_obj->fStartTime;
-      $event_data[$event_date][$index]['categories'] = '';
-      $event_data[$event_date][$index]['linkdate'] = date("Ymd",strtotime($event_date));
-      $event_data[$event_date][$index]['startdate'] = date("m-d-Y",strtotime($event_date));
-      // Get additional event information for hooking module.
+        //Set the data for the event
+        $event_data[$event_date][$index]['event_id'] = $event_obj->event_id;
+        $event_data[$event_date][$index]['class'] = 0;
+        $event_data[$event_date][$index]['organizer'] = 0;
+        $event_data[$event_date][$index]['summary'] = $event_obj->summary;
+        $event_data[$event_date][$index]['isallday'] = $event_obj->isallday;
+        $event_data[$event_date][$index]['color'] = $color;
+        $event_data[$event_date][$index]['time'] = $event_obj->fStartTime;
+        $event_data[$event_date][$index]['categories'] = '';
+        $event_data[$event_date][$index]['linkdate'] = date("Ymd",strtotime($event_date));
+        $event_data[$event_date][$index]['startdate'] = date("m-d-Y",strtotime($event_date));
+        // Get additional event information for hooking module.
+        // Make an admin adjustable time format
+        $dateformat=xarModGetVar('julian', 'dateformat');
+        $timeformat=xarModGetVar('julian', 'timeformat');
+        $dateformat_created=$dateformat.' '.$timeformat;
+        $event_data[$event_date][$index]['Fstartdate'] = date("$dateformat_created",strtotime($event_date));
+        //popover posted information
+        //multiple event in a day popup
+        $event_data[$event_date][$index]['multipopover'] = $event_obj->fStartTime . " " . addslashes($event_data[$event_date][$index]['summary']);
+        //single event popup
+        $event_data[$event_date][$index]['singlepopover'] = addslashes($event_data[$event_date][$index]['description']);
+        $event_data[$event_date][$index]['singlepopovercaption'] = addslashes($event_data[$event_date][$index]['summary'])." " . $event_obj->fStartTime;
 
-      //popover posted information
-      //multiple event in a day popup
-      $event_data[$event_date][$index]['multipopover'] = $event_obj->fStartTime . " " . addslashes($event_data[$event_date][$index]['summary']);
-      //single event popup
-      $event_data[$event_date][$index]['singlepopover'] = addslashes($event_data[$event_date][$index]['description']);
-      $event_data[$event_date][$index]['singlepopovercaption'] = addslashes($event_data[$event_date][$index]['summary'])." " . $event_obj->fStartTime;
-
-      //sort the array for this event date by the unique timestamp index which is the key for this array
-      $sortArray=$event_data[$event_date];
-      ksort($sortArray);
-      //reset the event array for this date to the sorted array for this event date
-      $event_data[$event_date]=$sortArray;
+        //sort the array for this event date by the unique timestamp index which is the key for this array
+        $sortArray=$event_data[$event_date];
+        ksort($sortArray);
+        //reset the event array for this date to the sorted array for this event date
+        $event_data[$event_date]=$sortArray;
     }
 
     function setStartTime($time)

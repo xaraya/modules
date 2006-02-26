@@ -51,7 +51,7 @@
                             <div class="xar-julian-list-contents">
                                   <xar:comment>Show a bullet with the color of the event category.</xar:comment>
                                   <font size="3" color="#$val2['color']#">#$Bullet#</font>
-                                <span class="xar-sub">#$val2['startdate']# #$val2['time']#</span>
+                                <span class="xar-sub">#$val2['Fstartdate']# #$val2['Ftime']#</span>
                                 <a href="#xarModURL('julian','user','viewevent',array('cal_date'=>$val2['linkdate'],'event_id'=>$val2['event_id']))#" class="xar-julian-event">
                                     #$val2['summary']#
                                 </a>
