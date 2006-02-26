@@ -1,7 +1,7 @@
 <?php
 function dailydelicious_adminapi_getmenulinks()
 {
-    if(xarSecurityCheck('AdminPOP3Gateway')) {
+    if(xarSecurityCheck('DailyDelicious')) {
         $menulinks[] = Array('url'   => xarModURL('dailydelicious',
                                                   'admin',
                                                   'modifyconfig'),
