@@ -1,16 +1,17 @@
 <?php
 /**
+ * Modify the configuration of Julian
+ *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Julian Module
+ * @link http://xaraya.com/index.php/release/319.html
  * @author Julian Module Developers Team
  */
-
 /**
- *
  * Function that allows modification of configurable variables for the julian calendar
  *
  * This module:

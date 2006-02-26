@@ -1,6 +1,6 @@
 <?php
 /**
- * Update module configuration parameters
+ * Update Julian module configuration parameters
  *
  * @package modules
  * @copyright (C) 2005-2006 The Digital Development Foundation

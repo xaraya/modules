@@ -15,8 +15,9 @@
 /**
  * Julian Month Block - Modify block settings
  *
- * @author Julian Module development team
- * @author MichelV MichelV@xarayahosting.nl
+ * @author MichelV <MichelV@xaraya.com>
+ * @param array blockinfo
+ * @return array vars
  */
 function julian_calmonthblock_modify($blockinfo)
 {
@@ -44,6 +45,8 @@ function julian_calmonthblock_modify($blockinfo)
 
 /**
  * Update block settings
+ * @param array blockinfo
+ * @return array blockinfo
  */
 function julian_calmonthblock_update($blockinfo)
 {

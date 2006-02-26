@@ -3,7 +3,7 @@
  * Month Block  - standard Initialization function
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -11,7 +11,6 @@
  * @link http://xaraya.com/index.php/release/319.html
  * @author Julian Module Development Team
  */
-
 /**
  * This module:
  * Metrostat Calendar
@@ -20,7 +19,6 @@
  * initial template: Roger Raymond
  * @author Jodie Razdrh/John Kevlin/David St.Clair
  */
-
 /**
  * initialise block
  *
@@ -49,13 +47,13 @@ function julian_calmonthblock_init()
 function julian_calmonthblock_info()
 {
     // Values
-    return array('text_type'        => 'Calendar',
-        'module'                    => 'julian',
-        'text_type_long'            => 'Metrostat Calendar',
-        'allow_multiple'            => false,
-        'form_content'              => false,
-        'form_refresh'              => false,
-        'show_preview'              => true);
+    return array('text_type'  => 'Calendar',
+        'module'              => 'julian',
+        'text_type_long'      => 'Metrostat Calendar',
+        'allow_multiple'      => false,
+        'form_content'        => false,
+        'form_refresh'        => false,
+        'show_preview'        => true);
 }
 
 /**
