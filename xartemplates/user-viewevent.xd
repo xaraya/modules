@@ -104,11 +104,32 @@
                             <strong><xar:mlstring>Posted By:</xar:mlstring></strong>&nbsp;&nbsp;#$organizer# <xar:mlstring>on</xar:mlstring> #$datecreated#
                      </td>
                 </tr>
+                <!-- if you want to extend this module with dynamic data, you can retrieve
+                //   that data in the code via APIs, or use e.g. the following BL tags here.
+                //   For the different options, see the overview of dynamicdata...
+                -->
+                <xar:if condition="xarModIsHooked('dynamicdata')">
+                    <tr>
+                    <!-- 1. retrieve any dynamic properties defined for this object -->
+                    <xar:data-getitem name="$properties" module="julian" itemid="$event_id" />
+                    <!-- 2. for each property, display its label and value in output format -->
+                    <xar:if condition="isset($properties) and count($properties) gt 0">
+                        <xar:foreach in="$properties" key="$name">
+                            <td><xar:data-label property="$properties[$name]" />:</td>
+                            <td><xar:data-output property="$properties[$name]" /></td>
+                        </xar:foreach>
+                    </xar:if>
+                    </tr>
+                </xar:if>
          </table>
-        <xar:if condition="!empty($hookoutput)">
-            <xar:foreach in="$hookoutput" key="$hookmodule">
+        <xar:if condition="!empty($hookoutput) AND (count($hookoutput) gt 1)">
+         <fieldset>
+            <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
+                <xar:foreach in="$hookoutput" key="$hookmodule">
                 #$hookoutput[$hookmodule]#
-            </xar:foreach>
+                </xar:foreach>
+        </fieldset>
         </xar:if>
+
     </div>
 </div>

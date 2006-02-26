@@ -481,6 +481,16 @@
                         <input type="text" name="fee" id="fee" value="#$fee#" onkeyup="checkNumericy(this);" maxlength="255" class="xar-form-textmedium" />
                     </div>
                 </fieldset>
+                <xar:if condition="!empty($hookoutput) AND (count($hookoutput) gt 1)">
+                 <fieldset>
+                    <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
+                        <xar:foreach in="$hookoutput" key="$hookmodule">
+                        <xar:if condition="$hookmodule ne 'categories'">
+                        #$hookoutput[$hookmodule]#
+                        </xar:if>
+                        </xar:foreach>
+                </fieldset>
+                </xar:if>
             <div class="xar-form-input-wrapper-after">
                 <input type="hidden" name="is_update" value="1" />
                 <input type="hidden" name="id" value="#$event_id#" />
