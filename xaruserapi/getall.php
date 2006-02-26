@@ -1,38 +1,38 @@
 <?PHP
 /**
- *    will return array of events for the date range specified for the current user
- *    @params $startdate string valid date as YYYY-MM-DD
- *    @params $enddate string valid date as YYYY-MM-DD
- *    @return array events for the range specified
-* @package Xaraya eXtensible Management System
-* @copyright (C) 2004 by Metrostat Technologies, Inc.
-* @license GPL {@link http://www.gnu.org/licenses/gpl.html}
-* @link http://www.metrostat.net
-*
-* @subpackage julian
-* initial template: Roger Raymond
-*
-* @TODO
-*/
-
+ * Julian module get all events and place in date array
+ *
+ * @package modules
+ * @copyright (C) 2004 by Metrostat Technologies, Inc.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.metrostat.net
+ *
+ * @subpackage Julian Module
+ * @link http://xaraya.com/index.php/release/319.html
+ * @author Julian Module Development Team
+ */
 /**
  * Get all events
  *
  * Get all events from the events table and the linked events table
  * Events are formatted for display
  *
- * @author Jodie Razdrh/John Kevlin/David St.Clair MichelV (Michelv@xarayahosting.nl)
- * @deprec  date since deprecated <insert this if function is deprecated>
- * @access  public / private / protected
- * @param   int $startnum Description of parameter 1
- * @param   int $numitems Description of parameter 2
+ * @author Jodie Razdrh/John Kevlin/David St.Clair
+ * @author MichelV <michelv@xaraya.com>
+ * initial template: Roger Raymond
+ *    will return array of events for the date range specified for the current user
+ * @param string $startdate valid date as YYYY-MM-DD
+ * @param string $enddate valid date as YYYY-MM-DD
+ * @access  public
+ * @param   int $startnum startnumber
+ * @param   int $numitems Max number of items
+ * @param   string startdate Starting date to get events for
+ * @param   string enddate End date to get events for
  * @param   str $sortby Sortby parameter for display in list
- * @param   date $startdate The starting date for the selection
- * @param   date $enddate The end date for the selection
- * @param orderby sortby catid
- * @return  array $event_data
+ * @param   orderby sortby catid
+ * @return array events for the range specified $event_data
  * @throws  list of exception identifiers which can be thrown
- * @todo    Michel V. <#> make userapi_getall.php from this.
+ * @todo    MichelV <#> Move the array formatting to a seperate function so this becomes a real getall
  */
 
 function julian_userapi_getall($args)
@@ -131,16 +131,21 @@ function julian_userapi_getall($args)
         $query .= " FROM $event_table
                     WHERE ";
      }
-
+     /* MySQL friendly query
+      * Comment this one if you need to use PostGres
+      */
 
      $query .= " ( $event_table.organizer = $current_user
                  OR ($event_table.class= '0' AND $event_table.organizer != '" .$current_user."' )
                  OR FIND_IN_SET('" . $current_user."',share_uids) )
                  $condition
                  ORDER BY $event_table.$sortby $orderby";
-     /* I could only replace the MySQL-specific FIND_IN_SET() with a (PostgreSQL-specific)
-        feature (arrays). This should be redesigned to use standard SQL features to make sure
-        it will work with various DBs.
+
+     /* PostGres Query. Uncomment this one to use with PostGres.
+      * I could only replace the MySQL-specific FIND_IN_SET() with a (PostgreSQL-specific)
+      * feature (arrays). This should be redesigned to use standard SQL features to make sure
+      * it will work with various DBs.
+      * @author Zsolt
 
      $query .= " ( $event_table.organizer = $current_user
                  OR ($event_table.class= '0' AND $event_table.organizer != '" .$current_user."' )
