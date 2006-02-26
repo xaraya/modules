@@ -28,7 +28,7 @@ function bible_init()
         'xar_lname' => array('type' => 'varchar', 'size' => 128, 'null' => false),
         'xar_file' => array('type' => 'varchar', 'size' => 128, 'null' => false),
         'xar_md5' => array('type' => 'varchar', 'size' => 32, 'null' => false),
-        'xar_config_exists' => array('type' => 'boolean', 'null'=>FALSE, 'default'=>false),
+        'xar_config_exists' => array('type' => 'integer', 'size' => 1, 'null'=> false, 'default'=> '0'),
         'xar_md5_config' => array('type' => 'varchar', 'size' => 32, 'null' => false),
         'xar_state' => array('type' => 'integer', 'size' => 'tiny', 'null' => false),
         'xar_type' => array('type' => 'integer', 'size' => 'tiny', 'null' => false)
