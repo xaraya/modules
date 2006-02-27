@@ -1,5 +1,14 @@
 <?php
-
+/**
+ * Return the dispatch mapping for the moveabletype api
+ *
+ * @package modules
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @link http://www.xaraya.com
+ *
+ * @subpackage moveabletype
+ * @author Marcel van der Boom <marcel@xaraya.com>
+ */
 function moveabletype_userapi_getrecentposttitles($args)
 {
   xarLogMessage("Moveabletype api: getRecentPostTitles", XARLOG_LEVEL_WARNING);
@@ -25,20 +34,20 @@ function moveabletype_userapi_getrecentposttitles($args)
             // FIXME: test for exeptions here!
             $numberOfPosts = xarModAPIFunc('articles','user','countitems',array('cids'=> $cids));
         }
-        
+
         // Retrieve articles from selected category
-        // FIXME: test for exceptions 
-        $articles = xarModAPIFunc('articles','user','getall', 
+        // FIXME: test for exceptions
+        $articles = xarModAPIFunc('articles','user','getall',
                                   array('startnum' => 1, 'ptid' => null, 'numitems' => $numberOfPosts, 'cids' => $cids));
-        
+
         // No posts found does NOT constitute an error, but can be helpfull in debugging
         //if (count($articles)==0) {
         //    $cat = xarModAPIFunc('categories','user','cid2name',array('cid'=>$blogid));
         //    $err = xarML("No posts found in category (#(1))",$cat);
         //}
     }
-    
-    
+
+
     if (!empty($err)) {
         $output = xarModAPIFunc('xmlrpcserver','user','faultresponse',array('errorstring' => $err));
     } else {
@@ -53,17 +62,17 @@ function moveabletype_userapi_getrecentposttitles($args)
           $article_list[$i]['title']       = $article['title'];
           $i++;
         }
-                
+
         $data['articlelist'] = $article_list;
-        
+
         $output = xarModAPIFunc('xmlrpcserver','user','createresponse',
                                 array('module'  => 'moveabletype',
                                       'command' => 'getrecentposttitles',
                                       'params'  => $data)
                                 );
-    } 
+    }
     return $output;
-      
+
 }
 
 ?>

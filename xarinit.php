@@ -7,9 +7,9 @@
  * @link http://www.xaraya.com
  *
  * @subpackage moveabletype
+ * @link http://xaraya.com/index.php/release/329.html
  * @author Marcel van der Boom <marcel@xarara.com>
  */
-
 /**
 * initialise the moveabletype module
  *
@@ -17,18 +17,19 @@
  * it uses no database tables yet.
  *
  */
-function moveabletype_init() 
+function moveabletype_init()
 {
-    return moveabletype_upgrade('0.1.0'); // initial version was 0.1.0 
+    return moveabletype_upgrade('0.1.0'); // initial version was 0.1.0
 }
 
 /**
  * upgrade the moveabletype module from an old version
  * This function can be called multiple times
+ * @return bool true
  */
-function moveabletype_upgrade($oldversion) 
-{ 
-    return true; 
+function moveabletype_upgrade($oldversion)
+{
+    return true;
 }
 
 /**

@@ -1,16 +1,25 @@
 <?php
-
+/**
+ * Return the dispatch mapping for the moveabletype api
+ *
+ * @package modules
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @link http://www.xaraya.com
+ *
+ * @subpackage moveabletype
+ * @author Marcel van der Boom <marcel@xaraya.com>
+ */
 function moveabletype_userapi_getpostcategories($args)
 {
     xarLogMessage('Moveabletype api: getpostcategories', XARLOG_LEVEL_WARNING);
     extract($args);
-    
+
     // get the params
     $sn1=$msg->getParam(0);  $postid        = $sn1->scalarval(); // NOTE: NOT blogid
     $sn2=$msg->getParam(1);  $username      = $sn2->scalarval();
     $sn3=$msg->getParam(2);  $password      = $sn3->scalarval();
 
-    // Try to login 
+    // Try to login
     $err='';
     $elements = array();
     if (empty($password) || !xarUserLogin($username,$password)) {
@@ -29,13 +38,13 @@ function moveabletype_userapi_getpostcategories($args)
         $rootCats = xarModGetVar('articles','mastercids.'.$pubtype);
         if (!empty($rootCats)) $rootCats = explode(';',$rootCats);
 
-        // This takes the intersecting values of both the item cats and the 
+        // This takes the intersecting values of both the item cats and the
         // root cats. The one which is in both is our blog.
         $blog = array_intersect($rootCats, $itemCatKeys);
         // array_intersect preserves keys
         // we dont care what it is, we just want the first
         $blog = array_shift($blog);
-        
+
         if(!empty($itemCats)) {
             // Construct an array of structs to return
             foreach($itemCats as $index => $category) {
