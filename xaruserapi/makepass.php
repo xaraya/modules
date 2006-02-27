@@ -43,7 +43,10 @@ function _make_seed()
     list($usec, $sec) = explode(' ', microtime());
     return (float) $sec + ((float) $usec * 100000);
 }
-
+/**
+ * Make a password
+ * @return string
+ */
 function authentication_userapi_makePass()
 {
     // init some

@@ -14,8 +14,7 @@
  * utility function pass individual menu items to the main menu
  *
  * @author Marc Lutolf <marcinmilan@xaraya.com>
- * @returns array
- * @return array containing the menulinks for the main menu items.
+ * @return array Array containing the menulinks for the main menu items.
  */
 function authentication_adminapi_getmenulinks()
 {

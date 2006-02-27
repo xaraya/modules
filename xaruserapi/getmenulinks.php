@@ -9,7 +9,7 @@
  *
  * @subpackage Authentication module
  */
-/*
+/**
  * Standard function to get main menu links
  * @author Marc Lutolf <marcinmilan@xaraya.com>
  */
@@ -18,13 +18,13 @@ function authentication_userapi_getmenulinks()
 
     if (xarModGetVar('authentication', 'allowregistration')){
     // Security check
-		if (!xarUserIsLoggedIn()){
-			$menulinks[] = array('url'   => xarModURL('authentication',
-													  'user',
-													  'register'),
-								 'title' => xarML('Log in'),
-								 'label' => xarML('Log in'));
-		}
+        if (!xarUserIsLoggedIn()){
+            $menulinks[] = array('url'   => xarModURL('authentication',
+                                                      'user',
+                                                      'register'),
+                                 'title' => xarML('Log in'),
+                                 'label' => xarML('Log in'));
+        }
     }
     if (xarModGetVar('authentication', 'showprivacy')){
         $menulinks[] = array('url'   => xarModURL('authentication',
