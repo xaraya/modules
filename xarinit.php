@@ -32,7 +32,7 @@ function authentication_init()
 #
 # Set up privileges
 #
-    xarRegisterPrivilege('AdminAuthentication','All','vendors','All','All','ACCESS_ADMIN');
+    xarRegisterPrivilege('AdminAuthentication','All','authentication','All','All','ACCESS_ADMIN');
 
 # --------------------------------------------------------
 #
@@ -47,8 +47,8 @@ function authentication_init()
     xarModSetVar('authentication', 'askpendingemail', 1);
     xarModSetVar('authentication', 'askpasswordemail', 1);
     xarModSetVar('authentication', 'defaultgroup', 'Users');
-	xarModSetVar('authentication', 'lockouttime', 15);
-	xarModSetVar('authentication', 'lockouttries', 3);
+    xarModSetVar('authentication', 'lockouttime', 15);
+    xarModSetVar('authentication', 'lockouttries', 3);
     xarModSetVar('authentication', 'minage', 13);
 
 /*---------------------------------------------------------------
@@ -94,8 +94,8 @@ president@whitehouse.gov';
         }
     }
 
-	// Make this the default authentication module
-	xarModSetVar('roles', 'defaultauthmodule', xarModGetIDFromName('authentication'));
+    // Make this the default authentication module
+    xarModSetVar('roles', 'defaultauthmodule', xarModGetIDFromName('authentication'));
 
     return true;
 }
