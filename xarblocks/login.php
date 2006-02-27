@@ -10,10 +10,12 @@
  * @subpackage Authentication module
  */
 
-/* Login via a block.
+/**
+ * Login via a block.
  *
  * @author Jim McDonald
  * initialise block
+ * @return array
  */
 function authentication_loginblock_init()
 {
@@ -29,6 +31,7 @@ function authentication_loginblock_init()
 
 /**
  * get information on block
+ * @return array
  */
 function authentication_loginblock_info()
 {
@@ -42,6 +45,7 @@ function authentication_loginblock_info()
 /**
  * Display func.
  * @param $blockinfo array containing title,content
+ * @return array $blockinfo
  */
 function authentication_loginblock_display($blockinfo)
 {

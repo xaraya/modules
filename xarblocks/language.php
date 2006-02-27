@@ -7,10 +7,9 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Roles module
+ * @subpackage Authentication module
  */
-
-/*
+/**
  * Language Selection via block
  * @author Marco Canini
  * initialise block
@@ -26,6 +25,7 @@ function authentication_languageblock_init()
 
 /**
  * get information on block
+ * @return array
  */
 function authentication_languageblock_info()
 {
@@ -39,6 +39,7 @@ function authentication_languageblock_info()
 /**
  * Display func.
  * @param $blockinfo array containing title,content
+ * @return array $blockinfo
  */
 function authentication_languageblock_display($blockinfo)
 {

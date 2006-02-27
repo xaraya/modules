@@ -46,10 +46,10 @@
       <xar:mlstring>Further information on the Roles module can be found at:</xar:mlstring>
    </p>
    <ul>
-      <li><xar:mlstring>Authentication Module Extension page at</xar:mlstring> <a title="#xarML('Authentication Module - Xaraya Extension 30205')#" href="http://www.xaraya.com/index.php/release/27.html">Xaraya Extension and Releases</a>.
+      <li><xar:mlstring>Authentication Module Extension page at</xar:mlstring> <a title="#xarML('Authentication Module - Xaraya Extension 659')#" href="http://www.xaraya.com/index.php/release/659.html">Xaraya Extension and Releases</a>.
       <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
       </li>
-      <li><xar:mlstring>Related tutorials and documentation on Roles module at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/roles/" title="#xarML('Related documentation on Authentication')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+      <li><xar:mlstring>Related tutorials and documentation on Roles module at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/authentication/" title="#xarML('Related documentation on Authentication')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
       </li>
       <li><xar:mlstring>Extended information for Developers at</xar:mlstring> <a href="http://www.xaraya.com/documentation/rfcs/rfc0030.html" title="#xarML('RFC 30')#"><xar:mlstring>Xaraya RFC-30</xar:mlstring></a>
       </li>
