@@ -3,8 +3,8 @@
 
 function TinyMCE_Engine() {
 	this.majorVersion = "2";
-	this.minorVersion = "0.3";
-	this.releaseDate = "2006-02-13";
+	this.minorVersion = "0.5";
+	this.releaseDate = "2006-xx-xx";
 
 	this.instances = new Array();
 	this.switchClassCache = new Array();
@@ -1483,15 +1483,17 @@ TinyMCE_Engine.prototype = {
 	applyTemplate : function(h, as) {
 		var i, s, ar = h.match(new RegExp('\\{\\$[a-z0-9_]+\\}', 'gi'));
 
-		for (i=ar.length-1; i>=0; i--) {
-			s = ar[i].substring(2, ar[i].length-1);
+		if (ar && ar.length > 0) {
+			for (i=ar.length-1; i>=0; i--) {
+				s = ar[i].substring(2, ar[i].length-1);
 
-			if (s.indexOf('lang_') == 0 && tinyMCELang[s])
-				h = tinyMCE.replaceVar(h, s, tinyMCELang[s]);
-			else if (as && as[s])
-				h = tinyMCE.replaceVar(h, s, as[s]);
-			else if (tinyMCE.settings[s])
-				h = tinyMCE.replaceVar(h, s, tinyMCE.settings[s]);
+				if (s.indexOf('lang_') == 0 && tinyMCELang[s])
+					h = tinyMCE.replaceVar(h, s, tinyMCELang[s]);
+				else if (as && as[s])
+					h = tinyMCE.replaceVar(h, s, as[s]);
+				else if (tinyMCE.settings[s])
+					h = tinyMCE.replaceVar(h, s, tinyMCE.settings[s]);
+			}
 		}
 
 		h = tinyMCE.replaceVar(h, "themeurl", tinyMCE.themeURL);
@@ -3326,8 +3328,6 @@ TinyMCE_Control.prototype = {
 
 /* file:jscripts/tiny_mce/classes/TinyMCE_Cleanup.class.js */
 
-/* Some of the contents of this file will be wrapped in a class later on it will also be replaced with the new cleanup logic */
-
 TinyMCE_Engine.prototype.cleanupHTMLCode = function(s) {
 	s = s.replace(/<p \/>/gi, '<p>&nbsp;</p>');
 	s = s.replace(/<p>\s*<\/p>/gi, '<p>&nbsp;</p>');
@@ -4264,8 +4264,6 @@ TinyMCE_Cleanup.prototype = {
 
 /* file:jscripts/tiny_mce/classes/TinyMCE_DOMUtils.class.js */
 
-/* The contents of this file will be wrapped in a class later on */
-
 TinyMCE_Engine.prototype.getElementByAttributeValue = function(n, e, a, v) {
 	return (n = this.getElementsByAttributeValue(n, e, a, v)).length == 0 ? null : n[0];
 };
@@ -4499,8 +4497,6 @@ TinyMCE_Engine.prototype.getAbsPosition = function(n) {
 };
 
 /* file:jscripts/tiny_mce/classes/TinyMCE_URL.class.js */
-
-/* The contents of this file will be wrapped in a class later on */
 
 TinyMCE_Engine.prototype.parseURL = function(url_str) {
 	var urlParts = new Array();
@@ -4825,8 +4821,6 @@ TinyMCE_Engine.prototype.convertAllRelativeURLs = function(body) {
 
 /* file:jscripts/tiny_mce/classes/TinyMCE_Array.class.js */
 
-/* The contents of this file will be wrapped in a class later on */
-
 TinyMCE_Engine.prototype.clearArray = function(a) {
 	for (var k in a)
 		a[k] = null;
@@ -4835,8 +4829,6 @@ TinyMCE_Engine.prototype.clearArray = function(a) {
 };
 
 /* file:jscripts/tiny_mce/classes/TinyMCE_Event.class.js */
-
-/* The contents of this file will be wrapped in a class later on */
 
 TinyMCE_Engine.prototype._setEventsEnabled = function(node, state) {
 	var events = new Array('onfocus','onblur','onclick','ondblclick',
@@ -5756,8 +5748,6 @@ var TinyMCE_ForceParagraphs = {
 };
 
 /* file:jscripts/tiny_mce/classes/TinyMCE_Debug.class.js */
-
-/* The contents of this file will be wrapped in a class later on */
 
 TinyMCE_Engine.prototype.debug = function() {
 	var m = "", e, a, i;

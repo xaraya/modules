@@ -1,18 +1,14 @@
-/**
- * $RCSfile: tiny_mce_popup.js,v $
- * $Revision: 1.24 $
- * $Date: 2006/02/05 17:26:01 $
- *
- * @author Moxiecode
- * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
- */
 
+
+// Some global instances, this will be filled later
 var tinyMCE = null, tinyMCELang = null;
 
-function TinyMCEPopup() {
+
+function TinyMCE_Popup() {
 };
 
-TinyMCEPopup.prototype.init = function() {
+
+TinyMCE_Popup.prototype.init = function() {
 	var win = window.opener ? window.opener : window.dialogArguments;
 	var inst;
 
@@ -71,7 +67,8 @@ TinyMCEPopup.prototype.init = function() {
 	tinyMCE.addEvent(window, "load", this.onLoad);
 };
 
-TinyMCEPopup.prototype.onLoad = function() {
+
+TinyMCE_Popup.prototype.onLoad = function() {
 	var body = document.body;
 
 	if (tinyMCE.getWindowArg('mce_replacevariables', true))
@@ -95,14 +92,16 @@ TinyMCEPopup.prototype.onLoad = function() {
 	}
 };
 
-TinyMCEPopup.prototype.executeOnLoad = function(str) {
+
+TinyMCE_Popup.prototype.executeOnLoad = function(str) {
 	if (tinyMCE.isOpera)
 		this.onLoadEval = str;
 	else
 		eval(str);
 };
 
-TinyMCEPopup.prototype.resizeToInnerSize = function() {
+
+TinyMCE_Popup.prototype.resizeToInnerSize = function() {
 	// Netscape 7.1 workaround
 	if (this.isWindow && tinyMCE.isNS71) {
 		window.resizeBy(0, 10);
@@ -168,7 +167,8 @@ TinyMCEPopup.prototype.resizeToInnerSize = function() {
 	}
 };
 
-TinyMCEPopup.prototype.resizeToContent = function() {
+
+TinyMCE_Popup.prototype.resizeToContent = function() {
 	var isMSIE = (navigator.appName == "Microsoft Internet Explorer");
 	var isOpera = (navigator.userAgent.indexOf("Opera") != -1);
 
@@ -198,11 +198,13 @@ TinyMCEPopup.prototype.resizeToContent = function() {
 	}
 };
 
-TinyMCEPopup.prototype.getWindowArg = function(name, default_value) {
+
+TinyMCE_Popup.prototype.getWindowArg = function(name, default_value) {
 	return tinyMCE.getWindowArg(name, default_value);
 };
 
-TinyMCEPopup.prototype.restoreSelection = function() {
+
+TinyMCE_Popup.prototype.restoreSelection = function() {
 	if (this.storeSelection) {
 		var inst = tinyMCE.selectedInstance;
 
@@ -213,7 +215,8 @@ TinyMCEPopup.prototype.restoreSelection = function() {
 	}
 };
 
-TinyMCEPopup.prototype.execCommand = function(command, user_interface, value) {
+
+TinyMCE_Popup.prototype.execCommand = function(command, user_interface, value) {
 	var inst = tinyMCE.selectedInstance;
 
 	this.restoreSelection();
@@ -224,11 +227,13 @@ TinyMCEPopup.prototype.execCommand = function(command, user_interface, value) {
 		inst.selectionBookmark = inst.selection.getBookmark(true);
 };
 
-TinyMCEPopup.prototype.close = function() {
+
+TinyMCE_Popup.prototype.close = function() {
 	tinyMCE.closeWindow(window);
 };
 
-TinyMCEPopup.prototype.pickColor = function(e, element_id) {
+
+TinyMCE_Popup.prototype.pickColor = function(e, element_id) {
 	tinyMCE.selectedInstance.execCommand('mceColorPicker', true, {
 		element_id : element_id,
 		document : document,
@@ -237,7 +242,8 @@ TinyMCEPopup.prototype.pickColor = function(e, element_id) {
 	});
 };
 
-TinyMCEPopup.prototype.openBrowser = function(element_id, type, option) {
+
+TinyMCE_Popup.prototype.openBrowser = function(element_id, type, option) {
 	var cb = tinyMCE.getParam(option, tinyMCE.getParam("file_browser_callback"));
 	var url = document.getElementById(element_id).value;
 
@@ -252,6 +258,6 @@ TinyMCEPopup.prototype.openBrowser = function(element_id, type, option) {
 };
 
 // Setup global instance
-var tinyMCEPopup = new TinyMCEPopup();
+var tinyMCEPopup = new TinyMCE_Popup();
 
 tinyMCEPopup.init();

@@ -3,14 +3,14 @@
 <HTML>
 <HEAD>
 <TITLE>
-TinyMCE_Selection
+TinyMCE_Popup
 </TITLE>
 <LINK REL ="stylesheet" TYPE="text/css" HREF="stylesheet.css" TITLE="Style">
 </HEAD>
 <SCRIPT>
 function asd()
 {
-parent.document.title="TinyMCE_Selection";
+parent.document.title="TinyMCE_Popup";
 }
 </SCRIPT>
 <BODY BGCOLOR="white" onload="asd();">
@@ -24,7 +24,7 @@ parent.document.title="TinyMCE_Selection";
 <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3">
   <TR ALIGN="center" VALIGN="top">
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">  <A HREF="overview-summary-TinyMCE_Selection.class.js.html"><FONT CLASS="NavBarFont1"><B>File</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">  <A HREF="overview-summary-TinyMCE_Popup.class.js.html"><FONT CLASS="NavBarFont1"><B>File</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev">&nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="overview-tree.html"><FONT CLASS="NavBarFont1"><B>Tree</B></FONT></A>&nbsp;</TD>
   <!--TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"-->    <!--A HREF="deprecated-list.html"--><!--FONT CLASS="NavBarFont1">Deprecated</FONT--><!--/A--><!--&nbsp;</TD-->
@@ -41,13 +41,13 @@ parent.document.title="TinyMCE_Selection";
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="TinyMCE_Popup.html"><B>PREV CLASS</B></A><!-- 
+&nbsp;<A HREF="TinyMCE_Engine.html"><B>PREV CLASS</B></A><!-- 
    NEXT CLASS 
 -->
-&nbsp;<A HREF="TinyMCE_UndoRedo.html"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="TinyMCE_Selection.html"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="index.html" TARGET="_top"><B>FRAMES</B></A>  &nbsp;
-&nbsp;<A HREF="TinyMCE_Selection.html" TARGET="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="TinyMCE_Popup.html" TARGET="_top"><B>NO FRAMES</B></A>  &nbsp;
 &nbsp;
 <SCRIPT>
   <!--
@@ -72,10 +72,10 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
 <HR>
 
 <!-- ======== START OF CLASS DATA ======== -->
-<H2>Class TinyMCE_Selection</H2>
+<H2>Class TinyMCE_Popup</H2>
 <PRE>Object
    |
-   +--<b>TinyMCE_Selection</b>
+   +--<b>TinyMCE_Popup</b>
 </PRE>
 
 
@@ -83,13 +83,13 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
 <DL>
    <!-- Class definition -->
    <DT>class 
-   <B>TinyMCE_Selection</B>
+   <B>TinyMCE_Popup</B>
    
 
 </DL>
    
    <P>
-   <I>Defined in <a href='overview-summary-TinyMCE_Selection.class.js.html'>TinyMCE_Selection.class.js</a></I><BR/><BR/>
+   <I>Defined in <a href='overview-summary-TinyMCE_Popup.class.js.html'>TinyMCE_Popup.class.js</a></I><BR/><BR/>
    </P>
    
    <HR>
@@ -101,27 +101,6 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
 
 <!-- =========== FIELD SUMMARY =========== -->
 
-   <A NAME="field_summary"><!-- --></A>
-      <TABLE BORDER="1" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
-         <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-            <TD COLSPAN=2><FONT SIZE="+2">
-               <B>Field Summary</B></FONT></TD>
-         </TR>
-
-   <!-- This is one instance field summary -->
-   
-   <TR BGCOLOR="white" CLASS="TableRowColor">
-   <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-   <CODE>&nbsp;Object</CODE></FONT></TD>
-   <TD><CODE><B><A HREF="#instance">instance</A></B></CODE>
-   <BR>
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-   </TR>
-   
-
-   </TABLE>
-   &nbsp;
-   
 
    
 
@@ -140,13 +119,13 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
    <TD>
       <CODE>
 	 <B>
-	    <A HREF="TinyMCE_Selection.html#TinyMCE_Selection()">TinyMCE_Selection</A> 
+	    <A HREF="TinyMCE_Popup.html#TinyMCE_Popup()">TinyMCE_Popup</A> 
 	 </B>
-	 (&lt;<a href="TinyMCE_Control.html">TinyMCE_Control</a>&gt; inst)
+	 ()
       </CODE>
       <BR>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      Constructs a Selection instance and binds it to the specificed TinyMCE editor control.
+      Constructor for the popup class.
       </TD>
 </TR>
 </TABLE>
@@ -168,119 +147,17 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
 	 <FONT SIZE="-1">
-	    <CODE>&nbsp;TinyMCE_Bookmark</CODE>
+	    <CODE>&nbsp;void</CODE>
 	 </FONT>
       </TD>
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#getBookmark">getBookmark</A></B>(&lt;boolean&gt; simple)
+	       <A HREF="#close">close</A></B>()
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Returns a selection bookmark that can be restored later with moveToBookmark.
-      </TD>
-   </TR>
-
-   <TR BGCOLOR="white" CLASS="TableRowColor">
-      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;HTMLElement</CODE>
-	 </FONT>
-      </TD>
-      <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#getFocusElement">getFocusElement</A></B>()
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Returns the currently selected/focused element.
-      </TD>
-   </TR>
-
-   <TR BGCOLOR="white" CLASS="TableRowColor">
-      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;DOMRange</CODE>
-	 </FONT>
-      </TD>
-      <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#getRng">getRng</A></B>()
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Returns the browsers selections first range instance.
-      </TD>
-   </TR>
-
-   <TR BGCOLOR="white" CLASS="TableRowColor">
-      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;DOMSelection</CODE>
-	 </FONT>
-      </TD>
-      <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#getSel">getSel</A></B>()
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Returns the browsers selection instance.
-      </TD>
-   </TR>
-
-   <TR BGCOLOR="white" CLASS="TableRowColor">
-      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;string</CODE>
-	 </FONT>
-      </TD>
-      <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#getSelectedHTML">getSelectedHTML</A></B>()
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Returns the selected HTML code.
-      </TD>
-   </TR>
-
-   <TR BGCOLOR="white" CLASS="TableRowColor">
-      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;string</CODE>
-	 </FONT>
-      </TD>
-      <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#getSelectedText">getSelectedText</A></B>()
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Returns the selected text.
-      </TD>
-   </TR>
-
-   <TR BGCOLOR="white" CLASS="TableRowColor">
-      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;boolean</CODE>
-	 </FONT>
-      </TD>
-      <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#moveToBookmark">moveToBookmark</A></B>(&lt;TinyMCE_Bookmark&gt; bookmark)
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Restores the selection to the specified bookmark.
+	 Closes the current window.
       </TD>
    </TR>
 
@@ -293,11 +170,11 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#scrollToNode">scrollToNode</A></B>(&lt;HTMLNode&gt; node)
+	       <A HREF="#execCommand">execCommand</A></B>(&lt;string&gt; command, &lt;boolean&gt; user_interface, &lt;mixed&gt; value)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Scrolls to the specified node location.
+	 Executes the specific command on the parent instance that opened the window.
       </TD>
    </TR>
 
@@ -310,11 +187,149 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#selectNode">selectNode</A></B>(&lt;HTMLNode&gt; node, &lt;boolean&gt; collapse, &lt;boolean&gt; select_text_node, &lt;boolean&gt; to_start)
+	       <A HREF="#executeOnLoad">executeOnLoad</A></B>(&lt;string&gt; str)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Selects the specified node.
+	 Executes the specified string onload.
+      </TD>
+   </TR>
+
+   <TR BGCOLOR="white" CLASS="TableRowColor">
+      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
+	 <FONT SIZE="-1">
+	    <CODE>&nbsp;Object</CODE>
+	 </FONT>
+      </TD>
+      <TD>
+	 <CODE>
+	    <B>
+	       <A HREF="#getWindowArg">getWindowArg</A></B>(&lt;string&gt; name, &lt;string&gt; default_value)
+	 </CODE>
+	 <BR>
+	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	 Returns a window argument, window arguments can be passed from a plugin to a window
+ by using the tinyMCE.openWindow function.
+      </TD>
+   </TR>
+
+   <TR BGCOLOR="white" CLASS="TableRowColor">
+      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
+	 <FONT SIZE="-1">
+	    <CODE>&nbsp;void</CODE>
+	 </FONT>
+      </TD>
+      <TD>
+	 <CODE>
+	    <B>
+	       <A HREF="#init">init</A></B>()
+	 </CODE>
+	 <BR>
+	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	 Initializes the TinyMCE Popup class.
+      </TD>
+   </TR>
+
+   <TR BGCOLOR="white" CLASS="TableRowColor">
+      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
+	 <FONT SIZE="-1">
+	    <CODE>&nbsp;void</CODE>
+	 </FONT>
+      </TD>
+      <TD>
+	 <CODE>
+	    <B>
+	       <A HREF="#onLoad">onLoad</A></B>()
+	 </CODE>
+	 <BR>
+	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	 Gets executed when the window has finished loading it's contents.
+      </TD>
+   </TR>
+
+   <TR BGCOLOR="white" CLASS="TableRowColor">
+      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
+	 <FONT SIZE="-1">
+	    <CODE>&nbsp;void</CODE>
+	 </FONT>
+      </TD>
+      <TD>
+	 <CODE>
+	    <B>
+	       <A HREF="#openBrowser">openBrowser</A></B>(&lt;string&gt; element_id, &lt;string&gt; type, &lt;string&gt; option)
+	 </CODE>
+	 <BR>
+	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	 Opens a filebrowser/imagebrowser this will set the output value from
+ the browser as a value on the specified element.
+      </TD>
+   </TR>
+
+   <TR BGCOLOR="white" CLASS="TableRowColor">
+      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
+	 <FONT SIZE="-1">
+	    <CODE>&nbsp;void</CODE>
+	 </FONT>
+      </TD>
+      <TD>
+	 <CODE>
+	    <B>
+	       <A HREF="#pickColor">pickColor</A></B>(&lt;DOMEvent&gt; e, &lt;string&gt; element_id)
+	 </CODE>
+	 <BR>
+	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	 Executes a color picker on the specified element id.
+      </TD>
+   </TR>
+
+   <TR BGCOLOR="white" CLASS="TableRowColor">
+      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
+	 <FONT SIZE="-1">
+	    <CODE>&nbsp;void</CODE>
+	 </FONT>
+      </TD>
+      <TD>
+	 <CODE>
+	    <B>
+	       <A HREF="#resizeToContent">resizeToContent</A></B>()
+	 </CODE>
+	 <BR>
+	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	 Resizes the current window to the dimensions of the body.
+      </TD>
+   </TR>
+
+   <TR BGCOLOR="white" CLASS="TableRowColor">
+      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
+	 <FONT SIZE="-1">
+	    <CODE>&nbsp;void</CODE>
+	 </FONT>
+      </TD>
+      <TD>
+	 <CODE>
+	    <B>
+	       <A HREF="#resizeToInnerSize">resizeToInnerSize</A></B>()
+	 </CODE>
+	 <BR>
+	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	 Resizes the current window to it's inner body size.
+      </TD>
+   </TR>
+
+   <TR BGCOLOR="white" CLASS="TableRowColor">
+      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
+	 <FONT SIZE="-1">
+	    <CODE>&nbsp;void</CODE>
+	 </FONT>
+      </TD>
+      <TD>
+	 <CODE>
+	    <B>
+	       <A HREF="#restoreSelection">restoreSelection</A></B>()
+	 </CODE>
+	 <BR>
+	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	 Restores the selection back to the one stored after executing a command.
       </TD>
    </TR>
 
@@ -328,24 +343,6 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
 
 
 <!-- ============ FIELD DETAIL START =========== -->
-
-   <A NAME="field_detail"><!-- --></A>
-   <TABLE BORDER="1" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
-      <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-         <TD COLSPAN=1><FONT SIZE="+2"><B>Field Detail</B></FONT></TD>
-      </TR>
-   </TABLE>
-
-   
-   <A NAME="instance"><!-- --></A>
-   <H3>instance</H3>
-   <PRE>Object&nbsp;<B>instance</B></PRE>
-   <UL>
-   
-   
-   </UL>
-   <HR>
-   
 
 
 <!-- ============ FIELD DETAIL END =========== -->
@@ -361,24 +358,18 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
    </TR>
 </TABLE>
 
-<A NAME="TinyMCE_Selection()"><!-- --></A><H3>
-TinyMCE_Selection</H3>
-<PRE><B>TinyMCE_Selection</B>(&lt;<a href="TinyMCE_Control.html">TinyMCE_Control</a>&gt; inst)</PRE>
+<A NAME="TinyMCE_Popup()"><!-- --></A><H3>
+TinyMCE_Popup</H3>
+<PRE><B>TinyMCE_Popup</B>()</PRE>
 
 
 <UL>
-   Constructs a Selection instance and binds it to the specificed TinyMCE editor control.
+   Constructor for the popup class. This class contains base logic for popup/dialogs and sets up
+ object references to the TinyMCE core.
 </UL>
 
 
 
-   <UL>
-   <B>Parameters:</B>
-   
-     <UL><CODE>inst</CODE> -  TinyMCE editor control instance.  
-     </UL>
-   
-   
    </UL>
 
 
@@ -407,13 +398,33 @@ TinyMCE_Selection</H3>
 
 <!-- One single method detail entry -->
 
-   <A NAME="getBookmark"><!-- --></A>
-   <H3>getBookmark</H3>
-   <PRE>TinyMCE_Bookmark <B>getBookmark</B>(&lt;boolean&gt; simple)</PRE>
+   <A NAME="close"><!-- --></A>
+   <H3>close</H3>
+   <PRE>void <B>close</B>()</PRE>
    
-      <UL>Returns a selection bookmark that can be restored later with moveToBookmark.
- This acts much like the one MSIE has built in but this one is persistent if between DOM
- tree rewritings. The simple mode enables a quicker and non persistent bookmark.</UL>
+      <UL>Closes the current window. This should be used instead of window.close. Since this will
+ also handle inlinepopups closing.</UL>
+   
+
+   <!-- METHOD PARAMETERS START -->
+   
+   <!-- METHOD PARAMETERS END -->
+
+   
+
+   <!-- ADDITIONAL ATTRIBUTES START -->
+   
+   <!-- ADDITIONAL ATTRIBUTES  END -->
+<HR>
+
+   <A NAME="execCommand"><!-- --></A>
+   <H3>execCommand</H3>
+   <PRE>void <B>execCommand</B>(&lt;string&gt; command, &lt;boolean&gt; user_interface, &lt;mixed&gt; value)</PRE>
+   
+      <UL>Executes the specific command on the parent instance that opened the window. This method
+ will also take care of the storage and restorage of the current selection in MSIE when
+ using inlinepopups. So we suggest using this method instead of tinyMCE.execCommand when using
+ popup windows.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
@@ -421,7 +432,13 @@ TinyMCE_Selection</H3>
    <UL>
    <B>Parameters:</B>
    
-     <UL><CODE>simple</CODE> -  If this is set to true, the selection bookmark will not me dom persistent.  
+     <UL><CODE>command</CODE> -  Command name to execute, for example mceLink or Bold.  
+      </UL> 
+   
+     <UL><CODE>user_interface</CODE> -  True/false state if a UI (dialog) should be presented or not.  
+      </UL> 
+   
+     <UL><CODE>value</CODE> -  Optional command value, this can be anything.    
       </UL> 
    
    </UL>
@@ -429,149 +446,18 @@ TinyMCE_Selection</H3>
    <!-- METHOD PARAMETERS END -->
 
    
-   <UL>
-   <B>Returns:</B>
-        <UL>
-        Selection bookmark that can be restored later with moveToBookmark.   
-        </UL>
-   </UL>
-   
 
    <!-- ADDITIONAL ATTRIBUTES START -->
    
    <!-- ADDITIONAL ATTRIBUTES  END -->
 <HR>
 
-   <A NAME="getFocusElement"><!-- --></A>
-   <H3>getFocusElement</H3>
-   <PRE>HTMLElement <B>getFocusElement</B>()</PRE>
+   <A NAME="executeOnLoad"><!-- --></A>
+   <H3>executeOnLoad</H3>
+   <PRE>void <B>executeOnLoad</B>(&lt;string&gt; str)</PRE>
    
-      <UL>Returns the currently selected/focused element.</UL>
-   
-
-   <!-- METHOD PARAMETERS START -->
-   
-   <!-- METHOD PARAMETERS END -->
-
-   
-   <UL>
-   <B>Returns:</B>
-        <UL>
-        Currently selected element.   
-        </UL>
-   </UL>
-   
-
-   <!-- ADDITIONAL ATTRIBUTES START -->
-   
-   <!-- ADDITIONAL ATTRIBUTES  END -->
-<HR>
-
-   <A NAME="getRng"><!-- --></A>
-   <H3>getRng</H3>
-   <PRE>DOMRange <B>getRng</B>()</PRE>
-   
-      <UL>Returns the browsers selections first range instance.</UL>
-   
-
-   <!-- METHOD PARAMETERS START -->
-   
-   <!-- METHOD PARAMETERS END -->
-
-   
-   <UL>
-   <B>Returns:</B>
-        <UL>
-        Browsers selections first range instance.   
-        </UL>
-   </UL>
-   
-
-   <!-- ADDITIONAL ATTRIBUTES START -->
-   
-   <!-- ADDITIONAL ATTRIBUTES  END -->
-<HR>
-
-   <A NAME="getSel"><!-- --></A>
-   <H3>getSel</H3>
-   <PRE>DOMSelection <B>getSel</B>()</PRE>
-   
-      <UL>Returns the browsers selection instance.</UL>
-   
-
-   <!-- METHOD PARAMETERS START -->
-   
-   <!-- METHOD PARAMETERS END -->
-
-   
-   <UL>
-   <B>Returns:</B>
-        <UL>
-        Browser selection instance.   
-        </UL>
-   </UL>
-   
-
-   <!-- ADDITIONAL ATTRIBUTES START -->
-   
-   <!-- ADDITIONAL ATTRIBUTES  END -->
-<HR>
-
-   <A NAME="getSelectedHTML"><!-- --></A>
-   <H3>getSelectedHTML</H3>
-   <PRE>string <B>getSelectedHTML</B>()</PRE>
-   
-      <UL>Returns the selected HTML code.</UL>
-   
-
-   <!-- METHOD PARAMETERS START -->
-   
-   <!-- METHOD PARAMETERS END -->
-
-   
-   <UL>
-   <B>Returns:</B>
-        <UL>
-        Selected HTML contents.   
-        </UL>
-   </UL>
-   
-
-   <!-- ADDITIONAL ATTRIBUTES START -->
-   
-   <!-- ADDITIONAL ATTRIBUTES  END -->
-<HR>
-
-   <A NAME="getSelectedText"><!-- --></A>
-   <H3>getSelectedText</H3>
-   <PRE>string <B>getSelectedText</B>()</PRE>
-   
-      <UL>Returns the selected text.</UL>
-   
-
-   <!-- METHOD PARAMETERS START -->
-   
-   <!-- METHOD PARAMETERS END -->
-
-   
-   <UL>
-   <B>Returns:</B>
-        <UL>
-        Selected text contents.   
-        </UL>
-   </UL>
-   
-
-   <!-- ADDITIONAL ATTRIBUTES START -->
-   
-   <!-- ADDITIONAL ATTRIBUTES  END -->
-<HR>
-
-   <A NAME="moveToBookmark"><!-- --></A>
-   <H3>moveToBookmark</H3>
-   <PRE>boolean <B>moveToBookmark</B>(&lt;TinyMCE_Bookmark&gt; bookmark)</PRE>
-   
-      <UL>Restores the selection to the specified bookmark.</UL>
+      <UL>Executes the specified string onload. This is a workaround for Opera since it
+ doesn't execute the events in the same order than MSIE and Firefox.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
@@ -579,7 +465,37 @@ TinyMCE_Selection</H3>
    <UL>
    <B>Parameters:</B>
    
-     <UL><CODE>bookmark</CODE> -  Bookmark to restore selection from.  
+     <UL><CODE>str</CODE> -  String to evaluate on load.    
+      </UL> 
+   
+   </UL>
+   
+   <!-- METHOD PARAMETERS END -->
+
+   
+
+   <!-- ADDITIONAL ATTRIBUTES START -->
+   
+   <!-- ADDITIONAL ATTRIBUTES  END -->
+<HR>
+
+   <A NAME="getWindowArg"><!-- --></A>
+   <H3>getWindowArg</H3>
+   <PRE>Object <B>getWindowArg</B>(&lt;string&gt; name, &lt;string&gt; default_value)</PRE>
+   
+      <UL>Returns a window argument, window arguments can be passed from a plugin to a window
+ by using the tinyMCE.openWindow function.</UL>
+   
+
+   <!-- METHOD PARAMETERS START -->
+   
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>name</CODE> -  Argument name to retrive.  
+      </UL> 
+   
+     <UL><CODE>default_value</CODE> -  Optional default value to assign if the argument wasn't set.  
       </UL> 
    
    </UL>
@@ -590,7 +506,7 @@ TinyMCE_Selection</H3>
    <UL>
    <B>Returns:</B>
         <UL>
-        true/false if it was successful or not.   
+        Argument value object.   
         </UL>
    </UL>
    
@@ -600,11 +516,49 @@ TinyMCE_Selection</H3>
    <!-- ADDITIONAL ATTRIBUTES  END -->
 <HR>
 
-   <A NAME="scrollToNode"><!-- --></A>
-   <H3>scrollToNode</H3>
-   <PRE>void <B>scrollToNode</B>(&lt;HTMLNode&gt; node)</PRE>
+   <A NAME="init"><!-- --></A>
+   <H3>init</H3>
+   <PRE>void <B>init</B>()</PRE>
    
-      <UL>Scrolls to the specified node location.</UL>
+      <UL>Initializes the TinyMCE Popup class. This will setup the TinyMCE core references and other popup/dialog related functions.</UL>
+   
+
+   <!-- METHOD PARAMETERS START -->
+   
+   <!-- METHOD PARAMETERS END -->
+
+   
+
+   <!-- ADDITIONAL ATTRIBUTES START -->
+   
+   <!-- ADDITIONAL ATTRIBUTES  END -->
+<HR>
+
+   <A NAME="onLoad"><!-- --></A>
+   <H3>onLoad</H3>
+   <PRE>void <B>onLoad</B>()</PRE>
+   
+      <UL>Gets executed when the window has finished loading it's contents. This function will then
+ replace language variables with their real values.</UL>
+   
+
+   <!-- METHOD PARAMETERS START -->
+   
+   <!-- METHOD PARAMETERS END -->
+
+   
+
+   <!-- ADDITIONAL ATTRIBUTES START -->
+   
+   <!-- ADDITIONAL ATTRIBUTES  END -->
+<HR>
+
+   <A NAME="openBrowser"><!-- --></A>
+   <H3>openBrowser</H3>
+   <PRE>void <B>openBrowser</B>(&lt;string&gt; element_id, &lt;string&gt; type, &lt;string&gt; option)</PRE>
+   
+      <UL>Opens a filebrowser/imagebrowser this will set the output value from
+ the browser as a value on the specified element.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
@@ -612,7 +566,13 @@ TinyMCE_Selection</H3>
    <UL>
    <B>Parameters:</B>
    
-     <UL><CODE>node</CODE> -  Node to scroll to. 	   
+     <UL><CODE>element_id</CODE> -  Id of the element to set value in.  
+      </UL> 
+   
+     <UL><CODE>type</CODE> -  Type of browser to open image/file/flash.  
+      </UL> 
+   
+     <UL><CODE>option</CODE> -  Option name to get the file_broswer_callback function name from.    
       </UL> 
    
    </UL>
@@ -626,11 +586,12 @@ TinyMCE_Selection</H3>
    <!-- ADDITIONAL ATTRIBUTES  END -->
 <HR>
 
-   <A NAME="selectNode"><!-- --></A>
-   <H3>selectNode</H3>
-   <PRE>void <B>selectNode</B>(&lt;HTMLNode&gt; node, &lt;boolean&gt; collapse, &lt;boolean&gt; select_text_node, &lt;boolean&gt; to_start)</PRE>
+   <A NAME="pickColor"><!-- --></A>
+   <H3>pickColor</H3>
+   <PRE>void <B>pickColor</B>(&lt;DOMEvent&gt; e, &lt;string&gt; element_id)</PRE>
    
-      <UL>Selects the specified node.</UL>
+      <UL>Executes a color picker on the specified element id. When the user
+ then selects a color it will be set as the value of the specified element.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
@@ -638,19 +599,71 @@ TinyMCE_Selection</H3>
    <UL>
    <B>Parameters:</B>
    
-     <UL><CODE>node</CODE> -  Node object to move selection to.  
+     <UL><CODE>e</CODE> -  DOM event object.  
       </UL> 
    
-     <UL><CODE>collapse</CODE> -  True/false if it will be collasped.  
-      </UL> 
-   
-     <UL><CODE>select_text_node</CODE> -  True/false if the text contents should be selected or not.  
-      </UL> 
-   
-     <UL><CODE>to_start</CODE> -  True/false if the collapse should be to start or end of range. 	   
+     <UL><CODE>element_id</CODE> -  Element id to be filled with the color value from the picker.    
       </UL> 
    
    </UL>
+   
+   <!-- METHOD PARAMETERS END -->
+
+   
+
+   <!-- ADDITIONAL ATTRIBUTES START -->
+   
+   <!-- ADDITIONAL ATTRIBUTES  END -->
+<HR>
+
+   <A NAME="resizeToContent"><!-- --></A>
+   <H3>resizeToContent</H3>
+   <PRE>void <B>resizeToContent</B>()</PRE>
+   
+      <UL>Resizes the current window to the dimensions of the body.</UL>
+   
+
+   <!-- METHOD PARAMETERS START -->
+   
+   <!-- METHOD PARAMETERS END -->
+
+   
+
+   <!-- ADDITIONAL ATTRIBUTES START -->
+   
+   <!-- ADDITIONAL ATTRIBUTES  END -->
+<HR>
+
+   <A NAME="resizeToInnerSize"><!-- --></A>
+   <H3>resizeToInnerSize</H3>
+   <PRE>void <B>resizeToInnerSize</B>()</PRE>
+   
+      <UL>Resizes the current window to it's inner body size. This function
+ was needed since MSIE makes the visible dialog area diffrent depending
+ on what Theme/Skin you use.</UL>
+   
+
+   <!-- METHOD PARAMETERS START -->
+   
+   <!-- METHOD PARAMETERS END -->
+
+   
+
+   <!-- ADDITIONAL ATTRIBUTES START -->
+   
+   <!-- ADDITIONAL ATTRIBUTES  END -->
+<HR>
+
+   <A NAME="restoreSelection"><!-- --></A>
+   <H3>restoreSelection</H3>
+   <PRE>void <B>restoreSelection</B>()</PRE>
+   
+      <UL>Restores the selection back to the one stored after executing a command.
+ This function was needed in MSIE when using inlinepopups, the selection
+ would otherwice get lost if the user focused another field.</UL>
+   
+
+   <!-- METHOD PARAMETERS START -->
    
    <!-- METHOD PARAMETERS END -->
 
@@ -676,7 +689,7 @@ TinyMCE_Selection</H3>
 <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3">
   <TR ALIGN="center" VALIGN="top">
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">  <A HREF="overview-summary-TinyMCE_Selection.class.js.html"><FONT CLASS="NavBarFont1"><B>File</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">  <A HREF="overview-summary-TinyMCE_Popup.class.js.html"><FONT CLASS="NavBarFont1"><B>File</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="overview-tree.html"><FONT CLASS="NavBarFont1"><b>Tree</b></FONT></A>&nbsp;</TD>
   <!--TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"-->    <!--A HREF="deprecated-list.html"--><!--FONT CLASS="NavBarFont1">Deprecated</FONT--><!--/A--><!--&nbsp;</TD-->
@@ -693,13 +706,13 @@ TinyMCE_Selection</H3>
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="TinyMCE_Popup.html"><B>PREV CLASS</B></A><!-- 
+&nbsp;<A HREF="TinyMCE_Engine.html"><B>PREV CLASS</B></A><!-- 
    NEXT CLASS 
 -->
-&nbsp;<A HREF="TinyMCE_UndoRedo.html"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="TinyMCE_Selection.html"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="index.html" TARGET="_top"><B>FRAMES</B></A>  &nbsp;
-&nbsp;<A HREF="TinyMCE_Selection.html" TARGET="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="TinyMCE_Popup.html" TARGET="_top"><B>NO FRAMES</B></A>  &nbsp;
 &nbsp;
 <SCRIPT>
   <!--
