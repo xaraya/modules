@@ -8,6 +8,7 @@
  * @link http://www.xaraya.com
  *
  * @subpackage Authentication module
+ * @link http://xaraya.com/index.php/release/659.html
  * @author Jan Schrage, John Cox, Gregor Rothfuss
  */
 
@@ -18,7 +19,7 @@
  * the file correctly, resulting in unexpected results.
  */
 $modversion['name']           = 'authentication';
-$modversion['id']             = '30205';
+$modversion['id']             = '659';
 $modversion['version']        = '1.0.0';
 $modversion['displayname']    = xarML('Authentication');
 $modversion['description']    = 'Standard User Registration/Authentication';

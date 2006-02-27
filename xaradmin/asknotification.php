@@ -7,13 +7,13 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Roles module
+ * @subpackage Authentication module
  */
 /*
  * Update users from roles_admin_showusers
  * @author Marc Lutolf <marcinmilan@xaraya.com>
  */
-function roles_admin_asknotification($args)
+function authentication_admin_asknotification($args)
 {
     // Security Check
     if (!xarSecurityCheck('EditAuthentication')) return;

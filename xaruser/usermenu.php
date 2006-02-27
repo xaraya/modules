@@ -7,13 +7,13 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Roles module
+ * @subpackage Authentication module
  */
 /*
  * Main user menu
  * @author Marc Lutolf <marcinmilan@xaraya.com>
  */
-function roles_user_usermenu($args)
+function authentication_user_usermenu($args)
 {
 
     // Security check
@@ -65,7 +65,7 @@ function roles_user_usermenu($args)
             if (isset($hooks['dynamicdata'])) {
                 unset($hooks['dynamicdata']);
             }
-            
+
             $data = xarTplModule('roles','user', 'user_menu_form',
                                   array('authid'       => $authid,
                                   'withupload'   => $withupload,

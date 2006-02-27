@@ -7,7 +7,7 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Roles module
+ * @subpackage Authentication module
  */
 /**
  * return the path for a short URL to xarModURL for this module
@@ -43,7 +43,7 @@
  * @returns string
  * @return path to be added to index.php for a short URL, or empty if failed
  */
-function roles_userapi_encode_shorturl($args)
+function authentication_userapi_encode_shorturl($args)
 {
     // Get arguments from argument array
     extract($args);
@@ -58,7 +58,7 @@ function roles_userapi_encode_shorturl($args)
     $path = array();
 
     // we can't rely on xarModGetName() here -> you must specify the modname.
-    $module = 'roles';
+    $module = 'authentication';
 
     switch($func) {
         case 'main':
@@ -133,7 +133,7 @@ function roles_userapi_encode_shorturl($args)
         default:
             break;
     }
-    
+
 
     // If no short URL path was obtained above, then there is no encoding.
     if (empty($path)) {

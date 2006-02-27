@@ -15,7 +15,7 @@
  * @author Marco Canini
  * initialise block
  */
-function roles_languageblock_init()
+function authentication_languageblock_init()
 {
     return array(
         'nocache' => 1, // don't cache by default
@@ -27,7 +27,7 @@ function roles_languageblock_init()
 /**
  * get information on block
  */
-function roles_languageblock_info()
+function authentication_languageblock_info()
 {
     return array(
         'text_type' => 'Language',
@@ -40,7 +40,7 @@ function roles_languageblock_info()
  * Display func.
  * @param $blockinfo array containing title,content
  */
-function roles_languageblock_display($blockinfo)
+function authentication_languageblock_display($blockinfo)
 {
     // Security check
     if (!xarSecurityCheck('ReadRole', 0, 'Block', "All:" . $blockinfo['title'] . ":" . $blockinfo['bid'])) {return;}
