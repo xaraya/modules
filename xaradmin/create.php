@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Messages Module
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Messages Module
+ * @link http://xaraya.com/index.php/release/6.html
+ * @author XarayaGeek
+ */
 /**
  * This is a standard function that is called with the results of the
  * form supplied by xarModFunc('messages','admin','new') to create a new item

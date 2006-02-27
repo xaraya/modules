@@ -1,5 +1,17 @@
 <?php
-function messages_user_view( $args ) 
+/**
+ * Messages Module
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Messages Module
+ * @link http://xaraya.com/index.php/release/6.html
+ * @author XarayaGeek
+ */
+function messages_user_view( $args )
 {
 
     // Security check
@@ -23,8 +35,8 @@ function messages_user_view( $args )
     }
 
     $read_messages = xarModGetUserVar('messages','read_messages');
-    
-                
+
+
     if (!empty($read_messages)) {
         $read_messages = unserialize($read_messages);
     } else {
@@ -32,7 +44,7 @@ function messages_user_view( $args )
     }
 
 
-    /* 
+    /*
      * if it's not already an array, then this must be
      * the first time we've looked at it
      * so let's make it an array :)
@@ -43,13 +55,13 @@ function messages_user_view( $args )
 
     $data['message'] = $messages[0];
     $data['action']  = 'view';
-    
-    // added call to transform text srg 09/22/03      
+
+    // added call to transform text srg 09/22/03
     list($data['message']['body']) = xarModCallHooks('item',
          'transform',
          $mid,
          array($data['message']['body']));
-       
+
     /*
      * Add this message id to the list of 'seen' messages
      * if it's not already in there :)

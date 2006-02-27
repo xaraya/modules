@@ -1,13 +1,16 @@
-<?php // File: $Id$
-// ----------------------------------------------------------------------
-// Xaraya eXtensible Management System
-// Copyright (C) 2002 by the Xaraya Development Team.
-// http://www.xaraya.org
-// ----------------------------------------------------------------------
-// Original Author of file: XarayaGeek
-// Purpose of file:  Table information for Messages Module
-// ----------------------------------------------------------------------
-
+<?php
+/**
+ * Messages Module
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Messages Module
+ * @link http://xaraya.com/index.php/release/6.html
+ * @author XarayaGeek
+ */
 function messages_xartables()
 {
     // no tables to worry about here :)

@@ -1,8 +1,20 @@
 <?php
 /**
+ * Messages Module
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Messages Module
+ * @link http://xaraya.com/index.php/release/6.html
+ * @author XarayaGeek
+ */
+/**
  * Administration for the mybookmarks module.
  */
-function messages_admin_config( $args ) 
+function messages_admin_config( $args )
 {
 
     list( $cancel, $itemtype ) = xarVarCleanFromInput( 'cancel', 'itemtype' );
@@ -41,7 +53,7 @@ function messages_admin_config( $args )
 /**
  * Administration for the mybookmarks module.
  */
-function messages_adminpriv_config( $args ) 
+function messages_adminpriv_config( $args )
 {
 
 //    $data = messages_admin_common( 'Module Configuration' );
@@ -104,7 +116,7 @@ function messages_adminpriv_config( $args )
 
 }
 
-function messages_adminpriv_configmenu() 
+function messages_adminpriv_configmenu()
 {
 
     /*

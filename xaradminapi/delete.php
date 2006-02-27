@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Messages Module
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Messages Module
+ * @link http://xaraya.com/index.php/release/6.html
+ * @author XarayaGeek
+ */
 /**
  * delete a message item
  *
@@ -11,10 +22,6 @@
  */
 function messages_adminapi_delete($args)
 {
-    // Get arguments from argument array - all arguments to this function
-    // should be obtained from the $args array, getting them from other
-    // places such as the environment is not allowed, as that makes
-    // assumptions that will not hold in future versions of PostNuke
     extract($args);
 
     // Argument check - make sure that all required arguments are present and

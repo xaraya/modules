@@ -1,5 +1,17 @@
 <?php
-function messages_user_send() 
+/**
+ * Messages Module
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Messages Module
+ * @link http://xaraya.com/index.php/release/6.html
+ * @author XarayaGeek
+ */
+function messages_user_send()
 {
 
     // Security check
@@ -81,7 +93,7 @@ function messages_user_send()
                 $data['mid'] = 1;
                 xarErrorHandled();
             }
-            
+
             if (!xarVarFetch('subject', 'str:1', $subject)) {
                 $data['no_subject'] = 1;
                 xarErrorHandled();
@@ -94,7 +106,7 @@ function messages_user_send()
                 $data['no_receipient'] = 1;
                 xarErrorHandled();
             }
-            // added call to transform text srg 09/22/03      
+            // added call to transform text srg 09/22/03
             list($body) = xarModCallHooks('item',
                                           'transform',
                                            $mid,

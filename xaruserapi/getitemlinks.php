@@ -1,20 +1,19 @@
 <?php
 /**
- * File: $Id:
- * 
- * Utility function to pass individual item links 
- * 
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * Messages Module
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage messages
- * @author Example module development team 
+ * @subpackage Messages Module
+ * @link http://xaraya.com/index.php/release/6.html
+ * @author XarayaGeek
  */
 /**
  * utility function to pass individual item links to whoever
- * 
+ *
  * @param  $args ['itemtype'] item type (optional)
  * @param  $args ['itemids'] array of item ids to get
  * @returns array
@@ -25,7 +24,7 @@ function messages_userapi_getitemlinks($args)
     $itemlinks = array();
     if (!xarSecurityCheck('ViewMessages', 0)) {
         return $itemlinks;
-    } 
+    }
 
     foreach ($args['itemids'] as $itemid) {
         $item = xarModAPIFunc('roles', 'user', 'get',
@@ -35,8 +34,8 @@ function messages_userapi_getitemlinks($args)
                 array('uid' => $itemid)),
             'title' => xarML('Display User'),
             'label' => xarVarPrepForDisplay($item['name']));
-    } 
+    }
     return $itemlinks;
-} 
+}
 
 ?>
