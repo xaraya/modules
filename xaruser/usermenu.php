@@ -9,24 +9,25 @@
  *
  * @subpackage Authentication module
  */
-/*
+/**
  * Main user menu
  * @author Marc Lutolf <marcinmilan@xaraya.com>
+ * @todo MichelV: does this function refer to roles, or to authentication?
  */
 function authentication_user_usermenu($args)
 {
 
     // Security check
-    if (!xarSecurityCheck('ViewRoles')) return;
+    if (!xarSecurityCheck('ViewAuthentication')) return;
     extract($args);
     if(!xarVarFetch('phase','notempty', $phase, 'menu', XARVAR_NOT_REQUIRED)) {return;}
     xarTplSetPageTitle(xarVarPrepForDisplay(xarML('Your Account Preferences')));
     $data = array(); $hooks = array();
     switch(strtolower($phase)) {
         case 'menu':
-            $iconbasic = 'modules/roles/xarimages/home.gif';
-            $iconenhanced = 'modules/roles/xarimages/home.gif';
-            $current = xarModURL('roles', 'user', 'account', array('moduleload' => 'roles'));
+            $iconbasic = 'modules/authentication/xarimages/home.gif';
+            $iconenhanced = 'modules/authentication/xarimages/home.gif';
+            $current = xarModURL('roles', 'user', 'account', array('moduleload' => 'authentication'));
             $data = xarTplModule('roles','user', 'user_menu_icon', array('iconbasic'    => $iconbasic,
                                                                          'iconenhanced' => $iconenhanced,
                                                                          'current'      => $current));
@@ -38,7 +39,7 @@ function authentication_user_usermenu($args)
             if (xarModIsAvailable('dynamicdata')) {
                 // get the Dynamic Object defined for this module (and itemtype, if relevant)
                 $object = xarModAPIFunc('dynamicdata','user','getobject',
-                                         array('module' => 'roles'));
+                                         array('module' => 'authentication'));
                 if (isset($object) && !empty($object->objectid)) {
                     // get the Dynamic Properties of this object
                     $properties =& $object->getProperties();
