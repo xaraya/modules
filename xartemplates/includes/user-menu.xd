@@ -4,7 +4,7 @@
 <xar:set name="$navITSPUrl">#xarModURL('itsp','user','itsp')#</xar:set>
 
 <!-- the variables used in this menu come from itsp_userapi_menu()
-     they involve a dynamic menu selection of the planitems.
+ //  they involve a dynamic menu selection of the planitems.
 -->
 <div class="xar-itsp-usermenu">
     <xar:set name="$null">#xarVarFetch('func','str:1:',$whatFunc, 'itsp', XARVAR_NOT_REQUIRED)#</xar:set>
@@ -34,5 +34,4 @@
             <dd><a href="&xar-modurl-roles-user-account;"><xar:mlstring>Login</xar:mlstring></a></dd>
         </xar:if>
     </dl>
-
 </div>

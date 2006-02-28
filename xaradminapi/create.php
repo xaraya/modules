@@ -20,6 +20,9 @@
  * @param  string planname name of the plan
  * @param  string plandesc Description of the plan
  * @param  int credits
+ * @param  int mincredit
+ * @param  int dateopen
+ * @param  int dateclose
  * @return int plan item ID on success, false on failure
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
