@@ -1,15 +1,14 @@
 <?php
 /**
- * File: $Id: s.xarversion.php 1.15 03/07/13 11:22:48+02:00 marcel@hsdev.com $
- *
  * Xaraya Autolinks
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
+ * @package modules
+ * @copyright (C) 2002-2006 by the Xaraya Development Team.
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.org
  *
  * @subpackage Autolinks Module
+ * @link http://xaraya.com/index.php/release/11.html
  * @author Jason Judge/Jim McDonald
 */
 

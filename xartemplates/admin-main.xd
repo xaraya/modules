@@ -1,44 +1,58 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Administration - Autolinks</xar:mlstring></span></div>
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+  <span class="xar-mod-title"><xar:mlstring>Autolinks Administration</xar:mlstring></span>
+</div>
 <div class="xar-mod-body">
-    <h2><xar:mlstring>Overview</xar:mlstring></h2>
-    <div style="padding: 1px;" class="xar-norm-outline">
-        <div style="float:right;padding:10px;">
-            <img src="modules/adminpanels/xarimages/admin.gif" alt="official icon" width="96" height="96" />
-        </div>
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>What is it?</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+  <img src="#xarTplGetImage('admin.gif','autolinks')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
+
+  <h2><xar:mlstring>Overview</xar:mlstring></h2>
+
+  <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+  <p>
+        <p>
             <em><xar:mlstring>Autolinks is a Xaraya Utility Module.</xar:mlstring></em>
             <xar:mlstring>It is currently responsible for accomplishing these tasks:</xar:mlstring>
+        </p>
             <ul>
                 <li><xar:mlstring>Automatically links text in articles or other content modules that you have configured.</xar:mlstring></li>
             </ul>
-        </div>
         <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+        <h3>
             <xar:mlstring>How to use it?</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+        </h3>
+        <p>
             <xar:mlstring>Simply set your configuration for the style of links that you want to have, and then start adding autolinks into the system.  The module will transform the text from there.</xar:mlstring>
-        </div>
+        </p>
         <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+        <h3>
             <xar:mlstring>Included Blocks</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+        </h3>
+        <p>
             <xar:mlstring>There are no included blocks</xar:mlstring>
-        </div>
+        </p>
         <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+        <h3>
             <xar:mlstring>Included Hooks</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+        </h3>
+
+        <p>
             <xar:mlstring>Autolinks provide a transform hook for searching and replacing text as necessary.</xar:mlstring>
-        </div>
-    </div>
+        </p>
+  <h3>
+    <xar:mlstring>Further Information</xar:mlstring>
+  </h3>
+  <p>
+    <xar:mlstring>Further information on the Autolinks module can be found at</xar:mlstring>
+  </p>
+  <ul>
+    <li><xar:mlstring>Autolinks Extension page at</xar:mlstring> <a title="#xarML('Autolinks Module - Xaraya Extension 36')#" href="http://www.xaraya.com/index.php/release/11.html">Xaraya Extension and Releases</a>.
+      <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+    </li>
+    <li><xar:mlstring>Related tutorials and documentation on Autolinks found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/autolinks/" title="#xarML('Related documentation on Autolinks')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+    </li>
+  </ul>
+  <p class="xar-sub">
+    <strong>&nbsp;<xar:mlstring>Autolinks Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2006-02-28
+  </p>
 </div>
+
