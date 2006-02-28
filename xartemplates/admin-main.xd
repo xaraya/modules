@@ -3,7 +3,7 @@
    <span class="xar-mod-title"><xar:mlstring>Administration - XarTinyMCE </xar:mlstring></span>
 </div>
 <div class="xar-mod-body">
-    <img src="modules/adminpanels/xarimages/admin.gif" class="xar-module-icon" alt="official icon" width="96" height="96" />
+    <img src="#xarTplGetImage('admin_generic.gif','base')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
     <h2><xar:mlstring>Overview</xar:mlstring></h2>
     <h3><xar:mlstring>What is it?</xar:mlstring></h3>
         <p><em><xar:mlstring>

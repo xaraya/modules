@@ -3,7 +3,7 @@
  * Admin Main Menu link
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -21,10 +21,7 @@ function tinymce_adminapi_getmenulinks()
 {
     /* Security Check */
     if (xarSecurityCheck('AdminTinyMCE', 0)) {
-       $menulinks[] = Array('url' => xarModURL('tinymce', 'admin','overview'),
-                                               'title' => xarML('Overview'),
-                                               'label' => xarML('Overview'));
-
+  
        $menulinks[] = Array('url' => xarModURL('tinymce','admin','modifyconfig'),
                             'title' => xarML('Modify the configuration for the module'),
                             'label' => xarML('Modify Config'));
