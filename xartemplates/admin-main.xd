@@ -12,7 +12,7 @@
   <h3><xar:mlstring>What is it?</xar:mlstring></h3>
   <p>
     <em><xar:mlstring>The ITSP module is a module to organise and plan Education plans.</xar:mlstring></em>
-    <xar:mlstring>It is currently responsible for accomplishing two main tasks:</xar:mlstring>
+    <xar:mlstring>It is currently responsible for accomplishing three main tasks:</xar:mlstring>
   </p>
   <ol>
     <li><xar:mlstring>Hold Education Education Plans. The plans have plan items that represent education blocks.</xar:mlstring></li>
@@ -23,34 +23,21 @@
   
   <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
   <p>
-    <xar:mlstring>Install the courses module.</xar:mlstring>
-    <xar:mlstring>Create an education plan. Decide on the parts it contains (planitems).</xar:mlstring>
-    <xar:mlstring>Create templates for each plan item that a student can add.</xar:mlstring>
+    <xar:mlstring>Install the courses module.</xar:mlstring><br />
+    <xar:mlstring>Create an education plan. Decide on the parts it contains (planitems).</xar:mlstring><br />
+    <xar:mlstring>Create templates for each plan item that a student can add.</xar:mlstring><br />
+    <xar:mlstring>The educationplan items are blocks of courses, or requirements. They are those blocks that you can set rules for, like At least 3 credits,
+    At this level a course, minimum 4 courses". But, like with publication types in articles, you might want those blocks of requirements to have different texts.
+    For this, you can add your own templates for each planitem. You will need to provide a template for each plan item in yourtheme/modules/itsp/includes</xar:mlstring><br />
     
     
   </p>
   
   <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
   <ul>
-    <li><xar:mlstring>first</xar:mlstring></li>
-    <li><xar:mlstring>example</xar:mlstring></li>
+    <li><xar:mlstring>None at the moment</xar:mlstring></li>
   </ul>
-  
-  <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
-  <ul>
-    <li><xar:mlstring>Usermenu -- Allows interface with the Roles "My Account Page"</xar:mlstring></li>
-    <li><xar:mlstring>Search -- Allows interface with the Search Module.</xar:mlstring></li>
-  </ul>
-  <p>
-    <xar:mlstring>
-      In these cases, the Example module provides the hook functionality.
-      To activate the hooks go to </xar:mlstring>
-    <a href="&xar-modurl-modules-admin-hooks;&amp;hook=example"><xar:mlstring>Modules - Configure Hooks - Example Module</xar:mlstring></a>.
-    <xar:mlstring> From there click on the checkbox in either Roles or
-      the Search module to activate the respective hooks.
-    </xar:mlstring>
-  </p>
-  
+ 
   <h3><xar:mlstring>Included Dynamic Data Properties</xar:mlstring></h3>
   <ul>
     <li><xar:mlstring>None</xar:mlstring></li>
@@ -60,17 +47,17 @@
     <xar:mlstring>Further Information</xar:mlstring>
   </h3>
   <p>
-    <xar:mlstring>Further information on the Example module can be found at</xar:mlstring>
+    <xar:mlstring>Further information on the ITSP module can be found at</xar:mlstring>
   </p>
   <ul>
-    <li><xar:mlstring>ITSP Extension page at</xar:mlstring> <a title="#xarML('ITSP Module - Xaraya Extension 36')#" href="http://www.xaraya.com/index.php/release/36.html">Xaraya Extension and Releases</a>.
+    <li><xar:mlstring>ITSP Extension page at</xar:mlstring> <a title="#xarML('ITSP Module - Xaraya Extension 572')#" href="http://www.xaraya.com/index.php/release/572.html">Xaraya Extension and Releases</a>.
       <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
     </li>
     <li><xar:mlstring>Related tutorials and documentation on ITSP found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/example/" title="#xarML('Related documentation on Example')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
     </li>
   </ul>
   <p class="xar-sub">
-    <strong>&nbsp;<xar:mlstring>ITSP Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2006-02-23
+    <strong>&nbsp;<xar:mlstring>ITSP Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.1&nbsp; 2006-02-28
   </p>
 </div>
 
