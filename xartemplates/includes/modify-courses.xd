@@ -1,4 +1,8 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<!-- This template is for items coming from the courses module
+  // You can copy this template to your include directory and edit the fieldnames
+  // Do not edit the amount of fields without providing standard hidden values
+  -->
 <fieldset>
     <xar:if condition="!empty($lcourses)">
         <legend><xar:mlstring>You have added:</xar:mlstring></legend>
