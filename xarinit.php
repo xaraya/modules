@@ -16,7 +16,7 @@
  * This function is only ever called once during the lifetime of a particular
  * module instance
  *
- * @author ITSP Module Development Team
+ * @author MichelV
  * @return bool true on success
  */
 function itsp_init()
@@ -239,7 +239,7 @@ This table deals with the free courses. So: how to add the custom courses/items 
         xarModSetVar('itsp', 'number_of_categories', 1);
         xarModSetVar('itsp', 'mastercids', $itspcid);
         $itspcategories = array();
-        $itspcategories[] = array('name' => "Eduction plan one",
+        $itspcategories[] = array('name' => "Education plan one",
             'description' => "description one");
         $itspcategories[] = array('name' => "Education plan two",
             'description' => "description two");
@@ -303,26 +303,36 @@ This table deals with the free courses. So: how to add the custom courses/items 
      * (limit) which defines the maximum number of rows a dropdown can have. If the number of
      * instances is greater than the limit (e.g. registered users), the UI instead presents an
      * input field for manual input, which is then checked for validity.
-
-    $query3 = "SELECT DISTINCT xar_name FROM " . $itsptable;
-    $query2 = "SELECT DISTINCT xar_number FROM " . $itsptable;
-    $query1 = "SELECT DISTINCT xar_planid FROM " . $planstable;
+     */
+    $query1 = "SELECT DISTINCT xar_pitemid FROM " . $planitemstable;
+    $query2 = "SELECT DISTINCT xar_itspid FROM " . $itsptable;
+    $query3 = "SELECT DISTINCT xar_planid FROM " . $planstable;
+    // For the plans
     $instances = array(
-        array('header' => 'ITSP id:',
+        array('header' => 'Plan item id:',
             'query' => $query1,
             'limit' => 20
             ),
-        array('header' => 'ITSP Number:',
-            'query' => $query2,
-            'limit' => 20
-            ),
-        array('header' => 'ITSP ID:',
+        array('header' => 'Plan ID:',
             'query' => $query3,
             'limit' => 20
             )
         );
-    xarDefineInstance('itsp', 'Item', $instances);
-     */
+    xarDefineInstance('itsp', 'Plan', $instances);
+    // For the ITSP
+    $instances = array(
+        array('header' => 'ITSP ID:',
+            'query' => $query2,
+            'limit' => 20
+            ),
+        array('header' => 'Plan ID:',
+            'query' => $query3,
+            'limit' => 20
+            )
+        );
+    xarDefineInstance('itsp', 'ITSP', $instances);
+
+ 
     /* You can also use some external "wizard" function to specify instances :
 
       $instances = array(
@@ -334,17 +344,6 @@ This table deals with the free courses. So: how to add the custom courses/items 
       xarDefineInstance('itsp', 'Item', $instances);
 
      */
-    $instancestable = $xartable['block_instances'];
-    $typestable = $xartable['block_types'];
-    $query = "SELECT DISTINCT i.xar_title FROM $instancestable i, $typestable t WHERE t.xar_id = i.xar_type_id AND t.xar_module = 'itsp'";
-    $instances = array(
-        array('header' => 'ITSP Block Title:',
-            'query' => $query,
-            'limit' => 20
-            )
-        );
-    xarDefineInstance('itsp', 'Block', $instances);
-
     /**
      * Register the module components that are privileges objects
      * Format is
@@ -390,6 +389,40 @@ function itsp_upgrade($oldversion)
         case '0.1.0':
         case '0.2.0':
         case '0.2.5':
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+            $itsptable = $xartable['itsp_itsp'];
+            $planstable = $xartable['itsp_plans'];
+            $planitemstable = $xartable['itsp_planitems'];
+            $query1 = "SELECT DISTINCT xar_pitemid FROM " . $planitemstable;
+            $query2 = "SELECT DISTINCT xar_itspid FROM " . $itsptable;
+            $query3 = "SELECT DISTINCT xar_planid FROM " . $planstable;
+            // For the plans
+            $instances = array(
+                array('header' => 'Plan item id:',
+                    'query' => $query1,
+                    'limit' => 20
+                    ),
+                array('header' => 'Plan ID:',
+                    'query' => $query3,
+                    'limit' => 20
+                    )
+                );
+            xarDefineInstance('itsp', 'Plan', $instances);
+            // For the ITSP
+            $instances = array(
+                array('header' => 'ITSP ID:',
+                    'query' => $query2,
+                    'limit' => 20
+                    ),
+                array('header' => 'Plan ID:',
+                    'query' => $query3,
+                    'limit' => 20
+                    )
+                );
+            xarDefineInstance('itsp', 'ITSP', $instances);
+            return itsp_upgrade('0.3.0');
+        case '0.3.0':
              return itsp_upgrade('1.0.0');
         case '1.0.0':
             break;
