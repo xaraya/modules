@@ -3,7 +3,7 @@
  * Pass individual menu items to the admin menu
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -47,13 +47,7 @@ function example_adminapi_getmenulinks()
 
     /* Show an overview menu option here if you like */
 
-    if (xarSecurityCheck('AddExample', 0)) {
-    $menulinks[] = array('url' => xarModURL('example','admin','overview'),
-
-            'title' => xarML('Example Overview'),
-            'label' => xarML('Overview'));
-    }
-
+  
     if (xarSecurityCheck('AddExample', 0)) {
 
         $menulinks[] = array('url' => xarModURL('example','admin','new'),

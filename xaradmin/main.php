@@ -3,7 +3,7 @@
  * The main administration function
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -35,12 +35,7 @@ function example_admin_main()
      * either 'edit' or 'delete'
      */
     if (!xarSecurityCheck('EditExample')) return;
-    /* The admin system looks for a var to be set to skip the introduction
-     * page altogether. This allows you to add sparse documentation about the
-     * module, and allow the site admins to turn it on and off as they see fit.
-     */
-    if (xarModGetVar('adminpanels', 'overview') == 0) {
-        /* If you want to go directly to some default function, instead of
+       /* If you want to go directly to some default function, instead of
          * having a separate main function, you can simply call it here, and
          * use the same template for admin-main.xd as for admin-view.xd
          * return xarModFunc('example','admin','view');
@@ -57,7 +52,9 @@ function example_admin_main()
          *$data['welcome'] = xarML('Welcome to the administration part of this Example module...');
          * Return the template variables defined in this function
          */
-        return $data;
+        
+        //return $data;
+
         /* Note : instead of using the $data variable, you could also specify
          * the different template variables directly in your return statement :
          */
@@ -66,12 +63,11 @@ function example_admin_main()
          * 'welcome' => ...,
          * ... => ...);
          */
-    } else {
-        /* If the Overview documentation is turned off, then we just return the view page,
-         * or whatever function seems to be the most fitting.
+        /* If no main function as such, just return the view page,
+         * or whatever function seems to be the most fitting for this module.
          */
         xarResponseRedirect(xarModURL('example', 'admin', 'view'));
-    }
+
     /* success so return true */
     return true;
 }
