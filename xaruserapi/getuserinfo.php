@@ -50,7 +50,7 @@ function bloggerapi_userapi_getuserinfo($args)
         $data['userid'] = $userinfo['uid'];
         $data['email'] = $userinfo['email'];
         $data['lastname'] = $userinfo['name'];
-        $data['url'] =''; // TODO: fill this in.
+        $data['url'] = xarModURL('roles', 'user', 'display',  array('uid' => $uid));
         $data['firstname'] = '';
         
         $output = xarModAPIFunc('xmlrpcserver','user','createresponse',
