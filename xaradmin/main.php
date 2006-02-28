@@ -23,6 +23,8 @@
  * view() function)
  *
  * @author Example Module Development Team
+ * @access public
+ * @return Specify your return type here
  */
 function example_admin_main()
 {

@@ -11,7 +11,6 @@
  * @link http://xaraya.com/index.php/release/36.html
  * @author Example Module Development Team
  */
-
 /**
  * Modify an item
  *
@@ -19,7 +18,14 @@
  * wishes to modify a current module item
  *
  * @author Example Module Development Team
- * @param  $ 'exid' the id of the item to be modified
+ * @param array $args An array containing all the arguments to this function.
+ * @param int exid The id of the item to be modified
+ * @param int objectid The id of the unified object, for use with other modules
+ * @param array invalid This array is initialised in the beginning of the function
+                        to hold all the errors caught in admin-update
+ * @param int number A number for the item, used as an example
+ * @param string name A name for the item, used as an example
+ * @return array $item containing all elements and variables for the template
  */
 function example_admin_modify($args)
 {
@@ -82,10 +88,17 @@ function example_admin_modify($args)
         return;
     }
     /* Get menu variables - it helps if all of the module pages have a standard
-     * menu at their head to aid in navigation
+     * menu at their head to aid in navigation. The example here includes a
+     * menu for this function, hence the specification of 'modify'
      * $menu = xarModAPIFunc('example','admin','menu','modify');
      */
+    /* Call the hooks
+     * This example module doesn't use itemtypes
+     * We will therefor pass NULL as an itemtype. When you define itemtypes, you should 
+     * pass it to the call for the hooks here
+     */
     $item['module'] = 'example';
+    $item['itemtype'] = NULL;
     $hooks = xarModCallHooks('item', 'modify', $exid, $item);
 
     /* Return the template variables defined in this function */
