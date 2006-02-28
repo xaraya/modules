@@ -1,11 +1,12 @@
 <?php
 /**
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Sitetools
+ * @link http://xaraya.com/index.php/release/887.html 
  * @author Jo Dalle Nogare <jojodee@xaraya.com>
  */
 /**
@@ -22,11 +23,7 @@ function sitetools_adminapi_getmenulinks()
      /* Security Check */
     if (xarSecurityCheck('AdminSiteTools', 0)) {
         /* The main menu will look for this array and return it for a tree view of the module*/
-       $menulinks[] = Array('url' => xarModURL('sitetools',
-                'admin',
-                'overview'),
-            'title' => xarML('Overview of sitetools'),
-            'label' => xarML('Overview'));
+
         $menulinks[] = Array('url' => xarModURL('sitetools',
                 'admin',
                 'optimize'),
