@@ -1,6 +1,6 @@
 <?php
 /**
- * Get an event.
+ * Get all subscriptions for a category.
  *
  * @package modules
  * @copyright (C) 2002-2006 The Digital Development Foundation
@@ -20,6 +20,7 @@
  *
  * initial template: Roger Raymond
  * @author Jodie Razdrh/John Kevlin/David St.Clair
+ * @todo MichelV: replace with UserVar calls?
  *
  * @return array array(uid=>subscriptions_array)
  */
