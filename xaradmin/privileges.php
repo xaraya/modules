@@ -16,6 +16,7 @@
  *
  * The mask will have the form of $event_id:$organizer:$calendar_id:$cid
  * $organizer here is the user that entered the event, the name might be confusing
+ * @author MichelV <michelv@xaraya.com>
  * @since feb 2006
  * @return array for template
  */
