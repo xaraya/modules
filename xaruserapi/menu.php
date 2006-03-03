@@ -95,8 +95,9 @@ function itsp_userapi_menu()
             }
             $menu['sumcreditsnow'] = $sumcreditsnow;
         }
+        xarVarSetCached('pitems.itsp', 'pitems', $menu['pitems']);
     }
-    xarVarSetCached('pitems.itsp', 'pitems', $menu['pitems']);
+
      /* Return the array containing the menu configuration */
     return $menu;
 }

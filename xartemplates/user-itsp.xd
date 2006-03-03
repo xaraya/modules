@@ -20,7 +20,11 @@
         #xarUserGetVar('name')#
     </p>
     <xar:comment> Show the plan details, coming from $plan</xar:comment>
-
+    <xar:if condition="empty($plan)">
+        <strong><xar:mlstring>Please choose an education plan first</xar:mlstring>&nbsp;
+        <a href="#xarModUrl('itsp','user','view')#"><xar:mlstring>here</xar:mlstring></a>
+        </strong>
+    <xar:else />
     <form>
         <fieldset>
             <legend><xar:mlstring>Information</xar:mlstring></legend>
@@ -78,6 +82,7 @@
             </div>
         </fieldset>
     </form>
+    </xar:if>
         <!-- if you want to extend this module with dynamic data, you can retrieve
         //   that data in the code via APIs, or use e.g. the following BL tags here.
         //   For the different options, see the overview of dynamicdata...

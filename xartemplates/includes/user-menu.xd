@@ -1,7 +1,15 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:if condition="xarTplAddStyleLink('base', 'navtabs')"></xar:if>
-<xar:set name="$navPlanUrl">#xarModURL('itsp','user','display',array('planid'=>$planid))#</xar:set>
-<xar:set name="$navITSPUrl">#xarModURL('itsp','user','itsp')#</xar:set>
+<xar:if condition="!empty($planid)">
+    <xar:set name="$navPlanUrl">#xarModURL('itsp','user','display',array('planid'=>$planid))#</xar:set>
+<xar:else />
+    <xar:set name="$navPlanUrl">#xarModURL('itsp','user','view')#</xar:set>
+</xar:if>
+<xar:if condition="!empty($itspid)">
+    <xar:set name="$navITSPUrl">#xarModURL('itsp','user','itsp')#</xar:set>
+<xar:else />
+    <xar:set name="$navITSPUrl">#xarModURL('itsp','user','view')#</xar:set>
+</xar:if>
 
 <!-- the variables used in this menu come from itsp_userapi_menu()
  //  they involve a dynamic menu selection of the planitems.
