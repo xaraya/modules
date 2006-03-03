@@ -242,7 +242,7 @@ function sigmapersonnel_init()
                               array('file' => $path . 'sp_cities-def.xml'));
     if (empty($objectid)) return;
     // save the object id for later
-    xarModSetVar('maxercalls','citiesobjectid',$objectid);
+    xarModSetVar('sigmapersonnel','citiesobjectid',$objectid);
 /*
     $objectid = xarModAPIFunc('dynamicdata','util','import',
                               array('file' => $path . 'mc_cities-data.xml'));
@@ -255,7 +255,7 @@ function sigmapersonnel_init()
                               array('file' => $path . 'sp_districts-def.xml'));
     if (empty($objectid)) return;
     // save the object id for later
-    xarModSetVar('maxercalls','districtsobjectid',$objectid);
+    xarModSetVar('sigmapersonnel','districtsobjectid',$objectid);
 /*
     $objectid = xarModAPIFunc('dynamicdata','util','import',
                               array('file' => $path . 'mc_districts-data.xml'));
@@ -268,10 +268,10 @@ function sigmapersonnel_init()
                               array('file' => $path . 'sp_presencetypes-def.xml'));
     if (empty($objectid)) return;
     // save the object id for later
-    xarModSetVar('maxercalls','presencetypesobjectid',$objectid);
+    xarModSetVar('sigmapersonnel','presencetypesobjectid',$objectid);
 
     $objectid = xarModAPIFunc('dynamicdata','util','import',
-                              array('file' => $path . 'mc_presencetypes-data.xml'));
+                              array('file' => $path . 'sp_presencetypes-data.xml'));
     if (empty($objectid)) return;
 
     /*
@@ -281,10 +281,10 @@ function sigmapersonnel_init()
                               array('file' => $path . 'sp_status-def.xml'));
     if (empty($objectid)) return;
     // save the object id for later
-    xarModSetVar('maxercalls','statusobjectid',$objectid);
+    xarModSetVar('sigmapersonnel','statusobjectid',$objectid);
 
     $objectid = xarModAPIFunc('dynamicdata','util','import',
-                              array('file' => $path . 'mc_status-data.xml'));
+                              array('file' => $path . 'sp_status-data.xml'));
     if (empty($objectid)) return;
 
     /**
