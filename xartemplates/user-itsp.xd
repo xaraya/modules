@@ -9,12 +9,9 @@
     <xar:template type="module" file="user-menu" />
 
     <h2><xar:mlstring>Your plan</xar:mlstring></h2>
-
-    <!-- some status given by the function using this template -->
-
-    <xar:if condition="!empty($status)">
-        <strong>#$status#</strong>
-    <xar:else />
+    <xar:if condition="xarSessionGetVar('statusmsg') ne ''">
+        <p>#xarSessionGetVar('statusmsg')#</p>
+    </xar:if>
     <p>
         <xar:mlstring>Welcome</xar:mlstring>&nbsp;
         #xarUserGetVar('name')#
@@ -25,79 +22,79 @@
         <a href="#xarModUrl('itsp','user','view')#"><xar:mlstring>here</xar:mlstring></a>
         </strong>
     <xar:else />
-    <form>
-        <fieldset>
-            <legend><xar:mlstring>Information</xar:mlstring></legend>
-            <div class="xar-form-input-wrapper">
-                 <label for="planname" class="xar-form-label" title="#xarML('Name of the plan')#">
-                      <xar:mlstring>Name:</xar:mlstring>
-                 </label>
-                 #$plan.planname#
-            </div>
-            <div class="xar-form-input-wrapper">
-                 <label for="plandesc" class="xar-form-label" title="#xarML('Name of the plan')#">
-                      <xar:mlstring>Description:</xar:mlstring>
-                 </label>
-                 #$plan.plandesc#
-            </div>
-            <div class="xar-form-input-wrapper">
-                 <label for="planitems" class="xar-form-label" title="#xarML('Name of the plan')#">
-                      <xar:mlstring>The parts:</xar:mlstring>
-                 </label>
+        <form>
+            <fieldset>
+                <legend><xar:mlstring>Information</xar:mlstring></legend>
+                <div class="xar-form-input-wrapper">
+                     <label for="planname" class="xar-form-label" title="#xarML('Name of the plan')#">
+                          <xar:mlstring>Name:</xar:mlstring>
+                     </label>
+                     #$plan.planname#
+                </div>
+                <div class="xar-form-input-wrapper">
+                     <label for="plandesc" class="xar-form-label" title="#xarML('Name of the plan')#">
+                          <xar:mlstring>Description:</xar:mlstring>
+                     </label>
+                     #$plan.plandesc#
+                </div>
+                <div class="xar-form-input-wrapper">
+                     <label for="planitems" class="xar-form-label" title="#xarML('Name of the plan')#">
+                          <xar:mlstring>The parts:</xar:mlstring>
+                     </label>
 
-                <table>
-                    <tr>
-                        <th><xar:mlstring>Type name</xar:mlstring></th>
-                        <th><xar:mlstring>Credits needed</xar:mlstring></th>
-                        <th><xar:mlstring>Obtained</xar:mlstring></th>
-                    </tr>
-                    <xar:foreach in="$pitems" value="$item">
-                    <tr>
-                        <td>
-                             <a href="#xarModURL('itsp','user','modify',array('pitemid'=>$item['pitemid'],'itspid'=>$itspid))#">#$item.pitemname#</a>
-                        </td>
-                        <td>
-                             #$item.mincredit#
-                        </td>
-                        <td>
-                             #$item.creditsnow#
-                        </td>
-                    </tr>
-                    </xar:foreach>
-                    <tr>
-                        <td>
-                        Total needed/obtained
-                        </td>
-                        <td>
-                        #$plan.mincredit#
-                        </td>
-                        <td>
-                        <xar:if condition="$sumcreditsnow lt $plan.mincredit">
-                        <span style="color:red">#$sumcreditsnow#&nbsp;</span>
-                        <xar:else />
-                        #$sumcreditsnow#
-                        </xar:if>
-                        </td>
-                </table>
-            </div>
-        </fieldset>
-    </form>
+                    <table>
+                        <tr>
+                            <th><xar:mlstring>Type name</xar:mlstring></th>
+                            <th><xar:mlstring>Credits needed</xar:mlstring></th>
+                            <th><xar:mlstring>Obtained</xar:mlstring></th>
+                        </tr>
+                        <xar:foreach in="$pitems" value="$item">
+                        <tr>
+                            <td>
+                                 <a href="#xarModURL('itsp','user','modify',array('pitemid'=>$item['pitemid'],'itspid'=>$itspid))#">#$item.pitemname#</a>
+                            </td>
+                            <td>
+                                 #$item.mincredit#
+                            </td>
+                            <td>
+                                 #$item.creditsnow#
+                            </td>
+                        </tr>
+                        </xar:foreach>
+                        <tr>
+                            <td>
+                            Total needed/obtained
+                            </td>
+                            <td>
+                            #$plan.mincredit#
+                            </td>
+                            <td>
+                            <xar:if condition="$sumcreditsnow lt $plan.mincredit">
+                            <span style="color:red">#$sumcreditsnow#&nbsp;</span>
+                            <xar:else />
+                            #$sumcreditsnow#
+                            </xar:if>
+                            </td>
+                    </table>
+                </div>
+            </fieldset>
+        </form>
     </xar:if>
-        <!-- if you want to extend this module with dynamic data, you can retrieve
-        //   that data in the code via APIs, or use e.g. the following BL tags here.
-        //   For the different options, see the overview of dynamicdata...
-        -->
-        <xar:if condition="xarModIsHooked('dynamicdata')">
-            <!-- 1. retrieve any dynamic properties defined for this object -->
-            <xar:data-getitem name="$properties" module="itsp" itemid="$itspid" />
-            <!-- 2. for each property, display its label and value in output format -->
-            <xar:if condition="isset($properties) and count($properties) gt 0">
-                <xar:foreach in="$properties" key="$name">
-                          <xar:data-label property="$properties[$name]" />:
-                        <xar:data-output property="$properties[$name]" />
-                </xar:foreach>
-            </xar:if>
+    <!-- if you want to extend this module with dynamic data, you can retrieve
+    //   that data in the code via APIs, or use e.g. the following BL tags here.
+    //   For the different options, see the overview of dynamicdata...
+    -->
+    <xar:if condition="xarModIsHooked('dynamicdata')">
+        <!-- 1. retrieve any dynamic properties defined for this object -->
+        <xar:data-getitem name="$properties" module="itsp" itemid="$itspid" />
+        <!-- 2. for each property, display its label and value in output format -->
+        <xar:if condition="isset($properties) and count($properties) gt 0">
+            <xar:foreach in="$properties" key="$name">
+                      <xar:data-label property="$properties[$name]" />:
+                    <xar:data-output property="$properties[$name]" />
+            </xar:foreach>
         </xar:if>
+    </xar:if>
 
     <!-- add the output from the different display hooks here -->
     <xar:if condition="!empty($hookoutput)">
@@ -105,6 +102,5 @@
             #$hookoutput[$hookmodule]#
         </xar:foreach>
     </xar:if>
-
-</xar:if>
 </div>
+<xar:if condition="xarSessionSetVar('statusmsg', '')"></xar:if>

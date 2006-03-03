@@ -82,7 +82,7 @@ function itsp_user_itsp($args)
 
     // Do this in the menu
     // $creditsnow = xarModApiFunc('itsp','user','countcredits',array('uid' => xarUserGetVar('uid')));
-
+ //   xarSessionSetVar('statusmsg', xarML('Course Item was successfully added!'));
 
     /* Let any transformation hooks know that we want to transform some text.
      * You'll need to specify the item id, and an array containing the names of all
