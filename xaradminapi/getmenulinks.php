@@ -14,17 +14,10 @@
 /**
  * utility function pass individual menu items to the main menu
  *
- * @returns array
  * @return array containing the menulinks for the main menu items.
  */
 function comments_adminapi_getmenulinks()
 {
-    $menulinks[] = Array('url'   => xarModURL('comments',
-                                              'admin',
-                                              'overview'),
-                          'title' => xarML('An Overview of the Comments Module'),
-                          'label' => xarML('Overview'));
-
     $menulinks[] = Array('url'   => xarModURL('comments',
                                               'admin',
                                               'stats'),
