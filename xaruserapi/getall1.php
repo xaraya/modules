@@ -2,7 +2,7 @@
 /*
  * Censor Module
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2003 by the Xaraya Development Team
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
@@ -30,10 +30,10 @@ function censor_userapi_getall1($args)
                    xar_case_sensitive,
                    xar_match_case
             FROM $censortable
-            WHERE xar_locale LIKE ? 
+            WHERE xar_locale LIKE ?
             OR xar_locale LIKE ?";
-            
-    $bindvars = array("%".$local."%", "%ALL%");    
+
+    $bindvars = array("%".$local."%", "%ALL%");
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 

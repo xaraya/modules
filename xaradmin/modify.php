@@ -2,7 +2,7 @@
 /*
  * Censor Module
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2003 by the Xaraya Development Team
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
@@ -35,25 +35,25 @@ function censor_admin_modify($args)
 
     if ($data == false) return;
 
-    
+
     // Security Check
     if (!xarSecurityCheck('EditCensor')) return;
-    
+
     $data['locale'] = unserialize($data['locale']);
     $data['authid'] = xarSecGenAuthKey();
-   
-  
+
+
     if (isset($newkey)) {
         $data['keyword'] = $newkey;
         $data['case_sensitive'] = $newcase;
         $data['match_case'] = $newmatchcase;
         }
-    
+
     $allowedlocales[] = "ALL";
     $sitelocales = xarConfigGetVar('Site.MLS.AllowedLocales');
-	foreach($sitelocales as $locale) {
-		$allowedlocales[] = $locale;
-	}
+    foreach($sitelocales as $locale) {
+        $allowedlocales[] = $locale;
+    }
 
      foreach($allowedlocales as $loc) {
     if (in_array($loc, $data['locale'])) {

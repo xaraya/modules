@@ -2,7 +2,7 @@
 /*
  * Censor Module
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2003 by the Xaraya Development Team
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
@@ -14,15 +14,15 @@
  * view censored words
  */
 function censor_admin_view()
-{ 
+{
     // Get parameters
     if (!xarVarFetch('startnum', 'str:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
-    
+
     // Specify some labels for display
-    
-   
+
+
     $data['authid'] = xarSecGenAuthKey();
-    
+
     // ftb -> where we can set this?
     $data['selstyle']  = xarModGetUserVar('censor', 'selstyle');
     if (empty($data['selstyle'])){
@@ -38,20 +38,20 @@ function censor_admin_view()
     $data['pager'] = xarTplGetPager($startnum,
         xarModAPIFunc('censor', 'user', 'countitems'),
         xarModURL('censor', 'admin', 'view', array('startnum' => '%%')),
-        xarModGetVar('censor', 'itemsperpage')); 
+        xarModGetVar('censor', 'itemsperpage'));
     // Security Check
-    if (!xarSecurityCheck('EditCensor')) return; 
+    if (!xarSecurityCheck('EditCensor')) return;
     // The user API function is called
     $censors = xarModAPIFunc('censor',
                              'user',
                              'getall',
                               array('startnum' => $startnum,
-                                    'numitems' => xarModGetVar('censor', 
+                                    'numitems' => xarModGetVar('censor',
                                                                'itemsperpage')));
     if (empty($censors)) {
         return $data;
-      
-    } 
+
+    }
 
     // Check individual permissions for Edit / Delete
     $data['items'] = array();
@@ -64,7 +64,7 @@ function censor_admin_view()
                 array('cid' => $censor['cid']));
         } else {
             $censors[$i]['editurl'] = '';
-        } 
+        }
         $censors[$i]['edittitle'] = xarML('Edit');
         if (xarSecurityCheck('DeleteCensor', 0)) {
             $censors[$i]['deleteurl'] = xarModURL('censor',
@@ -72,23 +72,23 @@ function censor_admin_view()
                                                   'delete',
                                                   array('cid' => $censor['cid'],
                                                         'authid' => $data['authid']));
-                                                        
+
         } else {
 
             $censors[$i]['deleteurl'] = '';
-        } 
+        }
 
         $censors[$i]['locale'] = implode(", ", $censor['locale']);
         if ($censors[$i]['locale']== 'ALL') {
             $censors[$i]['locale']= xarML('All');
             }
-    } 
+    }
     // Add the array of items to the template variables
-    $data['items'] = $censors; 
+    $data['items'] = $censors;
 
 
     // Return the template variables defined in this function
     return $data;
 
-} 
+}
 ?>

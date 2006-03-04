@@ -2,7 +2,7 @@
 /*
  * Censor Module
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2003 by the Xaraya Development Team
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
@@ -12,7 +12,7 @@
 
 /**
  * update an censored word
- * 
+ *
  * @param  $args ['cid'] the ID of the censored word
  * @param  $args ['keyword'] the new censored word
  */
@@ -20,8 +20,8 @@ function censor_adminapi_update($args)
 {
     // Get arguments from argument array
     extract($args);
-    
-    
+
+
     // Argument check
     if ((!isset($cid)) ||
             (!isset($keyword))) {
@@ -37,16 +37,16 @@ function censor_adminapi_update($args)
         $msg = xarML('No Such Censored Word Present');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
-    } 
-   
-   
+    }
+
+
     // Security Check
-    if (!xarSecurityCheck('EditCensor')) return; 
+    if (!xarSecurityCheck('EditCensor')) return;
     // Get datbase setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
-    $censortable = $xartable['censor']; 
+    $censortable = $xartable['censor'];
     // Update the link
     $query = "UPDATE $censortable
             SET xar_keyword         = ?,

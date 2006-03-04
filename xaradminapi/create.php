@@ -2,7 +2,7 @@
 /*
  * Censor Module
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2003 by the Xaraya Development Team
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
@@ -12,7 +12,7 @@
 
 /**
  * create a new censored word
- * 
+ *
  * @param  $args ['keyword'] new censored word
  * @returns int
  * @return censored word ID on success, false on failure
@@ -27,15 +27,15 @@ function censor_adminapi_create($args)
         $msg = xarML('Invalid Parameter Count in #(3)_#(1)_#(2).php', 'admin', 'create', 'censor');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
-    } 
- 
-        
+    }
+
+
     // Security Check
     if (!xarSecurityCheck('AddCensor')) return;
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $censortable = $xartable['censor'];
-    $nextId = $dbconn->GenId($censortable); 
+    $nextId = $dbconn->GenId($censortable);
     // Add item
     $query = "INSERT INTO $censortable (
               xar_cid,
@@ -50,7 +50,7 @@ function censor_adminapi_create($args)
               ?,
               ?)";
     $bindvars = array($nextId, $keyword, $case, $matchcase, serialize($locale));
-   
+
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
     // Get the ID of the item that we inserted
