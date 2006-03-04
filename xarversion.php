@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id$
- *
  * Xaraya Daily Delicious
  *
  * @package Xaraya eXtensible Management System
