@@ -13,6 +13,9 @@
  */
 /**
  * the main administration function
+ *
+ * It currently redirects to the admin-view function
+ * @return bool true on success
  */
 function articles_admin_main()
 {
