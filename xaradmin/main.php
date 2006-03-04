@@ -10,11 +10,11 @@
  * @subpackage Keywords Module
  * @link http://xaraya.com/index.php/release/187.html
  * @author mikespub
-*/
-
+ */
 /**
  * the main administration function
  *
+ * Redirects to modifyconfig
  *
  * @author mikespub
  * @access public
@@ -26,14 +26,8 @@ function keywords_admin_main()
 {
     // Security Check
     if (!xarSecurityCheck('AdminKeywords')) return;
-
-    if (xarModGetVar('adminpanels', 'overview') == 0) {
-        // Return the output
-        return array();
-    } else {
-        xarResponseRedirect(xarModURL('keywords', 'admin', 'modifyconfig'));
-    }
+    //xarResponseRedirect(xarModURL('keywords', 'admin', 'modifyconfig'));
     // success
-    return true;
+    return array();//true;
 }
 ?>
