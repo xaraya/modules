@@ -1,127 +1,123 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
-	<span class="xar-mod-title">
-		<xar:mlstring>Administration - Encyclopedia</xar:mlstring>
-	</span>
+    <span class="xar-mod-title">
+        <xar:mlstring>Administration - Encyclopedia</xar:mlstring>
+    </span>
 </div>
 
-
 <div class="xar-mod-body">
-    <h2 style="width:100%;height:1.5em;">
-		<xar:mlstring>
-			Modify Configuration
-		</xar:mlstring>
+    <h2>
+        <xar:mlstring>
+            Modify Configuration
+        </xar:mlstring>
     </h2>
-	<div style="text-align: center; margin: auto;">
-		<form name="entryform" id="entryform" class="xar-fullwidth"  action="#xarModURL('encyclopedia', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded">
-			<input type="hidden" name="authid" id="authid" value="#$authid#" />
-			<div style="text-align: left">
-			<table class="xar-fullwidth xar-noborder" cellpadding="2" cellspacing="0">
-				<tr>
-					<td>
-						<label for="welcome"><xar:mlstring>Welcome message</xar:mlstring></label>
-					</td>
-					<td>
-						<textarea name="welcome" id="welcome"rows="4" cols="40" tabindex="1" />#$welcome#							
-						</textarea>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<label for="pname"><xar:mlstring>Allow Public Uploads</xar:mlstring></label>
-					</td>
-					<td>
-						<xar:if condition="$upload">
-							<input type="checkbox" name="upload" id="upload" value="upload" checked="CHECKED" />
-						<xar:else />
-							<input type="checkbox" name="upload" id="upload" value="upload" />
-						</xar:if>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<label for="imagewidth"><xar:mlstring>Max image width</xar:mlstring></label>
-					</td>
-					<td>
-						<input type="text" name="imagewidth" id="imagewidth" value="#$imagewidth#" size="4" maxlength="4" tabindex="2" />
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<label for="imageheight"><xar:mlstring>Max image height</xar:mlstring></label>
-					</td>
-					<td>
-						<input type="text" name="imageheight" id="imageheight" value="#$imageheight#" size="4" maxlength="4" tabindex="3" />
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<label for="autolinks"><xar:mlstring>Use autolinks</xar:mlstring></label>
-					</td>
-					<td>
-						<xar:if condition="$autolinks">
-							<input type="checkbox" name="autolinks" id="autolinks" value="autolinks" checked="CHECKED" />
-						<xar:else />
-							<input type="checkbox" name="autolinks" id="autolinks" value="autolinks" />
-						</xar:if>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<label for="longdisplay"><xar:mlstring>Long Display</xar:mlstring></label>
-					</td>
-					<td>
-						<xar:if condition="$longdisplay">
-							<input type="checkbox" name="longdisplay" id="longdisplay" value="longdisplay" checked="CHECKED" />
-						<xar:else />
-							<input type="checkbox" name="longdisplay" id="longdisplay" value="longdisplay" />
-						</xar:if>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<label for="columns"><xar:mlstring>Columns for long display</xar:mlstring></label>
-					</td>
-					<td>
-						<input type="text" name="columns" id="columns" value="#$columns#" size="4" maxlength="4" tabindex="4" />
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<label for="itemsperpage"><xar:mlstring>Items per page for short display</xar:mlstring></label>
-					</td>
-					<td>
-						<input type="text" name="itemsperpage" id="itemsperpage" value="#$itemsperpage#" size="4" maxlength="4" tabindex="5" />
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<label for="allowsearch"><xar:mlstring>Enable searching of volumes</xar:mlstring></label>
-					</td>
-					<td>
-						<xar:if condition="$allowsearch">
-							<input type="checkbox" name="allowsearch" id="allowsearch" value="allowsearch" checked="CHECKED" />
-						<xar:else />
-							<input type="checkbox" name="allowsearch" id="allowsearch" value="allowsearch" />
-						</xar:if>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<label for="allowletters"><xar:mlstring>Enable the alphabetized index</xar:mlstring></label>
-					</td>
-					<td>
-						<xar:if condition="$allowletters">
-							<input type="checkbox" name="allowletters" id="allowletters" value="allowletters" checked="CHECKED" />
-						<xar:else />
-							<input type="checkbox" name="allowletters" id="allowletters" value="allowletters" />
-						</xar:if>
-					</td>
-				</tr>
-			</table>
-			<br />
-			<xar:set name="addlabel"><xar:mlstring>Save</xar:mlstring></xar:set>
-			<input type="submit" value="#$addlabel#" tabindex="2" />
-		</form>
-	</div>
+    <form name="entryform" id="entryform" class="xar-fullwidth"  action="#xarModURL('encyclopedia', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded">
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <table class="xar-fullwidth xar-noborder" cellpadding="2" cellspacing="0">
+            <tr>
+                <td>
+                    <label for="welcome"><xar:mlstring>Welcome message</xar:mlstring></label>
+                </td>
+                <td>
+                    <textarea name="welcome" id="welcome"rows="4" cols="40" tabindex="1" />#$welcome#
+                    </textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="pname"><xar:mlstring>Allow Public Uploads</xar:mlstring></label>
+                </td>
+                <td>
+                    <xar:if condition="$upload">
+                        <input type="checkbox" name="upload" id="upload" value="upload" checked="CHECKED" />
+                    <xar:else />
+                        <input type="checkbox" name="upload" id="upload" value="upload" />
+                    </xar:if>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="imagewidth"><xar:mlstring>Max image width</xar:mlstring></label>
+                </td>
+                <td>
+                    <input type="text" name="imagewidth" id="imagewidth" value="#$imagewidth#" size="4" maxlength="4" tabindex="2" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="imageheight"><xar:mlstring>Max image height</xar:mlstring></label>
+                </td>
+                <td>
+                    <input type="text" name="imageheight" id="imageheight" value="#$imageheight#" size="4" maxlength="4" tabindex="3" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="autolinks"><xar:mlstring>Use autolinks</xar:mlstring></label>
+                </td>
+                <td>
+                    <xar:if condition="$autolinks">
+                        <input type="checkbox" name="autolinks" id="autolinks" value="autolinks" checked="CHECKED" />
+                    <xar:else />
+                        <input type="checkbox" name="autolinks" id="autolinks" value="autolinks" />
+                    </xar:if>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="longdisplay"><xar:mlstring>Long Display</xar:mlstring></label>
+                </td>
+                <td>
+                    <xar:if condition="$longdisplay">
+                        <input type="checkbox" name="longdisplay" id="longdisplay" value="longdisplay" checked="CHECKED" />
+                    <xar:else />
+                        <input type="checkbox" name="longdisplay" id="longdisplay" value="longdisplay" />
+                    </xar:if>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="columns"><xar:mlstring>Columns for long display</xar:mlstring></label>
+                </td>
+                <td>
+                    <input type="text" name="columns" id="columns" value="#$columns#" size="4" maxlength="4" tabindex="4" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="itemsperpage"><xar:mlstring>Items per page for short display</xar:mlstring></label>
+                </td>
+                <td>
+                    <input type="text" name="itemsperpage" id="itemsperpage" value="#$itemsperpage#" size="4" maxlength="4" tabindex="5" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="allowsearch"><xar:mlstring>Enable searching of volumes</xar:mlstring></label>
+                </td>
+                <td>
+                    <xar:if condition="$allowsearch">
+                        <input type="checkbox" name="allowsearch" id="allowsearch" value="allowsearch" checked="CHECKED" />
+                    <xar:else />
+                        <input type="checkbox" name="allowsearch" id="allowsearch" value="allowsearch" />
+                    </xar:if>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="allowletters"><xar:mlstring>Enable the alphabetized index</xar:mlstring></label>
+                </td>
+                <td>
+                    <xar:if condition="$allowletters">
+                        <input type="checkbox" name="allowletters" id="allowletters" value="allowletters" checked="CHECKED" />
+                    <xar:else />
+                        <input type="checkbox" name="allowletters" id="allowletters" value="allowletters" />
+                    </xar:if>
+                </td>
+            </tr>
+        </table>
+        <br />
+        <xar:set name="addlabel"><xar:mlstring>Save</xar:mlstring></xar:set>
+        <input type="submit" value="#$addlabel#" tabindex="2" />
+    </form>
 </div>

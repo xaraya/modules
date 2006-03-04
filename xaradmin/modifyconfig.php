@@ -10,7 +10,10 @@
  * @subpackage Encyclopedia Module
  * @author Marc Lutolf <marcinmilan@xaraya.com>
  */
-
+/**
+ * Modify Configuration
+ * @return array
+ */
 function encyclopedia_admin_modifyconfig()
 {
     if (!xarSecurityCheck('AdminEncyclopedia')) {return;}

@@ -1,88 +1,88 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
-	<span class="xar-mod-title">
-		<xar:mlstring>Encyclopedia</xar:mlstring>
-	</span>
+    <span class="xar-mod-title">
+        <xar:mlstring>Encyclopedia</xar:mlstring>
+    </span>
 </div>
 
 <div class="xar-mod-body">
-    <h2 style="width:100%;height:1.5em;">
-		#$item['term']#    
-	</h2>
-	<xar:if condition="xarTplAddStyleLink('base', 'navtabs')">
-	</xar:if>
-	<dl class="xar-tabs">
-		<dd  class="active" style="float: right; margin-right: .5em; text-align: left;">
-			<a href="#xarModURL('encyclopedia','user','main')#">
-				<xar:mlstring>Volume Index</xar:mlstring>
-			</a>
-		</dd>    
-		<dd  class="active" style="float: right; margin-right: .5em; text-align: left;">
-			<a href="#xarModURL('encyclopedia','user','displayvol',array('vid' => $volume['cid']))#">
-				#$volume['name']#
-			</a>
-		</dd>    
-	</dl>
-	<div style="text-align: center; margin: auto;">
-		<input type="hidden" name="author" id="author" value="#$item['author']#" />
-		<div style="text-align: left">
-		<table class="xar-fullwidth xar-noborder" style="border-spacing:1px; padding:0;">
-			<tr>
-				<th>
-					<xar:mlstring>Volume</xar:mlstring>
-				</th>
-				<td>
-					#$volume['name']#
-				</td>
-			</tr>
-			<tr>
-				<th>
-					<label for="term"><xar:mlstring>Term</xar:mlstring></label>
-				</th>
-				<td>
-					#$item['term']#
-				</td>
-			</tr>
-			<tr>
-				<th>
-					<label for="pronunciation"><xar:mlstring>Pronunciation</xar:mlstring></label>
-				</th>
-				<td>
-					#$item['pronunciation']#
-				</td>
-			</tr>
-			<tr>
-				<th>
-					<label for="related"><xar:mlstring>Related Terms</xar:mlstring></label>
-				</th>
-				<td>
-					#$item['related']#
-				</td>
-			</tr>
-			<tr>
-				<th>
-					<label for="links"><xar:mlstring>Related Links</xar:mlstring></label>
-				</th>
-				<td>
-					#$item['links']#
-				</td>
-			</tr>
-			<tr>
-				<th>
-					<label for="definition"><xar:mlstring>Definition</xar:mlstring></label>
-				</th>
-				<td>
-					#$item['definition']#
-				</td>
-			</tr>
-			<tr>
-				<th>
-					<label for="upload"><xar:mlstring>Image File</xar:mlstring></label>
-				</th>
-				<td>
-				<input type="file" name="upload" id="upload" value="$item['upload']" size="20" maxlength="20" tabindex="5" />
-				</td>
-			</tr>
-		</table>
-	</div>
+    <h2>
+        #$item['term']#
+    </h2>
+    <xar:if condition="xarTplAddStyleLink('base', 'navtabs')">
+    </xar:if>
+    <dl class="xar-tabs">
+        <dd  class="active" style="float: right; margin-right: .5em; text-align: left;">
+            <a href="#xarModURL('encyclopedia','user','main')#">
+                <xar:mlstring>Volume Index</xar:mlstring>
+            </a>
+        </dd>
+        <dd  class="active" style="float: right; margin-right: .5em; text-align: left;">
+            <a href="#xarModURL('encyclopedia','user','displayvol',array('vid' => $volume['cid']))#">
+                #$volume['name']#
+            </a>
+        </dd>
+    </dl>
+
+    <input type="hidden" name="author" id="author" value="#$item['author']#" />
+    <div style="text-align: left">
+        <table class="xar-fullwidth xar-noborder" style="border-spacing:1px; padding:0;">
+            <tr>
+                <th>
+                    <xar:mlstring>Volume</xar:mlstring>
+                </th>
+                <td>
+                    #$volume['name']#
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="term"><xar:mlstring>Term</xar:mlstring></label>
+                </th>
+                <td>
+                    #$item['term']#
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="pronunciation"><xar:mlstring>Pronunciation</xar:mlstring></label>
+                </th>
+                <td>
+                    #$item['pronunciation']#
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="related"><xar:mlstring>Related Terms</xar:mlstring></label>
+                </th>
+                <td>
+                    #$item['related']#
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="links"><xar:mlstring>Related Links</xar:mlstring></label>
+                </th>
+                <td>
+                    #$item['links']#
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="definition"><xar:mlstring>Definition</xar:mlstring></label>
+                </th>
+                <td>
+                    #$item['definition']#
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="upload"><xar:mlstring>Image File</xar:mlstring></label>
+                </th>
+                <td>
+                <input type="file" name="upload" id="upload" value="$item['upload']" size="20" maxlength="20" tabindex="5" />
+                </td>
+            </tr>
+        </table>
+    </div>
 </div>
