@@ -16,20 +16,12 @@
 *
 * @author  Curtis Farnham <curtis@farnham.com>
 * @access  public
-* @return  array
-* @returns list of menu links
+* @return array list of menu links
 */
 function files_adminapi_getmenulinks()
 {
     // initialize list
     $menulinks = array();
-
-    // overview link
-    if (xarSecurityCheck('AddFiles', 0)) {
-        $menulinks[] = array('url' => xarModURL('files','admin','overview'),
-            'title' => xarML('Files Overview'),
-            'label' => xarML('Overview'));
-    }
 
     // modifyconfig link
     if (xarSecurityCheck('AdminFiles', 0)) {

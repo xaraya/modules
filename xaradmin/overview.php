@@ -12,8 +12,9 @@
 * @author Curtis Farnham <curtis@farnham.com>
 */
 /**
-* Display module overview
-*/
+ * Display module overview
+ * @return array
+ */
 function files_admin_overview()
 {
     // security check

@@ -12,22 +12,18 @@
 * @author Curtis Farnham <curtis@farnham.com>
 */
 /**
-* Main administration function
-*
-* Show overview or go to a more useful function.
-*/
+ * Main administration function
+ *
+ * Redirect to modifyconfig
+ * @return bool true on success of redirect
+ */
 function files_admin_main()
 {
     // security check
     if (!xarSecurityCheck('AdminFiles')) return;
 
     // show overview or redirect to a more useful function
-    if (xarModGetVar('adminpanels', 'overview') == 0) {
-        return xarModAPIFunc('files', 'admin', 'menu');
-    } else {
-        xarResponseRedirect(xarModURL('files', 'admin', 'modifyconfig'));
-    }
-
+    xarResponseRedirect(xarModURL('files', 'admin', 'modifyconfig'));
     // success
     return true;
 }
