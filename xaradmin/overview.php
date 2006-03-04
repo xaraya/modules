@@ -12,14 +12,13 @@
  * @author Example Module Development Team
  */
 /**
- * Overview displays standard Overview page
+ * Overview function that displays the standard Overview page
  *
- * Only used if you actually supply an overview link in your adminapi menulink function
- * and used to call the template that provides display of the overview
+ * This function shows the overview template, currently admin-main.xd.
+ * The template contains overview and help texts
  *
  * @author the Example module development team
- * @returns array xarTplModule with $data containing template data
- * @return array containing the menulinks for the overview item on the main manu
+ * @return array xarTplModule with $data containing template data
  * @since 3 Sept 2005
  */
 function example_admin_overview()
@@ -28,9 +27,9 @@ function example_admin_overview()
     if (!xarSecurityCheck('AdminExample',0)) return;
 
     $data=array();
-    
+
     /* if there is a separate overview function return data to it
-     * else just call the main function that usually displays the overview 
+     * else just call the main function that displays the overview
      */
 
     return xarTplModule('example', 'admin', 'main', $data,'main');
