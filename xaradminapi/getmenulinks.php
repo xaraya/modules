@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id:
- * 
  * Utility function to pass menu items to the main menu
- * 
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 by the Xaraya Development Team.
+ *
+ * @package modules
+ * @copyright (C) 2005-2006 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -16,17 +14,12 @@
  * utility function pass individual menu items to the main menu
  *
  * @author Jo Dalle Nogare <jojodee@xaraya.com>
- * @returns array
  * @return array containing the menulinks for the main menu items.
  */
 function search_adminapi_getmenulinks()
 {
     // Security Check
     if (xarSecurityCheck('AdminSearch', 0)) {
-
-        $menulinks[] = Array('url' => xarModURL('search','admin', 'overview'),
-            'title' => xarML('Overview'),
-            'label' => xarML('Overview'));
 
         $menulinks[] = Array('url' => xarModURL('search','admin', 'modifyconfig'),
             'title' => xarML('Modify the configuration of Search display'),
@@ -39,6 +32,6 @@ function search_adminapi_getmenulinks()
     }
     // return values back to the main menu for display.
     return $menulinks;
-} 
+}
 
 ?>
