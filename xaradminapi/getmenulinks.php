@@ -15,22 +15,11 @@
  * utility function pass individual menu items to the main menu
  *
  * @author the eBulletin module development team
- * @returns array
  * @return array containing the menulinks for the main menu items.
  */
 function ebulletin_adminapi_getmenulinks()
 {
     $menulinks = array();
-
-    // overview
-    if (xarSecurityCheck('ReadeBulletin', 0)) {
-        $menulinks[] = array(
-            'url' => xarModURL('ebulletin', 'admin', 'overview'),
-            'title' => xarML('See eBulletin overview.'),
-            'label' => xarML('Overview')
-        );
-    }
-
     // view publications and issues and subscribers
     if (xarSecurityCheck('EditeBulletin', 0)) {
         $menulinks[] = array(

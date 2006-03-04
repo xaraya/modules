@@ -22,11 +22,11 @@ function ebulletin_admin_main()
     if (!xarSecurityCheck('AdmineBulletin')) return;
 
     // show overview or redirect to a more useful function
-    if (xarModGetVar('adminpanels', 'overview') == 0) {
-        return xarModAPIFunc('ebulletin', 'admin', 'menu');
-    } else {
+   // if (xarModGetVar('adminpanels', 'overview') == 0) {
+   //     return xarModAPIFunc('ebulletin', 'admin', 'menu');
+   // } else {
         xarResponseRedirect(xarModURL('ebulletin', 'admin', 'view'));
-    }
+   // }
 
     // success
     return true;
