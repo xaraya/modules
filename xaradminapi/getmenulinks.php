@@ -15,21 +15,10 @@
  * Pass the admin items to the admin menu
  *
  * @author the ITSP module development team
- * @returns array
  * @return array containing the menulinks for the main menu items.
  */
 function itsp_adminapi_getmenulinks()
 {
-
-    /* Show an overview menu option here if you like */
-
-    if (xarSecurityCheck('AddITSP', 0)) {
-    $menulinks[] = Array('url' => xarModURL('itsp','admin','overview'),
-
-            'title' => xarML('ITSP Overview'),
-            'label' => xarML('Overview'));
-    }
-
     if (xarSecurityCheck('AddITSPPlan', 0)) {
 
         $menulinks[] = Array('url' => xarModURL('itsp','admin','new'),

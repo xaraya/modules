@@ -18,8 +18,7 @@
  * and used to call the template that provides display of the overview
  *
  * @author the ITSP module development team
- * @returns array xarTplModule with $data containing template data
- * @return array containing the menulinks for the overview item on the main manu
+ * @return array xarTplModule with $data containing template data
  * @since 3 Sept 2005
  */
 function itsp_admin_overview()

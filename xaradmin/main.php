@@ -22,24 +22,12 @@
  * view() function)
  *
  * @author ITSP Module Development Team
- * @return array Template information
+ * @return bool and redirect
  */
 function itsp_admin_main()
 {
     if (!xarSecurityCheck('EditITSP')) return;
-    /* The admin system looks for a var to be set to skip the introduction
-     * page altogether.  This allows you to add sparse documentation about the
-     * module, and allow the site admins to turn it on and off as they see fit.
-     */
-    if (xarModGetVar('adminpanels', 'overview') == 0) {
-        $data = xarModAPIFunc('itsp', 'admin', 'menu');
-        return $data;
-    } else {
-        /* If the Overview documentation is turned off, then we just return the view page,
-         * or whatever function seems to be the most fitting.
-         */
-        xarResponseRedirect(xarModURL('itsp', 'admin', 'view'));
-    }
+    xarResponseRedirect(xarModURL('itsp', 'admin', 'view'));
     /* success so return true */
     return true;
 }
