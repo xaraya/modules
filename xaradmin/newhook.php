@@ -1,6 +1,5 @@
 <?php
-/*
- *
+/**
  * Polls Module
  *
  * @package Xaraya eXtensible Management System
@@ -11,14 +10,12 @@
  * @subpackage polls
  * @author Jim McDonalds, dracos, mikespub et al.
  */
-
 /**
  * create an entry for a module item - hook for ('item','new','GUI')
  *
  * @param $args['objectid'] ID of the object
  * @param $args['extrainfo'] extra information
- * @returns string
- * @return hook output in HTML
+ * @return string hook output in HTML
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function polls_admin_newhook($args)

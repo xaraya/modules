@@ -1,6 +1,5 @@
 <?php
-/*
- *
+/**
  * Polls Module
  *
  * @package Xaraya eXtensible Management System
@@ -11,7 +10,6 @@
  * @subpackage polls
  * @author Jim McDonalds, dracos, mikespub et al.
  */
-
 /**
  * modify a poll
  */
