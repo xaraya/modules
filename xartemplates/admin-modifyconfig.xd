@@ -2,177 +2,172 @@
 
 <div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>Modify Configuration</xar:mlstring></h2>
-<div style="margin: auto;"><xar:template file="statusmsg" type="module" />
+    <div style="margin: auto;">
+        <xar:template file="statusmsg" type="module" />
+        <form method="post" id="post" action="&xar-modurl-ebulletin-admin-updateconfig;">
+            <fieldset>
+                <legend><xar:mlstring>Display Options</xar:mlstring></legend>
+                <div class="xar-form-input-wrapper">
+                    <label for="admin_issuesperpage" class="xar-form-label" title="#xarML('Items per page on admin screens')#">
+                        <xar:mlstring>Items per page</xar:mlstring>
+                    </label>
+                    <input type="text" name="admin_issuesperpage" id="admin_issuesperpage" value="#$admin_issues#" maxlength="3" size="3" class="xar-form-textshort" />
+                </div>
 
-<form method="post" id="post" action="&xar-modurl-ebulletin-admin-updateconfig;">
+                <div class="xar-form-input-wrapper">
+                    <label for="admin_subsperpage" class="xar-form-label" title="#xarML('Subscribers per page on admin screens')#">
+                        <xar:mlstring>Subscribers per page</xar:mlstring>
+                    </label>
+                    <input type="text" name="admin_subsperpage" id="admin_subsperpage" value="#$admin_subs#" maxlength="6" size="3" class="xar-form-textshort" />
+                </div>
 
-    <fieldset>
-        <legend><xar:mlstring>Display Options</xar:mlstring></legend>
+            </fieldset>
 
-        <div class="xar-form-input-wrapper">
-            <label for="admin_issuesperpage" class="xar-form-label" title="#xarML('Items per page on admin screens')#">
-                <xar:mlstring>Items per page</xar:mlstring>
-            </label>
-            <input type="text" name="admin_issuesperpage" id="admin_issuesperpage" value="#$admin_issues#" maxlength="3" size="3" class="xar-form-textshort" />
-        </div>
+            <fieldset>
+                <legend><xar:mlstring>System Options</xar:mlstring></legend>
 
-        <div class="xar-form-input-wrapper">
-            <label for="admin_subsperpage" class="xar-form-label" title="#xarML('Subscribers per page on admin screens')#">
-                <xar:mlstring>Subscribers per page</xar:mlstring>
-            </label>
-            <input type="text" name="admin_subsperpage" id="admin_subsperpage" value="#$admin_subs#" maxlength="6" size="3" class="xar-form-textshort" />
-        </div>
-
-    </fieldset>
-
-    <fieldset>
-        <legend><xar:mlstring>System Options</xar:mlstring></legend>
-
-        <div class="xar-form-input-wrapper">
-            <label for="supportshorturls" class="xar-form-label" title="#xarML('Enable short URLS?')#">
-                <xar:mlstring>Enable short URLs?</xar:mlstring>
-            </label>
-            <xar:if condition="$supportshorturls">
-                <input type="checkbox" name="supportshorturls" id="supportshorturls" value="1" checked="checked" />
-            <xar:else/>
-                <input type="checkbox" name="supportshorturls" id="supportshorturls" value="1" />
-            </xar:if>
-        </div>
-
-      <div class="xar-form-input-wrapper">
-          <label for="usemodulealias" class="xar-form-label" title="#xarML('Use an alias instead of the module name')#">
-              <xar:mlstring>Use a module alias?</xar:mlstring>
-          </label>
-          <xar:if condition="$usemodulealias">
-              <input type="checkbox" name="usemodulealias" id="usemodulealias" value="1" checked="checked" />
-          <xar:else />
-              <input type="checkbox" name="usemodulealias" id="usemodulealias" value="1" />
-          </xar:if>
-      </div>
-
-      <div class="xar-form-input-wrapper">
-          <label for="aliasname" class="xar-form-label" title="#xarML('The name of module alias to be used.')#">
-              <xar:mlstring>Module Alias Name</xar:mlstring>
-          </label>
-          <input type="text" name="aliasname" id="aliasname" value="#xarModGetVar('ebulletin', 'aliasname')#" size="32" maxlength="100" />
-      </div>
-
-    </fieldset>
-
-    <fieldset>
-        <legend><xar:mlstring>Issue Generation Options</xar:mlstring></legend>
-
-        <div class="xar-form-input-wrapper">
-            <label for="template_dir" class="xar-form-label" title="#xarML('Location where templates are stored')#">
-                <xar:mlstring>Template directory</xar:mlstring>
-            </label>
-            <input type="text" name="template_dir" id="template_dir" value="#$template_dir#" maxlength="100" class="xar-form-textlong" />
-        </div>
-
-        <div class="xar-form-input-wrapper">
-            <label for="theme" class="xar-form-label" title="#xarML('Default theme for generating issues')#">
-                <xar:mlstring>Default theme</xar:mlstring>
-            </label>
-            <select name="theme" id="theme">
-                <xar:loop name="$themes">
-                    <xar:if condition="$loop:item['directory'] eq $theme">
-                        <option value="#$loop:item['directory']#" selected="selected">
-                            #$loop:item['name']#
-                        </option>
-                    <xar:else />
-                        <option value="#$loop:item['directory']#">
-                            #$loop:item['name']#
-                        </option>
+                <div class="xar-form-input-wrapper">
+                    <label for="supportshorturls" class="xar-form-label" title="#xarML('Enable short URLS?')#">
+                        <xar:mlstring>Enable short URLs?</xar:mlstring>
+                    </label>
+                    <xar:if condition="$supportshorturls">
+                        <input type="checkbox" name="supportshorturls" id="supportshorturls" value="1" checked="checked" />
+                    <xar:else/>
+                        <input type="checkbox" name="supportshorturls" id="supportshorturls" value="1" />
                     </xar:if>
-                </xar:loop>
-            </select>
-        </div>
+                </div>
 
-        <div class="xar-form-input-wrapper">
-            <label for="issuenumsago" class="xar-form-label" title="#xarML('Default starting interval')#">
-                <xar:mlstring>Default starting interval</xar:mlstring>
-            </label>
-            <input type="text" name="issuenumsago" id="issuenumsago" size="3" maxlength="3" value="#$issuenumsago#" />
-            <select name="issueunitsago" id="issueunitsago">
-                <xar:foreach in="$units" key="$index" value="$row">
-                    <xar:if condition="$issueunitsago eq $row[0]">
-                        <option value="#$row[0]#" selected="selected">#$row[1]#</option>
-                    <xar:else />
-                        <option value="#$row[0]#">#$row[1]#</option>
+              <div class="xar-form-input-wrapper">
+                  <label for="usemodulealias" class="xar-form-label" title="#xarML('Use an alias instead of the module name')#">
+                      <xar:mlstring>Use a module alias?</xar:mlstring>
+                  </label>
+                  <xar:if condition="$usemodulealias">
+                      <input type="checkbox" name="usemodulealias" id="usemodulealias" value="1" checked="checked" />
+                  <xar:else />
+                      <input type="checkbox" name="usemodulealias" id="usemodulealias" value="1" />
+                  </xar:if>
+              </div>
+
+              <div class="xar-form-input-wrapper">
+                  <label for="aliasname" class="xar-form-label" title="#xarML('The name of module alias to be used.')#">
+                      <xar:mlstring>Module Alias Name</xar:mlstring>
+                  </label>
+                  <input type="text" name="aliasname" id="aliasname" value="#xarModGetVar('ebulletin', 'aliasname')#" size="32" maxlength="100" />
+              </div>
+
+            </fieldset>
+
+            <fieldset>
+                <legend><xar:mlstring>Issue Generation Options</xar:mlstring></legend>
+
+                <div class="xar-form-input-wrapper">
+                    <label for="template_dir" class="xar-form-label" title="#xarML('Location where templates are stored')#">
+                        <xar:mlstring>Template directory</xar:mlstring>
+                    </label>
+                    <input type="text" name="template_dir" id="template_dir" value="#$template_dir#" maxlength="100" class="xar-form-textlong" />
+                </div>
+
+                <div class="xar-form-input-wrapper">
+                    <label for="theme" class="xar-form-label" title="#xarML('Default theme for generating issues')#">
+                        <xar:mlstring>Default theme</xar:mlstring>
+                    </label>
+                    <select name="theme" id="theme">
+                        <xar:loop name="$themes">
+                            <xar:if condition="$loop:item['directory'] eq $theme">
+                                <option value="#$loop:item['directory']#" selected="selected">
+                                    #$loop:item['name']#
+                                </option>
+                            <xar:else />
+                                <option value="#$loop:item['directory']#">
+                                    #$loop:item['name']#
+                                </option>
+                            </xar:if>
+                        </xar:loop>
+                    </select>
+                </div>
+
+                <div class="xar-form-input-wrapper">
+                    <label for="issuenumsago" class="xar-form-label" title="#xarML('Default starting interval')#">
+                        <xar:mlstring>Default starting interval</xar:mlstring>
+                    </label>
+                    <input type="text" name="issuenumsago" id="issuenumsago" size="3" maxlength="3" value="#$issuenumsago#" />
+                    <select name="issueunitsago" id="issueunitsago">
+                        <xar:foreach in="$units" key="$index" value="$row">
+                            <xar:if condition="$issueunitsago eq $row[0]">
+                                <option value="#$row[0]#" selected="selected">#$row[1]#</option>
+                            <xar:else />
+                                <option value="#$row[0]#">#$row[1]#</option>
+                            </xar:if>
+                        </xar:foreach>
+                    </select>
+                    <select name="issuestartsign" id="issuestartsign">
+                        <xar:foreach in="$signs" value="$row">
+                            <xar:if condition="$issuestartsign eq $row[0]">
+                                <option value="#$row[0]#" selected="selected">#$row[1]#</option>
+                            <xar:else />
+                                <option value="#$row[0]#">#$row[1]#</option>
+                            </xar:if>
+                        </xar:foreach>
+                    </select>
+                    <xar:mlstring>the issue date</xar:mlstring>
+                </div>
+
+                <div class="xar-form-input-wrapper">
+                    <label for="issuenumsfromnow" class="xar-form-label" title="#xarML('Default ending interval')#">
+                        <xar:mlstring>Default ending interval</xar:mlstring>
+                    </label>
+                    <input type="text" name="issuenumsfromnow" id="issuenumsfromnow" size="3" maxlength="3" value="#$issuenumsfromnow#" />
+                    <select name="issueunitsfromnow" id="issueunitsfromnow">
+                        <xar:foreach in="$units" key="$index" value="$row">
+                            <xar:if condition="$issueunitsfromnow eq $row[0]">
+                                <option value="#$row[0]#" selected="selected">#$row[1]#</option>
+                            <xar:else />
+                                <option value="#$row[0]#">#$row[1]#</option>
+                            </xar:if>
+                        </xar:foreach>
+                    </select>
+                    <select name="issueendsign" id="issueendsign">
+                        <xar:foreach in="$signs" value="$row">
+                            <xar:if condition="$issueendsign eq $row[0]">
+                                <option value="#$row[0]#" selected="selected">#$row[1]#</option>
+                            <xar:else />
+                                <option value="#$row[0]#">#$row[1]#</option>
+                            </xar:if>
+                        </xar:foreach>
+                    </select>
+                    <xar:mlstring>the issue date</xar:mlstring>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend><xar:mlstring>Security Options</xar:mlstring></legend>
+
+                <div class="xar-form-input-wrapper">
+                    <label for="requirevalidation" class="xar-form-label" title="#xarML('Require unregistered users to validate?')#">
+                        <xar:mlstring>Require unregistered users to validate?</xar:mlstring>
+                    </label>
+                    <xar:if condition="$requirevalidation">
+                        <input type="checkbox" name="requirevalidation" id="requirevalidation" value="1" checked="checked" />
+                    <xar:else/>
+                        <input type="checkbox" name="requirevalidation" id="requirevalidation" value="1" />
                     </xar:if>
+                </div>
+
+            </fieldset>
+
+            <fieldset>
+              <legend><xar:mlstring>Enabled Hooks</xar:mlstring></legend>
+              <xar:if condition="!empty($hookoutput)">
+                <xar:foreach in="$hookoutput" key="$hookmodule">
+                  #$hookoutput[$hookmodule]#
                 </xar:foreach>
-            </select>
-            <select name="issuestartsign" id="issuestartsign">
-                <xar:foreach in="$signs" value="$row">
-                    <xar:if condition="$issuestartsign eq $row[0]">
-                        <option value="#$row[0]#" selected="selected">#$row[1]#</option>
-                    <xar:else />
-                        <option value="#$row[0]#">#$row[1]#</option>
-                    </xar:if>
-                </xar:foreach>
-            </select>
-            <xar:mlstring>the issue date</xar:mlstring>
-        </div>
+              </xar:if>
+            </fieldset>
 
-        <div class="xar-form-input-wrapper">
-            <label for="issuenumsfromnow" class="xar-form-label" title="#xarML('Default ending interval')#">
-                <xar:mlstring>Default ending interval</xar:mlstring>
-            </label>
-            <input type="text" name="issuenumsfromnow" id="issuenumsfromnow" size="3" maxlength="3" value="#$issuenumsfromnow#" />
-            <select name="issueunitsfromnow" id="issueunitsfromnow">
-                <xar:foreach in="$units" key="$index" value="$row">
-                    <xar:if condition="$issueunitsfromnow eq $row[0]">
-                        <option value="#$row[0]#" selected="selected">#$row[1]#</option>
-                    <xar:else />
-                        <option value="#$row[0]#">#$row[1]#</option>
-                    </xar:if>
-                </xar:foreach>
-            </select>
-            <select name="issueendsign" id="issueendsign">
-                <xar:foreach in="$signs" value="$row">
-                    <xar:if condition="$issueendsign eq $row[0]">
-                        <option value="#$row[0]#" selected="selected">#$row[1]#</option>
-                    <xar:else />
-                        <option value="#$row[0]#">#$row[1]#</option>
-                    </xar:if>
-                </xar:foreach>
-            </select>
-            <xar:mlstring>the issue date</xar:mlstring>
-        </div>
-    </fieldset>
-
-    <fieldset>
-        <legend><xar:mlstring>Security Options</xar:mlstring></legend>
-
-        <div class="xar-form-input-wrapper">
-            <label for="requirevalidation" class="xar-form-label" title="#xarML('Require unregistered users to validate?')#">
-                <xar:mlstring>Require unregistered users to validate?</xar:mlstring>
-            </label>
-            <xar:if condition="$requirevalidation">
-                <input type="checkbox" name="requirevalidation" id="requirevalidation" value="1" checked="checked" />
-            <xar:else/>
-                <input type="checkbox" name="requirevalidation" id="requirevalidation" value="1" />
-            </xar:if>
-        </div>
-
-    </fieldset>
-
-    <fieldset>
-      <legend><xar:mlstring>Enabled Hooks</xar:mlstring></legend>
-      <xar:if condition="!empty($hookoutput)">
-        <xar:foreach in="$hookoutput" key="$hookmodule">
-          #$hookoutput[$hookmodule]#
-        </xar:foreach>
-      </xar:if>
-    </fieldset>
-
-    <div class="xar-form-input-wrapper-after">
-        <input type="hidden" name="authid" id="authid" value="#$authid#" />
-
-        <input type="submit" value="#xarML('Update Configuration')#" />
+            <div class="xar-form-input-wrapper-after">
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <input type="submit" value="#xarML('Update Configuration')#" />
+            </div>
+        </form>
     </div>
-
-</form>
-
-</div>
 </div>
