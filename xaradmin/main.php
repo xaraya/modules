@@ -13,12 +13,15 @@
  */
 /**
  * the main administration function
- * @return mixed
+ *
+ * This function doesn't do much but present a template
+ *
+ * @author MichelV <michelv@xaraya.com>
+ * @return array Just show a template
  */
 function julian_admin_main()
 {
     if (!xarSecurityCheck('Editjulian')) return;
     return array();
-
 }
 ?>
