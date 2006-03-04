@@ -11,18 +11,16 @@
  * @author Garrett Hunter <garrett@blacktower.com>
  * Based on pnAddressBook by Thomas Smiatek <thomas@smiatek.com>
  */
-
 /**
  * Move custom field position down one level
  *
  * @param passed in from updatecustomfields api
+ * @throws BAD_PARAM
  * @return bool
  */
 function addressbook_adminapi_decCustomfields($args)
 {
-
     $returnCode = TRUE;
-
     /**
      * Security check
      */
@@ -39,7 +37,7 @@ function addressbook_adminapi_decCustomfields($args)
     }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                     join(', ', $invalid), 'admin', 'updateItems', 'addressbook');
+                     join(', ', $invalid), 'adminapi', 'decCustomfields', 'addressbook');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                     new SystemException($msg));
         $returnCode = FALSE;

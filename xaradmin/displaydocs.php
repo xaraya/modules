@@ -11,13 +11,13 @@
  * @author Garrett Hunter <garrett@blacktower.com>
  * Based on pnAddressBook by Thomas Smiatek <thomas@smiatek.com>
  */
-
 /**
  * Placeholder function to display a static page
+ *
+ * @return array
  */
-function addressbook_admin_displaydocs ()
+function addressbook_admin_displaydocs()
 {
-
     return array();
 
 } // END displayDocs

@@ -16,11 +16,10 @@
  * Handle the data submission
  *
  * @param GET / POST passed from modifyconfig form
- * @return xarTemplate data
+ * @return array xarTemplate data
  */
 function addressbook_admin_modifyconfig()
 {
-
     $output = array(); // template contents go here
 
     /**
@@ -32,7 +31,6 @@ function addressbook_admin_modifyconfig()
          */
         xarVarFetch('formSubmit', 'str::', $formSubmit,FALSE);
         if ($formSubmit) {
-
             /**
              * Data integrity / Security check
              */

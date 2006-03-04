@@ -11,17 +11,16 @@
  * @author Garrett Hunter <garrett@blacktower.com>
  * Based on pnAddressBook by Thomas Smiatek <thomas@smiatek.com>
  */
-
 /**
  * Display form used to update the category settings
  * Handle the data submission
  *
- * @param GET / POST passed from modifycategories form
+ * @param string formSubmit
+ * @param id
  * @return xarTemplate data
  */
 function addressbook_admin_modifycategories()
 {
-
     $output = array();
 
     /**
@@ -61,7 +60,6 @@ function addressbook_admin_modifycategories()
     } else {
         return xarTplModule('addressbook','user','noauth');
     }
-
 
     return xarModAPIFunc('addressbook','util','handleexception',array('output'=>$output));
 

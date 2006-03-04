@@ -11,15 +11,14 @@
  * @author Garrett Hunter <garrett@blacktower.com>
  * Based on pnAddressBook by Thomas Smiatek <thomas@smiatek.com>
  */
-
 /**
  * Inserts a record into a table that follows the convention:
- * - column: nr = code
- * - column: name = decode
+ * @param column: nr = code
+ * @param column: name = decode
  *
  * @param args['tablename'] string
  * @param args['name'] string
- * @return bool
+ * @return bool true on success, false on failure
  */
 function addressbook_adminapi_addItems($args)
 {
@@ -44,7 +43,7 @@ function addressbook_adminapi_addItems($args)
     }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                     join(', ', $invalid), 'admin', 'updateitems', 'addressbook');
+                     join(', ', $invalid), 'adminapi', 'addItems', 'addressbook');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                     new SystemException($msg));
         $returnCode = FALSE;

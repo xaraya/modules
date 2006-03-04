@@ -15,7 +15,9 @@
 /**
  * Inserts a record into the customfields table
  *
- * @param args['inserts'] array of strings
+ * @param array inserts array of strings
+          with sql
+               bindvars
  * @return bool
  */
 function addressbook_adminapi_addCustomfields($args)
@@ -38,7 +40,7 @@ function addressbook_adminapi_addCustomfields($args)
     }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                     join(', ', $invalid), 'admin', 'updateitems', 'addressbook');
+                     join(', ', $invalid), 'adminapi', 'addCustomfields', 'addressbook');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                     new SystemException($msg));
         $returnCode = FALSE;
