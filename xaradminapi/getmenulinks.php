@@ -2,7 +2,7 @@
 /**
  * Xaraya BBCode
  *
- * Based on pnBBCode Hook from larsneo 
+ * Based on pnBBCode Hook from larsneo
  * http://www.pncommunity.de
  * Converted to Xaraya by John Cox
  *
@@ -18,19 +18,14 @@
 /**
  * utility function pass individual menu items to the admin panels
  *
- * @author the Example module development team
- * @returns array
+ * @author the BBCode module development team
  * @return array containing the menulinks for the main menu items.
  */
 function bbcode_adminapi_getmenulinks()
 {
     // Security Check
     if (xarSecurityCheck('EditBBCode', 0)) {
-    	
-    	$menulinks[] = Array('url' => xarModURL('bbcode','admin','overview'),
-                            'title' => xarML('Bbcode Overview'),
-                            'label' => xarML('Overview'));
-                            
+
         $menulinks[] = Array('url' => xarModURL('bbcode',
                 'admin',
                 'modifyconfig'),

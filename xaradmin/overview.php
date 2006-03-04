@@ -2,7 +2,7 @@
 /**
  * Xaraya BBCode
  *
- * Based on pnBBCode Hook from larsneo 
+ * Based on pnBBCode Hook from larsneo
  * http://www.pncommunity.de
  * Converted to Xaraya by John Cox
  *
@@ -17,8 +17,7 @@
  * Only used if you actually supply an overview link in your adminapi menulink function
  * and used to call the template that provides display of the overview
  *
- * @returns array xarTplModule with $data containing template data
- * @return array containing the menulinks for the overview item on the main manu
+ * @return array xarTplModule with $data containing template data
  * @since 2 Oct 2005
  */
 function bbcode_admin_overview()

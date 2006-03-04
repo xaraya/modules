@@ -14,21 +14,15 @@
 /**
  * Add a standard screen upon entry to the module.
  *
- * @public
- * @author John Cox 
- * @returns output
- * @return output with censor Menu information
+ * @access public
+ * @author John Cox
+ * @return bool
  */
 function bbcode_admin_main()
 {
     // Security Check
     if(!xarSecurityCheck('EditBBCode')) return;
-    if (xarModGetVar('adminpanels', 'overview') == 0) {
-        // Return the output
-        return array();
-    } else {
-        xarResponseRedirect(xarModURL('bbcode', 'admin', 'modifyconfig'));
-    } 
+    xarResponseRedirect(xarModURL('bbcode', 'admin', 'modifyconfig'));
     // success
     return true;
 }
