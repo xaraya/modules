@@ -8,24 +8,23 @@
  * @link http://www.xaraya.com
  *
  * @subpackage AddressBook Module
+ * @link http://xaraya.com/index.php/release/66417.html
  * @author Garrett Hunter <garrett@blacktower.com>
  * Based on pnAddressBook by Thomas Smiatek <thomas@smiatek.com>
  */
 /**
  * Main admin function
- * @return array with redirect
+ * Redirect to modifyconfig
+ * @return bool true on success of with redirect
  */
 function addressbook_admin_main()
 {
-    /**
-     * Check if we want to display our overview panel.
-     */
-    if (xarModGetVar('adminpanels', 'overview') == 0){
-        return array();
-    } else {
-        xarResponseRedirect(xarModURL('addressbook','admin','modifyconfig'));
+    if(!xarSecurityCheck('AdminAddressBook')) {
+        return;
     }
-
-} // END main
+    // success
+    xarResponseRedirect(xarModURL('addressbook','admin','modifyconfig'));
+    return true;
+}
 
 ?>
