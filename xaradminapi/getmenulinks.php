@@ -14,21 +14,13 @@
 /**
  * utility function pass individual menu items to the main menu
  *
- * @author the Example module development team
- * @returns array
+ * @author the Categories module development team
+ * @throws none
  * @return array containing the menulinks for the main menu items.
  */
 function categories_adminapi_getmenulinks()
 {
     $menulinks = array();
-
-     if (xarSecurityCheck('AdminCategories')) {
-       $menulinks[] = Array('url' => xarModURL('categories','admin','overview'),
-                            'title' => xarML('Categories Overview'),
-                            'label' => xarML('Overview'));
-
-    }
-
 // Security Check
     if (xarSecurityCheck('AddCategories',0)) {
 

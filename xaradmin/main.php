@@ -13,20 +13,15 @@
  */
 /**
  * the main administration function
+ * This function redirects to the view categories function
+ * @return bool true on success
  */
 function categories_admin_main()
 {
-
     // Security check
     if(!xarSecurityCheck('ViewCategories')) return;
-
-    if (xarModGetVar('adminpanels', 'overview') == 0){
-        // Return the output
-        return array();
-    } else {
-        xarResponseRedirect(xarModURL('categories', 'admin', 'viewcats'));
-    }
-
+    // Redirect
+    xarResponseRedirect(xarModURL('categories', 'admin', 'viewcats'));
     return true;
 }
 
