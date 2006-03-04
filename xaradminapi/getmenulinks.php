@@ -13,8 +13,7 @@
 /**
  * utility function pass individual menu items to the main menu
  *
- * @author the Michel V.
- * @returns array
+ * @author the MichelV
  * @return array containing the menulinks for the main menu items.
  */
 function sigmapersonnel_adminapi_getmenulinks()
