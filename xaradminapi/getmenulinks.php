@@ -3,7 +3,7 @@
  * Get menu links
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -16,25 +16,13 @@
  *
  * This function will create the links that are shown in the admin menu
  * @author the Dyn_Example module development team
- * @returns array
- * @return array containing the menulinks for the main menu items.
+ * @return array The array contains the menulinks for the main menu items.
  */
 function dyn_example_adminapi_getmenulinks()
 {
     $menulinks = array();
     // Add a security check, so only admins can see this link
     // Hide the possible error
-    // By convention, the first link should provide an admin overview
-    if (xarSecurityCheck('AdminDynExample',0)) {
-
-        $menulinks[] = Array('url'   => xarModURL('dyn_example',
-                                                   'admin',
-                                                   'overview'),
-                              // In order to display the tool tips and label in any language,
-                              // we must encapsulate the calls in the xarML in the API.
-                              'title' => xarML('Overview'),
-                              'label' => xarML('Overview'));
-    }
 
     if (xarSecurityCheck('AddDynExample',0)) {
 
