@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id: s.xarinit.php 1.11 03/01/18 11:39:31-05:00 John.Cox@mcnabb. $
- *
  * Xaraya converter
  *
  * @package Xaraya eXtensible Management System
@@ -15,6 +13,7 @@
 
 /**
  * initialise the converter module
+ * @return bool true on success
  */
 function converter_init()
 {
@@ -26,7 +25,8 @@ function converter_init()
 }
 
 /**
- * upgrade the smiley module from an old version
+ * upgrade the converter module from an old version
+ * @return bool true on success
  */
 function converter_upgrade($oldversion)
 {
@@ -34,7 +34,8 @@ function converter_upgrade($oldversion)
 }
 
 /**
- * delete the smiley module
+ * delete the converter module
+ * @return bool true on success
  */
 function converter_delete()
 {

@@ -14,7 +14,6 @@ $modversion['author'] = 'John Cox';
 $modversion['contact'] = 'admin@dinerminor.com';
 $modversion['admin'] = 1;
 $modversion['user'] = 0;
-$modversion['securityschema'] = array();
 $modversion['class'] = 'Utility';
 $modversion['category'] = 'Global';
 ?>

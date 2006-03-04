@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id: s.xaradminapi.php 1.15 03/01/18 11:39:31-05:00 John.Cox@mcnabb. $
- *
  * Xaraya converter
  *
  * @package Xaraya eXtensible Management System
@@ -12,7 +10,9 @@
  * @subpackage converter Module
  * @author John Cox
 */
-
+/**
+ * Admin function
+ */
 function converter_adminapi_pntheme($args)
 {
     define('_EDIT','Edit');
@@ -169,7 +169,7 @@ function converter_adminapi_pntheme($args)
     // TODO add categories to template
     $catandtitle = '<a class="xar-title" href="#$link#">#$title#</a>';
 /*
-    $catandtitle = 
+    $catandtitle =
 '<xar:if condition="!empty($categories) and count($categories) gt 0">
     [ <xar:loop name="$categories">
            #$cjoin# <a href="#$clink#">#$cname#</a>
@@ -521,7 +521,7 @@ echo '</xar:if>'."\n\n";
 */
 }
 
-function converter_adminapi_simulateheader($theme) 
+function converter_adminapi_simulateheader($theme)
 {
 
     global
@@ -781,7 +781,7 @@ function footmsg()
 
 // Simulate PHPNuke themeheader
 
-function converter_adminapi_themeheadersimulate($theme) 
+function converter_adminapi_themeheadersimulate($theme)
 {
 
     if (file_exists(xarConfigGetVar('Site.BL.ThemesDirectory')."/$theme/header.html")) {
@@ -792,7 +792,7 @@ function converter_adminapi_themeheadersimulate($theme)
         eval($thefile);
         print $r_file;
     }
-    
+
     echo '<xar:blockgroup name="left" id="left" />';
 
     if (file_exists(xarConfigGetVar('Site.BL.ThemesDirectory')."/$theme/left_center.html")) {
@@ -805,7 +805,7 @@ function converter_adminapi_themeheadersimulate($theme)
     }
 }
 
-function converter_adminapi_themefootersimulate($theme) 
+function converter_adminapi_themefootersimulate($theme)
 {
 
     if (file_exists(xarConfigGetVar('Site.BL.ThemesDirectory')."/$theme/center_right.html")) {
@@ -829,7 +829,7 @@ function converter_adminapi_themefootersimulate($theme)
     }
 }
 
-function converter_adminapi_themeblocksimulate($theme, $title, $content) 
+function converter_adminapi_themeblocksimulate($theme, $title, $content)
 {
 
     if (file_exists(xarConfigGetVar('Site.BL.ThemesDirectory')."/$theme/center_right.html")) {
@@ -847,7 +847,7 @@ function themes_get_language($script = 'global')
     return;
 }
 
-function pnBannerDisplay() 
+function pnBannerDisplay()
 {
     return;
 }
