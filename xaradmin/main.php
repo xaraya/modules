@@ -13,14 +13,14 @@
  */
 /**
  * Add a standard screen upon entry to the module.
- * @return array Empty array
+ * @return bool true on success of redirect
  */
 function stats_admin_main()
 {
     // Security Check
     if(!xarSecurityCheck('AdminStats')) return;
-    return array();
-//        xarResponseRedirect(xarModURL('stats', 'admin', 'modifyconfig'));
+    xarResponseRedirect(xarModURL('stats', 'admin', 'modifyconfig'));
+    return true;
 }
 
 ?>
