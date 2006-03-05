@@ -1,6 +1,5 @@
 <?php
 /**
- * File: $Id: s.xarinit.php 1.27 03/01/17 15:18:04-08:00 rcave@lxwdev-1.schwabfoundation.org $
  *
  * Initialise the htmlarea module
  *
@@ -17,7 +16,7 @@
  *
  * @access public
  * @param none
- * @returns bool true
+ * @return bool true
  */
 function htmlarea_init()
 {
@@ -29,7 +28,7 @@ function htmlarea_init()
  *
  * @access public
  * @param none $
- * @returns bool
+ * @return bool
  */
 function htmlarea_activate()
 {
@@ -42,7 +41,7 @@ function htmlarea_activate()
  *
  * @access public
  * @param oldVersion $
- * @returns bool
+ * @return bool
  * @raise DATABASE_ERROR
  */
 function htmlarea_upgrade($oldVersion)
@@ -56,7 +55,7 @@ function htmlarea_upgrade($oldVersion)
  *
  * @access public
  * @param none $
- * @returns bool true
+ * @return bool true
  */
 function htmlarea_delete()
 {
