@@ -1,5 +1,17 @@
 <?php
 /**
+ * Ephemerids
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Ephemerids Module
+ * @link http://xaraya.com/index.php/release/15.html
+ * @author Volodymyr Metenchuk
+ */
+/**
  * Add new ephemerids to database.
  */
 function ephemerids_admin_add()
@@ -22,15 +34,15 @@ function ephemerids_admin_add()
     // Security Check
     if(!xarSecurityCheck('AddEphemerids')) return;
 
-    // The API function is called.  
+    // The API function is called.
     $emp = xarModAPIFunc('ephemerids',
                          'admin',
                          'add',
                          array('tid' => $tid,
-                               'did' => $did,   
-                               'mid' => $mid, 
-                               'yid' => $yid, 
-                               'content' => $content, 
+                               'did' => $did,
+                               'mid' => $mid,
+                               'yid' => $yid,
+                               'content' => $content,
                                'elanguage' => $elanguage));
 
     // The return value of the function is checked here

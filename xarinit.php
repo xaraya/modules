@@ -1,18 +1,16 @@
 <?php
 /**
- * File: $Id$
- *
  * Ephemerids
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
- * @link http://www.xaraya.org
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
  *
  * @subpackage Ephemerids Module
+ * @link http://xaraya.com/index.php/release/15.html
  * @author Volodymyr Metenchuk
-*/
-
+ */
 /**
  * init ephemerids module
  */
@@ -88,14 +86,14 @@ function ephemerids_upgrade($oldversion)
             xarModDelVar('ephemerids', 'table');
         case '1.4.1':
             // Code to upgrade from version 1.4 goes here
-            $changes = array('command'     => 'add', 
-                             'field'       => 'xar_tid', 
-                             'type'        => 'integer', 
-                             'null'        => false, 
+            $changes = array('command'     => 'add',
+                             'field'       => 'xar_tid',
+                             'type'        => 'integer',
+                             'null'        => false,
                              'default'     => '1');
             $query = xarDBAlterTable($ephemtable, $changes);
             $result = &$dbconn->Execute($query);
-            if (!$result) return; 
+            if (!$result) return;
 
             // Close result set
             $result->Close();

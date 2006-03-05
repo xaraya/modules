@@ -1,21 +1,22 @@
 <?php
 /**
- * File: $Id$
- * 
  * Ephemerids
- * 
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
- * @link http://www.xaraya.org
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
  *
  * @subpackage Ephemerids Module
+ * @link http://xaraya.com/index.php/release/15.html
  * @author Volodymyr Metenchuk
-*/
-
+ */
+/**
+ * Ephemerids block
+ */
 function ephemerids_ephemblock_init()
 {
-    return true;    
+    return true;
 }
 
 function ephemerids_ephemblock_info()
@@ -44,7 +45,7 @@ function ephemerids_ephemblock_display($blockinfo)
     $data['items'] = array();
     $data['emptycontent'] = false;
 
-    // The admin API function is called. 
+    // The admin API function is called.
     $ephemlist = xarModAPIFunc('ephemerids',
                                'user',
                                'getalltoday');

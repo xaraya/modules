@@ -1,22 +1,22 @@
 <?php
 /**
- * File: $Id$
- * 
  * Ephemerids
- * 
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
- * @link http://www.xaraya.org
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
  *
  * @subpackage Ephemerids Module
+ * @link http://xaraya.com/index.php/release/15.html
  * @author Volodymyr Metenchuk
-*/
-
-// add ephemerids to db
+ */
+/**
+ * add ephemerids to db
+ */
 function ephemerids_adminapi_add($args)
 {
-    // Get arguments 
+    // Get arguments
     extract($args);
 
     // Argument check - make sure that all required arguments are present,
@@ -39,24 +39,24 @@ function ephemerids_adminapi_add($args)
     $elanguage = 'all';
     $ephemtable = $xartable['ephem'];
     $nextId = $dbconn->GenId($ephemtable);
-    $query = "INSERT INTO $ephemtable (xar_eid, 
-                                       xar_tid, 
-                                       xar_did, 
-                                       xar_mid, 
-                                       xar_yid, 
-                                       xar_content, 
+    $query = "INSERT INTO $ephemtable (xar_eid,
+                                       xar_tid,
+                                       xar_did,
+                                       xar_mid,
+                                       xar_yid,
+                                       xar_content,
                                        xar_elanguage)
-                                VALUES (?, 
-                                        ?, 
-                                        ?, 
-                                        ?, 
-                                        ?, 
-                                        ?, 
+                                VALUES (?,
+                                        ?,
+                                        ?,
+                                        ?,
+                                        ?,
+                                        ?,
                                         ?)";
     $bindvars = array($nextId, $tid, $did, $mid, $yid, $content, $elanguage);
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
-    // Get the ID of the item that we inserted.  
+    // Get the ID of the item that we inserted.
     $eid = $dbconn->PO_Insert_ID($ephemtable, 'xar_eid');
     // Let any hooks know that we have created a new link
     xarModCallHooks('item', 'create', $eid, 'eid');

@@ -1,11 +1,22 @@
 <?php
 /**
+ * Ephemerids
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Ephemerids Module
+ * @link http://xaraya.com/index.php/release/15.html
+ * @author Volodymyr Metenchuk
+ */
+/**
  * get all Ephemerids
  *
  * @author the Ephemerids module development team
  * @param numitems the number of items to retrieve (default -1 = all)
  * @param startnum start with this item number (default 1)
- * @returns array
  * @return array of items, or false on failure
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
@@ -46,7 +57,7 @@ function ephemerids_userapi_getall($args)
     $query = "SELECT xar_eid,
                      xar_tid,
                      xar_did,
-                     xar_mid, 
+                     xar_mid,
                      xar_yid,
                      xar_content,
                      xar_elanguage
@@ -55,7 +66,7 @@ function ephemerids_userapi_getall($args)
     $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1);
     if (!$result) return;
 
-    // Put items into result array. 
+    // Put items into result array.
     for (; !$result->EOF; $result->MoveNext()) {
         list($exid, $name, $number) = $result->fields;
         if (xarSecurityCheck('OverviewEphemerids', 0)) {

@@ -1,5 +1,20 @@
 <?php
-// return an array containing ephemerids data
+/**
+ * Ephemerids
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Ephemerids Module
+ * @link http://xaraya.com/index.php/release/15.html
+ * @author Volodymyr Metenchuk
+ */
+/**
+ * @return an array containing ephemerids data
+ *
+ */
 function ephemerids_adminapi_display()
 {
     // Security Check
@@ -11,9 +26,9 @@ function ephemerids_adminapi_display()
     $ephemtable = $xartable['ephem'];
 
     $query = "SELECT xar_eid,
-                     xar_tid, 
-                     xar_did, 
-                     xar_mid, 
+                     xar_tid,
+                     xar_did,
+                     xar_mid,
                      xar_yid,
                      xar_content,
                      xar_elanguage

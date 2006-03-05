@@ -1,19 +1,30 @@
 <?php
 /**
+ * Ephemerids
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Ephemerids Module
+ * @link http://xaraya.com/index.php/release/15.html
+ * @author Volodymyr Metenchuk
+ */
+/**
  * get a specific item
  *
  * @author the Ephemerids
  * @param $args['eid'] id of ephemerid
- * @returns array
- * @return item array, or false on failure
+ * @return array item array, or false on failure
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function ephemerids_userapi_get($args)
 {
-    // Get arguments 
+    // Get arguments
     extract($args);
 
-    // Argument check 
+    // Argument check
     if (!isset($eid) || !is_numeric($eid)) {
         $msg = xarML('Invalid parameter',
                     'item ID', 'user', 'get', 'ephemerids');
@@ -28,9 +39,9 @@ function ephemerids_userapi_get($args)
     $ephemtable = $xartable['ephem'];
 
     // Get item
-    $query = "SELECT xar_tid, 
-                     xar_did, 
-                     xar_mid, 
+    $query = "SELECT xar_tid,
+                     xar_did,
+                     xar_mid,
                      xar_yid,
                      xar_content,
                      xar_elanguage
