@@ -56,15 +56,15 @@
             <strong><xar:mlstring>Event Description</xar:mlstring></strong>
         </legend>
         <div class="xar-form-input-wrapper">
-            <label for="summary" class="required xar-form-label">
+            <label for="event_summary" class="required xar-form-label">
                 <span class="help" title="#xarML('This title will be displayed in the Julian calendar.')#">
                     <xar:mlstring>Title to display:</xar:mlstring>
                 </span>
             </label>
-            <input type="text" name="summary" id="summary" maxlength="80" value="#$summary#" />
+            <input type="text" name="event_summary" id="event_summary" maxlength="80" value="#$event_summary#" />
         </div>
         <div class="xar-form-input-wrapper">
-            <label for="summary" class="required xar-form-label">
+            <label for="startdate" class="required xar-form-label">
                 <span class="help" title="#xarML('Date the event starts.')#">
                     <xar:mlstring>Start Date:</xar:mlstring>
                 </span>

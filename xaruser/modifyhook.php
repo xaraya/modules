@@ -3,7 +3,7 @@
  * Hook to modify a hooked event
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -11,9 +11,16 @@
  * @link http://xaraya.com/index.php/release/319.html
  * @author Julian Module Development Team
  */
-
 /**
  * enter date/time for an item that is modified - hook for ('item','modify','GUI')
+ *
+ * @author JornB
+ * @author MichelV <michelv@xaraya.com>
+ * @since May 2005
+ * @param array $args an array with arguments
+ * @param arrya extrainfo
+ * @param id objectid
+ * @return array with template data
  */
 function julian_user_modifyhook($args)
 {
@@ -55,7 +62,7 @@ function julian_user_modifyhook($args)
 
     $data = array();
 
-    $data['summary'] = xarML('Not Entered');
+    $data['event_summary'] = xarML('Not Entered');
 
     // Date/time defaults
     $event_startdate = time();
@@ -109,7 +116,7 @@ function julian_user_modifyhook($args)
         if (!$result->EOF) {
             $edit_obj = $result->FetchObject(false);
             // Summary aka Title
-            $data['summary'] = $edit_obj->summary;
+            $data['event_summary'] = $edit_obj->summary;
             // Start/end date (and time)
             $event_startdate = strtotime($edit_obj->dtstart);
             $event_enddate   = strtotime($edit_obj->recur_until);
@@ -184,7 +191,7 @@ function julian_user_modifyhook($args)
         $sminend = 46;
     }
 
-
+    $start_minute_options='';
     for($i = 0;$i < $sminend; $i = $i + $StartMinInterval) {
         $j = str_pad($i,2,"0",STR_PAD_LEFT);
         $start_minute_options.='<option value="'.$j.'"';
@@ -227,7 +234,7 @@ function julian_user_modifyhook($args)
     }
     $data['dur_minute_options'] = $dur_minute_options;
 
-    $data['summary'] = $summary;
+ //   $data['summary'] = $summary;
 
     return xarTplModule('julian','user','edithook',$data);
 }

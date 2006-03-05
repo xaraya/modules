@@ -17,23 +17,23 @@
  *
  * enter date/time for a new item - hook for ('item','new','GUI')
  *
- * @author  Julian Development Team, JornB MichelV. <michelv@xarayahosting.nl>
+ * @author  JornB MichelV. <michelv@xaraya.com>
  * @access  public
  * @param   $extrainfo
  * @return  array tplinfo
- * @todo    MichelV. <#> Use xarVarFetch
+ * @todo    none
  */
 function julian_user_newhook($args)
 {
     extract($args);
-    if (!xarVarFetch('summary', 'str:1:100', $summary, xarML('Not Entered'), XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('event_summary', 'str:1:100', $event_summary, xarML('Not Entered'), XARVAR_NOT_REQUIRED)) return;
 
     if (!isset($extrainfo)) {
         $extrainfo = array();
     }
 
     $data = array();
-    $data['summary'] = $summary;
+    $data['event_summary'] = $event_summary;
     $event_startdate = time();
     $event_enddate = time();
 

@@ -52,7 +52,7 @@ function julian_userapi_geteventinfo($args)
      */
     $event =array();
     $event['viewUrl']='';
-    $event['summary']='';
+    $event['event_summary']='';
     $event['description'] = '';
    // $event['artstatus'] = 1;
     $field = 'title';
@@ -62,7 +62,7 @@ function julian_userapi_geteventinfo($args)
         return array();
     } else {
         $event['viewURL'] = $item[$iid]['url'];
-        $event['summary'] = $item[$iid]['title'];
+        $event['event_summary'] = $item[$iid]['title'];
         if (!empty($item[$iid]['label'])) {
             $event['description'] = $item[$iid]['label'];
         } else {

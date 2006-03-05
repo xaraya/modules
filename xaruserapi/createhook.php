@@ -71,7 +71,7 @@ function julian_userapi_createhook($args)
         $result->Close();
    }
    // Give the summary (aka title) of event
-   if (!xarVarFetch('summary', 'str:1:', $summary, xarML('Not Entered'), XARVAR_NOT_REQUIRED)) return;
+   if (!xarVarFetch('event_summary', 'str:1:', $event_summary, xarML('Not Entered'), XARVAR_NOT_REQUIRED)) return;
     // start date
    if (!xarVarFetch('event_month','str',$event_month,'')) return;
    if (!xarVarFetch('event_day',  'int',$event_day,  '')) return;
@@ -179,7 +179,7 @@ function julian_userapi_createhook($args)
                 $bindvars = array ($modid,                      // hooking module id
                                    $itemtype,                   // hooking module item type
                                    $objectid,                   // hooking module item id
-                                   $summary,                    // The title of the hooked event
+                                   $event_summary,              // The title of the hooked event
                                    $event_startdate,            // event start date/time
                                    $event_duration,             // event duration (hh:mm)
                                    $event_allday,               // event takes all day (0 = false, 1 = true)
