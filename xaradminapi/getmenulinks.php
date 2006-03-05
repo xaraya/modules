@@ -3,7 +3,7 @@
  * Administration menu links.
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -11,9 +11,8 @@
  * @link http://xaraya.com/index.php/release/319.html
  * @author Julian Module Development Team
  */
-
 /**
- * Retreive admin links
+ * Retreive admin menu links
  *
  * This function return the menu links for the admin section in Xaraya.
  *
@@ -27,20 +26,9 @@
  * @copyright (C) 2005 by Metrostat Technologies, Inc.
  * initial template: Roger Raymond
  */
-
-
 function julian_adminapi_getmenulinks()
 {
-
     $menulinks = '';
-
-    if (xarSecurityCheck('AdminJulian', 0)) {
-        $menulinks[] = Array('url' => xarModURL('julian',
-                'admin',
-                'main'),
-            'title' => xarML('Julian Overview'),
-            'label' => xarML('Overview'));
-    }
 
     if (xarSecurityCheck('AdminJulian', 0)) {
         $menulinks[] = Array('url' => xarModURL('julian',
