@@ -544,7 +544,22 @@ function workflow_upgrade($oldversion)
                               'workflow_userapi_handleinstancestag');
             // fall through to next upgrade
         case '1.4':
+        case '1.4.0':
         case 1.4:
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+
+            xarDBLoadTableMaintenanceAPI();
+            // Add column name to workflow_instances table
+            $sql = xarDBAlterTable($xartable['workflow_instances'],
+                                     array('command' => 'add',
+                                           'field'   => 'name',
+                                           'type'    => 'varchar',
+                                           'size'    => 80,
+                                           'null'    => false,
+                                           'default' => ''));
+            $dbconn->execute($sql);
+        case '1.5.0':
         case 2.0:
             // Code to upgrade from version 2.0 goes here
             break;
