@@ -1,5 +1,19 @@
 <?php
 /**
+ * Tasks module
+ *
+ * @package modules
+ * @copyright (C) 2003-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Tasks Module
+ * @link http://xaraya.com/index.php/release/36.html
+ * @author Tasks Module Development Team
+ */
+/**
+ * @author Chad Kraeft
+ *
  * Show a gantt chart
  *
  */
@@ -13,7 +27,7 @@ function tasks_admin_gantt($args)
     if (!xarVarFetch('displaydepth', 'int:1', $displaydepth, NULL, XARVAR_NOT_REQUIRED)) return;
 
     extract($args);
-    
+
     $tasks = xarModAPIFunc('tasks',
                           'user',
                           'getall',
@@ -24,54 +38,54 @@ function tasks_admin_gantt($args)
 
     include ("html/modules/tasks/gantt/jpgraph.php");
     include ("html/modules/tasks/gantt/jpgraph_gantt.php");
-    
+
     // Some global configs
     $heightfactor=0.5;
     $groupbarheight=0.1;
     $revision="2002-10-14";
-    
+
     // Standard calls to create a new graph
     $graph = new GanttGraph(0,0,"auto");
     $graph->SetShadow();
     $graph->SetBox();
-    
+
     // Titles for chart
     $graph->title->Set("Xaraya scenario roadmap");
     $graph->subtitle->Set("(Revision: $revision)");
     $graph->title->SetFont(FF_FONT1,FS_BOLD,12);
-    
-    // For illustration we enable all headers. 
+
+    // For illustration we enable all headers.
     $graph->ShowHeaders(GANTT_HYEAR | GANTT_HMONTH | GANTT_HDAY | GANTT_HWEEK);
-    
+
     // For the week we choose to show the start date of the week
     // the default is to show week number (according to ISO 8601)
     $graph->scale->week->SetStyle(WEEKSTYLE_FIRSTDAY);
-    
-    // Change the scale font 
+
+    // Change the scale font
     $graph->scale->week->SetFont(FF_FONT0);
     $graph->scale->year->SetFont(FF_FONT1,FS_BOLD,12);
-    
+
     // xaroad contains a list of records
     // *id;label;start;duration;predecessor;progress;type;lead;part_of;
     // start: date of start, if empty: today or if predecessor, from end of that one
     // type: 0: grouping; 1: normal task; 2: milestone
     // duration in days
-    
+
     // Algorithm for sophistication
     // - DONE: scan database for group records and keep log of the latest date, so end-date can be set properly
     // - DONE: keep track of predecessors and adjust the start-date of successors
     // - draw arrows from end of predecessor to begin of successors
-    
+
     // Generate the gantt bars
     $plots=array();
     $scenario=array();
     $latestdate = array();
-    
+
     if(is_array($tasks) && count($tasks) > 0) {
         foreach($tasks as $task) {
             switch ($task[type]) {
-                case 0: // Grouping record 
-                    // params: line, label, start, end, caption, heightfactor 
+                case 0: // Grouping record
+                    // params: line, label, start, end, caption, heightfactor
                     $bar = new GanttBar($db->recordNr,$task[label],$task[start],"",$task[lead],$groupbarheight);
                     $bar->title->SetFont(FF_FONT1,FS_BOLD,8);
                     $bar->SetColor("black");
@@ -98,7 +112,7 @@ function tasks_admin_gantt($args)
                     break;
             }
         }
-    
+
     // Now we have all plots in an array in memory and we can do some processing based on
     // dependencies
     // $plots contains all plot objects
@@ -107,7 +121,7 @@ function tasks_admin_gantt($args)
     // 3. Adjust end date of grouping records so line will extend to whole project
         foreach($tasks as $task) {
             if ($task[predecessor]) {
-                // Predecessor found, get enddate for that record and set 
+                // Predecessor found, get enddate for that record and set
                 // begindate of current record at least to that date
                 $searchrec=array('id' => $task[predecessor]);
                 $pred = $db->search($searchrec);
@@ -122,18 +136,18 @@ function tasks_admin_gantt($args)
             }
         }
     }
-    
-    
+
+
     // Add things for which date doesn't change anymore to the graph here.
     // Add a baseline for today
     $vl = new GanttVLine(date("Y-m-d"),"today","darkred");
     $graph->Add($vl);
-    
-    // Process the plot array for drawing 
+
+    // Process the plot array for drawing
     while (list($key, $object) = each($plots)) {
       $graph->Add($object);
     }
-    
+
     $graph->Stroke();
 }
 ?>

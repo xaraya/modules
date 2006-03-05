@@ -1,16 +1,18 @@
 <?php
 /**
- * Modify module's configuration
+ * Tasks module
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2003-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Tasks Module
+ * @link http://xaraya.com/index.php/release/36.html
+ * @author Tasks Module Development Team
  */
-
 /**
+ * @author Chad Kraeft
  * Modify module's configuration
  *
  * This is a standard function to modify the configuration parameters of the
@@ -22,12 +24,12 @@
 function tasks_admin_modifyconfig()
 {
     $data=array();
-     
+
 //     if (!xarSecAuthAction(0, 'tasks::', '', ACCESS_ADMIN)) {
 //         xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_NOAUTH);
 //         return true;
 //     }
-    
+
     // Construct maximum depth combobox
     $maxdepthdropdown = array();
     for($x=0; $x<10; $x++) {
@@ -56,10 +58,10 @@ function tasks_admin_modifyconfig()
     $data['returnfromsurface']=xarModGetVar('tasks','returnfromsurface');
     $data['returnfrommigrate']=xarModGetVar('tasks','returnfrommigrate');
     $data['submitbutton']=xarML("Update tasks config");
-    
+
     /* Generate a one-time authorisation code for this operation */
     $data['authid'] = xarSecGenAuthKey();
-    
+
     return $data;
 }
 

@@ -1,16 +1,18 @@
 <?php
 /**
- * Standard function to update module configuration parameters
+ * Tasks module
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2003-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Tasks Module
+ * @link http://xaraya.com/index.php/release/36.html
+ * @author Tasks Module Development Team
  */
-
 /**
+ * @author Chad Kraeft
  * Standard function to update module configuration parameters
  *
  * This is a standard function to update the configuration parameters of the

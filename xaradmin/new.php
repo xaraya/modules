@@ -1,15 +1,16 @@
 <?php
 /**
- * Add new task
+ * Tasks module
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2003-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Tasks Module
+ * @link http://xaraya.com/index.php/release/36.html
+ * @author Tasks Module Development Team
  */
-
 /**
  * Add new task
  *
@@ -25,7 +26,7 @@ function tasks_admin_new($args)
     if (!xarVarFetch('module', 'str:1:', $module, NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('type', 'str:1:', $type, NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('func', 'str:1:', $func, NULL, XARVAR_NOT_REQUIRED)) return;
-             
+
     extract($args);
 
 // DISPLAY ONLY IF COMMENT AUTH FOR BASETASKID, OR MOD AUTH FOR NO BASETASKID
@@ -39,7 +40,7 @@ function tasks_admin_new($args)
     $data['statusoptions']=$statusoptions;
     $prioritydropdown =xarModAPIFunc('tasks','user','getpriorities');
     $data['prioritydropdown']=$prioritydropdown;
-    
+
     $data['feedback'] = '';//xarGetStatusMsg(); // Legacy
 
     $data['parentid']= (empty($parentid))? 0: $parentid;
@@ -49,8 +50,8 @@ function tasks_admin_new($args)
     $data['submitbutton']=xarML('Add task');
     return $data;
 /*
-// EXTRANEOUS    
-    $sendmailoptions = array();    
+// EXTRANEOUS
+    $sendmailoptions = array();
     $sendmailoptions[] = array('id'=>0,'name'=>'Please choose an email option');
     $sendmailoptions[] = array('id'=>1,'name'=>"any changes");
     $sendmailoptions[] = array('id'=>2,'name'=>"major changes");
