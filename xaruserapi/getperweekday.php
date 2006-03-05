@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Event API functions of Stats module
+ *
+ * @package modules
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Stats Module
+ * @link http://xaraya.com/index.php/release/34.html
+ * @author Frank Besler <frank@besler.net>
+ */
 /**
  * Get total amount of site hits grouped by weekday
  *
@@ -23,7 +34,7 @@ function stats_userapi_getperweekday($args)
     $dbconn =& xarDBGetConn();
     $xartable     =& xarDBGetTables();
     $statstable   = $xartable['stats'];
-    
+
     // create query
     $query = "SELECT xar_sta_weekday, SUM(xar_sta_hits) AS xar_sta_sum
               FROM $statstable ";
@@ -42,7 +53,7 @@ function stats_userapi_getperweekday($args)
 
     // Check for an error with the database code
     if (!$result) return;
-    
+
     // generate the result array
     for (; !$result->EOF; $result->MoveNext()) {
         list($weekday, $hits) = $result->fields;

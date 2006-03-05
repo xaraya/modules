@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Event API functions of Stats module
+ *
+ * @package modules
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Stats Module
+ * @link http://xaraya.com/index.php/release/34.html
+ * @author Frank Besler <frank@besler.net>
+ */
 /**
  * Get hits of last 7 days (today included)
  *
@@ -13,12 +24,12 @@ function stats_userapi_getlast7days()
     // initialize variables
     $max = 0; $sum = 0;
     $data = array();
-    
+
     // get database setup
     $dbconn =& xarDBGetConn();
     $xartable     =& xarDBGetTables();
     $statstable   = $xartable['stats'];
-    
+
     // create query
     $query = "SELECT xar_sta_year, xar_sta_month, xar_sta_day, SUM(xar_sta_hits) AS xar_sta_sum
               FROM $statstable
@@ -41,7 +52,7 @@ function stats_userapi_getlast7days()
     // prevent divbyzero errors
     if ($sum == 0) $sum = 1;
     if ($max == 0) $max = 1;
-    
+
     // free some memory
     unset($val);
 
