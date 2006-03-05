@@ -50,12 +50,12 @@
   <li>
     go to the Dynamic Data <a href="index.php?module=dynamicdata&amp;type=util&amp;func=import">Import
     Object Definition</a> page and paste the content of the file 
-    <a  href="modules/workflow/cdcollection3_dd.xml">cdcollection3_dd.xml</a>
+    <a  href="modules/workflow/xardata/cdcollection3_dd.xml">cdcollection3_dd.xml</a>
     in the text area to create the sample database table;
   </li>
   <li>
     go to <a href="index.php?module=workflow&amp;type=admin&amp;func=processes">Admin Processes</a>
-    and upload the file <a href="modules/workflow/cdcollection3.xml">cdcollection3.xml</a> to
+    and upload the file <a href="modules/workflow/xardata/cdcollection3.xml">cdcollection3.xml</a> to
     create a sample process;
   </li>
   <li>
@@ -87,7 +87,7 @@ The sample CD Loan process has been modified a bit to be more representative of 
 
 <p>With version 1.1, you can also automatically start a workflow process after some module item is created, updated or deleted. To try this out, you should :
 <ol>
-<li>upload the <a href="modules/workflow/review_articles.xml">review_articles.xml</a> file to create the Review Articles process</li>
+<li>upload the <a href="modules/workflow/xardata/review_articles.xml">review_articles.xml</a> file to create the Review Articles process</li>
 <li>assign some users to the 'editors' workflow role and mark the process as active</li>
 <li>enable the workflow hooks for articles</li>
 <li>configure the workflow module so that the Review Articles - start activity is started when Create hooks are called from articles</li>
