@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id$
- *
  * Event API functions of Stats module
  *
  * @package modules
@@ -9,10 +7,10 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage stats
+ * @subpackage Stats Module
+ * @link http://xaraya.com/index.php/release/34.html
  * @author Frank Besler <frank@besler.net>
  */
-
 /**
  * Count page views
  *
@@ -31,7 +29,7 @@ function stats_eventapi_OnServerRequest($arg)
     if (((xarSecurityCheck('AdminPanel', 0)) AND (xarModGetVar('stats', 'countadmin') == FALSE)) || $excluded) {
         return true;
     }
-    
+
 /*//TODO:<besfred> support for unique visitors count
     //param $args array - contains boolean $unique (true = unique hit, false = page view)
     extract($args);

@@ -1,9 +1,20 @@
 <?php
-
+/**
+ * Event API functions of Stats module
+ *
+ * @package modules
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Stats Module
+ * @link http://xaraya.com/index.php/release/34.html
+ * @author Frank Besler <frank@besler.net>
+ */
 function stats_userapi_get_os_data($args)
 {
     extract($args);
-    
+
     // API function to get the hits by browsers
     list($osdata, $ossum, $osmax) = xarModAPIFunc('stats',
                                                   'user',
@@ -53,9 +64,9 @@ function stats_userapi_get_os_data($args)
                     default:
                         $osname = xarML('Windows');
                         break;
-                }                                 
+                }
                 break;
-                
+
             case '*nix':
                 switch ($ositem['osver']) {
                     case 'linux':
@@ -79,7 +90,7 @@ function stats_userapi_get_os_data($args)
                         $ospic = 'question.gif';
                 }
                 break;
-                
+
             case 'mac':
                 $ospic = 'mac.png';
                 switch ($ositem['osver']) {
@@ -97,13 +108,13 @@ function stats_userapi_get_os_data($args)
                         break;
                 }
                 break;
-                
+
             default:
                 $osname = xarML('Unknown');
                 $ospic = 'question.gif';
                 break;
         }
-        
+
         $os[] = array('name' => $osname,
                       'rel'  => sprintf('%01.2f',(100*$ositem['hits']/$ossum)),
                       'abs'  => $ositem['hits'],
@@ -111,7 +122,7 @@ function stats_userapi_get_os_data($args)
                       'pic'  => $ospic);
     }
     unset($osdata, $ossum, $osmax, $ositem, $osname, $ospic);
-    
+
     $data = compact('os');
     return $data;
 }

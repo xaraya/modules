@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Event API functions of Stats module
+ *
+ * @package modules
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Stats Module
+ * @link http://xaraya.com/index.php/release/34.html
+ * @author Frank Besler <frank@besler.net>
+ */
 /**
  * Get total hits
  *

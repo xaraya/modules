@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Event API functions of Stats module
+ *
+ * @package modules
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Stats Module
+ * @link http://xaraya.com/index.php/release/34.html
+ * @author Frank Besler <frank@besler.net>
+ */
 /**
  * modify configuration
  */
@@ -18,28 +29,28 @@ function stats_admin_modifyconfig()
             // if (!xarVarFetch('startdate', 'str:1', $startdate, '', XARVAR_NOT_REQUIRED)) return;
 
             // Confirm authorisation code
-            if (!xarSecConfirmAuthKey()) return; 
+            if (!xarSecConfirmAuthKey()) return;
             // Update module variables
             xarModSetVar('stats', 'countadmin', $countadmin);
             xarModSetVar('stats', 'excludelist', $excludelist);
             // xarModSetVar('stats', 'startdate', $startdate);
 
-            xarResponseRedirect(xarModURL('stats', 'admin', 'modifyconfig')); 
+            xarResponseRedirect(xarModURL('stats', 'admin', 'modifyconfig'));
             // Return
             return true;
 
             break;
         case 'modify':
-        default: 
-            
+        default:
+
             // Quick Data Array
             $data['authid'] = xarSecGenAuthKey();
             $data['updatelabel'] = xarML('Update Users Configuration');
 
             break;
-    } 
+    }
 
     return $data;
-} 
+}
 
 ?>

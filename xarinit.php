@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id$
- *
  * Initialization for Stats module
  *
  * @package modules
@@ -9,10 +7,10 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage stats
+ * @subpackage Stats Module
+ * @link http://xaraya.com/index.php/release/34.html
  * @author Frank Besler <frank@besler.net>
  */
-
 /**
  * Install the Stats module
  *

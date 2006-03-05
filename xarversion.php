@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Stats Module - Provide Site statistics
+ *
+ * @package modules
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Stats Module
+ * @link http://xaraya.com/index.php/release/34.html
+ * @author Frank Besler <frank@besler.net>
+ */
 $modversion = array(
 
 'name'            => 'stats',
@@ -16,7 +27,6 @@ $modversion = array(
 'contact'         => 'http://www.besler.net',
 'admin'           => 1,
 'user'            => 1,
-'securityschema'  => array('Stats::' => '::'),
 'class'           => 'User',
 'category'        => 'Content',
 'dependency'      => array(775)

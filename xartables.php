@@ -1,18 +1,16 @@
 <?php
 /**
- * File: $Id$
- *
  * Define table information for Stats module
  *
  * @package modules
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
- * 
- * @subpackage stats
+ *
+ * @subpackage Stats Module
+ * @link http://xaraya.com/index.php/release/34.html
  * @author Frank Besler <frank@besler.net>
- */                
-
+ */
 /**
  * This function is called internally by the core whenever the module is loaded
  *

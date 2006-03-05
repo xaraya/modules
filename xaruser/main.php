@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Event API functions of Stats module
+ *
+ * @package modules
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Stats Module
+ * @link http://xaraya.com/index.php/release/34.html
+ * @author Frank Besler <frank@besler.net>
+ */
 /**
  * Main function of Stats module
  *
@@ -13,7 +24,7 @@ function stats_user_main()
 {
     // Security check
     if(!xarSecurityCheck('OverviewStats')) return;
-    
+
     xarVarFetch('year',  'int', $year,  0, XARVAR_NOT_REQUIRED);
     xarVarFetch('month', 'int', $month, 0, XARVAR_NOT_REQUIRED);
     xarVarFetch('day',   'int', $day,   0, XARVAR_NOT_REQUIRED);
@@ -24,10 +35,10 @@ function stats_user_main()
     // Initialize vars
     $picpath = 'modules/stats/xarimages';
     $barlen  = 230;
-   
+
     // Get the stats-module installation date a.k.a. start-of-stats-collecting
     $startdate = xarModGetVar('stats','startdate');
-    
+
     // API function to get the total hits
     $hits['total'] = xarModAPIFunc('stats',
                                    'user',
@@ -60,7 +71,7 @@ function stats_user_main()
     foreach ($l7data as $key => $val) {
     //TODO: use dateformat-medium from locales file here
         $unformatted = gmmktime(0,0,0,$val['month'],$val['day'],$val['year']);
-        $last7days[$key] = array('unformatted' => $unformatted,        
+        $last7days[$key] = array('unformatted' => $unformatted,
                                  'link'        => xarModURL('stats','user','main',
                                                             array('year'  => $val['year'],
                                                                   'month' => $val['month'],
@@ -119,7 +130,7 @@ function stats_user_main()
     $permonth = array();
     foreach ($pmdata as $key => $val) {
         $localeIndex = '/dateSymbols/months/'.$val['month'].'/full';
-        $permonth[$key] = array('name' => $localeData[$localeIndex],        
+        $permonth[$key] = array('name' => $localeData[$localeIndex],
                                 'num' => $key,
                                 'abs'  => $val['hits'],
                                 'rel'  => sprintf('%01.2f',(100*$val['hits']/$pmsum)),
@@ -141,7 +152,7 @@ function stats_user_main()
     $perweekday = array();
     foreach ($pwddata as $key => $val) {
         $localeIndex = '/dateSymbols/weekdays/'.++$val['weekday'].'/full';
-        $perweekday[$key] = array('name' => $localeData[$localeIndex],        
+        $perweekday[$key] = array('name' => $localeData[$localeIndex],
                                   'abs'  => $val['hits'],
                                   'rel'  => sprintf('%01.2f',(100*$val['hits']/$pwdsum)),
                                   'wid'  => round($barlen*$val['hits']/$pwdmax));
@@ -193,7 +204,7 @@ function stats_user_main()
                              'user',
                              'gettophour',
                              $perhour);
-    
+
     // get the hits by browsers
     $top10 = true;
     $args = compact('top10', 'picpath', 'barlen', 'year', 'month', 'day');

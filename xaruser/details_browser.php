@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Event API functions of Stats module
+ *
+ * @package modules
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Stats Module
+ * @link http://xaraya.com/index.php/release/34.html
+ * @author Frank Besler <frank@besler.net>
+ */
 /**
  * Function for browser details
  *
@@ -21,12 +32,12 @@ function stats_user_details_browser()
     $top10 = false;
     $args = compact('top10', 'picpath', 'barlen');
     extract(xarModAPIFunc('stats','user','get_browser_data',$args));
-    
+
     // arrange return values
     $data = compact('browsers', 'picpath');
 
     // return data to BL template
     return $data;
-}    
+}
 
 ?>

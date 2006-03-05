@@ -1,9 +1,20 @@
 <?php
-
+/**
+ * Event API functions of Stats module
+ *
+ * @package modules
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Stats Module
+ * @link http://xaraya.com/index.php/release/34.html
+ * @author Frank Besler <frank@besler.net>
+ */
 function stats_userapi_get_browser_data($args)
 {
     extract($args);
-    
+
     // API function to get the hits by browsers
     list($brdata, $brsum, $brmax) = xarModAPIFunc('stats',
                                                   'user',
@@ -48,7 +59,7 @@ function stats_userapi_get_browser_data($args)
             case 'Camino':
                 $brpic = 'camino.png';
                 $brname = xarML('Camino');
-                break;                
+                break;
             case 'Galeon':
                 $brpic = 'galeon.png';
                 $brname = xarML('Galeon');
