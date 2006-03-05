@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id: s.xaradmin.php 1.22 03/01/18 11:39:30-05:00 John.Cox@mcnabb. $
- *
  * Figlet Module
  *
  * @package Xaraya eXtensible Management System
@@ -11,25 +9,21 @@
  *
  * @subpackage figlet Module
  * @author Lucas Baltes, John Cox
-*/
-
+ */
 /**
  * Add a standard screen upon entry to the module.
- * @returns output
- * @return output with Figlet Menu information
+ * @return empty array
  */
 function figlet_admin_main()
 {
     // Security Check
     if(!xarSecurityCheck('AdminFiglet')) return;
-    if (xarModGetVar('adminpanels', 'overview') == 0){
-        // Return the output
-        return array();
-    } else {
-        xarResponseRedirect(xarModURL('figlet', 'admin', 'modifyconfig'));
-    }
+    // Return the output
+    return array();
+    //    xarResponseRedirect(xarModURL('figlet', 'admin', 'modifyconfig'));
+
     // success
-    return true;
+//    return true;
 }
 
 /**
