@@ -1,14 +1,14 @@
 <?php
 /**
- * File: $Id$
+ * Chat Module - Port of PJIRC for Xaraya
  *
- * Xaraya Censor
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
- * @link http://www.xaraya.org
  * @subpackage Chat Module
+ * @link http://xaraya.com/index.php/release/158.html
  * @author John Cox
  */
 $modversion['name']           = 'Chat';
@@ -22,7 +22,6 @@ $modversion['author']         = 'John Cox';
 $modversion['contact']        = 'admin@dinerminor.com';
 $modversion['admin']          = 1;
 $modversion['user']           = 1;
-$modversion['securityschema'] = array();
 $modversion['class']          = 'General';
 $modversion['category']       = 'Content';
 ?>

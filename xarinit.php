@@ -1,19 +1,19 @@
 <?php
 /**
- * File: $Id$
+ * Chat Module - Port of PJIRC for Xaraya
  *
- * Xaraya Chat
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
- * @link http://www.xaraya.org
  * @subpackage Chat Module
+ * @link http://xaraya.com/index.php/release/158.html
  * @author John Cox
  */
-
 /**
  * initialise the chat module
+ * @return bool
  */
 function chat_init()
 {
@@ -30,6 +30,7 @@ function chat_init()
 
 /**
  * delete the chat module
+ * @return bool
  */
 function chat_delete()
 {
