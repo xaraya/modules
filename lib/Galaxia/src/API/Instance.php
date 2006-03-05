@@ -103,8 +103,8 @@ class Instance extends Base {
     $this->started=$now;
     $this->owner = $user;
     $props=serialize($this->properties);
-    $query = "insert into `".GALAXIA_TABLE_PREFIX."instances`(`started`,`ended`,`status`,`pId`,`owner`,`properties`) values(?,?,?,?,?,?)";
-    $this->query($query,array($now,0,'active',$pid,$user,$props));
+    $query = "insert into `".GALAXIA_TABLE_PREFIX."instances`(`started`,`ended`,`status`,`name`,`pId`,`owner`,`properties`) values(?,?,?,?,?,?,?)";
+    $this->query($query,array($now,0,'active',$this->name,$pid,$user,$props));
     $this->instanceId = $this->getOne("select max(`instanceId`) from `".GALAXIA_TABLE_PREFIX."instances` where `started`=? and `owner`=?",array((int)$now,$user));
     $iid=$this->instanceId;
     
@@ -355,15 +355,12 @@ class Instance extends Base {
     if($activityId==0) {
       $activityId=$_REQUEST['activityId'];
     }  
-    
     // If we are completing a start activity then the instance must 
     // be created first!
     $type = $this->getOne("select `type` from `".GALAXIA_TABLE_PREFIX."activities` where `activityId`=?",array((int)$activityId));    
     if($type=='start') {
       $this->_createNewInstance((int)$activityId,$theuser);
     }
-      
-    // Now set ended
     $now = date("U");
     $query = "update `".GALAXIA_TABLE_PREFIX."instance_activities` set `ended`=? where `activityId`=? and `instanceId`=?";
     $this->query($query,array((int)$now,(int)$activityId,(int)$this->instanceId));
@@ -530,21 +527,21 @@ class Instance extends Base {
     
     //try to determine the user or *
     //Use the nextUser
-    if($this->nextUser) {
+    if ($this->nextUser) {
       $putuser = $this->nextUser;
     } else {
       $candidates = Array();
-      $query = "select `roleId` from `".GALAXIA_TABLE_PREFIX."activity_roles` where `activityId`=?";
-      $result = $this->query($query,array((int)$activityId)); 
+      $query = "select `roleId` from `" . GALAXIA_TABLE_PREFIX . "activity_roles` where `activityId`=?";
+      $result = $this->query($query,array((int)$activityId));
       while ($res = $result->fetchRow()) {
         $roleId = $res['roleId'];
-        $query2 = "select `user` from `".GALAXIA_TABLE_PREFIX."user_roles` where `roleId`=?";
-        $result2 = $this->query($query2,array((int)$roleId)); 
+        $query2 = "select `user` from `" . GALAXIA_TABLE_PREFIX . "user_roles` where `roleId`=?";
+        $result2 = $this->query($query2, array((int)$roleId)); 
         while ($res2 = $result2->fetchRow()) {
           $candidates[] = $res2['user'];
         }
       }
-      if(count($candidates) == 1) {
+      if (count($candidates) == 1) {
         $putuser = $candidates[0];
       } else {
         $putuser = '*';
@@ -583,11 +580,11 @@ class Instance extends Base {
     //if the activity is not interactive then
     //execute the code for the activity and
     //complete the activity
-    $isInteractive = $this->getOne("select `isInteractive` from `".GALAXIA_TABLE_PREFIX."activities` where `activityId`=?",array((int)$activityId));
-    if ($isInteractive=='n') {
-
+    $isInteractive = $this->getOne("select `isInteractive` from `" . GALAXIA_TABLE_PREFIX . "activities` where `activityId`=?",array((int)$activityId));
+	
+    if ($isInteractive == 'n') {
       // Now execute the code for the activity (function defined in lib/Galaxia/config.php)
-      galaxia_execute_activity($activityId, $iid , 1);
+      galaxia_execute_activity($activityId, $iid, 1);
 
       // Reload in case the activity did some change
       $this->getInstance($this->instanceId);

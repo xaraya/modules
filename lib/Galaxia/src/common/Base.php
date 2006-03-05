@@ -52,7 +52,7 @@ class Base extends Observable {
         trigger_error($ADODB_LASTDB . " error:  " . $this->db->ErrorMsg(). " in query:<br/>" . $query . "<br/>", E_USER_WARNING);
         // only for debugging.
         print_r($values);
-        //echo "<br/>";
+        //echo "<br />";
         die;
     }
 

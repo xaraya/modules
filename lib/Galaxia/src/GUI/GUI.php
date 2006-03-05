@@ -146,7 +146,6 @@ class GUI extends Base {
     return $retval;
   }
 
-
   function gui_list_user_instances($user,$offset,$maxRecords,$sort_mode,$find,$where='')
   {
     // FIXME: this doesn't support multiple sort criteria

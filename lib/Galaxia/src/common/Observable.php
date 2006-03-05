@@ -27,7 +27,7 @@ class Observable {
   function attach($event, &$obj)
   {
     if (!is_object($obj)) {
-        return false;
+    	return false;
     }
     $obj->_observerId = uniqid(rand());
     $this->_observers[$event][$obj->_observerId] = &$obj;
@@ -40,7 +40,7 @@ class Observable {
   function attach_all(&$obj)
   {
     if (!is_object($obj)) {
-        return false;
+    	return false;
     }
     $obj->_observerId = uniqid(rand());
     $this->_observers['all'][$obj->_observerId] = &$obj;
@@ -51,8 +51,8 @@ class Observable {
   */
   function dettach(&$obj)
   {
-      if (isset($this->_observers[$obj->_observerId])) {
-        unset($this->_observers[$obj->_observerId]);
+  	if (isset($this->_observers[$obj->_observerId])) {
+    	unset($this->_observers[$obj->_observerId]);
     }
   }
   
@@ -63,16 +63,16 @@ class Observable {
   */
   function notify_all($event, $msg)
   {
-      //reset($this->_observers[$event]);
-      if(isset($this->_observers[$event])) {
-        foreach ($this->_observers[$event] as $observer) {
-            $observer->notify($event,$msg);
-        }
+  	//reset($this->_observers[$event]);
+  	if(isset($this->_observers[$event])) {
+    	foreach ($this->_observers[$event] as $observer) {
+    		$observer->notify($event,$msg);
+    	}
     }
-    if(isset($this->_observers['all'])) {
-        foreach ($this->_observers['all'] as $observer) {
-            $observer->notify($event,$msg);
-        }
+	if(isset($this->_observers['all'])) {
+    	foreach ($this->_observers['all'] as $observer) {
+    		$observer->notify($event,$msg);
+    	}
     }
     
   } 

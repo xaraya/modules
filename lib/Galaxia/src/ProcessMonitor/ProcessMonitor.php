@@ -386,7 +386,5 @@ class ProcessMonitor extends Base {
     $retval["cant"] = $cant;
     return $retval;
   }
-
-
 }
 ?>

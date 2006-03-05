@@ -16,5 +16,4 @@ if(empty($instance->instanceId)) {
 if(isset($user) && !empty($instance->instanceId) && !empty($activity->activityId)) {
   $instance->setActivityUser($activity->activityId,$user);
 }
-
 ?>

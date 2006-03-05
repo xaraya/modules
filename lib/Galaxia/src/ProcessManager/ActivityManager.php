@@ -3,44 +3,44 @@ include_once(GALAXIA_LIBRARY.'/src/ProcessManager/BaseManager.php');
 //!! ActivityManager
 //! A class to maniplate process activities and transitions
 /*!
- This class is used to add,remove,modify and list
- activities used in the Workflow engine.
- Activities are managed in a per-process level, each
- activity belongs to some process.
+  This class is used to add,remove,modify and list
+  activities used in the Workflow engine.
+  Activities are managed in a per-process level, each
+  activity belongs to some process.
 */
 class ActivityManager extends BaseManager {
-    var $error='';
-    
-    /*!
-     Constructor takes a PEAR::Db object to be used
-     to manipulate activities in the database.
-    */
-    function ActivityManager($db) {
-        if(!$db) {
-            die("Invalid db object passed to activityManager constructor");  
-        }
-        $this->db = $db;  
+  var $error='';
+      
+  /*!
+    Constructor takes a PEAR::Db object to be used
+    to manipulate activities in the database.
+  */
+  function ActivityManager($db) {
+    if(!$db) {
+      die("Invalid db object passed to activityManager constructor");  
     }
-    
-    function get_error() {
-        return $this->error;
-    }
-    
-    /*!
-     Asociates an activity with a role
-    */
-    function add_activity_role($activityId, $roleId) {
-        $query = "delete from `".GALAXIA_TABLE_PREFIX."activity_roles` where `activityId`=? and `roleId`=?";
-        $this->query($query,array($activityId, $roleId));
-        $query = "insert into `".GALAXIA_TABLE_PREFIX."activity_roles`(`activityId`,`roleId`) values(?,?)";
-        $this->query($query,array($activityId, $roleId));
-    }
-    
-    /*!
-     Gets the roles asociated to an activity
-    */
-    function get_activity_roles($activityId) {
-        $query = "select activityId,roles.roleId,roles.name
+    $this->db = $db;  
+  }
+  
+  function get_error() {
+    return $this->error;
+  }
+  
+  /*!
+   Asociates an activity with a role
+  */
+  function add_activity_role($activityId, $roleId) {
+    $query = "delete from `".GALAXIA_TABLE_PREFIX."activity_roles` where `activityId`=? and `roleId`=?";
+    $this->query($query,array($activityId, $roleId));
+    $query = "insert into `".GALAXIA_TABLE_PREFIX."activity_roles`(`activityId`,`roleId`) values(?,?)";
+    $this->query($query,array($activityId, $roleId));
+  }
+  
+  /*!
+   Gets the roles asociated to an activity
+  */
+  function get_activity_roles($activityId) {
+    $query = "select activityId,roles.roleId,roles.name
               from ".GALAXIA_TABLE_PREFIX."activity_roles gar, ".GALAXIA_TABLE_PREFIX."roles roles
               where roles.roleId = gar.roleId and activityId=?";
         $result = $this->query($query,array($activityId));
