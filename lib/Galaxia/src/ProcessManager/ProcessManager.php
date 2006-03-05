@@ -70,8 +70,8 @@ class ProcessManager extends BaseManager {
     fclose($fp);
     $out.= '  ]]></sharedCode>'."\n";
     // Now loop over activities
-    $query = "select * from ".GALAXIA_TABLE_PREFIX."activities where pId=$pId";
-    $result = $this->query($query);
+    $query = "select * from ".GALAXIA_TABLE_PREFIX."activities where pId= ?";
+    $result = $this->query($query,array($pid));
     $out.='  <activities>'."\n";
     $am = new ActivityManager($this->db);
     while($res = $result->fetchRow()) {      
@@ -368,9 +368,9 @@ class ProcessManager extends BaseManager {
     }
     // add roles to activities
     if (count($newaid) > 0 && count($newrid ) > 0) {
-        // TODO: reformulate with bindvars
-      $query = "select * from ".GALAXIA_TABLE_PREFIX."activity_roles where activityId in (" . join(', ',array_keys($newaid)) . ")";
-      $result = $this->query($query);
+        $bindMarkers = '?' . str_repeat(', ?',count($newid) -1);
+      $query = "select * from ".GALAXIA_TABLE_PREFIX."activity_roles where activityId in ($bindMarkers)"
+      $result = $this->query($query,array_keys($newaid));
       while($res = $result->fetchRow()) {
         if (empty($newaid[$res['activityId']]) || empty($newrid[$res['roleId']])) {
           continue;

@@ -61,6 +61,11 @@ if (!isset($dbGalaxia)) {
     $dbGalaxia =& xarDBNewConn();
 
     // Set the fetch mode to assoc by default (needed by lib/Galaxia)
+    if(!defined('ADODB_FETCH_ASSOC')) {
+        // Desperate now :-)
+        define('ADODB_FETCH_ASSOC',ResultSet::FETCHMODE_ASSOC);
+    }
+    // This is wrong (adodb's fault) a fetchmode doesnt make sense for a connection, only for a resultset
     $oldmode = $dbGalaxia->SetFetchMode(ADODB_FETCH_ASSOC);
 }
 
