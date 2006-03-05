@@ -1,6 +1,20 @@
 <?php
-
-class Image_Properties 
+/**
+ * Images module class
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Images Module
+ * @link http://xaraya.com/index.php/release/152.html
+ * @author Images Module Development Team
+ */
+/**
+ * Class Image properties
+ */
+class Image_Properties
 {
 
     var $fileName;
@@ -14,11 +28,11 @@ class Image_Properties
     var $mime = null;
     var $_tmpFile;
     var $_fileId;
-    
-    function __constructor($fileInfo, $thumbsdir = NULL) 
+
+    function __constructor($fileInfo, $thumbsdir = NULL)
     {
         if (empty($thumbsdir)) {
-            $this->_thumbsdir = './'; 
+            $this->_thumbsdir = './';
         } else {
             $this->_thumbsdir = $thumbsdir;
         }
@@ -59,12 +73,12 @@ class Image_Properties
 
     }
 
-    function Image_Properties($fileLocation, $thumbsdir = NULL) 
+    function Image_Properties($fileLocation, $thumbsdir = NULL)
     {
         return $this->__constructor($fileLocation, $thumbsdir);
     }
 
-    function _getMimeType($mimeType) 
+    function _getMimeType($mimeType)
     {
         if (is_numeric($mimeType)) {
             switch ($mimeType) {
@@ -89,27 +103,27 @@ class Image_Properties
         } else {
             return $mimeType;
         }
-    }        
+    }
 
-    function getMime() 
+    function getMime()
     {
         return $this->mime;
     }
 
-    function setMime($mimeType) 
+    function setMime($mimeType)
     {
         $old_mime = $this->mime;
         $this->mime = $mimeType;
         return $old_mime;
     }
 
-    function Constrain($toSide = NULL) 
+    function Constrain($toSide = NULL)
     {
         if ($toSide == NULL) {
             return FALSE;
         } else {
             switch(strtolower($toSide)) {
-                case 'height': 
+                case 'height':
                     $this->setWidth($this->getWidth2HeightRatio() * $this->height);
                     break;
                 case 'width':
@@ -118,13 +132,13 @@ class Image_Properties
                 case 'both':
                     // choose wisely
                     $ratios = array();
-                    
+
                     $ratios[0]['width']  = $this->getWidth2HeightRatio() * $this->height;
                     $ratios[0]['height'] = $this->getHeight2WidthRatio() * $ratios[0]['width'];
-                    
+
                     $ratios[1]['height'] = $this->getHeight2WidthRatio() * $this->width;
                     $ratios[1]['width']  = $this->getWidth2HeightRatio() * $ratios[1]['height'];
-                    
+
                     foreach($ratios as $ratio) {
                         if($ratio['width'] <= $this->width && $ratio['height'] <= $this->height) {
                             $this->setWidth($ratio['width']);
@@ -139,13 +153,13 @@ class Image_Properties
         }
         return true;
     }
-    
-    function getHeight( ) 
+
+    function getHeight( )
     {
         return $this->height;
     }
-   
-    function setHeight($height) 
+
+    function setHeight($height)
     {
         $new_hpercent = @($height / $this->_oheight);
         $this->_percent['height'] = $new_hpercent * 100;
@@ -153,12 +167,12 @@ class Image_Properties
         return $this->height;
     }
 
-    function getWidth( ) 
+    function getWidth( )
     {
         return $this->width;
     }
 
-    function setWidth($width) 
+    function setWidth($width)
     {
         $new_wpercent = @($width / $this->_owidth);
         $this->_percent['width'] = $new_wpercent * 100;
@@ -166,22 +180,22 @@ class Image_Properties
         return $this->width;
     }
 
-    function getWidth2HeightRatio() 
+    function getWidth2HeightRatio()
     {
         return $this->_owidth / $this->_oheight;
     }
 
-    function getHeight2WidthRatio() 
+    function getHeight2WidthRatio()
     {
         return @($this->_oheight / $this->_owidth);
     }
 
-    function getPercent() 
+    function getPercent()
     {
         return $this->_percent;
     }
 
-    function setPercent( $args ) 
+    function setPercent( $args )
     {
         if (!is_array($args) && is_numeric($args)) {
             return $this->_setPercent($args);
@@ -215,7 +229,7 @@ class Image_Properties
         }
     }
 
-    function _setPercent($percent) 
+    function _setPercent($percent)
     {
         $this->setHeight($this->_oheight * ($percent / 100));
         $this->_percent['height'] = $percent;
@@ -225,7 +239,7 @@ class Image_Properties
         return TRUE;
     }
 
-    function _setWxHPercent($wpercent, $hpercent) 
+    function _setWxHPercent($wpercent, $hpercent)
     {
         $this->setHeight($this->_oheight * ($hpercent / 100));
         $this->_percent['height'] = $hpercent;
@@ -235,19 +249,19 @@ class Image_Properties
         return TRUE;
     }
 
-    function _setWPercent($wpercent) 
+    function _setWPercent($wpercent)
     {
         $this->_percent['width'] = $wpercent;
         return $this->setWidth($this->_owidth * ($wpercent / 100));
     }
 
-    function _setHPercent($hpercent) 
+    function _setHPercent($hpercent)
     {
         $this->_percent['height'] = $hpercent;
         return $this->setHeight($this->_oheight * ($hpercent / 100));
     }
-    
-    function save() 
+
+    function save()
     {
         if (!empty($this->_tmpFile) && file_exists($this->_tmpFile) && filesize($this->_tmpFile)) {
             if (@copy($this->_tmpFile, $this->fileLocation)) {
@@ -260,8 +274,8 @@ class Image_Properties
         }
         return TRUE;
     }
-    
-    function saveDerivative($fileName = '') 
+
+    function saveDerivative($fileName = '')
     {
         if (!empty($this->_tmpFile) && file_exists($this->_tmpFile) && filesize($this->_tmpFile)) {
             if (empty($fileName)) {
@@ -284,13 +298,13 @@ class Image_Properties
             } else {
                 @unlink($this->_tmpFile);
                 return NULL;
-            }                
+            }
         } else {
             return NULL;
         }
     }
-    
-    function getDerivative($fileName = '') 
+
+    function getDerivative($fileName = '')
     {
         if (empty($fileName)) {
             if ($this->width == $this->_owidth && $this->height == $this->_oheight) {

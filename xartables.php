@@ -10,18 +10,14 @@
  * @subpackage Images Module
  * @link http://xaraya.com/index.php/release/152.html
  * @author Carl P. Corliss <carl.corliss@xaraya.com>
-*/
- 
-/** 
- * This function is called internally by the core whenever the module is 
- * loaded.  It adds in the information 
- */ 
+ */
 
+/**
+ * This function is called internally by the core whenever the module is
+ * loaded.  It adds in the information
+ */
 function images_xartables()
 {
-
     return array();
-
 }
-
 ?>

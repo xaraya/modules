@@ -19,8 +19,7 @@
  * @param   string  $fileName  (optional) The name of the image we're getting derivatives for
  * @param   string  $thumbsdir (optional) The directory where derivative images are stored
  * @param   string  $filematch (optional) Specific file match for derivative images
- * @returns integer
- * @return the number of images
+ * @return int the number of images
  */
 function images_adminapi_countderivatives($args)
 {
@@ -58,7 +57,7 @@ function images_adminapi_countderivatives($args)
     $params = array('basedir'   => $thumbsdir,
                     'filematch' => $filematch,
                     'filetype'  => $filetype);
-        
+
     $cachekey = md5(serialize($params));
     // get the number of images from temporary cache - see getderivatives()
     if (xarVarIsCached('Modules.Images','countderivatives.'.$cachekey)) {

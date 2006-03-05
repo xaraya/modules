@@ -3,7 +3,7 @@
  * Utility function used in Admin Menu generation
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -14,17 +14,11 @@
 /**
  * utility function pass individual menu items to the main menu
  *
- * @returns array
  * @return array containing the menulinks for the main menu items.
  */
 function images_adminapi_getmenulinks()
 {
     if (xarSecurityCheck('AdminImages')) {
-        $menulinks[] = Array('url'   => xarModURL('images',
-                                                  'admin',
-                                                  'overview'),
-                             'title' => xarML('Images Module Overview'),
-                             'label' => xarML('Overview'));
         if (xarModIsAvailable('uploads') && xarSecurityCheck('AdminUploads',0)) {
             $menulinks[] = Array('url'   => xarModURL('images',
                                                       'admin',

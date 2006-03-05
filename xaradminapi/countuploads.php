@@ -14,9 +14,8 @@
 /**
  * count the number of uploaded images (managed by the uploads module)
  *
- * @author mikespub 
- * @returns integer
- * @return the number of uploaded images
+ * @author mikespub
+ * @return integer the number of uploaded images
  */
 function images_adminapi_countuploads($args)
 {
