@@ -369,7 +369,7 @@ class ProcessManager extends BaseManager {
     // add roles to activities
     if (count($newaid) > 0 && count($newrid ) > 0) {
         $bindMarkers = '?' . str_repeat(', ?',count($newid) -1);
-      $query = "select * from ".GALAXIA_TABLE_PREFIX."activity_roles where activityId in ($bindMarkers)"
+        $query = "select * from ".GALAXIA_TABLE_PREFIX."activity_roles where activityId in ($bindMarkers)";
       $result = $this->query($query,array_keys($newaid));
       while($res = $result->fetchRow()) {
         if (empty($newaid[$res['activityId']]) || empty($newrid[$res['roleId']])) {
