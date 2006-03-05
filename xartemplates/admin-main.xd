@@ -10,7 +10,7 @@
         <xar:mlstring>
             The Owner module is a simple utility module, which has no
             direct user interface. The module operates entirely
-            through the hooks system. 
+            through the hooks system.
         </xar:mlstring>
         <xar:mlstring>
             The functionality it provides is enabled by hooking the
@@ -24,7 +24,7 @@
             from the account which creates an item and logs the
             module and item identification of that operation in the
             database. This information is also created when updating
-            an which does not have an owner yet.
+            an item which does not have an owner yet.
         </xar:mlstring>
     </p>
     <p>
