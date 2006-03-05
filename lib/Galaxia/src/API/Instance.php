@@ -13,6 +13,7 @@ class Instance extends Base {
   var $owner = '';
   var $status = '';
   var $started;
+  var $name = '';
   var $nextActivity;
   var $nextUser;
   var $ended;
@@ -44,6 +45,7 @@ class Instance extends Base {
     $this->instanceId = $res['instanceId'];
     $this->owner = $res['owner'];
     $this->started = $res['started'];
+    $this->name = $res['name'];
     $this->ended = $res['ended'];
     $this->nextActivity = $res['nextActivity'];
     $this->nextUser = $res['nextUser'];
@@ -183,6 +185,23 @@ class Instance extends Base {
   }
   
   /*! 
+  Returns the name associated to the instance
+  */
+  function getName() {
+    return $this->name;
+  }
+  
+    /*! 
+  Sets the instance name user 
+  */
+  function setName($name) {
+    $this->name = $name;
+    // save database
+    $query = "update `".GALAXIA_TABLE_PREFIX."instances` set `name`=? where `instanceId`=?";
+    $this->query($query,array($name,(int)$this->instanceId));  
+  }
+  
+  /*! 
   Returns the user that created the instance
   */
   function getOwner() {
@@ -196,7 +215,7 @@ class Instance extends Base {
     $this->owner = $user;
     // save database
     $query = "update `".GALAXIA_TABLE_PREFIX."instances` set `owner`=? where `instanceId`=?";
-    $this->query($query,array($owner,(int)$this->instanceId));  
+    $this->query($query,array($this->owner,(int)$this->instanceId));  
   }
   
   /*!
@@ -547,14 +566,8 @@ class Instance extends Base {
         $putuser = '*';
       }
     }        
-    //update the instance_activities table
-    //if not splitting delete first
-    //please update started,status,user
-    if(!$split) {
-      $query = "delete from `".GALAXIA_TABLE_PREFIX."instance_activities` where `instanceId`=? and `activityId`=?";
-      $this->query($query,array((int)$this->instanceId,$from));
-    }
-    $now = date("U");
+
+	$now = date("U");
     $iid = $this->instanceId;
     $query="delete from `".GALAXIA_TABLE_PREFIX."instance_activities` where `instanceId`=? and `activityId`=?";
     $this->query($query,array((int)$iid,(int)$activityId));

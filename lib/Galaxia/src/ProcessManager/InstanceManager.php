@@ -51,8 +51,15 @@ class InstanceManager extends BaseManager {
   
   function set_instance_properties($iid,&$prop)
   {
-    $query = "update ".GALAXIA_TABLE_PREFIX."instances set properties=? where instanceId=?";
-    $this->query($query, array($props,$iid));
+    $props = serialize($prop);
+    $query = "update ".GALAXIA_TABLE_PREFIX."instances set properties= ? where instanceId= ?";
+    $this->query($query,array($props,$iid));
+  }
+  
+  function set_instance_name($iid,$name)
+  {
+    $query = "update ".GALAXIA_TABLE_PREFIX."instances set name= ? where instanceId= ?";
+    $this->query($query,array($name,$iid));
   }
   
   function set_instance_owner($iid,$owner)

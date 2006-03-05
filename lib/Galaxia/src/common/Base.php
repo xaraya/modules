@@ -63,7 +63,7 @@ class Base extends Observable {
         switch ($ADODB_LASTDB) {
         case "oci8":
             $query = preg_replace("/`/", "\"", $query);
-            // convert bind variables - adodb does not do that 
+            // convert bind variables - adodb does not do that
             $qe = explode("?", $query);
             $query = '';
             for ($i = 0; $i < sizeof($qe) - 1; $i++) {
