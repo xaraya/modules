@@ -11,14 +11,12 @@
  * @link http://xaraya.com/index.php/release/779.html
  * @author John Cox
  */
-
 /**
  * Generate the common admin menu configuration
  *
- * @public
+ * @access public
  * @author Richard Cave
- * @returns array
- * @return $menu
+ * @return array $menu
  */
 function html_adminapi_menu()
 {

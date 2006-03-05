@@ -11,25 +11,20 @@
  * @link http://xaraya.com/index.php/release/779.html
  * @author John Cox
  */
-
 /**
  * Add a standard screen upon entry to the module.
  *
  * @public
- * @author John Cox 
- * @returns output
- * @return output with censor Menu information
+ * @author John Cox
+ * @return bool true on success of redirect
  */
 function html_admin_main()
 {
     // Security Check
     if(!xarSecurityCheck('EditHTML')) return;
-
-    // Get the admin menu
-    $data = xarModAPIFunc('html', 'admin', 'menu');
-
+    xarResponseRedirect(xarModURL('html', 'admin', 'set'));
     // Return the template variables defined in this function
-    return $data;
+    return true;
 }
 
 ?>

@@ -11,26 +11,17 @@
  * @link http://xaraya.com/index.php/release/779.html
  * @author John Cox
  */
-
 /**
  * Utility function pass individual menu items to the main menu
  *
- * @public
- * @author John Cox 
- * @author Richard Cave 
- * @author the Example module development team
- * @returns array
+ * @access public
+ * @author John Cox
+ * @author Richard Cave
+ * @author the HTML module development team
  * @return array containing the menulinks for the main menu items.
  */
 function html_adminapi_getmenulinks()
 {
-    if (xarSecurityCheck('AdminHTML')) {
-    	 $menulinks[] = Array('url' => xarModURL('html','admin','overview'),
-                            'title' => xarML('HTML Overview'),
-                            'label' => xarML('Overview'));
-
-    }
-    
     if (xarSecurityCheck('AddHTML')) {
 
         $menulinks[] = Array('url'   => xarModURL('html',
