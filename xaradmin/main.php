@@ -1,6 +1,6 @@
 <?php
 /**
- * Change Log Module version information
+ * Change Log Module
  *
  * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
@@ -13,11 +13,12 @@
  */
 /**
  * the main administration function
+ * Redirect to modifyconfig
  *
  * @author mikespub
  * @access public
  * @param no $ parameters
- * @return true on success or void on falure
+ * @return bool true on success of redirect or void on failure
  * @throws XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION'
  */
 function changelog_admin_main()
@@ -25,14 +26,9 @@ function changelog_admin_main()
     // Security Check
     if (!xarSecurityCheck('AdminChangeLog')) return;
 
-    if (xarModGetVar('adminpanels', 'overview') == 0) {
-        // Return the output
-        return array();
-    } else {
-        xarResponseRedirect(xarModURL('changelog', 'admin', 'modifyconfig'));
-    }
+    //xarResponseRedirect(xarModURL('changelog', 'admin', 'modifyconfig'));
     // success
-    return true;
+    return array(); //true;
 }
 
 ?>

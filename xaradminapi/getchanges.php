@@ -19,7 +19,6 @@
  * @param $args['itemid'] item id
  * @param $args['numitems'] number of entries to retrieve (optional)
  * @param $args['startnum'] starting number (optional)
- * @returns array
  * @return array of changes
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
