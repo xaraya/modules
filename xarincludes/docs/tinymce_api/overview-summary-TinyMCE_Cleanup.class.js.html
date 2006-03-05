@@ -110,8 +110,8 @@ function asd() {
 
         <pre class="sourceview"><span class="comment">/**
  * $RCSfile: overview-summary-TinyMCE_Cleanup.class.js.html,v $
- * $Revision: 1.20 $
- * $Date: 2006/02/26 16:39:48 $
+ * $Revision: 1.25 $
+ * $Date: 2006/03/03 16:10:35 $
  *
  * <span class="attrib">@author</span> Moxiecode
  * <span class="attrib">@copyright</span> Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
@@ -599,7 +599,7 @@ TinyMCE_Engine.<span class="reserved">prototype</span>._cleanupHTML = <span clas
 
 	<span class="reserved">this</span>.vElements = tinyMCE.clearArray(new Array());
 	<span class="reserved">this</span>.vElementsRe = <span class="literal">''</span>;
-	<span class="reserved">this</span>.closeElementsRe = /^(IMG|BR|HR|LINK|META|BASE)$/;
+	<span class="reserved">this</span>.closeElementsRe = /^(IMG|BR|HR|LINK|META|BASE|INPUT|BUTTON)$/;
 	<span class="reserved">this</span>.codeElementsRe = /^(SCRIPT|STYLE)$/;
 	<span class="reserved">this</span>.mceAttribs = {
 		href : <span class="literal">'mce_href'</span>,
@@ -648,22 +648,7 @@ TinyMCE_Cleanup.<span class="reserved">prototype</span> = {
 			s.extended_valid_elements = <span class="literal">''</span>;
 		}
 
-		<span class="comment">// Setup default rule</span>
-		<span class="reserved">this</span>.addRuleStr(s.valid_elements);
-		<span class="reserved">this</span>.addRuleStr(s.extended_valid_elements);
-
-		<span class="comment">// Setup entities</span>
-		<span class="reserved">if</span> (s.entity_encoding == <span class="literal">"named"</span>) {
-			n = tinyMCE.clearArray(new Array());
-			a = <span class="reserved">this</span>.split(<span class="literal">','</span>, s.entities);
-			<span class="reserved">for</span> (i=0; i&lt;a.length; i+=2)
-				n[a[i]] = a[i+1];
-
-			<span class="reserved">this</span>.entities = n;
-		}
-
-		<span class="reserved">this</span>.fillStr = <span class="reserved">this</span>.xmlEncode(String.fromCharCode(160));
-
+		<span class="reserved">this</span>.fillStr = s.entity_encoding == <span class="literal">"named"</span> ? <span class="literal">"&amp;nbsp;"</span> : <span class="literal">"&amp;#160;"</span>;
 		<span class="reserved">this</span>.idCount = 0;
 	},
 
@@ -895,6 +880,8 @@ TinyMCE_Cleanup.<span class="reserved">prototype</span> = {
 	serializeNodeAsHTML : <span class="reserved">function</span>(n) {
 		var en, no, h = <span class="literal">''</span>, i, l, r, cn, va = false, f = false, at, hc;
 
+		<span class="reserved">this</span>._setupRules(); <span class="comment">// Will initialize cleanup rules</span>
+
 		switch (n.nodeType) {
 			case 1: <span class="comment">// Element</span>
 				hc = n.hasChildNodes();
@@ -1081,194 +1068,231 @@ TinyMCE_Cleanup.<span class="reserved">prototype</span> = {
 	xmlEncode : <span class="reserved">function</span>(s) {
 		var i, l, e, o = <span class="literal">''</span>, c;
 
+		<span class="reserved">this</span>._setupEntities(); <span class="comment">// Will intialize lookup table</span>
+
 		switch (<span class="reserved">this</span>.settings.entity_encoding) {
 			case <span class="literal">"raw"</span>:
-				s = <span class="literal">""</span> + s;
-				s = s.replace(/&amp;/g, <span class="literal">'&amp;amp;'</span>);
-				s = s.replace(new RegExp(<span class="literal">'"'</span>, <span class="literal">'g'</span>), <span class="literal">'&amp;quot;'</span>);
-				s = s.replace(/\<span class="literal">'/g, '</span>&amp;#39;<span class="literal">'); // &amp;apos; is not working in MSIE
-				s = s.replace(/&lt;/g, '</span>&amp;lt;<span class="literal">');
-				s = s.replace(/&gt;/g, '</span>&amp;gt;<span class="literal">');
+				<span class="reserved">return</span> tinyMCE.xmlEncode(s);
 
-				return s;
-
-			case "named":
-				for (i=0, l=s.length; i&lt;l; i++) {
+			case <span class="literal">"named"</span>:
+				<span class="reserved">for</span> (i=0, l=s.length; i&lt;l; i++) {
 					c = s.charCodeAt(i);
-					e = this.entities[c];
+					e = <span class="reserved">this</span>.entities[c];
 
-					// &amp;apos; is not working in MSIE
-					// More info: http://www.w3.org/TR/xhtml1/#C_16
-					if (c == 39) {
-						o += "&amp;#39;";
+					<span class="comment">// &amp;apos; is not working in MSIE</span>
+					<span class="comment">// More info: http://www.w3.org/TR/xhtml1/#C_16</span>
+					<span class="reserved">if</span> (c == 39) {
+						o += <span class="literal">"&amp;#39;"</span>;
 						continue;
 					}
 
-					if (e &amp;&amp; e != '</span><span class="literal">')
-						o += '</span>&amp;<span class="literal">' + e + '</span>;<span class="literal">';
-					else
+					<span class="reserved">if</span> (e &amp;&amp; e != <span class="literal">''</span>)
+						o += <span class="literal">'&amp;'</span> + e + <span class="literal">';'</span>;
+					<span class="reserved">else</span>
 						o += String.fromCharCode(c);
 				}
 
-				return o;
+				<span class="reserved">return</span> o;
 
-			case "numeric":
-				for (i=0, l=s.length; i&lt;l; i++) {
+			case <span class="literal">"numeric"</span>:
+				<span class="reserved">for</span> (i=0, l=s.length; i&lt;l; i++) {
 					c = s.charCodeAt(i);
 
-					if (c &gt; 127 || c == 60 || c == 62 || c == 38 || c == 39 || c == 34)
-						o += '</span>&amp;#<span class="literal">' + c + ";";
-					else
+					<span class="reserved">if</span> (c &gt; 127 || c == 60 || c == 62 || c == 38 || c == 39 || c == 34)
+						o += <span class="literal">'&amp;#'</span> + c + <span class="literal">";"</span>;
+					<span class="reserved">else</span>
 						o += String.fromCharCode(c);
 				}
 
-				return o;
+				<span class="reserved">return</span> o;
 		}
 
-		return s;
+		<span class="reserved">return</span> s;
 	},
 
-	/**
+	<span class="comment">/**
 	 * Splits the specified string and removed empty chunks.
 	 *
-	 * @param {RegEx} re RegEx to split string by.
-	 * @param {string} s String value to split.
-	 * @return Array with parts from specified string.
-	 * @type string
-	 */
-	split : function(re, s) {
+	 * <span class="attrib">@param</span> {RegEx} re RegEx to split string by.
+	 * <span class="attrib">@param</span> {string} s String value to split.
+	 * <span class="attrib">@return</span> Array with parts from specified string.
+	 * <span class="attrib">@type</span> string
+	 */</span>
+	split : <span class="reserved">function</span>(re, s) {
 		var c = s.split(re);
 		var i, l, o = new Array();
 
-		for (i=0, l=c.length; i&lt;l; i++) {
-			if (c[i] != '</span><span class="literal">')
+		<span class="reserved">for</span> (i=0, l=c.length; i&lt;l; i++) {
+			<span class="reserved">if</span> (c[i] != <span class="literal">''</span>)
 				o[i] = c[i];
 		}
 
-		return o;
+		<span class="reserved">return</span> o;
 	},
 
-	/**
+	<span class="comment">/**
 	 * Removes contents that got added by TinyMCE to comments.
 	 *
-	 * @param {string} s Comment string data to trim.
-	 * @return Cleaned string from TinyMCE specific content.
-	 * @type string
-	 * @private
-	 */
-	_trimComment : function(s) {
-		// Make xsrc, xhref as src and href again
-		if (tinyMCE.isGecko) {
-			s = s.replace(/\sxsrc=/gi, " src=");
-			s = s.replace(/\sxhref=/gi, " href=");
+	 * <span class="attrib">@param</span> {string} s Comment string data to trim.
+	 * <span class="attrib">@return</span> Cleaned string from TinyMCE specific content.
+	 * <span class="attrib">@type</span> string
+	 * <span class="attrib">@private</span>
+	 */</span>
+	_trimComment : <span class="reserved">function</span>(s) {
+		<span class="comment">// Make xsrc, xhref as src and href again</span>
+		<span class="reserved">if</span> (tinyMCE.isGecko) {
+			s = s.replace(/\sxsrc=/gi, <span class="literal">" src="</span>);
+			s = s.replace(/\sxhref=/gi, <span class="literal">" href="</span>);
 		}
 
-		// Remove mce_src, mce_href
-		s = s.replace(new RegExp('</span>\\smce_src=\<span class="literal">"[^\"</span>]*\<span class="literal">"', 'gi'), "</span><span class="literal">");
-		s = s.replace(new RegExp('\\smce_href=\"</span>[^\<span class="literal">"]*\"</span><span class="literal">', '</span>gi<span class="literal">'), "");
+		<span class="comment">// Remove mce_src, mce_href</span>
+		s = s.replace(new RegExp(<span class="literal">'\\smce_src=\"[^\"]*\"'</span>, <span class="literal">'gi'</span>), <span class="literal">""</span>);
+		s = s.replace(new RegExp(<span class="literal">'\\smce_href=\"[^\"]*\"'</span>, <span class="literal">'gi'</span>), <span class="literal">""</span>);
 
-		return s;
+		<span class="reserved">return</span> s;
 	},
 
-	/**
-	 * Returns the value of the specified attribute name or default value if it wasn'</span>t found.
+	<span class="comment">/**
+	 * Returns the value of the specified attribute name or default value if it wasn't found.
 	 *
-	 * @param {HTMLElement} e HTML element to get attribute from.
-	 * @param {string} n Attribute name to get from element.
-	 * @param {string} d Default value to <span class="reserved">return</span> <span class="reserved">if</span> attribute wasn<span class="literal">'t found.
-	 * @return Attribute value based on specified attribute name.
-	 * @type string
-	 * @private
-	 */
-	_getAttrib : function(e, n, d) {
-		if (typeof(d) == "undefined")
-			d = "";
+	 * <span class="attrib">@param</span> {HTMLElement} e HTML element to get attribute from.
+	 * <span class="attrib">@param</span> {string} n Attribute name to get from element.
+	 * <span class="attrib">@param</span> {string} d Default value to return if attribute wasn't found.
+	 * <span class="attrib">@return</span> Attribute value based on specified attribute name.
+	 * <span class="attrib">@type</span> string
+	 * <span class="attrib">@private</span>
+	 */</span>
+	_getAttrib : <span class="reserved">function</span>(e, n, d) {
+		<span class="reserved">if</span> (typeof(d) == <span class="literal">"undefined"</span>)
+			d = <span class="literal">""</span>;
 
-		if (!e || e.nodeType != 1)
-			return d;
+		<span class="reserved">if</span> (!e || e.nodeType != 1)
+			<span class="reserved">return</span> d;
 
 		var v = e.getAttribute(n, 0);
 
-		if (n == "class" &amp;&amp; !v)
+		<span class="reserved">if</span> (n == <span class="literal">"class"</span> &amp;&amp; !v)
 			v = e.className;
 
-		if (this.isMSIE &amp;&amp; n == "http-equiv")
+		<span class="reserved">if</span> (<span class="reserved">this</span>.isMSIE &amp;&amp; n == <span class="literal">"http-equiv"</span>)
 			v = e.httpEquiv;
 
-		if (n == "style" &amp;&amp; !tinyMCE.isOpera)
+		<span class="reserved">if</span> (n == <span class="literal">"style"</span> &amp;&amp; !tinyMCE.isOpera)
 			v = e.style.cssText;
 
-		if (n == '</span>style<span class="literal">')
+		<span class="reserved">if</span> (n == <span class="literal">'style'</span>)
 			v = tinyMCE.serializeStyle(tinyMCE.parseStyle(v));
 
-		if (this.settings.on_save &amp;&amp; n.indexOf('</span>on<span class="literal">') != -1 &amp;&amp; this.settings.on_save &amp;&amp; v &amp;&amp; v != "")
+		<span class="reserved">if</span> (<span class="reserved">this</span>.settings.on_save &amp;&amp; n.indexOf(<span class="literal">'on'</span>) != -1 &amp;&amp; <span class="reserved">this</span>.settings.on_save &amp;&amp; v &amp;&amp; v != <span class="literal">""</span>)
 			v = tinyMCE.cleanupEventStr(v);
 
-		return (v &amp;&amp; v != "") ? '</span><span class="literal">' + v : d;
+		<span class="reserved">return</span> (v &amp;&amp; v != <span class="literal">""</span>) ? <span class="literal">''</span> + v : d;
 	},
 
-	/**
+	<span class="comment">/**
 	 * Internal URL converter callback function. This simply converts URLs based
 	 * on some settings.
 	 *
-	 * @param {TinyMCE_Cleanup} c Cleanup instance.
-	 * @param {HTMLNode} n HTML node that holds the URL.
-	 * @param {string} v URL value to convert.
-	 * @return Converted URL value.
-	 * @type string
-	 * @private
-	 */
-	_urlConverter : function(c, n, v) {
-		if (!c.settings.on_save)
-			return tinyMCE.convertRelativeToAbsoluteURL(tinyMCE.settings.base_href, v);
-		else if (tinyMCE.getParam('</span>convert_urls<span class="literal">'))
-			return eval(tinyMCE.settings.urlconverter_callback + "(v, n, true);");
+	 * <span class="attrib">@param</span> {TinyMCE_Cleanup} c Cleanup instance.
+	 * <span class="attrib">@param</span> {HTMLNode} n HTML node that holds the URL.
+	 * <span class="attrib">@param</span> {string} v URL value to convert.
+	 * <span class="attrib">@return</span> Converted URL value.
+	 * <span class="attrib">@type</span> string
+	 * <span class="attrib">@private</span>
+	 */</span>
+	_urlConverter : <span class="reserved">function</span>(c, n, v) {
+		<span class="reserved">if</span> (!c.settings.on_save)
+			<span class="reserved">return</span> tinyMCE.convertRelativeToAbsoluteURL(tinyMCE.settings.base_href, v);
+		<span class="reserved">else</span> <span class="reserved">if</span> (tinyMCE.getParam(<span class="literal">'convert_urls'</span>))
+			<span class="reserved">return</span> eval(tinyMCE.settings.urlconverter_callback + <span class="literal">"(v, n, true);"</span>);
 
-		return v;
+		<span class="reserved">return</span> v;
 	},
 
-	/**
+	<span class="comment">/**
 	 * Converts a array into a regex.
 	 *
-	 * @param {Array} a Array to convert into a regex.
-	 * @param {string} op RegEx options like, gi.
-	 * @param {string} be Before chunk, beginning of expression.
-	 * @param {string} af After chunk, end of expression.
-	 * @return RegEx instance based in input information.
-	 * @type string
-	 * @private
-	 */
-	_arrayToRe : function(a, op, be, af) {
+	 * <span class="attrib">@param</span> {Array} a Array to convert into a regex.
+	 * <span class="attrib">@param</span> {string} op RegEx options like, gi.
+	 * <span class="attrib">@param</span> {string} be Before chunk, beginning of expression.
+	 * <span class="attrib">@param</span> {string} af After chunk, end of expression.
+	 * <span class="attrib">@return</span> RegEx instance based in input information.
+	 * <span class="attrib">@type</span> string
+	 * <span class="attrib">@private</span>
+	 */</span>
+	_arrayToRe : <span class="reserved">function</span>(a, op, be, af) {
 		var i, r;
 
-		op = typeof(op) == "undefined" ? "gi" : op;
-		be = typeof(be) == "undefined" ? "^(" : be;
-		af = typeof(af) == "undefined" ? ")$" : af;
+		op = typeof(op) == <span class="literal">"undefined"</span> ? <span class="literal">"gi"</span> : op;
+		be = typeof(be) == <span class="literal">"undefined"</span> ? <span class="literal">"^("</span> : be;
+		af = typeof(af) == <span class="literal">"undefined"</span> ? <span class="literal">")$"</span> : af;
 
 		r = be;
 
-		for (i=0; i&lt;a.length; i++)
-			r += this._wildcardToRe(a[i]) + (i != a.length-1 ? "|" : "");
+		<span class="reserved">for</span> (i=0; i&lt;a.length; i++)
+			r += <span class="reserved">this</span>._wildcardToRe(a[i]) + (i != a.length-1 ? <span class="literal">"|"</span> : <span class="literal">""</span>);
 
 		r += af;
 
-		return new RegExp(r, op);
+		<span class="reserved">return</span> new RegExp(r, op);
 	},
 
-	/**
+	<span class="comment">/**
 	 * Converts a wildcard string into a regex.
 	 *
-	 * @param {string} s Wildcard string to convert into RegEx.
-	 * @return RegEx string based on input.
-	 * @type string
-	 * @private
-	 */
-	_wildcardToRe : function(s) {
-		s = s.replace(/\?/g, '</span>(\\S?)<span class="literal">');
-		s = s.replace(/\+/g, '</span>(\\S+)<span class="literal">');
-		s = s.replace(/\*/g, '</span>(\\S*)');
+	 * <span class="attrib">@param</span> {string} s Wildcard string to convert into RegEx.
+	 * <span class="attrib">@return</span> RegEx string based on input.
+	 * <span class="attrib">@type</span> string
+	 * <span class="attrib">@private</span>
+	 */</span>
+	_wildcardToRe : <span class="reserved">function</span>(s) {
+		s = s.replace(/\?/g, <span class="literal">'(\\S?)'</span>);
+		s = s.replace(/\+/g, <span class="literal">'(\\S+)'</span>);
+		s = s.replace(/\*/g, <span class="literal">'(\\S*)'</span>);
 
 		<span class="reserved">return</span> s;
+	},
+
+	<span class="comment">/**
+	 * Sets up the entity name lookup table ones. This moves the entity lookup pasing time
+	 * from init to first xmlEncode call.
+	 *
+	 * <span class="attrib">@private</span>
+	 */</span>
+	_setupEntities : <span class="reserved">function</span>() {
+		var n, a, i, s = <span class="reserved">this</span>.settings;
+
+		<span class="comment">// Setup entities</span>
+		<span class="reserved">if</span> (!<span class="reserved">this</span>.entitiesDone) {
+			<span class="reserved">if</span> (s.entity_encoding == <span class="literal">"named"</span>) {
+				n = tinyMCE.clearArray(new Array());
+				a = <span class="reserved">this</span>.split(<span class="literal">','</span>, s.entities);
+				<span class="reserved">for</span> (i=0; i&lt;a.length; i+=2)
+					n[a[i]] = a[i+1];
+
+				<span class="reserved">this</span>.entities = n;
+			}
+
+			<span class="reserved">this</span>.entitiesDone = true;
+		}
+	},
+
+	<span class="comment">/**
+	 * Sets up the cleanup rules ones. This moves the cleanup rule pasing time
+	 * from init to first cleanup call.
+	 *
+	 * <span class="attrib">@private</span>
+	 */</span>
+	_setupRules : <span class="reserved">function</span>() {
+		var s = <span class="reserved">this</span>.settings;
+
+		<span class="comment">// Setup default rule</span>
+		<span class="reserved">if</span> (!<span class="reserved">this</span>.rulesDone) {
+			<span class="reserved">this</span>.addRuleStr(s.valid_elements);
+			<span class="reserved">this</span>.addRuleStr(s.extended_valid_elements);
+
+			<span class="reserved">this</span>.rulesDone = true;
+		}
 	}
 };
 </pre>
@@ -1329,6 +1353,6 @@ TinyMCE_Cleanup.<span class="reserved">prototype</span> = {
 <font size="-1">
 
 </font>
-<div class="jsdoc_ctime">Documentation generated by <a href="http://jsdoc.sourceforge.net/" target="_parent">JSDoc</a> on Sun Feb 26 17:36:18 2006</div>
+<div class="jsdoc_ctime">Documentation generated by <a href="http://jsdoc.sourceforge.net/" target="_parent">JSDoc</a> on Fri Mar  3 17:09:48 2006</div>
 </body>
 </html>

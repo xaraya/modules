@@ -57,7 +57,7 @@ paste_desc : 'Incolla',
 link_list : 'Lista link',
 image_list : 'Lista immagini',
 browse : 'Sfoglia',
-image_props_desc : 'Proprietà dell\'immagine',
+image_props_desc : 'Propriet\u00E0 dell\'immagine',
 newdocument_desc : 'Nuovo documento',
 class_name : 'Classe', 
 newdocument : 'Sicuro di voler cancellare l\'intero contenuto?'

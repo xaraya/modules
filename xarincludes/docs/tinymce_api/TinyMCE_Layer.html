@@ -3,14 +3,14 @@
 <HTML>
 <HEAD>
 <TITLE>
-TinyMCE_Selection
+TinyMCE_Layer
 </TITLE>
 <LINK REL ="stylesheet" TYPE="text/css" HREF="stylesheet.css" TITLE="Style">
 </HEAD>
 <SCRIPT>
 function asd()
 {
-parent.document.title="TinyMCE_Selection";
+parent.document.title="TinyMCE_Layer";
 }
 </SCRIPT>
 <BODY BGCOLOR="white" onload="asd();">
@@ -24,7 +24,7 @@ parent.document.title="TinyMCE_Selection";
 <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3">
   <TR ALIGN="center" VALIGN="top">
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">  <A HREF="overview-summary-TinyMCE_Selection.class.js.html"><FONT CLASS="NavBarFont1"><B>File</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">  <A HREF="overview-summary-TinyMCE_Layer.class.js.html"><FONT CLASS="NavBarFont1"><B>File</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev">&nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="overview-tree.html"><FONT CLASS="NavBarFont1"><B>Tree</B></FONT></A>&nbsp;</TD>
   <!--TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"-->    <!--A HREF="deprecated-list.html"--><!--FONT CLASS="NavBarFont1">Deprecated</FONT--><!--/A--><!--&nbsp;</TD-->
@@ -41,13 +41,13 @@ parent.document.title="TinyMCE_Selection";
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="TinyMCE_Popup.html"><B>PREV CLASS</B></A><!-- 
+&nbsp;<A HREF="TinyMCE_Engine.html"><B>PREV CLASS</B></A><!-- 
    NEXT CLASS 
 -->
-&nbsp;<A HREF="TinyMCE_UndoRedo.html"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="TinyMCE_Popup.html"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="index.html" TARGET="_top"><B>FRAMES</B></A>  &nbsp;
-&nbsp;<A HREF="TinyMCE_Selection.html" TARGET="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="TinyMCE_Layer.html" TARGET="_top"><B>NO FRAMES</B></A>  &nbsp;
 &nbsp;
 <SCRIPT>
   <!--
@@ -72,10 +72,10 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
 <HR>
 
 <!-- ======== START OF CLASS DATA ======== -->
-<H2>Class TinyMCE_Selection</H2>
+<H2>Class TinyMCE_Layer</H2>
 <PRE>Object
    |
-   +--<b>TinyMCE_Selection</b>
+   +--<b>TinyMCE_Layer</b>
 </PRE>
 
 
@@ -83,13 +83,13 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
 <DL>
    <!-- Class definition -->
    <DT>class 
-   <B>TinyMCE_Selection</B>
+   <B>TinyMCE_Layer</B>
    
 
 </DL>
    
    <P>
-   <I>Defined in <a href='overview-summary-TinyMCE_Selection.class.js.html'>TinyMCE_Selection.class.js</a></I><BR/><BR/>
+   <I>Defined in <a href='overview-summary-TinyMCE_Layer.class.js.html'>TinyMCE_Layer.class.js</a></I><BR/><BR/>
    </P>
    
    <HR>
@@ -101,27 +101,6 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
 
 <!-- =========== FIELD SUMMARY =========== -->
 
-   <A NAME="field_summary"><!-- --></A>
-      <TABLE BORDER="1" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
-         <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-            <TD COLSPAN=2><FONT SIZE="+2">
-               <B>Field Summary</B></FONT></TD>
-         </TR>
-
-   <!-- This is one instance field summary -->
-   
-   <TR BGCOLOR="white" CLASS="TableRowColor">
-   <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-   <CODE>&nbsp;Object</CODE></FONT></TD>
-   <TD><CODE><B><A HREF="#instance">instance</A></B></CODE>
-   <BR>
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-   </TR>
-   
-
-   </TABLE>
-   &nbsp;
-   
 
    
 
@@ -140,13 +119,13 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
    <TD>
       <CODE>
 	 <B>
-	    <A HREF="TinyMCE_Selection.html#TinyMCE_Selection()">TinyMCE_Selection</A> 
+	    <A HREF="TinyMCE_Layer.html#TinyMCE_Layer()">TinyMCE_Layer</A> 
 	 </B>
-	 (&lt;<a href="TinyMCE_Control.html">TinyMCE_Control</a>&gt; inst)
+	 (&lt;string&gt; id)
       </CODE>
       <BR>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      Constructs a Selection instance and binds it to the specificed TinyMCE editor control.
+      Constructor for the TinyMCE Layer.
       </TD>
 </TR>
 </TABLE>
@@ -168,119 +147,85 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
 	 <FONT SIZE="-1">
-	    <CODE>&nbsp;TinyMCE_Bookmark</CODE>
+	    <CODE>&nbsp;void</CODE>
 	 </FONT>
       </TD>
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#getBookmark">getBookmark</A></B>(&lt;boolean&gt; simple)
+	       <A HREF="#addCSSClass">addCSSClass</A></B>(e, c)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Returns a selection bookmark that can be restored later with moveToBookmark.
+	 
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
 	 <FONT SIZE="-1">
-	    <CODE>&nbsp;HTMLElement</CODE>
+	    <CODE>&nbsp;Object</CODE>
 	 </FONT>
       </TD>
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#getFocusElement">getFocusElement</A></B>()
+	       <A HREF="#explode">explode</A></B>(d, s)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Returns the currently selected/focused element.
+	 
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
 	 <FONT SIZE="-1">
-	    <CODE>&nbsp;DOMRange</CODE>
+	    <CODE>&nbsp;Object</CODE>
 	 </FONT>
       </TD>
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#getRng">getRng</A></B>()
+	       <A HREF="#getAbsPosition">getAbsPosition</A></B>(n)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Returns the browsers selections first range instance.
+	 
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
 	 <FONT SIZE="-1">
-	    <CODE>&nbsp;DOMSelection</CODE>
+	    <CODE>&nbsp;Object</CODE>
 	 </FONT>
       </TD>
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#getSel">getSel</A></B>()
+	       <A HREF="#getBlocker">getBlocker</A></B>()
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Returns the browsers selection instance.
+	 
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
 	 <FONT SIZE="-1">
-	    <CODE>&nbsp;string</CODE>
+	    <CODE>&nbsp;Object</CODE>
 	 </FONT>
       </TD>
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#getSelectedHTML">getSelectedHTML</A></B>()
+	       <A HREF="#getElement">getElement</A></B>()
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Returns the selected HTML code.
-      </TD>
-   </TR>
-
-   <TR BGCOLOR="white" CLASS="TableRowColor">
-      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;string</CODE>
-	 </FONT>
-      </TD>
-      <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#getSelectedText">getSelectedText</A></B>()
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Returns the selected text.
-      </TD>
-   </TR>
-
-   <TR BGCOLOR="white" CLASS="TableRowColor">
-      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;boolean</CODE>
-	 </FONT>
-      </TD>
-      <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#moveToBookmark">moveToBookmark</A></B>(&lt;TinyMCE_Bookmark&gt; bookmark)
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Restores the selection to the specified bookmark.
+	 
       </TD>
    </TR>
 
@@ -293,11 +238,11 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#scrollToNode">scrollToNode</A></B>(&lt;HTMLNode&gt; node)
+	       <A HREF="#hide">hide</A></B>()
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Scrolls to the specified node location.
+	 Hides the layer.
       </TD>
    </TR>
 
@@ -310,11 +255,164 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#selectNode">selectNode</A></B>(&lt;HTMLNode&gt; node, &lt;boolean&gt; collapse, &lt;boolean&gt; select_text_node, &lt;boolean&gt; to_start)
+	       <A HREF="#moveBy">moveBy</A></B>(&lt;int&gt; x, &lt;int&gt; y)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Selects the specified node.
+	 Moves the layer relative in pixels.
+      </TD>
+   </TR>
+
+   <TR BGCOLOR="white" CLASS="TableRowColor">
+      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
+	 <FONT SIZE="-1">
+	    <CODE>&nbsp;void</CODE>
+	 </FONT>
+      </TD>
+      <TD>
+	 <CODE>
+	    <B>
+	       <A HREF="#moveRelativeTo">moveRelativeTo</A></B>(&lt;HTMLElement&gt; re, &lt;string&gt; p)
+	 </CODE>
+	 <BR>
+	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	 Moves the layer relative to the specified HTML element.
+      </TD>
+   </TR>
+
+   <TR BGCOLOR="white" CLASS="TableRowColor">
+      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
+	 <FONT SIZE="-1">
+	    <CODE>&nbsp;void</CODE>
+	 </FONT>
+      </TD>
+      <TD>
+	 <CODE>
+	    <B>
+	       <A HREF="#moveTo">moveTo</A></B>(&lt;int&gt; x, &lt;int&gt; y)
+	 </CODE>
+	 <BR>
+	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	 Moves the layer absolute in pixels.
+      </TD>
+   </TR>
+
+   <TR BGCOLOR="white" CLASS="TableRowColor">
+      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
+	 <FONT SIZE="-1">
+	    <CODE>&nbsp;Object</CODE>
+	 </FONT>
+      </TD>
+      <TD>
+	 <CODE>
+	    <B>
+	       <A HREF="#onMouseDown">onMouseDown</A></B>(e)
+	 </CODE>
+	 <BR>
+	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	 
+      </TD>
+   </TR>
+
+   <TR BGCOLOR="white" CLASS="TableRowColor">
+      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
+	 <FONT SIZE="-1">
+	    <CODE>&nbsp;Object</CODE>
+	 </FONT>
+      </TD>
+      <TD>
+	 <CODE>
+	    <B>
+	       <A HREF="#parseInt">parseInt</A></B>(s)
+	 </CODE>
+	 <BR>
+	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	 
+      </TD>
+   </TR>
+
+   <TR BGCOLOR="white" CLASS="TableRowColor">
+      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
+	 <FONT SIZE="-1">
+	    <CODE>&nbsp;void</CODE>
+	 </FONT>
+      </TD>
+      <TD>
+	 <CODE>
+	    <B>
+	       <A HREF="#registerEventHandlers">registerEventHandlers</A></B>()
+	 </CODE>
+	 <BR>
+	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	 
+      </TD>
+   </TR>
+
+   <TR BGCOLOR="white" CLASS="TableRowColor">
+      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
+	 <FONT SIZE="-1">
+	    <CODE>&nbsp;void</CODE>
+	 </FONT>
+      </TD>
+      <TD>
+	 <CODE>
+	    <B>
+	       <A HREF="#removeCSSClass">removeCSSClass</A></B>(e, c)
+	 </CODE>
+	 <BR>
+	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	 
+      </TD>
+   </TR>
+
+   <TR BGCOLOR="white" CLASS="TableRowColor">
+      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
+	 <FONT SIZE="-1">
+	    <CODE>&nbsp;void</CODE>
+	 </FONT>
+      </TD>
+      <TD>
+	 <CODE>
+	    <B>
+	       <A HREF="#setAutoHide">setAutoHide</A></B>(s, cb)
+	 </CODE>
+	 <BR>
+	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	 ..
+      </TD>
+   </TR>
+
+   <TR BGCOLOR="white" CLASS="TableRowColor">
+      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
+	 <FONT SIZE="-1">
+	    <CODE>&nbsp;void</CODE>
+	 </FONT>
+      </TD>
+      <TD>
+	 <CODE>
+	    <B>
+	       <A HREF="#show">show</A></B>()
+	 </CODE>
+	 <BR>
+	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	 Shows the layer.
+      </TD>
+   </TR>
+
+   <TR BGCOLOR="white" CLASS="TableRowColor">
+      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
+	 <FONT SIZE="-1">
+	    <CODE>&nbsp;void</CODE>
+	 </FONT>
+      </TD>
+      <TD>
+	 <CODE>
+	    <B>
+	       <A HREF="#updateBlocker">updateBlocker</A></B>()
+	 </CODE>
+	 <BR>
+	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	 
       </TD>
    </TR>
 
@@ -328,24 +426,6 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
 
 
 <!-- ============ FIELD DETAIL START =========== -->
-
-   <A NAME="field_detail"><!-- --></A>
-   <TABLE BORDER="1" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
-      <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-         <TD COLSPAN=1><FONT SIZE="+2"><B>Field Detail</B></FONT></TD>
-      </TR>
-   </TABLE>
-
-   
-   <A NAME="instance"><!-- --></A>
-   <H3>instance</H3>
-   <PRE>Object&nbsp;<B>instance</B></PRE>
-   <UL>
-   
-   
-   </UL>
-   <HR>
-   
 
 
 <!-- ============ FIELD DETAIL END =========== -->
@@ -361,13 +441,14 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
    </TR>
 </TABLE>
 
-<A NAME="TinyMCE_Selection()"><!-- --></A><H3>
-TinyMCE_Selection</H3>
-<PRE><B>TinyMCE_Selection</B>(&lt;<a href="TinyMCE_Control.html">TinyMCE_Control</a>&gt; inst)</PRE>
+<A NAME="TinyMCE_Layer()"><!-- --></A><H3>
+TinyMCE_Layer</H3>
+<PRE><B>TinyMCE_Layer</B>(&lt;string&gt; id)</PRE>
 
 
 <UL>
-   Constructs a Selection instance and binds it to the specificed TinyMCE editor control.
+   Constructor for the TinyMCE Layer. This class enables you to construct
+ floating layers that is visible on top of select input fields, flashes and iframes.
 </UL>
 
 
@@ -375,7 +456,7 @@ TinyMCE_Selection</H3>
    <UL>
    <B>Parameters:</B>
    
-     <UL><CODE>inst</CODE> -  TinyMCE editor control instance.  
+     <UL><CODE>id</CODE> -  Unique ID name for the layer.    
      </UL>
    
    
@@ -407,13 +488,109 @@ TinyMCE_Selection</H3>
 
 <!-- One single method detail entry -->
 
-   <A NAME="getBookmark"><!-- --></A>
-   <H3>getBookmark</H3>
-   <PRE>TinyMCE_Bookmark <B>getBookmark</B>(&lt;boolean&gt; simple)</PRE>
+   <A NAME="addCSSClass"><!-- --></A>
+   <H3>addCSSClass</H3>
+   <PRE>void <B>addCSSClass</B>(e, c)</PRE>
    
-      <UL>Returns a selection bookmark that can be restored later with moveToBookmark.
- This acts much like the one MSIE has built in but this one is persistent if between DOM
- tree rewritings. The simple mode enables a quicker and non persistent bookmark.</UL>
+
+   <!-- METHOD PARAMETERS START -->
+   
+   <!-- METHOD PARAMETERS END -->
+
+   
+
+   <!-- ADDITIONAL ATTRIBUTES START -->
+   
+   <!-- ADDITIONAL ATTRIBUTES  END -->
+<HR>
+
+   <A NAME="explode"><!-- --></A>
+   <H3>explode</H3>
+   <PRE>Object <B>explode</B>(d, s)</PRE>
+   
+
+   <!-- METHOD PARAMETERS START -->
+   
+   <!-- METHOD PARAMETERS END -->
+
+   
+
+   <!-- ADDITIONAL ATTRIBUTES START -->
+   
+   <!-- ADDITIONAL ATTRIBUTES  END -->
+<HR>
+
+   <A NAME="getAbsPosition"><!-- --></A>
+   <H3>getAbsPosition</H3>
+   <PRE>Object <B>getAbsPosition</B>(n)</PRE>
+   
+
+   <!-- METHOD PARAMETERS START -->
+   
+   <!-- METHOD PARAMETERS END -->
+
+   
+
+   <!-- ADDITIONAL ATTRIBUTES START -->
+   
+   <!-- ADDITIONAL ATTRIBUTES  END -->
+<HR>
+
+   <A NAME="getBlocker"><!-- --></A>
+   <H3>getBlocker</H3>
+   <PRE>Object <B>getBlocker</B>()</PRE>
+   
+
+   <!-- METHOD PARAMETERS START -->
+   
+   <!-- METHOD PARAMETERS END -->
+
+   
+
+   <!-- ADDITIONAL ATTRIBUTES START -->
+   
+   <!-- ADDITIONAL ATTRIBUTES  END -->
+<HR>
+
+   <A NAME="getElement"><!-- --></A>
+   <H3>getElement</H3>
+   <PRE>Object <B>getElement</B>()</PRE>
+   
+
+   <!-- METHOD PARAMETERS START -->
+   
+   <!-- METHOD PARAMETERS END -->
+
+   
+
+   <!-- ADDITIONAL ATTRIBUTES START -->
+   
+   <!-- ADDITIONAL ATTRIBUTES  END -->
+<HR>
+
+   <A NAME="hide"><!-- --></A>
+   <H3>hide</H3>
+   <PRE>void <B>hide</B>()</PRE>
+   
+      <UL>Hides the layer.</UL>
+   
+
+   <!-- METHOD PARAMETERS START -->
+   
+   <!-- METHOD PARAMETERS END -->
+
+   
+
+   <!-- ADDITIONAL ATTRIBUTES START -->
+   
+   <!-- ADDITIONAL ATTRIBUTES  END -->
+<HR>
+
+   <A NAME="moveBy"><!-- --></A>
+   <H3>moveBy</H3>
+   <PRE>void <B>moveBy</B>(&lt;int&gt; x, &lt;int&gt; y)</PRE>
+   
+      <UL>Moves the layer relative in pixels.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
@@ -421,7 +598,10 @@ TinyMCE_Selection</H3>
    <UL>
    <B>Parameters:</B>
    
-     <UL><CODE>simple</CODE> -  If this is set to true, the selection bookmark will not me dom persistent.  
+     <UL><CODE>x</CODE> -  Horizontal relative position in pixels.  
+      </UL> 
+   
+     <UL><CODE>y</CODE> -  Vertical relative position in pixels. 	   
       </UL> 
    
    </UL>
@@ -429,149 +609,17 @@ TinyMCE_Selection</H3>
    <!-- METHOD PARAMETERS END -->
 
    
-   <UL>
-   <B>Returns:</B>
-        <UL>
-        Selection bookmark that can be restored later with moveToBookmark.   
-        </UL>
-   </UL>
-   
 
    <!-- ADDITIONAL ATTRIBUTES START -->
    
    <!-- ADDITIONAL ATTRIBUTES  END -->
 <HR>
 
-   <A NAME="getFocusElement"><!-- --></A>
-   <H3>getFocusElement</H3>
-   <PRE>HTMLElement <B>getFocusElement</B>()</PRE>
+   <A NAME="moveRelativeTo"><!-- --></A>
+   <H3>moveRelativeTo</H3>
+   <PRE>void <B>moveRelativeTo</B>(&lt;HTMLElement&gt; re, &lt;string&gt; p)</PRE>
    
-      <UL>Returns the currently selected/focused element.</UL>
-   
-
-   <!-- METHOD PARAMETERS START -->
-   
-   <!-- METHOD PARAMETERS END -->
-
-   
-   <UL>
-   <B>Returns:</B>
-        <UL>
-        Currently selected element.   
-        </UL>
-   </UL>
-   
-
-   <!-- ADDITIONAL ATTRIBUTES START -->
-   
-   <!-- ADDITIONAL ATTRIBUTES  END -->
-<HR>
-
-   <A NAME="getRng"><!-- --></A>
-   <H3>getRng</H3>
-   <PRE>DOMRange <B>getRng</B>()</PRE>
-   
-      <UL>Returns the browsers selections first range instance.</UL>
-   
-
-   <!-- METHOD PARAMETERS START -->
-   
-   <!-- METHOD PARAMETERS END -->
-
-   
-   <UL>
-   <B>Returns:</B>
-        <UL>
-        Browsers selections first range instance.   
-        </UL>
-   </UL>
-   
-
-   <!-- ADDITIONAL ATTRIBUTES START -->
-   
-   <!-- ADDITIONAL ATTRIBUTES  END -->
-<HR>
-
-   <A NAME="getSel"><!-- --></A>
-   <H3>getSel</H3>
-   <PRE>DOMSelection <B>getSel</B>()</PRE>
-   
-      <UL>Returns the browsers selection instance.</UL>
-   
-
-   <!-- METHOD PARAMETERS START -->
-   
-   <!-- METHOD PARAMETERS END -->
-
-   
-   <UL>
-   <B>Returns:</B>
-        <UL>
-        Browser selection instance.   
-        </UL>
-   </UL>
-   
-
-   <!-- ADDITIONAL ATTRIBUTES START -->
-   
-   <!-- ADDITIONAL ATTRIBUTES  END -->
-<HR>
-
-   <A NAME="getSelectedHTML"><!-- --></A>
-   <H3>getSelectedHTML</H3>
-   <PRE>string <B>getSelectedHTML</B>()</PRE>
-   
-      <UL>Returns the selected HTML code.</UL>
-   
-
-   <!-- METHOD PARAMETERS START -->
-   
-   <!-- METHOD PARAMETERS END -->
-
-   
-   <UL>
-   <B>Returns:</B>
-        <UL>
-        Selected HTML contents.   
-        </UL>
-   </UL>
-   
-
-   <!-- ADDITIONAL ATTRIBUTES START -->
-   
-   <!-- ADDITIONAL ATTRIBUTES  END -->
-<HR>
-
-   <A NAME="getSelectedText"><!-- --></A>
-   <H3>getSelectedText</H3>
-   <PRE>string <B>getSelectedText</B>()</PRE>
-   
-      <UL>Returns the selected text.</UL>
-   
-
-   <!-- METHOD PARAMETERS START -->
-   
-   <!-- METHOD PARAMETERS END -->
-
-   
-   <UL>
-   <B>Returns:</B>
-        <UL>
-        Selected text contents.   
-        </UL>
-   </UL>
-   
-
-   <!-- ADDITIONAL ATTRIBUTES START -->
-   
-   <!-- ADDITIONAL ATTRIBUTES  END -->
-<HR>
-
-   <A NAME="moveToBookmark"><!-- --></A>
-   <H3>moveToBookmark</H3>
-   <PRE>boolean <B>moveToBookmark</B>(&lt;TinyMCE_Bookmark&gt; bookmark)</PRE>
-   
-      <UL>Restores the selection to the specified bookmark.</UL>
+      <UL>Moves the layer relative to the specified HTML element.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
@@ -579,40 +627,10 @@ TinyMCE_Selection</H3>
    <UL>
    <B>Parameters:</B>
    
-     <UL><CODE>bookmark</CODE> -  Bookmark to restore selection from.  
+     <UL><CODE>re</CODE> -  Element to move the layer relative to.  
       </UL> 
    
-   </UL>
-   
-   <!-- METHOD PARAMETERS END -->
-
-   
-   <UL>
-   <B>Returns:</B>
-        <UL>
-        true/false if it was successful or not.   
-        </UL>
-   </UL>
-   
-
-   <!-- ADDITIONAL ATTRIBUTES START -->
-   
-   <!-- ADDITIONAL ATTRIBUTES  END -->
-<HR>
-
-   <A NAME="scrollToNode"><!-- --></A>
-   <H3>scrollToNode</H3>
-   <PRE>void <B>scrollToNode</B>(&lt;HTMLNode&gt; node)</PRE>
-   
-      <UL>Scrolls to the specified node location.</UL>
-   
-
-   <!-- METHOD PARAMETERS START -->
-   
-   <UL>
-   <B>Parameters:</B>
-   
-     <UL><CODE>node</CODE> -  Node to scroll to. 	   
+     <UL><CODE>p</CODE> -  Position of the layer tl = top left, tr = top right, bl = bottom left, br = bottom right. 	   
       </UL> 
    
    </UL>
@@ -626,11 +644,11 @@ TinyMCE_Selection</H3>
    <!-- ADDITIONAL ATTRIBUTES  END -->
 <HR>
 
-   <A NAME="selectNode"><!-- --></A>
-   <H3>selectNode</H3>
-   <PRE>void <B>selectNode</B>(&lt;HTMLNode&gt; node, &lt;boolean&gt; collapse, &lt;boolean&gt; select_text_node, &lt;boolean&gt; to_start)</PRE>
+   <A NAME="moveTo"><!-- --></A>
+   <H3>moveTo</H3>
+   <PRE>void <B>moveTo</B>(&lt;int&gt; x, &lt;int&gt; y)</PRE>
    
-      <UL>Selects the specified node.</UL>
+      <UL>Moves the layer absolute in pixels.</UL>
    
 
    <!-- METHOD PARAMETERS START -->
@@ -638,19 +656,129 @@ TinyMCE_Selection</H3>
    <UL>
    <B>Parameters:</B>
    
-     <UL><CODE>node</CODE> -  Node object to move selection to.  
+     <UL><CODE>x</CODE> -  Horizontal absolute position in pixels.  
       </UL> 
    
-     <UL><CODE>collapse</CODE> -  True/false if it will be collasped.  
-      </UL> 
-   
-     <UL><CODE>select_text_node</CODE> -  True/false if the text contents should be selected or not.  
-      </UL> 
-   
-     <UL><CODE>to_start</CODE> -  True/false if the collapse should be to start or end of range. 	   
+     <UL><CODE>y</CODE> -  Vertical absolute position in pixels. 	   
       </UL> 
    
    </UL>
+   
+   <!-- METHOD PARAMETERS END -->
+
+   
+
+   <!-- ADDITIONAL ATTRIBUTES START -->
+   
+   <!-- ADDITIONAL ATTRIBUTES  END -->
+<HR>
+
+   <A NAME="onMouseDown"><!-- --></A>
+   <H3>onMouseDown</H3>
+   <PRE>Object <B>onMouseDown</B>(e)</PRE>
+   
+
+   <!-- METHOD PARAMETERS START -->
+   
+   <!-- METHOD PARAMETERS END -->
+
+   
+
+   <!-- ADDITIONAL ATTRIBUTES START -->
+   
+   <!-- ADDITIONAL ATTRIBUTES  END -->
+<HR>
+
+   <A NAME="parseInt"><!-- --></A>
+   <H3>parseInt</H3>
+   <PRE>Object <B>parseInt</B>(s)</PRE>
+   
+
+   <!-- METHOD PARAMETERS START -->
+   
+   <!-- METHOD PARAMETERS END -->
+
+   
+
+   <!-- ADDITIONAL ATTRIBUTES START -->
+   
+   <!-- ADDITIONAL ATTRIBUTES  END -->
+<HR>
+
+   <A NAME="registerEventHandlers"><!-- --></A>
+   <H3>registerEventHandlers</H3>
+   <PRE>void <B>registerEventHandlers</B>()</PRE>
+   
+
+   <!-- METHOD PARAMETERS START -->
+   
+   <!-- METHOD PARAMETERS END -->
+
+   
+
+   <!-- ADDITIONAL ATTRIBUTES START -->
+   
+   <!-- ADDITIONAL ATTRIBUTES  END -->
+<HR>
+
+   <A NAME="removeCSSClass"><!-- --></A>
+   <H3>removeCSSClass</H3>
+   <PRE>void <B>removeCSSClass</B>(e, c)</PRE>
+   
+
+   <!-- METHOD PARAMETERS START -->
+   
+   <!-- METHOD PARAMETERS END -->
+
+   
+
+   <!-- ADDITIONAL ATTRIBUTES START -->
+   
+   <!-- ADDITIONAL ATTRIBUTES  END -->
+<HR>
+
+   <A NAME="setAutoHide"><!-- --></A>
+   <H3>setAutoHide</H3>
+   <PRE>void <B>setAutoHide</B>(s, cb)</PRE>
+   
+      <UL>..</UL>
+   
+
+   <!-- METHOD PARAMETERS START -->
+   
+   <!-- METHOD PARAMETERS END -->
+
+   
+
+   <!-- ADDITIONAL ATTRIBUTES START -->
+   
+   <!-- ADDITIONAL ATTRIBUTES  END -->
+<HR>
+
+   <A NAME="show"><!-- --></A>
+   <H3>show</H3>
+   <PRE>void <B>show</B>()</PRE>
+   
+      <UL>Shows the layer.</UL>
+   
+
+   <!-- METHOD PARAMETERS START -->
+   
+   <!-- METHOD PARAMETERS END -->
+
+   
+
+   <!-- ADDITIONAL ATTRIBUTES START -->
+   
+   <!-- ADDITIONAL ATTRIBUTES  END -->
+<HR>
+
+   <A NAME="updateBlocker"><!-- --></A>
+   <H3>updateBlocker</H3>
+   <PRE>void <B>updateBlocker</B>()</PRE>
+   
+
+   <!-- METHOD PARAMETERS START -->
    
    <!-- METHOD PARAMETERS END -->
 
@@ -676,7 +804,7 @@ TinyMCE_Selection</H3>
 <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3">
   <TR ALIGN="center" VALIGN="top">
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">  <A HREF="overview-summary-TinyMCE_Selection.class.js.html"><FONT CLASS="NavBarFont1"><B>File</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">  <A HREF="overview-summary-TinyMCE_Layer.class.js.html"><FONT CLASS="NavBarFont1"><B>File</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="overview-tree.html"><FONT CLASS="NavBarFont1"><b>Tree</b></FONT></A>&nbsp;</TD>
   <!--TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"-->    <!--A HREF="deprecated-list.html"--><!--FONT CLASS="NavBarFont1">Deprecated</FONT--><!--/A--><!--&nbsp;</TD-->
@@ -693,13 +821,13 @@ TinyMCE_Selection</H3>
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="TinyMCE_Popup.html"><B>PREV CLASS</B></A><!-- 
+&nbsp;<A HREF="TinyMCE_Engine.html"><B>PREV CLASS</B></A><!-- 
    NEXT CLASS 
 -->
-&nbsp;<A HREF="TinyMCE_UndoRedo.html"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="TinyMCE_Popup.html"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="index.html" TARGET="_top"><B>FRAMES</B></A>  &nbsp;
-&nbsp;<A HREF="TinyMCE_Selection.html" TARGET="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="TinyMCE_Layer.html" TARGET="_top"><B>NO FRAMES</B></A>  &nbsp;
 &nbsp;
 <SCRIPT>
   <!--

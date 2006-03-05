@@ -44,7 +44,7 @@ parent.document.title="TinyMCE_Engine";
 &nbsp;<A HREF="TinyMCE_Control.html"><B>PREV CLASS</B></A><!-- 
    NEXT CLASS 
 -->
-&nbsp;<A HREF="TinyMCE_Popup.html"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="TinyMCE_Layer.html"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="index.html" TARGET="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="TinyMCE_Engine.html" TARGET="_top"><B>NO FRAMES</B></A>  &nbsp;
@@ -374,7 +374,7 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#_getElementById">_getElementById</A></B>(&lt;string&gt; id)
+	       <A HREF="#_getElementById">_getElementById</A></B>(&lt;string&gt; i&lt;DOMDocument&gt; d, d)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -442,7 +442,7 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
-	       <A HREF="#addEventHandlers">addEventHandlers</A></B>(&lt;string&gt; editor_id)
+	       <A HREF="#addEventHandlers">addEventHandlers</A></B>(&lt;inst&gt; inst)
 	 </CODE>
 	 <BR>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -1519,6 +1519,23 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       <TD>
 	 <CODE>
 	    <B>
+	       <A HREF="#loadPlugin">loadPlugin</A></B>(&lt;string&gt; n, &lt;string&gt; u)
+	 </CODE>
+	 <BR>
+	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	 Load plugin from external URL.
+      </TD>
+   </TR>
+
+   <TR BGCOLOR="white" CLASS="TableRowColor">
+      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
+	 <FONT SIZE="-1">
+	    <CODE>&nbsp;void</CODE>
+	 </FONT>
+      </TD>
+      <TD>
+	 <CODE>
+	    <B>
 	       <A HREF="#loadScript">loadScript</A></B>(&lt;string&gt; url)
 	 </CODE>
 	 <BR>
@@ -2043,6 +2060,23 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
       </TD>
    </TR>
 
+   <TR BGCOLOR="white" CLASS="TableRowColor">
+      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
+	 <FONT SIZE="-1">
+	    <CODE>&nbsp;string</CODE>
+	 </FONT>
+      </TD>
+      <TD>
+	 <CODE>
+	    <B>
+	       <A HREF="#xmlEncode">xmlEncode</A></B>(&lt;string&gt; s)
+	 </CODE>
+	 <BR>
+	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	 Encodes the string to raw XML entities.
+      </TD>
+   </TR>
+
 
 </TABLE>
 
@@ -2352,7 +2386,7 @@ TinyMCE_Engine</H3>
 
    <A NAME="_getElementById"><!-- --></A>
    <H3>_getElementById</H3>
-   <PRE>HTMLElement <B>_getElementById</B>(&lt;string&gt; id)</PRE>
+   <PRE>HTMLElement <B>_getElementById</B>(&lt;string&gt; i&lt;DOMDocument&gt; d, d)</PRE>
    
       <UL>Returns a element by id, this will also search the form names to match the id.</UL>
    
@@ -2363,6 +2397,9 @@ TinyMCE_Engine</H3>
    <B>Parameters:</B>
    
      <UL><CODE>id</CODE> -  Id of element.  
+      </UL> 
+   
+     <UL><CODE>d</CODE> -  Optional document.  
       </UL> 
    
    </UL>
@@ -2470,7 +2507,7 @@ TinyMCE_Engine</H3>
 
    <A NAME="addEventHandlers"><!-- --></A>
    <H3>addEventHandlers</H3>
-   <PRE>void <B>addEventHandlers</B>(&lt;string&gt; editor_id)</PRE>
+   <PRE>void <B>addEventHandlers</B>(&lt;inst&gt; inst)</PRE>
    
       <UL>Adds the handleEvent function to the specified editor instance.</UL>
    
@@ -2480,7 +2517,7 @@ TinyMCE_Engine</H3>
    <UL>
    <B>Parameters:</B>
    
-     <UL><CODE>editor_id</CODE> -  Editor control instance to add event handler to.    
+     <UL><CODE>inst</CODE> -  Editor control instance to add event handler to.    
       </UL> 
    
    </UL>
@@ -4626,6 +4663,35 @@ TinyMCE_Engine</H3>
    <!-- ADDITIONAL ATTRIBUTES  END -->
 <HR>
 
+   <A NAME="loadPlugin"><!-- --></A>
+   <H3>loadPlugin</H3>
+   <PRE>void <B>loadPlugin</B>(&lt;string&gt; n, &lt;string&gt; u)</PRE>
+   
+      <UL>Load plugin from external URL.</UL>
+   
+
+   <!-- METHOD PARAMETERS START -->
+   
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>n</CODE> -  Plugin name for example \"emotions\".  
+      </UL> 
+   
+     <UL><CODE>u</CODE> -  URL of plugin directory to load. 	   
+      </UL> 
+   
+   </UL>
+   
+   <!-- METHOD PARAMETERS END -->
+
+   
+
+   <!-- ADDITIONAL ATTRIBUTES START -->
+   
+   <!-- ADDITIONAL ATTRIBUTES  END -->
+<HR>
+
    <A NAME="loadScript"><!-- --></A>
    <H3>loadScript</H3>
    <PRE>void <B>loadScript</B>(&lt;string&gt; url)</PRE>
@@ -5574,6 +5640,40 @@ TinyMCE_Engine</H3>
    <!-- ADDITIONAL ATTRIBUTES  END -->
 <HR>
 
+   <A NAME="xmlEncode"><!-- --></A>
+   <H3>xmlEncode</H3>
+   <PRE>string <B>xmlEncode</B>(&lt;string&gt; s)</PRE>
+   
+      <UL>Encodes the string to raw XML entities. This will only convert the most common ones.
+ For real entity encoding use the xmlEncode method of the Cleanup class.</UL>
+   
+
+   <!-- METHOD PARAMETERS START -->
+   
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>s</CODE> -  String to encode.  
+      </UL> 
+   
+   </UL>
+   
+   <!-- METHOD PARAMETERS END -->
+
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        XML Encoded string.   
+        </UL>
+   </UL>
+   
+
+   <!-- ADDITIONAL ATTRIBUTES START -->
+   
+   <!-- ADDITIONAL ATTRIBUTES  END -->
+<HR>
+
 
 
 <!-- ============ METHOD DETAIL END ========== -->
@@ -5609,7 +5709,7 @@ TinyMCE_Engine</H3>
 &nbsp;<A HREF="TinyMCE_Control.html"><B>PREV CLASS</B></A><!-- 
    NEXT CLASS 
 -->
-&nbsp;<A HREF="TinyMCE_Popup.html"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="TinyMCE_Layer.html"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="index.html" TARGET="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="TinyMCE_Engine.html" TARGET="_top"><B>NO FRAMES</B></A>  &nbsp;
@@ -5640,6 +5740,6 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
 <FONT SIZE="-1">
 
 </FONT>
-<div class="jsdoc_ctime">Documentation generated by <a href="http://jsdoc.sourceforge.net/" target="_parent">JSDoc</a> on Sun Feb 26 17:36:18 2006</div>
+<div class="jsdoc_ctime">Documentation generated by <a href="http://jsdoc.sourceforge.net/" target="_parent">JSDoc</a> on Fri Mar  3 17:09:48 2006</div>
 </BODY>
 </HTML>

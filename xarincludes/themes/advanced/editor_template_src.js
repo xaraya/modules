@@ -1,7 +1,7 @@
 /**
  * $RCSfile: editor_template_src.js,v $
- * $Revision: 1.91 $
- * $Date: 2006/02/15 18:42:03 $
+ * $Revision: 1.92 $
+ * $Date: 2006/03/03 16:10:42 $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
@@ -712,7 +712,7 @@ var TinyMCE_AdvancedTheme = {
 				}
 
 				// Only append element nodes to path
-				if (parentNode.nodeType == 1) {
+				if (parentNode.nodeType == 1 && tinyMCE.getAttrib(parentNode, "class").indexOf('mceItemHidden') == -1) {
 					path[path.length] = parentNode;
 				}
 

@@ -185,7 +185,7 @@ a.mceTiledButton img {
 }
 
 * html a.mceButtonSelected {
-	border: 1px solid #C0C0BB;
+	border: 1px solid #C0C0BB !important;
 }
 
 * html a.mceButtonNormal:hover, * html a.mceButtonSelected:hover {

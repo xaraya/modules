@@ -110,8 +110,8 @@ function asd() {
 
         <pre class="sourceview"><span class="comment">/**
  * $RCSfile: overview-summary-TinyMCE_Control.class.js.html,v $
- * $Revision: 1.20 $
- * $Date: 2006/02/26 16:39:48 $
+ * $Revision: 1.25 $
+ * $Date: 2006/03/03 16:10:35 $
  *
  * <span class="attrib">@author</span> Moxiecode
  * <span class="attrib">@copyright</span> Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
@@ -1328,7 +1328,7 @@ TinyMCE_Control.<span class="reserved">prototype</span> = {
 
 		var deltaWidth = editorTemplate[<span class="literal">'delta_width'</span>] ? editorTemplate[<span class="literal">'delta_width'</span>] : 0;
 		var deltaHeight = editorTemplate[<span class="literal">'delta_height'</span>] ? editorTemplate[<span class="literal">'delta_height'</span>] : 0;
-		var html = <span class="literal">'&lt;span id="'</span> + <span class="reserved">this</span>.editorId + <span class="literal">'_parent"&gt;'</span> + editorTemplate[<span class="literal">'html'</span>];
+		var html = <span class="literal">'&lt;span id="'</span> + <span class="reserved">this</span>.editorId + <span class="literal">'_parent" class="mceEditorContainer"&gt;'</span> + editorTemplate[<span class="literal">'html'</span>];
 
 		html = tinyMCE.replaceVar(html, <span class="literal">"editor_id"</span>, <span class="reserved">this</span>.editorId);
 		<span class="reserved">this</span>.settings[<span class="literal">'default_document'</span>] = tinyMCE.baseURL + <span class="literal">"/blank.htm"</span>;
@@ -1447,8 +1447,8 @@ TinyMCE_Control.<span class="reserved">prototype</span> = {
 		var tElm = targetDoc.getElementById(<span class="reserved">this</span>.editorId);
 
 		<span class="reserved">if</span> (!tinyMCE.isMSIE) {
-			<span class="reserved">if</span> (tElm &amp;&amp; tElm.nodeName.toLowerCase() == <span class="literal">"span"</span>) {
-				tElm = tinyMCE._createIFrame(tElm);
+			<span class="reserved">if</span> (tElm &amp;&amp; tElm.nodeName == <span class="literal">"SPAN"</span>) {
+				tElm = tinyMCE._createIFrame(tElm, targetDoc);
 				dynamicIFrame = true;
 			}
 
@@ -1459,8 +1459,8 @@ TinyMCE_Control.<span class="reserved">prototype</span> = {
 
 			<span class="comment">//this.getDoc().designMode = "on";</span>
 		} <span class="reserved">else</span> {
-			<span class="reserved">if</span> (tElm &amp;&amp; tElm.nodeName.toLowerCase() == <span class="literal">"span"</span>)
-				tElm = tinyMCE._createIFrame(tElm);
+			<span class="reserved">if</span> (tElm &amp;&amp; tElm.nodeName == <span class="literal">"SPAN"</span>)
+				tElm = tinyMCE._createIFrame(tElm, targetDoc, targetDoc.parentWindow);
 			<span class="reserved">else</span>
 				tElm = targetDoc.frames[<span class="reserved">this</span>.editorId];
 
@@ -1500,7 +1500,7 @@ TinyMCE_Control.<span class="reserved">prototype</span> = {
 		<span class="comment">// This timeout is needed in MSIE 5.5 for some odd reason</span>
 		<span class="comment">// it seems that the document.frames isn't initialized yet?</span>
 		<span class="reserved">if</span> (tinyMCE.isMSIE)
-			window.setTimeout(<span class="literal">"TinyMCE_Engine.prototype.addEventHandlers('"</span> + <span class="reserved">this</span>.editorId + <span class="literal">"');"</span>, 1);
+			window.setTimeout(<span class="literal">"tinyMCE.addEventHandlers(tinyMCE.instances[\"</span><span class="literal">" + this.editorId + "</span>\<span class="literal">"]);"</span>, 1);
 
 		tinyMCE.setupContent(<span class="reserved">this</span>.editorId, true);
 
@@ -1571,6 +1571,59 @@ TinyMCE_Control.<span class="reserved">prototype</span> = {
 	 */</span>
 	getRng : <span class="reserved">function</span>() {
 		<span class="reserved">return</span> <span class="reserved">this</span>.selection.getRng();
+	},
+
+	<span class="comment">/**
+	 * Moves the contents from the TinyMCE editor control instance to the hidden textarea
+	 * that got replaced with TinyMCE. This is executed automaticly on for example form submit unless you configure otherwice.
+	 *
+	 * <span class="attrib">@param</span> {boolean} skip_cleanup Optional Skip cleanup, simply move the contents as fast as possible.
+	 * <span class="attrib">@param</span> {boolean} skip_callback Optional Skip callback, don't call the save_callback function.
+	 */</span>
+	triggerSave : <span class="reserved">function</span>(skip_cleanup, skip_callback) {
+		<span class="reserved">this</span>.switchSettings();
+
+		tinyMCE.settings[<span class="literal">'preformatted'</span>] = false;
+
+		<span class="comment">// Default to false</span>
+		<span class="reserved">if</span> (typeof(skip_cleanup) == <span class="literal">"undefined"</span>)
+			skip_cleanup = false;
+
+		<span class="comment">// Default to false</span>
+		<span class="reserved">if</span> (typeof(skip_callback) == <span class="literal">"undefined"</span>)
+			skip_callback = false;
+
+		tinyMCE._setHTML(<span class="reserved">this</span>.getDoc(), <span class="reserved">this</span>.getBody().innerHTML);
+
+		<span class="comment">// Remove visual aids when cleanup is disabled</span>
+		<span class="reserved">if</span> (<span class="reserved">this</span>.settings[<span class="literal">'cleanup'</span>] == false) {
+			tinyMCE.handleVisualAid(<span class="reserved">this</span>.getBody(), true, false, <span class="reserved">this</span>);
+			tinyMCE._setEventsEnabled(<span class="reserved">this</span>.getBody(), true);
+		}
+
+		tinyMCE._customCleanup(<span class="reserved">this</span>, <span class="literal">"submit_content_dom"</span>, <span class="reserved">this</span>.contentWindow.document.body);
+		var htm = skip_cleanup ? <span class="reserved">this</span>.getBody().innerHTML : tinyMCE._cleanupHTML(<span class="reserved">this</span>, <span class="reserved">this</span>.getDoc(), <span class="reserved">this</span>.settings, <span class="reserved">this</span>.getBody(), tinyMCE.visualAid, true, true);
+		htm = tinyMCE._customCleanup(<span class="reserved">this</span>, <span class="literal">"submit_content"</span>, htm);
+
+		<span class="reserved">if</span> (!skip_callback &amp;&amp; tinyMCE.settings[<span class="literal">'save_callback'</span>] != <span class="literal">""</span>)
+			var content = eval(tinyMCE.settings[<span class="literal">'save_callback'</span>] + <span class="literal">"(this.formTargetElementId,htm,this.getBody());"</span>);
+
+		<span class="comment">// Use callback content if available</span>
+		<span class="reserved">if</span> ((typeof(content) != <span class="literal">"undefined"</span>) &amp;&amp; content != null)
+			htm = content;
+
+		<span class="comment">// Replace some weird entities (Bug: #1056343)</span>
+		htm = tinyMCE.regexpReplace(htm, <span class="literal">"&amp;#40;"</span>, <span class="literal">"("</span>, <span class="literal">"gi"</span>);
+		htm = tinyMCE.regexpReplace(htm, <span class="literal">"&amp;#41;"</span>, <span class="literal">")"</span>, <span class="literal">"gi"</span>);
+		htm = tinyMCE.regexpReplace(htm, <span class="literal">"&amp;#59;"</span>, <span class="literal">";"</span>, <span class="literal">"gi"</span>);
+		htm = tinyMCE.regexpReplace(htm, <span class="literal">"&amp;#34;"</span>, <span class="literal">"&amp;quot;"</span>, <span class="literal">"gi"</span>);
+		htm = tinyMCE.regexpReplace(htm, <span class="literal">"&amp;#94;"</span>, <span class="literal">"^"</span>, <span class="literal">"gi"</span>);
+
+		<span class="reserved">if</span> (<span class="reserved">this</span>.formElement)
+			<span class="reserved">this</span>.formElement.value = htm;
+
+		<span class="reserved">if</span> (tinyMCE.isSafari &amp;&amp; <span class="reserved">this</span>.formElement)
+			<span class="reserved">this</span>.formElement.innerText = htm;
 	}
 };
 </pre>
@@ -1631,6 +1684,6 @@ TinyMCE_Control.<span class="reserved">prototype</span> = {
 <font size="-1">
 
 </font>
-<div class="jsdoc_ctime">Documentation generated by <a href="http://jsdoc.sourceforge.net/" target="_parent">JSDoc</a> on Sun Feb 26 17:36:18 2006</div>
+<div class="jsdoc_ctime">Documentation generated by <a href="http://jsdoc.sourceforge.net/" target="_parent">JSDoc</a> on Fri Mar  3 17:09:48 2006</div>
 </body>
 </html>
