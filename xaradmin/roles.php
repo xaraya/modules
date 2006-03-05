@@ -55,10 +55,10 @@ if ($tiki_p_admin_workflow != 'y') {
                       'roleId' => 0
                      );
     }
-
+    
     $tplData['roleId'] =  $roleId;
     $tplData['info'] =  $info;
-
+    
 // Delete roles
 if (isset($_REQUEST["delete"])) {
     foreach (array_keys($_REQUEST["role"])as $item) {

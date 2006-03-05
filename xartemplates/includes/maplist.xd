@@ -52,7 +52,9 @@
             </xar:if>
             <tr class="#$rowclass#">
               <td>
-                <input type="checkbox" name="map[#$mapitems[$ix]['userId']#:::#$mapitems[$ix]['roleId']#]" />&nbsp;
+                  <xar:if condition="isset($mapitems[$ix]['roleId'])">
+                      <input type="checkbox" name="map[#$mapitems[$ix]['userId']#:::#$mapitems[$ix]['roleId']#]" />
+                  </xar:if>&nbsp;
                 #$mapitems[$ix]['name']#
               </td>
               <td>
