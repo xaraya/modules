@@ -1,12 +1,16 @@
 <?php
 /**
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 by the Xaraya Development Team.
+ * Headlines - Generates a list of feeds
+ *
+ * @package modules
+ * @copyright (C) 2005-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage headlines module
+ * @link http://www.xaraya.com/index.php/release/777.html
  * @author John Cox
-*/
+ */
 /**
  * delete item
  * @param 'hid' the id of the item to be deleted
@@ -28,7 +32,7 @@ function headlines_admin_delete()
                           'get',
                           array('hid' => $hid));
 
-    if ($link == false) return; 
+    if ($link == false) return;
 
     // Check for confirmation.
     if (empty($confirm)) {
@@ -48,7 +52,7 @@ function headlines_admin_delete()
     if (!xarModAPIFunc('headlines',
                        'admin',
                        'delete',
-                       array('hid' => $hid))) return; 
+                       array('hid' => $hid))) return;
 
     xarResponseRedirect(xarModURL('headlines', 'admin', 'view'));
 

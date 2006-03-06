@@ -1,12 +1,16 @@
 <?php
 /**
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 by the Xaraya Development Team.
+ * Headlines - Generates a list of feeds
+ *
+ * @package modules
+ * @copyright (C) 2005-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage headlines module
+ * @link http://www.xaraya.com/index.php/release/777.html
  * @author John Cox
-*/
+ */
 /**
  * This is a standard function that is called with the results of the
  * form supplied by headlines_admin_modify() to update a current item
@@ -27,7 +31,7 @@ function headlines_admin_update()
     if (!xarSecConfirmAuthKey()) return;
 
     $data['transform'] = array('desc');
-    $data = xarModCallHooks('item', 'transform-input', 0, $data, 'headlines', 0); 
+    $data = xarModCallHooks('item', 'transform-input', 0, $data, 'headlines', 0);
 
     if(!xarModAPIFunc('headlines',
                       'admin',

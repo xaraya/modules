@@ -1,17 +1,21 @@
 <?php
 /**
- * Displays an RSS Display.  
+ * Displays an RSS Display.
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
+ * @package modules
+ * @copyright (C) 2005-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
- * 
- * @subpackage headlines Module
+ *
+ * @subpackage headlines module
+ * @link http://www.xaraya.com/index.php/release/777.html
+ * @author John Cox
+ */
+/**
  * @author RevJim (revjim.net), John Cox
  * @todo Make the admin selectable number of headlines work.
  * @todo show search and image of rss site
-*/
-
+ */
 /**
  * Block init - holds security.
  */
@@ -54,7 +58,7 @@ function headlines_cloudblock_display($blockinfo)
         $insert['link'] = 'None Configured';
         $insert['channel']  = 'None Configured';
         //We are simply throwing something into the modvar so we don't get ugly errors.
-        // This is really only run once.  TODO, throw this in the init and upgrade for 
+        // This is really only run once.  TODO, throw this in the init and upgrade for
         // The search to remove this processing.
         $firstsearch = $insert['title'] . '|' . $insert['link'] . '|' . $insert['channel'];
         $firstsearch = serialize($firstsearch);

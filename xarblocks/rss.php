@@ -1,17 +1,21 @@
 <?php
 /**
- * Displays an RSS Display.  
+ * Displays an RSS Display.
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
+ * @package modules
+ * @copyright (C) 2005-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
- * 
- * @subpackage headlines Module
+ *
+ * @subpackage headlines module
+ * @link http://www.xaraya.com/index.php/release/777.html
+ * @author John Cox
+ */
+/**
  * @author RevJim (revjim.net), John Cox
  * @todo Make the admin selectable number of headlines work.
  * @todo show search and image of rss site
-*/
-
+ */
 /**
  * Block init - holds security.
  */
@@ -191,7 +195,7 @@ function headlines_rssblock_modify($blockinfo)
  * Updates the Block config from the Blocks Admin
  * @param $blockinfo array containing title,content
  */
-function headlines_rssblock_insert($blockinfo) 
+function headlines_rssblock_insert($blockinfo)
 {
     $vars = array();
     if (!xarVarFetch('rssurl', 'str:1:', $vars['rssurl'], '', XARVAR_NOT_REQUIRED)) {return;}
@@ -200,7 +204,7 @@ function headlines_rssblock_insert($blockinfo)
     if (!xarVarFetch('show_chantitle', 'checkbox', $vars['show_chantitle'], false, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('show_chandesc', 'checkbox', $vars['show_chandesc'], false, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('refresh', 'int:0', $vars['refresh'], 3600, XARVAR_NOT_REQUIRED)) {return;}
-        
+
     $blockinfo['content'] = $vars;
     return $blockinfo;
 }

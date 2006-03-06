@@ -1,15 +1,18 @@
 <?php
 /**
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 by the Xaraya Development Team.
+ * Headlines - Generates a list of feeds
+ *
+ * @package modules
+ * @copyright (C) 2005-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage headlines module
+ * @link http://www.xaraya.com/index.php/release/777.html
  * @author John Cox
-*/
+ */
 /**
  * process feed
- * @returns array
  * @return array of links, or false on failure
  */
 
@@ -19,8 +22,8 @@ function headlines_userapi_process($args)
     // Require the xmlParser class
     require_once('modules/base/xarclass/xmlParser.php');
     // Require the feedParser class
-    require_once('modules/base/xarclass/feedParser.php');    
-    
+    require_once('modules/base/xarclass/feedParser.php');
+
         // Sanitize the URL provided to us since
     // some people can be very mean.
     $feedfile = preg_replace("/\.\./","donthackthis",$feedfile);
@@ -121,8 +124,8 @@ function headlines_userapi_process($args)
         return;
     }
 
-    $data['feedcontent'] = $feedcontent;    
-    
+    $data['feedcontent'] = $feedcontent;
+
     return $data;
 }
 ?>

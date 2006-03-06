@@ -1,17 +1,20 @@
 <?php
 /**
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 by the Xaraya Development Team.
+ * Headlines - Generates a list of feeds
+ *
+ * @package modules
+ * @copyright (C) 2005-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage headlines module
+ * @link http://www.xaraya.com/index.php/release/777.html
  * @author John Cox
-*/
+ */
 /**
  * create a new headline
  * @param $args['url'] url of the item
- * @returns int
- * @return headline ID on success, false on failure
+ * @return int headline ID on success, false on failure
  */
 function headlines_adminapi_create($args)
 {

@@ -1,12 +1,16 @@
 <?php
 /**
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 by the Xaraya Development Team.
+ * Headlines - Generates a list of feeds
+ *
+ * @package modules
+ * @copyright (C) 2005-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage headlines module
+ * @link http://www.xaraya.com/index.php/release/777.html
  * @author John Cox
-*/
+ */
 function headlines_user_main()
 {
     xarVarFetch('startnum', 'id', $startnum, '1', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY);
@@ -85,20 +89,20 @@ function headlines_user_main()
         } else {
             $showcomments = 1;
         }
-        
+
         if ($showcomments) {
             if (!xarModIsAvailable('comments')) {
                 $showcomments = 0;
             }
         }
-        
+
         if ($showcomments) {
             $links[$i]['comments'] = xarModAPIFunc('comments',
                                                    'user',
                                                    'get_count',
                                                    array('modid' => xarModGetIDFromName('headlines'),
                                                          'objectid' => $link['hid']));
-            
+
             if (!$links[$i]['comments']) {
                 $links[$i]['comments'] = '';
             } elseif ($links[$i]['comments'] == 1) {
@@ -109,7 +113,7 @@ function headlines_user_main()
         } else {
             $links[$i]['comments'] = '';
         }
-        
+
     }
 
     $data['indlinks'] = $links;

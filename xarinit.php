@@ -18,7 +18,7 @@ xarDBLoadTableMaintenanceAPI();
  * Initialise the headlines module
  *
  * @return bool
- * @raise DATABASE_ERROR
+ * @throws DATABASE_ERROR
  */
 function headlines_init()
 {
