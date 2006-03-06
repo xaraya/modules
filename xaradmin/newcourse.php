@@ -65,7 +65,9 @@ function courses_admin_newcourse($args)
     } else {
         $data['hookoutput'] = $hooks;
     }
-    $data['hooks'] = '';
+    $ctype = xarModApiFunc('courses','user','gettype',array('tid'=> $coursetype));
+    $data['coursetype'] = $coursetype;
+    $data['ctypename'] = $ctype['coursetype'];
     // For E_ALL purposes, we need to check to make sure the vars are set.
     // If they are not set, then we need to set them empty to surpress errors
     if (empty($name)) {
@@ -78,12 +80,6 @@ function courses_admin_newcourse($args)
         $data['number'] = '';
     } else {
         $data['number'] = $number;
-    }
-
-     if (empty($coursetype)) {
-        $data['coursetype'] = '';
-    } else {
-        $data['coursetype'] = $coursetype;
     }
 
      if (empty($shortdesc)) {

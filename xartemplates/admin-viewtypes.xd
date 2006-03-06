@@ -47,6 +47,12 @@
                <xar:else />
                    <a href="#$item.deleteurl#"><xar:mlstring>Delete</xar:mlstring></a>
                </xar:if>
+               |
+               <xar:if condition="empty($item['addcourseurl'])">
+                   <xar:mlstring>Add Course</xar:mlstring>
+               <xar:else />
+                   <a href="#$item.addcourseurl#"><xar:mlstring>Add Course</xar:mlstring></a>
+               </xar:if>
             </td>
         </tr>
         </xar:foreach>

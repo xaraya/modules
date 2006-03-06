@@ -3,7 +3,7 @@
  * Utility function to pass menu items to the main menu
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -15,7 +15,6 @@
  * utility function pass individual menu items to the main menu
  *
  * @author the Courses module development team
- * @returns array
  * @return array containing the menulinks for the main menu items.
  */
 function courses_adminapi_getmenulinks()
@@ -26,13 +25,6 @@ function courses_adminapi_getmenulinks()
                 'viewcourses'),
             'title' => xarML('View all courses that have been added.'),
             'label' => xarML('View Courses'));
-    }
-    if (xarSecurityCheck('AddCourses', 0)) {
-        $menulinks[] = Array('url' => xarModURL('courses',
-                'admin',
-                'newcourse'),
-            'title' => xarML('Adds a new course to system.'),
-            'label' => xarML('Add Course'));
     }
     if (xarSecurityCheck('ReadCourses', 0)) {
         $menulinks[] = Array('url' => xarModURL('courses',
@@ -45,7 +37,7 @@ function courses_adminapi_getmenulinks()
         $menulinks[] = Array('url' => xarModURL('courses',
                 'admin',
                 'viewtypes'),
-            'title' => xarML('Modify the courses types'),
+            'title' => xarML('View the courses types and create new courses from them'),
             'label' => xarML('Course types'));
     }
     if (xarSecurityCheck('AdminCourses', 0)) {

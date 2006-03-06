@@ -61,10 +61,7 @@
                         <xar:mlstring>Course Type</xar:mlstring>
                      </span>
                   </label>
-                  <xar:data-input name="coursetype" type="2" value="$coursetype" />
-                  <xar:if condition="!empty($invalid['coursetype'])">
-                    <span style="color: red"><xar:mlstring>ERROR! This is not a valid type</xar:mlstring></span>
-                  </xar:if>
+                  #$ctypename#
                 </div>
                 <div class="xar-form-input-wrapper">
                     <label for="level" class="xar-form-label">
@@ -163,6 +160,7 @@
         </xar:if>
         <fieldset>
         <div class="xar-form-input-wrapper-after">
+            <input type="hidden" name="coursetype" id="coursetype" value="#$coursetype#" />
             <input type="hidden" name="authid" id="authid" value="#$authid#" />
             <input type="submit" value="#$addcoursebutton#" />
         </div>

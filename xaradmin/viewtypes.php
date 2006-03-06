@@ -29,7 +29,7 @@ function courses_admin_viewtypes()
      */
     $data['items'] = array();
 
-    if (!xarSecurityCheck('AdminCourses')) return;
+    if (!xarSecurityCheck('EditCourses')) return;
     /* The user API function is called. */
     $items = xarModAPIFunc('courses',
                            'user',
@@ -46,11 +46,22 @@ function courses_admin_viewtypes()
             'admin',
             'modifytype',
             array('tid' => $item['tid']));
-
-        $items[$i]['deleteurl'] = xarModURL('courses',
-            'admin',
-            'deletetype',
-            array('tid' => $item['tid']));
+        if (xarSecurityCheck('AdminCourses', 0, 'Course', "All:All:All")) {
+            $items[$i]['deleteurl'] = xarModURL('courses',
+                'admin',
+                'deletetype',
+                array('tid' => $item['tid']));
+        } else {
+            $items[$i]['deleteurl'] = '';
+        }
+        if (xarSecurityCheck('AddCourses', 0, 'Course', "All:All:All")) {
+            $items[$i]['addcourseurl'] = xarModURL('courses',
+                'admin',
+                'newcourse',
+                array('coursetype' => $item['tid']));
+        } else {
+            $items[$i]['addcourseurl'] = '';
+        }
     }
     /* Add the array of items to the template variables */
     $data['items'] = $items;
