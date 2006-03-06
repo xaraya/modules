@@ -1,29 +1,24 @@
 <?php
 /**
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 by the Xaraya Development Team.
+ * Headlines - Generates a list of feeds
+ *
+ * @package modules
+ * @copyright (C) 2005-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage headlines module
+ * @link http://www.xaraya.com/index.php/release/777.html
  * @author John Cox
-*/
+ */
 /**
  * utility function pass individual menu items to the main menu
  *
- * @author the Example module development team
- * @returns array
+ * @author the Headlines module development team
  * @return array containing the menulinks for the main menu items.
  */
 function headlines_adminapi_getmenulinks()
 {
-
-     if (xarSecurityCheck('AdminHeadlines')) {
-       $menulinks[] = Array('url' => xarModURL('headlines','admin','overview'),
-                            'title' => xarML('Headlines Overview'),
-                            'label' => xarML('Overview'));
-
-    }
-    
     // Security Check
     if(xarSecurityCheck('AddHeadlines')) {
 

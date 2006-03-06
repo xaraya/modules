@@ -1,25 +1,26 @@
 <?php
 /**
- * Xaraya Headlines
+ * Headlines - Generates a list of feeds
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
- * @link http://www.xaraya.org
+ * @package modules
+ * @copyright (C) 2005-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
  *
- * @subpackage Headlines Module
+ * @subpackage headlines module
+ * @link http://www.xaraya.com/index.php/release/777.html
  * @author John Cox
-*/
-$modversion['name'] = 'Headlines';
-$modversion['id'] = '777';
-$modversion['version'] = '1.0.1';
-$modversion['displayname']    = xarML('Headlines');
-$modversion['description'] = 'Generates a list of feeds.';
-$modversion['official'] = 1;
-$modversion['author'] = 'John Cox';
-$modversion['contact'] = 'niceguyeddie@xaraya.com';
-$modversion['admin'] = 1;
-$modversion['user'] = 1;
-$modversion['class'] = 'Complete';
-$modversion['category'] = 'Content';
+ */
+$modversion['name']         = 'Headlines';
+$modversion['id']           = '777';
+$modversion['version']      = '1.0.1';
+$modversion['displayname']  = xarML('Headlines');
+$modversion['description']  = 'Generates a list of feeds.';
+$modversion['official']     = 1;
+$modversion['author']       = 'John Cox';
+$modversion['contact']      = 'niceguyeddie@xaraya.com';
+$modversion['admin']        = 1;
+$modversion['user']         = 1;
+$modversion['class']        = 'Complete';
+$modversion['category']     = 'Content';
 ?>

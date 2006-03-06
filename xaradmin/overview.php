@@ -2,15 +2,15 @@
 /**
  * Overview displays standard Overview page
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage headlines module
+ * @link http://www.xaraya.com/index.php/release/777.html
  * @author John Cox
-*/
-
+ */
 /**
  * Overview displays standard Overview page
  *
@@ -18,7 +18,6 @@
  * and used to call the template that provides display of the overview
  *
  * @returns array xarTplModule with $data containing template data
- * @return array containing the menulinks for the overview item on the main manu
  * @since 2 Oct 2005
  */
 function headlines_admin_overview()
@@ -27,9 +26,9 @@ function headlines_admin_overview()
     if (!xarSecurityCheck('AdminHeadlines',0)) return;
 
     $data=array();
-    
+
     /* if there is a separate overview function return data to it
-     * else just call the main function that usually displays the overview 
+     * else just call the main function that usually displays the overview
      */
 
     return xarTplModule('headlines', 'admin', 'main', $data,'main');
