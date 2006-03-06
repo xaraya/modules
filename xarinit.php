@@ -13,12 +13,13 @@
  */
 
 /**
- * initialise the courses module
+ * Initialise the courses module
  *
  * This function is only ever called once during the lifetime of a particular
  * module instance
  *
  * @author MichelV <michelv@xarayahosting.nl>
+ * @return bool true on success
  */
 function courses_init()
 {
@@ -279,37 +280,6 @@ function courses_init()
         ,array(
             'hookModName'       => 'dynamicdata'
             ,'callerModName'    => 'courses'));
-*/
-
-    /*
-     * Nasty trick to get the itemtype id above 10: generate ten ids
-
-    $dbconn =& xarDBGetConn();
-    for($i = 0; $i < 11; $i++) {
-
-        $nextId = $dbconn->GenId($coursestable);
-        // Add item
-        $name='fillup';
-        $query = "INSERT INTO $coursestable (
-                  xar_courseid,
-                  xar_name)
-                  VALUES (?,?)";
-
-        $bindvars = array($nextId, $name);
-        $result = &$dbconn->Execute($query, $bindvars);
-        if (!$result) return;
-    }
-    // Get rid of the dummy courses
-    $name='fillup';
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
-    $coursestable = $xartable['courses'];
-    // Delete the item
-    $query = "DELETE FROM $coursestable
-            WHERE xar_name = ?";
-    $result = &$dbconn->Execute($query, array($name));
-
-     */
     /*
      *
      * REGISTER THE TABLES AT DYNAMICDATA
@@ -400,6 +370,9 @@ function courses_init()
 /**
  * upgrade the courses module from an old version
  * This function can be called multiple times
+ * @param string oldversion
+ * @return bool true on success
+ * @throws DATABASE_ERROR
  */
 function courses_upgrade($oldversion)
 {
@@ -748,6 +721,8 @@ function courses_upgrade($oldversion)
  * delete the courses module
  * This function is only ever called once during the lifetime of a particular
  * module instance
+ * @author MichelV <michelv@xarayahosting.nl>
+ * @return bool true on success
  */
 function courses_delete()
 {
