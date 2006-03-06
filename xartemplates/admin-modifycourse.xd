@@ -33,7 +33,7 @@
                         </legend>
                         <div class="xar-form-input-wrapper">
                             <label for="name" class="xar-form-label" title="#xarML('Enter the name for this course.')#">
-                                <span class="required">#$namelabel#</span>
+                                <span class="required"><xar:mlstring>Course Name</xar:mlstring></span>
                             </label>
                             <xar:data-input name="name" type="2" value="$name" />
 
@@ -46,7 +46,7 @@
                         </div>
                         <div class="xar-form-input-wrapper">
                             <label for="number" class="xar-form-label" title="#xarML('The code/number of this course.')#">
-                                <span class="required">#$numberlabel#</span>
+                                <span class="required"><xar:mlstring>Course Number</xar:mlstring></span>
                             </label>
                             <xar:data-input name="number" type="2" value="$coursedata['number']" />
                           <xar:if condition="!empty($invalid['number'])">
@@ -58,7 +58,7 @@
                         </div>
                         <div class="xar-form-input-wrapper">
                           <label for="number" class="xar-form-label help" title="#xarML('Enter the type of course.')#">
-                                #$coursetypelabel#
+                                <xar:mlstring>Course Type</xar:mlstring>
                           </label>
                              <xar:data-input name="coursetype" type="2" value="$coursedata['coursetype']" />
                           <xar:if condition="!empty($invalid['coursetype'])">
@@ -67,7 +67,7 @@
                         </div>
                         <div class="xar-form-input-wrapper">
                             <label for="level" class="xar-form-label" title="#xarML('Enter the level of this course.')#">
-                               #$levellabel#
+                               <xar:mlstring>Course Level</xar:mlstring>
                             </label>
                           <select name="level">
                             <xar:loop name="$levels">
@@ -86,7 +86,7 @@
                         </legend>
                         <div class="xar-form-input-wrapper">
                             <label for="shortdesc" class="xar-form-label" title="#xarML('Enter short description for this course.')#">
-                                #$shortdesclabel#
+                                <xar:mlstring>Short Description</xar:mlstring>
                             </label>
                             <xar:data-input name="shortdesc" type="4" value="$coursedata['shortdesc']" />
                           <xar:if condition="!empty($invalid['shortdesc'])">
@@ -95,7 +95,7 @@
                         </div>
                         <div class="xar-form-input-wrapper">
                             <label for="language" class="xar-form-label" title="#xarML('Enter the intended credits for this course.')#">
-                                #$intendedcreditslabel#
+                                <xar:mlstring>Intended credits</xar:mlstring>
                             </label>
                             <xar:data-input name="intendedcredits" type="2" value="$coursedata['intendedcredits']" />
                           <xar:if condition="!empty($invalid['intendedcredits'])">
@@ -104,7 +104,7 @@
                         </div>
                         <div class="xar-form-input-wrapper">
                             <label for="freq" class="xar-form-label" title="#xarML('Enter the frequency for this course.')#">
-                                #$freqlabel#
+                                <xar:mlstring>Course frequency</xar:mlstring>
                             </label>
                             <xar:data-input name="freq" type="2" value="$coursedata['freq']" />
                           <xar:if condition="!empty($invalid['freq'])">
@@ -113,7 +113,7 @@
                         </div>
                         <div class="xar-form-input-wrapper">
                             <label for="contact" class="xar-form-label" title="#xarML('Enter detailed contact information for this course.')#">
-                                #$contactlabel#
+                                <xar:mlstring>Course Contact details</xar:mlstring>
                             </label>
                             <xar:data-input name="contact" type="4" value="$coursedata['contact']" />
                           <xar:if condition="!empty($invalid['contact'])">
@@ -122,7 +122,7 @@
                         </div>
                         <div class="xar-form-input-wrapper">
                             <label for="contactuid" class="xar-form-label" title="#xarML('Enter the user that will serve as the main contact for this course. Like the coordinator.')#">
-                                #$contactuidlabel#
+                                <xar:mlstring>Course Coordinator uid</xar:mlstring>
                             </label>
                             <xar:data-input name="contactuid" id="contactuid" type="userlist" value="$contactuid" />
                             <xar:if condition="!empty($invalid['contactuid'])">
@@ -131,7 +131,7 @@
                         </div>
                         <div class="xar-form-input-wrapper">
                             <label for="hidecourse" class="xar-form-label" title="#xarML('Hide this course from being viewed by site users.')#">
-                                #$hidecourselabel#
+                                <xar:mlstring>Hide Course</xar:mlstring>
                             </label>
                               <xar:data-input name="hidecourse" type="14" value="$coursedata['hidecourse']" />
                             <xar:if condition="!empty($invalid['hidecourse'])">
@@ -140,7 +140,7 @@
                         </div>
                         <div class="xar-form-input-wrapper">
                             <label for="last_modified" class="xar-form-label" title="#xarML('Date of last modification.')#">
-                                #$lastmodilabel#
+                                <xar:mlstring>Last Modified</xar:mlstring>
                             </label>
                             #xarlocalegetformatteddate('medium',$coursedata['last_modified'])#
                         </div>
@@ -156,7 +156,7 @@
                 <div class="xar-form-input-wrapper-after">
                     <input type="hidden" name="courseid" id="courseid" value="#$courseid#" />
                     <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                    <input type="submit" value="#$updatebutton#" />
+                    <input type="submit" value="xarML('Update Course')" />
                 </div>
             </form>
         </div>
