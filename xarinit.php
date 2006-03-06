@@ -68,6 +68,8 @@ function tinymce_init()
     xarModSetVar('tinymce', 'tinyeditordeselector','');
     xarModSetVar('tinymce', 'tinycompressor',0);
     xarModSetVar('tinymce', 'tinycleanup',1);
+    xarModSetVar('tinymce', 'striplinebreaks',1);
+    xarModSetVar('tinymce',  'sourceformat',1);
    /* Set masks */
     xarRegisterMask('ViewTinyMCE','All','tinymce','All','All:All','ACCESS_OVERVIEW');
     xarRegisterMask('ReadTinyMCE','All','tinymce','All','All:All','ACCESS_READ');
@@ -127,6 +129,8 @@ function tinymce_upgrade($oldversion)
            xarModSetVar('tinymce', 'tinyentity_encoding','raw');
       return tinymce_upgrade('1.0.3');
     case '1.0.3': //current version
+        xarModSetVar('tinymce', 'striplinebreaks',1);
+        xarModSetVar('tinymce',  'sourceformat',1);
         break;
     }
     return true;

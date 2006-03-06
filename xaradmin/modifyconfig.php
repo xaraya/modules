@@ -82,6 +82,16 @@ function tinymce_admin_modifyconfig()
     $data['tinyeditordeselector'] = xarModGetVar('tinymce', 'tinyeditordeselector');
     $data['tinycompressor']= xarModGetVar('tinymce', 'tinycompressor');
     $data['tinycleanup']= xarModGetVar('tinymce', 'tinycleanup');
+    $data['stripbreaks']=xarModGetVar('tinymce', 'striplinebreaks');
+    $data['sourceformat']=xarModGetVar('tinymce',  'sourceformat');
+
+    if (!isset($data['sourceformat'])){
+        $data['sourceformat']=1; //default is off in tinymce
+    }
+    if (!isset($data['striplinebreaks'])){
+        $data['striplinebreaks']=1; //default is off in tinymce
+    }
+
     if (!isset($data['tinycleanup'])){
         $data['tinycleanup']=1;
     }
@@ -149,7 +159,7 @@ function tinymce_admin_modifyconfig()
         $data['dateplug']=1;
     } else {
         $data['dateplug']=0;
-    } 
+    }
     if (!isset($data['tab'])) {
         $data['tab']='basic';
     }

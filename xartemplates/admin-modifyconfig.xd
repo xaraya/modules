@@ -362,7 +362,30 @@
                </label>
                     <xar:mlstring>(ON by default).</xar:mlstring>
             </div>
+             <div class="xar-form-input-wrapper-after">
+                <xar:if condition="$stripbreaks">
+                    <input type="checkbox" name="stripbreaks" id="stripbreaks" value="1" checked="checked"/>
+                <xar:else/>
+                    <input type="checkbox" name="stripbreaks" id="stripbreaks" value="1" />
+                </xar:if>
+                <label for="stripbreaks" title="#xarML('Strip all newlines')#">
+                    <xar:mlstring>Strip all newlines</xar:mlstring>
+               </label>
+                    <xar:mlstring>(ON by default).</xar:mlstring>
+            </div>
+             <div class="xar-form-input-wrapper-after">
+                <xar:if condition="$sourceformat">
+                    <input type="checkbox" name="sourceformat" id="sourceformat" value="1" checked="checked"/>
+                <xar:else/>
+                    <input type="checkbox" name="sourceformat" id="sourceformat" value="1" />
+                </xar:if>
+                <label for="sourceformat" title="#xarML('Apply formatting to source')#">
+                    <xar:mlstring>Apply source formatting</xar:mlstring>
+               </label>
+                    <xar:mlstring>(OFF by default).</xar:mlstring>
+            </div>
            </fieldset>
+         <!-- language options -->
         <fieldset>
             <legend>
                 <strong><xar:mlstring>Language options</xar:mlstring></strong>

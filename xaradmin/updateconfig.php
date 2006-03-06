@@ -48,6 +48,8 @@ function tinymce_admin_updateconfig()
             if (!xarVarFetch('tinyheight','int:1:',$tinyheight,'',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinylang','str:1:',$tinylang,'',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinybr','checkbox',$tinybr,false,XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('stripbreaks','checkbox',$stripbreaks,true,XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('sourceformat','checkbox',$sourceformat,false,XARVAR_NOT_REQUIRED)) return;
             //if (!xarVarFetch('tinynowrap','str:1:',$tinynowrap,'false',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinypara','checkbox',$tinypara,false,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinytilemap','checkbox',$tinytilemap,true,XARVAR_NOT_REQUIRED)) return;
@@ -60,6 +62,7 @@ function tinymce_admin_updateconfig()
             //if (!xarVarFetch('tinyentities','str:0:',$tinyentities,'',XARVAR_NOT_REQUIRED)) return; Not specifically used - default string is used if entity_encoding is set to 'named'
                xarModSetVar('tinymce', 'tinytheme', $tinytheme);
                xarModSetVar('tinymce', 'tinyask', ($tinyask?1:0));
+               xarModSetVar('tinymce', 'striplinebreaks', ($stripbreaks?1:0));
                xarModSetVar('tinymce', 'tinyundolevel',$tinyundolevel);
                xarModSetVar('tinymce', 'tinydirection', $tinydirection);
                xarModSetVar('tinymce', 'tinyinstances', $tinyinstances); //not used at this stage
@@ -68,6 +71,7 @@ function tinymce_admin_updateconfig()
                xarModSetVar('tinymce', 'tinylang', $tinylang);
                xarModSetVar('tinymce', 'tinybr', ($tinybr?1:0));
                xarModSetVar('tinymce', 'tinypara', ($tinypara?1:0));
+               xarModSetVar('tinymce', 'sourceformat', ($sourceformat?1:0));
               // xarModSetVar('tinymce', 'tinynowrap', $tinynowrap);
                xarModSetVar('tinymce', 'tinycompressor',($tinycompressor?1:0));
                xarModSetVar('tinymce', 'tinycleanup',($tinycleanup?1:0));
@@ -238,6 +242,14 @@ function tinymce_admin_updateconfig()
     if (xarModGetVar('tinymce','tinypara') !=1){ //This is true by default in tinymce
         $jstext .='force_p_newlines: "false",';
     }
+
+    if (xarModGetVar('tinymce','sourceformat')==1){
+        $jstext .='apply_source_formatting: "true",';
+    }
+    if (xarModGetVar('tinymce','striplinebreaks')==1){
+        $jstext .='remove_linebreaks: "true",';
+    }
+
    if (trim(xarModGetVar('tinymce','tinyinvalid')) <> '') {
           $jstext .='invalid_elements  : "'.trim(xarModGetVar('tinymce','tinyinvalid')).'", ';
     }
