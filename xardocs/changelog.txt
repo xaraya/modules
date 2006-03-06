@@ -3,4 +3,7 @@ Initial release of this beta module
 
 Please read: BETA! Meaning there is no real life example of it working on a life site... although that will come soon!
 The use of itemtypes is still very dodgy, as are the security checks
-
+Version 0.3.1
+General clean-up
+Move labels to templates
+Solve consistency of display of next dates

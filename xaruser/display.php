@@ -18,7 +18,7 @@
  * and show the details of all planned occurences for this course
  *
  * @author MichelV <michelv@xarayahosting.nl>
- * @param  $args an array of arguments (if called by other modules)
+ * @param  array $args an array of arguments (if called by other modules)
  * @param  int $args ['objectid'] a generic object id (if called by other modules)
  * @param  int $args ['courseid'] the ID of the course
  * @return array

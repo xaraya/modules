@@ -18,16 +18,17 @@
  * @param id courseid The course to get all the dates for
  * @param numitems $ the number of items to retrieve (default -1 = all)
  * @param startnum $ start with this item number (default 1)
- * @param after The date (int) for which the closedate should be after
+ * @param int startafter The date for which the startdate should be after OPTIONAL
+ * @param int closeafter The date for which the closedate should be after OPTIONAL
  * @return array of items, or false on failure
  * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function courses_userapi_getplandates($args)
 {
     extract($args);
-    if (!xarVarFetch('courseid', 'id',     $courseid)) return;
-    if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('numitems', 'int:1:', $numitems, -1, XARVAR_NOT_REQUIRED)) return;
+  //  if (!xarVarFetch('courseid', 'id',     $courseid)) return;
+   // if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
+   // if (!xarVarFetch('numitems', 'int:1:', $numitems, -1, XARVAR_NOT_REQUIRED)) return;
 
     $items = array();
     // Security check
@@ -43,7 +44,7 @@ function courses_userapi_getplandates($args)
     $xartable =& xarDBGetTables();
     $planningtable = $xartable['courses_planning'];
     // TODO: implement security check when this item is hidden from display
-    // TODO: how to select by cat ids (automatically) when needed ???
+
     // Get items
     $query = "SELECT xar_planningid,
                xar_courseid,
@@ -70,7 +71,7 @@ function courses_userapi_getplandates($args)
                xar_last_modified,
                xar_closedate
         FROM $planningtable
-        WHERE xar_courseid = $courseid AND xar_hideplanning in ($where)";
+        WHERE xar_courseid = ? AND xar_hideplanning in ($where)";
     // Look for the courses planned after $after
     if (isset($startafter) && is_numeric($startafter)) {
         $query .= " AND xar_startdate > $startafter ";
@@ -79,8 +80,8 @@ function courses_userapi_getplandates($args)
         $query .= " AND xar_closedate > $closeafter ";
     }
 
-    $query .= " ORDER BY xar_startdate";
-    $result = $dbconn->SelectLimit($query, $numitems, $startnum-1);
+    $query .= " ORDER BY xar_startdate DESC";
+    $result = &$dbconn->Execute($query, array((int)$courseid));
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
     if (!$result) return;
