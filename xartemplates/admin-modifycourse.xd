@@ -124,7 +124,7 @@
                             <label for="contactuid" class="xar-form-label" title="#xarML('Enter the user that will serve as the main contact for this course. Like the coordinator.')#">
                                 <xar:mlstring>Course Coordinator uid</xar:mlstring>
                             </label>
-                            <xar:data-input name="contactuid" id="contactuid" type="userlist" value="$contactuid" />
+                            <xar:data-input name="contactuid" id="contactuid" type="userlist" value="$contactuid" validation="$group_validation"/>
                             <xar:if condition="!empty($invalid['contactuid'])">
                                 <span style="color: red"><xar:mlstring>ERROR! This is not a valid contact uid for this course</xar:mlstring></span>
                             </xar:if>
@@ -156,7 +156,7 @@
                 <div class="xar-form-input-wrapper-after">
                     <input type="hidden" name="courseid" id="courseid" value="#$courseid#" />
                     <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                    <input type="submit" value="xarML('Update Course')" />
+                    <input type="submit" value="#xarML('Update Course')#" />
                 </div>
             </form>
         </div>

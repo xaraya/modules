@@ -49,7 +49,11 @@ function courses_admin_newcourse($args)
 
     $data['level'] = xarModAPIFunc('courses', 'user', 'gets',
                                       array('itemtype' => 1003));
-
+    // Standard course coordinator group
+    $coord_group = xarModGetVar('courses', 'coord_group');
+    // Build the group name. Type 1 is a group
+    $coord_group = xarModAPIFunc ('roles', 'user', 'get', array('uid'=> $coord_group, 'type' =>1));
+    $data['group_validation'] = 'group:'.$coord_group['name'];
     // Call hooks for new course, with coursetype as the itemtype
     $item = array();
     $item['module'] = 'courses';

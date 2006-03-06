@@ -63,6 +63,10 @@ function courses_admin_modifycourse($args)
         $data['hookoutput'] = $hooks;
     }
 
+    $data['coord_group'] = xarModGetVar('courses', 'coord_group');
+    // Build the group name. Type 1 is a group
+    $coord_group = xarModAPIFunc ('roles', 'user', 'get', array('uid'=> $data['coord_group'], 'type' =>1));
+
     $levels = array();
     $levels = xarModAPIFunc('courses', 'user', 'gets', array('itemtype' => 1003));
 
@@ -76,6 +80,7 @@ function courses_admin_modifycourse($args)
                  'name'             => xarVarPrepForDisplay($coursedata['name']),
                  'contactuid'       => $coursedata['contactuid'],
                  'hookoutput'       => $data['hookoutput'],
+                 'group_validation' => 'group:'.$coord_group['name'],
                  'levels'           => $levels);
 }
 

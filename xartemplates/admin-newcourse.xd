@@ -124,7 +124,7 @@
                     </label>
                     <xar:data-input name="contact" type="4" value="$contact" />
                     <xar:if condition="!empty($invalid['contact'])">
-                        <span style="color: red"><xar:mlstring>ERROR! This is not a valid contact for this course</xar:mlstring></span>
+                        <span style="color: red"><xar:mlstring>ERROR! This is not a valid contact description for this course</xar:mlstring></span>
                     </xar:if>
                 </div>
                 <div class="xar-form-input-wrapper">
@@ -133,9 +133,9 @@
                         <xar:mlstring>User or role to serve as contact for course</xar:mlstring>
                         </span>
                     </label>
-                    <xar:data-input name="contactuid" type="37" value="$contactuid" />
+                    <xar:data-input name="contactuid" type="userlist" value="$contactuid" validation="$group_validation"/>
                     <xar:if condition="!empty($invalid['contactuid'])">
-                      <span style="color: red"><xar:mlstring>ERROR! This is not a valid contact uid for this course</xar:mlstring></span>
+                      <span style="color: red"><xar:mlstring>ERROR! This is not a valid contact contact uid for this course</xar:mlstring></span>
                     </xar:if>
                 </div>
                 <div class="xar-form-input-wrapper">
