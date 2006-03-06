@@ -153,9 +153,6 @@ function filemanager_init()
 /**
  * upgrade the filemanager module from an old version
  */
-/**
- * upgrade the articles module from an old version
- */
 function filemanager_upgrade($oldversion)
 {
     // Upgrade dependent on old version number
@@ -168,7 +165,7 @@ function filemanager_upgrade($oldversion)
             xarModAPILoad('filemanager', 'user');
             xarModSetVar('filemanager', 'file.auto-approve', _FILEMANAGER_APPROVE_ADMIN);
 
-        case '0.9.8': // last version of filemanager module before 1.0.0 
+        case '0.9.8': // last version of filemanager module before 1.0.0
             $dbconn =& xarDBGetConn();
             $xartable =& xarDBGetTables();
             $file_entry_table = $xartable['file_entry'];
@@ -220,34 +217,14 @@ function filemanager_upgrade($oldversion)
 
 /**
  * delete the filemanager module
+ * @return bool true on success
  */
 function filemanager_delete()
 {
-    xarModDelVar('filemanager', 'path.untrust');
-    xarModDelVar('filemanager', 'path.trusted');
-    xarModDelVar('filemanager', 'file.maxsize');
-    xarModDelVar('filemanager', 'file.delete-confirmation');
-    xarModDelVar('filemanager', 'file.auto-purge');
-    xarModDelVar('filemanager', 'path.cwd');
-    xarModDelVar('filemanager', 'dd.fileupload.stored');
-    xarModDelVar('filemanager', 'dd.fileupload.external');
-    xarModDelVar('filemanager', 'dd.fileupload.upload');
-    xarModDelVar('filemanager', 'dd.fileupload.trusted');
-    xarModDelVar('filemanager', 'file.auto-approve');
-    xarModDelVar('filemanager', 'view.filter');
-
-    xarUnregisterMask('ViewFileManager');
-    xarUnregisterMask('AddFileManager');
-    xarUnregisterMask('EditFileManager');
-    xarUnregisterMask('DeleteFileManager');
-    xarUnregisterMask('AdminFileManager');
-
     xarModUnregisterHook('item', 'transform', 'API', 'filemanager', 'user', 'transformhook');
-
     // Get database information
-
     $dbconn =& xarDBGetConn();
-    $xartables      =& xarDBGetTables();
+    $xartables =& xarDBGetTables();
 
     //Load Table Maintainance API
     xarDBLoadTableMaintenanceAPI();
@@ -279,7 +256,10 @@ function filemanager_delete()
     // Drop the table and send exception if returns false.
     $result =& $dbconn->Execute($query);
     xarErrorHandled();
+    xarModDelAllVars('filemanager');
 
+    xarRemoveMasks('filemanager');
+    xarRemoveInstances('filemanager');
     return true;
 }
 
