@@ -754,20 +754,20 @@ function courses_delete()
     // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-    xarDBLoadTableMaintenanceAPI();
+   // xarDBLoadTableMaintenanceAPI();
     // Generate the SQL to drop the table using the API
-    $query = xarDBDropTable($xartable['courses']);
-    if (empty($query)) return; // throw back
+  //  $query = xarDBDropTable($xartable['courses']);
+  //  if (empty($query)) return; // throw back
 
     /* Get a data dictionary object with item create and delete methods */
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+    $result = $datadict->dropTable($xartable['courses']);
     // Initialise table array
     $basename = 'courses';
 
     foreach(array('students', 'planning', 'teachers', 'types') as $table) {
-
-    /* Drop the tables */
-     $result = $datadict->dropTable($xartable[$basename . '_' . $table]);
+        /* Drop the tables */
+         $result = $datadict->dropTable($xartable[$basename . '_' . $table]);
     }
 
     /* Drop the Dyn data objects */
