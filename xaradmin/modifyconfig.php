@@ -3,17 +3,17 @@
  * Standard function to modify configuration parameters
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Courses Module
  * @link http://xaraya.com/index.php/release/179.html
+ * @author Courses module development team
  */
 /**
  * This is a standard function to modify the configuration parameters of the
  * module courses
- * @author Courses module development team
  * @author MichelV michelv@xarayahosting.nl
  * @return array
  */
@@ -33,6 +33,7 @@ function courses_admin_modifyconfig()
     $data['DefaultTeacherType']     = xarModGetVar('courses','DefaultTeacherType');
     $data['updatebutton']           = xarVarPrepForDisplay(xarML('Update Configuration'));
     $data['AlwaysNotify']           = xarModGetVar('courses', 'AlwaysNotify');
+    $data['coord_group']            = xarModGetVar('courses', 'coord_group');
     // Short URL support
     $data['shorturlschecked'] = xarModGetVar('courses', 'SupportShortURLs') ? true : false;
     /* If you plan to use alias names for you module then you should use the next two alias vars

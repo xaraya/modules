@@ -3,7 +3,7 @@
  * Create a new Course
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -17,8 +17,7 @@
  * @author the Courses module development team
  * @param  $args ['name'] name of the course
  * @param  $args ['number'] number of the course
- * @returns int
- * @return course ID on success, false on failure
+ * @return int course ID on success, false on failure
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function courses_adminapi_createcourse($args)

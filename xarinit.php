@@ -216,6 +216,8 @@ function courses_init()
     // Messages
     xarModSetVar('courses', 'hidecoursemsg', 'This course is currently hidden for display');
     xarModSetVar('courses', 'hideplanningmsg', 'This occurence is currently hidden for display');
+    // Set standard group to users
+    xarModSetVar('courses', 'coord_group', 5);
     // Register Block types (this *should* happen at activation/deactivation)
     if (!xarModAPIFunc('blocks',
             'admin',
@@ -711,6 +713,9 @@ function courses_upgrade($oldversion)
             $result = &$dbconn->Execute($query);
             if (!$result) return;
         case '0.3.0':
+        case '0.3.1':
+            xarModSetVar('courses', 'coord_group', 5);
+        case '0.3.2':
             break;
     }
     // Update successful

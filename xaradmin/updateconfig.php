@@ -29,6 +29,7 @@ function courses_admin_updateconfig()
     if (!xarVarFetch('ShowShortDesc',   'checkbox', $ShowShortDesc, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('aliasname',       'str:1:',   $aliasname, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('modulealias',     'checkbox', $modulealias,false,XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('coord_group',     'int',      $coord_group, 5, XARVAR_NOT_REQUIRED)) return;
 
     // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) return;
@@ -41,6 +42,7 @@ function courses_admin_updateconfig()
     xarModSetVar('courses', 'AlwaysNotify', $AlwaysNotify);
     xarModSetVar('courses', 'ShowShortDesc', $ShowShortDesc);
     xarModSetVar('courses', 'DefaultTeacherType', $DefaultTeacherType);
+    xarModSetVar('courses', 'coord_group', $coord_group);
     // Alias name
     if (isset($aliasname) && trim($aliasname)<>'') {
         xarModSetVar('courses', 'useModuleAlias', $modulealias);

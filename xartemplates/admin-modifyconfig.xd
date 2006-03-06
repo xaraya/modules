@@ -69,6 +69,16 @@
                     </label>
                     <input type="checkbox" name="ShowShortDesc" id="ShowShortDesc" value="1" #$ShowShortDescchecked# />
                 </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="coord_group" class="xar-form-label">
+                        <span class="help" title="#xarML('This group of roles is the group containing possible course coordinators')#">
+                            <xar:mlstring>
+                                Course coordinators Group:
+                            </xar:mlstring>
+                        </span>
+                    </label>
+                   <xar:data-input name="coord_group" id="coord_group" type="grouplist" value="$coord_group" />
+                </div>
           </fieldset>
           <fieldset>
                 <legend>
