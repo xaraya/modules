@@ -1,20 +1,17 @@
 <?php
-
 /**
+ * Tasks module
  *
- * Initialization of tasks module
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2003-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage tasks
+ * @subpackage Tasks Module
+ * @link http://xaraya.com/index.php/release/36.html
+ * @author Tasks Module Development Team
  */
-
-
 /**
- * initialization functions
  * Initialise the Tasks module
  * This function is only ever called once during the lifetime of a particular
  * module instance
@@ -65,7 +62,7 @@ function tasks_init()
 
 # --------------------------------------------------------
 # Create wrapper DD objects for the native itemtypes of this module
-	if (!xarModAPIFunc('tasks','admin','createobjects')) return;
+    if (!xarModAPIFunc('tasks','admin','createobjects')) return;
 
 # --------------------------------------------------------
 #
@@ -96,7 +93,11 @@ function tasks_init()
 
     return true;
 }
-
+/**
+ * Upgrade the tasks module
+ * @param string oldversion
+ * @return bool true on success
+ */
 function tasks_upgrade($oldversion)
 {
     switch($oldversion) {
@@ -112,11 +113,14 @@ function tasks_upgrade($oldversion)
 
     return true;
 }
-
+/**
+ * Remove the tasks module
+ * @return bool true on success
+ */
 function tasks_delete()
 {
     //Remove the objects
-	if (!xarModAPIFunc('tasks','admin','removeobjects')) return;
+    if (!xarModAPIFunc('tasks','admin','removeobjects')) return;
 
     //Load Table Maintenance API
     xarDBLoadTableMaintenanceAPI();
