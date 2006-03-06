@@ -1,18 +1,16 @@
-<?php 
+<?php
 /**
- * File: $Id$
- * 
- * Xaraya googlesearch
- * 
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
- * @link http://www.xaraya.org
+ * Xaraya Google Search
  *
- * @subpackage googlesearch Module
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Google Search Module
+ * @link http://xaraya.com/index.php/release/809.html
  * @author John Cox
-*/
-
+ */
 function googlesearch_user_main()
 {
     //xarVarFetch('startnum', 'id', $startnum, '1', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY);
@@ -74,7 +72,7 @@ function googlesearch_user_main()
             $data['message']                    = $result['faultstring'];
             $data['links']                      = '';
         } else {
-            $data['estimatedTotalResultsCount'] = $result['estimatedTotalResultsCount']; 
+            $data['estimatedTotalResultsCount'] = $result['estimatedTotalResultsCount'];
             $data['searchQuery']                = $result['searchQuery'];
             $data['links']                      = $result['resultElements'];
         }
