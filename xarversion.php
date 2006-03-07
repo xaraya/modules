@@ -1,5 +1,16 @@
 <?php
-// $Id$
+/**
+ * xmlrpcvalidatorapi Module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage xmlrpcvalidatorapi
+ * @link http://xaraya.com/index.php/release/746.html
+ * @author Marcel van der Boom <marcel@xaraya.com>
+ */
 $modversion['name'] = 'XML-RPC validator API';
 $modversion['id'] = '746';
 $modversion['version'] = '1.0.0';

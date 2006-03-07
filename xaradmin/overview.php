@@ -1,6 +1,6 @@
 <?php
 /**
- * Main function
+ * Overview for xmlrpcvalidatorapi
  *
  * @package modules
  * @copyright (C) 2002-2006 The Digital Development Foundation
@@ -12,14 +12,15 @@
  * @author Marcel van der Boom <marcel@xaraya.com>
  */
 
+
 /**
- * Main admin entry function
- *
-*/
-function xmlrpcvalidatorapi_admin_main() 
+ * Overview displays standard Overview page
+ */
+function xmlrpcvalidatorapi_admin_overview()
 {
-    // Return the template for the overview
-    return array();
+    $data=array();
+    //just return to main function that displays the overview
+    return xarTplModule('xmlrpcvalidatorapi', 'admin', 'main', $data, 'main');
 }
 
 ?>
