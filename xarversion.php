@@ -14,6 +14,6 @@ $modversion['contact'] = 'jbt_cooper@bigpond.com';
 $modversion['admin'] = 1;
 $modversion['user'] = 0;
 $modversion['securityschema'] = array('authsql::' => '::');   // comment out?
-$modversion['class'] = 'Miscellaneous';
+$modversion['class'] = 'Authentication';
 $modversion['category'] = 'Global';
 ?>
