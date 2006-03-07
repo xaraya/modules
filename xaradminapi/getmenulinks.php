@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id:
- * 
  * Utility function to pass menu items to the main menu
  * 
   * @copyright (C) 2004 by Jo Dalle Nogare
