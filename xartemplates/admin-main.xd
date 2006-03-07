@@ -3,54 +3,53 @@
         <xar:mlstring>Weather</xar:mlstring>
     </span>
 </div>
-<div class="xar-mod-body" style="display:block;">
+<div class="xar-mod-body">
+    <a href="http://www.weather.com"><img src="#xarTplGetImage('TWClogo_64px.png','weather')#" border="0"  class="xar-module-icon" alt="weather.com&reg;" width="86" height="64" /></a>
+
     <h2><xar:mlstring>Overview</xar:mlstring></h2>
-    
-    <div style="border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 1px;">
-        <div style="float: right; text-align:right; display:block;padding:10px;">
-            <a href="http://www.weather.com"><img 
-                src="modules/weather/xarimages/TWClogo_64px.png" border="0" 
-                alt="weather.com&reg;" width="86" height="64" /></a>
-        </div>
-        <div class="xar-mod-title" style="margin-top: 1em; margin-left: 1em; margin-right: 15%; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
-            <xar:mlstring>What is it?</xar:mlstring>
-        </div>
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <em><xar:mlstring><strong>weather.com&reg;</strong> XML Data Feed</xar:mlstring></em><br />
+ 
+    <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+
+     <p><em><xar:mlstring><strong>weather.com&reg;</strong> XML Data Feed</xar:mlstring></em>
             <ul>
                 <li><xar:mlstring>Downloads the <strong>weather.com&reg;</strong> xml data feeds and presents your forecast.</xar:mlstring></li>
                 <li><xar:mlstring>Implements the guidelines defined in the <strong>weather.com&reg;</strong> SDK.</xar:mlstring></li>
             </ul>
-        </div>
-        <br />
-        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
-            <xar:mlstring>How to use it?</xar:mlstring>
-        </div>
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>
+     </p>
+     <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
+         <p><xar:mlstring>
                 You need to register at <strong>weather.com&reg;</strong> in order to use this module.  This seems like
                 a fair trade since you will be using their feeds and they do cover the entire planet.  Just follow the
-                steps below and you should be up and running in no time.          
+                steps below and you should be up and running in no time.
             </xar:mlstring>
             <ul>
                 <li><xar:mlstring>Register for a <strong>Partner ID</strong> and <strong>License Key</strong> at </xar:mlstring><a href="http://www.weather.com/services/xmloap.html">http://www.weather.com/services/xmloap.html</a>.</li>
                 <li><xar:mlstring>You'll receive an email with your <strong>Partner ID</strong> and <strong>License Key</strong>, along with some other information.</xar:mlstring></li>
                 <li><xar:mlstring>Enter you <strong>Partner ID</strong> and <strong>License Key</strong> into the XoapWeather Config.</xar:mlstring></li>
             </ul>
-        </div>
-        <br />
-        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
-            <xar:mlstring>Included Blocks</xar:mlstring>
-        </div>
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+        </p>
+        <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
+        <p>
             <ul>
                 <li><xar:mlstring>Current Conditions</xar:mlstring></li>
             </ul>
-        </div>
-        <br />
-        <div class="xar-accent" style="text-align: center; border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
-            <xar:mlstring>Extended information about this module can be found at</xar:mlstring> 
-            <a href="http://xaraya.simiansynapse.com">http://xaraya.simiansynapse.com</a>
-        </div>
-    </div>
+        </p>
+  <h3>
+    <xar:mlstring>Further Information</xar:mlstring>
+  </h3>
+  <p>
+    <xar:mlstring>Further information on the Weather module can be found at</xar:mlstring>
+  </p>
+  <ul>
+    <li><a href="http://xaraya.simiansynapse.com">http://xaraya.simiansynapse.com</a></li>
+    <li><xar:mlstring>Weather Extension page at</xar:mlstring> <a title="#xarML('Weather Module - Xaraya Extension 36')#" href="http://www.xaraya.com/index.php/release/662.html">Xaraya Extension and Releases</a>.
+      <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+    </li>
+    <li><xar:mlstring>Related tutorials and documentation on Weather found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/weather/" title="#xarML('Related documentation on Weather')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+    </li>
+  </ul>
+  <p class="xar-sub">
+    <strong>&nbsp;<xar:mlstring>Weather Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2006-03-08
+  </p>
 </div>
+
