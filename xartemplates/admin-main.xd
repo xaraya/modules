@@ -38,11 +38,23 @@
             <xar:mlstring>Included Hooks</xar:mlstring>
         </h3>
         <p>
-            <xar:mlstring>The AuthSSO module has no hooks included at this time.</xar:mlstring>
+            <xar:mlstring>The XarLDAP module has no hooks included at this time.</xar:mlstring>
         </p>
-        </div>
-       <div class="xar-mod-foot xar-align-center xar-padding-thick">
-           <p>
-               <xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring>
-           </p>
-       </div>
+
+  <h3>
+    <xar:mlstring>Further Information</xar:mlstring>
+  </h3>
+  <p>
+    <xar:mlstring>Further information on the Xarldap  module can be found at</xar:mlstring>
+  </p>
+  <ul>
+    <li><xar:mlstring>Xarldap Extension page at</xar:mlstring> <a title="#xarML('Xarldap Module - Xaraya Extension 25')#" href="http://www.xaraya.com/index.php/release/25.html">Xaraya Extension and Releases</a>.
+      <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+    </li>
+    <li><xar:mlstring>Related tutorials and documentation on Xarldap  found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/xarldap /" title="#xarML('Related documentation on Xarldap ')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+    </li>
+  </ul>
+  <p class="xar-sub">
+    <strong>&nbsp;<xar:mlstring>Xarldap Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2006-03-08
+  </p>
+</div>

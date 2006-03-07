@@ -1,16 +1,16 @@
 <?php
 /**
+ * LDAP Authentication
  *
- * XarLDAP Administration
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage xarldap
+ * @link http://xaraya.com/index.php/release/25.html
  * @author Richard Cave <rcave@xaraya.com>
-*/
+ */
 
 $modversion['name']           = 'xarldap';
 $modversion['id']             = '25';
@@ -26,8 +26,7 @@ $modversion['author']         = 'Richard Cave';
 $modversion['contact']        = 'rcave@xaraya.com';
 $modversion['admin']          = 1;
 $modversion['user']           = 0;
-$modversion['securityschema'] = array('xarldap::all' => '::');
-$modversion['class']          = 'Complete';
+$modversion['class']          = 'Authentication';
 $modversion['category']       = 'Global';
 // this module requires the ldap extension
 $modversion['extensions']     = array('ldap');
