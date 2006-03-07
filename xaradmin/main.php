@@ -17,6 +17,6 @@
  */
 function weather_admin_main()
 {
-    return array();
+   return xarResponseRedirect(xarModURL('weather', 'admin', 'modifyconfig'));
 }
 ?>
