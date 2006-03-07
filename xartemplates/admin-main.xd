@@ -1,19 +1,14 @@
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
-  <span class="xar-mod-title"><xar:mlstring>Uploads Administration</xar:mlstring></span>
+    <span class="xar-mod-title">
+        <xar:mlstring>Administration - Uploads</xar:mlstring>
+    </span>
 </div>
 <div class="xar-mod-body">
   <img src="#xarTplGetImage('admin_generic.gif','base')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
-
   <h2><xar:mlstring>Overview</xar:mlstring></h2>
 
   <h3><xar:mlstring>What is it?</xar:mlstring></h3>
         <p><em><xar:mlstring>Uploads is a Xaraya Utility Module.</xar:mlstring></em>
-  </h2>
-  <h3>
-    <xar:mlstring>What is it?</xar:mlstring>
-  </h3>
-  <p>
             <xar:mlstring>It is currently responsible for accomplishing these tasks:</xar:mlstring>
             <ul>
                 <li><xar:mlstring>Allows for the importing of files into the Xaraya system either locally or externally.</xar:mlstring></li>
@@ -21,14 +16,11 @@
                 <li>...</li>
             </ul>
         </p>
-        <h3>
-    <xar:mlstring>How to use it?</xar:mlstring>
-  </h3>
-  <p>
-            <h4>
+        <h2><xar:mlstring>How to use it?</xar:mlstring></h2>
+
+            <h3>
                 <xar:mlstring>External Imports and Uploads</xar:mlstring>
-            </h4>
-            </p>
+            </h3>
             <p>
                 <xar:mlstring>
                     Files that are uploaded or imported from external locations can be saved in the database (DB)
@@ -75,15 +67,10 @@
                     sandbox can be seen in the 'Import Local Files' form immediately upon adding them.
                 </xar:mlstring>
             </p>
- <h3>
-    <xar:mlstring>Included Blocks</xar:mlstring>
-  </h3>
-  <p>
- </p>
-  <h3>
-    <xar:mlstring>Included Hooks</xar:mlstring>
-  </h3>
-  <p>
+
+        <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
+        <p><xar:mlstring>There are no included blocks.</xar:mlstring></p>
+        <br />
 
         <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
             <xar:mlstring>The Uploads module does provide a transform hook. You can activate the uploads hook for a module or itemtype by going to </xar:mlstring>
