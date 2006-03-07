@@ -1,16 +1,13 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Administration - XML-RPC</xar:mlstring></span></div>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Administration - XML-RPC</xar:mlstring></span>
+</div>
 <div class="xar-mod-body">
+    <img src="#xarTplGetImage('admin_generic.gif','base')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
+
     <h2><xar:mlstring>Overview</xar:mlstring></h2>
-    <div style="padding: 1px;" class="xar-norm-outline">
-        <div style="float:right;padding:10px;">
-            <img src="modules/adminpanels/xarimages/admin.gif" alt="official icon" width="96" height="96" />
-        </div>
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>What is it?</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <em><xar:mlstring>XML-RPC is a Xaraya Utility Module.</xar:mlstring></em>
+
+    <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+            <p><em><xar:mlstring>XML-RPC is a Xaraya Utility Module.</xar:mlstring></em></p>
             <p>
               <xar:mlstring>The XML-RPC server module is responsible for exposing certain procedure calls using XML as
               the transport format. Each command is send as an http request in a specified format. The XML-RPC
@@ -64,22 +61,27 @@
                 <li>The Xaraya API over XML-RPC</li>
               </ol>
             </p>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>Included Blocks</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>There are no included blocks</xar:mlstring>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>Included Hooks</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>There are no included hooks</xar:mlstring>
-        </div>
-    </div>
+    <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
+        <p>
+            <xar:mlstring>There are no included blocks.</xar:mlstring>
+        </p>
+
+    <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
+        <p>
+            <xar:mlstring>There are no included blocks.</xar:mlstring>
+        </p>
+
+  <h3>
+    <xar:mlstring>Further Information</xar:mlstring>
+  </h3>
+  <p>
+    <xar:mlstring>Further information on the Xmlrpcserver module can be found at</xar:mlstring>
+  </p>
+  <ul>
+    <li><xar:mlstring>Xmlrpcserver Extension page at</xar:mlstring> <a title="#xarML('Xmlrpcserver Module - Xaraya Extension 743')#" href="http://www.xaraya.com/index.php/release/743.html">Xaraya Extension and Releases</a>.
+      <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+    </li>
+    <li><xar:mlstring>Related tutorials and documentation on Xmlrpcserver found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/xmlrpcserver/" title="#xarML('Related documentation on Xmlrpcserver')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+    </li>
+  </ul>
 </div>
