@@ -14,14 +14,10 @@ function xslt_admin_main()
     // Security Check
     if (!xarSecurityCheck('AdminXSLT')) return;
 
-    if (xarModGetVar('adminpanels', 'overview') == 0) {
-        // Return the output
-        return array();
-    } else {
-        xarResponseRedirect(xarModURL('xslt', 'admin', 'modifyconfig'));
-    } 
+    xarResponseRedirect(xarModURL('xslt', 'admin', 'modifyconfig'));
+
     // success
     return true;
-} 
+}
 
 ?>
