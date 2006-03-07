@@ -2,17 +2,10 @@
 <xar:template compile="false" file="mod-admin-title" type="module" />
 <!-- END TITLE BAR -->
 <div class="xar-mod-body">
-  <h2><xar:mlstring>Overview</xar:mlstring></h2>
-  <div class="xar-norm-outline" style="padding:.25em;">
-    <div class="xar-norm" style="float:right;padding:.5em;">
-        <xar:set name="$modInfo">xarModGetInfo(xarModGetIDFromName('addressbook'))</xar:set>
-          <img src="modules/#$modInfo['directory']#/xarimages/admin.gif" alt="official icon" width="96" height="96" />
-    </div>
-        <div style="margin:0em 1em;">
-             <h4><xar:mlstring>What is it?</xar:mlstring></h4>
-        </div>
-        <div style="margin: 0em 1em;">
-        <xar:mlstring>The AddressBook was inspired by the Palm V PDA and gives your site to ability to have a single, shared contact list of
+    <h2><xar:mlstring>Overview</xar:mlstring></h2>
+        <img src="#xarTplGetImage('admin.gif','addressbook')#" class="xar-module-icon"  alt="official icon" width="96" height="96" />
+        <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+        <p><xar:mlstring>The AddressBook was inspired by the Palm V PDA and gives your site to ability to have a single, shared contact list of
       multiple private address lists for each registered user.</xar:mlstring>
       <ul>
         <li><xar:mlstring>Xaraya API / BL compliant.</xar:mlstring></li>
@@ -22,12 +15,9 @@
         <li><xar:mlstring>Image support for each contact</xar:mlstring></li>
         <li><xar:mlstring>Quality Control Reporting</xar:mlstring></li>
       </ul>
-        </div>
-        <div style="margin: 0em 1em;">
-          <h4><xar:mlstring>User Features</xar:mlstring></h4>
-        </div>
-        <div style="margin: 0em 1em;">
-        <table width="80%" border="0" cellspacing="0" cellpadding="0">
+        </p>
+      <h3><xar:mlstring>User Features</xar:mlstring></h3>
+       <table width="80%" border="0" cellspacing="0" cellpadding="0">
           <tr align="left" valign="top">
             <td><ul>
               <li><xar:mlstring>Each address entry can be categorized</xar:mlstring></li>
@@ -49,11 +39,8 @@
               </ul></td>
           </tr>
           </table>
-        </div>
-        <div style="margin: 0em 1em;">
-          <h4><xar:mlstring>Administrator Notes</xar:mlstring></h4>
-        </div>
-        <div style="margin: 0em 1em;">
+          <h3><xar:mlstring>Administrator Notes</xar:mlstring></h3>
+
         <p><xar:mlstring>As an administrator you have access to all records of all users in the Address Book.
         Therefore the &quot;Show private contacts&quot; switch works different for the administrator than for other
         users. If it set to &quot;on&quot;, all records you have entered are shown, if it is set to &quot;off&quot;
@@ -62,25 +49,32 @@
         <p><xar:mlstring>As an administrator you will always see the full main menu with all options, regardless of any setting that
         are made in</xar:mlstring> <a href="#xarModURL('addressbook','admin','modifyconfig')#">Modify Configuration</a>.</p>
         <p><xar:mlstring>For additional information consult the</xar:mlstring> <a href="#xarModURL('addressbook','admin','displaydocs')#"><xar:mlstring>Administrator Documentation</xar:mlstring></a>.</p>
-        </div>
-        <div style="margin: 0em 1em;">
-          <h4><xar:mlstring>Included Blocks</xar:mlstring></h4>
-      </div>
-        <div style="margin: 0em 1em;">
+        <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
             <ul>
                 <li><xar:mlstring>none right now</xar:mlstring>
         </li>
             </ul>
-        </div>
-        <div style="margin: 0em 1em;">
-          <h4><xar:mlstring>Included Hooks</xar:mlstring></h4>
-        </div>
-        <div style="margin: 0em 1em;">
+          <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
             <ul>
             <li><xar:mlstring>none right now</xar:mlstring>
             </li>
             </ul>
-        </div>
-  </div>
+    <h3><xar:mlstring>Further Information</xar:mlstring></h3>
+    <p>
+         <xar:mlstring>Further information on the Addressbook module can be found at</xar:mlstring>
+    </p>
+    <ul>
+        <li><xar:mlstring>AddressbookExtension page at</xar:mlstring> <a title="#xarML('Addressbook Module - Xaraya Extension 66417')#" href="http://www.xaraya.com/index.php/release/66417.html">Xaraya Extension and Releases</a>.
+            <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+        </li>
+        <li><xar:mlstring>Related tutorials and documentation on Addressbook found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/addressbook/" title="#xarML('Related documentation on Addressbook')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a></li>
+    </ul>
+    <p class="xar-sub">
+        <strong>&nbsp;<xar:mlstring>Addressbook Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2006-03-08
+    </p>
 </div>
+
+
+
+
 <xar:template compile="false" file="mod-footer" type="module" />
