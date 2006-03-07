@@ -12,7 +12,7 @@
  * @subpackage authinvision2
  * @author Brian McCloskey <brian@nexusden.com>
 */
-$modversion['name'] = 'Authinvision2';
+$modversion['name'] = 'authinvision2';
 $modversion['id'] = '130';
 $modversion['version'] = '1.3.2';
 $modversion['description'] = 'Xaraya Invision Board Module';
@@ -26,6 +26,6 @@ $modversion['contact'] = 'brian@nexusden.com';
 $modversion['admin'] = 1;
 $modversion['user'] = 0;
 $modversion['securityschema'] = array('authinvision2::' => '::');
-$modversion['class'] = 'Miscellaneous';
+$modversion['class'] = 'Authentication';
 $modversion['category'] = 'Global';
 ?>

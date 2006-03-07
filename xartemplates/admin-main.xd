@@ -1,21 +1,15 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Authinvision2 Authentication Module</xar:mlstring></span></div>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Authinvision2 Authentication Module</xar:mlstring></span>
+</div>
 <div class="xar-mod-body">
     <h2><xar:mlstring>Overview</xar:mlstring></h2>
-    <div style="padding: 1px;" class="xar-norm-outline">
-        <div style="float:right;padding:10px;">
-            <img src="modules/authinvision2/xarimages/admin.gif" alt="official icon" width="96" height="96" />
-        </div>
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <p><xar:mlstring>What is it?</xar:mlstring></p>
-        </div>
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <p><xar:mlstring>The Authinvision2 module provides authentication based on Invision Power Board's v2.x user base.  The intended purpose is to utilize IPB's proprietary Converge technology, but currently uses SQL queries to authenticate the user with the existing Converge implementation.  The Xaraya Event API is used for user login and logout events which performs the actual login process to IPB.  The authinvision2 module also assumes the database server is <b>mysql</b>.  </xar:mlstring></p>
-        </div>
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <p><xar:mlstring>How to use it?</xar:mlstring></p>
-        </div>
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+        <img src="#xarTplGetImage('admin.gif','authinvision2')#" alt="official icon" class="xar-module-icon" width="96" height="96" />
+        <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+
+        <p><xar:mlstring>The Authinvision2 module provides authentication based on Invision Power Board's v2.x user base.  The intended purpose is to utilize IPB's proprietary Converge technology, but currently uses SQL queries to authenticate the user with the existing Converge implementation.  The Xaraya Event API is used for user login and logout events which performs the actual login process to IPB.  The authinvision2 module also assumes the database server is <b>mysql</b>.  </xar:mlstring></p>
+
+        <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
             <p><xar:mlstring>From the menu, you have seven choices. </xar:mlstring></p>
             <ul>
                 <li><xar:mlstring>Server - The hostname running the database (defaults to localhost).</xar:mlstring></li>
@@ -27,23 +21,25 @@
                 <li><xar:mlstring>Use Authinvision2 exclusively - Setting this will set authinvision2 to be your only authentication mechanism, and can not be unset.</xar:mlstring></li>
                 <li><xar:mlstring>Default Xaraya Group - The default group to add new users into.</xar:mlstring></li>
             </ul>
-        </div>
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <p><xar:mlstring>Included Blocks</xar:mlstring></p>
-        </div>
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+        <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
             <ul>
                 <li><xar:mlstring>login - A modified Roles login block that adds the ability for a user to set themselves as invisible.  This only affects the IPB login, and has no affect in Xaraya.</xar:mlstring></li>
             </ul>
-        </div>
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <p><xar:mlstring>Included Hooks</xar:mlstring></p>
-        </div>
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+        <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
             <p><xar:mlstring>The Authinvision2 Module has no hooks included at this time.</xar:mlstring></p>
-        </div>
-        <div class="xar-norm-outline xar-accent" style="text-align: center; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
             <p><xar:mlstring>Included with the authinvision2 module is a class that can be used on IPB's side to log a user into Xaraya in order to provide two-way login capability.  In the modules/authinvision2 directory, copy the XarayaIPB-1.0.3.tar.gz file into your forumroot directory and unpack it, which will create a new directory called <b>modules/xaraya</b>.  Included in this directory is a README.txt file containing instructions on modifying IPB, and an example ipb_member_sync.php file.</xar:mlstring></p>
-        </div>
-    </div>
+    
+        <h3><xar:mlstring>Further Information</xar:mlstring></h3>
+        <p>
+            <xar:mlstring>Further information on the Authinvision2 module can be found at</xar:mlstring>
+       </p>
+    <ul>
+        <li><xar:mlstring>Authinvision2 Extension page at</xar:mlstring> <a title="#xarML('Authinvision2 Module - Xaraya Extension 130')#" href="http://www.xaraya.com/index.php/release/130.html">Xaraya Extension and Releases</a>.
+            <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+        </li>
+        <li><xar:mlstring>Related tutorials and documentation on Authinvision2 found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/authinvision2/" title="#xarML('Related documentation on Authinvision2')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a></li>
+    </ul>
+    <p class="xar-sub">
+        <strong>&nbsp;<xar:mlstring>Authinvision2 Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2006-03-08
+    </p>
 </div>
