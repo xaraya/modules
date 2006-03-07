@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Purpose of File
  *
@@ -21,12 +21,7 @@
 function uploads_adminapi_getmenulinks()
 {
     if (xarSecurityCheck('EditUploads')) {
-        $menulinks[] = Array('url'   => xarModURL('uploads',
-                                                  'admin',
-                                                  'main'),
-                             'title' => xarML('Uploads Module Overview'),
-                             'label' => xarML('Overview'));
-        $menulinks[] = Array('url'   => xarModURL('uploads',
+     $menulinks[] = Array('url'   => xarModURL('uploads',
                                                   'admin',
                                                   "view"),
                              'title' => xarML('View All Files'),
