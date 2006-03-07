@@ -42,9 +42,17 @@
   <p>
     <a href="&xar-modurl-translations-admin-start;"><xar:mlstring>Start translating</xar:mlstring></a>
   </p>
-</div>
-<div class="xar-mod-foot xar-align-center xar-padding-thick">
-  <p>
-    <xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring>
-  </p>
+    <h3><xar:mlstring>Further Information</xar:mlstring></h3>
+    <p>
+         <xar:mlstring>Further information on the Translations module can be found at</xar:mlstring>
+    </p>
+    <ul>
+        <li><xar:mlstring>Uploads Extension page at</xar:mlstring> <a title="#xarML('Translations Module - Xaraya Extension 77')#" href="http://www.xaraya.com/index.php/release/77.html">Xaraya Extension and Releases</a>.
+            <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+        </li>
+        <li><xar:mlstring>Related tutorials and documentation on Translations found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/translations/" title="#xarML('Related documentation on Translations')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a></li>
+    </ul>
+    <p class="xar-sub">
+        <strong>&nbsp;<xar:mlstring>Translations Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2006-03-08
+    </p>
 </div>
