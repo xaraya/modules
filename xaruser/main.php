@@ -71,7 +71,7 @@ function xarcpshop_user_main()
     // shut-off valve in case things go horribly wrong).
 
     if ($closed == 1)   {
-        $data['message']= xarML("Our apologies, this cafe press shop is currently closed for maintenance.");
+        $data['message']= xarML("Our apologies, this Cafe Press shop is currently closed for maintenance.");
 
     }else{
      $closed=0;

@@ -46,13 +46,13 @@ function xarcpshop_userapi_get($args)
     // the exception so we just return
     if (!$result) return;
     // Check for no rows found, and if so, close the result set and return an exception
-    if ($result->EOF) {
+    /*if ($result->EOF) {
         $result->Close();
         $msg = xarML('This shop does not exist');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'ID_NOT_EXIST',
             new SystemException(__FILE__ . '(' . __LINE__ . '): ' . $msg));
         return;
-    }
+    }*/
     // Obtain the item information from the result set
     list($storeid, $name, $nickname, $toplevel) = $result->fields;
     $result->Close();

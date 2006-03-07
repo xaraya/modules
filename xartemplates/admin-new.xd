@@ -3,9 +3,9 @@
 <script type="text/javascript">
 <!--
     // Enter name of mandatory fields
-    var fieldRequired = Array("nickname","name", "toplevel");
+    var fieldRequired = Array("nickname","name");
     // Enter field description to appear in the dialog box
-    var fieldDescription = Array("Nickname", "Store ID", "Top Level");
+    var fieldDescription = Array("Nickname", "Store ID");
 //-->
 </script>
 <div class="xar-mod-head">
