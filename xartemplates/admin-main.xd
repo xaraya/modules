@@ -6,7 +6,7 @@
     </span>
 </div>
 <div class="xar-mod-body">
-  <img src="modules/xarcpshop/xarimages/admin.gif" class="xar-module-icon" alt="official icon" width="96" height="96" />
+  <img src="#xarTplGetImage('admin.gif','xarcpshop')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
 
     <h2><xar:mlstring>Overview</xar:mlstring></h2>
 
