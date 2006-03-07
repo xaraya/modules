@@ -1,38 +1,25 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Administration - xarCacheManager</xar:mlstring></span></div>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Administration - xarCacheManager</xar:mlstring></span>
+</div>
 <div class="xar-mod-body">
+  <img src="modules/xarcpshop/xarimages/admin.gif" class="xar-module-icon" alt="official icon" width="96" height="96" />
+
     <h2><xar:mlstring>Overview</xar:mlstring></h2>
-    <div style="padding: 1px;" class="xar-norm-outline">
-        <div style="float:right;padding:10px;">
-            <xar:if condition="file_exists('modules/xarcachemanager/xarimages/admin.gif')" >
-                <img src="modules/xarcachemanager/xarimages/admin.gif" alt="official icon" width="96" height="96" />
-            <xar:else />
-                <img src="modules/xarcachemanager/xarimages/admin_generic.gif" alt="official icon" width="96" height="96" />
-            </xar:if>
-        </div>
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>What is it?</xar:mlstring>
-        </div>
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <p><xar:mlstring>The xarCacheManager module provides an administrator interface to control the settings of the xarCache system of Xaraya. It also provides hooks that allow the cache system to know when changes have happened to modules so that it can respond accordingly (event based cache expiration/invalidation).</xar:mlstring></p>
-        </div>
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <p><xar:mlstring>The output cache system is designed to reduce the amount of work a server system has to do under heavy load conditions. It saves the output used by Xaraya so that it does not need to go through the entire process to reproduce the same output over and over again. At this point, only page level output caching for anonymous users and block level output caching for all users are available. In time, the output cache system will also support module level output caching for all users, as well as more efficient serving of cached pages for anonymous users. Page level output caching for certain user groups is also planed to be available to sites that can take advantage of this.</xar:mlstring></p>
-        </div>
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <p><xar:mlstring>Please do not confuse output caching with Xaraya's variable or template caching systems. Each are different. In time, they will likely use the same caching infrastructure, but will still provide different caching for different purposes.  General data caching is also planned for xarCache.  For more on the different points of caching in Xaraya, please refer to:</xar:mlstring></p>
-        </div>
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+
+
+    <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+        <p><xar:mlstring>The xarCacheManager module provides an administrator interface to control the settings of the xarCache system of Xaraya. It also provides hooks that allow the cache system to know when changes have happened to modules so that it can respond accordingly (event based cache expiration/invalidation).</xar:mlstring></p>
+        <p><xar:mlstring>The output cache system is designed to reduce the amount of work a server system has to do under heavy load conditions. It saves the output used by Xaraya so that it does not need to go through the entire process to reproduce the same output over and over again. At this point, only page level output caching for anonymous users and block level output caching for all users are available. In time, the output cache system will also support module level output caching for all users, as well as more efficient serving of cached pages for anonymous users. Page level output caching for certain user groups is also planed to be available to sites that can take advantage of this.</xar:mlstring></p>
+        <p><xar:mlstring>Please do not confuse output caching with Xaraya's variable or template caching systems. Each are different. In time, they will likely use the same caching infrastructure, but will still provide different caching for different purposes.  General data caching is also planned for xarCache.  For more on the different points of caching in Xaraya, please refer to:</xar:mlstring>
             <a href="http://xaraya.com/~jsb/cachingPoints.html">http://xaraya.com/~jsb/cachingPoints.html</a>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>How to use it?</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+        </p>
+
+
+    <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
+        <p>
             <xar:mlstring>
-                The xarCacheManager module has several tools for managing the xarCache system and your cached output files. The tools are organized under the following menu links: 
+                The xarCacheManager module has several tools for managing the xarCache system and your cached output files. The tools are organized under the following menu links:
             </xar:mlstring>
             <ul>
                 <li><xar:mlstring>Query Caching - Queries in the certain functions could be quite expensive for large sites.  You can use this tool to set query caching to save the results of some expensive queries for reuse.  Please note that cached query results will only be invalidated based on expiration time.</xar:mlstring></li>
@@ -41,76 +28,65 @@
                 <li><xar:mlstring>Block Caching - provides a single view and management point of the output caching settings of all block instances.</xar:mlstring></li>
                 <li><xar:mlstring>Modify Config - allows you to set the values for the output cache system.  Mouse over the setting titles for more information.</xar:mlstring></li>
             </ul>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>Included Blocks</xar:mlstring>
-        </div>
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+
+        <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
             <p><xar:mlstring>The xarCacheManager Module has no blocks included at this time.</xar:mlstring></p>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>Included Hooks</xar:mlstring>
-        </div>
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+
+        <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
             <p><xar:mlstring>The xarCacheManager module provides create, update, delete and modify config API hooks and a modify GUI hook (currently only used for adding caching configuration administration to block instance modify pages). To activate these hooks, go to Admin panel -> Modules -> Configure Hooks and click on the xarcachemanager link. Select the modules you would like to enable the xarCacheManager hook functionality for (articles, categories, autolinks, blocks, html are likely candidates) and click the Save Changes button. Once hooked to xarCacheManager, when you create, update, or delete items of the module, or modify the configuration of a module, the call to the xarCacheManager hooks will flush the appropriate cache to insure that your changes will be instantly available on your site (not masked by cached output files).</xar:mlstring></p>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>Additional Information</xar:mlstring>
-        </div>
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+
+        <h3><xar:mlstring>Additional Information</xar:mlstring></h3>
             <p><xar:mlstring>Please note that page level output caching is not appropriate for sites that require the serving of dynamic content to anonymous users. Example: if each page contains data that changes every second and must be presented to the anonymous viewer in the latest state, you do not want to use page level output caching. However, if it is acceptable to present the data with changes no older than 1 minute, you can enable page level output caching and set the Cache Expiration Time to 60 seconds. If your site serves the same page 100 times per minute this will measurably reduce the load on your systems to do so.</xar:mlstring></p>
-        </div>
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
             <p><xar:mlstring>Page level output caching may also affect the expected behavior of certain aspects of Xaraya as cached pages are served without loading the modules. Example: the stats and opentracker modules will not accurately reflect the total number of page views your site receives because they are not invoked when serving cached pages. If your site is under heavy load that needs to be reduced, you may want to consider doing your site statistic tracking via the web server log files or a javascript based solution like that implemented by Hitbox or WebTrends Live, anyway. Either of these methods will accurately work with page level caching enabled.</xar:mlstring></p>
-        </div>
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
             <p><xar:mlstring>Block level output caching does not have the same dynamic content limitations.  It is purpose-built to allow Xaraya to fully load the core and active module(s) with each page request.  Block output caching can be configure on a per block instance basis, so you can have some block instances be fully dynamic (never cached), while other instances are cached for varying lifetimes.  The cache of each block instance can be configure to be or not be shared between users (or groups of users) and pages.  This allows for very flexible output caching behaviors for sites with mixed static and dynamic pages, but the tradeoff is a much higher fixed cost (page generation time).  Where page level output caching can reduce a site's page generation time by 65 to 80% (YMMV depending on site configuration), block level output caching general only reduced page generation time by 20 to 30%.</xar:mlstring></p>
-        </div>
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
             <p><xar:mlstring>Page level and block level output caching can be used in tandem to reduce loads and improve page generation times on sites that serve both anonymous and non-anonymous audience members, or on sites with varying page and block level output caching requirements.</xar:mlstring></p>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>TODO List</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+
+        <h3><xar:mlstring>TODO List</xar:mlstring></h3>
+        <p>
             <xar:mlstring>
-                General caching related: 
+                General caching related:
             </xar:mlstring>
+        </p>
             <ul>
                 <li><xar:mlstring>Support multisite configurations.</xar:mlstring></li>
                 <li><xar:mlstring>Provide data caching API.</xar:mlstring></li>
                 <li><xar:mlstring>Provide an output cache file browser, like the template cache file browser in SiteTools.</xar:mlstring></li>
                 <li><xar:mlstring>Refactor, refactor, refactor.</xar:mlstring></li>
             </ul>
-        </div>
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+        <p>
             <xar:mlstring>
-                Page level output caching related: 
+                Page level output caching related:
             </xar:mlstring>
+        </p>
             <ul>
                 <li><xar:mlstring>Support itemtype as a 'name' between cacheKey and page when available.</xar:mlstring></li>
                 <li><xar:mlstring>Provide Scheduler, getfile/link integration for pre-population of output cache.</xar:mlstring></li>
                 <li><xar:mlstring>Analyze Slashdot and Google News use of 304 &amp; ETag HTTP headers and rework our use of these headers based on findings.</xar:mlstring></li>
             </ul>
-        </div>
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>
-                Block/module level output caching related: 
+            <p><xar:mlstring>
+                Block/module level output caching related:
             </xar:mlstring>
+            </p>
             <ul>
                 <li><xar:mlstring>Add module output caching functions, reutilizing xarBlock*Cached functions when appropriate.</xar:mlstring></li>
                 <li><xar:mlstring>Add xarMod*Cached() calls in xarModFunc().</xar:mlstring></li>
                 <li><xar:mlstring>Provide Admin GUI hooks to modules beyond Blocks for the configuration of per module output cache settings.</xar:mlstring></li>
             </ul>
-        </div>
-        <br />
-        <div class="xar-norm-outline xar-accent" style="text-align: center; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
-            <xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring>
-        </div>
-    </div>
+
+        <h3>
+            <xar:mlstring>Further Information</xar:mlstring>
+        </h3>
+        <p>
+           <xar:mlstring>Further information on the xarcachemanager module can be found at</xar:mlstring>
+        </p>
+        <ul>
+            <li><xar:mlstring>xarcachemanager Extension page at</xar:mlstring> <a title="#xarML('xarcachemanager Module - Xaraya Extension 1652')#" href="http://www.xaraya.com/index.php/release/1652.html">Xaraya Extension and Releases</a>.
+                <xar:mlstring>Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+            </li>
+            <li><xar:mlstring>Related tutorials and documentation on xarcachemanager found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/xarcachemanager/" title="#xarML('Related documentation on xarcachemanager')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+            </li>
+        </ul>
+        <p class="xar-sub">
+            <strong>&nbsp;<xar:mlstring>xarcachemanager Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2006-03-08
+        </p>
 </div>
