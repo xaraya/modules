@@ -14,6 +14,6 @@ $modversion['contact'] = 'gq@gq.pp.ru';
 $modversion['admin'] = 1;
 $modversion['user'] = 0;
 $modversion['securityschema'] = array('authphpbb2::' => '::');
-$modversion['class'] = 'Miscellaneous';
+$modversion['class'] = 'Authentication';
 $modversion['category'] = 'Global';
 ?>
