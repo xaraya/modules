@@ -13,7 +13,6 @@ $modversion['author'] = 'Court Shrock';
 $modversion['contact'] = 'shrockc@inhs.org';
 $modversion['admin'] = 1;
 $modversion['user'] = 0;
-$modversion['securityschema'] = array('authurl::' => '::');
-$modversion['class'] = 'Miscellaneous';
+$modversion['class'] = 'Authentication';
 $modversion['category'] = 'Global';
 ?>

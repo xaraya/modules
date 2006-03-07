@@ -1,30 +1,16 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>AuthURL Administration</xar:mlstring></span></div>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>AuthURL Administration</xar:mlstring></span>
+</div>
 <div class="xar-mod-body">
-    <h2><xar:mlstring>Overview</xar:mlstring></h2>
-        <div style="padding: 1px;" class="xar-norm-outline">
-        <div style="float:right;padding:10px;">
-        <xar:if condition="file_exists('modules/authurl/xarimages/admin.gif')" >
-            <img src="modules/authurl/xarimages/admin.gif" alt="official icon" width="96" height="96" />
-        <xar:else />
-            <img src="modules/base/xarimages/admin_generic.gif" alt="official icon" width="96" height="96" />
-        </xar:if>
-        </div>
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>What is it?</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>The AuthURL module allows you to authenticate a user based on their access to another URL/site.  The AuthURL module sends a HTTP basic authentication request to the specified URL with the credentials supplied from the login form.</xar:mlstring>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>How to use it?</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>Authentication by AuthURL is automatically set once the the AuthURL module has been initialized.  To remove AuthURL authentication, you must remove the module.</xar:mlstring>
-            <br /><br />
-            <xar:mlstring>
+  <img src="#xarTplGetImage('admin_generic.gif','base')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
+  <h2><xar:mlstring>Overview</xar:mlstring></h2>
+
+  <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+            <p><xar:mlstring>The AuthURL module allows you to authenticate a user based on their access to another URL/site.  The AuthURL module sends a HTTP basic authentication request to the specified URL with the credentials supplied from the login form.</xar:mlstring></p>
+
+    <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
+            <p><xar:mlstring>Authentication by AuthURL is automatically set once the the AuthURL module has been initialized.  To remove AuthURL authentication, you must remove the module.</xar:mlstring></p>
+            <p><xar:mlstring>
                         From the menu, you have one choice.  "Modify Config".  From here, you:
                         </xar:mlstring>
                     <ul>
@@ -33,18 +19,22 @@
                         <li><xar:mlstring>Set the default group that users are added to if they are automatically created.</xar:mlstring></li>
                         <li><xar:mlstring>Set the level of output that this module logs (useful for seeing what is happening under the hood).</xar:mlstring></li>
                     </ul>
-                </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>Included Blocks</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>There are no included blocks with the AuthURL Module</xar:mlstring>
-        </div>
-        <br />
-        <div class="xar-norm-outline xar-accent" style="text-align: center; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
-            <xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring>
-        </div>
-    </div>
+            </p>
+
+    <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
+            <p><xar:mlstring>There are no included blocks with the AuthURL Module</xar:mlstring></p>
+
+    <h3><xar:mlstring>Further Information</xar:mlstring></h3>
+    <p>
+         <xar:mlstring>Further information on the AuthURL module can be found at</xar:mlstring>
+    </p>
+    <ul>
+        <li><xar:mlstring>AuthURL Extension page at</xar:mlstring> <a title="#xarML('AuthURL Module - Xaraya Extension 42241')#" href="http://www.xaraya.com/index.php/release/42241.html">Xaraya Extension and Releases</a>.
+            <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+        </li>
+        <li><xar:mlstring>Related tutorials and documentation on AuthURL found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/authurl/" title="#xarML('Related documentation on AuthURL')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a></li>
+    </ul>
+    <p class="xar-sub">
+        <strong>&nbsp;<xar:mlstring>AuthURL Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2006-03-08
+    </p>
 </div>
