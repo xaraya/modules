@@ -23,6 +23,6 @@ $modversion['contact'] = 'r.keays@ninthave.net';
 $modversion['admin'] = 0;
 $modversion['user'] = 1;
 $modversion['securityschema'] = array();
-$modversion['class'] = 'Utility';
+$modversion['class'] = 'Authentication';
 $modversion['category'] = 'Global';
 ?>
