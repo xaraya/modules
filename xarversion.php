@@ -14,6 +14,6 @@ $modversion['contact'] = 'jsb@xaraya.com | rcave@xaraya.com';
 $modversion['admin'] = 1;
 $modversion['user'] = 0;
 $modversion['securityschema'] = array('authsso::' => '::');
-$modversion['class'] = 'Miscellaneous';
+$modversion['class'] = 'Authentication';
 $modversion['category'] = 'Global';
 ?>

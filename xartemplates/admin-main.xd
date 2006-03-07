@@ -1,75 +1,46 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>AuthSSO Administration</xar:mlstring></span></div>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>AuthSSO Administration</xar:mlstring></span>
+</div>
 <div class="xar-mod-body">
-    <h2><xar:mlstring>Overview</xar:mlstring></h2>
-        <div style="padding: 1px;" class="xar-norm-outline">
-        <div style="float:right;padding:10px;">
-        <xar:if condition="file_exists('modules/authsso/xarimages/admin.gif')" >
-            <img src="modules/authsso/xarimages/admin.gif" alt="official icon" width="96" height="96" />
-        <xar:else />
-            <img src="modules/base/xarimages/admin_generic.gif" alt="official icon" width="96" height="96" />
-        </xar:if>
-        </div>
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>What is it?</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>The AuthSSO module allows Xaraya to automatically log users authenticated by the web server into Xaraya.  The original intent was to transparently log in users whose credentials could be passed by their browser to the web server for authentication.  Additionally, this module can be used to leverage other authentication mechanisms via its ability to delegate authentication to the web server (say, by having the web server authenticate with mod_auth_pam and then using pam to plug into an external authentication system).</xar:mlstring>
-            <br />
-            <br />
-            <xar:mlstring>Warning: this module is useless if you do not have your web server set up to authenticate users.  Refer to your web server's documentation on how to set this up.</xar:mlstring>
-            <br />
-            <br />
-            <xar:mlstring>Warning: this module is only as secure as your web server authentication mechanism.  It completely trusts the web server to handle user credential processing.</xar:mlstring>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>How to use it?</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>Authentication by AuthSSO is automatically available once the AuthSSO module has been initialized.  To disable AuthSSO authentication, you must remove the module or disable it in the modify config screen (or disable the webserver authentication, which is a prerequisite of AuthSSO functionality).</xar:mlstring>
-            <br />
-            <br />
-            <xar:mlstring>
-                From the menu, you have one choice.  "Modify Config". 
+  <img src="#xarTplGetImage('admin_generic.gif','base')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
+  <h2><xar:mlstring>Overview</xar:mlstring></h2>
+
+  <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+            <p><xar:mlstring>The AuthSSO module allows Xaraya to automatically log users authenticated by the web server into Xaraya.  The original intent was to transparently log in users whose credentials could be passed by their browser to the web server for authentication.  Additionally, this module can be used to leverage other authentication mechanisms via its ability to delegate authentication to the web server (say, by having the web server authenticate with mod_auth_pam and then using pam to plug into an external authentication system).</xar:mlstring></p>
+            <p><xar:mlstring>Warning: this module is useless if you do not have your web server set up to authenticate users.  Refer to your web server's documentation on how to set this up.</xar:mlstring></p>
+            <p><xar:mlstring>Warning: this module is only as secure as your web server authentication mechanism.  It completely trusts the web server to handle user credential processing.</xar:mlstring></p>
+  <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
+            <p><xar:mlstring>Authentication by AuthSSO is automatically available once the AuthSSO module has been initialized.  To disable AuthSSO authentication, you must remove the module or disable it in the modify config screen (or disable the webserver authentication, which is a prerequisite of AuthSSO functionality).</xar:mlstring></p>
+            <p><xar:mlstring>
+                From the menu, you have one choice.  "Modify Config".
             </xar:mlstring>
             <ul>
                 <li><xar:mlstring>Modify Config -- You can also allow a user that has been authenticated by the web server to be automatically added to the Xaraya database and allowed to login.</xar:mlstring></li>
             </ul>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>Included Blocks</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>No blocks yet, but one is coming...</xar:mlstring>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>Included Hooks</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>The AuthSSO module has no hooks included at this time.</xar:mlstring>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>TODO List</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>The 0.02 version of the AuthSSO module is a skeleton proof of concept.  There are many "ToDo"s.</xar:mlstring>
+            </p>
+  <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
+            <p><xar:mlstring>No blocks yet, but one is coming...</xar:mlstring></p>
+  <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
+            <p><xar:mlstring>The AuthSSO module has no hooks included at this time.</xar:mlstring></p>
+  <h3><xar:mlstring>TODO List</xar:mlstring></h3>
+            <p><xar:mlstring>The 0.02 version of the AuthSSO module is a skeleton proof of concept.  There are many "ToDo"s.</xar:mlstring>
             <ul>
                 <li><xar:mlstring>Rework to make natively pluggable with external auth systems other than the web server (i.e. allow xaraya to trust the authentication of other external systems, or to validate a ticket issued by a third party SSO product).</xar:mlstring></li>
                 <li><xar:mlstring>Make integration with other external user information options easily configurable and extendable.</xar:mlstring></li>
                 <li><xar:mlstring>Allow site administrators to configure which modules or pages do not auto sign in the web server authenticated user.</xar:mlstring></li>
             </ul>
-        </div>
-        <br />
-        <div class="xar-norm-outline xar-accent" style="text-align: center; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
-            <xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring>
-        </div>
-    </div>
+        </p>
+     <h3><xar:mlstring>Further Information</xar:mlstring></h3>
+    <p>
+         <xar:mlstring>Further information on the AuthSSO module can be found at</xar:mlstring>
+    </p>
+    <ul>
+        <li><xar:mlstring>AuthSSO Extension page at</xar:mlstring> <a title="#xarML('AuthSSO Module - Xaraya Extension 51')#" href="http://www.xaraya.com/index.php/release/51.html">Xaraya Extension and Releases</a>.
+            <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+        </li>
+        <li><xar:mlstring>Related tutorials and documentation on AuthSSO found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/authsso/" title="#xarML('Related documentation on AuthSSO')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a></li>
+    </ul>
+    <p class="xar-sub">
+        <strong>&nbsp;<xar:mlstring>AuthSSO Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2006-03-08
+    </p>
 </div>
