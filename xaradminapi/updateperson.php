@@ -217,9 +217,10 @@ function sigmapersonnel_adminapi_updateperson($args)
         $birthdate = mktime(1576800000,0,0,$month,$day,$year);
 */
 
-
+    if (!empty($birthdate) && !is_numeric($birthdate)) {
       $birthdate = safestrtotime($birthdate);
       //  $birthdate = $bdate+1576800000;
+    }
     if (!empty($ehbodate) && !is_numeric($ehbodate)) {
         $ehbodate = strtotime($ehbodate);
     }

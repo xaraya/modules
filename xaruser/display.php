@@ -46,6 +46,9 @@ function sigmapersonnel_user_display($args)
                             $personid,
                             $item);
     // Fill in the details of the item.
+
+    // Privacy options
+    $data['phonehome'] = ($item['privphonehome'] == 1) ?  false : $item['phonehome'];
     // Labels
     $data['useridlabel'] = xarVarPrepForDisplay(xarML('Xaraya User ID '));
     $data['pnumberlabel'] = xarVarPrepForDisplay(xarML('SIGMA number '));
@@ -59,7 +62,7 @@ function sigmapersonnel_user_display($args)
     $data['streetlabel'] = xarVarPrepForDisplay(xarML('Street'));
     $data['ziplabel'] = xarVarPrepForDisplay(xarML('ZIP Code'));
     $data['cityidlabel'] = xarVarPrepForDisplay(xarML('Town or City'));
-    $data['phonehomelabel'] = xarVarPrepForDisplay(xarML('Home phone number'));
+
     $data['mobilelabel'] = xarVarPrepForDisplay(xarML('Mobile phone number'));
     $data['phoneworklabel'] = xarVarPrepForDisplay(xarML('Work phone number'));
     $data['emaillabel'] = xarVarPrepForDisplay(xarML('Email address'));

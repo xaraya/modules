@@ -186,7 +186,12 @@
                             <xar:mlstring>Home phone number private?</xar:mlstring>
                             </span>
                         </label>
-                        <xar:data-input name="privphonehome" type="checkbox" value="$item['privphonehome']" />
+                        <xar:if condition="$item.privphonehome">
+                          <input type="checkbox" name="privphonehome" id="privphonehome" value="1" checked="checked"/>
+                        <xar:else/>
+                          <input type="checkbox" name="privphonehome" id="privphonehome" value="1" />
+                        </xar:if>
+
                     </div>
                     <div class="xar-form-input-wrapper">
                         <label for="privwork" class="xar-form-label">

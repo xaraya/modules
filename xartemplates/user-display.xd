@@ -24,7 +24,8 @@
               <xar:mlstring>Person number:</xar:mlstring>
             #$item.pnumber#
         </p>
-
+    <p><xar:mlstring>Home phone number</xar:mlstring> #$phonehome#
+    </p>
         <!-- if you want to extend this module with dynamic data, you can retrieve
         //   that data in the code via APIs, or use e.g. the following BL tags here.
         //   For the different options, see the overview of dynamicdata...

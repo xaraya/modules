@@ -89,6 +89,7 @@ function sigmapersonnel_admin_modifyperson($args)
     if (!xarSecurityCheck('EditSIGMAPersonnel', 1, 'PersonnelItem', "$personid:All:$item[persstatus]")) { // add catid:
         return;
     }
+    $data['privphonehome'] = ($item['privphonehome'] > 0) ? true : false;
     $data['cities'] = xarModAPIFunc('sigmapersonnel', 'user', 'gets',
                                       array('itemtype' => 4));
     $data['districts'] = xarModAPIFunc('sigmapersonnel', 'user', 'gets',
@@ -124,7 +125,7 @@ function sigmapersonnel_admin_modifyperson($args)
     $data['mobile'] =  $mobile;
     $data['phonework'] =  $phonework;
     $data['email'] =  $email;
-    $data['privphonehome'] =  $privphonehome;
+ //   $data['privphonehome'] = $privphonehome;
     $data['privwork'] =  $privwork;
     $data['privemail'] =  $privemail;
     $data['privbirthdate'] =  $privbirthdate;
