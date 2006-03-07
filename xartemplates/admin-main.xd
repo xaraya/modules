@@ -35,9 +35,19 @@
     <p>
         <xar:mlstring>There are no included Hooks with the AuthLDAP Module</xar:mlstring>
     </p>
-    </div>
-<div class="xar-mod-foot xar-align-center xar-padding-thick">
+
+    <h3><xar:mlstring>Further Information</xar:mlstring></h3>
     <p>
-        <xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring>
+         <xar:mlstring>Further information on the AuthLDAP module can be found at</xar:mlstring>
+    </p>
+    <ul>
+        <li><xar:mlstring>AuthLDAP Extension page at</xar:mlstring> <a title="#xarML('AuthLDAP Module - Xaraya Extension 50')#" href="http://www.xaraya.com/index.php/release/50.html">Xaraya Extension and Releases</a>.
+            <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+        </li>
+        <li><xar:mlstring>Related tutorials and documentation on AuthLDAP found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/authldap/" title="#xarML('Related documentation on AuthLDAP')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a></li>
+    </ul>
+    <p class="xar-sub">
+        <strong>&nbsp;<xar:mlstring>AuthLDAP Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2006-03-08
     </p>
 </div>
+
