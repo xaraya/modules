@@ -21,12 +21,8 @@ function xarbb_admin_main()
     // Security Check
     if(!xarSecurityCheck('EditxarBB',1,'Forum')) return;
 
-    if (xarModGetVar('adminpanels', 'overview') == 0){
-        // Return the output
-        return array();
-    } else {
-        xarResponseRedirect(xarModURL('xarbb', 'admin', 'view'));
-    }
+       xarResponseRedirect(xarModURL('xarbb', 'admin', 'view'));
+
     // success
     return true;
 }

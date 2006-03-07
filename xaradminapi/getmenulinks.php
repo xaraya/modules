@@ -20,14 +20,7 @@
 function xarbb_adminapi_getmenulinks()
 {
 
-   if (xarSecurityCheck('AdminxarBB', 0,'Forum')) {
-
-        $menulinks[] = Array('url'   => xarModURL('xarbb',
-                                                  'admin',
-                                                  'overview'),
-                              'title' => xarML('Overview'),
-                              'label' => xarML('Overview'));
-    }
+ 
     if (xarSecurityCheck('AddxarBB', 0,'Forum')) {
 
         $menulinks[] = Array('url'   => xarModURL('xarbb',
