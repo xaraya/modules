@@ -23,9 +23,6 @@ function xarlinkme_adminapi_getmenulinks()
     // Security Check
     if (xarSecurityCheck('AdminxarLinkMe', 0)) {
                                                    
-        $menulinks[] = Array('url' => xarModURL('xarlinkme','admin','overview'),
-                             'title' => xarML('Overview of the xarLinkMe Module'),
-                             'label' => xarML('Overview'));
         $menulinks[] = Array('url' => xarModURL('xarlinkme','admin','banneradmin'),
                              'title' => xarML('Manage Client Banners'),
                              'label' => xarML('Client Banners'));
