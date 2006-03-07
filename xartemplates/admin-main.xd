@@ -1,115 +1,113 @@
-<div class="xar-mod-body">
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
-  <span class="xar-mod-title">
-    <xar:mlstring>Workflow Administration</xar:mlstring>
-  </span>
+  <span class="xar-mod-title"><xar:mlstring>Workflow Administration</xar:mlstring></span>
 </div>
-<div style="margin: auto;">
+<div class="xar-mod-body">
+  <img src="#xarTplGetImage('admin.gif','example')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
 
-<!-- Introduction -->
-<h3><xar:mlstring>Overview</xar:mlstring></h3>
-<xar:mlstring>
-  <p>
+  <h2><xar:mlstring>Overview</xar:mlstring></h2>
+
+  <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+
+  <p><xar:mlstring>
     See the <a href="http://tikiwiki.org/tiki-index.php?page=GalaxiaWorkflow">introduction
     and user manual of Galaxia</a> for more details on what this
-    module is all about, and how to use it.
+    module is all about, and how to use it.</xar:mlstring>
   </p>
-  <p>
+  <p><xar:mlstring>
     However, we clarify their definitions here a bit. In the workflow
-    module a distinction could be made between:
+    module a distinction could be made between:</xar:mlstring>
     <ol>
-      <li>The definition part: processes and activities</li>
-      <li>The running part: instances and workitems</li>
+      <li><xar:mlstring>The definition part: processes and activities</xar:mlstring></li>
+      <li><xar:mlstring>The running part: instances and workitems</xar:mlstring></li>
     </ol>
   </p>
-  <p>
+  <p><xar:mlstring>
     So, you <em>define</em> processes with activities and you
     <em>run</em> instances to complete workitems. During the use of
     the module you <em>Manage</em> processes and activities. There is
     functionality available to <em>monitor</em> all of processes, activities,
     instances and workitems. Each workitem can be completed by one or more process roles.
     In Xaraya, you map the users or groups in the roles module to these process roles.
-    The description given here will be reflected in the Xaraya interface for the workflow module.
+    The description given here will be reflected in the Xaraya interface for the workflow module.</xar:mlstring>
   </p>
-</xar:mlstring>
+
 
 <!-- Getting started -->
 <h3><xar:mlstring>Getting started</xar:mlstring></h3>
 <p>
-<xar:mlstring>
+
 <ol>
-  <li>
+  <li><xar:mlstring>
     make sure that the webserver can write to the directory
-    <code>var/processes</code> (chmod 777 or equivalent)
+    <code>var/processes</code> (chmod 777 or equivalent)</xar:mlstring>
   </li>
-  <li>
+  <li><xar:mlstring>
     install <a href="http://www.research.att.com/sw/tools/graphviz/">GraphViz</a>
     if you want to generate some nice process graphs, and adapt
-    GRAPHVIZ_DIR in <code>modules/workflow/tiki-setup.php</code> if necessary;
+    GRAPHVIZ_DIR in <code>modules/workflow/tiki-setup.php</code> if necessary;</xar:mlstring>
   </li>
-  <li>
+  <li><xar:mlstring>
     go to the Dynamic Data <a href="index.php?module=dynamicdata&amp;type=util&amp;func=import">Import
-    Object Definition</a> page and paste the content of the file 
+    Object Definition</a> page and paste the content of the file
     <a  href="modules/workflow/xardata/cdcollection3_dd.xml">cdcollection3_dd.xml</a>
-    in the text area to create the sample database table;
+    in the text area to create the sample database table;</xar:mlstring>
   </li>
-  <li>
+  <li><xar:mlstring>
     go to <a href="index.php?module=workflow&amp;type=admin&amp;func=processes">Admin Processes</a>
     and upload the file <a href="modules/workflow/xardata/cdcollection3.xml">cdcollection3.xml</a> to
-    create a sample process;
+    create a sample process;</xar:mlstring>
   </li>
-  <li>
+  <li><xar:mlstring>
     map some Xaraya users to the 'admin' and 'user' workflow roles for
     that process, or add all current users from a Xaraya group to one
     of the workflow roles [TODO: Galaxia does not support a permanent
-    mapping between Xaraya groups and workflow roles at the moment]
+    mapping between Xaraya groups and workflow roles at the moment]</xar:mlstring>
   </li>
-  <li>
+  <li><xar:mlstring>
     mark the process as <i>active</i> once you no longer have the
-    errors "Role: ... is not mapped"
+    errors "Role: ... is not mapped"</xar:mlstring>
   </li>
-  <li>
-    go to the <a href="index.php?module=workflow">Workflow User Interface</a> and play around :-)
+  <li><xar:mlstring>
+    go to the <a href="index.php?module=workflow">Workflow User Interface</a> and play around :-)</xar:mlstring>
   </li>
-  <li>
-    come back here and try some of the monitoring and administration options
+  <li><xar:mlstring>
+    come back here and try some of the monitoring and administration options</xar:mlstring>
   </li>
-  <li>
-    create your own fancy processes and submit them back to the open source community
+  <li><xar:mlstring>
+    create your own fancy processes and submit them back to the open source community</xar:mlstring>
   </li>
 </ol>
-</xar:mlstring>
 </p>
 
-<xar:mlstring>
-<p>Note: this is mostly a 1-to-1 conversion of the current Galaxia interface scripts from TikiWiki, and a quick &amp; dirty conversion of the templates that go with them. 
-The sample CD Loan process has been modified a bit to be more representative of actual processes, but is otherwise unchanged.</p>
 
-<p>With version 1.1, you can also automatically start a workflow process after some module item is created, updated or deleted. To try this out, you should :
+<p><xar:mlstring>Note: this is mostly a 1-to-1 conversion of the current Galaxia interface scripts from TikiWiki, and a quick &amp; dirty conversion of the templates that go with them.
+The sample CD Loan process has been modified a bit to be more representative of actual processes, but is otherwise unchanged.</xar:mlstring></p>
+
+<p><xar:mlstring>With version 1.1, you can also automatically start a workflow process after some module item is created, updated or deleted. To try this out, you should :</xar:mlstring>
 <ol>
-<li>upload the <a href="modules/workflow/xardata/review_articles.xml">review_articles.xml</a> file to create the Review Articles process</li>
-<li>assign some users to the 'editors' workflow role and mark the process as active</li>
-<li>enable the workflow hooks for articles</li>
-<li>configure the workflow module so that the Review Articles - start activity is started when Create hooks are called from articles</li>
-<li>create a new article and have fun...</li>
+<li><xar:mlstring>upload the <a href="modules/workflow/xardata/review_articles.xml">review_articles.xml</a> file to create the Review Articles process</xar:mlstring></li>
+<li><xar:mlstring>assign some users to the 'editors' workflow role and mark the process as active</xar:mlstring></li>
+<li><xar:mlstring>enable the workflow hooks for articles</xar:mlstring></li>
+<li><xar:mlstring>configure the workflow module so that the Review Articles - start activity is started when Create hooks are called from articles</xar:mlstring></li>
+<li><xar:mlstring>create a new article and have fun...</xar:mlstring></li>
 </ol>
 </p>
 
-<p>Version 1.3 adds the support for two BL tags : &lt;xar:workflow-activity activityId="123" ... /&gt; and &lt;xar:workflow-status ... /&gt;.
+<p><xar:mlstring>Version 1.3 adds the support for two BL tags : &lt;xar:workflow-activity activityId="123" ... /&gt; and &lt;xar:workflow-status ... /&gt;.
 Those can be used in any template to run some workflow activity and show its output, resp. to show you the status of all the instances *you* started.
-To try that out, you should :
+To try that out, you should :</xar:mlstring>
 <ol>
-<li>delete your old "Music Loan 3" process, import the new version, assign users and mark as active</li>
-<li>find out what the activityId of activity "Request CD" is, in that new process</li>
-<li>in some template, add the following BL tags : &lt;xar:workflow-activity activityId="123"/&gt; (with 123 the activityId) and &lt;xar:workflow-status/&gt;</li>
-<li>go to that page and enjoy...</li>
+<li><xar:mlstring>delete your old "Music Loan 3" process, import the new version, assign users and mark as active</xar:mlstring></li>
+<li><xar:mlstring>find out what the activityId of activity "Request CD" is, in that new process</xar:mlstring></li>
+<li><xar:mlstring>in some template, add the following BL tags : &lt;xar:workflow-activity activityId="123"/&gt; (with 123 the activityId) and &lt;xar:workflow-status/&gt;</xar:mlstring></li>
+<li><xar:mlstring>go to that page and enjoy...</xar:mlstring></li>
 </ol>
 </p>
 
-<p>Version 1.4 also adds the BL tag &lt;xar:workflow-instances .../&gt; to show the instances that are assigned/accessible to you (i.e. your task list).</p>
+<p><xar:mlstring>Version 1.4 also adds the BL tag &lt;xar:workflow-instances .../&gt; to show the instances that are assigned/accessible to you (i.e. your task list).</xar:mlstring></p>
 
-<p><b>Patches and contributions are most welcome ;-)</b></p>
-</xar:mlstring>
+<p><xar:mlstring><b>Patches and contributions are most welcome ;-)</b></xar:mlstring></p>
 
 <p><i><xar:mlstring>Based on the</xar:mlstring> <a href="http://tikiwiki.org/tiki-index.php?page=GalaxiaWorkflow">Galaxia Workflow Engine</a></i></p>
 <pre><xar:mlstring>
@@ -117,5 +115,21 @@ To try that out, you should :
 // All Rights Reserved. See <a href="modules/workflow/lib/copyright.txt">copyright.txt</a> for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See <a href="modules/workflow/lib/license.txt">license.txt</a> for details.
 </xar:mlstring></pre>
+  <h3>
+    <xar:mlstring>Further Information</xar:mlstring>
+  </h3>
+  <p>
+    <xar:mlstring>Further information on the Workflow module can be found at</xar:mlstring>
+  </p>
+  <ul>
+    <li><xar:mlstring>Workflow Extension page at</xar:mlstring> <a title="#xarML('Workflow Module - Xaraya Extension 188')#" href="http://www.xaraya.com/index.php/release/188.html">Xaraya Extension and Releases</a>.
+      <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+    </li>
+    <li><xar:mlstring>Related tutorials and documentation on Workflow found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/workflow/" title="#xarML('Related documentation on Workflow')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+    </li>
+  </ul>
+  <p class="xar-sub">
+    <strong>&nbsp;<xar:mlstring>Workflow Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2006-03-08
+  </p>
 </div>
-</div>
+

@@ -14,14 +14,9 @@ function workflow_admin_main()
     // Security Check
     if (!xarSecurityCheck('AdminWorkflow')) return;
 
-    if (xarModGetVar('adminpanels', 'overview') == 0) {
-        // Return the output
-        return array();
-    } else {
         xarResponseRedirect(xarModURL('workflow', 'admin', 'processes'));
-    } 
     // success
     return true;
-} 
+}
 
 ?>
