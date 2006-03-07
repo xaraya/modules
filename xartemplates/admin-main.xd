@@ -1,0 +1,53 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+  <span class="xar-mod-title"><xar:mlstring>WikiAdministration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+  <img src="#xarTplGetImage('admin_generic.gif','base')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
+
+  <h2><xar:mlstring>Overview</xar:mlstring></h2>
+
+  <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+  <p>
+    <em><xar:mlstring>Wiki module is a simple imlementation of some aspects of wikis.</xar:mlstring></em>
+    <xar:mlstring>It is currently responsible for providing the ability to transform <a href="http://en.wikipedia.org/wiki/Wikipedia:How_to_edit_a_page#Wiki_markup">wiki markup</a> in a module itemtype when hooked to the module or itemtype. </xar:mlstring></p>
+    <p><xar:mlstring>At the current time it provides transformation of wiki formatting markup tags,
+     not wiki markup for wiki linking and wiki words.</xar:mlstring>
+  </p>
+
+  <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
+  <p>
+    <xar:mlstring>Hook the wiki module to any content module and/or it's itemtypes that supports hooks. For example the Articles module and any of it's publication types.</xar:mlstring>
+  </p>
+
+  <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
+  <p><xar:mlstring>There are no blocks included at this time</xar:mlstring></p>
+
+  <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
+  <p>
+    <xar:mlstring>
+      The Wiki module provides a transform hook that transforms Wiki markup.
+      To activate the hook go to </xar:mlstring>
+    <a href="&xar-modurl-modules-admin-hooks;&amp;hook=wiki"><xar:mlstring>Modules - Configure Hooks - Wiki Module</xar:mlstring></a>.
+    <xar:mlstring> From there check the radio buttons next to the modules and itemtypes where you wish to activate the wiki markup transformations.
+    </xar:mlstring>
+  </p>
+
+  <h3>
+    <xar:mlstring>Further Information</xar:mlstring>
+  </h3>
+  <p>
+    <xar:mlstring>Further information on the Example module can be found at</xar:mlstring>
+  </p>
+  <ul>
+    <li><xar:mlstring>Example Extension page at</xar:mlstring> <a title="#xarML('Example Module - Xaraya Extension 36')#" href="http://www.xaraya.com/index.php/release/36.html">Xaraya Extension and Releases</a>.
+      <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+    </li>
+    <li><xar:mlstring>Related tutorials and documentation on Example found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/example/" title="#xarML('Related documentation on Example')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+    </li>
+  </ul>
+  <p class="xar-sub">
+    <strong>&nbsp;<xar:mlstring>Example Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2006-03-08
+  </p>
+</div>
+
