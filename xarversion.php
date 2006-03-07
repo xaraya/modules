@@ -13,7 +13,6 @@ $modversion['author'] = 'Marie Altobelli';
 $modversion['contact'] = 'ladyofdragons@xaraya.com';
 $modversion['admin'] = 1;
 $modversion['user'] = 0;
-$modversion['securityschema'] = array('authinvision::' => '::');
-$modversion['class'] = 'Miscellaneous';
+$modversion['class'] = 'Authentication';
 $modversion['category'] = 'Global';
 ?>

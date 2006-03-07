@@ -1,44 +1,40 @@
-<table border="0" width="100%">
-    <tr>
-        <th colspan="4" align="center">
-            <xar:mlstring>Authinvision Administration</xar:mlstring>            
-        </th>
-    </tr>
-</table>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Authinvision Administration </xar:mlstring>
+    </span>
+</div>
 
-<div align="center"><h2><xar:mlstring>Authinvision Module Overview</xar:mlstring></h2></div><br />
-<table border="0" width="100%">
-    <tr>
-        <td align="left" valign="top" width="100px">
-            <b><xar:mlstring>What is it?</xar:mlstring></b>
-        </td>
-        <td align="left" valign="top">
+<div class="xar-mod-body">
+  <img src="#xarTplGetImage('admin_generic.gif','base')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
+  <h2><xar:mlstring>Overview</xar:mlstring></h2>
+
+  <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+
             <p><xar:mlstring>The Authinvision module allows you to authenticate a user with your Invision Board database.  The Authinvision module checks the username and password from the login screen against the Invision database and returns true for a match.</xar:mlstring></p>
             <p><xar:mlstring>Authinvision <strong>does not</strong> log users into both systems at once, nor does it allow users who register on xaraya to have their user information duplicated in the Invision database.  <strong>It is highly suggested that you turn off xaraya registration and use your Invision board's registration/password retrieval process.</strong></xar:mlstring></p>
-        </td>
-    </tr>
-    <tr>
-        <td align="left" valign="top" width="100px">
-            <b><xar:mlstring>How to use it?</xar:mlstring></b>
-        </td>
-        <td align="left" valign="top">
-            <xar:mlstring>Authentication by Authinvision is automatically available once the the Authinvision module has been initialized. You must configure Authinvision before a user will be able to login to Xaraya.  To remove Authinvision authentication, you must remove the module or disable it in the modify config screen.</xar:mlstring>
-            <br /><br />
-            <xar:mlstring>
-            From the menu, you have one choice.  "Modify Config". 
+   <h3><xar:mlstring>How to use it?</xar:mlstring></h3
+            <p><xar:mlstring>Authentication by Authinvision is automatically available once the the Authinvision module has been initialized. You must configure Authinvision before a user will be able to login to Xaraya.  To remove Authinvision authentication, you must remove the module or disable it in the modify config screen.</xar:mlstring></p>
+            <p><xar:mlstring>
+            From the menu, you have one choice.  "Modify Config".
             </xar:mlstring>
+            <p>
             <ul>
                 <li><xar:mlstring>Modify Config -- From here, you can configure the authinvision server that will be used for authentication.   A user that has account information in Invision to be automatically added to the Xaraya database and allowed to login.</xar:mlstring></li>
             </ul>
-        </td>
-    </tr>
-    <tr>
-        <td align="left" valign="top" width="100px">
-            <b><xar:mlstring>Included Blocks</xar:mlstring></b>
-        </td>
-        <td align="left" valign="top">
-            <xar:mlstring>usercp: a block that mimics the user links from Invision.</xar:mlstring><br/>
-      <xar:mlstring>whos_online.php: a who's online block that replaces the one in the roles module.</xar:mlstring>
-        </td>
-    </tr>
-</table>
+   <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
+       <p><xar:mlstring>usercp: a block that mimics the user links from Invision.</xar:mlstring></p>
+       <p><xar:mlstring>whos_online.php: a who's online block that replaces the one in the roles module.</xar:mlstring></p>
+    <h3><xar:mlstring>Further Information</xar:mlstring></h3>
+    <p>
+         <xar:mlstring>Further information on the Authinvision module can be found at</xar:mlstring>
+    </p>
+    <ul>
+        <li><xar:mlstring>Authinvision Extension page at</xar:mlstring> <a title="#xarML('Authinvision Module - Xaraya Extension 950')#" href="http://www.xaraya.com/index.php/release/950.html">Xaraya Extension and Releases</a>.
+            <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+        </li>
+        <li><xar:mlstring>Related tutorials and documentation on Authinvision found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/authinvision/" title="#xarML('Related documentation on Authinvision')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a></li>
+    </ul>
+    <p class="xar-sub">
+        <strong>&nbsp;<xar:mlstring>Authinvision Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2006-03-08
+    </p>
+</div>

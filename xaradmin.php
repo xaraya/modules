@@ -135,6 +135,16 @@ function authinvision_admin_updateconfig()
 }
 
 /**
+ * Overview displays standard Overview page
+ */
+function authinvision_admin_overview()
+{
+    $data=array();
+    //just return to main function that displays the overview
+    return xarTplModule('authinvision', 'admin', 'main', $data, 'main');
+}
+
+/**
  * utility function pass individual menu items to the main menu
  *
  * @author Richard Cave
