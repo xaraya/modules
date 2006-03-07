@@ -14,14 +14,9 @@ function xlink_admin_main()
     // Security Check
     if (!xarSecurityCheck('AdminXLink')) return;
 
-    if (xarModGetVar('adminpanels', 'overview') == 0) {
-        // Return the output
-        return array();
-    } else {
         xarResponseRedirect(xarModURL('xlink', 'admin', 'modifyconfig'));
-    } 
     // success
     return true;
-} 
+}
 
 ?>
