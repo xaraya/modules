@@ -33,10 +33,19 @@ function julian_calmonthblock_modify($blockinfo)
         $vars = $blockinfo['content'];
     }
 
-    /* Defaults */
+    /* Defaults for categories */
     if (empty($vars['CatAware'])) {
         $vars['CatAware'] = false;
     }
+    if (empty($vars['catfilter'])) {
+        $vars['catfilter'] = '';
+    }
+    if(!empty($vars['catfilter'])) {
+        $cidsarray = array($vars['catfilter']);
+    } else {
+        $cidsarray = array();
+    }
+    $vars['categorylist'] = xarModAPIFunc('categories', 'user', 'getcat');
     $vars['blockid'] = $blockinfo['bid'];
 
     /* Send content to template */
@@ -57,6 +66,7 @@ function julian_calmonthblock_update($blockinfo)
 
     $vars = array();
     if (!xarVarFetch('CatAware', 'checkbox', $vars['CatAware'], FALSE, XARVAR_NOT_REQUIRED)) return;
+        xarVarFetch('catfilter', 'id', $vars['catfilter'], 0, XARVAR_NOT_REQUIRED);
     $blockinfo['content'] = $vars;
     $vars['blockid'] = $blockinfo['bid'];
     return $blockinfo;

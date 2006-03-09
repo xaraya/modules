@@ -31,7 +31,7 @@
  */
 function julian_calmonthblock_init()
 {
-    return true;
+    return array('catfilter' => '');
 }
 
 /**
@@ -110,16 +110,12 @@ function julian_calmonthblock_display($blockinfo)
         $CatAware = 0;
     }
     $args['CatAware'] = $CatAware; // Needed?
-    /* If we don't want to have this block use categories, set the array empty
-     * Bug 5115
-     */
-    if ($CatAware == 0 ) {
-        // Get the events for the current month and set catid empty
-        $args['event_array']= xarModApiFunc('julian','user','getall', array('startdate'=>$startdate, 'enddate'=>$enddate, 'catid' => ''));
-    } else {
-        // Get the events for the current month
-        $args['event_array']= xarModApiFunc('julian','user','getall', array('startdate'=>$startdate, 'enddate'=>$enddate));
-    }
+
+    // Get the events for the current month and set catid empty
+    $args['event_array']= xarModApiFunc('julian','user','getall',
+                                         array('startdate'=>$startdate,
+                                               'enddate'=>$enddate,
+                                               'catid' =>(((!$vars['CatAware']==0) && !empty($vars['catfilter'])) ? $vars['catfilter'] : NULL)));
 
     if (empty($blockinfo['template'])) {
         $template = 'calmonth';
