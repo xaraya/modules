@@ -39,12 +39,13 @@ function julian_userapi_getall($args)
 {
     // Get arguments
     extract($args);
+    /*
     if (!xarVarFetch('startdate','isset',  $startdate, NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('enddate',  'isset',  $enddate, NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('catid',    'int:1:', $catid, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('startnum', 'int:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('numitems', 'int:1:', $numitems, '-1', XARVAR_NOT_REQUIRED)) return;
-
+*/
     // Optional arguments.
 
     if (!isset($sortby)) {
@@ -57,6 +58,12 @@ function julian_userapi_getall($args)
 
     if (!isset($catid)) {
         $catid = '';
+    }
+    if (!isset($startnum)) {
+        $startnum = 1;
+    }
+    if (!isset($numitems)) {
+        $numitems = -1;
     }
 
     if (!isset($startdate)) {
