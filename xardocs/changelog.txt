@@ -11,3 +11,6 @@ Version 0.3.2
 Make use of a course coordinatorsgroup
 Make use of coursetypes that are defined in courses
 Creation of courses is now from the page of coursetypes
+Version 0.3.3
+Fixed Bug 5472 Formatting of emails improved
+Fixed Bug 5470 Correct JOIN format in query
