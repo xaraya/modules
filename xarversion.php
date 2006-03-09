@@ -3,7 +3,7 @@
  * Julian Module : calendar with events
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -14,7 +14,7 @@
 
 $modversion['name']           = 'Julian';
 $modversion['id']             = '319';
-$modversion['version']        = '0.4.1';
+$modversion['version']        = '0.4.2';
 $modversion['description']    = 'Event Calendar for keeping track of events';
 $modversion['credits']        = 'xardocs/credits.txt';
 $modversion['help']           = 'xardocs/help.txt';

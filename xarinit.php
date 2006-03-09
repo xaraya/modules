@@ -650,6 +650,7 @@ function julian_upgrade($oldversion)
               xarDefineInstance('julian', 'Item', $instances);
             return julian_upgrade('0.4.1');
         case '0.4.1':
+        case '0.4.2':
             break;
     }
     // Update successful
