@@ -13,8 +13,32 @@
         <xar:mlstring>Use Categories:</xar:mlstring>
     </label>
     <xar:if condition="empty($CatAware)">
-        <input type="checkbox" name="CatAware" id="CatAware#$blockid#" value="1" /> 
+        <input type="checkbox" name="CatAware" id="CatAware#$blockid#" value="1" />
         <xar:else />
-        <input type="checkbox" name="CatAware" id="CatAware#$blockid#" value="1" checked="checked" /> 
+        <input type="checkbox" name="CatAware" id="CatAware#$blockid#" value="1" checked="checked" />
     </xar:if>
+</div>
+<div class="xar-form-input-wrapper">
+    <label for="catfilter#$blockid#" class="help xar-form-label" title="#xarML('Choose the category for the events to get.')#">
+        <xar:mlstring>
+            Category
+        </xar:mlstring>
+    </label><select name="catfilter" id="catfilter#$blockid#" onChange="this.form.submit();">
+        <option value="0">
+            <xar:mlstring>
+                All
+            </xar:mlstring>
+        </option>
+        <xar:foreach in="$categorylist" value="$catlistx">
+            <xar:if condition="!empty($catfilter) and $catfilter eq $catlistx['cid']">
+                <option value="#$catlistx['cid']#" selected="selected">
+                    #$catlistx['name']#
+                </option>
+                <xar:else />
+                <option value="#$catlistx['cid']#">
+                    #$catlistx['name']#
+                </option>
+            </xar:if>
+        </xar:foreach>
+    </select>
 </div>

@@ -31,7 +31,7 @@
  */
 function julian_caleventblock_init()
 {
-    return true;
+    return array('catfilter' => '');
 }
 
 /**
@@ -97,20 +97,20 @@ function julian_caleventblock_display($blockinfo)
     } else {
         $CatAware = 0;
     }
-
-    // Bug 5115 If we don't want to have this block use categories, set the array empty
-    if ($CatAware == 0 ) {
-        // Set the catid empty
-        // Get today's events: start and enddate are the same
-        $args['todaysevents']= xarModApiFunc('julian','user','getall', array('startdate'=>$today, 'enddate'=>$today, 'catid' => ''));
-        // Get the events for the next $EventBlockDays days
-        $args['upcomingevents'] = xarModApiFunc('julian','user','getall', array('startdate'=>$tomorrow, 'enddate'=>$endweek, 'catid' => ''));
-    } else {
-        // Get today's events: start and enddate are the same
-        $args['todaysevents']= xarModApiFunc('julian','user','getall', array('startdate'=>$today, 'enddate'=>$today));
-        // Get the events for the next $EventBlockDays days
-        $args['upcomingevents'] = xarModApiFunc('julian','user','getall', array('startdate'=>$tomorrow, 'enddate'=>$endweek));
-    }
+    // Get today's events: start and enddate are the same
+    $args['todaysevents']= xarModApiFunc('julian','user','getall',
+                                                          array('startdate'=>$today,
+                                                                'enddate'=>$today,
+                                                                'catid' =>(((!$vars['CatAware']==0) && !empty($vars['catfilter'])) ? $vars['catfilter'] : NULL)
+                                                                )
+                                        );
+    // Get the events for the next $EventBlockDays days
+    $args['upcomingevents'] = xarModApiFunc('julian','user','getall',
+                                                            array('startdate'=>$tomorrow,
+                                                                  'enddate'=>$endweek,
+                                                                  'catid' =>(((!$vars['CatAware']==0) && !empty($vars['catfilter'])) ? $vars['catfilter'] : NULL)
+                                                                  )
+                                           );
 
     //set the required block data
     if (empty($blockinfo['title'])) {
