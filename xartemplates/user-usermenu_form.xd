@@ -10,8 +10,8 @@
 
 <h3>#$uname# <xar:mlstring> Course Information</xar:mlstring></h3>
 <form action="#xarModURL('courses', 'user', 'usermenu')#" method="post" enctype="application/x-www-form-urlencoded">
-<input type="hidden" name="authid" id="authid" value="#$authid#" />    
-<input type="hidden" name="uid" id="uid" value="#$uid#" />    
+<input type="hidden" name="authid" id="authid" value="#$authid#" />
+<input type="hidden" name="uid" id="uid" value="#$uid#" />
 <input type="hidden" name="phase" id="phase" value="update" />
 <br />
 <br />
@@ -28,18 +28,18 @@
 
         <xar:foreach in="$data1['items']" value="$item">
         <tr align="center">
-		<xar:if condition="$item['hideplanning'] eq 1">
+        <xar:if condition="$item['hideplanning'] eq 1">
             <td style="background-color:#FF0000">
-			<xar:else />
-			<td>
-			</xar:if>
+            <xar:else />
+            <td>
+            </xar:if>
                 <xar:if condition="empty($item['link'])">
                     #$item['name']#
                 <xar:else />
                     <a href="#$item['link']#">#$item['name']#</a>
                 </xar:if>
              </td>
-            <td>#$item['startdate']#</td>
+            <td>#xarlocalegetformatteddate('medium',$item['startdate'])#</td>
             <td>#$item['statusname']#</td>
             <td>#$item['planningid']#</td>
         </tr>
@@ -73,8 +73,8 @@
         </xar:if>
 <hr>
 
-<input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#$value#" /> 
--- 
+<input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#$value#" />
+--
 <label for="itemsperpage"><xar:mlstring>Items Per Page</xar:mlstring></label>
 
 <input type="submit" value="#xarML('Modify')#"  tabindex="2" />

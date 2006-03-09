@@ -46,11 +46,12 @@ function courses_userapi_getall_enrolled($args)
             $planningtable.xar_hideplanning,
             $studentstable.xar_status,
             $studentstable.xar_regdate
-            FROM $studentstable, $coursestable
+            FROM $coursestable
             JOIN $planningtable
-            ON $planningtable.xar_planningid = $studentstable.xar_planningid
-            WHERE $studentstable.xar_userid = $uid
-            AND $coursestable.xar_courseid = $planningtable.xar_courseid";
+            JOIN $studentstable
+            ON ($planningtable.xar_planningid = $studentstable.xar_planningid)
+            WHERE ($studentstable.xar_userid = $uid
+            AND $coursestable.xar_courseid = $planningtable.xar_courseid)";
             //AND $planningtable.xar_planningid = $studentstable.xar_planningid
      $result = &$dbconn->Execute($query);
     // Check for an error with the database code, adodb has already raised
