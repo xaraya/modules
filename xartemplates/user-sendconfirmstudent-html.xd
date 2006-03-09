@@ -6,24 +6,22 @@
     <xar:mlvar>#$studentname#</xar:mlvar>
 </xar:ml>
 </p>
-
 <p>
 <xar:ml>
     <xar:mlstring>
-        You have been enrolled in the course: #(1) which starts at #(2).
+        You have been enrolled in the course: #(1) which starts on #(2).
     </xar:mlstring>
     <xar:mlvar>#$name#</xar:mlvar>
-    <xar:mlvar>#$planitem['startdate']#</xar:mlvar>
+    <xar:mlvar>#xarLocaleGetFormattedDate('long',$planitem['startdate'])#</xar:mlvar>
 </xar:ml>
 </p>
-
 <p>
 <xar:mlstring>Name of the course:</xar:mlstring> #$name#<br />
 <xar:mlstring>Code of the course:</xar:mlstring> #$course['number']#<br />
-<xar:mlstring>Link to the course:</xar:mlstring> <a href="#$viewcourse#">#$viewcourse#</a>
+<xar:mlstring>Link to the course:</xar:mlstring> <a href="#$viewcourse#">#$viewcourse#</a><br />
 </p>
 
 <p>
-<xar:mlstring>This course will start at:</xar:mlstring> #$planitem['startdate']#<br />
+<xar:mlstring>This course will start on:</xar:mlstring> #xarLocaleGetFormattedDate('long',$planitem['startdate'])#<br />
 <xar:mlstring>Link to all your courses:</xar:mlstring> <a href="#$viewaccount#">#$viewaccount#</a>
 </p>
