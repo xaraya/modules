@@ -14,7 +14,8 @@ Copy all the files in /courses to modules/courses
 Go to admin>modules>view all to install the courses module.
 
 GENERAL USE
-Adjust the course parameters. All of these need at least one item in them
+Create course types
+Adjust the course parameters. There are preset values at install, all of these need at least one item in them
 
 Create a course. This basic item in the module is the basis.
 Then, after creation, you can add an occurence of the course.

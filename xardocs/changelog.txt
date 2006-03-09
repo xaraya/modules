@@ -7,3 +7,7 @@ Version 0.3.1
 General clean-up
 Move labels to templates
 Solve consistency of display of next dates
+Version 0.3.2
+Make use of a course coordinatorsgroup
+Make use of coursetypes that are defined in courses
+Creation of courses is now from the page of coursetypes
