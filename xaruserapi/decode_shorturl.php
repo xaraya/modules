@@ -59,7 +59,7 @@ function sitecontact_userapi_decode_shorturl($params)
             $args['message'] = (int)$matches[0];
             $args['scid'] = null;
         }
-var_dump($args);
+
         return array('contactus', $args);
      }elseif (!empty($params[0]) && (preg_match('/^(\d+)/', $params[0], $matches))) {
         $args['message'] = $matches[0];
