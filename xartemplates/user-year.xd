@@ -33,7 +33,7 @@
             </xar:if>
                     <td valign="top" align="left">
 
-                        <table class="xar-julian-cal-month">
+                        <table class="month">
                             <tr>
                                 <th colspan="8" class="xar-julian-cal-title">
                                     <xar:if condition="$month lt 10">
@@ -47,7 +47,7 @@
                                     </a>
                                 </th>
                             </tr>
-                            <tr class="xar-julian-cal-daynames">
+                            <tr class="daynames">
                                 <th>&nbsp;</th>
                                 <xar:foreach in="$shortDayNames" value="$dayName">
                                 <th>#$dayName#</th>

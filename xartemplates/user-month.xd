@@ -23,8 +23,8 @@
         </div>
 
         <div class="tables">
-            <table class="xar-julian-cal-month">
-                <tr class="xar-julian-cal-daynames">
+            <table class="month">
+                <tr class="daynames">
                     <th>&nbsp;</th>
                     <xar:foreach in="$longDayNames" value="$dayName">
                     <th>#$dayName#</th>

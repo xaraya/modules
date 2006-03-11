@@ -129,7 +129,7 @@ being set to blank.
             </xar:foreach>
             <xar:set name="$caption">xarML('Category Legend')</xar:set>
             <a href="javascript:void(0)" class="xar-julian-event">
-               <span class="xar-julian-tooltip">#$caption# #$key#</span>
+               <span class="tt">#$caption# #$key#</span>
               <img src="#xarTplGetImage('key.gif')#" alt="#xarML('Category Legend')#" align="middle" />
             </a>
         </div>

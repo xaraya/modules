@@ -90,23 +90,23 @@ tr.xar-julian-cal-week a:hover.arrow {
     color: #ff00ff;
 }
 
-.xar-julian .tables {
+.xar-julian div.tables {
     clear: both;
 }
 /*
  The visual effect is made out of a table with cells per day */
-table.xar-julian-cal-month {
+.xar-julian table.month {
     width: 100%;
     border-collapse: collapse;
 }
 
-.xar-julian-cal-month td {
+.xar-julian table.month td {
     border-color: #a0a0a0;
     border-style: solid;
     border-width: 0 1px 1px 1px;
 }
 
-.xar-julian-cal-month th {
+.xar-julian table.month th {
     border-color: #a0a0a0;
     border-style: solid;
     border-width: 1px 1px 0 1px;
@@ -122,7 +122,7 @@ th.xar-julian-cal-title a {
     text-decoration: underline;
 }
 
-tr.xar-julian-cal-daynames th {
+.xar-julian tr.daynames th {
     text-align: center;
     background-color: #888;
     border-color: #888;
@@ -241,8 +241,8 @@ a.xar-julian-event {
     position: relative;
 }
 
-/* color the day in the month block that has an event*/
-.xar-julian-cal-month a.xar-julian-event {
+/* color the day in the month block that has an event */
+.xar-julian-block-calmonth table.month a.xar-julian-event {
     color:#FF0000;
     text-decoration: none;
 }
@@ -251,7 +251,7 @@ a.xar-julian-event span.tt {
     display: none;
 }
 
-.xar-julian-cal-month a.xar-julian-event:hover {
+.xar-julian table.month a.xar-julian-event:hover {
     text-decoration: underline;
 }
 

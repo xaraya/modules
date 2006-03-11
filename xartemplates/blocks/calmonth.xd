@@ -3,11 +3,11 @@
 <div class="xar-julian xar-julian-block-calmonth">
     <div class="xar-julian-cal">
         <div class="tables">
-            <table class="xar-julian-cal-month">
+            <table class="month">
                 <tr>
                     <th colspan="8" class="xar-julian-cal-title">#xarLocaleFormatDate('%B %Y',$todays_timestamp)#</th>
                 </tr>
-                <tr class="xar-julian-cal-daynames">
+                <tr class="daynames">
                     <xar:foreach in="$shortDayNames" value="$dayName">
                     <th>#$dayName#</th>
                     </xar:foreach>

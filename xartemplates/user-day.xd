@@ -19,7 +19,7 @@
         </div>
 
         <div class="tables">
-            <table class="xar-julian-cal-month">
+            <table class="month">
                 <tr class="xar-julian-cal-week">
 
                     <xar:comment>Color the cells differently for Sat and Sun</xar:comment>
