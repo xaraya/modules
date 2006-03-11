@@ -86,7 +86,11 @@ function julian_caleventblock_display($blockinfo)
     $args['name'] = xarUserGetVar('name');
     $args['blockid'] = $blockinfo['bid'];
     //set dates for determining which events to show for the upcoming events
-    $EventBlockDays = $vars['EventBlockDays'];
+    if (isset($vars['EventBlockDays']) && is_numeric($vars['EventBlockDays'])) {
+        $EventBlockDays = $vars['EventBlockDays'];
+    } else {
+        $EventBlockDays = 7;
+    }
     $args['EventBlockDays'] = $EventBlockDays;
     $today=date('Y-m-d');
     $tomorrow=date("Y-m-d",strtotime("tomorrow"));
@@ -101,14 +105,14 @@ function julian_caleventblock_display($blockinfo)
     $args['todaysevents']= xarModApiFunc('julian','user','getall',
                                                           array('startdate'=>$today,
                                                                 'enddate'=>$today,
-                                                                'catid' =>(((!$vars['CatAware']==0) && !empty($vars['catfilter'])) ? $vars['catfilter'] : NULL)
+                                                                'catid' =>(((!$CatAware==0) && !empty($vars['catfilter'])) ? $vars['catfilter'] : NULL)
                                                                 )
                                         );
     // Get the events for the next $EventBlockDays days
     $args['upcomingevents'] = xarModApiFunc('julian','user','getall',
                                                             array('startdate'=>$tomorrow,
                                                                   'enddate'=>$endweek,
-                                                                  'catid' =>(((!$vars['CatAware']==0) && !empty($vars['catfilter'])) ? $vars['catfilter'] : NULL)
+                                                                  'catid' =>(((!$CatAware==0) && !empty($vars['catfilter'])) ? $vars['catfilter'] : NULL)
                                                                   )
                                            );
 
