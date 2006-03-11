@@ -115,7 +115,7 @@ function julian_calmonthblock_display($blockinfo)
     $args['event_array']= xarModApiFunc('julian','user','getall',
                                          array('startdate'=>$startdate,
                                                'enddate'=>$enddate,
-                                               'catid' =>(((!$vars['CatAware']==0) && !empty($vars['catfilter'])) ? $vars['catfilter'] : NULL)));
+                                               'catid' =>(((!$CatAware==0) && !empty($vars['catfilter'])) ? $vars['catfilter'] : NULL)));
 
     if (empty($blockinfo['template'])) {
         $template = 'calmonth';

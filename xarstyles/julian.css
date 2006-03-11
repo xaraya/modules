@@ -3,7 +3,10 @@
     or the calendar looks "squished".
     Tooltips: Gary Sedgwick
     */
-
+/**
+ * This is the old version of the stylesheet for Julian
+ * From 12 March 2006 onwards, the new style.css is in use
+ */
 div.xar-julian a {
     text-decoration: none;
     clear:left;
