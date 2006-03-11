@@ -55,7 +55,7 @@
                             </tr>
                             <xar:comment>START :: LOOP THROUGH EACH WEEK OF THE MONTH</xar:comment>
                             <xar:foreach in="$weeks" key="$index" value="$week">
-                            <tr class="xar-julian-cal-week">
+                            <tr class="week">
                                 <xar:set name="$WeekDate">$week[0]</xar:set>
                                 <xar:set name="$WeekUrl">xarModURL('julian','user','week',array('cal_date'=>$WeekDate))</xar:set>
                                 <td class="xar-julian-cal-weeknumber">
@@ -81,8 +81,7 @@
                                                 <xar:set name="$text">$text.'<span>'.$event_array[$dateconverted][$index]['singlepopovercaption'].'</span>'</xar:set>
                                             </xar:foreach>
                                             <xar:set name="$text">$text.'</span>'</xar:set>
-                                            <xar:set name="$event">'
-                                             class="xar-julian-event"'</xar:set>
+                                            <xar:set name="$event">'class="xar-julian-event"'</xar:set>
                                         <xar:else />
                                             <xar:set name="$text">''</xar:set>
                                             <xar:set name="$event">''</xar:set>

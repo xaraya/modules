@@ -19,8 +19,8 @@
         </div>
 
         <div class="tables">
-            <table class="month">
-                <tr class="xar-julian-cal-week">
+            <table class="day">
+                <tr class="week">
 
                     <xar:comment>Color the cells differently for Sat and Sun</xar:comment>
                     <xar:if condition="$daydate eq date('Ymd')">

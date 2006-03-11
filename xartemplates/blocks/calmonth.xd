@@ -14,7 +14,7 @@
                 </tr>
                 <xar:comment>START :: LOOP THROUGH EACH WEEK OF THE MONTH</xar:comment>
                 <xar:foreach in="$month2" value="$week">
-                <tr class="xar-julian-cal-week">
+                <tr class="week">
                     <xar:comment>START :: LOOP THROUGH EACH DAY OF THE WEEK</xar:comment>
                     <xar:foreach in="$week" value="$date">
                     <xar:comment>Color the cells differently for Sat and Sun</xar:comment>
@@ -48,7 +48,7 @@
                             </a>
                         </td>
                     <xar:else />
-                        <td class="day #$daycolor# xar-julian-days-empty">&nbsp;
+                        <td class="day #$daycolor# empty">&nbsp;
 
                         </td>
                     </xar:if>

@@ -27,7 +27,7 @@
                     <th>#$dayName#</th>
                     </xar:foreach>
                 </tr>
-                <tr class="xar-julian-cal-week">
+                <tr class="week">
                     <xar:comment>START :: LOOP THROUGH EACH DAY OF THE WEEK</xar:comment>
                     <xar:foreach in="$week" value="$date">
                     <xar:set name="$yr">substr($date,0,4)</xar:set>

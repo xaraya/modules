@@ -32,7 +32,7 @@
                 </tr>
                 <xar:comment>START :: LOOP THROUGH EACH WEEK OF THE MONTH</xar:comment>
                 <xar:foreach in="$month" value="$week">
-                <tr class="xar-julian-cal-week">
+                <tr class="week">
                     <xar:set name="$WeekDate">$week[0]</xar:set>
                     <xar:set name="$WeekUrl">xarModURL('julian','user','week',array('cal_date'=>$WeekDate))</xar:set>
                     <td class="xar-julian-cal-weeknumber">
@@ -59,7 +59,7 @@
                             </div>
                             <div class="cal-icons">
                                 <xar:comment>Show Add icon (plus sign) on each day in the month and allow the administrator to add an event.</xar:comment>
-                                <xar:sec id="unique1" mask="Editjulian" catch="false">
+                                <xar:sec id="unique1" mask="AddJulian" catch="false">
                                     <a href="#xarModURL('julian','user','addevent',array('cal_date'=>$date))#">
                                         <img src="#xarTplGetImage('new.gif')#" alt="#xarML('Add Event')#" />
                                     </a>
