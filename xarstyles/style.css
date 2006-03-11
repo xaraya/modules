@@ -90,7 +90,7 @@ tr.xar-julian-cal-week a:hover.arrow {
     color: #ff00ff;
 }
 
-.xar-julian-cal-tables {
+.xar-julian .tables {
     clear: both;
 }
 /*
@@ -154,7 +154,7 @@ td.xar-julian-cal-weeknumber {
     padding-left:1px;
 }
 
-div.xar-julian-cal-icons {
+.xar-julian div.cal-icons {
     width: 15px;
     float: right;
     text-align: right;
@@ -247,7 +247,7 @@ a.xar-julian-event {
     text-decoration: none;
 }
 /* Create the tooltip from here */
-a.xar-julian-event span.xar-julian-tooltip {
+a.xar-julian-event span.tt {
     display: none;
 }
 
@@ -262,7 +262,7 @@ a.xar-julian-event:hover {
 * Set width and location of your tooltip here.
 * The width might be interfering with display, as well as the left location
 */
-a.xar-julian-event:hover span.xar-julian-tooltip {
+a.xar-julian-event:hover span.tt {
     top:0px;
     left: -30px;            /* Location to the left */
     text-decoration: none;
@@ -276,7 +276,7 @@ a.xar-julian-event:hover span.xar-julian-tooltip {
     border: 1px solid #aaa;
 }
 
-a.xar-julian-event:hover span.xar-julian-tooltip span {
+a.xar-julian-event:hover span.tt span {
     display:block;
     position: relative;
     top:0;

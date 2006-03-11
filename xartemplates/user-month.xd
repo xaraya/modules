@@ -22,7 +22,7 @@
             </div>
         </div>
 
-        <div class="xar-julian-cal-tables">
+        <div class="tables">
             <table class="xar-julian-cal-month">
                 <tr class="xar-julian-cal-daynames">
                     <th>&nbsp;</th>
@@ -57,7 +57,7 @@
                             <div class="date">
                                 <a href="#xarModURL('julian','user','day',array('cal_date'=>$date))#">#$day#</a>
                             </div>
-                            <div class="xar-julian-cal-icons">
+                            <div class="cal-icons">
                                 <xar:comment>Show Add icon (plus sign) on each day in the month and allow the administrator to add an event.</xar:comment>
                                 <xar:sec id="unique1" mask="Editjulian" catch="false">
                                     <a href="#xarModURL('julian','user','addevent',array('cal_date'=>$date))#">
@@ -86,7 +86,7 @@
                                                 </xar:if>
                                             <a href="#xarModURL('julian','user','viewevent',array('cal_date'=>$date,'event_id'=>$event_array[$dbdate][$index]['event_id']))#"
                                                class="xar-julian-event">
-                                               <span class="xar-julian-tooltip">#$event_array[$dbdate][$index]['singlepopover']#</span>
+                                               <span class="tt">#$event_array[$dbdate][$index]['singlepopover']#</span>
                                                     #$event_array[$dbdate][$index]['summary']#</a>
                                                     <br />
                                             <xar:comment> deprecated method with OverLib, here for reference only

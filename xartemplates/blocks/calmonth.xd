@@ -2,7 +2,7 @@
 <xar:if condition="xarTplAddStyleLink('julian', 'style')"></xar:if>
 <div class="xar-julian xar-julian-block-calmonth">
     <div class="xar-julian-cal">
-        <div class="xar-julian-cal-tables">
+        <div class="tables">
             <table class="xar-julian-cal-month">
                 <tr>
                     <th colspan="8" class="xar-julian-cal-title">#xarLocaleFormatDate('%B %Y',$todays_timestamp)#</th>
@@ -30,7 +30,7 @@
                             <xar:set name="dateconverted">date("Y-m-d",strtotime($date))</xar:set>
                             <xar:comment>Add pop-over with event information</xar:comment>
                             <xar:if condition="isset($event_array[$dateconverted])">
-                                <xar:set name="$text">'<span class="xar-julian-tooltip">'</xar:set>
+                                <xar:set name="$text">'<span class="tt">'</xar:set>
                                 <xar:foreach in="$event_array[$dateconverted]" key="$index">
                                     <xar:set name="$text">$text.'<span>'.$event_array[$dateconverted][$index]['singlepopovercaption'].'</span>'</xar:set>
                                 </xar:foreach>

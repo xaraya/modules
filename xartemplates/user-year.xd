@@ -18,7 +18,7 @@
             </div>
         </div>
 
-        <div class="xar-julian-cal-tables">
+        <div class="tables">
             <xar:comment>Number of columns calendars are displayed in.</xar:comment>
             <xar:set name="$xc_maxcols">3</xar:set>
             <xar:set name="$cols">1</xar:set>
@@ -76,7 +76,7 @@
                                         <xar:set name="dateconverted">date("Y-m-d",strtotime($date))</xar:set>
                                         <xar:comment>Add pop-over for event time and title</xar:comment>
                                         <xar:if condition="isset($event_array[$dateconverted])">
-                                            <xar:set name="$text">'<span class="xar-julian-tooltip">'</xar:set>
+                                            <xar:set name="$text">'<span class="tt">'</xar:set>
                                             <xar:foreach in="$event_array[$dateconverted]" key="$index">
                                                 <xar:set name="$text">$text.'<span>'.$event_array[$dateconverted][$index]['singlepopovercaption'].'</span>'</xar:set>
                                             </xar:foreach>
