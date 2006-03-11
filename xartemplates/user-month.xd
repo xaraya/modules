@@ -3,28 +3,28 @@
 <xar:comment> Include the header file which also loads the css for Julian</xar:comment>
     <xar:template file="header" />
 
-    <div class="xar-julian-calendar">
-        <div class="xar-julian-calendar-nav">
-            <div class="xar-julian-calendar-nav-prev">
+    <div class="xar-julian-cal">
+        <div class="xar-julian-cal-nav">
+            <div class="xar-julian-cal-nav-prev">
                 <a href="#xarModAPIFunc('julian','user','prev',array('cal_type'=>'year','cal_date'=>$cal_date))#"
-                   title="#xarML('Previous Year')#" class="xar-julian-arrow">&lt;&lt;</a>
+                   title="#xarML('Previous Year')#" class="arrow">&lt;&lt;</a>
                 <a href="#xarModAPIFunc('julian','user','prev',array('cal_type'=>'month','cal_date'=>$cal_date))#"
-                   title="#xarML('Previous Month')#" class="xar-julian-arrow">&lt;</a>
+                   title="#xarML('Previous Month')#" class="arrow">&lt;</a>
             </div>
-            <div class="xar-julian-calendar-nav-next">
+            <div class="xar-julian-cal-nav-next">
                 <a href="#xarModAPIFunc('julian','user','next',array('cal_type'=>'month','cal_date'=>$cal_date))#"
-                   title="#xarML('Next Month')#" class="xar-julian-arrow">&gt;</a>
+                   title="#xarML('Next Month')#" class="arrow">&gt;</a>
                 <a href="#xarModAPIFunc('julian','user','next',array('cal_type'=>'year','cal_date'=>$cal_date))#"
-                   title="#xarML('Next Year')#" class="xar-julian-arrow">&gt;&gt;</a>
+                   title="#xarML('Next Year')#" class="arrow">&gt;&gt;</a>
             </div>
-            <div class="xar-julian-calendar-nav-current">
+            <div class="xar-julian-cal-nav-current">
                 #xarLocaleFormatDate('%B %Y',$selected_timestamp)#
             </div>
         </div>
 
-        <div class="xar-julian-calendar-tables">
-            <table class="xar-julian-calendar-month">
-                <tr class="xar-julian-calendar-daynames">
+        <div class="xar-julian-cal-tables">
+            <table class="xar-julian-cal-month">
+                <tr class="xar-julian-cal-daynames">
                     <th>&nbsp;</th>
                     <xar:foreach in="$longDayNames" value="$dayName">
                     <th>#$dayName#</th>
@@ -32,11 +32,11 @@
                 </tr>
                 <xar:comment>START :: LOOP THROUGH EACH WEEK OF THE MONTH</xar:comment>
                 <xar:foreach in="$month" value="$week">
-                <tr class="xar-julian-calendar-week">
+                <tr class="xar-julian-cal-week">
                     <xar:set name="$WeekDate">$week[0]</xar:set>
                     <xar:set name="$WeekUrl">xarModURL('julian','user','week',array('cal_date'=>$WeekDate))</xar:set>
-                    <td class="xar-julian-calendar-weeknumber">
-                        <a href="#$WeekUrl#" title="#xarML('Go to week')#" class="xar-julian-arrow">&gt;</a>
+                    <td class="xar-julian-cal-weeknumber">
+                        <a href="#$WeekUrl#" title="#xarML('Go to week')#" class="arrow">&gt;</a>
                     </td>
                     <xar:comment>START :: LOOP THROUGH EACH DAY OF THE WEEK</xar:comment>
                     <xar:foreach in="$week" value="$date">
@@ -53,11 +53,11 @@
                         <xar:set name="$daycolor">"weekday"</xar:set>
                     </xar:if>
                     <xar:if condition="substr($date,4,2) eq $selected_month">
-                        <td class="xar-julian-calendar-day xar-julian-days-#$daycolor#">
-                            <div class="xar-julian-calendar-date">
+                        <td class="day #$daycolor#">
+                            <div class="date">
                                 <a href="#xarModURL('julian','user','day',array('cal_date'=>$date))#">#$day#</a>
                             </div>
-                            <div class="xar-julian-calendar-icons">
+                            <div class="xar-julian-cal-icons">
                                 <xar:comment>Show Add icon (plus sign) on each day in the month and allow the administrator to add an event.</xar:comment>
                                 <xar:sec id="unique1" mask="Editjulian" catch="false">
                                     <a href="#xarModURL('julian','user','addevent',array('cal_date'=>$date))#">
@@ -66,12 +66,12 @@
                                 </xar:sec>
                             </div>
                             <xar:if condition="isset($event_array[$dbdate])">
-                                <ul class="xar-julian-eventlist">
+                                <ul class="eventlist">
                                 <xar:foreach in="$event_array[$dbdate]" key="$index">
                                     <li style="color: #$event_array[$dbdate][$index]['color']#;">
-                                        <div class="xar-julian-list-contents">
+                                        <div class="li-content">
                                             <xar:set name="$event_id">#$event_array[$dbdate][$index]['event_id']#</xar:set>
-                                            <div class="xar-julian-list-icons">
+                                            <div class="icons">
                                                 <xar:if condition="xarModGetVar('julian','ical_links')">
                                                     <a href="#xarModURL('julian','user','export',array('event_id'=>$event_id))#">
                                                         <img src="#xarTplGetImage('export.gif')#" alt="#xarML('Export Event')#" title="#xarML('Export event to desktop calendar')#" align="middle "/>
@@ -104,8 +104,8 @@
                             </xar:if>
                         </td>
                     <xar:else />
-                        <td class="xar-julian-calendar-day xar-julian-days-#$daycolor# xar-julian-days-empty">&nbsp;
-
+                        <td class="day #$daycolor# empty">
+                            &nbsp;
                         </td>
                     </xar:if>
                     </xar:foreach>

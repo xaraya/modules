@@ -1,20 +1,20 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:if condition="xarTplAddStyleLink('julian', 'julian')"></xar:if>
+<xar:if condition="xarTplAddStyleLink('julian', 'style')"></xar:if>
 <div class="xar-julian xar-julian-block-calmonth">
-    <div class="xar-julian-calendar">
-        <div class="xar-julian-calendar-tables">
-            <table class="xar-julian-calendar-month">
+    <div class="xar-julian-cal">
+        <div class="xar-julian-cal-tables">
+            <table class="xar-julian-cal-month">
                 <tr>
-                    <th colspan="8" class="xar-julian-calendar-title">#xarLocaleFormatDate('%B %Y',$todays_timestamp)#</th>
+                    <th colspan="8" class="xar-julian-cal-title">#xarLocaleFormatDate('%B %Y',$todays_timestamp)#</th>
                 </tr>
-                <tr class="xar-julian-calendar-daynames">
+                <tr class="xar-julian-cal-daynames">
                     <xar:foreach in="$shortDayNames" value="$dayName">
                     <th>#$dayName#</th>
                     </xar:foreach>
                 </tr>
                 <xar:comment>START :: LOOP THROUGH EACH WEEK OF THE MONTH</xar:comment>
                 <xar:foreach in="$month2" value="$week">
-                <tr class="xar-julian-calendar-week">
+                <tr class="xar-julian-cal-week">
                     <xar:comment>START :: LOOP THROUGH EACH DAY OF THE WEEK</xar:comment>
                     <xar:foreach in="$week" value="$date">
                     <xar:comment>Color the cells differently for Sat and Sun</xar:comment>
@@ -26,7 +26,7 @@
                         <xar:set name="$daycolor">"weekday"</xar:set>
                     </xar:if>
                     <xar:if condition="substr($date,4,2) eq $todays_month">
-                        <td class="xar-julian-calendar-day xar-julian-days-#$daycolor#">
+                        <td class="day #$daycolor#">
                             <xar:set name="dateconverted">date("Y-m-d",strtotime($date))</xar:set>
                             <xar:comment>Add pop-over with event information</xar:comment>
                             <xar:if condition="isset($event_array[$dateconverted])">
@@ -48,7 +48,7 @@
                             </a>
                         </td>
                     <xar:else />
-                        <td class="xar-julian-calendar-day xar-julian-days-#$daycolor# xar-julian-days-empty">&nbsp;
+                        <td class="day #$daycolor# xar-julian-days-empty">&nbsp;
 
                         </td>
                     </xar:if>

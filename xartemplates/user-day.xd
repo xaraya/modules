@@ -1,27 +1,26 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-
 <div class="xar-julian xar-julian-user-day">
 <xar:comment> Include the header file which also loads the css for Julian</xar:comment>
     <xar:template file="header" />
 
-    <div class="xar-julian-calendar">
-        <div class="xar-julian-calendar-nav">
-            <div class="xar-julian-calendar-nav-prev">
+    <div class="xar-julian-cal">
+        <div class="xar-julian-cal-nav">
+            <div class="xar-julian-cal-nav-prev">
                 <a href="#xarModAPIFunc('julian','user','prev',array('cal_type'=>'day','cal_date'=>$cal_date))#"
-                   title="#xarML('Previous Day')#" class="xar-julian-arrow">&lt;</a>
+                   title="#xarML('Previous Day')#" class="arrow">&lt;</a>
             </div>
-            <div class="xar-julian-calendar-nav-next">
+            <div class="xar-julian-cal-nav-next">
                 <a href="#xarModAPIFunc('julian','user','next',array('cal_type'=>'day','cal_date'=>$cal_date))#"
-                   title="#xarML('Next Day')#" class="xar-julian-arrow">&gt;</a>
+                   title="#xarML('Next Day')#" class="arrow">&gt;</a>
             </div>
-            <div class="xar-julian-calendar-nav-current">
+            <div class="xar-julian-cal-nav-current">
                 #xarLocaleGetFormattedDate('long',$selected_timestamp)#
             </div>
         </div>
 
-        <div class="xar-julian-calendar-tables">
-            <table class="xar-julian-calendar-month">
-                <tr class="xar-julian-calendar-week">
+        <div class="xar-julian-cal-tables">
+            <table class="xar-julian-cal-month">
+                <tr class="xar-julian-cal-week">
 
                     <xar:comment>Color the cells differently for Sat and Sun</xar:comment>
                     <xar:if condition="$daydate eq date('Ymd')">
@@ -31,8 +30,8 @@
                     <xar:else />
                         <xar:set name="$daycolor">"weekday"</xar:set>
                     </xar:if>
-                    <td class="xar-julian-calendar-day xar-julian-days-#$daycolor#">
-                        <div class="xar-julian-calendar-icons">
+                    <td class="day #$daycolor#">
+                        <div class="xar-julian-cal-icons">
                             <xar:if condition="!empty($addlink)">
                                 <a href="#$addlink#">
                                     <img src="#xarTplGetImage('new.gif')#" alt="#xarML('Add Event')#" />
@@ -48,12 +47,12 @@
                                     <xar:set name="$day">substr($date,-2)</xar:set>
                                     <xar:set name="$dbdate">$yr."-".$mon."-".$day;</xar:set>
                                     <xar:if condition="isset($event_array[$dbdate])">
-                                        <ul class="xar-julian-eventlist">
+                                        <ul class="eventlist">
                                             <xar:foreach in="$event_array[$dbdate]" key="$index">
                                             <li style="color: #$event_array[$dbdate][$index]['color']#;">
-                                                <div class="xar-julian-list-contents">
+                                                <div class="li-content">
                                                     <xar:set name="$event_id">#$event_array[$dbdate][$index]['event_id']#</xar:set>
-                                                    <div class="xar-julian-list-icons">
+                                                    <div class="icons">
                                                         <xar:if condition="xarModGetVar('julian','ical_links')">
                                                         <a href="#xarModURL('julian','user','export',array('event_id'=>$event_id))#">
                                                             <img src="#xarTplGetImage('export.gif')#" alt="#xarML('Export Event')#" title="#xarML('Export event to desktop calendar')#" align="middle "/>

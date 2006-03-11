@@ -1,7 +1,7 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
 
 <xar:if condition="xarTplAddStyleLink('base', 'navtabs')"></xar:if>
-<xar:style scope="module" file="julian" />
+<xar:style scope="module" />
 <script type="text/javascript" src="modules/julian/xarjavascript/utilities_lite.js"></script>
 <script type="text/javascript" src="modules/julian/xarjavascript/validateheader.js"></script>
 <xar:comment>

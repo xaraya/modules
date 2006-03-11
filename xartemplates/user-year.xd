@@ -2,23 +2,23 @@
 <div class="xar-julian xar-julian-user-year">
     <xar:template file="header" />
 
-    <div class="xar-julian-calendar">
-        <div class="xar-julian-calendar-nav">
-            <div class="xar-julian-calendar-nav-prev">
+    <div class="xar-julian-cal">
+        <div class="xar-julian-cal-nav">
+            <div class="xar-julian-cal-nav-prev">
                 <a href="#xarModAPIFunc('julian','user','prev',array('cal_type'=>'year','cal_date'=>$cal_date))#"
-                   title="#xarML('Previous Year')#" class="xar-julian-arrow">&lt;&lt;</a>
+                   title="#xarML('Previous Year')#" class="arrow">&lt;&lt;</a>
             </div>
-            <div class="xar-julian-calendar-nav-next">
+            <div class="xar-julian-cal-nav-next">
                 <a href="#xarModAPIFunc('julian','user','next',array('cal_type'=>'year','cal_date'=>$cal_date))#"
-                   title="#xarML('Next Year')#" class="xar-julian-arrow">&gt;&gt;</a>
+                   title="#xarML('Next Year')#" class="arrow">&gt;&gt;</a>
             </div>
-            <div class="xar-julian-calendar-nav-current">
+            <div class="xar-julian-cal-nav-current">
                 <xar:set name="$theyear">xarLocaleFormatDate('%Y',$selected_timestamp)</xar:set>
                 #$theyear#
             </div>
         </div>
 
-        <div class="xar-julian-calendar-tables">
+        <div class="xar-julian-cal-tables">
             <xar:comment>Number of columns calendars are displayed in.</xar:comment>
             <xar:set name="$xc_maxcols">3</xar:set>
             <xar:set name="$cols">1</xar:set>
@@ -33,9 +33,9 @@
             </xar:if>
                     <td valign="top" align="left">
 
-                        <table class="xar-julian-calendar-month">
+                        <table class="xar-julian-cal-month">
                             <tr>
-                                <th colspan="8" class="xar-julian-calendar-title">
+                                <th colspan="8" class="xar-julian-cal-title">
                                     <xar:if condition="$month lt 10">
                                         <xar:set name="$month_2digit">"0".$month</xar:set>
                                     <xar:else />
@@ -47,7 +47,7 @@
                                     </a>
                                 </th>
                             </tr>
-                            <tr class="xar-julian-calendar-daynames">
+                            <tr class="xar-julian-cal-daynames">
                                 <th>&nbsp;</th>
                                 <xar:foreach in="$shortDayNames" value="$dayName">
                                 <th>#$dayName#</th>
@@ -55,11 +55,11 @@
                             </tr>
                             <xar:comment>START :: LOOP THROUGH EACH WEEK OF THE MONTH</xar:comment>
                             <xar:foreach in="$weeks" key="$index" value="$week">
-                            <tr class="xar-julian-calendar-week">
+                            <tr class="xar-julian-cal-week">
                                 <xar:set name="$WeekDate">$week[0]</xar:set>
                                 <xar:set name="$WeekUrl">xarModURL('julian','user','week',array('cal_date'=>$WeekDate))</xar:set>
-                                <td class="xar-julian-calendar-weeknumber">
-                                    <a href="#$WeekUrl#" title="#xarML('Go to week')#" class="xar-julian-arrow">&gt;</a>
+                                <td class="xar-julian-cal-weeknumber">
+                                    <a href="#$WeekUrl#" title="#xarML('Go to week')#" class="arrow">&gt;</a>
                                 </td>
                                 <xar:comment>START :: LOOP THROUGH EACH DAY OF THE WEEK</xar:comment>
                                 <xar:foreach in="$week" value="$date">
@@ -72,7 +72,7 @@
                                     <xar:set name="$daycolor">"weekday"</xar:set>
                                 </xar:if>
                                 <xar:if condition="substr($date,4,2) eq $month">
-                                    <td class="xar-julian-calendar-day xar-julian-days-#$daycolor#">
+                                    <td class="day #$daycolor#">
                                         <xar:set name="dateconverted">date("Y-m-d",strtotime($date))</xar:set>
                                         <xar:comment>Add pop-over for event time and title</xar:comment>
                                         <xar:if condition="isset($event_array[$dateconverted])">
@@ -94,7 +94,7 @@
                                         </a>
                                     </td>
                                 <xar:else />
-                                    <td class="xar-julian-calendar-day xar-julian-days-#$daycolor# xar-julian-days-empty">
+                                    <td class="day #$daycolor# empty">
                                         &nbsp;
                                     </td>
                                 </xar:if>

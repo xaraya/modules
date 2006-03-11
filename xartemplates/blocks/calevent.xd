@@ -1,13 +1,13 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <!--When bug (3868 and others) for not calling AddStyleLink is fixed in xarblocks this call can be implemented:
 <xar:style module="julian" scope="block" file="julian" /> -->
- <link type="text/css" rel="stylesheet" href="modules/julian/xarstyles/julian.css" />
+ <link type="text/css" rel="stylesheet" href="modules/julian/xarstyles/style.css" />
 
 <div class="xar-julian xar-julian-block-calevent">
     <div class="xar-julian-calevent-today">
         <strong><xar:mlstring>Today's Events</xar:mlstring></strong>
         <xar:set name="$hasevent">0</xar:set>
-        <ul class="xar-julian-eventlist">
+        <ul class="eventlist">
         <xar:foreach in="$todaysevents" key="$key" value="$val">
             <xar:foreach in="$todaysevents[$key]" key="$key2" value="$val2">
                <xar:comment><xar:mlstring>Only show events that are Approved or FrontPage</xar:mlstring></xar:comment>
@@ -15,7 +15,7 @@
                    <xar:comment>Show a bullet with the color of the event category.</xar:comment>
                    <font size="3" color="#$val2['color']#">#$Bullet#</font>
                    <li style="color: #$val2['color']#;">
-                       <div class="xar-julian-list-contents">
+                       <div class="li-content">
                            <span class="xar-sub">#$val2['time']#</span>
                            <a href="#xarModURL('julian','user','viewevent',array('cal_date'=>$val2['linkdate'],'event_id'=>$val2['event_id']))#" class="xar-julian-event">
                                #$val2['summary']#
@@ -27,7 +27,7 @@
             </xar:foreach>
         </xar:foreach>
         <xar:if condition="!$hasevent">
-             <li><div class="xar-julian-list-contents"><xar:mlstring>None</xar:mlstring></div></li>
+             <li><div class="li-content"><xar:mlstring>None</xar:mlstring></div></li>
         </xar:if>
         </ul>
     </div>
@@ -42,13 +42,13 @@
                </xar:ml>
             </strong>
             <xar:set name="$hasevent2">0</xar:set>
-            <ul class="xar-julian-eventlist">
+            <ul class="eventlist">
             <xar:foreach in="$upcomingevents" key="$key" value="$val">
                 <xar:foreach in="$upcomingevents[$key]" key="$key2" value="$val2">
                    <xar:comment><xar:mlstring>Only show events that are Approved or FrontPage</xar:mlstring></xar:comment>
                    <xar:if condition="(!isset($val2['artstatus']) OR (isset($val2['artstatus']) AND(($val2['artstatus']==2) OR ($val2['artstatus']==3))))">
                         <li style="color: #$val2['color']#;">
-                            <div class="xar-julian-list-contents">
+                            <div class="li-content">
                                   <xar:comment>Show a bullet with the color of the event category.</xar:comment>
                                   <font size="3" color="#$val2['color']#">#$Bullet#</font>
                                 <span class="xar-sub">#$val2['Fstartdate']# #$val2['Ftime']#</span>
@@ -62,7 +62,7 @@
                 </xar:foreach>
             </xar:foreach>
             <xar:if condition="!$hasevent2">
-                 <li><div class="xar-julian-list-contents"><xar:mlstring>None</xar:mlstring></div></li>
+                 <li><div class="li-content"><xar:mlstring>None</xar:mlstring></div></li>
             </xar:if>
             </ul>
         </div>
