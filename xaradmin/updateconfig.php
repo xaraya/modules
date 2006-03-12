@@ -49,9 +49,11 @@ function julian_admin_updateconfig($args)
     if (!xarVarFetch('modulealias',     'checkbox', $modulealias,   false,XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('DurMinInterval',  'int:1:15', $DurMinInterval,15, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('StartMinInterval','int:1:15', $StartMinInterval,15, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('shorturls',       'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
     // Confirmation code
     if (!xarSecConfirmAuthKey()) return;
     // Set the vars
+    xarModSetVar('julian', 'SupportShortURLs', $shorturls);
     xarModSetVar('julian','ical_links',$ical_links);
     xarModSetVar('julian','share_group',$share_group);
     xarmodSetVar('julian','from_name',$from_name);

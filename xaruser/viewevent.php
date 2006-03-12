@@ -33,7 +33,7 @@ function julian_user_viewevent()
 {
     //get post/get vars
     if (!xarVarFetch('event_id','isset',$event_id)) return; // can't be id, because of _link
-    if (!xarVarFetch('cal_date','int',$cal_date)) return; // str here?
+    if (!xarVarFetch('cal_date','int',$cal_date, date('dmY'), XARVAR_NOT_REQUIRED)) return; // str here?
 
     // Security check
 
@@ -105,7 +105,7 @@ function julian_user_viewevent()
         $bl_data['recur_until'] = 'recur_until';
     }
 
-   $bl_data['id'] = $bl_data['event_id'];
+   $bl_data['event_id'] = $bl_data['event_id'];
    $bl_data['deletesummary'] = xarVarPrepForDisplay($bl_data['summary']);
 
    // TODO: MichelV: improve ML settings here
@@ -189,7 +189,7 @@ function julian_user_viewevent()
    // Priv checks. We add a AddJulian here because we need to check on the own events, not of others
    if (xarSecurityCheck('EditJulian', 0, 'Item', "$event_id:$bl_data[organizer]:$bl_data[calendar_id]:All")) {
        // Add edit link
-       $bl_data['editlink'] = xarModURL('julian','user','edit',array('cal_date'=>$cal_date,'id'=> $event_id));
+       $bl_data['editlink'] = xarModURL('julian','user','edit',array('cal_date'=>$cal_date,'event_id'=> $event_id));
    } else {
        $bl_data['editlink'] = '';
    }

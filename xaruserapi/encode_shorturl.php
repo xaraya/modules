@@ -3,7 +3,7 @@
  * Encode the short URLs for Julian
  *
  * @package modules
- * @copyright (C) 2005 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -16,80 +16,95 @@
  *
  * The parameters are taken from the URL and coupled to functions
  *
- * @author  Julian Development Team, MichelV <michelv@xaraya.com>
+ * @author  MichelV <michelv@xaraya.com>
  * @access  public
  * @param   array $args including func
- * @return  array URL
+ * @return  string URL
  * @todo    MichelV. <#> Check this function and it functioning. Include Categories
  */
-
 function julian_userapi_encode_shorturl($args)
 {
     // Get arguments from argument array
     extract($args); unset($args);
     // check if we have something to work with
-    if (!isset($func)) { return; }
+    if (!isset($func)) {
+        return;
+    }
 
     // default path is empty -> no short URL
     $path = '';
     $extra = '';
     // we can't rely on xarModGetName() here (yet) !
     $module = 'julian';
-
+    $alias = xarModGetAlias($module);
+    /* Check if we have module alias set or not */
+    $aliasisset = xarModGetVar('julian', 'useModuleAlias');
+    $aliasname = xarModGetVar('julian','aliasname');
+    if (($aliasisset) && isset($aliasname)) {
+        $usealias   = true;
+    } else {
+        $usealias = false;
+    }
+    if (($module == $alias) && ($usealias)){
+        $path = '/' . $aliasname . '/';
+    } else {
+        $path = '/' . $module . '/';
+    }
     // specify some short URLs relevant to your module
     switch($func) {
         case 'main':
             // replace this with the default view when available
             // right now we'll just default to the month view
-            $path = "/$module/month/";
             if(isset($cal_date) && !empty($cal_date)) $path .= xarVarPrepForDisplay($cal_date).'/';
             if(isset($cal_user) && !empty($cal_user)) $path .= xarVarPrepForDisplay($cal_user).'/';
             $path .= 'index.html';
             break;
 
         case 'day':
-            $path = "/$module/day/";
+            $path .= 'day/';
             if(isset($cal_date) && !empty($cal_date)) $path .= xarVarPrepForDisplay($cal_date).'/';
             if(isset($cal_user) && !empty($cal_user)) $path .= xarVarPrepForDisplay($cal_user).'/';
             $path .= 'index.html';
             break;
 
         case 'week':
-            $path = "/$module/week/";
+            $path .= 'week/';
             if(isset($cal_date) && !empty($cal_date)) $path .= xarVarPrepForDisplay($cal_date).'/';
             if(isset($cal_user) && !empty($cal_user)) $path .= xarVarPrepForDisplay($cal_user).'/';
             $path .= 'index.html';
             break;
 
         case 'month':
-            $path = "/$module/month/";
+            $path .= 'month/';
             if(isset($cal_date) && !empty($cal_date)) $path .= xarVarPrepForDisplay($cal_date).'/';
             if(isset($cal_user) && !empty($cal_user)) $path .= xarVarPrepForDisplay($cal_user).'/';
             $path .= 'index.html';
             break;
 
         case 'year':
-            $path = "/$module/year/";
-            if(isset($cal_date) && !empty($cal_date)) $path .= xarVarPrepForDisplay($cal_date).'/';
-            if(isset($cal_user) && !empty($cal_user)) $path .= xarVarPrepForDisplay($cal_user).'/';
+            $path .= 'year/';
+            if(isset($cal_date) && !empty($cal_date)) $path .= $cal_date.'/';
+            if(isset($cal_user) && !empty($cal_user)) $path .= $cal_user.'/';
             $path .= 'index.html';
             break;
 
-        case 'add':
-            $path = "/$module/add/";
-            if(isset($cal_date) && !empty($cal_date)) $path .= xarVarPrepForDisplay($cal_date).'/';
+        case 'addevent':
+            $path .= 'addevent/';
+            if(isset($cal_date) && !empty($cal_date)) $path .= $cal_date.'/';
             $path .= 'index.html';
             break;
 
         case 'edit':
-            $path = "/$module/edit/";
-            if(isset($cal_eid) && !empty($cal_eid)) $path .= xarVarPrepForDisplay($cal_eid).'.html/';
+            $path .= 'edit/';
+            if(isset($event_id) && !empty($event_id)) $path .= $event_id.'.html';
             break;
 
-        case 'view':
-            $path = "/$module/view/";
-            if(isset($cal_vid) && !empty($cal_vid)) $path .= xarVarPrepForDisplay($cal_vid).'/';
+        case 'viewevent':
+            $path .= 'viewevent/';
+      //      if(isset($cal_date) && !empty($cal_date)) $path .= $cal_date.'/';
+            if(isset($event_id) && !empty($event_id)) $path .= $event_id.'.html';
             break;
+
     }
 
     if(!empty($path) && isset($cal_sdow)) {

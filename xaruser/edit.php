@@ -3,7 +3,7 @@
  * Generates a form for editing an existing event.
  *
  * @package modules
- * @copyright (C) 2005 by Metrostat Technologies, Inc.
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.metrostat.net
  *
@@ -17,6 +17,7 @@
  * Get a single event from the events table
  * Then offer a form that will allow the user to edit the event
  *
+ * @copyright (C) 2004 by Metrostat Technologies, Inc.
  * @author Jodie Razdrh/John Kevlin/David St.Clair
  * @author  MichelV <Michelv@xaraya.com>
  * @access  public
@@ -29,18 +30,18 @@
 function julian_user_edit()
 {
 
-    if (!xarVarFetch('id',      'id',    $id)) return;
+    if (!xarVarFetch('event_id', 'id',   $event_id)) return;
     if (!xarVarFetch('objectid', 'id',   $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
     // This is the var to set the first day of the week
     if (!xarVarFetch('cal_date','int::', $cal_date, 0, XARVAR_NOT_REQUIRED)) return;
 
     if (!empty($objectid)) {
-        $id = $objectid;
+        $event_id = $objectid;
     }
     // Get event the decent way
-    $item = xarModAPIFunc('julian', 'user', 'get', array('event_id' => $id));
+    $item = xarModAPIFunc('julian', 'user', 'get', array('event_id' => $event_id));
     // Security check
-    if (!xarSecurityCheck('EditJulian', 1, 'Item', "$id:$item[organizer]:$item[calendar_id]:All")) {
+    if (!xarSecurityCheck('EditJulian', 1, 'Item', "$event_id:$item[organizer]:$item[calendar_id]:All")) {
         return;
     }
 
@@ -302,7 +303,7 @@ function julian_user_edit()
     // Build description for the item we want the hooks (i.e. category) for.
     $item = array();
     $item['module'] = 'julian';
-    $hooks = xarModCallHooks('item', 'modify', $id, $item);
+    $hooks = xarModCallHooks('item', 'modify', $event_id, $item);
 
     // Deal with no-hook scenario (the template then must get an empty hook-array)
      if (empty($hooks)) {

@@ -3,7 +3,7 @@
  * Decode the short URLs in Julian
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -25,6 +25,23 @@
 function julian_userapi_decode_shorturl($params)
 {
     $args = array();
+    $module = 'julian';
+    /* Check and see if we have a module alias */
+    $aliasisset = xarModGetVar('julian', 'useModuleAlias');
+    $aliasname = xarModGetVar('julian','aliasname');
+    if (($aliasisset) && isset($aliasname)) {
+        $usealias   = true;
+    } else{
+        $usealias = false;
+    }
+    /* Analyse the different parts of the virtual path
+     * $params[1] contains the first part after index.php/julian
+     * In general, you should be strict in encoding URLs, but as liberal
+     * as possible in trying to decode them...
+     */
+    if ($params[0] != $module) { /* it's possibly some type of alias */
+        $aliasname = xarModGetVar('julian','aliasname');
+    }
     if(empty($params[1])) {
         return array('main', $args);
     } elseif($params[1] == 'day') {
@@ -91,7 +108,7 @@ function julian_userapi_decode_shorturl($params)
             $args['cal_user'] = $params[3];
         }
         return array('year', $args);
-    } elseif($params[1] == 'add') {
+    } elseif($params[1] == 'addevent') {
         // if we have a 2nd parameter it should be a date
         if(!empty($params[2])) {
             // just make sure it's a valid date
@@ -99,27 +116,30 @@ function julian_userapi_decode_shorturl($params)
                 $args['cal_date'] = $matches[1];
             }
         }
-        return array('add', $args);
+        return array('addevent', $args);
     } elseif($params[1] == 'edit') {
         // if we have a 2nd parameter it should be an event id
         if(!empty($params[2])) {
             // just make sure it's a valid eid
-            if(preg_match('/^(\d+)\.html$/',$params[1],$matches)) {
-                $args['cal_eid'] = $matches[1];
+            if(preg_match('/^(\d+)\.html$/',$params[2],$matches)) {
+
+                $args['event_id'] = $matches[1];
             }
         }
         return array('edit', $args);
-    } elseif($params[1] == 'view') {
-        // if we have a 2nd parameter it should be an view event id
+    } elseif($params[1] == 'viewevent') {
+
+        // if we have a 2nd parameter it should be an event id
         if(!empty($params[2])) {
-            // just make sure it's a valid vid
-            if(preg_match('/^(\d+)\.html$/',$params[1],$matches)) {
-                $args['cal_vid'] = $matches[1];
+            // just make sure it's a valid event_id
+            if (preg_match('/^(\d+)\.html$/',$params[2],$matches)) {
+           //     dump( $matches[1] );
+                $args['event_id'] = $matches[1];
             }
         }
-        return array('view', $args);
+        return array('viewevent', $args);
     } else {
-        die('bogus');
+    //    die('bogus');
         return array('main', $args);
     }
 

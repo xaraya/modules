@@ -178,6 +178,8 @@ function julian_init()
     // Alias
     xarModSetVar('julian', 'useModuleAlias',false);
     xarModSetVar('julian','aliasname','');
+    /* If your module supports short URLs */
+    xarModSetVar('julian', 'SupportShortURLs', 0);
 
     /**
      * Define instances for this module
@@ -651,6 +653,10 @@ function julian_upgrade($oldversion)
             return julian_upgrade('0.4.1');
         case '0.4.1':
         case '0.4.2':
+            /* If your module supports short URLs */
+            xarModSetVar('julian', 'SupportShortURLs', 0);
+            return julian_upgrade('0.4.3');
+        case '0.4.3':
             break;
     }
     // Update successful

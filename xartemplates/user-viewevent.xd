@@ -23,7 +23,7 @@
                 <div class="xar-julian-list-contents">
                     <div class="xar-julian-list-icons">
                         <xar:if condition="xarModGetVar('julian','ical_links')">
-                            <a href="#xarModURL('julian','user','export',array('event_id'=>$id))#">
+                            <a href="#xarModURL('julian','user','export',array('event_id'=>$event_id))#">
                                 <img src="#xarTplGetImage('export.gif')#" alt="#xarML('Export Event')#" title="#xarML('Export event to desktop calendar')#" align="middle "/>
                             </a>
                         </xar:if>
