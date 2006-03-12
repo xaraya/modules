@@ -93,7 +93,16 @@ function julian_userapi_encode_shorturl($args)
             if(isset($cal_date) && !empty($cal_date)) $path .= $cal_date.'/';
             $path .= 'index.html';
             break;
-
+        case 'viewevents':
+            $path .= 'viewevents/';
+            if(isset($cal_date) && !empty($cal_date)) $path .= $cal_date.'/';
+            $path .= 'index.html';
+            break;
+        case 'alerts':
+            $path .= 'alerts/';
+            if(isset($cal_date) && !empty($cal_date)) $path .= $cal_date.'/';
+            $path .= 'index.html';
+            break;
         case 'edit':
             $path .= 'edit/';
             if(isset($event_id) && !empty($event_id)) $path .= $event_id.'.html';
@@ -101,6 +110,11 @@ function julian_userapi_encode_shorturl($args)
 
         case 'viewevent':
             $path .= 'viewevent/';
+      //      if(isset($cal_date) && !empty($cal_date)) $path .= $cal_date.'/';
+            if(isset($event_id) && !empty($event_id)) $path .= $event_id.'.html';
+            break;
+        case 'export':
+            $path .= 'export/';
       //      if(isset($cal_date) && !empty($cal_date)) $path .= $cal_date.'/';
             if(isset($event_id) && !empty($event_id)) $path .= $event_id.'.html';
             break;

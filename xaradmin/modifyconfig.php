@@ -47,7 +47,7 @@ function julian_admin_modifyconfig()
     // Starttime minute interval
     $data['StartMinInterval'] = xarModGetVar('julian', 'StartMinInterval');
     // short URLs
-    $data['shorturlschecked'] = xarModGetVar('example', 'SupportShortURLs') ? true : false;
+    $data['shorturlschecked'] = xarModGetVar('julian', 'SupportShortURLs') ? true : false;
     /* If you plan to use alias names for you module then you should use the next two alias vars
      * You must also use short URLS for aliases, and provide appropriate encode/decode functions.
      */

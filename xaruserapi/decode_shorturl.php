@@ -127,6 +127,24 @@ function julian_userapi_decode_shorturl($params)
             }
         }
         return array('edit', $args);
+    } elseif($params[1] == 'viewevents') {
+        // if we have a 2nd parameter it should be a date
+        if(!empty($params[2])) {
+            // just make sure it's a valid date
+            if(preg_match('/([0-9]{4,4}[0-9]{2,2}?[0-9]{2,2}?)/',$params[2],$matches)) {
+                $args['cal_date'] = $matches[1];
+            }
+        }
+        return array('viewevents', $args);
+    } elseif($params[1] == 'alerts') {
+        // if we have a 2nd parameter it should be a date
+        if(!empty($params[2])) {
+            // just make sure it's a valid date
+            if(preg_match('/([0-9]{4,4}[0-9]{2,2}?[0-9]{2,2}?)/',$params[2],$matches)) {
+                $args['cal_date'] = $matches[1];
+            }
+        }
+        return array('alerts', $args);
     } elseif($params[1] == 'viewevent') {
 
         // if we have a 2nd parameter it should be an event id
@@ -138,6 +156,17 @@ function julian_userapi_decode_shorturl($params)
             }
         }
         return array('viewevent', $args);
+    } elseif($params[1] == 'export') {
+
+        // if we have a 2nd parameter it should be an event id
+        if(!empty($params[2])) {
+            // just make sure it's a valid event_id
+            if (preg_match('/^(\d+)\.html$/',$params[2],$matches)) {
+           //     dump( $matches[1] );
+                $args['event_id'] = $matches[1];
+            }
+        }
+        return array('export', $args);
     } else {
     //    die('bogus');
         return array('main', $args);
