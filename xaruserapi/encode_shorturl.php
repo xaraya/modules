@@ -62,22 +62,22 @@ function julian_userapi_encode_shorturl($args)
 
         case 'day':
             $path .= 'day/';
-            if(isset($cal_date) && !empty($cal_date)) $path .= xarVarPrepForDisplay($cal_date).'/';
-            if(isset($cal_user) && !empty($cal_user)) $path .= xarVarPrepForDisplay($cal_user).'/';
+            if(isset($cal_date) && !empty($cal_date)) $path .= $cal_date.'/';
+            if(isset($cal_user) && !empty($cal_user)) $path .= $cal_user.'/';
             $path .= 'index.html';
             break;
 
         case 'week':
             $path .= 'week/';
-            if(isset($cal_date) && !empty($cal_date)) $path .= xarVarPrepForDisplay($cal_date).'/';
-            if(isset($cal_user) && !empty($cal_user)) $path .= xarVarPrepForDisplay($cal_user).'/';
+            if(isset($cal_date) && !empty($cal_date)) $path .= $cal_date.'/';
+            if(isset($cal_user) && !empty($cal_user)) $path .= $cal_user.'/';
             $path .= 'index.html';
             break;
 
         case 'month':
             $path .= 'month/';
-            if(isset($cal_date) && !empty($cal_date)) $path .= xarVarPrepForDisplay($cal_date).'/';
-            if(isset($cal_user) && !empty($cal_user)) $path .= xarVarPrepForDisplay($cal_user).'/';
+            if(isset($cal_date) && !empty($cal_date)) $path .= $cal_date.'/';
+            if(isset($cal_user) && !empty($cal_user)) $path .= $cal_user.'/';
             $path .= 'index.html';
             break;
 
@@ -109,7 +109,7 @@ function julian_userapi_encode_shorturl($args)
             break;
 
         case 'viewevent':
-            $path .= 'viewevent/';
+            $path .= 'display/';
       //      if(isset($cal_date) && !empty($cal_date)) $path .= $cal_date.'/';
             if(isset($event_id) && !empty($event_id)) $path .= $event_id.'.html';
             break;
@@ -118,7 +118,11 @@ function julian_userapi_encode_shorturl($args)
       //      if(isset($cal_date) && !empty($cal_date)) $path .= $cal_date.'/';
             if(isset($event_id) && !empty($event_id)) $path .= $event_id.'.html';
             break;
-
+        case 'jump':
+            $path .= 'jump/';
+            if(isset($cal_date) && !empty($cal_date)) $path .= $cal_date;
+      //      if(isset($event_id) && !empty($event_id)) $path .= $event_id.'.html';
+            break;
     }
 
     if(!empty($path) && isset($cal_sdow)) {

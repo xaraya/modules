@@ -122,7 +122,6 @@ function julian_userapi_decode_shorturl($params)
         if(!empty($params[2])) {
             // just make sure it's a valid eid
             if(preg_match('/^(\d+)\.html$/',$params[2],$matches)) {
-
                 $args['event_id'] = $matches[1];
             }
         }
@@ -145,14 +144,16 @@ function julian_userapi_decode_shorturl($params)
             }
         }
         return array('alerts', $args);
-    } elseif($params[1] == 'viewevent') {
+    } elseif($params[1] == 'display') {
 
         // if we have a 2nd parameter it should be an event id
         if(!empty($params[2])) {
             // just make sure it's a valid event_id
             if (preg_match('/^(\d+)\.html$/',$params[2],$matches)) {
-           //     dump( $matches[1] );
                 $args['event_id'] = $matches[1];
+            }
+            elseif (preg_match('/^(\d+)\_link.html$/',$params[2],$matches)) {
+                $args['event_id'] = $matches[1].'_link';
             }
         }
         return array('viewevent', $args);
@@ -162,11 +163,21 @@ function julian_userapi_decode_shorturl($params)
         if(!empty($params[2])) {
             // just make sure it's a valid event_id
             if (preg_match('/^(\d+)\.html$/',$params[2],$matches)) {
-           //     dump( $matches[1] );
                 $args['event_id'] = $matches[1];
+            } elseif (preg_match('/^(\d+)\_link.html$/',$params[2],$matches)) {
+                $args['event_id'] = $matches[1].'_link';
             }
         }
         return array('export', $args);
+    } elseif($params[1] == 'jump') {
+        // Second parameter must be cal_date
+        if(!empty($params[2])) {
+            // just make sure it's a valid date
+            if(preg_match('/([0-9]{4,4}[0-9]{2,2}?[0-9]{2,2}?)/',$params[2],$matches)) {
+                $args['cal_date'] = $matches[1];
+            }
+        }
+        return array('jump', $args);
     } else {
     //    die('bogus');
         return array('main', $args);
