@@ -3,7 +3,7 @@
  * Example Module - initialization functions
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -15,9 +15,13 @@
  * Initialise the module
  *
  * This function is only ever called once during the lifetime of a particular
- * module instance
+ * module instance. It holds all the installation routines and sets the variables used
+ * by this module. This function is the place to create you database structure and define
+ * the privileges your module uses.
  *
  * @author Example Module Development Team
+ * @param none
+ * @return bool true on success of installation
  */
 function example_init()
 {
@@ -101,7 +105,7 @@ function example_init()
     */
 
     /* If Categories API loaded and available, generate proprietary
-     * module master category cid and child subcids
+     * module master category if (cid) and child category ids (subcids)
      */
     if (xarModIsAvailable('categories')) {
         $examplecid = xarModAPIFunc('categories',
@@ -110,7 +114,9 @@ function example_init()
             Array('name' => 'examples',
                 'description' => 'Example Categories',
                 'parent_id' => 0));
-        /* Note: you can have more than 1 mastercid (cfr. articles module) */
+        /* Store the generated master category id and the number of possible categories
+         * Note: you can have more than 1 mastercid (cfr. articles module)
+         */
         xarModSetVar('example', 'number_of_categories', 1);
         xarModSetVar('example', 'mastercids', $examplecid);
         $examplecategories = array();
@@ -173,13 +179,12 @@ function example_init()
     if (!xarModRegisterHook('item', 'search', 'GUI', 'example', 'user', 'search')) {
         return false;
     }
-    /**
+    /*
      * Define instances for this module
      * Format is
      * setInstance(Module,Type,ModuleTable,IDField,NameField,ApplicationVar,LevelTable,ChildIDField,ParentIDField)
-     */
-
-    /* Instance definitions serve two purposes:
+     *
+     * Instance definitions serve two purposes:
      * 1. The define "filters" that are added to masks at runtime, allowing us to set
      *    security checks over single objects or groups of objects
      * 2. They generate dropdowns the UI uses to present the user with choices when
@@ -209,7 +214,8 @@ function example_init()
             )
         );
     xarDefineInstance('example', 'Item', $instances);
-    /* You can also use some external "wizard" function to specify instances :
+    /* You can also use some external "wizard" function to specify instances
+     * You will need to provide the wizard function in admin_privileges :
 
       $instances = array(
           array('header' => 'external', // this keyword indicates an external "wizard"
@@ -231,10 +237,11 @@ function example_init()
         );
     xarDefineInstance('example', 'Block', $instances);
 
-    /**
+    /*
      * Register the module components that are privileges objects
      * Format is
      * xarregisterMask(Name,Realm,Module,Component,Instance,Level,Description)
+     * These masks are used in the module for the security checks
      */
 
     xarRegisterMask('ReadExampleBlock', 'All', 'example', 'Block', 'All', 'ACCESS_OVERVIEW');
@@ -252,7 +259,14 @@ function example_init()
 /**
  * Upgrade the module from an old version
  *
- * This function can be called multiple times
+ * This function can be called multiple times. It holds all the routines for each version
+ * of the module that are necessary to upgrade to a new version. It is very important to keep the
+ * initialisation and the upgrade compatible with eachother.
+ *
+ * @param string oldversion. This function takes the old version that is currently stored in the module db
+ * @return bool true on succes of upgrade
+ * @throws mixed This function can throw all sorts of errors, depending on the functions present
+                 Currently it can raise database errors.
  */
 function example_upgrade($oldversion)
 {
@@ -316,6 +330,8 @@ function example_upgrade($oldversion)
  *
  * This function is only ever called once during the lifetime of a particular
  * module instance
+ * @param none
+ * @return bool true on succes of deletion
  */
 function example_delete()
 {
@@ -364,7 +380,7 @@ function example_delete()
         return false;
     }
     /* Remove Masks and Instances
-     * these functions remove all the registered masks and instances of a module
+     * These functions remove all the registered masks and instances of a module
      * from the database. This is not strictly necessary, but it's good housekeeping.
      */
     xarRemoveMasks('example');
