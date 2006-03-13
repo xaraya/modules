@@ -1,5 +1,4 @@
 <?php
-
 /**
  *
  * The "media-types" directory contains a subdirectory for each content
@@ -17,11 +16,8 @@
  *
  *    URL = ftp://ftp.isi.edu/in-notes/iana/assignments/media-types
  */
-
-
-
 $modversion['name']         = 'filemanager';
-$modversion['id']           = '666';
+$modversion['id']           = '517';
 $modversion['version']      = '2.0.0'; // long jump from current filemanager version
 $modversion['displayname']  = xarML('FileManager');
 $modversion['description']  = 'Virtual/Real Directory and File Management';

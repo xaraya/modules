@@ -8,7 +8,8 @@
 // ----------------------------------------------------------------------
 // Original Author of file: Marie Altobelli (Ladyofdragons)
 // Current Maintainer: Michael Cortez (mcortez)
-// Purpose of file:  Initialisation functions for filemanager // ----------------------------------------------------------------------
+// Purpose of file:  Initialisation functions for filemanager
+// ----------------------------------------------------------------------
 
 /**
  * initialise the module

@@ -6,7 +6,7 @@
  *  @author  Carl P. Corliss
  *  @access  public
  *
- *  @returns integer The number of affected rows on success, or FALSE on error
+ *  @return integer The number of affected rows on success, or FALSE on error
  */
 
 function filemanager_userapi_db_change_status( $args )
