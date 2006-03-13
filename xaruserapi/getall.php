@@ -80,19 +80,10 @@ function julian_userapi_getall($args)
     $day_array = array("1"=>"Sunday","2"=>"Monday","3"=>"Tuesday","4"=>"Wednesday","5"=>"Thursday","6"=>"Friday","7"=>"Saturday");
     // build an array of units that coincides with an interval rule
     $units = array("1"=>"days","2"=>"weeks","3"=>"months","4"=>"years");
-
-
-
-    if(!strcmp($enddate,"")) {
-        // no enddate specified
-        // set the end date to the start date for recurring events
-        $enddate = $startdate;
-    }
     // set the enddate to the day after, so that we can use the SQL compliant "BETwEEN startdate AND enddate"
     // this works as Y-m-d dates are iterpreted as timestamps with 00:00:00 time
-    $enddatesql = date('Y-m-d',strtotime($enddate)+24*60*60);
-    $condition = " AND ( ( dtstart BETWEEN '" . $startdate . "' AND '" . $enddatesql . "' ) OR recur_freq > 0 ) ";
-
+    $enddatesql = date('Y-m-d',(strtotime($enddate)+24*60*60));
+    $condition = " AND ( (dtstart BETWEEN '" . $startdate . "' AND '" . $enddatesql . "' ) OR recur_freq > 0 ) ";
 
     $event_data = array();
     // Getting all events that are scheduled for this user,public events for other users, and shared events for this user in
@@ -111,7 +102,8 @@ function julian_userapi_getall($args)
                    rrule,
                    recur_count,
                    recur_until,
-                   recur_interval";
+                   recur_interval,
+                   share_uids";
 
     // Select on categories
     if (!empty($catid) && xarModIsHooked('categories','julian')) {
@@ -130,19 +122,19 @@ function julian_userapi_getall($args)
             $query .= " FROM $event_table
                         WHERE ";
         }
-     } else {
+    } else {
         $query .= " FROM $event_table
                     WHERE ";
-     }
-     /* MySQL friendly query
-      * Comment this one if you need to use PostGres
-      */
+    }
+    /* MySQL friendly query
+     * Comment this one if you need to use PostGres
+     */
 
-     $query .= " ( $event_table.organizer = $current_user
-                 OR ($event_table.class= '0' AND $event_table.organizer != '" .$current_user."' )
-                 OR FIND_IN_SET('" . $current_user."',share_uids) )
-                 $condition
-                 ORDER BY $event_table.$sortby $orderby";
+    $query .= " ( $event_table.organizer = $current_user
+                OR ($event_table.class= '0' AND $event_table.organizer != '" .$current_user."' )
+                OR FIND_IN_SET('".$current_user."',share_uids))
+                $condition
+                ORDER BY $event_table.$sortby $orderby";
 
      /* PostGres Query. Uncomment this one to use with PostGres.
       * I could only replace the MySQL-specific FIND_IN_SET() with a (PostgreSQL-specific)
@@ -163,8 +155,15 @@ function julian_userapi_getall($args)
 
     while(!$result->EOF) {
          $eventObj = $result->FetchObject(false);
+         $fRecurUntil ='';
+         if(!is_null($eventObj->recur_until) || !empty($eventObj->recur_until)) {
+             $fRecurUntil = $eventObj->recur_until;
+         }
          $fStartDate = date("Y-m-d",strtotime($eventObj->dtstart));
-         $fStartTime = date("H:i",strtotime($eventObj->dtstart));
+         $fStartTime ='';
+         if (!$eventObj->isallday) {
+             $fStartTime = date("H:i",strtotime($eventObj->dtstart));
+         }
          if (!$eventObj->recur_freq) {
               //this is a non-repeating event and falls in the current date range...add to the events array
               $e->setEventData($event_data,$fStartDate,$eventObj);
@@ -175,7 +174,7 @@ function julian_userapi_getall($args)
               //Keep adding the recurring events until we hit the enddate or the recur_until end date.
               $recur_until = 1;
               //If the db recur_until is set, check to see if we are past the recur_until date, otherwise it's 1 and it will fall through
-              if (!is_null($eventObj->recur_until)) {
+              if (strcmp($fRecurUntil,"")) {
                   $recur_until = ($nextTS <= strtotime($eventObj->recur_until));
               }
               while($nextTS <= strtotime($enddate) && $recur_until) {
@@ -200,7 +199,7 @@ function julian_userapi_getall($args)
                   //Get the next recur date's timestamp
                   $nextTS = strtotime($next_date);
                   //determine if the next recur date should be added
-                  if (!is_null($eventObj->recur_until)) {
+                if (strcmp($fRecurUntil,"")) {
                      $recur_until = ($nextTS <= strtotime($eventObj->recur_until));
                   }
               }
@@ -234,12 +233,12 @@ function julian_userapi_getall($args)
 
     while(!$result_linked->EOF) {
          $eventObj = $result_linked->FetchObject(false);
-         $event_data = xarModAPIFunc('julian', 'user', 'geteventinfo',
+         $itemlinks = xarModAPIFunc('julian', 'user', 'geteventinfo',
                                      array(//'event'   => $eventObj->event_id,
                                            'iid'     => $eventObj->hook_iid,
                                            'itemtype'=> $eventObj->hook_itemtype,
                                            'modid'   => $eventObj->hook_modid));
-         if (!empty($event_data['description'])) {
+         if (!empty($itemlinks['description'])) {
             $fStartDate = date("Y-m-d",strtotime($eventObj->dtstart));
             $fStartTime = date("H:i",strtotime($eventObj->dtstart));
             if (!$eventObj->recur_freq) {
