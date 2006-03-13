@@ -43,7 +43,7 @@ function julian_userapi_decode_shorturl($params)
         $aliasname = xarModGetVar('julian','aliasname');
     }
     if(empty($params[1])) {
-        return array('main', $args);
+ 'main';
     } elseif($params[1] == 'day') {
         // if we have a 2nd parameter see if it's a date or username
         if(!empty($params[2])) {
@@ -59,7 +59,7 @@ function julian_userapi_decode_shorturl($params)
         if(!empty($params[3])) {
             $args['cal_user'] = $params[3];
         }
-        return array('day', $args);
+        $func ='day';
     } elseif($params[1] == 'week') {
         // if we have a 2nd parameter see if it's a date or username
         if(!empty($params[2])) {
@@ -75,7 +75,7 @@ function julian_userapi_decode_shorturl($params)
         if(!empty($params[3])) {
             $args['cal_user'] = $params[3];
         }
-        return array('week', $args);
+        $func ='week';
     } elseif($params[1] == 'month') {
         // if we have a 2nd parameter see if it's a date or username
         if(!empty($params[2])) {
@@ -91,7 +91,7 @@ function julian_userapi_decode_shorturl($params)
         if(!empty($params[3])) {
             $args['cal_user'] = $params[3];
         }
-        return array('month', $args);
+        $func ='month';
     } elseif($params[1] == 'year') {
         // if we have a 2nd parameter see if it's a date or username
         if(!empty($params[2])) {
@@ -107,7 +107,7 @@ function julian_userapi_decode_shorturl($params)
         if(!empty($params[3])) {
             $args['cal_user'] = $params[3];
         }
-        return array('year', $args);
+        $func ='year';
     } elseif($params[1] == 'addevent') {
         // if we have a 2nd parameter it should be a date
         if(!empty($params[2])) {
@@ -125,7 +125,7 @@ function julian_userapi_decode_shorturl($params)
                 $args['event_id'] = $matches[1];
             }
         }
-        return array('edit', $args);
+        $func ='edit';
     } elseif($params[1] == 'viewevents') {
         // if we have a 2nd parameter it should be a date
         if(!empty($params[2])) {
@@ -134,7 +134,7 @@ function julian_userapi_decode_shorturl($params)
                 $args['cal_date'] = $matches[1];
             }
         }
-        return array('viewevents', $args);
+        $func ='viewevents';
     } elseif($params[1] == 'alerts') {
         // if we have a 2nd parameter it should be a date
         if(!empty($params[2])) {
@@ -143,7 +143,7 @@ function julian_userapi_decode_shorturl($params)
                 $args['cal_date'] = $matches[1];
             }
         }
-        return array('alerts', $args);
+        $func ='alerts';
     } elseif($params[1] == 'display') {
 
         // if we have a 2nd parameter it should be an event id
@@ -156,7 +156,7 @@ function julian_userapi_decode_shorturl($params)
                 $args['event_id'] = $matches[1].'_link';
             }
         }
-        return array('viewevent', $args);
+        $func ='viewevent';
     } elseif($params[1] == 'export') {
 
         // if we have a 2nd parameter it should be an event id
@@ -168,7 +168,7 @@ function julian_userapi_decode_shorturl($params)
                 $args['event_id'] = $matches[1].'_link';
             }
         }
-        return array('export', $args);
+        $func ='export';
     } elseif($params[1] == 'jump') {
         // Second parameter must be cal_date
         if(!empty($params[2])) {
@@ -177,12 +177,12 @@ function julian_userapi_decode_shorturl($params)
                 $args['cal_date'] = $matches[1];
             }
         }
-        return array('jump', $args);
+        $func ='jump';
     } else {
     //    die('bogus');
     //    return array('main', $args);
     }
-
+        return array($func, $args);
     // default : return nothing -> no short URL
     // (e.g. for multiple category selections)
 

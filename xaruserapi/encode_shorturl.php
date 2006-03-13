@@ -110,30 +110,26 @@ function julian_userapi_encode_shorturl($args)
 
         case 'viewevent':
             $path .= 'display/';
-      //      if(isset($cal_date) && !empty($cal_date)) $path .= $cal_date.'/';
             if(isset($event_id) && !empty($event_id)) $path .= $event_id.'.html';
             break;
         case 'export':
             $path .= 'export/';
-      //      if(isset($cal_date) && !empty($cal_date)) $path .= $cal_date.'/';
             if(isset($event_id) && !empty($event_id)) $path .= $event_id.'.html';
             break;
         case 'jump':
             $path .= 'jump/';
             if(isset($cal_date) && !empty($cal_date)) $path .= $cal_date;
-      //      if(isset($event_id) && !empty($event_id)) $path .= $event_id.'.html';
             break;
     }
 
     /* add some other module arguments as standard URL parameters */
     if (!empty($path)) {
+            $join = '&';
         if (isset($startnum)) {
             $path .= $join . 'startnum=' . $startnum;
-            $join = '&';
         }
         if (!empty($catid)) {
             $path .= $join . 'catid=' . $catid;
-            $join = '&';
         } elseif (!empty($cids) && count($cids) > 0) {
             if (!empty($andcids)) {
                 $catid = join('+', $cids);
@@ -141,7 +137,6 @@ function julian_userapi_encode_shorturl($args)
                 $catid = join('-', $cids);
             }
             $path .= $join . 'catid=' . $catid;
-            $join = '&';
         }
     }
 
