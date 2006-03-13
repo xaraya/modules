@@ -3,7 +3,7 @@
  * Hook for create Julian
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -73,7 +73,7 @@ function julian_userapi_createhook($args)
    // Give the summary (aka title) of event
    if (!xarVarFetch('event_summary', 'str:1:', $event_summary, xarML('Not Entered'), XARVAR_NOT_REQUIRED)) return;
     // start date
-   if (!xarVarFetch('event_month','str',$event_month,'')) return;
+   if (!xarVarFetch('event_month','int',$event_month,'')) return;
    if (!xarVarFetch('event_day',  'int',$event_day,  '')) return;
    if (!xarVarFetch('event_year', 'int',$event_year, '')) return;
 
@@ -93,8 +93,8 @@ function julian_userapi_createhook($args)
    if (!xarVarFetch('event_repeat','int', $event_repeat,0)) return;
 
     // recurrence 'every': frequency (number) and type (1=day, 2=week, 3=month, 4=year)
-   if (!xarVarFetch('event_repeat_every_freq', 'int', $event_repeat_every_freq,0)) return;    // database field: recur_freq
-   if (!xarVarFetch('event_repeat_every_type', 'int', $event_repeat_every_type,0)) return;    // database field: rrule
+   if (!xarVarFetch('event_repeat_freq', 'int', $event_repeat_every_freq,0)) return;    // database field: recur_freq
+   if (!xarVarFetch('event_repeat_freq_type', 'int', $event_repeat_freq_type,0)) return;    // database field: rrule
 
     // recurrence 'on': weekday, number in the month, interval (number of months)
    if (!xarVarFetch('event_repeat_on_day', 'int', $event_repeat_on_day,  0)) return; // database field: recur_count
@@ -156,7 +156,7 @@ function julian_userapi_createhook($args)
         case 2:
             // repeating every xth day every yth month
             $recur_freq = $event_repeat_on_freq;
-            $event_repeat_every_type = 3;
+            $event_repeat_freq_type = 3;
             break;
     }
 
@@ -183,7 +183,7 @@ function julian_userapi_createhook($args)
                                    $event_startdate,            // event start date/time
                                    $event_duration,             // event duration (hh:mm)
                                    $event_allday,               // event takes all day (0 = false, 1 = true)
-                                   $event_repeat_every_type,    // unit of repetition frequency (day, week, month, year)
+                                   $event_repeat_freq_type,     // unit of repetition frequency (day, week, month, year)
                                    $recur_freq,                 // repetition frequency
                                    $event_repeat_on_day,        // day of the week
                                    $event_repeat_on_num,        // month-based instance of weekday (1st, 2nd, ..., last=5)
@@ -225,7 +225,7 @@ function julian_userapi_createhook($args)
                                    $event_startdate,            // event start date/time
                                    $event_duration,             // event duration (hh:mm)
                                    $event_allday,               // event takes all day (0 = false, 1 = true)
-                                   $event_repeat_every_type,    // unit of repetition frequency (day, week, month, year)
+                                   $event_repeat_freq_type,    // unit of repetition frequency (day, week, month, year)
                                    $recur_freq,                 // repetition frequency
                                    $event_repeat_on_day,        // day of the week
                                    $event_repeat_on_num,        // month-based instance of weekday (1st, 2nd, ..., last=5)

@@ -61,7 +61,9 @@ function julian_userapi_getall($args)
     }
 
     if (!isset($startdate)) {
-        $startdate = date('Ymd');
+        $startdate = date('Y-m-d');
+    } else {
+        $startdate = date('Y-m-d',strtotime($startdate));
     }
 
     if (!isset($enddate)) {
@@ -80,7 +82,7 @@ function julian_userapi_getall($args)
     $units = array("1"=>"days","2"=>"weeks","3"=>"months","4"=>"years");
 
 
-    $startdate=date('Y-m-d',strtotime($startdate));
+
     if(!strcmp($enddate,"")) {
         // no enddate specified
         // set the end date to the start date for recurring events

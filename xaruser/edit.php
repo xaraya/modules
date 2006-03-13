@@ -95,8 +95,8 @@ function julian_user_edit()
 
     $data['event_id'] = $item['event_id'];
     $data['title'] = xarVarPrepForDisplay($item['summary']);
-    $data['month'] =  $month;
-    $data['day'] = $day;
+    $data['event_month'] =  $month;
+    $data['event_day'] = $day;
     $data['event_year'] = $year;
     $data['event_desc'] = xarVarPrepForDisplay($item['description']);
     $data['event_allday'] = $item['isallday'];

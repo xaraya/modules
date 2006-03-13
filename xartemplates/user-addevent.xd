@@ -145,12 +145,12 @@
                         #$hookoutput['categories']#
                     </div>
                     <div class="xar-form-input-wrapper">
-                        <label for="month" class="required xar-form-label">
+                        <label for="event_month" class="required xar-form-label">
                             <span class="help" title="#xarML('Date the event starts.')#">
                                 <xar:mlstring>Start Date:</xar:mlstring>
                             </span>
                         </label>
-                        <select name="month" title="#xarML('Event Date:Month')#" onchange="populateSelect(this, this.form.day, this.form.event_year)">
+                        <select name="event_month" title="#xarML('Event Date:Month')#" onchange="populateSelect(this, this.form.day, this.form.event_year)">
                             <option value=""></option>
                         <xar:for start="$i = 1" test="$i le 12" iter="$i++">
                             <xar:if condition="$i lt 10">
@@ -166,7 +166,7 @@
                             <option value="#$currMonth#" #$monthSelected#>#$currMonth_long#</option>
                         </xar:for>
                         </select>
-                        <select name="day" title="#xarML('Event Date:Day')#">
+                        <select name="event_day" title="#xarML('Event Date:Day')#">
                             <option value=""></option>
                         <xar:for start="$i = 1" test="$i le 31" iter="$i++">
                             <xar:if condition="$i lt 10">

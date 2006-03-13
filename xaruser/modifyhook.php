@@ -88,9 +88,9 @@ function julian_user_modifyhook($args)
     $data['event_repeat_on_freq'] = '';  // frequency (every x months)
 
     // start date and time
-   $data['event_year'] ='';
-   $data['event_month'] ='';
-   $data['event_day'] = '';
+ //  $data['event_year'] ='';
+ //  $data['event_month'] ='';
+ //  $data['event_day'] = '';
    $data['event_endyear'] ='';
    $data['event_endmonth'] ='';
    $data['event_endday'] = '';
@@ -101,9 +101,13 @@ function julian_user_modifyhook($args)
    $data['dur_minute_options'] = '';
 
     // start time
-   list($hour, $minute) = explode(":",date("h:i",$event_startdate));
+ //  list($hour, $minute) = explode(":",date("h:i",$event_startdate));
 
-
+    $item = xarModAPIFunc('julian', 'user', 'gethooked', array('modid' => $modid, 'itemtype' => $itemtype, 'objectid' => $objectid));
+    if(empty($item)) {
+        return "error";
+    }
+    /*
    // Load up database
    $dbconn =& xarDBGetConn();
    $xartable =& xarDBGetTables();
@@ -133,7 +137,7 @@ function julian_user_modifyhook($args)
             if ($edit_obj->rrule==3 && $edit_obj->recur_count && $edit_obj->recur_interval && $edit_obj->recur_freq)
                 $data['event_repeat'] = 2;
             else if ($edit_obj->rrule && $edit_obj->recur_freq)
-               $data['event_repeat'] = 1;
+                $data['event_repeat'] = 1;
 
             //Depending on which recurrence rule was used, set the appropriate form fields.
             switch ($data['event_repeat']) {
@@ -149,23 +153,19 @@ function julian_user_modifyhook($args)
             }
 
             $result->Close();
-        }
-        else {
+        } else {
             return xarTplModule('julian','user','edithook',$data);
             // ERROR: no link to this object was found!!!
         }
-    }
-    else {
+    } else {
         return xarTplModule('julian','user','edithook',$data);
         // ERROR: no link to this object was found!!!
     }
 
+
     // start date
    list($data['event_year'],   $data['event_month'],   $data['event_day'])    = explode("-",date("Y-m-d",$event_startdate));
    list($data['event_endyear'],$data['event_endmonth'],$data['event_endday']) = explode("-",date("Y-m-d",$event_enddate));
-
-    // start time
-   list($hour, $minute) = explode(":",date("h:i",$event_startdate));
 
    //Building start hour options
    $start_hour_options = '';
@@ -235,6 +235,229 @@ function julian_user_modifyhook($args)
     $data['dur_minute_options'] = $dur_minute_options;
 
  //   $data['summary'] = $summary;
+*/
+// Options for include template
+
+    /*
+    if($item['recur_until']) {
+       // End date and time
+       // determine the end date for a recurring event
+       // TODO: With the new get.php this should be rewritten
+       list($event_endyear,$event_endmonth,$event_endday) = explode("-",$item['recur_until']);
+    }
+*/
+    // start date
+   list($data['event_year'],  $data['event_month'],   $data['event_day'])    = explode("-",date("Y-m-d",strtotime($item['dtstart'])));
+   list($event_endyear,$event_endmonth,$event_endday) = explode("-",date("Y-m-d",$item['event_enddate']));
+    //Date time from item
+    //setting start date time variables
+    // $item['event_starttime'] = date("g:i A",$event_startdate);
+    $hour = date("h",strtotime($item['event_starttime'])); //12 hour format
+    $ampm = !strcmp(date("a",strtotime($item['event_starttime'])),"am")?0:1;
+    $minute = date("i",strtotime($item['event_starttime']));
+    /*
+    list($year,$month,$day) = explode("-",date("Y-m-d",strtotime($item['dtstart'])));
+    //set the start date parts in the data array
+    $data['todays_month'] = $month;
+    $data['todays_year'] = $year;
+    $data['todays_day'] = $day;
+*/
+    // If there is not a duration, set dur_hours and dur_minutes.
+    // list($item['event_dur_hours'], $item['event_dur_minutes']) = explode(':',$edit_obj->duration);
+    // Default for both is empty string.
+    $dur_hours = '';
+    $dur_minutes = '';
+    if(!empty($item['event_dur_hours'])){
+        $dur_hours = $item['event_dur_hours'];
+        $dur_minutes = $item['event_dur_minutes'];
+    }
+/*
+            //Checking to see which repeating rule was used so the event_repeat can be set.
+            if ($edit_obj->rrule==3 && $edit_obj->recur_count && $edit_obj->recur_interval && $edit_obj->recur_freq) {
+                $item['event_repeat'] = 2;
+            } else if ($edit_obj->rrule && $edit_obj->recur_freq) {
+               $item['event_repeat'] = 1;
+            } else {
+                $item['event_repeat'] = 0;
+            }
+
+            //Depending on which recurrence rule was used, set the appropriate form fields.
+            switch ($item['event_repeat']) {
+                case 1:
+                    $item['event_repeat_every_freq'] = $edit_obj->recur_freq;  // time unit (1=day, 2=week, 3=month, 4=year)
+                    $item['event_repeat_every_type'] = $edit_obj->rrule;       // every n time units
+                    break;
+                case 2:
+                    $item['event_repeat_on_day'] = $edit_obj->recur_count;     // day of the week (mon-sun)
+                    $item['event_repeat_on_num'] = $edit_obj->recur_interval;  // instance within month (1=1st, 2=2nd, ..., 5=last)
+                    $item['event_repeat_on_freq'] = $edit_obj->recur_freq;     // every n months
+
+
+*/
+    //Checking to see which repeating rule was used so the event_repeat can be set.
+    $event_repeat = $item['event_repeat'];
+/**/
+    //Depending on which rule was used, set the appropriate frequency field to the db value.
+    $data['event_repeat_on_freq'] = '';
+    $data['event_repeat_freq'] = '';
+    if ($event_repeat == 1) {// event repeats every
+      $data['event_repeat_freq'] = $item['recur_freq'];
+    } else if ($event_repeat == 2) {// event repeats on
+      $data['event_repeat_on_freq'] = $item['recur_freq'];
+    }
+    $data['event_summary'] = $item['event_summary'];
+  //  $data['event_month'] =  $data['todays_month'];
+  //  $data['event_day'] = $data['todays_day'];
+  //  $data['event_year'] = $data['todays_year'];
+    $data['event_allday'] = $item['event_allday'];
+    $data['event_starttimeh'] = $hour;
+    $data['event_starttimem'] = $minute;
+    $data['event_startampm'] = $ampm;
+    $data['event_dur_hours'] = $dur_hours;
+    $data['event_dur_minutes'] = $dur_minutes;
+
+    $data['event_repeat'] = $item['event_repeat'];
+    $data['event_repeat_freq_type'] = $item['event_repeat_every_type'];
+    $data['event_endmonth'] = $event_endmonth;
+    $data['event_endday'] = $event_endday;
+    $data['event_endyear'] = $event_endyear;
+    $data['event_repeat_on_day'] = $item['event_repeat_on_day'];
+    $data['event_repeat_on_num'] = $item['event_repeat_on_num'];
+
+    // Determining which end date radio to check. 0 index indicates this event has an end date and 1 index means it does not
+    // event_repeat tells the type of repeat
+    $event_endtype_checked[0] = '';
+    $event_endtype_checked[1] = 'checked';
+    if (($event_endyear > 0) && ($item['event_repeat'] > 0)) {
+        $event_endtype_checked[0] = 'checked';
+        $event_endtype_checked[1] = '';
+    }
+    $data['event_endtype_checked'] = $event_endtype_checked;
+
+    //determine if this is there is an enddate present
+    $data['enddatedisabled'] = 'disabled';
+    if ($item['event_repeat'] > 0) {
+        $data['enddatedisabled'] = '';
+    }
+
+  //  $data['cal_date'] = $cal_date;
+
+    //Building start hour options
+    $start_hour_options = '';
+    for($i = 1;$i <= 12; $i++) {
+        $j = str_pad($i,2,"0",STR_PAD_LEFT);
+        $start_hour_options.='<option value="'.$i.'"';
+        if ($i == $hour)
+            $start_hour_options.= " SELECTED";
+        $start_hour_options.='>'.$j.'</option>';
+    }
+    $data['start_hour_options'] = $start_hour_options;
+
+    // Building duration minute options
+    // Get the interval
+    $StartMinInterval = xarModGetVar('julian', 'StartMinInterval');
+    if ($StartMinInterval == 1) {
+        $sminend = 60;
+    } elseif ($StartMinInterval == 5) {
+        $sminend = 56;
+    } elseif ($StartMinInterval == 10) {
+        $sminend = 51;
+    } elseif ($StartMinInterval == 15) {
+        $sminend = 46;
+    }
+
+   //Building start minute options
+   $start_minute_options = '';
+   for($i = 0;$i < $sminend; $i = $i + $StartMinInterval) {
+     $j = str_pad($i,2,"0",STR_PAD_LEFT);
+     $start_minute_options.='<option value="'.$i.'"';
+     if ($i == $minute) {
+       $start_minute_options.= " selected";
+    }
+     $start_minute_options.='>'.$j.'</option>';
+   }
+   $data['start_minute_options'] = $start_minute_options;
+
+   //Building duration hour options
+   $dur_hour_options = '';
+   for($i = 0;$i <= 24; $i++)
+   {
+     $j = str_pad($i,2,"0",STR_PAD_LEFT);
+     $dur_hour_options.='<option value="'.$i.'"';
+     if ($i == $dur_hours)
+        $dur_hour_options.= " selected";
+     $dur_hour_options.='>'.$j.'</option>';
+   }
+   $data['dur_hour_options'] = $dur_hour_options;
+
+    // Building duration minute options
+    // Get the interval
+    $DurMinInterval = xarModGetVar('julian', 'DurMinInterval');
+    if ($DurMinInterval == 1) {
+        $minend = 60;
+    } elseif ($DurMinInterval == 5) {
+        $minend = 56;
+    } elseif ($DurMinInterval == 10) {
+        $minend = 51;
+    } elseif ($DurMinInterval == 15) {
+        $minend = 46;
+    }
+
+    $dur_minute_options = '';
+    //for($i = 0;$i < 46; $i = $i + 15)
+    for($i = 0;$i < $minend; $i = $i + $DurMinInterval) {
+        $j = str_pad($i,2,"0",STR_PAD_LEFT);
+        $dur_minute_options.='<option value="'.$j.'"';
+        if ($i == $dur_minutes) {
+        $dur_minute_options.= " selected";
+        }
+     $dur_minute_options.='>'.$j.'</option>';
+    }
+    $data['dur_minute_options'] = $dur_minute_options;
+
+   //Setting event repeat selection
+   for ($i = 0; $i < 3; $i++) {
+     $data['event_repeat_checked'][$i] = '';
+   }
+   $data['event_repeat_checked'][$event_repeat] = "checked";
+
+   //Setting freq type selection (days,weeks,months,years)
+   for ($i = 1; $i < 5; $i++) {
+     $data['freq_type_selected'][$i] = '';
+     if ($item['event_repeat_every_type'] == $i) {
+         $data['freq_type_selected'][$i] = 'selected';
+     }
+   }
+
+   //Show rrule only if the first repeating option was selected (2nd radio button) - every
+   if ($event_repeat == 1) {
+     $data['freq_type_selected']['rrule'] = 'selected';
+   }
+
+   //Setting repeat on num selection
+   for ($i = 1; $i < 6; $i++) {
+     $data['repeat_on_num_selected'][$i] = '';
+     if ($item['event_repeat_on_num'] == $i) {
+         $data['repeat_on_num_selected'][$i] = 'selected';
+     }
+   }
+
+   //Setting repeat on day selection
+   for ($i = 1; $i < 8; $i++) {
+     $data['repeat_on_day_selection'][$i] = '';
+     if ($item['event_repeat_on_day'] == $i) {
+         $data['repeat_on_day_selection'][$i] = 'selected';
+     }
+   }
+
+   //Setting allday checked
+   $data['allday_checked'][0] = '';
+   $data['allday_checked'][1] = 'checked';
+   if ($item['event_allday'] == 1) {
+     $data['allday_checked'][0] = 'checked';
+     $data['allday_checked'][1] = '';
+   }
+
 
     return xarTplModule('julian','user','edithook',$data);
 }

@@ -22,6 +22,7 @@
  * @author Jorn
  * @param  $args ['objectid'] id of item to get
  * @param  $args ['modid'] module id
+ * @param int itemtype
  * @return array item array, or false on failure
  * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  * @since May 2005
@@ -70,6 +71,7 @@ function julian_userapi_gethooked($args)
             // Start/end date (and time)
             $event_startdate = strtotime($edit_obj->dtstart);
             $event_enddate   = strtotime($edit_obj->recur_until);
+            $item['dtstart'] = $edit_obj->dtstart;
 
             $item['event_startdate'] = date("F j, Y",$event_startdate);// TODO: use xar Locale formatting
             $item['event_starttime'] = date("g:i A",$event_startdate);
@@ -82,12 +84,16 @@ function julian_userapi_gethooked($args)
             if (strcmp($edit_obj->duration,'')!=0) {
                 list($item['event_dur_hours'], $item['event_dur_minutes']) = explode(':',$edit_obj->duration);
             }
-
+            $item['event_repeat_every_freq'] = '';  // time unit (1=day, 2=week, 3=month, 4=year)
+            $item['event_repeat_every_type'] = '';
+            $item['event_repeat_on_day'] = '';     // day of the week (mon-sun)
+            $item['event_repeat_on_num'] = '';  // instance within month (1=1st, 2=2nd, ..., 5=last)
+            $item['event_repeat_on_freq'] ='';
             //Checking to see which repeating rule was used so the event_repeat can be set.
             if ($edit_obj->rrule==3 && $edit_obj->recur_count && $edit_obj->recur_interval && $edit_obj->recur_freq) {
                 $item['event_repeat'] = 2;
             } else if ($edit_obj->rrule && $edit_obj->recur_freq) {
-               $item['event_repeat'] = 1;
+                $item['event_repeat'] = 1;
             } else {
                 $item['event_repeat'] = 0;
             }
@@ -104,7 +110,8 @@ function julian_userapi_gethooked($args)
                     $item['event_repeat_on_freq'] = $edit_obj->recur_freq;     // every n months
                     break;
             }
-
+            $item['recur_until'] = $edit_obj->recur_until;
+            $item['recur_freq'] = $edit_obj->recur_freq;
             $result->Close();
         } else {
             return false;

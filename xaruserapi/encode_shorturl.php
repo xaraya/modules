@@ -107,7 +107,10 @@ function julian_userapi_encode_shorturl($args)
             $path .= 'edit/';
             if(isset($event_id) && !empty($event_id)) $path .= $event_id.'.html';
             break;
-
+        case 'updateevent':
+            $path .= 'updateevent/';
+            if(isset($event_id) && !empty($event_id)) $path .= $event_id.'.html';
+            break;
         case 'viewevent':
             $path .= 'display/';
             if(isset($event_id) && !empty($event_id)) $path .= $event_id.'.html';

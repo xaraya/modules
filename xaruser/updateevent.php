@@ -15,7 +15,7 @@
  * Create or update an event
  *
  * @author  Jodie Razdrh/John Kevlin/David St.Clair
- * @author  MichelV <michelv@xarayahosting.nl>
+ * @author  MichelV <michelv@xaraya.com>
  * @author  Zsolt for PostGres compatability
  * @access  public
  * @param   array event data
@@ -35,9 +35,9 @@ function julian_user_updateevent()
    if (!xarVarFetch('id',               'id',       $id,            $id, XARVAR_NOT_REQUIRED)) return;
    if (!xarVarFetch('cal_sdow',         'int:0:6',  $cal_sdow,      0, XARVAR_NOT_REQUIRED)) return;
    if (!xarVarFetch('title',            'str:1:',   $summary,       '')) return;
-   if (!xarVarFetch('month',            'str:1:',   $month,         '')) return;
-   if (!xarVarFetch('day',              'int',      $day,           '')) return;
-   if (!xarVarFetch('event_year',       'int',      $year,          '')) return;
+   if (!xarVarFetch('event_month',      'int:1:',   $event_month,   0)) return;
+   if (!xarVarFetch('event_day',        'int',      $event_day,     0)) return;
+   if (!xarVarFetch('event_year',       'int',      $event_year,    0)) return;
    if (!xarVarFetch('event_desc',       'str:1:',   $description,   '', XARVAR_NOT_REQUIRED)) return;
    if (!xarVarFetch('event_allday',     'int:1:',   $event_allday,  0, XARVAR_NOT_REQUIRED)) return;
    if (!xarVarFetch('event_starttimeh', 'int',      $event_starttimeh,0, XARVAR_NOT_REQUIRED)) return;
@@ -72,16 +72,16 @@ function julian_user_updateevent()
    if (!xarVarFetch('class',            'int:1:',   $class,         0, XARVAR_NOT_REQUIRED)) return;
    if (!xarVarFetch('share_uids',       'array',    $share_uids,    array(), XARVAR_NOT_REQUIRED)) return;
 
-   if(strcmp($id,"")) {
-    if (!xarSecurityCheck('EditJulian', 1, 'Item')) {
-        return;
-    }
-   } else {
+    if(strcmp($id,"")) {
+        if (!xarSecurityCheck('EditJulian', 1, 'Item')) {
+            return;
+        }
+    } else {
     // Event doesn't exist yet. Create one
-       if (!xarSecurityCheck('AddJulian', 1, 'Item')) { // TODO: improve
+        if (!xarSecurityCheck('AddJulian', 1, 'Item')) { // TODO: improve
            return;
-       }
-   }
+        }
+    }
     // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) return;
 
@@ -95,7 +95,7 @@ function julian_user_updateevent()
    if(!empty($share_uids)) {
       $share=implode(",",$share_uids);
    }
-   $eventstartdate = $year."-".$month."-".$day;
+   $eventstartdate = $event_year."-".$event_month."-".$event_day;
    //if this is a recurring event, determine the start date based on the recur type and the selected start date by the user.
    //Otherwise, the start date is the one selected by the user.
    if($recur_freq1>0) {

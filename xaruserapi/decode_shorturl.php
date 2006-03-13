@@ -43,7 +43,7 @@ function julian_userapi_decode_shorturl($params)
         $aliasname = xarModGetVar('julian','aliasname');
     }
     if(empty($params[1])) {
- 'main';
+        $func='main';
     } elseif($params[1] == 'day') {
         // if we have a 2nd parameter see if it's a date or username
         if(!empty($params[2])) {
@@ -126,6 +126,15 @@ function julian_userapi_decode_shorturl($params)
             }
         }
         $func ='edit';
+    } elseif($params[1] == 'updateevent') {
+        // if we have a 2nd parameter it should be an event id
+        if(!empty($params[2])) {
+            // just make sure it's a valid eid
+            if(preg_match('/^(\d+)\.html$/',$params[2],$matches)) {
+                $args['event_id'] = $matches[1];
+            }
+        }
+        $func ='updateevent';
     } elseif($params[1] == 'viewevents') {
         // if we have a 2nd parameter it should be a date
         if(!empty($params[2])) {
