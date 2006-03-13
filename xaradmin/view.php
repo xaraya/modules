@@ -40,14 +40,22 @@ function lists_admin_view()
     // D View a list item, in context           [tid=?] [lid=?] iid=?
 
     // Get all list types regardless.
+    $types = array();
     $types = xarModAPIfunc('lists', 'user', 'getlisttypes', array('typekey'=>'id'));
+    $data = array();
+    $data['mode'] = $mode;
+    $data['urlnew'] = xarModURL('lists','admin','view',array('mode'=>'new')); // New list type
+/*
+    if (empty($types)) {
+        return $data;
+    }
+*/
     foreach($types as $key => $looptype) {
         $types[$key]['urledit'] = xarModURL('lists','admin','view',array('tid'=>$looptype['tid'], 'mode'=>'modify'));
         $types[$key]['urlview'] = xarModURL('lists','admin','view',array('tid'=>$looptype['tid']));
         $types[$key]['urlnew'] = xarModURL('lists','admin','view',array('tid'=>$looptype['tid'], 'mode'=>'new')); // New list
     }
-    $data['types'] =& $types;
-    $data['urlnew'] = xarModURL('lists','admin','view',array('mode'=>'new')); // New list type
+    $data['types'] = $types;
 
     // Get the lid if only an iid has been specified.
     if (empty($lid) && !empty($iid)) {
@@ -134,9 +142,8 @@ function lists_admin_view()
     $data['iid'] = $iid;
 
 
-    /***********************************************
-     * Now we can start processing submitted forms *
-     ***********************************************/
+    // Now we can start processing submitted forms *
+
 
     if ($mode != 'view') {
         $success = true;
@@ -418,6 +425,7 @@ function lists_admin_view()
     $data['batch'] = !empty($batch) ? $batch : NULL;
 
     return $data;
+
 }
 
 ?>

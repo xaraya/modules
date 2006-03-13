@@ -1,6 +1,6 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
-<xar:style scope="module" module="lists" file="lists" />
+<xar:style scope="module" />
 <xar:base-include-javascript module="base" filename="confirmlink.js" />
 
 <xar:if condition="empty($tid) and empty($lid)">
@@ -20,8 +20,6 @@
     <h2><xar:mlstring>Lists Overview</xar:mlstring> - #$title#</h2>
     <div class="xar-mod-lists-view" style="margin: auto;">
 
-        <xar:comment><xar:set name="dummy">var_dump($alllists)</xar:set></xar:comment>
-
         <xar:set name="label_view_list_types"><xar:mlstring>View list types</xar:mlstring></xar:set>
         <xar:set name="label_view_lists"><xar:mlstring>View lists</xar:mlstring></xar:set>
         <xar:set name="label_view_list_items"><xar:mlstring>View list items</xar:mlstring></xar:set>
@@ -37,8 +35,6 @@
         <xar:set name="label_delete_list_type"><xar:mlstring>Delete list type</xar:mlstring></xar:set>
         <xar:set name="label_delete_list"><xar:mlstring>Delete list</xar:mlstring></xar:set>
         <xar:set name="label_delete_list_item"><xar:mlstring>Delete list item</xar:mlstring></xar:set>
-
-
 
         <xar:comment>
             Top level: no tid and no lid
@@ -353,7 +349,6 @@
                 </li>
             </ul>
         </xar:if>
-
 
         <!-- add the pager here -->
         <xar:comment>#$pager#</xar:comment>

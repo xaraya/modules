@@ -3,7 +3,7 @@
  * Get all list types
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -11,7 +11,6 @@
  * @link http://xaraya.com/index.php/release/46.html
  * @author Jason Judge
  */
-
 /**
  * Get the list types.
  *
@@ -20,7 +19,7 @@
  * @returns array
  * @param $args['tid'] type id (optional)
  * @param $args['type_name'] type name (optional)
- * @param $args['typekey'] key for the type list [id]|name|index (optional)
+ * @param $args['typekey'] key for the type list [id|name|index] (optional)
  * @return array of links, or false on failure
  */
 function lists_userapi_getlisttypes($args)
@@ -80,7 +79,9 @@ function lists_userapi_getlisttypes($args)
         . (!empty($where) ? ' AND ' . $where : '');
 
     $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1, $bind);
-    if (!$result) {return;}
+    if (!$result) {
+        return $types;
+    }
 
     for (; !$result->EOF; $result->MoveNext()) {
         list(
