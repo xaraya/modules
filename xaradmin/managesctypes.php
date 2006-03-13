@@ -63,7 +63,7 @@ function sitecontact_admin_managesctypes()
                 'webconfirmtext' => $webconfirmtext,
                 'notetouser'     => $notetouser,
                 'allowcopy'      => (int)$allowcopy,
-                'userhtmlemail'  => (int)$usehtmlemail,
+                'usehtmlemail'  => (int)$usehtmlemail,
                 'scdefaultemail' => $scdefaultemail,
                 'scdefaultname'  => $scdefaultname,
                 'scactive'       => (int)$scactive,
@@ -188,7 +188,7 @@ function sitecontact_admin_managesctypes()
                         'webconfirmtext' => xarModGetVar('sitecontact','webconfirmtext'),
                         'notetouser'     => xarModGetVar('sitecontact','notetouser'),
                         'allowcopy'      => xarModGetVar('sitecontact','allowcopy'),
-                        'userhtmlemail'  => xarModGetVar('sitecontact','usehtmlemail'),
+                        'usehtmlemail'  => xarModGetVar('sitecontact','usehtmlemail'),
                         'scdefaultemail' => xarModGetVar('sitecontact','scdefaultemail'),
                         'scdefaultname'  => xarModGetVar('sitecontact','scdefaultname'),
                         'formisactive'   => (xarModGetVar('sitecontact', 'scactive') ? 'checked' : '')

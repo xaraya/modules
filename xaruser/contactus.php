@@ -336,7 +336,9 @@ function sitecontact_user_contactus($args)
         if (!xarModAPIFunc('mail','admin','sendhtmlmail', $args))return;
     }
     if (isset($attachpath) && !empty($attachpath)){
-        unlink("{$attachpath}");
+        if (file_exists($attachpath)) {
+            unlink("{$attachpath}");
+        }
     }
     /* Set the theme comments back */
     xarModSetVar('themes','ShowTemplates',$themecomments);
