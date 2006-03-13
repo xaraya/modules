@@ -3,11 +3,12 @@
  * The main administration function
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Surveys Module
+ * @link http://xaraya.com/index.php/release/45.html
  */
 
 /**
@@ -26,24 +27,9 @@ function surveys_admin_main()
 {
     /* Security check */
     if (!xarSecurityCheck('EditSurvey')) return;
-    /* The admin system looks for a var to be set to skip the introduction
-     * page altogether.  This allows you to add sparse documentation about the
-     * module, and allow the site admins to turn it on and off as they see fit.
+    /* redirect to most important function
      */
-    if (xarModGetVar('adminpanels', 'overview') == 0) {
-
-        /* Initialise the $data variable that will hold the data
-         */
-        $data = xarModAPIFunc('surveys', 'admin', 'menu');
-
-        return $data;
-
-    } else {
-        /* If the Overview documentation is turned off, then we just return the view page,
-         * or whatever function seems to be the most fitting.
-         */
-        xarResponseRedirect(xarModURL('surveys', 'admin', 'viewusersurveys'));
-    }
+    xarResponseRedirect(xarModURL('surveys', 'admin', 'viewusersurveys'));
     /* success so return true */
     return true;
 }

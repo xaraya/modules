@@ -3,15 +3,16 @@
  * Surveys initialization functions
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage surveys
+ * @link http://xaraya.com/index.php/release/45.html
  * @author Jason Judge
  */
 $modversion['name']           = 'Surveys';
-$modversion['id']             = '45';//'1706';
+$modversion['id']             = '45';
 $modversion['version']        = '0.1.0';
 $modversion['description']    = 'Manage and run complex surveys';
 $modversion['credits']        = 'xardocs/credits.txt';

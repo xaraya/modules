@@ -3,19 +3,21 @@
  * Surveys initialization functions
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Surveys module
+ * @link http://xaraya.com/index.php/release/45.html
  * @author Jason Judge
  */
 /**
  * Initialise the surveys module.
  * @author Surveys module development team
  * @author MichelV <michelv@xarayahosting.nl>
+ * @param none
+ * @return bool true on success
  */
-
 function surveys_init()
 {
     /*
