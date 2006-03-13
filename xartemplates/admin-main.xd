@@ -114,6 +114,17 @@
             You can customize the dynamic data output in the respective user display templates, and the email templates. It is recommended you copy the default system template and edit that, so you can see how the dynamic data is added in the template. You can also <strong>remove</strong> fields that you do not want displayed by editing the templates, or retemplate their output. Who said simple modules aren't powerful :)
             </xar:mlstring></li>
         </ol>
+    <h3><xar:mlstring>Adding An Attachment</xar:mlstring></h3>
+    <p><xar:mlstring>You can add a Dynamic Data field to your form to allow users to add an Attachment to their email. To do:</xar:mlstring></p>
+    <ol>
+        <li><xar:mlstring>Make sure you <strong>do</strong> have Dynamic Data hooked, but <strong>do not</strong> have the Uploads module hooked to your Site contact form</xar:mlstring></li>
+        <li><xar:mlstring>Add a Dynamic Data property of type <strong>File Upload</strong> to your form. This will provide the attachment field.</xar:mlstring></li>
+        <li><xar:mlstring>Once you add and save the DD field, ensure you set the Validation for this File Upload field type. Add something like:
+        </xar:mlstring><code>var/uploads/resumes;(doc|jpg|tar.gz|zip);1000000</code> <xar:mlstring>In this example the attachment will be temporarily uploaded to the <strong>var/uploads/resume</strong> directory but deleted once the email has been sent. Make sure this temporary upload directory is writeable.</xar:mlstring></li>
+
+    </ol>
+
+
     <h3>
         <xar:mlstring>Included Blocks</xar:mlstring>
     </h3>
