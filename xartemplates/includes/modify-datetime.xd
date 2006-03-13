@@ -53,7 +53,6 @@
         </select>
     </div>
 
-
     <div class="xar-form-input-wrapper">
         <label class="required xar-form-label" title="#xarML('Duration of event: all day or partial.')#">
             <xar:mlstring>Event Duration</xar:mlstring>

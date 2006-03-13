@@ -18,18 +18,17 @@
  * Then offer a form that will allow the user to edit the event
  *
  * @copyright (C) 2004 by Metrostat Technologies, Inc.
- * @author Jodie Razdrh/John Kevlin/David St.Clair
+ * @author  Jodie Razdrh/John Kevlin/David St.Clair
  * @author  MichelV <Michelv@xaraya.com>
  * @access  public
  * @param   int id ID of the event to get or
- * @param int objectid ID of standard object to get OPTIONAL
+ * @param   int objectid ID of standard object to get OPTIONAL
  * @return  array $item
  * @throws  BAD_PARAM list of exception identifiers which can be thrown
  * @todo    Michel V. <1> Clean up
  */
 function julian_user_edit()
 {
-
     if (!xarVarFetch('event_id', 'id',   $event_id)) return;
     if (!xarVarFetch('objectid', 'id',   $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
     // This is the var to set the first day of the week
