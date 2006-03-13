@@ -421,4 +421,6 @@ Fix bug 5384 regarding date formatting in calevent block
 Fix bug 5361 Use more Postgres friendly queries
 0.4.2
 Add category selector for blocks
-
+0.4.3
+Add choice for short urls
+The functions are now checked and should all have a working short url version

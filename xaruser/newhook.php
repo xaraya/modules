@@ -115,14 +115,46 @@ function julian_user_newhook($args)
     $data['event_repeat'] = 0;
 
     // Repeat-every defaults.
-    $data['event_repeat_every_type'] = 0;    // frequency unit (day=1, week=2, month=3, year=4)
-    $data['event_repeat_every_freq'] = '';    // frequency (every x time units)
+    $data['event_repeat'] = 0;    // frequency unit (day=1, week=2, month=3, year=4)
+    $data['event_repeat_freq'] = '';    // frequency (every x time units)
 
     // Repeat-on defaults
     $data['event_repeat_on_day'] = 0;    // day of the week
     $data['event_repeat_on_num'] = 0;    // instance within month (1st, 2nd, ..., last=5)
     $data['event_repeat_on_freq'] = '';    // frequency (every x months)
 
+   //Setting freq type selection (days,weeks,months,years)
+   for ($i = 1; $i < 5; $i++) {
+     $data['freq_type_selected'][$i] = '';
+   }
+     $data['freq_type_selected'][1] = 'selected';
+
+   //Setting repeat on num selection
+   for ($i = 1; $i < 6; $i++) {
+     $data['repeat_on_num_selected'][$i] = '';
+   }
+ //  $data['repeat_on_num_selected'][$i] = 'selected';
+   //Setting allday checked
+   $data['allday_checked'][0] = '';
+   $data['allday_checked'][1] = 'checked';
+   //Setting repeat on day selection
+   for ($i = 1; $i < 8; $i++) {
+     $data['repeat_on_day_selection'][$i] = '';
+   }
+   //Setting event repeat selection
+   for ($i = 0; $i < 3; $i++) {
+     $data['event_repeat_checked'][$i] = '';
+   }
+   $data['event_repeat_checked'][0] = "checked";
+
+    // Determining which end date radio to check. 0 index indicates this event has an end date and 1 index means it does not
+    // event_repeat tells the type of repeat
+    $event_endtype_checked[0] = '';
+    $event_endtype_checked[1] = 'checked';
+    $data['event_endtype_checked'] = $event_endtype_checked;
+
+    //determine if this is there is an enddate present
+    $data['enddatedisabled'] = 'disabled';
     return xarTplModule('julian','user','edithook',$data);
 }
 

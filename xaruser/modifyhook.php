@@ -296,7 +296,7 @@ function julian_user_modifyhook($args)
 */
     //Checking to see which repeating rule was used so the event_repeat can be set.
     $event_repeat = $item['event_repeat'];
-/**/
+
     //Depending on which rule was used, set the appropriate frequency field to the db value.
     $data['event_repeat_on_freq'] = '';
     $data['event_repeat_freq'] = '';
