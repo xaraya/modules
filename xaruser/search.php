@@ -1,6 +1,16 @@
 <?php
-
-
+/**
+ * Comments module - Allows users to post comments on items
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Comments Module
+ * @link http://xaraya.com/index.php/release/14.html
+ * @author Carl P. Corliss <rabbitt@xaraya.com>
+ */
 /**
  * Searches all -active- comments based on a set criteria
  *
@@ -8,16 +18,14 @@
  * @access private
  * @returns mixed description of return
  */
-function comments_user_search( $args ) 
+function comments_user_search( $args )
 {
-
     if(!xarVarFetch('startnum', 'isset', $startnum,  NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('header',   'isset', $header,    NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('q',        'isset', $q,         NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('bool',     'isset', $bool,      NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('sort',     'isset', $sort,      NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('author',   'isset', $author,    NULL, XARVAR_DONT_SET)) {return;}
-
 
     $postinfo   = array('q' => $q, 'author' => $author);
     $data       = array();
@@ -67,33 +75,17 @@ function comments_user_search( $args )
     if (isset($header['author'])) {
         $postinfo['header[author]'] = 1;
         $header['author'] = 1;
-
         // need to get the user's uid from the name
-        // FIXME:  this should be an api function in the roles module
-        $dbconn =& xarDBGetConn();
-        $xartable =& xarDBGetTables();
+        // MichelV: Using the official shortcut now
+        $roles = new xarRoles();
+        $user = $roles->ufindRole($author);
 
-        // Get user information
-        $rolestable = $xartable['roles'];
-        $query = "SELECT xar_uid FROM $rolestable
-                  WHERE xar_uname = ?";
-        $result =& $dbconn->Execute($query,array($author));
-        if (!$result) return;
-
-        // if we found the uid add it to the search list,
-        // otherwise we won't bother searching for it
-        if (!$result->EOF) {
-            $uids = $result->fields;
-            $search['uid'] = $uids[0];
-            $search['author'] = $author;
-        }
-
-        $result->Close();
+        $search['uid'] = $user;
+        $search['author'] = $author;
     } else {
         $postinfo['header[author]'] = 0;
         $header['author'] = 0;
     }
-
 
     $package['comments'] = xarModAPIFunc('comments', 'user', 'search', $search);
 
