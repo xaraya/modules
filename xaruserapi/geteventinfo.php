@@ -19,9 +19,9 @@
  * @author Jorn, MichelV <michelv@xaraya.com>
  *
  * @param id  iid id of hooked item (in hooking module, e.g. an article id)
- * @param itemtype: type of hooked item
- * @param modid:    id of hooking module
- * @param event:    current event data
+ * @param int itemtype: type of hooked item
+ * @param int modid:    id of hooking module
+ * @return array event: current event data
  */
 function julian_userapi_geteventinfo($args)
 {
@@ -51,16 +51,16 @@ function julian_userapi_geteventinfo($args)
 
      */
     $event =array();
+
     $event['viewUrl']='';
     $event['event_summary']='';
     $event['description'] = '';
-   // $event['artstatus'] = 1;
+
+    // For articles
     $field = 'title';
     $item = xarModApiFunc($modname,'user','getitemlinks',array('itemids'=> array($iid),'field'=> $field));
     // Check the output
-    if (empty($item[$iid]['url'])) {
-        return array();
-    } else {
+    if (!empty($item)) {
         $event['viewURL'] = $item[$iid]['url'];
         $event['event_summary'] = $item[$iid]['title'];
         if (!empty($item[$iid]['label'])) {

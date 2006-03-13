@@ -125,19 +125,24 @@ function julian_userapi_encode_shorturl($args)
             break;
     }
 
-    if(!empty($path) && isset($cal_sdow)) {
-        $join = empty($extra) ? '?' : '&amp;';
-        $extra .= $join . 'cal_sdow=' . $cal_sdow;
-    }
-
-    if(!empty($path) && isset($cal_category)) {
-        $join = empty($extra) ? '?' : '&amp;';
-        $extra .= $join . 'cal_category=' . $cal_category;
-    }
-
-    if(!empty($path) && isset($cal_topic)) {
-        $join = empty($extra) ? '?' : '&amp;';
-        $extra .= $join . 'cal_topic=' . $cal_topic;
+    /* add some other module arguments as standard URL parameters */
+    if (!empty($path)) {
+        if (isset($startnum)) {
+            $path .= $join . 'startnum=' . $startnum;
+            $join = '&';
+        }
+        if (!empty($catid)) {
+            $path .= $join . 'catid=' . $catid;
+            $join = '&';
+        } elseif (!empty($cids) && count($cids) > 0) {
+            if (!empty($andcids)) {
+                $catid = join('+', $cids);
+            } else {
+                $catid = join('-', $cids);
+            }
+            $path .= $join . 'catid=' . $catid;
+            $join = '&';
+        }
     }
 
     return $path.$extra;

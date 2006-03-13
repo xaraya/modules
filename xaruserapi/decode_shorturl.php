@@ -180,7 +180,7 @@ function julian_userapi_decode_shorturl($params)
         return array('jump', $args);
     } else {
     //    die('bogus');
-        return array('main', $args);
+    //    return array('main', $args);
     }
 
     // default : return nothing -> no short URL

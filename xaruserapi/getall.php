@@ -160,53 +160,52 @@ function julian_userapi_getall($args)
     if (!$result) return;
 
     while(!$result->EOF) {
-     $eventObj = $result->FetchObject(false);
-     $fStartDate = date("Y-m-d",strtotime($eventObj->dtstart));
-     $fStartTime = date("H:i",strtotime($eventObj->dtstart));
-     if (!$eventObj->recur_freq) {
-        //this is a non-repeating event and falls in the current date range...add to the events array
-        $e->setEventData($event_data,$fStartDate,$eventObj);
-     } else {
-        //determine if this repeating event ever falls in the current date range
-        $nextTS = strtotime($fStartDate);
-        $next_date = date("Y-m-d",$nextTS);
-        //Keep adding the recurring events until we hit the enddate or the recur_until end date.
-        $recur_until = 1;
-        //If the db recur_until is set, check to see if we are past the recur_until date, otherwise it's 1 and it will fall through
-        if (!is_null($eventObj->recur_until)) {
-            $recur_until = ($nextTS <= strtotime($eventObj->recur_until));
-        }
-        while($nextTS <= strtotime($enddate) && $recur_until) {
-          //Add the event to the event array if the event is after or on the startdate
-          if ($nextTS >= strtotime($startdate)) {
-             $e->setEventData($event_data, $next_date,$eventObj);
-          }
-          /*calculate when this event would recur next. The loop will determine whether to add the next recur date or not*/
-          if ($eventObj->recur_interval < 5 && $eventObj->recur_interval != 0) {
-             /*event repeats 1st, 2nd, 3rd or 4th day of the week every so many month(s) (i.e. 2nd Sunday every 3 months)*/
-            $newTS = strtotime(date("Y-m",strtotime($next_date))."-01 +"  . $eventObj->recur_freq . " ".$units[$eventObj->rrule]);
-            $next_date = date("Y-m-d",strtotime($eventObj->recur_interval ." ". $day_array[$eventObj->recur_count], $newTS));
-          } else if ($eventObj->recur_interval == 5) {
-             /*event repeats a certain day the last week every so many month(s) (i.e. last Monday every two months)*/
-             $newTS = strtotime(date("Y-m",strtotime($next_date))."-01 +".$eventObj->recur_freq." ".$units[$eventObj->rrule]);
-             $endMonthTS=strtotime(date('Y-m',$newTS)."-".date('t',$newTS));
-             $next_date= date('Y-m-d',strtotime("this " . $day_array[$eventObj->recur_count],strtotime("last week",$endMonthTS)));
-          } else {
-             /*event repeats every so many days, weeks, months or years (i.e. every 2 weeks)*/
-             $next_date=date("Y-m-d",strtotime($next_date." +".$eventObj->recur_freq." ".$units[$eventObj->rrule]));
-          }
-          //Get the next recur date's timestamp
-          $nextTS = strtotime($next_date);
-          //determine if the next recur date should be added
-          if (!is_null($eventObj->recur_until)) {
-            $recur_until = ($nextTS <= strtotime($eventObj->recur_until));
-          }
-     }
+         $eventObj = $result->FetchObject(false);
+         $fStartDate = date("Y-m-d",strtotime($eventObj->dtstart));
+         $fStartTime = date("H:i",strtotime($eventObj->dtstart));
+         if (!$eventObj->recur_freq) {
+              //this is a non-repeating event and falls in the current date range...add to the events array
+              $e->setEventData($event_data,$fStartDate,$eventObj);
+         } else {
+              //determine if this repeating event ever falls in the current date range
+              $nextTS = strtotime($fStartDate);
+              $next_date = date("Y-m-d",$nextTS);
+              //Keep adding the recurring events until we hit the enddate or the recur_until end date.
+              $recur_until = 1;
+              //If the db recur_until is set, check to see if we are past the recur_until date, otherwise it's 1 and it will fall through
+              if (!is_null($eventObj->recur_until)) {
+                  $recur_until = ($nextTS <= strtotime($eventObj->recur_until));
+              }
+              while($nextTS <= strtotime($enddate) && $recur_until) {
+                  //Add the event to the event array if the event is after or on the startdate
+                  if ($nextTS >= strtotime($startdate)) {
+                     $e->setEventData($event_data, $next_date,$eventObj);
+                  }
+                  /*calculate when this event would recur next. The loop will determine whether to add the next recur date or not*/
+                  if ($eventObj->recur_interval < 5 && $eventObj->recur_interval != 0) {
+                     /*event repeats 1st, 2nd, 3rd or 4th day of the week every so many month(s) (i.e. 2nd Sunday every 3 months)*/
+                    $newTS = strtotime(date("Y-m",strtotime($next_date))."-01 +"  . $eventObj->recur_freq . " ".$units[$eventObj->rrule]);
+                    $next_date = date("Y-m-d",strtotime($eventObj->recur_interval ." ". $day_array[$eventObj->recur_count], $newTS));
+                  } else if ($eventObj->recur_interval == 5) {
+                     /*event repeats a certain day the last week every so many month(s) (i.e. last Monday every two months)*/
+                     $newTS = strtotime(date("Y-m",strtotime($next_date))."-01 +".$eventObj->recur_freq." ".$units[$eventObj->rrule]);
+                     $endMonthTS=strtotime(date('Y-m',$newTS)."-".date('t',$newTS));
+                     $next_date= date('Y-m-d',strtotime("this " . $day_array[$eventObj->recur_count],strtotime("last week",$endMonthTS)));
+                  } else {
+                     /*event repeats every so many days, weeks, months or years (i.e. every 2 weeks)*/
+                     $next_date=date("Y-m-d",strtotime($next_date." +".$eventObj->recur_freq." ".$units[$eventObj->rrule]));
+                  }
+                  //Get the next recur date's timestamp
+                  $nextTS = strtotime($next_date);
+                  //determine if the next recur date should be added
+                  if (!is_null($eventObj->recur_until)) {
+                     $recur_until = ($nextTS <= strtotime($eventObj->recur_until));
+                  }
+              }
+         }
+        $result->MoveNext();
     }
-    $result->MoveNext();
-}
     $result->Close();
-
 
     // Get the linked events
     $dbconn =& xarDBGetConn();
@@ -232,54 +231,56 @@ function julian_userapi_getall($args)
     if (!$result_linked) return;
 
     while(!$result_linked->EOF) {
-     $eventObj = $result_linked->FetchObject(false);
-     $fStartDate = date("Y-m-d",strtotime($eventObj->dtstart));
-     $fStartTime = date("H:i",strtotime($eventObj->dtstart));
-        if (!$eventObj->recur_freq) {
-            //this is a non-repeating event and falls in the current date range...add to the events array
-            $e->setLinkedEventData($event_data,$fStartDate,$eventObj);
-        } else {
-            //determine if this repeating event ever falls in the current date range
-            $nextTS = strtotime($fStartDate);
-            $next_date = date("Y-m-d",$nextTS);
-            //Keep adding the recurring events until we hit the enddate or the recur_until end date.
-            $recur_until = 1;
-            //If the db recur_until is set, check to see if we are past the recur_until date, otherwise it's 1 and it will fall through
-            if (!is_null($eventObj->recur_until)) {
-                $recur_until = ($nextTS <= strtotime($eventObj->recur_until));
-            }
-            while($nextTS <= strtotime($enddate) && $recur_until) {
-                  //Add the event to the event array if the event is after or on the startdate
-                  if ($nextTS >= strtotime($startdate)) {
-                      $e->setLinkedEventData($event_data, $next_date,$eventObj);
-                  }
-                  //calculate when this event would recur next. The loop will determine whether to add the next recur date or not
-                  if ($eventObj->recur_interval < 5 && $eventObj->recur_interval != 0) {
-                      // event repeats 1st, 2nd, 3rd or 4th day of the week every so many month(s) (i.e. 2nd Sunday every 3 months)
-                      $newTS = strtotime(date("Y-m",strtotime($next_date))."-01 +"  . $eventObj->recur_freq . " ".$units[$eventObj->rrule]);
-                      $next_date = date("Y-m-d",strtotime($eventObj->recur_interval ." ". $day_array[$eventObj->recur_count], $newTS));
-                  } else if ($eventObj->recur_interval == 5) {
-                      // event repeats a certain day the last week every so many month(s) (i.e. last Monday every two months)
-                      $newTS = strtotime(date("Y-m",strtotime($next_date))."-01 +".$eventObj->recur_freq." ".$units[$eventObj->rrule]);
-                      $endMonthTS=strtotime(date('Y-m',$newTS)."-".date('t',$newTS));
-                      $next_date= date('Y-m-d',strtotime("this " . $day_array[$eventObj->recur_count],strtotime("last week",$endMonthTS)));
-                  } else {
-                      // event repeats every so many days, weeks, months or years (i.e. every 2 weeks)
-                      $next_date=date("Y-m-d",strtotime($next_date." +".$eventObj->recur_freq." ".$units[$eventObj->rrule]));
-                  }
-                  //Get the next recur date's timestamp
-                  $nextTS = strtotime($next_date);
-                  //determine if the next recur date should be added
-                  if (!is_null($eventObj->recur_until)) {
+         $eventObj = $result_linked->FetchObject(false);
+         $event_data = xarModAPIFunc('julian', 'user', 'geteventinfo',
+                                     array(//'event'   => $eventObj->event_id,
+                                           'iid'     => $eventObj->hook_iid,
+                                           'itemtype'=> $eventObj->hook_itemtype,
+                                           'modid'   => $eventObj->hook_modid));
+         if (!empty($event_data['description'])) {
+            $fStartDate = date("Y-m-d",strtotime($eventObj->dtstart));
+            $fStartTime = date("H:i",strtotime($eventObj->dtstart));
+            if (!$eventObj->recur_freq) {
+                //this is a non-repeating event and falls in the current date range...add to the events array
+                $e->setLinkedEventData($event_data,$fStartDate,$eventObj);
+            } else {
+                //determine if this repeating event ever falls in the current date range
+                $nextTS = strtotime($fStartDate);
+                $next_date = date("Y-m-d",$nextTS);
+                //Keep adding the recurring events until we hit the enddate or the recur_until end date.
+                $recur_until = 1;
+                //If the db recur_until is set, check to see if we are past the recur_until date, otherwise it's 1 and it will fall through
+                if (!is_null($eventObj->recur_until)) {
                     $recur_until = ($nextTS <= strtotime($eventObj->recur_until));
-                  }
-            }    // while recurrence is still within wanted time span
-        }    // if the event is recurring
-     // Make sure we only get events with artstatus Approved or Frontpage
-    //	 if (($eventObj['artstatus'] == 2) OR ($eventObj['artstatus'] == 3)) {
-
-    //	   } //End if status
-
+                }
+                while($nextTS <= strtotime($enddate) && $recur_until) {
+                      //Add the event to the event array if the event is after or on the startdate
+                      if ($nextTS >= strtotime($startdate)) {
+                          $e->setLinkedEventData($event_data, $next_date,$eventObj);
+                      }
+                      //calculate when this event would recur next. The loop will determine whether to add the next recur date or not
+                      if ($eventObj->recur_interval < 5 && $eventObj->recur_interval != 0) {
+                          // event repeats 1st, 2nd, 3rd or 4th day of the week every so many month(s) (i.e. 2nd Sunday every 3 months)
+                          $newTS = strtotime(date("Y-m",strtotime($next_date))."-01 +"  . $eventObj->recur_freq . " ".$units[$eventObj->rrule]);
+                          $next_date = date("Y-m-d",strtotime($eventObj->recur_interval ." ". $day_array[$eventObj->recur_count], $newTS));
+                      } else if ($eventObj->recur_interval == 5) {
+                          // event repeats a certain day the last week every so many month(s) (i.e. last Monday every two months)
+                          $newTS = strtotime(date("Y-m",strtotime($next_date))."-01 +".$eventObj->recur_freq." ".$units[$eventObj->rrule]);
+                          $endMonthTS=strtotime(date('Y-m',$newTS)."-".date('t',$newTS));
+                          $next_date= date('Y-m-d',strtotime("this " . $day_array[$eventObj->recur_count],strtotime("last week",$endMonthTS)));
+                      } else {
+                          // event repeats every so many days, weeks, months or years (i.e. every 2 weeks)
+                          $next_date=date("Y-m-d",strtotime($next_date." +".$eventObj->recur_freq." ".$units[$eventObj->rrule]));
+                      }
+                      //Get the next recur date's timestamp
+                      $nextTS = strtotime($next_date);
+                      //determine if the next recur date should be added
+                      if (!is_null($eventObj->recur_until)) {
+                        $recur_until = ($nextTS <= strtotime($eventObj->recur_until));
+                      }
+                }    // while recurrence is still within wanted time span
+            }    // if the event is recurring
+         }
        $result_linked->MoveNext();
     }    // while we have records
     $result_linked->Close();

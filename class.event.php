@@ -156,7 +156,11 @@ class Event
     * Events are taken from the hooked events
     *
     * initial template: Roger Raymond
+    *
     * @author Jodie Razdrh/John Kevlin/David St.Clair
+    * @param array event_data
+    * @param string event_date
+    * @param array event_obj
     * @return
     */
     function setLinkedEventData(&$event_data,$event_date,$event_obj)
@@ -180,8 +184,8 @@ class Event
         // Default color: black.
         $color = "#000000";
         // Bug 5361
-      $fStartDate = date("Y-m-d",strtotime($event_obj->dtstart));
-      $fStartTime = date("H:i",strtotime($event_obj->dtstart));
+        $fStartDate = date("Y-m-d",strtotime($event_obj->dtstart));
+        $fStartTime = date("H:i",strtotime($event_obj->dtstart));
         //Set the data for the event
         $event_data[$event_date][$index]['event_id'] = $event_obj->event_id;
         $event_data[$event_date][$index]['class'] = 0;
