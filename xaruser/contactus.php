@@ -66,6 +66,7 @@ function sitecontact_user_contactus($args)
     
     $data['scid']=$formdata['scid'];
     $data['sctypename']=$formdata['sctypename'];
+    $withupload = isset($withupload)? $withupload :(int) false;
     $dditems=array();
     $propdata=array();
     if (xarModIsAvailable('dynamicdata')) {
@@ -79,21 +80,42 @@ function sitecontact_user_contactus($args)
         $isvalid = $object->checkInput();
 
         /*we just want a copy of data - don't need to save it in a table (no request yet anyway!) */
-        $dditems =& $object->getProperties();
+         if (isset($object) && !empty($object->objectid)) {
+             $dditems =& $object->getProperties();
+         }
 
-        foreach ($dditems as $itemid => $fields) {
-            $items[$itemid] = array();
-            foreach ($fields as $name => $value) {
-                $items[$itemid][$name] = ($value);
-            }
+        if (is_array($dditems)) {
+            foreach ($dditems as $itemid => $fields) {
 
-            $propdata=array();
-            foreach ($items as $key => $value) {
-                $propdata[$value['name']]['label']=$value['label'];
-                $propdata[$value['name']]['value']=$value['value'];
+                if (isset($fields->upload) && $fields->upload == true) {
+                    $withupload = (int) true;
+                    $fileuploadfieldname=$itemid;
+                }
+
+                 $items[$itemid] = array();
+                foreach ($fields as $name => $value) {
+                    $items[$itemid][$name] = ($value);
+                }
+
+                $propdata=array();
+                foreach ($items as $key => $value) {
+                    $propdata[$value['name']]['label']=$value['label'];
+                    $propdata[$value['name']]['value']=$value['value'];
+                }
             }
         }
      }
+
+    if ($withupload && isset($fileuploadfieldname) && is_array($items[$fileuploadfieldname]) && !empty($items[$fileuploadfieldname]['value'])) {
+       $filebasepath=$items[$fileuploadfieldname]['basePath'];
+       $filebasedir=$items[$fileuploadfieldname]['basedir'];
+       $fileattachmentname=$items[$fileuploadfieldname]['value'];
+       $attachpath=$filebasepath.'/'.$filebasedir.'/'.$fileattachmentname;
+       $attachname=$fileattachmentname;
+   } else {
+       $attachpath='';
+       $attachname='';
+   }
 
     /* Security Check - caused some problems here with anon browsing and cachemanager
      * should be ok now - review
@@ -244,6 +266,8 @@ function sitecontact_user_contactus($args)
                     'htmlmessage'  => $userhtmlmessage,
                     'from'         => $setmail,
                     'fromname'     => $sendname,
+                    'attachName'   => $attachname,
+                    'attachPath'   => $attachpath,
                     'usetemplates' => false);
 
         /* send mail to user , if html email let's do that  else just send text*/
@@ -302,12 +326,17 @@ function sitecontact_user_contactus($args)
                   'htmlmessage'  => $adminhtmlmessage,
                   'from'         => $useremail,
                   'fromname'     => $username,
+                  'attachName'   => $attachname,
+                  'attachPath'   => $attachpath,
                   'usetemplates' => false);
 
     if ($usehtmlemail != 1) {
         if (!xarModAPIFunc('mail','admin','sendmail', $args))return;
     } else {
         if (!xarModAPIFunc('mail','admin','sendhtmlmail', $args))return;
+    }
+    if (isset($attachpath) && !empty($attachpath)){
+        unlink("{$attachpath}");
     }
     /* Set the theme comments back */
     xarModSetVar('themes','ShowTemplates',$themecomments);

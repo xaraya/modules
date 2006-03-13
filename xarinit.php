@@ -187,7 +187,7 @@ function sitecontact_upgrade($oldversion)
            xarModSetVar('sitecontact', 'aliasname','');
              return sitecontact_upgrade('0.4.0');
              break;
-        case '0.4.0':
+        case '0.3.5':
           // Remove incomplete module hook until ready
            if (!xarModUnregisterHook('item', 'usermenu', 'GUI',
               'sitecontact', 'user', 'usermenu')) {
@@ -265,10 +265,11 @@ function sitecontact_upgrade($oldversion)
 
                         $result =& $dbconn->Execute($query);
            if (!$result) {return;}
-           return sitecontact_upgrade('0.5.0');
-
+           return sitecontact_upgrade('0.4.0');
+       case '0.4.0':
+           return sitecontact_upgrade('0.4.1');
             break;
-        case '0.5.0':
+        case '0.4.1':
              break;
     }
     // Update successful

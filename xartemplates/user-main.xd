@@ -28,13 +28,13 @@
         <p>
             #$customtext#
         </p>
-       
+<!--    
        <xar:set name="enctype">'application/x-www-form-urlencoded'</xar:set>
        <xar:if condition="isset($withupload) and $withupload">
          <xar:set name="enctype">'multipart/form-data'</xar:set>
        </xar:if>
-
-        <form action="&xar-modurl-sitecontact-user-contactus;" method="post" enctype="#$enctype#" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
+-->
+        <form action="&xar-modurl-sitecontact-user-contactus;" method="post" enctype="multipart/form-data" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
             <fieldset>
                 <legend>#$contacttitle#</legend>
             <div class="xar-form-input-wrapper">
