@@ -76,7 +76,9 @@ function julian_userapi_gethooked($args)
             $item['event_startdate'] = date("F j, Y",$event_startdate);// TODO: use xar Locale formatting
             $item['event_starttime'] = date("g:i A",$event_startdate);
             $item['event_enddate'] = strcmp($event_enddate,'')==0 ? '' : date("F j, Y",$event_enddate);
-
+        //    $item['event_endtime'] = strcmp($event_enddate,'')==0 ? '' : date("F j, Y",$event_enddate); // TODO: MichelV
+            $item['ts_end'] = $event_enddate;
+            $item['ts_start'] = $event_startdate;
             // All day or not
             $item['event_allday'] = ($edit_obj->isallday==1);
 

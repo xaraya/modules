@@ -139,7 +139,62 @@
                  f.event_repeat_freq_type.selectedIndex=0;
             }
     }
+    //this function resets the repeating events values for each associated repeating type and
+    //determines if the enddate should be disabled. The repeating event data fields are only
+    //reset to their default values if a radio button (event repeat) calls this function.
+    function processEventTimed(f,obj,callingobj)
+    {
+            //initialize the disabled fields to false
+            f.event_starttimeh.disabled = false
+            f.event_starttimem.disabled = false
+            f.event_startampm.disabled = false
+            f.event_dur_hours.disabled = false
+            f.event_dur_minutes.disabled = false;
 
+            var buttonArray=f.elements[obj.name];
+            //determine which repeating event was selected and set the associated repeating event
+            //data to either the object's default value or, if not set, to our default value
+            if (buttonArray[0].checked)
+            {
+                 //disable the end date section of the repeating events area
+                 f.event_starttimeh.disabled = true
+                 f.event_starttimem.disabled = true
+                 f.event_startampm.disabled = true
+                 f.event_dur_hours.disabled = true
+                 f.event_dur_minutes.disabled = true;
+            }
+            else if (buttonArray[1].checked) //repeats every
+            {
+                 //if the repeating event radio called this function, reset the repeating event data values to their default
+                 if(callingobj.type=="radio")
+                 {
+                        f.event_repeat_freq.value=1;
+                        if(f.event_repeat_freq.defaultValue!='')
+                             f.event_repeat_freq.value=f.event_repeat_freq.defaultValue;
+                        if(!restoreDefault(f.event_repeat_freq_type))
+                             f.event_repeat_freq_type.selectedIndex=1;
+                 }
+                 f.event_repeat_on_num.selectedIndex=0;
+                 f.event_repeat_on_day.selectedIndex=0;
+                 f.event_repeat_on_freq.value='';
+            }
+            else if (buttonArray[2].checked) //repeats on
+            {
+                 //if the repeating event radio called this function, reset the repeating event data values to their default
+                 if(callingobj.type=="radio")
+                 {
+                        if(!restoreDefault(f.event_repeat_on_num))
+                             f.event_repeat_on_num.selectedIndex=1;
+                        if(!restoreDefault(f.event_repeat_on_day))
+                             f.event_repeat_on_day.selectedIndex=1;
+                        f.event_repeat_on_freq.value=1;
+                        if(f.event_repeat_on_freq.defaultValue!='')
+                             f.event_repeat_on_freq.value=f.event_repeat_on_freq.defaultValue;
+                 }
+                 f.event_repeat_freq.value='';
+                 f.event_repeat_freq_type.selectedIndex=0;
+            }
+    }
 </script>
 
 <div class="xar-julian xar-julian-user-editevent">

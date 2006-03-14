@@ -247,8 +247,8 @@ function julian_user_modifyhook($args)
     }
 */
     // start date
-   list($data['event_year'],  $data['event_month'],   $data['event_day'])    = explode("-",date("Y-m-d",strtotime($item['dtstart'])));
-   list($event_endyear,$event_endmonth,$event_endday) = explode("-",date("Y-m-d",$item['event_enddate']));
+   list($data['event_year'],  $data['event_month'],   $data['event_day'])    = explode("-",date("Y-m-d",$item['ts_start']));
+   list($event_endyear,$event_endmonth,$event_endday) = explode("-",date("Y-m-d",$item['ts_end']));
     //Date time from item
     //setting start date time variables
     // $item['event_starttime'] = date("g:i A",$event_startdate);
@@ -453,9 +453,11 @@ function julian_user_modifyhook($args)
    //Setting allday checked
    $data['allday_checked'][0] = '';
    $data['allday_checked'][1] = 'checked';
+   $data['timeddisabled'] = '';
    if ($item['event_allday'] == 1) {
      $data['allday_checked'][0] = 'checked';
      $data['allday_checked'][1] = '';
+     $data['timeddisabled'] = 'disabled';
    }
 
 

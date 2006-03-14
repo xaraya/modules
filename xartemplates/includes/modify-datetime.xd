@@ -58,22 +58,22 @@
             <xar:mlstring>Event Duration</xar:mlstring>
         </label>
         <xar:mlstring>All day event</xar:mlstring>
-        <input type="radio" name="event_allday" value="1" #$allday_checked[0]# onClick="document.getElementById('p_event_startdur').style.visibility='hidden';" />
+        <input type="radio" name="event_allday" value="1" #$allday_checked[0]# onClick="processEventTimed(this.form,this,'button');" />
         <xar:mlstring>Timed event</xar:mlstring>
-        <input type="radio" name="event_allday" value="0" #$allday_checked[1]# onClick="document.getElementById('p_event_startdur').style.visibility='visible';" />
+        <input type="radio" name="event_allday" value="0" #$allday_checked[1]# onClick="processEventTimed(this.form,this,'button');" />
     </div>
     <div id="p_event_startdur">
-        <div class="xar-form-input-wrapper">
+        <div class="xar-form-input-wrapper" #$timeddisabled#>
             <label for="event_starttimeh" class="xar-form-label" title="#xarML('The time this event starts')#">
                 <xar:mlstring>Start Time:</xar:mlstring>
             </label>
-            <select name="event_starttimeh" id="event_starttimeh" size="1" tabindex="7">
+            <select name="event_starttimeh" id="event_starttimeh" size="1" tabindex="7" #$timeddisabled#>
                 #$start_hour_options#
             </select>
-            <select name="event_starttimem" id="event_starttimem" size="1" tabindex="8">
+            <select name="event_starttimem" id="event_starttimem" size="1" tabindex="8" #$timeddisabled#>
                 #$start_minute_options#
             </select>
-            <select name="event_startampm" id="event_startampm" size="1" tabindex="9">
+            <select name="event_startampm" id="event_startampm" size="1" tabindex="9" #$timeddisabled#>
                 <xar:if condition="$event_startampm">
                     <option value="1" >AM</option>
                     <option value="2" selected>PM</option>
@@ -87,11 +87,11 @@
                 <label for="event_dur_hours" class="xar-form-label" title="#xarML('The duration of this event')#">
                     <xar:mlstring>Duration:</xar:mlstring>
                 </label>
-                <select name="event_dur_hours" id="event_dur_hours">
+                <select name="event_dur_hours" id="event_dur_hours" #$timeddisabled#>
                     #$dur_hour_options#
                 </select>
                 <xar:mlstring>Hours</xar:mlstring>
-                <select name="event_dur_minutes">
+                <select name="event_dur_minutes" id="event_dur_minutes" #$timeddisabled#>
                     #$dur_minute_options#
                 </select>
                 <xar:mlstring>Minutes</xar:mlstring>

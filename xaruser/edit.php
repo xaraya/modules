@@ -284,9 +284,11 @@ function julian_user_edit()
    //Setting allday checked
    $data['allday_checked'][0] = '';
    $data['allday_checked'][1] = 'checked';
+   $data['timeddisabled'] = '';
    if ($item['isallday'] == 1) {
      $data['allday_checked'][0] = 'checked';
      $data['allday_checked'][1] = '';
+     $data['timeddisabled'] = 'disabled';
    }
    // 0 = CAL_CLASS_PUBLIC
    // 1 = CAL_CLASS_PRIVATE
