@@ -167,8 +167,11 @@ class Event
     {
         //Get variables
         $dateformat=xarModGetVar('julian', 'dateformat');
-
-        $event_obj->event_id .= "_link";
+        // Add a link identifier when not present yet
+        $pos = strpos($event_obj->event_id, '_link');
+        if (!$pos) {
+            $event_obj->event_id .= "_link";
+        }
 
         // Generate unique id for event that allows for time/date-based sorting.
         $index=strtotime($event_obj->dtstart) ."-".$event_obj->event_id;
