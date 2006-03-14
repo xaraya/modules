@@ -16,11 +16,12 @@
  *
  * The parameters are taken from the URL and coupled to functions
  *
- * @author  Julian Development Team, MichelV <michelv@xarayahosting.nl>
- * @access  public
+ * @author  Julian Development Team, MichelV <michelv@xaraya.com>
+ * @access  private
  * @param   array $params the URL
  * @return  array
- * @todo    MichelV. <#> Check this function and it functioning. Include Categories
+ * @todo    MichelV. <1> Check this function and it functioning. Include Categories
+                     <2> Use switch to decrease decode time
  */
 function julian_userapi_decode_shorturl($params)
 {
@@ -43,7 +44,12 @@ function julian_userapi_decode_shorturl($params)
         $aliasname = xarModGetVar('julian','aliasname');
     }
     if(empty($params[1])) {
-        $func='main';
+        return array('main', $args);
+    } elseif (preg_match('/^index/i', $params[1])) {
+        /* some search engine/someone tried using index.html (or similar)
+         * -> we'll go to the main function
+         */
+        return array('main', $args);
     } elseif($params[1] == 'day') {
         // if we have a 2nd parameter see if it's a date or username
         if(!empty($params[2])) {
