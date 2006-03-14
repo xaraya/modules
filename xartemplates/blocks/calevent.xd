@@ -10,20 +10,20 @@
         <ul class="eventlist">
         <xar:foreach in="$todaysevents" key="$key" value="$val">
             <xar:foreach in="$todaysevents[$key]" key="$key2" value="$val2">
-               <xar:comment><xar:mlstring>Only show events that are Approved or FrontPage</xar:mlstring></xar:comment>
-               <xar:if condition="(!isset($val2['artstatus']) OR (isset($val2['artstatus']) AND(($val2['artstatus']==2) OR ($val2['artstatus']==3))))">
-                   <xar:comment>Show a bullet with the color of the event category.</xar:comment>
-                   <font size="3" color="#$val2['color']#">#$Bullet#</font>
-                   <li style="color: #$val2['color']#;">
-                       <div class="li-content">
-                           <span class="xar-sub">#$val2['time']#</span>
-                           <a href="#xarModURL('julian','user','viewevent',array('cal_date'=>$val2['linkdate'],'event_id'=>$val2['event_id']))#" class="xar-julian-event">
-                               #$val2['summary']#
-                           </a>
-                       </div>
-                   </li>
-                   <xar:set name="$hasevent">1</xar:set>
-                </xar:if>
+               <xar:comment>Show a bullet with the color of the event category.</xar:comment>
+               <font size="3" color="#$val2['color']#">#$Bullet#</font>
+               <li style="color: #$val2['color']#;">
+                   <div class="li-content">
+                   <xar:if condition="$val2['isallday'] lt 1">
+                       <span class="xar-sub">#$val2['time']#</span>
+                   <xar:else /><span class="xar-sub"><xar:mlstring>All day</xar:mlstring></span>
+                   </xar:if>
+                       <a href="#xarModURL('julian','user','viewevent',array('cal_date'=>$val2['linkdate'],'event_id'=>$val2['event_id']))#" class="xar-julian-event">
+                           #$val2['summary']#
+                       </a>
+                   </div>
+               </li>
+               <xar:set name="$hasevent">1</xar:set>
             </xar:foreach>
         </xar:foreach>
         <xar:if condition="!$hasevent">
@@ -45,20 +45,17 @@
             <ul class="eventlist">
             <xar:foreach in="$upcomingevents" key="$key" value="$val">
                 <xar:foreach in="$upcomingevents[$key]" key="$key2" value="$val2">
-                   <xar:comment><xar:mlstring>Only show events that are Approved or FrontPage</xar:mlstring></xar:comment>
-                   <xar:if condition="(!isset($val2['artstatus']) OR (isset($val2['artstatus']) AND(($val2['artstatus']==2) OR ($val2['artstatus']==3))))">
-                        <li style="color: #$val2['color']#;">
-                            <div class="li-content">
-                                  <xar:comment>Show a bullet with the color of the event category.</xar:comment>
-                                  <font size="3" color="#$val2['color']#">#$Bullet#</font>
-                                <span class="xar-sub">#$val2['Fstartdate']# #$val2['Ftime']#</span>
-                                <a href="#xarModURL('julian','user','viewevent',array('cal_date'=>$val2['linkdate'],'event_id'=>$val2['event_id']))#" class="xar-julian-event">
-                                    #$val2['summary']#
-                                </a>
-                            </div>
-                        </li>
-                        <xar:set name="$hasevent2">1</xar:set>
-                    </xar:if>
+                    <li style="color: #$val2['color']#;">
+                        <div class="li-content">
+                            <xar:comment>Show a bullet with the color of the event category.</xar:comment>
+                            <font size="3" color="#$val2['color']#">#$Bullet#</font>
+                            <span class="xar-sub">#$val2['Fstartdate']# #$val2['Ftime']#</span>
+                            <a href="#xarModURL('julian','user','viewevent',array('cal_date'=>$val2['linkdate'],'event_id'=>$val2['event_id']))#" class="xar-julian-event">
+                                #$val2['summary']#
+                            </a>
+                        </div>
+                    </li>
+                    <xar:set name="$hasevent2">1</xar:set>
                 </xar:foreach>
             </xar:foreach>
             <xar:if condition="!$hasevent2">

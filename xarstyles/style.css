@@ -34,6 +34,7 @@ div.xar-julian-footer a {
 div.xar-julian-contents {
     margin-top: 10px;
     padding: 5px;
+    clear: bottom;
 }
 
 div.xar-julian-contents h1 {
@@ -163,7 +164,7 @@ td.xar-julian-cal-weeknumber {
     padding-right: 2px;
 }
 
-.xar-julian-sub{
+.xar-julian-sub {
     font-size:x-small;
     clear:both;
 }
@@ -213,8 +214,9 @@ div.xar-julian td.empty {
     clear:left;
 }
 
-/**/
-ul.eventlist .icons {
+/* The iCal export icon*/
+.xar-julian .icons {
+    display: block;
     float: left;
     padding-right: 2px;
     padding-top: 3px;
@@ -300,10 +302,6 @@ a.xar-julian-event:hover span.tt span {
 
 .xar-julian-block-calevent ul.eventlist li {
     margin-left: 0.5em;
-}
-
-.xar-julian-calevent-upcoming ul.eventlist li {
-    margin-left:0.5em;
 }
 
 .xar-julian .eventlist .xar-sub a {

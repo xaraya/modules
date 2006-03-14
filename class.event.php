@@ -188,7 +188,15 @@ class Event
         $color = "#000000";
         // Bug 5361
         $fStartDate = date("Y-m-d",strtotime($event_obj->dtstart));
-        $fStartTime = date("H:i",strtotime($event_obj->dtstart));
+        // Make an admin adjustable time format
+        $dateformat=xarModGetVar('julian', 'dateformat');
+        $timeformat=xarModGetVar('julian', 'timeformat');
+        $fStartTime ='';
+        $dateformat_created=$dateformat;
+        if ($event_obj->isallday ==0) {
+            $fStartTime = date("H:i",strtotime($event_obj->dtstart));
+            $dateformat_created=$dateformat.' '.$timeformat;
+        }
         //Set the data for the event
         $event_data[$event_date][$index]['event_id'] = $event_obj->event_id;
         $event_data[$event_date][$index]['class'] = 0;
@@ -201,10 +209,6 @@ class Event
         $event_data[$event_date][$index]['linkdate'] = date("Ymd",strtotime($event_date));
         $event_data[$event_date][$index]['startdate'] = date("m-d-Y",strtotime($event_date));
         // Get additional event information for hooking module.
-        // Make an admin adjustable time format
-        $dateformat=xarModGetVar('julian', 'dateformat');
-        $timeformat=xarModGetVar('julian', 'timeformat');
-        $dateformat_created=$dateformat.' '.$timeformat;
         $event_data[$event_date][$index]['Fstartdate'] = date("$dateformat_created",strtotime($event_date));
         $event_data[$event_date][$index]['Ftime'] = '';
         //popover posted information
