@@ -221,11 +221,11 @@ function julian_userapi_createhook($args)
                 $bindvars = array ($modid,                      // hooking module id
                                    $itemtype,                   // hooking module item type
                                    $objectid,                   // hooking module item id
-                                   $summary,                    // The title of the hooked event
+                                   $event_summary,              // The title of the hooked event
                                    $event_startdate,            // event start date/time
                                    $event_duration,             // event duration (hh:mm)
                                    $event_allday,               // event takes all day (0 = false, 1 = true)
-                                   $event_repeat_freq_type,    // unit of repetition frequency (day, week, month, year)
+                                   $event_repeat_freq_type,     // unit of repetition frequency (day, week, month, year)
                                    $recur_freq,                 // repetition frequency
                                    $event_repeat_on_day,        // day of the week
                                    $event_repeat_on_num,        // month-based instance of weekday (1st, 2nd, ..., last=5)
