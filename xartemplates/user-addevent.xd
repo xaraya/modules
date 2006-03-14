@@ -109,6 +109,29 @@
             f.event_repeat_freq_type.selectedIndex='0'
         }
     }
+    //this function determines if the duration times should be disabled.
+    function processEventTimed(f,obj,callingobj)
+    {
+            //initialize the disabled fields to false
+            f.event_starttimeh.disabled = false
+            f.event_starttimem.disabled = false
+            f.event_startampm.disabled = false
+            f.event_dur_hours.disabled = false
+            f.event_dur_minutes.disabled = false;
+
+            var buttonArray=f.elements[obj.name];
+            //determine which repeating event was selected and set the associated repeating event
+            //data to either the object's default value or, if not set, to our default value
+            if (buttonArray[0].checked)
+            {
+                 //disable the end date section of the repeating events area
+                 f.event_starttimeh.disabled = true
+                 f.event_starttimem.disabled = true
+                 f.event_startampm.disabled = true
+                 f.event_dur_hours.disabled = true
+                 f.event_dur_minutes.disabled = true;
+            }
+    }
 </script>
 
 <div class="xar-julian xar-julian-user-addevent">
@@ -206,10 +229,10 @@
 
                             <xar:mlstring>All day event</xar:mlstring>
                             <input type="radio" name="event_allday" id="event_allday1" value="1"
-                                   onclick="document.getElementById('p_event_startdur').style.visibility='hidden';" />
+                                   onClick="processEventTimed(this.form,this,'button');" />
                             <xar:mlstring>Timed event</xar:mlstring>
                             <input type="radio" name="event_allday" id="event_allday2" value="0" checked="checked"
-                                   onclick="document.getElementById('p_event_startdur').style.visibility='visible';" />
+                                   onClick="processEventTimed(this.form,this,'button');" />
 
                     </div>
                     <div id="p_event_startdur">
