@@ -203,6 +203,7 @@ class Event
         $timeformat=xarModGetVar('julian', 'timeformat');
         $dateformat_created=$dateformat.' '.$timeformat;
         $event_data[$event_date][$index]['Fstartdate'] = date("$dateformat_created",strtotime($event_date));
+        $event_data[$event_date][$index]['Ftime'] = '';
         //popover posted information
         //multiple event in a day popup
         $event_data[$event_date][$index]['multipopover'] = $fStartTime . " " . addslashes($event_data[$event_date][$index]['summary']);
