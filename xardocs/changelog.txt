@@ -1,3 +1,13 @@
+TODO list:
+[09:47:03] <MichelV> 1. Multiple categories
+[09:47:20] <MichelV> 2. day spanding (start one day, end the other)
+[09:47:31] <MichelV> 3. Have groups to share events with
+[09:47:40] <MichelV> 4. Have multiple calendars
+[09:47:51] <MichelV> 5. Have Julian hook internally
+[09:48:05] <MichelV> in order of importance
+[09:49:00] <MichelV> For a true good julian, the dates need to be stored as int(11) as well, generated with gmtime()
+
+Changelog (short version, see pushes to monotone for full list)
 0.2.0
 -Replaced own categories with a hook to Xaraya categories. An upgrade function is included
 -Allow the admin to choose a date format
