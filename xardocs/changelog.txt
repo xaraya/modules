@@ -1,6 +1,6 @@
 TODO list:
-[09:47:03] <MichelV> 1. Multiple categories
-[09:47:20] <MichelV> 2. day spanding (start one day, end the other)
+[09:47:03] <MichelV> 1. Multiple categories Bug 5363
+[09:47:20] <MichelV> 2. day spanding (start one day, end the other) Bug 4966
 [09:47:31] <MichelV> 3. Have groups to share events with
 [09:47:40] <MichelV> 4. Have multiple calendars
 [09:47:51] <MichelV> 5. Have Julian hook internally
@@ -434,3 +434,4 @@ Add category selector for blocks
 0.4.3
 Add choice for short urls
 The functions are now checked and should all have a working short url version
+When an event is allday, the time fields are now disabled instead of invisible
