@@ -1,19 +1,19 @@
 <?php
-
 /**
- * File: $Id$
- *
  * Initialise the xarpages module.
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2004 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage example
+ * @subpackage xarpages
  * @author Jason Judge 
  */
 
+/**
+ * Initialise the module
+ */
 function xarpages_init()
 {
     // Set up database tables
