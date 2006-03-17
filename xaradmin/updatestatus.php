@@ -23,9 +23,9 @@
 function courses_admin_updatestatus()
 {
     // Get parameters
-    if(!xarVarFetch('sids',      'isset', $sids,    NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('statusid',  'int::', $statusid,  NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('planningid','id', $planningid,    NULL, XARVAR_DONT_SET)) {return;}//Change this?
+    if(!xarVarFetch('sids',      'array', $sids,       NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('statusid',  'int::', $statusid,   NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('planningid','id',    $planningid, NULL, XARVAR_DONT_SET)) {return;}//Change this?
 
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;
