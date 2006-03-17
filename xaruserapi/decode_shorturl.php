@@ -2,27 +2,20 @@
 /**
  * Standard function to decode short urls
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @package modules
+ * @copyright (C) 2003-2006 The Digital Development Foundation.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.org
+ * @link http://www.xaraya.com
  *
  * @subpackage  xarbb Module
+ * @link http://xaraya.com/index.php/release/300.html
  * @author John Cox
  * @author Jo dalle Nogare
 */
 /**
- * extract function and arguments from short URLs for this module, and pass
+ * Extract function and arguments from short URLs for this module, and pass
  * them back to xarGetRequestInfo()
  *
- * @author the xarBB module development team 
- * @param  $params array containing the different elements of the virtual path
- * @returns array
- * @return array containing func the function to be called and args the query
- *          string arguments, or empty if it failed
- */
-
-/*
  * Supported URLs:
  *
  * [/<xarbb-alias>]/index
@@ -30,13 +23,16 @@
  * [/<xarbb-alias>]/topic/<topic-id>
  * [/<xarbb-alias>]/category/<category-id>
  *
+ * @author the xarBB module development team
+ * @param  array $params array containing the different elements of the virtual path
+ * @return array containing func the function to be called and args the query
+ *         string arguments, or empty if it failed
  * Notes:
  * - TODO: support category and forum names.
  * - Missing IDs or an unrecognised path will result in a redirect to '<xarbb-alias>/index'
  * - Additional path arguments will be ignored.
- * - The IDs are extracted as the left-most digits only (e.g. 3.html => 3)
+ * - The IDs are extracted as the left-most digits only (e.g. 3.html => 3).
  */
-
 function xarbb_userapi_decode_shorturl($params)
 {
     // Initialise the argument list we will return
@@ -53,8 +49,6 @@ function xarbb_userapi_decode_shorturl($params)
     if ($params[0] != $module) { //it's possibly some type of alias
         $aliasname = xarModGetVar('xarbb','aliasname');
     }
-
-    
 
     // Shift the alias out if it is equal to the module name.
     // This allows us to use, say, 'topics' or 'forum' as the module alias.
@@ -139,7 +133,7 @@ function xarbb_userapi_decode_shorturl($params)
     }
 
     return array($func, $args);
-    
+
         // the first part might be something variable like a category name
         // In order to match that, you'll have to retrieve all relevant
         // categories for this module, and compare against them...
@@ -171,6 +165,5 @@ function xarbb_userapi_decode_shorturl($params)
         // forget about trying to decode this thing
         // you *could* return the main function here if you want to
         // return array('main', $args);
-} 
-
+}
 ?>
