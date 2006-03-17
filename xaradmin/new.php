@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -13,6 +13,13 @@
  */
 /**
  * add new article
+ *
+ * This function presents the template from which the article is created
+ * @param int ptid The publication type id
+ * @param int catid The category id this article will belong to
+ * @param id itemtype the itemtype, if forced
+ * @param string return_url The url to return to
+ * @return mixed call to template with data array and name of template to use
  */
 function articles_admin_new($args)
 {
