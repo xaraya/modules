@@ -3,7 +3,7 @@
  * Update an example item
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -14,11 +14,15 @@
 /**
  * Update an example item
  *
+ * This function takes in the data from admin_update and
+ * saves the data it the appriopriate table
+ *
  * @author the Example module development team
  * @param  $args ['exid'] the ID of the item
  * @param  $args ['name'] the new name of the item
  * @param  $args ['number'] the new number of the item
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @return bool true on success of update
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function example_adminapi_update($args)
 {
@@ -28,6 +32,10 @@ function example_adminapi_update($args)
      * assumptions that will not hold in future versions of Xaraya
      */
     extract($args);
+    /* Note the absence of a xarVarFetch function here. Remember that xarVarFetch
+     * gets environmental variables, and therefore can fetch variables that you do not want in here.
+     * This function can be called from others than just the admin_update one
+     */
     /* Argument check - make sure that all required arguments are present
      * and in the right format, if not then set an appropriate error
      * message and return
@@ -101,6 +109,10 @@ function example_adminapi_update($args)
     $query = "UPDATE $exampletable
             SET xar_name =?, xar_number = ?
             WHERE xar_exid = ?";
+    /* We use the $bindvars method here to increase the security and
+     * to make sure that the data we enter is clean. It lets the database layer
+     * take care of -a part of- the datachecking
+     */
     $bindvars = array($name, $number, $exid);
     $result = &$dbconn->Execute($query,$bindvars);
     /* Check for an error with the database code, adodb has already raised
@@ -112,6 +124,10 @@ function example_adminapi_update($args)
      */
     $item['module'] = 'example';
     $item['itemid'] = $exid;
+    /* We set the itemtype to NULL here, as we do not use it. When your module does use itemtypes,
+     * then add the appropriate one here
+     */
+    $item['itemtype'] = NULL;
     $item['name'] = $name;
     $item['number'] = $number;
     xarModCallHooks('item', 'update', $exid, $item);
