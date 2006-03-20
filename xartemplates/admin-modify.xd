@@ -123,3 +123,9 @@
         </fieldset>
     </form>
 </div>
+<!--
+    // clear the status message
+    // we put this in an if tag to prevent the function from
+    // showing '1' in the page
+-->
+<xar:if condition="xarSessionSetVar('statusmsg', '')"></xar:if>

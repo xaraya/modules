@@ -3,7 +3,7 @@
  * The main user function
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -11,7 +11,6 @@
  * @link http://xaraya.com/index.php/release/36.html
  * @author Example Module Development Team
  */
-
 /**
  * The main user function
  *
@@ -22,6 +21,8 @@
  * function (often this is the view() function)
  *
  * @author the Example module development team
+ * @param none
+ * @return array $data An array with the data for the template
  */
 function example_user_main()
 {
