@@ -3,7 +3,7 @@
  * Let user add an event
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -28,8 +28,8 @@ function julian_user_addevent($args)
 
     //This prevents users from viewing something they are not suppose to.
     if (!xarSecurityCheck('AddJulian')) return;
-
-    if (!xarVarFetch('cal_date','int::',$cal_date)) return;
+    // See if we get passed a date, otherwise add the date of today
+    if (!xarVarFetch('cal_date','int:18000000:20500000',$cal_date, xarLocaleFormatDate('%Y%m%d'))) return;
 
     // Build description for the item we want the hooks (i.e. category) for.
     $item = array();
