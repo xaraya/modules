@@ -112,7 +112,11 @@
                  <label for="mincredit" class="xar-form-label" title="#xarML('This is the minimum number of credits that need to be obtained in the pitem')#">
                       <xar:mlstring>Minimum credits:</xar:mlstring>
                  </label>
-                 <input type="text" name="mincredit" id="mincredit" value="#$mincredit#" maxlength="32" class="xar-form-textshort" />
+                 <xar:if condition = "!empty($mincredit)">
+                    <input type="text" name="mincredit" id="mincredit" value="#$mincredit#" maxlength="32" class="xar-form-textshort" />
+                 <xar:else />
+                    <input type="text" name="mincredit" id="mincredit" value="#$item.mincredit#" maxlength="32" class="xar-form-textshort" />
+                 </xar:if>
                  <xar:if condition="!empty($invalid['mincredit'])">
                      <div class="xar-error">
                             <xar:mlstring>ERROR! This is not a valid mincredits</xar:mlstring>
@@ -123,7 +127,11 @@
                  <label for="credits" class="xar-form-label" title="#xarML('This is the credits that need to be obtained in the pitem')#">
                         <xar:mlstring>Credits:</xar:mlstring>
                  </label>
-                 <input type="text" name="credits" id="credits" value="#$credits#" maxlength="32" class="xar-form-textshort" />
+                 <xar:if condition = "!empty($credits)">
+                    <input type="text" name="credits" id="credits" value="#$credits#" maxlength="32" class="xar-form-textshort" />
+                 <xar:else />
+                    <input type="text" name="credits" id="credits" value="#$item.credits#" maxlength="32" class="xar-form-textshort" />
+                 </xar:if>
                  <xar:if condition="!empty($invalid['credits'])">
                      <div class="xar-error">
                             <xar:mlstring>ERROR! This is not a valid credits</xar:mlstring>

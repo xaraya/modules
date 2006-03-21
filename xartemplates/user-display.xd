@@ -5,10 +5,9 @@
 </div>
 <div class="xar-mod-body">
 
-    <!-- the variables used in this menu templte  come from example_user_menu() -->
     <xar:template type="module" file="user-menu" />
 
-    <h2><xar:mlstring>Eduction Plan</xar:mlstring></h2>
+    <h2><xar:mlstring>Education Plan</xar:mlstring></h2>
 
     <xar:if condition="!empty($status)">
         <strong>#$status#</strong>

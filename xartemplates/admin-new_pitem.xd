@@ -113,8 +113,8 @@
                  </select>
             </div>
             <div class="xar-form-input-wrapper">
-                 <label for="rule_source" class="xar-form-label" title="#xarML('Choose from internal or external or open')#">
-                        <xar:mlstring>Source Rule</xar:mlstring>
+                 <label for="rule_source" class="xar-form-label" title="#xarML('Choose a name for the source. This source will also be used in the template name')#">
+                        <xar:mlstring>Source</xar:mlstring>
                  </label>
                  <input type="text" name="rule_source" id="rule_source" value="#$rule_source#" maxlength="15" class="xar-form-textshort" />
                  <xar:if condition="!empty($invalid['rule_source'])">

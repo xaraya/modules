@@ -39,10 +39,10 @@ function itsp_admin_modify_pitem($args)
     if (!xarVarFetch('dateopen',    'int:1:', $dateopen,   '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('dateclose',   'int:1:', $dateclose,  '', XARVAR_NOT_REQUIRED)) return;
 
-    if (!xarVarFetch('rule_cat',    'int::',                      $rule_cat,    $rule_cat,    XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('rule_type',   'int::',                       $rule_type,   $rule_type,   XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('rule_source', 'enum:courses:internal:external:open:all', $rule_source, $rule_source, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('rule_level',  'int::',                      $rule_level,  $rule_level,  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('rule_cat',    'int::', $rule_cat,    $rule_cat,    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('rule_type',   'int::', $rule_type,   $rule_type,   XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('rule_source', 'str::', $rule_source, $rule_source, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('rule_level',  'int::', $rule_level,  $rule_level,  XARVAR_NOT_REQUIRED)) return;
 
     if (!empty($objectid)) {
         $pitemid = $objectid;
@@ -73,41 +73,34 @@ function itsp_admin_modify_pitem($args)
         $rule_cat = $rule_parts[1];
         $rule_parts = explode(':',$Rsource);
         $rule_source = $rule_parts[1];
-
-        $data['rule_type'] = $rule_type;
-
-        $data['rule_level'] = $rule_level;
-        $data['rule_cat'] = $rule_cat;
-        $data['rule_source'] = $rule_source;
-
     }
+    $data['rule_type'] = $rule_type;
+    $data['rule_level'] = $rule_level;
+    $data['rule_cat'] = $rule_cat;
+    $data['rule_source'] = $rule_source;
 
     // get the levels in courses
     $levels = xarModAPIFunc('courses', 'user', 'gets', array('itemtype' => 1003));
 
+    $hooks =array();
     /* Call hooks */
     $item['module'] = 'itsp';
     $item['itemtype'] = 3;
     $hooks = xarModCallHooks('item', 'modify', $pitemid, $item);
-
     /* Return the template variables defined in this function */
-    return array('authid'       => xarSecGenAuthKey(),
-                 'pitemid'      => $pitemid,
-                 'pitemname'    => $pitemname,
-                 'pitemdesc'    => $pitemdesc,
-                 'credits'      => $credits,
-                 'mincredit'    => $mincredit,
-                 'rule_cat'     => $rule_cat,
-                 'rule_type'    => $rule_type,
-                 'rule_source'  => $rule_source,
-                 'rule_level'   => $rule_level,
-                 'pitemrules'   => $pitemrules,
-                 'dateopen'     => $dateopen,
-                 'dateclose'    => $dateclose,
-                 'invalid'      => $invalid,
-                 'hookoutput'   => $hooks,
-                 'item'         => $item,
-                 'levels'       => $levels
-                 );
+    $data['item']         = $item;
+    $data['authid']       = xarSecGenAuthKey();
+    $data['pitemid']      = $pitemid;
+    $data['pitemname']    = $pitemname;
+    $data['pitemdesc']    = $pitemdesc;
+    $data['credits']      = $credits;
+    $data['mincredit']    = $mincredit;
+    $data['pitemrules']   = $pitemrules;
+    $data['dateopen']     = $dateopen;
+    $data['dateclose']    = $dateclose;
+    $data['invalid']      = $invalid;
+    $data['hookoutput']   = $hooks;
+    $data['levels']       = $levels;
+    return $data;
 }
 ?>
