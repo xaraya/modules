@@ -91,8 +91,8 @@ function itsp_userapi_get_plan($args)
                   'planrules'   => $planrules,
                   'credits'     => $credits,
                   'mincredit'   => $mincredit,
-                  'dateopen'    => $dateopen,
-                  'dateclose'   => $dateclose,
+                  'dateopen'    => (int)$dateopen,
+                  'dateclose'   => (int)$dateclose,
                   'datemodi'    => $datemodi,
                   'modiby'      => $modiby);
     /* Return the item array */

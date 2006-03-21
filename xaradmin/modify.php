@@ -35,11 +35,15 @@ function itsp_admin_modify($args)
     if (!xarVarFetch('planrules',  'str:1:', $planrules,  '',   XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('credits',    'int:1:', $credits,    '',     XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('mincredit',  'int:1:', $mincredit,  '',   XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('dateopen',   'int:1:', $dateopen,   '',    XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('dateclose',  'int:1:', $dateclose,  '',   XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('dateopen',   'isset', $dateopen,   $dateopen,    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('dateclose',  'isset', $dateclose,  $dateclose,   XARVAR_NOT_REQUIRED)) return;
 
     if (!empty($objectid)) {
         $planid = $objectid;
+    }
+    /* Security check */
+    if (!xarSecurityCheck('EditITSPPlan', 1, 'Item', "$planid:All:All")) {
+        return;
     }
     /* The user API function is called.
      */
@@ -51,10 +55,6 @@ function itsp_admin_modify($args)
     /* Check for exceptions */
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; /* throw back */
 
-    /* Security check */
-    if (!xarSecurityCheck('EditITSPPlan', 1, 'Item', "$planid:All:All")) {
-        return;
-    }
     /* Get menu variables - it helps if all of the module pages have a standard
      * menu at their head to aid in navigation
      * $menu = xarModAPIFunc('itsp','admin','menu','modify');

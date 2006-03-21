@@ -97,8 +97,8 @@ function itsp_userapi_getall_plans($args)
                              'planrules'   => $planrules,
                              'credits'     => $credits,
                              'mincredit'   => $mincredit,
-                             'dateopen'    => $dateopen,
-                             'dateclose'   => $dateclose,
+                             'dateopen'    => (int)$dateopen,
+                             'dateclose'   => (int)$dateclose,
                              'datemodi'    => $datemodi,
                              'modiby'      => $modiby);
         }

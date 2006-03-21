@@ -16,11 +16,11 @@
     <span class="xar-mod-title"><xar:mlstring>ITSP Administration</xar:mlstring></span>
 </div>
 <div class="xar-mod-body">
-    <h2><xar:mlstring>New Plan</xar:mlstring></h2>
+    <h2><xar:mlstring>Modify Plan</xar:mlstring></h2>
 
     <form method="post" action="&xar-modurl-itsp-admin-update;" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
         <fieldset>
-            <legend><xar:mlstring>Creating a new plan</xar:mlstring></legend>
+            <legend><xar:mlstring>Modify an existing plan</xar:mlstring></legend>
 
             <div class="xar-form-input-wrapper">
                  <label for="planname" class="xar-form-label" title="#xarML('This is the item name')#">
@@ -125,7 +125,7 @@
             </div>
 
             <div class="xar-form-input-wrapper">
-                 <label for="name" class="xar-form-label" title="#xarML('This is the date this plan can be applied to')#">
+                 <label for="dateclose" class="xar-form-label" title="#xarML('This is the date this plan can be applied to')#">
                         <xar:mlstring>Date this plan closes:</xar:mlstring>
                  </label>
                  <xar:if condition="!empty($dateclose)">

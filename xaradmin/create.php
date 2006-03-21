@@ -35,8 +35,8 @@ function itsp_admin_create($args)
     if (!xarVarFetch('planrules',  'str:1:', $planrules,  '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('credits',    'int:1:', $credits,    '',   XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('mincredit',  'int:1:', $mincredit,  '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('dateopen',   'int:1:', $dateopen,   '',  XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('dateclose',  'int:1:', $dateclose,  '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('dateopen',   'str',    $dateopen,   '',  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('dateclose',  'str',    $dateclose,  '', XARVAR_NOT_REQUIRED)) return;
 
     if (!xarVarFetch('invalid', 'array',  $invalid, $invalid, XARVAR_NOT_REQUIRED)) return;
 
@@ -86,8 +86,9 @@ function itsp_admin_create($args)
                                 'planrules' => $planrules,
                                 'credits' => $credits,
                                 'mincredit' => $mincredit,
-                                'dateopen' => $dateopen,
-                                'dateclose' => $dateclose));
+                                'dateopen'  => $dateopen,
+                                'dateclose' => $dateclose
+                                ));
     /* The return value of the function is checked here, and if the function
      * suceeded then an appropriate message is posted.
      */

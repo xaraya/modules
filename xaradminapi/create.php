@@ -85,7 +85,7 @@ function itsp_adminapi_create($args)
      * Question marks in the statement above.
      */
     $bindvars = array($nextId, (string) $planname, $plandesc, $planrules, $credits, $mincredit,
-    $dateopen, $dateclose, $datemodi, $modiby);
+    (int)$dateopen, (int)$dateclose, $datemodi, $modiby);
     $result = &$dbconn->Execute($query,$bindvars);
 
     /* Check for an error with the database code, adodb has already raised

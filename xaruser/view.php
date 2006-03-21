@@ -64,8 +64,28 @@ function itsp_user_view()
         } else {
             $item['link'] = '';
         }
+        if (xarSecurityCheck('AddITSP', 0, 'ITSP', "All:$planid")
+            &&(    (($item['dateopen'] < time() ) && ($item['dateclose'] > time() ))
+                || (($item['dateclose'] == 0) && ($item['dateopen'] < time() ) )
+                || (($item['dateopen'] == 0) && ($item['dateclose'] > time() ) )
+            )) {
+            $item['create_link'] = xarModURL('itsp',
+                'user',
+                'create',
+                array('planid' => $planid));
+            /* Security check 2 - else only display the item name (or whatever is
+             * appropriate for your module)
+             */
+        } else {
+            $item['create_link'] = '';
+        }
         /* Clean up the item text before display */
         $item['planname'] = xarVarPrepForDisplay($item['planname']);
+        if ($item['dateopen'] > 0) {
+            $item['dateopen'] = xarLocaleGetFormattedDate('short',$item['dateopen']);
+        } else {
+            $item['dateopen'] = '';
+        }
         /* Add this item to the list of items to be displayed */
         $data['items'][] = $item;
     }

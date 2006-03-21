@@ -5,7 +5,6 @@
 </div>
 <div class="xar-mod-body xar-border-thin">
 
-    <!-- the variables used in this menu templte  come from example_user_menu()-->
     <xar:template type="module" file="user-menu" />
 
     <h2><xar:mlstring>The education plans you can choose from</xar:mlstring></h2>
@@ -37,10 +36,10 @@
 
                 <!-- we only show a link if the item link variable is not empty -->
 
-                <xar:if condition="empty($item.link)">
+                <xar:if condition="empty($item.create_link)">
                     #$item.dateopen#
                 <xar:else />
-                    <a href="#$item.link#">#$item.dateopen#</a>
+                    <a href="#$item.create_link#">#$item.dateopen#</a>
                 </xar:if>
 
             </td>
