@@ -253,6 +253,16 @@ function addressbook_userapi_insertrecord($args)
 
     $result->Close();
 
+    /* Get the ID of the item that we inserted. It is possible, depending
+     * on your database, that this is different from $nextId as obtained
+     * above, so it is better to be safe than sorry in this situation
+     */
+    $itemid = $dbconn->PO_Insert_ID($address_table, 'nr');
+    // Call hooks
+    $item = $args;
+    $item['module'] = 'addressbook';
+    $item['itemid'] = $itemid;
+    xarModCallHooks('item', 'create', $itemid, $item);
     return true;
 } // END insertrecord
 
