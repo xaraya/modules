@@ -3,7 +3,7 @@
  * View a list of items
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -11,7 +11,6 @@
  * @link http://xaraya.com/index.php/release/36.html
  * @author Example Module Development Team
  */
-
 /**
  * View a list of items
  *
@@ -19,6 +18,8 @@
  * available from the module.
  *
  * @author the Example module development team
+ * @param none
+ * @return array $data array with all information for the template
  */
 function example_user_view()
 {
@@ -57,9 +58,9 @@ function example_user_view()
         'user',
         'getall',
         array('startnum' => $startnum,
-            'numitems' => xarModGetUserVar('example',
-                'itemsperpage',
-                $uid)));
+              'numitems' => xarModGetUserVar('example',
+              'itemsperpage',
+              $uid)));
     if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     /* TODO: check for conflicts between transformation hook output and xarVarPrepForDisplay
@@ -86,7 +87,8 @@ function example_user_view()
                 'display',
                 array('exid' => $item['exid']));
             /* Security check 2 - else only display the item name (or whatever is
-             * appropriate for your module)
+             * appropriate for your module). We do this by setting the link empty, and
+             * have a check on this in the template.
              */
         } else {
             $item['link'] = '';
@@ -97,13 +99,10 @@ function example_user_view()
         $data['items'][] = $item;
     }
     /* TODO: how to integrate cat ids in pager (automatically) when needed ???
-     * Get the UID so we can see if there are any overridden defaults.
-     */
-    $uid = xarUserGetVar('uid');
-    /* Call the xarTPL helper function to produce a pager in case of there
+     * Call the xarTPL helper function to produce a pager in case of there
      * being many items to display.
      *
-     * Note that this function includes another user API function. The
+     * Note that this function includes another user API function -countitems-. The
      * function returns a simple count of the total number of items in the item
      * table so that the pager function can do its job properly
      */
@@ -112,7 +111,7 @@ function example_user_view()
         xarModURL('example', 'user', 'view', array('startnum' => '%%')),
         xarModGetUserVar('example', 'itemsperpage', $uid));
 
-    /* Same as above. We are changing the name of the page to raise
+    /* We are changing the name of the page to raise
      * better search engine compatibility.
      */
     xarTplSetPageTitle(xarVarPrepForDisplay(xarML('View Examples')));
