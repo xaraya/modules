@@ -18,8 +18,7 @@
  *
  * @author the ITSP module development team
  * @param  $args ['planid'] id of plan to get
- * @returns array
- * @return item array, or false on failure
+ * @return array item array, or false on failure
  * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function itsp_userapi_get_plan($args)

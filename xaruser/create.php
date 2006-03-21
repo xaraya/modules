@@ -70,7 +70,7 @@ function itsp_user_create($args)
                                 'invalid'       => $invalid));
     }
     // Confirm authorisation code.
-    if (!xarSecConfirmAuthKey()) return;
+ //   if (!xarSecConfirmAuthKey()) return;
     // Create the ITSP
     $itspid = xarModAPIFunc('itsp',
                             'user',

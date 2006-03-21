@@ -28,7 +28,7 @@ function itsp_user_display($args)
 {
     extract($args);
 
-    if (!xarVarFetch('planid', 'id', $planid)) return;
+    if (!xarVarFetch('planid', 'id', $planid, $planid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('objectid', 'id', $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
 
     /* At this stage we check to see if we have been passed $objectid, the
