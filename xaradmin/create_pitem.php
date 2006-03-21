@@ -41,8 +41,8 @@ function itsp_admin_create_pitem($args)
     if (!xarVarFetch('pitemname',  'str:1:', $pitemname,  $pitemname,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('pitemdesc',  'str:1:', $pitemdesc,  $pitemdesc,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('pitemrules', 'str:1:', $pitemrules, $pitemrules, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('credits',    'int:1:', $credits,    $credits,   XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('mincredit',  'int::',  $mincredit,  $mincredit, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('credits',    'str::',  $credits,    $credits,   XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('mincredit',  'str::',  $mincredit,  $mincredit, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('dateopen',   'int:1:', $dateopen,   $dateopen,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('dateclose',  'int:1:', $dateclose,  $dateclose, XARVAR_NOT_REQUIRED)) return;
 
@@ -62,10 +62,11 @@ function itsp_admin_create_pitem($args)
      */
     // Argument check
     $invalid = array();
-    if (empty($mincredit) || !is_integer($mincredit)) {
+/*    if (empty($mincredit)) {// || !is_numeric($mincredit)
         $invalid['mincredit'] = 1;
-        $mincredit = '';
+        $mincredit = $mincredit;
     }
+*/
     if (empty($pitemname) || !is_string($pitemname)) {
         $invalid['pitemname'] = 1;
         $name = '';

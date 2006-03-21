@@ -35,8 +35,8 @@ function itsp_admin_update_pitem($args)
     if (!xarVarFetch('pitemname',  'str:1:', $pitemname,   $pitemname,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('pitemdesc',  'str:1:', $pitemdesc,   $pitemdesc,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('pitemrules', 'str:1:', $pitemrules,  $pitemrules, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('credits',    'int:1:', $credits,    $credits,   XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('mincredit',  'int:0:', $mincredit,  $mincredit, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('credits',    'str::', $credits,    $credits,   XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('mincredit',  'str::', $mincredit,  $mincredit, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('dateopen',   'isset',  $dateopen,   $dateopen,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('dateclose',  'isset',  $dateclose,  $dateclose, XARVAR_NOT_REQUIRED)) return;
 
@@ -58,7 +58,7 @@ function itsp_admin_update_pitem($args)
      */
 
     $invalid = array();
-    if (empty($credits) || !is_numeric($credits)) {
+    if (empty($credits)) {// || !is_integer($credits)
         $invalid['credits'] = 1;
         $number = '';
     }

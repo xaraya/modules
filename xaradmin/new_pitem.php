@@ -29,8 +29,8 @@ function itsp_admin_new_pitem($args)
     if (!xarVarFetch('pitemname',  'str:1:', $pitemname,   $pitemname,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('pitemdesc',  'str:1:', $pitemdesc,   $pitemdesc,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('pitemrules', 'str:1:', $pitemrules,  $pitemrules, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('credits',    'int:1:', $credits,     $credits,    XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('mincredit',  'int:1:', $mincredit,   $mincredit,  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('credits',    'int:0:', $credits,     $credits,    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('mincredit',  'int:0:', $mincredit,   $mincredit,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('dateopen',   'int:1:', $dateopen,    $dateopen,   XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('dateclose',  'int:1:', $dateclose,   $dateclose,  XARVAR_NOT_REQUIRED)) return;
     // Rules can start with an int of 0, meaning ALL
