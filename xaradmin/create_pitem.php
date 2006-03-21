@@ -42,7 +42,7 @@ function itsp_admin_create_pitem($args)
     if (!xarVarFetch('pitemdesc',  'str:1:', $pitemdesc,  $pitemdesc,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('pitemrules', 'str:1:', $pitemrules, $pitemrules, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('credits',    'int:1:', $credits,    $credits,   XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('mincredit',  'int:1:', $mincredit,  $mincredit, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('mincredit',  'int::',  $mincredit,  $mincredit, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('dateopen',   'int:1:', $dateopen,   $dateopen,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('dateclose',  'int:1:', $dateclose,  $dateclose, XARVAR_NOT_REQUIRED)) return;
 
@@ -62,7 +62,7 @@ function itsp_admin_create_pitem($args)
      */
     // Argument check
     $invalid = array();
-    if (empty($mincredit) || !is_numeric($mincredit)) {
+    if (empty($mincredit) || !is_integer($mincredit)) {
         $invalid['mincredit'] = 1;
         $mincredit = '';
     }
@@ -89,14 +89,14 @@ function itsp_admin_create_pitem($args)
                                 'rule_cat'    => $rule_cat,
                                 'rule_type'   => $rule_type,
                                 'rule_level'  => $rule_level,
-                                'rule_course' => $rule_source));
+                                'rule_source' => $rule_source));
     }
 
      /* Confirm authorisation code. */
     if (!xarSecConfirmAuthKey()) return;
 
     // Format the rule
-    $pitemrules = "coursetype:$rule_type;level:$rule_level;category:$rule_cat;source:$rule_source";
+    $pitemrules = "coursetype:$rule_type;level:$rule_level;category:$rule_cat;source:$rule_source;";
 
     if(empty($credits)) {
         $credits = '';

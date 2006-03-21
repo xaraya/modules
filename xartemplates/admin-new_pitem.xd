@@ -134,7 +134,7 @@
                  <input type="text" name="mincredit" id="mincredit" value="#$mincredit#" maxlength="32" class="xar-form-textshort" />
                  <xar:if condition="!empty($invalid['mincredit'])">
                      <div class="xar-error">
-                            <xar:mlstring>ERROR! This is not a valid mincredits</xar:mlstring>
+                            <xar:mlstring>ERROR! This is not a valid minimum credits</xar:mlstring>
                      </div>
                  </xar:if>
             </div>
