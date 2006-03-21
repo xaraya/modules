@@ -3,7 +3,7 @@
  * Example Block  - standard Initialization function
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -11,11 +11,11 @@
  * @link http://xaraya.com/index.php/release/36.html
  * @author Example Module Development Team
  */
-
 /**
  * Example Block  - standard Initialization function
  *
  * @author Example Module development team
+ * @return array
  */
 function example_firstblock_init()
 {
@@ -30,6 +30,7 @@ function example_firstblock_init()
 
 /**
  * Get information on block
+ * @return array
  */
 function example_firstblock_info()
 {
@@ -47,6 +48,8 @@ function example_firstblock_info()
 
 /**
  * Display block
+ * @param array $blockinfo The array with all information this block needs
+ * @return array $blockinfo
  */
 function example_firstblock_display($blockinfo)
 {
