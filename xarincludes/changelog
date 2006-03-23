@@ -1,3 +1,40 @@
+Version 2.0.5.1 (2005-03-22)
+	Fixed bug where emtpy paragraphs sometimes got removed in MSIE.
+	Fixed bug where autosave plugin was running even in fullscreen mode.
+	Fixed bug where browse and color image button urls in form_utils.js where hardcoded.
+Version 2.0.5 (2005-03-21)
+	Added API docs for the TinyMCE_Popup class that is used by all dialogs in TinyMCE.
+	Added new TinyMCE_Layer class to the core of TinyMCE plugins will be using this later on.
+	Added new loadPlugin function, use this to load external plugins.
+	Added instructions on how to contribute language packs.
+	Added new support for multiple content_css files, based on contribution by Man-Chicken.
+	Added new table_cell_limit, table_row_limit, table_col_limit options, based on contribution by Man-Chicken.
+	Added new fix_list_elements option, if this is set to true UL/OL lists will be forced XHTML valid on cleanup.
+	Added new fix_table_elements, if this is set to true tables will be moved outside paragraphs.
+	Fixed so input and button as closed elements in the cleanup logic.
+	Fixed so the mceButtonSelected is more visible with darker background in the editor_ui.css.
+	Fixed issue where charmap.js was calling switchClass that's reserved for buttons.
+	Fixed issue where the directionality option wasn't used in the preview plugin.
+	Fixed issues with nestled bullet lists pasted from Word 2003.
+	Fixed bug where button wasn't selected correctly in MSIE due to a CSS issue.
+	Fixed bug where ask mode wasn't working on DIV elements in Firefox and Opera.
+	Fixed bug where the mceAddFrameControl command wasn't working correctly.
+	Fixed bug where language packs wasn't imported correctly in plugins loaded externaly.
+	Fixed bug where focusing external input elements was visible in element path under MSIE.
+	Fixed bug where fullscreen plugin wasn't opening the window fullscreen in Firefox.
+	Fixed bug where style select dropdown wasn't working in Firefox when used in fullscreen mode.
+	Fixed bug where the fix_content_duplication wasn't working anymore.
+	Fixed bug where MSIE sometimes generated empty paragraphs.
+	Fixed bug where MSIE sometimes generated tags like <//tag>.
+	Fixed bug where the directionality option produced a error for the color picker dialog.
+	Fixed bug where configured callback options wasn't executed correctly in fullscreen mode.
+	Fixed bug where tags got generated as <*> some times in Gecko.
+	Fixed bug where the cursor was placed within a the anchor when inserting a new one in Gecko.
+	Fixed bug where convert_fonts_to_span option wasn't working correctly with new cleanup engine.
+	Fixed various language pack issues such as invalid characters.
+	Fixed naming conflict with zoom plugin and the format select box.
+	Fixed so that the initialization of the editor is slightly faster.
+	Removed all language packs except the english one from the core package. [BREAKS COMPATIBLITY]
 Version 2.0.4 (2006-02-24)
 	Fixed bug where fullscreen plugin was using the tinymce_dev.js script.
 	Fixed bug where events where having a return true; statement infront of them.

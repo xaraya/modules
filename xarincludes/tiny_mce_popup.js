@@ -69,15 +69,15 @@ TinyMCE_Popup.prototype.init = function() {
 
 
 TinyMCE_Popup.prototype.onLoad = function() {
-	var body = document.body;
+	var dir, i, elms, body = document.body;
 
 	if (tinyMCE.getWindowArg('mce_replacevariables', true))
 		body.innerHTML = tinyMCE.applyTemplate(body.innerHTML, tinyMCE.windowArgs);
 
-	var dir = tinyMCE.selectedInstance.settings['directionality'];
-	if (dir == "rtl") {
-		var elms = document.forms[0].elements;
-		for (var i=0; i<elms.length; i++) {
+	dir = tinyMCE.selectedInstance.settings['directionality'];
+	if (dir == "rtl" && document.forms && document.forms.length > 0) {
+		elms = document.forms[0].elements;
+		for (i=0; i<elms.length; i++) {
 			if ((elms[i].type == "text" || elms[i].type == "textarea") && elms[i].getAttribute("dir") != "ltr")
 				elms[i].dir = dir;
 		}
@@ -87,9 +87,8 @@ TinyMCE_Popup.prototype.onLoad = function() {
 		body.style.display = 'block';
 
 	// Execute real onload (Opera fix)
-	if (tinyMCEPopup.onLoadEval != "") {
+	if (tinyMCEPopup.onLoadEval != "")
 		eval(tinyMCEPopup.onLoadEval);
-	}
 };
 
 

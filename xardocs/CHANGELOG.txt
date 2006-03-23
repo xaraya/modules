@@ -1,3 +1,9 @@
+* Version 1.0.x 23 Mar 06
+- Includes tinymce upstream project version 2.0.5.1
+- Updated and reduced number  of language files - only UTF-8 included
+- Ibrowser update for file paths
+- Many bugfixes
+
 * Version 1.0.3 26 Feb 06
 - Includes tinymce upstream project version 2.0.4
 - This included a major rewrite and cleanup of files so will break
