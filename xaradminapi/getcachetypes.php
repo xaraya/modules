@@ -1,13 +1,16 @@
 <?php
-
-/**
- * construct an array of output cache types
+/*
+ *Construct output array
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 Xaraya
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage xarCacheManager module
+ * @link http://xaraya.com/index.php/release/1652.html
+ */
+/**
  * @author jsb
  *
  * @returns array

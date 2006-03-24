@@ -1,13 +1,17 @@
 <?php
-
-/**
- * Construct and array of the current cache keys
+/*
+ * Construct an array of current cache keys
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 Xaraya
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage xarCacheManager module
+ * @link http://xaraya.com/index.php/release/1652.html
+ */
+/**
+ * Construct an array of the current cache keys
  * @author jsb
  *
  * @param $type cachetype to start the search for cachekeys

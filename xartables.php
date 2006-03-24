@@ -1,15 +1,14 @@
-<?php 
+<?php
 /**
- * File: $Id$
- * 
- * Xaraya Autolinks
- * 
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
- * @link http://www.xaraya.org
+ * xarCacheManager table setup 
  *
- * @subpackage xarCacheManager Module
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage xarCacheManager module
+ * @link http://xaraya.com/index.php/release/1652.html
  * @author jsb 
 */
 

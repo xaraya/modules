@@ -1,15 +1,17 @@
 <?php
-
 /**
  * construct an array of output cache subdirectories
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 Xaraya
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage xarCacheManager module
+ * @link http://xaraya.com/index.php/release/1652.html
  * @author jsb
- *
+ */
+/*
  * @param $dir directory to start the search for subdirectories in
  * @returns array
  * @return sorted array of cache sub directories, with key set to directory name and value set to path

@@ -1,6 +1,16 @@
 <?php
-
-/**
+/*
+ * Utility function for menulinks
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage xarCacheManager module
+ * @link http://xaraya.com/index.php/release/1652.html
+ */
+ /**
  * utility function pass individual menu items to the main menu
  *
  * @author jsb| mikespub
