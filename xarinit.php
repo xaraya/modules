@@ -15,7 +15,7 @@
 /**
  * Initialise the registration module
  *
- * @author jojodee
+ * @author jojodee <jojodee@xaraya.com>
  * @access public
  * @param none $
  * @returns bool

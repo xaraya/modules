@@ -21,7 +21,7 @@
 $modversion['name']           = 'registration';
 $modversion['id']             = '30205';
 $modversion['version']        = '1.0.0';
-$modversion['displayname']    = xarML('Registration');
+$modversion['displayname']    = xarML('User Registration');
 $modversion['description']    = 'Standard User Registration';
 $modversion['displaydescription'] = xarML('Standard User Registration');
 $modversion['credits']        = 'xardocs/credits.txt';

@@ -21,12 +21,6 @@
 function registration_adminapi_getmenulinks()
 {
     $menulinks = array();
-    if (xarSecurityCheck('EditRegistration',0)) {
-        $menulinks[] = Array('url' => xarModURL('registration','admin','overview'),
-                               'title' => xarML('Registration Overview'),
-                              'label' => xarML('Overview'));
-
-    }
 
     if (xarSecurityCheck('AdminRegistration',0)) {
         $menulinks[] = Array('url'   => xarModURL('registration',
