@@ -27,7 +27,8 @@ function registration_user_main()
 									 'user',
 									 'terms'));
 	} elseif ($allowregistration != true) {
-		xarResponseRedirect(xarModURL('authsystem',
+        $authenticationmod=xarModGetNameFromId(xarModGetVar('roles','defaultauthmodule'));
+		xarResponseRedirect(xarModURL($authenticationmod,
 									  'user',
 									  'showloginform'));
 	} else {
