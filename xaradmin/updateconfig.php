@@ -335,6 +335,9 @@ function tinymce_admin_updateconfig()
      if (xarModGetVar('tinymce','tinydirection') != 'ltr') { //defaults to ltr
          $jstext .='directionality : "'.xarModGetVar('tinymce','tinydirection').'",';
      }
+    /* add our filebrowsercallback file */
+    $jstext .='file_browser_callback : "xarfilebrowsercallback",';
+
     /*language options */
     if (xarModGetVar('tinymce','tinyencode')==1){
         $jstext .='encoding : "xml", ';
@@ -347,6 +350,8 @@ function tinymce_admin_updateconfig()
     }
     /* add known requirement last to ensure proper syntax with no trailing comma */
     $jstext .='language : "'.xarModGetVar('tinymce','tinylang').'" ';
+    
+
 
     /* now add the other configurations */
     if (xarModGetVar('tinymce','usemulticonfig')==1){
