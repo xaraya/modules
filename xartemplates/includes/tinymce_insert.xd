@@ -27,6 +27,7 @@
         <xar:else />
             <xar:base-include-javascript position="head" module="tinymce" filename="../../xarincludes/tiny_mce_gzip.php" />
         </xar:if>
+        <xar:base-include-javascript position="head" module="tinymce" filename="../../xarincludes/xarfilebrowsercallback.js" />
         <xar:set name="jsstring">xarModGetVar('tinymce','jstext')</xar:set>
         <xar:set name="jsconfigstring">xarModGetVar('tinymce','multiconfig')</xar:set>
         <xar:set name="buttonjs">xarModGetVar('tinymce','buttonstring')</xar:set>

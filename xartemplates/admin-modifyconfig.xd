@@ -633,9 +633,6 @@
                 <strong><xar:mlstring>Plugin Options</xar:mlstring></strong>
             </legend>
 
-            <div class="xar-form-input-wrapper-before xar-padding-medium">
-                 <xar:mlstring>To use a plugin first list it's name in the <strong>Plugins to Load</strong> field below. For some plugins you must also add the name of the plugin BUTTON to the Button Layout below.</xar:mlstring>
-            </div>
 
             <div class="xar-form-input-wrapper-before xar-padding-medium">
                 <label for="tinyplugins" class="xar-form-label" title="#xarML('Add names of any extra plugins you wish to load here.')#">
@@ -673,15 +670,14 @@
              </div>
              </xar:if>
 
-        <div class="xar-form-input-wrapper xar-padding-large">
-            <label for="ibrowser" class="xar-form-label"><xar:mlstring>To Use Image Browser plugin:</xar:mlstring>
-            </label>
+        <div class="xar-form-input-wrapper-before">
+            <p><strong><xar:mlstring>To use FileBrowser, IBrowser or IManager:</xar:mlstring></strong></p>
 
-            <ul class="xar-form-input-wrapper-after">
-            <li><xar:mlstring>Add <strong>ibrowser</strong> to the plugins to load list above</xar:mlstring></li>
-            <li><xar:mlstring>Add <strong>ibrowser</strong> to the button list in Advanced Theme Layout option below.</xar:mlstring></li>
-            <li><xar:mlstring> Update the </xar:mlstring><a href="modules/tinymce/xartemplates/includes/ibrowserconfig.inc"><xar:mlstring>configuration file at modules/tinymce/xartemplates/includes/ibrowserconfig.inc</xar:mlstring></a>
-                <xar:mlstring> for the IBrowser Plugin.</xar:mlstring>
+            <ul>
+            <li><xar:mlstring>Add <strong>ibrowser or imanager or advimage</strong> to the plugins above</xar:mlstring></li>
+            <li><xar:mlstring>Add <strong>ibrowser or imanager </strong> to the button list in Advanced Theme Layout option below.</xar:mlstring></li>
+            <li><xar:mlstring> Update the </xar:mlstring><a href="modules/tinymce/xartemplates/includes/tinymceconfig.inc"><xar:mlstring>configuration file at modules/tinymce/xartemplates/includes/tinymceconfig.inc</xar:mlstring></a>
+                <xar:mlstring> and copy to your <code>var/tinymce/tinymceconfig.inc</code> directory</xar:mlstring>
             </li>
             </ul>
 
