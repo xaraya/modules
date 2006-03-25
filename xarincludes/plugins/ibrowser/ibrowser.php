@@ -44,12 +44,11 @@
     $realpath=str_replace('//','/',$realpath); //get rid of any double slashes
 
     // include image library config settings
-    if (is_file($realpath.'/var/ibrowser/ibrowserconfig.inc')) {
-        include_once $realpath.'/var/ibrowser/ibrowserconfig.inc';
+    if (is_file($realpath.'/var/tinymce/tinymceconfig.inc')) {
+        include_once $realpath.'/var/tinymce/tinymceconfig.inc';
    } else {
         // look in the templates directory of this module for the default file
-        //include_once '../../../../../ibrowserconfig.inc';
-        include_once '../../../xartemplates/includes/ibrowserconfig.inc';
+        include_once '../../../xartemplates/includes/tinymceconfig.inc';
    }
 
 	//-------------------------------------------------------------------------

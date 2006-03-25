@@ -41,10 +41,10 @@ function tinymce_init()
    xarModSetVar('tinymce', 'tinyentity_encoding','raw');
    xarModSetVar('tinymce', 'tinyinlinestyle',1);
    xarModSetVar('tinymce', 'tinyundolevel',10);
-   xarModSetVar('tinymce', 'tinyplugins', 'searchreplace,print,advimage,advlink,table,paste,fullscreen,emotions');
+   xarModSetVar('tinymce', 'tinyplugins', 'searchreplace,print,advimage,advlink,table,paste,fullscreen,emotions,liststyle');
    xarModSetVar('tinymce', 'tinybuttons', 'search,replace,pastetext,pasteword');
    xarModSetVar('tinymce', 'tinybuttons2','print,fullscreen,emotions');
-   xarModSetVar('tinymce', 'tinybuttons3','tablecontrols');
+   xarModSetVar('tinymce', 'tinybuttons3','liststyle,tablecontrols');
    xarModSetVar('tinymce', 'tinybuild1', '');
    xarModSetVar('tinymce', 'tinybuild2', '');
    xarModSetVar('tinymce', 'tinybuild3', '');
