@@ -23,7 +23,7 @@ include('util.php') ;
 include('io.php') ;
 include('basexml.php') ;
 include('commands.php') ;
-include '../../../../../../var/tinymce/tinymceconfig.inc';
+
 if ( !$Config['Enabled'] )
 	SendError( 1, 'This connector is disabled. Please check the "filemanager/browser/default/connectors/php/config.php" file' ) ;
 

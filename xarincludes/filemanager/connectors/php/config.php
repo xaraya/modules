@@ -20,9 +20,13 @@
 
 global $Config ;
 
-// SECURITY: You must explicitelly enable this "connector". (Set it to "true").
+// SECURITY: You must explicitly enable this "connector". (Set it to "true").
 $Config['Enabled'] = true ;
-include '../../../../../../var/tinymce/tinymceconfig.inc';
+if (is_file('../../../../../../var/tinymce/tinymceconfig.inc')) {
+    include_once '../../../../../../var/tinymce/tinymceconfig.inc';
+}else{
+    include_once '../../../../xartemplates/includes/tinymceconfig.inc';
+}
 // Path to user files relative to the document root.
 $Config['UserFilesPath'] = $cfg['filebrowser_dir'];//'./var/images/' ;
 // Fill the following value it you prefer to specify the absolute path for the

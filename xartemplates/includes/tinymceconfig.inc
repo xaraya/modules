@@ -110,12 +110,13 @@
 	// use static image libraries	
 	$cfg['ilibs'] = array (																// image library path with slashes; absolute to root directory - please make sure that the directories have write permissions	
 		array (																		
-			'value'   	=> '/yourwebroot/subdir_if_exists/var/images/',
-			'text'    	=> 'Stock Images',
+
+             'value'   	=> '/var/uploads/',
+            'text'    	=> 'Stock Images',
 		),
 
 				array (
-			'value'   	=> '/yourwebroot/subdir_if_exists/var/images/library/',
+			'value'   	=> '/var/images/',
 			'text'    	=> 'Image Library',
 		),
 	);
@@ -123,7 +124,7 @@
 	// use dynamic image libraries - if $cfg['ilibs_inc'] is set, static image libraries above are ignored
 	// image directories to be scanned
 	$cfg['filebrowser_dir']= 'var/images/'; //relative to your installation directory, trailing slash
-	$cfg['ilibs_dir'] 	   = array('/yourwebroot/subdir_if_exists/var/images/');						   	// image library path with slashes; absolute to root directory - please make sure that the directories have write permissions
+	$cfg['ilibs_dir'] 	   = array('/var/images/');						   	// image library path with slashes; absolute to root directory - please make sure that the directories have write permissions
 	$cfg['ilibs_dir_show'] = true;														// show main library (true) or only sub-dirs (false)
      //You must uncomment the following to get dynamic library creation and scanning
 	$cfg['ilibs_inc']      = 'scripts/rdirs.php';  	// uncomment to allow dynamic file library
