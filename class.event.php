@@ -166,7 +166,7 @@ class Event
     function setLinkedEventData(&$event_data,$event_date,$event_obj)
     {
         //Get variables
-        $dateformat=xarModGetVar('julian', 'dateformat');
+        //$dateformat=xarModGetVar('julian', 'dateformat');
         // Add a link identifier when not present yet
         $pos = strpos($event_obj->event_id, '_link');
         if (!$pos) {

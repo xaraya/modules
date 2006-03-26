@@ -303,18 +303,6 @@ function julian_userapi_getevents($args)
             case 'eventName':
                 $query_linked .= " ORDER BY $event_linkage_table.summary $orderby";
                 break;
-            case 'eventDesc':
-                $query_linked .= " ORDER BY $event_linkage_table.description $orderby";
-                break;
-            case 'eventLocn':
-                $query_linked .= " ORDER BY $event_linkage_table.location $orderby";
-                break;
-            case 'eventCont':
-                $query_linked .= " ORDER BY $event_linkage_table.contact $orderby";
-                break;
-            case 'eventFee':
-                $query_linked .= " ORDER BY $event_linkage_table.fee $orderby";
-                break;
         }
     }
 
