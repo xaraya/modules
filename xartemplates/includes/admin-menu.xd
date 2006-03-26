@@ -1,11 +1,58 @@
-<table border="1" width="100%" cellpadding="2" cellspacing="0">
-    <tr>
-        <th align="center">
-            <xar:mlstring>Categories Administration</xar:mlstring>
-        </th>
-    </tr>
-</table>
-<!-- these do not belong here!!!
-        </td>
-    </tr>
-</table> -->
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:comment>Common Administration menu</xar:comment>
+<xar:style scope="module" module="base" file="navtabs" />
+
+<xar:set name="activetab">$_bl_module_func</xar:set>
+<div>
+  <dl class="xar-tabs">
+    <dt class="help" title="#xarML('Choose an action to perform')#">
+      <xar:mlstring>Actions:</xar:mlstring>
+    </dt>
+    <xar:sec mask="EditCategories" catch="false">
+        <xar:set name="tabclass">$activetab=='viewcats'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-categories-admin-viewcats;">
+            <xar:mlstring>View Categories</xar:mlstring>
+          </a>
+        </dd>
+    </xar:sec>
+    <xar:sec mask="AddCategories" catch="false">
+        <xar:set name="tabclass">$activetab=='modifycat'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-categories-admin-modifycat;">
+            <xar:mlstring>Add Category</xar:mlstring>
+          </a>
+        </dd>
+    </xar:sec>
+    <xar:sec mask="AddCategories" catch="false">
+        <xar:set name="tabclass">$activetab=='stats'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-categories-admin-stats;">
+            <xar:mlstring>Stats</xar:mlstring>
+          </a>
+        </dd>
+    </xar:sec>
+    <xar:sec mask="AdminCategories" catch="false">
+        <xar:set name="tabclass">$activetab=='checklinks'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-categories-admin-checklinks;">
+            <xar:mlstring>Check links</xar:mlstring>
+          </a>
+        </dd>
+    </xar:sec>
+    <xar:sec mask="AdminCategories" catch="false">
+        <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-categories-admin-modifyconfig;">
+            <xar:mlstring>Modify Config</xar:mlstring>
+          </a>
+        </dd>
+    </xar:sec>
+        <xar:set name="tabclass">$activetab=='overview'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+            <a href="&xar-modurl-categories-admin-overview;" >
+                <xar:mlstring>Overview</xar:mlstring>
+            </a>
+        </dd>
+  </dl>
+</div>

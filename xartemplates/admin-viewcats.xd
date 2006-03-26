@@ -1,7 +1,9 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Categories Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>View Categories</xar:mlstring></h2><br />
-<div style="margin: auto;">
+<div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
+    <h2><xar:mlstring>View Categories</xar:mlstring></h2><br />
+
 <table border="0" width="100%" cellspacing="0" cellpadding="0">
 <tr>
     <th><xar:mlstring>Name</xar:mlstring></th>
@@ -99,6 +101,5 @@
 </form>
 <tr><td><xar:mlstring>Categories Total:</xar:mlstring>&nbsp;&nbsp;#$pagertotal#</td></tr>
 </table>
-<br />
-</div>
+
 </div>

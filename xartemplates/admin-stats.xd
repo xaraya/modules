@@ -1,7 +1,9 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Categories Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>View Statistics</xar:mlstring></h2><br />
-<div style="margin: auto;">
+<div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
+    <h2><xar:mlstring>View Statistics</xar:mlstring></h2><br />
+
 <xar:if condition="empty($modid)">
         <table border="0" width="100%" cellpadding="0" cellspacing="0">
             <tr>
@@ -212,5 +214,5 @@
             </tr>
         </table>
 </xar:if>
-</div>
+
 </div>

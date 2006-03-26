@@ -1,5 +1,5 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:if condition="xarTplAddStyleLink('categories', 'forms')"></xar:if>
+
 <xar:base-include-javascript module="base" filename="formcheck.js" />
 <script type="text/javascript">
 <!--
@@ -17,13 +17,14 @@
     </span>
 </div>
 <div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
     <h2>
         <xar:mlstring>
             Modify Configuration
         </xar:mlstring>
     </h2>
-    <form class="xar-formwidget" action="#xarModURL('categories','admin','modifyconfig')#" method="post" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);" enctype="application/x-www-form-urlencoded">
-        <fieldset class="formelements xar-norm">
+    <form action="#xarModURL('categories','admin','modifyconfig')#" method="post" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);" enctype="application/x-www-form-urlencoded">
+        <fieldset class="xar-norm">
             <legend>
                 <strong>
                     <xar:mlstring>
@@ -33,24 +34,20 @@
             </legend>
             <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
             <input type="hidden" name="phase" id="phase" value="update" />
-            <p class="param">
-                <label for="catsperpage" class="required">
-                    <span class="help" title="#xarML('The number of categories that you want displayed per page.')#">
+            <div class="xar-form-input-wrapper">
+                <label for="catsperpage" class="xar-form-label" title="#xarML('The number of categories that you want displayed per page')#">
                         <xar:mlstring>
                             Categories per page
                         </xar:mlstring>
-                    </span>
                 </label>
                 <input type="text" name="catsperpage" id="catsperpage" value="#$catsperpage#" size="5" />
-            </p>
+            </div>
             <xar:comment>Let's remove this option for the 1.0 release.  If someone wants it, just remove the comment here.
-            <p class="param">
-                <label for="useJSdisplay">
-                    <span class="help" title="#xarML('The categories can be navigated in an explorer style interface.')#">
-                        <xar:mlstring>
+            <div class="xar-form-input-wrapper">
+                <label for="useJSdisplay" class="xar-form-label" title="#xarML('The categories can be navigated in an explorer style interface')#">
+                       <xar:mlstring>
                             Windows Explorer style tree
                         </xar:mlstring>
-                    </span>
                 </label>
                 <xar:if condition="$useJSdisplay">
                     <input type="radio" name="useJSdisplay" id="useJSdisplayYes" value="true" checked="checked" /><label for="useJSdisplayYes"><xar:mlstring>Yes</xar:mlstring></label>
@@ -59,35 +56,32 @@
                     <input type="radio" name="useJSdisplay" id="useJSdisplayYes" value="true" /><label for="useJSdisplayYes"><xar:mlstring>Yes</xar:mlstring></label>
                     <input type="radio" name="useJSdisplay" id="useJSdisplayNo" value="false" checked="checked" /><label for="useJSdisplayNo"><xar:mlstring>No</xar:mlstring></label>
                 </xar:if>
-            </p>
+            </div>
             </xar:comment>
-            <p class="param">
-                <label for="numstats">
-                    <span class="help" title="#xarML('Specify how many links you want to see per page.')#">
-                        <xar:mlstring>
+            <div class="xar-form-input-wrapper">
+                <label for="numstats" class="xar-form-label" title="#xarML('Specify how many links you want to see per page.')#">
+                         <xar:mlstring>
                             Number of links shown in statistics
                         </xar:mlstring>
-                    </span>
                 </label>
                 <input type="text" name="numstats" id="numstats" size="4" maxlength="4" value="#$numstats#" />
-            </p>
-            <p class="param">
-                <label for="showtitle">
-                    <span class="help" title="#xarML('In many cases, you can see the item title if you want.')#">
-                        <xar:mlstring>
-                            Show the item title in statistics
-                        </xar:mlstring>
-                    </span>
-                </label>
-                <xar:if condition="!empty($showtitle)">
+            </div>
+            <div class="xar-form-input-wrapper-after">
+              <xar:if condition="!empty($showtitle)">
                   <input type="checkbox" name="showtitle" id="showtitle" value="1" checked="checked" />
                 <xar:else/>
                   <input type="checkbox" name="showtitle" id="showtitle" value="1" />
                 </xar:if>
-            </p>
+                <label for="showtitle" title="#xarML('In many cases, you can see the item title if you want')#">
+                        <xar:mlstring>
+                            Show the item title in statistics
+                        </xar:mlstring>
+                </label>
+
+            </div>
         </fieldset>
             <xar:if condition="!empty($hooks)">
-                <fieldset class="formelements xar-norm">
+                <fieldset >
                     <legend>
                         <strong>
                             <xar:mlstring>
@@ -102,10 +96,10 @@
                     </xar:if>
                 </fieldset>
             </xar:if>
-        <fieldset class="formelements xar-norm">
-            <p class="param">
+        <fieldset >
+            <div class="xar-form-input-wrapper">
                 <input type="submit" value="#xarML('Submit')#" />
-            </p>
+            </div>
         </fieldset>
     </form>
 </div>
