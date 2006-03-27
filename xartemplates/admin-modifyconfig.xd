@@ -7,55 +7,59 @@
     </span>
 </div>
 <div class="xar-mod-body">
-    <form class="xar-formwidget" name="post" id="post" action="&xar-modurl-hitcount-admin-modifyconfig;" method="post" enctype="application/x-www-form-urlencoded">
-        <fieldset class="formelements xar-norm">
+    <xar:template type="module" file="admin-menu" />
+    <form name="post" id="post" action="&xar-modurl-hitcount-admin-modifyconfig;" method="post" enctype="application/x-www-form-urlencoded">
+        <fieldset>
             <legend>
                 <xar:mlstring>
                     Modify Configuration
                 </xar:mlstring>
             </legend>
-    <input type="hidden" name="authid" id="authid" value="#$authid#" />
-    <input type="hidden" name="phase" id="phase" value="update" />
-            <div class="xar-form-input-wrapper xar-clear-both">
-                <label for="countadmin" class="xar-form-label">
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="hidden" name="phase" id="phase" value="update" />
+            <div class="xar-form-input-wrapper-after">
+            <xar:if condition="xarModGetVar('hitcount', 'countadmin')">
+                <input type="checkbox" name="countadmin" id="countadmin" value="1" checked="checked" />
+            <xar:else />
+                <input type="checkbox" name="countadmin" id="countadmin" value="1" />
+             </xar:if>
+                <label for="countadmin"">
                     <xar:mlstring>Count Administrator Hits</xar:mlstring>
                     :
                 </label>
-        <xar:if condition="xarModGetVar('hitcount', 'countadmin')">
-            <input type="checkbox" name="countadmin" id="countadmin" value="1" checked="checked" />
-        <xar:else />
-            <input type="checkbox" name="countadmin" id="countadmin" value="1" />
-                </xar:if>
             </div>
-            <div class="xar-form-input-wrapper xar-clear-both">
+            <div class="xar-form-input-wrapper">
                 <label for="numitems" class="xar-form-label">
                     <xar:mlstring>Number of top items shown to users</xar:mlstring>
                     :
                 </label>
                 <input type="text" name="numitems" id="numitems" size="4" maxlength="4" value="#$numitems#" />
             </div>
-            <div class="xar-form-input-wrapper xar-clear-both">
+            <div class="xar-form-input-wrapper">
                 <label for="numstats" class="xar-form-label">
                     <xar:mlstring>Number of items shown in statistics</xar:mlstring>
                     :
                 </label>
                 <input type="text" name="numstats" id="numstats" size="4" maxlength="4" value="#$numstats#" />
             </div>
-            <div class="xar-form-input-wrapper xar-clear-both">
-                <label for="showtitle" class="xar-form-label">
-                    <xar:mlstring>Show the item title in statistics</xar:mlstring>
-                    :
-                </label>
+            <div class="xar-form-input-wrapper-after">
+
                 <xar:if condition="!empty($showtitle)">
                   <input type="checkbox" name="showtitle" id="showtitle" value="1" checked="checked" />
                 <xar:else/>
                   <input type="checkbox" name="showtitle" id="showtitle" value="1" />
                 </xar:if>
+                <label for="showtitle"">
+                    <xar:mlstring>Show the item title in statistics</xar:mlstring>
+                    :
+                </label>
             </div>
         </fieldset>
-        <div class="xar-clear-both xar-align-center">
-            <input type="submit" value="#xarML('Save config')#" />
-        </div>
+        <fieldset>
+            <div class="xar-form-input-wrapper">
+                <input type="submit" value="#xarML('Save config')#" />
+            </div>
+        </fieldset>
     </form>
 </div>
 <xar:comment>

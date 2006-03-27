@@ -3,6 +3,7 @@
     <span class="xar-mod-title"><xar:mlstring>Hitcount Administration</xar:mlstring></span>
         </div>
 <div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
    <img src="#xarTplGetImage('admin_generic.gif', 'base')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
     <h2>
         <xar:mlstring>Overview</xar:mlstring>
@@ -37,9 +38,5 @@
     <p>
             <xar:mlstring>The hitcount must be hooked into the items that you want to count up.</xar:mlstring>
     </p>
-        </div>
-<div class="xar-mod-foot xar-align-center xar-padding-thick">
-    <p>
-        <xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring>
-    </p>
+
 </div>
