@@ -8,13 +8,14 @@
     </span>
 </div>
 <div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
     <h2>
         <xar:mlstring>
             Modify Configuration
         </xar:mlstring>
     </h2>
-    <form class="xar-formwidget" method="post" action="#xarModUrl('comments', 'admin', 'updateconfig')#" enctype="application/x-www-form-urlencoded">
-        <fieldset class="formelements xar-norm">
+    <form method="post" action="#xarModUrl('comments', 'admin', 'updateconfig')#" enctype="application/x-www-form-urlencoded">
+        <fieldset>
             <legend>
                 <strong>
                     <xar:mlstring>
@@ -24,28 +25,25 @@
             </legend>
 
             <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-            <p class="param">
-                <label for="showoptions">
-                    <span class="help" title="#xarML('Disabled, this will kill the options bar on comments')#">
-                        <xar:mlstring>
-                            Show rendering options
-                        </xar:mlstring>
-                    </span>
-                </label>
+            <div class="xar-form-input-wrapper-after">
                 <xar:set name="$showoptions">#xarModGetVar('comments','showoptions')#</xar:set>
                 <xar:if condition="!empty($showoptions)">
                     <input type="checkbox" name="showoptions" id="showoptions" value="1" checked="checked" />
                 <xar:else/>
                     <input type="checkbox" name="showoptions" id="showoptions" value="1" />
                 </xar:if>
-            </p>
-            <p class="param">
-                <label for="xar_depth">
-                    <span class="help" title="#xarML('The rendering depth to be used as default')#">
+
+                <label for="showoptions" title="#xarML('Disabled, this will kill the options bar on comments')#">
+                        <xar:mlstring>
+                            Show rendering options
+                        </xar:mlstring>
+                </label>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="xar_depth" class="xar-form-label" title="#xarML('The rendering depth to be used as default')#">
                         <xar:mlstring>
                             Default Rendering Depth
                         </xar:mlstring>
-                    </span>
                 </label>
                 <xar:set name="$depth">#xarModGetVar('comments','depth')#</xar:set>
                 <xar:set name="$max_depth">_COM_MAX_DEPTH - 1</xar:set>
@@ -59,14 +57,12 @@
                         </xar:if>
                     </xar:for>
                 </select>
-            </p>
-            <p class="param">
-                <label for="xar_render">
-                    <span class="help" title="#xarML('The rendering style to be used as default.')#">
-                        <xar:mlstring>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="xar_render" class="xar-form-label" title="#xarML('The rendering style to be used as default.')#">
+                         <xar:mlstring>
                             Default Rendering Style
                         </xar:mlstring>
-                    </span>
                 </label>
                 <xar:set name="$render">#xarModGetVar('comments','render')#</xar:set>
                 <select name="xar_render" id="xar_render">
@@ -91,14 +87,12 @@
                         <option value="nocomments"><xar:mlstring>No Comments</xar:mlstring></option>
                     </xar:if>
                 </select>
-            </p>
-            <p class="param">
-                <label for="xar_sortby">
-                    <span class="help" title="#xarML('The sorting mode to be used as default.')#">
-                        <xar:mlstring>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="xar_sortby" class="xar-form-label" title="#xarML('The sorting mode to be used as default.')#">
+                           <xar:mlstring>
                             Default Sorting Mode
                         </xar:mlstring>
-                    </span>
                 </label>
                 <xar:set name="$sortby">#xarModGetVar('comments','sortby')#</xar:set>
                 <select name="xar_sortby" id="xar_sortby">
@@ -126,14 +120,12 @@
                         <option value="4"><xar:mlstring>Title</xar:mlstring></option>
                     </xar:if>
                 </select>
-            </p>
-            <p class="param">
-                <label for="xar_order">
-                    <span class="help" title="#xarML('The sorting order to be used as default.')#">
-                        <xar:mlstring>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="xar_order" class="xar-form-label" title="#xarML('The sorting order to be used as default.')#">
+                         <xar:mlstring>
                             Default Sorting Order
                         </xar:mlstring>
-                    </span>
                 </label>
                 <xar:set name="$order">#xarModGetVar('comments','order')#</xar:set>
                 <select name="xar_order" id="xar_order">
@@ -150,14 +142,12 @@
                     </xar:if>
 
                 </select>
-            </p>
-            <p class="param">
-                <label for="xar_postanon">
-                    <span class="help" title="#xarML('Admin will see the name of who posted.')#">
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="xar_postanon" class="xar-form-label"  title="#xarML('Admin will see the name of who posted.')#">
                         <xar:mlstring>
                             Allow anonymous posting
                         </xar:mlstring>
-                    </span>
                 </label>
                 <xar:set name="$postanon">#xarModGetVar('comments','AllowPostAsAnon')#</xar:set>
                 <xar:if condition="$postanon eq 1">
@@ -165,40 +155,34 @@
                 <xar:else />
                     <input type="checkbox" name="xar_postanon" id="xar_postanon" />
                 </xar:if>
-            </p>
-            <p class="param">
-                <label for="numstats">
-                    <span class="help" title="#xarML('Statistics page ordering.')#">
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="numstats" class="xar-form-label"  title="#xarML('Statistics page ordering.')#">
                         <xar:mlstring>
                             Number of Items in Statistics
                         </xar:mlstring>
-                    </span>
                 </label>
                 <xar:set name="$numstats">#xarModGetVar('comments','numstats')#</xar:set>
                 <input type="text" name="numstats" id="numstats" size="4" maxlength="4" value="#$numstats#" />
-            </p>
-            <p class="param">
-                <label for="showtitle">
-                    <span class="help" title="#xarML('Show the titles of items that the comments are attached to.')#">
-                        <xar:mlstring>
-                            Show Title in Statistics
-                        </xar:mlstring>
-                    </span>
-                </label>
+            </div>
+            <div class="xar-form-input-wrapper-after">
                 <xar:set name="$showtitle">#xarModGetVar('comments','showtitle')#</xar:set>
                 <xar:if condition="!empty($showtitle)">
                     <input type="checkbox" name="showtitle" id="showtitle" value="1" checked="checked" />
                 <xar:else/>
                     <input type="checkbox" name="showtitle" id="showtitle" value="1" />
                 </xar:if>
-            </p>
-            <p class="param">
-                <label for="editstamp">
-                    <span class="help" title="#xarML('Default value for Comment Edit Stamp use')#">
+                <label for="showtitle" title="#xarML('Show the titles of items that the comments are attached to.')#">
+                        <xar:mlstring>
+                            Show Title in Statistics
+                        </xar:mlstring>
+                </label>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="editstamp" class="xar-form-label" title="#xarML('Default value for Comment Edit Stamp use')#">
                         <xar:mlstring>
                             Use Comment Edit Stamp
                         </xar:mlstring>
-                    </span>
                 </label>
                 <select name="editstamp" id="editstamp" size="1">
                 <xar:if condition="$editstamp eq '0'">
@@ -215,41 +199,36 @@
                    <option value="2" selected="selected"><xar:mlstring>Yes - exclude for Admin</xar:mlstring></option>
                 </xar:if> 
                 </select>
-            </p>
-            <p class="param">
-                <label for="xar_wrap">
-                    <span class="help" title="#xarML('Long strings will be wrapped, including URLS when checked')#">
-                        <xar:mlstring>
-                            Wrap Long Entries
-                        </xar:mlstring>
-                    </span>
-                </label>
+            </div>
+            <div class="xar-form-input-wrapper-after">
                 <xar:set name="$wrap">#xarModGetVar('comments','wrap')#</xar:set>
                 <xar:if condition="!empty($wrap)">
                     <input type="checkbox" name="xar_wrap" id="xar_wrap" value="1" checked="checked" />
                 <xar:else/>
                     <input type="checkbox" name="xar_wrap" id="xar_wrap" value="1" />
                 </xar:if>
-            </p>
-            <p class="param">
-                <label for="rssnumitems">
-                    <span class="help" title="#xarML('Number of items in RSS Feed')#">
+                <label for="xar_wrap" title="#xarML('Long strings will be wrapped, including URLS when checked')#">
                         <xar:mlstring>
-                            Number of Items in Statistics
+                            Wrap Long Entries
                         </xar:mlstring>
-                    </span>
+                </label>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="rssnumitems" class="xar-form-label" title="#xarML('Number of items in RSS Feed')#">
+                    <xar:mlstring>
+                         Number of Items in Statistics
+                    </xar:mlstring>
                 </label>
                 <xar:set name="$rssnumitems">#xarModGetVar('comments','rssnumitems')#</xar:set>
                 <input type="text" name="rssnumitems" id="rssnumitems" size="4" maxlength="4" value="#$rssnumitems#" />
-            </p>
+            </div>
+
             <xar:comment> Black list not available
-            <p class="param">
-                <label for="xar_useblacklist">
-                    <span class="help" title="#xarML('Use comment blacklist for comment spam checking.')#">
+            <div class="xar-form-input-wrapper">
+                <label for="xar_useblacklist" class="xar-form-input-wrapper" title="#xarML('Use comment blacklist for comment spam checking.')#">
                         <xar:mlstring>
                             Use Blacklist for Spam Check
                         </xar:mlstring>
-                    </span>
                 </label>
                 <xar:set name="$useblacklist">#xarModGetVar('comments','useblacklist')#</xar:set>
                 <xar:if condition="$useblacklist eq 1">
@@ -257,7 +236,7 @@
                 <xar:else />
                     <input type="checkbox" name="xar_useblacklist" id="xar_useblacklist" />
                 </xar:if>
-            </p>
+            </div>
             </xar:comment>
         </fieldset>
         <xar:if condition="!empty($hooks)">
@@ -265,10 +244,10 @@
                 #$output#
             </xar:foreach>
         </xar:if>
-        <fieldset class="formelements xar-norm">
-            <p class="param">
+        <fieldset>
+            <div class="xar-form-input-wrapper">
                 <input type="submit" value="#xarML('Submit')#" />
-            </p>
+            </div>
         </fieldset>
     </form>
 </div>

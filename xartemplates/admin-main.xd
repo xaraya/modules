@@ -1,8 +1,9 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>Comments Administration</xar:mlstring></span>
-        </div>
+</div>
 <div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
    <img src="#xarTplGetImage('admin_generic.gif', 'base')#" alt="official icon" width="96" height="96" class="xar-module-icon" />
     <h2>
         <xar:mlstring>Overview</xar:mlstring>
@@ -36,9 +37,21 @@
         <p>
             <xar:mlstring>Comments provide a display hook for modules to use as needed.</xar:mlstring>
         </p> 
-        </div>
-        <div class="xar-mod-foot xar-align-center xar-padding-thick">
+    <h3>
+        <xar:mlstring>Further Information</xar:mlstring>
+    </h3>
     <p>
-        <xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring>
+        <xar:mlstring>Further information on the Comments module can be found at</xar:mlstring>
     </p>
+       <ul>
+              <li><xar:mlstring>Comments Module Extension page at</xar:mlstring> <a title="#xarML('Comments Module - Xaraya Extension 14')#" href="http://www.xaraya.com/index.php/release/14.html">Xaraya Extension and Releases</a>.
+              <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+              </li>
+              <li><xar:mlstring>Related tutorials and documentation on Comments Module found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/comments/" title="#xarML('Related documentation on Comments')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+              </li>
+         </ul>
+         <p class="xar-sub">
+             <strong>&nbsp;<xar:mlstring>Comments Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.2&nbsp; 2006-03-26
+         </p>
+
 </div>

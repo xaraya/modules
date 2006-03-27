@@ -11,7 +11,7 @@
  * @link http://xaraya.com/index.php/release/14.html
  * @author Carl P. Corliss <rabbitt@xaraya.com>
  */
-$modversion['name'] = 'Comments API';
+$modversion['name'] = 'comments';
 $modversion['id'] = '14';
 $modversion['version'] = '1.3.0';
 $modversion['displayname']    = xarML('Comments');

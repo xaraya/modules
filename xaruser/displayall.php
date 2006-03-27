@@ -226,7 +226,7 @@ function comments_user_displayall($args)
     $templateargs['addprevious']    =$args['addprevious'];
     $templateargs['modarray']       =$modarray;
     $templateargs['modid']          =$modarray;
-    $templateargs['itemtype']       =$itemtype;
+    $templateargs['itemtype']       =isset($itemtype)?$itemtype:0;
     $templateargs['modlist']        =$modlist;
     $templateargs['decoded_returnurl'] = rawurldecode(xarModURL('comments','user','displayall'));
     $templateargs['decoded_nexturl'] = xarModURL('comments','user','displayall',array(

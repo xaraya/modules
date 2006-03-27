@@ -1,18 +1,14 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:mlstring>Comments Administration</xar:mlstring>
     </span>
 </div>
-
-<div align="center">
+<div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
     <h2>
         <xar:mlstring>Comments Module Statistics</xar:mlstring>
     </h2>
-</div>
-
-<br />
-
-<div class="xar-mod-body xar-norm-outline" style="padding: 1px;">
 
     <div align="center">
         <table border="0" width="100%" cellpadding="0" cellspacing="0">
@@ -102,7 +98,7 @@
 
             <tr>
                 <td colspan="5">
-                    <div class="xar-accent xar-norm-outline" style="text-align: justify;padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
+                    <div class="xar-accent xar-norm-outline xar-padding-thick">
                         <xar:mlstring>
                             By clicking on <b>Delete</b> you can delete all comments associated with a particular
                             module. Clicking on a module will take you to that module's statistics page containing
@@ -115,5 +111,4 @@
         </table>
     </div>
 </div>
-<br />
-<br />
+
