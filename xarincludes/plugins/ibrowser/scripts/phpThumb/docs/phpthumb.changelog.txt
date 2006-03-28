@@ -3,13 +3,108 @@
 //        available at http://phpthumb.sourceforge.net     ///
 //////////////////////////////////////////////////////////////
 
-v1.6.3 - December ??, 2005
+§ = structure change or important new feature
+* = less important new feature or change
+
+v1.7.0 - February 15, 2006
+  § ImageMagick output is used directly far more frequently
+    for much improved speed and minor quality improvement.
+  § ImageMagick now processes most of the image filters if
+    possible (will fall back to GD methods if unavailable)
+  § GD support is now optional if ImageMagick is installed.
+    Known limitations include:
+    - no support for HTTP source images
+    - ICO output is buggy (in some ImageMagick versions)
+    - most &fltr[] filters don't work at all
+    - 'ar', 'ra', 'far' don't work
+  § Added output support for ICO (icon) format (&f=ico).
+    Currently only supports single-image icons, but multi-
+    resolution support may be added in future versions
+    New file: phpthumb.ico.php
+  § Added output support for BMP (bitmap) format (&f=bmp).
+    Currently only supports 24-bit RGB format (for simplicity)
+  § Added new configuration & compatability checker
+    New file: demo/phpThumb.demo.check.php
+  * ImageMagick-generated thumbnails now have extra hidden
+    contents (EXIF data, etc) stripped (by using -thumbnail
+    instead of -resize) resulting in smaller filesizes
+  * Added background fill color, opacity and extent options to
+    'wmt' filter  (thanks craigÿpc-fanatics*com)
+  * Added metacharacter (^*) support for 'wmt', currently:
+    source filesize in bytes (^Fb), kB (^Fk), MB (^Fm),
+    source image width (^X), source image height (^Y),
+    thumbnail width (^x), thumbnail height (^y) and caret (^^)
+    (Feature Request #1357815)
+    (thanks ticklemeozmoÿusers*sourceforge*net)
+  * Moved ImageDestroy call from OutputThumbnail to end of
+    phpThumb.php to allow multiple calls to OutputThumbnail
+  * Added config_http_user_agent for site with browsersniffers
+    (thanks redrobÿgmail*com)
+  * Added $PHPTHUMB_CONFIG['disable_pathinfo_parsing'] (default
+    false) which disables parsing $_SERVER[PATH_INFO] for
+    parameters. If you want to parse PATH_INFO, set to false
+  * Added $PHPTHUMB_CONFIG['disable_imagecopyresampled'] (default
+    false) which replaces ImageCopyResampled with
+    ImageCopyResampleBicubic for buggy PHP-GD versions
+    (thanks g*pelagattiÿnetface*it)
+  * Added $PHPTHUMB_CONFIG['cache_prefix'] to allow sharing of
+    cache files across virtual servers (Feature Request #1395332)
+    (thanks doggyfrÿusers*sourceforge*net)
+  * Added $PHPTHUMB_CONFIG['disable_onlycreateable_passthru'] with
+    default=true (increased speed) to allow direct passthru of
+    images that don't have GD support. (Feature Request #1396446)
+    (thanks zedboyÿusers*sourceforge*net)
+  * Removed $PHPTHUMB_CONFIG['cache_differentiate_offsite'] because
+    it is now automatically tied in with nooffsitelink_enabled
+    (thanks doggysworldÿlibertysurf*fr)
+  * Removed phpThumb.demo.cacheconvert2.php
+  * Debug messages are now passed back from filters
+  * $PHPTHUMB_CONFIG['cache_source_filemtime_ignore_remote'] now
+    defaults to true for much-improved cached performance
+    (thanks redrobÿgmail*com)
+  * $PHPTHUMB_CONFIG['cache_differentiate_offsite'] now defaults
+    to false
+  * Added $PHPTHUMB_DEFAULTS['ar']='x' to phpThumb.config.php.default
+  * Added ImageDestroy($this->gdimg_source) to GenerateThumbnail()
+    to save memory before applying image filters
+  * gd_info() no longer member of phpthumb_functions
+  * cache files now default to using SERVER_NAME without 'www.'
+  * phpUnsharpMask::applyUnsharpMask() should be faster under PHP5 by
+    using ImageFilter(IMG_FILTER_GAUSSIAN_BLUR) when radius==1
+  * Added alternate CURL method for HTTP source images if
+    allow_url_fopen is disabled  (thanks webweberÿmotiondraw*com)
+  * Replaced $this->osslash with DIRECTORY_SEPARATOR constant
+  * Bugfix: [#1398327] 'new' got broken (1x1 images)
+  * Bugfix: [#1412552] HTTP source images with special characters were
+      not getting urlencoded
+  * Bugfix: ImageSaveAlpha errors on GD v2.0.0
+  * Bugfix: phpThumbDebug now entirely disabled if high_security=true
+  * Bugfix: source images with transparency lost transparency when
+    rotated  (thanks roalklÿyahoo*com)
+  * Bugfix: square source images were not resized when only (w|h)(p|l)
+    parameters passed
+  * Bugfix: source images are passed through unmodified in more cases
+  * Bugfix: ImageMagick not used on systems where it exists outside
+    defined open_basedir
+  * Bugfix: ImageMagickVersion() now returns correct versionstring
+  * Bugfix: ImageMagick warnings no longer cause ImageMagick to fail
+  * Bugfix: ErrorImage no longer fatal to phpThumbDebug
+  * Bugfix: "Array to string conversion" in foreach($a as $v) loops
+    (thanks zeeshanÿtargetedmedia*co*uk)
   * Bugfix: safe mode warnings in ImageCreateFromStringReplacement
     (thanks adminÿalex-home*net)
-  * Bugfix: 'new' got broken (1x1 images)
+  * Bugfix: nooffsitelink broken if !nooffsitelink_require_refer
+    (thanks depronÿgmx*net)
+  * Bugfix: phpThumb failed when magic_quotes_runtime=true
+    (thanks stansawyerÿyahoo*com)
+  * Bugfix: several issues with HTTP image sources
+    (thanks redrobÿgmail*com)
+  * Bugfix: phpThumb_tempnam() would return incomplete temp filenames
+    under Windows, which may result in orphaned zero-byte temp files
+    in C:\ if multiple drives exist
 
 v1.6.2 - November 24, 2005
-  * Animated GIF output is now possible if ImageMagick is
+  § Animated GIF output is now possible if ImageMagick is
     available and no filters (other than resize) are applied
     (thanks brandenbassÿgmail*com for idea)
   * Added $PHPTHUMB_CONFIG['cache_force_passthru'] to work
@@ -26,22 +121,22 @@ v1.6.2 - November 24, 2005
     (thanks aparviaiÿusers*sourceforge*net)
 
 v1.6.1 - August 26, 2005
-  * Filters now use GD functions where available (using
+  § Filters now use GD functions where available (using
     ImageFilter, only available in PHP v5.0.0+ with bundled
     version of GD). Enabled for: colorize, negative,
     grayscale, brightness, contrast, gaussian blur, selective
     blur, mean removal  (thanks donlaurÿmac*com)
-  * Added config_prefer_imagemagick (defaults=true)
-  * Added phpthumb_filters::Grayscale()        'gray'
-  * Added phpthumb_filters::ReduceColorDepth() 'rcd'
-  * Added phpthumb_filters::Brightness()       'brit'
-  * Added phpthumb_filters::Contrast()         'cont'
-  * Added phpthumb_filters::Saturation()       'sat'
-  * Added phpthumb_filters::EdgeDetect()    'edge' [PHP5 only]
-  * Added phpthumb_filters::BlurGaussian()  'gblr' [PHP5 only]
-  * Added phpthumb_filters::BlurSelective() 'gblr' [PHP5 only]
-  * Added phpthumb_filters::MeanRemoval()   'mean' [PHP5 only]
-  * Added phpthumb_filters::Smooth()        'smth' [PHP5 only]
+  § Added config_prefer_imagemagick (defaults=true)
+  § Added phpthumb_filters::Grayscale()        'gray'
+  § Added phpthumb_filters::ReduceColorDepth() 'rcd'
+  § Added phpthumb_filters::Brightness()       'brit'
+  § Added phpthumb_filters::Contrast()         'cont'
+  § Added phpthumb_filters::Saturation()       'sat'
+  § Added phpthumb_filters::EdgeDetect()    'edge' [PHP5 only]
+  § Added phpthumb_filters::BlurGaussian()  'gblr' [PHP5 only]
+  § Added phpthumb_filters::BlurSelective() 'gblr' [PHP5 only]
+  § Added phpthumb_filters::MeanRemoval()   'mean' [PHP5 only]
+  § Added phpthumb_filters::Smooth()        'smth' [PHP5 only]
   * New timing debug info in phpThumbDebug
   * Added config_cache_differentiate_offsite
   * config_die_on_error now defaults to false
@@ -76,23 +171,23 @@ v1.6.1 - August 26, 2005
     in some installations  (thanks frankieali4ÿhotmail*com)
 
 v1.6.0 - July 18, 2005
-  * Included new file phpThumb.demo.random.php to select a
+  § Included new file phpThumb.demo.random.php to select a
     random image from a specified folder, optionally only
     landscape and/or portrait and/or square images, and to
     display it to phpThumb.php
     (thanks mikeÿgdaymate*nl)
-  * Added /docs/phpthumb.faq.txt
-  * Added /demo/readme.demos.txt
-  * Added 'wp', 'hp', 'wl', 'hl', 'ws', 'hs' parameters for
+  § Added /docs/phpthumb.faq.txt
+  § Added /demo/readme.demos.txt
+  § Added 'wp', 'hp', 'wl', 'hl', 'ws', 'hs' parameters for
     width and height of portrait, landscape and square
     images. This allows you to display any image aspect
     ratio at the size you want without knowing ahead of time
     whether the image is wide or tall.
     (thanks mikeÿgdaymate*nl)
-  * phpThumb.php can now also be called by passing parameters
+  § phpThumb.php can now also be called by passing parameters
     in $_SERVER['PATH_INFO']. Please see phpthumb.readme.txt
     (thanks javierÿguegue*net)
-  * MySQL data pulling configuration moved from phpThumb.php
+  § MySQL data pulling configuration moved from phpThumb.php
     to phpThumb.config.php
   * "file" and "goto" parameters are now disabled by
     default (configurable in phpThumb.config.php but not
@@ -176,7 +271,7 @@ v1.5.4 - May 27, 2005
     Image Dimensions error  (thanks mailÿmmjaeger*com)
 
 v1.5.3 - May 4, 2005
-  * Added new filters:
+  § Added new filters:
     - 'wb' (White Balance) [ex: &fltr[]=wb|<c>]
       where <c> is the target hex color to white balance
       on, this color is what "should be" white, or light
@@ -184,7 +279,7 @@ v1.5.3 - May 4, 2005
       any gray color can theoretically be used. If <c> is
       omitted the filter guesses based on brightest pixels
       in each of RGB
-  * Cached files are used by a Location header instead of
+  § Cached files are used by a Location header instead of
     being passed through phpThumb.php using readfile
     (thanks newtnÿthrillnerds*com)
   * Added 'cache_source_filemtime_ignore_local' and
@@ -227,12 +322,12 @@ v1.5.3 - May 4, 2005
     (thanks rebootÿusers*sourceforge*net)
 
 v1.5.2 - April 20, 2005
-  * phpThumb.config.php is renamed to
+  § phpThumb.config.php is renamed to
     phpThumb.config.php.default to prevent accidental
     overwriting. Please migrate your old settings to the new
     file, delete your old config and rename the default to
     phpThumb.config.php
-  * Added new filters:
+  § Added new filters:
     - 'blur' (Blur) [ex: &fltr[]=blur|<radius>]
       where (0 < <radius> < 25) (default = 1)
       (thanks thoensiÿnetcom*no for code)
@@ -299,12 +394,12 @@ v1.5.1 - April 06, 2005
       echo '<img src="'.phpThumbURL('src=pic.jpg&w=50').'">';
       This function is supplied at the bottom of
       phpThumb.config.php  (thanks paulÿstonie*co*uk)
-  * Added new parameter "new" (phpThumb.php only) which can
+  § Added new parameter "new" (phpThumb.php only) which can
     create a new image without using "src" parameter. Set
     "&new=<b>|<o>" where <b> is the background hex color,
     <o> is (optional) opacity (0=transparent, 100=opaque).
     (thanks mailÿmmjaeger*com)
-  * Added new filters:
+  § Added new filters:
     - 'sep' (Sepia) [ex: &fltr[]=sep|<value>|<color>]
       where <value> is a number between 0 and 100 for the
       amount of colorization (default=50), and <color> is

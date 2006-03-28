@@ -40,7 +40,7 @@
         include_once $realpath.'/var/tinymce/tinymceconfig.inc';
    } else {
         // look in the templates directory of this module for the default file
-        include_once '../../../../xartemplates/includes/tinymceconfig.inc';
+        include_once $realpath.'/modules/tinymce/xartemplates/includes/tinymceconfig.inc';
    }
 	//-------------------------------------------------------------------------
 	// include configuration settings

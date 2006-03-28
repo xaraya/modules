@@ -84,8 +84,26 @@ A: Check these two values are present and properly configured
    to configure 'allow_src_above_docroot' to true.
 
 
+Q: Should I use phpThumb.php, or use phpThumb() as an object?
+A: phpThumb.php is easier to use (less coding) for basic uses.
+   phpThumb.php handles all caching; your own object will need
+   to have its own caching code. If you just want to display a
+   thumbnailed version of an existing image, use phpThumb.php
+   If you want to render one (or more) thumbnails to static
+   files (during upload, for example), that's an appropriate
+   use for the object mode. Also, phpThumb.config.php is only
+   used by phpThumb.php, so if you instantiate your own object
+   you need to manually set all configuration options because
+   phpThumb.config.php has NO effect. So, to repeat:
+   **always use phpThumb.php unless you NEED to have an object**
+
+
 Q: Are there any front-end GUI interfaces to phpThumb()?
 A: See /demo/readme.demo.txt
+
+
+Q: Are there / have there been any security issues in phpThumb?
+A: http://secunia.com/product/5199/
 
 
 Q: Why can't Flash work with images output from phpThumb()?
@@ -127,3 +145,59 @@ A: By default, phpThumb() only makes thumbnails for the same domain
    To disable off-server thumbnail blocking, just set:
      $PHPTHUMB_CONFIG['nohotlink_enabled'] = false;
 
+
+Q: Is it possible to set the parameters (like w/h/fltr[]) in the config,
+   so that they can't be changed over the URL?
+A: Take a look at $PHPTHUMB_DEFAULTS at the bottom of phpThumb.config.php
+   You'll want to set $PHPTHUMB_DEFAULTS_GETSTRINGOVERRIDE=false,
+   possibly also $PHPTHUMB_DEFAULTS_DISABLEGETPARAMS=true.
+   You may also want to investigate $PHPTHUMB_CONFIG['high_security_enabled']
+   (see the example at the bottom of phpThumb.config.php for how to call
+   images in HighSecurity mode.
+
+
+Q: Is there a way to use phpThumb() object to create thumbnails without the
+   parameters in the URL showing the location of the image etc?
+A: There is a demo in /demo/phpThumb.demo.object.php. You could modify this
+   into your own file, but there still remains the problem of passing
+   parameters to the file, whether it's phpThumb.php or your own instantiation
+   of a phpThumb() object. I would suggest is putting as many of the common
+   parameters into phpThumb.config.php as possible under $PHPTHUMB_DEFAULTS,
+   so you then don't have to pass them for each image. If you don't want people
+   modifying the parameters, turn on $PHPTHUMB_CONFIG['high_security_enabled']
+   and set a password (you'll need to generate the <img> tags with phpThumbURL()
+   provided at the bottom of phpThumb.config.php). If you don't want people
+   accessing your source images at all, you can place them outside DOCUMENT_ROOT
+   on your server (as long as phpThumb/PHP has read access to the directory).
+   The other option is to put your source images in a MySQL database and set
+   $PHPTHUMB_CONFIG['mysql_query'] and related parameters in phpThumb.config.php
+   to pull your source images from the database. That way it's impossible to
+   retrieve the images except through phpThumb.php, and if high_security is enabled,
+   then nobody can modify the parameters to view anything except what you want to show.
+   So, yes, it's possible to use your own object, but it's probably better to use
+   phpThumb.php if possible -- one notable issue is that phpThumb.php handles all
+   the caching, so you're on your own to deal with that if you create your own object.
+
+
+Q: phpThumb runs slowly, as if the images aren't cached, when I use HTTP source
+   images (not on my server). How can I make it go faster?
+A: $PHPTHUMB_CONFIG['cache_source_filemtime_ignore_remote'] = true;
+   // if true, remote source images will not be checked for modification date and
+   // cached image will be used if available, even if source image is changed or removed
+
+
+Q: What does the "cache_default_only_suffix" configuration option do?
+A: Cache files are normally created with big ugly names like
+   "phpThumb_cache_www.example.com_src1a482c2c760463795ff18faf073b389f_par3e099041c2f4a73041a7f5d7e7fc481a_dat1119952152.jpeg"
+   but if cache_default_only_suffix is enabled, cache filenames are simplified to
+   "pic_thumb.jpg" (for example). The problem is that only one version of that
+   thumbnail is possible, and you can never call it again with a different size,
+   or different filters, etc.  Generally you don't want that enabled, but it's
+   there because some people asked for it.
+
+
+Q: Why is the visual size of rotated images smaller than the unrotated images?
+A: phpThumb fits the rotated image into the 'w' and 'h' dimensions.
+   Try not specifying a 'w' parameter: phpThumb.php?src=file.png&ra=15
+   That should leave the image the apparent same size as the unrotated image
+   (in actual fact the canvas size is enlarged to fit the rotated image in it).

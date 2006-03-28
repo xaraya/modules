@@ -1,6 +1,6 @@
-INSTALLATION AND USE - XarTinyMCE Version 1.0.3
+INSTALLATION AND USE - XarTinyMCE Version 1.0.4
 
-UPGRADES to 1.0.3:
+UPGRADES to 1.0.4:
 IMPORTANT!! PLEASE SEE SPECIAL UPGRADE CONSIDERATIONS AT THE END OF THIS DOCUMENT
 
 XarTinyMCE is a configurable, lightweight WYSIWYG editor.
@@ -42,7 +42,7 @@ Please read the Overview Documentation in the TinyMCE administration area for mo
 
 ******************************
 
-To UPGRADE to Version 1.0.3:
+To UPGRADE to Version 1.0.4:
 
 There has been a number of major changes in tinymce that could BREAK COMPTIBILITY.
 Please check the following to ensure xartinymce continues to work for you.
@@ -52,21 +52,31 @@ When you are ready to upgrade your tinymce files:
 1. Remove ALL files in the tinymce module directory and subdirectories and
    replace with the upgraded module and files. There have been major
    changes in the file directory tree so please ensure you remove the old module.
+   
+2. Copy the tinymceconfig.inc file in tinymce/xartemplates/includes/tinymceconfig.inc
+   to your installation var/tinymce/tinymceconfig.inc (create the directory if it doesn't exist)
+   Make sure you update the file paths as this configuration sets the paths for ibrowser,
+   imanager and the new filebrowser functionality.
 
-2. Go to your Administration -> Modules ->View All
+3. Go to your Administration -> Modules ->View All
    Click Upgrade
    Click Activate
 
-3. Go to your admin Dynamic Data -> Property Types -> Flush Property Cache
+4. Go to your admin Dynamic Data -> Property Types -> Flush Property Cache
 
-4. Go to Administration -> XarTinyMCE -> Modify Config
+5. Go to Administration -> XarTinyMCE -> Modify Config
    Go to ***each*** TAB and ensure the values are as required.
    Make sure you check any new or upgraded options are filled in.
-   Click Submit button on EACH screen to confirm.
+   **Click Submit button**** on EACH screen to confirm and update the configuration and 
+   generated javascript saved from your settings.
 
 
 MAJOR CHANGES
 *************
+Version 1.0.4 has unified configuration file 'tinymceconfig.inc' that replaces 
+the ibrowserconfig.inc and imanagerconfig.inc files. It should be located in var/tinymce directory
+instead of the var/ibrowser directory. Please make sure you update this file.
+
 In Version 1.0.3 the main tinymce project had a complete rewrite and this means some Plugins are
 not working, until the authors update these. The cleanup routine has been totally rewritten
 as has a lot of the code to use classes. Plugins known to have broken with these changes are

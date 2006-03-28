@@ -132,6 +132,9 @@ function tinymce_upgrade($oldversion)
         xarModSetVar('tinymce', 'striplinebreaks',1);
         xarModSetVar('tinymce',  'sourceformat',1);
         break;
+      return tinymce_upgrade('1.0.4');        
+    case '1.0.4':
+       break;
     }
     return true;
 }

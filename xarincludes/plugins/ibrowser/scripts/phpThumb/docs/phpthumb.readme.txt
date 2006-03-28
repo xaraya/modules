@@ -24,7 +24,9 @@
 //                                                         ///
 //////////////////////////////////////////////////////////////
 
+============
 Description:
+============
 
 phpThumb() uses the GD library to create thumbnails from
 images (GIF, PNG or JPEG) on the fly. The output size is
@@ -42,7 +44,9 @@ your  images  from  another  server.  The  cache feature
 reduces server load.
 
 
+======
 Usage:
+======
 
 Call phpThumb() just like you would a normal image.
 Examples:
@@ -71,7 +75,9 @@ problems, although either slash should work if
 magic_quotes_gpc is disabled
 
 
+================================
 Alternate PATH_INFO-style Usage:
+================================
 
 phpThumb.php can also be called by passing parameters not
 after the usual "?" but like this:
@@ -91,7 +97,9 @@ passed before those last two items, with each pair joined by
 equals ("=") and seperated by semicolon (";")
 
 
+==============
 Configuration:
+==============
 
 There are some configuration options you may (but are
 not required to) change. Most configuration options can
@@ -104,7 +112,7 @@ The configuration file is distributed as
 phpThumb.config.php.default to prevent accidental
 overwriting of old configuration settings. Please
 migrate your old settings to the new file (if upgrading),
-delete your old config and rename the default to
+or delete your old config and rename the default to
 phpThumb.config.php
 
 
@@ -136,62 +144,7 @@ The configuration options you should maybe modify are:
     phpThumb() will use it to generate the thumbnail.
 
 
-Calling as an object (not using phpThumb.php):
-
-To use a database rather than physical files, or to
-render output to a file instead of the browser, you
-should skip phpThumb.php and instantiate your own
-phpThumb() object as follows:
-
-  // create new phpThumb() object
-  require_once('phpthumb.class.php');
-  $phpThumb = new phpThumb();
-
-  // set data
-  $phpThumb->setSourceFilename($image_filename);
-  // or $phpThumb->setSourceData($binary_image_data);
-  // or $phpThumb->setSourceImageResource($gd_image_resource);
-
-  // set parameters (see "URL Parameters" below)
-  $phpThumb->w = 100;
-
-  // set options (see phpThumb.config.php)
-  // here you must preface each option with "config_"
-  $phpThumb->config_output_format = 'jpeg';
-
-  // Set error handling (optional)
-  $phpThumb->config_error_die_on_error = false;
-
-  // generate & output thumbnail
-  if ($phpThumb->GenerateThumbnail()) {
-    $phpThumb->OutputThumbnail();
-    // or
-    //if (!$phpThumb->RenderToFile($filename)) {
-    //// do something with debug/error messages
-    //echo 'Failed: '.implode("\n", $phpThumb->debugmessages);
-    //}
-  } else {
-    // do something with debug/error messages
-    echo 'Failed: '.implode("\n", $phpThumb->debugmessages);
-  }
-
-
-If you want to change any of the configuration parameters
-(see phpThumb.config.php) you can change them like this:
-    $phpThumb->config_<variable_name> = <value>
-for example:
-    $phpThumb->config_output_format = 'jpeg';
-
-Note: If you want to loop through and create multiple
-  thumbnails from different image sources, you should
-  create and dispose an instance of phpThumb() each time
-  through the loop and not reuse the object.
-
-Note: phpThumb.php is where the caching code is located, if
-  you instantiate your own phpThumb() object that code is
-  bypassed and it's up to you to handle the reading and
-  writing of cached files.
-
+///////////////////////////////////////////////////////////
 Note: High-Security mode is recommended enabled if possible.
   Set $PHPTHUMB_CONFIG['high_security_enabled'] in
   phpThumb.config.php to enable it. Each call to phpThumb
@@ -199,11 +152,30 @@ Note: High-Security mode is recommended enabled if possible.
   bottom of phpThumb.config.php which create the hash:
     require_once('phpThumb.config.php');
     echo '<img src="'.phpThumbURL('src=pic.jpg&w=50').'">';
-
-
 ///////////////////////////////////////////////////////////
 
+
+==============================================
+Calling as an object (not using phpThumb.php):
+==============================================
+
+NOTE: most people don't need to and should not do this.
+If you just want to display resized images, please just
+use phpThumb.php, not the object mode. To render output
+to one (or more) files instead of the browser, you should
+skip phpThumb.php and instantiate your own object. Please
+take a look at /demo/phpThumb.demo.object.php for details.
+
+Note: phpThumb.php is where the caching code is located, if
+  you instantiate your own phpThumb() object that code is
+  bypassed and it's up to you to handle the reading and
+  writing of cached files.
+
+
+===============
 URL Parameters:
+===============
+
  src = filename of source image
  new = create new image, not thumbnail of existing image.
        Requires "w" and "h" parameters set.
@@ -275,6 +247,10 @@ fltr = filter system. Call as an array as follows:
          where <value> is a number between 0 and 100 for the
          amount of colorization (default=50), and <color> is
          the hex color to colorize to (default=A28065).
+         Note: this behaves differently when applied by
+         ImageMagick, in which case 80 is default, and lower
+         values give brighter/yellower images and higher
+         values give darker/bluer images
        - "usm" (UnSharpMask) [ex: &fltr[]=usm|<a>|<r>|<t>]
          where <a> is the amount (default = 80), <r> is the
          radius (default = 0.5), <t> is the threshold
@@ -344,9 +320,19 @@ fltr = filter system. Call as an array as follows:
              (requires PHP v4.3.2, otherwise 100% opaque);
          <m> is the edge (and inter-tile) margin in percent
        - "wmt" (WaterMarkText)
-         [ex: &fltr[]=wmt|<t>|<s>|<a>|<c>|<f>|<o>|<m>|<n>]
+         [ex: &fltr[]=wmt|<t>|<s>|<a>|<c>|<f>|<o>|<m>|<n>|<b>|<O>|<x>]
          where:
          <t> is the text to use as a watermark;
+             Any instance of metacharacters will be replaced
+             with their calculated value. Currently supported:
+               ^Fb = source image filesize in bytes
+               ^Fk = source image filesize in kilobytes
+               ^Fm = source image filesize in megabytes
+               ^X  = source image width in pixels
+               ^Y  = source image height in pixels
+               ^x  = thumbnail width in pixels
+               ^y  = thumbnail height in pixels
+               ^^  = the character ^
          <s> is the font size (1-5 for built-in font, or point
            size for TrueType fonts);
          <a> is the alignment (one of BR, BL, TR, TL, C, R, L,
@@ -359,7 +345,15 @@ fltr = filter system. Call as an array as follows:
              (requires PHP v4.3.2, otherwise 100% opaque);
          <m> is the edge (and inter-tile) margin in percent;
          <n> is the angle
-         (thanks mailÿmmjaeger*com)
+         <b> is the hex color of the background;
+         <O> is background opacity from 0 (transparent) to
+             100 (opaque)
+             (requires PHP v4.3.2, otherwise 100% opaque);
+         <x> is the direction(s) in which the background is
+             extended (either 'x' or 'y' (or both, but both
+             will obscure entire image))
+             Note: works with TTF fonts only, not built-in
+         (thanks mailÿmmjaeger*com, craigÿpc-fanatics*com)
        - "flip" [ex: &fltr[]=flip|x   or   &fltr[]=flip|y]
          flip image on X or Y axis
        - "ric" [ex: &fltr[]=ric|<x>|<y>]
@@ -443,20 +437,19 @@ down = filename to save image to. If this is set the
        than display the image
 
 
-Additional Object-only configuration variables:
-  rawImageData = binary data of source image, for example
-                 if the source data is from a database. Set
-                 this value instead of setting "src".
 
-
-
+==============
 General Notes:
+==============
 
 * Always use the local image filename wherever possible
   rather than a full http:// URL because performance is
   much better, less (or no) use of temp files, and the
   last-modified check for cached files doesn't work for
-  remote files.
+  remote files. For example:
+   good: phpThumb.php?src=/images/nicepic.jpg
+    bad: phpThumb.php?src=/home/httpd/example/images/nicepic.jpg
+  worse: phpThumb.php?src=http://example.com/images/nicepic.jpg
 
 * Thumbnails will be scaled proportionately to fit in a
   box of at most (width * height) pixels
@@ -497,6 +490,12 @@ General Notes:
   Image rotation requires PHP v4.3.0+. There have been
     reports of problems with PHP older than v4.3.3
   Some image filters require PHP v5.0.0+
+  Run /demo/phpThumb.demo.check.php to examine your server
+
+* phpThumb() works better and faster when ImageMagick is
+  available. Most functions will work with only GD2, but
+  speed is much faster with ImageMagick, and much larger
+  images can be processed with ImageMagick than GD.
 
 * phpThumb() works with GD v1.x, but works better with
    GD v2.0+ because of the true-color image support
@@ -511,5 +510,18 @@ General Notes:
    * http://bugs.php.net/bug.php?id=24174
    phpThumb() has a workaround for the above bug but
    there may be other bugs, and the workaround is slow.
+  Alpha transparent output requires GD >= 2.0.1 and
+   PHP >= 4.3.2
   Most (if not all) filters require GD v2.x to function
-   at all.
+   at all. But many filters can be handled by ImageMagick
+   instead of GD.
+
+* Filters handled by ImageMagick or GD:
+  - brit;cont;ds;sat;gray;clr;sep;gam;neg;th;rcd;flip;edge;
+    emb;lvl;blur;gblr;usm;
+* Filters handled only by ImageMagick:
+  - none yet
+* Filters handled only by GD + PHP5:
+  - sblr;mean;smth;
+* Filters handled only by GD2:
+  - bvl;wmi;wmt;over;wb;hist;fram;drop;mask;elip;ric;bord;

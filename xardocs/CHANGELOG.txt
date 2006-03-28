@@ -1,7 +1,9 @@
-* Version 1.0.x 23 Mar 06
+* Version 1.0.4 29 Mar 06
 - Includes tinymce upstream project version 2.0.5.1
 - Updated and reduced number  of language files - only UTF-8 included
-- Ibrowser update for file paths
+- Ibrowser update for file paths, newest phpThumbs
+- New! Filebrowser functionality that works with the advimage, advlink, and flash plugins.
+- Updated IManager 
 - Many bugfixes
 
 * Version 1.0.3 26 Feb 06
