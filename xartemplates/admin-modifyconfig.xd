@@ -684,7 +684,7 @@
             <p><strong><xar:mlstring>To use FileBrowser, IBrowser or IManager:</xar:mlstring></strong></p>
 
             <ul>
-            <li><xar:mlstring>Add <strong>ibrowser or imanager or advimage</strong> to the plugins above</xar:mlstring></li>
+            <li><xar:mlstring>Add <strong>ibrowser or imanager</strong> (or plugin that uses filebrowser eg advimage or advlink)</strong> to the plugins above</xar:mlstring></li>
             <li><xar:mlstring>Add <strong>ibrowser or imanager </strong> to the button list in Advanced Theme Layout option below.</xar:mlstring></li>
             <li><xar:mlstring> Update the </xar:mlstring><a href="modules/tinymce/xartemplates/includes/tinymceconfig.inc"><xar:mlstring>configuration file at modules/tinymce/xartemplates/includes/tinymceconfig.inc</xar:mlstring></a>
                 <xar:mlstring> and copy to your <code>var/tinymce/tinymceconfig.inc</code> directory</xar:mlstring>
