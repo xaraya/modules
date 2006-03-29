@@ -120,6 +120,7 @@ function tinymce_admin_updateconfig()
             if (!xarVarFetch('tinyadvformat','str:1:',$tinyadvformat,'',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinyshowpath','str:1:',$tinyshowpath,'',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinyadvresize','checkbox',$tinyadvresize,true,XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('usefilebrowser','checkbox',$usefilebrowser,false,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinyresizehorizontal','checkbox',$tinyresizehorizontal,false,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinyenablepath','str:1:',$tinyenablepath,1,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinytime', 'str:1:', $tinytime, '', XARVAR_NOT_REQUIRED)) return;
@@ -143,6 +144,7 @@ function tinymce_admin_updateconfig()
                xarModSetVar('tinymce','tinyadvresize', ($tinyadvresize?1:0));
                xarModSetVar('tinymce','tinyenablepath', $tinyenablepath);
                xarModSetVar('tinymce','tinyresizehorizontal', ($tinyresizehorizontal?1:0));
+               xarModSetVar('tinymce','usefilebrowser',($usefilebrowser?1:0));
            break;
     case 'customconfig':
            if (!xarVarFetch('tinycustom','str:1:',$tinycustom,'',XARVAR_NOT_REQUIRED)) return;
@@ -336,8 +338,9 @@ function tinymce_admin_updateconfig()
          $jstext .='directionality : "'.xarModGetVar('tinymce','tinydirection').'",';
      }
     /* add our filebrowsercallback file */
-    $jstext .='file_browser_callback : "xarfilebrowsercallback",';
-
+    if (xarModGetVar('tinymce','usefilebrowser')==1 ){
+        $jstext .='file_browser_callback : "xarfilebrowsercallback",';
+    }
     /*language options */
     if (xarModGetVar('tinymce','tinyencode')==1){
         $jstext .='encoding : "xml", ';

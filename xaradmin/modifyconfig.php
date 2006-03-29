@@ -84,14 +84,16 @@ function tinymce_admin_modifyconfig()
     $data['tinycleanup']= xarModGetVar('tinymce', 'tinycleanup');
     $data['stripbreaks']=xarModGetVar('tinymce', 'striplinebreaks');
     $data['sourceformat']=xarModGetVar('tinymce',  'sourceformat');
-
+    $data['usefilebrowser']=xarModGetVar('tinymce',  'usefilebrowser');
     if (!isset($data['sourceformat'])){
         $data['sourceformat']=1; //default is off in tinymce
     }
     if (!isset($data['striplinebreaks'])){
         $data['striplinebreaks']=1; //default is off in tinymce
     }
-
+    if (!isset($data['usefilebrowser'])){
+        $data['usefilebrowser']=0;
+    }
     if (!isset($data['tinycleanup'])){
         $data['tinycleanup']=1;
     }

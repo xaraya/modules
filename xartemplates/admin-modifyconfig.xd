@@ -669,7 +669,17 @@
                     <xar:mlstring>%H hour using a 24-hour clock, %M minute as 00-59, %S second as 00-59, %% - a literal `%' character</xar:mlstring>
              </div>
              </xar:if>
+          <div class="xar-form-input-wrapper-after">
+               <xar:if condition="$usefilebrowser">
+                   <input type="checkbox" name="usefilebrowser" id="usefilebrowser" value="1" checked="checked" />
+               <xar:else />
+                   <input type="checkbox" name="usefilebrowser" id="usefilebrowser" value="1" />
+               </xar:if>
+               <label for="usefilebrowser" title="#xarML('Use the filebrowser for advanced image, link or flash plugins?')#">
+                       <xar:mlstring>Use filebrowser in advanced image, link or flash plugins?</xar:mlstring>
+               </label>
 
+           </div>
         <div class="xar-form-input-wrapper-before">
             <p><strong><xar:mlstring>To use FileBrowser, IBrowser or IManager:</xar:mlstring></strong></p>
 
