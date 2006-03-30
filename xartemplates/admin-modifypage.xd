@@ -137,9 +137,9 @@
                             </xar:if>
                             <xar:loop name="$themes">
                                 <xar:if condition="$loop:item.name eq $page.theme">
-                                    <option value="#xarVarPrepForDisplay($loop:item.name)#" selected="selected">#xarVarPrepForDisplay($loop:item.name)#</option>
+                                    <option value="#xarVarPrepForDisplay($loop:item.osdirectory)#" selected="selected">#xarVarPrepForDisplay($loop:item.name)#</option>
                                 <xar:else />
-                                    <option value="#xarVarPrepForDisplay($loop:item.name)#">#xarVarPrepForDisplay($loop:item.name)#</option>
+                                    <option value="#xarVarPrepForDisplay($loop:item.osdirectory)#">#xarVarPrepForDisplay($loop:item.name)#</option>
                                 </xar:if>
                             </xar:loop>
                         </select>
