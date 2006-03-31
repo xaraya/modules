@@ -82,7 +82,7 @@ var TinyMCE_AdvancedTheme = {
 					['h4', '{$lang_theme_h4}'],
 					['h5', '{$lang_theme_h5}'],
 					['h6', '{$lang_theme_h6}']
-				];
+		 		];
 
 				html += '<option value="">{$lang_theme_block}</option>';
 
@@ -465,7 +465,7 @@ var TinyMCE_AdvancedTheme = {
 		var styleSelectHTML = '<option value="">{$lang_theme_style_select}</option>';
 		if (settings['theme_advanced_styles']) {
 			var stylesAr = settings['theme_advanced_styles'].split(';');
-			
+
 			for (var i=0; i<stylesAr.length; i++) {
 				var key, value;
 
