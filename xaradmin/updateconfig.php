@@ -281,9 +281,15 @@ function tinymce_admin_updateconfig()
 
         }
 
+
         if (trim(xarModGetVar('tinymce','tinyplugins')) <> '') {
-            $jstext .='plugins : "'.xarModGetVar('tinymce','tinyplugins').'", ';
+           /* get rid of all white space first */
+           $plugs = xarModGetVar('tinymce','tinyplugins');
+           $plugs = preg_replace('/[ |\s]*\s+/','',$plugs);
+          //  $jstext .='plugins : "'.xarModGetVar('tinymce','tinyplugins').'", ';
+            $jstext .='plugins : "'.$plugs.'", ';
         }
+
         /* $jstext .= 'theme_advanced_styles : "'.trim(xarModGetVar('tinymce','tinyexstyle')).'",'; */
 
         if (trim(xarModGetVar('tinymce','tinybuttonsremove')) <> '') {
@@ -312,14 +318,18 @@ function tinymce_admin_updateconfig()
        /*  Uncomment to get a debug popup dialog showing paths used
          $jstext .= 'debug : "true",';
        */
-        if (trim(xarModGetVar('tinymce','tinyadvformat')) <> '') {
-          $jstext .='theme_advanced_blockformats : "'.xarModGetVar('tinymce','tinyadvformat').'", ';
+       if (trim(xarModGetVar('tinymce','tinyadvformat')) <> '') {
+           /* get rid of all white space first */
+           $advformat = xarModGetVar('tinymce','tinyadvformat');
+           $advformat = preg_replace('/[ |\s]*\s+/','',$advformat);
+           //$jstext .='theme_advanced_blockformats : "'.xarModGetVar('tinymce','tinyadvformat').'", ';
+            $jstext .='theme_advanced_blockformats : "'.$advformat.'", ';
         }
-
         if (trim(xarModGetVar('tinymce','tinyextended')) <> '') {
            /* get rid of all white space first */
            $extended = xarModGetVar('tinymce','tinyextended');
-           $extended = preg_replace('/\s\s+/','',$extended);
+           $extended = preg_replace('/[ |\s]*\s+/','',$extended);
+           //$extended = preg_replace('/\s\s+/','',$extended);
             //$jstext .='extended_valid_elements : "'.xarModGetVar('tinymce','tinyextended').'", ';
             $jstext .='extended_valid_elements : "'.$extended.'", ';
         }
