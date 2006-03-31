@@ -40,6 +40,8 @@ function julian_userapi_decode_shorturl($params)
      * In general, you should be strict in encoding URLs, but as liberal
      * as possible in trying to decode them...
      */
+
+    $func = 'main';
     if ($params[0] != $module) { /* it's possibly some type of alias */
         $aliasname = xarModGetVar('julian','aliasname');
     }
