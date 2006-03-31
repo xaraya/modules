@@ -24,7 +24,7 @@
  * @return int 1
  * @TODO MichelV <1> Generate cleaner mail function to incorporate templates.
  */
-function julian_userapi_email_alerts($args)
+function julian_schedulerapi_email_alerts($args)
 {
     extract ($args);
 
@@ -36,7 +36,7 @@ function julian_userapi_email_alerts($args)
     // get all the events from tomorrow to tomorrow
     $events = xarModApiFunc('julian','user','getall', array('startdate'=>$startdate, 'enddate'=>$startdate));
     // get all subscriptions per user
-    $allsubscriptions = xarModAPIFunc('julian','user','getallsubcriptions');
+    $allsubscriptions = xarModAPIFunc('julian','user','getallsubscriptions');
 
     //set the from email address and name. These variables are configurable.
     $from_email = xarModGetVar('julian','from_email');

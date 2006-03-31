@@ -36,7 +36,7 @@ function julian_userapi_email_alerts()
     // get all the events from tomorrow to tomorrow
     $events = xarModApiFunc('julian','user','getall', array('startdate'=>$startdate, 'enddate'=>$startdate));
     // get all subscriptions per user
-    $allsubscriptions = xarModAPIFunc('julian','user','getallsubcriptions');
+    $allsubscriptions = xarModAPIFunc('julian','user','getallsubscriptions');
 
     //set the from email address and name. These variables are configurable.
     $from_email = xarModGetVar('julian','from_email');
@@ -105,87 +105,5 @@ function julian_userapi_email_alerts()
     }
 
     return 1;
-
-    /*//replacement above
-    //establish a db connection
-    $dbconn = xarDBGetConn();
-    //get db tables
-    $xartable = xarDBGetTables();
-    $roles_table  = $xartable['roles'];
-    $alerts_table = $xartable['julian_alerts'];
-
-    //load the calendar class
-    $c = xarModAPIFunc('julian','user','factory','calendar');
-
-    //get tomorrow's events
-    $startdate = date("Y-m-d",strtotime("tomorrow"));
-    $events    = $c->getEvents($startdate);
-    //build header
-    $headers  = "MIME-Version: 1.0\r\n";
-    $headers .= "Content-type: text/html; charset=iso-8859-1";
-    //set the from email address and name. These variables are configurable.
-    $from_email = xarModGetVar('julian','from_email');
-    $from_name =  xarModGetVar('julian','from_name');
-
-    //begin the mail message content
-    $message = "The following events are scheduled for ".date('m-d-Y',strtotime($startdate)).":";
-    //determine who wants to be alerted re: calendar events and for which event categories
-    $sql = "SELECT * FROM " . $alerts_table . " WHERE 1;";
-    $rs = $dbconn->Execute($sql);
-    $txtmessage = '';
-    $htmlmessage = '';
-
-    //For each user
-    while (!$rs->EOF) {
-       $hasMail = 0;
-       $row = $rs->FetchObject(false);
-       $sql2 = "SELECT xar_uid,xar_email FROM " . $roles_table . " WHERE xar_uid='".$row->uid."';";
-       $rs2 = $dbconn->Execute($sql2);
-       $row2 = $rs2->FetchObject(false);
-       $to_email = $row2->xar_email;
-       $subscriptions = unserialize($row->subscriptions);
-       //For each day
-       foreach ($events as $key=>$val)
-       {
-           //For each event in that day
-           foreach ($events[$key] as $key2=>$val2)
-           {
-                //see if the user requested an alert be sent for this type event
-               if (in_array($events[$key][$key2]['categories'],$subscriptions))
-               {
-                   //only mail this event if it is the user's event or it is not the user's event and is a public event
-                   if(!strcmp($events[$key][$key2]['organizer'],$row->uid) || (strcmp($events[$key][$key2]['organizer'],$row->uid) && !$events[$key][$key2]['class']))
-                   {
-                       $time = strcmp($events[$key][$key2]['time'],'')?$events[$key][$key2]['time']:"All Day Event:";
-                       //html message
-                       $htmlmessage.= $time." <a href=\"".xarServerGetBaseURL()."/index.php?module=julian&func=view&cal_date=" . date("Ymd",strtotime("tomorrow"))."&event_id=".$events[$key][$key2]['event_id']."\">".$events[$key][$key2]['summary']."</a><br />";
-                       $htmlmessage.= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$events[$key][$key2]['description']."<br />";
-                       //text message
-                       $txtmessage.= $time." ".$events[$key][$key2]['summary']."\n";
-                       $txtmessage.= "     ".$events[$key][$key2]['description']."\n";
-                       $hasMail = 1;
-                   }
-               }
-           }
-       }
-       if ($hasMail) {
-           $htmlmessage=$message."<br /><br />".$htmlmessage;
-           $txtmessage=$message."\n\n".$txtmessage;
-           //Send email via Xaraya Mail function.
-           if (!xarModAPIFunc('mail', 'admin', 'sendhtmlmail',
-                     array('from' => $from_email,
-                             'info' => $to_email,
-                            'fromname' =>$from_name,
-                             'subject'=> "Event Alert",
-                           'message'=> $txtmessage,
-                             'htmlmessage'=> $htmlmessage
-                            ))) return;
-           $txtmessage = '';
-           $htmlmessage='';
-       }
-       $rs->MoveNext();
-    }
-    return 1;
-    */
 }
 ?>
