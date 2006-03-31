@@ -23,7 +23,7 @@
     *
     * INSTRUCTIONS: The main configuration file for the xarTinyMCE image browsers and tinyfck
     *
-    * 1. Copy this file to var/ibrowser/ibrowserconfig.inc
+    * 1. Copy this file to var/tinymce/tinymceconfig.inc
     * 2. Please make sure you check all configurations settings
     * 3. Update the configurations especially:
     *     - $cfg['thumbs'] - set your sizes for image uploads and uncomment where necessary
@@ -37,7 +37,6 @@
     *     - $cfg['temp'] eg var/cache as set below
     */
     //-------------------------------------------------------------------------
-    // CONFIGURATIONS
     // CONFIGURATIONS
     $cfg['mode']        = 1;                                                        // 1 = plugin mode (default); 2 = standalone mode'
     $cfg['lang']        = 'en';                                                     // default language; e.g. 'en'
