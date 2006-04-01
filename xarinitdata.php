@@ -170,7 +170,7 @@ function create_lgroutertable()
     $xartable =& xarDBGetTables();
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
     $taboptarray = array('REPLACE');
-    $idxoptarray = array('UNIQUE');
+    //$idxoptarray = array('UNIQUE');
     $LGRouterTable = $xartable['netquery_lgrouter'];
     $LGRouterFields = "
         router_id         I          AUTO        PRIMARY,
@@ -325,7 +325,7 @@ function create_flagstable()
     $xartable =& xarDBGetTables();
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
     $taboptarray = array('REPLACE');
-    $idxoptarray = array('UNIQUE');
+    //$idxoptarray = array('UNIQUE');
     $FlagsTable = $xartable['netquery_flags'];
     $FlagsFields = "
         flag_id           I          AUTO        PRIMARY,
