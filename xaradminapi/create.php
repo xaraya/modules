@@ -95,7 +95,7 @@ function courses_adminapi_create($args)
               xar_shortdesc,
               xar_longdesc)
             VALUES (?,?,?,?,?,?,?,?,?)";
-    $bindvars = array((int)$nextId, $name, $number, $hours, $ceu, $startdate, $enddate, $shortdesc, $longdesc);
+    $bindvars = array($nextId, $name, $number, $hours, $ceu, $startdate, $enddate, $shortdesc, $longdesc);
     $result = &$dbconn->Execute($query, $bindvars);
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
