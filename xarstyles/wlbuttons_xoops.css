@@ -1,0 +1,264 @@
+form.nquser, form.nqadmin, table.nqoutput th, table.nqinput th
+{
+  color: #FFFFFF;
+  background-color: #2F5376;
+}
+form.nquser legend, form.nqadmin legend, input.gobutton, img.gobutton, input.gobuttonup, img.gobuttonup, input.inset
+{
+  font-weight: bold;
+  color: #FFFFFF;
+  border-color: #3070A0;
+  background-color: #3070A0;
+  background-image: url(gradients/aquagrad.png);
+  background-position: 0px -120px;
+  background-repeat: repeat-x;
+}
+input.outset
+{
+  font-weight: bold;
+  color: #FFFFFF;
+  border-color: #286898;
+  background-color: #286898;
+  background-image: url(gradients/bluegrad.png);
+  background-position: 0px -100px;
+  background-repeat: repeat-x;
+}
+table.nqoutput, table.nqinput, form.nquser fieldset, form.nqadmin fieldset
+{
+  text-align: left;
+  color: #000000;
+  background-color: #D0E0F0;
+}
+table.nqoutput th a:link, table.nqinput th a:link
+{
+  color: #D0E0F0;
+  background-color: transparent;
+  text-decoration: none;
+}
+table.nqoutput th a:visited, table.nqinput th a:visited
+{
+  color: #D0E0F0;
+  background-color: transparent;
+  text-decoration: none;
+}
+table.nqoutput th a:link:hover, table.nqinput th a:link:hover
+{
+  color: #D0E0F0;
+  background-color: transparent;
+  text-decoration: underline;
+}
+form.nquser
+{
+  margin: 0 auto;
+  text-align: left;
+  width: 550px;
+  padding: 3px 3px 3px 3px;
+}
+form.nqadmin
+{
+  margin: 0 auto;
+  text-align: left;
+  width: 42em;
+  padding: 3px 3px 3px 3px;
+}
+form.nquser fieldset, form.nqadmin fieldset
+{
+  border-style: solid;
+  border-color: #003366;
+  border-width: 1px;
+  padding: 0 10px 10px 10px;
+  margin: 20px 0 20px 0;
+  position: static;
+  display: block;
+}
+* html form.nquser fieldset, html form.nqadmin fieldset
+{
+  padding-top: 10px;
+  margin-top: 30px;
+  position: relative;
+}
+form.nquser legend, form.nqadmin legend
+{
+  min-width: 16em;
+  width: 16em;
+  border-style: solid;
+  border-color: #003366;
+  border-width: 1px;
+  padding: 2px;
+  margin: 2px;
+  position: static;
+  display: block;
+}
+* html form.nquser legend, html form.nqadmin legend
+{
+  top: -12px;
+  margin-top: -1px;
+  position: absolute;
+}
+input.inset
+{
+  border-style: inset;
+  border-width: 4px;
+}
+input.outset
+{
+  border-style: outset;
+  border-width: 4px;
+}
+input.inset, input.outset
+{
+  width: 40px;
+  height: 27px;
+  padding: 0;
+  margin: 0 0 0 2px;
+}
+input.gobutton, img.gobutton, input.gobuttonup, img.gobuttonup
+{
+  width: 21px;
+  height: 22px;
+  border: 0;
+  padding: 0;
+  margin: 0 0 0 2px;
+  vertical-align: top;
+}
+input.gobuttonup, img.gobuttonup
+{
+  top: -23px;
+  position: relative;
+}
+img.geoflag
+{
+  height: 20px;
+  width: 32px;
+  border: 0;
+  padding: 0;
+  margin: 2px 2px 0px 0px;
+  vertical-align: middle;
+}
+div.gobuttons
+{
+  text-align: right;
+  margin-bottom: 15px;
+}
+div.nqbuttons
+{
+  text-align: center;
+}
+div.nqinput, div.nqinput label, div.nqconfig, div.nqconfig label
+{
+  overflow: hidden;
+}
+div.nqresults
+{
+  text-align: center;
+  width: 80%;
+}
+.nq-left
+{
+  text-align: left;
+}
+.nq-right
+{
+  text-align: right;
+}
+.nq-center
+{
+  text-align: center;
+}
+.nq-justify
+{
+  text-align: justify;
+}
+.nq-indent
+{
+  padding-left: 2em;
+}
+.nq-column11
+{
+  float: left;
+  width: 230px;
+}
+.nq-column12
+{
+  float: left;
+  width: 200px;
+}
+.nq-column13
+{
+  float: left;
+  width: 130px;
+}
+.nq-column2
+{
+  float: left;
+}
+label.nq-column13
+{
+  padding-left: 2px;
+}
+label.nq-column2
+{
+  padding-left: 2px;
+}
+span.nq-spacer
+{
+  float: left;
+  padding-left: 1px;
+  padding-right: 1px;
+}
+.nq-help
+{
+  border-bottom: 1px dotted #090909;
+  cursor: help;
+}
+.nq-black
+{
+  color: #000000;
+  background-color: transparent;
+}
+.nq-blue
+{
+  color: #0000FF;
+  background-color: transparent;
+}
+.nq-purple
+{
+  color: #FF00FF;
+  background-color: transparent;
+}
+.nq-red
+{
+  color: #FF0000;
+  background-color: transparent;
+}
+.nq-brown
+{
+  color: #663300;
+  background-color: transparent;
+}
+.nq-orange
+{
+  color: #FF6600;
+  background-color: transparent;
+}
+.nq-yellow
+{
+  color: #FFFF00;
+  background-color: transparent;
+}
+.nq-green
+{
+  color: #00FF00;
+  background-color: transparent;
+}
+.nq-cyan
+{
+  color: #66FFFF;
+  background-color: transparent;
+}
+.nq-violet
+{
+  color: #CC00FF;
+  background-color: transparent;
+}
+

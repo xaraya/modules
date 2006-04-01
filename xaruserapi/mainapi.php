@@ -32,6 +32,7 @@ function netquery_userapi_mainapi()
     $data['querytype_default'] = xarModGetVar('netquery', 'querytype_default');
     $data['exec_timer_enabled'] = xarModGetVar('netquery', 'exec_timer_enabled');
     $data['stylesheet'] = xarModGetVar('netquery', 'stylesheet');
+    $data['buttondir'] = ((list($testdir) = split('[._-]', $data['stylesheet'])) && (!empty($testdir)) && (file_exists('modules/netquery/xarimages/'.$testdir))) ? 'modules/netquery/xarimages/'.$testdir : 'modules/netquery/xarimages/blbuttons';
     $data['capture_log_enabled'] = xarModGetVar('netquery', 'capture_log_enabled');
     $data['capture_log_allowuser'] = xarModGetVar('netquery', 'capture_log_allowuser');
     $data['capture_log_filepath'] = xarModGetVar('netquery', 'capture_log_filepath');
@@ -97,14 +98,14 @@ function netquery_userapi_mainapi()
     $j = 1;
     while ($j <= $data['whois_max_limit']) {
       $dom = "domain_".$j;
-      $tld = "whois_ext_".$j;
+      $tld = "whois_tld_".$j;
       xarVarFetch($dom, 'str:1:', $domain[$j], $wiexample, XARVAR_NOT_REQUIRED);
-      xarVarFetch($tld, 'str:1:', $whois_ext[$j], $data['whois_default'], XARVAR_NOT_REQUIRED);
+      xarVarFetch($tld, 'str:1:', $whois_tld[$j], $data['whois_default'], XARVAR_NOT_REQUIRED);
       $wiexample = '';
       $j++;
     }
     $data['domain'] = $domain;
-    $data['whois_ext'] = $whois_ext;
+    $data['whois_tld'] = $whois_tld;
     xarVarFetch('maxp', 'int:1:10', $data['maxp'], '4', XARVAR_NOT_REQUIRED);
     xarVarFetch('maxt', 'int:1:100', $data['maxt'], '30', XARVAR_NOT_REQUIRED);
     xarVarFetch('host', 'str:1:', $data['host'], $_SERVER['REMOTE_ADDR'], XARVAR_NOT_REQUIRED);
@@ -144,8 +145,6 @@ function netquery_userapi_mainapi()
     $data['b10class'] = ($data['formtype'] == 'tracerem') ? 'inset' : 'outset';
     $data['b11class'] = ($data['formtype'] == 'lgquery') ? 'inset' : 'outset';
     $data['b12class'] = ($data['formtype'] == 'email') ? 'inset' : 'outset';
-    list($data['buttondir'], $wasted) = split('[_-]', $data['stylesheet'], 2);
-    if (!file_exists($data['buttondir'] = 'modules/netquery/xarimages/'.$data['buttondir'])) $data['buttondir'] = 'modules/netquery/xarimages/greybuttons';
     $data['clrlink'] = Array('url' => xarModURL('netquery', 'user', 'main', array('formtype' => $data['formtype'])),
                              'title' => xarML('Clear results and return'),
                              'label' => xarML('Clear'));

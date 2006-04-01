@@ -4,18 +4,18 @@ function netquery_admin_config()
     if (!xarSecurityCheck('EditRole')) return;
     if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('Submit', 'str:1:100', $Submit, 'Cancel', XARVAR_NOT_REQUIRED)) return;
-    switch (strtolower($phase)) {
+    switch(strtolower($phase)) {
         case 'modify':
         default:
             $data = xarModAPIFunc('netquery', 'admin', 'configapi');
             break;
         case 'update':
-            if ((!isset($Submit)) || ($Submit != 'Submit')) {
+            if ((!isset($Submit)) || ($Submit != xarML('Submit'))) {
                 xarResponseRedirect(xarModURL('netquery', 'admin', 'main'));
             }
             if (!xarVarFetch('querytype_default', 'str:1:', $querytype_default, 'whois', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('exec_timer_enabled', 'checkbox', $exec_timer_enabled, '0', XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('stylesheet', 'str:1:', $stylesheet, 'xaraya_greybuttons', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('stylesheet', 'str:1:', $stylesheet, 'blbuttons_xaraya', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('capture_log_enabled', 'checkbox', $capture_log_enabled, '0', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('capture_log_allowuser', 'checkbox', $capture_log_allowuser, '0', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('capture_log_filepath', 'str:1:', $capture_log_filepath, 'var/logs/netquery.log', XARVAR_NOT_REQUIRED)) return;
@@ -25,7 +25,7 @@ function netquery_admin_config()
             if (!xarVarFetch('topcountries_limit', 'int:1:100000', $topcountries_limit, '10', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('whois_enabled', 'checkbox', $whois_enabled, '0', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('whois_max_limit', 'int:1:10', $whois_max_limit, '3', XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('whois_default', 'str:1:', $whois_default, '.com', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('whois_default', 'str:1:', $whois_default, 'com', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('whoisip_enabled', 'checkbox', $whoisip_enabled, '0', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('dns_lookup_enabled', 'checkbox', $dns_lookup_enabled, '0', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('dns_dig_enabled', 'checkbox', $dns_dig_enabled, '0', XARVAR_NOT_REQUIRED)) return;

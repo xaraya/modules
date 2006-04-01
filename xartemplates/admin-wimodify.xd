@@ -9,7 +9,7 @@
   <form action="#xarModURL('netquery', 'admin', 'wimodify')#" method="post" enctype="application/x-www-form-urlencoded" >
     <table class="nqinput">
       <tr>
-        <th colspan="2">
+        <th colspan="5">
           <xar:mlstring>Editing Whois Lookup Link #</xar:mlstring>#$whois_id#
           <input type="hidden" name="authid" value="#$authid#" />
           <input type="hidden" name="phase" id="phase" value="update" />
@@ -18,22 +18,40 @@
       </tr>
       <tr>
         <td>
-          <span class="help" title="#xarML('The .ext part of domainname.ext including the dot')#"><label for="whois_ext"><xar:mlstring>.ext</xar:mlstring></label></span>
+          <span class="help" title="#xarML('The top level domain (no dot)')#"><label for="whois_tld"><xar:mlstring>TLD</xar:mlstring></label></span>
         </td>
         <td>
-          <span class="help" title="#xarML('The whois lookup server - Leave blank for autodiscovery')#"><label for="whois_server"><xar:mlstring>Server</xar:mlstring></label></span>
+          <span class="help" title="#xarML('Leave whois server entry blank for autodiscovery')#"><label for="whois_server"><xar:mlstring>Whois Server</xar:mlstring></label></span>
+        </td>
+        <td>
+          <span class="help" title="#xarML('Special prefix (if any) for whois server queries')#"><label for="whois_prefix"><xar:mlstring>Prequery</xar:mlstring></label></span>
+        </td>
+        <td>
+          <span class="help" title="#xarML('Special suffix (if any) for whois server queries')#"><label for="whois_suffix"><xar:mlstring>Postquery</xar:mlstring></label></span>
+        </td>
+        <td>
+          <span class="help" title="#xarML('Server response indicating no match found')#"><label for="whois_unfound"><xar:mlstring>Unfound</xar:mlstring></label></span>
         </td>
       </tr>
       <tr>
         <td>
-          <input type="text" name="whois_ext" id="whois_ext" value="#$whois_ext#" size="10" maxlength="10" />
+          <input type="text" name="whois_tld" id="whois_tld" value="#$whois_tld#" size="5" maxlength="10" />
         </td>
         <td>
-          <input type="text" name="whois_server" id="whois_server" value="#$whois_server#" size="30" maxlength="100" />
+          <input type="text" name="whois_server" id="whois_server" value="#$whois_server#" size="25" maxlength="50" />
+        </td>
+        <td>
+          <input type="text" name="whois_prefix" id="whois_prefix" value="#$whois_prefix#" size="10" maxlength="20" />
+        </td>
+        <td>
+          <input type="text" name="whois_suffix" id="whois_suffix" value="#$whois_suffix#" size="10" maxlength="20" />
+        </td>
+        <td>
+          <input type="text" name="whois_unfound" id="whois_unfound" value="#$whois_unfound#" size="15" maxlength="30" />
         </td>
       </tr>
       <tr>
-        <td colspan="2">
+        <td colspan="5">
           <input type="submit" name="Submit" id="Submit" value="#$submitlabel#" />
           <input type="submit" name="Cancel" id="Cancel" value="#$cancellabel#" />
         </td>

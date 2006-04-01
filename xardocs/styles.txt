@@ -1,8 +1,121 @@
-All Netquery download packages include two zipped sets of query selector button
-images (blue and grey) and eight CSS stylesheets (one for each button set for each
-of the four Netquery standalone and CMS environments).
+Netquery's configuration panel provides an administrator selection option that lists all
+of its available CSS stylesheets and that selection also determines which set of query
+type selector button images is used by Netquery.  (See explanation below.)
 
-Stylesheet selection is an administrator option in Netquery's configuration panel.
-You can use the CSS files provided as examples to create your own stylesheets.  If
-you do, they must be located in the same Netquery styles subfolder to be listed with
-the other options for selection.
+All Netquery download packages include two query type selector button image sets
+(wlbuttons and blbuttons with white and black lettering respectively) and twelve CSS
+stylesheets (one for each button set for each of the six Netquery standalone and CMS
+environments).
+
+Both of the supplied button sets are 40 pixels in width x 27 pixels in height and both
+sets are transparent.  Their displayed background colors and/or images (several gradient
+images supplied) are set in the CSS stylesheets (see special notes below) under the
+following elements: input.inset, input.outset, input.gobutton, input.gobuttonup,
+img.gobutton, img.gobuttonup
+
+You can create and add your own stylesheets using the CSS files provided as examples.
+Added CSS files must be located in the same folder as the others to be included in
+Netquery's style options listing.
+
+You can also create and add your own query selector button sets.  They must be located in
+their own subfolder of the Netquery images folder and the (first part of the) file names
+of any CSS stylesheets based on the new button set must correspond to the name of that
+images subfolder.
+
+The naming of CSS stylesheet files may use either an underscore (_) or a hyphen (-) to
+separate the initial button set indicator part of the file name from the remainder.  For
+example, selection of a stylesheet named redbuttons_newstyle.css will cause Netquery to
+look for the buttons in an images subfolder named redbuttons.  A CSS file name containing
+neither separator (e.g., mygreenstyle.css) will cause Netquery to use the entire file
+base name (e.g., mygreenstyle) to look for a corresponding button images subfolder.
+
+If the button images subfolder indicated by the name of a selected CSS stylesheet does not
+exist, Netquery will revert to using a default button set.  Do NOT delete the button set
+images that are supplied in the Netquery download package.
+
+--------
+SPECIAL NOTE FOR PHP-FUSION USERS:
+
+PHP-Fusion's current subheader makes no provision for particular CSS style requirments of
+individual "plugins".  Netquery, therefore, to accomodate its admin selectable stylesheet
+options, uses its own nqheader.php file instead.  The only difference is that Netquery's
+nqheader.php file adds two lines to the PHP-Fusion (v6.00.305) subheader as follows:
+<link rel='stylesheet' type='text/css' href='".INFUSIONS."netquery/styles/".$stylesheet."'>
+<script type='text/javascript' src='".INFUSIONS."netquery/include/popup.js'></script>
+
+--------
+SPECIAL NOTE FOR XOOPS USERS:
+
+Xoops requires an admin module update to recognize and list any added stylesheets in the
+module's configuration options.
+
+Netquery's interface design relies heavily on the selection of CSS stylesheets.  Xoops themes
+that provide the <{$xoops_module_header}> feature make this possible only for Netquery's user
+interface.  Xoops makes no similar provision for any module's admin interface or blocks.  To
+partially compensate, the two CSS stylesheets that are provided for Xoops have been "translated"
+as PHP include files to set in-line style values for use by Netquery's Xoops edition admin and
+block coding.
+
+Older Xoops themes that lack the <{$xoops_module_header}> feature entirely will not impair any
+funtionality, but will prevent the CSS stylesheets selection feature of Netquery's Xoops edition
+from properly setting up tables, images and other style elements of the module's user interface,
+the appearance of which will thus be significantly degraded.
+
+--------
+SPECIAL NOTE FOR XARAYA USERS:
+
+As supplied, the blbuttons-xaraya.css stylesheet (the default for the Xaraya CMS) has most of
+its background-color/image values commented out.  This anticipates that many users of Xaraya's
+Classic theme (or adaptations thereof) will prefer to allow its very comprehensive background
+switching to apply to the Netquery module's interface as well.  If not, you can select Netquery's
+wlbuttons-xaraya CSS stylesheet which sets its own static backgrounds.  If you do want to apply
+the Xaraya background color and image switching to Netquery's button set backgrounds also, just
+append a few lines to the Xaraya theme's CSS files as follows:
+
+Add to the style.css file --
+
+input.outset, input.inset, input.gobutton, input.gobuttonup, img.gobutton, img.gobuttonup {
+    color: #333333;
+    border-color: #666699;
+    background-color: #666699;
+    background-image: url(../images/gradients.png);
+    background-position: 0px -430px;
+    background-repeat: repeat-x;
+}
+
+Add to the colorstyle_green.css file --
+
+input.outset, input.inset, input.gobutton, input.gobuttonup, img.gobutton, img.gobuttonup {
+    color: #003F3F;
+    border-color: #669966;
+    background-color: #669966;
+    background-image: url(../images/green/gradients.png);
+    background-position: 0px -430px;
+    background-repeat: repeat-x;
+}
+
+Add to the colorstyle_orange.css file --
+
+input.outset, input.inset, input.gobutton, input.gobuttonup, img.gobutton, img.gobuttonup {
+    color: #7F5300;
+    border-color: #996600;
+    background-color: #996600;
+    background-image: url(../images/orange/gradients.png);
+    background-position: 0px -430px;
+    background-repeat: repeat-x;
+}
+
+Add to the colorstyle_highcontrast.css file --
+
+input.outset, input.inset, input.gobutton, input.gobuttonup, img.gobutton, img.gobuttonup {
+    color: #000000;
+    border-color: #666666;
+    background-color: #666666;
+    background-image: url(../images/highcontrast/gradients.png);
+    background-position: 0px -430px;
+    background-repeat: repeat-x;
+}
+
+HINT: You may choose to separate input.outset from the others and set a background-position
+on the gradient image to modify the appearance of the unselected buttons.  Something around
+0px -475px seems to work quite well.

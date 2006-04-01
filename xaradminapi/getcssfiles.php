@@ -9,6 +9,7 @@ function netquery_adminapi_getcssfiles($dirname="./modules/netquery/xarstyles") 
                    $files[] = getFilename( $file, false );
        closedir($handle);
    }
+   sort($files);
    return($files);
 }
 function getFilename( $file, $extension = true ) {

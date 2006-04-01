@@ -1,7 +1,7 @@
 <xar:if condition="xarTplAddStyleLink('netquery', $stylesheet)">
 </xar:if>
 
-<script type="text/javascript" src="modules/netquery/xartemplates/popup.js"></script>
+<script type="text/javascript" src="modules/netquery/xarincludes/popup.js"></script>
 
 <div class="xar-mod-head">
   <span class="xar-mod-title"><xar:mlstring>Netquery Administration</xar:mlstring></span>
@@ -11,17 +11,19 @@
 <div class="xar-accent">
   <table class="nqinput">
     <tr>
-      <th colspan="3">
-          <a href="javascript:popUp('#$hlplink.url#','console','400','600');"><img class="floatbutton" src="modules/netquery/xarimages/btn_help.gif" alt="#$hlplink.label#" /></a>
+      <th colspan="2">
           <xar:mlstring>Netquery Whois Configuration</xar:mlstring>
+      </th>
+      <th class="nq-right">
+          <a href="javascript:NQpopup('#$hlplink.url#','console','400','600');"><img class="gobutton" src="#$buttondir#/btn_help.gif" alt="#$hlplink.label#" /></a>
       </th>
     </tr>
     <tr>
       <th>
-          <xar:mlstring>Domain.TLD</xar:mlstring>
+          <xar:mlstring>TLD</xar:mlstring>
       </th>
       <th>
-          <xar:mlstring>Whois Lookup Server</xar:mlstring>
+          <xar:mlstring>Whois Server</xar:mlstring>
       </th>
       <th>
           <xar:mlstring>Options</xar:mlstring>
@@ -31,7 +33,7 @@
     <xar:if condition="(($loop:index + 1) % 2)">
       <tr>
         <td class="xar-norm">
-            #$loop:item.whois_ext#
+            #$loop:item.whois_tld#
         </td>
         <td class="xar-norm">
             #$loop:item.whois_server#
@@ -53,7 +55,7 @@
     <xar:else />
       <tr>
         <td class="xar-accent">
-            #$loop:item.whois_ext#
+            #$loop:item.whois_tld#
         </td>
         <td class="xar-accent">
             #$loop:item.whois_server#

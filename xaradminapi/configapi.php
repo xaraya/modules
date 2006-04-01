@@ -6,6 +6,7 @@ function netquery_adminapi_configapi()
     $data['querytype_default'] = xarModGetVar('netquery', 'querytype_default');
     $data['exec_timer_enabled'] = xarModGetVar('netquery', 'exec_timer_enabled');
     $data['stylesheet'] = xarModGetVar('netquery', 'stylesheet');
+    $data['buttondir'] = ((list($testdir) = split('[._-]', $data['stylesheet'])) && (!empty($testdir)) && (file_exists('modules/netquery/xarimages/'.$testdir))) ? 'modules/netquery/xarimages/'.$testdir : 'modules/netquery/xarimages/blbuttons';
     $data['capture_log_enabled'] = xarModGetVar('netquery', 'capture_log_enabled');
     $data['capture_log_allowuser'] = xarModGetVar('netquery', 'capture_log_allowuser');
     $data['capture_log_filepath'] = xarModGetVar('netquery', 'capture_log_filepath');
@@ -72,7 +73,7 @@ function netquery_adminapi_configapi()
                              'title' => xarML('Return to main configuration'),
                              'label' => xarML('Modify Configuration'));
     if (file_exists('modules/netquery/xaradmin/xageoip.php')) {
-        $data['xaglink'] = Array('url'   => xarModURL('netquery', 'admin', 'xageoip'),
+        $data['xaglink'] = Array('url'   => xarModURL('netquery', 'admin', 'xageoip', array('step' => '1')),
                                  'title' => xarML('Install new GeoIP data table'),
                                  'label' => xarML('Install GeoIP Data'));
     } else {
@@ -96,7 +97,7 @@ function netquery_adminapi_configapi()
                              'title' => $data['portsubmits'].' '. xarML('New for Reflagging'),
                              'label' => xarML('None for Reflagging'));
     if (file_exists('modules/netquery/xaradmin/xaports.php')) {
-        $data['xaplink'] = Array('url'   => xarModURL('netquery', 'admin', 'xaports'),
+        $data['xaplink'] = Array('url'   => xarModURL('netquery', 'admin', 'xaports', array('step' => '1')),
                                  'title' => xarML('Install new ports data table'),
                                  'label' => xarML('Install Ports Data'));
     } else {

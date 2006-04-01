@@ -14,11 +14,14 @@ function netquery_adminapi_getlink($args)
     $bindvars = array((int)$whois_id);
     $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;
-    list($whois_id, $whois_ext, $whois_server) = $result->fields;
+    list($whois_id, $whois_tld, $whois_server, $whois_prefix, $whois_suffix, $whois_unfound) = $result->fields;
     if (!xarSecurityCheck('OverviewNetquery')) return;
-    $data = array('whois_id'     => $whois_id,
-                  'whois_ext'    => $whois_ext,
-                  'whois_server' => $whois_server);
+    $data = array('whois_id'      => $whois_id,
+                  'whois_tld'     => $whois_tld,
+                  'whois_server'  => $whois_server,
+                  'whois_prefix'  => $whois_prefix,
+                  'whois_suffix'  => $whois_suffix,
+                  'whois_unfound' => $whois_unfound);
     $result->Close();
     return $data;
 }

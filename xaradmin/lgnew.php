@@ -13,7 +13,7 @@ function netquery_admin_lgnew()
             $data['cancellabel']    = xarML('Cancel');
             break;
         case 'update':
-            if ((!isset($Submit)) || ($Submit != 'Submit')) {
+            if ((!isset($Submit)) || ($Submit != xarML('Submit'))) {
                 xarResponseRedirect(xarModURL('netquery', 'admin', 'lgview'));
             }
             if (!xarVarFetch('router_router', 'str:1:100', $router_router)) return;

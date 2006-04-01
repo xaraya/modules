@@ -1,4 +1,4 @@
-<script type="text/javascript" src="modules/netquery/xartemplates/popup.js"></script>
+<script type="text/javascript" src="modules/netquery/xarincludes/popup.js"></script>
 
 <xar:if condition="xarTplAddStyleLink('netquery', $stylesheet)">
 </xar:if>
@@ -16,11 +16,14 @@
 <form class="nquser" method="post" action="&xar-modurl-netquery-user-main;">
   <fieldset class="nqbuttons">
     <legend>
-    <xar:if condition="!empty($geoip.cn)">
-      <a href="#$countrieslink.url#"><img class="floatbutton" src="modules/netquery/xarimages/btn_earth.gif" alt="#$countrieslink.label#" /></a>
-    </xar:if>
     <xar:mlstring>Options</xar:mlstring>
     </legend>
+    <div class="gobuttons">
+    <xar:if condition="!empty($geoip.cn)">
+      <a href="#$countrieslink.url#"><img class="gobuttonup" src="#$buttondir#/btn_earth.gif" alt="#$countrieslink.label#" /></a>
+    </xar:if>
+    </div>
+    <div class="nqbuttons">
     <xar:if condition="$whois_enabled"><input name="b1" id="b1" type="image" src="#$buttondir#/btn_whois.gif" class="#$b1class#" alt="Whois" /></xar:if>
     <xar:if condition="$whoisip_enabled"><input name="b2" id="b2" type="image" src="#$buttondir#/btn_whoisip.gif" class="#$b2class#" alt="Whois IP" /></xar:if>
     <xar:if condition="$dns_lookup_enabled"><input name="b3" id="b3" type="image" src="#$buttondir#/btn_dns.gif" class="#$b3class#" alt="DNS Lookup" /></xar:if>
@@ -33,34 +36,42 @@
     <xar:if condition="$trace_enabled"><input name="b9" id="b9" type="image" src="#$buttondir#/btn_trace.gif" class="#$b9class#" alt="Traceroute" /></xar:if>
     <xar:if condition="$trace_remote_enabled"><input name="b10" id="b10" type="image" src="#$buttondir#/btn_tracerem.gif" class="#$b10class#" alt="Traceroute Remote" /></xar:if>
     <xar:if condition="$looking_glass_enabled"><input name="b11" id="b11" type="image" src="#$buttondir#/btn_lgquery.gif" class="#$b11class#" alt="Looking Glass" /></xar:if>
+    </div>
   </fieldset>
 
 <xar:if condition="$formtype eq 'whois'">
   <xar:set name="$manlink">'modules/netquery/xardocs/manual.html#whois'</xar:set>
   <fieldset>
     <legend>
-    <input class="floatbutton" type="image" src="modules/netquery/xarimages/btn_go.gif" alt="Go" />
-    <a href="javascript:popUp('#$manlink#','console','400','600');"><img class="floatbutton" src="modules/netquery/xarimages/btn_help.gif" alt="#$hlplink.label#" /></a><xar:mlstring>Whois</xar:mlstring>
+    <xar:mlstring>Whois</xar:mlstring>
     </legend>
+    <div class="gobuttons">
+    <a href="javascript:NQpopup('#$manlink#','console','400','600');"><img class="gobuttonup" src="#$buttondir#/btn_help.gif" alt="#$hlplink.label#" /></a>
+    <input class="gobuttonup" type="image" src="#$buttondir#/btn_go.gif" alt="Go" />
+    </div>
+    <div class="nqinput">
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <input type="hidden" name="querytype" id="querytype" value="whois" />
-    <label for="domain_1">#$domainlabel#</label>
-    <label class="nq-posn2" for="whois_ext_1">#$extlabel#</label>
+    <label class="nq-column11" for="domain_1">#$domainlabel#</label>
+    <span class="nq-spacer">&nbsp;</span>
+    <label class="nq-column2" for="whois_tld_1">#$extlabel#</label>
     <xar:while condition="(++$j le $whois_max_limit)">
       <br />
-      <input type="text" name="domain_#$j#" id="domain_#$j#" value="#$domain[$j]#" size="32" maxlength="100" />
-      <select class="nq-posn2" name="whois_ext_#$j#" id="whois_ext_#$j#">
+      <input class="nq-column11" type="text" name="domain_#$j#" id="domain_#$j#" value="#$domain[$j]#" size="32" maxlength="50" />
+      <span class="nq-spacer">.</span>
+      <select class="nq-column2" name="whois_tld_#$j#" id="whois_tld_#$j#">
         <xar:foreach in="$links" value="$link">
-            <xar:if condition="!empty($link.whois_ext)">
-                <xar:if condition="$link.whois_ext eq $whois_ext[$j]">
-                    <option selected="selected" value="#$link.whois_ext#">#$link.whois_ext#</option>
+            <xar:if condition="!empty($link.whois_tld)">
+                <xar:if condition="$link.whois_tld eq $whois_tld[$j]">
+                    <option selected="selected" value="#$link.whois_tld#">#$link.whois_tld#</option>
                 <xar:else />
-                    <option value="#$link.whois_ext#">#$link.whois_ext#</option>
+                    <option value="#$link.whois_tld#">#$link.whois_tld#</option>
                 </xar:if>
             </xar:if>
         </xar:foreach>
       </select>
     </xar:while>
+    </div>
   </fieldset>
 </xar:if>
 
@@ -68,13 +79,18 @@
   <xar:set name="$manlink">'modules/netquery/xardocs/manual.html#whoisip'</xar:set>
   <fieldset>
     <legend>
-    <input class="floatbutton" type="image" src="modules/netquery/xarimages/btn_go.gif" alt="Go" />
-    <a href="javascript:popUp('#$manlink#','console','400','600');"><img class="floatbutton" src="modules/netquery/xarimages/btn_help.gif" alt="#$hlplink.label#" /></a><xar:mlstring>Whois IP</xar:mlstring>
+    <xar:mlstring>Whois IP</xar:mlstring>
     </legend>
+    <div class="gobuttons">
+    <a href="javascript:NQpopup('#$manlink#','console','400','600');"><img class="gobuttonup" src="#$buttondir#/btn_help.gif" alt="#$hlplink.label#" /></a>
+    <input class="gobuttonup" type="image" src="#$buttondir#/btn_go.gif" alt="Go" />
+    </div>
+    <div class="nqinput">
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <input type="hidden" name="querytype" id="querytype" value="whoisip" />
-    <label for="host">#$whoisiplabel#</label>
-    <br /><input type="text" name="host" id="host" value="#$host#" size="32" maxlength="100" />
+    <label class="nq-column11" for="host">#$whoisiplabel#</label>
+    <br /><input class="nq-column11" type="text" name="host" id="host" value="#$host#" size="32" maxlength="100" />
+    </div>
   </fieldset>
 </xar:if>
 
@@ -82,13 +98,18 @@
   <xar:set name="$manlink">'modules/netquery/xardocs/manual.html#dnslookup'</xar:set>
   <fieldset>
     <legend>
-    <input class="floatbutton" type="image" src="modules/netquery/xarimages/btn_go.gif" alt="Go" />
-    <a href="javascript:popUp('#$manlink#','console','400','600');"><img class="floatbutton" src="modules/netquery/xarimages/btn_help.gif" alt="#$hlplink.label#" /></a><xar:mlstring>DNS Lookup</xar:mlstring>
+    <xar:mlstring>DNS Lookup</xar:mlstring>
     </legend>
+    <div class="gobuttons">
+    <a href="javascript:NQpopup('#$manlink#','console','400','600');"><img class="gobuttonup" src="#$buttondir#/btn_help.gif" alt="#$hlplink.label#" /></a>
+    <input class="gobuttonup" type="image" src="#$buttondir#/btn_go.gif" alt="Go" />
+    </div>
+    <div class="nqinput">
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <input type="hidden" name="querytype" id="querytype" value="lookup" />
-    <label for="host">#$lookuplabel#</label>
-    <br /><input type="text" name="host" id="host" value="#$host#" size="32" maxlength="100" />
+    <label class="nq-column11" for="host">#$lookuplabel#</label>
+    <br /><input class="nq-column11" type="text" name="host" id="host" value="#$host#" size="32" maxlength="100" />
+    </div>
   </fieldset>
 </xar:if>
 
@@ -96,15 +117,21 @@
   <xar:set name="$manlink">'modules/netquery/xardocs/manual.html#dnsdig'</xar:set>
   <fieldset>
     <legend>
-    <input class="floatbutton" type="image" src="modules/netquery/xarimages/btn_go.gif" alt="Go" />
-    <a href="javascript:popUp('#$manlink#','console','400','600');"><img class="floatbutton" src="modules/netquery/xarimages/btn_help.gif" alt="#$hlplink.label#" /></a><xar:mlstring>DNS Dig</xar:mlstring>
+    <xar:mlstring>DNS Dig</xar:mlstring>
     </legend>
+    <div class="gobuttons">
+    <a href="javascript:NQpopup('#$manlink#','console','400','600');"><img class="gobuttonup" src="#$buttondir#/btn_help.gif" alt="#$hlplink.label#" /></a>
+    <input class="gobuttonup" type="image" src="#$buttondir#/btn_go.gif" alt="Go" />
+    </div>
+    <div class="nqinput">
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <input type="hidden" name="querytype" id="querytype" value="dig" />
-    <label for="host">#$diglabel#</label>
-    <label class="nq-posn2" for="digparam">#$digparamlabel#</label>
-    <br /><input type="text" name="host" id="host" value="#$host#" size="32" maxlength="100" />
-    <select class="nq-posn2" name="digparam" id="digparam">
+    <label class="nq-column11" for="host">#$diglabel#</label>
+    <span class="nq-spacer">&nbsp;</span>
+    <label class="nq-column2" for="digparam">#$digparamlabel#</label>
+    <br /><input class="nq-column11" type="text" name="host" id="host" value="#$host#" size="32" maxlength="100" />
+    <span class="nq-spacer">&nbsp;</span>
+    <select class="nq-column2" name="digparam" id="digparam">
         <xar:foreach in="$digoptions" value="$digoption">
             <xar:if condition="!empty($digoption.value)">
                 <xar:if condition="$digoption.value eq $digparam">
@@ -115,6 +142,7 @@
             </xar:if>
         </xar:foreach>
     </select>
+    </div>
   </fieldset>
 </xar:if>
 
@@ -122,13 +150,18 @@
   <xar:set name="$manlink">'modules/netquery/xardocs/manual.html#email'</xar:set>
   <fieldset>
     <legend>
-    <input class="floatbutton" type="image" src="modules/netquery/xarimages/btn_go.gif" alt="Go" />
-    <a href="javascript:popUp('#$manlink#','console','400','600');"><img class="floatbutton" src="modules/netquery/xarimages/btn_help.gif" alt="#$hlplink.label#" /></a><xar:mlstring>Validate Email</xar:mlstring>
+    <xar:mlstring>Validate Email</xar:mlstring>
     </legend>
+    <div class="gobuttons">
+    <a href="javascript:NQpopup('#$manlink#','console','400','600');"><img class="gobuttonup" src="#$buttondir#/btn_help.gif" alt="#$hlplink.label#" /></a>
+    <input class="gobuttonup" type="image" src="#$buttondir#/btn_go.gif" alt="Go" />
+    </div>
+    <div class="nqinput">
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <input type="hidden" name="querytype" id="querytype" value="email" />
-    <label for="host">#$emaillabel#</label>
-    <br /><input type="text" name="email" id="email" value="#$email#" size="32" maxlength="100" />
+    <label class="nq-column11" for="host">#$emaillabel#</label>
+    <br /><input class="nq-column11" type="text" name="email" id="email" value="#$email#" size="32" maxlength="100" />
+    </div>
   </fieldset>
 </xar:if>
 
@@ -136,15 +169,22 @@
   <xar:set name="$manlink">'modules/netquery/xardocs/manual.html#port'</xar:set>
   <fieldset>
     <legend>
-    <input class="floatbutton" type="image" src="modules/netquery/xarimages/btn_go.gif" alt="Go" />
-    <a href="javascript:popUp('#$manlink#','console','400','600');"><img class="floatbutton" src="modules/netquery/xarimages/btn_help.gif" alt="#$hlplink.label#" /></a><xar:mlstring>Port Services</xar:mlstring>
+    <xar:mlstring>Port Services</xar:mlstring>
     </legend>
+    <div class="gobuttons">
+    <a href="javascript:NQpopup('#$manlink#','console','400','600');"><img class="gobuttonup" src="#$buttondir#/btn_help.gif" alt="#$hlplink.label#" /></a>
+    <input class="gobuttonup" type="image" src="#$buttondir#/btn_go.gif" alt="Go" />
+    </div>
+    <div class="nqinput">
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <input type="hidden" name="querytype" id="querytype" value="port" />
-    <label for="server">#$serverlabel#</label>
-    <label class="nq-posn2" for="portnum">#$portnumlabel#</label>
-    <br /><input type="text" name="server" id="server" value="#$server#" size="32" maxlength="100" />
-    <input class="nq-posn2" type="text" name="portnum" id="portnum" value="#$portnum#" size="5" maxlength="10" />
+    <label class="nq-column11" for="server">#$serverlabel#</label>
+    <span class="nq-spacer">&nbsp;</span>
+    <label class="nq-column2" for="portnum">#$portnumlabel#</label>
+    <br /><input class="nq-column11" type="text" name="server" id="server" value="#$server#" size="32" maxlength="100" />
+    <span class="nq-spacer">&nbsp;</span>
+    <input class="nq-column2" type="text" name="portnum" id="portnum" value="#$portnum#" size="5" maxlength="10" />
+    </div>
   </fieldset>
 </xar:if>
 
@@ -152,15 +192,21 @@
   <xar:set name="$manlink">'modules/netquery/xardocs/manual.html#httpreq'</xar:set>
   <fieldset>
     <legend>
-    <input class="floatbutton" type="image" src="modules/netquery/xarimages/btn_go.gif" alt="Go" />
-    <a href="javascript:popUp('#$manlink#','console','400','600');"><img class="floatbutton" src="modules/netquery/xarimages/btn_help.gif" alt="#$hlplink.label#" /></a><xar:mlstring>HTTP Request</xar:mlstring>
+    <xar:mlstring>HTTP Request</xar:mlstring>
     </legend>
+    <div class="gobuttons">
+    <a href="javascript:NQpopup('#$manlink#','console','400','600');"><img class="gobuttonup" src="#$buttondir#/btn_help.gif" alt="#$hlplink.label#" /></a>
+    <input class="gobuttonup" type="image" src="#$buttondir#/btn_go.gif" alt="Go" />
+    </div>
+    <div class="nqinput">
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <input type="hidden" name="querytype" id="querytype" value="http" />
-    <label for="httpurl">#$httpurllabel#</label>
-    <label class="nq-posn2" for="httpreq">#$httpreqlabel#</label>
-    <br /><input type="text" name="httpurl" id="httpurl" value="#$httpurl#" size="32" maxlength="100" />
-    <select class="nq-posn2" name="httpreq" id="httpreq">
+    <label class="nq-column11" for="httpurl">#$httpurllabel#</label>
+    <span class="nq-spacer">&nbsp;</span>
+    <label class="nq-column2" for="httpreq">#$httpreqlabel#</label>
+    <br /><input class="nq-column11" type="text" name="httpurl" id="httpurl" value="#$httpurl#" size="32" maxlength="100" />
+    <span class="nq-spacer">&nbsp;</span>
+    <select class="nq-column2" name="httpreq" id="httpreq">
         <xar:foreach in="$httpoptions" value="$httpoption">
             <xar:if condition="!empty($httpoption)">
                 <xar:if condition="$httpoption eq $httpreq">
@@ -171,6 +217,7 @@
             </xar:if>
         </xar:foreach>
     </select>
+    </div>
   </fieldset>
 </xar:if>
 
@@ -178,15 +225,21 @@
   <xar:set name="$manlink">'modules/netquery/xardocs/manual.html#ping'</xar:set>
   <fieldset>
     <legend>
-    <input class="floatbutton" type="image" src="modules/netquery/xarimages/btn_go.gif" alt="Go" />
-    <a href="javascript:popUp('#$manlink#','console','400','600');"><img class="floatbutton" src="modules/netquery/xarimages/btn_help.gif" alt="#$hlplink.label#" /></a><xar:mlstring>Ping Host</xar:mlstring>
+    <xar:mlstring>Ping Host</xar:mlstring>
     </legend>
+    <div class="gobuttons">
+    <a href="javascript:NQpopup('#$manlink#','console','400','600');"><img class="gobuttonup" src="#$buttondir#/btn_help.gif" alt="#$hlplink.label#" /></a>
+    <input class="gobuttonup" type="image" src="#$buttondir#/btn_go.gif" alt="Go" />
+    </div>
+    <div class="nqinput">
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <input type="hidden" name="querytype" id="querytype" value="ping" />
-    <label for="host">#$pinglabel#</label>
-    <label class="nq-posn2" for="maxp">#$maxplabel#</label>
-    <br /><input type="text" name="host" id="host" value="#$host#" size="32" maxlength="100" />
-    <select class="nq-posn2" name="maxp" id="maxp">
+    <label class="nq-column11" for="host">#$pinglabel#</label>
+    <span class="nq-spacer">&nbsp;</span>
+    <label class="nq-column2" for="maxp">#$maxplabel#</label>
+    <br /><input class="nq-column11" type="text" name="host" id="host" value="#$host#" size="32" maxlength="100" />
+    <span class="nq-spacer">&nbsp;</span>
+    <select class="nq-column2" name="maxp" id="maxp">
         <xar:foreach in="$maxpoptions" value="$maxpoption">
             <xar:if condition="!empty($maxpoption)">
                 <xar:if condition="$maxpoption eq $maxp">
@@ -197,6 +250,7 @@
             </xar:if>
         </xar:foreach>
     </select>
+    </div>
   </fieldset>
 </xar:if>
 
@@ -204,13 +258,18 @@
   <xar:set name="$manlink">'modules/netquery/xardocs/manual.html#ping'</xar:set>
   <fieldset>
     <legend>
-    <input class="floatbutton" type="image" src="modules/netquery/xarimages/btn_go.gif" alt="Go" onclick="pingwindow(host.value);" />
-    <a href="javascript:popUp('#$manlink#','console','400','600');"><img class="floatbutton" src="modules/netquery/xarimages/btn_help.gif" alt="#$hlplink.label#" /></a><xar:mlstring>Remote Ping</xar:mlstring>
+    </a><xar:mlstring>Remote Ping</xar:mlstring>
     </legend>
+    <div class="gobuttons">
+    <a href="javascript:NQpopup('#$manlink#','console','400','600');"><img class="gobuttonup" src="#$buttondir#/btn_help.gif" alt="#$hlplink.label#" />
+    <input class="gobuttonup" type="image" src="#$buttondir#/btn_go.gif" alt="Go" onclick="NQremote('#$pingexec_remote#','#$pingexec_remote_t#',host.value);" />
+    </div>
+    <div class="nqinput">
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <input type="hidden" name="querytype" id="querytype" value="pingrem" />
-    <label for="host">#$pingremotelabel#</label>
-    <br /><input type="text" name="host" id="host" value="#$host#" size="32" maxlength="100" />
+    <label class="nq-column11" for="host">#$pingremotelabel#</label>
+    <br /><input class="nq-column11" type="text" name="host" id="host" value="#$host#" size="32" maxlength="100" />
+    </div>
   </fieldset>
 </xar:if>
 
@@ -218,15 +277,21 @@
   <xar:set name="$manlink">'modules/netquery/xardocs/manual.html#traceroute'</xar:set>
   <fieldset>
     <legend>
-    <input class="floatbutton" type="image" src="modules/netquery/xarimages/btn_go.gif" alt="Go" />
-    <a href="javascript:popUp('#$manlink#','console','400','600');"><img class="floatbutton" src="modules/netquery/xarimages/btn_help.gif" alt="#$hlplink.label#" /></a><xar:mlstring>Traceroute</xar:mlstring>
+    <xar:mlstring>Traceroute</xar:mlstring>
     </legend>
+    <div class="gobuttons">
+    <a href="javascript:NQpopup('#$manlink#','console','400','600');"><img class="gobuttonup" src="#$buttondir#/btn_help.gif" alt="#$hlplink.label#" /></a>
+    <input class="gobuttonup" type="image" src="#$buttondir#/btn_go.gif" alt="Go" />
+    </div>
+    <div class="nqinput">
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <input type="hidden" name="querytype" id="querytype" value="trace" />
-    <label for="host">#$tracelabel#</label>
-    <label class="nq-posn2" for="maxt">#$maxtlabel#</label>
-    <br /><input type="text" name="host" id="host" value="#$host#" size="32" maxlength="100" />
-    <select class="nq-posn2" name="maxt" id="maxt">
+    <label class="nq-column11" for="host">#$tracelabel#</label>
+    <span class="nq-spacer">&nbsp;</span>
+    <label class="nq-column2" for="maxt">#$maxtlabel#</label>
+    <br /><input class="nq-column11" type="text" name="host" id="host" value="#$host#" size="32" maxlength="100" />
+    <span class="nq-spacer">&nbsp;</span>
+    <select class="nq-column2" name="maxt" id="maxt">
         <xar:foreach in="$maxtoptions" value="$maxtoption">
             <xar:if condition="!empty($maxtoption)">
                 <xar:if condition="$maxtoption eq $maxt">
@@ -237,6 +302,7 @@
             </xar:if>
         </xar:foreach>
     </select>
+    </div>
   </fieldset>
 </xar:if>
 
@@ -244,13 +310,18 @@
   <xar:set name="$manlink">'modules/netquery/xardocs/manual.html#traceroute'</xar:set>
   <fieldset>
     <legend>
-    <input class="floatbutton" type="image" src="modules/netquery/xarimages/btn_go.gif" alt="Go" onclick="tracewindow(host.value);" />
-    <a href="javascript:popUp('#$manlink#','console','400','600');"><img class="floatbutton" src="modules/netquery/xarimages/btn_help.gif" alt="#$hlplink.label#" /></a><xar:mlstring>Remote Traceroute</xar:mlstring>
+    <xar:mlstring>Remote Traceroute</xar:mlstring>
     </legend>
+    <div class="gobuttons">
+    <a href="javascript:NQpopup('#$manlink#','console','400','600');"><img class="gobuttonup" src="#$buttondir#/btn_help.gif" alt="#$hlplink.label#" /></a>
+    <input class="gobuttonup" type="image" src="#$buttondir#/btn_go.gif" alt="Go" onclick="NQremote('#$traceexec_remote#','#$traceexec_remote_t#',host.value);" />
+    </div>
+    <div class="nqinput">
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <input type="hidden" name="querytype" id="querytype" value="tracerem" />
-    <label for="host">#$traceremotelabel#</label>
-    <br /><input type="text" name="host" id="host" value="#$host#" size="32" maxlength="100" />
+    <label class="nq-column11" for="host">#$traceremotelabel#</label>
+    <br /><input class="nq-column11" type="text" name="host" id="host" value="#$host#" size="32" maxlength="100" />
+    </div>
   </fieldset>
 </xar:if>
 
@@ -258,15 +329,21 @@
   <xar:set name="$manlink">'modules/netquery/xardocs/manual.html#lg'</xar:set>
   <fieldset>
     <legend>
-    <input class="floatbutton" type="image" src="modules/netquery/xarimages/btn_go.gif" alt="Go" />
-    <a href="javascript:popUp('#$manlink#','console','400','600');"><img class="floatbutton" src="modules/netquery/xarimages/btn_help.gif" alt="#$hlplink.label#" /></a><xar:mlstring>Looking Glass</xar:mlstring>
+    <xar:mlstring>Looking Glass</xar:mlstring>
     </legend>
+    <div class="gobuttons">
+    <a href="javascript:NQpopup('#$manlink#','console','400','600');"><img class="gobuttonup" src="#$buttondir#/btn_help.gif" alt="#$hlplink.label#" /></a>
+    <input class="gobuttonup" type="image" src="#$buttondir#/btn_go.gif" alt="Go" />
+    </div>
+    <div class="nqinput">
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <input type="hidden" name="querytype" id="querytype" value="lgquery" />
-    <label for="request">#$lgrequestlabel#</label>
-    <label class="nq-posn1" for="lgparam">#$lgparamlabel#</label>
-    <label class="nq-posn3" for="router">#$lgrouterlabel#</label>
-    <br /><select name="request" id="request">
+    <label class="nq-column12" for="request">#$lgrequestlabel#</label>
+    <span class="nq-spacer">&nbsp;</span>
+    <label class="nq-column13" for="lgparam">#$lgparamlabel#</label>
+    <span class="nq-spacer">&nbsp;</span>
+    <label class="nq-column2" for="router">#$lgrouterlabel#</label>
+    <br /><select class="nq-column12" name="request" id="request">
         <xar:foreach in="$lgrequests" value="$req" key="$lgreq">
             <xar:if condition="!empty($req.request)">
                 <xar:if condition="$lgdefault[$req.handler] and !(($req.argc) and (!$lgdefault.use_argc))">
@@ -279,8 +356,10 @@
             </xar:if>
         </xar:foreach>
     </select>
-    <input class="nq-posn1" type="text" name="lgparam" id="lgparam" value="#$lgparam#" size="8" maxlength="100" />
-    <select class="nq-posn3" name="router" id="router">
+    <span class="nq-spacer">&nbsp;</span>
+    <input class="nq-column13" type="text" name="lgparam" id="lgparam" value="#$lgparam#" size="8" maxlength="100" />
+    <span class="nq-spacer">&nbsp;</span>
+    <select class="nq-column2" name="router" id="router">
         <xar:foreach in="$lgrouters" value="$rtr">
             <xar:if condition="!empty($rtr.router)">
                 <xar:if condition="$rtr.router eq $router">
@@ -291,7 +370,8 @@
             </xar:if>
         </xar:foreach>
     </select>
-   </fieldset>
+    </div>
+  </fieldset>
 </xar:if>
 
 </form>
@@ -308,9 +388,9 @@
     <xar:if condition="!empty($geoip.cn)">
       <xar:if condition="!empty($geoip.geoflag)"><img class="geoflag" src="#$geoip.geoflag#" alt="" /></xar:if>
       <xar:if condition="$mapping_site eq 1">
-          <a href="javascript:newwindow('http://www.mapquest.com/maps/map.adp?latlongtype=decimal&amp;latitude=#$geoip.lat#&amp;longitude=#$geoip.lon#&amp;zoom=0');">#$geoip.cn#</a> - 
+          <a href="javascript:NQpopup('http://www.mapquest.com/maps/map.adp?latlongtype=decimal&amp;latitude=#$geoip.lat#&amp;longitude=#$geoip.lon#&amp;zoom=0');">#$geoip.cn#</a> - 
       <xar:elseif condition="$mapping_site eq 2" />
-          <a href="javascript:newwindow('http://www.multimap.com/map/browse.cgi?lat=#$geoip.lat#&amp;lon=#$geoip.lon#&amp;scale=40000000&amp;icon=x');">#$geoip.cn#</a> - 
+          <a href="javascript:NQpopup('http://www.multimap.com/map/browse.cgi?lat=#$geoip.lat#&amp;lon=#$geoip.lon#&amp;scale=40000000&amp;icon=x');">#$geoip.cn#</a> - 
       <xar:else />
           #$geoip.cn#
       </xar:if>
@@ -321,11 +401,11 @@
     </p><p>
 </xar:if>
 
-<xar:if condition="!empty($loglink) and $capture_log_allowuser">
-  <a href="javascript:popUp('#$loglink.url#','console','400','600');">#$loglink.label#</a>&nbsp;&nbsp;
-</xar:if>
 <xar:if condition="$exec_timer_enabled">
   <xar:mlstring>Execution time</xar:mlstring>: #$timer->get_current('main')#
+</xar:if>
+<xar:if condition="!empty($loglink) and $capture_log_allowuser">
+  &nbsp;&nbsp;<a href="javascript:NQpopup('#$loglink.url#','console','400','600');">#$loglink.label#</a>
 </xar:if>
 </p>
 
@@ -333,21 +413,3 @@
 
 </div>
 </div>
-
-<script type="text/javascript">
-function pingwindow(target)
-{
-        var pingsite = "#$pingexec_remote#?#$pingexec_remote_t#=" + target;
-        popUp(pingsite,'console','400','600')
-}
-function tracewindow(target)
-{
-        var tracesite = "#$traceexec_remote#?#$traceexec_remote_t#=" + target;
-        popUp(tracesite,'console','400','600')
-}
-function newwindow(link)
-{
-        newWin = window.open(link);
-        newWin.focus();
-}
-</script>

@@ -14,7 +14,7 @@ function netquery_admin_flnew()
             $data['colors'] = array('black', 'blue', 'purple', 'red', 'brown', 'orange', 'yellow', 'green', 'cyan', 'violet');
             break;
         case 'update':
-            if ((!isset($Submit)) || ($Submit != 'Submit')) {
+            if ((!isset($Submit)) || ($Submit != xarML('Submit'))) {
                 xarResponseRedirect(xarModURL('netquery', 'admin', 'flview'));
             }
             if (!xarVarFetch('flag_flagnum', 'int:1:100000', $flag_flagnum)) return;

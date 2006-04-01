@@ -15,7 +15,7 @@ function netquery_admin_lgdelete()
         $data['authid'] = xarSecGenAuthKey();
         return $data;
     }
-    if ((!isset($Submit)) || ($Submit != 'Confirm')) {
+    if ((!isset($Submit)) || ($Submit != xarML('Confirm'))) {
         xarResponseRedirect(xarModURL('netquery', 'admin', 'lgview'));
     }
     if (!xarSecConfirmAuthKey()) return;

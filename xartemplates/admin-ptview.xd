@@ -1,7 +1,7 @@
 <xar:if condition="xarTplAddStyleLink('netquery', $stylesheet)">
 </xar:if>
 
-<script type="text/javascript" src="modules/netquery/xartemplates/popup.js"></script>
+<script type="text/javascript" src="modules/netquery/xarincludes/popup.js"></script>
 
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>Netquery Administration</xar:mlstring></span>
@@ -11,10 +11,12 @@
 <div class="xar-accent">
   <table class="nqinput">
     <tr>
-      <th colspan="4">
-          <a href="javascript:popUp('#$hlplink.url#','console','400','600');"><img class="floatbutton" src="modules/netquery/xarimages/btn_help.gif" alt="#$hlplink.label#" /></a>
+      <th colspan="3">
           <xar:mlstring>Netquery Port Services Configuration</xar:mlstring><br />
           <xar:mlstring>Flag ## entry overrides port ## entry</xar:mlstring>
+      </th>
+      <th class="nq-right">
+          <a href="javascript:NQpopup('#$hlplink.url#','console','400','600');"><img class="gobutton" src="#$buttondir#/btn_help.gif" alt="#$hlplink.label#" /></a>
       </th>
     </tr>
     <tr>
@@ -25,7 +27,7 @@
           <input type="text" name="portnum" id="portnum" value="#$portnum#" size="3" maxlength="10" />
           <label for="pflag">#$pflaglabel#</label>
           <input type="text" name="pflag" id="pflag" value="#$pflag#" size="3" maxlength="4" />
-          <input type="image" class="gobutton" src="modules/netquery/xarimages/btn_go.gif" alt="Go" /></fieldset>
+          <input type="image" class="gobutton" src="#$buttondir#/btn_go.gif" alt="Go" /></fieldset>
         </form>
       </td>
     </tr>

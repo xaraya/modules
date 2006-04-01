@@ -4,10 +4,9 @@ function netquery_admin_xageoip2()
     if (!xarSecurityCheck('EditRole')) return;
     if (!xarVarFetch('step', 'int:1:10', $step, '0', XARVAR_NOT_REQUIRED)) return;
     $dbconn =& xarDBGetConn();
-//  $xartable =& xarDBGetTables();
-//  $GeoipTable = $xartable['netquery_geoip'];
-    $GeoipTable = xarDBGetSiteTablePrefix() . '_netquery_geoip';
-$geoipitems = array(
+    $xartable =& xarDBGetTables();
+    $GeoipTable = $xartable['netquery_geoip'];
+    $GeoipItems = array(
 array(33996344, 33996351, 82),
 array(50331648, 68257567, 235),
 array(68257568, 68257599, 42),
@@ -1809,16 +1808,17 @@ array(1042300352, 1042300383, 112),
 array(1042300384, 1042300415, 113),
 array(1042300416, 1042300479, 82),
 array(1042300480, 1042300495, 112));
-    foreach ($geoipitems as $geoipitem) {
-        list($start,$end,$ci) = $geoipitem;
+    foreach ($GeoipItems as $GeoipItem) {
+        list($start,$end,$ci) = $GeoipItem;
         $query = "INSERT INTO $GeoipTable
                 (start, end, ci)
                 VALUES (?,?,?)";
         $bindvars = array($start, $end, (int)$ci);
         $result =& $dbconn->Execute($query,$bindvars);
     }
-unset($geoipitems);
-$geoipitems = array(
+    if ($dbconn->ErrorNo() != 0) return;
+    unset($GeoipItems);
+    $GeoipItems = array(
 array(1042300496, 1042300543, 82),
 array(1042300544, 1042300639, 112),
 array(1042300640, 1042300647, 82),
@@ -3590,16 +3590,17 @@ array(1050450712, 1050450719, 169),
 array(1050450720, 1050502559, 61),
 array(1050502560, 1050502567, 235),
 array(1050502568, 1050502575, 61));
-    foreach ($geoipitems as $geoipitem) {
-        list($start,$end,$ci) = $geoipitem;
+    foreach ($GeoipItems as $GeoipItem) {
+        list($start,$end,$ci) = $GeoipItem;
         $query = "INSERT INTO $GeoipTable
                 (start, end, ci)
                 VALUES (?,?,?)";
         $bindvars = array($start, $end, (int)$ci);
         $result =& $dbconn->Execute($query,$bindvars);
     }
-unset($geoipitems);
-$geoipitems = array(
+    if ($dbconn->ErrorNo() != 0) return;
+    unset($GeoipItems);
+    $GeoipItems = array(
 array(1050502576, 1050502583, 105),
 array(1050502584, 1050505215, 61),
 array(1050505216, 1050505247, 42),
@@ -5369,16 +5370,17 @@ array(1055210496, 1055210751, 204),
 array(1055210752, 1055211263, 74),
 array(1055211264, 1055211519, 60),
 array(1055211520, 1055219711, 187));
-    foreach ($geoipitems as $geoipitem) {
-        list($start,$end,$ci) = $geoipitem;
+    foreach ($GeoipItems as $GeoipItem) {
+        list($start,$end,$ci) = $GeoipItem;
         $query = "INSERT INTO $GeoipTable
                 (start, end, ci)
                 VALUES (?,?,?)";
         $bindvars = array($start, $end, (int)$ci);
         $result =& $dbconn->Execute($query,$bindvars);
     }
-unset($geoipitems);
-$geoipitems = array(
+    if ($dbconn->ErrorNo() != 0) return;
+    unset($GeoipItems);
+    $GeoipItems = array(
 array(1055219712, 1055221503, 169),
 array(1055221504, 1055221631, 26),
 array(1055221632, 1055223807, 169),
@@ -7125,16 +7127,17 @@ array(1077013400, 1077013407, 235),
 array(1077013408, 1077013415, 174),
 array(1077013416, 1077013431, 235),
 array(1077013432, 1077013439, 174));
-    foreach ($geoipitems as $geoipitem) {
-        list($start,$end,$ci) = $geoipitem;
+    foreach ($GeoipItems as $GeoipItem) {
+        list($start,$end,$ci) = $GeoipItem;
         $query = "INSERT INTO $GeoipTable
                 (start, end, ci)
                 VALUES (?,?,?)";
         $bindvars = array($start, $end, (int)$ci);
         $result =& $dbconn->Execute($query,$bindvars);
     }
-unset($geoipitems);
-$geoipitems = array(
+    if ($dbconn->ErrorNo() != 0) return;
+    unset($GeoipItems);
+    $GeoipItems = array(
 array(1077013440, 1077013511, 235),
 array(1077013512, 1077013519, 174),
 array(1077013520, 1077013551, 235),
@@ -8878,16 +8881,17 @@ array(1094869104, 1094874215, 235),
 array(1094874216, 1094874223, 185),
 array(1094874224, 1094878639, 235),
 array(1094878640, 1094878647, 185));
-    foreach ($geoipitems as $geoipitem) {
-        list($start,$end,$ci) = $geoipitem;
+    foreach ($GeoipItems as $GeoipItem) {
+        list($start,$end,$ci) = $GeoipItem;
         $query = "INSERT INTO $GeoipTable
                 (start, end, ci)
                 VALUES (?,?,?)";
         $bindvars = array($start, $end, (int)$ci);
         $result =& $dbconn->Execute($query,$bindvars);
     }
-unset($geoipitems);
-$geoipitems = array(
+    if ($dbconn->ErrorNo() != 0) return;
+    unset($GeoipItems);
+    $GeoipItems = array(
 array(1094878648, 1094878991, 235),
 array(1094878992, 1094878999, 185),
 array(1094879000, 1094879959, 235),
@@ -10630,16 +10634,17 @@ array(1114584952, 1114584961, 72),
 array(1114584962, 1114584971, 235),
 array(1114584972, 1114584981, 82),
 array(1114584982, 1114584991, 35));
-    foreach ($geoipitems as $geoipitem) {
-        list($start,$end,$ci) = $geoipitem;
+    foreach ($GeoipItems as $GeoipItem) {
+        list($start,$end,$ci) = $GeoipItem;
         $query = "INSERT INTO $GeoipTable
                 (start, end, ci)
                 VALUES (?,?,?)";
         $bindvars = array($start, $end, (int)$ci);
         $result =& $dbconn->Execute($query,$bindvars);
     }
-unset($geoipitems);
-$geoipitems = array(
+    if ($dbconn->ErrorNo() != 0) return;
+    unset($GeoipItems);
+    $GeoipItems = array(
 array(1114584992, 1114585097, 235),
 array(1114585098, 1114585107, 75),
 array(1114585108, 1114585117, 235),
@@ -12389,16 +12394,17 @@ array(1122174161, 1122174184, 235),
 array(1122174185, 1122174192, 42),
 array(1122174193, 1122174200, 82),
 array(1122174201, 1122174328, 235));
-    foreach ($geoipitems as $geoipitem) {
-        list($start,$end,$ci) = $geoipitem;
+    foreach ($GeoipItems as $GeoipItem) {
+        list($start,$end,$ci) = $GeoipItem;
         $query = "INSERT INTO $GeoipTable
                 (start, end, ci)
                 VALUES (?,?,?)";
         $bindvars = array($start, $end, (int)$ci);
         $result =& $dbconn->Execute($query,$bindvars);
     }
-unset($geoipitems);
-$geoipitems = array(
+    if ($dbconn->ErrorNo() != 0) return;
+    unset($GeoipItems);
+    $GeoipItems = array(
 array(1122174329, 1122174336, 42),
 array(1122174337, 1122174392, 235),
 array(1122174393, 1122174408, 42),
@@ -14145,16 +14151,17 @@ array(1208200288, 1208200303, 235),
 array(1208200304, 1208200319, 20),
 array(1208200320, 1208200639, 235),
 array(1208200640, 1208200647, 80));
-    foreach ($geoipitems as $geoipitem) {
-        list($start,$end,$ci) = $geoipitem;
+    foreach ($GeoipItems as $GeoipItem) {
+        list($start,$end,$ci) = $GeoipItem;
         $query = "INSERT INTO $GeoipTable
                 (start, end, ci)
                 VALUES (?,?,?)";
         $bindvars = array($start, $end, (int)$ci);
         $result =& $dbconn->Execute($query,$bindvars);
     }
-unset($geoipitems);
-$geoipitems = array(
+    if ($dbconn->ErrorNo() != 0) return;
+    unset($GeoipItems);
+    $GeoipItems = array(
 array(1208200648, 1208200655, 235),
 array(1208200656, 1208200663, 36),
 array(1208200664, 1208200815, 235),
@@ -15914,16 +15921,17 @@ array(1358356480, 1358360575, 202),
 array(1358360576, 1358364671, 193),
 array(1358364672, 1358372863, 82),
 array(1358372864, 1358376959, 193));
-    foreach ($geoipitems as $geoipitem) {
-        list($start,$end,$ci) = $geoipitem;
+    foreach ($GeoipItems as $GeoipItem) {
+        list($start,$end,$ci) = $GeoipItem;
         $query = "INSERT INTO $GeoipTable
                 (start, end, ci)
                 VALUES (?,?,?)";
         $bindvars = array($start, $end, (int)$ci);
         $result =& $dbconn->Execute($query,$bindvars);
     }
-unset($geoipitems);
-$geoipitems = array(
+    if ($dbconn->ErrorNo() != 0) return;
+    unset($GeoipItems);
+    $GeoipItems = array(
 array(1358376960, 1358381055, 82),
 array(1358381056, 1358384127, 115),
 array(1358384128, 1358384143, 80),
@@ -17681,16 +17689,17 @@ array(1389232128, 1389264895, 61),
 array(1389264896, 1389297663, 3),
 array(1389297664, 1389330431, 231),
 array(1389330432, 1389363199, 61));
-    foreach ($geoipitems as $geoipitem) {
-        list($start,$end,$ci) = $geoipitem;
+    foreach ($GeoipItems as $GeoipItem) {
+        list($start,$end,$ci) = $GeoipItem;
         $query = "INSERT INTO $GeoipTable
                 (start, end, ci)
                 VALUES (?,?,?)";
         $bindvars = array($start, $end, (int)$ci);
         $result =& $dbconn->Execute($query,$bindvars);
     }
-unset($geoipitems);
-$geoipitems = array(
+    if ($dbconn->ErrorNo() != 0) return;
+    unset($GeoipItems);
+    $GeoipItems = array(
 array(1389363200, 1389379583, 60),
 array(1389379584, 1389395967, 193),
 array(1389395968, 1389412351, 192),
@@ -19456,16 +19465,17 @@ array(1425997824, 1426014207, 156),
 array(1426014208, 1426030591, 63),
 array(1426030592, 1426046975, 29),
 array(1426046976, 1426063359, 202));
-    foreach ($geoipitems as $geoipitem) {
-        list($start,$end,$ci) = $geoipitem;
+    foreach ($GeoipItems as $GeoipItem) {
+        list($start,$end,$ci) = $GeoipItem;
         $query = "INSERT INTO $GeoipTable
                 (start, end, ci)
                 VALUES (?,?,?)";
         $bindvars = array($start, $end, (int)$ci);
         $result =& $dbconn->Execute($query,$bindvars);
     }
-unset($geoipitems);
-$geoipitems = array(
+    if ($dbconn->ErrorNo() != 0) return;
+    unset($GeoipItems);
+    $GeoipItems = array(
 array(1426063360, 1426587647, 47),
 array(1426587648, 1426604031, 199),
 array(1426604032, 1426620415, 61),
@@ -21219,16 +21229,17 @@ array(2258595352, 2258595359, 119),
 array(2258595360, 2258595455, 100),
 array(2258595456, 2258595463, 110),
 array(2258595464, 2258595471, 229));
-    foreach ($geoipitems as $geoipitem) {
-        list($start,$end,$ci) = $geoipitem;
+    foreach ($GeoipItems as $GeoipItem) {
+        list($start,$end,$ci) = $GeoipItem;
         $query = "INSERT INTO $GeoipTable
                 (start, end, ci)
                 VALUES (?,?,?)";
         $bindvars = array($start, $end, (int)$ci);
         $result =& $dbconn->Execute($query,$bindvars);
     }
-unset($geoipitems);
-$geoipitems = array(
+    if ($dbconn->ErrorNo() != 0) return;
+    unset($GeoipItems);
+    $GeoipItems = array(
 array(2258595472, 2258595551, 100),
 array(2258595552, 2258595591, 229),
 array(2258595592, 2258595599, 100),
@@ -22977,16 +22988,17 @@ array(2653749248, 2653814783, 20),
 array(2653880320, 2653945855, 115),
 array(2653945856, 2654011391, 235),
 array(2654011392, 2654076927, 72));
-    foreach ($geoipitems as $geoipitem) {
-        list($start,$end,$ci) = $geoipitem;
+    foreach ($GeoipItems as $GeoipItem) {
+        list($start,$end,$ci) = $GeoipItem;
         $query = "INSERT INTO $GeoipTable
                 (start, end, ci)
                 VALUES (?,?,?)";
         $bindvars = array($start, $end, (int)$ci);
         $result =& $dbconn->Execute($query,$bindvars);
     }
-unset($geoipitems);
-$geoipitems = array(
+    if ($dbconn->ErrorNo() != 0) return;
+    unset($GeoipItems);
+    $GeoipItems = array(
 array(2654076928, 2654142463, 80),
 array(2654142464, 2654207999, 42),
 array(2654208000, 2654339071, 235),
@@ -24733,16 +24745,17 @@ array(3225660416, 3225664511, 235),
 array(3225664512, 3225669887, 61),
 array(3225669888, 3225671935, 235),
 array(3225671936, 3225672191, 20));
-    foreach ($geoipitems as $geoipitem) {
-        list($start,$end,$ci) = $geoipitem;
+    foreach ($GeoipItems as $GeoipItem) {
+        list($start,$end,$ci) = $GeoipItem;
         $query = "INSERT INTO $GeoipTable
                 (start, end, ci)
                 VALUES (?,?,?)";
         $bindvars = array($start, $end, (int)$ci);
         $result =& $dbconn->Execute($query,$bindvars);
     }
-unset($geoipitems);
-$geoipitems = array(
+    if ($dbconn->ErrorNo() != 0) return;
+    unset($GeoipItems);
+    $GeoipItems = array(
 array(3225672192, 3225672447, 61),
 array(3225672448, 3225672703, 235),
 array(3225672704, 3225673215, 169),
@@ -26489,16 +26502,17 @@ array(3231119360, 3231119615, 82),
 array(3231119616, 3231120383, 219),
 array(3231120384, 3231120639, 170),
 array(3231120640, 3231120895, 235));
-    foreach ($geoipitems as $geoipitem) {
-        list($start,$end,$ci) = $geoipitem;
+    foreach ($GeoipItems as $GeoipItem) {
+        list($start,$end,$ci) = $GeoipItem;
         $query = "INSERT INTO $GeoipTable
                 (start, end, ci)
                 VALUES (?,?,?)";
         $bindvars = array($start, $end, (int)$ci);
         $result =& $dbconn->Execute($query,$bindvars);
     }
-unset($geoipitems);
-$geoipitems = array(
+    if ($dbconn->ErrorNo() != 0) return;
+    unset($GeoipItems);
+    $GeoipItems = array(
 array(3231120896, 3231121151, 170),
 array(3231121408, 3231135231, 235),
 array(3231135232, 3231135487, 47),
@@ -28246,16 +28260,17 @@ array(3239775232, 3239782399, 61),
 array(3239782400, 3239782655, 19),
 array(3239782656, 3239782911, 193),
 array(3239782912, 3239783167, 82));
-    foreach ($geoipitems as $geoipitem) {
-        list($start,$end,$ci) = $geoipitem;
+    foreach ($GeoipItems as $GeoipItem) {
+        list($start,$end,$ci) = $GeoipItem;
         $query = "INSERT INTO $GeoipTable
                 (start, end, ci)
                 VALUES (?,?,?)";
         $bindvars = array($start, $end, (int)$ci);
         $result =& $dbconn->Execute($query,$bindvars);
     }
-unset($geoipitems);
-$geoipitems = array(
+    if ($dbconn->ErrorNo() != 0) return;
+    unset($GeoipItems);
+    $GeoipItems = array(
 array(3239783168, 3239783423, 47),
 array(3239783424, 3239783679, 63),
 array(3239783680, 3239783935, 47),
@@ -30011,16 +30026,17 @@ array(3251213312, 3251213439, 61),
 array(3251213440, 3251213503, 82),
 array(3251213504, 3251213567, 61),
 array(3251213568, 3251213631, 80));
-    foreach ($geoipitems as $geoipitem) {
-        list($start,$end,$ci) = $geoipitem;
+    foreach ($GeoipItems as $GeoipItem) {
+        list($start,$end,$ci) = $GeoipItem;
         $query = "INSERT INTO $GeoipTable
                 (start, end, ci)
                 VALUES (?,?,?)";
         $bindvars = array($start, $end, (int)$ci);
         $result =& $dbconn->Execute($query,$bindvars);
     }
-unset($geoipitems);
-$geoipitems = array(
+    if ($dbconn->ErrorNo() != 0) return;
+    unset($GeoipItems);
+    $GeoipItems = array(
 array(3251213696, 3251213759, 140),
 array(3251213760, 3251213823, 226),
 array(3251213824, 3251213887, 82),
@@ -31775,16 +31791,17 @@ array(3257546624, 3257546655, 72),
 array(3257546752, 3257548799, 75),
 array(3257548800, 3257556991, 61),
 array(3257556992, 3257557503, 159));
-    foreach ($geoipitems as $geoipitem) {
-        list($start,$end,$ci) = $geoipitem;
+    foreach ($GeoipItems as $GeoipItem) {
+        list($start,$end,$ci) = $GeoipItem;
         $query = "INSERT INTO $GeoipTable
                 (start, end, ci)
                 VALUES (?,?,?)";
         $bindvars = array($start, $end, (int)$ci);
         $result =& $dbconn->Execute($query,$bindvars);
     }
-unset($geoipitems);
-$geoipitems = array(
+    if ($dbconn->ErrorNo() != 0) return;
+    unset($GeoipItems);
+    $GeoipItems = array(
 array(3257557504, 3257558015, 139),
 array(3257558016, 3257559551, 192),
 array(3257559552, 3257560063, 231),
@@ -33543,16 +33560,17 @@ array(3262477792, 3262477795, 82),
 array(3262477796, 3262477799, 80),
 array(3262477800, 3262477803, 26),
 array(3262477804, 3262477807, 47));
-    foreach ($geoipitems as $geoipitem) {
-        list($start,$end,$ci) = $geoipitem;
+    foreach ($GeoipItems as $GeoipItem) {
+        list($start,$end,$ci) = $GeoipItem;
         $query = "INSERT INTO $GeoipTable
                 (start, end, ci)
                 VALUES (?,?,?)";
         $bindvars = array($start, $end, (int)$ci);
         $result =& $dbconn->Execute($query,$bindvars);
     }
-unset($geoipitems);
-$geoipitems = array(
+    if ($dbconn->ErrorNo() != 0) return;
+    unset($GeoipItems);
+    $GeoipItems = array(
 array(3262477808, 3262477811, 42),
 array(3262477812, 3262477819, 235),
 array(3262477820, 3262477823, 61),
@@ -35317,16 +35335,17 @@ array(3263088128, 3263088639, 61),
 array(3263088640, 3263089151, 47),
 array(3263089152, 3263089407, 192),
 array(3263089408, 3263089663, 193));
-    foreach ($geoipitems as $geoipitem) {
-        list($start,$end,$ci) = $geoipitem;
+    foreach ($GeoipItems as $GeoipItem) {
+        list($start,$end,$ci) = $GeoipItem;
         $query = "INSERT INTO $GeoipTable
                 (start, end, ci)
                 VALUES (?,?,?)";
         $bindvars = array($start, $end, (int)$ci);
         $result =& $dbconn->Execute($query,$bindvars);
     }
-unset($geoipitems);
-$geoipitems = array(
+    if ($dbconn->ErrorNo() != 0) return;
+    unset($GeoipItems);
+    $GeoipItems = array(
 array(3263089664, 3263089919, 231),
 array(3263089920, 3263090175, 192),
 array(3263090176, 3263090431, 61),
@@ -37090,16 +37109,17 @@ array(3269066752, 3269069323, 199),
 array(3269069324, 3269069327, 63),
 array(3269069328, 3269076479, 199),
 array(3269076480, 3269076735, 61));
-    foreach ($geoipitems as $geoipitem) {
-        list($start,$end,$ci) = $geoipitem;
+    foreach ($GeoipItems as $GeoipItem) {
+        list($start,$end,$ci) = $GeoipItem;
         $query = "INSERT INTO $GeoipTable
                 (start, end, ci)
                 VALUES (?,?,?)";
         $bindvars = array($start, $end, (int)$ci);
         $result =& $dbconn->Execute($query,$bindvars);
     }
-unset($geoipitems);
-$geoipitems = array(
+    if ($dbconn->ErrorNo() != 0) return;
+    unset($GeoipItems);
+    $GeoipItems = array(
 array(3269076736, 3269125887, 199),
 array(3269125888, 3269126143, 235),
 array(3269126144, 3269132287, 199),
@@ -38865,16 +38885,17 @@ array(3274693120, 3274693375, 138),
 array(3274693376, 3274693631, 231),
 array(3274693632, 3274693887, 169),
 array(3274693888, 3274694143, 115));
-    foreach ($geoipitems as $geoipitem) {
-        list($start,$end,$ci) = $geoipitem;
+    foreach ($GeoipItems as $GeoipItem) {
+        list($start,$end,$ci) = $GeoipItem;
         $query = "INSERT INTO $GeoipTable
                 (start, end, ci)
                 VALUES (?,?,?)";
         $bindvars = array($start, $end, (int)$ci);
         $result =& $dbconn->Execute($query,$bindvars);
     }
-unset($geoipitems);
-$geoipitems = array(
+    if ($dbconn->ErrorNo() != 0) return;
+    unset($GeoipItems);
+    $GeoipItems = array(
 array(3274694144, 3274694399, 63),
 array(3274694400, 3274694655, 82),
 array(3274694656, 3274694911, 202),
@@ -40648,16 +40669,17 @@ array(3276505088, 3276505919, 250),
 array(3276505920, 3276505983, 74),
 array(3276505984, 3276506191, 250),
 array(3276506192, 3276506207, 74));
-    foreach ($geoipitems as $geoipitem) {
-        list($start,$end,$ci) = $geoipitem;
+    foreach ($GeoipItems as $GeoipItem) {
+        list($start,$end,$ci) = $GeoipItem;
         $query = "INSERT INTO $GeoipTable
                 (start, end, ci)
                 VALUES (?,?,?)";
         $bindvars = array($start, $end, (int)$ci);
         $result =& $dbconn->Execute($query,$bindvars);
     }
-unset($geoipitems);
-$geoipitems = array(
+    if ($dbconn->ErrorNo() != 0) return;
+    unset($GeoipItems);
+    $GeoipItems = array(
 array(3276506208, 3276507135, 250),
 array(3276507136, 3276507231, 47),
 array(3276507232, 3276507391, 74),
@@ -42420,16 +42442,17 @@ array(3278942751, 3278942751, 80),
 array(3278942752, 3278942753, 47),
 array(3278942754, 3278942754, 61),
 array(3278942755, 3278942755, 82));
-    foreach ($geoipitems as $geoipitem) {
-        list($start,$end,$ci) = $geoipitem;
+    foreach ($GeoipItems as $GeoipItem) {
+        list($start,$end,$ci) = $GeoipItem;
         $query = "INSERT INTO $GeoipTable
                 (start, end, ci)
                 VALUES (?,?,?)";
         $bindvars = array($start, $end, (int)$ci);
         $result =& $dbconn->Execute($query,$bindvars);
     }
-unset($geoipitems);
-$geoipitems = array(
+    if ($dbconn->ErrorNo() != 0) return;
+    unset($GeoipItems);
+    $GeoipItems = array(
 array(3278942756, 3278942756, 61),
 array(3278942757, 3278942757, 82),
 array(3278942758, 3278942759, 115),
@@ -44195,16 +44218,17 @@ array(3279373056, 3279375359, 75),
 array(3279375360, 3279380479, 74),
 array(3279380480, 3279380991, 47),
 array(3279380992, 3279382783, 187));
-    foreach ($geoipitems as $geoipitem) {
-        list($start,$end,$ci) = $geoipitem;
+    foreach ($GeoipItems as $GeoipItem) {
+        list($start,$end,$ci) = $GeoipItem;
         $query = "INSERT INTO $GeoipTable
                 (start, end, ci)
                 VALUES (?,?,?)";
         $bindvars = array($start, $end, (int)$ci);
         $result =& $dbconn->Execute($query,$bindvars);
     }
-unset($geoipitems);
-$geoipitems = array(
+    if ($dbconn->ErrorNo() != 0) return;
+    unset($GeoipItems);
+    $GeoipItems = array(
 array(3279382784, 3279383807, 47),
 array(3279383808, 3279384063, 187),
 array(3279384064, 3279385343, 47),
@@ -45970,16 +45994,17 @@ array(3285524736, 3285524863, 82),
 array(3285524864, 3285524879, 3),
 array(3285524880, 3285524895, 26),
 array(3285524896, 3285524927, 72));
-    foreach ($geoipitems as $geoipitem) {
-        list($start,$end,$ci) = $geoipitem;
+    foreach ($GeoipItems as $GeoipItem) {
+        list($start,$end,$ci) = $GeoipItem;
         $query = "INSERT INTO $GeoipTable
                 (start, end, ci)
                 VALUES (?,?,?)";
         $bindvars = array($start, $end, (int)$ci);
         $result =& $dbconn->Execute($query,$bindvars);
     }
-unset($geoipitems);
-$geoipitems = array(
+    if ($dbconn->ErrorNo() != 0) return;
+    unset($GeoipItems);
+    $GeoipItems = array(
 array(3285524928, 3285524991, 82),
 array(3285524992, 3285525247, 3),
 array(3285525248, 3285525503, 47),
@@ -47746,16 +47771,17 @@ array(3291325440, 3291326463, 39),
 array(3291326464, 3291330559, 250),
 array(3291330560, 3291331583, 230),
 array(3291331584, 3291332607, 159));
-    foreach ($geoipitems as $geoipitem) {
-        list($start,$end,$ci) = $geoipitem;
+    foreach ($GeoipItems as $GeoipItem) {
+        list($start,$end,$ci) = $GeoipItem;
         $query = "INSERT INTO $GeoipTable
                 (start, end, ci)
                 VALUES (?,?,?)";
         $bindvars = array($start, $end, (int)$ci);
         $result =& $dbconn->Execute($query,$bindvars);
     }
-unset($geoipitems);
-$geoipitems = array(
+    if ($dbconn->ErrorNo() != 0) return;
+    unset($GeoipItems);
+    $GeoipItems = array(
 array(3291332608, 3291348991, 167),
 array(3291348992, 3291353087, 162),
 array(3291357184, 3291365375, 157),
@@ -49508,16 +49534,17 @@ array(3359461120, 3359461375, 17),
 array(3359461376, 3359461887, 67),
 array(3359461888, 3359461951, 17),
 array(3359461952, 3359462015, 102));
-    foreach ($geoipitems as $geoipitem) {
-        list($start,$end,$ci) = $geoipitem;
+    foreach ($GeoipItems as $GeoipItem) {
+        list($start,$end,$ci) = $GeoipItem;
         $query = "INSERT INTO $GeoipTable
                 (start, end, ci)
                 VALUES (?,?,?)";
         $bindvars = array($start, $end, (int)$ci);
         $result =& $dbconn->Execute($query,$bindvars);
     }
-unset($geoipitems);
-$geoipitems = array(
+    if ($dbconn->ErrorNo() != 0) return;
+    unset($GeoipItems);
+    $GeoipItems = array(
 array(3359462016, 3359462271, 17),
 array(3359462272, 3359462335, 236),
 array(3359462336, 3359462399, 17),
@@ -51264,16 +51291,17 @@ array(3398638384, 3398638399, 119),
 array(3398638400, 3398638431, 229),
 array(3398638432, 3398638447, 180),
 array(3398638448, 3398638479, 119));
-    foreach ($geoipitems as $geoipitem) {
-        list($start,$end,$ci) = $geoipitem;
+    foreach ($GeoipItems as $GeoipItem) {
+        list($start,$end,$ci) = $GeoipItem;
         $query = "INSERT INTO $GeoipTable
                 (start, end, ci)
                 VALUES (?,?,?)";
         $bindvars = array($start, $end, (int)$ci);
         $result =& $dbconn->Execute($query,$bindvars);
     }
-unset($geoipitems);
-$geoipitems = array(
+    if ($dbconn->ErrorNo() != 0) return;
+    unset($GeoipItems);
+    $GeoipItems = array(
 array(3398638480, 3398638495, 229),
 array(3398638496, 3398638527, 119),
 array(3398638528, 3398638575, 180),
@@ -53012,16 +53040,17 @@ array(3420366448, 3420366463, 235),
 array(3420366464, 3420366471, 200),
 array(3420366472, 3420366479, 110),
 array(3420366480, 3420366495, 200));
-    foreach ($geoipitems as $geoipitem) {
-        list($start,$end,$ci) = $geoipitem;
+    foreach ($GeoipItems as $GeoipItem) {
+        list($start,$end,$ci) = $GeoipItem;
         $query = "INSERT INTO $GeoipTable
                 (start, end, ci)
                 VALUES (?,?,?)";
         $bindvars = array($start, $end, (int)$ci);
         $result =& $dbconn->Execute($query,$bindvars);
     }
-unset($geoipitems);
-$geoipitems = array(
+    if ($dbconn->ErrorNo() != 0) return;
+    unset($GeoipItems);
+    $GeoipItems = array(
 array(3420366496, 3420366511, 100),
 array(3420366512, 3420366527, 200),
 array(3420366528, 3420366591, 52),
@@ -54768,16 +54797,17 @@ array(3460942336, 3460943359, 235),
 array(3460943360, 3460943615, 106),
 array(3460943616, 3460943871, 100),
 array(3460943872, 3460944383, 235));
-    foreach ($geoipitems as $geoipitem) {
-        list($start,$end,$ci) = $geoipitem;
+    foreach ($GeoipItems as $GeoipItem) {
+        list($start,$end,$ci) = $GeoipItem;
         $query = "INSERT INTO $GeoipTable
                 (start, end, ci)
                 VALUES (?,?,?)";
         $bindvars = array($start, $end, (int)$ci);
         $result =& $dbconn->Execute($query,$bindvars);
     }
-unset($geoipitems);
-$geoipitems = array(
+    if ($dbconn->ErrorNo() != 0) return;
+    unset($GeoipItems);
+    $GeoipItems = array(
 array(3460944384, 3460944447, 127),
 array(3460944448, 3460944479, 235),
 array(3460944480, 3460944511, 52),
@@ -56523,16 +56553,17 @@ array(3486630144, 3486631679, 119),
 array(3486631680, 3486631935, 106),
 array(3486631936, 3486632447, 119),
 array(3486632448, 3486632703, 235));
-    foreach ($geoipitems as $geoipitem) {
-        list($start,$end,$ci) = $geoipitem;
+    foreach ($GeoipItems as $GeoipItem) {
+        list($start,$end,$ci) = $GeoipItem;
         $query = "INSERT INTO $GeoipTable
                 (start, end, ci)
                 VALUES (?,?,?)";
         $bindvars = array($start, $end, (int)$ci);
         $result =& $dbconn->Execute($query,$bindvars);
     }
-unset($geoipitems);
-$geoipitems = array(
+    if ($dbconn->ErrorNo() != 0) return;
+    unset($GeoipItems);
+    $GeoipItems = array(
 array(3486632704, 3486632959, 119),
 array(3486632960, 3486633215, 115),
 array(3486633216, 3486633471, 82),
@@ -58277,16 +58308,17 @@ array(3512197120, 3512198703, 42),
 array(3512198704, 3512198719, 235),
 array(3512198720, 3512203063, 42),
 array(3512203064, 3512203071, 235));
-    foreach ($geoipitems as $geoipitem) {
-        list($start,$end,$ci) = $geoipitem;
+    foreach ($GeoipItems as $GeoipItem) {
+        list($start,$end,$ci) = $GeoipItem;
         $query = "INSERT INTO $GeoipTable
                 (start, end, ci)
                 VALUES (?,?,?)";
         $bindvars = array($start, $end, (int)$ci);
         $result =& $dbconn->Execute($query,$bindvars);
     }
-unset($geoipitems);
-$geoipitems = array(
+    if ($dbconn->ErrorNo() != 0) return;
+    unset($GeoipItems);
+    $GeoipItems = array(
 array(3512203072, 3512205311, 42),
 array(3512205312, 3512205567, 235),
 array(3512205568, 3512205823, 50),
@@ -60032,16 +60064,17 @@ array(3556769792, 3556769795, 82),
 array(3556769796, 3556786175, 61),
 array(3556786176, 3556794367, 193),
 array(3556794368, 3556794879, 82));
-    foreach ($geoipitems as $geoipitem) {
-        list($start,$end,$ci) = $geoipitem;
+    foreach ($GeoipItems as $GeoipItem) {
+        list($start,$end,$ci) = $GeoipItem;
         $query = "INSERT INTO $GeoipTable
                 (start, end, ci)
                 VALUES (?,?,?)";
         $bindvars = array($start, $end, (int)$ci);
         $result =& $dbconn->Execute($query,$bindvars);
     }
-unset($geoipitems);
-$geoipitems = array(
+    if ($dbconn->ErrorNo() != 0) return;
+    unset($GeoipItems);
+    $GeoipItems = array(
 array(3556794880, 3556795135, 72),
 array(3556795136, 3556795647, 82),
 array(3556795648, 3556795679, 115),
@@ -61809,16 +61842,17 @@ array(3560943208, 3560943208, 19),
 array(3560943209, 3560943210, 72),
 array(3560943211, 3560943211, 80),
 array(3560943212, 3560943212, 61));
-    foreach ($geoipitems as $geoipitem) {
-        list($start,$end,$ci) = $geoipitem;
+    foreach ($GeoipItems as $GeoipItem) {
+        list($start,$end,$ci) = $GeoipItem;
         $query = "INSERT INTO $GeoipTable
                 (start, end, ci)
                 VALUES (?,?,?)";
         $bindvars = array($start, $end, (int)$ci);
         $result =& $dbconn->Execute($query,$bindvars);
     }
-unset($geoipitems);
-$geoipitems = array(
+    if ($dbconn->ErrorNo() != 0) return;
+    unset($GeoipItems);
+    $GeoipItems = array(
 array(3560943213, 3560943213, 80),
 array(3560943214, 3560943214, 182),
 array(3560943215, 3560943218, 61),
@@ -63578,16 +63612,17 @@ array(3563800624, 3563800751, 80),
 array(3563800752, 3563800767, 115),
 array(3563800768, 3563800911, 80),
 array(3563800912, 3563801007, 82));
-    foreach ($geoipitems as $geoipitem) {
-        list($start,$end,$ci) = $geoipitem;
+    foreach ($GeoipItems as $GeoipItem) {
+        list($start,$end,$ci) = $GeoipItem;
         $query = "INSERT INTO $GeoipTable
                 (start, end, ci)
                 VALUES (?,?,?)";
         $bindvars = array($start, $end, (int)$ci);
         $result =& $dbconn->Execute($query,$bindvars);
     }
-unset($geoipitems);
-$geoipitems = array(
+    if ($dbconn->ErrorNo() != 0) return;
+    unset($GeoipItems);
+    $GeoipItems = array(
 array(3563801008, 3563801087, 80),
 array(3563801088, 3563801103, 82),
 array(3563801104, 3563801215, 80),
@@ -65358,16 +65393,17 @@ array(3569733552, 3569733567, 80),
 array(3569733568, 3569733583, 82),
 array(3569733584, 3569733647, 80),
 array(3569733648, 3569733663, 82));
-    foreach ($geoipitems as $geoipitem) {
-        list($start,$end,$ci) = $geoipitem;
+    foreach ($GeoipItems as $GeoipItem) {
+        list($start,$end,$ci) = $GeoipItem;
         $query = "INSERT INTO $GeoipTable
                 (start, end, ci)
                 VALUES (?,?,?)";
         $bindvars = array($start, $end, (int)$ci);
         $result =& $dbconn->Execute($query,$bindvars);
     }
-unset($geoipitems);
-$geoipitems = array(
+    if ($dbconn->ErrorNo() != 0) return;
+    unset($GeoipItems);
+    $GeoipItems = array(
 array(3569733664, 3569733679, 80),
 array(3569733680, 3569733711, 82),
 array(3569733712, 3569733775, 80),
@@ -67148,16 +67184,17 @@ array(3576086368, 3576086431, 82),
 array(3576086432, 3576086495, 74),
 array(3576086496, 3576086527, 82),
 array(3576086528, 3576086535, 74));
-    foreach ($geoipitems as $geoipitem) {
-        list($start,$end,$ci) = $geoipitem;
+    foreach ($GeoipItems as $GeoipItem) {
+        list($start,$end,$ci) = $GeoipItem;
         $query = "INSERT INTO $GeoipTable
                 (start, end, ci)
                 VALUES (?,?,?)";
         $bindvars = array($start, $end, (int)$ci);
         $result =& $dbconn->Execute($query,$bindvars);
     }
-unset($geoipitems);
-$geoipitems = array(
+    if ($dbconn->ErrorNo() != 0) return;
+    unset($GeoipItems);
+    $GeoipItems = array(
 array(3576086536, 3576086563, 82),
 array(3576086564, 3576086567, 74),
 array(3576086568, 3576086571, 82),
@@ -68932,16 +68969,17 @@ array(3582640128, 3582648319, 193),
 array(3582648320, 3582656511, 187),
 array(3582656512, 3582664047, 72),
 array(3582664048, 3582664055, 80));
-    foreach ($geoipitems as $geoipitem) {
-        list($start,$end,$ci) = $geoipitem;
+    foreach ($GeoipItems as $GeoipItem) {
+        list($start,$end,$ci) = $GeoipItem;
         $query = "INSERT INTO $GeoipTable
                 (start, end, ci)
                 VALUES (?,?,?)";
         $bindvars = array($start, $end, (int)$ci);
         $result =& $dbconn->Execute($query,$bindvars);
     }
-unset($geoipitems);
-$geoipitems = array(
+    if ($dbconn->ErrorNo() != 0) return;
+    unset($GeoipItems);
+    $GeoipItems = array(
 array(3582664056, 3582664703, 72),
 array(3582664704, 3582672895, 118),
 array(3582672896, 3582681087, 61),
@@ -70704,16 +70742,17 @@ array(3589724816, 3589724823, 26),
 array(3589724824, 3589724883, 82),
 array(3589724884, 3589724887, 26),
 array(3589724888, 3589725623, 82));
-    foreach ($geoipitems as $geoipitem) {
-        list($start,$end,$ci) = $geoipitem;
+    foreach ($GeoipItems as $GeoipItem) {
+        list($start,$end,$ci) = $GeoipItem;
         $query = "INSERT INTO $GeoipTable
                 (start, end, ci)
                 VALUES (?,?,?)";
         $bindvars = array($start, $end, (int)$ci);
         $result =& $dbconn->Execute($query,$bindvars);
     }
-unset($geoipitems);
-$geoipitems = array(
+    if ($dbconn->ErrorNo() != 0) return;
+    unset($GeoipItems);
+    $GeoipItems = array(
 array(3589725624, 3589725695, 26),
 array(3589725696, 3589734399, 82),
 array(3589734400, 3589742591, 69),
@@ -72465,16 +72504,17 @@ array(3633032288, 3633032319, 93),
 array(3633032320, 3633032415, 3),
 array(3633032416, 3633032431, 250),
 array(3633032432, 3633032439, 3));
-    foreach ($geoipitems as $geoipitem) {
-        list($start,$end,$ci) = $geoipitem;
+    foreach ($GeoipItems as $GeoipItem) {
+        list($start,$end,$ci) = $GeoipItem;
         $query = "INSERT INTO $GeoipTable
                 (start, end, ci)
                 VALUES (?,?,?)";
         $bindvars = array($start, $end, (int)$ci);
         $result =& $dbconn->Execute($query,$bindvars);
     }
-unset($geoipitems);
-$geoipitems = array(
+    if ($dbconn->ErrorNo() != 0) return;
+    unset($GeoipItems);
+    $GeoipItems = array(
 array(3633032440, 3633032447, 250),
 array(3633032448, 3633032511, 3),
 array(3633032512, 3633032575, 205),
@@ -74232,16 +74272,17 @@ array(3645763632, 3645763633, 82),
 array(3645763634, 3645763634, 169),
 array(3645763635, 3645763635, 61),
 array(3645763636, 3645763636, 19));
-    foreach ($geoipitems as $geoipitem) {
-        list($start,$end,$ci) = $geoipitem;
+    foreach ($GeoipItems as $GeoipItem) {
+        list($start,$end,$ci) = $GeoipItem;
         $query = "INSERT INTO $GeoipTable
                 (start, end, ci)
                 VALUES (?,?,?)";
         $bindvars = array($start, $end, (int)$ci);
         $result =& $dbconn->Execute($query,$bindvars);
     }
-unset($geoipitems);
-$geoipitems = array(
+    if ($dbconn->ErrorNo() != 0) return;
+    unset($GeoipItems);
+    $GeoipItems = array(
 array(3645763637, 3645763637, 80),
 array(3645763638, 3645763638, 169),
 array(3645763639, 3645763639, 61),
@@ -76016,16 +76057,17 @@ array(3647949056, 3647949079, 61),
 array(3647949080, 3647950847, 82),
 array(3647950848, 3647950879, 61),
 array(3647950880, 3647955967, 82));
-    foreach ($geoipitems as $geoipitem) {
-        list($start,$end,$ci) = $geoipitem;
+    foreach ($GeoipItems as $GeoipItem) {
+        list($start,$end,$ci) = $GeoipItem;
         $query = "INSERT INTO $GeoipTable
                 (start, end, ci)
                 VALUES (?,?,?)";
         $bindvars = array($start, $end, (int)$ci);
         $result =& $dbconn->Execute($query,$bindvars);
     }
-unset($geoipitems);
-$geoipitems = array(
+    if ($dbconn->ErrorNo() != 0) return;
+    unset($GeoipItems);
+    $GeoipItems = array(
 array(3647955968, 3647956223, 61),
 array(3647956224, 3647995903, 82),
 array(3647995904, 3647997183, 61),
@@ -77244,14 +77286,15 @@ array(3740270592, 3740925951, 52),
 array(3740925952, 3741024255, 229),
 array(3741024256, 3741057023, 127),
 array(3741057024, 3741319167, 243));
-    foreach ($geoipitems as $geoipitem) {
-        list($start,$end,$ci) = $geoipitem;
+    foreach ($GeoipItems as $GeoipItem) {
+        list($start,$end,$ci) = $GeoipItem;
         $query = "INSERT INTO $GeoipTable
                 (start, end, ci)
                 VALUES (?,?,?)";
         $bindvars = array($start, $end, (int)$ci);
         $result =& $dbconn->Execute($query,$bindvars);
     }
+    if ($dbconn->ErrorNo() != 0) return;
     xarResponseRedirect(xarModURL('netquery', 'admin', 'xageoip', array('step' => '3')));
     return $true;
 }

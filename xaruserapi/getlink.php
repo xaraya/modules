@@ -2,7 +2,7 @@
 function netquery_userapi_getlink($args)
 {
     extract($args);
-    if (!isset($whois_ext)) {
+    if (!isset($whois_tld)) {
         $msg = xarML('Invalid Parameter Count');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
@@ -10,15 +10,18 @@ function netquery_userapi_getlink($args)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $WhoisTable = $xartable['netquery_whois'];
-    $query = "SELECT * FROM $WhoisTable WHERE whois_ext = ?";
-    $bindvars = array($whois_ext);
+    $query = "SELECT * FROM $WhoisTable WHERE whois_tld = ?";
+    $bindvars = array($whois_tld);
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
-    list($whois_id, $whois_ext, $whois_server) = $result->fields;
+    list($whois_id, $whois_tld, $whois_server, $whois_prefix, $whois_suffix, $whois_unfound) = $result->fields;
     if (!xarSecurityCheck('OverviewNetquery')) return;
-    $link = array('whois_id'     => $whois_id,
-                  'whois_ext'    => $whois_ext,
-                  'whois_server' => $whois_server);
+    $link = array('whois_id'      => $whois_id,
+                  'whois_tld'     => $whois_tld,
+                  'whois_server'  => $whois_server,
+                  'whois_prefix'  => $whois_prefix,
+                  'whois_suffix'  => $whois_suffix,
+                  'whois_unfound' => $whois_unfound);
     $result->Close();
     return $link;
 }

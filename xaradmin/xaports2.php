@@ -4,10 +4,9 @@ function netquery_admin_xaports2()
     if (!xarSecurityCheck('EditRole')) return;
     if (!xarVarFetch('step', 'int:1:10', $step, '0', XARVAR_NOT_REQUIRED)) return;
     $dbconn =& xarDBGetConn();
-//  $xartable =& xarDBGetTables();
-//  $PortsTable = $xartable['netquery_ports'];
-    $PortsTable = xarDBGetSiteTablePrefix() . '_netquery_ports';
-$portitems =array(
+    $xartable =& xarDBGetTables();
+    $PortsTable = $xartable['netquery_ports'];
+    $PortItems = array(
 array(1741, 1025, 'tcp', 'blackjack', 'network blackjack', 0),
 array(1742, 1025, 'tcp', 'FraggleRock', 'Fraggle Rock', 1),
 array(1743, 1025, 'tcp', 'listen', 'listener RFS remote_file_sharing', 0),
@@ -9099,14 +9098,15 @@ array(10828, 65534, 'tcp', 'sbininitd', '/sbin/initd', 1),
 array(10829, 65535, 'tcp', 'Adoreworm', 'Adore worm', 3),
 array(10830, 65535, 'tcp', 'RC1trojan', 'RC1 trojan', 1),
 array(10831, 65535, 'tcp', 'Sins', 'Sins', 1));
-    foreach ($portitems as $portitem) {
-        list($port_id,$port,$protocol,$service,$comment,$flag) = $portitem;
+    foreach ($PortItems as $PortItem) {
+        list($port_id,$port,$protocol,$service,$comment,$flag) = $PortItem;
         $query = "INSERT INTO $PortsTable
                 (port_id, port, protocol, service, comment, flag)
                 VALUES (?,?,?,?,?,?)";
         $bindvars = array((int)$port_id, (int)$port, (string)$protocol, (string)$service, (string)$comment, (int)$flag);
         $result =& $dbconn->Execute($query,$bindvars);
     }
+    if ($dbconn->ErrorNo() != 0) return;
     xarResponseRedirect(xarModURL('netquery', 'admin', 'xaports', array('step' => '3')));
     return $true;
 }

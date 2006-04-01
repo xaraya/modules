@@ -4,6 +4,8 @@ function netquery_admin_flview()
     if (!xarSecurityCheck('EditNetquery')) return;
     $data['items'] = array();
     $data['stylesheet'] = xarModGetVar('netquery', 'stylesheet');
+    list($data['buttondir']) = split('[._-]', $data['stylesheet']);
+    if (!file_exists($data['buttondir'] = 'modules/netquery/xarimages/'.$data['buttondir'])) $data['buttondir'] = 'modules/netquery/xarimages/blbuttons';
     $data['authid'] = xarSecGenAuthKey();
     $flags = xarModAPIFunc('netquery', 'user', 'getflags');
     if (empty($flags)) {

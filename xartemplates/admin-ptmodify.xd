@@ -1,7 +1,7 @@
 <xar:if condition="xarTplAddStyleLink('netquery', $stylesheet)">
 </xar:if>
 
-<script type="text/javascript" src="modules/netquery/xartemplates/popup.js"></script>
+<script type="text/javascript" src="modules/netquery/xarincludes/popup.js"></script>
 
 <div class="xar-mod-head">
   <span class="xar-mod-title"><xar:mlstring>Netquery Administration</xar:mlstring></span>
@@ -68,7 +68,7 @@
         <td colspan="5">
           <input type="submit" name="Submit" id="Submit" value="#$submitlabel#" />
           <input type="submit" name="Cancel" id="Cancel" value="#$cancellabel#" />
-          <input type="button" value="#$hlplink.label#" onclick="popUp('#$hlplink.url#','console','400','600');return false;" />
+          <input type="button" value="#$hlplink.label#" onclick="NQpopup('#$hlplink.url#','console','400','600');return false;" />
         </td>
       </tr>
     </table>

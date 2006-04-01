@@ -1,78 +1,11 @@
 <?php
 function netquery_xartables()
 {
-        $xartable = array();
-        $netqueryExecTable = xarDBGetSiteTablePrefix() . '_netquery_exec';
-        $xartable['netquery_exec'] = $netqueryExecTable;
-        $netqueryLGRequestTable = xarDBGetSiteTablePrefix() . '_netquery_lgrequest';
-        $xartable['netquery_lgrequest'] = $netqueryLGRequestTable;
-        $netqueryWhoisTable = xarDBGetSiteTablePrefix() . '_netquery_whois';
-        $xartable['netquery_whois'] = $netqueryWhoisTable;
-        $xartable['netquery_whois_column'] = array(
-                'whois_id'     => $netqueryWhoisTable . '.whois_id',
-                'whois_ext'    => $netqueryWhoisTable . '.whois_ext',
-                'whois_server' => $netqueryWhoisTable . '.whois_server');
-        $netqueryLGRouterTable = xarDBGetSiteTablePrefix() . '_netquery_lgrouter';
-        $xartable['netquery_lgrouter'] = $netqueryLGRouterTable;
-        $xartable['netquery_lgrouter_column'] = array(
-                'router_id'       => $netqueryLGRouterTable . '.router_id',
-                'router'          => $netqueryLGRouterTable . '.router',
-                'address'         => $netqueryLGRouterTable . '.address',
-                'username'        => $netqueryLGRouterTable . '.username',
-                'password'        => $netqueryLGRouterTable . '.password',
-                'zebra'           => $netqueryLGRouterTable . '.zebra',
-                'zebra_port'      => $netqueryLGRouterTable . '.zebra_port',
-                'zebra_password'  => $netqueryLGRouterTable . '.zebra_password',
-                'ripd'            => $netqueryLGRouterTable . '.ripd',
-                'ripd_port'       => $netqueryLGRouterTable . '.ripd_port',
-                'ripd_password'   => $netqueryLGRouterTable . '.ripd_password',
-                'ripngd'          => $netqueryLGRouterTable . '.ripngd',
-                'ripngd_port'     => $netqueryLGRouterTable . '.ripngd_port',
-                'ripngd_password' => $netqueryLGRouterTable . '.ripngd_password',
-                'ospfd'           => $netqueryLGRouterTable . '.ospfd',
-                'ospfd_port'      => $netqueryLGRouterTable . '.ospfd_port',
-                'ospfd_password'  => $netqueryLGRouterTable . '.ospfd_password',
-                'bgpd'            => $netqueryLGRouterTable . '.bgpd',
-                'bgpd_port'       => $netqueryLGRouterTable . '.bgpd_port',
-                'bgpd_password'   => $netqueryLGRouterTable . '.bgpd_password',
-                'ospf6d'          => $netqueryLGRouterTable . '.ospf6d',
-                'ospf6d_port'     => $netqueryLGRouterTable . '.ospf6d_port',
-                'ospf6d_password' => $netqueryLGRouterTable . '.ospf6d_password',
-                'use_argc'        => $netqueryLGRouterTable . '.use_argc');
-        $netqueryGeoccTable = xarDBGetSiteTablePrefix() . '_netquery_geocc';
-        $xartable['netquery_geocc'] = $netqueryGeoccTable;
-        $xartable['netquery_geocc_column'] = array(
-                'ci'    => $netqueryGeoccTable . '.ci',
-                'cc'    => $netqueryGeoccTable . '.cc',
-                'cn'    => $netqueryGeoccTable . '.cn',
-                'lat'   => $netqueryGeoccTable . '.lat',
-                'lon'   => $netqueryGeoccTable . '.lon',
-                'users' => $netqueryGeoccTable . '.users');
-        $netqueryGeoipTable = xarDBGetSiteTablePrefix() . '_netquery_geoip';
-        $xartable['netquery_geoip'] = $netqueryGeoipTable;
-        $xartable['netquery_geoip_column'] = array(
-                'start' => $netqueryGeoipTable . '.start',
-                'end'   => $netqueryGeoipTable . '.end',
-                'ci'    => $netqueryGeoipTable . '.ci');
-        $netqueryFlagsTable = xarDBGetSiteTablePrefix() . '_netquery_flags';
-        $xartable['netquery_flags'] = $netqueryFlagsTable;
-        $xartable['netquery_flags_column'] = array(
-                'flag_id'  => $netqueryFlagsTable . '.flag_id',
-                'flagnum'  => $netqueryFlagsTable . '.flagnum',
-                'keyword'  => $netqueryFlagsTable . '.keyword',
-                'fontclr'  => $netqueryFlagsTable . '.fontclr',
-                'backclr'  => $netqueryFlagsTable . '.backclr',
-                'lookup_1' => $netqueryFlagsTable . '.lookup_1',
-                'lookup_2' => $netqueryFlagsTable . '.lookup_2');
-        $netqueryPortsTable = xarDBGetSiteTablePrefix() . '_netquery_ports';
-        $xartable['netquery_ports'] = $netqueryPortsTable;
-        $xartable['netquery_ports_column'] = array(
-                'port_id'  => $netqueryPortsTable . '.port_id',
-                'port'     => $netqueryPortsTable . '.port',
-                'protocol' => $netqueryPortsTable . '.protocol',
-                'service'  => $netqueryPortsTable . '.service',
-                'comment'  => $netqueryPortsTable . '.comment',
-                'flag'     => $netqueryPortsTable . '.flag');
-        return $xartable;
-}
+    $xarTables = array();
+    $basename = 'netquery';
+    foreach(array('whois', 'lgrouter', 'geocc', 'geoip', 'flags', 'ports') as $table) {
+        $xarTables[$basename . '_' . $table] = xarDBGetSiteTablePrefix() . '_' . $basename . '_' . $table;
+    }
+    return $xarTables;
+} 
 ?>

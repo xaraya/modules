@@ -17,7 +17,7 @@ function netquery_admin_ptdelete()
         $data['authid'] = xarSecGenAuthKey();
         return $data;
     }
-    if ((!isset($Submit)) || ($Submit != 'Confirm')) {
+    if ((!isset($Submit)) || ($Submit != xarML('Confirm'))) {
         xarResponseRedirect(xarModURL('netquery', 'admin', 'ptview', array('portnum' => $data['port'], 'pflag' => $data['pflag'])));
     }
     if (!xarSecConfirmAuthKey()) return;

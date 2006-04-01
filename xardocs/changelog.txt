@@ -15,7 +15,7 @@ Version 2.0 2004-12-01
    - added admin notification on new submissions
 Version 2.1 2005-01-05
    - added whois lookup server autodiscovery
-   - minor template changes for Xaraya 0.9.11
+   - other minor cosmetic improvements
 Version 2.2 2005-01-28
    - verfied CSS and XHTML Strict validation
    - new user interface with query type selection
@@ -32,7 +32,7 @@ Version 2.4 2005-03-10
 Version 3.0 2005-03-20
    - added GeoIP address country data lookup
    - made GeoIP and ports data installer option packages
-   - Converted Netquery to handle separate modular options 
+   - Converted Netquery to handle separate data pak options 
 Version 3.1 2005-04-15
    - added "top countries" logging and zoomable map links
    - changed geoflags data pak to use country codes
@@ -49,12 +49,20 @@ Version 3.20 2006-01-08
 Version 3.30 2006-02-08
    - Modified GeoIP data pak array handling (now 2 files only)
    - Added more GeoIP country flags (AC, CS, GG, IM, JE, PN, SU)
-   - Added more help entries to language files
+   - Added more input field help entries to language files
    - Revised some UTF-8 header items for W3C XHTML 1.1 compliance
    - Replaced user & admin entry tables by forms/fieldsets
-   - Fieldset legends display links to "top countries" and help
+   - Fieldset legends include help links and "go" buttons
    - Selection of "top countries" now works like other query types
    - Modified output table templates for consistent displays
    - Revised manual styles, links and ID tags for user help
-   - Made CSS stylesheet selection an admin config option
-   - Interface styles more readily adaptable to various CMS themes
+   - Made CSS stylesheet selection an administrator config option
+   - Button set selection tracks stylesheet selection automatically
+   - Interface style adapts more readily to various CMS/CSS themes
+Version 3.31 2006-02-24
+   - Modified Whois data table (tld prefix, suffix & unfound fields)
+   - Modified setup for data table upgrading (standalone versioning)
+   - Added upgrade.txt process sequence instuctions for all editions
+Version 3.32 2006-03-15
+   - Moved buttons out of fieldset legends (Firefox rendering issue)
+   - Other minor bug fixes and coding cleanup

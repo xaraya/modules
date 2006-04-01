@@ -1,4 +1,4 @@
-<script type="text/javascript" src="modules/netquery/xartemplates/popup.js"></script>
+<script type="text/javascript" src="modules/netquery/xarincludes/popup.js"></script>
 
 <xar:if condition="xarTplAddStyleLink('netquery', $stylesheet)">
 </xar:if>
@@ -11,13 +11,15 @@
 <div style="margin: auto;">
 
 <div class="nq-center">
-<h2><xar:mlstring>Modify Netquery Configuration</xar:mlstring></h2>
+<h2>
+    <xar:mlstring>Modify Netquery Configuration</xar:mlstring>
+    <a href="javascript:NQpopup('#$hlplink.url#','console','400','600');"><img class="gobutton" src="#$buttondir#/btn_help.gif" alt="#$hlplink.label#" /></a>
+</h2>
 <form class="nqadmin" action="#xarModURL('netquery', 'admin', 'config')#" method="post" enctype="application/x-www-form-urlencoded">
       <input type="hidden" name="authid" id="authid" value="#$authid#" />
       <input type="hidden" name="phase" id="phase" value="update" />
   <fieldset>
       <legend>
-      <a href="javascript:popUp('#$hlplink.url#','console','400','600');"><img class="floatbutton" src="modules/netquery/xarimages/btn_help.gif" alt="#$hlplink.label#" /></a>
       <xar:mlstring>Options</xar:mlstring>
       </legend>
       <xar:if condition="$exec_timer_enabled">
@@ -66,7 +68,7 @@
       </xar:if>
       <label for="capture_log_allowuser"><xar:mlstring>Allow User View</xar:mlstring></label>
       <xar:if condition="!empty($loglink)">
-        ~ <a href="javascript:popUp('#$loglink.url#','console','400','600');">#$loglink.label#</a>
+        ~ <a href="javascript:NQpopup('#$loglink.url#','console','400','600');">#$loglink.label#</a>
         ~ <a href="#$clearlog.url#">#$clearlog.label#</a>
       </xar:if>
       <br /><span class="nq-indent">
@@ -137,11 +139,11 @@
       ~ <span class="help" title="#xarML('Default TLD for whois lookups')#"><label for="whois_default"><xar:mlstring>Default TLD</xar:mlstring></label></span>:
       <select name="whois_default" id="whois_default">
       <xar:foreach in="$links" value="$link">
-        <xar:if condition="!empty($link.whois_ext)">
-          <xar:if condition="$link.whois_ext eq $whois_default">
-            <option selected="selected" value="#$link.whois_ext#">#$link.whois_ext#</option>
+        <xar:if condition="!empty($link.whois_tld)">
+          <xar:if condition="$link.whois_tld eq $whois_default">
+            <option selected="selected" value="#$link.whois_tld#">#$link.whois_tld#</option>
           <xar:else />
-            <option value="#$link.whois_ext#">#$link.whois_ext#</option>
+            <option value="#$link.whois_tld#">#$link.whois_tld#</option>
           </xar:if>
         </xar:if>
       </xar:foreach>

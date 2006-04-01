@@ -6,6 +6,8 @@ function netquery_admin_ptview()
     if (!xarVarFetch('pflag', 'int:0:200', $pflag, '-1', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
     $data['items'] = array();
     $data['stylesheet'] = xarModGetVar('netquery', 'stylesheet');
+    list($data['buttondir']) = split('[._-]', $data['stylesheet']);
+    if (!file_exists($data['buttondir'] = 'modules/netquery/xarimages/'.$data['buttondir'])) $data['buttondir'] = 'modules/netquery/xarimages/blbuttons';
     $data['authid'] = xarSecGenAuthKey();
     if ($pflag >= 0) {
         $portdata = xarModAPIFunc('netquery', 'admin', 'getportflag', array('flag' => $pflag));

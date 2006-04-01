@@ -15,7 +15,7 @@ function netquery_user_submit()
             $data['cancellabel']    = xarML('Cancel');
             break;
         case 'update':
-            if ((!isset($Submit)) || ($Submit != 'Submit')) {
+            if ((!isset($Submit)) || ($Submit != xarML('Submit'))) {
                 xarResponseRedirect(xarModURL('netquery', 'user', 'main'));
             }
             if (!xarVarFetch('port_port', 'int:1:100000', $port_port)) return;

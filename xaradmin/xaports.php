@@ -9,8 +9,8 @@ function netquery_admin_xaports()
     switch ($step) {
         case '1':
         default:
-            $data['body'] = '<br /><br />The first step in building a new table is to delete the existing ports table along with the related flags table.';
-            $data['body'] .= ' Unless it has been backed up, all of the data contained in both tables will be lost.';
+            $data['body'] = '<br /><br />Creating and populating new data tables replaces any existing ports data table and related category flags table.';
+            $data['body'] .= ' Unless it has been backed up, all data contained in both tables will be lost.';
             $data['body'] .= '<br /><br />Do you wish to proceed?:';
             $data['body'] .= ' [<a href="'.xarModURL('netquery', 'admin', 'xaports', array('step' => 99)).'">Yes</a>]';
             $data['body'] .= ' [<a href="'.xarModURL('netquery', 'admin', 'config').'">No</a>]<br /><br />';
@@ -18,42 +18,36 @@ function netquery_admin_xaports()
             break;
         case '99':
             $dbconn =& xarDBGetConn();
-//          $xartable =& xarDBGetTables();
-//          $FlagsTable = $xartable['netquery_flags'];
-//          $PortsTable = $xartable['netquery_ports'];
-            $FlagsTable = xarDBGetSiteTablePrefix() . '_netquery_flags';
-            $PortsTable = xarDBGetSiteTablePrefix() . '_netquery_ports';
-            xarDBLoadTableMaintenanceAPI();
-            $query = xarDBDropTable($FlagsTable);
-            $result = &$dbconn->Execute($query);
-            if (xarCurrentErrorType() != XAR_NO_EXCEPTION) {
-              xarErrorHandled();
-            }
-            $query = xarDBDropTable($PortsTable);
-            $result = &$dbconn->Execute($query);
-            if (xarCurrentErrorType() != XAR_NO_EXCEPTION) {
-              xarErrorHandled();
-            }
-            $flagfields = array(
-                 'flag_id'  => array('type'=>'integer','size'=>'medium','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE)
-                ,'flagnum'  => array('type'=>'integer','size'=>'medium','null'=>FALSE,'default'=>'0')
-                ,'keyword'  => array('type'=>'varchar','size'=>20,'null'=>FALSE,'default'=>'')
-                ,'fontclr'  => array('type'=>'varchar','size'=>20,'null'=>FALSE,'default'=>'')
-                ,'backclr'  => array('type'=>'varchar','size'=>20,'null'=>FALSE,'default'=>'')
-                ,'lookup_1' => array('type'=>'varchar','size'=>100,'null'=>FALSE,'default'=>'')
-                ,'lookup_2' => array('type'=>'varchar','size'=>100,'null'=>FALSE,'default'=>''));
-            $query = xarDBCreateTable($FlagsTable,$flagfields);
-            $result = &$dbconn->Execute($query);
-            $portfields = array(
-                 'port_id'  => array('type'=>'integer','size'=>'medium','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE)
-                ,'port'     => array('type'=>'integer','size'=>'medium','null'=>FALSE,'default'=>'0')
-                ,'protocol' => array('type'=>'varchar','size'=>3,'null'=>FALSE,'default'=>'')
-                ,'service'  => array('type'=>'varchar','size'=>35,'null'=>FALSE,'default'=>'')
-                ,'comment'  => array('type'=>'varchar','size'=>50,'null'=>FALSE,'default'=>'')
-                ,'flag'     => array('type'=>'integer','size'=>'tiny','null'=>FALSE,'default'=>'0'));
-            $query = xarDBCreateTable($PortsTable,$portfields);
-            $result = &$dbconn->Execute($query);
-$flagitems = array(
+            $xartable =& xarDBGetTables();
+            $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+            $taboptarray = array('REPLACE');
+            $idxoptarray = array('UNIQUE');
+            $FlagsTable = $xartable['netquery_flags'];
+            $FlagsFields = "
+                flag_id           I          AUTO        PRIMARY,
+                flagnum           I          NOTNULL     DEFAULT 0,
+                keyword           C(20)      NOTNULL     DEFAULT '',
+                fontclr           C(20)      NOTNULL     DEFAULT '',
+                backclr           C(20)      NOTNULL     DEFAULT '',
+                lookup_1          C(100)     NOTNULL     DEFAULT '',
+                lookup_2          C(100)     NOTNULL     DEFAULT ''
+            ";
+            $result = $datadict->createTable($FlagsTable, $FlagsFields, $taboptarray);
+            if (!$result) return;
+            $result = $datadict->createIndex('keyword', $FlagsTable, 'flagnum', $idxoptarray);
+            if (!$result) return;
+            $PortsTable = $xartable['netquery_ports'];
+            $PortsFields = "
+                port_id           I          AUTO        PRIMARY,
+                port              I          NOTNULL     DEFAULT 0,
+                protocol          C(3)       NOTNULL     DEFAULT '',
+                service           C(35)      NOTNULL     DEFAULT '',
+                comment           C(50)      NOTNULL     DEFAULT '',
+                flag              I1         NOTNULL     DEFAULT 0
+            ";
+            $result = $datadict->createTable($PortsTable, $PortsFields, $taboptarray);
+            if (!$result) return;
+            $FlagItems = array(
 array(1, 0, 'service', 'black', 'white', 'http://www.google.com/search?num=20&amp;hl=en&amp;ie=UTF-8&amp;q=port+service+', ''),
 array(2, 1, 'trojan', 'red', 'white', 'http://www.google.com/search?num=20&amp;hl=en&amp;ie=UTF-8&amp;q=trojan+', ''),
 array(3, 2, 'backdoor', 'purple', 'white', 'http://www.google.com/search?num=20&amp;hl=en&amp;ie=UTF-8&amp;q=backdoor+', ''),
@@ -62,15 +56,16 @@ array(5, 4, 'game', 'blue', 'white', 'http://www.google.com/search?num=20&amp;hl
 array(6, 5, 'reserved1', 'yellow', 'white', 'http://www.google.com/search?num=20&amp;hl=en&amp;ie=UTF-8&amp;q=dummy1+', ''),
 array(7, 6, 'reserved2', 'yellow', 'white', 'http://www.google.com/search?num=20&amp;hl=en&amp;ie=UTF-8&amp;q=dummy2+', ''),
 array(8, 99, 'pending', 'green', 'white', '', ''));
-            foreach ($flagitems as $flagitem) {
-                list($flag_id,$flagnum,$keyword,$fontclr,$backclr,$lookup_1,$lookup_2) = $flagitem;
+            foreach ($FlagItems as $FlagItem) {
+                list($flag_id,$flagnum,$keyword,$fontclr,$backclr,$lookup_1,$lookup_2) = $FlagItem;
                 $query = "INSERT INTO $FlagsTable
                         (flag_id, flagnum, keyword, fontclr, backclr, lookup_1, lookup_2)
                         VALUES (?,?,?,?,?,?,?)";
                 $bindvars = array((int)$flag_id, (int)$flagnum, (string)$keyword, (string)$fontclr, (string)$backclr, (string)$lookup_1,(string)$lookup_2);
                 $result =& $dbconn->Execute($query,$bindvars);
             }
-$portitems = array(
+            if ($dbconn->ErrorNo() != 0) return;
+            $PortItems = array(
 array(1, 0, 'tcp', 'Reserved', 'Reserved - used for fingerprinting', 0),
 array(2, 0, 'udp', 'Reserved', 'Reserved - used for fingerprinting', 0),
 array(3, 1, 'udp', 'SocketsdesTroie', 'Sockets des Troie', 1),
@@ -1811,14 +1806,15 @@ array(1737, 1024, 'tcp', 'kdm', 'K Display Manager (KDE version of xdm) xdm)', 0
 array(1738, 1024, 'tcp', 'Latinus', 'Latinus', 1),
 array(1739, 1024, 'tcp', 'NetSpy', 'NetSpy', 1),
 array(1740, 1024, 'tcp', 'RAT', 'Remote Administration Tool - RAT [no 2]', 1));
-            foreach ($portitems as $portitem) {
-                list($port_id,$port,$protocol,$service,$comment,$flag) = $portitem;
+            foreach ($PortItems as $PortItem) {
+                list($port_id,$port,$protocol,$service,$comment,$flag) = $PortItem;
                 $query = "INSERT INTO $PortsTable
                         (port_id, port, protocol, service, comment, flag)
                         VALUES (?,?,?,?,?,?)";
                 $bindvars = array((int)$port_id, (int)$port, (string)$protocol, (string)$service, (string)$comment, (int)$flag);
                 $result =& $dbconn->Execute($query,$bindvars);
             }
+            if ($dbconn->ErrorNo() != 0) return;
             xarResponseRedirect(xarModURL('netquery', 'admin', 'xaports', array('step' => '2')));
             return true;
             break;

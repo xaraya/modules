@@ -12,9 +12,9 @@ IMPORTANT NOTES:
 - If you have included the optional GeoIP and/or ports services and exploits data
   packages, be sure to select the "Install Data" options for those features and
   follow the on-screen instructions.
-- All packages include two image sets of query selector buttons (blue and grey) and
-  two CSS stylesheet layouts (vertical and horizontal) for each.  Just overwrite
-  the netquery.css file, or "roll your own" CSS stylesheet.
+- All packages include two image sets of query selector buttons and several CSS
+  stylesheets selectable as an admin option.  You can also "roll your own" CSS
+  stylesheets.  Please see styles.txt for additonal important notes for Xaraya.
 ---------------
 That's it -- enjoy!
 Richard Virtue - http://virtech.org/

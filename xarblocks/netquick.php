@@ -26,6 +26,8 @@ function netquery_netquickblock_display($blockinfo)
     if (!isset($vars['blockquery'])) {
         $vars['blockquery'] = 'whois';
     }
+    $stylesheet = xarModGetVar('netquery', 'stylesheet');
+    $buttondir = ((list($testdir) = split('[._-]', $stylesheet)) && (!empty($testdir)) && (file_exists('modules/netquery/xarimages/'.$testdir))) ? 'modules/netquery/xarimages/'.$testdir : 'modules/netquery/xarimages/blbuttons';
     $browserinfo =& new nqSniff();
     $geoip = xarModAPIFunc('netquery', 'user', 'getgeoip', array('ip' => $browserinfo->property('ip')));
     $mapping_site = xarModGetVar('netquery', 'mapping_site');
@@ -35,7 +37,9 @@ function netquery_netquickblock_display($blockinfo)
     $links = xarModAPIFunc('netquery','user','getlinks');
     $email = 'someone@'.gethostbyaddr($_SERVER['REMOTE_ADDR']);
     $httpurl = 'http://'.$_SERVER['SERVER_NAME'];
-    $blockinfo['content'] = array('browserinfo'   => $browserinfo,
+    $blockinfo['content'] = array('stylesheet'    => $stylesheet,
+                                  'buttondir'     => $buttondir,
+                                  'browserinfo'   => $browserinfo,
                                   'geoip'         => $geoip,
                                   'mapping_site'  => $mapping_site,
                                   'countries'     => $countries,

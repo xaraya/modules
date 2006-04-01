@@ -9,8 +9,8 @@ function netquery_admin_xageoip()
     switch ($step) {
         case '1':
         default:
-            $data['body'] = '<br /><br />The first step in building a new table is to delete the existing geoip table along with the related geocc table.';
-            $data['body'] .= ' Unless it has been backed up, all of the data contained in both tables will be lost.';
+            $data['body'] = '<br /><br />Creating and populating new data tables replaces any existing geoip and related geocc data tables.';
+            $data['body'] .= ' Unless it has been backed up, all data contained in both tables will be lost.';
             $data['body'] .= '<br /><br />Do you wish to proceed?:';
             $data['body'] .= ' [<a href="'.xarModURL('netquery', 'admin', 'xageoip', array('step' => 99)).'">Yes</a>]';
             $data['body'] .= ' [<a href="'.xarModURL('netquery', 'admin', 'config').'">No</a>]<br /><br />';
@@ -18,38 +18,30 @@ function netquery_admin_xageoip()
             break;
         case '99':
             $dbconn =& xarDBGetConn();
-//          $xartable =& xarDBGetTables();
-//          $GeoccTable = $xartable['netquery_geocc'];
-//          $GeoipTable = $xartable['netquery_geoip'];
-            $GeoccTable = xarDBGetSiteTablePrefix() . '_netquery_geocc';
-            $GeoipTable = xarDBGetSiteTablePrefix() . '_netquery_geoip';
-            xarDBLoadTableMaintenanceAPI();
-            $query = xarDBDropTable($GeoccTable);
-            $result = &$dbconn->Execute($query);
-            if (xarCurrentErrorType() != XAR_NO_EXCEPTION) {
-              xarErrorHandled();
-            }
-            $query = xarDBDropTable($GeoipTable);
-            $result = &$dbconn->Execute($query);
-            if (xarCurrentErrorType() != XAR_NO_EXCEPTION) {
-              xarErrorHandled();
-            }
-            $geoccfields = array(
-                 'ci'    => array('type'=>'integer','size'=>'tiny','unsigned'=>TRUE,'null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE)
-                ,'cc'    => array('type'=>'char','size'=>2,'null'=>FALSE,'default'=>'')
-                ,'cn'    => array('type'=>'varchar','size'=>50,'null'=>FALSE,'default'=>'')
-                ,'lat'   => array('type'=>'float','size'=>'decimal','width'=>'7','decimals'=>'4','null'=>FALSE,'default'=>'0.0000')
-                ,'lon'   => array('type'=>'float','size'=>'decimal','width'=>'7','decimals'=>'4','null'=>FALSE,'default'=>'0.0000')
-                ,'users' => array('type'=>'integer','size'=>'medium','unsigned'=>TRUE,'null'=>FALSE,'default'=>'0'));
-            $query = xarDBCreateTable($GeoccTable,$geoccfields);
-            $result = &$dbconn->Execute($query);
-            $geoipfields = array(
-                 'start' => array('type'=>'integer','size'=>10,'unsigned'=>TRUE,'null'=>FALSE,'default'=>'0')
-                ,'end'   => array('type'=>'integer','size'=>10,'unsigned'=>TRUE,'null'=>FALSE,'default'=>'0')
-                ,'ci'    => array('type'=>'integer','size'=>'tiny','unsigned'=>TRUE,'null'=>FALSE,'default'=>'0'));
-            $query = xarDBCreateTable($GeoipTable,$geoipfields);
-            $result = &$dbconn->Execute($query);
-$geoccitems = array(
+            $xartable =& xarDBGetTables();
+            $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+            $taboptarray = array('REPLACE');
+            $idxoptarray = array('UNIQUE');
+            $GeoccTable = $xartable['netquery_geocc'];
+            $GeoccFields = "
+                ci                I1         AUTO        PRIMARY         UNSIGNED,
+                cc                C(2)       NOTNULL     DEFAULT '',
+                cn                C(50)      NOTNULL     DEFAULT '',
+                lat               N(7.4)     NOTNULL     DEFAULT 0.0000,
+                lon               N(7.4)     NOTNULL     DEFAULT 0.0000,
+                users             I          NOTNULL     DEFAULT 0       UNSIGNED
+            ";
+            $result = $datadict->createTable($GeoccTable, $GeoccFields, $taboptarray);
+            if (!$result) return;
+            $GeoipTable = $xartable['netquery_geoip'];
+            $GeoipFields = "
+                start             I          NOTNULL     DEFAULT 0       UNSIGNED,
+                end               I          NOTNULL     DEFAULT 0       UNSIGNED,
+                ci                I1         NOTNULL     DEFAULT 0       UNSIGNED
+            ";
+            $result = $datadict->createTable($GeoipTable, $GeoipFields, $taboptarray);
+            if (!$result) return;
+            $GeoccItems = array(
 array(1, 'A0', 'Reserved Addr', '0.0000', '0.0000', 0),
 array(2, 'A1', 'Loopback Addr', '0.0000', '0.0000', 0),
 array(3, 'A2', 'Satellite Provider', '0.0000', '0.0000', 0),
@@ -302,15 +294,16 @@ array(249, 'YU', 'Yugoslavia', '44.0000', '21.0000', 0),
 array(250, 'ZA', 'South Africa', '-29.0000', '24.0000', 0),
 array(251, 'ZM', 'Zambia', '-15.0000', '30.0000', 0),
 array(252, 'ZW', 'Zimbabwe', '-20.0000', '30.0000', 0));
-            foreach ($geoccitems as $geoccitem) {
-                list($ci,$cc,$cn,$lat,$lon,$users) = $geoccitem;
+            foreach ($GeoccItems as $GeoccItem) {
+                list($ci,$cc,$cn,$lat,$lon,$users) = $GeoccItem;
                 $query = "INSERT INTO $GeoccTable
                         (ci, cc, cn, lat, lon, users)
                         VALUES (?,?,?,?,?,?)";
                 $bindvars = array((int)$ci, (string)$cc, (string)$cn, $lat, $lon, (int)$users);
                 $result =& $dbconn->Execute($query,$bindvars);
             }
-$geoipitems = array(
+            if ($dbconn->ErrorNo() != 0) return;
+            $GeoipItems = array(
 array(0, 16777215, 1),             # Reserved block 0/8
 array(167772160, 184549375, 4),    # Private address block 10/8 (Class A)
 array(2130706432, 2147483647, 2),  # Loopback address block 127/8
@@ -321,14 +314,15 @@ array(3221159936, 3221225471, 1),  # Reserved block 191.255/16
 array(3221225472, 3221225727, 1),  # Reserved block 192.0.0/24
 array(3232235520, 3232301055, 4),  # Private address blocks 192.168/16 (Class C x256 contiguous
 array(3758096128, 3758096383, 1)); # Reserved block 223.255.255/24
-            foreach ($geoipitems as $geoipitem) {
-                list($start,$end,$ci) = $geoipitem;
+            foreach ($GeoipItems as $GeoipItem) {
+                list($start,$end,$ci) = $GeoipItem;
                 $query = "INSERT INTO $GeoipTable
                         (start, end, ci)
                         VALUES (?,?,?)";
                 $bindvars = array($start, $end, (int)$ci);
                 $result =& $dbconn->Execute($query,$bindvars);
             }
+            if ($dbconn->ErrorNo() != 0) return;
             xarResponseRedirect(xarModURL('netquery', 'admin', 'xageoip', array('step' => '2')));
             return true;
             break;

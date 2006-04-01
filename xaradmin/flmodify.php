@@ -17,7 +17,7 @@ function netquery_admin_flmodify()
             $data['cancellabel']    = xarML('Cancel');
             break;
         case 'update':
-            if ((!isset($Submit)) || ($Submit != 'Submit')) {
+            if ((!isset($Submit)) || ($Submit != xarML('Submit'))) {
                 xarResponseRedirect(xarModURL('netquery', 'admin', 'flview'));
             }
             if (!xarVarFetch('flag_keyword', 'str:1:20', $flag_keyword)) return;

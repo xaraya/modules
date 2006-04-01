@@ -12,7 +12,7 @@ function netquery_admin_clearlog()
         $data['authid'] = xarSecGenAuthKey();
         return $data;
     }
-    if ((!isset($Submit)) || ($Submit != 'Confirm')) {
+    if ((!isset($Submit)) || ($Submit != xarML('Confirm'))) {
         xarResponseRedirect(xarModURL('netquery', 'admin', 'config'));
     }
     if (!xarSecConfirmAuthKey()) return;

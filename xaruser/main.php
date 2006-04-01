@@ -10,17 +10,21 @@ function netquery_user_main()
     else if ($data['querytype'] == 'whois')
     {
         $domain = $data['domain'];
-        $whois_ext = $data['whois_ext'];
+        $whois_tld = $data['whois_tld'];
         $whois_max_limit = $data['whois_max_limit'];
         $msg = ('<table class="nqoutput">');
         $j = 1;
         while ($j <= $whois_max_limit && !empty($domain[$j])) {
             $readbuf = '';
             $nextServer = '';
-            $target = $domain[$j].$whois_ext[$j];
-            $link = xarModAPIFunc('netquery', 'user', 'getlink', array('whois_ext' => $whois_ext[$j]));
+            $link = xarModAPIFunc('netquery', 'user', 'getlink', array('whois_tld' => $whois_tld[$j]));
             $whois_server = $link['whois_server'];
-            if ($whois_server == 'whois.denic.de') $target = ' -T dn '.$target;
+            $whois_prefix = $link['whois_prefix'];
+            $whois_suffix = $link['whois_suffix'];
+            $whois_unfound = $link['whois_unfound'];
+            $target = $domain[$j].'.'.$whois_tld[$j];
+            if (! empty($whois_prefix)) $target = $whois_prefix.' '.$target;
+            if (! empty($whois_suffix)) $target = $target.' '.$whois_suffix;
             $msg .= ('<tr><th>Whois Results '.$j.' [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</th></tr><tr><td>');
             if (! $sock = @fsockopen($whois_server, 43, $errnum, $error, 10)){
                 unset($sock);
@@ -33,10 +37,7 @@ function netquery_user_main()
                 @fclose($sock);
             }
             if (! eregi("Whois Server:", $readbuf)) {
-                if (eregi("No match", $readbuf) || eregi("No entries", $readbuf) || eregi("Not found", $readbuf))
-                    $msg .= "NOT FOUND: No match for $target<br />";
-                else if (! eregi("Timed-out", $msg))
-                    $msg .= "Ambiguous query, multiple matches for $target:<br />";
+                if (! empty($whois_unfound) && eregi($whois_unfound, $readbuf)) $msg .= "<span class=\"nq-red\">NOT FOUND</span>: No match for $target<br />";
             } else {
                 $readbuf = split("\n", $readbuf);
                 for ($i=0; $i<sizeof($readbuf); $i++) {
@@ -50,7 +51,7 @@ function netquery_user_main()
                     unset($sock);
                     $msg .= "Cannot connect to ".$nextServer." (".$error.")";
                 } else {
-                    fputs($sock, "$target\n");
+                    fputs($sock, $target."\r\n");
                     while (!feof($sock)) {
                         $readbuf .= fgets($sock, 10240);
                     }
@@ -80,7 +81,7 @@ function netquery_user_main()
                 unset($sock);
                 $msg .= "Cannot connect to ".$whois_server." (".$error.")";
             } else {
-                fputs($sock, "$target\n");
+                fputs($sock, $target."\r\n");
                 while (!feof($sock)) {
                     $readbuf .= fgets($sock, 10240);
                 }
@@ -88,13 +89,14 @@ function netquery_user_main()
             }
             if (eregi("whois.apnic.net", $readbuf))
                 $nextServer = "whois.apnic.net";
-            else if (eregi("RIPE.NET", $readbuf))
+            else if (eregi("whois.ripe.net", $readbuf))
                 $nextServer = "whois.ripe.net";
+            else if (eregi("whois.lacnic.net", $readbuf))
+                $nextServer = "whois.lacnic.net";
             else if (eregi("whois.registro.br", $readbuf))
                 $nextServer = "whois.registro.br";
-            else if (eregi("nic.ad.jp", $readbuf)) {
-                $nextServer = "whois.nic.ad.jp";
-                $extra = "/e";
+            else if (eregi("whois.afrinic.net", $readbuf)) {
+                $nextServer = "whois.afrinic.net";
             }
             if ($nextServer) {
                 $readbuf = "";
@@ -102,7 +104,7 @@ function netquery_user_main()
                     unset($sock);
                     $msg .= "Cannot connect to ".$nextServer." (".$error.")";
                 } else {
-                    fputs($sock, "$target$extra\n");
+                    fputs($sock, $target.$extra."\r\n");
                     while (!feof($sock)) {
                         $readbuf .= fgets($sock, 10240);
                     }
@@ -223,7 +225,7 @@ function netquery_user_main()
         $submitlink = $data['submitlink'];
         $portdata = xarModAPIFunc('netquery', 'user', 'getportdata', array('port' => $tport));
         $msg = ('<table class="nqoutput">');
-        $msg .= ('<tr><th colspan="3">Port '.$tport.' Services &amp; Exploits [<a href="javascript:newwindow(\'http://isc.sans.org/port_details.php?port='.$tport.'\');">Details</a>]');
+        $msg .= ('<tr><th colspan="3">Port '.$tport.' Services &amp; Exploits [<a href="javascript:NQpopup(\'http://isc.sans.org/port_details.php?port='.$tport.'\');">Details</a>]');
         if ($data['user_submissions']) $msg .= (' [<a href="'.$submitlink['url'].'">'.$submitlink['label'].'</a>]');
         $msg .= (' [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:<br />');
         if (!empty($target) && $target != 'None') {
@@ -242,7 +244,7 @@ function netquery_user_main()
         {
           if (!empty($portdatum['protocol'])) {
             $flagdata = xarModAPIFunc('netquery', 'user', 'getflagdata', array('flagnum' => $portdatum['flag']));
-            $notes = '<span class="nq-'.$flagdata['fontclr'].'">['.$flagdata['keyword'].']</span> <a href="javascript:newwindow(\''.$flagdata['lookup_1'].$portdatum['comment'].'\');">'.$portdatum['comment'].'</a>';
+            $notes = '<span class="nq-'.$flagdata['fontclr'].'">['.$flagdata['keyword'].']</span> <a href="javascript:NQpopup(\''.$flagdata['lookup_1'].$portdatum['comment'].'\');">'.$portdatum['comment'].'</a>';
             $msg .= '<tr><td>'.$portdatum['protocol'].'</td><td>'.$portdatum['service'].'</td><td>'.$notes.'</td></tr>';
           }
         }
@@ -406,15 +408,15 @@ function netquery_user_main()
         $target = "Top Countries";
         $countries = $data['countries'];
         $msg = ('<table class="nqoutput">');
-        $msg .= ('<tr><th colspan="6">Top Countriest Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</th</tr>');
+        $msg .= ('<tr><th colspan="6">Top Countries Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</th</tr>');
         $msg .= "<tr><th>Code</th><th>Country</th><th>Flag</th><th>Latitude</th><th>Longitude</th><th>Users</th></tr>\n";
         foreach ($countries as $country) {
           if (!empty ($country['cn'])) {
             $msg .= "<tr><td>".$country['cc']."</td><td>\n";
             if ($data['mapping_site'] == 1)
-              $msg .= "<a href=\"javascript:newwindow('http://www.mapquest.com/maps/map.adp?latlongtype=decimal&amp;latitude=".$country['lat']."&amp;longitude=".$country['lon']."&amp;zoom=0');\">".$country['cn']."</a>\n";
+              $msg .= "<a href=\"javascript:NQpopup('http://www.mapquest.com/maps/map.adp?latlongtype=decimal&amp;latitude=".$country['lat']."&amp;longitude=".$country['lon']."&amp;zoom=0');\">".$country['cn']."</a>\n";
             else if ($data['mapping_site'] == 2)
-              $msg .= "<a href=\"javascript:newwindow('http://www.multimap.com/map/browse.cgi?lat=".$country['lat']."&amp;lon=".$country['lon']."&amp;scale=40000000&amp;icon=x');\">".$country['cn']."</a>\n";
+              $msg .= "<a href=\"javascript:NQpopup('http://www.multimap.com/map/browse.cgi?lat=".$country['lat']."&amp;lon=".$country['lon']."&amp;scale=40000000&amp;icon=x');\">".$country['cn']."</a>\n";
             else
               $msg .= $country['cn']."\n";
             $msg .= "</td><td>\n";
