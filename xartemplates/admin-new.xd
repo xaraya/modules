@@ -32,35 +32,15 @@
             <xar:mlstring>Make Public:</xar:mlstring>
         </label>
         <xar:if condition="$public">
-            <input type="checkbox" name="public" id="public" checked="checked" />
+            <input type="checkbox" name="public" id="public" value="1" checked="checked" />
         <xar:else />
-            <input type="checkbox" name="public" id="public" />
+            <input type="checkbox" name="public" id="public" value="1" />
         </xar:if>
     </div>
 
 </fieldset>
 <fieldset>
     <legend><xar:mlstring>Senders and Recipients</xar:mlstring></legend>
-
-    <div class="xar-form-input-wrapper">
-        <label for="to"  class="xar-form-label" title="#xarML('To email')#">
-            <xar:mlstring>To Email:</xar:mlstring>
-        </label>
-        <input type="text" name="to" id="to" value="#$to#" maxlength="255" class="xar-form-textlong" />
-        <span class="xar-error">*</span>
-        <xar:if condition="!empty($invalid['to'])">
-            <div class="xar-error">
-                <xar:mlstring>ERROR! Blank or invalid email.</xar:mlstring>
-            </div>
-        </xar:if>
-    </div>
-
-    <div class="xar-form-input-wrapper">
-        <label for="toname"  class="xar-form-label" title="#xarML('To name')#">
-            <xar:mlstring>To Name:</xar:mlstring>
-        </label>
-        <input type="text" name="toname" id="toname" value="#$toname#" maxlength="255" class="xar-form-textlong" />
-    </div>
 
     <div class="xar-form-input-wrapper">
         <label for="from"  class="xar-form-label" title="#xarML('From email')#">
@@ -250,6 +230,7 @@
         <input type="submit" value="#xarML('Add Publication')#" />
     </div>
 </fieldset>
+
 </form>
 
 </div>

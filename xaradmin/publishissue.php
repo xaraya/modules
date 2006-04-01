@@ -95,7 +95,7 @@ function ebulletin_admin_publishissue($args)
     if (!xarSecConfirmAuthKey()) return;
 
     // call API function to do the publishing
-    if (!xarModAPIFunc('ebulletin', 'admin', 'publishissue', array('id' => $id))) return;
+    if (!xarModAPIFunc('ebulletin', 'admin', 'send_issue', array('id' => $id))) return;
 
     // set status message and return to view
     xarSessionSetVar('statusmsg', xarML('Issue successfully published!'));

@@ -38,12 +38,6 @@ function ebulletin_adminapi_update($args)
     if (empty($name) || !is_string($name)) {
         $invalid[] = 'name';
     }
-    if (empty($name) || !is_string($name)) {
-        $invalid[] = 'name';
-    }
-    if (empty($to) || !is_string($to) || !preg_match($email_regexp, $to)) {
-        $invalid[] = 'to';
-    }
     if (empty($from) || !is_string($from) || !preg_match($email_regexp, $from)) {
         $invalid[] = 'from';
     }
@@ -81,7 +75,7 @@ function ebulletin_adminapi_update($args)
     if (!xarSecurityCheck('AddeBulletin', 1, 'Publication', "$name:$id")) return;
 
     // handle checkboxes
-    $public = (isset($public) && $public) ? 1 : 0;
+    $public = empty($public) ? '0' : '1';
 
     // prepare for database
     $dbconn = xarDBGetConn();
@@ -94,8 +88,6 @@ function ebulletin_adminapi_update($args)
         SET xar_name = ?,
             xar_desc = ?,
             xar_public = ?,
-            xar_to = ?,
-            xar_toname = ?,
             xar_from = ?,
             xar_fromname = ?,
             xar_replyto = ?,
@@ -111,7 +103,7 @@ function ebulletin_adminapi_update($args)
             xar_endsign = ?
         WHERE xar_id = ?";
     $bindvars = array(
-        $name, $desc, $public, $to, $toname, $from, $fromname, $replyto, $replytoname, $subject, $tpl_html,
+        $name, $desc, $public, $from, $fromname, $replyto, $replytoname, $subject, $tpl_html,
         $tpl_txt, $numsago, $unitsago, $startsign, $numsfromnow, $unitsfromnow, $endsign, $id
     );
     $result = $dbconn->Execute($query, $bindvars);

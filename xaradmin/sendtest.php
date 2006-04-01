@@ -101,7 +101,7 @@ function ebulletin_admin_sendtest($args)
     }
 
     // call API function to do the publishing
-    if (!xarModAPIFunc('ebulletin', 'admin', 'publishissue', array('test' => true, 'id' => $id, 'to' => $to, 'toname' => $toname))) return;
+    if (!xarModAPIFunc('ebulletin', 'admin', 'send_test', array('test' => true, 'id' => $id, 'to' => $to, 'toname' => $toname))) return;
 
     // set status message and return to view
     xarSessionSetVar('statusmsg', xarML('Test issue successfully sent!'));

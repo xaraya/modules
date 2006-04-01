@@ -31,8 +31,8 @@ The following variables from eBulletin are available during template compilation
 
     $publication - full array of full details of the parent publication, which include:
 
-        $publication.name - name of publication
-        $publication.desc - description of publication
+        $publication['name'] - name of publication
+        $publication['desc'] - description of publication
 
         (browse the xar_ebulletin table or view modules/ebulletin/xarinit.php for a full list)
 
@@ -109,29 +109,21 @@ See Blocklayout's documentation for full details:
 -->
 </xar:comment>
 
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<html>
 <head>
 <title>#$subject#</title>
-<base href="&xar-baseurl;index.php" />
-
-<xar:comment> Head Style Sheets</xar:comment>
-<xar:style scope="common" />
-<xar:style />
-<xar:additional-styles />
-
 </head>
-<body id="body">
-    <h1><a href="&xar-baseurl;">#$sitename#</a></h1>
+<body>
+    <h1><a href="&xar-baseurl;">&xar-mod-themes-SiteName;</a></h1>
     <div id="content">
         <xar:module main="false" module="articles" type="user" func="view" />
     </div>
+
+    <xar:block instance="links" />
+
     <div id="footer">
-        <p>#$copyright#
-        <xar:if condition="!empty($copyright) and !empty($footer)"> - </xar:if>
-        #$footer#
-        </p>
+        <p>&xar-mod-themes-SiteCopyRight;</p>
+        <p>&xar-mod-themes-SiteFooter;</p>
     </div>
 </body>
 </html>

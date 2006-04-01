@@ -26,8 +26,6 @@ function ebulletin_admin_new($args)
     if (!xarVarFetch('name', 'str:1:', $name, $name, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('desc', 'str:1:', $desc, $desc, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('public', 'checkbox', $public, $public, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('to', 'str:1:', $to, $to, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('toname', 'str:1:', $toname, $toname, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('from', 'str:1:', $from, $from, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('fromname', 'str:1:', $fromname, $fromname, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('replyto', 'str:1:', $replyto, $replyto, XARVAR_NOT_REQUIRED)) return;
@@ -45,9 +43,7 @@ function ebulletin_admin_new($args)
     // get defaults for publication vars
     if (empty($name))         $name = '';
     if (empty($desc))         $desc = '';
-    if (empty($public))       $public = 1;
-    if (empty($to))           $to = '';
-    if (empty($toname))       $toname = '';
+    if (empty($public))       $public = 0;
     if (empty($from))         $from = '';
     if (empty($fromname))     $fromname = '';
     if (empty($replyto))      $replyto = '';
@@ -90,8 +86,6 @@ function ebulletin_admin_new($args)
     $data['name']         = $name;
     $data['desc']         = $desc;
     $data['public']       = $public;
-    $data['to']           = $to;
-    $data['toname']       = $toname;
     $data['from']         = $from;
     $data['fromname']     = $fromname;
     $data['replyto']      = $replyto;

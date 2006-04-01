@@ -1,6 +1,12 @@
+Version 1.1.0 2006-03-09
+    - Fix "public" checkbox in New Pub and Modify Pub functions
+    - Put actual recipient in "To" field instead of preset value
+    - Low-level capability to limit to X messages sent per hour, day, etc.
+    - Restrict Issue themes to 'System' class only
+
 Version 1.0.1 2006-01-26
-	- Update Short URLs for new user functions
-	- Fix 'invalid $pid' error in admin viewissues
+    - Update Short URLs for new user functions
+    - Fix 'invalid $pid' error in admin viewissues
 
 Version 1.0.0 2006-01-25
     - Major overhaul of admin subscription section -- added filtering and sorting too

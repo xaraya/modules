@@ -52,7 +52,7 @@ function ebulletin_userapi_get($args)
 
     // retrieve params for this publication
     list(
-        $id, $name, $desc, $public, $to, $toname, $from, $fromname, $replyto, $replytoname,
+        $id, $name, $desc, $public, $from, $fromname, $replyto, $replytoname,
         $subject, $tpl_txt, $tpl_html, $numsago, $unitsago, $startsign, $numsfromnow,
         $unitsfromnow, $endsign
     ) = $result->fields;
@@ -68,8 +68,6 @@ function ebulletin_userapi_get($args)
         'name'          => $name,
         'desc'          => $desc,
         'public'        => $public,
-        'to'            => $to,
-        'toname'        => $toname,
         'from'          => $from,
         'fromname'      => $fromname,
         'replyto'       => $replyto,

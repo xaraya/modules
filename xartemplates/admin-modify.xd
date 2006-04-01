@@ -22,10 +22,10 @@
         </div>
 
         <div class="xar-form-input-wrapper">
-            <label for="desc"  class="xar-form-label" title="#xarML('Description')#">
+            <label for="description"  class="xar-form-label" title="#xarML('Description')#">
                 <xar:mlstring>Description:</xar:mlstring>
             </label>
-            <input type="text" name="desc" id="desc" value="#$desc#" size="60" maxlength="255" />
+            <input type="text" name="desc" id="description" value="#$desc#" size="60" maxlength="255" />
         </div>
 
         <div class="xar-form-input-wrapper">
@@ -33,35 +33,15 @@
                 <xar:mlstring>Make Public:</xar:mlstring>
             </label>
             <xar:if condition="$public">
-                <input type="checkbox" name="public" id="public" checked="checked" />
+                <input type="checkbox" name="public" id="public" value="1" checked="checked" />
             <xar:else />
-                <input type="checkbox" name="public" id="public" />
+                <input type="checkbox" name="public" id="public" value="1" />
             </xar:if>
         </div>
 
     </fieldset>
     <fieldset>
         <legend><xar:mlstring>Senders and Recipients</xar:mlstring></legend>
-
-        <div class="xar-form-input-wrapper">
-            <label for="to"  class="xar-form-label" title="#xarML('To email')#">
-                <xar:mlstring>To Email:</xar:mlstring>
-            </label>
-            <input type="text" name="to" id="to" value="#$to#" maxlength="255" class="xar-form-textlong" />
-            <span class="xar-error">*</span>
-            <xar:if condition="!empty($invalid['to'])">
-                <div class="xar-error">
-                    <xar:mlstring>ERROR! Blank or invalid email.</xar:mlstring>
-                </div>
-            </xar:if>
-        </div>
-
-        <div class="xar-form-input-wrapper">
-            <label for="toname"  class="xar-form-label" title="#xarML('To name')#">
-                <xar:mlstring>To Name:</xar:mlstring>
-            </label>
-            <input type="text" name="toname" id="toname" value="#$toname#" maxlength="255" class="xar-form-textlong" />
-        </div>
 
         <div class="xar-form-input-wrapper">
             <label for="from"  class="xar-form-label" title="#xarML('From email')#">
@@ -120,7 +100,7 @@
         </div>
         <div class="xar-form-input-wrapper xar-sub">
             <xar:ml>
-                <xar:mlstring>Subject can include the issue date formatted according to your locale settings.  Specify by using <code>%short%</code>, <code>%medium%</code>, or <code>%long%</code>.  Will be substituted for respectively formatted date when an issue is generated.</xar:mlstring>
+                <xar:mlstring>Subject can include the issue date formatted according to your locale settings.  Specify by using <code>%short%</code>, <code>%medium%</code>, or <code>%long%</code>.</xar:mlstring>
                 <xar:mlvar>#$template_dir#</xar:mlvar>
             </xar:ml>
         </div>
@@ -169,7 +149,7 @@
         </div>
         <div class="xar-form-input-wrapper xar-sub">
             <xar:ml>
-                <xar:mlstring>Must select at least one template.  Template directory is <code class="xar-sub">#(1)</code>.</xar:mlstring>
+                <xar:mlstring>Must select at least one template.  Template directory is <code>#(1)</code>.</xar:mlstring>
                 <xar:mlvar>#$template_dir#</xar:mlvar>
             </xar:ml>
         </div>

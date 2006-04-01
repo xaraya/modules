@@ -68,7 +68,7 @@ function ebulletin_admin_onetime($args)
     if (!xarVarFetch('body_txt', 'str:0:', $body_txt, '', XARVAR_NOT_REQUIRED)) return;
 
     // call API function to do the sending
-    if (!xarModAPIFunc('ebulletin', 'admin', 'publishissue', array('onetime' => true, 'pid' => $pid, 'body_html' => $body_html, 'body_txt' => $body_txt))) return;
+    if (!xarModAPIFunc('ebulletin', 'admin', 'send_onetime', array('onetime' => true, 'pid' => $pid, 'body_html' => $body_html, 'body_txt' => $body_txt))) return;
 
     // set status message and return to view
     xarSessionSetVar('statusmsg', xarML('One-time message successfully sent!'));

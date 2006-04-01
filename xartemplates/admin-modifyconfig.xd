@@ -8,10 +8,10 @@
             <fieldset>
                 <legend><xar:mlstring>Display Options</xar:mlstring></legend>
                 <div class="xar-form-input-wrapper">
-                    <label for="admin_issuesperpage" class="xar-form-label" title="#xarML('Items per page on admin screens')#">
+                    <label for="msglimit" class="xar-form-label" title="#xarML('Items per page on admin screens')#">
                         <xar:mlstring>Items per page</xar:mlstring>
                     </label>
-                    <input type="text" name="admin_issuesperpage" id="admin_issuesperpage" value="#$admin_issues#" maxlength="3" size="3" class="xar-form-textshort" />
+                    <input type="text" name="msglimit" id="msglimit" value="#$admin_issues#" maxlength="3" size="3" class="xar-form-textshort" />
                 </div>
 
                 <div class="xar-form-input-wrapper">
@@ -153,6 +153,31 @@
                     </xar:if>
                 </div>
 
+            </fieldset>
+
+            <fieldset>
+                <legend><xar:mlstring>Email Options</xar:mlstring></legend>
+
+                <div class="xar-form-input-wrapper">
+                    <label for="msglimit" class="xar-form-label" title="#xarML('Limit the emails sent per unit of time')#">
+                        <xar:mlstring>Message Limit</xar:mlstring>
+                    </label>
+                    <xar:mlstring>Send no more than </xar:mlstring>
+                    <input type="text" name="msglimit" id="msglimit" value="#$msglimit#" maxlength="6" size="3" />
+                    <xar:mlstring>messages per </xar:mlstring>
+                    <select name="msgunit">
+                        <xar:foreach in="$msgunits" key="$value" value="$label">
+                            <xar:if condition="$msgunit eq $value">
+                                <option value="#$value#" selected="true">#$label#</option>
+                            <xar:else />
+                                <option value="#$value#">#$label#</option>
+                            </xar:if>
+                        </xar:foreach>
+                    </select>
+                </div>
+                <div class="xar-form-input-wrapper xar-sub">
+                    <xar:mlstring>Leave blank or set to "0" for no limit.  You must go to the Scheduler Module and activate the <em>sendmail</em> function for this to work.</xar:mlstring>
+                </div>
             </fieldset>
 
             <fieldset>

@@ -51,7 +51,7 @@ function ebulletin_userapi_getall($args)
 
         // get params
         list(
-            $id, $name, $desc, $public, $to, $toname, $from, $fromname, $replyto, $replytoname,
+            $id, $name, $desc, $public, $from, $fromname, $replyto, $replytoname,
             $subject, $tpl_txt, $tpl_html, $numsago, $unitsago, $startsign, $numsfromnow,
             $unitsfromnow, $endsign
         ) = $result->fields;
@@ -65,8 +65,6 @@ function ebulletin_userapi_getall($args)
                 'name'          => $name,
                 'public'        => $public,
                 'desc'          => $desc,
-                'to'            => $to,
-                'toname'        => $toname,
                 'from'          => $from,
                 'fromname'      => $fromname,
                 'replyto'       => $replyto,

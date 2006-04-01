@@ -15,14 +15,12 @@
  * This is a standard function that is called with the results of the
  * form supplied by xarModFunc('ebulletin','admin','modify') to update a current item
  *
- * @param  $ 'pid' the pid of the item to be created
- * @param  $ 'name' the name of the item to be created
- * @param  $ 'to' the to of the item to be created
- * @param  $ 'from' the from of the item to be created
- * @param  $ 'replyto' the replyto of the item to be created
- * @param  $ 'subject' the subject of the item to be created
- * @param  $ 'body' the body of the item to be created
- * @param  $ 'range' the range of the item to be created
+ * @param  $ 'pid' the pid of the publication
+ * @param  $ 'from' the from of the publication
+ * @param  $ 'replyto' the replyto of the publication
+ * @param  $ 'subject' the subject of the publication
+ * @param  $ 'body' the body of the publication
+ * @param  $ 'range' the range of the publication
  */
 function ebulletin_admin_update($args)
 {
@@ -38,8 +36,6 @@ function ebulletin_admin_update($args)
     if (!xarVarFetch('name', 'str:1:', $name, $name, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('desc', 'str:1:', $desc, $desc, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('public', 'checkbox', $public, $public, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('to', 'str:1:', $to, $to, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('toname', 'str:1:', $toname, $toname, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('from', 'str:1:', $from, $from, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('fromname', 'str:1:', $fromname, $fromname, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('replyto', 'str:1:', $replyto, $replyto, XARVAR_NOT_REQUIRED)) return;
@@ -60,10 +56,6 @@ function ebulletin_admin_update($args)
     if (empty($name) || !is_string($name)) {
         $invalid['name'] = 1;
         $name = '';
-    }
-    if (empty($to) || !is_string($to) || !preg_match($email_regexp, $to)) {
-        $invalid['to'] = 1;
-        $to = '';
     }
     if (empty($from) || !is_string($from) || !preg_match($email_regexp, $from)) {
         $invalid['from'] = 1;
@@ -103,8 +95,6 @@ function ebulletin_admin_update($args)
     $data['name'] = $name;
     $data['desc'] = $desc;
     $data['public'] = $public;
-    $data['to'] = $to;
-    $data['toname'] = $toname;
     $data['from'] = $from;
     $data['fromname'] = $fromname;
     $data['replyto'] = $replyto;

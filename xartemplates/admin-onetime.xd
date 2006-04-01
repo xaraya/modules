@@ -30,14 +30,6 @@
             </div>
 
             <div class="xar-form-input-wrapper">
-                <label for="to"  class="xar-form-label"  title="#xarML('To')#">
-                    <xar:mlstring>To:</xar:mlstring>
-                </label>
-                #$pub['to']#
-                <xar:if condition="!empty($pub['toname'])">&lt;#$pub['toname']#&gt;</xar:if>
-            </div>
-
-            <div class="xar-form-input-wrapper">
                 <label for="replyto"  class="xar-form-label"  title="#xarML('Reply To')#">
                     <xar:mlstring>Reply To:</xar:mlstring>
                 </label>

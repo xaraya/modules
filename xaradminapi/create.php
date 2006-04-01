@@ -15,8 +15,6 @@
  * create a new publication
  *
  * @author the eBulletin module development team
- * @param  $args['name'] the name of the item to be created
- * @param  $args['to'] the to of the item to be created
  * @param  $args['from'] the from of the item to be created
 
  * all the args here...
@@ -32,12 +30,6 @@ function ebulletin_adminapi_create($args)
     // validate vars
     $invalid = array();
     $email_regexp = '/^[a-z0-9]+([_\\.-][a-z0-9]+)*@([a-z0-9]+([\.-][a-z0-9]+)*)+\\.[a-z]{2,}$/i';
-    if (empty($name) || !is_string($name)) {
-        $invalid[] = 'name';
-    }
-    if (empty($to) || !is_string($to) || !preg_match($email_regexp, $to)) {
-        $invalid[] = 'to';
-    }
     if (empty($from) || !is_string($from) || !preg_match($email_regexp, $from)) {
         $invalid[] = 'from';
     }
@@ -67,7 +59,7 @@ function ebulletin_adminapi_create($args)
     }
 
     // security check
-    if (!xarSecurityCheck('AddeBulletin', 1, 'Publication', "$name:All")) return;
+    if (!xarSecurityCheck('AddeBulletin', 1, 'Publication')) return;
 
     // handle checkboxes
     $public = (isset($public) && $public) ? 1 : 0;
@@ -87,8 +79,6 @@ function ebulletin_adminapi_create($args)
             xar_name,
             xar_desc,
             xar_public,
-            xar_to,
-            xar_toname,
             xar_from,
             xar_fromname,
             xar_replyto,
@@ -102,9 +92,9 @@ function ebulletin_adminapi_create($args)
             xar_numsfromnow,
             xar_unitsfromnow,
             xar_endsign
-        ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     $bindvars = array(
-        $nextId, $name, $desc, $public, $to, $toname, $from, $fromname, $replyto, $replytoname, $subject,
+        $nextId, $name, $desc, $public, $from, $fromname, $replyto, $replytoname, $subject,
         $tpl_html, $tpl_txt, $numsago, $unitsago, $startsign, $numsfromnow, $unitsfromnow, $endsign
     );
     $result = $dbconn->Execute($query, $bindvars);

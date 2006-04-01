@@ -33,19 +33,29 @@ function ebulletin_admin_modifyconfig()
     $issuenumsfromnow    = xarModGetVar('ebulletin', 'issuenumsfromnow');
     $issueunitsfromnow   = xarModGetVar('ebulletin', 'issueunitsfromnow');
     $issueendsign        = xarModGetVar('ebulletin', 'issueendsign');
+    $msglimit            = xarModGetVar('ebulletin', 'msglimit');
+    $msgunit             = xarModGetVar('ebulletin', 'msgunit');
     $requirevalidation   = xarModGetVar('ebulletin', 'requirevalidation');
 
     // get other vars
-    $themes = xarModAPIFunc('themes', 'admin', 'getlist', array('Class' => 2));
+    $themes = xarModAPIFunc('themes', 'admin', 'getlist', array('Class' => 0));
     $authid = xarSecGenAuthKey();
     $pubs = xarModAPIFunc('ebulletin', 'user', 'getall');
 
-    // get units
+    // message units
+    $msgunits = array();
+    $msgunits['minute'] = xarML('Minute');
+    $msgunits['hour']   = xarML('Hour');
+    $msgunits['day']    = xarML('Day');
+    $msgunits['week']   = xarML('Week');
+    $msgunits['month']  = xarML('Minute');
+
+    // issue units
     $units = array();
-    $units[] = array('days', xarML('Days'));
-    $units[] = array('weeks', xarML('Weeks'));
+    $units[] = array('days',   xarML('Days'));
+    $units[] = array('weeks',  xarML('Weeks'));
     $units[] = array('months', xarML('Months'));
-    $units[] = array('years', xarML('Years'));
+    $units[] = array('years',  xarML('Years'));
 
     // get signs
     $signs = array();
@@ -69,14 +79,17 @@ function ebulletin_admin_modifyconfig()
     $data['issuenumsfromnow']  = $issuenumsfromnow;
     $data['issueunitsfromnow'] = $issueunitsfromnow;
     $data['issueendsign']      = $issueendsign;
+    $data['msglimit']          = $msglimit;
+    $data['msgunit']           = $msgunit;
     $data['requirevalidation'] = $requirevalidation;
 
     // add other vars to template
-    $data['themes'] = $themes;
-    $data['authid'] = $authid;
-    $data['pubs']   = $pubs;
-    $data['units']  = $units;
-    $data['signs']  = $signs;
+    $data['themes']   = $themes;
+    $data['authid']   = $authid;
+    $data['pubs']     = $pubs;
+    $data['units']    = $units;
+    $data['signs']    = $signs;
+    $data['msgunits'] = $msgunits;
 
     // get modifyconfig hooks
     $data['hookoutput'] = xarModCallHooks('module', 'modifyconfig', 'ebulletin',

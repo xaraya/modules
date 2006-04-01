@@ -33,12 +33,10 @@ function ebulletin_init()
         'xar_name'         => array('type' => 'varchar', 'size' => 255,   'null' => false),
         'xar_desc'         => array('type' => 'varchar', 'size' => 255,   'null' => false),
         'xar_public'       => array('type' => 'integer', 'size' => 1,     'null' => false),
-        'xar_to'           => array('type' => 'varchar', 'size' => 255,   'null' => false),
-        'xar_toname'       => array('type' => 'varchar', 'size' => 255,   'null' => false),
         'xar_from'         => array('type' => 'varchar', 'size' => 255,   'null' => false),
         'xar_fromname'     => array('type' => 'varchar', 'size' => 255,   'null' => false),
         'xar_replyto'      => array('type' => 'varchar', 'size' => 255,   'null' => false),
-        'xar_replytoname'  => array('type' => 'varchar', 'size' => 255,   'null' => false),
+        'xar_reply'  => array('type' => 'varchar', 'size' => 255,   'null' => false),
         'xar_subject'      => array('type' => 'varchar', 'size' => 255,   'null' => false),
         'xar_tpl_txt'      => array('type' => 'varchar', 'size' => 255,   'null' => false),
         'xar_tpl_html'     => array('type' => 'varchar', 'size' => 255,   'null' => false),
@@ -114,6 +112,8 @@ function ebulletin_init()
     xarModSetVar('ebulletin', 'issueunitsfromnow',   'days');
     xarModSetVar('ebulletin', 'issuestartsign',      'before');
     xarModSetVar('ebulletin', 'issueendsign',        'after');
+    xarModSetVar('ebulletin', 'msglimit',            '');
+    xarModSetVar('ebulletin', 'msgunit',             'hour');
     xarModSetVar('ebulletin', 'requirevalidation',   1);
 
     // register blocks
@@ -176,15 +176,18 @@ function ebulletin_upgrade($oldversion)
     // Set up database tables
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
+    $ebulletintable = $xartable['ebulletin'];
     $subscriptionstable = $xartable['ebulletin_subscriptions'];
 
     // Get a data dictionary object with item create methods.
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
 
     switch($oldversion) {
+    case '0.9.5':
+        // changes after 0.9.5 here
     case '0.9.7':
         /**
-        * Changes:
+        * Changes after 0.9.7:
         *
         * Move uid for registered subscribers to its own column
         * instead of storing them in xar_email.
@@ -206,7 +209,31 @@ function ebulletin_upgrade($oldversion)
         ";
         $result = $dbconn->Execute($query);
         if (!$result) {return;}
+    case '0.9.8':
+        // changes after 0.9.8 here
+    case '1.0.0':
+        // changes after 1.0.0 here
+    case '1.0.1':
+        /**
+        * Changes after 1.0.1:
+        *
+        * Delete "to" and "toname" fields from main table.
+        * Add scheduler options.
+        */
 
+        // drop columns
+        $result = $datadict->DropColumn(
+            $ebulletintable, 'xar_to,xar_toname'
+        );
+        if (!$result) {return;}
+
+        // add scheduler modvars
+        xarModSetVar('ebulletin', 'msglimit', '');
+        xarModSetVar('ebulletin', 'msgunit', 'hour');
+
+    case '1.1.0':
+        // changes after 1.1.0 here
+        // TBD
     }
     return true;
 }

@@ -35,6 +35,8 @@ function ebulletin_admin_updateconfig()
     if (!xarVarFetch('issuenumsfromnow', 'int', $issuenumsfromnow, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('issueunitsfromnow', 'str:0', $issueunitsfromnow, 'days', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('issueendsign', 'enum:before:after', $issueendsign, 'after', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('msglimit', 'int:0:', $msglimit, 'msglimit', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('msgunit', 'enum:minute:hour:day:week:month', $msgunit, 'msgunit', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('requirevalidation', 'checkbox', $requirevalidation, false, XARVAR_NOT_REQUIRED)) return;
 
     // validate and clean up template dir
@@ -69,6 +71,8 @@ function ebulletin_admin_updateconfig()
     xarModSetVar('ebulletin', 'issuenumsfromnow', $issuenumsfromnow);
     xarModSetVar('ebulletin', 'issueunitsfromnow', $issueunitsfromnow);
     xarModSetVar('ebulletin', 'issueendsign', $issueendsign);
+    xarModSetVar('ebulletin', 'msglimit', $msglimit);
+    xarModSetVar('ebulletin', 'msgunit', $msgunit);
     xarModSetVar('ebulletin', 'requirevalidation', $requirevalidation);
 
     // call updateconfig hooks

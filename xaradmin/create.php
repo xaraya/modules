@@ -28,8 +28,6 @@ function ebulletin_admin_create($args)
     if (!xarVarFetch('name', 'str:1:', $name, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('desc', 'str:1:', $desc, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('public', 'checkbox', $public, 1, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('to', 'str:1:', $to, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('toname', 'str:1:', $toname, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('from', 'str:1:', $from, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('fromname', 'str:1:', $fromname, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('replyto', 'str:1:', $replyto, '', XARVAR_NOT_REQUIRED)) return;
@@ -50,10 +48,6 @@ function ebulletin_admin_create($args)
     if (empty($name) || !is_string($name)) {
         $invalid['name'] = 1;
         $name = '';
-    }
-    if (empty($to) || !is_string($to) || !preg_match($email_regexp, $to)) {
-        $invalid['to'] = 1;
-        $to = '';
     }
     if (empty($from) || !is_string($from) || !preg_match($email_regexp, $from)) {
         $invalid['from'] = 1;
@@ -92,8 +86,6 @@ function ebulletin_admin_create($args)
     $data['name'] = $name;
     $data['desc'] = $desc;
     $data['public'] = $public;
-    $data['to'] = $to;
-    $data['toname'] = $toname;
     $data['from'] = $from;
     $data['fromname'] = $fromname;
     $data['replyto'] = $replyto;
