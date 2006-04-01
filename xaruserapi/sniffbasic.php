@@ -52,7 +52,7 @@ function sniffer_userapi_sniffbasic($args)
         $uaid = $result->fields[0];
     } else {
         $nextID = $dbconn->GenId($sniffertable);
-        $insarr = array((int) $nextID, (string) $client->get_property('ua'),
+        $insarr = array($nextID, (string) $client->get_property('ua'),
                         (string) $client->property('platform'), (string) $client->property('os'),
                         (string) $client->getname('browser'), (string) $client->property('version'));
 
