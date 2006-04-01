@@ -63,13 +63,13 @@ function bible_user_dictionary($args)
         }
     }
 
-    // get default text for dropdown list and save the user's current selection
-    if (!empty($sname)) {
-        $default_sname = $sname;
-    } elseif (false === ($default_sname = xarSessionGetVar('bible_dictionaryname'))) {
-        $default_sname = $texts[key($texts)]['sname'];
+    // get default text for dropdown display
+    $sname = xarSessionGetVar('bible_dictionaryname');
+    if (empty($sname)) {
+        // none is set for this session, so use the first one in the texts list
+        $sname = $texts[key($texts)]['sname'];
+        xarSessionSetVar('bible_dictionaryname', $sname);
     }
-    xarSessionSetVar('bible_dictionaryname', $default_sname);
 
     /**
     * Three possible actions here
@@ -278,7 +278,7 @@ function bible_user_dictionary($args)
 
     // set template vars
     $data['texts'] = $texts;
-    $data['default_sname'] = $default_sname;
+    $data['default_sname'] = $sname;
     $data['displaytype'] = $displaytype;
 
     return $data;
