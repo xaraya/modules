@@ -167,8 +167,12 @@ function tinymce_admin_updateconfig()
     $xarbaseurl=xarServerGetBaseURL();
     //This is not used anymore we use the loading in the include template
     $tinybasepath="'.$xarbaseurl.'modules/tinymce/xarincludes/tiny_mce.js";
-
-
+    //Calculate baseurl
+    if (strlen(xarCore_getSystemVar('BaseModURL',true))==0) {
+        $basemodurl='index.php';
+    } else {
+        $basemodurl=xarCore_getSystemVar('BaseModURL',true);
+    }
     /* Turn our settings into javascript for insert into template
      *Let's call the variable jstext
      */
@@ -177,8 +181,10 @@ function tinymce_admin_updateconfig()
     $tinymode = xarModGetVar('tinymce','tinymode');
     $jstext = 'mode : "'.$tinymode.'",';
     $jstext .='theme : "'.xarModGetVar('tinymce','tinytheme').'",';
-    $jstext .='document_base_url : "'.xarServerGetBaseURL().'",';
-    
+    //$jstext .='document_base_url : "'.xarServerGetBaseURL().'",';
+
+    $jstext .='document_base_url : "'.xarServerGetBaseURL().$basemodurl.'",';
+        
     $tinyeditorselector = xarModGetVar('tinymce','tinyeditorselector');
 
     $tinyeditorselector=isset($tinyeditorselector) ? $tinyeditorselector: 'mceEditor';
