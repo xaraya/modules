@@ -208,19 +208,20 @@ function registration_user_register()
                     if ($user != false) {
                         unset($user);
                         $invalid['email'] = xarML('That email address is already registered.');
+                    }
+
                 }
 
-                } else {
                     // check for disallowed email addresses
                     $disallowedemails = xarModGetVar('registration','disallowedemails');
-                    if (!empty($disallowedemails)) {
+                 if (!empty($disallowedemails)) {
                         $disallowedemails = unserialize($disallowedemails);
                         $disallowedemails = explode("\r\n", $disallowedemails);
                         if (in_array ($email, $disallowedemails)) {
                             $invalid['email'] = xarML('That email address is either reserved or not allowed on this website');
                         }
-                    }
-                }
+
+                 }
             }
 
             if (empty($agreetoterms)){
