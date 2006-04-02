@@ -2,8 +2,8 @@ List Style Plugin for the TinyMCE Editor
 ----------------------------------------
 
 By Scott Eade (seade at policypoint dot net)
-March 10, 2006
-Version 1.1.0
+March 25, 2006
+Version 1.1.1
 
 The List Style plugin allows you to set the list-style-type CSS property on
 lists within the TinyMCE editor.
@@ -29,6 +29,9 @@ Initialization example
 History
 -------
 
+* 2006-03-25: Version 1.1.1 released.
+  - Fixed Javascript error under IE.  Thanks to Bryan Costin for highlighting
+    this issue.
 * 2006-03-10: Version 1.1.0 released.
   - Updated for TinyMCE plugin architecture change introduced in TinyMCE 2.0.3.
     Use ListStyle 1.0.1 if you are using a TinyMCE 2.0.0 - 2.0.2.

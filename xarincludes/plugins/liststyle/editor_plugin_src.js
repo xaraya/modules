@@ -15,7 +15,7 @@ var TinyMCE_ListStylePlugin = {
 			author : 'Scott Eade - PolicyPoint Technologies Pty. Ltd.',
 			authorurl : 'http://policypoint.net',
 			infourl : 'http://policypoint.net/tinymce/docs/plugin_liststyle.html',
-			version : '1.1.0'
+			version : '1.1.1'
 		};
 	},
 
@@ -73,7 +73,7 @@ var TinyMCE_ListStylePlugin = {
 				return;
 			}
 		} while ((node = node.parentNode));
-	},
+	}
 
 };
 
