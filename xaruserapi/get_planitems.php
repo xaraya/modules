@@ -69,7 +69,7 @@ function itsp_userapi_get_planitems($args)
         list($pitemid,
              $datemodi,
              $modiby) = $result->fields;
-        if (xarSecurityCheck('ViewITSPPlan', 0, 'Plan', "$planid:$pitemid:All")) {
+        if (xarSecurityCheck('ViewITSPPlan', 0, 'Plan', "$planid:$pitemid")) {
             $items[] = array('pitemid'    => $pitemid,
                              'datemodi'   => $datemodi,
                              'modiby'     => $modiby);

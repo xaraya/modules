@@ -103,7 +103,7 @@ function itsp_userapi_getall_planitems($args)
              $dateclose,
              $datemodi,
              $modiby) = $result->fields;
-        if (xarSecurityCheck('ViewITSPPlan', 0, 'Plan', "All:$pitemid:All")) {
+        if (xarSecurityCheck('ViewITSPPlan', 0, 'Plan', "All:$pitemid")) {
             $items[] = array('pitemid'    => $pitemid,
                              'pitemname'  => $pitemname,
                              'pitemdesc'  => $pitemdesc,

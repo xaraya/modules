@@ -120,7 +120,7 @@ function itsp_userapi_getall($args)
                $datecertaward,
                $datemodi,
                $modiby) = $result->fields;
-        if (xarSecurityCheck('ViewITSP', 0, 'ITSP', "$itspid:$planid:All")) {
+        if (xarSecurityCheck('ViewITSP', 0, 'ITSP', "$itspid:$planid")) {
             $items[] = array('itspid'        => $itspid,
                               'userid'        => $userid,
                               'planid'        => $planid,

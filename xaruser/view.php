@@ -53,7 +53,7 @@ function itsp_user_view()
     foreach ($items as $item) {
         // Add read link
         $planid = $item['planid'];
-        if (xarSecurityCheck('ReadITSPPlan', 0, 'Plan', "$planid:All:All")) {
+        if (xarSecurityCheck('ReadITSPPlan', 0, 'Plan', "$planid:All")) {
             $item['link'] = xarModURL('itsp',
                 'user',
                 'display',

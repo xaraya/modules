@@ -89,7 +89,7 @@ function itsp_userapi_getall_plans($args)
     for (; !$result->EOF; $result->MoveNext()) {
         list($planid, $planname, $plandesc, $planrules, $credits,
          $mincredit, $dateopen, $dateclose, $datemodi, $modiby) = $result->fields;
-        if (xarSecurityCheck('ViewITSPPlan', 0, 'Plan', "$planid:All:All")) {
+        if (xarSecurityCheck('ViewITSPPlan', 0, 'Plan', "$planid:All")) {
 
             $items[] = array('planid'      => $planid,
                              'planname'    => $planname,

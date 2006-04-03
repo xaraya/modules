@@ -11,10 +11,11 @@
  * @link http://xaraya.com/index.php/release/572.html
  * @author ITSP Module Development Team
  */
- /*
+ /**
   * Validate an item
   *
   * @author the ITSP module development team
+  * @todo everything
   */
 function itsp_userapi_validateitem($args)
 {
@@ -67,7 +68,7 @@ function itsp_userapi_validateitem($args)
      * this is the first time we have the relevant information.
      * For this function, the user must *at least* have READ access to this item
      */
-    if (!xarSecurityCheck('ReadITSP', 1, 'Item', "$name:All:$name")) {
+    if (!xarSecurityCheck('ReadITSP', 1, 'Item', "$name:All")) {
         return;
     }
     /* Create the item array */

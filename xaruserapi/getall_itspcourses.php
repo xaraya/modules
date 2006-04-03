@@ -91,7 +91,7 @@ function itsp_userapi_getall_itspcourses($args)
     for (; !$result->EOF; $result->MoveNext()) {
         list($icourseid, $pitemid, $icoursetitle, $icourseloc, $icoursedesc, $icoursecredits, $icourselevel, $icourseresult,
         $icoursedate, $dateappr, $datemodi,$modiby) = $result->fields;
-        if (xarSecurityCheck('ViewITSP', 0, 'ITSP', "$itspid:All:All")) {
+        if (xarSecurityCheck('ViewITSP', 0, 'ITSP', "$itspid:All")) {
             $items[] = array('icourseid'      => $icourseid,
                              'pitemid'        => $pitemid,
                              'icoursetitle'   => $icoursetitle,

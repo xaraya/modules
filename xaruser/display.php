@@ -48,7 +48,7 @@ function itsp_user_display($args)
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; /* throw back */
 
      /* Security check */
-     if (!xarSecurityCheck('ReadITSPPlan',0,'Plan',"$planid:All:All")) {
+     if (!xarSecurityCheck('ReadITSPPlan',0,'Plan',"$planid:All")) {
          return $data;
      }
 
@@ -78,7 +78,7 @@ function itsp_user_display($args)
         $pitemid = $planitem['pitemid'];
         // get the planitem
         $pitem = xarModApiFunc('itsp','user','get_planitem',array('pitemid'=>$pitemid));
-        if (xarSecurityCheck('ReadITSPPlan', 0, 'Plan', "$planid:$pitemid:All")) {
+        if (xarSecurityCheck('ReadITSPPlan', 0, 'Plan', "$planid:$pitemid")) {
             $pitem['link'] = xarModURL('itsp',
                 'user',
                 'display',

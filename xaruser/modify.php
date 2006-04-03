@@ -63,7 +63,7 @@ function itsp_user_modify($args)
     $itspid = $itsp['itspid'];
     /* Security check
      */
-    if (!xarSecurityCheck('ReadITSP', 1, 'ITSP', "$itspid:$planid:All")) {
+    if (!xarSecurityCheck('ReadITSP', 1, 'ITSP', "$itspid:$planid")) {
         return;
     }
 
@@ -98,7 +98,7 @@ function itsp_user_modify($args)
                 foreach ($courselinks as $lcourse) {
                     // Add read link
                     $courseid = $lcourse['lcourseid'];
-                    if (xarSecurityCheck('ReadITSPPlan', 0, 'Plan', "$planid:All:All")) {
+                    if (xarSecurityCheck('ReadITSPPlan', 0, 'Plan', "$planid:All")) {
                         $lcourse['link'] = xarModURL('courses',
                             'user',
                             'display',
@@ -128,7 +128,7 @@ function itsp_user_modify($args)
                 foreach ($courselinks as $icourse) {
                     // Add read link
                     $icourseid = $icourse['icourseid'];
-                    if (xarSecurityCheck('ReadITSP', 0, 'ITSP', "$itspid:All:All")) {
+                    if (xarSecurityCheck('ReadITSP', 0, 'ITSP', "$itspid:All")) {
                         $icourse['link'] = xarModURL('itsp',
                             'user',
                             'display_icourse',

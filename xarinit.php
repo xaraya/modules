@@ -332,7 +332,7 @@ This table deals with the free courses. So: how to add the custom courses/items 
         );
     xarDefineInstance('itsp', 'ITSP', $instances);
 
- 
+
     /* You can also use some external "wizard" function to specify instances :
 
       $instances = array(
@@ -354,21 +354,21 @@ This table deals with the free courses. So: how to add the custom courses/items 
     // The ITSP seen from the student.
     // $itspid:$planid
     // TODO: add comment level
-    xarRegisterMask('ViewITSP', 'All', 'itsp', 'ITSP', 'All:All:All', 'ACCESS_OVERVIEW');
-    xarRegisterMask('ReadITSP', 'All', 'itsp', 'ITSP', 'All:All:All', 'ACCESS_READ');
-    xarRegisterMask('EditITSP', 'All', 'itsp', 'ITSP', 'All:All:All', 'ACCESS_EDIT');
-    xarRegisterMask('AddITSP', 'All', 'itsp', 'ITSP', 'All:All:All', 'ACCESS_ADD');
-    xarRegisterMask('DeleteITSP', 'All', 'itsp', 'ITSP', 'All:All:All', 'ACCESS_DELETE');
-    xarRegisterMask('AdminITSP', 'All', 'itsp', 'ITSP', 'All:All:All', 'ACCESS_ADMIN');
+    xarRegisterMask('ViewITSP', 'All', 'itsp', 'ITSP', 'All:All', 'ACCESS_OVERVIEW');
+    xarRegisterMask('ReadITSP', 'All', 'itsp', 'ITSP', 'All:All', 'ACCESS_READ');
+    xarRegisterMask('EditITSP', 'All', 'itsp', 'ITSP', 'All:All', 'ACCESS_EDIT');
+    xarRegisterMask('AddITSP', 'All', 'itsp', 'ITSP', 'All:All', 'ACCESS_ADD');
+    xarRegisterMask('DeleteITSP', 'All', 'itsp', 'ITSP', 'All:All', 'ACCESS_DELETE');
+    xarRegisterMask('AdminITSP', 'All', 'itsp', 'ITSP', 'All:All', 'ACCESS_ADMIN');
     // Let's seperate for the plans for now
     // $planid:$pitemid:
     //xarRegisterMask('ReadITSPBlock', 'All', 'itsp', 'Block', 'All', 'ACCESS_OVERVIEW');
-    xarRegisterMask('ViewITSPPlan', 'All', 'itsp', 'Plan', 'All:All:All', 'ACCESS_OVERVIEW');
-    xarRegisterMask('ReadITSPPlan', 'All', 'itsp', 'Plan', 'All:All:All', 'ACCESS_READ');
-    xarRegisterMask('EditITSPPlan', 'All', 'itsp', 'Plan', 'All:All:All', 'ACCESS_EDIT');
-    xarRegisterMask('AddITSPPlan', 'All', 'itsp', 'Plan', 'All:All:All', 'ACCESS_ADD');
-    xarRegisterMask('DeleteITSPPlan', 'All', 'itsp', 'Plan', 'All:All:All', 'ACCESS_DELETE');
-    xarRegisterMask('AdminITSPPlan', 'All', 'itsp', 'Plan', 'All:All:All', 'ACCESS_ADMIN');
+    xarRegisterMask('ViewITSPPlan', 'All', 'itsp', 'Plan', 'All:All', 'ACCESS_OVERVIEW');
+    xarRegisterMask('ReadITSPPlan', 'All', 'itsp', 'Plan', 'All:All', 'ACCESS_READ');
+    xarRegisterMask('EditITSPPlan', 'All', 'itsp', 'Plan', 'All:All', 'ACCESS_EDIT');
+    xarRegisterMask('AddITSPPlan', 'All', 'itsp', 'Plan', 'All:All', 'ACCESS_ADD');
+    xarRegisterMask('DeleteITSPPlan', 'All', 'itsp', 'Plan', 'All:All', 'ACCESS_DELETE');
+    xarRegisterMask('AdminITSPPlan', 'All', 'itsp', 'Plan', 'All:All', 'ACCESS_ADMIN');
 
     /* Initialisation successful so return true */
     return true;
@@ -423,6 +423,29 @@ function itsp_upgrade($oldversion)
             xarDefineInstance('itsp', 'ITSP', $instances);
             return itsp_upgrade('0.3.0');
         case '0.3.0':
+            /* Remove Masks and Instances */
+             xarRemoveMasks('itsp');
+            // Reregister them all
+            xarRegisterMask('ReadITSPBlock', 'All', 'itsp', 'Block', 'All', 'ACCESS_OVERVIEW');
+            // The ITSP seen from the student.
+            // $itspid:$planid
+            // TODO: add comment level
+            xarRegisterMask('ViewITSP', 'All', 'itsp', 'ITSP', 'All:All', 'ACCESS_OVERVIEW');
+            xarRegisterMask('ReadITSP', 'All', 'itsp', 'ITSP', 'All:All', 'ACCESS_READ');
+            xarRegisterMask('EditITSP', 'All', 'itsp', 'ITSP', 'All:All', 'ACCESS_EDIT');
+            xarRegisterMask('AddITSP', 'All', 'itsp', 'ITSP', 'All:All', 'ACCESS_ADD');
+            xarRegisterMask('DeleteITSP', 'All', 'itsp', 'ITSP', 'All:All', 'ACCESS_DELETE');
+            xarRegisterMask('AdminITSP', 'All', 'itsp', 'ITSP', 'All:All', 'ACCESS_ADMIN');
+            // Let's seperate for the plans for now
+            // $planid:$pitemid:
+            //xarRegisterMask('ReadITSPBlock', 'All', 'itsp', 'Block', 'All', 'ACCESS_OVERVIEW');
+            xarRegisterMask('ViewITSPPlan', 'All', 'itsp', 'Plan', 'All:All', 'ACCESS_OVERVIEW');
+            xarRegisterMask('ReadITSPPlan', 'All', 'itsp', 'Plan', 'All:All', 'ACCESS_READ');
+            xarRegisterMask('EditITSPPlan', 'All', 'itsp', 'Plan', 'All:All', 'ACCESS_EDIT');
+            xarRegisterMask('AddITSPPlan', 'All', 'itsp', 'Plan', 'All:All', 'ACCESS_ADD');
+            xarRegisterMask('DeleteITSPPlan', 'All', 'itsp', 'Plan', 'All:All', 'ACCESS_DELETE');
+            xarRegisterMask('AdminITSPPlan', 'All', 'itsp', 'Plan', 'All:All', 'ACCESS_ADMIN');
+        case '0.3.1':
              return itsp_upgrade('1.0.0');
         case '1.0.0':
             break;

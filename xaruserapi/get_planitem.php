@@ -85,7 +85,7 @@ function itsp_userapi_get_planitem($args)
      */
     $result->Close();
     // Security check
-    if (!xarSecurityCheck('ReadITSPPlan', 1, 'Plan', "All:$pitemid:All")) {
+    if (!xarSecurityCheck('ReadITSPPlan', 1, 'Plan', "All:$pitemid")) {
         return;
     }
     /* Create the item array */

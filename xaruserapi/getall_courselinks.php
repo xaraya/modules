@@ -90,7 +90,7 @@ function itsp_userapi_getall_courselinks($args)
     for (; !$result->EOF; $result->MoveNext()) {
         list($courselinkid, $lcourseid, $pitemid, $dateappr,
                $datemodi,$modiby) = $result->fields;
-        if (xarSecurityCheck('ViewITSP', 0, 'ITSP', "$itspid:All:All")) {
+        if (xarSecurityCheck('ViewITSP', 0, 'ITSP', "$itspid:All")) {
             $items[] = array('courselinkid' => $courselinkid,
                              'lcourseid'    => $lcourseid,
                              'pitemid'      => $pitemid,

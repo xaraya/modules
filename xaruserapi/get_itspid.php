@@ -75,7 +75,7 @@ function itsp_userapi_get_itspid($args)
      */
     $result->Close();
     /* Security check */
-    if (!xarSecurityCheck('ReadITSP', 1, 'ITSP', "$itspid:$planid:All")) {
+    if (!xarSecurityCheck('ReadITSP', 1, 'ITSP', "$itspid:$planid")) {
         return;
     }
     /* Create the item array */

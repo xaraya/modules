@@ -80,7 +80,7 @@ function itsp_userapi_get_plan($args)
      */
     $result->Close();
     // Security check
-    if (!xarSecurityCheck('ReadITSPPlan', 1, 'Plan', "$planid:All:All")) {
+    if (!xarSecurityCheck('ReadITSPPlan', 1, 'Plan', "$planid:All")) {
         return;
     }
     /* Create the item array */

@@ -49,7 +49,7 @@ function itsp_adminapi_create_pitem($args)
         return;
     }
     /* Security check */
-    if (!xarSecurityCheck('AddITSPPlan', 1, 'Plan', "All:All:All")) {//TODO: check
+    if (!xarSecurityCheck('AddITSPPlan', 1, 'Plan', "All:All")) {
         return;
     }
     $datemodi = time();
