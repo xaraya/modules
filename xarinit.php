@@ -3,7 +3,7 @@
  * Initialize the SiteContact Module
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -30,29 +30,33 @@ function sitecontact_init()
     /* Get a data dictionary object with all the item create methods in it */
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
 
-    $fields= "xar_scid           I      AUTO       PRIMARY,
-	          xar_sctypename     C(100) NotNull    DEFAULT '',
-              xar_sctypedesc     C(254) NotNull    DEFAULT '',
-              xar_customtext     X      NotNull    DEFAULT '',
-              xar_customtitle    C(150) NotNull    DEFAULT '',
-              xar_optiontext     X      NotNull    DEFAULT '',
-              xar_webconfirmtext X      NotNull    DEFAULT '',
-              xar_notetouser     X      NotNull    DEFAULT '',
-              xar_allowcopy      L      NotNull    DEFAULT 0,
-              xar_usehtmlemail   L      NotNull    DEFAULT 0,
-   	          xar_scdefaultemail C(254) NotNull    DEFAULT '',
-              xar_scdefaultname  C(254) NotNull    DEFAULT '',
-              xar_scactive       L      NotNull    DEFAULT 1
+    $fields= "xar_scid            I      AUTO       PRIMARY,
+              xar_sctypename      C(100) NotNull    DEFAULT '',
+              xar_sctypedesc      C(254) NotNull    DEFAULT '',
+              xar_customtext      X      NotNull    DEFAULT '',
+              xar_customtitle     C(150) NotNull    DEFAULT '',
+              xar_optiontext      X      NotNull    DEFAULT '',
+              xar_webconfirmtext  X      NotNull    DEFAULT '',
+              xar_notetouser      X      NotNull    DEFAULT '',
+              xar_allowcopy       L      NotNull    DEFAULT 0,
+              xar_usehtmlemail    L      NotNull    DEFAULT 0,
+              xar_scdefaultemail  C(254) NotNull    DEFAULT '',
+              xar_scdefaultname   C(254) NotNull    DEFAULT '',
+              xar_scactive        L      NotNull    DEFAULT 1,
+              xar_savedata        L      NotNull    DEFAULT 0,
+              xar_permissioncheck L      NotNull    DEFAULT 0,
+              xar_termslink       C(254) NotNull    DEFAULT '',
+              xar_soptions        X      NotNull    DEFAULT ''
               ";
             $result = $datadict->changeTable($sitecontactTable, $fields);
            if (!$result) {return;}
 
     /* Create a default form */
-   $defaultemail=  xarModGetVar('mail', 'adminmail');
+    $defaultemail=  xarModGetVar('mail', 'adminmail');
     $sitecontactTable = $xarTables['sitecontact'];
     $query = "INSERT INTO $sitecontactTable
                   (xar_scid,
-	               xar_sctypename,
+                   xar_sctypename,
                    xar_sctypedesc,
                    xar_customtext,
                    xar_customtitle,
@@ -61,9 +65,13 @@ function sitecontact_init()
                    xar_notetouser,
                    xar_allowcopy,
                    xar_usehtmlemail,
-   	               xar_scdefaultemail,
+                   xar_scdefaultemail,
                    xar_scdefaultname,
-                   xar_scactive)
+                   xar_scactive,
+                   xar_savedata,
+                   xar_permissioncheck,
+                   xar_termslink,
+                   xar_soptions)
                 VALUES (1,
                         'basic',
                         'Basic contact form',
@@ -76,13 +84,20 @@ function sitecontact_init()
                         '0',
                         '$defaultemail',
                         'Site Admin',
-                        1
+                        1,
+                        0,
+                        0,
+                        '',
+                        ''
                         )";
 
     $result =& $dbconn->Execute($query);
            if (!$result) {return;}
 
-
+    xarModSetVar('sitecontact', 'savedata', 0);
+    xarModSetVar('sitecontact', 'termslink', '');
+    xarModSetVar('sitecontact', 'soptions', '');
+    xarModSetVar('sitecontact', 'permissioncheck', 0);
     xarModSetVar('sitecontact', 'itemsperpage', 10);
     xarModSetVar('sitecontact', 'defaultform',1);
     xarModSetVar('sitecontact', 'defaultsort','scid');
@@ -119,6 +134,15 @@ Administrator
 %%sitename%%
 -------------------------------------------------------------');
   xarModSetVar('sitecontact','notetouser',xarModGetVar('sitecontact','defaultnote'));
+
+
+     // Enable dynamicdata hooks for sitecontact forms
+    if (xarModIsAvailable('dynamicdata')) {
+        xarModAPIFunc('modules','admin','enablehooks',
+                       array('callerModName' => 'sitecontact', 'hookModName' => 'dynamicdata'));
+    }
+
+
 /*
     if (!xarModAPIFunc('blocks',
                        'admin',
@@ -185,7 +209,7 @@ function sitecontact_upgrade($oldversion)
         case '0.3.0':
            xarModSetVar('sitecontact', 'useModuleAlias',0);
            xarModSetVar('sitecontact', 'aliasname','');
-             return sitecontact_upgrade('0.4.0');
+             return sitecontact_upgrade('0.3.5');
              break;
         case '0.3.5':
           // Remove incomplete module hook until ready
@@ -206,19 +230,19 @@ function sitecontact_upgrade($oldversion)
             /* Get a data dictionary object with all the item create methods in it */
             $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
 
-           	$fields= "xar_scid            I      AUTO       PRIMARY,
-	                  xar_sctypename     C(100) NotNull    DEFAULT '',
+            $fields= "xar_scid            I      AUTO       PRIMARY,
+                      xar_sctypename     C(100) NotNull    DEFAULT '',
                       xar_sctypedesc     C(254) NotNull    DEFAULT '',
-	                  xar_customtext     X      NotNull    DEFAULT '',
-	                  xar_customtitle    C(150) NotNull    DEFAULT '',
-	                  xar_optiontext     X      NotNull    DEFAULT '',
-	                  xar_webconfirmtext X      NotNull    DEFAULT '',
-	                  xar_notetouser     X      NotNull    DEFAULT '',
-	                  xar_allowcopy      L      NotNull    DEFAULT 0,
-	                  xar_usehtmlemail   L      NotNull    DEFAULT 0,
-         	          xar_scdefaultemail C(254) NotNull    DEFAULT '',
-	                  xar_scdefaultname  C(254) NotNull    DEFAULT '',
-	                  xar_scactive       L      NotNull    DEFAULT 1
+                      xar_customtext     X      NotNull    DEFAULT '',
+                      xar_customtitle    C(150) NotNull    DEFAULT '',
+                      xar_optiontext     X      NotNull    DEFAULT '',
+                      xar_webconfirmtext X      NotNull    DEFAULT '',
+                      xar_notetouser     X      NotNull    DEFAULT '',
+                      xar_allowcopy      L      NotNull    DEFAULT 0,
+                      xar_usehtmlemail   L      NotNull    DEFAULT 0,
+                      xar_scdefaultemail C(254) NotNull    DEFAULT '',
+                      xar_scdefaultname  C(254) NotNull    DEFAULT '',
+                      xar_scactive       L      NotNull    DEFAULT 1
               ";
             $result = $datadict->changeTable($sitecontactTable, $fields);
             if (!$result) {return;}
@@ -236,7 +260,7 @@ function sitecontact_upgrade($oldversion)
             $sitecontactTable = $xarTables['sitecontact'];
            $query ="INSERT INTO $sitecontactTable
                   (xar_scid,
-	               xar_sctypename,
+                   xar_sctypename,
                    xar_sctypedesc,
                    xar_customtext,
                    xar_customtitle,
@@ -245,7 +269,7 @@ function sitecontact_upgrade($oldversion)
                    xar_notetouser,
                    xar_allowcopy,
                    xar_usehtmlemail,
-   	               xar_scdefaultemail,
+                   xar_scdefaultemail,
                    xar_scdefaultname,
                    xar_scactive)
                 VALUES (1,
@@ -267,9 +291,37 @@ function sitecontact_upgrade($oldversion)
            if (!$result) {return;}
            return sitecontact_upgrade('0.4.0');
        case '0.4.0':
-           return sitecontact_upgrade('0.4.1');
+           xarModSetVar('sitecontact', 'savedata', 0);
+           xarModSetVar('sitecontact', 'termslink', '');
+           xarModSetVar('sitecontact', 'soptions', '');
+           xarModSetVar('sitecontact', 'permissioncheck', 0);
+          
+           $dbconn =& xarDBGetConn();
+           $xarTables =& xarDBGetTables();
+
+           $sitecontactTable = $xarTables['sitecontact'];
+
+           /* Get a data dictionary object with all the item create methods in it */
+           $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+
+           /* Add a few more fields */
+            $fields= "xar_savedata        L      NotNull    DEFAULT 0,
+                      xar_permissioncheck L      NotNull    DEFAULT 0,
+                      xar_termslink       C(254) NotNull    DEFAULT '',
+                      xar_soptions        X      NotNull    DEFAULT ''
+                     ";
+            $result = $datadict->changeTable($sitecontactTable, $fields);
+            if (!$result) {return;}
+            
+           /* Enable dynamicdata hooks for sitecontact forms - now a dependency */
+           if (xarModIsAvailable('dynamicdata')) {
+               xarModAPIFunc('modules','admin','enablehooks',
+                       array('callerModName' => 'sitecontact', 'hookModName' => 'dynamicdata'));
+           }
+
+           return sitecontact_upgrade('0.5.0');
             break;
-        case '0.4.1':
+        case '0.5.0':
              break;
     }
     // Update successful

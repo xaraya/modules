@@ -9,20 +9,7 @@
 
     </dt>
         <xar:sec mask="EditSiteContact" catch="false">
-           <xar:set name="viewurl">xarModURL('sitecontact','admin','overview')</xar:set>
-            <xar:if condition="$compare eq $viewurl">
-               <dd class="active">
-                <a href="#xarServerGetCurrentURL()#">
-                   <xar:mlstring>SiteContact Overview</xar:mlstring>
-                </a>
-               </dd>
-            <xar:else />
-            <dd>
-                <a href="#$viewurl#">
-                <xar:mlstring>SiteContact Overview</xar:mlstring>
-                </a>
-            </dd>
-            </xar:if>
+
              <xar:set name="pendingurl">xarModURL('sitecontact','admin','modifyconfig')</xar:set>
             <xar:if condition="$compare eq $pendingurl">
                <dd class="active">
@@ -54,6 +41,20 @@
             </dd>
             </xar:if>
          </xar:sec>
+         <xar:set name="viewurl">xarModURL('sitecontact','admin','overview')</xar:set>
+            <xar:if condition="$compare eq $viewurl">
+               <dd class="active">
+                <a href="#xarServerGetCurrentURL()#">
+                   <xar:mlstring>Overview</xar:mlstring>
+                </a>
+               </dd>
+            <xar:else />
+            <dd>
+                <a href="#$viewurl#">
+                <xar:mlstring>Overview</xar:mlstring>
+                </a>
+            </dd>
+            </xar:if>         
 
 </dl>
 

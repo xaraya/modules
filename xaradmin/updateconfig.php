@@ -37,8 +37,14 @@ function sitecontact_admin_updateconfig()
     if (!xarVarFetch('modulealias','checkbox', $modulealias,false,XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('defaultform','int:1:', $defaultform, 1,XARVAR_NOT_REQUIRED)) return;
     if(!xarVarFetch('itemsperpage','int',   $itemsperpage, 20, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('savedata', 'checkbox', $savedata, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('permissioncheck', 'checkbox', $permissioncheck, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('termslink', 'str:1:', $termslink, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('allowcc', 'checkbox', $allowcc, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('allowbcc', 'checkbox', $allowbcc, false, XARVAR_NOT_REQUIRED)) return;
 
-
+    $soptions=array('allowcc'=>$allowcc,'allowbcc'=>$allowbcc);
+    $soptions=serialize($soptions);
     xarModSetVar('sitecontact', 'customtext', $customtext);
     xarModSetVar('sitecontact', 'customtitle', $customtitle);
     xarModSetVar('sitecontact', 'optiontext', $optiontext);
@@ -52,6 +58,11 @@ function sitecontact_admin_updateconfig()
     xarModSetVar('sitecontact', 'scdefaultname', $scdefaultname);
     xarModSetVar('sitecontact', 'defaultform', $defaultform);
     xarModSetVar('sitecontact', 'itempsperpage', $itemsperpage);    
+    xarModSetVar('sitecontact', 'soptions', $soptions);
+    xarModSetVar('sitecontact', 'savedata', $savedata);
+    xarModSetVar('sitecontact', 'permissioncheck', $permissioncheck);
+    xarModSetVar('sitecontact', 'termslink', trim($termslink));
+
     if (isset($aliasname) && trim($aliasname)<>'') {
         xarModSetVar('sitecontact', 'useModuleAlias', $modulealias);
     } else{

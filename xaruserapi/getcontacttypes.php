@@ -63,7 +63,11 @@ function sitecontact_userapi_getcontacttypes($args)
               xar_usehtmlemail,
    	          xar_scdefaultemail,
               xar_scdefaultname,
-              xar_scactive
+              xar_scactive,
+              xar_savedata,
+              xar_permissioncheck,
+              xar_termslink,
+              xar_soptions
             FROM $sitecontactTable ";
     if (!empty($where)) {
         $query .= " $where";
@@ -87,7 +91,8 @@ function sitecontact_userapi_getcontacttypes($args)
 
     while (!$result->EOF) {
         list($scid, $sctypename, $sctypedesc, $customtext, $customtitle, $optiontext,
-             $webconfirmtext, $notetouser, $allowcopy, $usehtmlemail, $scdefaultemail, $scdefaultname, $scactive) = $result->fields;
+             $webconfirmtext, $notetouser, $allowcopy, $usehtmlemail, $scdefaultemail, $scdefaultname, $scactive,
+             $savedata,$permissioncheck,$termslink,$soptions) = $result->fields;
 
             $sctypes[] = array('scid'           => (int)$scid,
                                    'sctypename'     => $sctypename,
@@ -101,7 +106,11 @@ function sitecontact_userapi_getcontacttypes($args)
                                    'usehtmlemail'  => $usehtmlemail,
                                    'scdefaultemail' => $scdefaultemail,
                                    'scdefaultname'  => $scdefaultname,
-                                   'scactive'       => (int)$scactive);
+                                   'scactive'       => (int)$scactive,
+                                   'savedata'       => (int)$savedata,
+                                   'permissioncheck'=> (int)$permissioncheck,
+                                   'termslink'      => $termslink,
+                                   'soptions'       => $soptions);
         $result->MoveNext();
     }
 

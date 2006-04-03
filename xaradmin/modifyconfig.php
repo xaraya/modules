@@ -28,6 +28,20 @@ function sitecontact_admin_modifyconfig()
         $data['usehtmlemail']= (int)xarModGetVar('sitecontact', 'usehtmlemail');
         $data['allowcopy']   = (int)xarModGetVar('sitecontact', 'allowcopy');
         $data['webconfirmtext'] = xarModGetVar('sitecontact', 'webconfirmtext');
+        $data['savedata']   = xarModGetVar('sitecontact', 'savedata');
+        $data['termslink']   = xarModGetVar('sitecontact', 'termslink');
+        $soptions   = xarModGetVar('sitecontact', 'soptions');
+        $data['permissioncheck']   = xarModGetVar('sitecontact', 'permissioncheck');
+        if (!isset($soptions)) $soptions=array();
+
+        $soptions=unserialize($soptions);
+        if (is_array($soptions)) {
+            foreach ($soptions as $k=>$v) {
+                $data[$k]=$v;
+            }
+        }
+        if (!isset($data['allowbcc']))$data['allowbcc']=false;
+        if (!isset($data['allowcc']))$data['allowcc']=false;
         $notetouser = xarModGetVar('sitecontact', 'notetouser');
         if (!isset($notetouser) || (trim($notetouser)=='')) {
             $notetouser=xarModGetVar('sitecontact','defaultnote');

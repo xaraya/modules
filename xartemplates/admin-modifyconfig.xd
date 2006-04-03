@@ -129,6 +129,38 @@
         </label>
             <textarea name="webconfirmtext" id="webconfirmtext" rows="5" cols="50">#$webconfirmtext#</textarea>
         </div>
+       <div class="xar-form-input-wrapper-after">
+            <xar:if condition="$allowcc">
+                <input type="checkbox" name="allowcc" id="allowcc" value="1" checked="checked" />
+            <xar:else />
+                <input type="checkbox" name="allowcc" id="allowcc" value="1" />
+            </xar:if>
+             <label for="allowcc" title="#xarML('Allow a cc recipient list?')#">
+               <xar:mlstring>Allow CC Recipient list?</xar:mlstring>
+            </label>
+        </div>
+
+       <div class="xar-form-input-wrapper-after">
+            <xar:if condition="$allowbcc">
+                <input type="checkbox" name="allowbcc" id="allowbcc" value="1" checked="checked" />
+            <xar:else />
+                <input type="checkbox" name="allowbcc" id="allowbcc" value="1" />
+            </xar:if>
+             <label for="allowcc" title="#xarML('Allow a bcc recipient list?')#">
+               <xar:mlstring>Allow BCC Recipient list?</xar:mlstring>
+            </label>
+        </div>
+
+
+     
+
+         <div class="xar-form-input-wrapper">
+            <label for="termslink" class="xar-form-label" title="#xarML('URL link to your terms.')#">
+               <xar:mlstring>Terms link URL [none - leave blank]:</xar:mlstring>
+            </label>
+            <input type="text" name="termslink" id="termslink" size="40" maxlength="128" value="#$termslink#" />
+        </div>
+
     </fieldset>
 
    <fieldset>
@@ -190,9 +222,8 @@
 
     <fieldset>
        <legend><xar:mlstring>Enable Hooks for Sitecontact Forms (itemtypes)</xar:mlstring></legend>
-       <xar:mlstring>You can add extra data fields to your forms by enabling Dynamic Data hooks for either all
-       Sitecontact forms or individually. To do this go to </xar:mlstring> <a href="&xar-modurl-modules-admin-hooks;&amp;hook=dynamicdata"><xar:mlstring>Modules-Configure Hooks-DynamicData</xar:mlstring></a><xar:mlstring>. Find
-        the Sitecontact entry and enable DD hooks for ALL or Some (a checklist will appear) itemtypes.
+       <xar:mlstring>You can add extra data fields to your forms using Dynamic Data. Dynamic Data should be hooked by default for all
+       Sitecontact forms. You can enable hooks at </xar:mlstring> <a href="&xar-modurl-modules-admin-hooks;&amp;hook=dynamicdata"><xar:mlstring>Modules-Configure Hooks-DynamicData</xar:mlstring></a><xar:mlstring>.
        Edit a sitecontact form to add or modify DD property fields for that form.</xar:mlstring>
     </fieldset>
     <fieldset>

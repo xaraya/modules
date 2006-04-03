@@ -31,7 +31,11 @@ function sitecontact_admin_managesctypes()
 	if(!xarVarFetch('scdefaultname', 'str:1:',   $scdefaultname,  '', XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('action',       'isset',    $action,         NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('scactive',     'checkbox', $scactive,       1, XARVAR_NOT_REQUIRED)) return;
-
+    if (!xarVarFetch('savedata',     'checkbox', $savedata, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('permissioncheck', 'checkbox', $permissioncheck, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('termslink',    'str:1:',   $termslink, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('allowccs',      'checkbox', $allowccs, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('allowbccs',     'checkbox', $allowbccs, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarSecurityCheck('EditSiteContact')) return;
 
     // Initialise the template variables
@@ -52,6 +56,8 @@ function sitecontact_admin_managesctypes()
     }
     $data['managetype']=xarML('List Forms');
     $formisactive = xarModGetVar('sitecontact', 'scactive') ? 'checked' : '';
+    $soptions=array('allowccs'=>$allowccs,'allowbccs'=>$allowbccs);
+    $soptions=serialize($soptions);
 
     //Setup array with captured vars
     $item=array('scid' => (int)$scid,
@@ -67,6 +73,12 @@ function sitecontact_admin_managesctypes()
                 'scdefaultemail' => $scdefaultemail,
                 'scdefaultname'  => $scdefaultname,
                 'scactive'       => (int)$scactive,
+                'savedata'       => $savedata,
+                'permissioncheck' => $permissioncheck,
+                'termslink'       => $termslink,
+                'allowccs'         => $allowccs,
+                'allowbccs'        => $allowbccs,
+                'soptions'        => $soptions,
                 'formisactive'   => $formisactive // add this in addition to normal field value
                 );
 
@@ -92,6 +104,7 @@ function sitecontact_admin_managesctypes()
             }
 
         } elseif ($action == 'update') {
+
              $updatedscid=xarModAPIFunc('sitecontact','admin','updatesctype', $item);
 
              if (!$updatedscid) {
@@ -112,7 +125,8 @@ function sitecontact_admin_managesctypes()
         } elseif ($action == 'confirm') { //go ahead and delete
 
            $item = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid'=>$scid));
-           $data['item']=$item[$scid];
+
+           $data['item']=$item[0];
            if ($scid == $defaultform) {
             $msg = xarML('You cannot delete the default form. Please change the default form first');
              xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
@@ -180,6 +194,15 @@ function sitecontact_admin_managesctypes()
         $data['managetype']=xarML('Create Form');
         $data['link'] = xarModURL('sitecontact','admin','managesctypes',
                                  array('action' => 'create'));
+        $soptions =xarModGetVar('sitecontact','soptions');
+        $soptions=unserialize($soptions);
+        if (is_array($soptions)) {
+            foreach ($soptions as $k=>$v) {
+                $k=$v;
+            }
+        }
+        if (!isset($allowbccs)) $allowbccs=false;
+        if (!isset($allowccs)) $allowccs=false;
         $item=array('sctypename'     => xarML('Unique name for new form'),
                         'sctypedesc'     => xarML('Another contact form'),
                         'customtext'     => xarModGetVar('sitecontact','customtext'),
@@ -191,6 +214,11 @@ function sitecontact_admin_managesctypes()
                         'usehtmlemail'  => xarModGetVar('sitecontact','usehtmlemail'),
                         'scdefaultemail' => xarModGetVar('sitecontact','scdefaultemail'),
                         'scdefaultname'  => xarModGetVar('sitecontact','scdefaultname'),
+                        'permissioncheck'  => xarModGetVar('sitecontact','permissioncheck'),
+                        'savedata'       => xarModGetVar('sitecontact','savedata'),
+                        'termslink'       => xarModGetVar('sitecontact','termslink'),
+                        'allowbccs'        =>$allowbccs,
+                        'allowccs'         =>$allowccs,
                         'formisactive'   => (xarModGetVar('sitecontact', 'scactive') ? 'checked' : '')
                 );
         $data['item']=$item;
@@ -199,6 +227,22 @@ function sitecontact_admin_managesctypes()
          xarSessionSetVar('statusmsg','');
         $item = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid'=>$scid));
         $data['item']=$item[0];
+
+         if (isset($data['item']['soptions'])) {
+           $soptions=unserialize($data['item']['soptions']);
+           if (is_array($soptions)) {
+               foreach ($soptions as $k=>$v) {
+                   $data['item'][$k]=$v;
+              }
+           }
+        }
+
+       if (!isset($data['item']['allowbccs']))$data['item']['allowbccs']=0;
+       if (!isset($data['item']['allowccs']))$data['item']['allowccs']=0;
+       if (!isset($data['item']['savedata']))$data['item']['savedata']=xarModGetVar('sitecontact','savedata')?xarModGetVar('sitecontact','savedata'):0;
+        if (!isset($data['item']['permissioncheck']))$data['item']['permissioncheck']=xarModGetVar('sitecontact','permissioncheck');
+       if (!isset($data['item']['termslink']))$data['item']['termslink']=xarModGetVar('sitecontact','termslink');
+
         $data['managetype']=xarML('Edit Form Definition');
         $data['formisactive']=xarModGetVar('sitecontact', 'scactive') ? 'checked' : '';
         $data['authid'] = xarSecGenAuthKey();
@@ -235,6 +279,21 @@ function sitecontact_admin_managesctypes()
        xarSessionSetVar('statusmsg','');
        $item = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid'=>$scid));
        $data['item']=$item[0];
+         if (isset($data['item']['soptions'])) {
+           $soptions=unserialize($data['item']['soptions']);
+           if (is_array($soptions)) {
+               foreach ($soptions as $k=>$v) {
+                   $data['item'][$k]=$v;
+              }
+           }
+        }
+
+       if (!isset($data['item']['allowbccs']))$data['item']['allowbccs']=0;
+       if (!isset($data['item']['allowccs']))$data['item']['allowccs']=0;
+       if (!isset($data['item']['savedata']))$data['item']['savedata']=xarModGetVar('sitecontact','savedata');
+        if (!isset($data['item']['permissioncheck']))$data['item']['permissioncheck']=xarModGetVar('sitecontact','permissioncheck');
+       if (!isset($data['item']['termslink']))$data['item']['termslink']=xarModGetVar('sitecontact','termslink');
+
        $optionset=explode(',',$item[0]['optiontext']);
        $data['optionset']=$optionset;
         $optionitems=array();

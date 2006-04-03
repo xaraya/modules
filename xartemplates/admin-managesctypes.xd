@@ -90,6 +90,27 @@
         </label>
             <textarea name="webconfirmtext" id="webconfirmtext" rows="5" cols="50">#$item.webconfirmtext#</textarea>
         </div>
+       <div class="xar-form-input-wrapper-after">
+            <xar:if condition="$item.allowccs">
+                <input type="checkbox" name="allowccs" id="allowccs" value="1" checked="checked" />
+            <xar:else />
+                <input type="checkbox" name="allowccs" id="allowccs" value="1" />
+            </xar:if>
+             <label for="allowccs" title="#xarML('Allow a cc recipient list?')#">
+               <xar:mlstring>Allow CC Recipient list?</xar:mlstring>
+            </label>
+        </div>
+       <div class="xar-form-input-wrapper-after">
+            <xar:if condition="$item.allowbccs">
+                <input type="checkbox" name="allowbccs" id="allowbccs" value="1" checked="checked" />
+            <xar:else />
+                <input type="checkbox" name="allowbccs" id="allowbccs" value="1" />
+            </xar:if>
+             <label for="allowbccs" title="#xarML('Allow a bcc recipient list?')#">
+               <xar:mlstring>Allow BCC Recipient list?</xar:mlstring>
+            </label>
+        </div>
+
 
     </fieldset>
 
@@ -254,6 +275,26 @@
         </label>
             <textarea name="webconfirmtext" id="webconfirmtext" rows="5" cols="50">#$item.webconfirmtext#</textarea>
         </div>
+       <div class="xar-form-input-wrapper-after">
+            <xar:if condition="$item.allowccs eq 1">
+                <input type="checkbox" name="allowccs" id="allowccs" value="1" checked="checked" />
+            <xar:else />
+                <input type="checkbox" name="allowccs" id="allowccs" value="1" />
+            </xar:if>
+             <label for="allowccs" title="#xarML('Allow a cc recipient list?')#">
+               <xar:mlstring>Allow CC Recipient list?</xar:mlstring>
+            </label>
+        </div>
+       <div class="xar-form-input-wrapper-after">
+            <xar:if condition="$item.allowbccs eq 1">
+                <input type="checkbox" name="allowbccs" id="allowbccs" value="1" checked="checked" />
+            <xar:else />
+                <input type="checkbox" name="allowbccs" id="allowbccs" value="1" />
+            </xar:if>
+             <label for="allowbccs" title="#xarML('Allow a bcc recipient list?')#">
+               <xar:mlstring>Allow BCC Recipient list?</xar:mlstring>
+            </label>
+        </div>
     </fieldset>
 
    <fieldset>
@@ -392,6 +433,7 @@
     </xar:ml>
     </h3>
 <hr>
+
     <xar:if condition="empty($item.customtitle)">
         <xar:set name="contacttitle"><xar:mlstring>Contact Form</xar:mlstring></xar:set>
     <xar:else />
@@ -462,6 +504,26 @@
                 </label>
                 <input type="text" name="company" id="company" size="40" value="" maxlength="128"  />
             </div>
+           <xar:if condition="$item.allowccs">
+                <div class="xar-form-input-wrapper">
+                    <xar:data-label label="CC Recipients" for="ccrecipients" />
+                    <xar:data-input type="textbox" name="ccrecipients" id="ccrecipients" size="150" value=""/>
+                </div>
+            </xar:if>
+            <xar:if condition="$item.allowbccs">
+                <div class="xar-form-input-wrapper">
+                    <xar:data-label label="BCC Recipients" for="bccrecipients" />
+                    <xar:data-input type="textbox" name="bccrecipients" id="bccrecipients" size="150" value=""/>
+
+                </div>
+            </xar:if>
+            <xar:if condition="$item.allowbccs or $item.allowccs">
+             <p class="xar-form-input-wrapper-after">
+                    <xar:mlstring>
+                    Separate emails by colons (;) or optionally add a name for each email by separating email and name by a comma eg
+                    </xar:mlstring> <strong>email1@somedomain.com,SomeName;</strong>
+             </p>
+            </xar:if>
             <div class="xar-form-input-wrapper">
                 <label for="usermessage" class="xar-form-label" title="#xarML('Type in your message')#">
                         <xar:mlstring>
@@ -489,13 +551,14 @@
             </xar:if>
 
             <xar:if condition="$item.allowcopy eq 1">
-            <div class="xar-form-input-wrapper">
-                <label for="sendcopy" class="xar-form-label" title="#xarML('Would you like to have a copy of the message sent to your email')#">
+            <div class="xar-form-input-wrapper-after">
+                <input type="checkbox" name="sendcopy" id="sendcopy" value="1" checked="checked" />
+                <label for="sendcopy" title="#xarML('Would you like to have a copy of the message sent to your email')#">
                         <xar:mlstring>
                             Copy email to you
                         </xar:mlstring>
                 </label>
-                <input type="checkbox" name="sendcopy" id="sendcopy" value="1" checked="checked" />
+
             </div>
             </xar:if>
            </fieldset>

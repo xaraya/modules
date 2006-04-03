@@ -78,6 +78,19 @@ function sitecontact_adminapi_updatesctype($args)
     if (!isset($scactive)) {
         $scactive = xarModGetVar('sitecontact', 'scactive');
     }
+
+    if (!$savedata || !isset($savedata)) {
+        $savedata = (int)xarModGetVar('sitecontact', 'savedata');
+    }
+     if (!isset($permissioncheck) || !$savedata) {
+        $permissioncheck = (int)xarModGetVar('sitecontact', 'permissioncheck');
+    }
+    if (!isset($termslink)) {
+        $termslink = xarModGetVar('sitecontact', 'termslink');
+    }
+    if (!isset($soptions)) {
+        $soptions = xarModGetVar('sitecontact', 'soptions');
+    }
     if (xarModGetVar('sitecontact','defaultform') == $scid) {
         $scactive = 1;
     }
@@ -117,11 +130,17 @@ function sitecontact_adminapi_updatesctype($args)
                 xar_usehtmlemail =?,
    	            xar_scdefaultemail =?,
                 xar_scdefaultname =?,
-                xar_scactive =?
+                xar_scactive =?,
+                xar_savedata =?,
+                xar_permissioncheck =?,
+                xar_termslink=?,
+                xar_soptions=?
             WHERE xar_scid = ?";
     $bindvars = array($sctypename, $sctypedesc, $customtext, $customtitle, $optiontext,
-             $webconfirmtext, $notetouser, $allowcopy, $usehtmlemail, $scdefaultemail, $scdefaultname, $scactive, $scid);
+             $webconfirmtext, $notetouser, $allowcopy, $usehtmlemail, $scdefaultemail, $scdefaultname, $scactive,
+             (int)$savedata,(int)$permissioncheck,$termslink,$soptions, $scid);
     $result =& $dbconn->Execute($query,$bindvars);
+
     if (!$result) return;
 
     $item['module'] = 'sitecontact';

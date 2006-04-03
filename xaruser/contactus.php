@@ -3,7 +3,7 @@
  * Contact us main function
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -34,9 +34,69 @@ function sitecontact_user_contactus($args)
 	if(!xarVarFetch('sctypename', 'str:0:', $sctypename, NULL, XARVAR_NOT_REQUIRED)) {return;}
 	if(!xarVarFetch('scform',     'str:0:', $scform, NULL, XARVAR_NOT_REQUIRED)) {return;}
 	if(!xarVarFetch('scid',       'int:1:', $scid,       $defaultformid, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('bccrecipients', 'str:1', $bccrecipients, '')) return;
+    if (!xarVarFetch('ccrecipients', 'str:1', $ccrecipients, '')) return;
+    if (!xarVarFetch('return_url',  'isset', $return_url, NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('savedata',     'checkbox', $savedata, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('permissioncheck', 'checkbox', $permissioncheck, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('permission', 'checkbox', $permission, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('termslink',    'str:1:',   $termslink, '', XARVAR_NOT_REQUIRED)) return;
     if (isset($scform) && !isset($sctypename)) { //provide alternate entry name
       $sctypename=$scform;
     }
+    //Put all set data in an array for later processing
+     $item=array('scid'           => array(xarML('Form ID'),(int)$scid),
+                'sctypename'      => array(xarML('Form'),$sctypename),
+                'scform'          => array(xarML('Form Name'),$scform),
+                'username'        => array(xarML('Name'),$username),
+                'useremail'       => array(xarML('Email'),$useremail),
+                'requesttext'     => array(xarML('Subject'),$requesttext),
+                'company'         => array(xarML('Organization'),$company),
+                'usermessage'     => array(xarML('Message'),$usermessage),
+                'useripaddress'   => array(xarML('IP'),$useripaddress),
+                'userreferer'     => array(xarML('Referrer'),$userreferer),
+                'sendcopy'        => array(xarML('Copy?'),$sendcopy),
+                'savedata'        => array(xarML('Allow Save?'),$savedata),
+                'permissioncheck' => array(xarML('Check permission?'),$permissioncheck),
+                'permission'      => array(xarML('Agree to save?'),$permission),
+                'termslink'       => array(xarML('Terms provided'),$termslink),
+                'bccrecipients'   => array(xarML('BCC'),$bccrecipients),
+                'ccrecipients'    => array(xarML('CC'),$ccrecipients)
+                );
+
+    /* process CC Recipient list */
+    $ccrecipientarray=array();
+    $ccrec=array();
+    $cctemp=array();
+    if (isset($ccrecipients) && !empty($ccrecipients)) {
+      $ccrecipientarray=explode(';',$ccrecipients);
+      if (is_array($ccrecipientarray)) {
+          foreach ($ccrecipientarray as $recipientkey=>$v) {
+             $cctemp[]=explode(',',$v);
+          }
+          foreach ($cctemp as $recipient=>$values) {
+              $ccrec[$values[0]]=isset($values[1])?$values[1]:'';
+          }
+      }
+    }
+    $ccrecipients=$ccrec;
+
+    /* process BCC Recipient list */
+    $bccrecipientarray=array();
+    $bccrec=array();
+    $bcctemp=array();
+    if (isset($bccrecipients) && !empty($bccrecipients)) {
+      $bccrecipientarray=explode(';',$bccrecipients);
+      if (is_array($bccrecipientarray)) {
+          foreach ($bccrecipientarray as $recipientkey=>$v) {
+             $bcctemp[]=explode(',',$v);
+          }
+          foreach ($bcctemp as $recipient=>$values) {
+              $bccrec[$values[0]]=isset($values[1])?$values[1]:'';
+          }
+      }
+    }
+    $bccrecipients=$bccrec;
 
     /* Confirm authorisation code. */
     if (!xarSecConfirmAuthKey()) return;
@@ -75,6 +135,8 @@ function sitecontact_user_contactus($args)
                              array('module' => 'sitecontact',
                                    'itemtype' => $data['scid']));
         if (!isset($object)) return;  /* throw back */
+        $objectid=$object->objectid;
+
 
         /* check the input values for this object and do ....what here? */
         $isvalid = $object->checkInput();
@@ -321,6 +383,8 @@ function sitecontact_user_contactus($args)
     /* send email to admin */
     $args = array('info'         => $setmail,
                   'name'         => $sendname,
+                  'ccrecipients' => $ccrecipients,
+                  'bccrecipients' => $bccrecipients,
                   'subject'      => $subject,
                   'message'      => $admintextmessage,
                   'htmlmessage'  => $adminhtmlmessage,
@@ -329,7 +393,6 @@ function sitecontact_user_contactus($args)
                   'attachName'   => $attachname,
                   'attachPath'   => $attachpath,
                   'usetemplates' => false);
-
     if ($usehtmlemail != 1) {
         if (!xarModAPIFunc('mail','admin','sendmail', $args))return;
     } else {
@@ -343,8 +406,11 @@ function sitecontact_user_contactus($args)
     /* Set the theme comments back */
     xarModSetVar('themes','ShowTemplates',$themecomments);
     /* lets update status and display updated configuration */
-    xarResponseRedirect(xarModURL('sitecontact', 'user', 'main', array('message' => '1', 'scid'=>$data['scid'])));
-
+    if (isset($return_url)) {
+        xarResponseRedirect(xarModURL($return_url));
+    } else {
+        xarResponseRedirect(xarModURL('sitecontact', 'user', 'main', array('message' => '1', 'scid'=>$data['scid'])));
+    }
     /* Return */
     return true;
 }

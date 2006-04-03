@@ -80,6 +80,19 @@ function sitecontact_adminapi_createsctype($args)
     if (!isset($scactive)) {
         $scactive = xarModGetVar('sitecontact', 'scactive');
     }
+    if (!isset($savedata)) {
+        $savedata = xarModGetVar('sitecontact', 'savedata');
+    }
+     if (!isset($permissioncheck)) {
+        $permissioncheck = xarModGetVar('sitecontact', 'permissioncheck');
+    }
+    if (!isset($termslink)) {
+        $termslink = xarModGetVar('sitecontact', 'termslink');
+    }
+    if (!isset($soptions)) {
+        $soptions = xarModGetVar('sitecontact', 'soptions');
+    }
+
     // Security check
     if (!xarSecurityCheck('AddSiteContact')) return;
 
@@ -105,10 +118,15 @@ function sitecontact_adminapi_createsctype($args)
               xar_usehtmlemail,
    	          xar_scdefaultemail,
               xar_scdefaultname,
-              xar_scactive)
-            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
-    $bindvars = array($nextId, $sctypename, $sctypedesc, $customtext, $customtitle, $optiontext,
-             $webconfirmtext, $notetouser, $allowcopy, $usehtmlemail, $scdefaultemail, $scdefaultname, $scactive);
+              xar_scactive,
+              xar_savedata,
+              xar_permissioncheck,
+              xar_termslink,
+              xar_soptions)
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    $bindvars = array($nextId, (str)$sctypename, (str)$sctypedesc, (str)$customtext, $customtitle, (str)$optiontext,
+             (str)$webconfirmtext, (str)$notetouser, (int)$allowcopy, (int)$usehtmlemail, (str)$scdefaultemail, (str)$scdefaultname, (int)$scactive,
+             (int)$savedata,(int)$permissioncheck,$termslink,(str)$soptions);
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 

@@ -64,19 +64,21 @@ function sitecontact_user_main()
        $formdata2=xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid'=>$scid));
        $formdata=$formdata2[0];
     }
-    /*
-    $customtext = xarModGetVar('sitecontact','customtext');
-    $customtitle = xarModGetVar('sitecontact','customtitle');
-    $usehtmlemail= xarModGetVar('sitecontact', 'usehtmlemail');
-    $allowcopy = xarModGetVar('sitecontact', 'allowcopy');
+    if (isset($formdata['soptions'])) {
+           $soptions=unserialize($formdata['soptions']);
+           if (is_array($soptions)) {
+               foreach ($soptions as $k=>$v) {
+                   $data[$k]=$v;
+              }
+           }
+    }
+    
+    if (!isset($data['allowbccs']))$data['allowbccs']=0;
+    if (!isset($data['allowccs']))$data['allowccs']=0;
+    if (!isset($data['savedata']))$data['savedata']=xarModGetVar('sitecontact','savedata')?xarModGetVar('sitecontact','savedata'):0;
+    if (!isset($data['permissioncheck']))$data['permissioncheck']=xarModGetVar('sitecontact','permissioncheck');
+    if (!isset($data['termslink']))$data['termslink']=xarModGetVar('sitecontact','termslink');
 
-    $data['customtitle']=xarVarPrepHTMLDisplay($customtitle);
-    $data['customtext'] = xarVarPrepHTMLDisplay($customtext);
-
-    $data['usehtmlemail'] = $usehtmlemail;
-    $data['allowcopy'] = $allowcopy;
-    $optiontext = xarModGetVar('sitecontact','optiontext');
-    */
     $customtext = $formdata['customtext'];
     $customtitle = $formdata['customtitle'];
     $usehtmlemail= $formdata['usehtmlemail'];
@@ -160,7 +162,9 @@ function sitecontact_user_main()
     }
     $data['scid']=$formdata['scid'];
     $data['sctypename']=$formdata['sctypename'];
-
+    $data['permissioncheck']=$formdata['permissioncheck'];
+    $data['savedata']=$formdata['savedata'];
+    $data['termslink']=$formdata['termslink'];    
     if (!empty($data['sctypename'])){
         $template = 'main-' . $data['sctypename'];
     } else {

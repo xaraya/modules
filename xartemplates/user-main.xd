@@ -90,6 +90,27 @@
                 </label>
                 <input type="text" name="company" id="company" size="40" value="" maxlength="128"  />
             </div>
+            <xar:if condition="$allowccs">
+                <div class="xar-form-input-wrapper">
+                    <xar:data-label label="CC Recipients" for="ccrecipients" />
+                    <xar:data-input type="textbox" name="ccrecipients" id="ccrecipients" size="150" value=""/>
+                </div>
+            </xar:if>
+
+            <xar:if condition="$allowbccs">
+                <div class="xar-form-input-wrapper">
+                    <xar:data-label label="BCC Recipients" for="bccrecipients" />
+                    <xar:data-input type="textbox" name="bccrecipients" id="bccrecipients" size="150" value=""/>
+
+                </div>
+            </xar:if>
+            <xar:if condition="$allowbccs or $allowccs">
+             <p class="xar-form-input-wrapper-after">
+                    <xar:mlstring>
+                    Separate emails by colons (;) or optionally add a name for each email by separating email and name by a comma eg
+                    </xar:mlstring> <strong>email1@somedomain.com,SomeName;</strong>
+             </p>
+            </xar:if>
             <div class="xar-form-input-wrapper">
                 <label for="usermessage" class="xar-form-label" title="#xarML('Type in your message')#">
                         <xar:mlstring>
@@ -117,13 +138,14 @@
             </xar:if>
 
             <xar:if condition="xarModGetVar('sitecontact', 'allowcopy')">
-            <div class="xar-form-input-wrapper">
-                <label for="sendcopy" class="xar-form-label" title="#xarML('Would you like to have a copy of the message sent to your email')#">
+            <div class="xar-form-input-wrapper-after">
+                 <input type="checkbox" name="sendcopy" id="sendcopy" value="1" checked="checked" />
+                <label for="sendcopy" title="#xarML('Would you like to have a copy of the message sent to your email')#">
                         <xar:mlstring>
                             Copy email to you
                         </xar:mlstring>
                 </label>
-                <input type="checkbox" name="sendcopy" id="sendcopy" value="1" checked="checked" />
+
             </div>
             </xar:if>
            </fieldset>
@@ -133,7 +155,9 @@
                    <input type="hidden" name="useripaddress" value="#$useripaddress#" />
                    <input type="hidden" name="userreferer" value="#$userreferer#" />
                    <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                   <input type="hidden" name="scid" id="scid" value="#$scid#" />                   
+                   <input type="hidden" name="scid" id="scid" value="#$scid#" /> 
+                   <input type="hidden" name="savedata" id="savedata" value="#$savedata#" />
+                   <input type="hidden" name="permissioncheck" id="permissioncheck" value="#$permissioncheck#" />
                    <input type="hidden" name="message" id="message" value="1" />
                    <input type="submit" value="#xarML('Submit')#" />
                </div>

@@ -3,7 +3,7 @@
  * Sitecontact package 
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -14,7 +14,7 @@
 $modversion['name']           = 'sitecontact';
 $modversion['displayname']    = xarML('Site Contact');
 $modversion['id']             = '890';
-$modversion['version']        = '0.4.1';
+$modversion['version']        = '0.5.0';
 $modversion['displayname']    = xarML('SiteContact');
 $modversion['description']    = xarML('Contact site admin by email');
 $modversion['credits']        = 'xardocs/credits.txt';
@@ -28,4 +28,5 @@ $modversion['admin']          = 1;
 $modversion['user']           = 1;
 $modversion['class']          = 'Complete';
 $modversion['category']       = 'Content';
+$modversion['dependency'] = array(182); //dynamic data dependency
 ?>

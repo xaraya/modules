@@ -105,6 +105,16 @@
             usermail-text.xd and user-usermail-html.xd).
             </xar:mlstring></li>
         </ol>
+    <h3><xar:mlstring>CC or BC to other Recipients</xar:mlstring></h3>
+    <p><xar:mlstring>You can configure your forms with a list of CC or BC recipients from the configuration for each form. The CC and BC fields take a list of recipient emails and optionally a name for each. These emails and names must be in the correct format. Keep in mind the following:</xar:mlstring></p>
+    <ol>
+            <li><xar:mlstring>If you have a list of email addresses, separate each by a semicolon (;) eg <code>person1@somedomain.com;person2@anotherdomain.com</code>
+            </xar:mlstring><br /></li>
+            <li><xar:mlstring>If you have a list of email addresses and optional names, separate the name from the email addres with a comma eg<br />
+            <code>person1@somedomain.com,name1;person2@anotherdomain.com,name2</code>
+            </xar:mlstring></li>
+        </ol>
+        <p><xar:mlstring>NOTE: CC and BC do not work with Windows and the mail() function. They both should work with SMTP mail.</xar:mlstring></p>
     <h3><xar:mlstring>Extend Forms with Dynamic Data</xar:mlstring></h3>
     <ol>
             <li><xar:mlstring><strong>Hook Dynamic Data to Site Contact forms</strong> for either individual
@@ -145,7 +155,7 @@
               </li>
          </ul>
          <p class="xar-sub">
-             <strong>&nbsp;<xar:mlstring>Sitecontact Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.5.3&nbsp; 2006-02-12
+             <strong>&nbsp;<xar:mlstring>Sitecontact Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Doc Version</xar:mlstring> 1.6.0&nbsp; 2006-04-02
          </p>
       </div>
 
