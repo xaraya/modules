@@ -1,4 +1,3 @@
-
 <?php
 /**
 * Highlight - versatile syntax highlighting
