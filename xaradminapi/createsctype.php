@@ -124,9 +124,9 @@ function sitecontact_adminapi_createsctype($args)
               xar_termslink,
               xar_soptions)
             VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-    $bindvars = array($nextId, (str)$sctypename, (str)$sctypedesc, (str)$customtext, $customtitle, (str)$optiontext,
-             (str)$webconfirmtext, (str)$notetouser, (int)$allowcopy, (int)$usehtmlemail, (str)$scdefaultemail, (str)$scdefaultname, (int)$scactive,
-             (int)$savedata,(int)$permissioncheck,$termslink,(str)$soptions);
+    $bindvars = array($nextId, (string)$sctypename, (string)$sctypedesc, (string)$customtext, $customtitle, (string)$optiontext,
+             (string)$webconfirmtext, (string)$notetouser, (int)$allowcopy, (int)$usehtmlemail, (string)$scdefaultemail, (string)$scdefaultname, (int)$scactive,
+             (int)$savedata,(int)$permissioncheck,$termslink,(string)$soptions);
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
