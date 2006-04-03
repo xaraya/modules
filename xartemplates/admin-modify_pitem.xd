@@ -67,7 +67,11 @@
                  </label>
                  <select name="rule_level">
                     <xar:loop name="$levels">
+                    <xar:if condition="$loop:item['lid'] == $rule_level">
+                        <option value="#$loop:item['lid']#" selected>#$loop:item['level']#</option>
+                    <xar:else />
                         <option value="#$loop:item['lid']#">#$loop:item['level']#</option>
+                    </xar:if>
                     </xar:loop>
                  </select>
             </div>

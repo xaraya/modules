@@ -73,15 +73,16 @@ function itsp_userapi_menu()
                 $pitemid= $item['pitemid'];
                 $pitem = xarModApiFunc('itsp','user','get_planitem',array('pitemid'=>$pitemid));
 
-                if (xarSecurityCheck('EditITSPPlan', 0, 'Plan', "$planid:$pitemid:All")) {
+        //        if (xarSecurityCheck('EditITSPPlan', 0, 'Plan', "$planid:$pitemid")) {
                     $item['link'] = xarModURL('itsp',
                         'user',
                         'modify',
                         array('pitemid' => $pitemid, 'itspid' => $itspid));
 
-                } else {
+       /*         } else {
                     $item['link'] = '';
                 }
+       */
                 // Add credits so we can do calculations
                 $item['mincredit'] = $pitem['mincredit'];
                 $item['credits'] = $pitem['credits'];
