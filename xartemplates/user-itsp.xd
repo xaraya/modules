@@ -46,7 +46,8 @@
                         <tr>
                             <th><xar:mlstring>Type name</xar:mlstring></th>
                             <th><xar:mlstring>Credits needed</xar:mlstring></th>
-                            <th><xar:mlstring>Obtained</xar:mlstring></th>
+                            <th><xar:mlstring>In ITSP</xar:mlstring></th>
+                            <th><xar:mlstring>Passed</xar:mlstring></th>
                         </tr>
                         <xar:foreach in="$pitems" value="$item">
                         <tr>
@@ -74,6 +75,9 @@
                             <xar:else />
                             #$sumcreditsnow#
                             </xar:if>
+                            </td>
+                            <td>
+                            &nbsp;
                             </td>
                     </table>
                 </div>

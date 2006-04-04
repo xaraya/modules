@@ -87,7 +87,7 @@ function itsp_user_modify($args)
             case 'courses':
                 // get the pitem details for this itsp
                 // get all linked courses that already have been added to the ITSP for this pitemid
-                $courselinks = xarModApiFunc('itsp','user','getall_courselinks',array('itspid'=>$pitemid, 'pitemid' => $pitemid));
+                $courselinks = xarModApiFunc('itsp','user','getall_courselinks',array('itspid'=>$itspid, 'pitemid' => $pitemid));
                 // for each linked course get the details
                 if (!isset($courselinks) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
