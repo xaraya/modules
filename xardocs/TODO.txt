@@ -24,3 +24,5 @@
 
 ad 17. Courses that are itemtypes are not the solution
     the level needs to be higher. Therefore we need to add real course types. Those can have different behaviours [in progress].
+
+18 Enable digits in credits (eg 1.5)
