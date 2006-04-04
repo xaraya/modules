@@ -80,7 +80,7 @@ function courses_user_usermenu($args)
                 $item['name'] = xarVarPrepForDisplay($item['name']);
                 $item['courseid'] = $item['courseid'];
                 $item['planningid'] = $item['planningid'];
-                $item['startdate'] = xarVarPrepForDisplay($item['startdate']);
+                $item['startdate'] = $item['startdate'];
                 $item['statusname'] = xarModAPIFunc('courses', 'user', 'getstatus',
                                       array('status' => $item['studstatus']));
 

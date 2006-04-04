@@ -42,6 +42,7 @@
             <td>#xarlocalegetformatteddate('medium',$item['startdate'])#</td>
             <td>#$item['statusname']#</td>
             <td>#$item['planningid']#</td>
+
         </tr>
         </xar:foreach>
 
@@ -52,7 +53,7 @@
     <h3><xar:mlstring>You are a teacher in the following courses:</xar:mlstring></h3>
     <table border="1" cellpadding="5" cellspacing="0">
         <tr>
-            <th colspan="3"><xar:mlstring>Courses you teach in</xar:mlstring></th>
+            <th colspan="4"><xar:mlstring>Courses you teach in</xar:mlstring></th>
         </tr>
 
             <xar:foreach in="$data1['titems']" value="$item">
@@ -64,8 +65,13 @@
                         <a href="#$item['tlink']#">#$item['tname']#</a>
                     </xar:if>
                  </td>
-                <td>#$item['tstartdate']#</td>
+                <td>#xarlocalegetformatteddate('medium',$item['tstartdate'])#</td>
                 <td>#$item['tplanningid']#</td>
+            <td><a href="#xarModURL('courses',
+                'admin',
+                'participants',
+                array('planningid' => $item.tplanningid))#">Participants</a>
+            </td>
             </tr>
             </xar:foreach>
 

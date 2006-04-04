@@ -48,6 +48,7 @@ function courses_userapi_getall($args)
     $xartable =& xarDBGetTables();
     $coursestable = $xartable['courses'];
     // Set to be able to see all courses or only non-hidden ones
+    // TODO: when this simple check is used, and an admin level is given, then all are presented
     if (xarSecurityCheck('AdminCourses', 0)) {
     $where = "0, 1";
     } else {
