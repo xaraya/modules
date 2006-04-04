@@ -42,7 +42,7 @@ function itsp_admin_modify($args)
         $planid = $objectid;
     }
     /* Security check */
-    if (!xarSecurityCheck('EditITSPPlan', 1, 'Item', "$planid:All:All")) {
+    if (!xarSecurityCheck('EditITSPPlan', 1, 'Item', "$planid:All")) {
         return;
     }
     /* The user API function is called.

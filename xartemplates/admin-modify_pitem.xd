@@ -76,7 +76,7 @@
                  </select>
             </div>
             <div class="xar-form-input-wrapper">
-                 <label for="rule_cat" class="xar-form-label" title="#xarML('This is the category rule that applies to this plan item')#">
+                 <label for="rule_cat" class="xar-form-label" title="#xarML('What Category should the courses come from? State an catid')#">
                         <xar:mlstring>Category Rule</xar:mlstring>
                  </label>
                  <input type="text" name="rule_cat" id="rule_cat" value="#$rule_cat#" maxlength="5" class="xar-form-textshort" />

@@ -66,7 +66,7 @@ function itsp_admin_view_pitems()
     for ($i = 0; $i < count($items); $i++) {
         $item = $items[$i];
         $pitemid = $item['pitemid'];
-        if (xarSecurityCheck('EditITSPPlan', 0, 'Plan', "All:$pitemid:All")) {
+        if (xarSecurityCheck('EditITSPPlan', 0, 'Plan', "All:$pitemid")) {
             $items[$i]['editurl'] = xarModURL('itsp',
                 'admin',
                 'modify_pitem',
@@ -74,7 +74,7 @@ function itsp_admin_view_pitems()
         } else {
             $items[$i]['editurl'] = '';
         }
-        if (xarSecurityCheck('DeleteITSPPlan', 0, 'Plan', "All:$pitemid:All")) {
+        if (xarSecurityCheck('DeleteITSPPlan', 0, 'Plan', "All:$pitemid")) {
             $items[$i]['deleteurl'] = xarModURL('itsp',
                 'admin',
                 'delete_pitem',

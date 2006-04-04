@@ -56,7 +56,7 @@ function itsp_adminapi_update($args)
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     // Security check
-    if (!xarSecurityCheck('EditITSPPlan', 1, 'Plan', "$planid:All:All")) {
+    if (!xarSecurityCheck('EditITSPPlan', 1, 'Plan', "$planid:All")) {
         return;
     }
     /* Get database setup */

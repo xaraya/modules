@@ -47,7 +47,7 @@ function itsp_adminapi_create_courselink($args)
     /* Security check - important to do this as early on as possible to
      * avoid potential security holes or just too much wasted processing
      */
-    if (!xarSecurityCheck('EditITSP', 1, 'ITSP', "$itspid:All:All")) {//TODO: check
+    if (!xarSecurityCheck('EditITSP', 1, 'ITSP', "$itspid:All")) {//TODO: check
         return;
     }
     if (!empty($dateappr) && is_string($dateappr)) {

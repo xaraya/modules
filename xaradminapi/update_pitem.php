@@ -53,7 +53,7 @@ function itsp_adminapi_update_pitem($args)
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     // Security check
-    if (!xarSecurityCheck('EditITSPPlan', 1, 'Plan', "All:$pitemid:All")) {
+    if (!xarSecurityCheck('EditITSPPlan', 1, 'Plan', "All:$pitemid")) {
         return;
     }
     /* Get database setup */

@@ -45,7 +45,7 @@ function itsp_adminapi_delete($args)
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; /* throw back */
 
     // Security check
-    if (!xarSecurityCheck('DeleteITSPPlan', 1, 'Plan', "$planid:All:All")) {
+    if (!xarSecurityCheck('DeleteITSPPlan', 1, 'Plan', "$planid:All")) {
         return;
     }
     $dbconn =& xarDBGetConn();
