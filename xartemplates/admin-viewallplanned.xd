@@ -12,6 +12,7 @@
       <xar:categories-navigation layout="trails" showchildren="1" module="courses" catid="$catid" type="admin" func="viewallplanned" />
     </xar:if>
     <table>
+        <thead>
         <tr>
             <th><xar:mlstring>Name</xar:mlstring></th>
             <th><xar:mlstring>Startdate</xar:mlstring></th>
@@ -20,15 +21,16 @@
             <th><xar:mlstring>Participants</xar:mlstring></th>
             <th><xar:mlstring>Options</xar:mlstring></th>
         </tr>
+        </thead>
         <xar:foreach in="$items" value="$item">
         <tr>
-            <td>
+            <th>
                <xar:if condition="empty($item['displayurl'])">
                    #$item['name']#
                <xar:else />
                    <a href="#$item['displayurl']#">#$item['name']#</a>
                </xar:if>
-            </td>
+            </th>
             <xar:if condition="$item['hideplanning'] eq 1">
                 <td class="coursehidden">
             <xar:else />

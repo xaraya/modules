@@ -35,7 +35,7 @@
         </thead>
         <xar:foreach in="$items" value="$item">
             <tr>
-            <td>#$item.number#</td>
+            <th>#$item.number#</th>
             <td>
                 <xar:if condition="empty($item['link'])">
                     #$item.name#
