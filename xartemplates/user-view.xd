@@ -11,6 +11,7 @@
         </xar:if>
         <xar:categories-navigation layout="trails" showchildren="1" module="courses" showcatcount="0" showempty="1" />
         <table>
+        <thead>
         <tr>
             <xar:if condition="$snumberlink != ''">
                 <th><a href="#$snumberlink#"><xar:mlstring>Course Code</xar:mlstring></a></th>
@@ -31,7 +32,7 @@
             </xar:if>
             <th><xar:mlstring>Next course starts</xar:mlstring></th>
         </tr>
-
+        </thead>
         <xar:foreach in="$items" value="$item">
             <tr>
             <td>#$item.number#</td>
