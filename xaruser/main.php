@@ -18,12 +18,15 @@
  * of things, but most commonly it either just shows the module menu and
  * returns or calls whatever the module designer feels should be the default
  * function (often this is the view() function)
+ * @author MichelV <michelv@xarayahosting.nl>
+ * @return array Empty array.
  */
 function courses_user_main()
 {
     // Security check
     if (!xarSecurityCheck('ViewCourses')) return;
-    /* redirect to the main user page */
-    xarResponseRedirect(xarModURL('courses', 'user', 'view'));
+    /* redirect to the main user page
+    xarResponseRedirect(xarModURL('courses', 'user', 'view'));*/
+    return array();
 }
 ?>

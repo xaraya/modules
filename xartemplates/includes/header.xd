@@ -8,7 +8,7 @@
 <xar:set name="$navMyCoursesUrl">#xarModURL('roles','user','account',array('moduleload'=>'courses'))#</xar:set>
 
 <div class="xar-courses-header">
-    <xar:set name="$null">#xarVarFetch('func','str:1:',$whatFunc)#</xar:set>
+    <xar:set name="$null">#xarVarFetch('func','str:1:',$whatFunc,'')#</xar:set>
     <dl class="xar-tabs">
         <dt class="help"><xar:mlstring>View types</xar:mlstring>:</dt>
         <xar:if condition="$whatFunc eq 'view'">

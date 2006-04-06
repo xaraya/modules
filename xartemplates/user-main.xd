@@ -2,13 +2,13 @@
 <!-- common user menu for this module - remove link to the current function -->
 <div class="xar-courses xar-courses-user-main">
     <xar:template file="header" />
-    
+
     <div class="xar-courses-contents">
 
-    <h1>#$menutitle#</h1>
-    <a href="#$menulink_view#">#$menulabel_view#</a>
-    
-    <div align="center"> #$welcome#</div>
+        <h1><xar:mlstring>Our courses</xar:mlstring></h1>
+        <p>
+        Please choose an option from the menu to view our or your courses
+        </p>
 
     </div>
 </div>
