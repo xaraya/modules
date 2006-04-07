@@ -1,7 +1,7 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
 <xar:if condition="xarTplAddStyleLink('base', 'navtabs')"></xar:if>
-
+<xar:style scope="module" />
 <xar:set name="$navViewUrl">#xarModURL('courses','user','view')#</xar:set>
 <xar:set name="$navDisplayUrl">#xarModURL('courses','user','display')#</xar:set>
 <xar:set name="$navDisplayPlannedUrl">#xarModURL('courses','user','displayplanned')#</xar:set>
