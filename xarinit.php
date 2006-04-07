@@ -36,7 +36,7 @@ function ebulletin_init()
         'xar_from'         => array('type' => 'varchar', 'size' => 255,   'null' => false),
         'xar_fromname'     => array('type' => 'varchar', 'size' => 255,   'null' => false),
         'xar_replyto'      => array('type' => 'varchar', 'size' => 255,   'null' => false),
-        'xar_reply'  => array('type' => 'varchar', 'size' => 255,   'null' => false),
+        'xar_replytoname'  => array('type' => 'varchar', 'size' => 255,   'null' => false),
         'xar_subject'      => array('type' => 'varchar', 'size' => 255,   'null' => false),
         'xar_tpl_txt'      => array('type' => 'varchar', 'size' => 255,   'null' => false),
         'xar_tpl_html'     => array('type' => 'varchar', 'size' => 255,   'null' => false),
@@ -104,14 +104,6 @@ function ebulletin_init()
     xarModSetVar('ebulletin', 'SupportShortURLs',    0);
     xarModSetVar('ebulletin', 'useModuleAlias',      false);
     xarModSetVar('ebulletin', 'aliasname',           '');
-    xarModSetVar('ebulletin', 'template_dir',        xarPreCoreGetVarDirPath().'/ebulletin');
-    xarModSetVar('ebulletin', 'theme',               xarTplGetThemeName());
-    xarModSetVar('ebulletin', 'issuenumsago',        1);
-    xarModSetVar('ebulletin', 'issueunitsago',       'weeks');
-    xarModSetVar('ebulletin', 'issuenumsfromnow',    0);
-    xarModSetVar('ebulletin', 'issueunitsfromnow',   'days');
-    xarModSetVar('ebulletin', 'issuestartsign',      'before');
-    xarModSetVar('ebulletin', 'issueendsign',        'after');
     xarModSetVar('ebulletin', 'msglimit',            '');
     xarModSetVar('ebulletin', 'msgunit',             'hour');
     xarModSetVar('ebulletin', 'requirevalidation',   1);
@@ -233,6 +225,9 @@ function ebulletin_upgrade($oldversion)
 
     case '1.1.0':
         // changes after 1.1.0 here
+        // LOTS of stuff should go here.......
+    case '1.2.0':
+        // changes after 1.2.0 here
         // TBD
     }
     return true;

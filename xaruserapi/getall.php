@@ -27,6 +27,9 @@ function ebulletin_userapi_getall($args)
 
     extract($args);
 
+    if (!isset($order)) $order = 'name';
+    if (!isset($sort)) $sort = 'asc';
+
     // prepare for database query
     $dbconn = xarDBGetConn();
     $xartable = xarDBGetTables();
@@ -39,7 +42,7 @@ function ebulletin_userapi_getall($args)
         $query .= "WHERE xar_public = ?\n";
         $bindvars[] = ($public) ? 1 : 0;
     }
-    $query .= "ORDER BY xar_name\n";
+    $query .= "ORDER BY xar_$order $sort\n";
 
     // execute query
     $result = $dbconn->Execute($query, $bindvars);
@@ -51,9 +54,8 @@ function ebulletin_userapi_getall($args)
 
         // get params
         list(
-            $id, $name, $desc, $public, $from, $fromname, $replyto, $replytoname,
-            $subject, $tpl_txt, $tpl_html, $numsago, $unitsago, $startsign, $numsfromnow,
-            $unitsfromnow, $endsign
+            $id, $template, $name, $description, $public, $from, $fromname, $replyto,
+            $replytoname, $subject, $html, $startday, $endday, $theme
         ) = $result->fields;
 
         // security check
@@ -62,22 +64,19 @@ function ebulletin_userapi_getall($args)
             // assemble row of data
             $row = array(
                 'id'            => $id,
+                'template'      => $template,
                 'name'          => $name,
                 'public'        => $public,
-                'desc'          => $desc,
+                'description'   => $description,
                 'from'          => $from,
                 'fromname'      => $fromname,
                 'replyto'       => $replyto,
                 'replytoname'   => $replytoname,
                 'subject'       => $subject,
-                'tpl_txt'       => $tpl_txt,
-                'tpl_html'      => $tpl_html,
-                'numsago'       => $numsago,
-                'unitsago'      => $unitsago,
-                'startsign'     => $startsign,
-                'numsfromnow'   => $numsfromnow,
-                'unitsfromnow'  => $unitsfromnow,
-                'endsign'       => $endsign
+                'html'          => $html,
+                'startday'      => $startday,
+                'endday'        => $endday,
+                'theme'         => $theme,
             );
 
             // add to publications array

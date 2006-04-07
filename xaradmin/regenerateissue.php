@@ -44,14 +44,14 @@ function ebulletin_admin_regenerateissue($args)
 
     // retrieve issue
     $issue = xarModAPIFunc('ebulletin', 'user', 'getissue', array('id' => $id));
-    if (!isset($issue) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+    if (xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
     // security check
     if (!xarSecurityCheck('EditeBulletin', 1, 'Publication', "$issue[pubname]:$issue[pid]")) return;
 
     // let API function do the regenerating
     $id = xarModAPIFunc('ebulletin', 'admin', 'regenerateissue', array('id' => $id));
-    if (!isset($id) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+    if (xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
     // set status message and redirect to publications view page
     xarSessionSetVar('statusmsg', xarML('Publication successfully regenerated!'));

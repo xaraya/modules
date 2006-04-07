@@ -27,7 +27,7 @@ function ebulletin_admin_sendtest($args)
 
     // get issue
     $issue = xarModAPIFunc('ebulletin', 'user', 'getissue', array('id' => $id));
-    if (empty($issue) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+    if (xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
     // security check
     if (!xarSecurityCheck('AddeBulletin', 1, 'Publication', "$issue[pubname]:$issue[id]")) return;
@@ -35,49 +35,18 @@ function ebulletin_admin_sendtest($args)
     // Check for confirmation.
     if (empty($confirm)) {
 
-        // add body sizes
-        $units = array(xarML(''), xarML('K'), xarML('M'), xarML('G'));
-        $htmlsize = $txtsize = '';
-        if (!empty($issue['body_html'])) {
-            $size = strlen($issue['body_html']);
-            $cnt = 0;
-            $unit = '';
-            $htmlsize = $size;
-            while ($size > 1024) {
-                $size /= 1024;
-                $cnt++;
-                $htmlsize = round($size, 1).$units[$cnt];
-            }
-        }
-        if (!empty($issue['body_txt'])) {
-            $size = strlen($issue['body_txt']);
-            $cnt = 0;
-            $unit = '';
-            $txtsize = $size;
-            while ($size > 1024) {
-                $size /= 1024;
-                $cnt++;
-                $txtsize = round($size, 1).$units[$cnt];
-            }
-        }
-
         // get publication
         $pub = xarModAPIFunc('ebulletin', 'user', 'get', array('id' => $issue['pid']));
-        if (empty($pub) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+        if (xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
-        // initialize template data
-        $data = xarModAPIFunc('ebulletin', 'admin', 'menu');
-
-        // get vars
-        $authid = xarSecGenAuthKey();
-
-        // set template data
-        $data['id'] = $id;
-        $data['issue'] = $issue;
-        $data['pub'] = $pub;
-        $data['authid'] = $authid;
-        $data['htmlsize'] = $htmlsize;
-        $data['txtsize'] = $txtsize;
+        // set template vars
+        $data = array();
+        $data['id']       = $id;
+        $data['issue']    = $issue;
+        $data['pub']      = $pub;
+        $data['authid']   = xarSecGenAuthKey();
+        $data['htmlsize'] = round(strlen($issue['body_html'])/1024, 1);
+        $data['txtsize']  = round(strlen($issue['body_txt'])/1024, 1);
 
         return $data;
     }
@@ -101,11 +70,14 @@ function ebulletin_admin_sendtest($args)
     }
 
     // call API function to do the publishing
-    if (!xarModAPIFunc('ebulletin', 'admin', 'send_test', array('test' => true, 'id' => $id, 'to' => $to, 'toname' => $toname))) return;
+    xarModAPIFunc('ebulletin', 'admin', 'send_test', array(
+        'id' => $id, 'to' => $to, 'toname' => $toname
+    ));
+    if (xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
     // set status message and return to view
     xarSessionSetVar('statusmsg', xarML('Test issue successfully sent!'));
-    xarResponseRedirect(xarModURL('ebulletin', 'admin', 'viewissues'));
+    xarResponseRedirect(xarModURL('ebulletin', 'admin', 'sendtest', array('id' => $id)));
 
     // success
     return true;

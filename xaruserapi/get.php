@@ -52,9 +52,8 @@ function ebulletin_userapi_get($args)
 
     // retrieve params for this publication
     list(
-        $id, $name, $desc, $public, $from, $fromname, $replyto, $replytoname,
-        $subject, $tpl_txt, $tpl_html, $numsago, $unitsago, $startsign, $numsfromnow,
-        $unitsfromnow, $endsign
+        $id, $template, $name, $description, $public, $from, $fromname, $replyto, $replytoname,
+        $subject, $html, $startday, $endday, $theme
     ) = $result->fields;
 
     $result->Close();
@@ -65,22 +64,19 @@ function ebulletin_userapi_get($args)
     // put params into an array
     $pub = array(
         'id'            => $id,
+        'template'      => $template,
         'name'          => $name,
-        'desc'          => $desc,
+        'description'   => $description,
         'public'        => $public,
         'from'          => $from,
         'fromname'      => $fromname,
         'replyto'       => $replyto,
         'replytoname'   => $replytoname,
         'subject'       => $subject,
-        'tpl_txt'       => $tpl_txt,
-        'tpl_html'      => $tpl_html,
-        'numsago'       => $numsago,
-        'unitsago'      => $unitsago,
-        'startsign'     => $startsign,
-        'numsfromnow'   => $numsfromnow,
-        'unitsfromnow'  => $unitsfromnow,
-        'endsign'       => $endsign
+        'html'          => $html,
+        'startday'      => $startday,
+        'endday'        => $endday,
+        'theme'         => $theme,
     );
 
     // success

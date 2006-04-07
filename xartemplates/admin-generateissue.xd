@@ -1,0 +1,6 @@
+<xar:comment>
+	Is the need for this template a bug in BL?  We're using
+	xarTplModule with it, and are specifying a different modFunc.
+</xar:comment>
+Testing...
+

@@ -35,6 +35,9 @@ function ebulletin_adminapi_update($args)
     if (empty($id) || !is_numeric($id)) {
         $invalid[] = 'id';
     }
+    if (empty($template) || !is_string($template)) {
+        $invalid[] = 'template';
+    }
     if (empty($name) || !is_string($name)) {
         $invalid[] = 'name';
     }
@@ -47,14 +50,14 @@ function ebulletin_adminapi_update($args)
     if (empty($subject) || !is_string($subject)) {
         $invalid[] = 'subject';
     }
-    if (empty($tpl_html) && empty($tpl_txt)) {
-        $invalid[] = 'template';
+    if (!isset($startday) || !is_numeric($startday)) {
+        $invalid[] = 'startday';
     }
-    if (!is_numeric($numsago) || $numsago < 0) {
-        $invalid[] = 'numsago';
+    if (!isset($endday) || !is_numeric($endday)) {
+        $invalid[] = 'endday';
     }
-    if (!is_numeric($numsfromnow) || $numsfromnow < 0) {
-        $invalid[] = 'numsfromnow';
+    if (isset($defaulttheme) && !is_string($defaulttheme)) {
+        $invalid[] = 'defaulttheme';
     }
 
     // throw error if bad data
@@ -74,8 +77,10 @@ function ebulletin_adminapi_update($args)
     if (!xarSecurityCheck('AddeBulletin', 1, 'Publication', "$pub[name]:$id")) return;
     if (!xarSecurityCheck('AddeBulletin', 1, 'Publication', "$name:$id")) return;
 
-    // handle checkboxes
+    // sanitize db input
     $public = empty($public) ? '0' : '1';
+    $html = empty($html) ? '0' : '1';
+    if (empty($theme)) $theme = '';
 
     // prepare for database
     $dbconn = xarDBGetConn();
@@ -85,26 +90,23 @@ function ebulletin_adminapi_update($args)
     // generate query
     $query = "
         UPDATE $pubtable
-        SET xar_name = ?,
-            xar_desc = ?,
-            xar_public = ?,
-            xar_from = ?,
-            xar_fromname = ?,
-            xar_replyto = ?,
+        SET xar_template    = ?,
+            xar_name        = ?,
+            xar_description = ?,
+            xar_public      = ?,
+            xar_from        = ?,
+            xar_fromname    = ?,
+            xar_replyto     = ?,
             xar_replytoname = ?,
-            xar_subject = ?,
-            xar_tpl_html = ?,
-            xar_tpl_txt = ?,
-            xar_numsago = ?,
-            xar_unitsago = ?,
-            xar_startsign = ?,
-            xar_numsfromnow = ?,
-            xar_unitsfromnow = ?,
-            xar_endsign = ?
+            xar_subject     = ?,
+            xar_html        = ?,
+            xar_startday    = ?,
+            xar_endday      = ?,
+            xar_theme       = ?
         WHERE xar_id = ?";
     $bindvars = array(
-        $name, $desc, $public, $from, $fromname, $replyto, $replytoname, $subject, $tpl_html,
-        $tpl_txt, $numsago, $unitsago, $startsign, $numsfromnow, $unitsfromnow, $endsign, $id
+        $template, $name, $description, $public, $from, $fromname, $replyto, $replytoname,
+        $subject, $html, $startday, $endday, $defaulttheme, $id
     );
     $result = $dbconn->Execute($query, $bindvars);
 

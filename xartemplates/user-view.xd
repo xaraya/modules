@@ -1,27 +1,26 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
-<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>View Archive</xar:mlstring></h2>
-<div style="margin: auto;"><xar:template file="user-menu" type="module" />
+<xar:template type="module" file="user-header" />
+<div class="xar-mod-body">
+    <h2><xar:mlstring>View Archive</xar:mlstring></h2>
 
-<p><xar:mlstring>Please select a publication:</xar:mlstring></p>
+    <p><xar:mlstring>Please select a publication:</xar:mlstring></p>
 
-<table class="xar-fullwidth">
-    <tr>
-        <th><xar:mlstring>Name</xar:mlstring></th>
-        <th><xar:mlstring>Description</xar:mlstring></th>
-    </tr>
-    <xar:foreach in="$pubs" value="$pub">
-    <tr>
-        <td>
-            <a href="#xarModURL('ebulletin', 'user', 'viewissues', array('pid' => $pub['id']))#">
-                #$pub['name']#
-            </a>
-        </td>
-        <td>#$pub['desc']#</td>
-    </tr>
-    </xar:foreach>
-</table>
+    <table class="xar-fullwidth">
+        <tr>
+            <th><xar:mlstring>Name</xar:mlstring></th>
+            <th><xar:mlstring>Description</xar:mlstring></th>
+        </tr>
+        <xar:foreach in="$pubs" value="$pub">
+        <tr>
+            <td>
+                <a href="#xarModURL('ebulletin', 'user', 'viewissues', array('pid' => $pub['id']))#">
+                    #$pub['name']#
+                </a>
+            </td>
+            <td>#$pub['description']#</td>
+        </tr>
+        </xar:foreach>
+    </table>
 
-</div>
 </div>

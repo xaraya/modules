@@ -47,18 +47,18 @@ function ebulletin_admin_createissue($args)
 
     // retrieve parent publication
     $pub = xarModAPIFunc('ebulletin', 'user', 'get', array('id' => $pid));
-    if (!isset($pub) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+    if (xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
     // security check
     if (!xarSecurityCheck('EditeBulletin', 1, 'Publication', "$pub[name]:$pid")) return;
 
     // assemble array of data
     $data = array();
-    $data['pid'] = $pid;
+    $data['pid']       = $pid;
     $data['issuedate'] = $issuedate;
-    $data['subject'] = $subject;
+    $data['subject']   = $subject;
     $data['body_html'] = $body_html;
-    $data['body_txt'] = $body_txt;
+    $data['body_txt']  = $body_txt;
     $data['published'] = $published;
 
     // check if we have any errors
@@ -69,11 +69,11 @@ function ebulletin_admin_createissue($args)
 
     // let API function do the creating
     $id = xarModAPIFunc('ebulletin', 'admin', 'createissue', $data);
-    if (!isset($id) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+    if (xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
     // set status message and redirect to issues view page
     xarSessionSetVar('statusmsg', xarML('Issue successfully created!'));
-    xarResponseRedirect(xarModURL('ebulletin', 'admin', 'viewissues'));
+    xarResponseRedirect(xarModURL('ebulletin', 'admin', 'modifyissue', array('id' => $id)));
 
     // success
     return true;

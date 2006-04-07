@@ -1,61 +1,78 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
-<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>New Issue</xar:mlstring></h2>
-<div style="margin: auto;"><xar:template file="statusmsg" type="module" />
+<xar:template type="module" file="admin-header" />
+<div class="xar-mod-body">
+    <h2><xar:mlstring>New Issue</xar:mlstring></h2>
 
-<form method="post" action="&xar-modurl-ebulletin-admin-createissue;">
+    <form method="post" action="&xar-modurl-ebulletin-admin-createissue;">
 
-<fieldset>
-    <legend><xar:mlstring>Parent Publication</xar:mlstring></legend>
-
-    <div class="xar-form-input-wrapper">
-        <label for="name"  class="xar-form-label" title="#xarML('Publication Name')#">
-            <xar:mlstring>Name:</xar:mlstring>
-        </label>
-        #$pub['name']#
-    </div>
-
-    <div class="xar-form-input-wrapper">
-        <label for="name"  class="xar-form-label" title="#xarML('Publication Description')#">
-            <xar:mlstring>Description:</xar:mlstring>
-        </label>
-        #$pub['desc']#
-    </div>
-
-</fieldset>
-
-<fieldset>
-    <legend><xar:mlstring>Issue</xar:mlstring></legend>
-
-    <div class="xar-form-input-wrapper">
-        <label for="issuedate_input"  class="xar-form-label" title="#xarML('Projected Date of Issuance')#">
-            <xar:mlstring>Date of Issue:</xar:mlstring>
-        </label>
-        <xar:articles-field definition="$datedefinition" />
-    </div>
-
-</fieldset>
-<xar:if condition="!empty($hookoutput)">
     <fieldset>
-        <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
-            <xar:foreach in="$hookoutput" value="$hook">
-                #$hook#
-            </xar:foreach>
-    </fieldset>
-</xar:if>
-<fieldset>
-    <div class="xar-form-input-wrapper-after">
-        <input type="hidden" name="authid" id="authid" value="#$authid#" />
-        <input type="hidden" name="pid" id="pid" value="#$pid#" />
-        <input type="hidden" name="subject" id="subject" value="#$subject#" />
-        <input type="hidden" name="body_html" id="body_html" value="#$body_html#" />
-        <input type="hidden" name="body_txt" id="body_txt" value="#$body_txt#" />
-        <input type="hidden" name="published" id="published" value="#$published#" />
-        <input type="submit" value="#xarML('Add Issue')#" />
-    </div>
-</fieldset>
-</form>
+        <legend><xar:mlstring>Publication Details</xar:mlstring></legend>
 
-</div>
+        <div class="xar-form-input-wrapper">
+            <label for="name"  class="xar-form-label" title="#xarML('Publication')#">
+                <xar:mlstring>Publication:</xar:mlstring>
+            </label>
+            #$pub['name']#
+        </div>
+
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label" title="#xarML('Description')#">
+                <xar:mlstring>Description:</xar:mlstring>
+            </label>
+            #$pub['description']#
+        </div>
+
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label" title="#xarML('Template')#">
+                <xar:mlstring>Template:</xar:mlstring>
+            </label>
+            #$pub['template']#
+        </div>
+
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label" title="#xarML('Theme')#">
+                <xar:mlstring>Theme:</xar:mlstring>
+            </label>
+            <xar:if condition="empty($pub['theme'])">
+                <xar:mlstring>[System Theme]</xar:mlstring>
+            <xar:else />
+                #$pub['theme']#
+            </xar:if>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend><xar:mlstring>Issue Details</xar:mlstring></legend>
+
+        <div class="xar-form-input-wrapper">
+            <label for="issuedate_input"  class="xar-form-label" title="#xarML('Projected Date of Issuance')#">
+                <xar:mlstring>Date:</xar:mlstring>
+            </label>
+            <xar:articles-field definition="$datedefinition" />
+        </div>
+
+    </fieldset>
+    <xar:if condition="!empty($hookoutput)">
+        <fieldset>
+            <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
+                <xar:foreach in="$hookoutput" value="$hook">
+                    #$hook#
+                </xar:foreach>
+        </fieldset>
+    </xar:if>
+    <fieldset>
+        <div class="xar-form-input-wrapper-after">
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="hidden" name="pid" id="pid" value="#$pid#" />
+            <input type="hidden" name="subject" id="subject" value="#$subject#" />
+            <input type="hidden" name="body_html" id="body_html" value="#$body_html#" />
+            <input type="hidden" name="body_txt" id="body_txt" value="#$body_txt#" />
+            <input type="hidden" name="published" id="published" value="#$published#" />
+
+            <input type="submit" value="#xarML('Add Issue')#" />
+        </div>
+    </fieldset>
+    </form>
+
 </div>

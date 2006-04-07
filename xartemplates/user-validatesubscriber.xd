@@ -1,40 +1,40 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
-<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Subscriber Validation</xar:mlstring></h2>
-<div style="margin: auto;"><xar:template file="user-menu" type="module" />
+<xar:template type="module" file="user-header" />
+<div class="xar-mod-body">
 
-<xar:if condition="$phase eq 'val'">
+    <h2><xar:mlstring>Subscriber Validation</xar:mlstring></h2>
 
-    <h3>Success!</h3>
+    <xar:if condition="$phase eq 'val'">
 
-    <p>
-        <xar:ml>
-            <xar:mlstring>Subscription update for #(1) &lt;#(2)&gt; was successfully completed.</xar:mlstring>
-            <xar:mlvar>#$name#</xar:mlvar>
-            <xar:mlvar>#$email#</xar:mlvar>
-        </xar:ml>
-    </p>
+        <h3>Success!</h3>
 
-<xar:else />
+        <p>
+            <xar:ml>
+                <xar:mlstring>Subscription update for #(1) &lt;#(2)&gt; was successfully completed.</xar:mlstring>
+                <xar:mlvar>#$name#</xar:mlvar>
+                <xar:mlvar>#$email#</xar:mlvar>
+            </xar:ml>
+        </p>
 
-    <p>
-        <xar:mlstring>IMPORTANT: You must validate your email address before this subscription update will apply.  You should receive an email message in your inbox within 24 hours.  It will contain a web address that you must visit to apply this update.</xar:mlstring>
-    </p>
+    <xar:else />
 
-    <p>
-        <xar:mlstring>If you do not find the message after 24 hours, please contact the website administrator.  To aid in locating it, here are some headers it will contain:</xar:mlstring>
-    </p>
+        <p>
+            <xar:mlstring>IMPORTANT: You must validate your email address before this subscription update will apply.  You should receive an email message in your inbox within 24 hours.  It will contain a web address that you must visit to apply this update.</xar:mlstring>
+        </p>
 
-<pre>
-   FROM: #$adminname# &lt;#$adminemail#&gt;
-     TO: #$name# &lt;#$email#&gt;
-SUBJECT: #$subject#
-</pre>
+        <p>
+            <xar:mlstring>If you do not find the message after 24 hours, please contact the website administrator.  To aid in locating it, here are some headers it will contain:</xar:mlstring>
+        </p>
 
-    <p><a href="&xar-modurl-ebulletin-user-main;"><xar:mlstring>Return to subscriptions page</xar:mlstring></a></p>
+    <pre>
+    FROM: #$adminname# &lt;#$adminemail#&gt;
+        TO: #$name# &lt;#$email#&gt;
+    SUBJECT: #$subject#
+    </pre>
 
-</xar:if>
+        <p><a href="&xar-modurl-ebulletin-user-main;"><xar:mlstring>Return to subscriptions page</xar:mlstring></a></p>
 
-</div>
+    </xar:if>
+
 </div>

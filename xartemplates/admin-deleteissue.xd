@@ -1,53 +1,52 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
-<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Delete Issue</xar:mlstring></h2>
-<div style="margin: auto;"><xar:template file="statusmsg" type="module" />
+<xar:template type="module" file="admin-header" />
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Delete Issue</xar:mlstring></h2>
 
-<h3 class="xar-align-center"><xar:mlstring>Confirm deleting this issue?</xar:mlstring></h3>
-<form method="post" action="&xar-modurl-ebulletin-admin-deleteissue;">
+    <h3 class="xar-align-center"><xar:mlstring>Confirm deleting this issue?</xar:mlstring></h3>
+    <form method="post" action="&xar-modurl-ebulletin-admin-deleteissue;">
 
-        <fieldset>
-            <legend>
-                <xar:mlstring>Issue marked for deletion</xar:mlstring>
-            </legend>
-            <div class="xar-form-input-wrapper">
-             <label for="itemid" class="xar-form-label" title="#xarML('Issue ID')#">
-                <xar:mlstring>ID:</xar:mlstring>
-             </label>
-              #$id#
-            </div>
+            <fieldset>
+                <legend>
+                    <xar:mlstring>Issue marked for deletion</xar:mlstring>
+                </legend>
 
-            <div class="xar-form-input-wrapper">
-                <label for="itemname"  class="xar-form-label"  title="#xarML('Parent Publication')#">
-                    <xar:mlstring>Parent Publication:</xar:mlstring>
-                </label>
-                 #$issue['pubname']#
-            </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="itemname"  class="xar-form-label"  title="#xarML('Subject')#">
+                        <xar:mlstring>Subject:</xar:mlstring>
+                    </label>
+                    #$issue['subject']#
+                </div>
 
-            <div class="xar-form-input-wrapper">
-                <label for="itemname"  class="xar-form-label"  title="#xarML('Subject')#">
-                    <xar:mlstring>Subject:</xar:mlstring>
-                </label>
-                 #$issue['subject']#
-            </div>
-        </fieldset>
+                <div class="xar-form-input-wrapper">
+                    <label for="itemname"  class="xar-form-label"  title="#xarML('Date')#">
+                        <xar:mlstring>Date:</xar:mlstring>
+                    </label>
+                    #xarLocaleGetFormattedDate('long', strtotime($issue['issuedate']))#
+                </div>
 
-        <fieldset>
-            <div class="xar-form-input-wrapper-after">
-                <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                <input type="hidden" name="confirm" id="confirm" value="true" />
-                <input type="hidden" name="id" id="id" value="#$id#" />
-                <input type="submit" value="#xarML('Confirm')#" />
-            </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="itemname"  class="xar-form-label"  title="#xarML('Publication')#">
+                        <xar:mlstring>Publication:</xar:mlstring>
+                    </label>
+                    #$issue['pubname']#
+                </div>
+            </fieldset>
 
-            <div class="xar-form-input-wrapper-before">
-             <a href="&xar-modurl-ebulletin-admin-viewissues;">
-                 <xar:mlstring>Cancel and Return</xar:mlstring>
-             </a>
-             </div>
-        </fieldset>
+            <fieldset>
+                <div class="xar-form-input-wrapper-after">
+                    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                    <input type="hidden" name="confirm" id="confirm" value="true" />
+                    <input type="hidden" name="id" id="id" value="#$id#" />
 
-</form>
-</div>
+                    <input type="submit" value="#xarML('Confirm')#" />
+                    <a href="&xar-modurl-ebulletin-admin-viewissues;">
+                        <xar:mlstring>Cancel and Return</xar:mlstring>
+                    </a>
+                </div>
+            </fieldset>
+
+    </form>
+
 </div>

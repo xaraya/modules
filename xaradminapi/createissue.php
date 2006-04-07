@@ -48,30 +48,25 @@ function ebulletin_adminapi_createissue($args)
 
     // retrieve parent publication
     $pub = xarModAPIFunc('ebulletin', 'user', 'get', array('id' => $pid));
-    if (!isset($pub) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+    if (xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
     // security check
-    if (!xarSecurityCheck('EditeBulletin', 1, 'Publication', "$pub[name]:$pid")) return;
+    if (!xarSecurityCheck('AddeBulletin', 1, 'Publication', "$pub[name]:$pid")) return;
 
-    // get vars for templating
-    $template_dir = xarModGetVar('ebulletin', 'template_dir');
-    $tpl_html = empty($pub['tpl_html']) ? '' : "$template_dir/$pub[tpl_html]";
-    $tpl_txt = empty($pub['tpl_txt']) ? '' : "$template_dir/$pub[tpl_txt]";
-    $theme = xarModGetVar('ebulletin', 'theme');
-
-    // generate start and end dates
-    $beforesign = ($pub['startsign'] == 'before') ? '-' : '+';
-    $aftersign = ($pub['endsign'] == 'before') ? '-' : '+';
-    // fix bug 5327
-    $startdate = strtotime($beforesign.$pub['numsago'].' '.$pub['unitsago'], strtotime($issuedate));
-    $enddate = strtotime($aftersign.$pub['numsfromnow'].' '.$pub['unitsfromnow'], strtotime($issuedate));
-
-    /**
-    * This is tricky.  To include an accurate issue ID, we have to have saved it to the DB first.
-    * Unfortunately, $dbconn->GenId($issuestable) doesn't work for this purpose.  So, we create
-    * a dummy issue entry in the DB, then use the "regenerate" function to generate it for the
-    * first time!
-    */
+    // generate subject and body
+    list(
+        $subject,
+        $body_html,
+        $body_txt
+    ) = xarModAPIFunc('ebulletin', 'admin', 'generateissue', array(
+        'startday' => $pub['startday'],
+        'endday'   => $pub['endday'],
+        'subject'  => $pub['subject'],
+        'today'    => $issuedate,
+        'defaulttheme'  => $pub['theme'],
+        'template_html' => $pub['template'],
+        'template_txt'  => $pub['template'],
+    ));
 
     // prepare for database
     $dbconn = xarDBGetConn();
@@ -93,25 +88,20 @@ function ebulletin_adminapi_createissue($args)
             xar_published
         ) VALUES (?,?,?,?,?,?,?)
     ";
-    $bindvars = array($nextId, $pid, $issuedate, '', '', '', 0);
-    $result = $dbconn->Execute($query,$bindvars);
+    $bindvars = array($nextId, $pid, $issuedate, $subject, $body_html, $body_txt, 0);
+    $result = $dbconn->Execute($query, $bindvars);
     if (!$result) return;
 
     // retrieve the ID that was created
     $id = $dbconn->PO_Insert_ID($issuestable, 'xar_id');
 
-    // "regenerate" the issue (actually, generate it for the first time)
-    xarModAPIFunc('ebulletin', 'admin', 'regenerateissue', array('id' => $id));
-    if (xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
-
     // call create hooks
     $item = $args;
-    $item['module'] = 'ebulletin';
+    $item['module']   = 'ebulletin';
     $item['itemtype'] = 1;
-    $item['itemid'] = $id;
+    $item['itemid']   = $id;
     xarModCallHooks('item', 'create', $id, $item);
 
-    // success
     return $id;
 }
 

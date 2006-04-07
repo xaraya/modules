@@ -1,138 +1,135 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
-<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>View Subscribers</xar:mlstring></h2>
-<div style="margin: auto;"><xar:template file="statusmsg" type="module" />
+<xar:template type="module" file="admin-header" />
+<div class="xar-mod-body">
 
+    <h2><xar:mlstring>View Subscribers</xar:mlstring></h2>
 
-<xar:style scope="module" file="navtabs" module="base" />
+    <dl class="xar-tabs">
+        <dt class="help">
+            <xar:mlstring>Subscriber Type: </xar:mlstring>
+        </dt>
 
-<dl class="xar-tabs">
-    <dt class="help">
-        <xar:mlstring>Subscriber Type: </xar:mlstring>
-    </dt>
+        <xar:if condition="$stype eq 'reg'">
+            <dd class="active"><a href="#xarServerGetCurrentURL(array('stype' => 'reg', 'startnum' => ''))#"><xar:mlstring>Registered</xar:mlstring></a></dd>
+            <dd><a href="#xarServerGetCurrentURL(array('stype' => 'non', 'startnum' => ''))#"><xar:mlstring>Non-registered</xar:mlstring></a></dd>
+        <xar:else />
+            <dd><a href="#xarServerGetCurrentURL(array('stype' => 'reg', 'startnum' => ''))#"><xar:mlstring>Registered</xar:mlstring></a></dd>
+            <dd class="active"><a href="#xarServerGetCurrentURL(array('stype' => 'non', 'startnum' => ''))#"><xar:mlstring>Non-registered</xar:mlstring></a></dd>
+        </xar:if>
+    </dl>
 
-    <xar:if condition="$stype eq 'reg'">
-        <dd class="active"><a href="#xarServerGetCurrentURL(array('stype' => 'reg', 'startnum' => ''))#"><xar:mlstring>Registered</xar:mlstring></a></dd>
-        <dd><a href="#xarServerGetCurrentURL(array('stype' => 'non', 'startnum' => ''))#"><xar:mlstring>Non-registered</xar:mlstring></a></dd>
-    <xar:else />
-        <dd><a href="#xarServerGetCurrentURL(array('stype' => 'reg', 'startnum' => ''))#"><xar:mlstring>Registered</xar:mlstring></a></dd>
-        <dd class="active"><a href="#xarServerGetCurrentURL(array('stype' => 'non', 'startnum' => ''))#"><xar:mlstring>Non-registered</xar:mlstring></a></dd>
+    <xar:base-include-javascript module="ebulletin" filename="checkall.js" position="head" />
+
+    <xar:if condition="$showaddlink">
+        <p style="float: left;">
+            <a href="#xarModURL('ebulletin', 'admin', 'newsubscribers', array('stype' => $stype))#">
+                <xar:mlstring>Add Subscribers</xar:mlstring>
+            </a>
+        </p>
     </xar:if>
-</dl>
 
-<xar:base-include-javascript module="ebulletin" filename="checkall.js" position="head" />
+    <form method="get" class="xar-align-right">
 
-<xar:if condition="$showaddlink">
-    <p style="float: left;">
-        <a href="#xarModURL('ebulletin', 'admin', 'newsubscribers', array('stype' => $stype))#">
-            <xar:mlstring>Add Subscribers</xar:mlstring>
+        <xar:comment>
+            ***SIGH*** To make filter play nicely with other links on this page,
+            we need to use GET protocol, which means defining all the URL's other
+            params using <input type="hidden" /> values.
+        </xar:comment>
+        <input type="hidden" name="module" value="ebulletin" />
+        <input type="hidden" name="type" value="admin" />
+        <input type="hidden" name="func" value="viewsubscribers" />
+        <input type="hidden" name="stype" value="#$stype#" />
+        <input type="hidden" name="order" value="#$order#" />
+        <input type="hidden" name="sort" value="#$sort#" />
+
+        <xar:mlstring>Items per page:</xar:mlstring>
+        <input type="text" name="numitems" value="#$numitems#" size="3" />
+        <input type="submit" value="#xarML('Go')#" />
+        &nbsp;
+
+        <xar:mlstring>Filter: </xar:mlstring> &nbsp;
+        <select name="filter_col" id="filter_col">
+            <xar:foreach in="$filter_cols" key="$key" value="$value">
+                <xar:if condition="$filter['col'] eq $key">
+                    <option value="#$key#" selected="selected">#$value#</option>
+                <xar:else />
+                    <option value="#$key#">#$value#</option>
+                </xar:if>
+            </xar:foreach>
+        </select>
+
+        <select name="filter_type" id="filter_type">
+            <xar:foreach in="$filter_types" key="$key" value="$value">
+                <xar:if condition="$filter['type'] eq $key">
+                    <option value="#$key#" selected="selected">#$value#</option>
+                <xar:else />
+                    <option value="#$key#">#$value#</option>
+                </xar:if>
+            </xar:foreach>
+        </select>
+
+        <input type="text" name="filter_text" id="filter_text" size="12" value="#$filter_text#" />
+        <input type="submit" value="#xarML('Search')#" />
+
+        <a href="#xarServerGetCurrentURL(array('filter_text' => '', 'filter_col' => '', 'filter_type' => ''))#">
+            <xar:mlstring>Clear</xar:mlstring>
         </a>
-    </p>
-</xar:if>
 
-<form method="get" class="xar-align-right">
+    </form>
 
-    <xar:comment>
-        ***SIGH*** To make filter play nicely with other links on this page,
-        we need to use GET protocol, which means defining all the URL's other
-        params using <input type="hidden" /> values.
-    </xar:comment>
-    <input type="hidden" name="module" value="ebulletin" />
-    <input type="hidden" name="type" value="admin" />
-    <input type="hidden" name="func" value="viewsubscribers" />
-    <input type="hidden" name="stype" value="#$stype#" />
-    <input type="hidden" name="order" value="#$order#" />
-    <input type="hidden" name="sort" value="#$sort#" />
+    <div class="xar-clearboth"></div>
 
-    <xar:mlstring>Items per page:</xar:mlstring>
-    <input type="text" name="numitems" value="#$numitems#" size="3" />
-    <input type="submit" value="#xarML('Update')#" />
-    &nbsp;
+    <form method="post" action="&xar-modurl-ebulletin-admin-deletesubscribers;" name="ebulletin_form">
 
-    <xar:mlstring>Filter: </xar:mlstring> &nbsp;
-    <select name="filter_col" id="filter_col">
-        <xar:foreach in="$filter_cols" key="$key" value="$value">
-            <xar:if condition="$filter['col'] eq $key">
-                <option value="#$key#" selected="selected">#$value#</option>
-            <xar:else />
-                <option value="#$key#">#$value#</option>
-            </xar:if>
-        </xar:foreach>
-    </select>
+    <xar:if condition="!empty($pager)"><div class="xar-align-center xar-padding-thick">#$pager#</div></xar:if>
 
-    <select name="filter_type" id="filter_type">
-        <xar:foreach in="$filter_types" key="$key" value="$value">
-            <xar:if condition="$filter['type'] eq $key">
-                <option value="#$key#" selected="selected">#$value#</option>
-            <xar:else />
-                <option value="#$key#">#$value#</option>
-            </xar:if>
-        </xar:foreach>
-    </select>
-
-    <input type="text" name="filter_text" id="filter_text" size="12" value="#$filter_text#" />
-    <input type="submit" value="#xarML('Search')#" />
-
-    <a href="#xarServerGetCurrentURL(array('filter_text' => '', 'filter_col' => '', 'filter_type' => ''))#">
-        <xar:mlstring>Clear</xar:mlstring>
-    </a>
-
-</form>
-
-<div class="xar-clearboth"></div>
-
-<form method="post" action="&xar-modurl-ebulletin-admin-deletesubscribers;" name="ebulletin_form">
-
-<xar:if condition="!empty($pager)"><div class="xar-align-center xar-padding-thick">#$pager#</div></xar:if>
-
-<table class="xar-fullwidth">
-<tr>
-    <th>
-        <input type="checkbox" onClick="xar_ebulletin_checkall(document.forms['ebulletin_form'])" title="#xarML('Check or Uncheck all subscribers on this page')#" />
-    </th>
-    <th>
-        <a href="#xarServerGetCurrentURL(array('order' => 'name', 'sort' => $nextsort))#"><xar:mlstring>Name</xar:mlstring></a>
-        <xar:if condition="$order eq 'name'">
-            <img src="#$sort_img#" alt="#xarML('Sorted by '.$sort)#" />
-        </xar:if>
-    </th>
-    <th>
-        <a href="#xarServerGetCurrentURL(array('order' => 'pubname', 'sort' => $nextsort))#"><xar:mlstring>Publication</xar:mlstring></a>
-        <xar:if condition="$order eq 'pubname'">
-            <img src="#$sort_img#" alt="#xarML('Sorted by '.$sort)#" />
-        </xar:if>
-    </th>
-    <th>
-        <a href="#xarServerGetCurrentURL(array('order' => 'email', 'sort' => $nextsort))#"><xar:mlstring>Email</xar:mlstring></a>
-        <xar:if condition="$order eq 'email'">
-            <img src="#$sort_img#" alt="#xarML('Sorted by '.$sort)#" />
-        </xar:if>
-    </th>
-    <th><xar:mlstring>Options</xar:mlstring></th>
-</tr>
-<xar:loop name="$subscribers">
+    <table class="xar-fullwidth">
     <tr>
-        <td><input type="checkbox" name="unsub[#$loop:item.id#]" id="unsub[#$loop:item.id#]" /></td>
-        <td>#$loop:item.name#</td>
-        <td>#$loop:item.pubname#</td>
-        <td>#$loop:item.email#</td>
-        <td>
-            <a href="#xarModURL('ebulletin', 'admin', 'deletesubscribers', array('id' => $loop:item.id, 'confirm' => 1, 'return' => $currenturl, 'authid' => $authid))#" onclick="return confirm('#xarML('Are you sure you want to delete this subscription?')#');"><xar:mlstring>Unsubscribe</xar:mlstring></a>
-        </td>
+        <th>
+            <input type="checkbox" onClick="xar_ebulletin_checkall(document.forms['ebulletin_form'])" title="#xarML('Check or Uncheck all subscribers on this page')#" />
+        </th>
+        <th>
+            <a href="#xarServerGetCurrentURL(array('order' => 'name', 'sort' => $nextsort))#"><xar:mlstring>Name</xar:mlstring></a>
+            <xar:if condition="$order eq 'name'">
+                <img src="#$sort_img#" alt="#xarML('Sorted by '.$sort)#" />
+            </xar:if>
+        </th>
+        <th>
+            <a href="#xarServerGetCurrentURL(array('order' => 'pubname', 'sort' => $nextsort))#"><xar:mlstring>Publication</xar:mlstring></a>
+            <xar:if condition="$order eq 'pubname'">
+                <img src="#$sort_img#" alt="#xarML('Sorted by '.$sort)#" />
+            </xar:if>
+        </th>
+        <th>
+            <a href="#xarServerGetCurrentURL(array('order' => 'email', 'sort' => $nextsort))#"><xar:mlstring>Email</xar:mlstring></a>
+            <xar:if condition="$order eq 'email'">
+                <img src="#$sort_img#" alt="#xarML('Sorted by '.$sort)#" />
+            </xar:if>
+        </th>
+        <th><xar:mlstring>Options</xar:mlstring></th>
     </tr>
-</xar:loop>
-</table>
+    <xar:loop name="$subscribers">
+        <tr>
+            <td><input type="checkbox" name="unsub[#$loop:item.id#]" id="unsub[#$loop:item.id#]" /></td>
+            <td>#$loop:item.name#</td>
+            <td>#$loop:item.pubname#</td>
+            <td>#$loop:item.email#</td>
+            <td>
+                <a href="#xarModURL('ebulletin', 'admin', 'deletesubscribers', array('id' => $loop:item.id, 'confirm' => 1, 'return' => $currenturl, 'authid' => $authid))#" onclick="return confirm('#xarML('Are you sure you want to delete this subscription?')#');"><xar:mlstring>Unsubscribe</xar:mlstring></a>
+            </td>
+        </tr>
+    </xar:loop>
+    </table>
 
-<xar:if condition="!empty($pager)"><div class="xar-align-center xar-padding-thick">#$pager#</div></xar:if>
+    <xar:if condition="!empty($pager)"><div class="xar-align-center xar-padding-thick">#$pager#</div></xar:if>
 
-<p><xar:mlstring>With checked subscribers :</xar:mlstring> <input type="submit" value="#xarML('Unsubscribe')#" />
-&nbsp; <a href="javascript:void(0);" onClick="xar_ebulletin_checkall(document.forms['ebulletin_form'])" title="#xarML('Check or Uncheck all subscribers on this page')#"><xar:mlstring>Check/Uncheck All</xar:mlstring></a></p>
+    <p><xar:mlstring>With checked subscribers :</xar:mlstring> <input type="submit" value="#xarML('Unsubscribe')#" />
+    &nbsp; <a href="javascript:void(0);" onClick="xar_ebulletin_checkall(document.forms['ebulletin_form'])" title="#xarML('Check or Uncheck all subscribers on this page')#"><xar:mlstring>Check/Uncheck All</xar:mlstring></a></p>
 
-    <input type="hidden" name="stype" value="#$stype#" />
-    <input type="hidden" name="return" value="#$currenturl#" />
+        <input type="hidden" name="stype" value="#$stype#" />
+        <input type="hidden" name="return" value="#$currenturl#" />
 
-</form>
+    </form>
 
-</div>
 </div>

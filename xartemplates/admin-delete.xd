@@ -1,53 +1,47 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
-<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Delete Publication</xar:mlstring></h2>
-<div style="margin: auto;"><xar:template file="statusmsg" type="module" />
+<xar:template type="module" file="admin-header" />
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Delete Publication</xar:mlstring></h2>
 
-<h3 class="xar-align-center"><xar:mlstring>Confirm deleting this publication?</xar:mlstring></h3>
-<form method="post" action="&xar-modurl-ebulletin-admin-delete;">
+    <h3 class="xar-align-center"><xar:mlstring>Confirm deleting this publication?</xar:mlstring></h3>
+    <form method="post" action="&xar-modurl-ebulletin-admin-delete;">
 
-    <fieldset>
-        <legend>
-            <xar:mlstring>Publication marked for deletion</xar:mlstring>
-        </legend>
-        <div class="xar-form-input-wrapper">
-            <label for="itemid" class="xar-form-label" title="#xarML('Publication ID')#">
-            <xar:mlstring>ID:</xar:mlstring>
-            </label>
-            #$id#
-        </div>
+        <fieldset>
+            <legend>
+                <xar:mlstring>Publication marked for deletion</xar:mlstring>
+            </legend>
 
-        <div class="xar-form-input-wrapper">
-            <label for="itemname"  class="xar-form-label"  title="#xarML('Publication Name')#">
-                <xar:mlstring>Name:</xar:mlstring>
-            </label>
-            #$pub['name']#
-        </div>
-
-        <div class="xar-form-input-wrapper">
-            <label for="itemname"  class="xar-form-label"  title="#xarML('Publication Description')#">
-                <xar:mlstring>Description:</xar:mlstring>
-            </label>
-            #$pub['desc']#
-        </div>
-    </fieldset>
-
-    <fieldset>
-        <div class="xar-form-input-wrapper-after">
-            <input type="hidden" name="authid" id="authid" value="#$authid#" />
-            <input type="hidden" name="confirm" id="confirm" value="true" />
-            <input type="hidden" name="id" id="id" value="#$id#" />
-            <input type="submit" value="#xarML('Confirm')#" />
-        </div>
-
-        <div class="xar-form-input-wrapper-before">
-            <a href="&xar-modurl-ebulletin-admin-view;">
-                <xar:mlstring>Cancel and Return</xar:mlstring>
-            </a>
+            <div class="xar-form-input-wrapper">
+                <label for="itemname"  class="xar-form-label"  title="#xarML('Publication Name')#"><xar:mlstring>Name:</xar:mlstring></label>
+                #$pub['name']#
             </div>
-    </fieldset>
 
-</form>
-</div>
+            <div class="xar-form-input-wrapper">
+                <label for="itemname"  class="xar-form-label"  title="#xarML('Publication Description')#"><xar:mlstring>Description:</xar:mlstring></label>
+                #$pub['description']#
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                <label for="itemtemplate"  class="xar-form-label"  title="#xarML('Template')#"><xar:mlstring>Template:</xar:mlstring></label>
+                #$pub['template']#
+            </div>
+
+        </fieldset>
+
+        <fieldset>
+            <div class="xar-form-input-wrapper-after">
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <input type="hidden" name="confirm" id="confirm" value="true" />
+                <input type="hidden" name="id" id="id" value="#$id#" />
+
+                <input type="submit" value="#xarML('Confirm')#" />
+                <a href="&xar-modurl-ebulletin-admin-view;">
+                    <xar:mlstring>Cancel and Return</xar:mlstring>
+                </a>
+            </div>
+        </fieldset>
+
+    </form>
+
 </div>

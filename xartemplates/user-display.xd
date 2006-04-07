@@ -1,66 +1,56 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
-<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>View Issue</xar:mlstring></h2>
-<div style="margin: auto;"><xar:template file="user-menu" type="module" />
+<xar:template type="module" file="user-header" />
+<div class="xar-mod-body">
 
-<fieldset>
-    <legend><xar:mlstring>Issue Data</xar:mlstring></legend>
+    <h2><xar:mlstring>View Issue</xar:mlstring></h2>
 
-    <div class="xar-form-input-wrapper">
-        <label for="name"  class="xar-form-label" title="#xarML('Issue ID')#">
-            <xar:mlstring>ID:</xar:mlstring>
-        </label>
-        #$issue['id']#
-    </div>
+    <p>
+        <a href="#xarModURL('ebulletin', 'user', 'viewissues', array('pid' => $issue['pid']))#"><xar:mlstring>Issues</xar:mlstring></a> |
+        <a href="&xar-modurl-ebulletin-user-view;"><xar:mlstring>Publications</xar:mlstring></a>
+    </p>
 
-    <div class="xar-form-input-wrapper">
-        <label for="name"  class="xar-form-label" title="#xarML('Parent Publication')#">
-            <xar:mlstring>Parent Publication:</xar:mlstring>
-        </label>
-        #$issue['pubname']#
-    </div>
-
-    <div class="xar-form-input-wrapper">
-        <label for="name"  class="xar-form-label" title="#xarML('Subject')#">
-            <xar:mlstring>Subject:</xar:mlstring>
-        </label>
-        #$issue['subject']#
-    </div>
-
-    <div class="xar-form-input-wrapper">
-        <label for="name"  class="xar-form-label" title="#xarML('Issue Date')#">
-            <xar:mlstring>Issue Date:</xar:mlstring>
-        </label>
-        #$issue['issuedate']#
-    </div>
-
-    <div class="xar-form-input-wrapper">
-        <label for="name"  class="xar-form-label" title="#xarML('Options')#">
-            <xar:mlstring>Options:</xar:mlstring>
-        </label>
-
-        <a href="#xarModURL('ebulletin', 'user', 'viewissues', array('pid' => $issue['pid']))#"><xar:mlstring>Return to Issue List</xar:mlstring></a>
-        |
-        <a href="&xar-modurl-ebulletin-user-view;"><xar:mlstring>Return to Publication List</xar:mlstring></a>
-
-    </div>
-
-</fieldset>
-
-<xar:if condition="$htmlurl">
     <fieldset>
-        <legend><xar:mlstring>Body (HTML)</xar:mlstring></legend>
-        <iframe src="#$htmlurl#" width="100%" height="600" name="htmlbulletin" id="htmlbulletin" frameborder="1"></iframe>
-    </fieldset>
-</xar:if>
+        <legend><xar:mlstring>Issue Details</xar:mlstring></legend>
 
-<xar:if condition="$txturl">
+        <div class="xar-form-input-wrapper">
+            <label for="name"  class="xar-form-label" title="#xarML('Parent Publication')#">
+                <xar:mlstring>Publication:</xar:mlstring>
+            </label>
+            #$issue['pubname']#
+        </div>
+
+        <div class="xar-form-input-wrapper">
+            <label for="name"  class="xar-form-label" title="#xarML('Issue Date')#">
+                <xar:mlstring>Date:</xar:mlstring>
+            </label>
+            #$issue['issuedate']#
+        </div>
+
+        <div class="xar-form-input-wrapper">
+            <label for="name"  class="xar-form-label" title="#xarML('Subject')#">
+                <xar:mlstring>Subject:</xar:mlstring>
+            </label>
+            #$issue['subject']#
+        </div>
+
+    </fieldset>
+
     <fieldset>
-        <legend><xar:mlstring>Body (TXT)</xar:mlstring></legend>
-        <iframe src="#$txturl#" width="100%" height="600" name="txtbulletin" id="txtbulletin" frameborder="1"></iframe>
-    </fieldset>
-</xar:if>
+        <legend><xar:mlstring>Mail Body</xar:mlstring></legend>
 
-</div>
+        <xar:if condition="$htmlurl">
+            <h3><xar:mlstring>HTML</xar:mlstring>
+            <iframe src="#$htmlurl#" width="100%" height="400" name="htmlbulletin"
+                id="htmlbulletin" frameborder="1">
+            </iframe>
+        </xar:if>
+
+        <h3><xar:mlstring>Text</xar:mlstring>
+        <iframe src="#$txturl#" width="100%" height="400" name="txtbulletin"
+            id="txtbulletin" frameborder="1">
+        </iframe>
+
+    </fieldset>
+
 </div>

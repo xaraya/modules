@@ -45,14 +45,14 @@ function ebulletin_adminapi_regenerateissue($args)
 
     // retrieve issue
     $issue = xarModAPIFunc('ebulletin', 'user', 'getissue', array('id' => $id));
-    if (!isset($issue) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+    if (xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
     // security check
     if (!xarSecurityCheck('EditeBulletin', 1, 'Publication', "$issue[pubname]:$issue[pid]")) return;
 
     // retrieve parent publication
     $pub = xarModAPIFunc('ebulletin', 'user', 'get', array('id' => $issue['pid']));
-    if (!isset($pub) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+    if (xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
     // get vars for templating
     $template_dir = xarModGetVar('ebulletin', 'template_dir');

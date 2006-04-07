@@ -1,104 +1,108 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
-<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>View Issue</xar:mlstring></h2>
-<div style="margin: auto;"><xar:template file="statusmsg" type="module" />
+<xar:template type="module" file="admin-header" />
+<div class="xar-mod-body">
+    <h2><xar:mlstring>View Issue</xar:mlstring></h2>
 
-<fieldset>
-    <legend><xar:mlstring>Issue Data</xar:mlstring></legend>
-
-    <div class="xar-form-input-wrapper">
-        <label for="name"  class="xar-form-label" title="#xarML('Issue ID')#">
-            <xar:mlstring>ID:</xar:mlstring>
-        </label>
-        #$issue['id']#
-    </div>
-
-    <div class="xar-form-input-wrapper">
-        <label for="name"  class="xar-form-label" title="#xarML('Parent Publication')#">
-            <xar:mlstring>Parent Publication:</xar:mlstring>
-        </label>
-        #$issue['pubname']#
-    </div>
-
-    <div class="xar-form-input-wrapper">
-        <label for="name"  class="xar-form-label" title="#xarML('Subject')#">
-            <xar:mlstring>Subject:</xar:mlstring>
-        </label>
-        #$issue['subject']#
-    </div>
-
-    <div class="xar-form-input-wrapper">
-        <label for="name"  class="xar-form-label" title="#xarML('Issue Date')#">
-            <xar:mlstring>Issue Date:</xar:mlstring>
-        </label>
-        #$issue['issuedate']#
-    </div>
-
-    <div class="xar-form-input-wrapper">
-        <label for="name"  class="xar-form-label" title="#xarML('Published?')#">
-            <xar:mlstring>Published?</xar:mlstring>
-        </label>
-        #$issue['published_string']#
-    </div>
-
-    <div class="xar-form-input-wrapper">
-        <label for="name"  class="xar-form-label" title="#xarML('Options')#">
-            <xar:mlstring>Options:</xar:mlstring>
-        </label>
-
-        <xar:if condition="!empty($issue['editurl'])">
-            <xar:if condition="$issue['published']">
-                <a href="#$issue['editurl']#" onClick="return confirm('This issue has already been published.  Are you sure you want to edit it?');"><xar:mlstring>Edit</xar:mlstring></a>
-            <xar:else />
-                <a href="#$issue['editurl']#"><xar:mlstring>Edit</xar:mlstring></a>
-            </xar:if>
-            &nbsp;
-        </xar:if>
-        &nbsp;
-        <xar:if condition="!empty($issue['regenerateurl'])">
-            <xar:if condition="$issue['published']">
-                <a href="#$issue['regenerateurl']#" onClick="return confirm('This issue has already been published.  Are you sure you want to regenerate it?');"><xar:mlstring>Regenerate</xar:mlstring></a>
-            <xar:else />
-                <a href="#$issue['regenerateurl']#"><xar:mlstring>Regenerate</xar:mlstring></a>
-            </xar:if>
-            &nbsp;
-        </xar:if>
-        <xar:if condition="!empty($issue['deleteurl'])">
-            <xar:if condition="$issue['published']">
-                <a href="#$issue['deleteurl']#" onClick="return confirm('This issue has already been published.  Are you sure you want to delete it?');"><xar:mlstring>Delete</xar:mlstring></a>
-            <xar:else />
-                <a href="#$issue['deleteurl']#"><xar:mlstring>Delete</xar:mlstring></a>
-            </xar:if>
-            &nbsp;
-        </xar:if>
-        &nbsp;
-        <xar:if condition="!empty($issue['publishurl'])">
-            <xar:if condition="$issue['published']">
-                <a href="#$issue['publishurl']#" onClick="return confirm('This issue has already been published.  Are you sure you want to publish it again?');"><xar:mlstring>Publish</xar:mlstring></a>
-            <xar:else />
-                <a href="#$issue['publishurl']#"><xar:mlstring>Publish</xar:mlstring></a>
-            </xar:if>
-            &nbsp;
-        </xar:if>
-
-    </div>
-
-</fieldset>
-
-<xar:if condition="$htmlurl">
     <fieldset>
-        <legend><xar:mlstring>Body (HTML)</xar:mlstring></legend>
-        <iframe src="#$htmlurl#" width="100%" height="600" name="htmlbulletin" id="htmlbulletin" frameborder="1"></iframe>
-    </fieldset>
-</xar:if>
+        <legend><xar:mlstring>Issue Data</xar:mlstring></legend>
 
-<xar:if condition="$txturl">
-    <fieldset>
-        <legend><xar:mlstring>Body (TXT)</xar:mlstring></legend>
-        <iframe src="#$txturl#" width="100%" height="600" name="txtbulletin" id="txtbulletin" frameborder="1"></iframe>
-    </fieldset>
-</xar:if>
+        <div class="xar-form-input-wrapper">
+            <label for="name"  class="xar-form-label" title="#xarML('Issue ID')#">
+                <xar:mlstring>ID:</xar:mlstring>
+            </label>
+            #$issue['id']#
+        </div>
 
-</div>
+        <div class="xar-form-input-wrapper">
+            <label for="name"  class="xar-form-label" title="#xarML('Parent Publication')#">
+                <xar:mlstring>Parent Publication:</xar:mlstring>
+            </label>
+            #$issue['pubname']#
+        </div>
+
+        <div class="xar-form-input-wrapper">
+            <label for="name"  class="xar-form-label" title="#xarML('Subject')#">
+                <xar:mlstring>Subject:</xar:mlstring>
+            </label>
+            #$issue['subject']#
+        </div>
+
+        <div class="xar-form-input-wrapper">
+            <label for="name"  class="xar-form-label" title="#xarML('Issue Date')#">
+                <xar:mlstring>Issue Date:</xar:mlstring>
+            </label>
+            #$issue['issuedate']#
+        </div>
+
+        <div class="xar-form-input-wrapper">
+            <label for="name"  class="xar-form-label" title="#xarML('Published?')#">
+                <xar:mlstring>Published?</xar:mlstring>
+            </label>
+            #$issue['published_string']#
+        </div>
+
+        <div class="xar-form-input-wrapper">
+            <label for="name"  class="xar-form-label" title="#xarML('Options')#">
+                <xar:mlstring>Options:</xar:mlstring>
+            </label>
+
+            <xar:if condition="!empty($issue['editurl'])">
+                <xar:if condition="$issue['published']">
+                    <a href="#$issue['editurl']#" onClick="return confirm('This issue has already been published.  Are you sure you want to edit it?');"><xar:mlstring>Edit</xar:mlstring></a>
+                <xar:else />
+                    <a href="#$issue['editurl']#"><xar:mlstring>Edit</xar:mlstring></a>
+                </xar:if>
+                &nbsp;
+            </xar:if>
+            &nbsp;
+            <xar:if condition="!empty($issue['regenerateurl'])">
+                <xar:if condition="$issue['published']">
+                    <a href="#$issue['regenerateurl']#" onClick="return confirm('This issue has already been published.  Are you sure you want to regenerate it?');"><xar:mlstring>Regenerate</xar:mlstring></a>
+                <xar:else />
+                    <a href="#$issue['regenerateurl']#"><xar:mlstring>Regenerate</xar:mlstring></a>
+                </xar:if>
+                &nbsp;
+            </xar:if>
+            <xar:if condition="!empty($issue['deleteurl'])">
+                <xar:if condition="$issue['published']">
+                    <a href="#$issue['deleteurl']#" onClick="return confirm('This issue has already been published.  Are you sure you want to delete it?');"><xar:mlstring>Delete</xar:mlstring></a>
+                <xar:else />
+                    <a href="#$issue['deleteurl']#"><xar:mlstring>Delete</xar:mlstring></a>
+                </xar:if>
+                &nbsp;
+            </xar:if>
+            &nbsp;
+            <xar:if condition="!empty($issue['publishurl'])">
+                <xar:if condition="$issue['published']">
+                    <a href="#$issue['publishurl']#" onClick="return confirm('This issue has already been published.  Are you sure you want to publish it again?');"><xar:mlstring>Publish</xar:mlstring></a>
+                <xar:else />
+                    <a href="#$issue['publishurl']#"><xar:mlstring>Publish</xar:mlstring></a>
+                </xar:if>
+                &nbsp;
+            </xar:if>
+
+            <xar:if condition="!empty($issue['sendtesturl'])">
+                <a href="#$issue['sendtesturl']#"><xar:mlstring>Send Test</xar:mlstring></a>
+                &nbsp;
+            </xar:if>
+
+        </div>
+
+    </fieldset>
+
+    <xar:if condition="$htmlurl">
+        <fieldset>
+            <legend><xar:mlstring>Body (HTML)</xar:mlstring></legend>
+            <iframe src="#$htmlurl#" width="100%" height="600" name="htmlbulletin" id="htmlbulletin" frameborder="1"></iframe>
+        </fieldset>
+    </xar:if>
+
+    <xar:if condition="$txturl">
+        <fieldset>
+            <legend><xar:mlstring>Body (TXT)</xar:mlstring></legend>
+            <iframe src="#$txturl#" width="100%" height="600" name="txtbulletin" id="txtbulletin" frameborder="1"></iframe>
+        </fieldset>
+    </xar:if>
+
 </div>

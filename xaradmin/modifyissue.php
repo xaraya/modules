@@ -21,7 +21,7 @@ function ebulletin_admin_modifyissue()
 
     // get issue
     $issue = xarModAPIFunc('ebulletin', 'user', 'getissue', array('id' => $id));
-    if (empty($issue) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+    if (xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
     // security check
     if (!xarSecurityCheck('EditeBulletin', 0, 'Publication', "$issue[pubname]:$issue[pid]")) return;
@@ -39,57 +39,88 @@ function ebulletin_admin_modifyissue()
         'dateformat' => '%Y-%m-%d'
     );
 
-    // url for view
-    if (xarSecurityCheck('ReadeBulletin', 0, 'Publication', "$issue[pubname]:$issue[pid]")) {
-        $issue['viewurl'] = xarModURL('ebulletin', 'admin', 'display', array(
-            'id' => $issue['id'])
-        );
-    }
+    // get publication
+    $pub = xarModAPIFunc('ebulletin', 'user', 'get', array('id' => $issue['pid']));
+    if (xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
-    // url for edit and regenerate
     if (xarSecurityCheck('EditeBulletin', 0, 'Publication', "$issue[pubname]:$issue[pid]")) {
-        $issue['regenerateurl'] = xarModURL('ebulletin', 'admin', 'regenerateissue', array(
-            'id' => $issue['id'],
-            'authid' => xarSecGenAuthKey(),
-            'return' => xarModURL('ebulletin', 'admin', 'viewissues'))
+
+        // preview HTML
+        if ($pub['html']) {
+            $issue['urls'][] = array(
+                'url' => xarModURL('ebulletin', 'user', 'displayissue', array(
+                    'id' => $issue['id'], 'displaytype' => 'html'
+                )),
+                'title' => xarML('Preview the HTML version of this issue'),
+                'label' => xarML('Preview HTML'),
+            );
+        }
+        $issue['urls'][] = array(
+            'url' => xarModURL('ebulletin', 'user', 'displayissue', array(
+                'id' => $issue['id'], 'displaytype' => 'txt'
+            )),
+            'title' => xarML('Preview the text version of this issue'),
+            'label' => xarML('Preview Text'),
         );
     }
 
-    // url for delete
     if (xarSecurityCheck('DeleteeBulletin', 0, 'Publication', "$issue[pubname]:$issue[pid]")) {
-        $issue['deleteurl'] = xarModURL('ebulletin', 'admin', 'deleteissue', array(
-            'id' => $issue['id'])
+
+        // delete
+        $issue['urls'][] = array(
+            'url' => xarModURL('ebulletin', 'admin', 'deleteissue', array(
+                'id' => $issue['id']
+            )),
+            'title' => xarML('Delete this issue.'),
+            'label' => xarML('Delete'),
+            'onclick' => $issue['published'] ? 'return confirm(\''.xarML('This issue has already been published.  Are you sure you want to delete it?').'\');' : ''
         );
     }
 
-    // url for publish
     if (xarSecurityCheck('AddeBulletin', 0, 'Publication', "$issue[pubname]:$issue[pid]")) {
-        $issue['publishurl'] = xarModURL('ebulletin', 'admin', 'publishissue', array(
-            'id' => $issue['id'])
+
+        // regenerate
+        $issue['urls'][] = array(
+            'url' => xarModURL('ebulletin', 'admin', 'updateissue', array(
+                'id' => $issue['id'],
+                'regen' => true,
+                'authid' => $authid
+            )),
+            'title' => xarML('Regenerate this issue'),
+            'label' => xarML('Regenerate'),
+            'onclick' => $issue['published'] ? 'return confirm(\''.xarML('This issue has already been published.  Are you sure you want to regenerate it?').'\');' : ''
         );
+
+        // publish
+        $issue['urls'][] = array(
+            'url' => xarModURL('ebulletin', 'admin', 'publishissue', array(
+                'id' => $issue['id']
+            )),
+            'title' => xarML('Publish this issue to its regular distribution list.'),
+            'label' => xarML('Publish'),
+            'onclick' => $issue['published'] ? 'return confirm(\''.xarML('This issue has already been published.  Are you sure you want to publish it again?').'\');' : ''
+        );
+
     }
 
-    // links for the iframe
-    if (!empty($issue['body_html'])) {
-        $htmlurl = xarModURL('ebulletin', 'user', 'displayissue',
-            array('id' => $id, 'displaytype' => 'html')
-        );
-    }
-    if (!empty($issue['body_html'])) {
-        $txturl = xarModURL('ebulletin', 'user', 'displayissue',
-            array('id' => $id, 'displaytype' => 'txt')
-        );
-    }
+    if (xarSecurityCheck('AddeBulletin', 0, 'Publication', "$issue[pubname]:$issue[pid]")) {
 
-    // initialize template data
-    $data = xarModAPIFunc('ebulletin', 'admin', 'menu');
+        // test
+        $issue['urls'][] = array(
+            'url' => xarModURL('ebulletin', 'admin', 'sendtest', array(
+                'id' => $issue['id']
+            )),
+            'title' => xarML('Send this issue to one recipient.'),
+            'label' => xarML('Test'),
+        );
+
+    }
 
     // set template vars
-    $data['issue'] = $issue;
-    $data['htmlurl'] = $htmlurl;
-    $data['txturl'] = $txturl;
-    $data['authid'] = $authid;
-    $data['id'] = $id;
+    $data = array();
+    $data['issue']          = $issue;
+    $data['authid']         = $authid;
+    $data['id']             = $id;
     $data['datedefinition'] = $datedefinition;
 
     return $data;

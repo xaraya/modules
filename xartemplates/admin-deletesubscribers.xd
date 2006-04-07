@@ -1,49 +1,49 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
-<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Delete Publication</xar:mlstring></h2>
-<div style="margin: auto;"><xar:template file="statusmsg" type="module" />
+<xar:template type="module" file="admin-header" />
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Delete Publication</xar:mlstring></h2>
 
-<h3 class="xar-align-center"><xar:mlstring>Confirm unsubscribing?</xar:mlstring></h3>
-<form method="post" action="&xar-modurl-ebulletin-admin-deletesubscribers;">
+    <h3 class="xar-align-center"><xar:mlstring>Confirm unsubscribing?</xar:mlstring></h3>
+    <form method="post" action="&xar-modurl-ebulletin-admin-deletesubscribers;">
 
-    <fieldset>
-        <legend>
-            <xar:mlstring>Recipients to be unsubscribed</xar:mlstring>
-        </legend>
+        <fieldset>
+            <legend>
+                <xar:mlstring>Recipients to be unsubscribed</xar:mlstring>
+            </legend>
 
-        <table>
-        <tr>
-            <th class="xar-padding-thicksides"><xar:mlstring>Name</xar:mlstring></th>
-            <th class="xar-padding-thicksides"><xar:mlstring>Publication</xar:mlstring></th>
-            <th class="xar-padding-thicksides"><xar:mlstring>Email</xar:mlstring></th>
-        <xar:loop name="$subscribers">
+            <table>
             <tr>
-                <td class="xar-padding-thicksides">#$loop:item.name#</td>
-                <td class="xar-padding-thicksides">#$loop:item.pubname#</td>
-                <td class="xar-padding-thicksides">#$loop:item.email#</td>
-            </tr>
-            <input type="hidden" name="unsub[#$loop:item.id#]" id="unsub[#$loop:item.id#]" value="1" />
-        </xar:loop>
-        </table>
-    </fieldset>
+                <th class="xar-padding-thicksides"><xar:mlstring>Name</xar:mlstring></th>
+                <th class="xar-padding-thicksides"><xar:mlstring>Publication</xar:mlstring></th>
+                <th class="xar-padding-thicksides"><xar:mlstring>Email</xar:mlstring></th>
+            <xar:loop name="$subscribers">
+                <tr>
+                    <td class="xar-padding-thicksides">#$loop:item.name#</td>
+                    <td class="xar-padding-thicksides">#$loop:item.pubname#</td>
+                    <td class="xar-padding-thicksides">#$loop:item.email#</td>
+                </tr>
+                <input type="hidden" name="unsub[#$loop:item.id#]" id="unsub[#$loop:item.id#]" value="1" />
+            </xar:loop>
+            </table>
+        </fieldset>
 
-    <fieldset>
-        <div class="xar-form-input-wrapper-after">
-            <input type="hidden" name="authid" id="authid" value="#$authid#" />
-            <input type="hidden" name="confirm" id="confirm" value="true" />
-            <input type="submit" value="#xarML('Confirm')#" />
-        </div>
+        <fieldset>
+            <div class="xar-form-input-wrapper-after">
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <input type="hidden" name="confirm" id="confirm" value="true" />
+                <input type="submit" value="#xarML('Confirm')#" />
+            </div>
 
-        <div class="xar-form-input-wrapper-before">
-        <a href="&xar-modurl-ebulletin-admin-viewsubscribers;">
-            <xar:mlstring>Cancel and Return</xar:mlstring>
-        </a>
-        </div>
-    </fieldset>
+            <div class="xar-form-input-wrapper-before">
+            <a href="&xar-modurl-ebulletin-admin-viewsubscribers;">
+                <xar:mlstring>Cancel and Return</xar:mlstring>
+            </a>
+            </div>
+        </fieldset>
 
-    <input type="hidden" name="return" value="#$return#" />
+        <input type="hidden" name="return" value="#$return#" />
 
-</form>
-</div>
+    </form>
+
 </div>

@@ -48,15 +48,13 @@ function ebulletin_admin_newsubscribers($args)
     $pubs = xarModAPIFunc('ebulletin', 'user', 'getall');
     if (empty($pubs) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
-    // initialize template array
-    $data = xarModAPIFunc('ebulletin', 'admin', 'menu');
-
     // set template vars
-    $data['authid'] = $authid;
-    $data['pubs']   = $pubs;
-    $data['pid']    = $pid;
-    $data['stype']  = $stype;
-    $data['numitems']    = $numitems;
+    $data = array();
+    $data['authid']   = $authid;
+    $data['pubs']     = $pubs;
+    $data['pid']      = $pid;
+    $data['stype']    = $stype;
+    $data['numitems'] = $numitems;
 
     // handle items specific to subscriber type
     switch($stype) {

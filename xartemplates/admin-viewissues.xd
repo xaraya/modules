@@ -1,104 +1,84 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
-<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>View Issues</xar:mlstring></h2>
-<div style="margin: auto;"><xar:template file="statusmsg" type="module" />
+<xar:template type="module" file="admin-header" />
+<div class="xar-mod-body">
 
-<form method="get" class="xar-align-right" style="float: right;">
+    <h2><xar:mlstring>View Issues</xar:mlstring></h2>
 
-    <xar:comment>
-        ***SIGH*** To make filter play nicely with other links on this page,
-        we need to use GET protocol, which means defining all the URL's other
-        params using <input type="hidden" /> values.
-    </xar:comment>
-    <input type="hidden" name="module" value="ebulletin" />
-    <input type="hidden" name="type" value="admin" />
-    <input type="hidden" name="func" value="viewissues" />
-    <input type="hidden" name="order" value="#$order#" />
-    <input type="hidden" name="sort" value="#$sort#" />
-    <input type="hidden" name="startnum" value="1" />
+    <form method="get" class="xar-align-right" style="float: right;">
+        <input type="hidden" name="module" value="ebulletin" />
+        <input type="hidden" name="type" value="admin" />
+        <input type="hidden" name="func" value="viewissues" />
+        <input type="hidden" name="order" value="#$order#" />
+        <input type="hidden" name="sort" value="#$sort#" />
+        <input type="hidden" name="startnum" value="1" />
 
-    <xar:mlstring>Items per page:</xar:mlstring>
-    <input type="text" name="numitems" value="#$numitems#" size="3" />
-    <input type="submit" value="#xarML('Update')#" />
-
-</form>
-
-<xar:if condition="!empty($pubs)">
-    <form action="&xar-modurl-ebulletin-admin-newissue;" method="post">
-    <xar:mlstring>Create new issue for</xar:mlstring>:
-    <select name="pid">
-        <xar:foreach in="$pubs" key="$pid" value="$pub">
-            <option value="#$pid#">#$pub['name']#</option>
-        </xar:foreach>
-    </select>
-    <input type="submit" value="#xarML('Go')#" />
+        <xar:mlstring>Issues per page:</xar:mlstring>
+        <input type="text" name="numitems" value="#$numitems#" size="3" />
+        <input type="submit" value="#xarML('Go')#" />
     </form>
-</xar:if>
 
-<div class="xar-align-center xar-padding-thick">#$pager#</div>
+    <xar:if condition="!empty($pubs)">
+        <form action="&xar-modurl-ebulletin-admin-newissue;" method="post">
+        <xar:mlstring>Create new issue for</xar:mlstring>:
+        <select name="pid">
+            <xar:foreach in="$pubs" key="$pid" value="$pub">
+                <option value="#$pid#">#$pub['name']#</option>
+            </xar:foreach>
+        </select>
+        <input type="submit" value="#xarML('Go')#" />
+        </form>
+    </xar:if>
 
-<table class="xar-fullwidth">
-<tr>
-    <th>
-        <a href="#xarServerGetCurrentURL(array('order' => 'id', 'sort' => $nextsort))#"><xar:mlstring>ID</xar:mlstring></a>
-        <xar:if condition="$order eq 'id'">
-            <img src="#$sort_img#" alt="#xarML('Sorted by '.$sort)#" />
-        </xar:if>
-    </th>
-    <th>
-        <a href="#xarServerGetCurrentURL(array('order' => 'pubname', 'sort' => $nextsort))#"><xar:mlstring>Publication</xar:mlstring></a>
-        <xar:if condition="$order eq 'pubname'">
-            <img src="#$sort_img#" alt="#xarML('Sorted by '.$sort)#" />
-        </xar:if>
-    </th>
-    <th>
-        <a href="#xarServerGetCurrentURL(array('order' => 'subject', 'sort' => $nextsort))#"><xar:mlstring>Subject</xar:mlstring></a>
-        <xar:if condition="$order eq 'subject'">
-            <img src="#$sort_img#" alt="#xarML('Sorted by '.$sort)#" />
-        </xar:if>
-    </th>
-    <th>
-        <a href="#xarServerGetCurrentURL(array('order' => 'date', 'sort' => $nextsort))#"><xar:mlstring>Issue Date</xar:mlstring></a>
-        <xar:if condition="$order eq 'date'">
-            <img src="#$sort_img#" alt="#xarML('Sorted by '.$sort)#" />
-        </xar:if>
-    </th>
-    <th>
-        <a href="#xarServerGetCurrentURL(array('order' => 'published', 'sort' => $nextsort))#"><xar:mlstring>Published?</xar:mlstring></a>
-        <xar:if condition="$order eq 'published'">
-            <img src="#$sort_img#" alt="#xarML('Sorted by '.$sort)#" />
-        </xar:if>
-    </th>
-    <th>
-        <xar:mlstring>Options</xar:mlstring>
-    </th>
-</tr>
-<xar:foreach in="$issues" value="$issue">
-<tr>
-    <td>#$issue['id']#</td>
-    <td>#$issue['pubname']#</td>
-    <td>#$issue['subject']#</td>
-    <td>#$issue['issuedate']#</td>
-    <td>#$issue['published_string']#</td>
-    <td>
-        <xar:loop name="$issue['urls']">
-            <xar:if condition="empty($loop:item.onclick)">
-                <a href="#$loop:item.url#" title="#$loop:item.title#">
-                    #$loop:item.label#
-                </a>
-            <xar:else />
-                <a href="#$loop:item.url#" title="#$loop:item.title#" onclick="#$loop:item.onclick#">
-                    #$loop:item.label#
-                </a>
+    <div class="xar-align-center xar-padding-thick">#$pager#</div>
+
+    <table class="xar-fullwidth">
+    <tr>
+        <th>
+            <a href="#xarServerGetCurrentURL(array('order' => 'date', 'sort' => $nextsort))#"><xar:mlstring>Date</xar:mlstring></a>
+            <xar:if condition="$order eq 'date'">
+                <img src="#$sort_img#" alt="#$sort#" />
             </xar:if>
-            <xar:if condition="$loop:index+1 lt count($issue['urls'])">|</xar:if>
-        </xar:loop>
-    </td>
-</tr>
-</xar:foreach>
-</table>
+        </th>
+        <th>
+            <a href="#xarServerGetCurrentURL(array('order' => 'subject', 'sort' => $nextsort))#"><xar:mlstring>Subject</xar:mlstring></a>
+            <xar:if condition="$order eq 'subject'">
+                <img src="#$sort_img#" alt="#$sort#" />
+            </xar:if>
+        </th>
+        <th>
+            <a href="#xarServerGetCurrentURL(array('order' => 'published', 'sort' => $nextsort))#"><xar:mlstring>Published?</xar:mlstring></a>
+            <xar:if condition="$order eq 'published'">
+                <img src="#$sort_img#" alt="#$sort#" />
+            </xar:if>
+        </th>
+        <th>
+            <xar:mlstring>Options</xar:mlstring>
+        </th>
+    </tr>
+    <xar:foreach in="$issues" value="$issue">
+    <tr>
+        <td>#$issue['issuedate']#</td>
+        <td>#$issue['subject']#</td>
+        <td class="xar-align-center">#$issue['published_string']#</td>
+        <td>
+            <xar:loop name="$issue['urls']">
+                <xar:if condition="empty($loop:item.onclick)">
+                    <a href="#$loop:item.url#" title="#$loop:item.title#">
+                        #$loop:item.label#
+                    </a>
+                <xar:else />
+                    <a href="#$loop:item.url#" title="#$loop:item.title#" onclick="#$loop:item.onclick#">
+                        #$loop:item.label#
+                    </a>
+                </xar:if>
+                <xar:if condition="$loop:index+1 lt count($issue['urls'])">|</xar:if>
+            </xar:loop>
+        </td>
+    </tr>
+    </xar:foreach>
+    </table>
 
-<div class="xar-align-center xar-padding-thick">#$pager#</div>
-</div>
+    <div class="xar-align-center xar-padding-thick">#$pager#</div>
+
 </div>

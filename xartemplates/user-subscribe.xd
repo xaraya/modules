@@ -1,16 +1,19 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
-<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Already Registered?</xar:mlstring></h2>
-<div style="margin: auto;"><xar:template file="user-menu" type="module" />
+<xar:template type="module" file="user-header" />
+<div class="xar-mod-body">
 
-<p>
-    <xar:ml>
-        <xar:mlstring>The email address you entered belongs to a registered user of this website.  If this is you, please <a href="#(2)">log in</a> before subscribing.  If it is not, please use an alternate address or contact the website administrator.</xar:mlstring>
-        <xar:mlvar>#$email#</xar:mlvar>
-        <xar:mlvar>&xar-modurl-roles-user-account;</xar:mlvar>
-    </xar:ml>
-</p>
+    <h2><xar:mlstring>Already Registered?</xar:mlstring></h2>
 
-</div>
+    <p>
+        <xar:ml>
+            <xar:mlstring>The email address you entered belongs to a registered user of this
+            website.  If this is you, please <a href="#(2)">log in</a> before subscribing.  If it
+            is not, please use an alternate address or contact the website
+            administrator.</xar:mlstring>
+            <xar:mlvar>#$email#</xar:mlvar>
+            <xar:mlvar>&xar-modurl-roles-user-account;</xar:mlvar>
+        </xar:ml>
+    </p>
+
 </div>

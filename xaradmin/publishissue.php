@@ -27,7 +27,7 @@ function ebulletin_admin_publishissue($args)
 
     // get issue
     $issue = xarModAPIFunc('ebulletin', 'user', 'getissue', array('id' => $id));
-    if (empty($issue) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+    if (xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
     // security check
     if (!xarSecurityCheck('AddeBulletin', 1, 'Publication', "$issue[pubname]:$issue[id]")) return;
@@ -35,35 +35,9 @@ function ebulletin_admin_publishissue($args)
     // Check for confirmation.
     if (empty($confirm)) {
 
-        // add body sizes
-        $units = array(xarML(''), xarML('K'), xarML('M'), xarML('G'));
-        $htmlsize = $txtsize = '';
-        if (!empty($issue['body_html'])) {
-            $size = strlen($issue['body_html']);
-            $cnt = 0;
-            $unit = '';
-            $htmlsize = $size;
-            while ($size > 1024) {
-                $size /= 1024;
-                $cnt++;
-                $htmlsize = round($size, 1).$units[$cnt];
-            }
-        }
-        if (!empty($issue['body_txt'])) {
-            $size = strlen($issue['body_txt']);
-            $cnt = 0;
-            $unit = '';
-            $txtsize = $size;
-            while ($size > 1024) {
-                $size /= 1024;
-                $cnt++;
-                $txtsize = round($size, 1).$units[$cnt];
-            }
-        }
-
         // get publication
         $pub = xarModAPIFunc('ebulletin', 'user', 'get', array('id' => $issue['pid']));
-        if (empty($pub) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+        if (xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
         // get list of would-be recipients
         $subscribers = xarModAPIFunc('ebulletin', 'user', 'getsubscriberemails',
@@ -72,20 +46,15 @@ function ebulletin_admin_publishissue($args)
         if (empty($subscribers) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
         $subscriberscount = count($subscribers);
 
-        // initialize template data
-        $data = xarModAPIFunc('ebulletin', 'admin', 'menu');
-
-        // get vars
-        $authid = xarSecGenAuthKey();
-
-        // set template data
-        $data['id'] = $id;
-        $data['issue'] = $issue;
-        $data['pub'] = $pub;
-        $data['authid'] = $authid;
-        $data['htmlsize'] = $htmlsize;
-        $data['txtsize'] = $txtsize;
-        $data['subscribers'] = $subscribers;
+        // set template vars
+        $data = array();
+        $data['id']               = $id;
+        $data['issue']            = $issue;
+        $data['pub']              = $pub;
+        $data['authid']           = xarSecGenAuthKey();
+        $data['htmlsize']         = round(strlen($issue['body_html'])/1024, 1);
+        $data['txtsize']          = round(strlen($issue['body_txt'])/1024, 1);
+        $data['subscribers']      = $subscribers;
         $data['subscriberscount'] = $subscriberscount;
 
         return $data;

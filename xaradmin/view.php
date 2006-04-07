@@ -20,8 +20,8 @@ function ebulletin_admin_view()
     if (!xarSecurityCheck('EditeBulletin')) return;
 
     // get publications
-    $pubs = xarModAPIFunc('ebulletin', 'user', 'getall');
-    if (empty($pub) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+    $pubs = xarModAPIFunc('ebulletin', 'user', 'getall', array('order' => 'id'));
+    if (xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
     // get additional vars
     $yes = xarML('Yes');
@@ -45,27 +45,6 @@ function ebulletin_admin_view()
             );
         }
 
-        if (xarSecurityCheck('AddeBulletin', 0, 'Publication', "$pub[name]:All:$pub[id]")) {
-
-            // new issue
-            $pubs[$index]['urls'][] = array(
-                'url' => xarModURL('ebulletin', 'admin', 'newissue',
-                    array('pid' => $pub['id'])
-                ),
-                'title' => xarML('Create a new issue for this publication.'),
-                'label' => xarML('New Issue')
-            );
-
-            // one-time message
-            $pubs[$index]['urls'][] = array(
-                'url' => xarModURL('ebulletin', 'admin', 'onetime',
-                    array('pid' => $pub['id'])
-                ),
-                'title' => xarML('Send one-time message to this publication\'s distribution list'),
-                'label' => xarML('One-time Message')
-            );
-        }
-
         if (xarSecurityCheck('DeleteeBulletin', 0, 'Publication', "$pub[name]:All:$pub[id]")) {
 
             // delete
@@ -78,10 +57,23 @@ function ebulletin_admin_view()
             );
         }
 
+        if (xarSecurityCheck('AddeBulletin', 0, 'Publication', "$pub[name]:All:$pub[id]")) {
+
+            // announce
+            $pubs[$index]['urls'][] = array(
+                'url' => xarModURL('ebulletin', 'admin', 'announce',
+                    array('pid' => $pub['id'])
+                ),
+                'title' => xarML('Send one-time message to all subscribers'),
+                'label' => xarML('Announce')
+            );
+        }
+
+
     }
 
     // initialize template array
-    $data = xarModAPIFunc('ebulletin', 'admin', 'menu');
+    $data = array();
 
     // add template vars
     $data['pubs'] = $pubs;

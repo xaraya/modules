@@ -39,14 +39,11 @@ function ebulletin_adminapi_create($args)
     if (empty($subject) || !is_string($subject)) {
         $invalid[] = 'subject';
     }
-    if (empty($tpl_html) && empty($tpl_txt)) {
-        $invalid[] = 'template';
+    if (!isset($startday) || !is_numeric($startday)) {
+        $invalid[] = 'startday';
     }
-    if (!is_numeric($numsago) || $numsago < 0) {
-        $invalid[] = 'numsago';
-    }
-    if (!is_numeric($numsfromnow) || $numsfromnow < 0) {
-        $invalid[] = 'numsfromnow';
+    if (!isset($endday) || !is_numeric($endday)) {
+        $invalid[] = 'endday';
     }
 
     // throw error if bad data
@@ -63,6 +60,8 @@ function ebulletin_adminapi_create($args)
 
     // handle checkboxes
     $public = (isset($public) && $public) ? 1 : 0;
+    $html = (isset($html) && $html) ? 1 : 0;
+    if (!isset($defaulttheme)) $defaulttheme = '';
 
     // prepare for database
     $dbconn = xarDBGetConn();
@@ -76,26 +75,23 @@ function ebulletin_adminapi_create($args)
     $query = "
         INSERT INTO $pubtable (
             xar_id,
+            xar_template,
             xar_name,
-            xar_desc,
+            xar_description,
             xar_public,
             xar_from,
             xar_fromname,
             xar_replyto,
             xar_replytoname,
             xar_subject,
-            xar_tpl_html,
-            xar_tpl_txt,
-            xar_numsago,
-            xar_unitsago,
-            xar_startsign,
-            xar_numsfromnow,
-            xar_unitsfromnow,
-            xar_endsign
-        ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            xar_html,
+            xar_startday,
+            xar_endday,
+            xar_theme
+        ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     $bindvars = array(
-        $nextId, $name, $desc, $public, $from, $fromname, $replyto, $replytoname, $subject,
-        $tpl_html, $tpl_txt, $numsago, $unitsago, $startsign, $numsfromnow, $unitsfromnow, $endsign
+        $nextId, $template, $name, $description, $public, $from, $fromname, $replyto,
+        $replytoname, $subject, $html, $startday, $endday, $defaulttheme
     );
     $result = $dbconn->Execute($query, $bindvars);
 

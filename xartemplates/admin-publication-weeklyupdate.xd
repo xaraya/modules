@@ -1,0 +1,44 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<head>
+    <title>#$subject#</title>
+    <style type="text/css">
+        body { font-family: Verdana, Arial, sans-serif; font-size: 12px; }
+        a { color: #000099; }
+    </style>
+</head>
+<body>
+
+    <table width="640" align="center">
+    <tr><td align="center" bgcolor="#0e0e82">
+
+        <b><i>
+        <font size="2" face="Verdana, Arial, sans-serif" color="#ffffff">
+            <xar:mlstring>Advent HOPE's</xar:mlstring>
+        </font><br />
+        <font size="6" face="Verdana, Arial, sans-serif" color="#ffffff">
+            #$subject#
+        </font><br />
+        <font size="2" face="Verdana, Arial, sans-serif" color="#ffffff">
+            <xar:mlstring>Dedication to Christ, seeking the lost, pointing to His soon
+            return</xar:mlstring>
+        </font>
+        </i></b>
+
+    </td></tr>
+    <tr><td>
+
+
+        <br />
+
+    <xar:blockgroup name="frontpage" id="frontpage" />
+
+
+
+    </td></tr>
+    </table>
+
+</body>
+</html>

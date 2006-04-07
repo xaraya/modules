@@ -1,0 +1,39 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<xar:style scope="module" module="base" file="navtabs" />
+<xar:set name="$statusmsg">xarSessionGetVar('statusmsg')</xar:set>
+<xar:if condition="xarSessionSetVar('statusmsg', '')"></xar:if>
+
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>eBulletin</xar:mlstring></span>
+
+    <xar:set name="activetab">$_bl_module_func</xar:set>
+    <div>
+        <dl class="xar-tabs">
+            <dt class="help" title="#xarML('Choose a section to visit')#">
+                <xar:mlstring>Sections:</xar:mlstring>
+            </dt>
+            <xar:sec mask="ReadeBulletin" catch="false">
+                <xar:set name="tabclass">($activetab == 'main') ? 'active' : ''</xar:set>
+                <dd class="#$tabclass#">
+                    <a href="&xar-modurl-ebulletin-user-main;">
+                        <xar:mlstring>Subscriptions</xar:mlstring>
+                    </a>
+                </dd>
+            </xar:sec>
+            <xar:sec mask="ReadeBulletin" catch="false">
+                <xar:set name="tabclass">($activetab == 'view') ? 'active' : ''</xar:set>
+                <dd class="#$tabclass#">
+                    <a href="&xar-modurl-ebulletin-user-view;" >
+                        <xar:mlstring>Archive</xar:mlstring>
+                    </a>
+                </dd>
+            </xar:sec>
+        </dl>
+    </div>
+
+    <xar:if condition="!empty($statusmsg)">
+        <p class="xar-align-center">#$statusmsg#</p>
+    </xar:if>
+
+</div>

@@ -1,237 +1,171 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
-<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>New Publication</xar:mlstring></h2>
-<div style="margin: auto;"><xar:template file="statusmsg" type="module" />
+<xar:template type="module" file="admin-header" />
+<div class="xar-mod-body">
+    <h2><xar:mlstring>New Publication</xar:mlstring></h2>
 
-<form method="post" action="&xar-modurl-ebulletin-admin-create;">
-<fieldset>
-    <legend><xar:mlstring>Display</xar:mlstring></legend>
-    <div class="xar-form-input-wrapper">
-        <label for="name"  class="xar-form-label" title="#xarML('Publication Name')#">
-            <xar:mlstring>Name:</xar:mlstring>
-        </label>
-        <input type="text" name="name" id="name" value="#$name#" maxlength="255" class="xar-form-textlong" />
-        <span class="xar-error">*</span>
-        <xar:if condition="!empty($invalid['name'])">
-            <div class="xar-error">
-                <xar:mlstring>ERROR! Name cannot be blank.</xar:mlstring>
-            </div>
-        </xar:if>
-    </div>
+    <form method="post" action="&xar-modurl-ebulletin-admin-create;">
+        <fieldset>
+            <legend><xar:mlstring>Display Options</xar:mlstring></legend>
 
-    <div class="xar-form-input-wrapper">
-        <label for="desc"  class="xar-form-label" title="#xarML('Description')#">
-            <xar:mlstring>Description:</xar:mlstring>
-        </label>
-        <input type="text" name="desc" id="desc" value="#$desc#" size="60" maxlength="255" />
-    </div>
-
-    <div class="xar-form-input-wrapper">
-        <label for="public"  class="xar-form-label" title="#xarML('Make publicly viewable')#">
-            <xar:mlstring>Make Public:</xar:mlstring>
-        </label>
-        <xar:if condition="$public">
-            <input type="checkbox" name="public" id="public" value="1" checked="checked" />
-        <xar:else />
-            <input type="checkbox" name="public" id="public" value="1" />
-        </xar:if>
-    </div>
-
-</fieldset>
-<fieldset>
-    <legend><xar:mlstring>Senders and Recipients</xar:mlstring></legend>
-
-    <div class="xar-form-input-wrapper">
-        <label for="from"  class="xar-form-label" title="#xarML('From email')#">
-            <xar:mlstring>From Email:</xar:mlstring>
-        </label>
-        <input type="text" name="from" id="from" value="#$from#" maxlength="255" class="xar-form-textlong" />
-        <span class="xar-error">*</span>
-        <xar:if condition="!empty($invalid['from'])">
-            <div class="xar-error">
-                <xar:mlstring>ERROR! Blank or invalid email.</xar:mlstring>
-            </div>
-        </xar:if>
-    </div>
-
-    <div class="xar-form-input-wrapper">
-        <label for="fromname"  class="xar-form-label" title="#xarML('From name')#">
-            <xar:mlstring>From Name:</xar:mlstring>
-        </label>
-        <input type="text" name="fromname" id="fromname" value="#$fromname#" maxlength="255" class="xar-form-textlong" />
-    </div>
-
-    <div class="xar-form-input-wrapper">
-        <label for="replyto"  class="xar-form-label" title="#xarML('Reply-To email')#">
-            <xar:mlstring>Reply-To Email:</xar:mlstring>
-        </label>
-        <input type="text" name="replyto" id="replyto" value="#$replyto#" maxlength="255" class="xar-form-textlong" />
-        <xar:if condition="!empty($invalid['replyto'])">
-            <div class="xar-error">
-                <xar:mlstring>ERROR! Invalid email.</xar:mlstring>
-            </div>
-        </xar:if>
-    </div>
-
-    <div class="xar-form-input-wrapper">
-        <label for="replytoname"  class="xar-form-label" title="#xarML('Reply-To name')#">
-            <xar:mlstring>Reply-To Name:</xar:mlstring>
-        </label>
-        <input type="text" name="replytoname" id="replytoname" value="#$replytoname#" maxlength="255" class="xar-form-textlong" />
-    </div>
-
-</fieldset>
-<fieldset>
-    <legend><xar:mlstring>Message Content</xar:mlstring></legend>
-
-    <div class="xar-form-input-wrapper">
-        <label for="subject"  class="xar-form-label" title="#xarML('Subject')#">
-            <xar:mlstring>Subject:</xar:mlstring>
-        </label>
-        <input type="text" name="subject" id="subject" value="#$subject#" maxlength="255" class="xar-form-textlong" />
-        <span class="xar-error">*</span>
-        <xar:if condition="!empty($invalid['subject'])">
-            <div class="xar-error">
-                <xar:mlstring>ERROR! Subject cannot be blank.</xar:mlstring>
-            </div>
-        </xar:if>
-    </div>
-
-    <div class="xar-form-input-wrapper xar-sub">
-        <xar:ml>
-            <xar:mlstring>Must select at least one template.  Template directory is <code class="xar-sub">#(1)</code>.</xar:mlstring>
-            <xar:mlvar>#$template_dir#</xar:mlvar>
-        </xar:ml>
-    </div>
-
-    <div class="xar-form-input-wrapper">
-        <label for="tpl_html"  class="xar-form-label" title="#xarML('HTML Template')#">
-            <xar:mlstring>HTML Template:</xar:mlstring>
-        </label>
-        <select name="tpl_html" id="tpl_html">
-            <option value=""></option>
-            <xar:foreach in="$templates" value="$template">
-                <xar:if condition="$tpl_html eq $template">
-                    <option value="#$template#" selected="selected">#$template#</option>
-                <xar:else />
-                    <option value="#$template#">#$template#</option>
+            <div class="xar-form-input-wrapper">
+                <label for="name"  class="xar-form-label" title="#xarML('Name')#">
+                    <xar:mlstring>Name:</xar:mlstring>
+                </label>
+                <input type="text" name="name" id="name" value="#$name#" maxlength="255" class="xar-form-textlong" />
+                <span class="xar-error">*</span>
+                <xar:if condition="!empty($invalid['name'])">
+                    <div class="xar-error">
+                        <xar:mlstring>ERROR! Name cannot be blank.</xar:mlstring>
+                    </div>
                 </xar:if>
-            </xar:foreach>
-        </select>
-        <span class="xar-error">*</span><span class="xar-norm">
-        <xar:if condition="!empty($invalid['template'])">
-            <div class="xar-error">
-                <xar:mlstring>ERROR! HTML and TXT templates cannot both be blank.</xar:mlstring>
             </div>
+
+            <div class="xar-form-input-wrapper">
+                <label for="description"  class="xar-form-label" title="#xarML('Description')#">
+                    <xar:mlstring>Description:</xar:mlstring>
+                </label>
+                <input type="text" name="description" id="description" value="#$description#" size="60" maxlength="255" />
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                <label for="public"  class="xar-form-label" title="#xarML('Make publicly viewable')#">
+                    <xar:mlstring>Make Public:</xar:mlstring>
+                </label>
+                <xar:if condition="$public">
+                    <input type="checkbox" name="public" id="public" value="1" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="public" id="public" value="1" />
+                </xar:if>
+            </div>
+
+        </fieldset>
+        <fieldset>
+            <legend><xar:mlstring>Mail Headers</xar:mlstring></legend>
+
+            <div class="xar-form-input-wrapper">
+                <label for="fromname"  class="xar-form-label" title="#xarML('From name')#">
+                    <xar:mlstring>From:</xar:mlstring>
+                </label>
+                <xar:mlstring>Name:</xar:mlstring> <input type="text" name="fromname" id="fromname" value="#$fromname#" maxlength="255" class="xar-form-textmedium" /> &nbsp;
+                <xar:mlstring>Email:</xar:mlstring> <input type="text" name="from" id="from" value="#$from#" maxlength="255" class="xar-form-textmedium" />
+                <span class="xar-error">*</span>
+                <xar:if condition="!empty($invalid['from'])">
+                    <div class="xar-error">
+                        <xar:mlstring>ERROR! From email cannot be blank.</xar:mlstring>
+                    </div>
+                </xar:if>
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                <label for="replytoname"  class="xar-form-label" title="#xarML('Reply-To name')#">
+                    <xar:mlstring>Reply-To:</xar:mlstring>
+                </label>
+                <xar:mlstring>Name:</xar:mlstring> <input type="text" name="replytoname" id="replytoname" value="#$replytoname#" maxlength="255" class="xar-form-textmedium" /> &nbsp;
+                <xar:mlstring>Email:</xar:mlstring> <input type="text" name="replyto" id="replyto" value="#$replyto#" maxlength="255" class="xar-form-textmedium" />
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                <label for="subject"  class="xar-form-label" title="#xarML('Subject')#">
+                    <xar:mlstring>Subject:</xar:mlstring>
+                </label>
+                <input type="text" name="subject" id="subject" value="#$subject#" maxlength="255" size="60"  />
+                <span class="xar-error">*</span>
+                <xar:if condition="!empty($invalid['subject'])">
+                    <div class="xar-error">
+                        <xar:mlstring>ERROR! Subject cannot be blank.</xar:mlstring>
+                    </div>
+                </xar:if>
+            </div>
+
+        </fieldset>
+        <fieldset>
+            <legend><xar:mlstring>Mail Body</xar:mlstring></legend>
+
+            <div class="xar-form-input-wrapper">
+                <label for="template" class="xar-form-label" title="#xarML('Template')#">
+                    <xar:mlstring>Template:</xar:mlstring>
+                </label>
+                <input type="text" name="template" id="template" value="#$template#" maxlength="255" class="xar-form-textmedium" />
+                <span class="xar-error">*</span>
+                <xar:if condition="!empty($invalid['template'])">
+                    <div class="xar-error">
+                        <xar:mlstring>ERROR! Template cannot be blank.</xar:mlstring>
+                    </div>
+                </xar:if>
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                <label for="html" class="xar-form-label" title="#xarML('Send HTML messages?')#">
+                    <xar:mlstring>Use HTML:</xar:mlstring>
+                </label>
+                <xar:if condition="$html">
+                    <input type="checkbox" name="html" id="html" value="1" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="html" id="html" value="1" />
+                </xar:if>
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                <label for="startday" class="xar-form-label" title="#xarML('Starting day for items to be included in each issue')#">
+                    <xar:mlstring>Start Day</xar:mlstring>
+                </label>
+                <input type="text" name="startday" id="startday" size="3" maxlength="8" value="#$startday#" />
+                <span class="xar-sub">
+                    <xar:mlstring>Relative to issue date.  Use negative number to include days in the past.</xar:mlstring>
+                </span>
+                <xar:if condition="!empty($invalid['range'])">
+                    <span class="xar-error"><xar:mlstring>Error!  Start date occurs after end date.</xar:mlstring></span>
+                </xar:if>
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                <label for="endday" class="xar-form-label" title="#xarML('Ending day for items to be included in each issue')#">
+                    <xar:mlstring>End Day</xar:mlstring>
+                </label>
+                <input type="text" name="endday" id="endday" size="3" maxlength="8" value="#$endday#" />
+                <span class="xar-sub">
+                    <xar:mlstring>Relative to issue date.  Use negative number to include days in the past.</xar:mlstring>
+                </span>
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                <label for="defaulttheme" class="xar-form-label" title="#xarML('Default theme for generating issues')#">
+                    <xar:mlstring>Default theme</xar:mlstring>
+                </label>
+                <select name="defaulttheme" id="defaulttheme">
+                    <option value=""><xar:mlstring>[System Theme]</xar:mlstring></option>
+                    <xar:loop name="$themes">
+                        <xar:if condition="$loop:item['directory'] eq $defaulttheme">
+                            <option value="#$loop:item['directory']#" selected="selected">
+                                #$loop:item['name']#
+                            </option>
+                        <xar:else />
+                            <option value="#$loop:item['directory']#">
+                                #$loop:item['name']#
+                            </option>
+                        </xar:if>
+                    </xar:loop>
+                </select>
+            </div>
+
+        </fieldset>
+
+        <xar:if condition="!empty($hookoutput)">
+            <fieldset>
+                <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
+                    <xar:foreach in="$hookoutput" value="$hook">
+                        #$hook#
+                    </xar:foreach>
+            </fieldset>
         </xar:if>
-    </div>
-
-    <div class="xar-form-input-wrapper">
-        <label for="tpl_txt"  class="xar-form-label" title="#xarML('TXT Template')#">
-            <xar:mlstring>TXT Template:</xar:mlstring>
-        </label>
-        <select name="tpl_txt" id="tpl_txt">
-            <option value=""></option>
-            <xar:foreach in="$templates" value="$template">
-                <xar:if condition="$tpl_txt eq $template">
-                    <option value="#$template#" selected="selected">#$template#</option>
-                <xar:else />
-                    <option value="#$template#">#$template#</option>
-                </xar:if>
-            </xar:foreach>
-        </select>
-        <span class="xar-error">*</span><span class="xar-norm">
-        <xar:if condition="!empty($invalid['template'])">
-            <div class="xar-error">
-                <xar:mlstring>ERROR! TXT and TXT templates cannot both be blank.</xar:mlstring>
+        <fieldset>
+            <div class="xar-form-input-wrapper-after">
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <input type="submit" value="#xarML('Add Publication')#" />
             </div>
-        </xar:if>
-    </div>
+        </fieldset>
 
-    <div class="xar-form-input-wrapper">
-        <label for="numsago" class="xar-form-label" title="#xarML('Starting interval')#">
-            <xar:mlstring>Starting interval</xar:mlstring>
-        </label>
-        <input type="text" name="numsago" id="numsago" size="3" maxlength="8" value="#$numsago#" />
-        <select name="unitsago" id="unitsago">
-            <xar:foreach in="$units" value="$row">
-                <xar:if condition="$unitsago eq $row[0]">
-                    <option value="#$row[0]#" selected="selected">#$row[1]#</option>
-                <xar:else />
-                    <option value="#$row[0]#">#$row[1]#</option>
-                </xar:if>
-            </xar:foreach>
-        </select>
-        <select name="startsign" id="startsign">
-            <xar:foreach in="$signs" value="$row">
-                <xar:if condition="$startsign eq $row[0]">
-                    <option value="#$row[0]#" selected="selected">#$row[1]#</option>
-                <xar:else />
-                    <option value="#$row[0]#">#$row[1]#</option>
-                </xar:if>
-            </xar:foreach>
-        </select>
-        <xar:mlstring>the issue date</xar:mlstring>
-        <xar:if condition="!empty($invalid['numsago'])">
-            <div class="xar-error">
-                <xar:mlstring>ERROR! Starting interval must begin with a positive integer</xar:mlstring>
-            </div>
-        <xar:elseif condition="!empty($invalid['sequence'])" />
-            <div class="xar-error">
-                <xar:mlstring>ERROR! Starting interval is after ending interval</xar:mlstring>
-            </div>
-        </xar:if>
-    </div>
+    </form>
 
-    <div class="xar-form-input-wrapper">
-        <label for="numsfromnow" class="xar-form-label" title="#xarML('Ending interval')#">
-            <xar:mlstring>Ending interval</xar:mlstring>
-        </label>
-        <input type="text" name="numsfromnow" id="numsfromnow" size="3" maxlength="8" value="#$numsfromnow#" />
-        <select name="unitsfromnow" id="unitsfromnow">
-            <xar:foreach in="$units" key="$index" value="$row">
-                <xar:if condition="$unitsfromnow eq $row[0]">
-                    <option value="#$row[0]#" selected="selected">#$row[1]#</option>
-                <xar:else />
-                    <option value="#$row[0]#">#$row[1]#</option>
-                </xar:if>
-            </xar:foreach>
-        </select>
-        <select name="endsign" id="endsign">
-            <xar:foreach in="$signs" value="$row">
-                <xar:if condition="$endsign eq $row[0]">
-                    <option value="#$row[0]#" selected="selected">#$row[1]#</option>
-                <xar:else />
-                    <option value="#$row[0]#">#$row[1]#</option>
-                </xar:if>
-            </xar:foreach>
-        </select>
-        <xar:mlstring>the issue date</xar:mlstring>
-        <xar:if condition="!empty($invalid['numsfromnow'])">
-            <div class="xar-error">
-                <xar:mlstring>ERROR! Ending interval must begin with a positive integer</xar:mlstring>
-            </div>
-        </xar:if>
-    </div>
-
-</fieldset>
-<xar:if condition="!empty($hookoutput)">
-    <fieldset>
-        <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
-            <xar:foreach in="$hookoutput" value="$hook">
-                #$hook#
-            </xar:foreach>
-    </fieldset>
-</xar:if>
-<fieldset>
-    <div class="xar-form-input-wrapper-after">
-        <input type="hidden" name="authid" id="authid" value="#$authid#" />
-        <input type="submit" value="#xarML('Add Publication')#" />
-    </div>
-</fieldset>
-
-</form>
-
-</div>
 </div>

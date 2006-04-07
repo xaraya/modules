@@ -46,15 +46,15 @@ function ebulletin_user_main($args)
     $subs = xarModAPIFunc('ebulletin', 'user', 'getsubscriber',
         array('uid' => $uid, 'name' => $name, 'email' => $email)
     );
-    if (empty($subs) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+    if (xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
     // get public publications
     $pubs = xarModAPIFunc('ebulletin', 'user', 'getall', array('public' => true));
-    if (empty($pubs) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+    if (xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
     // get hidden publications
     $hidden = xarModAPIFunc('ebulletin', 'user', 'getall', array('public' => false));
-    if (empty($hidden) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+    if (xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
     // add subscription flag to pubs
     foreach ($subs as $index => $sub) {

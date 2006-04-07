@@ -45,10 +45,8 @@ function ebulletin_admin_createsubscribers($args)
     ));
     if (empty($results) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
-    // initialize template data
-    $data = xarModAPIFunc('ebulletin', 'admin', 'menu');
-
-    // set temmplate vars
+    // set template vars
+    $data = array();
     $data['results'] = $results;
     $data['stype']   = $stype;
 

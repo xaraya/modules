@@ -1,103 +1,86 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
-<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>New Issue</xar:mlstring></h2>
-<div style="margin: auto;"><xar:template file="statusmsg" type="module" />
+<xar:template type="module" file="admin-header" />
+<div class="xar-mod-body">
 
+    <h2><xar:mlstring>New Issue</xar:mlstring></h2>
 
-<!-- the specific template for the current admin function comes here -->
+    <form method="post" action="#xarModUrl('ebulletin', 'admin', 'createissue')#" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
 
-<form method="post" action="#xarModUrl('ebulletin', 'admin', 'createissue')#" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
+        <input type="hidden" name="pid" id="pid" value="#$pub['pid']#" />
 
-<input type="hidden" name="pid" id="pid" value="#$pub['pid']#" />
+        <div style="clear: both; padding-top: 10px;">
+            <span style="float: left; width: 35%; text-align: right;">
+                <span class="help" title="#xarML('Publication Name')#"><label for="name">#$publabel#</label>:</span>
+            </span>
+            <span style="float: right; width: 63%; text-align: left; font-weight: bold;">#$pub['name']#</span>
+        </div>
 
-<div style="clear: both; padding-top: 10px;">
-<span style="float: left; width: 35%; text-align: right;">
-    <span class="help" title="#xarML('Publication Name')#"><label for="name">#$publabel#</label>:</span>
-</span>
-<span style="float: right; width: 63%; text-align: left; font-weight: bold;">#$pub['name']#</span>
-</div>
+        <div style="clear: both; padding-top: 10px;">
+            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+            <span style="float: left; width: 35%; text-align: right;">
+                <span class="help" title="#xarML('Projected Date of Publication')#"><label for="name">#$datelabel#</label>:</span>
+            </span>
+            <span style="float: right; width: 63%; text-align: left;">
+            <xar:set name="$definition">array('name' => 'issuedate', 'type' => 'calendar', 'id' => 'issuedate', 'value' => strtotime('today'));</xar:set>
+            <xar:articles-field definition="$definition" />
+            </span>
+        </div>
 
-<div style="clear: both; padding-top: 10px;">
-<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-<span style="float: left; width: 35%; text-align: right;">
-    <span class="help" title="#xarML('Projected Date of Publication')#"><label for="name">#$datelabel#</label>:</span>
-</span>
-<span style="float: right; width: 63%; text-align: left;">
-<xar:set name="$definition">array('name' => 'issuedate', 'type' => 'calendar', 'id' => 'issuedate', 'value' => strtotime('today'));</xar:set>
-<xar:articles-field definition="$definition" />
-<xar:comment>
-<xar:if condition="isset($date)">
-    <input type="text" name="date" id="date" size="32" maxlength="32" value="#$date#" />
-<xar:else />
-    <input type="text" name="date" id="date" size="32" maxlength="32" value="#$issue['date']#" />
-</xar:if>
-</xar:comment>
-</span>
-</div>
+        <div style="clear: both; padding-top: 10px;">
+            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+            <span style="float: left; width: 35%; text-align: right;">
+                <span class="help" title="#xarML('Range of item dates to include')#"><label for="name">#$rangelabel#</label>:</span>
+            </span>
+            <span style="float: right; width: 63%; text-align: left;">
+            <xar:mlstring>From </xar:mlstring>
+            <select name="range[past][number]" id="range[past][number]">
+            <xar:foreach in="$dates['numbers']" value="$value">
+                <xar:if condition="$pub['range']['past']['number'] eq '-'.$value">
+                    <option value="-#$value#" selected="selected">#$value#</option>
+                <xar:else />
+                    <option value="-#$value#">#$value#</option>
+                </xar:if>
+            </xar:foreach>
+            </select>
+            <select name="range[past][increment]" id="range[past][increment]">
+            <xar:foreach in="$dates['increments']" value="$value">
+                <xar:if condition="$pub['range']['future']['increment'] eq $value">
+                    <option value="#$value#" selected="selected">#$value#s</option>
+                <xar:else />
+                    <option value="#$value#">#$value#s</option>
+                </xar:if>
+            </xar:foreach>
+            </select>
+            <xar:mlstring>prior to </xar:mlstring>
+            <select name="range[future][number]" id="range[future][number]">
+            <xar:foreach in="$dates['numbers']" value="$value">
+                <xar:if condition="$pub['range']['future']['number'] eq '+'.$value">
+                    <option value="+#$value#" selected="selected">#$value#</option>
+                <xar:else />
+                    <option value="+#$value#">#$value#</option>
+                </xar:if>
+            </xar:foreach>
+            </select>
+            <select name="range[future][increment]" id="range[future][increment]">
+            <xar:foreach in="$dates['increments']" value="$value">
+                <xar:if condition="$pub['range']['future']['increment'] eq $value">
+                    <option value="#$value#" selected="selected">#$value#s</option>
+                <xar:else />
+                    <option value="#$value#">#$value#s</option>
+                </xar:if>
+            </xar:foreach>
+            </select>
+            <xar:mlstring>later</xar:mlstring>
+            </span>
+        </div>
 
-<div style="clear: both; padding-top: 10px;">
-<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-<span style="float: left; width: 35%; text-align: right;">
-    <span class="help" title="#xarML('Range of item dates to include')#"><label for="name">#$rangelabel#</label>:</span>
-</span>
-<span style="float: right; width: 63%; text-align: left;">
-<xar:mlstring>From </xar:mlstring>
-<select name="range[past][number]" id="range[past][number]">
-<xar:foreach in="$dates['numbers']" value="$value">
-    <xar:if condition="$pub['range']['past']['number'] eq '-'.$value">
-        <option value="-#$value#" selected="selected">#$value#</option>
-    <xar:else />
-        <option value="-#$value#">#$value#</option>
-    </xar:if>
-</xar:foreach>
-</select>
-<select name="range[past][increment]" id="range[past][increment]">
-<xar:foreach in="$dates['increments']" value="$value">
-    <xar:if condition="$pub['range']['future']['increment'] eq $value">
-        <option value="#$value#" selected="selected">#$value#s</option>
-    <xar:else />
-        <option value="#$value#">#$value#s</option>
-    </xar:if>
-</xar:foreach>
-</select>
-<xar:mlstring>prior to </xar:mlstring>
-<select name="range[future][number]" id="range[future][number]">
-<xar:foreach in="$dates['numbers']" value="$value">
-    <xar:if condition="$pub['range']['future']['number'] eq '+'.$value">
-        <option value="+#$value#" selected="selected">#$value#</option>
-    <xar:else />
-        <option value="+#$value#">#$value#</option>
-    </xar:if>
-</xar:foreach>
-</select>
-<select name="range[future][increment]" id="range[future][increment]">
-<xar:foreach in="$dates['increments']" value="$value">
-    <xar:if condition="$pub['range']['future']['increment'] eq $value">
-        <option value="#$value#" selected="selected">#$value#s</option>
-    <xar:else />
-        <option value="#$value#">#$value#s</option>
-    </xar:if>
-</xar:foreach>
-</select>
-<xar:mlstring>later</xar:mlstring>
-</span>
-</div>
+        #$hooks#
+        <div style="clear: both; padding-top: 10px;">
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <span style="float: left; width: 30%; text-align: right;"><input type="submit" value="#$addbutton#" /></span>
+        </div>
 
+    </form>
 
-
-
-
-
-    #$hooks#
-    <div style="clear: both; padding-top: 10px;">
-
-        <input type="hidden" name="authid" id="authid" value="#$authid#" />
-        <span style="float: left; width: 30%; text-align: right;"><input type="submit" value="#$addbutton#" /></span>
-    </div>
-
-</form>
-
-<br />
-</div>
 </div>

@@ -24,16 +24,13 @@
 */
 function ebulletin_adminapi_menu()
 {
-    // get status message
-    $statusmsg = xarSessionGetVar('statusmsg');
-    xarSessionSetVar('statusmsg', '');
-
     // initialize menu data
     $menu = array();
 
+# Do we need this function any more?
+
     // set menu vars
-    $menu['menutitle'] = xarML('eBulletin Administration');
-    $menu['statusmsg'] = $statusmsg;
+#    $menu['menutitle'] = xarML('eBulletin Administration');
 
     return $menu;
 }

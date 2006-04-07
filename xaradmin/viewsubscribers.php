@@ -104,9 +104,9 @@ function ebulletin_admin_viewsubscribers()
     $currenturl = xarServerGetCurrentURL();
     $authid = xarSecGenAuthKey();
     $filter_cols = array(
+        'email'   => xarML('Email'),
         'name'    => xarML('Name'),
         'pubname' => xarML('Publication'),
-        'email'   => xarML('Email'),
     );
     $filter_types = array(
         'contains' => xarML('Contains'),
@@ -115,10 +115,8 @@ function ebulletin_admin_viewsubscribers()
         'equals'   => xarML('Equals'),
     );
 
-    // initialize template array
-    $data = xarModAPIFunc('ebulletin', 'admin', 'menu');
-
-    // add template vars
+    // set template vars
+    $data = array();
     $data['subscribers']  = $subscribers;
     $data['pager']        = $pager;
     $data['showaddlink']  = $showaddlink;

@@ -45,51 +45,47 @@ function ebulletin_admin_newissue($args)
 
     // retrieve parent publication
     $pub = xarModAPIFunc('ebulletin', 'user', 'get', array('id' => $pid));
-    if (!isset($pub) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+    if (xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
     // security check
-    if (!xarSecurityCheck('EditeBulletin', 1, 'Publication', "$pub[name]:$pid")) return;
+    if (!xarSecurityCheck('AddeBulletin', 1, 'Publication', "$pub[name]:$pid")) return;
 
     // get defaults for issue vars
     if (empty($issuedate)) $issuedate = date('Y-m-d', time());
     if (empty($subject))   $subject = '';
     if (empty($body_html)) $body_html = '';
     if (empty($body_txt))  $body_txt = '';
-    if (empty($published))  $published = false;
+    if (empty($published)) $published = false;
 
     // get other vars
-    $authid = xarSecGenAuthKey();
     $datedefinition = array(
-        'name' => 'issuedate',
-        'type' => 'calendar',
-        'id' => 'issuedate',
-        'class' => 'xar-form-textmedium',
-        'value' => time(),
+        'name'       => 'issuedate',
+        'type'       => 'calendar',
+        'id'         => 'issuedate',
+        'class'      => 'xar-form-textmedium',
+        'value'      => time(),
         'dateformat' => '%Y-%m-%d'
     );
 
     // get hooks
-    $item = array();
-    $item['module'] = 'ebulletin';
-    $item['itemtype'] = 1;
-    $hookoutput = xarModCallHooks('item', 'new', '', $item);
+    $hookoutput = xarModCallHooks('item', 'new', '', array(
+        'module' => 'ebulletin', 'itemtype' => 1
+    ));
 
-    // initialize template vars
-    $data = xarModAPIFunc('ebulletin', 'admin', 'menu');
-
-    // set issue vars
-    $data['pid'] = $pid;
+    // set template vars
+    $data = array();
+    $data['pid']       = $pid;
     $data['issuedate'] = $issuedate;
-    $data['subject'] = xarVarPrepForDisplay($subject);
+    $data['subject']   = xarVarPrepForDisplay($subject);
     $data['body_html'] = xarVarPrepForDisplay($body_html);
-    $data['body_txt'] = xarVarPrepForDisplay($body_txt);
+    $data['body_txt']  = xarVarPrepForDisplay($body_txt);
     $data['published'] = $published;
 
     // set other vars
-    $data['pub'] = $pub;
-    $data['authid'] = $authid;
-    $data['invalid'] = $invalid;
-    $data['hookoutput'] = $hookoutput;
+    $data['pub']            = $pub;
+    $data['authid']         = xarSecGenAuthKey();
+    $data['invalid']        = $invalid;
+    $data['hookoutput']     = $hookoutput;
     $data['datedefinition'] = $datedefinition;
 
     return $data;

@@ -1,36 +1,36 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
-<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>View Publications</xar:mlstring></h2>
-<div style="margin: auto;"><xar:template file="statusmsg" type="module" />
+<xar:template type="module" file="admin-header" />
+<div class="xar-mod-body">
 
-<xar:if condition="$showaddlink">
-    <p><a href="#xarModURL('ebulletin', 'admin', 'new')#"><xar:mlstring>New Publication</xar:mlstring></a></p>
-</xar:if>
+    <h2><xar:mlstring>Publications</xar:mlstring></h2>
 
-<table class="xar-fullwidth">
-    <tr>
-        <th><xar:mlstring>Name</xar:mlstring></th>
-        <th><xar:mlstring>Description</xar:mlstring></th>
-        <th><xar:mlstring>Public?</xar:mlstring></th>
-        <th><xar:mlstring>Options</xar:mlstring></th>
-    </tr>
-    <xar:foreach in="$pubs" value="$pub">
-    <tr>
-        <td>#$pub['name']#</td>
-        <td>#$pub['desc']#</td>
-        <td>#$pub['hr_public']#</td>
-        <td>
-            <xar:loop name="$pub['urls']">
-                <a href="#$loop:item.url#" title="#$loop:item.title#">
-                    #$loop:item.label#
-                </a>
-                <xar:if condition="$loop:index+1 lt count($pub['urls'])">|</xar:if>
-            </xar:loop>
-        </td>
-    </tr>
-    </xar:foreach>
-</table>
+    <xar:if condition="$showaddlink">
+        <p><a href="#xarModURL('ebulletin', 'admin', 'new')#"><xar:mlstring>New Publication</xar:mlstring></a></p>
+    </xar:if>
 
-</div>
+    <table class="xar-fullwidth">
+        <tr>
+            <th><xar:mlstring>Name</xar:mlstring></th>
+            <th><xar:mlstring>Description</xar:mlstring></th>
+            <th><xar:mlstring>Public?</xar:mlstring></th>
+            <th><xar:mlstring>Options</xar:mlstring></th>
+        </tr>
+        <xar:foreach in="$pubs" value="$pub">
+        <tr>
+            <td>#$pub['name']#</td>
+            <td>#$pub['description']#</td>
+            <td class="xar-align-center">#$pub['hr_public']#</td>
+            <td>
+                <xar:loop name="$pub['urls']">
+                    <a href="#$loop:item.url#" title="#$loop:item.title#">
+                        #$loop:item.label#
+                    </a>
+                    <xar:if condition="$loop:index+1 lt count($pub['urls'])">|</xar:if>
+                </xar:loop>
+            </td>
+        </tr>
+        </xar:foreach>
+    </table>
+
 </div>

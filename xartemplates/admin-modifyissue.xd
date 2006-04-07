@@ -1,136 +1,107 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
-<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Edit Issue</xar:mlstring></h2>
-<div style="margin: auto;"><xar:template file="statusmsg" type="module" />
+<xar:template type="module" file="admin-header" />
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Edit Issue</xar:mlstring></h2>
 
-<form method="post" action="&xar-modurl-ebulletin-admin-updateissue;">
-
-<fieldset>
-    <legend><xar:mlstring>Issue Data</xar:mlstring></legend>
-
-    <div class="xar-form-input-wrapper">
-        <label for="name"  class="xar-form-label" title="#xarML('Issue ID')#">
-            <xar:mlstring>ID:</xar:mlstring>
-        </label>
-        #$issue['id']#
-    </div>
-
-    <div class="xar-form-input-wrapper">
-        <label for="name"  class="xar-form-label" title="#xarML('Parent publication')#">
-            <xar:mlstring>Parent publication:</xar:mlstring>
-        </label>
-        #$issue['pubname']#
-    </div>
-
-    <div class="xar-form-input-wrapper">
-        <label for="name"  class="xar-form-label" title="#xarML('Subject')#">
-            <xar:mlstring>Subject:</xar:mlstring>
-        </label>
-        <input type="text" name="subject" id="subject" value="#$issue['subject']#" maxlength="255" class="xar-form-textlong" />
-        <span class="xar-error">*</span>
-        <xar:if condition="!empty($invalid['name'])">
-            <div class="xar-error">
-                <xar:mlstring>ERROR! Name cannot be blank.</xar:mlstring>
-            </div>
-        </xar:if>
-    </div>
-
-    <div class="xar-form-input-wrapper">
-        <label for="issuedate_input"  class="xar-form-label" title="#xarML('Projected Date of Issuance')#">
-            <xar:mlstring>Date of Issue:</xar:mlstring>
-        </label>
-        <xar:articles-field definition="$datedefinition" />
-        <span class="xar-error">*</span>
-        <xar:if condition="!empty($invalid['issuedate'])">
-            <div class="xar-error">
-                <xar:mlstring>ERROR! Date is blank or invalid.</xar:mlstring>
-            </div>
-        </xar:if>
-    </div>
-
-    <div class="xar-form-input-wrapper">
-        <label for="published"  class="xar-form-label" title="#xarML('Published?')#">
-            <xar:mlstring>Published?:</xar:mlstring>
-        </label>
-        <xar:if condition="$issue['published']">
-            <input type="checkbox" name="published" id="published" checked="checked" />
+    <p>
+    <xar:loop name="$issue['urls']">
+        <xar:if condition="empty($loop:item.onclick)">
+            <a href="#$loop:item.url#" title="#$loop:item.title#">
+                #$loop:item.label#
+            </a>
         <xar:else />
-            <input type="checkbox" name="published" id="published" />
+            <a href="#$loop:item.url#" title="#$loop:item.title#" onclick="#$loop:item.onclick#">
+                #$loop:item.label#
+            </a>
         </xar:if>
-    </div>
+        <xar:if condition="$loop:index+1 lt count($issue['urls'])">|</xar:if>
+    </xar:loop>
+    </p>
 
-    <div class="xar-form-input-wrapper">
-        <label for="name"  class="xar-form-label" title="#xarML('Options')#">
-            <xar:mlstring>Options:</xar:mlstring>
-        </label>
+    <form method="post" action="&xar-modurl-ebulletin-admin-updateissue;">
 
-        <xar:if condition="!empty($issue['viewurl'])">
-            <a href="#$issue['viewurl']#"><xar:mlstring>View</xar:mlstring></a>
-        </xar:if>
-        &nbsp;
-        <xar:if condition="!empty($issue['regenerateurl'])">
-            <xar:if condition="$issue['published']">
-                <a href="#$issue['regenerateurl']#" onClick="return confirm('This issue has already been published.  Are you sure you want to regenerate it?');"><xar:mlstring>Regenerate</xar:mlstring></a>
-            <xar:else />
-                <a href="#$issue['regenerateurl']#"><xar:mlstring>Regenerate</xar:mlstring></a>
-            </xar:if>
-            &nbsp;
-        </xar:if>
-        <xar:if condition="!empty($issue['deleteurl'])">
-            <xar:if condition="$issue['published']">
-                <a href="#$issue['deleteurl']#" onClick="return confirm('This issue has already been published.  Are you sure you want to delete it?');"><xar:mlstring>Delete</xar:mlstring></a>
-            <xar:else />
-                <a href="#$issue['deleteurl']#"><xar:mlstring>Delete</xar:mlstring></a>
-            </xar:if>
-            &nbsp;
-        </xar:if>
-        &nbsp;
-        <xar:if condition="!empty($issue['publishurl'])">
-            <xar:if condition="$issue['published']">
-                <a href="#$issue['publishurl']#" onClick="return confirm('This issue has already been published.  Are you sure you want to publish it again?');"><xar:mlstring>Publish</xar:mlstring></a>
-            <xar:else />
-                <a href="#$issue['publishurl']#"><xar:mlstring>Publish</xar:mlstring></a>
-            </xar:if>
-            &nbsp;
-        </xar:if>
-    </div>
+        <fieldset>
+            <legend><xar:mlstring>Issue Details</xar:mlstring></legend>
 
-</fieldset>
+            <div class="xar-form-input-wrapper">
+                <label for="name"  class="xar-form-label" title="#xarML('Parent publication')#">
+                    <xar:mlstring>Publication:</xar:mlstring>
+                </label>
+                #$issue['pubname']#
+            </div>
 
-<fieldset>
-    <div class="xar-form-input-wrapper-after">
-        <input type="submit" value="#xarML('Update')#" />
-    </div>
-</fieldset>
+            <div class="xar-form-input-wrapper">
+                <label for="published"  class="xar-form-label" title="#xarML('Published?')#">
+                    <xar:mlstring>Published?</xar:mlstring>
+                </label>
+                <xar:if condition="$issue['published']">
+                    <input type="checkbox" name="published" id="published" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="published" id="published" />
+                </xar:if>
+            </div>
 
-<fieldset>
-    <legend><xar:mlstring>Body (HTML)</xar:mlstring></legend>
+            <div class="xar-form-input-wrapper">
+                <label for="issuedate_input"  class="xar-form-label" title="#xarML('Projected Date of Issuance')#">
+                    <xar:mlstring>Date:</xar:mlstring>
+                </label>
+                <xar:articles-field definition="$datedefinition" />
+                <span class="xar-error">*</span>
+                <xar:if condition="!empty($invalid['issuedate'])">
+                    <div class="xar-error">
+                        <xar:mlstring>ERROR! Date is blank or invalid.</xar:mlstring>
+                    </div>
+                </xar:if>
+            </div>
 
-    <textarea name="body_html" id="body_html" rows="30" style="width: 100%">#$issue['body_html']#</textarea>
-</fieldset>
+        </fieldset>
+        <fieldset>
+            <legend><xar:mlstring>Mail Headers</xar:mlstring></legend>
 
-<fieldset>
-    <div class="xar-form-input-wrapper-after">
-        <input type="submit" value="#xarML('Update')#" />
-    </div>
-</fieldset>
+            <div class="xar-form-input-wrapper">
+                <label for="name"  class="xar-form-label" title="#xarML('Subject')#">
+                    <xar:mlstring>Subject:</xar:mlstring>
+                </label>
+                <input type="text" name="subject" id="subject" value="#$issue['subject']#" maxlength="255" class="xar-form-textlong" />
+                <span class="xar-error">*</span>
+                <xar:if condition="!empty($invalid['name'])">
+                    <div class="xar-error">
+                        <xar:mlstring>ERROR! Name cannot be blank.</xar:mlstring>
+                    </div>
+                </xar:if>
+            </div>
 
-<fieldset>
-    <legend><xar:mlstring>Body (TXT)</xar:mlstring></legend>
-    <textarea name="body_txt" id="body_txt" rows="30" style="width: 100%">#$issue['body_txt']#</textarea>
-</fieldset>
+        </fieldset>
+        <fieldset>
+            <legend><xar:mlstring>Mail Body</xar:mlstring></legend>
 
-<fieldset>
-    <div class="xar-form-input-wrapper-after">
-        <input type="submit" value="#xarML('Update')#" />
-    </div>
-</fieldset>
+            <div class="xar-form-input-wrapper">
+                <label for="body_html"  class="xar-form-label" title="#xarML('HTML Body')#">
+                    <xar:mlstring>HTML Body:</xar:mlstring>
+                </label>
+                <textarea mce_editable="true" name="body_html" id="body_html" rows="15" cols="65">#$issue['body_html']#</textarea>
+            </div>
 
-    <input type="hidden" name="authid" id="authid" value="#$authid#" />
-    <input type="hidden" name="pid" id="pid" value="#$issue['pid']#" />
-    <input type="hidden" name="id" id="id" value="#$issue['id']#" />
-</form>
+            <div class="xar-form-input-wrapper">
+                <label for="body_txt"  class="xar-form-label" title="#xarML('Text Body')#">
+                    <xar:mlstring>Text Body:</xar:mlstring>
+                </label>
+                <textarea name="body_txt" id="body_txt" rows="15" cols="65">#$issue['body_txt']#</textarea>
+            </div>
 
-</div>
+        </fieldset>
+
+        <fieldset>
+            <div class="xar-form-input-wrapper-after">
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <input type="hidden" name="pid" id="pid" value="#$issue['pid']#" />
+                <input type="hidden" name="id" id="id" value="#$issue['id']#" />
+
+                <input type="submit" value="#xarML('Update')#" />
+            </div>
+        </fieldset>
+
+    </form>
+
 </div>

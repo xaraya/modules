@@ -53,16 +53,11 @@ function ebulletin_admin_deletesubscribers($args)
 
         }
 
-        // initialize template data
-        $data = xarModAPIFunc('ebulletin', 'admin', 'menu');
-
-        // get vars
-        $authid = xarSecGenAuthKey();
-
-        // set template data
+        // set template vars
+        $data = array();
         $data['subscribers'] = $subscribers;
-        $data['authid'] = $authid;
-        $data['return'] = $return;
+        $data['authid']      = xarSecGenAuthKey();
+        $data['return']      = $return;
 
         return $data;
     }

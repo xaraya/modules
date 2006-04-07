@@ -1,143 +1,140 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
-<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>New Subscribers</xar:mlstring></h2>
-<div style="margin: auto;"><xar:template file="statusmsg" type="module" />
+<xar:template type="module" file="admin-header" />
+<div class="xar-mod-body">
+    <h2><xar:mlstring>New Subscribers</xar:mlstring></h2>
 
-<xar:style scope="module" file="navtabs" module="base" />
+    <dl class="xar-tabs">
+        <dt class="help">
+            <xar:mlstring>Subscriber Type: </xar:mlstring>
+        </dt>
 
-<dl class="xar-tabs">
-    <dt class="help">
-        <xar:mlstring>Subscriber Type: </xar:mlstring>
-    </dt>
+        <xar:if condition="$stype eq 'reg'">
+            <dd class="active"><a href="#xarServerGetCurrentURL(array('stype' => 'reg', 'startnum' => ''))#"><xar:mlstring>Registered</xar:mlstring></a></dd>
+            <dd><a href="#xarServerGetCurrentURL(array('stype' => 'non', 'startnum' => ''))#"><xar:mlstring>Non-registered</xar:mlstring></a></dd>
+        <xar:else />
+            <dd><a href="#xarServerGetCurrentURL(array('stype' => 'reg', 'startnum' => ''))#"><xar:mlstring>Registered</xar:mlstring></a></dd>
+            <dd class="active"><a href="#xarServerGetCurrentURL(array('stype' => 'non', 'startnum' => ''))#"><xar:mlstring>Non-registered</xar:mlstring></a></dd>
+        </xar:if>
+    </dl>
+
+    <form method="get" class="xar-align-right" style="float: right;">
+
+    <xar:comment>
+        ***SIGH*** To make filter play nicely with other links on this page,
+        we need to use GET protocol, which means defining all the URL's other
+        params using <input type="hidden" /> values.
+    </xar:comment>
+    <input type="hidden" name="module" value="ebulletin" />
+    <input type="hidden" name="type" value="admin" />
+    <input type="hidden" name="func" value="newsubscribers" />
+    <input type="hidden" name="stype" value="#$stype#" />
+    <input type="hidden" name="startnum" value="1" />
+
+    <xar:mlstring>Items per page:</xar:mlstring>
+    <input type="text" name="numitems" value="#$numitems#" size="3" />
+    <input type="submit" value="#xarML('Update')#" />
+
+    </form>
+
+
+    <p><a href="#xarModURL('ebulletin', 'admin', 'viewsubscribers', array('stype' => $stype))#"><xar:mlstring>View Subscribers</xar:mlstring></a></p>
+
+    <form method="post" action="&xar-modurl-ebulletin-admin-createsubscribers;" name="ebulletin_form">
+
+        <fieldset>
+            <legend><xar:mlstring>Subscription Options</xar:mlstring></legend>
+
+            <div class="xar-form-input-wrapper">
+                <label for="name"  class="xar-form-label" title="#xarML('Publication Name')#">
+                    <xar:mlstring>Publication:</xar:mlstring>
+                </label>
+                <select name="pid" id="pid">
+                    <xar:foreach in="$pubs" key="$key" value="$pub">
+                        <xar:if condition="$pid eq $key">
+                            <option value="#$key#" selected="selected">#$pub['name']#</option>
+                        <xar:else />
+                            <option value="#$key#">#$pub['name']#</option>
+                        </xar:if>
+                    </xar:foreach>
+                </select>
+            </div>
+        </fieldset>
+
 
     <xar:if condition="$stype eq 'reg'">
-        <dd class="active"><a href="#xarServerGetCurrentURL(array('stype' => 'reg', 'startnum' => ''))#"><xar:mlstring>Registered</xar:mlstring></a></dd>
-        <dd><a href="#xarServerGetCurrentURL(array('stype' => 'non', 'startnum' => ''))#"><xar:mlstring>Non-registered</xar:mlstring></a></dd>
-    <xar:else />
-        <dd><a href="#xarServerGetCurrentURL(array('stype' => 'reg', 'startnum' => ''))#"><xar:mlstring>Registered</xar:mlstring></a></dd>
-        <dd class="active"><a href="#xarServerGetCurrentURL(array('stype' => 'non', 'startnum' => ''))#"><xar:mlstring>Non-registered</xar:mlstring></a></dd>
-    </xar:if>
-</dl>
 
-<form method="get" class="xar-align-right" style="float: right;">
+        <xar:base-include-javascript module="ebulletin" filename="checkall.js" position="head" />
 
-<xar:comment>
-    ***SIGH*** To make filter play nicely with other links on this page,
-    we need to use GET protocol, which means defining all the URL's other
-    params using <input type="hidden" /> values.
-</xar:comment>
-<input type="hidden" name="module" value="ebulletin" />
-<input type="hidden" name="type" value="admin" />
-<input type="hidden" name="func" value="newsubscribers" />
-<input type="hidden" name="stype" value="#$stype#" />
-<input type="hidden" name="startnum" value="1" />
+        <fieldset>
+            <legend><xar:mlstring>Registered users to be subscribed</xar:mlstring></legend>
 
-<xar:mlstring>Items per page:</xar:mlstring>
-<input type="text" name="numitems" value="#$numitems#" size="3" />
-<input type="submit" value="#xarML('Update')#" />
+            <div class="xar-form-input-wrapper">
 
-</form>
+                <div class="xar-align-center xar-padding-thick">#$pager#</div>
 
+            <table width="98%">
+            <tr><td valign="top">
 
-<p><a href="#xarModURL('ebulletin', 'admin', 'viewsubscribers', array('stype' => $stype))#"><xar:mlstring>View Subscribers</xar:mlstring></a></p>
-
-<form method="post" action="&xar-modurl-ebulletin-admin-createsubscribers;" name="ebulletin_form">
-
-    <fieldset>
-        <legend><xar:mlstring>Subscription Options</xar:mlstring></legend>
-
-        <div class="xar-form-input-wrapper">
-            <label for="name"  class="xar-form-label" title="#xarML('Publication Name')#">
-                <xar:mlstring>Publication:</xar:mlstring>
-            </label>
-            <select name="pid" id="pid">
-                <xar:foreach in="$pubs" key="$key" value="$pub">
-                    <xar:if condition="$pid eq $key">
-                        <option value="#$key#" selected="selected">#$pub['name']#</option>
-                    <xar:else />
-                        <option value="#$key#">#$pub['name']#</option>
+                <table width="25%">
+                <xar:loop name="$users">
+                    <tr>
+                        <td>
+                            <input type="checkbox" name="names[#$loop:item['uid']#]"
+                                id="names[#$loop:item['uid']#]" value="#$loop:item['uid']#" />
+                        </td>
+                        <td>
+                            <label for="names[#$loop:item['uid']#]" class="xar-nowrap">#$loop:item['name']#</label>
+                        </td>
+                    </tr>
+                    <xar:if condition="($loop:index+1) % round($numitems/4) eq 0 and ($loop:index+1) ne count($users)">
+                        </table>
+                    </td><td valign="top">
+                        <table width="20%">
                     </xar:if>
-                </xar:foreach>
-            </select>
-        </div>
-    </fieldset>
+                </xar:loop>
+                </table>
 
-
-<xar:if condition="$stype eq 'reg'">
-
-    <xar:base-include-javascript module="ebulletin" filename="checkall.js" position="head" />
-
-    <fieldset>
-        <legend><xar:mlstring>Registered users to be subscribed</xar:mlstring></legend>
-
-        <div class="xar-form-input-wrapper">
+            </td></tr>
+            </table>
 
             <div class="xar-align-center xar-padding-thick">#$pager#</div>
 
-        <table width="98%">
-        <tr><td valign="top">
+        </fieldset>
 
-            <table width="25%">
-            <xar:loop name="$users">
-                <tr>
-                    <td>
-                        <input type="checkbox" name="names[#$loop:item['uid']#]"
-                            id="names[#$loop:item['uid']#]" value="#$loop:item['uid']#" />
-                    </td>
-                    <td>
-                        <label for="names[#$loop:item['uid']#]" class="xar-nowrap">#$loop:item['name']#</label>
-                    </td>
-                </tr>
-                <xar:if condition="($loop:index+1) % round($numitems/4) eq 0 and ($loop:index+1) ne count($users)">
-                    </table>
-                </td><td valign="top">
-                    <table width="20%">
-                </xar:if>
-            </xar:loop>
-            </table>
+        <fieldset>
+            <div class="xar-form-input-wrapper-after">
+                <input type="submit" value="#xarML('Subscribe')#" /> &nbsp; <a href="javascript:void(0);" onClick="xar_ebulletin_checkall(document.forms['ebulletin_form'])" title="#xarML('Check or Uncheck all subscribers on this page')#"><xar:mlstring>Check/Uncheck All</xar:mlstring></a>
+            </div>
+        </fieldset>
 
-        </td></tr>
-        </table>
+    <xar:elseif condition="$stype eq 'non'" />
 
-        <div class="xar-align-center xar-padding-thick">#$pager#</div>
+        <fieldset>
+            <legend><xar:mlstring>Non-registered names to be subscribed</xar:mlstring></legend>
 
-    </fieldset>
+            <textarea name="names" rows="5" cols="40"></textarea>
+            <br />
+            <xar:mlstring>Please enter one name per line.  Acceptable formats:</xar:mlstring>
+            <span class="xar-sub">
+                <dd><xar:mlstring>Somebody's Name &lt;somebody@example.com&gt;</xar:mlstring></dd>
+                <dd><xar:mlstring>Somebody's Name, somebody@example.com</xar:mlstring></dd>
+                <dd><xar:mlstring>"Somebody's Name","somebody@example.com"</xar:mlstring></dd>
+            </span>
 
-    <fieldset>
-        <div class="xar-form-input-wrapper-after">
-            <input type="submit" value="#xarML('Subscribe')#" /> &nbsp; <a href="javascript:void(0);" onClick="xar_ebulletin_checkall(document.forms['ebulletin_form'])" title="#xarML('Check or Uncheck all subscribers on this page')#"><xar:mlstring>Check/Uncheck All</xar:mlstring></a>
-        </div>
-    </fieldset>
+        </fieldset>
 
-<xar:elseif condition="$stype eq 'non'" />
-
-    <fieldset>
-        <legend><xar:mlstring>Non-registered names to be subscribed</xar:mlstring></legend>
-
-        <textarea name="names" rows="5" cols="40"></textarea>
-        <br />
-        <xar:mlstring>Please enter one name per line.  Acceptable formats:</xar:mlstring>
-        <span class="xar-sub">
-            <dd><xar:mlstring>Somebody's Name &lt;somebody@example.com&gt;</xar:mlstring></dd>
-            <dd><xar:mlstring>Somebody's Name, somebody@example.com</xar:mlstring></dd>
-            <dd><xar:mlstring>"Somebody's Name","somebody@example.com"</xar:mlstring></dd>
-        </span>
-
-    </fieldset>
-
-    <fieldset>
-        <div class="xar-form-input-wrapper-after">
-            <input type="submit" value="#xarML('Add Subscribers')#" />
-        </div>
-    </fieldset>
+        <fieldset>
+            <div class="xar-form-input-wrapper-after">
+                <input type="submit" value="#xarML('Add Subscribers')#" />
+            </div>
+        </fieldset>
 
 
-</xar:if>
+    </xar:if>
 
-    <input type="hidden" name="authid" id="authid" value="#$authid#" />
-    <input type="hidden" name="stype" value="#$stype#" />
-</form>
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <input type="hidden" name="stype" value="#$stype#" />
+    </form>
 
-</div>
 </div>

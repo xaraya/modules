@@ -22,7 +22,7 @@ function ebulletin_admin_viewissues()
     // get HTTP vars
     if (!xarVarFetch('startnum', 'str:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('numitems', 'str:1:', $numitems, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('order', 'enum:id:pubname:subject:date:published', $order, 'date', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('order', 'enum:pubname:subject:date:published', $order, 'date', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('sort', 'enum:ASC:DESC', $sort, 'DESC', XARVAR_NOT_REQUIRED)) return;
 
     // get other vars
@@ -66,18 +66,6 @@ function ebulletin_admin_viewissues()
         $issue['published_string'] = ($issue['published']) ? xarML('Yes') : xarML('No');
         $issue['issuedate'] = xarLocaleGetFormattedDate('short', strtotime($issue['issuedate']));
 
-        if (xarSecurityCheck('VieweBulletin', 0, 'Publication', "$issue[pubname]:$issue[pid]")) {
-
-            // view
-            $issue['urls'][] = array(
-                'url' => xarModURL('ebulletin', 'admin', 'display',
-                    array('id' => $issue['id'])
-                ),
-                'title' => xarML('View this issue'),
-                'label' => xarML('View')
-            );
-        }
-
         if (xarSecurityCheck('EditeBulletin', 0, 'Publication', "$issue[pubname]:$issue[pid]")) {
 
             // edit
@@ -89,22 +77,9 @@ function ebulletin_admin_viewissues()
                 'label' => xarML('Edit'),
                 'onclick' => $issue['published'] ? 'return confirm(\''.xarML('This issue has already been published.  Are you sure you want to edit it?').'\');' : ''
             );
-
-            // regenerate
-            $issue['urls'][] = array(
-                'url' => xarModURL('ebulletin', 'admin', 'regenerateissue', array(
-                    'id' => $issue['id'],
-                    'authid' => xarSecGenAuthKey(),
-                    'return' => xarModURL('ebulletin', 'admin', 'viewissues')
-                )),
-                'title' => xarML('Regenerate this issue.'),
-                'label' => xarML('Regenerate'),
-                'onclick' => $issue['published'] ? 'return confirm(\''.xarML('This issue has already been published.  Are you sure you want to regenerate it?').'\');' : ''
-            );
         }
 
         if (xarSecurityCheck('DeleteeBulletin', 0, 'Publication', "$issue[pubname]:$issue[pid]")) {
-
             // delete
             $issue['urls'][] = array(
                 'url' => xarModURL('ebulletin', 'admin', 'deleteissue', array(
@@ -128,14 +103,20 @@ function ebulletin_admin_viewissues()
                 'onclick' => $issue['published'] ? 'return confirm(\''.xarML('This issue has already been published.  Are you sure you want to publish it again?').'\');' : ''
             );
 
+        }
+
+        if (xarSecurityCheck('AddeBulletin', 0, 'Publication', "$issue[pubname]:$issue[pid]")) {
+
             // test
             $issue['urls'][] = array(
                 'url' => xarModURL('ebulletin', 'admin', 'sendtest', array(
                     'id' => $issue['id']
                 )),
-                'title' => xarML('Test sending this message to a single address.'),
-                'label' => xarML('Send Test')
+                'title' => xarML('Send this issue to one recipient.'),
+                'label' => xarML('Test'),
+                'onclick' => $issue['published'] ? 'return confirm(\''.xarML('This issue has already been published.  Are you sure you want to do a send test?').'\');' : ''
             );
+
         }
 
         // add modified issue back into array
@@ -144,13 +125,11 @@ function ebulletin_admin_viewissues()
     }
 
     // get publications
-    $pubs = xarModAPIFunc('ebulletin', 'user', 'getall');
-    if (empty($pubs) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
-
-    // initialize template data
-    $data = xarModAPIFunc('ebulletin', 'admin', 'menu');
+    $pubs = xarModAPIFunc('ebulletin', 'user', 'getall', array('order' => 'id'));
+    if (xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
     // set template vars
+    $data = array();
     $data['issues']     = $issues;
     $data['pubs']       = $pubs;
     $data['pager']      = $pager;

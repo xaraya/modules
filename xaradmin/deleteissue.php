@@ -27,7 +27,7 @@ function ebulletin_admin_deleteissue($args)
 
     // get issue
     $issue = xarModAPIFunc('ebulletin', 'user', 'getissue', array('id' => $id));
-    if (empty($issue) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+    if (xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
     // security check
     if (!xarSecurityCheck('DeleteeBulletin', 1, 'Publication', "$issue[pubname]:$issue[id]")) return;
@@ -35,16 +35,11 @@ function ebulletin_admin_deleteissue($args)
     // Check for confirmation.
     if (empty($confirm)) {
 
-        // initialize template data
-        $data = xarModAPIFunc('ebulletin', 'admin', 'menu');
-
-        // get vars
-        $authid = xarSecGenAuthKey();
-
-        // set template data
-        $data['id'] = $id;
-        $data['issue'] = $issue;
-        $data['authid'] = $authid;
+        // set template vars
+        $data = array();
+        $data['id']     = $id;
+        $data['issue']  = $issue;
+        $data['authid'] = xarSecGenAuthKey();
 
         return $data;
     }

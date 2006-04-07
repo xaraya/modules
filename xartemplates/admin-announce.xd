@@ -2,25 +2,30 @@
 
 <xar:template type="module" file="admin-header" />
 <div class="xar-mod-body">
-    <h2><xar:mlstring>Publish Issue</xar:mlstring></h2>
+    <h2><xar:mlstring>Send Announcement</xar:mlstring></h2>
 
-    <h3 class="xar-align-center"><xar:mlstring>Confirm publishing this issue?</xar:mlstring></h3>
-    <form method="post" action="&xar-modurl-ebulletin-admin-publishissue;" onsubmit="return window.confirm('#xarML('Ready to publish?')#');">
+    <p>
+        <xar:mlstring>This page sends a one-time announcement to the subscribers
+        of the chosen publication.</xar:mlstring>
+    </p>
+
+    <form method="post" action="&xar-modurl-ebulletin-admin-announce;" onsubmit="this.disabled=true">
+
         <fieldset>
-            <legend><xar:mlstring>Issue Details</xar:mlstring></legend>
+            <legend><xar:mlstring>Publication Details</xar:mlstring></legend>
 
             <div class="xar-form-input-wrapper">
-                <label for="itemname"  class="xar-form-label"  title="#xarML('Parent Publication')#">
-                    <xar:mlstring>Publication:</xar:mlstring>
+                <label class="xar-form-label" title="#xarML('Publication name')#">
+                    <xar:mlstring>Name:</xar:mlstring>
                 </label>
-                #$issue['pubname']#
+                #$pub['name']#
             </div>
 
             <div class="xar-form-input-wrapper">
-                <label for="itemname"  class="xar-form-label"  title="#xarML('Issue Date')#">
-                    <xar:mlstring>Date:</xar:mlstring>
+                <label class="xar-form-label" title="#xarML('Description')#">
+                    <xar:mlstring>Description:</xar:mlstring>
                 </label>
-                #$issue['issuedate']#
+                #$pub['description']#
             </div>
 
         </fieldset>
@@ -42,7 +47,7 @@
             <xar:if condition="!empty($pub['replyto'])">
                 <div class="xar-form-input-wrapper">
                     <label for="replyto"  class="xar-form-label"  title="#xarML('Reply To')#">
-                        <xar:mlstring>Reply-To:</xar:mlstring>
+                        <xar:mlstring>Reply To:</xar:mlstring>
                     </label>
                     <xar:if condition="empty($pub['replytoname'])">
                         #$pub['replyto']#
@@ -53,8 +58,8 @@
             </xar:if>
 
             <div class="xar-form-input-wrapper">
-                <label class="xar-form-label"  title="#xarML('Recipients')#">
-                    <xar:mlstring>Recipients:</xar:mlstring>
+                <label class="xar-form-label"  title="#xarML('To')#">
+                    <xar:mlstring>To:</xar:mlstring>
                 </label>
                 <xar:if condition="empty($subscribers)">
                     <xar:mlstring>None</xar:mlstring>
@@ -78,10 +83,10 @@
             </div>
 
             <div class="xar-form-input-wrapper">
-                <label for="itemname"  class="xar-form-label"  title="#xarML('Subject')#">
+                <label for="subject" class="xar-form-label"  title="#xarML('Subject')#">
                     <xar:mlstring>Subject:</xar:mlstring>
                 </label>
-                #$issue['subject']#
+                <input type="text" name="subject" id="subject" value="#$pub['name']#" class="xar-form-textlong" />
             </div>
 
         </fieldset>
@@ -94,15 +99,15 @@
                     <label for="body_html"  class="xar-form-label"  title="#xarML('HTML Body')#">
                         <xar:mlstring>HTML Body:</xar:mlstring>
                     </label>
-                    #$htmlsize# <xar:mlstring>Kb</xar:mlstring>
+                    <textarea name="body_html" id="body_html" rows="15" cols="60"></textarea>
                 </div>
             </xar:if>
 
             <div class="xar-form-input-wrapper">
-                <label for="body_txt"  class="xar-form-label"  title="#xarML('TXT Body')#">
+                <label for="body_txt"  class="xar-form-label"  title="#xarML('Text Body')#">
                     <xar:mlstring>Text Body:</xar:mlstring>
                 </label>
-                #$txtsize# <xar:mlstring>Kb</xar:mlstring>
+                <textarea name="body_txt" id="body_txt" rows="15" cols="60"></textarea>
             </div>
 
         </fieldset>
@@ -111,10 +116,10 @@
             <div class="xar-form-input-wrapper-after">
                 <input type="hidden" name="authid" id="authid" value="#$authid#" />
                 <input type="hidden" name="confirm" id="confirm" value="true" />
-                <input type="hidden" name="id" id="id" value="#$id#" />
+                <input type="hidden" name="pid" id="pid" value="#$pid#" />
 
-                <input type="submit" name="send" id="send" value="#xarML('Send')#" />
-                <a href="&xar-modurl-ebulletin-admin-viewissues;">
+                <input type="submit" name="send" value="#xarML('Send')#" onclick="if(window.confirm('#xarML('Ready to send?')#')){this.disabled=true}else{return false}" />
+                <a href="&xar-modurl-ebulletin-admin-view;">
                     <xar:mlstring>Cancel and Return</xar:mlstring>
                 </a>
             </div>

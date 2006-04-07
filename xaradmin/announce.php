@@ -19,7 +19,7 @@
 * @param  $ 'id' the id of the item to be publishd
 * @param  $ 'confirm' confirm that this item can be publishd
 */
-function ebulletin_admin_onetime($args)
+function ebulletin_admin_announce($args)
 {
     extract($args);
 
@@ -44,17 +44,12 @@ function ebulletin_admin_onetime($args)
         if (empty($subscribers) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
         $subscriberscount = count($subscribers);
 
-        // initialize template data
-        $data = xarModAPIFunc('ebulletin', 'admin', 'menu');
-
-        // get vars
-        $authid = xarSecGenAuthKey();
-
-        // set template data
-        $data['pid'] = $pid;
-        $data['pub'] = $pub;
-        $data['authid'] = $authid;
-        $data['subscribers'] = $subscribers;
+        // set template vars
+        $data = array();
+        $data['pid']              = $pid;
+        $data['pub']              = $pub;
+        $data['authid']           = xarSecGenAuthKey();
+        $data['subscribers']      = $subscribers;
         $data['subscriberscount'] = $subscriberscount;
 
         return $data;
@@ -68,10 +63,14 @@ function ebulletin_admin_onetime($args)
     if (!xarVarFetch('body_txt', 'str:0:', $body_txt, '', XARVAR_NOT_REQUIRED)) return;
 
     // call API function to do the sending
-    if (!xarModAPIFunc('ebulletin', 'admin', 'send_onetime', array('onetime' => true, 'pid' => $pid, 'body_html' => $body_html, 'body_txt' => $body_txt))) return;
+    if (!xarModAPIFunc('ebulletin', 'admin', 'send_announce', array(
+        'pid'       => $pid,
+        'body_html' => $body_html,
+        'body_txt'  => $body_txt,
+    ))) return;
 
     // set status message and return to view
-    xarSessionSetVar('statusmsg', xarML('One-time message successfully sent!'));
+    xarSessionSetVar('statusmsg', xarML('Announcement successfully sent!'));
     xarResponseRedirect(xarModURL('ebulletin', 'admin', 'view'));
 
     // success
