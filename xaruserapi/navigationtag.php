@@ -16,8 +16,7 @@
  * Format : <xar:categories-navigation layout="..." module="..." ... />
  *
  * @param $args array containing the requested layout, optional categories etc.
- * @returns string
- * @return the PHP code needed to invoke shownavigation() in the BL template
+ * @return string with the PHP code needed to invoke shownavigation() in the BL template
  */
 function categories_userapi_navigationTag($args)
 {

@@ -18,14 +18,13 @@
  * within a region of the website - the 'region' being defined by one or
  * more branches.
  *
+ * @author Jason Judge <judgej@xaraya.com>
  * @param $args['cid'] id of category to test; or
  * @param $args['cids'] array of category ids to test; defaults to query parameter 'catid'
  * @param $args['branch'] id of the category branch; or
  * @param $args['branches'] id of the category branches
  * @param $args['include_root'] flag to indicate whether a branch root is included in the check [false]
- * @returns boolean
- * @return true if one or more cids is a descendant of one or more of the branch roots
- * @author Jason Judge judgej@xaraya.com
+ * @return bool true if one or more cids is a descendant of one or more of the branch roots
  */
 function categories_userapi_isdescendant($args)
 {

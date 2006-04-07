@@ -32,7 +32,6 @@
  * @param $args['layout'] string layout to use for the navigation (prevnext, trails or tree - default trails)
  * @param $args['template'] string override the template that corresponds to this layout (prevnext, rootcats/trails or tree)
  * @param $args['tplmodule'] string override the module where this template is located (default 'categories')
- * @returns string
  * @return string containing the HTML (or other) text to output in the BL template
  */
 function categories_userapi_navigation($args)

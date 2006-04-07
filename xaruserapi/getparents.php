@@ -14,10 +14,9 @@
 /**
  * get parents of a specific (list of) category
  *
- * @param $args['cid'] id of category to get children for, or
- * @param $args['cids'] array of category ids to get children for
- * @param $args['return_itself'] =Boolean= return the cid itself (default true)
- * @returns array
+ * @param id $args['cid'] id of category to get parent for, or
+ * @param array $args['cids'] array of category ids to get parent for
+ * @param bool $args['return_itself'] return the cid itself (default true)
  * @return array of category info arrays, false on failure
  */
 function categories_userapi_getparents($args)

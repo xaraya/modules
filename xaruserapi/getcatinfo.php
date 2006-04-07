@@ -13,10 +13,10 @@
  */
 /**
  * get info on a specific (list of) category
+ *
  * @param $args['cid'] id of category to get info, or
  * @param $args['cids'] array of category ids to get info
- * @returns array
- * @return category info array, or array of cat info arrays, false on failure
+ * @return array Category info array, or array of cat info arrays, false on failure
  */
 function categories_userapi_getcatinfo($args)
 {

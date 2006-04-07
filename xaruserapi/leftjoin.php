@@ -31,7 +31,6 @@
  *
  * @param $args['cidtree'] get items in cid or anywhere below it (= slower than cids, usually)
  *
- * @returns array
  * @return array('table' => 'xar_categories_linkage',
  *               'field' => 'xar_categories_linkage.xar_iid',
  *               'where' => 'xar_categories_linkage.xar_modid = ...

@@ -14,16 +14,16 @@
 /**
  * get categories
  *
- * @param $args['cid'] =Integer= restrict output only to this category ID and its sibbling (default none)
- * @param $args['eid'] =Integer= do not output this category and its sibblings (default none)
- * @param $args['maximum_depth'] =Integer= return categories with the given depth or less
- * @param $args['minimum_depth'] =Integer= return categories with the given depth or more
+ * @param int $args['cid'] restrict output only to this category ID and its sibbling (default none)
+ * @param int $args['eid'] do not output this category and its sibblings (default none)
+ * @param int $args['maximum_depth'] return categories with the given depth or less
+ * @param int $args['minimum_depth'] return categories with the given depth or more
  * @param $args['indexby'] =string= specify the index type for the result array (default 'default')
  *  They only change the output IF 'cid' is set:
  *    @param $args['getchildren'] =Boolean= get children of category (default false)
  *    @param $args['getparents'] =Boolean= get parents of category (default false)
  *    @param $args['return_itself'] =Boolean= return the cid itself (default false)
- * @return =Array= of categories, or =Boolean= false on failure
+ * @return array Array of categories, or =Boolean= false on failure
 
  * Examples:
  *    getcat() => Return all the categories
