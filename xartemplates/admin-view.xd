@@ -1,5 +1,5 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-
+<xar:style scope="module" />
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:mlstring>Courses Administration</xar:mlstring>
@@ -15,13 +15,15 @@
     </xar:if>
     <xar:data-getitems name="$properties" value="$values" module="courses" itemtype="$itemtype" numitems="$itemsperpage" startnum="$startnum" />
 
-    <table width="100%" border="0" cellspacing="1" cellpadding="4">
-        <tr>
-            <xar:foreach in="$properties" key="$name">
-                <th align="center"><xar:data-label property="$properties[$name]" /></th>
-            </xar:foreach>
-            <th align="center"><xar:mlstring>Options</xar:mlstring></th>
-        </tr>
+    <table>
+        <thead>
+            <tr>
+                <xar:foreach in="$properties" key="$name">
+                    <th><xar:data-label property="$properties[$name]" /></th>
+                </xar:foreach>
+                <th><xar:mlstring>Options</xar:mlstring></th>
+            </tr>
+        </thead>
         <xar:set name="$class">'xar-norm'</xar:set>
         <xar:foreach in="$values" key="$itemid" value="$fields">
         <tr class="#$class#">

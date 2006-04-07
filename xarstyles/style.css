@@ -2,3 +2,6 @@ form fieldset label.required span:before {
     content: " * ";
     color: red;
 }
+td.coursehidden {
+    background-color:red;
+}
