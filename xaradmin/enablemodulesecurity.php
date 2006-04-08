@@ -15,8 +15,8 @@ function security_admin_enablemodulesecurity($args)
     $default_group_level  = SECURITY_OVERVIEW+SECURITY_READ;
     $default_world_level  = SECURITY_OVERVIEW+SECURITY_READ;    
     
-    xarVarFetch('mod',        'str', $module,     'categories', XARVAR_NOT_REQUIRED);
-    xarVarFetch('table',      'str', $table,      $module, XARVAR_NOT_REQUIRED);
+    xarVarFetch('mod',        'id',  $modid,     xarModGetIdFromName('categories'), XARVAR_NOT_REQUIRED);
+    xarVarFetch('table',      'str', $table,     '', XARVAR_NOT_REQUIRED);
     xarVarFetch('itemtype',   'int', $itemtype,   0,    XARVAR_NOT_REQUIRED);
     
     xarVarFetch('user_level', 'int', $user_level, $default_user_level, XARVAR_NOT_REQUIRED);
@@ -34,8 +34,6 @@ function security_admin_enablemodulesecurity($args)
 
     if( $submit )
     {
-        $modid = xarModGetIdFromName($module);
-
         xarModLoad('owner', 'user');
 
         /*
@@ -68,7 +66,7 @@ function security_admin_enablemodulesecurity($args)
         {
             $secArgs = array(
                 'modid'      => $modid, 
-                'itemtype'   => $itemtype, 
+                'itemtype'   => $itemtype,
                 'itemid'     => $itemid,
                 'uid'        => $uid,
                 'settings'   => array(
@@ -97,11 +95,10 @@ function security_admin_enablemodulesecurity($args)
     extract($args);
     
     $data = array();   
-    
-    $data['modules'] = xarModAPIFunc('modules', 'admin', 'getdbmodules');
-    $data['tables']  = $dict->getTables();
-    $data['groups'] = xarModAPIFunc('roles', 'user', 'getallgroups');
 
+    $data['modid'] = $modid;
+    $data['gid'] = $gid;
+    $data['tables']  = $dict->getTables();
     $data['user_level']  = $user_level;
     $data['group_level'] = $group_level;
     $data['world_level'] = $world_level;
