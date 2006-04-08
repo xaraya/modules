@@ -34,6 +34,16 @@ exist, Netquery will revert to using a default button set.  Do NOT delete the bu
 images that are supplied in the Netquery download package.
 
 --------
+SPECIAL NOTE FOR MULTI-COLUMN SITE USERS:
+
+All Netquery CSS stylesheets specify widths for the "nquser" and "nqadmin" form classes.
+In some cases, especially with some multi-column site themes and low display resolutions,
+the specified widths may cause unwanted displacments of other elements due to horizontal
+space limitations.  The solution is simply to modify the specified form widths in the
+Netquery CSS stylesheet, or, depending on your site theme's other parameters, you may be
+able to drop those Netquery form width settings entirely.
+
+--------
 SPECIAL NOTE FOR PHP-FUSION USERS:
 
 PHP-Fusion's current subheader makes no provision for particular CSS style requirments of

@@ -34,7 +34,7 @@ function netquery_admin_xaports()
             ";
             $result = $datadict->createTable($FlagsTable, $FlagsFields, $taboptarray);
             if (!$result) return;
-            $result = $datadict->createIndex('keyword', $FlagsTable, 'flagnum', $idxoptarray);
+            $result = $datadict->createIndex('i_' . xarDBGetSiteTablePrefix() . '_netquery_flags_1', $FlagsTable, 'flagnum', $idxoptarray);
             if (!$result) return;
             $PortsTable = $xartable['netquery_ports'];
             $PortsFields = "

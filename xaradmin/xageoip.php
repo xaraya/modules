@@ -35,8 +35,8 @@ function netquery_admin_xageoip()
             if (!$result) return;
             $GeoipTable = $xartable['netquery_geoip'];
             $GeoipFields = "
-                start             I          NOTNULL     DEFAULT 0       UNSIGNED,
-                end               I          NOTNULL     DEFAULT 0       UNSIGNED,
+                ipstart           I8         NOTNULL     DEFAULT 0       UNSIGNED,
+                ipend             I8         NOTNULL     DEFAULT 0       UNSIGNED,
                 ci                I1         NOTNULL     DEFAULT 0       UNSIGNED
             ";
             $result = $datadict->createTable($GeoipTable, $GeoipFields, $taboptarray);
@@ -315,11 +315,11 @@ array(3221225472, 3221225727, 1),  # Reserved block 192.0.0/24
 array(3232235520, 3232301055, 4),  # Private address blocks 192.168/16 (Class C x256 contiguous
 array(3758096128, 3758096383, 1)); # Reserved block 223.255.255/24
             foreach ($GeoipItems as $GeoipItem) {
-                list($start,$end,$ci) = $GeoipItem;
+                list($ipstart,$ipend,$ci) = $GeoipItem;
                 $query = "INSERT INTO $GeoipTable
-                        (start, end, ci)
+                        (ipstart, ipend, ci)
                         VALUES (?,?,?)";
-                $bindvars = array($start, $end, (int)$ci);
+                $bindvars = array($ipstart, $ipend, (int)$ci);
                 $result =& $dbconn->Execute($query,$bindvars);
             }
             if ($dbconn->ErrorNo() != 0) return;

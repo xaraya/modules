@@ -16,7 +16,7 @@ function netquery_userapi_getgeoip($args)
     $xartable =& xarDBGetTables();
     $GeoipTable = $xartable['netquery_geoip'];
     $GeoccTable = $xartable['netquery_geocc'];
-    $query = "SELECT cc, cn, lat, lon FROM ".$GeoipTable." NATURAL JOIN ".$GeoccTable." WHERE ? BETWEEN start AND end";
+    $query = "SELECT cc, cn, lat, lon FROM ".$GeoipTable." NATURAL JOIN ".$GeoccTable." WHERE ? BETWEEN ipstart AND ipend";
     $bindvars = array($ipnum);
     $result =& $dbconn->Execute($query,$bindvars);
     if (xarCurrentErrorType() != XAR_NO_EXCEPTION) {

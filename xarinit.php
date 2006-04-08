@@ -145,6 +145,9 @@ function netquery_upgrade($oldversion)
             return netquery_upgrade('3.3.2');
         case '3.3.1':
         case '3.3.2':
+            revise_geoiptable();
+            return netquery_upgrade('3.3.3');
+        case '3.3.3':
         default:
             break;
     }

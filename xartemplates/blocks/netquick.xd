@@ -1,5 +1,4 @@
-<xar:if condition="xarTplAddStyleLink('netquery', $stylesheet)">
-</xar:if>
+<xar:style scope="module" file="'.$stylesheet.'" module="netquery" />
 
 <xar:sec mask="OverviewNetquery" catch="false">
   <xar:if condition="$vars['blockquery'] eq 'clientinfo'">

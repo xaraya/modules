@@ -1,8 +1,7 @@
-<xar:if condition="xarTplAddStyleLink('netquery', $stylesheet)">
-</xar:if>
+<xar:style scope="module" file="'.$stylesheet.'" module="netquery" />
 
 <div class="xar-mod-head">
-    <span class="xar-mod-title"><xar:mlstring>Netquery Administration</xar:mlstring></span>
+  <span class="xar-mod-title"><xar:mlstring>Netquery Administration</xar:mlstring></span>
 </div>
 
 <div class="xar-mod-body">

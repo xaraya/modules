@@ -1,16 +1,14 @@
 <script type="text/javascript" src="modules/netquery/xarincludes/popup.js"></script>
 
-<xar:if condition="xarTplAddStyleLink('netquery', $stylesheet)">
-</xar:if>
+<xar:style scope="module" file="'.$stylesheet.'" module="netquery" />
 
 <div class="xar-mod-head">
-    <span class="xar-mod-title"><xar:mlstring>Netquery Administration</xar:mlstring></span>
+  <span class="xar-mod-title"><xar:mlstring>Netquery Administration</xar:mlstring></span>
 </div>
 
 <div class="xar-mod-body">
-<div style="margin: auto;">
-
 <div class="nq-center">
+
 <h2>
     <xar:mlstring>Modify Netquery Configuration</xar:mlstring>
     <a href="javascript:NQpopup('#$hlplink.url#','console','400','600');"><img class="gobutton" src="#$buttondir#/btn_help.gif" alt="#$hlplink.label#" /></a>
@@ -288,7 +286,6 @@
       <input type="submit" name="Cancel" id="Cancel" value="#$cancellabel#" />
   </p>
 </form>
-</div>
 
 </div>
 </div>

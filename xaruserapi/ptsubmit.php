@@ -15,7 +15,7 @@ function netquery_userapi_ptsubmit($args)
     $query = "INSERT INTO $PortsTable (
               port_id, port, protocol, service, comment, flag)
               VALUES (?,?,?,?,?,?)";
-    $bindvars = array($nextId, (int)$port_port, $port_protocol, $port_service, $port_comment, (int)$port_flag);
+    $bindvars = array((int)$nextId, (int)$port_port, $port_protocol, $port_service, $port_comment, (int)$port_flag);
     $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;
     $port_id = $dbconn->PO_Insert_ID($PortsTable, 'port_id');

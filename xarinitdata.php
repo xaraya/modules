@@ -27,7 +27,7 @@ function create_whoistable()
     ";
     $result = $datadict->changeTable($WhoisTable, $WhoisFields);
     if (!$result) return;
-    $result = $datadict->createIndex('keyword', $WhoisTable, 'whois_tld', $idxoptarray);
+    $result = $datadict->createIndex('i_' . xarDBGetSiteTablePrefix() . '_netquery_whois_1', $WhoisTable, 'whois_tld', $idxoptarray);
     if (!$result) return;
     $WhoisItems=array(
         array(1, 'ac', 'whois.nic.ac', '', '', 'No match'),
@@ -170,7 +170,7 @@ function create_lgroutertable()
     $xartable =& xarDBGetTables();
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
     $taboptarray = array('REPLACE');
-    //$idxoptarray = array('UNIQUE');
+    $idxoptarray = array('UNIQUE');
     $LGRouterTable = $xartable['netquery_lgrouter'];
     $LGRouterFields = "
         router_id         I          AUTO        PRIMARY,
@@ -200,7 +200,7 @@ function create_lgroutertable()
     ";
     $result = $datadict->changeTable($LGRouterTable, $LGRouterFields);
     if (!$result) return;
-    $result = $datadict->createIndex('keyword', $LGRouterTable, 'router', $idxoptarray);
+    $result = $datadict->createIndex('i_' . xarDBGetSiteTablePrefix() . '_netquery_lgrouter_1', $LGRouterTable, 'router', $idxoptarray);
     if (!$result) return;
     $LGRouters=array(
         array(1, 'default', 'LG Default Settings', '', '', 1, 2601, '', 1, 2602, '', 1, 2603, '', 1, 2604, '', 1, 2605, '', 1, 2606, '', 1),
@@ -284,6 +284,31 @@ function drop_geoiptable()
     if (!$result) return;
     return true;
 }
+function revise_geoiptable()
+{
+    $database_type = xarCore_getSystemvar('DB.Type');
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+    $GeoipTable = $xartable['netquery_geoip'];
+    $result = $datadict->addColumn($GeoipTable, 'ipstart I8 NOTNULL DEFAULT 0 UNSIGNED');
+    if (!$result) return;
+    $result = $datadict->addColumn($GeoipTable, 'ipend I8 NOTNULL DEFAULT 0 UNSIGNED');
+    if (!$result) return;
+    $sql = 'UPDATE '.$GeoipTable.' SET ipstart = start';
+    $result =& $dbconn->Execute($sql);
+    if (!$result) return;
+    $sql = 'UPDATE '.$GeoipTable.' SET ipend = end';
+    $result =& $dbconn->Execute($sql);
+    if (!$result) return;
+    if ($database_type != 'sqlite') {
+        $result = $datadict->dropColumn($GeoipTable, 'start');
+        if (!$result) return;
+        $result = $datadict->dropColumn($GeoipTable, 'end');
+        if (!$result) return;
+    }
+    return true;
+}
 function create_geoiptable()
 {
     $dbconn =& xarDBGetConn();
@@ -293,8 +318,8 @@ function create_geoiptable()
     $idxoptarray = array('UNIQUE');
     $GeoipTable = $xartable['netquery_geoip'];
     $GeoipFields = "
-        start             I          NOTNULL     DEFAULT 0       UNSIGNED,
-        end               I          NOTNULL     DEFAULT 0       UNSIGNED,
+        ipstart           I8         NOTNULL     DEFAULT 0       UNSIGNED,
+        ipend             I8         NOTNULL     DEFAULT 0       UNSIGNED,
         ci                I1         NOTNULL     DEFAULT 0       UNSIGNED
     ";
     $result = $datadict->changeTable($GeoipTable, $GeoipFields);
@@ -302,7 +327,7 @@ function create_geoiptable()
     $GeoipItem = array(0, 1, 1);
     list($start,$end,$ci) = $GeoipItem;
     $query = "INSERT INTO $GeoipTable
-            (start, end, ci)
+            (ipstart, ipend, ci)
             VALUES (?,?,?)";
     $bindvars = array($start, $end, (int)$ci);
     $result =& $dbconn->Execute($query,$bindvars);
@@ -325,7 +350,7 @@ function create_flagstable()
     $xartable =& xarDBGetTables();
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
     $taboptarray = array('REPLACE');
-    //$idxoptarray = array('UNIQUE');
+    $idxoptarray = array('UNIQUE');
     $FlagsTable = $xartable['netquery_flags'];
     $FlagsFields = "
         flag_id           I          AUTO        PRIMARY,
@@ -338,7 +363,7 @@ function create_flagstable()
     ";
     $result = $datadict->changeTable($FlagsTable, $FlagsFields);
     if (!$result) return;
-    $result = $datadict->createIndex('keyword', $FlagsTable, 'flagnum', $idxoptarray);
+    $result = $datadict->createIndex('i_' . xarDBGetSiteTablePrefix() . '_netquery_flags_1', $FlagsTable, 'flagnum', $idxoptarray);
     if (!$result) return;
     $FlagItems =array(
         array(1, 0, 'service', 'black', 'white', 'http://www.virtech.org/tools/#', ''),

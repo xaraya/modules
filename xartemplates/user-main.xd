@@ -1,16 +1,14 @@
 <script type="text/javascript" src="modules/netquery/xarincludes/popup.js"></script>
 
-<xar:if condition="xarTplAddStyleLink('netquery', $stylesheet)">
-</xar:if>
+<xar:style scope="module" file="'.$stylesheet.'" module="netquery" />
 
 <div class="xar-mod-head">
-<span class="xar-mod-title">#$maintitle#</span>
+  <span class="xar-mod-title">#$maintitle#</span>
 </div>
 
 <div class="xar-mod-body">
-<div style="margin: auto;">
-
 <div class="nq-center">
+
 <!-- <h4>#$subtitle#</h4> -->
 
 <form class="nquser" method="post" action="&xar-modurl-netquery-user-main;">
@@ -408,8 +406,6 @@
   &nbsp;&nbsp;<a href="javascript:NQpopup('#$loglink.url#','console','400','600');">#$loglink.label#</a>
 </xar:if>
 </p>
-
-</div>
 
 </div>
 </div>
