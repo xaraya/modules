@@ -52,7 +52,7 @@
                </fieldset>
                <fieldset>
                     <legend>
-                        <strong><xar:mlstring>Course contents</xar:mlstring></strong>
+                        <xar:mlstring>Course contents</xar:mlstring>
                     </legend>
                     <div class="xar-form-input-wrapper">
                         <label for="startdate" class="xar-form-label">
@@ -328,13 +328,15 @@
               </fieldset>
 
             <H2>#xarML('Other occurences of this course')#</H2>
-            <table width="100%" border="1" cellspacing="0" cellpadding="4">
-                <tr>
-                    <th><xar:mlstring>Starts</xar:mlstring></th>
-                    <th><xar:mlstring>Location</xar:mlstring></th>
-                    <th><xar:mlstring>Credits</xar:mlstring></th>
-                    <th><xar:mlstring>Options</xar:mlstring></th>
-                </tr>
+            <table>
+                <thead>
+                    <tr>
+                        <th><xar:mlstring>Starts</xar:mlstring></th>
+                        <th><xar:mlstring>Location</xar:mlstring></th>
+                        <th><xar:mlstring>Credits</xar:mlstring></th>
+                        <th><xar:mlstring>Options</xar:mlstring></th>
+                    </tr>
+                </thead>
                 <xar:foreach in="$items" value="$item">
                 <tr>
                     <td>#xarlocalegetformatteddate('medium',$item['startdate'])#</td>

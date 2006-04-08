@@ -80,13 +80,15 @@
 
                 <H3><xar:mlstring>This course has been scheduled for the following periods</xar:mlstring>:</H3>
 
-                <table width="100%" border="1" cellspacing="0" cellpadding="4">
-                    <tr>
-                        <th><xar:mlstring>Start date</xar:mlstring></th>
-                        <th><xar:mlstring>Course location</xar:mlstring></th>
-                        <th><xar:mlstring>Course Credits</xar:mlstring></th>
-                        <th><xar:mlstring>Options</xar:mlstring></th>
-                    </tr>
+                <table>
+                    <thead>
+                        <tr>
+                            <th><xar:mlstring>Start date</xar:mlstring></th>
+                            <th><xar:mlstring>Course location</xar:mlstring></th>
+                            <th><xar:mlstring>Course Credits</xar:mlstring></th>
+                            <th><xar:mlstring>Options</xar:mlstring></th>
+                        </tr>
+                    </thead>
                     <xar:foreach in="$items" value="$item">
                     <tr>
                         <td>#xarlocalegetformatteddate('medium',$item.startdate)#</td>
