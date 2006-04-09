@@ -129,7 +129,7 @@
       <div class="xar-form-input-wrapper">
         <label for="topicsperpage" class="xar-form-label" title="#xarML('The number of topics to show per page in this forum.')#">
           <xar:mlstring>
-            Topics per page
+            Topics per forum page view
           </xar:mlstring>
         </label>
         <input type="text" name="topicsperpage" id="topicsperpage" value="#$topicsperpage#" size="2" maxlength="4" />
@@ -177,7 +177,7 @@
       <div class="xar-form-input-wrapper">
         <label for="postsperpage" class="xar-form-label" title="#xarML('The number of posts to show per page in each topic.')#">
           <xar:mlstring>
-            Posts per page
+            Posts per topic page view
           </xar:mlstring>
         </label>
         <input type="text" name="postsperpage" id="postsperpage" value="#$postsperpage#" size="2" maxlength="4" />
