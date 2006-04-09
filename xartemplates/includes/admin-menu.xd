@@ -1,0 +1,48 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:comment>Common Administration menu</xar:comment>
+<xar:style scope="module" module="base" file="navtabs" />
+
+<xar:set name="activetab">$_bl_module_func</xar:set>
+<div>
+  <dl class="xar-tabs">
+    <dt class="help" title="Choose an action to perform">
+      <xar:mlstring>Actions:</xar:mlstring>
+    </dt>
+    <xar:sec mask="AddxarBB" catch="false">
+        <xar:set name="tabclass">$activetab=='new'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-xarbb-admin-new;">
+            <xar:mlstring>Add Forum</xar:mlstring>
+          </a>
+        </dd>
+    </xar:sec>
+    <xar:sec mask="EditxarBB" catch="false">
+        <xar:set name="tabclass">$activetab=='view'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+            <a href="&xar-modurl-xarbb-admin-view;" >
+                <xar:mlstring>View Forums</xar:mlstring>
+            </a>
+        </dd>
+        <xar:set name="tabclass">$activetab=='reorder'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+            <a href="&xar-modurl-xarbb-admin-reorder;" >
+                <xar:mlstring>Reorder Forums</xar:mlstring>
+            </a>
+        </dd>
+    </xar:sec>
+    <xar:sec mask="AdminxarBB" catch="false">
+        <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-xarbb-admin-modifyconfig;">
+            <xar:mlstring>Modify Config</xar:mlstring>
+          </a>
+        </dd>
+    </xar:sec>
+    <xar:set name="tabclass">$activetab=='overview'?'active':''</xar:set>
+    <dd class="#$tabclass#">
+      <a href="&xar-modurl-xarbb-admin-overview;">
+        <xar:mlstring>Overview</xar:mlstring>
+      </a>
+    </dd>
+  </dl>
+</div>

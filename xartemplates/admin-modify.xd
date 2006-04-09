@@ -18,13 +18,15 @@
   </span>
 </div>
 <div class="xar-mod-body">
-  <xar:template file="navtabs" type="module" />
-  <xar:template file="navtabs-action" type="module" />
+ <xar:template type="module" file="admin-menu" />
+
   <h2>
     <xar:mlstring>
       Modify Existing Forum
     </xar:mlstring>
   </h2>
+    <xar:template file="navtabs" type="module" />
+  <xar:template file="navtabs-action" type="module" />
   <xar:if condition="!empty($warning)">
     <p>
       #$warning#

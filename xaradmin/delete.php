@@ -39,6 +39,7 @@ function xarbb_admin_delete($args)
         if (!isset($data['fid'])) {
             $data['fid'] = $fid;
         }
+
         $data['authid'] = xarSecGenAuthKey();
 
         // For Tabs:
@@ -64,7 +65,7 @@ function xarbb_admin_delete($args)
         // Add the array of items to the template variables
         $data['tabs'] = $links;
         $data['action'] = '2';
-
+        $data['forumname'] = $data['fname'];
         //Load Template
         return $data;
     }
@@ -76,7 +77,7 @@ function xarbb_admin_delete($args)
 
 
     $topics =  xarModAPIFunc('xarbb','user','getalltopics', array('fid' => $fid));
-    
+
     if (count($topics) >0) { //check to make sure there are topics to delete
     // need to delete the topics first then the forum.
         if (!xarModAPIFunc('xarbb',
