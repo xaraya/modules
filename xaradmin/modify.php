@@ -66,7 +66,7 @@ function xarbb_admin_modify()
                 $data['hottopic']               = empty($settings['hottopic']) ? 20 : $settings['hottopic'];
                 $data['allowhtml']              = !empty($settings['allowhtml']) ? 'checked="checked"' : '';
                 $data['allowbbcode']            = !empty($settings['allowbbcode']) ? 'checked="checked"' : '';
-                $data['editstamp']              = !isset($settings['editstamp']) ? 1 : $settings['editstamp'];
+                $data['editstamp']              = !isset($settings['editstamp']) ? 0 : $settings['editstamp'];
                 $data['showcats']               = !empty($settings['showcats']) ? 'checked="checked"' : '';
                 $data['nntp']                   = empty($settings['nntp']) ? '' :$settings['nntp'];
             }
@@ -83,7 +83,7 @@ function xarbb_admin_modify()
                 $data['hottopic'] = 20;
             }
             if (!isset($data['editstamp'])) {
-                $data['editstamp'] = 1;
+                $data['editstamp'] = 0;
             }
             if (!isset($data['allowhtml'])) {
                 $data['allowhtml'] = '';
@@ -97,8 +97,12 @@ function xarbb_admin_modify()
             if (!isset($data['nntp'])) {
                 $data['nntp'] = '';
             }
+            $masternntpsetting=xarModGetVar('xarbb','masternntpsetting');
+            $masternntpsetting  = !isset($masternntpsetting) ? false :$masternntpsetting;
+            //jojodee- let's only do this if we allow nntp in the master setting else this is loading each time now
+            //even if the nntp settings are not available. Review when nntp is available
 
-            if (xarModIsAvailable('newsgroups')){
+            if (xarModIsAvailable('newsgroups') && $masternntpsetting){
                 // get the current list of newsgroups
                 $data['items'] = xarModAPIFunc('newsgroups','user','getgroups',
                                                array('nocache' => true));

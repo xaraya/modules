@@ -19,6 +19,9 @@ function xarbb_admin_modifyconfig()
         default:
             $data = array();
             $settings = array();
+            //General setting for using nntp or not so we can easily grab it (until fully implemented and other settings in place)
+            $masternntpsetting=xarModGetVar('xarbb','masternntpsetting');
+            $data['masternntpsetting']       = !isset($masternntpsetting) ? false :$masternntpsetting;
             $xarsettings= xarModGetVar('xarbb', 'settings');
             if (!empty($xarsettings)) {
                 $settings = unserialize($xarsettings);
@@ -31,7 +34,7 @@ function xarbb_admin_modifyconfig()
             $data['hottopic']        = !isset($settings['hottopic']) ? 20 :$settings['hottopic'];
             $data['allowhtml']       = !isset($settings['allowhtml']) ? false :$settings['allowhtml'];
             $data['allowbbcode']     = !isset($settings['allowbbcode']) ? false :$settings['allowbbcode'];
-            $data['editstamp']       = !isset($settings['editstamp']) ? 1 :$settings['editstamp'];
+            $data['editstamp']       = !isset($settings['editstamp']) ? 0 :$settings['editstamp'];
             $data['showcats']        = !isset($settings['showcats']) ? false :$settings['showcats'];
             $data['usenntp']         = !isset($settings['usenntp']) ? false :$settings['usenntp'];
             $data['linknntp']        = !isset($settings['linknntp']) ? false :$settings['linknntp'];
@@ -66,7 +69,7 @@ function xarbb_admin_modifyconfig()
             if (!xarVarFetch('modulealias','checkbox', $modulealias,false,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('allowhtml','checkbox', $allowhtml, false,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('allowbbcode','checkbox', $allowbbcode, false,XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('editstamp','int:1',$editstamp,0,XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('editstamp','int:0:2',$editstamp,0,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('showcats','checkbox', $showcats, false,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('usenntp','checkbox', $usenntp, false,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('linknntp','checkbox', $linknntp, false,XARVAR_NOT_REQUIRED)) return;
@@ -77,12 +80,13 @@ function xarbb_admin_modifyconfig()
             if (!xarVarFetch('cookiepath', 'str:1:', $cookiepath, '/', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('xarbbtitle', 'str:1:', $xarbbtitle, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('aliasname', 'str:1:', $aliasname, '', XARVAR_NOT_REQUIRED)) return;
-
+            if (!xarVarFetch('masternntpsetting', 'checkbox', $masternntpsetting, false, XARVAR_NOT_REQUIRED)) return;
             // Update module variables
             xarModSetVar('xarbb', 'SupportShortURLs', $supportshorturls);
             xarModSetVar('xarbb', 'cookiename', $cookiename);
             xarModSetVar('xarbb', 'cookiepath', $cookiepath);
             xarModSetVar('xarbb', 'xarbbtitle', $xarbbtitle);
+            xarModSetVar('xarbb', 'masternntpsetting', $masternntpsetting);            
             if (isset($aliasname) && trim($aliasname)<>'') {
                 xarModSetVar('xarbb', 'useModuleAlias', $modulealias);
             } else{
@@ -99,7 +103,7 @@ function xarbb_admin_modifyconfig()
             $settings['topicsortorder']     = $topicsortorder;
             $settings['hottopic']           = $hottopic;
             $settings['allowhtml']          = $allowhtml;
-            $settings['editstamp']          = $editstamp;            
+            $settings['editstamp']          = $editstamp;
             $settings['allowbbcode']        = $allowbbcode;
             $settings['showcats']           = $showcats;
             $settings['usenntp']            = $usenntp;

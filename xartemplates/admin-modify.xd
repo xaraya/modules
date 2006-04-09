@@ -246,7 +246,7 @@
           </xar:if>
         </select>
       </div>
-      <xar:if condition="xarModIsAvailable('newsgroups')">
+      <xar:if condition="xarModIsAvailable('newsgroups') and xarModGetVar('xarbb','masternntpsetting')">
         <div class="xar-form-input-wrapper">
           <label for="nntp"  class="xar-form-label" title="#xarML('Associate with which Newsgroup')#">
             <xar:mlstring>

@@ -10,6 +10,7 @@
 </div>
 <!-- common admin menu for this module - remove link to the current function -->
 <div class="xar-mod-body">
+ <xar:template type="module" file="admin-menu" />
     <h2>
         <xar:mlstring>
             View Forums
