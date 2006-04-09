@@ -1,10 +1,9 @@
 <?php
 /**
- *
- * AuthLDAP 
+ * AuthLDAP
  * 
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -27,7 +26,6 @@ $modversion['author'] = 'Andreas Jeitler | Chris Dudley | Richard Cave | Sylvain
 $modversion['contact'] = 'ajeitler@edu.uni-klu.ac.at | miko@xaraya.com | rcave@xaraya.com | beuc@beuc.net';
 $modversion['admin'] = 1;
 $modversion['user'] = 0;
-$modversion['securityschema'] = array('authldap::' => '::');
 $modversion['class'] = 'Authentication';
 $modversion['category'] = 'Global';
 // this module depends on the xarldap module
