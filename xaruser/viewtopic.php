@@ -189,6 +189,9 @@ function xarbb_user_viewtopic($args)
                                                                   $comment['xar_title']),
                                                             'xarbb',
                                                             $data['fid']);
+            //Bug 4836 again
+            $comments[$i]['xar_title'] = str_replace("<p>", "", $comments[$i]['xar_title']);
+            $comments[$i]['xar_title'] = str_replace("</p>", "", $comments[$i]['xar_title']);
 
 // TODO: retrieve all post counts at once ?
         // The user API function is called
