@@ -1,8 +1,10 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <a name="top"></a>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Site Tools Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Search for Links</xar:mlstring></h2>
-<div style="margin: auto;">
+<div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
+    <h2><xar:mlstring>Search for Links</xar:mlstring></h2>
+
 <form action="&xar-modurl-sitetools-admin-links;" method="post">
 <table border="0" cellpadding="4" cellspacing="0">
  <tr>
@@ -142,5 +144,4 @@
   <a href="#xarServerGetCurrentURL()##top"><xar:mlstring>Back to top</xar:mlstring></a>
 </xar:if>
 
-</div>
 </div>

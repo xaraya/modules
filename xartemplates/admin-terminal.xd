@@ -5,6 +5,7 @@
     </span>
 </div>
 <div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
     <h2><xar:mlstring>SQL Terminal</xar:mlstring></h2>
     <p>
         <xar:mlstring>The contents of the textarea is passed verbatim to the Execute method of the adodb driver of the database behind this Xaraya installation</xar:mlstring>

@@ -277,7 +277,7 @@ function sitetools_delete()
     /* Get datbase setup */
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-
+ 
     xarDBLoadTableMaintenanceAPI();
     /* Generate the SQL to drop the table using the API */
     $query = xarDBDropTable($xartable['sitetools']);

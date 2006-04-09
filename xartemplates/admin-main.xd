@@ -3,6 +3,7 @@
         <xar:mlstring>Administration - SiteTools</xar:mlstring>
 </div>
 <div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
     <img src="#xarTplGetImage('admin_generic.gif','sitetools')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
     <h2>
         <xar:mlstring>Overview</xar:mlstring>
