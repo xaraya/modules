@@ -50,7 +50,7 @@
             <xar:else />
                 <tr>
                     <td colspan="5">
-                        <div class="xar-norm-outline" style=" margin-left: 1em; margin-right: 1em; width: auto;border-style: dotted none none none;"></div>
+                        <div class="xar-alt"></div>
                     </td>
                 </tr>
                 <xar:loop name="$data">
@@ -73,7 +73,7 @@
                     </tr>
                     <tr>
                         <td colspan="5">
-                            <div class="xar-norm-outline" style=" margin-left: 1em; margin-right: 1em; width: auto;border-style: dotted none none none;"></div>
+                            <div class="xar-alt"></div>
                         </td>
                     </tr>
                 </xar:loop>

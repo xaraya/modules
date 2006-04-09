@@ -1,24 +1,24 @@
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:mlstring>Comments Administration</xar:mlstring>
+        <xar:mlstring>
+            Comments Administration
+        </xar:mlstring>
     </span>
 </div>
-
-<div align="center">
+<div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
     <h2>
-        <xar:mlstring>Comments Module Statistics</xar:mlstring>
+        <xar:mlstring>
+            Comments Module Statistics
+        </xar:mlstring>
     </h2>
-</div>
 
-<div align="center">
-    <h2>
+
+    <h3>
         <xar:mlstring>Module</xar:mlstring> [<b>#$modname#</b>]
-    </h2>
-</div>
+    </h3>
 
-<br />
 
-<div class="xar-mod-body xar-norm-outline" style="padding: 1px;">
 
     <div align="center">
         <table border="0" width="100%" cellpadding="0" cellspacing="0">
@@ -57,7 +57,7 @@
             <xar:else />
                 <tr>
                     <td colspan="4">
-                        <div class="xar-norm-outline" style="margin-left: 1em; margin-right: 1em; width: auto;border-style: dotted none none none;"></div>
+                        <div class="xar-alt" ></div>
                     </td>
                 </tr>
                 <xar:loop name="$data">
@@ -83,7 +83,7 @@
                     </tr>
                     <tr>
                         <td colspan="4">
-                        <div class="xar-norm-outline" style="margin-left: 1em; margin-right: 1em; width: auto;border-style: dotted none none none;"></div>
+                        <div class="xar-alt" ></div>
                         </td>
                     </tr>
                 </xar:loop>
@@ -122,4 +122,3 @@
         </table>
     </div>
 </div>
-<br />

@@ -4,48 +4,45 @@
     </span>
 </div>
 
-<div align="center">
+<div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
     <h2>
         <xar:mlstring>Delete Comments</xar:mlstring>
     </h2>
-</div>
+    <form method="post" action="#$delete_url#">
+    <fieldset>
+        <legend><xar:mlstring>Delete Confirmation</xar:mlstring></legend>
 
-<br />
+            <div class="xar-form-input-wrapper">
+                <label for="choice" title="#xarML('Delete all comments for this module?')#">
+                    <xar:mlstring>
+                        Are you sure you want to delete <strong>all</strong> comments associated with
+                    </xar:mlstring>
+                    <xar:if condition="$dtype ne 'all'">
+                        <strong>#$modname#</strong>
+                    <xar:else />
+                       <strong><xar:mlstring>all modules</xar:mlstring></strong>
+                    </xar:if>
+                    <xar:if condition="$dtype eq 'object'">
+                    <xar:mlstring>page id</xar:mlstring>
+                    [<strong>#$objectid#</strong>]?
+                    <xar:else />
+                     ?
+                    </xar:if>
+                </label>
+                    <strong><xar:mlstring>Yes</xar:mlstring></strong>
+                        <input type="radio" name="choice" id="yes" value="yes" />
+                    <strong><xar:mlstring>No</xar:mlstring></strong>
+                        <input type="radio" name="choice" id="no" value="no" checked="checked" />
+            </div>
+         </fieldset>
 
-<div class="xar-mod-body xar-norm-outline" style="padding: 1px;">
-
-    <div align="center">
-        <xar:mlstring>
-            Are you sure you want to delete <b>all</b> comments associated with
-        </xar:mlstring>
-
-        <xar:if condition="$dtype ne 'all'">
-            <b>#$modname#</b>
-        <xar:else />
-            <b>
-            <xar:mlstring>all modules</xar:mlstring>
-            </b>
-        </xar:if>
-
-        <xar:if condition="$dtype eq 'object'">
-            <xar:mlstring>
-                page id
-            </xar:mlstring>
-
-            [<b>#$objectid#</b>]?
-        <xar:else />
-            ?
-        </xar:if>
-        <form method="post" action="#$delete_url#">
+            <div class="xar-form-input-wrapper">
             <input type="hidden" name="authid" value="#$authid#"/>
-            <b><xar:mlstring>Yes</xar:mlstring></b>
-                <input type="radio" name="choice" id="yes" value="yes" />
-            <b><xar:mlstring>No</xar:mlstring></b>
-                <input type="radio" name="choice" id="no" value="no" checked="checked" />
-            <br />
             <input type="submit" name="submitted" id="submitted" value="submit" />
+            </div>
+   
         </form>
     </div>
 </div>
-<br />
-<br />
+
