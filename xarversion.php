@@ -13,7 +13,6 @@ $modversion['author'] = 'Alexander GQ Gerasiov';
 $modversion['contact'] = 'gq@gq.pp.ru';
 $modversion['admin'] = 1;
 $modversion['user'] = 0;
-$modversion['securityschema'] = array('authphpbb2::' => '::');
 $modversion['class'] = 'Authentication';
 $modversion['category'] = 'Global';
 ?>
