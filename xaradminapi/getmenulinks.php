@@ -14,6 +14,7 @@
  */
 function ie7_adminapi_getmenulinks()
 { 
+    if (!xarSecurityCheck('AdminIE7',0)) return;    
     /* locals */
     $menulinks = array();
     $menulinks[] = array('url' => xarModURL('ie7', 'admin', 'test'),

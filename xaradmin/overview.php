@@ -20,7 +20,7 @@
 function ie7_admin_overview()
 {
    /* Security Check */
-    if (!xarSecurityCheck('AdminIE7',0)) return;
+    if (!xarSecurityCheck('AdminIE7')) return;
 
     $data=array();
 

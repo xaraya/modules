@@ -11,7 +11,8 @@
  */
 function ie7_admin_test($args)
 {
-    xarTplAddStyleLink('ie7', 'ie7test');
+    if (!xarSecurityCheck('AdminIE7')) return;
+    //xarTplAddStyleLink('ie7', 'ie7test');
 
     /* array of variables to pass to the admin-main template */
     return array();

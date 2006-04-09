@@ -11,6 +11,7 @@
  */
 function ie7_admin_main($args) 
 {
+    if (!xarSecurityCheck('AdminIE7',0)) return;    
     /* array of variables to pass to the admin-main template */
     return array();
 }
