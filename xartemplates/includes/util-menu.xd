@@ -1,0 +1,27 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:comment>Common Administration menu</xar:comment>
+<xar:style scope="module" module="base" file="navtabs" />
+
+<xar:set name="activetab">$_bl_module_func</xar:set>
+<xar:set name="activetype">$_bl_module_type</xar:set>
+<div>
+  <dl class="xar-tabs">
+    <dt class="help" title="Choose an action to perform">
+      <xar:mlstring>Utility:</xar:mlstring>
+    </dt>
+      <xar:sec mask="AdminAutolinks" catch="false">
+        <xar:set name="tabclass">$activetab=='export'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-autolinks-util-export;">
+            <xar:mlstring>Export Autolinks</xar:mlstring>
+          </a>
+        </dd>
+        <xar:set name="tabclass">$activetab=='samples'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-autolinks-util-samples;">
+            <xar:mlstring>Create Samples</xar:mlstring>
+          </a>
+        </dd>
+    </xar:sec>
+  </dl>
+</div>
