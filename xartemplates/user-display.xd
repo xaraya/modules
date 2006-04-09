@@ -1,16 +1,16 @@
 <xar:if condition="!isset($error)">
-
-    <div class="xar-mod-head">
-        <span class="xar-mod-title"><xar:mlstring>Your private messages</xar:mlstring></span>
-    </div>
-    
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Private Messages</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="user-menu" />
     <table cellspacing="0" cellpadding="0" width="50%" border="0">
         <tr>
             <td nowrap="nowrap" width="5%" align="center">
                 <xar:if condition="$unread gt 0">
-                    <img src="modules/messages/xarimages/green.gif" />
+                    <img src="#xarTplGetImage('green.gif','messages')#" />
                 <xar:else/>
-                    <img src="modules/messages/xarimages/red.gif" />
+                    <img src="#xarTplGetImage('red.gif','messages')#" />
                 </xar:if>
             </td>
             <td nowrap="nowrap" width="15%" align="right">
@@ -23,9 +23,9 @@
             <td nowrap="nowrap" width="5%" align="center">
 
             <xar:if condition="$sent gt 0">
-                <img src="modules/messages/xarimages/green.gif" />
+                <img src="#xarTplGetImage('green.gif','messages')#" />
             <xar:else/>
-                <img src="modules/messages/xarimages/red.gif" />
+                <img src="#xarTplGetImage('red.gif','messages')#" />
             </xar:if>
             </td>
             <td nowrap="nowrap" width="15%" align="right">
@@ -142,10 +142,10 @@
         <hr/>
         <div align="right">
             <a href="#xarModURL('messages','user','send',array('action'=>'post'))#">
-                <img src="modules/messages/xarimages/newpm.gif" border="0"/>
+                <img src="#xarTplGetImage('newpm.gif','messages')#" border="0"/>
             </a>
         </div>
-    <hr/>
+
     <xar:if condition="empty($away_message)">
         <span class="xar-mod-title"><xar:mlstring>Away Message - OFF</xar:mlstring></span>
     <xar:else/>
@@ -159,8 +159,8 @@
     </div>
     </form>
 <xar:else />
-    <br />
     <div class="xar-norm">
         #$error#
     </div>
 </xar:if>
+</div>

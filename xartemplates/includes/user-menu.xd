@@ -1,0 +1,33 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:comment>Common Administration menu</xar:comment>
+<xar:style scope="module" module="base" file="navtabs" />
+
+<xar:set name="activetab">$_bl_module_func</xar:set>
+<xar:set name="activetype">$_bl_module_type</xar:set>
+<div>
+  <dl class="xar-tabs">
+    <dt class="help" title="Choose an action to perform">
+      <xar:mlstring>Actions:</xar:mlstring>
+    </dt>
+    <xar:sec mask="ViewMessages" catch="false">
+        <xar:if condition="$activetab eq 'display' or $activetab eq 'view'">
+            <xar:set name="tabclass">'active'</xar:set>
+        <xar:else />
+            <xar:set name="tabclass">''</xar:set>
+
+        </xar:if>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-messages-user-display;">
+            <xar:mlstring>Display Messages</xar:mlstring>
+          </a>
+        </dd>
+        <xar:set name="tabclass">$activetab=='send'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-messages-user-send;&amp;action=post">
+            <xar:mlstring>New Message</xar:mlstring>
+          </a>
+        </dd>
+    </xar:sec>
+
+  </dl>
+</div>

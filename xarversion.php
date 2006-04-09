@@ -11,7 +11,7 @@
  * @link http://xaraya.com/index.php/release/6.html
  * @author XarayaGeek
  */
-$modversion['name']         = 'Xaraya Messages';
+$modversion['name']         = 'messages';
 $modversion['id']           = '6';
 $modversion['version']      = '1.8.1';
 $modversion['displayname']  = xarML('Messages');

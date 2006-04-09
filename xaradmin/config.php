@@ -19,7 +19,7 @@ function messages_admin_config( $args )
 
     list( $cancel, $itemtype ) = xarVarCleanFromInput( 'cancel', 'itemtype' );
     extract( $args );
-
+ 
     // check if the user selected cancel
     if ( !empty( $cancel ) ) {
 

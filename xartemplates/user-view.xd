@@ -1,1 +1,7 @@
-<xar:template file="view-message" type="module" />
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Private Messages</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="user-menu" />
+    <xar:template file="view-message" type="module" />
+</div>

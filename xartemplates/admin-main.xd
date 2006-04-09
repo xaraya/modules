@@ -1,51 +1,47 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Messages Administration</xar:mlstring></span></div>
-<div class="xar-mod-body" style="display:block;">
-    <h2><xar:mlstring>Messages Module Overview</xar:mlstring></h2>
-<p><xar:mlstring>If this is your first visit to this part of your Xaraya site,
-please take a minute to read through the following introduction,
-in order to explore the different possibilities offered by the
-Contact module.</xar:mlstring></p>
-    <div style="border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 1px;">
-        <div style="float:right;display:block;background-color:#ffffff;padding:10px;">
-            <xar:if condition="file_exists('modules/mybookmarks/xarimages/admin.gif')" >
-                <img src="modules/messages/xarimages/admin.gif" alt="official icon" width="96" height="96" />
-            <xar:else />
-                <img src="modules/messages/xarimages/admin_generic.gif" alt="official icon" width="96" height="96" />
-            </xar:if>
-        </div>
-        <div class="xar-mod-title" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
-            <xar:mlstring>What is it?</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>"The Messages module gives your users a way to send messages to another users inbox."</xar:mlstring>
-        </div>
-        <br />
-        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
-            <xar:mlstring>How to use it?</xar:mlstring>
-        </div>
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>"You must be logged into the site before you can send messages. Select Messages from the user menu and select a user from the drop down list to send your message too. Compose your message and select the send button."</xar:mlstring>
-            <xar:mlstring>"From the Admin menu you can specify the support of short urls for the messages module."</xar:mlstring>
-            <br />
-
-        </div>
-        <br />
-        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
-            <xar:mlstring>Included Blocks</xar:mlstring>
-            <xar:mlstring>"newmessages"</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>The Messages Module has one block included at this time.</xar:mlstring>
-            <xar:mlstring>newmessages -> Display's a block that lists any new unread messages for the user with a link to the view messages page.'</xar:mlstring>
-        </div>
-        <br />
-        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
-    </div>
-        <br />
-
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Messages Administration</xar:mlstring></span>
 </div>
+<div class="xar-mod-body">
+  <!-- include a standard tabbed admin menu via include file in the xartemplates/include folder -->
+  <xar:template type="module" file="admin-menu" />
+  <img src="#xarTplGetImage('xaraya_logo.gif','messages')#" class="xar-module-icon" alt="official icon"   />
 
+  <h2><xar:mlstring>Overview</xar:mlstring></h2>
+
+  <h3>
+      <xar:mlstring>What is it?</xar:mlstring>
+  </h3>
+  <p>
+      <xar:mlstring>The Messages module gives your users a way to send messages to another users inbox.</xar:mlstring>
+  </p>
+  <h3>
+      <xar:mlstring>How to use it?</xar:mlstring>
+  </h3>
+      <p>
+            <xar:mlstring>You must be logged into the site before you can send messages. Select Messages from the user menu and select a user from the drop down list to send your message too. Compose your message and select the send button.</xar:mlstring>
+            <xar:mlstring>From the Admin menu you can specify the support of short urls for the messages module.</xar:mlstring>
+      </p>
+  <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
+        <p>
+            <xar:mlstring>The Messages Module has one block included at this time.</xar:mlstring>
+            <ul>
+            <li>
+            <xar:mlstring><strong>newmessages :</strong> Display's a block that lists any new unread messages for the user with a link to the view messages page.'</xar:mlstring>
+            </li>
+            </ul>
+        </p>
+  <h3>
+    <xar:mlstring>Further Information</xar:mlstring>
+  </h3>
+  <p>
+    <xar:mlstring>Further information on the Messages module can be found at</xar:mlstring>
+  </p>
+  <ul>
+    <li><xar:mlstring>Messages Extension page at</xar:mlstring> <a title="#xarML('Messages Module - Xaraya Extension 6')#" href="http://www.xaraya.com/index.php/release/6.html">Xaraya Extension and Releases</a>.
+      <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+    </li>
+    <li><xar:mlstring>Related tutorials and documentation on Messages found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/messages/" title="#xarML('Related documentation on Messages')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+    </li>
+  </ul>
 
 </div>
