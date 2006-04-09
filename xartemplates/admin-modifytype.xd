@@ -2,8 +2,11 @@
 <xar:set name="$addbuttonlabel"><xar:mlstring>Update</xar:mlstring></xar:set>
 <xar:set name="$cachebuttonlabel"><xar:mlstring>Refresh Cache</xar:mlstring></xar:set>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Autolinks Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Modify Autolink Type</xar:mlstring></h2>
-<div style="margin: auto;">
+<div class="xar-mod-body">
+<xar:template type="module" file="admin-menu" />
+<h2><xar:mlstring>View Autolink Types</xar:mlstring></h2>
+<h3><xar:mlstring>Modify Type</xar:mlstring></h3>
+
 
 <xar:if condition="isset($global_error)">
    <div class="xar-error">#xarVarPrepForDisplay($global_error)#</div>
@@ -86,5 +89,4 @@
     </xar:if>
     <input type="submit" name="submit" id="submit" value="#$addbuttonlabel#"  />
 </form>
-</div>
 </div>

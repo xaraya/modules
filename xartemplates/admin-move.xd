@@ -1,6 +1,10 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Autolinks Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Move Autolink</xar:mlstring></h2><br />
-<div style="margin: auto;">
+<div class="xar-mod-body">
+<xar:template type="module" file="admin-menu" />
+<h2><xar:mlstring>View Autolinks</xar:mlstring></h2>
+<h3><xar:mlstring>Move Autolink</xar:mlstring></h3>
+
+
 
 <form method="post" action="#xarModURL('autolinks', 'admin', 'move')#" enctype="application/x-www-form-urlencoded">
     <div>
@@ -55,4 +59,4 @@
 </form>
 
 </div>
-</div>
+

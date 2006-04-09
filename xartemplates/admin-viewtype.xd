@@ -1,7 +1,9 @@
 <xar:comment> $Id </xar:comment>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Autolinks Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>View Autolink Types</xar:mlstring></h2><br />
-<div style="margin: auto;">
+<div class="xar-mod-body">
+<xar:template type="module" file="admin-menu" />
+<h2><xar:mlstring>View Autolink Types</xar:mlstring></h2><br />
+
 <xar:if condition="!empty($items)">
 <table width="100%" border="1" cellspacing="0" cellpadding="4">
     <tr>
@@ -58,4 +60,4 @@
 <xar:mlstring>No Autolink types defined</xar:mlstring>
 </xar:if>
 </div>
-</div>
+

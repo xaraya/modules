@@ -3,8 +3,9 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Autolinks Administration</xar:mlstring></span></div>
 
 <div class="xar-mod-body">
+  <xar:template type="module" file="admin-menu" />
 <h2><xar:mlstring>Add</xar:mlstring> <xar:mlstring>Autolink Type</xar:mlstring></h2>
-<div style="margin: auto;">
+
 
 <xar:if condition="isset($global_error)">
    <div class="xar-error">#$global_error#</div>
@@ -71,5 +72,4 @@
     <input type="submit" value="#$addbuttonlabel#"  />
 </form>
 
-</div>
 </div>

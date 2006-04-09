@@ -1,4 +1,11 @@
-<div style="margin: auto;">
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Autolinks Administration</xar:mlstring></span></div>
+
+<div class="xar-mod-body">
+  <xar:template type="module" file="admin-menu" />
+    <h2><xar:mlstring>Import and Export Utilities</xar:mlstring></h2>
+    <xar:template type="module" file="util-menu" />    
+    <h3>Create Sample Data</h3>
+
 <form method="post" action="#xarModURL('autolinks', 'util', 'samples')#" enctype="application/x-www-form-urlencoded">
 
     <xar:if condition="isset($status)">
@@ -9,7 +16,7 @@
         </xar:if>
     </xar:if>
 
-    <h2><xar:mlstring>Create Sample Data</xar:mlstring></h2>
+
     <p>
         <xar:mlstring>
         Create sample link types, links and dynamic data objects and properties.
