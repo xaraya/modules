@@ -159,6 +159,7 @@ function xarbb_init()
 
     // modvars
     xarModSetVar('xarbb', 'cookiename', 'xarbb');
+    xarModSetVar('xarbb','masternntpsetting',false); //added 2006-04-09 : see admin new.php function
     xarModSetVar('xarbb', 'cookiepath', '/');
     xarModSetVar('xarbb', 'cookiedomain', '');
     xarModSetVar('xarbb', 'forumsperpage', 20); //only need this for admin view
@@ -173,6 +174,7 @@ function xarbb_init()
     $settings['postsperpage']       = 20;
     $settings['topicsperpage']      = 20;
     $settings['hottopic']           = 20;
+    $settings['editstamp']          = 0;
     $settings['allowhtml']          = false;
     $settings['allowbbcode']        = false;
     $settings['showcats']           = false;
@@ -385,6 +387,7 @@ function xarbb_upgrade($oldversion)
                 $settings['topicsperpage']      = 20;
                 $settings['forumsperpage']      = 20;
                 $settings['hottopic']           = 20;
+                $settings['editlink']           = 0;                
                 $settings['allowhtml']          = false;
                 $settings['allowbbcode']        = false;
                 $settings['showcats']           = false;
