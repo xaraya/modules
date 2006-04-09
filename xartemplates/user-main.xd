@@ -1,12 +1,14 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Newsgroups Module</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2>Newsgroups from <a href="#$server#">#$server#</a></h2>
-<div style="margin: auto;">
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Newsgroups</xar:mlstring></span></div>
+<div class="xar-mod-body">
 
-<div class="xar-norm-outline" style="margin: 0px 3px 6px 3px;padding: 3px;text-align: left;">
-<div class="xar-norm" style="padding: 3px;">
-    <span style="float: left; text-align: left; width: 98%;"><xar:mlstring>Name and Description</xar:mlstring></span>
-    <!-- <span style="float: right; text-align: right; width: 19%;"><xar:mlstring>Number of Posts</xar:mlstring></span>--><br /> 
-</div>
+    <h2>Newsgroups from <a href="#$server#">#$server#</a>
+    </h2>
+
+    <div class="xar-norm-outline" style="margin: 0px 3px 6px 3px;padding: 3px;text-align: left;">
+    <div class="xar-norm" style="padding: 3px;">
+        <span style="float: left; text-align: left; width: 98%;"><xar:mlstring>Name and Description</xar:mlstring></span>
+    <!-- <span style="float: right; text-align: right; width: 19%;"><xar:mlstring>Number of Posts</xar:mlstring></span>--><br />
+    </div>
 <xar:loop name="$items">
     <xar:if condition="empty($loop:item['group'])">
         <xar:continue/>
@@ -26,7 +28,6 @@
 <xar:if condition="!empty($error_message)">
     <xar:mlstring>News Server Error:</xar:mlstring> <strong>#$error_message#</strong>
 </xar:if>
-</div>
 
 </div>
 </div>

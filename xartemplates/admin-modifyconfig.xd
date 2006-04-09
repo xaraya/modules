@@ -1,65 +1,57 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>NewsGroups Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
+  <xar:template type="module" file="admin-menu" />
     <h2><xar:mlstring>Modify NewsGroups Configuration</xar:mlstring></h2><br />
-    <div style="margin: auto;">
+
         <form method="post" action="#xarModURL('newsgroups', 'admin', 'modifyconfig', array('phase' => 'update'))#" enctype="application/x-www-form-urlencoded" >
             <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <fieldset>
+            <legend><xar:mlstring>Configuration Options</xar:mlstring></legend>
 
-            <div style="clear: both; padding-top: 10px;">
-                <span style="float: left; width: 30%; text-align: right;">
-                    <label for="server"><xar:mlstring>News Server</xar:mlstring></label>
-                </span>
-                <span style="float: right; width: 68%; text-align: left;">
-                    <input type="text" name="server" id="server" value="#xarModGetVar('newsgroups', 'server', 1)#" size="25" maxlength="255" />
-                </span>
+            <div class="xar-form-input-wrapper">
+                <label for="server" class="xar-form-label" title="#xarML('The news server.')#">
+                    <xar:mlstring>News Server</xar:mlstring>
+                </label>
+                <input type="text" name="server" id="server" value="#xarModGetVar('newsgroups', 'server', 1)#" size="25" maxlength="255" />
             </div>
-            <div style="clear: both; padding-top: 10px;">
-                <span style="float: left; width: 30%; text-align: right;">
-                    <label for="port"><xar:mlstring>Port</xar:mlstring></label>
-                </span>
-                <span style="float: right; width: 68%; text-align: left;">
-                    <input type="text" name="port" id="port" value="#xarModGetVar('newsgroups', 'port', 1)#" size="2" maxlength="4" />
-                </span>
+            <div class="xar-form-input-wrapper">
+                <label for="port" class="xar-form-label" title="#xarML('The port')#">
+                    <xar:mlstring>Port</xar:mlstring>
+                </label>
+                <input type="text" name="port" id="port" value="#xarModGetVar('newsgroups', 'port', 1)#" size="2" maxlength="4" />
             </div>
-            <div style="clear: both; padding-top: 10px;">
-                <span style="float: left; width: 30%; text-align: right;">
-                    <label for="user"><xar:mlstring>Username</xar:mlstring></label>
-                </span>
-                <span style="float: right; width: 68%; text-align: left;">
+            <div class="xar-form-input-wrapper">
+                    <label for="user" class="xar-form-label">
+                        <xar:mlstring>Username</xar:mlstring>
+                    </label>
                     <input type="text" name="user" id="user" value="#xarModGetVar('newsgroups', 'user', 1)#" size="25" maxlength="255" />
-                </span>
             </div>
-            <div style="clear: both; padding-top: 10px;">
-                <span style="float: left; width: 30%; text-align: right;">
-                    <label for="pass"><xar:mlstring>Password</xar:mlstring></label>
-                </span>
-                <span style="float: right; width: 68%; text-align: left;">
+             <div class="xar-form-input-wrapper">
+                    <label for="pass" class="xar-form-label">
+                        <xar:mlstring>Password</xar:mlstring>
+                    </label>
                     <input type="password" name="pass" id="pass" value="" size="25" maxlength="255" />
-                </span>
             </div>
-            <div style="clear: both; padding-top: 10px;">
-                <span style="float: left; width: 30%; text-align: right;">
-                    <label for="wildmat_0"><xar:mlstring>Wildcard Match</xar:mlstring></label>
-                </span>
-                <span style="float: right; width: 68%; text-align: left;">
+             <div class="xar-form-input-wrapper">
+                    <label for="wildmat_0" class="xar-form-label">
+                        <xar:mlstring>Wildcard Match</xar:mlstring>
+                    </label>
                     <xar:foreach in="$wildmat" key="$idx" value="$value">
+                    <div class="xar-form-input-wrapper-after">
                     <input type="text" name="wildmat[]" id="wildmat_#$idx#" value="#$value#" size="25" maxlength="255" /><br/>
+                    </div>
                     </xar:foreach>
-                </span>
             </div>
-            <div style="clear: both; padding-top: 10px;">
-                <span style="float: left; width: 30%; text-align: right;">
-                    <label for="numitems"><xar:mlstring>Messages Per Page</xar:mlstring></label>
-                </span>
-                <span style="float: right; width: 68%; text-align: left;">
+             <div class="xar-form-input-wrapper">
+                    <label for="numitems"  class="xar-form-label">
+                        <xar:mlstring>Messages Per Page</xar:mlstring>
+                    </label>
                     <input type="text" name="numitems" id="numitems" value="#xarModGetVar('newsgroups', 'numitems')#" size="2" maxlength="4" />
-                </span>
             </div>
-            <div style="clear: both; padding-top: 10px;">
-                <span style="float: left; width: 30%; text-align: right;">
-                    <label for="sortby"><xar:mlstring>Sort Messages in Page By</xar:mlstring></label>
-                </span>
-                <span style="float: right; width: 68%; text-align: left;">
+             <div class="xar-form-input-wrapper">
+                    <label for="sortby" class="xar-form-label">
+                        <xar:mlstring>Sort Messages in Page By</xar:mlstring>
+                    </label>
                     <xar:set name="sortby">xarModGetVar('newsgroups','sortby')</xar:set>
                     <select name="sortby" id="sortby">
                         <xar:if condition="empty($sortby) or $sortby eq 'thread'">
@@ -70,63 +62,53 @@
                             <option value="article" selected="selected"><xar:mlstring>Newest Article</xar:mlstring></option>
                         </xar:if>
                     </select>
-                </span>
             </div>
 <xar:comment> replace with xarCacheManager modifyconfig hook for mod / data caching ? </xar:comment>
-            <div style="clear: both; padding-top: 10px;">
-                <span style="float: left; width: 30%; text-align: right;">
-                    <label for="listexpire"><xar:mlstring>Refresh List of Newsgroups</xar:mlstring></label>
-                </span>
-                <span style="float: right; width: 68%; text-align: left;">
+             <div class="xar-form-input-wrapper">
+                    <label for="listexpire"  class="xar-form-label">
+                        <xar:mlstring>Refresh List of Newsgroups</xar:mlstring>
+                    </label>
                     <input type="text" name="listexpire" id="listexpire" value="#xarModGetVar('newsgroups', 'listexpire')#" size="5" maxlength="10" />
                     <xar:mlstring>seconds (leave empty to disable caching)</xar:mlstring>
-                </span>
             </div>
-            <div style="clear: both; padding-top: 10px;">
-                <span style="float: left; width: 30%; text-align: right;">
-                    <label for="groupexpire"><xar:mlstring>Refresh Newsgroup Messages</xar:mlstring></label>
-                </span>
-                <span style="float: right; width: 68%; text-align: left;">
+             <div class="xar-form-input-wrapper">
+                    <label for="groupexpire"  class="xar-form-label">
+                        <xar:mlstring>Refresh Newsgroup Messages</xar:mlstring>
+                    </label>
                     <input type="text" name="groupexpire" id="groupexpire" value="#xarModGetVar('newsgroups', 'groupexpire')#" size="5" maxlength="10" />
                     <xar:mlstring>seconds (leave empty to disable caching)</xar:mlstring>
-                </span>
             </div>
-            <div style="clear: both; padding-top: 10px;">
-                <span style="float: left; width: 30%; text-align: right;">
-                    <label for="messageexpire"><xar:mlstring>Cache Individual Messages</xar:mlstring></label>
-                </span>
-                <span style="float: right; width: 68%; text-align: left;">
+             <div class="xar-form-input-wrapper">
+                    <label for="messageexpire" class="xar-form-label">
+                        <xar:mlstring>Cache Individual Messages</xar:mlstring>
+                    </label>
                     <input type="text" name="messageexpire" id="messageexpire" value="#xarModGetVar('newsgroups', 'messageexpire')#" size="5" maxlength="10" />
                     <xar:mlstring>seconds (leave empty to disable caching)</xar:mlstring>
-                </span>
             </div>
-            <div style="clear: both; padding-top: 10px;">
-                <span style="float: left; width: 30%; text-align: right;">
-                    <label for="cachesize"><xar:mlstring>Cache Size</xar:mlstring></label>
-                </span>
-                <span style="float: right; width: 68%; text-align: left;">
+             <div class="xar-form-input-wrapper">
+                    <label for="cachesize" class="xar-form-label">
+                        <xar:mlstring>Cache Size</xar:mlstring>
+                    </label>
                     <input type="text" name="cachesize" id="cachesize" value="#xarModGetVar('newsgroups', 'cachesize')#" size="8" maxlength="10" />
                     <xar:mlstring>bytes (leave empty to disable caching)</xar:mlstring>
-                </span>
             </div>
-            <div style="clear: both; padding-top: 10px;">
-                <span style="float: left; width: 30%; text-align: right;">
-                    <label for="isalias"><xar:mlstring>Enable Short URLs</xar:mlstring></label>
-                </span>
-                <span style="float: right; width: 68%; text-align: left;">
+             <div class="xar-form-input-wrapper-after">
                     <xar:if condition="xarModGetVar('newsgroups','SupportShortURLs')">
                         <input type="checkbox" name="isalias" id="isalias" value="1" checked="checked" />
                     <xar:else/>
                         <input type="checkbox" name="isalias" id="isalias" value="1" />
                     </xar:if>
-                </span>
+                    <label for="isalias"><xar:mlstring>Enable Short URLs</xar:mlstring></label>
             </div>
+        </fieldset>
 
+        <fieldset>
+        <legend><xar:mlstring>Enabled Hooks</xar:mlstring></legend>
             #$hooks#
 
-            <div style="clear: both; padding-top: 10px;">
-                <p><input type="submit" value="Update Configuration" /></p>
-            </div>
-        </form>
-    </div>
+        </fieldset>
+        <div class="xar-form-input-wrapper-after">
+            <p><input type="submit" value="Update Configuration" /></p>
+        </div>
+    </form>
 </div>

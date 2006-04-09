@@ -1,10 +1,11 @@
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:mlstring>Newsgroups Module</xar:mlstring>
+        <xar:mlstring>Newsgroups</xar:mlstring>
     </span>
 </div>
 
 <div class="xar-mod-body">
+
     <h2><xar:mlstring>Read Message</xar:mlstring></h2>
     <p>#$pager# <a href="#xarModUrl('newsgroups', 'user', 'group', array('group' => $group))#"><xar:ml><xar:mlstring>Back to newsgroup #(1)</xar:mlstring><xar:mlvar>#$group#</xar:mlvar></xar:ml></a></p>
     <xar:if condition="isset($error_message)">

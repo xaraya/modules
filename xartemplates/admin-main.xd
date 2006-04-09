@@ -1,45 +1,35 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Administration - NewsGroups</xar:mlstring></span></div>
+<div class="xar-mod-head">
+  <span class="xar-mod-title"><xar:mlstring>Newsgroups Administration</xar:mlstring></span>
+</div>
 <div class="xar-mod-body">
-    <h2><xar:mlstring>Overview</xar:mlstring></h2>
-    <div style="padding: 1px;" class="xar-norm-outline">
-        <div style="float:right;padding:10px;">
-            <img src="modules/adminpanels/xarimages/admin.gif" alt="official icon" width="96" height="96" />
-        </div>
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>What is it?</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>The NewsGroups module provides the basic functionality to read and post to NNTP.</xar:mlstring>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>How to use it?</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+  <xar:template type="module" file="admin-menu" />
+  <img src="#xarTplGetImage('admin_generic.gif','base')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
+
+  <h2><xar:mlstring>Overview</xar:mlstring></h2>
+
+  <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+      <p>
+          <xar:mlstring>The NewsGroups module provides the basic functionality to read and post to NNTP.</xar:mlstring>
+      </p>
+  <h3>
+      <xar:mlstring>How to use it?</xar:mlstring>
+  </h3>
+      <p>
             <xar:mlstring>
-            From the menu, you have one choice.  "Modify Configuration". 
+            From the menu, you have one choice.  "Modify Configuration".
             </xar:mlstring>
             <ul>
                 <li><xar:mlstring>Modify Configuration -- Allows you to set the server, port, and pager for your newsgroups that you wish to view.</xar:mlstring></li>
             </ul>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+       </p>
+   <h3>
             <xar:mlstring>Included Blocks</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>There are no included blocks</xar:mlstring>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+   </h3>
+       <p><xar:mlstring>There are no included blocks</xar:mlstring></p>
+   <h3>
             <xar:mlstring>Included Hooks</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+   </h3>
+    <p>
             <xar:mlstring>There are no included hooks</xar:mlstring>
-        </div>
-    </div>
+    </p>
 </div>

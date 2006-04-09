@@ -1,0 +1,22 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:comment>Common Administration menu</xar:comment>
+<xar:style scope="module" module="base" file="navtabs" />
+
+<xar:set name="activetab">$_bl_module_func</xar:set>
+<div>
+  <dl class="xar-tabs">
+    <dt class="help" title="Choose an action to perform">
+      <xar:mlstring>Select:</xar:mlstring>
+    </dt>
+    <xar:sec mask="ReadNewsGroups" catch="false">
+        <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-newsgroups-user-main;">
+            <xar:mlstring>List Newsgroups</xar:mlstring>
+          </a>
+        </dd>
+
+    </xar:sec>
+
+  </dl>
+</div>

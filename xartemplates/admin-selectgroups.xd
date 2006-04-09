@@ -1,22 +1,25 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>NewsGroups Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
     <h2><xar:mlstring>Select Newsgroups</xar:mlstring></h2>
-    <div style="margin: auto;">
+
         <form method="post" action="#xarModURL('newsgroups', 'admin', 'selectgroups')#" enctype="application/x-www-form-urlencoded" >
             <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <fieldset>
+            <legend><xar:mlstring>Wildcard Filter</xar:mlstring></legend>
 
-            <div style="clear: both; padding-top: 10px;">
-                <span style="float: left; width: 30%; text-align: right;">
-                    <label for="wildmat_0"><xar:mlstring>Wildcard Match</xar:mlstring></label>
-                </span>
-                <span style="float: right; width: 68%; text-align: left;">
+             <div class="xar-form-input-wrapper">
+                    <label for="wildmat_0" class="xar-form-label" >
+                        <xar:mlstring>Wildcard Match</xar:mlstring>
+                    </label>
                     <xar:foreach in="$wildmat" key="$idx" value="$value">
-                    <input type="text" name="wildmat[]" id="wildmat_#$idx#" value="#$value#" size="25" maxlength="255" /><br/>
+                    <div class="xar-form-input-wrapper-after">
+                        <input type="text" name="wildmat[]" id="wildmat_#$idx#" value="#$value#" size="25" maxlength="255" /><br/>
+                    </div>
                     </xar:foreach>
-                </span>
             </div>
-
-            <div style="clear: both; padding-top: 10px;">
+            </fieldset>
+            <div class="xar-form-input-wrapper-after">
                 <p><input type="submit" value="#xarML('Update Wildcard Filter')#" /></p>
             </div>
         </form>
@@ -24,32 +27,30 @@
         <xar:base-include-javascript module="base" filename="checkall.js" />
         <form method="post" name="selectgroups" id="selectgroups" action="#xarModURL('newsgroups', 'admin', 'selectgroups', array('phase' => 'update'))#" enctype="application/x-www-form-urlencoded" >
             <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <fieldset>
+            <legend><xar:mlstring>Newsgroup Selection</xar:mlstring></legend>
 
             <xar:foreach in="$items" key="$name" value="$info">
-            <div style="clear: both; padding-top: 10px;">
-                <span style="float: left; width: 30%; text-align: right;">
-                    <label for="selected_#$name#">
+            <div class="xar-form-input-wrapper">
+                    <label for="selected_#$name#" class="xar-form-label">
                         #xarVarPrepForDisplay($info['group'])#
                     </label>
-                </span>
-                <span style="float: right; width: 10%; text-align: left;">
+                    <span style="float: right; width: 10%; text-align: left;">
                     <xar:if condition="!empty($selected) and in_array($name,$selected)">
                         <input type="checkbox" name="selected[#$name#]" id="selected_#$name#" value="1" checked="checked" />
                     <xar:else/>
                         <input type="checkbox" name="selected[#$name#]" id="selected_#$name#" value="1" />
                     </xar:if>
-                </span>
-                <span style="float: right; width: 58%; text-align: left;">
+                    </span>
                     <xar:if condition="!empty($info['desc'])">
                         <input type="text" name="desc[#$name#]" id="desc_#$name#" value="#xarVarPrepForDisplay(trim($info['desc']))#" size="50" />
                     <xar:else/>
                         <input type="text" name="desc[#$name#]" id="desc_#$name#" value="" size="50" />
                     </xar:if>
-                </span>
             </div>
             </xar:foreach>
-
-            <div style="clear: both; padding-top: 10px;">
+            </fieldset>
+            <div class="xar-form-input-wrapper-after">
                 <p>
                     <input type="submit" value="#xarML('Update Newsgroup Selection')#" />
 <script language="JavaScript" type="text/javascript"><![CDATA[
@@ -60,5 +61,4 @@
                 </p>
             </div>
         </form>
-    </div>
 </div>
