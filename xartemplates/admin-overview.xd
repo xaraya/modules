@@ -5,6 +5,8 @@
 </div>
 <div class="xar-mod-body">
 
+    <xar:template file="admin-menu" />
+
     <h2><xar:mlstring>Overview</xar:mlstring></h2>
 
     <h3>What is it?</h3>

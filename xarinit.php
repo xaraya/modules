@@ -1,12 +1,12 @@
 <?php
 /**
     Helpdesk
- 
+
     @package Xaraya eXtensible Management System
     @copyright (C) 2003-2004 by Envision Net, Inc.
     @license GPL <http://www.gnu.org/licenses/gpl.html>
     @link http://www.envisionnet.net/
- 
+
     @subpackage Helpdesk module
     @author Brian McGilligan <brian@envisionnet.net>
 */
@@ -27,18 +27,18 @@
 * initialise the helpdesk module
 */
 function helpdesk_init()
-{   
+{
     // Get database information
     $dbconn   =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-    
+
     //Load Table Maintenance API
     xarDBLoadTableMaintenanceAPI();
 
     // Create tables
     $helpdesktable  = $xartable['helpdesk_tickets'];
     $helpdeskcolumn = &$xartable['helpdesk_tickets_column'];
-    
+
     $fields = array(
         'xar_id'          => array('type'=>'integer', 'size'=>11, 'null'=>FALSE, 'increment'=>TRUE,'primary_key'=>TRUE),
         'xar_date'        => array('type'=>'datetime', 'null'=>FALSE),
@@ -55,71 +55,71 @@ function helpdesk_init()
         'xar_phone'       => array('type'=>'varchar', 'size'=>50,'null'=>FALSE, 'default'=>''),
         'xar_email'       => array('type'=>'varchar', 'size'=>50,'null'=>FALSE, 'default'=>'')
     );
-    
+
     // Create the Table - the function will return the SQL is successful or
     // raise an exception if it fails, in this case $query is empty
     $query = xarDBCreateTable($helpdesktable,$fields);
     if (empty($query)) return; // throw back
     $result = $dbconn->Execute($query);
     if (!isset($result)) return;
-    
+
     /**
         Creates the Priority table
     */
     $table  = $xartable['helpdesk_priority'];
-    
+
     $fields = array(
         'xar_pid'          => array('type'=>'integer', 'size'=>11, 'null'=>FALSE, 'increment'=>TRUE,'primary_key'=>TRUE),
         'xar_priority'        => array('type'=>'varchar', 'size'=>20,'null'=>FALSE, 'default'=>''),
         'xar_color'       => array('type'=>'varchar', 'size'=>10,'null'=>FALSE, 'default'=>'')
     );
-    
+
     // Create the Table - the function will return the SQL is successful or
     // raise an exception if it fails, in this case $query is empty
     $query = xarDBCreateTable($table,$fields);
     if (empty($query)) return; // throw back
     $result = $dbconn->Execute($query);
     if (!isset($result)) return;
-    
+
     /**
         Creates the Status table
     */
     $table  = $xartable['helpdesk_status'];
-    
+
     $fields = array(
         'xar_sid'          => array('type'=>'integer', 'size'=>11, 'null'=>FALSE, 'increment'=>TRUE,'primary_key'=>TRUE),
         'xar_status'        => array('type'=>'varchar', 'size'=>20,'null'=>FALSE, 'default'=>'')
     );
-    
+
     // Create the Table - the function will return the SQL is successful or
     // raise an exception if it fails, in this case $query is empty
     $query = xarDBCreateTable($table,$fields);
     if (empty($query)) return; // throw back
     $result = $dbconn->Execute($query);
     if (!isset($result)) return;
-    
+
     /**
         Creates the Source table
     */
     $table  = $xartable['helpdesk_source'];
-    
+
     $fields = array(
         'xar_sid'          => array('type'=>'integer', 'size'=>11, 'null'=>FALSE, 'increment'=>TRUE,'primary_key'=>TRUE),
         'xar_source'       => array('type'=>'varchar', 'size'=>20,'null'=>FALSE, 'default'=>'')
     );
-    
+
     // Create the Table - the function will return the SQL is successful or
     // raise an exception if it fails, in this case $query is empty
     $query = xarDBCreateTable($table,$fields);
     if (empty($query)) return; // throw back
     $result = $dbconn->Execute($query);
     if (!isset($result)) return;
-    
+
     // Set up module variables
     xarModSetVar('helpdesk', 'Website', 'http://www.envisionnet.net/');
     xarModSetVar('helpdesk', 'Default rows per page', 20);
     xarModSetVar('helpdesk', 'Page Count Limit', 10);
-    
+
     xarModSetVar('helpdesk', 'Tech NewTicket Msg', 'New Tech Ticket');
     xarModSetVar('helpdesk', 'User NewTicket Msg', 'New User Ticket');
     xarModSetVar('helpdesk', 'MAIN menu Msg', 'Menu Msg');
@@ -145,16 +145,16 @@ function helpdesk_init()
     xarModSetVar('helpdesk', 'EnableMyStatsHyperLink', 1);
     // Module variable for testing
     xarModSetVar('helpdesk', 'debug message', '');
-    
+
     xarRegisterMask('viewhelpdesk',   'All','helpdesk','helpdesk','All', 'ACCESS_OVERVIEW');
     xarRegisterMask('readhelpdesk',   'All','helpdesk','helpdesk','All', 'ACCESS_READ');
-    xarRegisterMask('submithelpdesk', 'All','helpdesk','helpdesk','All', 'ACCESS_COMMENT');    
+    xarRegisterMask('submithelpdesk', 'All','helpdesk','helpdesk','All', 'ACCESS_COMMENT');
     xarRegisterMask('edithelpdesk',   'All','helpdesk','helpdesk','All', 'ACCESS_EDIT');
     xarRegisterMask('addhelpdesk',    'All','helpdesk','helpdesk','All', 'ACCESS_ADD');
     xarRegisterMask('deletehelpdesk', 'All','helpdesk','helpdesk','All', 'ACCESS_DELETE');
     xarRegisterMask('adminhelpdesk',  'All','helpdesk','helpdesk','All', 'ACCESS_ADMIN');
 
-    
+
     // let's hook cats in
     $cid = xarModAPIFunc('categories', 'admin', 'create',
                          array('name' => 'Helpdesk',
@@ -178,32 +178,34 @@ function helpdesk_init()
                                     'description' => $subcat['description'],
                                     'parent_id' => $cid));
     }
-    
+
     // Enable categories hooks for helpdesk
     xarModAPIFunc('modules','admin','enablehooks',
-          array('callerModName' => 'helpdesk', 'hookModName' => 'categories'));        
-    
+          array('callerModName' => 'helpdesk', 'hookModName' => 'categories'));
+
     // Enable comments hooks for helpdesk
     xarModAPIFunc('modules','admin','enablehooks',
-          array('callerModName' => 'helpdesk', 'hookModName' => 'comments'));        
-    
+          array('callerModName' => 'helpdesk', 'hookModName' => 'comments'));
+
     // Enable comments hooks for helpdesk
     xarModAPIFunc('modules','admin','enablehooks',
           array('callerModName' => 'helpdesk', 'hookModName' => 'hitcount'));
-    
+
     // Enable owner hooks for helpdesk
     xarModAPIFunc('modules','admin','enablehooks',
           array('callerModName' => 'helpdesk', 'hookModName' => 'owner'));
-    
+
     // Enable security hooks for helpdesk
     xarModAPIFunc('modules','admin','enablehooks',
           array('callerModName' => 'helpdesk', 'hookModName' => 'security'));
-    
+
+    // Default Security Levels for helpesk.
+
     /**
     * Ok, Now lets create all of our dd objects
     */
     $path = "modules/helpdesk/xardata/";
-    
+
     /*
     * The Priority Object
     */
@@ -215,7 +217,7 @@ function helpdesk_init()
     $objectid = xarModAPIFunc('dynamicdata','util','import',
                               array('file' => $path . 'hd_priority.data.xml'));
     if (empty($objectid)) return;
-    
+
     /*
     * The Sources Object
     */
@@ -223,11 +225,11 @@ function helpdesk_init()
                               array('file' => $path . 'hd_sources.xml'));
     if (empty($objectid)) return;
     // save the object id for later
-    xarModSetVar('helpdesk','sourcesobjectid',$objectid);    
+    xarModSetVar('helpdesk','sourcesobjectid',$objectid);
     $objectid = xarModAPIFunc('dynamicdata','util','import',
                               array('file' => $path . 'hd_sources.data.xml'));
     if (empty($objectid)) return;
-    
+
     /*
     * The Status Object
     */
@@ -235,11 +237,11 @@ function helpdesk_init()
                               array('file' => $path . 'hd_status.xml'));
     if (empty($objectid)) return;
     // save the object id for later
-    xarModSetVar('helpdesk','statusobjectid',$objectid);    
+    xarModSetVar('helpdesk','statusobjectid',$objectid);
     $objectid = xarModAPIFunc('dynamicdata','util','import',
                               array('file' => $path . 'hd_status.data.xml'));
     if (empty($objectid)) return;
-    
+
     /*
     * The Rep Object
     */
@@ -247,8 +249,8 @@ function helpdesk_init()
                               array('file' => $path . 'hd_representatives.xml'));
     if (empty($objectid)) return;
     // save the object id for later
-    xarModSetVar('helpdesk','representativesobjectid',$objectid);    
-    
+    xarModSetVar('helpdesk','representativesobjectid',$objectid);
+
     // Initialisation successful
     return true;
 }
@@ -261,13 +263,13 @@ function helpdesk_upgrade($oldversion)
     // Get database information
     $dbconn   =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-    
+
     //Load Table Maintenance API
     xarDBLoadTableMaintenanceAPI();
 
     // Create tables
     $helpdesktable = $xartable['helpdesk_tickets'];
-    
+
     switch($oldversion) {
         case '.3':
         case '.3.0':
@@ -283,24 +285,24 @@ function helpdesk_upgrade($oldversion)
                                       array('file' => $path . 'hd_representatives.xml'));
             if (empty($objectid)) return;
             // save the object id for later
-            xarModSetVar('helpdesk','representativesobjectid',$objectid);                
-            
-        case '.3.2':            
+            xarModSetVar('helpdesk','representativesobjectid',$objectid);
+
+        case '.3.2':
             $args = array('command' => 'add',
                           'field'   => 'xar_date',
                           'type'    => 'datetime',
                           'null'    => FALSE
                          );
             xarDBAlterTable($helpdesktable, $args, $databaseType = NULL);
-           
+
             $args = array('command' => 'add',
                           'field'   => 'xar_updated',
                           'type'    => 'datetime',
                           'null'    => FALSE
                          );
             xarDBAlterTable($helpdesktable, $args, $databaseType = NULL);
-            
-            
+
+
             // let's hook it in
             $cid = xarModAPIFunc('categories', 'admin', 'create',
                                 array('name' => 'Helpdesk',
@@ -327,65 +329,65 @@ function helpdesk_upgrade($oldversion)
             xarModAPIFunc('modules','admin','enablehooks',
                           array('callerModName' => 'helpdesk', 'hookModName' => 'categories'));
             }
-            
+
         case '.3.3':
         case '0.3.3':
 
         case '0.4.0':
-        
+
         case '0.5.0':
             /**
                 Creates the Priority table
             */
             $table  = $xartable['helpdesk_priority'];
-            
+
             $fields = array(
                 'xar_pid'          => array('type'=>'integer', 'size'=>11, 'null'=>FALSE, 'increment'=>TRUE,'primary_key'=>TRUE),
                 'xar_priority'        => array('type'=>'varchar', 'size'=>20,'null'=>FALSE, 'default'=>''),
                 'xar_color'       => array('type'=>'varchar', 'size'=>10,'null'=>FALSE, 'default'=>'')
             );
-            
+
             // Create the Table - the function will return the SQL is successful or
             // raise an exception if it fails, in this case $query is empty
             $query = xarDBCreateTable($table,$fields);
             if (empty($query)) return; // throw back
             $result = $dbconn->Execute($query);
             if (!isset($result)) return;
-            
+
             /**
                 Creates the Status table
             */
             $table  = $xartable['helpdesk_status'];
-            
+
             $fields = array(
                 'xar_sid'          => array('type'=>'integer', 'size'=>11, 'null'=>FALSE, 'increment'=>TRUE,'primary_key'=>TRUE),
                 'xar_status'        => array('type'=>'varchar', 'size'=>20,'null'=>FALSE, 'default'=>'')
             );
-            
+
             // Create the Table - the function will return the SQL is successful or
             // raise an exception if it fails, in this case $query is empty
             $query = xarDBCreateTable($table,$fields);
             if (empty($query)) return; // throw back
             $result = $dbconn->Execute($query);
             if (!isset($result)) return;
-            
+
             /**
                 Creates the Source table
             */
             $table  = $xartable['helpdesk_source'];
-            
+
             $fields = array(
                 'xar_sid'          => array('type'=>'integer', 'size'=>11, 'null'=>FALSE, 'increment'=>TRUE,'primary_key'=>TRUE),
                 'xar_source'       => array('type'=>'varchar', 'size'=>20,'null'=>FALSE, 'default'=>'')
             );
-            
+
             // Create the Table - the function will return the SQL is successful or
             // raise an exception if it fails, in this case $query is empty
             $query = xarDBCreateTable($table,$fields);
             if (empty($query)) return; // throw back
             $result = $dbconn->Execute($query);
-            if (!isset($result)) return;        
-        
+            if (!isset($result)) return;
+
             /*
                 Now let load the data again
             */
@@ -395,28 +397,28 @@ function helpdesk_upgrade($oldversion)
 
             xarModAPIFunc('dynamicdata','util','import',
                           array('file' => $path . 'hd_sources.data.xml'));
-            
+
             xarModAPIFunc('dynamicdata','util','import',
                           array('file' => $path . 'hd_status.data.xml'));
-            
+
         case '0.5.1':
         case '0.5.6':
             // Enable owner hooks for helpdesk
             xarModAPIFunc('modules','admin','enablehooks',
                   array('callerModName' => 'helpdesk', 'hookModName' => 'owner'));
-            
+
             // Enable security hooks for helpdesk
             xarModAPIFunc('modules','admin','enablehooks',
                   array('callerModName' => 'helpdesk', 'hookModName' => 'security'));
-                            
+
         case '0.7.0':
-        
+
         default:
-            break;  
+            break;
     }
     // If all else fails, return true so the module no longer shows "Upgrade" in module administration
     return true;
-} 
+}
 
 /**
 * delete the helpdesk module
@@ -467,22 +469,22 @@ function helpdesk_delete()
     }
 
     xarModDelAllVars('helpdesk');
-    
+
     // Remove all comments still in the system
     xarModAPIFunc('comments', 'admin', 'remove_module', array('objectid' => 'helpdesk', 'extrainfo' => true));
-    
+
     xarRemoveMasks('helpdesk');
-    xarRemoveInstances('helpdesk');    
-            
+    xarRemoveInstances('helpdesk');
+
     return true;
-} 
+}
 
 function helpdesk_get_sources()
 {
     $sources = array(
-    
+
     );
-    
+
     return $sources;
 }
 

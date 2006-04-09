@@ -3,52 +3,47 @@
         Helpdesk Administration - Modify
     </span>
 </div>
-<br />
+<div class="xar-mod-body">
 
-<xar:if condition="!empty($menu)">
-#$menu#
-</xar:if>
-<div class="tborder">
+    <xar:template file="admin-menu" />
 
-<xar:if condition="!empty($preview)">
-<table width="100%" border="1" cellspacing="0" cellpadding="4">
-    <tr>
-        <td align="center">
-            <b><xar:mlstring>Preview</xar:mlstring></b>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <xar:data-display object="$object" />
-        </td>
-    </tr>
-</table>
-</xar:if>
-<br />
+    <xar:if condition="!empty($menu)">
+        <xar:var name="menu" />
+    </xar:if>
 
-<form method="POST" action="#xarModURL('helpdesk', 'admin', 'update')#">
-    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-    <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
-    <input type="hidden" name="itemtype" id="itemtype" value="#$itemtype#" />
-
-    <table width="100%" border="0" cellspacing="0" cellpadding="4">
-
-        <!-- this does most of the hard work :) -->
-        <xar:data-form object="$object" />
+    <xar:if condition="!empty($preview)">
+    <table width="100%" border="1" cellspacing="0" cellpadding="4">
         <tr>
-            <td colspan="2">
-                <xar:foreach in="$hooks" value="$hook">
-                #$hook#
-                </xar:foreach>
+            <td align="center">
+                <b><xar:mlstring>Preview</xar:mlstring></b>
             </td>
         </tr>
         <tr>
-            <td colspan="2" align="center">
-                <input type="submit" name="preview" value="#xarML('Preview')#" />
-                &nbsp;&nbsp;&nbsp;
-                <input type="submit" value="#xarML('Update')#" />
+            <td>
+                <xar:data-display object="$object" />
             </td>
         </tr>
     </table>
-</form>
+    </xar:if>
+    <br />
+
+    <form method="post" action="&xar-modurl-helpdesk-admin-update;">
+         <fieldset>
+             <legend>Basic Info</legend>
+             <xar:data-form object="$object" />
+         </fieldset>
+
+         <xar:foreach in="$hooks" key="$key" value="$hook">
+            <xar:var name="hook" />
+         </xar:foreach>
+
+         <fieldset class="xar-align-center">
+             <legend>Actions</legend>
+             <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+             <input type="hidden" name="itemtype" value="#$itemtype#" />
+             <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
+             <input type="submit" name="preview" value="#xarML('Preview')#" />
+             <input type="submit" value="#xarML('Update')#" />
+        </fieldset>
+    </form>
 </div>

@@ -8,8 +8,8 @@
  * @link http://www.xaraya.com
  *
  * @subpackage Helpdesk Module
- * @link http://www.envisionnet.net/home/products/helpdesk/
- * @author Brian McGilligan <brian@envisionnet.net>
+ * @link http://www.abraisontechnoloy.com/
+ * @author Brian McGilligan <brianmcgilligan@gmail.com>
  */
 // Is Based On:
 /********************************************************/

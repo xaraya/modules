@@ -3,15 +3,16 @@
         Helpdesk Administration
     </span>
 </div>
-<br />
+<div class="xar-mod-body">
 
-<xar:if condition="!empty($menu)">
-#$menu#
-</xar:if>
+    <xar:template file="admin-menu" />
 
-<xar:data-getitems name="$properties" value="$values" module="helpdesk" itemtype="$itemtype" numitems="$itemsperpage" startnum="$startnum" />
+    <xar:if condition="!empty($menu)">
+        <xar:var name="menu" />
+    </xar:if>
 
-<div class="tborder">
+    <xar:data-getitems name="$properties" value="$values" module="helpdesk" itemtype="$itemtype" numitems="$itemsperpage" startnum="$startnum" />
+
     <table width="100%" border="0" cellspacing="1" cellpadding="4">
     <tr>
         <xar:foreach in="$properties" key="$name">
@@ -48,4 +49,5 @@
         <td><a href="#xarModURL('helpdesk','admin','new', array('itemtype' => $itemtype))#"><xar:mlstring>New</xar:mlstring></a></td>
     </tr>
     </table>
+
 </div>

@@ -1,5 +1,8 @@
-<xar:set name="tmp">xarTplAddStyleLink('base', 'navtabs')</xar:set>
 <dl class="xar-tabs" style="margin-bottom: 0px;">
+
+    <dt class="help" title="Choose an item.">
+      <xar:mlstring>Item Types:</xar:mlstring>
+    </dt>
 
     <xar:foreach in="$menulinks" key="$key" value="$link">
 

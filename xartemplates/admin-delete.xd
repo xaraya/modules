@@ -1,31 +1,35 @@
-<table border="1" width="100%" cellpadding="2" cellspacing="0">
-    <tr>
-        <th align="center">#$menutitle#</th>
-    </tr>
-</table>
-<br />
-
-<xar:if condition="!empty($menu)">
-#$menu#
-</xar:if>
-<div class="tborder">
-
-<h2><xar:mlstring>Delete Item</xar:mlstring></h2>
-
-<div align="center"><b><xar:mlstring>Confirm deleting this item ?</xar:mlstring></b></div><br />
-
-<xar:data-display object="$object" />
-
-<div align="center">
-<form method="post" action="#xarModURL('helpdesk', 'admin', 'delete')#">
-    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-    <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
-    <input type="hidden" name="itemtype" id="itemtype" value="#$itemtype#" />
-
-    <input type="submit" name="confirm" value=" #xarML('Yes')# " />
-    &nbsp;&nbsp;&nbsp;&nbsp;
-    <input type="submit" name="noconfirm" value="  #xarML('No')#  " />
-</form>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        Helpdesk Administration
+    </span>
 </div>
+<div class="xar-mod-body">
+
+    <xar:template file="admin-menu" />
+
+    <xar:if condition="!empty($menu)">
+        <xar:var name="menu" />
+    </xar:if>
+
+    <h3 class="xar-align-center">
+        <xar:mlstring>Are you sure you want to delete this item?</xar:mlstring>
+    </h3>
+
+    <fieldset>
+        <legend>Item Info</legend>
+        <xar:data-display object="$object" />
+    </fieldset>
+
+    <fieldset class="xar-align-center">
+        <legend>Actions</legend>
+        <form method="post" action="#xarModURL('helpdesk', 'admin', 'delete')#">
+            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+            <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
+            <input type="hidden" name="itemtype" id="itemtype" value="#$itemtype#" />
+
+            <input type="submit" name="confirm" value=" #xarML('Confirm')# " />
+            <input type="submit" name="noconfirm" value="  #xarML('Cancel')#  " />
+        </form>
+    </fieldset>
 
 </div>

@@ -1,51 +1,49 @@
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:mlstring>HelpDesk</xar:mlstring>
+        <xar:mlstring>Helpdesk</xar:mlstring>
     </span>
 </div>
-<br />
-<xar:if condition="!empty($menu)">
-#$menu#
-</xar:if>
-<div class="tborder">
+<div class="xar-mod-body">
 
-<h2><xar:mlstring>New</xar:mlstring></h2>
+    <xar:template file="admin-menu" />
 
-<xar:if condition="!empty($preview)">
-<table width="100%" border="1" cellspacing="0" cellpadding="4">
-    <tr>
-        <td align="center">
-            <xar:mlstring>Preview</xar:mlstring>
-        </td>
-    </tr>
-    <tr>
-        <td align="center">
-            <xar:data-display object="$object" />
-        </td>
-    </tr>
-</table>
-</xar:if>
+    <xar:if condition="!empty($menu)">
+        <xar:var name="menu" />
+    </xar:if>
 
-<form method="post" action="#xarModURL('helpdesk','admin','create')#">
-<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-<table width="100%" border="0" cellpadding="4" cellspacing="0">
-<!-- this does most of the hard work :) -->
-    <xar:data-form object="$object" />
-    <tr>
-        <td colspan="2">
+    <h2><xar:mlstring>New</xar:mlstring></h2>
+
+    <xar:if condition="!empty($preview)">
+    <table width="100%" border="1" cellspacing="0" cellpadding="4">
+        <tr>
+            <td align="center">
+                <xar:mlstring>Preview</xar:mlstring>
+            </td>
+        </tr>
+        <tr>
+            <td align="center">
+                <xar:data-display object="$object" />
+            </td>
+        </tr>
+    </table>
+    </xar:if>
+
+    <form method="post" action="&xar-modurl-helpdesk-admin-create;">
+         <fieldset>
+             <legend>Basic Info</legend>
+             <xar:data-form object="$object" />
+         </fieldset>
+
          <xar:foreach in="$hooks" key="$key" value="$hook">
-         #$hook#
+            <xar:var name="hook" />
          </xar:foreach>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="2" align="center">
-            <input type="hidden" name="itemtype" value="#$itemtype#" />
-            <input type="submit" name="preview" value="#xarML('Preview')#" />
-            &nbsp;&nbsp;&nbsp;
-            <input type="submit" value="#xarML('Create')#" />
-        </td>
-    </tr>
-</table>
-</form>
+
+         <fieldset class="xar-align-center">
+             <legend>Actions</legend>
+             <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+             <input type="hidden" name="itemtype" value="#$itemtype#" />
+             <input type="submit" name="preview" value="#xarML('Preview')#" />
+             <input type="submit" value="#xarML('Create')#" />
+        </fieldset>
+    </form>
 </div>

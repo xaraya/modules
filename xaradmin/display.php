@@ -44,14 +44,7 @@ function helpdesk_admin_display($args)
     $item['module'] = 'helpdesk';
     $item['returnurl'] = xarModURL('helpdesk', 'user', 'display',
                                    array('itemid' => $itemid));
-    $hooks = xarModCallHooks('item', 'display', $itemid, $item);
-    if (empty($hooks)) {
-        $data['hookoutput'] = '';
-    } elseif (is_array($hooks)) {
-        $data['hookoutput'] = join('',$hooks);
-    } else {
-        $data['hookoutput'] = $hooks;
-    }
+    $data['hooks'] = xarModCallHooks('item', 'display', $itemid, $item);
 
     // Return the template variables defined in this function
     return $data;

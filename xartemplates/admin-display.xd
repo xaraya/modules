@@ -1,18 +1,20 @@
-<table border="1" width="100%" cellpadding="2" cellspacing="0">
-    <tr>
-        <th align="center">Helpdesk</th>
-    </tr>
-</table>
-<br />
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        Helpdesk Administration
+    </span>
+</div>
+<div class="xar-mod-body">
 
-<xar:if condition="!empty($menu)">
-#$menu#
-</xar:if>
-<div class="tborder">
-<h2><xar:mlstring>Display</xar:mlstring></h2>
+    <xar:template file="admin-menu" />
 
-<xar:data-display module="helpdesk" itemtype="$itemtype" itemid="$itemid" />
+    <xar:if condition="!empty($menu)">
+        <xar:var name="menu" />
+    </xar:if>
+    <h2><xar:mlstring>Display</xar:mlstring></h2>
 
-<!-- add the output from display hooks here -->
-#$hookoutput#
+    <xar:data-display module="helpdesk" itemtype="$itemtype" itemid="$itemid" />
+
+     <xar:foreach in="$hooks" key="$key" value="$hook">
+        <xar:var name="hook" />
+     </xar:foreach>
 </div>
