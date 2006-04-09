@@ -1,11 +1,31 @@
-<form method="post" action="&xar-modurl-ie7-admin-updateconfig;">
-Enable ie7? 
-<xar:if condition="!empty($enabled)">
-  <input type="checkbox" name="enabled" value="1" checked="true" />
-<xar:else/>
-  <input type="checkbox" name="enabled" value="1" />
-</xar:if>
-<br/><br/><input type="submit" value="Modify Settings" />
-</form>
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+  <span class="xar-mod-title"><xar:mlstring>IE7 Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+ <xar:template type="module" file="admin-menu" />
+  <h2><xar:mlstring>Modify Config</xar:mlstring></h2>
+  <form method="post" action="&xar-modurl-ie7-admin-updateconfig;">
+    <fieldset>
+      <legend><xar:mlstring>Options</xar:mlstring></legend>
+
+      <div class="xar-form-input-wrapper">
+        <label for="bold" class="xar-form-label" title="#xarML('Activate IE7 module for IE users?')#">
+          <xar:mlstring>  Enable ie7?</xar:mlstring>
+        </label>
+        <xar:if condition="!empty($enabled)">
+            <input type="checkbox" name="enabled" value="1" checked="true" />
+          <xar:else/>
+            <input type="checkbox" name="enabled" value="1" />
+        </xar:if>
+      </div>
+    </fieldset>
+
+    <div class="xar-form-input-wrapper-after">
+        <input type="submit" value="#xarML('Update Configuration')#" />
+    </div>
+
+  </form>
+</div>
 
 

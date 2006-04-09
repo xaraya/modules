@@ -18,7 +18,7 @@ function ie7_adminapi_getmenulinks()
     $menulinks = array();
     $menulinks[] = array('url' => xarModURL('ie7', 'admin', 'test'),
             'title' => xarML('Test ie7'),
-            'label' => xarML('Test'));
+            'label' => xarML('Test Setup'));
     $menulinks[] = array('url' => xarModURL('ie7', 'admin', 'modifyconfig'),
             'title' => xarML('Change the ie7 module settings'),
             'label' => xarML('Modify config'));

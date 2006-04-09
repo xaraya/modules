@@ -1,25 +1,36 @@
-<h3>About</h3>
-Microsoft Internet Exporer 5, 5.5 and 6.0 has poor support for many CSS2
-standards and even completely breaks the standards in some earlier versions
-(e.g. faulty box model). Dean Edwards has written a fantastic script called
-ie7 which uses mostly Javascript to fix these defects, and this is the
-Xaraya-ized version of his work.
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+  <span class="xar-mod-title"><xar:mlstring>IE7 Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+  <xar:template type="module" file="admin-menu" />
+  <img src="#xarTplGetImage('admin.gif','ie7')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
 
-Dean's script can be found at <a href="http://dean.edwards.name/IE7">his 
-site</a>
+  <h2><xar:mlstring>Overview</xar:mlstring></h2>
 
-<h3>How to use it?</h3>
-<p>First, check your theme to make sure your head javascript appears before any
+  <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+  <p>
+    <em><xar:mlstring>IE7 is a module that emulates better CSS support (such as in Internet Explorer 7) for visitors using IE 5.0, 5.5 or 6.0</xar:mlstring></em>
+  </p>
+   <p><xar:mlstring>Microsoft Internet Exporer 5, 5.5 and 6.0 has poor support for many CSS2
+        standards and even completely breaks the standards in some earlier versions
+        (e.g. faulty box model). Dean Edwards has written a fantastic script called
+        ie7 which uses mostly Javascript to fix these defects, and this is the
+        Xaraya-ized version of his work.
+   </xar:mlstring></p>
+
+   <p><xar:mlstring>Dean's script can be found at </xar:mlstring><a href="http://dean.edwards.name/IE7">his site</a></p>
+
+<h2><xar:mlstring>How to use it?</xar:mlstring></h2>
+<p><xar:mlstring>First, check your theme to make sure your head javascript appears before any
 css is loaded. eg the tag <code>&lt;xar:base-render-javascript position="head" /&gt;</code> should appear before any css in your main page templates.
-</p>
+</xar:mlstring></p>
 
-<p>Second, enable IE7 in the <a href="#xarModURL('ie7', 'admin', 'modifyconfig')#">
-modify config</a> pages.</p>
+<p><xar:mlstring>Second, enable IE7 in the </xar:mlstring><a href="&xar-modurl-ie7-admin-modifyconfig;">modify config</a><xar:mlstring> pages.</xar:mlstring></p>
 
-<p>Third, add all those CSS features you've been holding back on for
-years!</p>
+<p><xar:mlstring>Third, add all those CSS features you've been holding back on for years!</xar:mlstring></p>
 
-<h3>Tests</h3>
+<h3><xar:mlstring>Tests</xar:mlstring></h3>
  <ul>
   <li><a href="#xarModURL('ie7', 'admin', 'test')#">Xaraya test suite</a></li>
   <li>
@@ -29,7 +40,7 @@ years!</p>
   </li>
  </ul>
 
-<h3>Targets</h3>
+<h3><xar:mlstring>Targets</xar:mlstring></h3>
  <ul>
   <li><del>namespace|selector</del></li>
   <li><del>:root</del></li>
@@ -62,4 +73,20 @@ years!</p>
 
   <li>!important</li>
  </ul>
-
+  <h3>
+    <xar:mlstring>Further Information</xar:mlstring>
+  </h3>
+  <p>
+    <xar:mlstring>Further information on the ie7 module can be found at</xar:mlstring>
+  </p>
+  <ul>
+    <li><xar:mlstring>IE7 Extension page at</xar:mlstring> <a title="#xarML('ie7 Module - Xaraya Extension 109')#" href="http://www.xaraya.com/index.php/release/109.html">Xaraya Extension and Releases</a>.
+      <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+    </li>
+    <li><xar:mlstring>Related tutorials and documentation on ie7 found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/ie7/" title="#xarML('Related documentation on ie7')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+    </li>
+  </ul>
+  <p class="xar-sub">
+    <strong>&nbsp;<xar:mlstring>IE7 Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2006-04-09
+  </p>
+</div>

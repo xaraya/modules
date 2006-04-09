@@ -1,6 +1,13 @@
-First, a simple test - this div  should turn red when you hover over it.<br/>
-<div id="ie7div"></div> 
-<br/>
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+  <span class="xar-mod-title"><xar:mlstring>IE7 Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+ <xar:template type="module" file="admin-menu" />
+  <h2><xar:mlstring>Test Setup </xar:mlstring></h2>
+  <p><xar:mlstring>First, a simple test - this div  should turn red when you hover over it.</xar:mlstring></p>
+<div id="ie7div"></div>
+
 Now, if you see pull out menus here using IE then you have won!
 
 <div id="ie7test">
@@ -39,4 +46,5 @@ Now, if you see pull out menus here using IE then you have won!
     </li> <!-- dance -->
   </ul> <!-- menu -->
 </div>
-<br/>
+
+</div>
