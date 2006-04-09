@@ -1,0 +1,59 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:comment>Common Administration menu</xar:comment>
+<xar:style scope="module" module="base" file="navtabs" />
+
+<xar:set name="activetab">$_bl_module_func</xar:set>
+<div>
+  <dl class="xar-tabs">
+    <dt class="help" title="Choose an action to perform">
+      <xar:mlstring>Actions:</xar:mlstring>
+    </dt>
+    <xar:sec mask="ModerateXarpagesPage" catch="false">
+         <xar:set name="tabclass">$activetab=='viewpages'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-xarpages-admin-viewpages;" title="#xarML('View and manage pages')#">
+            <xar:mlstring>View Pages</xar:mlstring>
+          </a>
+        </dd>
+
+    </xar:sec>
+    <xar:sec mask="AddXarpagesPage" catch="false">
+        <xar:set name="tabclass">($activetab=='modifypage'?'active':'') and !isset($pid)</xar:set>
+        <dd class="#$tabclass#">
+            <a href="&xar-modurl-xarpages-admin-newpage;" title="#xarML('Add a new page')#">
+                <xar:mlstring>Add Page</xar:mlstring>
+            </a>
+        </dd>
+    </xar:sec>
+    <xar:sec mask="EditXarpagesPagetype" catch="false">
+        <xar:set name="tabclass">$activetab=='viewtypes'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-xarpages-admin-viewtypes;" title="#xarML('View and manage page types')#">
+            <xar:mlstring>View Page Types</xar:mlstring>
+          </a>
+        </dd>
+    </xar:sec>
+    <xar:sec mask="AdminXarpagesPagetype" catch="false">
+        <xar:set name="tabclass">$activetab=='modifytype'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-xarpages-admin-newtype;" title="#xarML('Add a new page type')#">
+            <xar:mlstring>Add Page Type</xar:mlstring>
+          </a>
+        </dd>
+    </xar:sec>
+    <xar:sec mask="AdminXarpagesPage" catch="false">
+        <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-xarpages-admin-modifyconfig;" title="#xarML('Modify the xarpages configuration')#">
+            <xar:mlstring>Modify Config</xar:mlstring>
+          </a>
+        </dd>
+    </xar:sec>
+    <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
+    <dd class="#$tabclass#">
+      <a href="&xar-modurl-xarpages-admin-overview;" title="#xarML('View overview documenatation of xarPages')#">
+        <xar:mlstring>Overview</xar:mlstring>
+      </a>
+    </dd>
+  </dl>
+</div>
