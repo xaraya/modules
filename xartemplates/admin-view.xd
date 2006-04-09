@@ -25,7 +25,7 @@
             </tr>
             <xar:if condition="empty($moditems) or count($moditems) eq '0'">
                 <tr>
-                    <td colspan="4" align="center">
+                    <td colspan="4" >
                         <xar:mlstring>
                             There are currently no hit counts in the database...
                         </xar:mlstring>
@@ -34,13 +34,13 @@
             <xar:else />
                 <xar:foreach in="$moditems" value="$moditem">
                     <tr>
-                        <td class="xar-align-center">
+                        <td class="xar-align-left">
                             <a href="#$moditem['link']#">#$moditem['name']#</a>
                         </td>
-                        <td class="xar-align-center">
+                        <td class="xar-align-right">
                             #$moditem['numitems']#
                         </td>
-                        <td class="xar-align-center">
+                        <td class="xar-align-right">
                             #$moditem['numhits']#
                         </td>
                         <td class="xar-align-center">
@@ -56,10 +56,10 @@
                     <td class="xar-align-center">
                         <b><xar:mlstring>Grand Total</xar:mlstring></b>
                     </td>
-                    <td class="xar-align-center">
+                    <td class="xar-align-right">
                         <b>#$numitems#</b>
                     </td>
-                    <td class="xar-align-center">
+                    <td class="xar-align-right">
                         <b>#$numhits#</b>
                     </td>
                     <td class="xar-align-center">
@@ -116,15 +116,15 @@
                 <xar:foreach in="$moditems" key="$itemid" value="$moditem">
                     <tr>
                         <xar:if condition="!empty($moditem['title']) and !empty($moditem['link'])">
-                                <td class="xar-align-center">
+                                <td class="xar-align-left">
                             #$itemid# - <a href="#$moditem['link']#">#$moditem['title']# </a>
                         </td>
                         <xar:else/>
-                                <td class="xar-align-center">
+                                <td class="xar-align-right">
                             #$itemid#
                         </td>
                         </xar:if>
-                            <td class="xar-align-center">
+                            <td class="xar-align-right">
                             #$moditem['numhits']#
                         </td>
                             <td class="xar-align-center">
@@ -143,7 +143,7 @@
                         <td class="xar-align-center">
                         <b><xar:mlstring>Grand Total</xar:mlstring></b>:
                     </td>
-                        <td class="xar-align-center">
+                        <td class="xar-align-right">
                         <b>#$numhits#</b>
                     </td>
                         <td class="xar-align-center">
