@@ -1,11 +1,10 @@
 <?php
 /**
- * File: $Id: xarversion.php,v 1.1.1.1 2003/10/29 04:02:03 roger Exp $
- *
  * Email authentication module. Allows you to login with your email address
  * instead of username.
  *
- * @package authentication
+ * @package modules
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @author Roger Keays
 */
 $modversion['name'] = 'authemail';
@@ -22,7 +21,6 @@ $modversion['author'] = 'Roger Keays';
 $modversion['contact'] = 'r.keays@ninthave.net';
 $modversion['admin'] = 0;
 $modversion['user'] = 1;
-$modversion['securityschema'] = array();
 $modversion['class'] = 'Authentication';
 $modversion['category'] = 'Global';
 ?>
