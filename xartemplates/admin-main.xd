@@ -3,6 +3,7 @@
   <span class="xar-mod-title"><xar:mlstring>Headlines Administration</xar:mlstring></span>
 </div>
 <div class="xar-mod-body">
+  <xar:template type="module" file="admin-menu" />
   <img src="#xarTplGetImage('admin_generic.gif', 'base')#" alt="official icon" width="96" height="96" class="xar-module-icon" />
   <h2>
     <xar:mlstring>Overview</xar:mlstring>
@@ -62,6 +63,6 @@
           </li>
       </ul>
       <p class="xar-sub">
-         <strong>&nbsp;<xar:mlstring>Headlines module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.1&nbsp; #xarLocaleGetFormattedDate('short','1138794329')#
+         <strong>&nbsp;<xar:mlstring>Headlines module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.1&nbsp; #xarLocaleGetFormattedDate('short','1138794329')#
   </p>
 </div>

@@ -1,17 +1,22 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Headlines</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Headlines from</xar:mlstring>: <a href = "#$chanlink#"> #$chantitle# </a></h2>
-<div style="margin: auto;">
-<script type="text/javascript" src="modules/headlines/xartemplates/includes/popup.js"></script>
-<xar:if condition="xarModIsHooked('categories','headlines')">
-<xar:categories-navigation layout="trails" showchildren="1" module="headlines" func="main" showcatcount="1" catid="$catid" itemid="$hid" />
-</xar:if>
-<xar:if condition="xarSecurityCheck('EditHeadlines', 0) and xarModGetVar('headlines','importpubtype')">
-    <xar:set name="showimport">1</xar:set>
-<xar:else/>
-    <xar:set name="showimport">0</xar:set>
-</xar:if>
-<xar:set name="magpie">xarModGetVar('headlines','magpie')</xar:set>
-<xar:if condition="empty($warning)">
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Headlines</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
+    <h2><xar:mlstring>Headlines from</xar:mlstring>: <a href = "#$chanlink#"> #$chantitle# </a></h2>
+
+    <script type="text/javascript" src="modules/headlines/xartemplates/includes/popup.js"></script>
+    <xar:if condition="xarModIsHooked('categories','headlines')">
+        <xar:categories-navigation layout="trails" showchildren="1" module="headlines" func="main" showcatcount="1" catid="$catid" itemid="$hid" />
+    </xar:if>
+    <xar:if condition="xarSecurityCheck('EditHeadlines', 0) and xarModGetVar('headlines','importpubtype')">
+        <xar:set name="showimport">1</xar:set>
+    <xar:else/>
+        <xar:set name="showimport">0</xar:set>
+    </xar:if>
+    <xar:set name="magpie">xarModGetVar('headlines','magpie')</xar:set>
+    
+    <xar:if condition="empty($warning)">
     <xar:if condition="!empty($chandesc)">
          <p>#$chandesc#</p>
     </xar:if>
@@ -48,5 +53,4 @@
     <h3><xar:mlstring>Options</xar:mlstring>:</h3>
     #$hooks#
 </xar:if>
-</div>
 </div>

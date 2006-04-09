@@ -17,6 +17,7 @@
     </span>
 </div>
 <div class="xar-mod-body">
+<xar:template type="module" file="admin-menu" />
     <h2>
         <xar:mlstring>
             Edit Headlines
@@ -29,8 +30,8 @@
             </xar:mlstring>
         </a>
     </p>
-    <form class="xar-formwidget" action="#xarModURL('headlines', 'admin', 'update')#" method="post" enctype="application/x-www-form-urlencoded" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
-        <fieldset class="formelements xar-norm">
+    <form action="#xarModURL('headlines', 'admin', 'update')#" method="post" enctype="application/x-www-form-urlencoded" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
+        <fieldset>
             <legend>
                 <strong>
                     <xar:mlstring>
@@ -40,46 +41,38 @@
             </legend>
             <input type="hidden" name="authid" value="#$authid#" />
             <input type="hidden" name="hid" id="hid" value="#$hid#" />
-            <p class="param">
-                <label for="url" class="required">
-                    <span class="help" title="#xarML('The url of the feed that you are wanting to add to your system')#">
-                        <xar:mlstring>
+            <div class="xar-form-input-wrapper">
+                <label for="url" class="xar-form-label" title="#xarML('The url of the feed that you are wanting to add to your system')#">
+                          <xar:mlstring>
                             URL
                         </xar:mlstring>
-                    </span>
                 </label>
                 <input type="text" name="url" id="url" value="#$url#" size="40" maxlength="200" />
-            </p>
-            <p class="param">
-                <label for="title">
-                    <span class="help" title="#xarML('This is an alternate title for the feed to be displayed on the user display')#">
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="title" class="xar-form-label" title="#xarML('This is an alternate title for the feed to be displayed on the user display')#">
                         <xar:mlstring>
                             Alt Title
                         </xar:mlstring>
-                    </span>
                 </label>
                 <input type="text" name="title" id="title" value="#$title#" size="40" maxlength="200" />
-            </p>
-            <p class="param">
-                <label for="desc">
-                    <span class="help" title="#xarML('This is an alternate description for the feed to be displayed on the user display')#">
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="desc" class="xar-form-label" title="#xarML('This is an alternate description for the feed to be displayed on the user display')#">
                         <xar:mlstring>
                             Alt Description
                         </xar:mlstring>
-                    </span>
                 </label>
                 <input type="text" name="desc" id="desc" value="#$desc#" size="40" maxlength="200" />
-            </p>
-            <p class="param">
-                <label for="order">
-                    <span class="help" title="#xarML('You can change the order of the feeds to be displayed on individual category pages')#">
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="order" class="xar-form-label" title="#xarML('You can change the order of the feeds to be displayed on individual category pages')#">
                         <xar:mlstring>
                             Order
                         </xar:mlstring>
-                    </span>
                 </label>
                 <input type="text" name="order" id="order" value="#$order#" size="3" maxlength="3" />
-            </p>
+            </div>
             </fieldset>
             <fieldset class="xar-norm">
                 <legend>

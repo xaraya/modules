@@ -1,5 +1,5 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:if condition="xarTplAddStyleLink('headlines', 'forms')"></xar:if>
+
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:mlstring>
@@ -8,13 +8,14 @@
     </span>
 </div>
 <div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
     <h2>
         <xar:mlstring>
             Modify Configuration
         </xar:mlstring>
     </h2>
     <form class="xar-formwidget" action="#xarModURL('headlines', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded">
-        <fieldset class="formelements xar-norm">
+        <fieldset xar-norm">
             <legend>
                 <strong>
                     <xar:mlstring>
@@ -23,38 +24,33 @@
                 </strong>
             </legend>
             <input type="hidden" name="authid" value="#$authid#" />
-            <p class="param">
-                <label for="itemsperpage">
-                    <span class="help" title="#xarML('Number of items per page to show')#">
+            <div class="xar-form-input-wrapper">
+                <label for="itemsperpage" class="xar-form-label" title="#xarML('Number of items per page to show')#">
                         <xar:mlstring>
                             Items Per Page
                         </xar:mlstring>
-                    </span>
                 </label>
                 <input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#xarModGetVar('headlines', 'itemsperpage', 1)#" />
-            </p>
-            <p class="param">
-                <label for="shorturls">
-                    <span class="help" title="#xarML('Show short urls for the headlines')#">
-                        <xar:mlstring>
-                            Support Short URLS
-                        </xar:mlstring>
-                    </span>
-                </label>
+            </div>
+            <div class="xar-form-input-wrapper-after">
                 <xar:if condition="$shorturlschecked">
                     <input type="checkbox" name="shorturls" id="shorturls" value="1" checked="checked" />
                 <xar:else/>
                     <input type="checkbox" name="shorturls" id="shorturls" value="1" />
                 </xar:if>
-            </p>
+                <label for="shorturls" title="#xarML('Show short urls for the headlines')#">
+                         <xar:mlstring>
+                            Support Short URLS
+                        </xar:mlstring>
+                </label>
+
+            </div>
             <xar:if condition="xarModIsAvailable('articles')">
-            <p class="param">
-                <label for="importpubtype">
-                    <span class="help" title="#xarML('Choose a publication type for import.')#">
+            <div class="xar-form-input-wrapper">
+                <label for="importpubtype" class="xar-form-label" title="#xarML('Choose a publication type for import.')#">
                         <xar:mlstring>
                             Import to Publication Type
                         </xar:mlstring>
-                    </span>
                 </label>
                 <select name="importpubtype" id="importpubtype">
                     <option value="0"></option>
@@ -66,14 +62,12 @@
                     </xar:if>
                 </xar:foreach>
                 </select>
-            </p>
-            <p class="param">
-                <label for="uniqueid">
-                    <span class="help" title="#xarML('Determine what makes a headline unique.')#">
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="uniqueid" class="xar-form-label" title="#xarML('Determine what makes a headline unique.')#">
                         <xar:mlstring>
                             Unique Identifier for Import
                         </xar:mlstring>
-                    </span>
                 </label>
                 <xar:set name="options">
                 array('feed;link' => xarML('Feed + Link'),
@@ -94,26 +88,25 @@
                     </xar:if>
                 </xar:foreach>
                 </select>
-            </p>
+            </div>
             </xar:if>
             <xar:if condition="xarModIsAvailable('magpie')">
-            <p class="param">
-                <label for="magpie">
-                    <span class="help" title="#xarML('Use Magpie Module for Process of Feeds')#">
-                        <xar:mlstring>
-                            Use Magpie Module for Feeds
-                        </xar:mlstring>
-                    </span>
-                </label>
+            <div class="xar-form-input-wrapper-after">
                 <xar:if condition="$magpiechecked">
                     <input type="checkbox" name="magpie" id="magpie" value="1" checked="checked" />
                 <xar:else/>
                     <input type="checkbox" name="magpie" id="magpie" value="1" />
                 </xar:if>
-            </p>
+                <label for="magpie" title="#xarML('Use Magpie Module for Process of Feeds')#">
+                        <xar:mlstring>
+                            Use Magpie Module for Feeds
+                        </xar:mlstring>
+                </label>
+
+            </div>
             </xar:if>
         </fieldset>
-        <fieldset class="xar-norm">
+        <fieldset>
             <legend>
                 <strong>
                     <xar:mlstring>
@@ -124,11 +117,8 @@
             #$hooks#
         </fieldset>
 
-        <div class="xar-form-input-wrapper">
-            <div class="xar-form-container-after">
-
+         <div class="xar-form-input-wrapper-after">
                 <input type="submit" value="#xarML('Submit')#" />
-            </div>
         </div>
 
     </form>

@@ -1,20 +1,15 @@
 <script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Headline Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
+<xar:template type="module" file="admin-menu" />
     <h2><xar:mlstring>View Headlines</xar:mlstring></h2>
     <form method="post" action="#xarModUrl('headlines', 'admin', 'settings')#">
-        <div>
-        <div class="xar-norm-outline" style="padding: 0px;">
+        <fieldset>
+        <legend><xar:mlstring>Display Options</xar:mlstring></legend>
+        <div class="xar-form-input-wrapper">
             <xar:comment> Module List Sort and Filter Controls table </xar:comment>
-            <table width="100%" border="0" cellspacing="1" cellpadding="1">
-              <tr>
-                <th nowrap="nowrap">
-                    <label class="xar-mod-title" for="filter"><xar:mlstring>Style</xar:mlstring></label>
-                </th>
-              </tr>
-              <tr>
-                <td style="text-align: center;">
-                  <select name="selstyle" id="selstyle" onchange="this.form.submit()">
+              <label class="xar-form-label" for="filter"><xar:mlstring>Style</xar:mlstring></label>
+              <select name="selstyle" id="selstyle" onchange="this.form.submit()">
                     <xar:foreach in="$style" key="$key" value="$value">
                       <xar:if condition="$key eq $selstyle">
                         <option value="#$key#" selected="selected">#$value#</option>
@@ -23,18 +18,14 @@
                       </xar:if>
                     </xar:foreach>
                   </select>
-                </td>
-              </tr>
-            </table>
         </div>
         <xar:if condition="$selstyle eq 'compact'">
             <xar:template file="compact" type="module"/>
-       <xar:elseif condition="$selstyle eq 'plain'"/>
-        <xar:template file="plain" type="module"/>
-    <xar:else/>
-        <xar:template file="icons" type="module"/>    
-    </xar:if>
-        </div>
+        <xar:elseif condition="$selstyle eq 'plain'"/>
+            <xar:template file="plain" type="module"/>
+        <xar:else/>
+            <xar:template file="icons" type="module"/>
+        </xar:if>
     </form>
     #$pager#
 </div>
