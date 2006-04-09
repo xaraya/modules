@@ -3,9 +3,10 @@
         <xar:mlstring>
             Articles Administration 
         </xar:mlstring>
-    </span> 
+    </span>
 </div>
 <div class="xar-mod-body">
+      <xar:template type="module" file="admin-menu" />
     <h2> 
         <xar:mlstring>
             Publication Types 

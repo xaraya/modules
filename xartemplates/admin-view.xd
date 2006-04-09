@@ -6,9 +6,10 @@
     </span>
 </div>
 <div class="xar-mod-body">
+      <xar:template type="module" file="admin-menu" />
     <h2>
         <xar:mlstring>
-            View Articles
+            Manage Articles
         </xar:mlstring>
     </h2>
 
