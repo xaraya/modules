@@ -150,16 +150,18 @@
                <xar:mlstring>Allow BCC Recipient list?</xar:mlstring>
             </label>
         </div>
-
-
-     
-
+        <p class="xar-form-input-wrapper-after">
+            <xar:mlstring>NOTE: Please ensure you understand the potential problems of allowing
+            muliple emailings if you have open access on your website to this module or specific form.</xar:mlstring>
+        </p>
+        <xar:comment>
          <div class="xar-form-input-wrapper">
             <label for="termslink" class="xar-form-label" title="#xarML('URL link to your terms.')#">
                <xar:mlstring>Terms link URL [none - leave blank]:</xar:mlstring>
             </label>
             <input type="text" name="termslink" id="termslink" size="40" maxlength="128" value="#$termslink#" />
         </div>
+        </xar:comment>
 
     </fieldset>
 

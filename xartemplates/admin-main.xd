@@ -106,7 +106,7 @@
             </xar:mlstring></li>
         </ol>
     <h3><xar:mlstring>CC or BC to other Recipients</xar:mlstring></h3>
-    <p><xar:mlstring>You can configure your forms with a list of CC or BC recipients from the configuration for each form. The CC and BC fields take a list of recipient emails and optionally a name for each. These emails and names must be in the correct format. Keep in mind the following:</xar:mlstring></p>
+    <p><xar:mlstring>You can configure your forms with a list of CC or BC recipients from the configuration for each form. The CC and BC fields take a list of recipient emails and optionally a name for each. These emails and names must be in the correct format. Make sure you understand the *POTENTIAL PROBLEMS* of adding this to your forms on an open access website! Keep in mind the following:</xar:mlstring></p>
     <ol>
             <li><xar:mlstring>If you have a list of email addresses, separate each by a semicolon (;) eg <code>person1@somedomain.com;person2@anotherdomain.com</code>
             </xar:mlstring><br /></li>

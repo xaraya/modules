@@ -110,7 +110,10 @@
                <xar:mlstring>Allow BCC Recipient list?</xar:mlstring>
             </label>
         </div>
-
+        <p class="xar-form-input-wrapper-after">
+            <xar:mlstring>NOTE: Please ensure you understand the potential problems of allowing
+            muliple emailings if you have open access on your website to this module or specific form.</xar:mlstring>
+        </p>
 
     </fieldset>
 
@@ -295,6 +298,10 @@
                <xar:mlstring>Allow BCC Recipient list?</xar:mlstring>
             </label>
         </div>
+                <p class="xar-form-input-wrapper-after">
+            <xar:mlstring>NOTE: Please ensure you understand the potential problems of allowing
+            muliple emailings if you have open access on your website to this module or specific form.</xar:mlstring>
+        </p>
     </fieldset>
 
    <fieldset>
