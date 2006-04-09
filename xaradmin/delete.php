@@ -90,6 +90,7 @@ function xarbb_admin_delete($args)
                        'delete',
                         array('fid' => $fid))) return;
 
+    xarSessionSetVar('statusmsg', xarML('Forum deleted!'));
     // Redirect
     xarResponseRedirect(xarModURL('xarbb', 'admin', 'view'));
 

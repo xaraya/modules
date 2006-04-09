@@ -20,7 +20,7 @@
         <xar:set name="tabclass">$activetab=='view'?'active':''</xar:set>
         <dd class="#$tabclass#">
             <a href="&xar-modurl-xarbb-admin-view;" >
-                <xar:mlstring>View Forums</xar:mlstring>
+                <xar:mlstring>Manage Forums</xar:mlstring>
             </a>
         </dd>
         <xar:set name="tabclass">$activetab=='reorder'?'active':''</xar:set>

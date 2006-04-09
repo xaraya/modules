@@ -19,19 +19,19 @@
 </div>
 <div class="xar-mod-body">
  <xar:template type="module" file="admin-menu" />
-
-  <h2>
-    <xar:mlstring>
-      Modify Existing Forum
-    </xar:mlstring>
-  </h2>
-    <xar:template file="navtabs" type="module" />
+  <h2><xar:mlstring>Manage Forums</xar:mlstring></h2>
+  <xar:template file="navtabs" type="module" />
+  <h3><xar:mlstring>Modify Forum</xar:mlstring> :: #$forumname#</h3>
   <xar:template file="navtabs-action" type="module" />
   <xar:if condition="!empty($warning)">
     <p>
       #$warning#
     </p>
   </xar:if>
+  <xar:if condition="xarSessionGetVar('statusmsg') ne ''">
+      <p class="xar-form-input-wrapper-after xar-error">#xarSessionGetVar('statusmsg')#</p>
+  </xar:if>
+  <xar:set name="dummy">xarSessionSetVar('statusmsg','')</xar:set>
   <form method="post" name="post" id="post" action="&xar-modurl-xarbb-admin-modify;&amp;phase=update" enctype="application/x-www-form-urlencoded" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
     <fieldset >
       <legend>

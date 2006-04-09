@@ -26,6 +26,9 @@ function xarbb_admin_modify()
     switch(strtolower($phase)) {
         case 'form':
         default:
+            if (!isset($fid)) {
+                  xarSessionSetVar('statusmsg', '');
+            }
             // The user API function is called.
             $data = xarModAPIFunc('xarbb',
                                   'user',
@@ -161,6 +164,7 @@ function xarbb_admin_modify()
             $data['tabs'] = $links;
             $data['action'] = '1';
             $data['settings']=$settings;
+            $data['forumname'] = $data['fname'];
             break;
 
         case 'update':

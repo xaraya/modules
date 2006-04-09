@@ -26,16 +26,26 @@ function xarbb_admin_sync()
     // Get parameters
     if (!xarVarFetch('fid','id', $fid, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('withtopics','bool', $withtopics, false, XARVAR_NOT_REQUIRED)) return;
-
+    xarSessionSetVar('statusmsg', '');
     // Pass arguments to the API function
     if (!xarModAPIFunc('xarbb','admin','sync',
                        array('fid'        => $fid,
                              'withtopics' => $withtopics))) {
+       if ($withtopics) {
+          xarSessionSetVar('statusmsg', xarML('Problem syncing forum topics!'));
+       } else {
+          xarSessionSetVar('statusmsg', xarML('Problem syncing forum!'));
+       }
+
         return;
     }
-
+    if ($withtopics) {
+        xarSessionSetVar('statusmsg', xarML('Forum topics successfully synced'));
+       } else {
+        xarSessionSetVar('statusmsg', xarML('Forum successfully synced'));
+       }
     // redirect
-    xarResponseRedirect(xarModURL('xarbb', 'admin', 'view'));
+    xarResponseRedirect(xarModURL('xarbb', 'admin', 'modify',array('fid'=> $fid)));
     return true;
 }
 ?>

@@ -28,7 +28,7 @@
             <legend>
                 <strong>
                     <xar:mlstring>
-                        xarBB Settings
+                        Global xarBB Settings
                     </xar:mlstring>
                 </strong>
             </legend>
@@ -96,7 +96,7 @@
             <legend>
                 <strong>
                     <xar:mlstring>
-                        Default Values
+                        Default Values for New Forums
                     </xar:mlstring>
                 </strong>
             </legend>
