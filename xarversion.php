@@ -13,7 +13,6 @@ $modversion['author'] = 'James Cooper | Roger Keays';
 $modversion['contact'] = 'jbt_cooper@bigpond.com';
 $modversion['admin'] = 1;
 $modversion['user'] = 0;
-$modversion['securityschema'] = array('authsql::' => '::');   // comment out?
 $modversion['class'] = 'Authentication';
 $modversion['category'] = 'Global';
 ?>
