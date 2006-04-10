@@ -1,22 +1,33 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>HTML Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
-<h2><xar:mlstring>Delete Tag Type</xar:mlstring></h2>
-<div align="center">
-<form method="post" action="#xarModURL('html', 'admin', 'deletetype')#" enctype="application/x-www-form-urlencoded">
-    <input type="hidden" name="authid" value="#$authid#" />
-    <input type="hidden" name="id" id="id" value="#$id#" />
-    <input type="hidden" name="confirm" id="confirm" value="1"/>
+    <xar:template type="module" file="admin-menu" />
+    <h2><xar:mlstring>Delete Tag Type</xar:mlstring>: #$type#</h2>
 
-    <font class="xar-title"><xar:mlstring>Confirm deletion of the tag type</xar:mlstring></font>
-        <br /><br />
-    <font class="xar-title"><xar:mlstring>Warning!  This will also remove all tags associated with the tag type!</xar:mlstring></font>
-    <br /><br />
-    #$type#
-    <br /><br />
+    <form method="post" action="&xar-modurl-html-admin-deletetype;" enctype="application/x-www-form-urlencoded">
+        <input type="hidden" name="authid" value="#$authid#" />
+        <input type="hidden" name="id" id="id" value="#$id#" />
+        <input type="hidden" name="confirm" id="confirm" value="1"/>
+        <fieldset>
+            <legend>
+                <strong><xar:mlstring>Confirm Tag Deletion</xar:mlstring></strong>
+            </legend>
+                <div class="xar-form-input-wrapper">
+                    <label for="tagtype" class="xar-form-label" title="#xarML('Delete this Tag Type')#">
+                       <xar:mlstring>Confirm deletion of tag type:</xar:mlstring>
+                    </label>
+                        &nbsp;&nbsp;<strong>#$type#</strong>
+                        <p class="xar-form-input-wrapper-after">
+                            <xar:mlstring>Warning!  This will also remove all tags associated with the tag type!</xar:mlstring>
+                        </p>
+                </div>
+        </fieldset>
+        <div class="xar-form-input-wrapper">
+            <input type="submit" value="#$submitlabel#"  />
+        </div>
 
-    <input type="submit" value="#$submitlabel#"  /><br /><br />
-    
-    <a href="#xarModURL('html', 'admin', 'viewtypes')#"><xar:mlstring>Cancel deletion of the tag type</xar:mlstring>.</a>
-</form>        
-</div>
+    <p>
+        <a href="&xar-modurl-html-admin-viewtypes;"><xar:mlstring>Cancel deletion of the tag type</xar:mlstring>.</a>
+    </p>
+    </form>
+
 </div>

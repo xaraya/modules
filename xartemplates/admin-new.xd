@@ -7,37 +7,37 @@
 //-->
 </script>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>HTML Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Add Tag</xar:mlstring></h2>
-    <div style="margin: auto;">
+<div class="xar-mod-body">
+  <xar:template type="module" file="admin-menu" />
+    <h2><xar:mlstring>Add Tag</xar:mlstring></h2>
 
-    <form class="xar-fullwidth" method="post" action="&xar-modurl-html-admin-create;" onsubmit="return xar_base_formCheck(this, html_fieldRequired, html_fieldDescription);" enctype="application/x-www-form-urlencoded">
+    <form  method="post" action="&xar-modurl-html-admin-create;" onsubmit="return xar_base_formCheck(this, html_fieldRequired, html_fieldDescription);" enctype="application/x-www-form-urlencoded">
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
-    <table class="xar-fullwidth xar-noborder" cellspacing="1" cellpadding="2">
-        <tr>
-            <td class="xar-norm">
-                <label for="tag"><xar:mlstring>Tag</xar:mlstring></label>:
-            </td>
-            <td class="xar-norm">
-                <input type="text" name="tag" id="tag" value="" size="32" maxlength="100" tabindex="1" />
-            </td>
-        </tr>
-        <tr>
-            <td class="xar-norm">
-                <label for="type"><xar:mlstring>Choose Type</xar:mlstring></label>:
-            </td>
-            <td class="xar-norm">
-                <select name="tagtype" tabindxex="2">
+        <fieldset>
+        <legend>
+            <strong><xar:mlstring>Tag Settings</xar:mlstring></strong>
+        </legend>
+        <div class="xar-form-input-wrapper">
+            <label for="tag" class="xar-form-label" title="#xarML('Tag')#">
+                <xar:mlstring>Tag</xar:mlstring>:
+            </label>
+            <input type="text" name="tag" id="tag" value="" size="32" maxlength="100" tabindex="1" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label for="type" class="xar-form-label" title="#xarML('Tag type')#">
+                <xar:mlstring>Choose Type</xar:mlstring>:
+            </label>
+            <select name="tagtype" tabindxex="2">
                 <xar:loop name="$types">
                     <option name="#$loop:item['type']#" value="#$loop:item['type']#">#$loop:item['type']#</option>
                 </xar:loop>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td class="xar-norm">
+            </select>
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label for="type" class="xar-form-label" title="#xarML('Tag type')#">
                 <xar:mlstring>Choose State</xar:mlstring>
-            </td>
-            <td class="xar-norm">
+            </label>
+            <p class="xar-form-container-after">
                    <input type="radio" value="0" name="allowed" id="0" tabindex="3" />
                    &nbsp;&nbsp;<xar:mlstring>Not Allowed</xar:mlstring>
                    <br />
@@ -46,17 +46,12 @@
                    <br />
                    <input type="radio" value="2" name="allowed" id="2" tabindex="5" checked="checked" />
                    &nbsp;&nbsp;<xar:mlstring>Allowed with Parameters</xar:mlstring>
-                   <br />
-            </td>
-        </tr>
-        <tr>
-            <td class="xar-norm" colspan="2">
-                <span style="float: left; width: 30%; text-align: right;">
-                    <input type="submit" value="#$createbutton#" />
-                </span>
-            </td>
-        </tr>
-    </table>
+            </p>
+         </div>
+        </fieldset>
+        <div class="xar-form-input-wrapper">
+            <input type="submit" value="#$createbutton#" />
+        </div>
     </form>
-    </div>
+
 </div>

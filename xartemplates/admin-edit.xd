@@ -1,25 +1,32 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>HTML Administration</xar:mlstring></span></div>
 <!-- common admin menu for this module - remove link to the current function -->
 <div class="xar-mod-body">
-<h2><xar:mlstring>Edit Tag</xar:mlstring></h2>
-<div align="center">
-<form method="post" action="#xarModURL('html', 'admin', 'edit')#" enctype="application/x-www-form-urlencoded">
+    <xar:template type="module" file="admin-menu" />
+    <h2><xar:mlstring>Edit Tag</xar:mlstring></h2>
+
+    <form method="post" action="&xar-modurl-html-admin-edit;" enctype="application/x-www-form-urlencoded">
     <input type="hidden" name="authid" value="#$authid#" />
     <input type="hidden" name="cid" id="cid" value="#$cid#" />
     <input type="hidden" name="confirm" id="confirm" value="1"/>
-    <table border="0" cellspacing="0" cellpadding="2">
-        <tr>
-        <td>
-            <xar:mlstring>Tag Name:</xar:mlstring>
-        </td>
-        <td>
+        <fieldset>
+        <legend>
+            <strong><xar:mlstring>Tag Details</xar:mlstring></strong>
+        </legend>
+        <div class="xar-form-input-wrapper">
+            <label for="tag" class="xar-form-label" title="#xarML('Tag Name')#">
+                <xar:mlstring>Tag Name:</xar:mlstring>
+            </label>
             <input type="text" name="tag" id="tag" value="#$tag#" size="32" maxlength="100" tabindex="1" />
-        </td>
-        </tr>
-    </table><br />
-    <input type="submit" value="#$editbutton#"  tabindex="2" />
-    <br /><br />
-    <a href="#xarModURL('html', 'admin', 'set')#"><xar:mlstring>Cancel edit of the tag</xar:mlstring>.</a>
+
+        </div>
+        </fieldset>
+
+        <div class="xar-form-input-wrapper">
+            <input type="submit" value="#$editbutton#"  tabindex="2" />
+        </div>
+
+        <p>
+            <a href="&xar-modurl-html-admin-set;"><xar:mlstring>Cancel edit of the tag</xar:mlstring>.</a>
+        </p>
 </form>
-</div>
 </div>

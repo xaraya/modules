@@ -44,11 +44,12 @@ function html_admin_modifyconfig()
 
         case 'update':
             if (!xarVarFetch('dolinebreak', 'checkbox', $dolinebreak, false, XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('transformtype', 'int', $transformtype, 1)) return;
             // Confirm authorisation code
             if (!xarSecConfirmAuthKey()) return; 
             // Update module variables
             xarModSetVar('html', 'dolinebreak', $dolinebreak);
-
+            xarModSetVar('html', 'transformtype', $transformtype);
             // Call Update Config Hooks
             xarModCallHooks('module', 
                             'updateconfig', 

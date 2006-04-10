@@ -67,7 +67,7 @@ function html_userapitransformoutput($text)
      * does NOT depend on the bbcode module, nor the (big) class. From casual inspection it looks as if this does
      * only nl2br on the $text?
      */
-    include_once 'modules/bbcode/xarclass/stringparser_bbcode.class.php';
+   /* include_once 'modules/bbcode/xarclass/stringparser_bbcode.class.php';
     $bbcode = new StringParser_BBCode();
     $dotransform = xarModGetVar('html', 'dolinebreak');
     if ($dotransform == 1){
@@ -75,6 +75,27 @@ function html_userapitransformoutput($text)
         $bbcode->setRootParagraphHandling(true);
     }
     $text = $bbcode->parse($text);
+    */
+
+    $dotransform = xarModGetVar('html', 'dolinebreak');
+    if (!strlen(trim($text))) {
+        return '';
+    }
+    if ($dotransform == 1){
+        $text = preg_replace("/\n/si","<br />",$text);
+    } else {
+        $text = $text;
+    }
+    //$text = preg_replace("/(\015\012)|(\015)|(\012)/","</p><p>",$text); 
+    // This call is what is driving the bugs because it is transforming more
+    // than we want.  The problem without the call though, it the output from
+    // this function is not xhtml compliant.
+    //
+    // So, a configuration in the html script will allow a replacement of
+    // paragraphs or line breaks.  If paragraphs are used, the template must
+    // open and close the paragraphs tags before and after the transformed output.
+    //$text = "<p> " . $text . " </p>\n";
+   $text = str_replace ("<p></p>", "", $text);
     return $text;
 }
 ?>

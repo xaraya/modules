@@ -1,8 +1,9 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>HTML Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
-<h2><xar:mlstring>View Tag Types</xar:mlstring></h2>
-<div  class="xar-fullwidth" align="center">
-<table class="xar-fullwidth xar-noborder" cellspacing="1" cellpadding="2">
+<xar:template type="module" file="admin-menu" />
+  <h2><xar:mlstring>View Tag Types</xar:mlstring></h2>
+  <div  class="xar-fullwidth" align="center">
+    <table class="xar-fullwidth xar-noborder" cellspacing="1" cellpadding="2">
     <tr>
         <th>
              <xar:mlstring>Type</xar:mlstring>
@@ -37,7 +38,5 @@
         </tr>
     </xar:loop>
 </table>
-<br /><br />
-<br />
 </div>
 </div>
