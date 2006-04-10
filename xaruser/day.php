@@ -27,12 +27,14 @@
  */
 function julian_user_day()
 {
-    // Security check
-    if (!xarSecurityCheck('ReadJulian')) return;
     if (!xarVarFetch('catid', 'int:1:', $catid, '', XARVAR_NOT_REQUIRED)) return;
     // get post/get vars
     xarVarFetch('cal_sdow','int:0:6',$cal_sdow,xarModGetVar('julian','startDayOfWeek'));
 
+    // Security check
+    if (!xarSecurityCheck('ViewJulian', 1, 'Item', "All:All:All:$catid")) {
+       return;
+    }
     // load the calendar class
     $c = xarModAPIFunc('julian','user','factory','calendar');
 

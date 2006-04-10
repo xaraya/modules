@@ -33,7 +33,9 @@ function julian_user_month($args)
     if (!xarVarFetch('catid', 'int:1:', $catid, '', XARVAR_NOT_REQUIRED)) return;
 
     // Security check
-    if (!xarSecurityCheck('ReadJulian')) return;
+    if (!xarSecurityCheck('ViewJulian', 1, 'Item', "All:All:All:$catid")) {
+       return;
+    }
 
     //get post/get vars
     $cal_sdow = xarModGetVar('julian','startDayOfWeek');
