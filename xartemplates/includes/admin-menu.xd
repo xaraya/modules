@@ -9,7 +9,11 @@
       <xar:mlstring>Actions:</xar:mlstring>
     </dt>
     <xar:sec mask="EditCategories" catch="false">
-        <xar:set name="tabclass">$activetab=='viewcats'?'active':''</xar:set>
+        <xar:if condition="$activetab eq 'viewcats-render' or $activetab eq 'modifycat'">
+            <xar:set name="tabclass">'active'</xar:set>
+        <xar:else />
+            <xar:set name="tabclass">''</xar:set>
+        </xar:if>
         <dd class="#$tabclass#">
           <a href="&xar-modurl-categories-admin-viewcats;">
             <xar:mlstring>View Categories</xar:mlstring>
@@ -17,7 +21,7 @@
         </dd>
     </xar:sec>
     <xar:sec mask="AddCategories" catch="false">
-        <xar:set name="tabclass">$activetab=='modifycat'?'active':''</xar:set>
+        <xar:set name="tabclass">$activetab=='editcat'?'active':''</xar:set>
         <dd class="#$tabclass#">
           <a href="&xar-modurl-categories-admin-modifycat;">
             <xar:mlstring>Add Category</xar:mlstring>
@@ -41,14 +45,14 @@
         </dd>
     </xar:sec>
     <xar:sec mask="AdminCategories" catch="false">
-        <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
+        <xar:set name="tabclass">$activetab=='config'?'active':''</xar:set>
         <dd class="#$tabclass#">
           <a href="&xar-modurl-categories-admin-modifyconfig;">
             <xar:mlstring>Modify Config</xar:mlstring>
           </a>
         </dd>
     </xar:sec>
-        <xar:set name="tabclass">$activetab=='overview'?'active':''</xar:set>
+        <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
         <dd class="#$tabclass#">
             <a href="&xar-modurl-categories-admin-overview;" >
                 <xar:mlstring>Overview</xar:mlstring>
