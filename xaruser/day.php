@@ -32,7 +32,7 @@ function julian_user_day()
     xarVarFetch('cal_sdow','int:0:6',$cal_sdow,xarModGetVar('julian','startDayOfWeek'));
 
     // Security check
-    if (!xarSecurityCheck('ViewJulian', 1, 'Item', "All:All:All:$catid")) {
+    if (!xarSecurityCheck('ViewJulian', 1)) {
        return;
     }
     // load the calendar class

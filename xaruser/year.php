@@ -35,7 +35,7 @@ function julian_user_year($args)
     if (!xarVarFetch('catid', 'int:1:', $catid, '', XARVAR_NOT_REQUIRED)) return;
 
     // Security check
-    if (!xarSecurityCheck('ViewJulian', 1, 'Item', "All:All:All:$catid")) {
+    if (!xarSecurityCheck('ViewJulian', 1)) {
        return;
     }
     // Starting day of the week
