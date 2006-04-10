@@ -2,12 +2,12 @@
   <span class="xar-title">  
     <xar:mlstring>Showing comments n.</xar:mlstring>
     &nbsp;#$first# - #$first+$howmany-1#&nbsp;
-    <xar:if condition="$modarray[0]!='all'">                
-      <xar:mlstring>from</xar:mlstring>  
+    <xar:if condition="$modarray[0]!='all'">
+      <xar:mlstring>from</xar:mlstring>
       <xar:foreach in="$modarray" key="$i">
         #$modlist[$modarray[$i]]#
         <xar:if condition= "($i ge 0) and ($i lt count($modarray)-1)">
-          ,   
+          ,
         </xar:if>
       </xar:foreach>
     <xar:else />
@@ -25,7 +25,7 @@
   </span>
   <p />
   <xar:comment> DISPLAY COMMENTS </xar:comment>
-    <xar:if condition="count($commentlist)"> 
+    <xar:if condition="count($commentlist)">
       <xar:foreach in="$commentlist" key="$daylabel" value="$commentsthisday">
         <xar:if condition="$adddaysep=='on'">
           <xar:if condition="$daylabel">
@@ -47,7 +47,7 @@
                   <xar:mlstring>in</xar:mlstring> 
                   <span class="xar-title">
                     <xar:if condition="$addobject ge 21">
-                      <a href="#$comment['objurl']###$comment['xar_cid']#">
+                      <a href="#$comment['objurl']####$comment['xar_cid']#">
                         #$comment['xar_title']#
                       </a> 
                     <xar:else/>

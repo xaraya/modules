@@ -186,8 +186,8 @@ function comments_user_displayall($args)
             $comments[$i]['xar_title'] = $items[$modid][$itemtype][$itemid]['label'];
             $comments[$i]['objurl'] = $items[$modid][$itemtype][$itemid]['url'];
         }
-        $comments[$i]['modname']=$modname[$modid][$itemtype];
-        $comments[$i]['modview']=$modview[$modid][$itemtype];
+        if (isset($modname[$modid][$itemtype])) $comments[$i]['modname']=$modname[$modid][$itemtype];
+        if (isset($modview[$modid][$itemtype])) $comments[$i]['modview']=$modview[$modid][$itemtype];
 
         //$comments[$i]['returnurl'] = urlencode($modview[$modid][$itemtype]);
         $comments[$i]['returnurl'] = null;
