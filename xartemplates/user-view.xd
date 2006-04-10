@@ -3,7 +3,7 @@
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>Example</xar:mlstring></span>
 </div>
-<div class="xar-mod-body xar-border-thin">
+<div class="xar-mod-body xar-border-thin"> 
 
     <!-- the variables used in this menu templte  come from example_user_menu() -->
     <xar:template type="module" file="user-menu" />
