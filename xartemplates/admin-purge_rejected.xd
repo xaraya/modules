@@ -1,53 +1,54 @@
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:mlstring>File Administration</xar:mlstring>
+        <xar:mlstring>File Upload Administration</xar:mlstring>
     </span>
 </div>
 <div class="xar-mod-body">
+     <xar:template type="module" file="admin-menu" />
     <h2><xar:mlstring>Purge Rejected Files</xar:mlstring></h2>
-    <br />
-    <div style="margin: auto;">
-    
-        <table summary="Files" width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-norm">
             <xar:if condition="!count($fileList)">
-                <tr>
-                    <td colspan="3" align="center">
-                        <xar:mlstring>
-                            There are no files marked as rejected.
-                        </xar:mlstring>
-                    </td>
-                </tr>
+                <p class="xar-norm xar-align-left">&nbsp;
+                    <xar:mlstring>
+                        There are no files marked as rejected.
+                    </xar:mlstring>
+                </p>
             <xar:else />
-                <tr>
-                    <td colspan="2">
-                        <form action="#xarModUrl('uploads','admin','purge_rejected')#" method="post">
-                            <xar:mlstring>
-                                Are you sure you want to delete the following files?
-                            </xar:mlstring>&nbsp;
+                <form action="#xarModUrl('uploads','admin','purge_rejected')#" method="post">
+                    <fieldset>
+                        <legend>
+                            <xar:mlstring>Delete confirmation</xar:mlstring>
+                        </legend>
+                        <div class="xar-form-input-wrapper">
+                            <label for="confirmdelete" class="xar-form-label" title="#xarML('Confirm deletion of this rejected file')#">
+                                <xar:mlstring>
+                                    Are you sure you want to delete the following files?
+                                </xar:mlstring>&nbsp;
+                            </label>
+
                             <input type="submit" name="submit" value="#xarML('Delete')#" />
-                            <input type="hidden" name="authid" value="#$authid#" />
-                            <input type="hidden" name="confirmation" value="1" />
-                            <input type="submit" name="submit" value="#xarML('Cancel')#" onClick="javascript:window.location='#xarModURL('uploads', 'admin', 'view')#'; return false;" />
-                        </form>
-                    </td>
-                </tr>
-                <tr>
-                    <xar:loop name="$fileList">
-                        <!-- TODO: reformulate this -->
-                        <xar:if condition="(($loop:index + 1) % 2)">
-                            </tr><tr>
-                        </xar:if>
-                        <td class="xar-norm" align="left">&nbsp;
+                        </div>
+                        <div class="xar-form-input-wrapper-before">
+                            <ul>
+                            <xar:loop name="$fileList">
+                                <!-- TODO: reformulate this -->
+                           <li style="list-type-style:none;">
                             <a onClick="MyWindow=window.open('#xarModURL('uploads','user','file_properties')#&amp;fileId=#$loop:item['fileId']#',
                                                             '#$loop:item['fileName']#',
-                                                            'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=no,width=500,height=375,left=20,top=20'); 
+                                                            'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=no,width=500,height=375,left=20,top=20');
                                                             return false;">
                                 #$loop:item['fileName']#
                             </a>
-                        </td>
-                    </xar:loop>
-                </tr>
+                           </li>
+                            </xar:loop>
+                            </ul>
+                        </div>
+                        </fieldset>
+                        <div class="xar-form-input-wrapper">
+                            <input type="hidden" name="authid" value="#$authid#" />
+                            <input type="hidden" name="confirmation" value="1" />
+
+                            <input type="submit" name="submit" value="#xarML('Cancel')#" onClick="javascript:window.location='#xarModURL('uploads', 'admin', 'view')#'; return false;" />
+                        </div>
+                        </form>
             </xar:if>
-        </table>
-    </div>
 </div>

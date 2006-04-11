@@ -5,59 +5,69 @@
 </div>
 
 <div class="xar-mod-body">
+   <xar:template type="module" file="admin-menu" />
     <h2>
         <xar:mlstring>Modify Uploads Configuration</xar:mlstring>
     </h2>
-    <div style="margin: auto;">
 
-        <form method="post" action="#xarModUrl('uploads', 'admin', 'updateconfig')#">
-            <input type="hidden" name="authid" value="#$authid#"/>
-            <p>
-                <strong><xar:mlstring>Uploads Directory</xar:mlstring>:</strong>&nbsp;&nbsp;
-                <input type="text" name="path[uploads-directory]" value="#$path['uploads-directory']#" size="70"/>
-                <br />
-                <xar:mlstring>
-                    This is the full path to the directory where uploaded and external import files will be placed. 
-                    It is stronly recommended that this directory be located outside of your web directory.
-                    <br />NOTE: This directory MUST be writable by the webserver.
-                </xar:mlstring>
-            </p>
-            <p>
-                <strong>
+    <form method="post" action="#xarModUrl('uploads', 'admin', 'updateconfig')#">
+        <input type="hidden" name="authid" value="#$authid#"/>
+        <fieldset>
+            <legend>
+                <xar:mlstring>Upload Options</xar:mlstring>
+            </legend>
+                <div class="xar-form-input-wrapper">
+                    <label for="path[uploads-directory]" class="xar-form-label" title="#xarML('Full path to your upload directory')#">
+                        <xar:mlstring>Uploads Directory</xar:mlstring>:
+                    </label>
+                    <input type="text" name="path[uploads-directory]" value="#$path['uploads-directory']#" size="60"/>
+                    <p class="xar-form-input-wrapper-after">
+                        <xar:mlstring>
+                        This is the full path to the directory where uploaded and external import files will be placed.
+                        It is stronly recommended that this directory be located outside of your web directory.
+                        <br />NOTE: This directory MUST be writable by the webserver.
+                       </xar:mlstring>
+                    </p>
+            </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="path[imports-directory]" class="xar-form-label" title="#xarML('Full path to the local trusted directory')#">
+                        <xar:mlstring>
+                            Trusted Directory:
+                        </xar:mlstring>
+                    </label>
+                    <input type="text" name="path[imports-directory]" value="#$path['imports-directory']#" size="60" max="70"/>
+                    <p class="xar-form-input-wrapper-after">
                     <xar:mlstring>
-                        Trusted Directory:
+                        This is the full path to the local trusted directory. Files located in this directory will
+                        be immediately available for users to attach to other objects (ie: articles). Files in this directory
+                        are <strong>not</strong> counted in the disk usage summary totals. It is strongly recommended
+                        that this directory be located outside of your web directory.
+                        <br />NOTE: This directory MUST be readable and should also be writable by the webserver.
                     </xar:mlstring>
-                </strong>&nbsp;&nbsp;
-                <input type="text" name="path[imports-directory]" value="#$path['imports-directory']#" size="70"/>
-                <br />
-                <xar:mlstring>
-                    This is the full path to the local trusted directory. Files located in this directory will 
-                    be immediately available for users to attach to other objects (ie: articles). Files in this directory 
-                    are <strong>not</strong> counted in the disk usage summary totals. It is strongly recommended 
-                    that this directory be located outside of your web directory. 
-                    <br />NOTE: This directory MUST be readable and should also be writable by the webserver.
-                </xar:mlstring>
-            </p>
-            <p>
-                <strong>
-                    <xar:mlstring>
-                        Maximum Upload Size in bytes (commas are fine):
-                    </xar:mlstring>
-                </strong>&nbsp;&nbsp;
-                <input type="text" name="file[maxsize]" value="#$file['maxsize']#"/>
-                <br />
-                <xar:mlstring>
-                    This is the maximum size an uploaded file may be.<br />
-                    NOTE: The server wide PHP setting, if set to a lower value, <em>will</em> override this setting. 
-                    Please ask your web host provider for details on the settings that they use for uploaded files.
-                </xar:mlstring>
-            </p>
-            <p>
-                <strong>
-                    <xar:mlstring>
-                        Auto approve files added by:
-                    </xar:mlstring>
-                </strong>&nbsp;&nbsp;
+                    </p>
+                </div>
+                 <div class="xar-form-input-wrapper">
+                    <label for="file[maxsize]" class="xar-form-label" title="#xarML('Auto approve files')#">
+                        <xar:mlstring>
+                            Maximum Upload Size :
+                        </xar:mlstring>
+                    </label>
+                    <input type="text" name="file[maxsize]" value="#$file['maxsize']#"/> 
+                    in bytes (commas are fine)
+                    <p class="xar-form-input-wrapper-after">
+                        <xar:mlstring>
+                        This is the maximum size an uploaded file may be.<br />
+                        NOTE: The server wide PHP setting, if set to a lower value, <em>will</em> override this setting.
+                        Please ask your web host provider for details on the settings that they use for uploaded files.
+                        </xar:mlstring>
+                    </p>
+                 </div>
+                 <div class="xar-form-input-wrapper">
+                    <label for="file[auto-approve]" class="xar-form-label" title="#xarML('Auto approve files')#">
+                        <xar:mlstring>
+                            Auto approve files added by:
+                        </xar:mlstring>
+                    </label>
                 <xar:if condition="$file['auto-approve'] eq $approveList['noone']">
                     <input type="radio" name="file[auto-approve]" value="#$approveList['noone']#" checked="true"/> <xar:mlstring>No one</xar:mlstring>     
                     <input type="radio" name="file[auto-approve]" value="#$approveList['admin']#"/> <xar:mlstring>Admin</xar:mlstring>      
@@ -71,19 +81,18 @@
                     <input type="radio" name="file[auto-approve]" value="#$approveList['admin']#"/> <xar:mlstring>Admin</xar:mlstring>      
                     <input type="radio" name="file[auto-approve]" value="#$approveList['everyone']#" checked="true"/> <xar:mlstring>Everyone</xar:mlstring>   
                 </xar:if>
-                <p>
-                <xar:mlstring>
-                    This option allows you to make all newly added files' status set to approved for Everyone (not recommended), Admins only, or No One.
-                </xar:mlstring>
-                </p>
-            </p>
-            <p>
-                <strong>
-                    <xar:mlstring>
-                        Confirm deletion of files:
-                    </xar:mlstring>
-                </strong>&nbsp;&nbsp;
-                
+                    <p class="xar-form-input-wrapper-after">
+                        <xar:mlstring>
+                            This option allows you to make all newly added files' status set to approved for Everyone (not recommended), Admins only, or No One.
+                        </xar:mlstring>
+                    </p>
+                </div>
+                 <div class="xar-form-input-wrapper">
+                    <label for="file[delete-confirmation]" class="xar-form-label" title="#xarML('Confirm deletion of files')#">
+                        <xar:mlstring>
+                            Confirm deletion of files:
+                        </xar:mlstring>
+                    </label>
                 <xar:if condition="$file['delete-confirmation'] eq FALSE">
                     <input type="radio" name="file[delete-confirmation]" value="1"/> <xar:mlstring>Yes</xar:mlstring>
                     <input type="radio" name="file[delete-confirmation]" value="0" checked="true"/> <xar:mlstring>No</xar:mlstring>
@@ -91,18 +100,18 @@
                     <input type="radio" name="file[delete-confirmation]" value="1" checked="true"/> <xar:mlstring>Yes</xar:mlstring>
                     <input type="radio" name="file[delete-confirmation]" value="0"/> <xar:mlstring>No</xar:mlstring>
                 </xar:if>
-                <br/>
-                <xar:mlstring>
-                    Confirmation must be provided before files are deleted.
-                </xar:mlstring>
-            </p>
-            <p>
-                <strong>
+                    <p class="xar-form-input-wrapper-after">
                     <xar:mlstring>
-                        Auto purge files marked as 'rejected':
+                        Confirmation must be provided before files are deleted.
                     </xar:mlstring>
-                </strong>&nbsp;&nbsp;
-                    
+                    </p>
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="file[auto-purge]" class="xar-form-label" title="#xarML('Auto purge files marked as rejected')#">
+                        <xar:mlstring>
+                            Auto purge 'rejected' files:
+                        </xar:mlstring>
+                    </label>
                 <xar:if condition="$file['auto-purge'] eq FALSE">
                     <input type="radio" name="file[auto-purge]" value="1"/> <xar:mlstring>Yes</xar:mlstring>
                     <input type="radio" name="file[auto-purge]" value="0" checked="true"/> <xar:mlstring>No</xar:mlstring>
@@ -110,178 +119,194 @@
                     <input type="radio" name="file[auto-purge]" value="1" checked="true"/> <xar:mlstring>Yes</xar:mlstring>
                     <input type="radio" name="file[auto-purge]" value="0"/> <xar:mlstring>No</xar:mlstring>
                 </xar:if>
-                <br/>
-                <xar:mlstring>
-                    Normally, when you reject files, you have to manually purge them by clicking on 
-                    the 'Purge Rejected' button located on the <em>Admin->Uploads->View page</em>. This 
-                    option forces any file you set to 'rejected' status to be deleted right away.
-                </xar:mlstring>
-            </p>
-            <p>
-                <strong>
+                    <p class="xar-form-input-wrapper-after">
                     <xar:mlstring>
-                        Obfuscate/Secure Imported Files:
+                        Normally, when you reject files, you have to manually purge them by clicking on
+                        the 'Purge Rejected' button located on the <em>Admin->Uploads->View page</em>. This
+                        option forces any file you set to 'rejected' status to be deleted right away.
                     </xar:mlstring>
-                </strong>&nbsp;&nbsp;
-                <xar:if condition="$file['obfuscate-on-import'] eq FALSE">
-                    <input type="radio" name="file[obfuscate-on-import]" value="1"/> <xar:mlstring>Yes</xar:mlstring>
-                    <input type="radio" name="file[obfuscate-on-import]" value="0" checked="true"/> <xar:mlstring>No</xar:mlstring>
-                <xar:else />
-                    <input type="radio" name="file[obfuscate-on-import]" value="1" checked="true"/> <xar:mlstring>Yes</xar:mlstring>
-                    <input type="radio" name="file[obfuscate-on-import]" value="0"/> <xar:mlstring>No</xar:mlstring>        
-                </xar:if>
-                <br />
-                <xar:mlstring>
-                    If Yes, imported files will be stored with their original names obfuscated for added security.
-                </xar:mlstring>
-            </p>
-            <p>
-                <strong>
-                    <xar:mlstring>
-                        Obfuscate/Secure Uploaded Files:
-                    </xar:mlstring>
-                </strong>&nbsp;&nbsp;
-                <xar:if condition="$file['obfuscate-on-upload'] eq FALSE">
-                    <input type="radio" name="file[obfuscate-on-upload]" value="1"/> <xar:mlstring>Yes</xar:mlstring>
-                    <input type="radio" name="file[obfuscate-on-upload]" value="0" checked="true"/> <xar:mlstring>No</xar:mlstring>
-                <xar:else />
-                    <input type="radio" name="file[obfuscate-on-upload]" value="1" checked="true"/> <xar:mlstring>Yes</xar:mlstring>
-                    <input type="radio" name="file[obfuscate-on-upload]" value="0"/> <xar:mlstring>No</xar:mlstring>        
-                </xar:if>
-                <br />
-                <xar:mlstring>
-                    If Yes, uploaded files will be stored with their original names obfuscated for added security.
-                    <br />
-                    <strong style="color: red;">NOTE:</strong>Setting this option to 'No' can open a possible route for users
-                    to upload and run malicious scripts on your site. It is <strong>highly</strong>
-                    recommended that you leave this option on unless you have a thorough understanding
-                    of the implications behind turning it off.
-                </xar:mlstring>
-            </p>
-            <p>
-                <strong>
-                    <xar:mlstring>
-                        Reaction to Duplicate Filenames:
-                    </xar:mlstring>
-                </strong>&nbsp;&nbsp;
-                <xar:set name="dup_options">
-                    array('0' => xarML('No upload allowed'),
-                          '1' => xarML('Save as new version'),
-                          '2' => xarML('Replace original'),
-                         )
-                </xar:set>
-                <select name="file[allow-duplicate-upload]" id="file_allow_duplicate_upload">
-                <xar:foreach in="$dup_options" key="$id" value="$val">
-                    <xar:if condition="$file['allow-duplicate-upload'] eq $id">
-                        <option value="#$id#" selected="selected"> #$val# </option>
-                    <xar:else/>
-                        <option value="#$id#"> #$val# </option>
+                    </p>
+                 </div>
+                 <div class="xar-form-input-wrapper">
+                    <label for="file[obfuscate-on-import]" class="xar-form-label" title="#xarML('Obfuscate/Secure Imported Files')#">
+                        <xar:mlstring>
+                            Secure Imported Files:
+                        </xar:mlstring>
+                    </label>
+                    <xar:if condition="$file['obfuscate-on-import'] eq FALSE">
+                        <input type="radio" name="file[obfuscate-on-import]" value="1"/> <xar:mlstring>Yes</xar:mlstring>
+                        <input type="radio" name="file[obfuscate-on-import]" value="0" checked="true"/> <xar:mlstring>No</xar:mlstring>
+                    <xar:else />
+                        <input type="radio" name="file[obfuscate-on-import]" value="1" checked="true"/> <xar:mlstring>Yes</xar:mlstring>
+                        <input type="radio" name="file[obfuscate-on-import]" value="0"/> <xar:mlstring>No</xar:mlstring>
                     </xar:if>
-                </xar:foreach>
-                </select>
-                <br />
-                <xar:mlstring>
-                    For new version, files with the same name of existing files will be stored alongside the originals.
-                    <br />
-                </xar:mlstring>
-            </p>
-            <p>
-                <strong>
+                  <p class="xar-form-input-wrapper-after">
+                        <xar:mlstring>
+                            If Yes, imported files will be stored with their original names obfuscated for added security.
+                        </xar:mlstring>
+                    </p>
+                  </div>
+                 <div class="xar-form-input-wrapper">
+                    <label for="file[obfuscate-on-upload]" class="xar-form-label" title="#xarML('Obfuscate/Secure Uploaded Files')#">
+                        <xar:mlstring>
+                            Secure Uploaded Files:
+                        </xar:mlstring>
+                    </label>
+                     <xar:if condition="$file['obfuscate-on-upload'] eq FALSE">
+                        <input type="radio" name="file[obfuscate-on-upload]" value="1"/> <xar:mlstring>Yes</xar:mlstring>
+                        <input type="radio" name="file[obfuscate-on-upload]" value="0" checked="true"/> <xar:mlstring>No</xar:mlstring>
+                    <xar:else />
+                        <input type="radio" name="file[obfuscate-on-upload]" value="1" checked="true"/> <xar:mlstring>Yes</xar:mlstring>
+                        <input type="radio" name="file[obfuscate-on-upload]" value="0"/> <xar:mlstring>No</xar:mlstring>
+                    </xar:if>
+                    <p class="xar-form-input-wrapper-after">
                     <xar:mlstring>
-                        Cache trusted file information:
+                        If Yes, uploaded files will be stored with their original names obfuscated for added security.
+                        <br />
+                        <strong style="color: red;">NOTE:</strong>Setting this option to 'No' can open a possible route for users
+                        to upload and run malicious scripts on your site. It is <strong>highly</strong>
+                        recommended that you leave this option on unless you have a thorough understanding
+                        of the implications behind turning it off.
                     </xar:mlstring>
-                </strong>&nbsp;&nbsp;
-                <input type="text" name="file[cache-expire]" id="file_cache_expire" size="3" maxlength="3" value="#xarModGetVar('uploads','file.cache-expire')#" /> 
-                <xar:mlstring>seconds</xar:mlstring>
-            </p>
-            <p>
-                <strong>
+                    </p>
+                 </div>
+                 <div class="xar-form-input-wrapper">
+                    <label for="file[allow-duplicate-upload]" class="xar-form-label" title="#xarML('Reaction to Duplicate Filenames')#">
+                        <xar:mlstring>
+                            Allow Duplicate Filenames?
+                        </xar:mlstring>
+                    </label>
+                    <xar:set name="dup_options">
+                        array('0' => xarML('No upload allowed'),
+                              '1' => xarML('Save as new version'),
+                              '2' => xarML('Replace original'),
+                             )
+                    </xar:set>
+                    <select name="file[allow-duplicate-upload]" id="file_allow_duplicate_upload">
+                        <xar:foreach in="$dup_options" key="$id" value="$val">
+                        <xar:if condition="$file['allow-duplicate-upload'] eq $id">
+                            <option value="#$id#" selected="selected"> #$val# </option>
+                        <xar:else/>
+                            <option value="#$id#"> #$val# </option>
+                        </xar:if>
+                    </xar:foreach>
+                    </select>
+                    <p class="xar-form-input-wrapper-after">
+                        <xar:mlstring>
+                            For new version, files with the same name of existing files will be stored alongside the originals.
+                        </xar:mlstring>
+                    </p>
+                </div>
+                 <div class="xar-form-input-wrapper">
+                    <label for="file[cache-expire" class="xar-form-label" title="#xarML('Cache trusted file information')#">
+                        <xar:mlstring>
+                            Cache trusted file information:
+                        </xar:mlstring>
+                    </label>
+                    <input type="text" name="file[cache-expire]" id="file_cache_expire" size="3" maxlength="3" value="#xarModGetVar('uploads','file.cache-expire')#" />
+                    <xar:mlstring>seconds</xar:mlstring>
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="view[itemsperpage]" class="xar-form-label" title="#xarML('Items per page in admin view')#">
+                        <xar:mlstring>
+                            Items per page in admin view:
+                        </xar:mlstring>
+                    </label>
+                    <input type="text" name="view[itemsperpage]" id="view_itemsperpage" size="3" maxlength="3" value="#xarModGetVar('uploads','view.itemsperpage')#" />
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>
                     <xar:mlstring>
-                        Items per page in admin view:
+                        Dynamic File Upload Property Configuration
                     </xar:mlstring>
-                </strong>&nbsp;&nbsp;
-                <input type="text" name="view[itemsperpage]" id="view_itemsperpage" size="3" maxlength="3" value="#xarModGetVar('uploads','view.itemsperpage')#" /> 
-            </p>
-            
-            <h2>
-                <xar:mlstring>Dynamic File Upload Property Configuration</xar:mlstring>
-            </h2>
-            <p>
-                <xar:mlstring>
+                </legend>
+                <p class="xar-form-input-wrapper-before">
+                    <xar:mlstring>
                     These settings allow you to redefine certain characteristics of the FileUpload DynamicData Property. 
-                    These settings only take effect if you have 'hooked' the uploads module to the module using the 
+                    These settings only take effect if you have 'hooked' the uploads module to the module using the
                     FileUpload property.
-                </xar:mlstring>
-            </p>
-            <strong>
-                <xar:mlstring>
-                    Select available file sources for the FileUpload Property:
-                </xar:mlstring>
-            </strong>
-            <p>
-                <xar:mlstring>
-                    Note: be sure to choose at <strong>least</strong> one!
-                </xar:mlstring>
-            </p>
-            <div>
-                <span>
+                    </xar:mlstring>
+                </p>
+                <p>
+                    <strong>
+                    <xar:mlstring>
+                        Select file sources for the FileUpload Property:
+                    </xar:mlstring>
+                    </strong>
+                </p>
+                <p>
+                    <xar:mlstring>
+                        Note: be sure to choose at <strong>least</strong> one!
+                   </xar:mlstring>
+                </p>
+
+
+                <div class="xar-form-input-wrapper-after">
                     <xar:if condition="$ddprop['trusted'] eq TRUE">
                         <input type="checkbox" name="ddprop[trusted]" value="1" checked="checked"/>
                     <xar:else />
                         <input type="checkbox" name="ddprop[trusted]" value="1"/>
                     </xar:if>
-                </span>
-                <span>
-                    <xar:mlstring>Files located in the Trusted directory</xar:mlstring>
-                </span>
-            </div>
-            <div>
-                <span>
+                    <label for="ddprop[trusted]">
+                        <xar:mlstring>Files located in the Trusted directory</xar:mlstring>
+                    </label>
+                </div>
+
+                <div class="xar-form-input-wrapper-after">
                     <xar:if condition="$ddprop['external'] eq TRUE">
                         <input type="checkbox" name="ddprop[external]" value="1" checked="checked"/>
                     <xar:else />
                         <input type="checkbox" name="ddprop[external]" value="1"/>
                     </xar:if>
-                </span>
-                <span>
-                    <xar:mlstring>Externally located files (http / ftp / file)</xar:mlstring>
-                </span>
-            </div>
-            <div>
-                <span>
+
+                    <label for="ddprop[external]">
+                        <xar:mlstring>Externally located files (http / ftp / file)</xar:mlstring>
+                    </label>
+                </div>
+                <div class="xar-form-input-wrapper-after">
                     <xar:if condition="$ddprop['upload'] eq TRUE">
                         <input type="checkbox" name="ddprop[upload]" value="1" checked="checked"/>
                     <xar:else />
                         <input type="checkbox" name="ddprop[upload]" value="1"/>
                     </xar:if>
-                </span>
-                <span>
-                    <xar:mlstring>User uploaded files</xar:mlstring>
-                </span>
-            </div>
-            <div>
-                <span>
+
+                    <label for="ddprop[upload]">
+                        <xar:mlstring>User uploaded files</xar:mlstring>
+                    </label>
+               </div>
+                <div class="xar-form-input-wrapper-after">
                     <xar:if condition="$ddprop['stored'] eq TRUE">
                         <input type="checkbox" name="ddprop[stored]" value="1" checked="checked"/>
                     <xar:else />
                         <input type="checkbox" name="ddprop[stored]" value="1"/>
                     </xar:if>
-                </span>
-                <span>
-                    <xar:mlstring>Files previously stored</xar:mlstring>
-                </span>
+                     <label for="ddprop[stored]">
+                        <xar:mlstring>Files previously stored</xar:mlstring>
+                    </label>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>
+                    <xar:mlstring>
+                        Hook configuration for uploaded files
+                    </xar:mlstring>
+                </legend>
+                <div class="xar-form-input-wrapper">
+                <xar:if condition="!empty($hooks)">
+                    <xar:foreach in="$hooks" key="$hookmodule">
+                        #$hooks[$hookmodule]#
+                    </xar:foreach>
+                <xar:else/>
+                    <xar:mlstring>No hooks configured. </xar:mlstring>
+                    <a href="&xar-modurl-modules-admin-hooks;"><xar:mlstring>Configure hooks now</xar:mlstring></a>.
+                </xar:if>
+                </div>
+            </fieldset>
+            <div class="xar-form-input-wrapper">
+                <input type="submit" name="update" value="#xarMl('Update Configuration')#"/>
             </div>
-
-            <xar:if condition="!empty($hooks)">
-                <h2>
-                    <xar:mlstring>Hook configuration for uploaded files</xar:mlstring>
-                </h2>
-                <xar:foreach in="$hooks" key="$hookmodule">
-                    #$hooks[$hookmodule]#
-                </xar:foreach>
-            </xar:if>
-
-            <input type="submit" name="update" value="#xarMl('Update Configuration')#"/>
         </form>
-    </div>
+
 </div>

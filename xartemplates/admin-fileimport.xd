@@ -1,10 +1,10 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Uploads Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Import Files</xar:mlstring></h2><br />
-<div style="margin: auto;">
-
-<xar:if condition="isset($file2import) AND ($file2import != '')">
-    #$file2import# imported successfully.
-</xar:if>
+<div class="xar-mod-body"><h2>
+   <xar:template type="module" file="admin-menu" />
+    <xar:mlstring>Import Files</xar:mlstring></h2>
+    <xar:if condition="isset($file2import) AND ($file2import != '')">
+        #$file2import# imported successfully.
+    </xar:if>
 
 <xar:if condition="is_array($files) AND count($files)">
 <form method="post" action="&xar-modurl-uploads-admin-fileimport;">
@@ -37,5 +37,4 @@
     <xar:mlstring>No files found to import.</xar:mlstring>
 </xar:if>
 
-</div>
 </div>

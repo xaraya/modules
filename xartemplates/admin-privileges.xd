@@ -6,6 +6,7 @@
     </span>
 </div>
 <div class="xar-mod-body">
+   <xar:template type="module" file="admin-menu" />
     <h2>
         <xar:ml>
             <xar:mlstring>
@@ -16,8 +17,7 @@
             </xar:mlvar>
         </xar:ml>
     </h2>
-    
-    <div style="margin: auto;">
+
 
     <form method="post" action="#xarModURL('uploads', 'admin', 'privileges')#">
         <input type="hidden" name="extpid" id="extpid" value="#$extpid#" />
@@ -184,6 +184,5 @@
         </p>
         <input type="submit" name="apply" value="#$applylabel#" />
     </form>
-    <br />
-    </div>
+
 </div>

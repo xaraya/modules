@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Purpose of File
  *

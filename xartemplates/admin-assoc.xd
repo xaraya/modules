@@ -7,6 +7,7 @@
     </span>
 </div>
 <div class="xar-mod-body">
+   <xar:template type="module" file="admin-menu" />
     <h2><xar:mlstring>View File Associations</xar:mlstring></h2>
 
     <xar:if condition="!empty($fileId)">
@@ -23,9 +24,9 @@
     </xar:if>
 
     <xar:if condition="empty($missing)">
-        <a href="#xarModURL('uploads','admin','assoc',array('action' => 'missing'))#"><xar:mlstring>Check Missing Files</xar:mlstring></a>
+        <p><a href="#xarModURL('uploads','admin','assoc',array('action' => 'missing'))#"><xar:mlstring>Check Missing Files</xar:mlstring></a></p>
     <xar:else/>
-        <strong><xar:mlstring>Missing Files in Associations</xar:mlstring></strong>
+        <p><strong><xar:mlstring>Missing Files in Associations</xar:mlstring></strong>
         <ul>
         <xar:foreach in="$missing" key="$id" value="$num">
             <li><a href="#xarModURL('uploads','admin','assoc',array('fileId' => $id))#"><xar:ml><xar:mlstring>File #(1) - #(2) association(s)</xar:mlstring><xar:mlvar>#$id#</xar:mlvar><xar:mlvar>#$num#</xar:mlvar></xar:ml></a></li>
@@ -35,40 +36,35 @@
 
     <div style="margin: auto;">
     <xar:if condition="empty($modid)">
-        <table border="0" width="100%" cellpadding="0" cellspacing="0">
+        <table border="1" cellpadding="2" cellspacing="1" class="xar-accent xar-accent-outline">
             <tr>
                 <th valign="center" width="30%">
-                    <b><xar:mlstring>Module Name</xar:mlstring></b>
+                    <strong><xar:mlstring>Module Name</xar:mlstring></strong>
                 </th>
                 <th align="center" valign="center" width="15%">
-                    <b><xar:mlstring>Module<br />Items</xar:mlstring></b>
+                    <strong><xar:mlstring>Module<br />Items</xar:mlstring></strong>
                 </th>
                 <th align="center" valign="center" width="15%">
-                    <b><xar:mlstring>Distinct<br />Files</xar:mlstring></b>
+                    <strong><xar:mlstring>Distinct<br />Files</xar:mlstring></strong>
                 </th>
                 <th align="center" valign="center" width="15%">
-                    <b><xar:mlstring>Total<br />Associations</xar:mlstring></b>
+                    <strong><xar:mlstring>Total<br />Associations</xar:mlstring></strong>
                 </th>
                 <th align="center" valign="center" width="25%">
-                    <b><xar:mlstring>Action</xar:mlstring></b>
+                    <strong><xar:mlstring>Action</xar:mlstring></strong>
                 </th>
             </tr>
 
-            <tr>
-                <td colspan="5">
-                    &nbsp;
-                </td>
-            </tr>
 
             <xar:if condition="empty($moditems) or count($moditems) eq '0'">
                 <tr>
                     <td colspan="5" align="center">
-                        <br />
+                        <p>
                         <xar:mlstring>
                             There are currently no file associations in the database...
                         </xar:mlstring>
-                        <br />
-                        <br />
+                        </p>
+
                     </td>
                 </tr>
             <xar:else />
@@ -92,9 +88,10 @@
                             #$moditem['numlinks']#
                         </td>
                         <td align="center" valign="center" width="25%">
-                            <a href="#$moditem['rescan']#"><b><xar:mlstring>Rescan</xar:mlstring></b></a>
+                            <p><a href="#$moditem['rescan']#"><strong><xar:mlstring>Rescan</xar:mlstring></strong></a>
                             |
-                            <a href="#$moditem['delete']#"><b><xar:mlstring>Delete</xar:mlstring></b></a>
+                            <a href="#$moditem['delete']#"><strong><xar:mlstring>Delete</xar:mlstring></strong></a>
+                            </p>
                         </td>
                     </tr>
                     <tr>
@@ -106,40 +103,34 @@
             </xar:if>
             <tr>
                 <td valign="center" width="30%">
-                    <b><xar:mlstring>Grand Total</xar:mlstring></b>
+                    <strong><xar:mlstring>Grand Total</xar:mlstring></strong>
                 </td>
                 <td align="center" valign="center" width="15%">
-                    <b>#$numitems#</b>
+                    <strong>#$numitems#</strong>
                 </td>
                 <td align="center" valign="center" width="15%">
-                    <b>-</b>
+                    <strong>-</strong>
                 </td>
                 <td align="center" valign="center" width="15%">
-                    <b>#$numlinks#</b>
+                    <strong>#$numlinks#</strong>
                 </td>
                 <td align="center" valign="center" width="25%">
                     <a href="#$rescan#"><xar:mlstring>Rescan All</xar:mlstring></a>
-<xar:comment>
+                    <xar:comment>
                     |
                     <a href="#$delete#"><xar:mlstring>Delete All</xar:mlstring></a>
-</xar:comment>
-                </td>
-            </tr>
-
-            <tr>
-                <td colspan="5">
-                    <div class="xar-accent xar-norm-outline" style="text-align: justify;padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
-                        <xar:mlstring>
-                            By clicking on <b>Delete</b> you can delete all file associations with a particular
-                            module. Clicking on a module will take you to that module's statistics page containing
-                            the figures for each of that module's items that have files associated with them.
-                            From there you can delete all file associations with a particular item.
-                        </xar:mlstring>
-                    </div>
+                    </xar:comment>
                 </td>
             </tr>
         </table>
-
+        <p>
+            <xar:mlstring>
+            By clicking on <strong>Delete</strong> you can delete all file associations with a particular
+            module. Clicking on a module will take you to that module's statistics page containing
+            the figures for each of that module's items that have files associated with them.
+            From there you can delete all file associations with a particular item.
+            </xar:mlstring>
+        </p>
     <xar:else/>
         <h3><xar:ml><xar:mlstring>In Module #(1)</xar:mlstring><xar:mlvar>#$modname#</xar:mlvar></xar:ml></h3>
 
@@ -161,16 +152,16 @@
             <tr>
                 <th valign="center" width="50%">
                     <xar:if condition="empty($sortlink['itemid'])">
-                        <b><xar:mlstring>Item Id</xar:mlstring></b>
+                        <strong><xar:mlstring>Item Id</xar:mlstring></strong>
                     <xar:else/>
-                        <a href="#$sortlink['itemid']#"><b><xar:mlstring>Item Id</xar:mlstring></b></a>
+                        <a href="#$sortlink['itemid']#"><strong><xar:mlstring>Item Id</xar:mlstring></strong></a>
                     </xar:if>
                 </th>
                 <th align="center" valign="center" width="25%">
-                    <b><xar:mlstring>File<br />Associations</xar:mlstring></b>
+                    <strong><xar:mlstring>File<br />Associations</xar:mlstring></strong>
                 </th>
                 <th align="center" valign="center" width="25%">
-                    <b><xar:mlstring>Action</xar:mlstring></b>
+                    <strong><xar:mlstring>Action</xar:mlstring></strong>
                 </th>
             </tr>
 
@@ -220,9 +211,9 @@
                         </xar:foreach>
                         </td>
                         <td align="center" valign="center" width="25%">
-                            <a href="#$moditem['rescan']#"><b><xar:mlstring>Rescan</xar:mlstring></b></a>
+                            <a href="#$moditem['rescan']#"><strong><xar:mlstring>Rescan</xar:mlstring></strong></a>
                             |
-                            <a href="#$moditem['delete']#"><b><xar:mlstring>Delete</xar:mlstring></b></a>
+                            <a href="#$moditem['delete']#"><strong><xar:mlstring>Delete</xar:mlstring></strong></a>
                         </td>
                     </tr>
                     <tr>
@@ -241,10 +232,10 @@
             </xar:if>
             <tr>
                 <td valign="center" width="50%">
-                    <b><xar:mlstring>Grand Total</xar:mlstring></b>:
+                    <strong><xar:mlstring>Grand Total</xar:mlstring></strong>:
                 </td>
                 <td align="center" valign="center" width="25%">
-                    <b>#$numlinks#</b>
+                    <strong>#$numlinks#</strong>
                 </td>
                 <td align="center" valign="center" width="25%">
                     <a href="#$rescan#"><xar:mlstring>Rescan All</xar:mlstring></a>
@@ -252,17 +243,14 @@
                     <a href="#$delete#"><xar:mlstring>Delete All</xar:mlstring></a>
                 </td>
             </tr>
-            <tr>
-                <td colspan="3">
-                    <div class="xar-accent xar-norm-outline" style="text-align: justify;padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
-                        <xar:mlstring>
-                            By clicking on <b>Delete</b> you can delete all file associations with a particular
-                            module's item.
-                        </xar:mlstring>
-                    </div>
-                </td>
-            </tr>
+
         </table>
+        <p>
+            <xar:mlstring>
+                By clicking on <strong>Delete</strong> you can delete all file associations with a particular
+                module's item.
+            </xar:mlstring>
+        </p>
     </xar:if>
     </div>
 </div>

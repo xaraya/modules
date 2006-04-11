@@ -1,12 +1,12 @@
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:mlstring>File Administration</xar:mlstring>
+        <xar:mlstring>File Uploads Administration</xar:mlstring>
     </span>
 </div>
 <div class="xar-mod-body">
+   <xar:template type="module" file="admin-menu" />
     <h2><xar:mlstring>View Files</xar:mlstring></h2>
-    <br />
-    <div style="margin: auto;">
+
         <xar:if condition="isset($diskUsage)">
             <table summary="Files" width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent xar-accent-outline">
                 <tr>
@@ -77,7 +77,7 @@
                                 <a style="cursor: pointer;" onClick="PropertiesDialog('#xarModURL('uploads','user','file_properties', array('fileId' => $loop:item['fileId']))#'); return false;">
                                     #$loop:item['fileName']#
                                 </a>
-                            </td>
+                               </td>
                             <td class="xar-accent" align="center">&nbsp;<xar:if condition="!empty($numassoc[$loop:item['fileId']])"><a href="#xarModURL('uploads','admin','assoc',array('fileId' => $loop:item['fileId']))#">#$numassoc[$loop:item['fileId']]#</a></xar:if></td>
                             <td class="xar-accent" align="right">&nbsp;#$loop:item['fileSize']#</td>
                             <td class="xar-accent" align="center">&nbsp;<xar:if condition="!empty($loop:item['fileModified'])">#xarLocaleGetFormattedDate('medium',$loop:item['fileModified'])#</xar:if></td>
@@ -87,7 +87,7 @@
                     </xar:if>
                 </xar:loop>
                 <tr>
-                    <td colspan="6" class="xar-norm" align="center">
+                    <td colspan="7" class="xar-norm" align="center">
 <script language="JavaScript" type="text/javascript"><![CDATA[
     document.write("[ <a href=\"javascript:xar_base_checkall(document.forms['viewfiles'],true)\"><xar:mlstring>Check All</xar:mlstring></a> | ");
     document.write("<a href=\"javascript:xar_base_checkall(document.forms['viewfiles'],false)\"><xar:mlstring>Uncheck All</xar:mlstring></a> ]");
@@ -97,7 +97,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="6" class="xar-accent xar-accent-outline">
+                    <td colspan="4" >
                         <table summary="Commands" width="100%" border="0" cellpadding="0" cellspacing="0" class="xar-norm">
                             <tr>
                                 <td width="100%">
@@ -118,12 +118,10 @@
                             </tr>
                         </table>
                     </td>
-                </tr>                                    
-                </form>
-                <xar:if condition="!xarModGetVar('uploads','file.auto-purge')">
-                    <tr>
+                     </form>
+                    <td colspan="3">
+                    <xar:if condition="!xarModGetVar('uploads','file.auto-purge')">
                         <form action="#xarModUrl('uploads','admin','purge_rejected')#" method="post">
-                            <td colspan="6" class="xar-accent">
                                 <table summary="Commands" width="100%" border="0" cellpadding="0" cellspacing="0" class="xar-norm">
                                     <tr>
                                         <td width="100%" align="right">
@@ -132,21 +130,23 @@
                                         </td>
                                     </tr>
                                 </table>
-                            </td>
                         </form>
-                    </tr>                                    
-                </xar:if>
+                    <xar:else />
+                       &nbsp;
+                    </xar:if>
+                    </td>
+                </tr>
             <xar:else />
                 <tr>
                     <td class="xar-norm" colspan="6" align="center">
-                        <br />
+                       <p>
                         <xar:mlstring>
                             There are currently no files to view with the filter you have chosen.
                         </xar:mlstring>
-                        <br />
+                        </p>
                     </td>
                 </tr>
             </xar:if>
         </table>
-    </div>
+
 </div>
