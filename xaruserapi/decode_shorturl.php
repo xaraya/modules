@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Standard function to decode short urls
  *
@@ -12,6 +13,7 @@
  * @author John Cox
  * @author Jo dalle Nogare
 */
+
 /**
  * Extract function and arguments from short URLs for this module, and pass
  * them back to xarGetRequestInfo()
@@ -33,21 +35,22 @@
  * - Additional path arguments will be ignored.
  * - The IDs are extracted as the left-most digits only (e.g. 3.html => 3).
  */
+
 function xarbb_userapi_decode_shorturl($params)
 {
     // Initialise the argument list we will return
     $args = array();
     $aliasisset = xarModGetVar('xarbb', 'useModuleAlias');
-    $aliasname = xarModGetVar('xarbb','aliasname');
+    $aliasname = xarModGetVar('xarbb', 'aliasname');
     if (($aliasisset) && isset($aliasname)) {
-        $usealias   = true;
+        $usealias = true;
     } else{
         $usealias = false;
     }
 
     $module = 'xarbb';
     if ($params[0] != $module) { //it's possibly some type of alias
-        $aliasname = xarModGetVar('xarbb','aliasname');
+        $aliasname = xarModGetVar('xarbb', 'aliasname');
     }
 
     // Shift the alias out if it is equal to the module name.
@@ -166,4 +169,5 @@ function xarbb_userapi_decode_shorturl($params)
         // you *could* return the main function here if you want to
         // return array('main', $args);
 }
+
 ?>

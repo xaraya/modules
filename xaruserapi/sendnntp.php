@@ -27,7 +27,7 @@ function xarbb_userapi_sendnntp($args)
     $email      = xarUserGetVar('email');
     $name       = xarUserGetVar('name');
     $from       = $email .'('. $name .')';
-    $settings   = unserialize(xarModGetVar('xarbb', 'settings.'.$fid));
+    $settings   = unserialize(xarModGetVar('xarbb', 'settings.' . $fid));
     $server     = $settings['nntpserver'];
     $port       = $settings['nntpport'];
     $group      = $settings['nntpgroup'];
@@ -42,14 +42,19 @@ function xarbb_userapi_sendnntp($args)
         $reference = '';
     }
 
-    if (!xarModAPIfunc('nntp', 'user', 'postarticle', array('server'     => $server, 
-                                                            'port'       => $port, 
-                                                            'newsgroups' => $group,
-                                                            'ref'        => $reference,
-                                                            'body'       => $tpost,
-                                                            'subject'    => $ttitle,
-                                                            'from'       => $from))) return;
+    if (!xarModAPIfunc('nntp', 'user', 'postarticle',
+        array(
+            'server'     => $server, 
+            'port'       => $port, 
+            'newsgroups' => $group,
+            'ref'        => $reference,
+            'body'       => $tpost,
+            'subject'    => $ttitle,
+            'from'       => $from)
+        )
+    ) return;
 
     return true;
 }
+
 ?>

@@ -88,4 +88,5 @@ function xarbb_userapi_getallforums($args)
 
     return $forums;
 }
+
 ?>
