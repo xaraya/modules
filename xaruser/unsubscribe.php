@@ -16,21 +16,18 @@ function xarbb_user_unsubscribe()
     // No anons please
     if (!xarUserIsLoggedIn()) return;
     // And you better have rights.
-    if (!xarSecurityCheck('ViewxarBB',1,'Forum')) return;
+    if (!xarSecurityCheck('ViewxarBB', 1, 'Forum')) return;
     // All we need is who and where.
-    if (!xarVarFetch('tid','int:1:',$tid)) return;
+    if (!xarVarFetch('tid', 'int:1:', $tid)) return;
     // Do not allow specifying the uid via URL parameters !
     $uid = (int) xarUserGetVar('uid');
     // Get the topic data
-    $data = xarModAPIFunc('xarbb',
-                          'user',
-                          'gettopic',
-                          array('tid' => $tid));
+    $data = xarModAPIFunc('xarbb', 'user', 'gettopic', array('tid' => $tid));
     // If there are subscribers already, we need to update that array
     if (!empty($data['toptions'])){
         $topicoptions = unserialize($data['toptions']);
         if (empty($topicoptions['subscribers']) ||
-            !in_array($uid,$topicoptions['subscribers'])) {
+            !in_array($uid, $topicoptions['subscribers'])) {
             // We're already unsubscribed
             xarResponseRedirect(xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $tid)));
             return true;
@@ -46,13 +43,15 @@ function xarbb_user_unsubscribe()
         return true;
     }
     // Then we just need to push the update through.
-    if (!xarModAPIFunc('xarbb',
-                       'user',
-                       'updatetopic',
-                       array('tid'      => $tid,
-                             'fid'      => $data['fid'],
-                             'ttime'    => $data['ttime'],
-                             'toptions' => $mergedarray))) return;
+    if (!xarModAPIFunc('xarbb', 'user', 'updatetopic',
+        array(
+            'tid'      => $tid,
+            'fid'      => $data['fid'],
+            'ttime'    => $data['ttime'],
+            'toptions' => $mergedarray)
+        )
+    ) return;
+
     // And then go back to the topic.
     xarResponseRedirect(xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $tid)));
     return true;

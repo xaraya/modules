@@ -31,7 +31,7 @@ function xarbb_user_main()
     if (!xarVarFetch('read', 'isset', $read, NULL, XARVAR_DONT_SET)) return;
 
     // Security Check
-    if(!xarSecurityCheck('ViewxarBB',1,'Forum')) return;
+    if (!xarSecurityCheck('ViewxarBB', 1, 'Forum')) return;
 
     // Variable Needed for output
     $args               = array();
@@ -45,7 +45,7 @@ function xarbb_user_main()
     $data['items']      = array();
     $sitename           = xarModGetVar('themes', 'SiteName', 0);
     $xarbbtitle         = xarModGetVar('xarbb', 'xarbbtitle', 0);
-    $data['xarbbtitle'] = isset($xarbbtitle) ? $xarbbtitle :'';
+    $data['xarbbtitle'] = isset($xarbbtitle) ? $xarbbtitle : '';
     // Login
     $data['return_url'] = xarModURL('xarbb', 'user', 'main');
     $data['submitlabel']= xarML('Submit');
@@ -53,7 +53,7 @@ function xarbb_user_main()
     // List the categories available as well
 
     // Regular Categories
-    if (isset($catid)){
+    if (isset($catid)) {
         $args['cid'] = $catid;
         $cats = xarModAPIfunc('categories', 'user', 'getcat', $args);
 
@@ -61,7 +61,7 @@ function xarbb_user_main()
         $items = array();
         $catcount = count($cats);
         foreach($cats as $cat) {
-            if(xarSecurityCheck('ViewxarBB',0,'Forum',"$cat[cid]:All")) {
+            if(xarSecurityCheck('ViewxarBB', 0, 'Forum', $cat['cid'] . ':All')) {
                 $items[] = $cat;
             }
         }
@@ -70,13 +70,10 @@ function xarbb_user_main()
 
         for ($i = 0; $i < $totalitems; $i++) {
             $item = $items[$i];
-                    // The user API function is called
+            // The user API function is called
             $args['basecat'] = $item['cid'];
             $items[$i]['cbchild'] = xarModAPIfunc('categories', 'user', 'getchildren', array('cid' => $item['cid']));
-            $forums = xarModAPIFunc('xarbb',
-                                    'user',
-                                    'getallforums',
-                                     array('catid' => $item['cid']));
+            $forums = xarModAPIFunc('xarbb', 'user', 'getallforums', array('catid' => $item['cid']));
             // Security check: remove forums the user should not see
             $forumcount = count($forums);
             $items[$i]['forums'] = array();
@@ -102,9 +99,11 @@ function xarbb_user_main()
         // Security check: remove categories the user should not see
         $items = array();
         $catcount = count($cats);
-        foreach($cats as $cat)
-            if(xarSecurityCheck('ViewxarBB',0,'Forum',"$cat[cid]:All"))
+        foreach($cats as $cat) {
+            if (xarSecurityCheck('ViewxarBB', 0, 'Forum', $cat['cid'] . ':All')) {
                 $items[] = $cat;
+            }
+        }
 
         $totalitems = count($items);
         for ($i = 0; $i < $totalitems; $i++) {
@@ -114,21 +113,20 @@ function xarbb_user_main()
             $items[$i]['cbchild'] = xarModAPIfunc('categories', 'user', 'getchildren', array('cid' => $item['cid']));
 
             // The user API function is called
-            $forums = xarModAPIFunc('xarbb',
-                                    'user',
-                                    'getallforums',
-                                     array('catid' => $item['cid']));
+            $forums = xarModAPIFunc('xarbb', 'user', 'getallforums', array('catid' => $item['cid']));
 
             // Security check: remove forums the user should not see
             $forumcount = count($forums);
             $items[$i]['forums'] = array();
-            foreach($forums as $forum)
-                if(xarSecurityCheck('ViewxarBB',0,'Forum','All:'.$forum['fid']))
-                $items[$i]['forums'][] = $forum;
+            foreach($forums as $forum) {
+                if(xarSecurityCheck('ViewxarBB',0,'Forum','All:'.$forum['fid'])) {
+                    $items[$i]['forums'][] = $forum;
+                }
+            }
 
             $args = $items[$i]['forums'];
             $items[$i]['forums'] = xarbb_user__getforuminfo($args);
-            if (isset($read)){
+            if (isset($read)) {
                 xarSessionSetVar(xarModGetVar('xarbb', 'cookiename') . '_f_' . $forum['fid'], time());
             }
         }
@@ -171,10 +169,7 @@ function xarbb_user__getforuminfo($args)
             if (!empty($forum['fposter'])) {
                 // Get the name of the poster.  Does it make sense to split this
                 // to the API, since it is called so often?
-                $getname = xarModAPIFunc('roles',
-                                     'user',
-                                     'get',
-                                     array('uid' => $forum['fposter']));
+                $getname = xarModAPIFunc('roles', 'user', 'get', array('uid' => $forum['fposter']));
             }
             if (!empty($getname['name'])) {
                 $forums[$i]['name'] = $getname['name'];
@@ -182,17 +177,17 @@ function xarbb_user__getforuminfo($args)
                 $forums[$i]['name'] = '-';
             }
         }
+
         if (!empty($forum['foptions']) && is_string($forum['foptions'])){
             $forums[$i]['foptions'] = unserialize($forum['foptions']);
         }
 
         // Forum Options
         // Check to see if forum is locked
-        if ($forum['fstatus'] == 1){
-        $forums[$i]['timeimage'] = 1;
-
+        if ($forum['fstatus'] == 1) {
+            $forums[$i]['timeimage'] = 1;
         } else {
-            if (xarUserIsLoggedIn()){
+            if (xarUserIsLoggedIn()) {
                 // Here we can check the updated images or standard ones.
                 $lastvisitforumsession = xarSessionGetVar(xarModGetVar('xarbb', 'cookiename') . '_f_' . $forum['fid']);
                 if (isset($lastvisitforumsession)){
@@ -217,4 +212,5 @@ function xarbb_user__getforuminfo($args)
     }
     return $forums;
 }
+
 ?>

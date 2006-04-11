@@ -19,7 +19,7 @@
 function xarbb_user_jump()
 {
     // Security Check
-    if(!xarSecurityCheck('ViewxarBB',1,'Forum')) return;
+    if(!xarSecurityCheck('ViewxarBB', 1, 'Forum')) return;
     if (!xarVarFetch('f', 'isset', $f, NULL, XARVAR_DONT_SET)) return;
     xarResponseRedirect(xarModURL('xarbb', 'user', 'viewforum', array('fid' => $f)));
     return true;

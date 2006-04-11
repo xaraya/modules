@@ -24,21 +24,17 @@ function xarbb_user_viewtopic($args)
     // redirect to previous/next topic
     if (!empty($view)) {
         if ($view == 'next') {
-            $nextid = xarModAPIFunc('xarbb','user','getnexttopicid',
-                                    array('tid' => $tid));
+            $nextid = xarModAPIFunc('xarbb', 'user', 'getnexttopicid', array('tid' => $tid));
             if (!isset($nextid)) return;
             if (!empty($nextid)) {
-                xarResponseRedirect(xarModURL('xarbb','user','viewtopic',
-                                              array('tid' => $nextid)));
+                xarResponseRedirect(xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $nextid)));
                 return true;
             }
         } elseif ($view == 'previous' || $view == 'prev') {
-            $previousid = xarModAPIFunc('xarbb','user','getprevioustopicid',
-                                        array('tid' => $tid));
+            $previousid = xarModAPIFunc('xarbb', 'user', 'getprevioustopicid', array('tid' => $tid));
             if (!isset($previousid)) return;
             if (!empty($previousid)) {
-                xarResponseRedirect(xarModURL('xarbb','user','viewtopic',
-                                              array('tid' => $previousid)));
+                xarResponseRedirect(xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $previousid)));
                 return true;
             }
         }
@@ -47,7 +43,7 @@ function xarbb_user_viewtopic($args)
     // Session for topic read
     xarSessionSetVar(xarModGetVar('xarbb', 'cookiename') . '_t_' . $tid, time());
 
-    if(!$topic = xarModAPIFunc('xarbb','user','gettopic',array('tid' => $tid))) return;    
+    if (!$topic = xarModAPIFunc('xarbb', 'user', 'gettopic', array('tid' => $tid))) return;
 
     if ($topic['fstatus'] == 1) {
         $msg = xarML('Forum -- #(1) -- all associated topics have been locked by administrator', $topic['fname']);
@@ -61,25 +57,25 @@ function xarbb_user_viewtopic($args)
         xarSessionSetVar(xarModGetVar('xarbb', 'cookiename') . 'lastvisit', time());
     }
 
-    $settings               = unserialize(xarModGetVar('xarbb', 'settings.'.$topic['fid']));
+    $settings = unserialize(xarModGetVar('xarbb', 'settings.' . $topic['fid']));
     if (isset($settings['allowhtml'])) {
-        $allowhtml  = $settings['allowhtml'];
+        $allowhtml = $settings['allowhtml'];
     } else {
         $allowhtml = false;
     }
     if (isset($settings['allowbbcode'])) {
-        $allowbbcode  = $settings['allowbbcode'];
+        $allowbbcode = $settings['allowbbcode'];
     } else {
         $allowbbcode = false;
     }
-    $postperpage            = $settings['postsperpage'];
+    $postperpage = $settings['postsperpage'];
 
     // Security Check
-    if(!xarSecurityCheck('ReadxarBB',1,'Forum',$topic['catid'].':'.$topic['fid'])) return;
+    if (!xarSecurityCheck('ReadxarBB', 1, 'Forum', $topic['catid'] . ':' . $topic['fid'])) return;
 
     // The user API function is called and returns all forum and topic data
     //<jojodee> Do we need to call this again?
-    $data=$topic; //to cover us for any use of $data
+    $data = $topic; //to cover us for any use of $data
 
     $data['pager'] = '';
 
@@ -92,14 +88,12 @@ function xarbb_user_viewtopic($args)
     }
 
     // Need to get this working for new itemtypes
-    list($data['transformedtext'],
-         $data['transformedtitle']) = xarModCallHooks('item',
-                                                      'transform',
-                                                       $tid,
-                                                 array($data['tpost'],
-                                                       $data['ttitle']),
-                                                       'xarbb',
-                                                       $data['fid']);
+    list($data['transformedtext'], $data['transformedtitle']) = xarModCallHooks(
+        'item', 'transform', $tid,
+        array($data['tpost'], $data['ttitle']),
+        'xarbb', $data['fid']
+    );
+
     // Bug 4836
     $data['transformedtitle'] = str_replace("<p>", "", $data['transformedtitle']);
     $data['transformedtitle'] = str_replace("</p>", "", $data['transformedtitle']);
@@ -107,16 +101,10 @@ function xarbb_user_viewtopic($args)
 
     xarTplSetPageTitle(xarVarPrepForDisplay($data['ttitle']));
     // The user API function is called
-    $posterdata = xarModAPIFunc('roles',
-                                'user',
-                                'get',
-                                array('uid' => $data['tposter']));
+    $posterdata = xarModAPIFunc('roles', 'user', 'get', array('uid' => $data['tposter']));
 
     // The user API function is called
-    $topiccount = xarModAPIFunc('xarbb',
-                                'user',
-                                'countposts',
-                                array('uid' => $data['tposter']));
+    $topiccount = xarModAPIFunc('xarbb', 'user', 'countposts', array('uid' => $data['tposter']));
 
     // Build up the list of posters
     $isposter = array();
@@ -149,29 +137,32 @@ function xarbb_user_viewtopic($args)
         $reverse = false; // default normal Celko order
     }
 
-    $comments = xarModAPIFunc('comments',
-                              'user',
-                              'get_multiple',
-                              array('modid'    => $header['modid'],
-                                    'itemtype' => $data['fid'],
-                                    'objectid' => $header['objectid'],
-                                    'startnum' => $startnum,
-                                    'numitems' => $postperpage,
-                                    'reverse'  => $reverse));
+    $comments = xarModAPIFunc('comments', 'user', 'get_multiple',
+        array(
+            'modid'    => $header['modid'],
+            'itemtype' => $data['fid'],
+            'objectid' => $header['objectid'],
+            'startnum' => $startnum,
+            'numitems' => $postperpage,
+            'reverse'  => $reverse
+        )
+    );
+
 /*
     $todolist = array();
     $todolist['transform'] = array();
 */
+
     $totalcomments=count($comments);
     for ($i = 0; $i < $totalcomments; $i++) {
         $comment = $comments[$i];
 
         if ($allowhtml == true){
-            $comment['xar_text']=xarVarPrepHTMLDisplay($comment['xar_text']);
-            $comment['xar_title']=xarVarPrepHTMLDisplay($comment['xar_title']);
+            $comment['xar_text'] = xarVarPrepHTMLDisplay($comment['xar_text']);
+            $comment['xar_title'] = xarVarPrepHTMLDisplay($comment['xar_title']);
         } else {
-            $comment['xar_text']=xarVarPrepForDisplay($comment['xar_text']);
-            $comment['xar_title']=xarVarPrepForDisplay($comment['xar_title']);
+            $comment['xar_text'] = xarVarPrepForDisplay($comment['xar_text']);
+            $comment['xar_title'] = xarVarPrepForDisplay($comment['xar_title']);
         }
 
 /*
@@ -181,21 +172,15 @@ function xarbb_user_viewtopic($args)
         $todolist[$i.'xar_title'] =& $comments[$i]['xar_title'];
 */
         // This has to come after the html call.
-        list($comments[$i]['xar_text'],
-             $comments[$i]['xar_title']) = xarModCallHooks('item',
-                                                           'transform',
-                                                            $tid,
-                                                            array($comment['xar_text'],
-                                                                  $comment['xar_title']),
-                                                            'xarbb',
-                                                            $data['fid']);
+        list($comments[$i]['xar_text'], $comments[$i]['xar_title']) = xarModCallHooks(
+            'item', 'transform', $tid,
+            array($comment['xar_text'], $comment['xar_title']),
+            'xarbb', $data['fid']
+        );
 
 // TODO: retrieve all post counts at once ?
         // The user API function is called
-        $comments[$i]['usertopics'] = xarModAPIFunc('xarbb',
-                                                    'user',
-                                                    'countposts',
-                                                    array('uid' => $comment['xar_uid']));
+        $comments[$i]['usertopics'] = xarModAPIFunc('xarbb', 'user', 'countposts', array('uid' => $comment['xar_uid']));
 
 /*
 // TODO: retrieve all user info at once ?
@@ -244,8 +229,10 @@ function xarbb_user_viewtopic($args)
             }
         }
 */
-        $data['userdata'] = xarModAPIFunc('roles','user','getall',
-                                          array('order' => 'uid', 'uidlist' => $data['posterlist']));
+        $data['userdata'] = xarModAPIFunc(
+            'roles','user','getall',
+            array('order' => 'uid', 'uidlist' => $data['posterlist'])
+        );
 
         for ($i = 0; $i < $totalcomments; $i++) {
             $uid = $comments[$i]['xar_uid'];
@@ -297,18 +284,19 @@ function xarbb_user_viewtopic($args)
  
 
     // for display hooks, we need to pass a returnurl
-    $item['returnurl'] = xarModURL('xarbb','user','viewtopic',
-                                   array('tid' => $tid,
-                                         'startnum'=>$startnum));
+    $item['returnurl'] = xarModURL('xarbb', 'user', 'viewtopic',
+        array('tid' => $tid, 'startnum' => $startnum)
+    );
 
-    $data['hooks'] = xarModCallHooks('item','display',$tid,$item);
+    $data['hooks'] = xarModCallHooks('item', 'display', $tid, $item);
 
     // Let's handle the changelog a little differently
     // and add a link in the topic itself.
     if (isset($data['hooks']['changelog'])){
-        $data['changelog']  = true;
+        $data['changelog'] = true;
         $data['hooks']['changelog'] = '';
     }
+
     //pass the bbcodeswitch
     $data['allowbbcode'] = $allowbbcode;
     //pass the htmlmod switch
@@ -318,7 +306,7 @@ function xarbb_user_viewtopic($args)
     $data['hooks']['hitcount'] = '';
 
     // Generate authid only if the current user can delete topics and replies
-    if (xarSecurityCheck('DeletexarBB',0)) {
+    if (xarSecurityCheck('DeletexarBB', 0)) {
         // Note : this make the page un-cacheable
         $data['authid'] = xarSecGenAuthKey('xarbb');
     } else {
@@ -327,19 +315,18 @@ function xarbb_user_viewtopic($args)
 
     // Call the xarTPL helper function to produce a pager in case of there
     // being many items to display.
-    $data['pager'] = xarTplGetPager($startnum,
-                                    $topic['treplies'],
-                                    xarModURL('xarbb', 'user', 'viewtopic', array('startnum' => '%%',
-                                                                                  'tid'          => $tid)),
-                                    $postperpage);
+    $data['pager'] = xarTplGetPager(
+        $startnum, $topic['treplies'],
+        xarModURL('xarbb', 'user', 'viewtopic', array('startnum' => '%%', 'tid' => $tid)),
+        $postperpage
+    );
 
     // Return the template variables defined in this function
     $categories = xarModAPIFunc('categories', 'user', 'getcatinfo', array('cid' => $data['catid']));
     $data['catname'] = $categories['name'];
-   // Forum Jump
-    $data['forums'] = xarModAPIFunc('xarbb',
-                                    'user',
-                                    'getallforums');
+
+    // Forum Jump
+    $data['forums'] = xarModAPIFunc('xarbb', 'user', 'getallforums');
     
     // Lets check our options as well for a dual status topic
     if (!empty($topic['toptions'])){
@@ -350,8 +337,8 @@ function xarbb_user_viewtopic($args)
         }
         // Check if we subscribed already
         if (xarUserIsLoggedIn()) {
-            $uid = (int) xarUserGetVar('uid');
-            if (!empty($topicoptions['subscribers']) && in_array($uid,$topicoptions['subscribers'])) {
+            $uid = (int)xarUserGetVar('uid');
+            if (!empty($topicoptions['subscribers']) && in_array($uid, $topicoptions['subscribers'])) {
                 $data['tsubscribed'] = 1;
             }
         }
@@ -359,4 +346,5 @@ function xarbb_user_viewtopic($args)
 
     return $data;
 }
+
 ?>

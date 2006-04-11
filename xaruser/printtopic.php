@@ -19,7 +19,7 @@ function xarbb_user_printtopic($args)
     extract($args);
     // redirect to previous/next topic
 
-    if(!$topic = xarModAPIFunc('xarbb','user','gettopic',array('tid' => $tid))) return;    
+    if (!$topic = xarModAPIFunc('xarbb', 'user', 'gettopic', array('tid' => $tid))) return;
 
     if ($topic['fstatus'] == 1) {
         $msg = xarML('Forum -- #(1) -- all associated topics have been locked by administrator', $topic['fname']);
@@ -28,30 +28,28 @@ function xarbb_user_printtopic($args)
     }
 
 
-    $settings               = unserialize(xarModGetVar('xarbb', 'settings.'.$topic['fid']));
+    $settings               = unserialize(xarModGetVar('xarbb', 'settings.' . $topic['fid']));
     $allowhtml              = $settings['allowhtml'];
     if (isset($settings['allowbbcode'])) {
-        $allowbbcode  = $settings['allowbbcode'];
+        $allowbbcode = $settings['allowbbcode'];
     } else {
         $allowbbcode = false;
     }
 
     // Security Check
-    if(!xarSecurityCheck('ReadxarBB',1,'Forum',$topic['catid'].':'.$topic['fid'])) return;
+    if(!xarSecurityCheck('ReadxarBB', 1, 'Forum', $topic['catid'] . ':' . $topic['fid'])) return;
 
     // The user API function is called and returns all forum and topic data
     //<jojodee> Do we need to call this again?
-    $data=$topic; //to cover us for any use of $data
+    $data = $topic; //to cover us for any use of $data
 
     // Need to get this working for new itemtypes
-    list($data['transformedtext'],
-         $data['transformedtitle']) = xarModCallHooks('item',
-                                                      'transform',
-                                                       $tid,
-                                                 array($data['tpost'],
-                                                       $data['ttitle']),
-                                                       'xarbb',
-                                                       $data['fid']);
+    list($data['transformedtext'], $data['transformedtitle']) = xarModCallHooks(
+        'item', 'transform', $tid,
+        array($data['tpost'], $data['ttitle']),
+        'xarbb',
+        $data['fid']
+    );
 
     if ($allowhtml) {
         $data['tpost'] = xarVarPrepHTMLDisplay($data['tpost']);
@@ -64,16 +62,10 @@ function xarbb_user_printtopic($args)
     xarTplSetPageTitle(xarVarPrepForDisplay($data['ttitle']));
     
     // The user API function is called
-    $posterdata = xarModAPIFunc('roles',
-                                'user',
-                                'get',
-                                array('uid' => $data['tposter']));
+    $posterdata = xarModAPIFunc('roles', 'user', 'get', array('uid' => $data['tposter']));
 
     // The user API function is called
-    $topiccount = xarModAPIFunc('xarbb',
-                                'user',
-                                'countposts',
-                                array('uid' => $data['tposter']));
+    $topiccount = xarModAPIFunc('xarbb', 'user', 'countposts', array('uid' => $data['tposter']));
 
     // Build up the list of posters
     $isposter = array();
@@ -85,16 +77,19 @@ function xarbb_user_printtopic($args)
 
     $data['items'] = array();
 
-    $comments = xarModAPIFunc('comments',
-                              'user',
-                              'get_multiple',
-                              array('modid'       => $header['modid'],
-                                    'itemtype'    => $data['fid'],
-                                    'objectid'    => $header['objectid']));
+    $comments = xarModAPIFunc('comments', 'user', 'get_multiple',
+        array(
+            'modid'       => $header['modid'],
+            'itemtype'    => $data['fid'],
+            'objectid'    => $header['objectid']
+        )
+    );
+
 /*
     $todolist = array();
     $todolist['transform'] = array();
 */
+
     $totalcomments=count($comments);
     for ($i = 0; $i < $totalcomments; $i++) {
         $comment = $comments[$i];
@@ -113,25 +108,21 @@ function xarbb_user_printtopic($args)
         $todolist['transform'][] = $i . 'xar_title';
         $todolist[$i.'xar_title'] =& $comments[$i]['xar_title'];
 */
+
         // This has to come after the html call.
-        list($comments[$i]['xar_text'],
-             $comments[$i]['xar_title']) = xarModCallHooks('item',
-                                                           'transform',
-                                                            $tid,
-                                                            array($comment['xar_text'],
-                                                                  $comment['xar_title']),
-                                                            'xarbb',
-                                                            $data['fid']);
+        list($comments[$i]['xar_text'], $comments[$i]['xar_title']) = xarModCallHooks(
+            'item', 'transform', $tid,
+            array($comment['xar_text'], $comment['xar_title']),
+            'xarbb',
+            $data['fid']
+        );
 
-// TODO: retrieve all post counts at once ?
+        // TODO: retrieve all post counts at once ?
         // The user API function is called
-        $comments[$i]['usertopics'] = xarModAPIFunc('xarbb',
-                                                    'user',
-                                                    'countposts',
-                                                    array('uid' => $comment['xar_uid']));
+        $comments[$i]['usertopics'] = xarModAPIFunc('xarbb', 'user', 'countposts', array('uid' => $comment['xar_uid']));
 
-/*
-// TODO: retrieve all user info at once ?
+        /*
+        // TODO: retrieve all user info at once ?
         // The user API function is called
         $comments[$i]['userdata'] = xarModAPIFunc('roles',
                                              'user',
@@ -142,29 +133,29 @@ function xarbb_user_printtopic($args)
         //$comments[$i]['commenterdate'] = xarLocaleFormatDate('%Y-%m-%d',$comments[$i]['userdata']['date_reg']);
         //Add datestamp so users can format in template, existing templates are still OK
         $comments[$i]['commenterdatestamp'] =$comments[$i]['userdata']['date_reg'];
-*/
+        */
 
         $isposter[$comment['xar_uid']] = 1;
 
         //format the post reply date consistently with topic post date
         //$comments[$i]['xar_date']=xarLocaleFormatDate('%Y-%m-%d %H:%M:%S',$comments[$i]['xar_datetime']);
         //Add datestamp so users can format in template, existing templates are still OK
-        $comments[$i]['xar_datestamp']=$comments[$i]['xar_datetime'];
+        $comments[$i]['xar_datestamp'] = $comments[$i]['xar_datetime'];
     }
 
     $data['posterlist'] = array_keys($isposter);
 
-/*
+    /*
     $todolist = xarModCallHooks('item',
                                 'transform',
                                 $tid,
                                 $todolist,
                                 'xarbb',
                                 $data['fid']);
-*/
+    */
 
     if (count($data['posterlist']) > 0) {
-/* the performance issue seems to be in comments author count, really, so this is not a solution
+        /* the performance issue seems to be in comments author count, really, so this is not a solution
         $data['usertopics'] = xarModAPIFunc('xarbb','user','countpostslist',
                                             array('uidlist' => $data['posterlist']));
         // TODO: support of legacy templates - get rid of this later on
@@ -176,9 +167,12 @@ function xarbb_user_printtopic($args)
                 $comments[$i]['usertopics'] = 0;
             }
         }
-*/
-        $data['userdata'] = xarModAPIFunc('roles','user','getall',
-                                          array('order' => 'uid', 'uidlist' => $data['posterlist']));
+        */
+
+        $data['userdata'] = xarModAPIFunc(
+            'roles','user','getall',
+            array('order' => 'uid', 'uidlist' => $data['posterlist'])
+        );
 
         for ($i = 0; $i < $totalcomments; $i++) {
             $uid = $comments[$i]['xar_uid'];
@@ -215,4 +209,5 @@ function xarbb_user_printtopic($args)
     $data['catname'] = $categories['name'];
     return $data;
 }
+
 ?>

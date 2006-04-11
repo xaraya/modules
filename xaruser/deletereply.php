@@ -19,13 +19,13 @@ function xarbb_user_deletereply()
     if (!xarVarFetch('confirmation','int',$confirmation,'',XARVAR_NOT_REQUIRED)) return;
 
     // for sec check
-    if(!$comment = xarModAPIFunc('comments','user','get_one',array('cid' => $cid))) return;
+    if (!$comment = xarModAPIFunc('comments', 'user', 'get_one', array('cid' => $cid))) return;
     $tid = $comment[0]['xar_objectid'];
 
-    if(!$topic = xarModAPIFunc('xarbb','user','gettopic',array('tid' => $tid))) return;
+    if (!$topic = xarModAPIFunc('xarbb', 'user', 'gettopic', array('tid' => $tid))) return;
 
     // Security Check
-    if(!xarSecurityCheck('ModxarBB',1,'Forum',$topic['catid'].':'.$topic['fid'])) return;
+    if(!xarSecurityCheck('ModxarBB', 1, 'Forum', $topic['catid'].':'.$topic['fid'])) return;
  
     // Check for confirmation.
     if (empty($confirmation)) {
@@ -40,10 +40,7 @@ function xarbb_user_deletereply()
     // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) return;
 
-    if (!xarModAPIFunc('xarbb',
-                       'admin',
-                       'deletereplies',
-                        array('cid' => $cid))) return;
+    if (!xarModAPIFunc('xarbb', 'admin', 'deletereplies', array('cid' => $cid))) return;
 
     if (!empty($topic['treplies'])) {
         $topic['treplies'] = $topic['treplies'] - 1;
@@ -52,19 +49,21 @@ function xarbb_user_deletereply()
     }
 
     // Need to update the forum page to show one less reply
-    if (!xarModAPIFunc('xarbb',
-                       'user',
-                       'updateforumview',
-                       array('fid'      => $topic['fid'],
-                             'replies'  => 1,
-                             'move'     => 'negative',
-                             'fposter'  => $topic['tposter'],
-                             'tid'      => $tid,
-                             'ttitle'   => $topic['ttitle'],
-                             'treplies' => $topic['treplies']))) return;
+    if (!xarModAPIFunc('xarbb', 'user', 'updateforumview',
+        array(
+            'fid'      => $topic['fid'],
+            'replies'  => 1,
+            'move'     => 'negative',
+            'fposter'  => $topic['tposter'],
+            'tid'      => $tid,
+            'ttitle'   => $topic['ttitle'],
+            'treplies' => $topic['treplies'])
+        )
+    ) return;
  
     // Redirect
-    xarResponseRedirect(xarModURL('xarbb', 'user', 'viewtopic',array("tid" => $tid)));
+    xarResponseRedirect(xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $tid)));
+
     // Return
     return true;
 }

@@ -17,12 +17,12 @@
  */
 function xarbb_user_search( $args ) 
 {
-    if(!xarVarFetch('startnum', 'isset', $startnum,  NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('header',   'isset', $header,    NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('q',        'isset', $q,         NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('bool',     'isset', $bool,      NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('sort',     'isset', $sort,      NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('author',   'isset', $author,    NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('startnum', 'isset', $startnum,  NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('header',   'isset', $header,    NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('q',        'isset', $q,         NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('bool',     'isset', $bool,      NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('sort',     'isset', $sort,      NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('author',   'isset', $author,    NULL, XARVAR_DONT_SET)) {return;}
     $postinfo   = array('q' => $q, 'author' => $author);
     $data       = array();
     $search     = array();
@@ -39,6 +39,7 @@ function xarbb_user_search( $args )
         }
     }
 
+    // 
     $q = "%$q%";
     $search['title'] = $q;
 
@@ -80,10 +81,8 @@ function xarbb_user_search( $args )
 
         // Get user information
         $rolestable = $xartable['roles'];
-        $query = "SELECT xar_uid
-                  FROM $rolestable
-                  WHERE xar_uname = ?";
-        $result =& $dbconn->Execute($query,array($author));
+        $query = "SELECT xar_uid FROM $rolestable WHERE xar_uname = ?";
+        $result =& $dbconn->Execute($query, array($author));
         if (!$result) return;
 
         // if we found the uid add it to the search list,
@@ -96,6 +95,7 @@ function xarbb_user_search( $args )
 
         $result->Close();
     } else {
+        // FIXME: should this be $header['author'] ?
         $postinfo['header[author]'] = 0;
         $header['author'] = 0;
     }

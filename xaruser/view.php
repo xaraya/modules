@@ -13,10 +13,11 @@
 function xarbb_user_view()
 {
     // Security Check
-    if(!xarSecurityCheck('ViewxarBB',1,'Forum')) return;
+    if(!xarSecurityCheck('ViewxarBB', 1, 'Forum')) return;
     
-       xarResponseRedirect(xarModURL('xarbb', 'user', 'main'));
+    xarResponseRedirect(xarModURL('xarbb', 'user', 'main'));
 
- return true;
+    return true;
 }
+
 ?>

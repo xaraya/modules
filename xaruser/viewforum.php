@@ -14,30 +14,30 @@
 function xarbb_user_viewforum()
 {
     // Get parameters from whatever input we need
-    if(!xarVarFetch('startnum', 'id', $startnum, NULL, XARVAR_NOT_REQUIRED)) return;
-    if(!xarVarFetch('fid', 'id', $fid)) return;
+    if (!xarVarFetch('startnum', 'id', $startnum, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('fid', 'id', $fid)) return;
     if (!xarVarFetch('read', 'isset', $read, NULL, XARVAR_DONT_SET)) return;
 
     // The user API function is called.
-    $data = xarModAPIFunc('xarbb',
-                          'user',
-                          'getforum',
-                          array('fid' => $fid));
+    $data = xarModAPIFunc('xarbb', 'user', 'getforum', array('fid' => $fid));
 
     if (empty($data)) return;
     if ($data['fstatus'] == 1) {
+        // FIXME: this same message keeps cropping up over and over - could it be centralised?
         $msg = xarML('Forum -- #(1) -- has been locked by administrator', $data['fname']);
         xarErrorSet(XAR_USER_EXCEPTION, 'LOCKED_FORUM', new SystemException($msg));
         return;
     }
+
     // Security Check
-    if(!xarSecurityCheck('ViewxarBB',1,'Forum',$data['catid'].':'.$data['fid'])) return;
+    if (!xarSecurityCheck('ViewxarBB', 1, 'Forum', $data['catid'] . ':' . $data['fid'])) return;
     xarTplSetPageTitle(xarVarPrepForDisplay($data['fname']));
 
     // Need to grab the last visit to update the not read, before we kill it.
     $lastvisitthisforum = xarSessionGetVar(xarModGetVar('xarbb', 'cookiename') . '_f_' . $fid);
     $lastvistallforums = xarSessionGetVar(xarModGetVar('xarbb', 'cookiename') . 'lastvisit');
     $lastvistcompared = max($lastvisitthisforum, $lastvistallforums);
+
     // And now we kill all of this work and just move on.
     if (xarUserIsLoggedIn()){
         xarSessionSetVar(xarModGetVar('xarbb', 'cookiename') . '_f_' . $fid, time());
@@ -69,14 +69,15 @@ function xarbb_user_viewforum()
     }
 
     // The user API function is called
-    $topics = xarModAPIFunc('xarbb',
-                            'user',
-                            'getalltopics',
-                            array('fid' => $fid,
-                                  'sortby' => $topicsortby,
-                                  'order' => $topicsortorder,
-                                  'startnum' => $startnum,
-                                  'numitems' => $settings['topicsperpage']));
+    $topics = xarModAPIFunc('xarbb', 'user', 'getalltopics',
+        array(
+            'fid' => $fid,
+            'sortby' => $topicsortby,
+            'order' => $topicsortorder,
+            'startnum' => $startnum,
+            'numitems' => $settings['topicsperpage']
+        )
+    );
     $totaltopics=count($topics);
 
     $topiclist = array();
@@ -86,31 +87,26 @@ function xarbb_user_viewforum()
         $isuser[$topics[$i]['tposter']] = 1;
         $isuser[$topics[$i]['treplier']] = 1;
     }
-    $hits = xarModAPIFunc('hitcount',
-                          'user',
-                          'getitems',
-                          array('modname' => 'xarbb',
-                                'itemtype' => $fid,
-                                'itemids' => $topiclist));
+    $hits = xarModAPIFunc('hitcount', 'user', 'getitems',
+        array(
+            'modname' => 'xarbb',
+            'itemtype' => $fid,
+            'itemids' => $topiclist
+        )
+    );
     $userlist = array_keys($isuser);
     $users = array();
     if (count($userlist) > 0) {
-        $users = xarModAPIFunc('roles',
-                               'user',
-                               'getall',
-                               array('uidlist' => $userlist));
+        $users = xarModAPIFunc('roles', 'user', 'getall', array('uidlist' => $userlist));
     }
  
     for ($i = 0; $i < $totaltopics; $i++) {
         $topic = $topics[$i];
-        list($topics[$i]['ttitle'],
-             $topics[$i]['tpost']) = xarModCallHooks('item',
-                                         'transform',
-                                         $fid,
-                                         array($topic['ttitle'],
-                                               $topic['tpost']),
-                                         'xarbb',
-                                         $fid);
+        list($topics[$i]['ttitle'], $topics[$i]['tpost']) = xarModCallHooks(
+            'item', 'transform', $fid,
+            array($topic['ttitle'], $topic['tpost']),
+            'xarbb', $fid
+        );
 
         if (!empty($read)){
             xarSessionSetVar(xarModGetVar('xarbb', 'cookiename') . '_t_' . $topic['tid'], time());
@@ -213,33 +209,29 @@ function xarbb_user_viewforum()
             $topics[$i]['replyname'] = '-';
         }
 
-        $topics[$i]['topicpager'] = xarTplGetPager(1,
-                                        $topic['treplies'],
-                                        xarModURL('xarbb', 'user', 'viewtopic', array('startnum' => '%%',
-                                                                                      'tid'          => $topic['tid'])),
-                                        $postperpage,
-                                        array(),
-                                        'multipage');
+        $topics[$i]['topicpager'] = xarTplGetPager(
+            1, $topic['treplies'],
+            xarModURL('xarbb', 'user', 'viewtopic', array('startnum' => '%%', 'tid' => $topic['tid'])),
+            $postperpage, array(), 'multipage'
+        );
 
 
     }
-    sort_topics($topics);
+    xarbb_user_viewforum_sort_topics($topics);
     $data['items'] = $topics;
 
     // Call the xarTPL helper function to produce a pager in case of there
     // being many items to display.
-    $data['pager'] = xarTplGetPager($startnum,
-                                    $data['ftopics'],
-                                    xarModURL('xarbb', 'user', 'viewforum', array('startnum' => '%%',
-                                                                                  'fid'          => $fid)),
-                                    $settings['topicsperpage']);
+    $data['pager'] = xarTplGetPager(
+        $startnum, $data['ftopics'],
+        xarModURL('xarbb', 'user', 'viewforum', array('startnum' => '%%', 'fid' => $fid)),
+        $settings['topicsperpage']
+    );
     $categories = xarModAPIFunc('categories', 'user', 'getcatinfo', array('cid' => $data['catid']));
     $data['catname'] = $categories['name'];
 
     // Forum Jump
-    $data['forums'] = xarModAPIFunc('xarbb',
-                                    'user',
-                                    'getallforums');
+    $data['forums'] = xarModAPIFunc('xarbb', 'user', 'getallforums');
     
     return $data;
 }
@@ -249,7 +241,7 @@ function xarbb_user_viewforum()
  *  @params $topics array topics to be sorted passed in by reference
  *  @return null
  */
-function sort_topics(&$topics)
+function xarbb_user_viewforum_sort_topics(&$topics)
 {
     $normal = array();
     $sticky = array();
@@ -273,8 +265,10 @@ function sort_topics(&$topics)
         }
     }
     // merge the arrays and form the new topics array
-    $topics = array_merge($announcements,$sticky,$normal);
+    $topics = array_merge($announcements, $sticky, $normal);
+
     // get rid of these since we no longer need them in memory
-    unset($announcements,$sticky,$normal);
+    unset($announcements, $sticky, $normal);
 }
+
 ?>
