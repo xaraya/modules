@@ -19,6 +19,7 @@
  * @param  $args an array of arguments (if called by other modules)
  * @param  $args ['objectid'] a generic object id (if called by other modules)
  * @param  $args ['planningid'] the planned course ID that the user will enroll to
+ * @param bool
  * @Access PUBLIC
  * @return mixed
  * @todo MichelV <1> Create admin configurable standard student status
@@ -33,10 +34,11 @@ function courses_user_enroll($args)
 
     extract($args);
 
-    if (!xarVarFetch('planningid', 'id',     $planningid, NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('objectid',   'id',     $objectid,   '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('message',    'str:1:', $message,    '', XARVAR_NOT_REQUIRED)) return;
-
+    if (!xarVarFetch('planningid', 'id',     $planningid, NULL,  XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('objectid',   'id',     $objectid,   '',    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('message',    'str:1:', $message,    '',    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('confirm',    'isset',  $confirm,    false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('noconfirm',  'isset',  $npconfirm,  false, XARVAR_NOT_REQUIRED)) return;
     //check for override by objectid
     if (!empty($objectid)) {
         $planningid = $objectid;
@@ -63,31 +65,46 @@ function courses_user_enroll($args)
                           array('planningid' => $planningid));
     if (!isset($planitem) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
-    // If user is not enrolled already go ahead and create the enrollment
-    // Get status of student; for the moment standard status is 1
-    // TODO: make admin configurable primary student status
-    $studstatus = 1;
+    if (!$confirm) {
+        // No confirmation yet, present form
+        $data=array();
+        $data['planitem'] = $planitem;
+        $data['confirm'] = $confirm;
+        $data['planningid'] = $planningid;
+        $data['authid'] = xarSecGenAuthKey();
+        $data['coursename'] = xarModApiFunc('courses','user','getcoursename',array('planningid' => $planningid));
+        // Show confirmation form
+        return $data;
 
-    $enrollid = xarModAPIFunc('courses',
-                              'user',
-                              'create_enroll',
-                              array('uid'        => $uid,
-                                    'planningid' => $planningid,
-                                    'studstatus' => $studstatus));
-    if (!isset($enrollid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-    // TODO: make this a better one
-    $regdate = time();
-    // Call sendconfirm messages
-    $confirm = xarModFunc('courses',
-                              'user',
-                              'sendconfirms',
-                              array('userid'     => xarUserGetVar('uid'),
-                                    'planningid' => $planningid,
-                                    'studstatus' => $studstatus,
-                                    'regdate'    => $regdate,
-                                    'enrollid'   => $enrollid
-                                    ));
-    if(!$confirm) return false;
+    } elseif ($confirm) {
+        // If user is not enrolled already go ahead and create the enrollment
+        // Get status of student; for the moment standard status is 1
+        // TODO: make admin configurable primary student status
+        $studstatus = 1;
+
+        $enrollid = xarModAPIFunc('courses',
+                                  'user',
+                                  'create_enroll',
+                                  array('uid'        => $uid,
+                                        'planningid' => $planningid,
+                                        'studstatus' => $studstatus));
+        if (!isset($enrollid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+        // TODO: make this a better one
+        $regdate = time();
+        // Call sendconfirm messages
+        $sendconfirm = xarModFunc('courses',
+                                  'user',
+                                  'sendconfirms',
+                                  array('userid'     => xarUserGetVar('uid'),
+                                        'planningid' => $planningid,
+                                        'studstatus' => $studstatus,
+                                        'regdate'    => $regdate,
+                                        'enrollid'   => $enrollid
+                                        ));
+        if(!$sendconfirm) return false;
+        xarSessionSetVar('statusmsg', xarML('You have been enrolled'));
+    }
+
     // This function generated no output, and so now it is complete we redirect
     // the user to an appropriate page for them to carry on their work
     xarResponseRedirect(xarModURL('courses', 'user', 'displayplanned', array('planningid' => $planningid)));

@@ -1,0 +1,53 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:style scope="module" />
+<xar:template file="header" />
+
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Example Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <div class="xar-courses-contents">
+
+    <h2><xar:mlstring>Enroll in this course?</xar:mlstring></h2>
+
+        <h3><xar:mlstring>Please confirm</xar:mlstring></h3>
+        <fieldset>
+            <legend>
+                <xar:mlstring>Course</xar:mlstring>
+            </legend>
+            <div class="xar-form-input-wrapper">
+                 <label for="itemid"  class="xar-form-label" title="#xarML('The name of the course')#">
+                         <xar:mlstring>Coursename:</xar:mlstring>
+                 </label>
+                 #$coursename#
+            </div>
+            <div class="xar-form-input-wrapper">
+                 <label for="itemid"  class="xar-form-label" title="#xarML('The date this course starts')#">
+                         <xar:mlstring>Date:</xar:mlstring>
+                 </label>
+                 #xarlocalegetformatteddate('medium',$planitem.startdate)#
+            </div>
+            <div class="xar-form-input-wrapper">
+                 <label for="itemid"  class="xar-form-label" title="#xarML('The credits for this course')#">
+                         <xar:mlstring>Credits:</xar:mlstring>
+                 </label>
+                 #$planitem.credits#
+            </div>
+            <div class="xar-form-input-wrapper">
+                 <label for="itemid"  class="xar-form-label" title="#xarML('The location for this course')#">
+                         <xar:mlstring>Location:</xar:mlstring>
+                 </label>
+                 #$planitem.location#
+            </div>
+            <div class="xar-form-input-wrapper-after">
+            <form method="post" action="&xar-modurl-courses-user-enroll;">
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <input type="hidden" name="planningid" id="planningid" value="#$planningid#" />
+                <input type="submit" name="confirm" value=" #xarML('Yes, enroll')# " />
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="submit" name="noconfirm" value="  #xarML('No, take me back')#  " />
+            </form>
+            </div>
+        </fieldset>
+    </div>
+</div>
