@@ -16,7 +16,7 @@
  *
  * Send an e-mail to the coordinator to notify about the enrollment
  * @param Takes parameters passed by user_sendtofriend to generate info used by email mod
- * @author jojodee/Michel V.
+ * @author jojodee/MichelV.
  * @param studstatus
  * @param userid
  * @param planningid
@@ -47,17 +47,17 @@ function courses_user_sendconfirms($args)
     $coursename = $course['name'];
     // Check to see if coordinator exists
     if (!empty ($course['contactuid'])) {
-    $coordinator = $course['contactuid'];
-    $coordname = xarUserGetVar('name', $coordinator);
+        $coordinator = $course['contactuid'];
+        $coordname = xarUserGetVar('name', $coordinator);
     } else {
-    $coordinator = '';
+        $coordinator = '';
     }
 
     // Without coordinator, send mail to AlwaysNotify
     if (empty($coordinator) || !is_numeric($coordinator)) {
-        $recipients = xarModGetVar('courses', 'AlwaysNotify');
+        $recipients = array(xarModGetVar('courses', 'AlwaysNotify'));
     } elseif (is_numeric($coordinator)) {
-        $recipients = xarUserGetVar('email', $coordinator);//.','.xarModGetVar('courses', 'AlwaysNotify');
+        $recipients = array(xarUserGetVar('email', $coordinator), xarModGetVar('courses', 'AlwaysNotify'));
     } else {
         $msg = xarML('Wrong arguments to courses_enroll', join(', ', $invalid), 'user', 'enroll', 'Courses');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
@@ -109,7 +109,7 @@ function courses_user_sendconfirms($args)
         if (xarModAPIFunc('mail',
                           'admin',
                           'sendmail',
-                           array('info'         => $recipients,
+                           array('recipients'   => $recipients,
                                  'name'         => $coordname,
                                  'subject'      => $subject,
                                  'htmlmessage'  => $htmlmessage,
@@ -127,8 +127,8 @@ function courses_user_sendconfirms($args)
 /**
  *
  * Send an e-mail to the user with course details
- * TODO Move these to seperate functions and make them adjustable]
- * @author Michel V.
+ * @TODO Move these to seperate functions and make them adjustable
+ * @author MichelV.
  */
     $studentmail = xarUserGetVar('email');
     if(isset($studentmail)) {
@@ -154,7 +154,7 @@ function courses_user_sendconfirms($args)
                                        'user',
                                        'sendconfirmstudent',
                                         array('studentname'   => $studentname,
-                                              'femail'  => $femail,
+                                              'femail'  => $fromemail,
                                               'name' => $coursename,
                                               'username' => $username,
                                               'viewcourse' => $viewcourse,
@@ -184,15 +184,15 @@ function courses_user_sendconfirms($args)
         if (xarModAPIFunc('mail',
                            'admin',
                            'sendmail',
-                           array('info'         => $recipients,
-                                 'name'         => $coordinators,
+                           array('info'         => $studentmail,
+                                 'name'         => $studentname,
                                  'subject'      => $subject,
                                  'htmlmessage'  => $htmlmessage,
                                  'message'      => $textmessage,
-                                 'from'         => $femail,
-                                 'fromname'     => $username))) {
+                                 'from'         => $fromemail,
+                                 'fromname'     => $fromname))) {
 
-        xarSessionSetVar('courses_statusmsg', xarML('Student notification Sent','courses'));
+             xarSessionSetVar('courses_statusmsg', xarML('Student notification Sent','courses'));
         } else {
             $msg = xarML('The message was not sent to the student');
             xarErrorSet(XAR_SYSTEM_EXCEPTION, 'FUNCTION_FAILED', new SystemException($msg));

@@ -10,14 +10,16 @@
         <form method="post" name="participants" id="participants" action="&xar-modurl-courses-admin-updatestatus;">
         <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
         <input type="hidden" name="planningid" id="planningid" value="#$planningid#" />
-            <table width="100%" border="1" cellspacing="0" cellpadding="4">
-                <tr>
-                    <th><xar:mlstring>Full Name</xar:mlstring></th>
-                    <th><xar:mlstring>E-mail address</xar:mlstring></th>
-                    <th><xar:mlstring>Date of registration</xar:mlstring></th>
-                    <th colspan="2"><xar:mlstring>Status of student</xar:mlstring></th>
-                    <th><xar:mlstring>Options</xar:mlstring></th>
-                </tr>
+            <table>
+                <thead>
+                    <tr>
+                        <th><xar:mlstring>Full Name</xar:mlstring></th>
+                        <th><xar:mlstring>E-mail address</xar:mlstring></th>
+                        <th><xar:mlstring>Date of registration</xar:mlstring></th>
+                        <th colspan="2"><xar:mlstring>Status of student</xar:mlstring></th>
+                        <th><xar:mlstring>Options</xar:mlstring></th>
+                    </tr>
+                </thead>
                 <xar:foreach in="$items" value="$item">
                 <tr>
                     <td>#xarUserGetVar('name',$item['userid'])#</td>

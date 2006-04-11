@@ -20,6 +20,8 @@
  * @param  $args ['objectid'] a generic object id (if called by other modules)
  * @param  $args ['planningid'] the planned course ID that the user will enroll to
  * @Access PUBLIC
+ * @return mixed
+ * @todo MichelV <1> Create admin configurable standard student status
  *
  */
 function courses_user_enroll($args)
@@ -63,9 +65,8 @@ function courses_user_enroll($args)
 
     // If user is not enrolled already go ahead and create the enrollment
     // Get status of student; for the moment standard status is 1
-    // TODO: make admin configurable
+    // TODO: make admin configurable primary student status
     $studstatus = 1;
-
 
     $enrollid = xarModAPIFunc('courses',
                               'user',
