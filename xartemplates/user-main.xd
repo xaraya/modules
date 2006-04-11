@@ -184,10 +184,10 @@
                                        <xar:mlstring>By</xar:mlstring>:
                                     </strong>
                                     <a href="#xarModUrl('roles', 'user', 'display', array('uid' =&gt; $forum.fposter))#">
-                                        #$forum.name']#
+                                        #$forum.name#
                                     </a>
                                 <xar:else />
-                                       <xar:mlstring>No posts</xar:mlstring>
+                                    <xar:mlstring>No posts</xar:mlstring>
                                 </xar:if>
                             </span>
                         </td>
