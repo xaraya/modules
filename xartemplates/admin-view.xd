@@ -1,3 +1,4 @@
+<xar:comment>jojodee - this template and the associated function seem redundant - handled by overview function</xar:comment>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Administration - Comments</xar:mlstring></span></div>
 <div class="xar-mod-body">
     <h2><xar:mlstring>Overview</xar:mlstring></h2>

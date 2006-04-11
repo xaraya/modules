@@ -143,18 +143,19 @@
 
                 </select>
             </div>
-            <div class="xar-form-input-wrapper">
-                <label for="xar_postanon" class="xar-form-label"  title="#xarML('Admin will see the name of who posted.')#">
-                        <xar:mlstring>
-                            Allow anonymous posting
-                        </xar:mlstring>
-                </label>
+            <div class="xar-form-input-wrapper-after">
                 <xar:set name="$postanon">#xarModGetVar('comments','AllowPostAsAnon')#</xar:set>
                 <xar:if condition="$postanon eq 1">
                     <input type="checkbox" name="xar_postanon" id="xar_postanon" checked="checked" />
                 <xar:else />
                     <input type="checkbox" name="xar_postanon" id="xar_postanon" />
                 </xar:if>
+                <label for="xar_postanon" title="#xarML('Admin will see the name of who posted.')#">
+                        <xar:mlstring>
+                            Allow anonymous posting
+                        </xar:mlstring>
+                </label>
+
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="numstats" class="xar-form-label"  title="#xarML('Statistics page ordering.')#">
@@ -222,7 +223,20 @@
                 <xar:set name="$rssnumitems">#xarModGetVar('comments','rssnumitems')#</xar:set>
                 <input type="text" name="rssnumitems" id="rssnumitems" size="4" maxlength="4" value="#$rssnumitems#" />
             </div>
+            <div class="xar-form-input-wrapper-after">
+                <xar:set name="$userrendering">#xarModGetVar('comments','usersetrendering')#</xar:set>
+                <xar:if condition="$userrendering eq 1">
+                    <input type="checkbox" name="usersetrendering" id="usersetrendering" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="usersetrendering" id="usersetrendering" />
+                </xar:if>
+                <label for="usersetrendering" title="#xarML('Allow users to set their own comment rendering style in their account?')#">
+                        <xar:mlstring>
+                            Allow users to set comment rendering style in their account?
+                        </xar:mlstring>
+                </label>
 
+            </div>
             <xar:comment> Black list not available
             <div class="xar-form-input-wrapper">
                 <label for="xar_useblacklist" class="xar-form-input-wrapper" title="#xarML('Use comment blacklist for comment spam checking.')#">

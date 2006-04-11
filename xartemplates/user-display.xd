@@ -1,6 +1,5 @@
 <xar:comment> lets link module related stylesheet to theme - have to do it via xar:set atm, cuz it returns 1 [andyv] </xar:comment>
-<xar:set name="$stylesheet">xarTplAddStyleLink('comments', 'comments')</xar:set>
-
+<xar:style scope="module" module="comments" file="comments" />
 <xar:comment>
     [andyv] i see that we have at least 3 possible situations here, 
     so we should deal with them in a context-sensitive manner as follows:
@@ -18,7 +17,7 @@
         - display 'Comments Disabled' + count of total comments
         - hide sorting options box
         - hide 'Post New Comment' box
-        TODO: shouldn't this option be 'sticky' from user POV? 
+        TODO: shouldn't this option be 'sticky' from user POV?
         If yes, a user needs a way back to display comments again.
         
 </xar:comment>

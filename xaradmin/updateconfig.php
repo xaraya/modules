@@ -34,6 +34,7 @@ function comments_admin_updateconfig()
     if (!xarVarFetch('xar_sortby', 'str:1:', $xar_sortby, _COM_SORTBY_THREAD, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('xar_order', 'str:1:', $xar_order, _COM_SORT_ASC, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('xar_authorize', 'checkbox', $xar_authorize, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('usersetrendering', 'checkbox', $usersetrendering, false, XARVAR_NOT_REQUIRED)) return;
 
     xarModSetVar('comments', 'AllowPostAsAnon', $xar_postanon);
     xarModSetVar('comments', 'AuthorizeComments', $xar_authorize);
@@ -48,6 +49,7 @@ function comments_admin_updateconfig()
     xarModSetVar('comments', 'showtitle', $showtitle);
     xarModSetVar('comments', 'showoptions', $showoptions);
     xarModSetVar('comments', 'useblacklist', $xar_useblacklist);
+    xarModSetVar('comments','usersetrendering',$usersetrendering);
     xarModCallHooks('module', 'updateconfig', 'comments', array('module' => 'comments'));
     /* Blacklist feed unavailable
     xarModSetVar('comments', 'useblacklist', $xar_useblacklist);
@@ -55,6 +57,22 @@ function comments_admin_updateconfig()
         if (!xarModAPIFunc('comments', 'admin', 'import_blacklist')) return;
     }
     */
+     if ($usersetrendering == true) {
+     //check and hook Comments to roles if not already hooked
+         if (!xarModIsHooked('comments', 'roles')) {
+             xarModAPIFunc('modules','admin','enablehooks',
+                                 array('callerModName' => 'roles',
+                                       'hookModName' => 'comments'));
+         }
+
+     } else {
+       if (xarModIsHooked('comments', 'roles')) {
+        //unhook Comments from roles
+             xarModAPIFunc('modules','admin','disablehooks',
+                                 array('callerModName' => 'roles',
+                                       'hookModName' => 'comments'));
+          }
+     }
     xarResponseRedirect(xarModURL('comments', 'admin', 'modifyconfig'));
     return true;
 }

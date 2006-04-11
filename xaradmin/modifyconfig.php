@@ -32,6 +32,14 @@ function comments_admin_modifyconfig()
     if (empty($numstats)) {
         xarModSetVar('comments', 'numstats', 100);
     }
+
+    //check for comments hook in case it's set independently elsewhere
+    if (xarModIsHooked('comments', 'roles')) {
+        xarModSetVar('comments','usersetrendering',true);
+    } else {
+        xarModSetVar('comments','usersetrendering',false);
+    }
+
     $output['authid'] = xarSecGenAuthKey();
     $output['hooks'] = xarModCallHooks('module', 'modifyconfig', 'comments',
                                        array('module' => 'comments'));
