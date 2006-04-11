@@ -81,9 +81,6 @@ function julian_calmonthblock_display($blockinfo)
         $vars = $blockinfo['content'];
     }
 
-    if (empty($blockinfo['title'])) {
-        $blockinfo['title'] = xarML('Calendar');
-    }
     // Set the selected date parts, timestamp, and cal_date in the data array
     $args = xarModAPIFunc('julian','user','getUserDateTimeInfo');
     // Load the calendar class
@@ -94,7 +91,7 @@ function julian_calmonthblock_display($blockinfo)
     $args['calendar'] = $c;
     // Determine today and the month that today is in. The current month is the month that will be displayed
     $args['todays_timestamp'] = strtotime("today");
-    $args['todays_month']=$month = date("m");
+    $args['todays_month']= date("m");
     // Set the current year
     $year=date("Y");
     // Set the start date to the first day of the selected month
