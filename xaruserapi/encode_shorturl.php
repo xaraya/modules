@@ -104,6 +104,7 @@ function xarbb_userapi_encode_shorturl($args)
     } elseif ($func == 'viewforum') {
         if (isset($fid) && is_numeric($fid)) {
             unset($get['func']);
+            unset($get['fid']);
             $path[] = 'forum';
             $path[] = $fid;
         }
@@ -111,6 +112,7 @@ function xarbb_userapi_encode_shorturl($args)
         // check for required parameters
         if (isset($tid) && is_numeric($tid)) {
             unset($get['func']);
+            unset($get['tid']);
             $path[] = 'topic';
             $path[] = $tid;
         }
@@ -119,15 +121,18 @@ function xarbb_userapi_encode_shorturl($args)
         if (isset($fid) && is_numeric($fid)) {
             unset($get['func']);
             if (isset($phase) && $phase == 'quote' && isset($tid) && is_numeric($tid)){
+                unset($get['tid']);
                 $path[] = 'newreply';
                 $path[] = $tid;
                 $path[] = 'quote';
             } else {
+                unset($get['fid']);
                 $path[] = 'newtopic';
                 $path[] = $fid;
             }
         } elseif (isset($tid) && is_numeric($tid)) {
             unset($get['func']);
+            unset($get['tid']);
             $path[] = 'newtopic';
             $path[] = $tid;
             $path[] = 'edit';
@@ -138,10 +143,13 @@ function xarbb_userapi_encode_shorturl($args)
         if (isset($tid) && is_numeric($tid)) {
             $path[] = 'newreply';
             $path[] = $tid;
+            unset($get['tid']);
             if (isset($phase) && $phase == 'edit' && isset($cid) && is_numeric($cid)) {
+                unset($get['cid']);
                 $path[] = 'edit';
                 $path[] = $cid;
             } elseif (isset($phase) && $phase == 'quote' && isset($cid) && is_numeric($cid)) {
+                unset($get['cid']);
                 $path[] = 'quote';
                 $path[] = $cid;
             } elseif (isset($phase) && $phase == 'quote') {
@@ -152,6 +160,7 @@ function xarbb_userapi_encode_shorturl($args)
         unset($get['func']);
         // check for required parameters
         if (isset($tid) && is_numeric($tid)) {
+            unset($get['tid']);
             $path[] = 'updatetopic';
             $path[] = $tid;
         }
@@ -159,6 +168,7 @@ function xarbb_userapi_encode_shorturl($args)
         unset($get['func']);
         // check for required parameters
         if (isset($tid) && is_numeric($tid)) {
+            unset($get['tid']);
             $path[] = 'subscribe';
             $path[] = $tid;
         }
@@ -166,6 +176,7 @@ function xarbb_userapi_encode_shorturl($args)
         unset($get['func']);
         // check for required parameters
         if (isset($tid) && is_numeric($tid)) {
+            unset($get['tid']);
             $path[] = 'unsubscribe';
             $path[] = $tid;
         }
@@ -173,12 +184,11 @@ function xarbb_userapi_encode_shorturl($args)
         unset($get['func']);
         // check for required parameters
         if (isset($tid) && is_numeric($tid)) {
+            unset($get['tid']);
             $path[] = 'printtopic';
             $path[] = $tid;
             // We will ensure the 'theme' get parameter is set.
             $get['theme'] = 'print';
-        } else {
-            // we don't know how to handle that -> don't create a path here
         }
     }
 
