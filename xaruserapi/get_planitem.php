@@ -89,8 +89,8 @@ function itsp_userapi_get_planitem($args)
         return;
     }
     /* Create the item array */
-    $item = array('pitemid'     => $pitemid,
-                  'pitemname'   => $pitemname,
+    $item = array( 'pitemid'    => $pitemid,
+                   'pitemname'  => $pitemname,
                    'pitemdesc'  => $pitemdesc,
                    'pitemrules' => $pitemrules,
                    'credits'    => $credits,

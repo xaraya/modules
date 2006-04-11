@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * ITSP Module
  *
  * @package modules

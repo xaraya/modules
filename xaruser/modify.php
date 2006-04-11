@@ -33,13 +33,11 @@ function itsp_user_modify($args)
     if (!xarVarFetch('pitemid',  'id',    $pitemid,  $pitemid,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('invalid',  'array', $invalid,  array(),   XARVAR_NOT_REQUIRED)) return;
 
-    /* At this stage we check to see if we have been passed $objectid
-     */
+    /* At this stage we check to see if we have been passed $objectid */
     if (!empty($objectid)) {
         $itspid = $objectid;
     }
-    /* Get menu variables - it helps if all of the module pages have a standard
-     * menu at their head to aid in navigation*/
+    /* Get menu variables and set data as array */
     $data = xarModAPIFunc('itsp','user','menu');
 
     if (empty($itspid)) {
@@ -61,9 +59,9 @@ function itsp_user_modify($args)
 
     $planid = $itsp['planid'];
     $itspid = $itsp['itspid'];
-    /* Security check
-     */
-    if (!xarSecurityCheck('ReadITSP', 1, 'ITSP', "$itspid:$planid")) {
+    $userid = $itsp['userid']; // User for MySelf
+    /* Security check */
+    if (!xarSecurityCheck('ReadITSP', 1, 'ITSP', "$itspid:$planid:$userid")) {
         return;
     }
 
@@ -128,7 +126,7 @@ function itsp_user_modify($args)
                 foreach ($courselinks as $icourse) {
                     // Add read link
                     $icourseid = $icourse['icourseid'];
-                    if (xarSecurityCheck('ReadITSP', 0, 'ITSP', "$itspid:All")) {
+                    if (xarSecurityCheck('ReadITSP', 0, 'ITSP', "$itspid:All:$userid")) {
                         $icourse['link'] = xarModURL('itsp',
                             'user',
                             'display_icourse',

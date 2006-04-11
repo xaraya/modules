@@ -14,7 +14,7 @@
 
 $modversion['name']           = 'itsp'; /* lowercase, no spaces or special chars */
 $modversion['id']             = '572';
-$modversion['version']        = '0.3.1'; /* three point version number */
+$modversion['version']        = '0.3.5'; /* three point version number */
 $modversion['displayname']    = xarML('ITSP');
 $modversion['description']    = 'Individual Training and Supervision Plan for students';
 $modversion['credits']        = 'xardocs/credits.txt';

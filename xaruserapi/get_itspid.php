@@ -25,10 +25,7 @@
 function itsp_userapi_get_itspid($args)
 {
     extract($args);
-    /* Argument check - make sure that all required arguments are present and
-     * in the right format, if not then set an appropriate error message
-     * and return
-     */
+    /* Argument check */
     if ((!isset($userid) || !is_numeric($userid))) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
             'item ID', 'user', 'get_itspid', 'ITSP');
@@ -75,7 +72,7 @@ function itsp_userapi_get_itspid($args)
      */
     $result->Close();
     /* Security check */
-    if (!xarSecurityCheck('ReadITSP', 1, 'ITSP', "$itspid:$planid")) {
+    if (!xarSecurityCheck('ReadITSP', 1, 'ITSP', "$itspid:$planid:$userid")) {
         return;
     }
     /* Create the item array */

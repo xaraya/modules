@@ -82,7 +82,7 @@ function itsp_userapi_get($args)
      */
     $result->Close();
     /* Security check */
-    if (!xarSecurityCheck('ReadITSP', 1, 'ITSP', "$itspid:$planid")) {
+    if (!xarSecurityCheck('ReadITSP', 1, 'ITSP', "$itspid:$planid:$userid")) {
         return;
     }
     /* Create the item array */

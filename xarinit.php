@@ -307,14 +307,15 @@ This table deals with the free courses. So: how to add the custom courses/items 
     $query1 = "SELECT DISTINCT xar_pitemid FROM " . $planitemstable;
     $query2 = "SELECT DISTINCT xar_itspid FROM " . $itsptable;
     $query3 = "SELECT DISTINCT xar_planid FROM " . $planstable;
+    $query4 = "SELECT DISTINCT xar_userid FROM " . $itsptable;
     // For the plans
     $instances = array(
-        array('header' => 'Plan item id:',
-            'query' => $query1,
-            'limit' => 20
-            ),
         array('header' => 'Plan ID:',
             'query' => $query3,
+            'limit' => 20
+            ),
+        array('header' => 'Plan Item ID:',
+            'query' => $query1,
             'limit' => 20
             )
         );
@@ -327,6 +328,10 @@ This table deals with the free courses. So: how to add the custom courses/items 
             ),
         array('header' => 'Plan ID:',
             'query' => $query3,
+            'limit' => 20
+            ),
+        array('header' => 'User ID:',
+            'query' => $query4,
             'limit' => 20
             )
         );
@@ -352,14 +357,20 @@ This table deals with the free courses. So: how to add the custom courses/items 
 
     xarRegisterMask('ReadITSPBlock', 'All', 'itsp', 'Block', 'All', 'ACCESS_OVERVIEW');
     // The ITSP seen from the student.
-    // $itspid:$planid
+    // $itspid:$planid:$userid
     // TODO: add comment level
-    xarRegisterMask('ViewITSP', 'All', 'itsp', 'ITSP', 'All:All', 'ACCESS_OVERVIEW');
-    xarRegisterMask('ReadITSP', 'All', 'itsp', 'ITSP', 'All:All', 'ACCESS_READ');
-    xarRegisterMask('EditITSP', 'All', 'itsp', 'ITSP', 'All:All', 'ACCESS_EDIT');
-    xarRegisterMask('AddITSP', 'All', 'itsp', 'ITSP', 'All:All', 'ACCESS_ADD');
-    xarRegisterMask('DeleteITSP', 'All', 'itsp', 'ITSP', 'All:All', 'ACCESS_DELETE');
-    xarRegisterMask('AdminITSP', 'All', 'itsp', 'ITSP', 'All:All', 'ACCESS_ADMIN');
+    // See it's there
+    xarRegisterMask('ViewITSP', 'All', 'itsp', 'ITSP', 'All:All:All', 'ACCESS_OVERVIEW');
+    // Read the contents
+    xarRegisterMask('ReadITSP', 'All', 'itsp', 'ITSP', 'All:All:All', 'ACCESS_READ');
+    // Comment, for supervisors
+    xarRegisterMask('CommentITSP', 'All', 'itsp', 'ITSP', 'All:All:All', 'ACCESS_COMMENT');
+    // Change it, for owner of ITSP
+    xarRegisterMask('EditITSP', 'All', 'itsp', 'ITSP', 'All:All:All', 'ACCESS_EDIT');
+    // Create a new ITSP
+    xarRegisterMask('AddITSP', 'All', 'itsp', 'ITSP', 'All:All:All', 'ACCESS_ADD');
+    xarRegisterMask('DeleteITSP', 'All', 'itsp', 'ITSP', 'All:All:All', 'ACCESS_DELETE');
+    xarRegisterMask('AdminITSP', 'All', 'itsp', 'ITSP', 'All:All:All', 'ACCESS_ADMIN');
     // Let's seperate for the plans for now
     // $planid:$pitemid:
     //xarRegisterMask('ReadITSPBlock', 'All', 'itsp', 'Block', 'All', 'ACCESS_OVERVIEW');
@@ -446,8 +457,65 @@ function itsp_upgrade($oldversion)
             xarRegisterMask('DeleteITSPPlan', 'All', 'itsp', 'Plan', 'All:All', 'ACCESS_DELETE');
             xarRegisterMask('AdminITSPPlan', 'All', 'itsp', 'Plan', 'All:All', 'ACCESS_ADMIN');
         case '0.3.1':
-             return itsp_upgrade('1.0.0');
-        case '1.0.0':
+            // Update instances
+            xarRemoveInstances('itsp');
+
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+            $itsptable = $xartable['itsp_itsp'];
+            $planstable = $xartable['itsp_plans'];
+            $planitemstable = $xartable['itsp_planitems'];
+            // Register instances
+            $query1 = "SELECT DISTINCT xar_pitemid FROM " . $planitemstable;
+            $query2 = "SELECT DISTINCT xar_itspid FROM " . $itsptable;
+            $query3 = "SELECT DISTINCT xar_planid FROM " . $planstable;
+            $query4 = "SELECT DISTINCT xar_userid FROM " . $itsptable;
+            // For the plans
+            $instances = array(
+                array('header' => 'Plan ID:',
+                    'query' => $query3,
+                    'limit' => 20
+                    ),
+                array('header' => 'Plan Item ID:',
+                    'query' => $query1,
+                    'limit' => 20
+                    )
+                );
+            xarDefineInstance('itsp', 'Plan', $instances);
+            // For the ITSP
+            $instances = array(
+                array('header' => 'ITSP ID:',
+                    'query' => $query2,
+                    'limit' => 20
+                    ),
+                array('header' => 'Plan ID:',
+                    'query' => $query3,
+                    'limit' => 20
+                    ),
+                array('header' => 'User ID:',
+                    'query' => $query4,
+                    'limit' => 20
+                    )
+                );
+            xarDefineInstance('itsp', 'ITSP', $instances);
+            // remove again
+            xarUnregisterMask('ViewITSP');
+            xarUnregisterMask('ReadITSP');
+            xarUnregisterMask('EditITSP');
+            xarUnregisterMask('AddITSP');
+            xarUnregisterMask('DeleteITSP');
+            xarUnregisterMask('AdminITSP');
+            // Register with userid in there
+            xarRegisterMask('ViewITSP', 'All', 'itsp', 'ITSP', 'All:All:All', 'ACCESS_OVERVIEW');
+            xarRegisterMask('ReadITSP', 'All', 'itsp', 'ITSP', 'All:All:All', 'ACCESS_READ');
+            xarRegisterMask('CommentITSP', 'All', 'itsp', 'ITSP', 'All:All:All', 'ACCESS_COMMENT');
+            xarRegisterMask('EditITSP', 'All', 'itsp', 'ITSP', 'All:All:All', 'ACCESS_EDIT');
+            xarRegisterMask('AddITSP', 'All', 'itsp', 'ITSP', 'All:All:All', 'ACCESS_ADD');
+            xarRegisterMask('DeleteITSP', 'All', 'itsp', 'ITSP', 'All:All:All', 'ACCESS_DELETE');
+            xarRegisterMask('AdminITSP', 'All', 'itsp', 'ITSP', 'All:All:All', 'ACCESS_ADMIN');
+
+            return itsp_upgrade('0.3.5');
+        case '0.3.5':
             break;
     }
     /* Update successful */

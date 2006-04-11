@@ -47,9 +47,9 @@ function itsp_user_update()
                           'get',
                           array('itspid' => $itspid));
     $planid = $itsp['planid'];
-    /* Security check
-     */
-    if (!xarSecurityCheck('ReadITSP', 1, 'ITSP', "$itspid:$planid")) {
+    /* Security check */
+    $userid = $itsp['userid'];
+    if (!xarSecurityCheck('ReadITSP', 1, 'ITSP', "$itspid:$planid:$userid")) {
         return;
     }
 

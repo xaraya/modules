@@ -64,7 +64,7 @@ function itsp_user_view()
         } else {
             $item['link'] = '';
         }
-        if (xarSecurityCheck('AddITSP', 0, 'ITSP', "All:$planid")
+        if (xarSecurityCheck('AddITSP', 0, 'ITSP', "All:$planid:All")
             &&(    (($item['dateopen'] < time() ) && ($item['dateclose'] > time() ))
                 || (($item['dateclose'] == 0) && ($item['dateopen'] < time() ) )
                 || (($item['dateopen'] == 0) && ($item['dateclose'] > time() ) )
