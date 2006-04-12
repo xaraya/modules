@@ -4,14 +4,15 @@
 <xar:style scope="module" module="base" file="navtabs" />
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:mlstring>XarTinyMCE Editor Administration</xar:mlstring>
+        <xar:mlstring>XarTinyMCE Administration</xar:mlstring>
     </span>
 </div>
 <div class="xar-mod-body">
+    <xar:template type="module" module="tinymce" file="admin-menu" />
     <h2><xar:mlstring>Modify XarTinyMCE Configuration</xar:mlstring></h2>
     <div>
     <dl class="xar-tabs">
-          <dt class="help" title="Choose a set of configuration options"><xar:mlstring>Actions</xar:mlstring> :</dt>
+          <dt class="help" title="Choose a set of configuration options"><xar:mlstring>Select</xar:mlstring> :</dt>
         <xar:if condition="$tab eq 'basic'">
             <dd class="active"><a href="&xar-modurl-tinymce-admin-modifyconfig;&amp;tab=basic">
                     <xar:mlstring>Install Options</xar:mlstring>
