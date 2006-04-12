@@ -5,20 +5,29 @@
     </span>
 </div>
 <div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
     <h2><xar:mlstring>Delete Hit Counts</xar:mlstring></h2>
-<xar:if condition="empty($modname)">
-    <xar:mlstring>Are you sure you want to delete all hitcounts ?</xar:mlstring>
-<xar:elseif condition="empty($itemid)"/>
-    <xar:ml><xar:mlstring>Are you sure you want to delete all hitcounts for module <b>#(1)</b> ?</xar:mlstring><xar:mlvar>#$modname#</xar:mlvar></xar:ml>
-<xar:else/>
-    <xar:ml><xar:mlstring>Are you sure you want to delete all hitcounts for module <b>#(1)</b> item <b>#(2)</b> ?</xar:mlstring><xar:mlvar>#$modname#</xar:mlvar><xar:mlvar>#$itemid#</xar:mlvar></xar:ml>
-</xar:if>
-    <form class="xar-formwidget" name="post" id="post" action="&xar-modurl-hitcount-admin-delete;" method="post" enctype="application/x-www-form-urlencoded">
-    <input type="hidden" name="authid" id="authid" value="#$authid#" />
-    <input type="hidden" name="modid" id="modid" value="#$modid#" />
-    <input type="hidden" name="itemtype" id="itemtype" value="#$itemtype#" />
-    <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
-    <div class="xar-clear-both xar-align-center">
+    <form name="post" id="post" action="&xar-modurl-hitcount-admin-delete;" method="post" enctype="application/x-www-form-urlencoded">
+    <fieldset>
+        <legend>
+            <xar:mlstring>Confirm Hitcount Deletion</xar:mlstring>
+        </legend>
+        <div class="xar-form-input-wrapper">
+        <p>
+    <xar:if condition="empty($modname)">
+        <xar:mlstring>Are you sure you want to delete all hitcounts ?</xar:mlstring>
+    <xar:elseif condition="empty($itemid)"/>
+        <xar:ml><xar:mlstring>Are you sure you want to delete all hitcounts for module <b>#(1)</b> ?</xar:mlstring><xar:mlvar>#$modname#</xar:mlvar></xar:ml>
+    <xar:else/>
+        <xar:ml><xar:mlstring>Are you sure you want to delete all hitcounts for module <b>#(1)</b> item <b>#(2)</b> ?</xar:mlstring><xar:mlvar>#$modname#</xar:mlvar><xar:mlvar>#$itemid#</xar:mlvar></xar:ml>
+    </xar:if>
+         </p>
+    </fieldset>
+    <div class="xar-form-input-wrapper-after">
+       <input type="hidden" name="authid" id="authid" value="#$authid#" />
+       <input type="hidden" name="modid" id="modid" value="#$modid#" />
+       <input type="hidden" name="itemtype" id="itemtype" value="#$itemtype#" />
+        <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
         <input type="submit" name="confirm" id="confirm" value="#xarML('Confirm')#" />
     </div>
     </form>
