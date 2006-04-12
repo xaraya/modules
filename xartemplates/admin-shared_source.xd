@@ -10,51 +10,44 @@ function setSomeElement(fooel, foo1) {
 <!-- Process navigation bar -->
 <xar:template file="proc_bar"/>
 
-<fieldset>
-  <legend><xar:mlstring>Admin process sources</xar:mlstring></legend>
-
   <form id='editsource' action="&xar-modurl-workflow-admin-shared_source;" method="post">
-    <input type="hidden" name="pid" value="#$pid#" />
-    <input type="hidden" name="source_name" value="#$source_name#" />
-    <table style="width: 99%">
-      <tr>
-        <td><xar:mlstring>Activity: </xar:mlstring>
-          <select name="activityId" onChange="document.getElementById('editsource').submit();">
-            <xar:if condition="$activityId eq 0">
-              <option value="" selected="selected"><xar:mlstring>Shared code</xar:mlstring></option>
+
+    <fieldset>
+     <legend><xar:mlstring>Admin process sources</xar:mlstring></legend>
+          <div class="xar-form-input-wrapper-before">
+              <label class="xar-form-label">
+                  <xar:mlstring>Activity: </xar:mlstring>
+              </label>
+              <select name="activityId" onChange="document.getElementById('editsource').submit();">
+              <xar:if condition="$activityId eq 0">
+                  <option value="" selected="selected"><xar:mlstring>Shared code</xar:mlstring></option>
               <xar:else/>
-              <option value=""><xar:mlstring>Shared code</xar:mlstring></option>
-            </xar:if>
-            <xar:foreach in="$items" key="$ix">
+                  <option value=""><xar:mlstring>Shared code</xar:mlstring></option>
+              </xar:if>
+
+              <xar:foreach in="$items" key="$ix">
               <xar:if condition="$activityId eq $items[$ix]['activityId']">
                 <option value="#$items[$ix]['activityId']#" selected="selected">#$items[$ix]['name']#</option>
                 <xar:else/>
                 <option value="#$items[$ix]['activityId']#">#$items[$ix]['name']#</option>
               </xar:if>
-            </xar:foreach>
-          </select>
-        </td>
-        <td>
+              </xar:foreach>
+              </select>
+        </div>
+       <div class="xar-form-input-wrapper-before">
           <xar:if condition="$activityId gt 0 and $act_info['isInteractive'] eq 'y' and $template eq 'n'">
             <input type="submit" name='template' value="#xarML('Switch to template')#" />
           </xar:if>
           <xar:if condition="$activityId gt 0 and $act_info['isInteractive'] eq 'y' and $template eq 'y'">
             <input type="submit" name='save' value="#xarML('Switch to code')#" />
           </xar:if>
-        </td>
-      </tr>
-      <tr>
-        <td colspan="4">
-          <table>
-            <tr>
-              <td colspan="2" style="width: 100%;">
-                <textarea style="width: 100%" id='src' name="source" rows="20" cols="80">#$data#</textarea>
-              </td>
-            </tr>
-            <xar:comment>Added on separate line as it was hard to read-see in some browsers squashed on the right</xar:comment>
-            <tr>
-              <td colspan="2" class="xar-sub">
-                <p>
+          &nbsp;
+        </div>
+         <div class="xar-form-input-wrapper-before">
+                 <textarea style="width: 100%" id='src' name="source" rows="20" cols="80">#$data#</textarea>
+         </div>
+         <div class="xar-form-input-wrapper-before">
+               <p>
                 <strong><xar:mlstring>Function wizard: </xar:mlstring></strong>
                 <xar:if condition="$template != 'y'">
                   <a href="javascript:setSomeElement('src','$instance->setNextUser(\'\');');"><xar:mlstring>Set next user</xar:mlstring></a> &nbsp;
@@ -71,20 +64,16 @@ function setSomeElement(fooel, foo1) {
                   </xar:if>
                 </xar:if>
                 </p>
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <input type="submit" name='save' value="#xarML('Save')#" />
-          <input type="submit" name='cancel' value="#xarML('Cancel')#" />
-        </td>
-      </tr>
-    </table>  
+            </div>
+        </fieldset>
+         <div class="xar-form-input-wrapper-after">
+            <input type="hidden" name="pid" value="#$pid#" />
+            <input type="hidden" name="source_name" value="#$source_name#" />
+            <input type="submit" name='save' value="#xarML('Save')#" />
+            <input type="submit" name='cancel' value="#xarML('Cancel')#" />
+        </div>
   </form>
-</fieldset>
+
 
 <!-- Show a courtesy footer -->
 <xar:template file="galaxfooter"/>
