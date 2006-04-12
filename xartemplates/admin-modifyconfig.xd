@@ -5,30 +5,36 @@
 </div>
 
 <div class="xar-mod-body">
+  <xar:template type="module" file="admin-menu" module="images" />
     <h2>
         <xar:mlstring>Modify Images Configuration</xar:mlstring>
     </h2>
-    <div style="margin: auto;">
 
-        <form method="post" name="post" id="post" action="#xarModURL('images', 'admin', 'updateconfig')#">
-            <input type="hidden" name="authid" value="#$authid#"/>
-            <p>
-                <strong><xar:mlstring>Derivatives Storage Directory</xar:mlstring>:</strong>&nbsp;&nbsp;
-                <input type="text" name="path[derivative-store]" value="#$path['derivative-store']#" size="70"/>
-                <br />
-                <xar:mlstring>
-                    This is the full path to the directory where Derivative images will be stored.
-                    It is strongly recommended that this directory be located outside of your web directory.
-                    <br />NOTE: This directory MUST be writable by the webserver.
-                </xar:mlstring>
-            </p>
-            <p>
-                <strong>
-                    <xar:mlstring>
-                        Select Graphics Library:
-                    </xar:mlstring>
-                </strong>&nbsp;&nbsp;
-
+    <form method="post" name="post" id="post" action="#xarModURL('images', 'admin', 'updateconfig')#">
+        <input type="hidden" name="authid" value="#$authid#"/>
+        <fieldset>
+            <legend>
+                <xar:mlstring>Image Module Options</xar:mlstring>
+            </legend>
+                <div class="xar-form-input-wrapper">
+                    <label for="path[derivative-store]" class="xar-form-label" title="#xarML('Derivatives Storage Directory')#">
+                        <xar:mlstring>Derivatives Storage Directory</xar:mlstring>:
+                    </label>
+                    <input type="text" name="path[derivative-store]" value="#$path['derivative-store']#" size="70"/>
+                    <p class="xar-form-input-wrapper-after">
+                        <xar:mlstring>
+                        This is the full path to the directory where Derivative images will be stored.
+                        It is strongly recommended that this directory be located outside of your web directory.
+                        <br />NOTE: This directory MUST be writable by the webserver.
+                        </xar:mlstring>
+                    </p>
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="libtype[graphics-library]" class="xar-form-label" title="#xarML('Select Graphics Library')#">
+                        <xar:mlstring>
+                            Graphics Library:
+                        </xar:mlstring>
+                    </label>
                 <xar:if condition="$libtype['graphics-library'] eq $library['GD']">
                     <input type="radio" name="libtype[graphics-library]" value="#$library['GD']#" checked="checked" /> GD
                     <input type="radio" name="libtype[graphics-library]" value="#$library['ImageMagick']#" disabled="true" /> Image Magick
@@ -44,105 +50,115 @@
                     <input type="radio" name="libtype[graphics-library]" value="#$library['NetPBM']#" checked="checked" /> NetPBM
 </xar:comment>
                 </xar:if>
-                <br />
-                <xar:mlstring>
+                    <p class="xar-form-input-wrapper-after">
+                    <xar:mlstring>
                     <em>
-                        <strong>Note:</strong> currently, only GD >= 2.0.1 is supported
+                        <strong>Note:</strong> Currently only GD &gt;= 2.0.1 is supported
                     </em>
-                </xar:mlstring>
-            </p>
-            <p>
-                <strong>
-                    <xar:mlstring>
-                        ImageMagick 'convert' program:
                     </xar:mlstring>
-                </strong>&nbsp;&nbsp;
-                <input type="text" name="file[imagemagick]" id="file_imagemagick" size="60" value="#xarModGetVar('images','file.imagemagick')#" /> 
-                <br />
-                <xar:mlstring>
-                    <em>
-                        <strong>Example:</strong> /usr/local/bin/convert (Unix) or C:\Program Files\ImageMagick-6.0.6-Q16\convert.exe (Windows)
-                    </em>
-                </xar:mlstring>
-            </p>
-            <p>
-                <strong><xar:mlstring>Support Short URLs</xar:mlstring>:</strong>&nbsp;&nbsp;
-                <xar:if condition="$shortURLs eq TRUE">
-                    <input type="checkbox" name="shortURLs" value="true" checked="checked"/>
-                <xar:else />
-                    <input type="checkbox" name="shortURLs" value="true"/>
-                </xar:if>
-                <br />
-                <xar:mlstring>
-                    This will cause urls to be displayed in a condescenced format.
-                </xar:mlstring>
-                <br />
-            </p>
-            <p>
-                <strong>
-                    <xar:mlstring>
-                        Cache server file information:
-                    </xar:mlstring>
-                </strong>&nbsp;&nbsp;
-                <input type="text" name="file[cache-expire]" id="file_cache_expire" size="3" maxlength="3" value="#xarModGetVar('images','file.cache-expire')#" /> 
-                <xar:mlstring>seconds</xar:mlstring>
-            </p>
-            <p>
-                <strong>
-                    <xar:mlstring>
-                        Items per page in admin view:
-                    </xar:mlstring>
-                </strong>&nbsp;&nbsp;
-                <input type="text" name="view[itemsperpage]" id="view_itemsperpage" size="3" maxlength="3" value="#xarModGetVar('images','view.itemsperpage')#" /> 
-            </p>
-
-            <p>
-                <strong>
-                    <xar:mlstring>
-                        Base directories for browsing server images:
-                    </xar:mlstring>
-                </strong>&nbsp;&nbsp;
-        <table class="xar-accent">
-            <tr>
-                <th>
-                    <xar:mlstring>Base Directory</xar:mlstring>
-                </th>
-                <th>
-                    <xar:mlstring>Base URL</xar:mlstring>
-                </th>
-                <th>
-                    <xar:mlstring>Recursive</xar:mlstring>
-                </th>
-                <th>
-                    <xar:mlstring>File Extensions</xar:mlstring>
-                </th>
-            </tr>
-            <xar:foreach in="$basedirs" key="$id" value="$info">
-            <tr>
-                <td>
-                    <input type="text" name="basedirs[#$id#][basedir]" id="basedirs_#$id#_basedir" value="#$info['basedir']#" size="30" />
-                </td>
-                <td>
-                    <input type="text" name="basedirs[#$id#][baseurl]" id="basedirs_#$id#_baseurl" value="#$info['baseurl']#" size="30" />
-                </td>
-                <td>
-                    <xar:if condition="!empty($info['recursive'])">
-                        <input type="checkbox" name="basedirs[#$id#][recursive]" id="basedirs_#$id#_recursive" value="1" checked="checked" />
-                    <xar:else/>
-                        <input type="checkbox" name="basedirs[#$id#][recursive]" id="basedirs_#$id#_recursive" value="1" />
+                    </p>
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="file[imagemagick]" class="xar-form-label" title="#xarML('ImageMagick convert program')#">
+                         <xar:mlstring>
+                            ImageMagick 'convert' program:
+                        </xar:mlstring>
+                    </label>
+                    <input type="text" name="file[imagemagick]" id="file_imagemagick" size="60" value="#xarModGetVar('images','file.imagemagick')#" />
+                    <p class="xar-form-input-wrapper-after">
+                        <xar:mlstring>
+                        <em>
+                            <strong>Example:</strong> /usr/local/bin/convert (Unix) or<br />
+                             C:\Program Files\ImageMagick-6.0.6-Q16\convert.exe (Windows)
+                        </em>
+                        </xar:mlstring>
+                    </p>
+               </div>
+               <br />
+                <div class="xar-form-input-wrapper-after">
+                    <xar:if condition="$shortURLs eq TRUE">
+                        <input type="checkbox" name="shortURLs" value="true" checked="checked"/>
+                    <xar:else />
+                        <input type="checkbox" name="shortURLs" value="true"/>
                     </xar:if>
-                </td>
-                <td>
-                    <input type="text" name="basedirs[#$id#][filetypes]" id="basedirs_#$id#_filetypes" value="#$info['filetypes']#" size="10" />
-                </td>
-            </tr>
-            </xar:foreach>
-        </table>
-            </p>
+                    <label for="shortURLs" title="#xarML('Support short urls?')#">
+                        <strong><xar:mlstring>Support Short URLs?</xar:mlstring></strong>
+                    </label>
+                    </p>
+                    <p class="xar-form-input-wrapper">
+                    <xar:mlstring>
+                        This will cause urls to be displayed in a condescenced format.
+                    </xar:mlstring>
+                    </p>
+                </div>
+                <br />
+                <div class="xar-form-input-wrapper">
+                    <label for="file[cache-expire]" class="xar-form-label" title="#xarML('Cache server file information?')#">
+                        <xar:mlstring>
+                            Cache server file information:
+                        </xar:mlstring>
+                    </label>
+                    <input type="text" name="file[cache-expire]" id="file_cache_expire" size="3" maxlength="3" value="#xarModGetVar('images','file.cache-expire')#" />
+                    <xar:mlstring>seconds</xar:mlstring>
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="view_itemsperpage" class="xar-form-label" title="#xarML('Items per page in admin view')#">
+                        <xar:mlstring>
+                            Items per page in admin view:
+                        </xar:mlstring>
+                    </label>
+                    <input type="text" name="view[itemsperpage]" id="view_itemsperpage" size="3" maxlength="3" value="#xarModGetVar('images','view.itemsperpage')#" />
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>
+                    <xar:mlstring>
+                            Base directories for browsing server images
+                    </xar:mlstring>
+                </legend>
+                <div class="xar-form-container">
+                    <table class="xar-accent">
+                    <tr>
+                       <th>
+                        <xar:mlstring>Base Directory</xar:mlstring>
+                       </th>
+                       <th>
+                           <xar:mlstring>Base URL</xar:mlstring>
+                       </th>
+                       <th>
+                           <xar:mlstring>Recursive</xar:mlstring>
+                       </th>
+                       <th>
+                           <xar:mlstring>File Extensions</xar:mlstring>
+                       </th>
+                    </tr>
+                     <xar:foreach in="$basedirs" key="$id" value="$info">
+                     <tr>
+                        <td>
+                            <input type="text" name="basedirs[#$id#][basedir]" id="basedirs_#$id#_basedir" value="#$info['basedir']#" size="30" />
+                        </td>
+                        <td>
+                            <input type="text" name="basedirs[#$id#][baseurl]" id="basedirs_#$id#_baseurl" value="#$info['baseurl']#" size="30" />
+                        </td>
+                        <td>
+                        <xar:if condition="!empty($info['recursive'])">
+                            <input type="checkbox" name="basedirs[#$id#][recursive]" id="basedirs_#$id#_recursive" value="1" checked="checked" />
+                        <xar:else/>
+                            <input type="checkbox" name="basedirs[#$id#][recursive]" id="basedirs_#$id#_recursive" value="1" />
+                        </xar:if>
+                        </td>
+                        <td>
+                            <input type="text" name="basedirs[#$id#][filetypes]" id="basedirs_#$id#_filetypes" value="#$info['filetypes']#" size="10" />
+                        </td>
+                    </tr>
+                    </xar:foreach>
+                     </table>
 
-            <p>
+                  </div>
+             </fieldset>
+
+            <div class="xar-form-input-wrapper">
                 <input type="submit" name="update" value="#xarML('Update Configuration')#"/>
-            </p>
+            </div>
         </form>
-    </div>
 </div>

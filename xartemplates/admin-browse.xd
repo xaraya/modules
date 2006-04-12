@@ -5,11 +5,12 @@
 </div>
 
 <div class="xar-mod-body">
+  <xar:template type="module" file="admin-menu" module="images" />
     <h2>
         <xar:mlstring>View Server Images</xar:mlstring>
     </h2>
     <xar:if condition="!empty($selimage)">
-    <div style="margin: auto;">
+
 
         <xar:if condition="!empty($action) and $action eq 'delete'">
         <form method="post" action="&xar-modurl-images-admin-browse;">
@@ -46,40 +47,72 @@
         </form>
         </xar:if>
 
-        <p>
-        <a href="#xarModURL('images','admin','browse',array('action' => $action,'bid' => $baseId,'getprev' => $selimage['fileId']))#">&lt;&lt;</a>
-        <xar:if condition="!empty($width) or !empty($height)">
-            <img src="#$selimage['fileDownload']#" width="#$width#" height="#$height#" border="0" align="top" />
-        <xar:else/>
-            <img src="#$selimage['fileDownload']#" border="0" align="top" />
-        </xar:if>
-        <a href="#xarModURL('images','admin','browse',array('action' => $action,'bid' => $baseId,'getnext' => $selimage['fileId']))#">&gt;&gt;</a>
-        </p>
-        <xar:mlstring>Filename</xar:mlstring> : #$selimage['fileName']#<br/>
-        <xar:mlstring>Width</xar:mlstring> : #$selimage['width']#<br/>
-        <xar:mlstring>Height</xar:mlstring> : #$selimage['height']#<br/>
-        <xar:mlstring>Size</xar:mlstring> : #$selimage['fileSize']#<br/>
-        <xar:mlstring>Modified</xar:mlstring> : #xarLocaleGetFormattedDate('short',$selimage['fileModified'])#<br/>
-        <xar:if condition="!empty($selimage['derivatives'])">
-            <xar:mlstring>Derivatives</xar:mlstring> : 
-            <xar:foreach in="$selimage['derivatives']" value="$derivimage">
-                <xar:if condition="!empty($derivimage['fileSetting'])">
-                    <a href="#xarModURL('images','admin','derivatives',array('action' => 'view', 'fileId' => $derivimage['fileId']))#">#$derivimage['fileSetting']#</a>
+        <fieldset>
+            <legend>
+                <xar:mlstring>Image</xar:mlstring>
+            </legend>
+            <div class="xar-form-input-wrapper">
+            <p class="xar-align-center">
+                <a href="#xarModURL('images','admin','browse',array('action' => $action,'bid' => $baseId,'getprev' => $selimage['fileId']))#">&lt;&lt;</a>&nbsp;&nbsp;&nbsp;
+                <xar:if condition="!empty($width) or !empty($height)">
+                    <img src="#$selimage['fileDownload']#" width="#$width#" height="#$height#" border="0" align="top" />
                 <xar:else/>
-                    <a href="#xarModURL('images','admin','derivatives',array('action' => 'view', 'fileId' => $derivimage['fileId']))#">#$derivimage['width']# x #$derivimage['height']#</a>
-                </xar:if>
-            </xar:foreach>
-            <br/>
-        </xar:if>
+                    <img src="#$selimage['fileDownload']#" border="0" align="top" />
+               </xar:if>
+               &nbsp;&nbsp; &nbsp;<a href="#xarModURL('images','admin','browse',array('action' => $action,'bid' => $baseId,'getnext' => $selimage['fileId']))#">&gt;&gt;</a>
+             </p>
+           </div>
+        </fieldset>
+        <fieldset>
+            <legend>
+                <xar:mlstring>Image Details</xar:mlstring>
+            </legend>
+                <div class="xar-form-input-wrapper">
+                    <label class="xar-form-label"><xar:mlstring>Filename</xar:mlstring> :<label>
+                     #$selimage['fileName']#
+                </div>
 
-    </div>
+                <div class="xar-form-input-wrapper">
+                    <label class="xar-form-label"><xar:mlstring>Width</xar:mlstring> :<label>
+                     #$selimage['width']#
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label class="xar-form-label"><xar:mlstring>Height</xar:mlstring> :<label>
+                     #$selimage['height']#
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label class="xar-form-label"><xar:mlstring>Size</xar:mlstring> :<label>
+                     #$selimage['fileSize']#
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label class="xar-form-label"><xar:mlstring>Modified</xar:mlstring> :<label>
+                     #xarLocaleGetFormattedDate('short',$selimage['fileModified'])#
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>
+                    <xar:mlstring>Derivatives &amp; Associations</xar:mlstring>
+                </legend>
+                <div class="xar-form-input-wrapper">
+                <xar:if condition="!empty($selimage['derivatives'])">
+                    <label class="xar-form-label"><xar:mlstring>Derivatives</xar:mlstring> :<label>
+                    <xar:foreach in="$selimage['derivatives']" value="$derivimage">
+                        <xar:if condition="!empty($derivimage['fileSetting'])">
+                            <a href="#xarModURL('images','admin','derivatives',array('action' => 'view', 'fileId' => $derivimage['fileId']))#">#$derivimage['fileSetting']#</a>
+                        <xar:else/>
+                            <a href="#xarModURL('images','admin','derivatives',array('action' => 'view', 'fileId' => $derivimage['fileId']))#">#$derivimage['width']# x #$derivimage['height']#</a>
+                        </xar:if>
+                    </xar:foreach>
+                 <xar:else/>
+                     <p><xar:mlstring>No Derivatives</xar:mlstring></p>
+                </xar:if>
+                </div>
+            </fieldset>
     </xar:if>
 
     <xar:comment>
         Note: we always show the list here
     </xar:comment>
-
-    <div style="margin: auto;">
 
         <table class="xar-accent">
             <tr>
@@ -312,5 +345,4 @@
         </table>
         </form>
 
-    </div>
 </div>

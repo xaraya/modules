@@ -1,0 +1,66 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:comment>Common Administration menu</xar:comment>
+<xar:style scope="module" module="base" file="navtabs" />
+
+<xar:set name="activetab">$_bl_module_func</xar:set>
+<div>
+  <dl class="xar-tabs">
+    <dt class="help" title="Choose an action to perform">
+      <xar:mlstring>Actions:</xar:mlstring>
+    </dt>
+    <xar:sec mask="AdminImages" catch="false">
+        <xar:if condition="xarModIsAvailable('uploads') and xarSecurityCheck('AdminUploads',0)">
+            <xar:set name="tabclass">$activetab=='uploads'?'active':''</xar:set>
+            <dd class="#$tabclass#">
+              <a href="&xar-modurl-images-admin-uploads;">
+                <xar:mlstring>Uploaded Images</xar:mlstring>
+              </a>
+            </dd>
+
+        </xar:if>
+        <xar:set name="tabclass">$activetab=='derivatives'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-images-admin-derivatives;">
+            <xar:mlstring>Derivatives</xar:mlstring>
+          </a>
+        </dd>
+        <!--
+        <xar:if condition="$activetab eq 'get_files' or $activetab eq 'addfile-status' or $activetab eq 'purge_rejected'">
+            <xar:set name="tabclass">'active'</xar:set>
+        <xar:else />
+            <xar:set name="tabclass">''</xar:set>
+        </xar:if>
+        <dd class="#$tabclass#">
+            <a href="&xar-modurl-images-admin-get_files;" >
+                <xar:mlstring>Add File</xar:mlstring>
+            </a>
+        </dd>
+        -->
+        <xar:set name="tabclass">$activetab=='browse'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+            <a href="&xar-modurl-images-admin-browse;" >
+                <xar:mlstring>Server Images</xar:mlstring>
+            </a>
+        </dd>
+        <xar:set name="tabclass">$activetab=='phpthumb'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+            <a href="&xar-modurl-images-admin-phpthumb;" >
+                <xar:mlstring>Image Processing</xar:mlstring>
+            </a>
+        </dd>
+
+        <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-images-admin-modifyconfig;">
+            <xar:mlstring>Modify Config</xar:mlstring>
+          </a>
+        </dd>
+    </xar:sec>
+    <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
+    <dd class="#$tabclass#">
+      <a href="&xar-modurl-images-admin-overview;">
+        <xar:mlstring>Overview</xar:mlstring>
+      </a>
+    </dd>
+  </dl>
+</div>

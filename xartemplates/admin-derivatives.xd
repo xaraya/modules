@@ -5,11 +5,12 @@
 </div>
 
 <div class="xar-mod-body">
+  <xar:template type="module" file="admin-menu" module="images" />
     <h2>
         <xar:mlstring>View Derivative Images</xar:mlstring>
     </h2>
     <xar:if condition="!empty($selimage)">
-    <div style="margin: auto;">
+
 
         <xar:if condition="!empty($action) and $action eq 'delete'">
         <form method="post" action="&xar-modurl-images-admin-derivatives;">
@@ -21,28 +22,63 @@
             <input type="submit" name="action" value="#xarML('Cancel')#" />
         </form>
         </xar:if>
+        <fieldset>
+            <legend>
+                <xar:mlstring>Image</xar:mlstring>
+            </legend>
+            <div class="xar-form-input-wrapper">
+            <p class="xar-align-center">
+                <img src="#$selimage['fileDownload']#" border="0" />
+            </p>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>
+                <xar:mlstring>Derivative Image Details</xar:mlstring>
+            </legend>
+                <div class="xar-form-input-wrapper">
+                    <label class="xar-form-label"><xar:mlstring>Filename</xar:mlstring> :<label>
+                     #$selimage['fileName']#
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label class="xar-form-label"><xar:mlstring>Width</xar:mlstring> :<label>
+                     #$selimage['width']#
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label class="xar-form-label"><xar:mlstring>Height</xar:mlstring> :<label>
+                     #$selimage['height']#
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label class="xar-form-label"><xar:mlstring>Size</xar:mlstring> :<label>
+                     #$selimage['fileSize']#
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label class="xar-form-label"><xar:mlstring>Modified</xar:mlstring> :<label>
+                     #xarLocaleGetFormattedDate('short',$selimage['fileModified'])#
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label class="xar-form-label">
+                    <xar:if condition="!empty($selimage['fileSetting'])">
+                     <xar:mlstring>Settings</xar:mlstring> :<label>
+                      #$selimage['fileSetting']#
+                    </xar:if>
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label class="xar-form-label">
+                    <xar:if condition="!empty($selimage['original'])">
+                          <xar:mlstring>Original</xar:mlstring> : <label>
+                          <a href="#xarModURL('images', 'admin', 'uploads', array('action' => 'view', 'fileId' => $selimage['original']['fileId']))#">#$selimage['original']['fileName']#</a>
+                    </xar:if>
+                </div>
+        </fieldset>
 
-        <p><img src="#$selimage['fileDownload']#" border="0" /></p>
-        <xar:mlstring>Filename</xar:mlstring> : #$selimage['fileName']#<br/>
-        <xar:mlstring>Width</xar:mlstring> : #$selimage['width']#<br/>
-        <xar:mlstring>Height</xar:mlstring> : #$selimage['height']#<br/>
-        <xar:mlstring>Size</xar:mlstring> : #$selimage['fileSize']#<br/>
-        <xar:mlstring>Modified</xar:mlstring> : #xarLocaleGetFormattedDate('short',$selimage['fileModified'])#<br/>
-        <xar:if condition="!empty($selimage['fileSetting'])">
-            <xar:mlstring>Settings</xar:mlstring> : #$selimage['fileSetting']#<br/>
-        </xar:if>
-        <xar:if condition="!empty($selimage['original'])">
-            <xar:mlstring>Original</xar:mlstring> : <a href="#xarModURL('images', 'admin', 'uploads', array('action' => 'view', 'fileId' => $selimage['original']['fileId']))#">#$selimage['original']['fileName']#</a>
-        </xar:if>
-
-    </div>
     </xar:if>
 
     <xar:comment>
         Note: we always show the list here
     </xar:comment>
 
-    <div style="margin: auto;">
+
 
         <p>
             <strong><xar:mlstring>Derivatives Storage Directory</xar:mlstring>:</strong>
@@ -148,5 +184,4 @@
             </xar:if>
         </table>
 
-    </div>
 </div>

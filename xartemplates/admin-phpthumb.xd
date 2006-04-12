@@ -5,17 +5,23 @@
 </div>
 
 <div class="xar-mod-body">
+  <xar:template type="module" file="admin-menu" module="images" />
     <h2>
         <xar:mlstring>Image Processing with phpThumb()</xar:mlstring>
     </h2>
-    <div style="margin: auto;">
+
 
     <xar:if condition="!empty($message)">
         <p><strong>#$message#</strong></p>
     </xar:if>
 
     <a name="config"></a>
-    <p>
+    <fieldset>
+        <legend>
+            <xar:mlstring>Settings</xar:mlstring>
+        </legend>
+        <div class="xar-form-input-wrapper">
+
         <strong><xar:mlstring>Configure</xar:mlstring></strong>
         <xar:if condition="!empty($selimage['filePreview'])">
         |
@@ -27,7 +33,7 @@
         </xar:if>
     </p>
     <form method="post" name="post" id="post" action="#xarModURL('images', 'admin', 'phpthumb')#">
-    <table class="xar-accent">
+    <table class="xar-fullwidth xar-accent">
     <xar:if condition="!empty($selimage)">
         <tr>
             <th colspan="4" class="xar-accent" align="center">
@@ -581,9 +587,8 @@ Perhaps we could provide a separate (javascript-based) page to fill in those fie
     <p><img src="#$selimage['fileDownload']#" border="0" /></p>
 </xar:if>
 
-    <hr/>
     </div>
-
+</div>
     <div>
         <p><i>
             <xar:set name="ref">'<a href="http://phpthumb.sourceforge.net/">phpThumb()</a>'</xar:set>
@@ -591,4 +596,3 @@ Perhaps we could provide a separate (javascript-based) page to fill in those fie
         </i></p>
     </div>
 
-</div>
