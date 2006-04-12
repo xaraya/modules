@@ -57,11 +57,13 @@
           </a>
         </dd>
     </xar:sec>
-    <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
-    <dd class="#$tabclass#">
-      <a href="&xar-modurl-articles-admin-overview;">
-        <xar:mlstring>Overview</xar:mlstring>
-      </a>
-    </dd>
+    <xar:sec mask="EditArticles" catch="false">
+        <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-articles-admin-overview;">
+            <xar:mlstring>Overview</xar:mlstring>
+          </a>
+        </dd>
+    </xar:sec>
   </dl>
 </div>
