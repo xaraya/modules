@@ -71,7 +71,7 @@ class ProcessManager extends BaseManager {
     $out.= '  ]]></sharedCode>'."\n";
     // Now loop over activities
     $query = "select * from ".GALAXIA_TABLE_PREFIX."activities where pId= ?";
-    $result = $this->query($query,array($pid));
+    $result = $this->query($query,array($pId));
     $out.='  <activities>'."\n";
     $am = new ActivityManager($this->db);
     while($res = $result->fetchRow()) {      
