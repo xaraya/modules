@@ -1,38 +1,49 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>XLink Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Configure</xar:mlstring></h2><br />
-<div style="margin: auto;">
-<form method="post" action="#xarModURL('xlink', 'admin', 'updateconfig')#" enctype="application/x-www-form-urlencoded" >
-    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+<div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" module="xlink" />
+    <h2><xar:mlstring>Configure</xar:mlstring></h2>
 
-    <table border="0" cellpadding="8" cellspacing="0">
-    <xar:foreach in="$settings" key="$modname" value="$config">
-        <tr>
-            <td colspan="2"><b>#$config['label']#</b></td>
-        </tr>
-        <tr>
-            <td><xar:mlstring>Base names (comma-separated list)</xar:mlstring></td>
-            <td>
+    <form method="post" action="&xar-modurl-xlink-admin-updateconfig;" enctype="application/x-www-form-urlencoded">
+    <fieldset>
+        <legend>
+            <xar:mlstring>Configuration Options</xar:mlstring>
+        </legend>
+
+        <xar:foreach in="$settings" key="$modname" value="$config">
+        <p class="xar-form-input-wrapper-before xar-standard-box-padding">
+            <strong>#$config['label']#</strong>
+        </p>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label">
+                <xar:mlstring>Base names</xar:mlstring>
+            </label>
                 <input type="text" name="xlink[#$modname#]" id="xlink[#$modname#]" value="#$config['xlink']#" size="40" />
-            </td>
-        </tr>
-    </xar:foreach>
-    </table>
-    <br /><br />
-    <b><xar:mlstring>Declare base name as alias for short URLs</xar:mlstring></b>
-    <table border="0" cellpadding="8" cellspacing="0">
+         (<xar:mlstring>comma-separated list</xar:mlstring>)
+        </div>
+        </xar:foreach>
+    </fieldset>
+    <fieldset>
+        <legend>
+            <xar:mlstring>Configuration Options</xar:mlstring>
+        </legend>
+    <p class="xar-form-input-wrapper-before xar-standard-box-padding">
+        <strong><xar:mlstring>Declare base name as alias for short URLs</xar:mlstring></strong>
+    </p>
+
     <xar:foreach in="$isalias" key="$base" value="$yes">
-        <tr>
-            <td>#$base#</td>
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label">#$base#</label>
         <xar:if condition="!empty($yes)">
-            <td><input type="checkbox" name="isalias[#$base#]" id="isalias[#$base#]" value="1" checked="checked" /></td>
+            <input type="checkbox" name="isalias[#$base#]" id="isalias[#$base#]" value="1" checked="checked" />
         <xar:else/>
-            <td><input type="checkbox" name="isalias[#$base#]" id="isalias[#$base#]" value="1" /></td>
+            <input type="checkbox" name="isalias[#$base#]" id="isalias[#$base#]" value="1" />
         </xar:if>
-        </tr>
+     </div>
     </xar:foreach>
-    </table>
-    <br /><br />
-    <input type="submit" value="Update XLink Configuration" />
+    </fieldset>
+    <div class="xar-form-input-wrapper-after">
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <input type="submit" value="Update XLink Configuration" />
+    </div>
 </form>
-</div>
 </div>

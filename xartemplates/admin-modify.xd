@@ -1,15 +1,25 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>XLink Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Modify XLink Definition</xar:mlstring></h2><br />
-<div style="margin: auto;">
-<form method="post">
-<table border="0" cellpadding="5">
-    <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
-    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+<div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" module="xlink" />
+    <h2><xar:mlstring>Modify XLink Definition</xar:mlstring></h2>
+
+    <form method="post">
+    <fieldset>
+        <legend>
+            <xar:mlstring>XLink Options</xar:mlstring>
+        </legend>
     <xar:data-form object="$object" />
-    <tr><td colspan="2">#$hooks#</td></tr>
-    <tr><td colspan="2" align="center"><input type="submit" name="confirm" value="#$confirm#" /></td></tr>
-</table>
-</form>
-</div>
+    </fieldset>
+    <div class="xar-form-input-wrapper">
+        #$hooks#
+    </div>
+    <div class="xar-form-input-wrapper-after">
+        <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <input type="submit" name="confirm" value="#$confirm#" />
+    </div>
+
+    </form>
+
 </div>
 

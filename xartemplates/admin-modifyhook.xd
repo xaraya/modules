@@ -1,10 +1,6 @@
-
-    <div style="clear: both; padding-top: 10px;">
-    <span style="float: left; width: 20%; text-align: right;">
-        <label for="xlink_base"><xar:mlstring>X-link base</xar:mlstring></label>:
-    </span>
-    <span style="float: right; width: 78%; text-align: left;">
-       <select name="xlink_base">
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label" for="xlink_base"><xar:mlstring>X-link base</xar:mlstring></label>:
+        <select name="xlink_base">
          <option value="-"><xar:mlstring>[none]</xar:mlstring></option>
          <xar:foreach in="$basenames" value="$name">
            <xar:if condition="!empty($base) and $base eq $name">
@@ -14,14 +10,9 @@
            </xar:if>
          </xar:foreach>
        </select>
-    </span>
     </div>
 
-    <div style="clear: both; padding-top: 10px;">
-    <span style="float: left; width: 20%; text-align: right;">
-        <label for="xlink_id"><xar:mlstring>X-link reference</xar:mlstring></label>:
-    </span>
-    <span style="float: right; width: 78%; text-align: left;">
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label" for="xlink_id"><xar:mlstring>X-link reference</xar:mlstring></label>:
         <input type="text" name="xlink_id" value="#$id#" size="20" />
-    </span>
     </div>

@@ -1,7 +1,12 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>XLink Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Overview of XLink Definitions</xar:mlstring></h2><br />
-<div style="margin: auto;">
-<xar:data-list module="xlink" />
-</div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" module="xlink" />
+    <h2><xar:mlstring>Summary of XLink Definitions</xar:mlstring></h2>
+    <fieldset>
+        <legend>
+            <xar:mlstring>Xlink Details</xar:mlstring>
+        </legend>
+        <xar:data-list module="xlink" />
+    </fieldset>
 </div>
 

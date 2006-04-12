@@ -1,15 +1,21 @@
-<h2><xar:mlstring>Display XLink Definition</xar:mlstring></h2>
-<xar:if condition="!empty($id) and is_numeric($id)">
-    <xar:data-display module="xlink" itemid="$id" />
-    <xar:if condition="!empty($url)">
-        <br />
-        <xar:if condition="!empty($label)">
-            <xar:mlstring>This XLink refers to</xar:mlstring> <a href="#$url#">#$label#</a>
-        <xar:else/>
-            <xar:mlstring>This XLink refers to</xar:mlstring> <a href="#$url#"><xar:mlstring>this module item</xar:mlstring></a>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>XLinks</xar:mlstring></span></div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Display XLink Definition</xar:mlstring></h2>
+    <xar:if condition="!empty($id) and is_numeric($id)">
+        <xar:data-display module="xlink" itemid="$id" />
+        <xar:if condition="!empty($url)">
+            <p class="xar-form-input-wrapper-after">
+            <xar:if condition="!empty($label)">
+                <xar:mlstring>This XLink refers to</xar:mlstring> <a href="#$url#">#$label#</a>
+            <xar:else/>
+                <xar:mlstring>This XLink refers to</xar:mlstring> <a href="#$url#"><xar:mlstring>this module item</xar:mlstring></a>
+            </xar:if>
+            </p>
         </xar:if>
+    <xar:else />
+        <p class="xar-form-input-wrapper-after">
+            <xar:mlstring>Unable to find corresponding item</xar:mlstring>
+        </p>
     </xar:if>
-<xar:else />
-    <xar:mlstring>Unable to find corresponding item</xar:mlstring>
-</xar:if>
+</div>
 
