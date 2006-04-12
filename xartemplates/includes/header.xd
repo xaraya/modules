@@ -1,6 +1,6 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
-<xar:if condition="xarTplAddStyleLink('base', 'navtabs')"></xar:if>
+<xar:style scope="module" module="base" file="navtabs" />
 <xar:style scope="module" />
 <xar:set name="$navViewUrl">#xarModURL('courses','user','view')#</xar:set>
 <xar:set name="$navDisplayUrl">#xarModURL('courses','user','display')#</xar:set>
@@ -10,11 +10,11 @@
 <div class="xar-courses-header">
     <xar:set name="$null">#xarVarFetch('func','str:1:',$whatFunc,'')#</xar:set>
     <dl class="xar-tabs">
-        <dt class="help"><xar:mlstring>View types</xar:mlstring>:</dt>
+        <dt class="help"><xar:mlstring>Show</xar:mlstring>:</dt>
         <xar:if condition="$whatFunc eq 'view'">
-            <dd class="active"><a href="#$navViewUrl#"><xar:mlstring>View</xar:mlstring></a></dd>
+            <dd class="active"><a href="#$navViewUrl#"><xar:mlstring>Overview</xar:mlstring></a></dd>
         <xar:else />
-            <dd><a href="#$navViewUrl#"><xar:mlstring>View</xar:mlstring></a></dd>
+            <dd><a href="#$navViewUrl#"><xar:mlstring>Overview</xar:mlstring></a></dd>
         </xar:if>
         <xar:if condition="$whatFunc eq 'display'">
             <dd class="active"><a href="#$navDisplayUrl#"><xar:mlstring>Display</xar:mlstring></a></dd>
