@@ -1,4 +1,4 @@
-<div>
+<div class="xar-form-input-container">
   <fieldset>
     <legend>
       <xar:if condition="$activityId gt 0">
@@ -21,7 +21,7 @@
       </div>
       <div class="xar-form-input-wrapper">
         <label class="xar-form-label"><xar:mlstring>Description</xar:mlstring></label>
-        <textarea name="description" rows="4" cols="60">#$info['description']#</textarea>
+        <textarea name="description" rows="4" cols="55">#$info['description']#</textarea>
       </div>
       <div class="xar-form-input-wrapper">
         <label class="xar-form-label"><xar:mlstring>Type</xar:mlstring></label>

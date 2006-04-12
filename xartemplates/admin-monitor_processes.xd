@@ -136,9 +136,9 @@
                   
                   <td style="text-align:left;">
                     <xar:if condition="!empty($items[$ix]['duration'])">
-                      <xar:if condition="!empty($items[$ix]['timescale']['min'])"><img src="modules/workflow/xarimages/bluepixel.gif" width="#$items[$ix]['timescale']['min']#" height="10" border="0" alt="minimum" title="minimum = #$items[$ix]['duration']['min']#" /></xar:if>
-                      <xar:if condition="!empty($items[$ix]['timescale']['avg'])"><img src="modules/workflow/xarimages/greenpixel.gif" width="#$items[$ix]['timescale']['avg']#" height="10" border="0" alt="average" title="average = #$items[$ix]['duration']['avg']#" /></xar:if>
-                      <xar:if condition="!empty($items[$ix]['timescale']['max'])"><img src="modules/workflow/xarimages/redpixel.gif" width="#$items[$ix]['timescale']['max']#" height="10" border="0" alt="maximum" title="maximum = #$items[$ix]['duration']['max']#" /></xar:if>
+                      <xar:if condition="!empty($items[$ix]['timescale']['min'])"><img src="modules/workflow/xarimages/bluepixel.gif" class="xar-noborder" width="#$items[$ix]['timescale']['min']#" height="10" alt="minimum" title="minimum = #$items[$ix]['duration']['min']#" /></xar:if>
+                      <xar:if condition="!empty($items[$ix]['timescale']['avg'])"><img src="modules/workflow/xarimages/greenpixel.gif" class="xar-noborder" width="#$items[$ix]['timescale']['avg']#" height="10" alt="average" title="average = #$items[$ix]['duration']['avg']#" /></xar:if>
+                      <xar:if condition="!empty($items[$ix]['timescale']['max'])"><img src="modules/workflow/xarimages/redpixel.gif" class="xar-noborder" width="#$items[$ix]['timescale']['max']#" height="10" alt="maximum" title="maximum = #$items[$ix]['duration']['max']#" /></xar:if>
                       #$items[$ix]['duration']['avg']#
                     </xar:if>
                   </td>

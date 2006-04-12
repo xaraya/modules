@@ -13,6 +13,7 @@
           <input type="checkbox" name="isalias" id="isalias" value="1" />
         </xar:if>
         <label for="isalias"><xar:mlstring>Enable Short URLs</xar:mlstring></label>
+        [<xar:mlstring>Not currently implemented</xar:mlstring>]
       </div>
       <div class="xar-form-input-wrapper">
         <label class="xar-form-label" for="numitems"><xar:mlstring>Items per Page :</xar:mlstring></label>

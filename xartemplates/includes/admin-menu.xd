@@ -21,7 +21,13 @@
           </a>
         </dd>
 
-        <xar:set name="tabclass">$activetab=='processes'?'active':''</xar:set>
+      <xar:if condition="$activetab eq 'processes' or $activetab eq 'activities'  or $activetab eq 'save_process'
+        or $activetab eq 'shared_source' or $activetab eq 'roles' or $activetab eq 'graph'">
+            <xar:set name="tabclass">'active'</xar:set>
+        <xar:else />
+            <xar:set name="tabclass">''</xar:set>
+        </xar:if>
+
         <dd class="#$tabclass#">
             <a href="&xar-modurl-workflow-admin-processes;" >
                 <xar:mlstring>Manage Processes</xar:mlstring>

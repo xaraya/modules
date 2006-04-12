@@ -18,15 +18,15 @@
 
     <div class="xar-form-input-wrapper">
       <label class="xar-form-label"><xar:mlstring>Version:</xar:mlstring></label>
-      <label>#$info.version#</label>
+      #$info.version#
     </div>
     <div class="xar-form-input-wrapper">
       <label for="processname" class="xar-form-label"><xar:mlstring>Process Name</xar:mlstring></label>
-      <input id="processname" type="text" maxlength="80" name="name" value="#$info['name']#" size="60" />
+      <input id="processname" type="text" maxlength="80" name="name" value="#$info['name']#" size="55" />
     </div>
     <div class="xar-form-input-wrapper">
       <label for="processdescription" class="xar-form-label"><xar:mlstring>Description</xar:mlstring></label>
-      <textarea rows="5" cols="60" name="description">#$info['description']#</textarea>
+      <textarea rows="5" cols="55" name="description">#$info['description']#</textarea>
     </div>
     <div class="xar-form-input-wrapper-after">
       <xar:if condition="$info['isActive'] eq 'y'">
