@@ -3,14 +3,13 @@
  * Get all events.
  *
  * @package modules
- * @copyright (C) 2004 by Metrostat Technologies, Inc.
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.metrostat.net
+ * @link http://www.xaraya.com
  *
  * @subpackage Julian Module
  * @link http://xaraya.com/index.php/release/319.html
- * initial template: Roger Raymond
- * @author Jodie Razdrh/John Kevlin/David St.Clair
+ * @author Julian Module Development Team
  */
 /**
  * Get all Julian Calendar Event items.
@@ -19,7 +18,10 @@
  * are not formatted for display. When a calendar oriented listing is needed,
  * use xaruser-getall.php
  *
- * @author Julian Module Development Team
+ * initial template: Roger Raymond
+ * @copyright (C) 2004 by Metrostat Technologies, Inc.
+ * @link http://www.metrostat.net
+ * @author Jodie Razdrh/John Kevlin/David St.Clair
  * @param array $args an array of arguments
  * @param int $args['startnum'] start with this item number (default 1)
  * @param int $args['numitems'] the number of items to retrieve (default -1 = all)
@@ -32,6 +34,9 @@
  */
 function julian_userapi_getevents($args)
 {
+    // Security check.
+    if (!xarSecurityCheck('ViewJulian')) return;
+
     // Get arguments
     extract($args);
 
@@ -79,8 +84,7 @@ function julian_userapi_getevents($args)
 
     $items = array();
 
-    // Security check.
-    if (!xarSecurityCheck('Viewjulian')) return;
+
 
     // Load categories API.
     // Needed?
@@ -206,7 +210,7 @@ function julian_userapi_getevents($args)
              $eIsallday,
              $eFee) = $result->fields;
           // Security check
-          if (xarSecurityCheck('ReadJulian', 1, 'Item', "$event_id:$eOrganizer:$eCalendarID:All")) {
+          if (xarSecurityCheck('ReadJulian', 0, 'Item', "$event_id:$eOrganizer:$eCalendarID:All")) {
               // Change date formats from UNIX timestamp to something readable.
               if ($eStart['timestamp'] == 0 || empty($eStart['timestamp'])) {
                   $eStart['mon'] = "";
