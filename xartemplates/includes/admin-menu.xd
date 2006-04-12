@@ -1,60 +1,35 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:comment>Common Administration menu</xar:comment>
 <xar:style scope="module" module="base" file="navtabs" />
-<xar:set name="compare">xarServerGetCurrentURL()</xar:set>
-<dl class="xar-tabs">
-    <dt class="help">
-        <xar:mlstring>
-            Select
-        </xar:mlstring>
 
+<xar:set name="activetab">$_bl_module_func</xar:set>
+<div>
+  <dl class="xar-tabs">
+    <dt class="help" title="Choose an action to perform">
+      <xar:mlstring>Actions:</xar:mlstring>
     </dt>
-        <xar:sec mask="EditSiteContact" catch="false">
-
-             <xar:set name="pendingurl">xarModURL('sitecontact','admin','modifyconfig')</xar:set>
-            <xar:if condition="$compare eq $pendingurl">
-               <dd class="active">
-                <a href="#xarServerGetCurrentURL()#">
-                   <xar:mlstring>Modify Global Config</xar:mlstring>
-                </a>
-               </dd>
-            <xar:else />
-            <dd>
-                <a href="#$pendingurl#">
-                   <xar:mlstring>Modify Global Config</xar:mlstring>
-                </a>
-            </dd>
-            </xar:if>
-        </xar:sec>
-        <xar:sec mask="DeleteSiteContact" catch="false">
-          <xar:set name="viewurl">xarModURL('sitecontact','admin','managesctypes')</xar:set>
-            <xar:if condition="$compare eq $viewurl">
-               <dd class="active">
-                <a href="#xarServerGetCurrentURL()#">
-                <xar:mlstring>Manage SiteContact Forms</xar:mlstring>
-                </a>
-               </dd>
-            <xar:else />
-            <dd>
-                <a href="#$viewurl#">
-                <xar:mlstring>Manage SiteContact Forms</xar:mlstring>
-                </a>
-            </dd>
-            </xar:if>
-         </xar:sec>
-         <xar:set name="viewurl">xarModURL('sitecontact','admin','overview')</xar:set>
-            <xar:if condition="$compare eq $viewurl">
-               <dd class="active">
-                <a href="#xarServerGetCurrentURL()#">
-                   <xar:mlstring>Overview</xar:mlstring>
-                </a>
-               </dd>
-            <xar:else />
-            <dd>
-                <a href="#$viewurl#">
-                <xar:mlstring>Overview</xar:mlstring>
-                </a>
-            </dd>
-            </xar:if>         
-
-</dl>
-
+    <xar:sec mask="EditSiteContact" catch="false">
+        <xar:set name="tabclass">$activetab=='managesctypes'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+            <a href="&xar-modurl-sitecontact-admin-managesctypes;" >
+                <xar:mlstring>Manage Contact Forms</xar:mlstring>
+            </a>
+        </dd>
+    </xar:sec>
+    <xar:sec mask="AdminSiteContact" catch="false">
+        <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-sitecontact-admin-modifyconfig;">
+            <xar:mlstring>Modify Global Config</xar:mlstring>
+          </a>
+        </dd>
+    </xar:sec>
+    
+    <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
+    <dd class="#$tabclass#">
+      <a href="&xar-modurl-sitecontact-admin-overview;">
+        <xar:mlstring>Overview</xar:mlstring>
+      </a>
+    </dd>
+  </dl>
+</div>
