@@ -3,6 +3,10 @@
 <xar:style scope="module" module="base" file="navtabs" />
 
 <xar:set name="activetab">$_bl_module_func</xar:set>
+<xar:comment>We put in catch here for the whole menu as the same admin page
+             is used for user display. 
+</xar:comment>
+<xar:sec mask="EditSmilies" catch="false">
 <div>
   <dl class="xar-tabs">
     <dt class="help" title="Choose an action to perform">
@@ -16,7 +20,7 @@
           </a>
         </dd>
     </xar:sec>
-    <xar:sec mask="EditSmilies" catch="false">
+
         <xar:if condition="$activetab eq 'view' or $activetab eq 'modify' or $activetab eq 'delete'">
             <xar:set name="tabclass">'active'</xar:set>
         <xar:else />
@@ -27,7 +31,7 @@
                 <xar:mlstring>Manage Smilies</xar:mlstring>
             </a>
         </dd>
-    </xar:sec>
+
     <!--
     <xar:sec mask="AdminSmilies" catch="false">
         <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
@@ -44,5 +48,7 @@
         <xar:mlstring>Overview</xar:mlstring>
       </a>
     </dd>
+
   </dl>
 </div>
+</xar:sec>
