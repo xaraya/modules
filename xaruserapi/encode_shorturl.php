@@ -33,24 +33,6 @@
  *
  * - http://mysite.com/index.php/xarbb/list.html?startnum=21
  *
- *
- * Module developers who wish to support this feature are strongly
- * recommended to create virtual paths that are 'semantically meaningful',
- * so that people navigating in your module can understand at a glance what
- * the short URLs mean, and how they could e.g. display item 234 simply
- * by changing the 123.html into 234.html.
- *
- * For older modules with many different optional parameters and functions,
- * this generally implies re-thinking which parameters could easily be set
- * to some default to cover the most frequently-used cases, and rethinking
- * how each function could be represented inside some "virtual directory
- * structure". E.g. .../archive/2002/05/, .../forums/12/345.html, ../recent.html
- * or .../<categoryname>/123.html
- *
- * The same kind of encoding/decoding can be done for admin functions as well,
- * except that by default, the URLs will start with index.php/admin/xarbb.
- * The encode/decode functions for admin functions are in xaradminapi.php.
- *
  */
 
 /**
@@ -101,19 +83,27 @@ function xarbb_userapi_encode_shorturl($args)
 
     if ($func == 'main') {
         unset($get['func']);
+        if (isset($catid) && is_numeric($catid)) {
+            $path[] = 'category';
+
+            unset($get['catid']);
+            $path[] = $catid;
+        }
     } elseif ($func == 'viewforum') {
         if (isset($fid) && is_numeric($fid)) {
             unset($get['func']);
-            unset($get['fid']);
             $path[] = 'forum';
+
+            unset($get['fid']);
             $path[] = $fid;
         }
     } elseif ($func == 'viewtopic') {
         // check for required parameters
         if (isset($tid) && is_numeric($tid)) {
             unset($get['func']);
-            unset($get['tid']);
             $path[] = 'topic';
+
+            unset($get['tid']);
             $path[] = $tid;
         }
     } elseif ($func == 'newtopic') {
@@ -121,74 +111,62 @@ function xarbb_userapi_encode_shorturl($args)
         if (isset($fid) && is_numeric($fid)) {
             unset($get['func']);
             if (isset($phase) && $phase == 'quote' && isset($tid) && is_numeric($tid)){
-                unset($get['tid']);
                 $path[] = 'newreply';
+
+                unset($get['tid']);
                 $path[] = $tid;
-                $path[] = 'quote';
+
+                unset($get['phase']);
+                $path[] = $phase;
             } else {
+                $path[] = $func;
+
                 unset($get['fid']);
-                $path[] = 'newtopic';
                 $path[] = $fid;
             }
         } elseif (isset($tid) && is_numeric($tid)) {
             unset($get['func']);
+            $path[] = $func;
+
             unset($get['tid']);
-            $path[] = 'newtopic';
             $path[] = $tid;
+
             $path[] = 'edit';
         }
     } elseif ($func == 'newreply') {
-        unset($get['func']);
         // check for required parameters
         if (isset($tid) && is_numeric($tid)) {
-            $path[] = 'newreply';
-            $path[] = $tid;
+            unset($get['func']);
+            $path[] = $func;
+
             unset($get['tid']);
-            if (isset($phase) && $phase == 'edit' && isset($cid) && is_numeric($cid)) {
-                unset($get['cid']);
-                $path[] = 'edit';
-                $path[] = $cid;
-            } elseif (isset($phase) && $phase == 'quote' && isset($cid) && is_numeric($cid)) {
-                unset($get['cid']);
-                $path[] = 'quote';
-                $path[] = $cid;
-            } elseif (isset($phase) && $phase == 'quote') {
-                $path[] = 'quote';
+            $path[] = $tid;
+
+            if (isset($phase) && ($phase == 'edit' || $phase == 'quote')) {
+                if ((isset($cid) && is_numeric($cid)) || $phase == 'quote') {
+                    unset($get['phase']);
+                    $path[] = $phase;
+                }
+
+                if (isset($cid) && is_numeric($cid)) {
+                    unset($get['cid']);
+                    $path[] = $cid;
+                }
             }
         }
-    } elseif ($func == 'updatetopic') {
-        unset($get['func']);
+    } elseif ($func == 'updatetopic' || $func == 'subscribe' || $func == 'unsubscribe' || $func == 'printtopic') {
         // check for required parameters
         if (isset($tid) && is_numeric($tid)) {
+            unset($get['func']);
+            $path[] = $func;
+
             unset($get['tid']);
-            $path[] = 'updatetopic';
             $path[] = $tid;
-        }
-    } elseif ($func == 'subscribe') {
-        unset($get['func']);
-        // check for required parameters
-        if (isset($tid) && is_numeric($tid)) {
-            unset($get['tid']);
-            $path[] = 'subscribe';
-            $path[] = $tid;
-        }
-    } elseif ($func == 'unsubscribe') {
-        unset($get['func']);
-        // check for required parameters
-        if (isset($tid) && is_numeric($tid)) {
-            unset($get['tid']);
-            $path[] = 'unsubscribe';
-            $path[] = $tid;
-        }
-    } elseif ($func == 'printtopic') {
-        unset($get['func']);
-        // check for required parameters
-        if (isset($tid) && is_numeric($tid)) {
-            unset($get['tid']);
-            $path[] = 'printtopic';
-            $path[] = $tid;
-            // We will ensure the 'theme' get parameter is set.
-            $get['theme'] = 'print';
+
+            if ($func == 'printtopic') {
+                // Ensure the 'theme' GET parameter is set.
+                $get['theme'] = 'print';
+            }
         }
     }
 
