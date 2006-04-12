@@ -1,11 +1,12 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Workflow Administration</xar:mlstring></span></div>
 <script type="text/javascript">
 function setSomeElement(fooel, foo1) {
     document.getElementById(fooel).value = document.getElementById(fooel).value + foo1;
 }
 </script>
-
 <div class="xar-mod-body">
-
+    <xar:template module="workflow" type="module" file="admin-menu" />
+    <h2><xar:mlstring>Manage Processes</xar:mlstring></h2>
 <!-- Process navigation bar -->
 <xar:template file="proc_bar"/>
 
@@ -46,24 +47,30 @@ function setSomeElement(fooel, foo1) {
         <td colspan="4">
           <table>
             <tr>
-              <td style="width: 100%;">
+              <td colspan="2" style="width: 100%;">
                 <textarea style="width: 100%" id='src' name="source" rows="20" cols="80">#$data#</textarea>
               </td>
-              <td>
+            </tr>
+            <xar:comment>Added on separate line as it was hard to read-see in some browsers squashed on the right</xar:comment>
+            <tr>
+              <td colspan="2" class="xar-sub">
+                <p>
+                <strong><xar:mlstring>Function wizard: </xar:mlstring></strong>
                 <xar:if condition="$template != 'y'">
-                  <a href="javascript:setSomeElement('src','$instance->setNextUser(\'\');');"><xar:mlstring>Set next user</xar:mlstring></a><hr/>
-                  <a href="javascript:setSomeElement('src','$instance->get(\'\');');"><xar:mlstring>Get property</xar:mlstring></a><hr/>
-                  <a href="javascript:setSomeElement('src','$instance->set(\'\',\'\');');"><xar:mlstring>Set property</xar:mlstring></a><hr />
+                  <a href="javascript:setSomeElement('src','$instance->setNextUser(\'\');');"><xar:mlstring>Set next user</xar:mlstring></a> &nbsp;
+                  <a href="javascript:setSomeElement('src','$instance->get(\'\');');"><xar:mlstring>Get property</xar:mlstring></a>&nbsp;
+                  <a href="javascript:setSomeElement('src','$instance->set(\'\',\'\');');"><xar:mlstring>Set property</xar:mlstring></a>&nbsp;
                   <xar:if condition="$act_info['isInteractive'] eq 'y'">
-                    <a href="javascript:setSomeElement('src','$instance->complete();');"><xar:mlstring>Complete</xar:mlstring></a><hr/>
-                    <a href="javascript:setSomeElement('src','if(isset($_REQUEST[\'save\']){\n  $instance->complete();\n}');"><xar:mlstring>Process form</xar:mlstring></a><hr/>
+                    <a href="javascript:setSomeElement('src','$instance->complete();');"><xar:mlstring>Complete</xar:mlstring></a>&nbsp;
+                    <a href="javascript:setSomeElement('src','if(isset($_REQUEST[\'save\']){\n  $instance->complete();\n}');"><xar:mlstring>Process form</xar:mlstring></a>&nbsp;
                   </xar:if>
                   <xar:if condition="$act_info['type'] eq 'switch'">
-                    <a href="javascript:setSomeElement('src','$instance->setNextActivity(\'\');');"><xar:mlstring>Set Next act</xar:mlstring></a><hr />              
-                    <a href="javascript:setSomeElement('src','if() {\n  $instance->setNextActivity(\'\');\n}');"><xar:mlstring>If:SetNextact</xar:mlstring></a><hr />              
-                    <a href="javascript:setSomeElement('src','switch($instance->get(\'\')){\n  case:\'\':\n  $instance->setNextActivity(\'\');\n  break;\n}');"><xar:mlstring>Switch construct</xar:mlstring></a><hr />
+                    <a href="javascript:setSomeElement('src','$instance->setNextActivity(\'\');');"><xar:mlstring>Set Next act</xar:mlstring></a>&nbsp;>
+                    <a href="javascript:setSomeElement('src','if() {\n  $instance->setNextActivity(\'\');\n}');"><xar:mlstring>If:SetNextact</xar:mlstring></a>&nbsp;
+                    <a href="javascript:setSomeElement('src','switch($instance->get(\'\')){\n  case:\'\':\n  $instance->setNextActivity(\'\');\n  break;\n}');"><xar:mlstring>Switch construct</xar:mlstring></a>&nbsp;
                   </xar:if>
                 </xar:if>
+                </p>
               </td>
             </tr>
           </table>
