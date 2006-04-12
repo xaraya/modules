@@ -5,7 +5,7 @@
 </div>
 <div class="xar-mod-body">
 
-    <xar:template file="admin-menu" />
+<!--    <xar:template file="admin-menu" /> -->
 
     <xar:if condition="!empty($menu)">
         <xar:var name="menu" />

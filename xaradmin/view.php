@@ -1,10 +1,22 @@
 <?php
 /**
+ * Helpdesk Module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Helpdesk Module
+ * @link http://www.abraisontechnoloy.com/
+ * @author Brian McGilligan <brianmcgilligan@gmail.com>
+ */
+/**
    View items
 
    @param $itemtype - type of item that is being viewed (required)
    @param $startnum - id of item to start the page with (optional)
-   @returns data used in a template
+   @return array data used in a template
 */
 function helpdesk_admin_view()
 {

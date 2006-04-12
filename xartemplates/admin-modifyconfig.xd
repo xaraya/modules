@@ -5,11 +5,11 @@
 </div>
 <div class="xar-mod-body">
 
-    <xar:template file="admin-menu" />
+ <!--   <xar:template file="admin-menu" /> -->
 
-    <form action="#xarModURL('helpdesk', 'admin', 'updateconfig')#" method="post">
+    <form action="&xar-modurl-helpdesk-admin-updateconfig;" method="post">
     <div align="center">
-        <table border="1" width="75%">
+        <table>
             <tr>
                 <th colspan="2"><xar:mlstring>Global Settings</xar:mlstring></th>
             </tr>
