@@ -91,7 +91,7 @@ function julian_calmonthblock_display($blockinfo)
     $args['calendar'] = $c;
     // Determine today and the month that today is in. The current month is the month that will be displayed
     $args['todays_timestamp'] = strtotime("today");
-    $args['todays_month']= date("m");
+    $args['todays_month']=$month = date("m");
     // Set the current year
     $year=date("Y");
     // Set the start date to the first day of the selected month
