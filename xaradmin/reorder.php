@@ -27,7 +27,7 @@ function xarbb_admin_reorder()
     }
     $data['pager'] = xarTplGetPager($startnum,
         xarModAPIFunc('xarbb', 'user', 'countforums'),
-        xarModURL('xarbb', 'admin', 'view', array('startnum' => '%%')),
+        xarModURL('xarbb', 'admin', 'reorder', array('startnum' => '%%')),
         xarModGetVar('xarbb', 'itemsperpage'));
  
     if (!xarSecurityCheck('EditxarBB')) return;

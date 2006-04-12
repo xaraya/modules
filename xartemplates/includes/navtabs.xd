@@ -3,7 +3,7 @@
     <dl class="xar-tabs">
         <dt class="help" title="#xarML('Click on a tab to display forums configuration')#">
             <xar:mlstring>
-                Forums
+                Select Forum
             </xar:mlstring>
             : 
         </dt>
@@ -34,4 +34,3 @@
     </dl>
 </div>
 </xar:if>
-<div>&nbsp;</div>

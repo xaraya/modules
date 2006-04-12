@@ -2,20 +2,23 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xarbb Module</xar:mlstring></span></div>
 <!-- common admin menu for this module - remove link to the current function -->
 <div class="xar-mod-body">
-  <xar:template file="navtabs" type="module" />
+ <xar:template type="module" file="admin-menu" />
+    <h2><xar:mlstring>Manage Forums</xar:mlstring></h2>
+  <h3><xar:mlstring>Delete Forum</xar:mlstring> :: #$forumname#</h3>
   <xar:template file="navtabs-action" type="module" />
-  
-  <h2><xar:mlstring>Delete a Forum</xar:mlstring></h2>
   <form method="post" action="&xar-modurl-xarbb-admin-delete;" enctype="application/x-www-form-urlencoded" >
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <input type="hidden" name="fid" id="fid" value="#$fid#" />
     <input type="hidden" name="confirm" id="confirm" value="1" />
     <input type="hidden" name="confirmation" id="confirmation" value="1" />
     <fieldset>
-      <legend><xar:mlstring>Forum for Deletion</xar:mlstring></legend>
+      <legend><xar:mlstring>Confirm Forum Deletion</xar:mlstring></legend>
         <div class="xar-form-input-wrapper">
           <label for="confirm" class="xar-form-label" title="#xarML('Confirm deletion of forum')#">
-            <xar:mlstring>Confirm deletion of forum</xar:mlstring>
+            <xar:ml>
+            <xar:mlstring>Delete forum <strong>#(1)</strong> ?</xar:mlstring>
+            <xar:mlvar>#$forumname#</xar:mlvar>
+            </xar:ml>
           </label>
         </div>
         <div class="xar-form-input-wrapper-after">
@@ -23,6 +26,6 @@
           <input type="submit" value="#$mlconfirm#"  tabindex="1" />
         </div>
     </fieldset>
-    <a href="&xar-modurl-xarbb-admin-view;"><xar:mlstring>Cancel deletion of forum</xar:mlstring></a>
+    <a href="&xar-modurl-xarbb-admin-modify;&amp;fid=#$fid#"><xar:mlstring>Cancel deletion of forum</xar:mlstring></a>
   </form>        
 </div>

@@ -90,10 +90,11 @@
                     : 
                 </td>
                 <td class="xar-norm newtopicfield">
+                   <xar:set name="re"><xar:mlstring>Re: </xar:mlstring></xar:set>
                     <xar:if condition="isset($package['new_title'])">
-                        <input type="text" name="package[title]" id="packagetitle" size="45" maxlength="60" value="#xarVarPrepForDisplay($package['new_title'])#" tabindex="1" />
+                        <input type="text" name="package[title]" id="packagetitle" size="45" maxlength="60" value="#$re# #xarVarPrepForDisplay($package['new_title'])#" tabindex="1" />
                         <xar:elseif condition="!empty($package['title'])" tabindex="1" />
-                        <input type="text" name="package[title]" id="packagetitle" size="45" maxlength="60" value="#xarVarPrepForDisplay($package['title'])#" />
+                        <input type="text" name="package[title]" id="packagetitle" size="45" maxlength="60" value="#$re# #xarVarPrepForDisplay($package['title'])#" />
                         <xar:else />
                         <input type="text" name="package[title]" id="packagetitle" size="45" maxlength="60" value="" tabindex="1" />
                     </xar:if>

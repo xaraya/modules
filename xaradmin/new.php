@@ -31,7 +31,7 @@ function xarbb_admin_new()
     if (!xarVarFetch('hottopic','int:1:',$hottopic, 20, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('allowhtml','checkbox', $allowhtml, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('allowbbcode','checkbox', $allowbbcode, false, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('editstamp','int:1:',$editstamp, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('editstamp','int:0:2',$editstamp, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('showcats','checkbox', $showcats, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('nntp', 'str:1:', $nntp, '', XARVAR_NOT_REQUIRED)) return;
 
@@ -52,7 +52,7 @@ function xarbb_admin_new()
             $data['topicsortby']     = !isset($settings['topicsortby']) ? 'time' :$settings['topicsortby'];
             $data['topicsortorder']  = !isset($settings['topicsortorder']) ? 'DESC' :$settings['topicsortorder'];
             $data['hottopic']        = !isset($settings['hottopic']) ? 20 :$settings['hottopic'];
-            $data['editstamp']       = !isset($settings['editstamp']) ? 0 :$settings['editstamp'];
+            $data['editstamp']       = 0;// default is zero !isset($settings['editstamp']) ? 0 :$settings['editstamp'];
             $data['allowhtml']       = !isset($settings['allowhtml']) ? false :$settings['allowhtml'];
             $data['allowbbcode']     = !isset($settings['allowbbcode']) ? false :$settings['allowbbcode'];
             $data['showcats']        = !isset($settings['showcats']) ? false :$settings['showcats'];
@@ -69,8 +69,11 @@ function xarbb_admin_new()
             } else {
                 $data['hooks'] = $hooks;
             }
-
-            if (xarModIsAvailable('newsgroups')){
+            $masternntpsetting=xarModGetVar('xarbb','masternntpsetting');
+            $masternntpsetting  = !isset($masternntpsetting) ? false :$masternntpsetting;
+            //jojodee- let's only do this if we allow nntp in the master setting else this is loading each time now
+            //even if the nntp settings are not available. Review when nntp is available
+            if (xarModIsAvailable('newsgroups') && $masternntpsetting){
                 // get the current list of newsgroups
                 $data['items'] = xarModAPIFunc('newsgroups','user','getgroups',
                                                array('nocache' => true));

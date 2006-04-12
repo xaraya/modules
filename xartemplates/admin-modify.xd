@@ -18,18 +18,20 @@
   </span>
 </div>
 <div class="xar-mod-body">
+ <xar:template type="module" file="admin-menu" />
+  <h2><xar:mlstring>Manage Forums</xar:mlstring></h2>
   <xar:template file="navtabs" type="module" />
+  <h3><xar:mlstring>Modify Forum</xar:mlstring> :: #$forumname#</h3>
   <xar:template file="navtabs-action" type="module" />
-  <h2>
-    <xar:mlstring>
-      Modify Existing Forum
-    </xar:mlstring>
-  </h2>
   <xar:if condition="!empty($warning)">
     <p>
       #$warning#
     </p>
   </xar:if>
+  <xar:if condition="xarSessionGetVar('statusmsg') ne ''">
+      <p class="xar-form-input-wrapper-after xar-error">#xarSessionGetVar('statusmsg')#</p>
+  </xar:if>
+  <xar:set name="dummy">xarSessionSetVar('statusmsg','')</xar:set>
   <form method="post" name="post" id="post" action="&xar-modurl-xarbb-admin-modify;&amp;phase=update" enctype="application/x-www-form-urlencoded" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
     <fieldset >
       <legend>
@@ -127,7 +129,7 @@
       <div class="xar-form-input-wrapper">
         <label for="topicsperpage" class="xar-form-label" title="#xarML('The number of topics to show per page in this forum.')#">
           <xar:mlstring>
-            Topics per page
+            Topics per forum page view
           </xar:mlstring>
         </label>
         <input type="text" name="topicsperpage" id="topicsperpage" value="#$topicsperpage#" size="2" maxlength="4" />
@@ -175,7 +177,7 @@
       <div class="xar-form-input-wrapper">
         <label for="postsperpage" class="xar-form-label" title="#xarML('The number of posts to show per page in each topic.')#">
           <xar:mlstring>
-            Posts per page
+            Posts per topic page view
           </xar:mlstring>
         </label>
         <input type="text" name="postsperpage" id="postsperpage" value="#$postsperpage#" size="2" maxlength="4" />
@@ -246,7 +248,7 @@
           </xar:if>
         </select>
       </div>
-      <xar:if condition="xarModIsAvailable('newsgroups')">
+      <xar:if condition="xarModIsAvailable('newsgroups') and xarModGetVar('xarbb','masternntpsetting')">
         <div class="xar-form-input-wrapper">
           <label for="nntp"  class="xar-form-label" title="#xarML('Associate with which Newsgroup')#">
             <xar:mlstring>

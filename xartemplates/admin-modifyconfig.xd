@@ -17,6 +17,7 @@
     </span>
 </div>
 <div class="xar-mod-body">
+ <xar:template type="module" file="admin-menu" />
     <h2>
         <xar:mlstring>
             Modify Configuration
@@ -27,7 +28,7 @@
             <legend>
                 <strong>
                     <xar:mlstring>
-                        xarBB Settings
+                        Global xarBB Settings
                     </xar:mlstring>
                 </strong>
             </legend>
@@ -95,14 +96,14 @@
             <legend>
                 <strong>
                     <xar:mlstring>
-                        Default Values
+                        Default Values for New Forums
                     </xar:mlstring>
                 </strong>
             </legend>
             <div class="xar-form-input-wrapper">
                 <label for="topicsperpage" class="xar-form-label" title="#xarML('Default number of topics to show per page in a forum.')#">
                         <xar:mlstring>
-                            Topics per page
+                            Topics per forum page view
                         </xar:mlstring>
                 </label>
                 <input type="text" name="topicsperpage" id="topicsperpage" value="#$topicsperpage#" size="2" maxlength="4" />
@@ -150,7 +151,7 @@
             <div class="xar-form-input-wrapper">
                 <label for="postsperpage" class="xar-form-label" title="#xarML('Default number of posts to show per page in a topic.')#">
                         <xar:mlstring>
-                            Posts per page
+                            Posts per topic page view
                         </xar:mlstring>
                 </label>
                 <input type="text" name="postsperpage" id="postsperpage" value="#$postsperpage#" size="2" maxlength="4" />

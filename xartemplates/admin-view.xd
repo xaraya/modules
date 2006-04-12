@@ -10,11 +10,13 @@
 </div>
 <!-- common admin menu for this module - remove link to the current function -->
 <div class="xar-mod-body">
+ <xar:template type="module" file="admin-menu" />
     <h2>
         <xar:mlstring>
-            View Forums
+            Manage Forums
         </xar:mlstring>
     </h2>
+
     <xar:if condition="!$isforums">
         <div style="width:98%; font-weight:bold; text-align:center;">
             <p>
@@ -30,6 +32,11 @@
         </div>
         <xar:else />
         <xar:template file="navtabs" type="module" />
+        <xar:if condition="xarSessionGetVar('statusmsg') ne ''">
+            <p class="xar-form-input-wrapper-after xar-error">#xarSessionGetVar('statusmsg')#</p>
+        </xar:if>
+        <xar:set name="dummy">xarSessionSetVar('statusmsg','')</xar:set>
+
         <div style="width:98%; font-weight:bold; margin-top:20px;">
             <p>
                 <a href="#$addforum#">
@@ -40,4 +47,5 @@
             </p>
         </div>
     </xar:if>
+
 </div>
