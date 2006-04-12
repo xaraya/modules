@@ -2,7 +2,7 @@
 /**
     Helpdesk
 
-    @package Xaraya eXtensible Management System
+    @package modules
     @copyright (C) 2003-2004 by Envision Net, Inc.
     @license GPL <http://www.gnu.org/licenses/gpl.html>
     @link http://www.envisionnet.net/
