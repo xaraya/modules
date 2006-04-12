@@ -25,7 +25,7 @@
 
 $modversion['id'] = '910';
 $modversion['name'] = 'helpdesk';
-$modversion['version'] = '0.7.2';
+$modversion['version'] = '0.7.5';
 $modversion['displayname'] = xarML('HelpDesk');
 $modversion['description'] = 'HelpDesk Module';
 $modversion['credits'] = 'docs/credits.txt';
@@ -45,5 +45,5 @@ $modversion['category'] = 'Content';
     269 - Owner Module
     270 - Security Module
 */
-$modversion['dependency'] = array(14, 147, 182, 269, 270);
+$modversion['dependency'] = array(14, 147, 182, 270);
 ?>

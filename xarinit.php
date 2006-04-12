@@ -1,16 +1,16 @@
 <?php
 /**
-    Helpdesk
-
-    @package Xaraya eXtensible Management System
-    @copyright (C) 2003-2004 by Envision Net, Inc.
-    @license GPL <http://www.gnu.org/licenses/gpl.html>
-    @link http://www.envisionnet.net/
-
-    @subpackage Helpdesk module
-    @author Brian McGilligan <brian@envisionnet.net>
-*/
-
+ * Helpdesk Module
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Helpdesk Module
+ * @link http://www.abraisontechnoloy.com/
+ * @author Brian McGilligan <brianmcgilligan@gmail.com>
+ */
 // Helpdesk Is Based On:
 /********************************************************/
 /* Dimensionquest Help Desk                             */
@@ -116,7 +116,7 @@ function helpdesk_init()
     if (!isset($result)) return;
 
     // Set up module variables
-    xarModSetVar('helpdesk', 'Website', 'http://www.envisionnet.net/');
+    xarModSetVar('helpdesk', 'Website', 'http://www.abrasiontechnology.com/');
     xarModSetVar('helpdesk', 'Default rows per page', 20);
     xarModSetVar('helpdesk', 'Page Count Limit', 10);
 
@@ -157,47 +157,82 @@ function helpdesk_init()
 
     // let's hook cats in
     $cid = xarModAPIFunc('categories', 'admin', 'create',
-                         array('name' => 'Helpdesk',
-                               'description' => 'Main Helpdesk Cats.',
-                               'parent_id' => 0));
+        array(
+            'name' => 'Helpdesk',
+            'description' => 'Main Helpdesk Cats.',
+            'parent_id' => 0
+        )
+    );
     // Note: you can have more than 1 mastercid (cfr. articles module)
     xarModSetVar('helpdesk', 'number_of_categories', 1);
     xarModSetVar('helpdesk', 'mastercids', $cid);
     $categories = array();
-    $categories[] = array('name' => "General Helpdesk",
-                          'description' => "General helpdesk");
-    $categories[] = array('name' => "Networking",
-                          'description' => "Networking");
-    $categories[] = array('name' => "Tech Support",
-                          'description' => "Tech Support");
-    $categories[] = array('name' => "Software",
-                          'description' => "Software");
-    foreach($categories as $subcat) {
+    $categories[] = array(
+        'name' => "General Helpdesk",
+        'description' => "General helpdesk"
+    );
+    $categories[] = array(
+        'name' => "Networking",
+        'description' => "Networking"
+    );
+    $categories[] = array(
+        'name' => "Tech Support",
+        'description' => "Tech Support"
+    );
+    $categories[] = array(
+        'name' => "Software",
+        'description' => "Software"
+    );
+    foreach($categories as $subcat)
+    {
         $subcid = xarModAPIFunc('categories', 'admin', 'create',
-                                array('name' => $subcat['name'],
-                                    'description' => $subcat['description'],
-                                    'parent_id' => $cid));
+            array(
+                'name' => $subcat['name'],
+                'description' => $subcat['description'],
+                'parent_id' => $cid
+            )
+        );
     }
 
     // Enable categories hooks for helpdesk
     xarModAPIFunc('modules','admin','enablehooks',
-          array('callerModName' => 'helpdesk', 'hookModName' => 'categories'));
+        array(
+            'callerModName' => 'helpdesk',
+            'callerItemType' => 1, // Ticket Item Type
+            'hookModName' => 'categories'
+        )
+    );
 
     // Enable comments hooks for helpdesk
     xarModAPIFunc('modules','admin','enablehooks',
-          array('callerModName' => 'helpdesk', 'hookModName' => 'comments'));
+        array(
+            'callerModName' => 'helpdesk',
+            'callerItemType' => 1, // Ticket Item Type
+            'hookModName' => 'comments'
+        )
+    );
 
     // Enable comments hooks for helpdesk
     xarModAPIFunc('modules','admin','enablehooks',
-          array('callerModName' => 'helpdesk', 'hookModName' => 'hitcount'));
+        array(
+            'callerModName' => 'helpdesk',
+            'callerItemType' => 1, // Ticket Item Type
+            'hookModName' => 'hitcount'
+        )
+    );
 
     // Enable owner hooks for helpdesk
-    xarModAPIFunc('modules','admin','enablehooks',
-          array('callerModName' => 'helpdesk', 'hookModName' => 'owner'));
+    //xarModAPIFunc('modules','admin','enablehooks',
+    //      array('callerModName' => 'helpdesk', 'hookModName' => 'owner'));
 
     // Enable security hooks for helpdesk
     xarModAPIFunc('modules','admin','enablehooks',
-          array('callerModName' => 'helpdesk', 'hookModName' => 'security'));
+        array(
+            'callerModName' => 'helpdesk',
+            'callerItemType' => 1, // Ticket Item Type
+            'hookModName' => 'security'
+        )
+    );
 
     // Default Security Levels for helpesk.
 
@@ -403,15 +438,25 @@ function helpdesk_upgrade($oldversion)
 
         case '0.5.1':
         case '0.5.6':
-            // Enable owner hooks for helpdesk
-            xarModAPIFunc('modules','admin','enablehooks',
-                  array('callerModName' => 'helpdesk', 'hookModName' => 'owner'));
-
+        case '0.7.0':
+        case '0.7.1':
+        case '0.7.2':
             // Enable security hooks for helpdesk
             xarModAPIFunc('modules','admin','enablehooks',
-                  array('callerModName' => 'helpdesk', 'hookModName' => 'security'));
+                array(
+                    'callerModName' => 'helpdesk',
+                    'callerItemType' => 1, // Ticket Item Type
+                    'hookModName' => 'security'
+                )
+            );
 
-        case '0.7.0':
+            // owner is not need as we just do a join on the helpdesk owner field
+            xarModAPIFunc('modules','admin','disablehooks',
+                array(
+                    'callerModName' => 'helpdesk',
+                    'hookModName' => 'owner'
+                )
+            );
 
         default:
             break;
@@ -471,7 +516,47 @@ function helpdesk_delete()
     xarModDelAllVars('helpdesk');
 
     // Remove all comments still in the system
-    xarModAPIFunc('comments', 'admin', 'remove_module', array('objectid' => 'helpdesk', 'extrainfo' => true));
+    xarModAPIFunc('comments', 'admin', 'remove_module',
+        array(
+            'objectid' => 'helpdesk',
+            'extrainfo' => true
+        )
+    );
+
+    // Delete all security levels for tickets
+    xarModAPIFunc('security', 'admin', 'delete',
+        array(
+            'modid' => xarModGetIdFromName('helpdesk')
+        )
+    );
+
+    // Removes hooks
+    xarModAPIFunc('modules','admin','disablehooks',
+        array(
+            'callerModName' => 'helpdesk',
+            'hookModName' => 'security'
+        )
+    );
+    $result = xarModAPIFunc('modules','admin','disablehooks',
+        array(
+            'callerModName' => 'helpdesk',
+            'hookModName' => 'comments'
+        )
+    );
+    if( empty($result) ){ return false; }
+
+    xarModAPIFunc('modules','admin','disablehooks',
+        array(
+            'callerModName' => 'helpdesk',
+            'hookModName' => 'categories'
+        )
+    );
+    xarModAPIFunc('modules','admin','disablehooks',
+        array(
+            'callerModName' => 'helpdesk',
+            'hookModName' => 'hitcount'
+        )
+    );
 
     xarRemoveMasks('helpdesk');
     xarRemoveInstances('helpdesk');

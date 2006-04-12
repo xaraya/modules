@@ -33,10 +33,11 @@ function helpdesk_admin_create($args)
 
     // get the Dynamic Object defined for this module (and itemtype, if relevant)
     $object = xarModAPIFunc('dynamicdata','user','getobject',
-                             array('module'   => 'helpdesk',
-                                   'itemtype' => $itemtype
-                                  )
-                            );
+        array(
+            'module'   => 'helpdesk',
+            'itemtype' => $itemtype
+        )
+    );
     if (!isset($object)) return;  // throw back
 
     // check the input values for this object
@@ -68,6 +69,14 @@ function helpdesk_admin_create($args)
 
     // create the item here
     $itemid = $object->createItem();
+    // For Reps but them in the reps group.
+    if( $itemtype == 10 )
+    {
+        $tech_role_id = xarModGetVar('helpdesk', 'tech_group');
+        $user_role_id = $object->properties['name']->getValue();
+        if( $tech_role_id > 0 and  $user_role_id > 0  )
+        { xarMakeRoleMemberByID($user_role_id, $tech_role_id); }
+    }
     if (empty($itemid)) return; // throw back
 
     // let's go back to the admin view

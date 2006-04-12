@@ -1,0 +1,113 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Setup Helpdesk Security</xar:mlstring>
+    </span>
+</div>
+<div class="xar-mod-body">
+
+    <xar:template file="admin-menu" />
+
+    <h3><xar:mlstring>Status</xar:mlstring></h3>
+
+    <ul>
+    <xar:if condition="$tech_exists eq true">
+        <li><h4>There is a representatives group defined.</h4></li>
+    <xar:else />
+        <li>
+            <h4 class="xar-error">There is not a representatives group defined.</h4>
+            <p>
+            This can be fixed by clicking the "Setup Security" button below or by
+            creating a group in roles for helpdesk representatives.
+            Then go to the the helpdesk modify config screen and select the group
+            you created for the "Helpdesk Representative Group" field.
+            </p>
+        </li>
+    </xar:if>
+
+    <xar:if condition="$security_hooked eq true">
+        <li><h4>The security module is hooked into the helpdesk.</h4></li>
+    <xar:else />
+        <li>
+            <h4 class="xar-error">The security module is not hooked into the helpdesk.</h4>
+            <p>
+            This can be fixed by clicking the "Setup Security" button below or
+            by going to Admin Menu->Modules->Configure Hooks and hooking security to helpdesk.
+            </p>
+        </li>
+    </xar:if>
+
+    <xar:if condition="$security_user_levels_ok eq true">
+        <li>
+            <h4>The security module user levels for helpdesk tickets looks to be ok.</h4>
+            <p>
+                This does not mean that the security levels are what you will want them to be.
+                It just means that the user level looks sane.
+            </p>
+        </li>
+    <xar:else />
+        <li>
+            <h4 class="xar-error">The security module user level is NOT ok.</h4>
+            <p>
+            This means you probably haven't set default security user levels for the
+            helpdesk tickets. This can be setup automatically. If you do not understand how the
+            security module works let this module set it up for you.
+            </p>
+        </li>
+    </xar:if>
+
+    <xar:if condition="$security_tech_levels_ok eq true">
+        <li>
+            <h4>The security module "Representatives" level for helpdesk tickets looks to be ok.</h4>
+            <p>
+                This does not mean that the security levels are what you will want them to be.
+                It just means that the "Representatives" level looks sane. The Representatives
+                will be able to see all tickets.
+            </p>
+        </li>
+    <xar:else />
+        <li>
+            <h4 class="xar-error">The security module "Representatives" level is NOT ok.</h4>
+            <p>
+            This means you probably haven't set default security "Representatives" level for the
+            helpdesk tickets. This can be setup automatically. If you do not understand how the
+            security module works let this module set it up for you.
+            </p>
+        </li>
+    </xar:if>
+
+    <xar:if condition="$security_world_levels_ok eq true">
+        <li>
+            <h4>The security module world levels for helpdesk tickets looks to be ok.</h4>
+            <p>
+                This does not mean that the security levels are what you will want them to be.
+                It just means that the world level looks sane. "Everybody" has no access
+                to tickets.
+            </p>
+        </li>
+    <xar:else />
+        <li>
+            <h4 class="xar-error">The security module world security level are NOT ok.</h4>
+            <p>
+            This means you probably haven't set default security levels for the
+            helpdesk tickets. This can be setup automatically and will give you a basic
+            setup. If you do not understand how the security module works just let this
+            module set it up for you.
+            </p>
+        </li>
+    </xar:if>
+
+    </ul>
+
+    <fieldset>
+        <legend><xar:mlstring>Actions</xar:mlstring></legend>
+
+        <form action="&xar-modurl-helpdesk-admin-setup_security;" method="POST">
+
+        <div class="xar-form-input-wrapper-after">
+            <input name="setup" type="submit" value="Setup Security" />
+        </div>
+
+        </form>
+    </fieldset>
+
+</div>

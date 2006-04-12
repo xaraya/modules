@@ -8,7 +8,6 @@
     <xar:template file="admin-menu" />
 
     <h2><xar:mlstring>Overview</xar:mlstring></h2>
-
     <h3>What is it?</h3>
     <p>
         <xar:mlstring>Helpdesk is system which enables system admin support to its users though a web based interface.  It allows admin to track the progress of tickets.</xar:mlstring>
@@ -24,6 +23,16 @@
         </ul>
     </p>
     <h3>Important Setup Instructions!</h3>
+    <p>
+        There are currently two ways to setup the helpdesk module. The easy way which sets just about everything
+        up for you using a simple wizard. Then there is the hard way, which is not recommend unless you know
+        what you are doing.
+    </p>
+    <h4>Easy Setup</h4>
+    <p>
+        <a href="&xar-modurl-helpdesk-admin-setup_security;">The Security Setup Wizard</a>
+    </p>
+    <h4>Hard Setup</h4>
     <p>
         Helpdesk Techs have chagned since using the security module.  Techs need to be set as a default group in the security module for helpdesk tickets with Overview thru Write privileges.
     </p>

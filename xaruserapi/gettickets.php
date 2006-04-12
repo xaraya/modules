@@ -1,7 +1,7 @@
 <?php
 /**
     Get the Tickets in the database
-    
+
     @author Brian McGilligan
     @param
     @return The tickets in the database
@@ -19,7 +19,7 @@ function helpdesk_userapi_gettickets($args)
     if (!isset($numitems)) {
         $numitems = 20;
     }
-    
+
     if( !isset($count) ){
         $count = false;
     }
@@ -28,9 +28,9 @@ function helpdesk_userapi_gettickets($args)
     $dbconn         =& xarDBGetConn();
     $xartable       =& xarDBGetTables();
     $helpdesktable  = $xartable['helpdesk_tickets'];
-    
+
     xarSessionSetVar('ResultTitle', '');
-    
+
     xarVarFetch('override',  'str:1:', $override,  null,  XARVAR_NOT_REQUIRED);
 
     /*
@@ -38,9 +38,9 @@ function helpdesk_userapi_gettickets($args)
     */
     if( $count == true )
     {
-        $fields = array("COUNT(DISTINCT $helpdesktable.xar_id)"); 
+        $fields = array("COUNT(DISTINCT $helpdesktable.xar_id)");
     }
-    else 
+    else
     {
         $fields = array(
             "$helpdesktable.xar_id", "xar_date", "xar_subject", "xar_statusid",
@@ -48,16 +48,16 @@ function helpdesk_userapi_gettickets($args)
             "xar_closedby"
         );
     }
-    $tables = array($helpdesktable);            
+    $tables = array($helpdesktable);
     $from ='';
     $left_join = array();
     $where = array();
     $bindvars = array();
-    
+
     //Joins on Catids
     if(!empty($catid))
     {
-        $categoriesdef = xarModAPIFunc('categories', 'user', 'leftjoin', 
+        $categoriesdef = xarModAPIFunc('categories', 'user', 'leftjoin',
                               array('modid'    => xarModGetIdFromName('helpdesk'),
                                     'itemtype' => 1,
                                     'cids'     => array($catid),
@@ -69,54 +69,55 @@ function helpdesk_userapi_gettickets($args)
     */
     if( xarModIsAvailable('security') )
     {
-        $security_def = xarModAPIFunc('security', 'user', 'leftjoin', 
+        $security_def = xarModAPIFunc('security', 'user', 'leftjoin',
             array(
                 'modid'    => xarModGetIdFromName('helpdesk'),
                 'itemtype' => 1,
                 'itemid'   => "$helpdesktable.xar_id",
+                'user_field' => "$helpdesktable.xar_openedby",
                 'level' => isset($level) ? $level : null,
                 'limit_gids' => !empty($company) ? array($company) : null,
                 // This exception insures that the tech assigned to the ticket can see it.
                 'exception' => 'xar_assignedto = ' . $dbconn->qstr(xarUserGetVar('uid'))
             )
-        );        
+        );
         if( count($security_def) > 0 )
         {
             $left_join[] = " {$security_def['left_join']} ";
             $where[] = "( {$security_def['where']} )";
         }
-    }    
-    
+    }
+
     // Get items Ticket Number/Date/Subject/Status/Last Update
     $sql  = ' SELECT ' . join(', ', $fields);
     $sql .= ' FROM ' .join(', ', $tables);
-                
-    if( !empty($catid) && count(array($catid)) > 0 ) 
+
+    if( !empty($catid) && count(array($catid)) > 0 )
     {
         // add this for SQL compliance when there are multiple JOINs
         // Add the LEFT JOIN ... ON ... parts from categories
         $left_join[] = ' LEFT JOIN ' . $categoriesdef['table']
             . ' ON ' . $categoriesdef['field'] . ' = ' . $helpdesktable . '.xar_id';
-        
-        if( !empty($categoriesdef['more']) ) 
+
+        if( !empty($categoriesdef['more']) )
         {
             $left_join[] = $categoriesdef['more'];
         }
-        
+
         $where[] = $categoriesdef['where'];
     }
-    
+
     /*
         Runs a couple conditions on the tickets
-        
+
         TODO:
-            Limit selections to 
+            Limit selections to
                 MY  - Tickets user created, assigned to user
                 ALL - All Tickets using only security filters
                 MYASSIGNED - Tickets assigned to user
                 UNASSIGNED - Tickets assigned to no one
     */
-    switch($selection) 
+    switch($selection)
     {
         case 'MYALL':
             xarSessionSetVar('ResultTitle', xarML('All Your Tickets'));
@@ -124,31 +125,31 @@ function helpdesk_userapi_gettickets($args)
             $bindvars[] = (int)$userid;
             $bindvars[] = (int)$userid;
             break;
-            
+
         case 'ALL':
             xarSessionSetVar('ResultTitle', xarML('All Tickets in Database'));
             break;
-            
+
         case 'MYASSIGNEDALL':
             xarSessionSetVar('ResultTitle', xarML('All Your Assigned Tickets'));
             $where[] = "xar_assignedto = ?";
             $bindvars[] = $userid;
             break;
-            
-        case 'UNASSIGNED':            
+
+        case 'UNASSIGNED':
             xarSessionSetVar('ResultTitle', xarML('Unassigned Tickets'));
             $where[] = "xar_assignedto < ?";
             $bindvars[] = 2;
             break;
     }
-    
+
     // Status filter code
     if( !empty($statusfilter) )
     {
         $where[] = "xar_statusid = ? ";
         $bindvars[] = $statusfilter;
     }
-    
+
     /*
         keywords used in searching tickets
     */
@@ -164,8 +165,8 @@ function helpdesk_userapi_gettickets($args)
                 $whereor[] = "(xar_$field LIKE " . $dbconn->qstr("%$word%") . ")";
             }
         }
-    }    
-    
+    }
+
     /*
         Start putting the condition parts of the query together
     */
@@ -173,7 +174,7 @@ function helpdesk_userapi_gettickets($args)
     {
         $sql .= join(' ', $left_join);
     }
-    
+
     if(count($whereor) > 0)
     {
         $where[] = ' ( ' . join(' OR ', $whereor) . ' ) ';
@@ -184,9 +185,9 @@ function helpdesk_userapi_gettickets($args)
     }
 
     if( $count != true )
-        $sql .= " GROUP BY xar_id ";    
-    
-    switch($sortorder) 
+        $sql .= " GROUP BY xar_id ";
+
+    switch($sortorder)
     {
         case 'TICKET_ID':
             $sql .= " ORDER BY xar_id $order";
@@ -216,24 +217,24 @@ function helpdesk_userapi_gettickets($args)
             $sql .= " ORDER BY xar_closedby $order";
             break;
     }
-    
+
     if( $count == true )
     { $results = $dbconn->Execute($sql, $bindvars); }
-    else 
+    else
     { $results = $dbconn->SelectLimit($sql, $numitems, $startnum-1, $bindvars);  }
     if( !$results ){ return false; }
 
     if( $count == true ){ return $results->fields[0]; }
-    
+
     /*
         Put items into result array
     */
     $tickets = array();
     while( list($tid,        $ticketdate, $subject, $statusid, $priorityid, $lastupdate,
-                $assignedto, $openedby,   $closedby) = $results->fields ) 
+                $assignedto, $openedby,   $closedby) = $results->fields )
     {
         $tickets[$tid] = array(
-            'ticket_id'     => $tid, 
+            'ticket_id'     => $tid,
             'ticketdate'    => xarModAPIFunc('helpdesk', 'user', 'formatdate', array('date' => $ticketdate)),
             'subject'       => $subject,
             'status'        => xarModAPIFunc('helpdesk', 'user', 'get', array('object' => 'status', 'itemid'   => $statusid, 'field'=> '')),
@@ -243,10 +244,10 @@ function helpdesk_userapi_gettickets($args)
             'openedby'      => $openedby,
             'closedby'      => $closedby
         );
-            
+
         $results->MoveNext();
     }
-    
+
     $results->close();
 
     return $tickets;

@@ -10,7 +10,7 @@ function helpdesk_admin_updateconfig()
     // proceed no further as it is possible that this is an attempt at sending
     // in false data to the system
     if (xarModGetVar('helpdesk', 'EnforceAuthKey')){
-        if (!xarSecConfirmAuthKey()) {            
+        if (!xarSecConfirmAuthKey()) {
             return false;
         }
     }
@@ -27,6 +27,7 @@ function helpdesk_admin_updateconfig()
     xarVarFetch('usercancheckstatus',   'isset', $usercancheckstatus, '');
     xarVarFetch('techsseealltickets',   'isset', $techsseealltickets, '');
     xarVarFetch('enableimages',         'isset', $enableimages, '');
+    xarVarFetch('tech_group',           'isset', $tech_group, '');
     xarVarFetch('allowstatuschangeonsubmit',   'isset', $allowstatuschangeonsubmit, '');
     xarVarFetch('allowcloseonsubmit',          'isset', $allowcloseonsubmit, '');
     xarVarFetch('showopenbyinsummary',         'isset', $showopenbyinsummary, '');
@@ -54,6 +55,8 @@ function helpdesk_admin_updateconfig()
     xarModSetVar('helpdesk', 'User can check status',   $usercancheckstatus);
     xarModSetVar('helpdesk', 'Techs see all tickets',   $techsseealltickets);
     xarModSetVar('helpdesk', 'Enable Images',           $enableimages);
+    xarModSetVar('helpdesk', 'tech_group',              $tech_group);
+
     xarModSetVar('helpdesk', 'AllowStatusChangeOnSubmit', $allowstatuschangeonsubmit);
     xarModSetVar('helpdesk', 'AllowCloseOnSubmit',      $allowcloseonsubmit);
     xarModSetVar('helpdesk', 'ShowOpenedByInSummary',   $showopenbyinsummary);
@@ -68,19 +71,19 @@ function helpdesk_admin_updateconfig()
     xarModSetVar('helpdesk', 'AllowDomainName',             $allowdomainname);
     xarModSetVar('helpdesk', 'EnableMyStatsHyperLink',      $enablemystatshyperlink);
     }
-            
+
     xarModCallHooks('module','updateconfig','helpdesk',
                     array('module'   => 'helpdesk',
                           'itemtype' => $itemtype)
-            ); 
-    
+            );
+
     // this second hooks call should sync cats for the main mod with the ones for the reps
     // which is what we really need
     xarModCallHooks('module','updateconfig','helpdesk',
                     array('module'   => 'helpdesk',
                           'itemtype' => 10)
-            ); 
-    
+            );
+
     xarResponseRedirect(xarModURL('helpdesk', 'admin', 'modifyconfig'));
 
     //Return
