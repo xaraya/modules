@@ -2,7 +2,9 @@
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>xarCacheManager Administration</xar:mlstring></span>
 </div>
-<div class="xar-mod-body"><h2><xar:mlstring>Configuration</xar:mlstring></h2>
+<div class="xar-mod-body">
+  <xar:template type="module" file="admin-menu" module="xarcachemanager" />
+  <h2><xar:mlstring>Configuration</xar:mlstring></h2>
   <xar:if condition="xarSessionGetVar('statusmsg') != ''">
     <p>#xarSessionGetVar('statusmsg')#</p>
   </xar:if>

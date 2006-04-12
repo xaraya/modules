@@ -1,74 +1,72 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xarCacheManager Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Flush Output Cache Files</xar:mlstring></h2>
-<div style="margin: auto;">
-<xar:if condition="$message eq false">
+<div class="xar-mod-body">
+  <xar:template type="module" file="admin-menu" module="xarcachemanager" />
+  <h2><xar:mlstring>Flush Output Cache Files</xar:mlstring></h2>
+  <xar:if condition="$message eq false">
+
     <form action="#xarModURL('xarcachemanager', 'admin', 'flushcache')#" method="post" enctype="application/x-www-form-urlencoded">
-        <div style="clear: both; padding: 10px;">
+      <fieldset>
+            <legend>
+                <xar:mlstring>Select Cache for Flushing</xar:mlstring>
+            </legend>
+            <p class="xar-form-input-wrapper-before">
+                #$instructions# #$instructionhelp#
+            </p>
+
+            <xar:foreach in="$cachekeys" key="$type" value="$keylist">
+            <div class="xar-form-input-wrapper">
+                    <label class="xar-form-label" for="flushkey_#$type#">#$type#</label>
+                    <select name="flushkey[#$type#]" id="flushkey_#$type#">
+                        <option value="-" selected="selected"> - - - </option>
+                        <xar:foreach in="$keylist" value="$key">
+                            <option value="#$key#">#$key#</option>
+                        </xar:foreach>
+                        <xar:if condition="count($keylist) gt 0">
+                            <option value="*">
+                                 <xar:ml><xar:mlstring>* Flush all #(1) cache keys *</xar:mlstring><xar:mlvar>#$type#</xar:mlvar></xar:ml>
+                            </option>
+                        </xar:if>
+                    </select>
+            </div>
+                </xar:foreach>
+
+        <div class="xar-form-input-wrapper">
             <input type="hidden" name="authid" id="authid" value="#$authid#" />
             <input type="hidden" name="confirm" id="confirm" value="true" />
-            <span style="align: center">
-                #$instructions# #$instructionhelp#
-            </span>
-            <table class="xar-norm">
-                <xar:foreach in="$cachekeys" key="$type" value="$keylist">
-                <tr>
-                    <td>
-                        <label for="flushkey_#$type#">#$type#</label>
-                    </td>
-                    <td>
-                        <select name="flushkey[#$type#]" id="flushkey_#$type#">
-                            <option value="-" selected="selected"> - - - </option>
-                            <xar:foreach in="$keylist" value="$key">
-                                <option value="#$key#">#$key#</option>
-                            </xar:foreach>
-                            <xar:if condition="count($keylist) gt 0">
-                                <option value="*">
-                                     <xar:ml><xar:mlstring>* Flush all #(1) cache keys *</xar:mlstring><xar:mlvar>#$type#</xar:mlvar></xar:ml>
-                                </option>
-                            </xar:if>
-                        </select>
-                    </td>
-                </tr>
-                </xar:foreach>
-                <tr>
-                    <td colspan="2" align="center">
-                        <input type="submit" value="#xarML('Flush')#"  />
-                    </td>
-                </tr>
-            </table>
-        </div>
-     </form>
-<xar:elseif condition="$message eq true" />
+            <input type="submit" value="#xarML('Flush Cache')#"  />
+       </div>
+       </fieldset>
+    </form>
+    <xar:elseif condition="$message eq true" />
 
-    <div style="clear: both; padding: 10px;">
-        <span>
+        <p class="xar-form-input-wrapper">
             #$notice#
-        </span>
-    </div>
-    <div style="clear: both; padding: 10px;">
-        <span>
+        </p>
+        <p class="xar-form-input-wrapper">
             <a href="#$returnlink.url#" title="#$returnlink.title#">#$returnlink.label#</a>
-        </span>
-    </div>
-</xar:if>
-<div style="clear: both; padding: 10px;">
-    <table border="1">
-        <thead>
-            <tr>
-                <th><xar:mlstring>Cache Type</xar:mlstring></th>
-                <th><xar:mlstring>Size in MB</xar:mlstring></th>
-            </tr>
-        </thead>
-        <tbody>
-            <xar:foreach in="$cachesize" key="$type" value="$size">
+        </p>
+    </xar:if>
+
+    <fieldset>
+        <legend><xar:mlstring>Output Cache Size Reference</xar:mlstring></legend>
+        <div class="xar-form-input-wrapper">
+        <table border="1">
+            <thead>
+                <tr>
+                    <th><xar:mlstring>Cache Type</xar:mlstring></th>
+                    <th><xar:mlstring>Size in MB</xar:mlstring></th>
+                </tr>
+            </thead>
+            <tbody>
+                <xar:foreach in="$cachesize" key="$type" value="$size">
                 <tr>
                     <td>#$type#</td>
                     <td>#$size#</td>
                 </tr>
-            </xar:foreach>
-        </tbody>
-    </table>
-</div>
-</div>
+                </xar:foreach>
+            </tbody>
+        </table>
+        </div>
+    </fieldset>
 </div>
