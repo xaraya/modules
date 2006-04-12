@@ -6,6 +6,7 @@
 </xar:comment>
 <xar:style module="xarbb" scope="module" file="xarbb-layout" />
 <xar:base-include-javascript filename="confirmlink.js" module="base" position="head"/>
+
 <xar:if condition="$post ne '1'">
     <div class="xarbb-noteswrapper">
         <xar:categories-navigation layout="trails" showchildren="1" module="xarbb" itemtype="1" func="main" catid="$catid" />

@@ -70,6 +70,7 @@ function xarbb_user_viewtopic($args)
     }
     $postperpage = $settings['postsperpage'];
 
+
     // Security Check
     if (!xarSecurityCheck('ReadxarBB', 1, 'Forum', $topic['catid'] . ':' . $topic['fid'])) return;
 
@@ -251,19 +252,8 @@ function xarbb_user_viewtopic($args)
 
     // End individual Replies
 
-    // adjust the display format
-    // <jojodee> OK - rather than change each post reply time formats above
-    // Let's bring this reg date into line with future locale use
-    //$thisdate = new xarDate();
-    //if(is_numeric($posterdata['date_reg'])) {
-    //    $thisdate->setTimestamp($posterdata['date_reg']);
-    // $regdate=xarLocaleFormatDate('%Y-%m-%d',$posterdata['date_reg']);
-    //Add datestamp so users can format in template, existing templates are still OK
+     //Add datestamp so users can format in template, existing templates are still OK
     $regdatestamp=$posterdata['date_reg'];
-    //}
-    // else {
-    //     $thisdate->DBtoTS($posterdata['date_reg']);
-    // }
 
     //Forum Name and Links
     // $data['fname']      = $forumdata['fname']; //No need to reassign here
