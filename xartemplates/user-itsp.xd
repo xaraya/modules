@@ -13,8 +13,10 @@
         <p>#xarSessionGetVar('statusmsg')#</p>
     </xar:if>
     <p>
-        <xar:mlstring>Welcome</xar:mlstring>&nbsp;
-        #xarUserGetVar('name')#
+    <xar:ml>
+        <xar:mlstring>Welcome #(1)</xar:mlstring>
+        <xar:mlvar>#xarUserGetVar('name')#</xar:mlvar>
+    </xar:ml>
     </p>
     <xar:comment> Show the plan details, coming from $plan</xar:comment>
     <xar:if condition="empty($plan)">
@@ -39,16 +41,18 @@
                 </div>
                 <div class="xar-form-input-wrapper">
                      <label for="planitems" class="xar-form-label" title="#xarML('Name of the plan')#">
-                          <xar:mlstring>The parts:</xar:mlstring>
+                          <xar:mlstring>The sections:</xar:mlstring>
                      </label>
 
                     <table>
-                        <tr>
-                            <th><xar:mlstring>Type name</xar:mlstring></th>
-                            <th><xar:mlstring>Credits needed</xar:mlstring></th>
-                            <th><xar:mlstring>In ITSP</xar:mlstring></th>
-                            <th><xar:mlstring>Passed</xar:mlstring></th>
-                        </tr>
+                        <thead>
+                            <tr>
+                                <th><xar:mlstring>Section</xar:mlstring></th>
+                                <th><xar:mlstring>Needed</xar:mlstring></th>
+                                <th><xar:mlstring>Planned</xar:mlstring></th>
+                                <th><xar:mlstring>Passed</xar:mlstring></th>
+                            </tr>
+                        </thead>
                         <xar:foreach in="$pitems" value="$item">
                         <tr>
                             <td>
@@ -64,7 +68,7 @@
                         </xar:foreach>
                         <tr>
                             <td>
-                            Total needed/obtained
+                            Credits needed
                             </td>
                             <td>
                             #$plan.mincredit#
