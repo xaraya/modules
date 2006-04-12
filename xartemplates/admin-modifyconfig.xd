@@ -24,7 +24,7 @@
     </fieldset>
     <fieldset>
         <legend>
-            <xar:mlstring>Configuration Options</xar:mlstring>
+            <xar:mlstring>Configure URL Alias</xar:mlstring>
         </legend>
     <p class="xar-form-input-wrapper-before xar-standard-box-padding">
         <strong><xar:mlstring>Declare base name as alias for short URLs</xar:mlstring></strong>
