@@ -1,7 +1,8 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Smilies Module</xar:mlstring></span></div>
-<!-- common admin menu for this module - remove link to the current function -->
 <div class="xar-mod-body">
-<h2><xar:mlstring>View Smilies</xar:mlstring></h2>
+    <!-- common admin menu for this module -->
+    <xar:template type="module" module="smilies" file="admin-menu" />
+    <h2><xar:mlstring>View Smilies</xar:mlstring></h2>
 <div class="xar-accent">
 <table width="100%" border="0" cellspacing="0" cellpadding="4">
     <tr>

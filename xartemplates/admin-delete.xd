@@ -1,17 +1,30 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Smilies</xar:mlstring></span></div>
 <!-- common admin menu for this module - remove link to the current function -->
 <div class="xar-mod-body">
-<h2><xar:mlstring>Delete a Smiley</xar:mlstring></h2>
-<form method="post" action="#xarModURL('smilies', 'admin', 'delete')#"  enctype="application/x-www-form-urlencoded">
-    <input type="hidden" name="authid" id="authid" value="#$authid#" />
-    <input type="hidden" name="sid" id="sid" value="#$sid#" />
-    <input type="hidden" name="confirm" id="confirm" value="1" />
-    <input type="hidden" name="confirmation" id="confirmation" value="1" />
+    <xar:template type="module" module="smilies" file="admin-menu" />
+    <h2><xar:mlstring>Delete a Smiley</xar:mlstring></h2>
+    <form method="post" action="#xarModURL('smilies', 'admin', 'delete')#"  enctype="application/x-www-form-urlencoded">
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <input type="hidden" name="sid" id="sid" value="#$sid#" />
+        <input type="hidden" name="confirm" id="confirm" value="1" />
+        <input type="hidden" name="confirmation" id="confirmation" value="1" />
+        <fieldset>
+            <legend>
+                <strong>
+                    <xar:mlstring>
+                         Deletion Confirmation
+                    </xar:mlstring>
+                </strong>
+            </legend>
 
-    <span class="xar-title"><xar:mlstring>Confirm deletion of smiley</xar:mlstring></span><br /><br />
+            <div class="xar-form-input-wrapper">
+                <label for="code" class="xar-form-label" title="#xarML('Confirm deletion of smiley')#">
+                    <xar:mlstring>Confirm deletion of smiley</xar:mlstring>
+                </label>
+                <input type="submit" value="#xarML('Confirm')#" tabindex="1" /><br /><br />
+            </div>
+        </fieldset>
 
-    <input type="submit" value="#xarML('Confirm')#" tabindex="1" /><br /><br />
-    
     <a href="#xarModURL('smilies', 'admin', 'view')#"><xar:mlstring>Cancel deletion of smiley</xar:mlstring></a>
-</form>        
+    </form>        
 </div>

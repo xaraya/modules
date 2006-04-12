@@ -1,0 +1,48 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:comment>Common Administration menu</xar:comment>
+<xar:style scope="module" module="base" file="navtabs" />
+
+<xar:set name="activetab">$_bl_module_func</xar:set>
+<div>
+  <dl class="xar-tabs">
+    <dt class="help" title="Choose an action to perform">
+      <xar:mlstring>Actions:</xar:mlstring>
+    </dt>
+    <xar:sec mask="AddSmilies" catch="false">
+        <xar:set name="tabclass">$activetab=='new'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-smilies-admin-new;">
+            <xar:mlstring>Add Smilie</xar:mlstring>
+          </a>
+        </dd>
+    </xar:sec>
+    <xar:sec mask="EditSmilies" catch="false">
+        <xar:if condition="$activetab eq 'view' or $activetab eq 'modify' or $activetab eq 'delete'">
+            <xar:set name="tabclass">'active'</xar:set>
+        <xar:else />
+            <xar:set name="tabclass">''</xar:set>
+        </xar:if>
+        <dd class="#$tabclass#">
+            <a href="&xar-modurl-smilies-admin-view;" >
+                <xar:mlstring>Manage Smilies</xar:mlstring>
+            </a>
+        </dd>
+    </xar:sec>
+    <!--
+    <xar:sec mask="AdminSmilies" catch="false">
+        <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-smilies-admin-modifyconfig;">
+            <xar:mlstring>Modify Config</xar:mlstring>
+          </a>
+        </dd>
+    </xar:sec>
+    -->
+    <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
+    <dd class="#$tabclass#">
+      <a href="&xar-modurl-smilies-admin-overview;">
+        <xar:mlstring>Overview</xar:mlstring>
+      </a>
+    </dd>
+  </dl>
+</div>

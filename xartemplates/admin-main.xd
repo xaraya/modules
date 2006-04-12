@@ -1,54 +1,56 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Administration - Smilies</xar:mlstring></span></div>
 <div class="xar-mod-body">
+    <xar:template type="module" module="smilies" file="admin-menu" />
     <h2><xar:mlstring>Overview</xar:mlstring></h2>
-    <div style="padding: 1px;" class="xar-norm-outline">
-        <div style="float:right;padding:10px;">
-            <img src="modules/adminpanels/xarimages/admin.gif" alt="official icon" width="96" height="96" />
-        </div>
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+      <img src="#xarTplGetImage('admin_generic.gif','base')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
+        <h2>
             <xar:mlstring>What is it?</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+        </h2>
+        <p>
             <em><xar:mlstring>Smilies is an utility module</xar:mlstring></em>
             <xar:mlstring>It is currently responsible for accomplishing these tasks:</xar:mlstring>
             <xar:mlstring>The Smilies module will transform text that is using smilies code to images.</xar:mlstring>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+        </p>
+        <h2>
             <xar:mlstring>How to use it?</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+        </h2>
+        <p>
             <xar:mlstring>
-            From the menu, you have two choices.  "Add Smilies", and "View Smiles". 
+            From the menu, you have two choices.  "Add Smilies", and "View Smiles".
             </xar:mlstring>
             <ul>
                 <li><xar:mlstring>View Smilies -- Allows you to view the smilies that you have configured on your system.</xar:mlstring></li>
                 <li><xar:mlstring>Add Smilies -- Allows you to add new smilies to your system.</xar:mlstring></li>
             </ul>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+        </p>
+        <h3>
             <xar:mlstring>Included Blocks</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+        </h3>
+        <p>
             <ul>
                 <li><xar:mlstring>smilies</xar:mlstring></li>
             </ul>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+        </p>
+        <h3>
             <xar:mlstring>Included Hooks</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+        </h3>
+        <p>
             <xar:mlstring>The Smilies Transform Hook can be used on any content module that calls transforms.</xar:mlstring>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>And more.. [for module developers]</xar:mlstring>
-        </div>
-    </div>
+        </p>
+  <h3>
+    <xar:mlstring>Further Information</xar:mlstring>
+  </h3>
+  <p>
+    <xar:mlstring>Further information on the Smilies module can be found at</xar:mlstring>
+  </p>
+  <ul>
+    <li><xar:mlstring>Smilies Extension page at</xar:mlstring> <a title="#xarML('Smilies Module - Xaraya Extension 153')#" href="http://www.xaraya.com/index.php/release/153.html">Xaraya Extension and Releases</a>.
+      <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+    </li>
+    <li><xar:mlstring>Related tutorials and documentation on Smilies found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/smilies/" title="#xarML('Related documentation on Smilies')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+    </li>
+  </ul>
+  <p class="xar-sub">
+    <strong>&nbsp;<xar:mlstring>Smilies Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2006-04-10
+  </p>
 </div>
