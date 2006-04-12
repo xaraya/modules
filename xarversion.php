@@ -25,7 +25,7 @@
 
 $modversion['id']           = '910';
 $modversion['name']         = 'helpdesk';
-$modversion['version']      = '0.7.2';
+$modversion['version'] = '0.7.5';
 $modversion['displayname']  = xarML('HelpDesk');
 $modversion['description']  = 'HelpDesk Module';
 $modversion['credits']      = 'docs/credits.txt';
@@ -39,10 +39,23 @@ $modversion['user']         = 1;
 $modversion['admin']        = 1;
 $modversion['class']        = 'Complete';
 $modversion['category']     = 'Content';
+$modversion['displayname'] = xarML('HelpDesk');
+$modversion['description'] = 'HelpDesk Module';
+$modversion['credits'] = 'docs/credits.txt';
+$modversion['help'] = 'docs/help.txt';
+$modversion['changelog'] = 'docs/changelog.txt';
+$modversion['license'] = 'docs/license.txt';
+$modversion['official'] = 0;
+$modversion['author'] = 'Brian McGilligan';
+$modversion['contact'] = 'brian@envisionnet.net';
+$modversion['user'] = 1;
+$modversion['admin'] = 1;
+$modversion['securityschema'] = array('helpdesk::' => '::');
+$modversion['class'] = 'Complete';
+$modversion['category'] = 'Content';
 
 /*
-    269 - Owner Module
     270 - Security Module
 */
-$modversion['dependency'] = array(14, 147, 182, 269, 270);
+$modversion['dependency'] = array(14, 147, 182, 270);
 ?>

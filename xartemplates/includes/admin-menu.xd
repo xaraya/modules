@@ -1,0 +1,44 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:comment>Common Administration menu</xar:comment>
+<xar:style scope="module" module="base" file="navtabs" />
+
+<xar:set name="activetab">$_bl_module_func</xar:set>
+<xar:set name="activetype">$_bl_module_type</xar:set>
+<div>
+  <dl class="xar-tabs">
+    <dt class="help" title="Choose an action to perform">
+      <xar:mlstring>Actions:</xar:mlstring>
+    </dt>
+    <xar:sec mask="adminhelpdesk" catch="false">
+
+        <xar:set name="manage_funcs">array('view', 'display', 'new', 'modify', 'delete')</xar:set>
+        <xar:set name="tabclass">in_array($activetab, $manage_funcs)?'active':''</xar:set>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-helpdesk-admin-view;">
+            <xar:mlstring>Manage Items</xar:mlstring>
+          </a>
+        </dd>
+
+        <xar:set name="tabclass">$activetab=='setup_security'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-helpdesk-admin-setup_security;">
+            <xar:mlstring>Setup Security</xar:mlstring>
+          </a>
+        </dd>
+
+        <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-helpdesk-admin-modifyconfig;">
+            <xar:mlstring>Modify Config</xar:mlstring>
+          </a>
+        </dd>
+
+        <xar:set name="tabclass">$activetab=='overview'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-helpdesk-admin-overview;">
+            <xar:mlstring>Overview</xar:mlstring>
+          </a>
+        </dd>
+    </xar:sec>
+  </dl>
+</div>

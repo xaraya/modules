@@ -8,7 +8,10 @@
 </div>
 
 <div class="xar-mod-body">
+
+    <xar:if condition="isset($catid)">
     <xar:categories-navigation layout="trails" showchildren="1" module="helpdesk" itemtype="10" catid="$catid" showcatcount="0" showempty="1" selection="$selection" />
+    </xar:if>
 <xar:if condition="isset($menu)"><xar:var name="menu" /></xar:if>
 
 <xar:if condition="$UserLoggedIn">
@@ -86,7 +89,7 @@
                 <option value=""></option>
             	<xar:foreach in="$companies" key="$key" value="$value">
             	   <xar:if condition="$value.uid eq $company">
-            	   <option value="#$value.uid#" selected="selected"><xar:var name="value.name" /></option>            	   
+            	   <option value="#$value.uid#" selected="selected"><xar:var name="value.name" /></option>
             	   <xar:else />
             	   <option value="#$value.uid#"><xar:var name="value.name" /></option>
             	   </xar:if>
@@ -94,7 +97,7 @@
             	</select>
             </td>
             </xar:if>
-            
+
         </tr>
     </table>
     </form>

@@ -16,24 +16,24 @@ function helpdesk_user_modify($args)
     if (!xarModAPILoad('helpdesk', 'user')) { return false; }
     if (!xarModAPILoad('security', 'user')) { return false; }
 
+    /*
+        Security check to prevent un authorized users from modifying it
+    */
+    $has_security = xarModAPIFunc('security', 'user', 'check',
+        array(
+            'modid'     => xarModGetIDFromName('helpdesk'),
+            'itemtype'  => $itemtype,
+            'itemid'    => $tid,
+            'level'     => SECURITY_WRITE
+        )
+    );
+    if( !$has_security ){ return false; }
+
     // If we have confirmation do the update
     if( !empty($confirm) )
     {
         $enforceauthkey = xarModGetVar('helpdesk', 'EnforceAuthKey');
         if ( $enforceauthkey && !xarSecConfirmAuthKey() ){ return false; }
-
-        /*
-            Security check to prevent un authorized users from modifying it
-        */
-        $has_security = xarModAPIFunc('security', 'user', 'check',
-            array(
-                'modid'     => xarModGetIDFromName('helpdesk'),
-                'itemtype'  => $itemtype,
-                'itemid'    => $tid,
-                'level'     => SECURITY_WRITE
-            )
-        );
-        if( !$has_security ){ return false; }
 
         if( !xarVarFetch('userid',     'str:1:',  $userid,  null,  XARVAR_NOT_REQUIRED) ){ return false; }
         if( !xarVarFetch('name',       'str:1:',  $name,  null,  XARVAR_NOT_REQUIRED) ){ return false; }

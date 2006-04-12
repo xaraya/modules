@@ -5,222 +5,153 @@
 </div>
 <div class="xar-mod-body">
 
- <!--   <xar:template file="admin-menu" /> -->
+    <xar:template file="admin-menu" />
 
     <form action="&xar-modurl-helpdesk-admin-updateconfig;" method="post">
-    <div align="center">
-        <table>
-            <tr>
-                <th colspan="2"><xar:mlstring>Global Settings</xar:mlstring></th>
-            </tr>
-            <tr>
-                <td><xar:mlstring>Module Website</xar:mlstring></td>
-                <td><a href="http://www.abrasiontechnology.com/">Abrasion Technology</a></td>
-            </tr>
-            <tr>
-                <td><xar:mlstring>Enforce Form Authorization</xar:mlstring></td>
-                <xar:if condition="xarModGetVar('helpdesk', 'EnforceAuthKey')">
-                    <xar:set name="$checked">'checked="checked"'</xar:set>
-                <xar:else />
-                    <xar:set name="$checked">''</xar:set>
-                </xar:if>
-                <td><input type="checkbox" name="enforceauthkey" value="1" #$checked# /></td>
-            </tr>
-            <tr>
-                <td><xar:mlstring>Allow Users to check status</xar:mlstring></td>
-                <xar:if condition="xarModGetVar('helpdesk', 'User can check status')">
-                    <xar:set name="$checked">'checked="checked"'</xar:set>
-                <xar:else />
-                    <xar:set name="$checked">''</xar:set>
-                </xar:if>
-                <td><input type="checkbox" name="usercancheckstatus" value="1" #$checked# /></td>
-            </tr>
-            <tr>
-                <td><xar:mlstring>Allow Techs to see ALL tickets</xar:mlstring></td>
-                <xar:if condition="xarModGetVar('helpdesk', 'Techs see all tickets')">
-                    <xar:set name="$checked">'checked="checked"'</xar:set>
-                <xar:else />
-                    <xar:set name="$checked">''</xar:set>
-                </xar:if>
-                <td><input type="checkbox" name="techsseealltickets" value="1" #$checked# /></td>
-            </tr>
-            <tr>
-                <td><xar:mlstring>Enable Images</xar:mlstring></td>
-                <xar:if condition="xarModGetVar('helpdesk', 'Enable Images')">
-                    <xar:set name="$checked">'checked="checked"'</xar:set>
-                <xar:else />
-                    <xar:set name="$checked">''</xar:set>
-                </xar:if>
-                <td><input type="checkbox" name="enableimages" value="1" #$checked# /></td>
-            </tr>
-            <tr>
-                <td><xar:mlstring>Enable HyperLinks in Stats</xar:mlstring></td>
-                <xar:if condition="xarModGetVar('helpdesk', 'EnableMyStatsHyperLink')">
-                    <xar:set name="$checked">'checked="checked"'</xar:set>
-                <xar:else />
-                    <xar:set name="$checked">''</xar:set>
-                </xar:if>
-                <td><input type="checkbox" name="enablemystatshyperlink" value="1" #$checked# /></td>
-            </tr>
+    <fieldset>
+        <legend><xar:mlstring>Global Settings</xar:mlstring></legend>
 
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Module Website</xar:mlstring></label>
+            <a href="http://www.abrasiontechnology.com/">Abrasion Technology</a>
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Enforce Form Authorization</xar:mlstring></label>
+            <xar:set name="$checked">xarModGetVar('helpdesk', 'EnforceAuthKey')?'checked="checked"':''</xar:set>
+            <input type="checkbox" name="enforceauthkey" value="1" #$checked# />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Allow Users to check status</xar:mlstring></label>
+            <xar:set name="$checked">xarModGetVar('helpdesk', 'User can check status')?'checked="checked"':''</xar:set>
+            <input type="checkbox" name="usercancheckstatus" value="1" #$checked# />
+        </div>
+        <xar:comment>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Allow Techs to see ALL tickets</xar:mlstring></label>
+            <xar:set name="$checked">xarModGetVar('helpdesk', 'Techs see all tickets')?'checked="checked"':''</xar:set>
+            <input type="checkbox" name="techsseealltickets" value="1" #$checked# />
+        </div>
+        </xar:comment>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Enable Images</xar:mlstring></label>
+            <xar:set name="$checked">xarModGetVar('helpdesk', 'Enable Images')?'checked="checked"':''</xar:set>
+            <input type="checkbox" name="enableimages" value="1" #$checked# />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Enable HyperLinks in Stats</xar:mlstring></label>
+            <xar:set name="$checked">xarModGetVar('helpdesk', 'EnableMyStatsHyperLink')?'checked="checked"':''</xar:set>
+            <input type="checkbox" name="enablemystatshyperlink" value="1" #$checked# />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Representative Group</xar:mlstring></label>
+            <xar:set name="tech_group">xarModGetVar('helpdesk', 'tech_group')</xar:set>
+            <xar:data-input name="tech_group" type="grouplist" value="$tech_group"/>
+        </div>
 
-            <!-- New Ticket Options -->
-            <tr>
-                <th colspan="2"><xar:mlstring>New Ticket Options</xar:mlstring></th>
-            </tr>
-            <tr>
-                <td><xar:mlstring>Allow Anonymous to submit tickets</xar:mlstring></td>
-                <xar:if condition="xarModGetVar('helpdesk', 'Anonymous can Submit')">
-                    <xar:set name="$checked">'checked="checked"'</xar:set>
-                <xar:else />
-                    <xar:set name="$checked">''</xar:set>
-                </xar:if>
-                <td><input type="checkbox" name="anonymouscansubmit" value="1" #$checked# /></td>
-            </tr>
-            <tr>
-                <td><xar:mlstring>Allow Users to submit tickets</xar:mlstring></td>
-                <xar:if condition="xarModGetVar('helpdesk', 'User can Submit')">
-                    <xar:set name="$checked">'checked="checked"'</xar:set>
-                <xar:else />
-                    <xar:set name="$checked">''</xar:set>
-                </xar:if>
-                <td><input type="checkbox" name="usercansubmit" value="1" #$checked# /></td>
-            </tr>
-            <tr>
-                <td><xar:mlstring>Allow Users to change ticket status on submit</xar:mlstring></td>
-                <xar:if condition="xarModGetVar('helpdesk', 'AllowStatusChangeOnSubmit')">
-                    <xar:set name="$checked">'checked="checked"'</xar:set>
-                <xar:else />
-                    <xar:set name="$checked">''</xar:set>
-                </xar:if>
-                <td><input type="checkbox" name="allowstatuschangeonsubmit" value="1" #$checked# /></td>
-            </tr>
-            <tr>
-                <td><xar:mlstring>Allow closing tickets on submit</xar:mlstring></td>
-                <xar:if condition="xarModGetVar('helpdesk', 'AllowCloseOnSubmit')">
-                    <xar:set name="$checked">'checked="checked"'</xar:set>
-                <xar:else />
-                    <xar:set name="$checked">''</xar:set>
-                </xar:if>
-                <td><input type="checkbox" name="allowcloseonsubmit" value="1" #$checked# /></td>
-            </tr>
-            <tr>
-                <td><xar:mlstring>Default to Logged in Tech ID for Opened By</xar:mlstring></td>
-                <xar:if condition="xarModGetVar('helpdesk', 'OpenedByDefaultToLoggedIn')">
-                    <xar:set name="$checked">'checked="checked"'</xar:set>
-                <xar:else />
-                    <xar:set name="$checked">''</xar:set>
-                </xar:if>
-                <td><input type="checkbox" name="openedbydefaulttologgedin" value="1" #$checked# /></td>
-            </tr>
-            <tr>
-                <td><xar:mlstring>Default the AssignedTo field to the currently logged in user</xar:mlstring></td>
-                <xar:if condition="xarModGetVar('helpdesk', 'AssignedToDefaultToLoggedIn')">
-                    <xar:set name="$checked">'checked="checked"'</xar:set>
-                <xar:else />
-                    <xar:set name="$checked">''</xar:set>
-                </xar:if>
-                <td><input type="checkbox" name="assignedtodefaulttologgedin" value="1" #$checked# /></td>
-            </tr>
-            <tr>
-                <td><xar:mlstring>Allow Usage of Domain Names</xar:mlstring></td>
-                <xar:if condition="xarModGetVar('helpdesk', 'AllowDomainName')">
-                    <xar:set name="$checked">'checked="checked"'</xar:set>
-                <xar:else />
-                    <xar:set name="$checked">''</xar:set>
-                </xar:if>
-                <td><input type="checkbox" name="allowdomainname" value="1" #$checked# /></td>
-            </tr>
+    </fieldset>
 
-            <!-- New Ticket Options -->
-            <tr>
-                <th colspan="2"><xar:mlstring>View Ticket Results Settings</xar:mlstring></th>
-            </tr>
-            <tr>
-                <td><xar:mlstring>Rows per page(0 for all)</xar:mlstring></td>
-                <xar:set name="$value">xarModGetVar('helpdesk', 'Default rows per page')</xar:set>
-                <td><input type="text" name="rowsperpage" value="#$value#" /></td>
-            </tr>
-            <tr>
-                <td><xar:mlstring>Max result page count (ie: 1 2 3 4 )</xar:mlstring></td>
-                <xar:set name="$value">xarModGetVar('helpdesk', 'Page Count Limit')</xar:set>
-                <td><input type="text" name="pagecountlimit" value="#$value#" /></td>
-            </tr>
-            <tr>
-                <td><xar:mlstring>Show Status in view Ticket List</xar:mlstring></td>
-                <xar:if condition="xarModGetVar('helpdesk', 'ShowStatusInSummary')">
-                    <xar:set name="$checked">'checked="checked"'</xar:set>
-                <xar:else />
-                    <xar:set name="$checked">''</xar:set>
-                </xar:if>
-                <td><input type="checkbox" name="showstatusinsummary" value="1" #$checked# /></td>
-            </tr>
-            <tr>
-                <td><xar:mlstring>Show Priority in view Ticket List</xar:mlstring></td>
-                <xar:if condition="xarModGetVar('helpdesk', 'ShowPriorityInSummary')">
-                    <xar:set name="$checked">'checked="checked"'</xar:set>
-                <xar:else />
-                    <xar:set name="$checked">''</xar:set>
-                </xar:if>
-                <td><input type="checkbox" name="showpriorityinsummary" value="1" #$checked# /></td>
-            </tr>
-            <tr>
-                <td><xar:mlstring>Show Date Entered in view Ticket List</xar:mlstring></td>
-                <xar:if condition="xarModGetVar('helpdesk', 'ShowDateEnteredInSummary')">
-                    <xar:set name="$checked">'checked="checked"'</xar:set>
-                <xar:else />
-                    <xar:set name="$checked">''</xar:set>
-                </xar:if>
-                <td><input type="checkbox" name="showdateenteredinsummary" value="1" #$checked# /></td>
-            </tr>
-            <tr>
-                <td><xar:mlstring>Show Last Modified in view Ticket List</xar:mlstring></td>
-                <xar:if condition="xarModGetVar('helpdesk', 'ShowLastModifiedInSummary')">
-                    <xar:set name="$checked">'checked="checked"'</xar:set>
-                <xar:else />
-                    <xar:set name="$checked">''</xar:set>
-                </xar:if>
-                <td><input type="checkbox" name="showlastmodifiedinsummary" value="1" #$checked# /></td>
-            </tr>
-            <tr>
-                <td><xar:mlstring>Show Opened By in Ticket List</xar:mlstring></td>
-                <xar:if condition="xarModGetVar('helpdesk', 'ShowOpenedByInSummary')">
-                    <xar:set name="$checked">'checked="checked"'</xar:set>
-                <xar:else />
-                    <xar:set name="$checked">''</xar:set>
-                </xar:if>
-                <td><input type="checkbox" name="showopenbyinsummary" value="1" #$checked# /></td>
-            </tr>
-            <tr>
-                <td><xar:mlstring>Show Assigned To in Ticket List</xar:mlstring></td>
-                <xar:if condition="xarModGetVar('helpdesk', 'ShowAssignedToInSummary')">
-                    <xar:set name="$checked">'checked="checked"'</xar:set>
-                <xar:else />
-                    <xar:set name="$checked">''</xar:set>
-                </xar:if>
-                <td><input type="checkbox" name="showassignedtoinsummary" value="1" #$checked# /></td>
-            </tr>
-            <tr>
-                <td><xar:mlstring>Show Closed By To in Ticket List</xar:mlstring></td>
-                <xar:if condition="xarModGetVar('helpdesk', 'ShowClosedByInSummary')">
-                    <xar:set name="$checked">'checked="checked"'</xar:set>
-                <xar:else />
-                    <xar:set name="$checked">''</xar:set>
-                </xar:if>
-                <td><input type="checkbox" name="showclosedbyinsummary" value="1" #$checked# /></td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    #$hooks#
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                    <input type="submit" name="submit" value="#xarML('Update Config')#" />
-                </td>
-            </tr>
-        </table>
-    </div>
+    <fieldset>
+        <legend><xar:mlstring>New Ticket Options</xar:mlstring></legend>
+
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Allow Anonymous to submit tickets</xar:mlstring></label>
+            <xar:set name="$checked">xarModGetVar('helpdesk', 'Anonymous can Submit')?'checked="checked"':''</xar:set>
+            <input type="checkbox" name="anonymouscansubmit" value="1" #$checked# />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Allow Users to submit tickets</xar:mlstring></label>
+            <xar:set name="$checked">xarModGetVar('helpdesk', 'User can Submit')?'checked="checked"':''</xar:set>
+            <input type="checkbox" name="usercansubmit" value="1" #$checked# />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Allow Users to change ticket status on submit</xar:mlstring></label>
+            <xar:set name="$checked">xarModGetVar('helpdesk', 'AllowStatusChangeOnSubmit')?'checked="checked"':''</xar:set>
+            <input type="checkbox" name="allowstatuschangeonsubmit" value="1" #$checked# />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Allow closing tickets on submit</xar:mlstring></label>
+            <xar:set name="$checked">xarModGetVar('helpdesk', 'AllowCloseOnSubmit')?'checked="checked"':''</xar:set>
+            <input type="checkbox" name="allowcloseonsubmit" value="1" #$checked# />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Default to Logged in Tech ID for Opened By</xar:mlstring></label>
+            <xar:set name="$checked">xarModGetVar('helpdesk', 'OpenedByDefaultToLoggedIn')?'checked="checked"':''</xar:set>
+            <input type="checkbox" name="openedbydefaulttologgedin" value="1" #$checked# />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Default the AssignedTo field to the currently logged in user</xar:mlstring></label>
+            <xar:set name="$checked">xarModGetVar('helpdesk', 'AssignedToDefaultToLoggedIn')?'checked="checked"':''</xar:set>
+            <input type="checkbox" name="assignedtodefaulttologgedin" value="1" #$checked# />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Allow Usage of Domain Names</xar:mlstring></label>
+            <xar:set name="$checked">xarModGetVar('helpdesk', 'AllowDomainName')?'checked="checked"':''</xar:set>
+            <input type="checkbox" name="allowdomainname" value="1" #$checked# />
+        </div>
+
+    </fieldset>
+
+    <fieldset>
+        <legend><xar:mlstring>View Ticket Results Settings</xar:mlstring></legend>
+
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Rows per page(0 for all)</xar:mlstring></label>
+            <xar:set name="$value">xarModGetVar('helpdesk', 'Default rows per page')</xar:set>
+            <input type="text" name="rowsperpage" value="#$value#" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Max result page count (ie: 1 2 3 4 )</xar:mlstring></label>
+            <xar:set name="$value">xarModGetVar('helpdesk', 'Page Count Limit')</xar:set>
+            <input type="text" name="pagecountlimit" value="#$value#" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Show Status in view Ticket List</xar:mlstring></label>
+            <xar:set name="$checked">xarModGetVar('helpdesk', 'ShowStatusInSummary')?'checked="checked"':''</xar:set>
+            <input type="checkbox" name="showstatusinsummary" value="1" #$checked# />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Show Priority in view Ticket List</xar:mlstring></label>
+            <xar:set name="$checked">xarModGetVar('helpdesk', 'ShowPriorityInSummary')?'checked="checked"':''</xar:set>
+            <input type="checkbox" name="showpriorityinsummary" value="1" #$checked# />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Show Date Entered in view Ticket List</xar:mlstring></label>
+            <xar:set name="$checked">xarModGetVar('helpdesk', 'ShowDateEnteredInSummary')?'checked="checked"':''</xar:set>
+            <input type="checkbox" name="showdateenteredinsummary" value="1" #$checked# />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Show Last Modified in view Ticket List</xar:mlstring></label>
+            <xar:set name="$checked">xarModGetVar('helpdesk', 'ShowLastModifiedInSummary')?'checked="checked"':''</xar:set>
+            <input type="checkbox" name="showlastmodifiedinsummary" value="1" #$checked# />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Show Opened By in Ticket List</xar:mlstring></label>
+            <xar:set name="$checked">xarModGetVar('helpdesk', 'ShowOpenedByInSummary')?'checked="checked"':''</xar:set>
+            <input type="checkbox" name="showopenbyinsummary" value="1" #$checked# />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Show Assigned To in Ticket List</xar:mlstring></label>
+            <xar:set name="$checked">xarModGetVar('helpdesk', 'ShowAssignedToInSummary')?'checked="checked"':''</xar:set>
+            <input type="checkbox" name="showassignedtoinsummary" value="1" #$checked# />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Show Closed By To in Ticket List</xar:mlstring></label>
+            <xar:set name="$checked">xarModGetVar('helpdesk', 'ShowClosedByInSummary')?'checked="checked"':''</xar:set>
+            <input type="checkbox" name="showclosedbyinsummary" value="1" #$checked# />
+        </div>
+
+    </fieldset>
+
+    <xar:var name="hooks" />
+
+    <fieldset class="">
+        <legend>Actions</legend>
+        <div class="xar-form-input-wrapper-after">
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="submit" name="submit" value="#xarML('Update Config')#" />
+        </div>
+    </fieldset>
+
     </form>
+
 </div>
