@@ -1,17 +1,14 @@
-<div class="xar-mod-head">
-  <span class="xar-mod-title">
-    <xar:mlstring>Workflow Administration</xar:mlstring>
-  </span>
-</div>
-
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Workflow Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
+    <xar:template module="workflow" type="module" file="admin-menu" />
+    <h2><xar:mlstring>Monitor Processes</xar:mlstring></h2>
+
   <!-- Include the monitoring navigation -->
   <xar:template file="monitor_bar" type="module"/>
 
     <!-- Show some help if we enabled the feature -->
     <xar:template file="help"/>
 
-    <div style="margin: auto;">
       <fieldset>
         <legend><xar:mlstring>List of processes</xar:mlstring> (#$cant#)</legend>
         <form style="margin-left: 1em;" action="&xar-modurl-workflow-admin-monitor_processes;" method="post">
@@ -161,6 +158,6 @@
       <xar:template file="pager"/>
       <xar:template file="monitor_stats" type="module"/>
       <xar:template file="galaxfooter"/>
-    </div>
+
 </div>
   

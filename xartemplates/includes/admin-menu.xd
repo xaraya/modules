@@ -1,0 +1,46 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:comment>Common Administration menu</xar:comment>
+<xar:style scope="module" module="base" file="navtabs" />
+
+<xar:set name="activetab">$_bl_module_func</xar:set>
+<div>
+  <dl class="xar-tabs">
+    <dt class="help" title="Choose an action to perform">
+      <xar:mlstring>Actions:</xar:mlstring>
+    </dt>
+    <xar:sec mask="AdminWorkflow" catch="false">
+      <xar:if condition="$activetab eq 'monitor_processes' or $activetab eq 'monitor_activities'
+        or $activetab eq 'monitor_instances' or $activetab eq 'monitor_workitems'">
+            <xar:set name="tabclass">'active'</xar:set>
+        <xar:else />
+            <xar:set name="tabclass">''</xar:set>
+        </xar:if>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-workflow-admin-monitor_processes;">
+            <xar:mlstring>Workflow Monitoring</xar:mlstring>
+          </a>
+        </dd>
+
+        <xar:set name="tabclass">$activetab=='processes'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+            <a href="&xar-modurl-workflow-admin-processes;" >
+                <xar:mlstring>Manage Processes</xar:mlstring>
+            </a>
+        </dd>
+
+        <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-workflow-admin-modifyconfig;">
+            <xar:mlstring>Modify Config</xar:mlstring>
+          </a>
+        </dd>
+
+        <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-workflow-admin-overview;">
+            <xar:mlstring>Overview</xar:mlstring>
+          </a>
+        </dd>
+    </xar:sec>
+  </dl>
+</div>

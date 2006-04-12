@@ -1,13 +1,12 @@
-<div>
+<div class="xar-form-input-wrapper">
   <fieldset>
     <legend>
       <xar:mlstring>List of processes</xar:mlstring> (#$cant#)
     </legend>
-    
+
       <!-- Proces filtering -->
-      <form style="margin: 0.5em 0 0.5em 1em;" action="&xar-modurl-workflow-admin-processes;" method="post">
-        <input type="hidden" name="offset" value="#$offset#" />
-        <input type="hidden" name="sort_mode" value="#$sort_mode#" />
+      <div class="xar-form-input-container">
+      <form action="&xar-modurl-workflow-admin-processes;" method="post">
         <xar:mlstring>Find</xar:mlstring>:<input size="8" type="text" name="find" value="#$find#" />
         <xar:mlstring>Process</xar:mlstring>:
         <select name="filter_name">
@@ -23,12 +22,16 @@
           <option value="y"><xar:mlstring>Active</xar:mlstring></option>
           <option value="n"><xar:mlstring>Inactive</xar:mlstring></option>
         </select>
-        
+
+        <input type="hidden" name="offset" value="#$offset#" />
+        <input type="hidden" name="sort_mode" value="#$sort_mode#" />
         <input type="submit" name="filter" value="#xarML('Filter')#" />
       </form>
-      
+      </div>
+
       <!-- List of processes -->
-      <form style="margin-left: 1em; width: 100%" action="&xar-modurl-workflow-admin-processes;" method="post">
+      <div class="xar-form-input-container">
+      <form action="&xar-modurl-workflow-admin-processes;" method="post">
         <input type="hidden" name="offset" value="#$offset#" />
         <input type="hidden" name="find" value="#$find#" />
         <input type="hidden" name="where" value="#$where#" />
@@ -89,42 +92,42 @@
                   <input type="checkbox" name="process[#$items[$ix]['pId']#]" />&nbsp;
                   <a href="#$baselink#&amp;sort_mode=#$sort_mode#&amp;pid=#$items[$ix]['pId']#">#$items[$ix]['name']#</a>
                 </td>
-                <td style="text-align:right;">#$items[$ix]['version']#</td>
-                <td style="text-align:center;">
+                <td class="xar-align-right">#$items[$ix]['version']#</td>
+                <td class="xar-align-center">
                   <xar:if condition="$items[$ix]['isActive'] eq 'y'">
                     <img src="modules/workflow/lib/Galaxia/img/icons/refresh2.gif" alt="(#xarML('active')#)" title="#xarML('active process')#" />
                   <xar:else/>
                     &nbsp;
                   </xar:if>
                 </td>
-                <td style="text-align:center;">
+                <td class="xar-align-center">
                   <xar:if condition="$items[$ix]['isValid'] eq 'n'">
                     <img src="modules/workflow/lib/Galaxia/img/icons/red_dot.gif" alt="(#xarML('invalid')#)" title="#xarML('invalid process')#" />
                   <xar:else/>
                     <img src="modules/workflow/lib/Galaxia/img/icons/green_dot.gif" alt="(#xarML('valid')#)" title="#xarML('valid process')#" />
                   </xar:if>  
                 </td>
-                <td style="text-align:center;"><a href="#$baselink#&amp;sort_mode=#$sort_mode#&amp;newminor=#$items[$ix]['pId']#">
+                <td class="xar-align-center"><a href="#$baselink#&amp;sort_mode=#$sort_mode#&amp;newminor=#$items[$ix]['pId']#">
                     <span>1.</span><span class="xar-accent-outline">x</span></a></td>
                 <td><a href="#$baselink#&amp;sort_mode=#$sort_mode#&amp;newmajor=#$items[$ix]['pId']#">
                     <span class="xar-accent-outline">x</span><span>.1</span></a></td>
-                <td style="text-align:center;">
+                <td class="xar-align-center">
                   <a href="&xar-modurl-workflow-admin-activities;&amp;pid=#$items[$ix]['pId']#">
                     <img src="modules/workflow/lib/Galaxia/img/icons/Activity.gif" alt="#xarML('activities')#" title="#xarML('activities')#" /></a>
                 </td>
-                <td style="text-align:center;">
+                <td class="xar-align-center">
                   <a href="&xar-modurl-workflow-admin-shared_source;&amp;pid=#$items[$ix]['pId']#">
                     <img src="modules/workflow/lib/Galaxia/img/icons/book.gif" alt="#xarML('code')#" title="#xarML('code')#" /></a>
                 </td>
-                <td style="text-align:center;">
+                <td class="xar-align-center">
                   <a href="&xar-modurl-workflow-admin-roles;&amp;pid=#$items[$ix]['pId']#">
                     <img src="modules/workflow/lib/Galaxia/img/icons/myinfo.gif" alt="#xarML('roles')#" title="#xarML('roles')#" /></a>
                 </td>
-                <td style="text-align:center;">
+                <td class="xar-align-center">
                   <a href="&xar-modurl-workflow-admin-graph;&amp;pid=#$items[$ix]['pId']#">
                     <img src="modules/workflow/lib/Galaxia/img/icons/mode_tree.gif" title="#xarML('graph')#" alt="#xarML('graph')#" /></a>
                 </td>
-                <td style="text-align:center;">
+                <td class="xar-align-center">
                   <a class="link" href="&xar-modurl-workflow-admin-save_process;&amp;pid=#$items[$ix]['pId']#">
                     <img src="modules/workflow/lib/Galaxia/img/icons/export.gif" alt="#xarML('export')#" title="#xarML('export')#" /></a>
                 </td>
@@ -141,5 +144,6 @@
           </xar:if>
         </table>
       </form>
+      </div>
   </fieldset>
 </div>

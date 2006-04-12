@@ -1,9 +1,9 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Workflow Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Modify Configuration</xar:mlstring></h2>
-<div style="margin: auto;">
-<form method="post" action="#xarModURL('workflow', 'admin', 'updateconfig')#" enctype="application/x-www-form-urlencoded" >
-    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+<div class="xar-mod-body">
+    <xar:template module="workflow" type="module" file="admin-menu" />
+    <h2><xar:mlstring>Modify Configuration</xar:mlstring></h2>
 
+<form method="post" action="&xar-modurl-workflow-admin-updateconfig;" enctype="application/x-www-form-urlencoded" >
     <fieldset>
       <legend><xar:mlstring>Global Configuration</xar:mlstring></legend>
       <div class="xar-form-input-wrapper-after">
@@ -150,7 +150,10 @@
       </p>
 
     </fieldset>
-    <input type="submit" value="Update Workflow Configuration" />
+    <div class="xar-form-input-wrapper-after">
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <input type="submit" value="Update Workflow Configuration" />
+    </div>
 </form>
-</div>
+
 </div>
