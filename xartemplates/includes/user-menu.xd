@@ -19,16 +19,16 @@
     <dl class="xar-tabs">
         <dt class="help"><xar:mlstring>ITSP details</xar:mlstring>:</dt>
         <xar:if condition="$whatFunc eq 'display'">
-            <dd class="active"><a href="#$navPlanUrl#"><xar:mlstring>Plan</xar:mlstring></a></dd>
+            <dd class="active"><a href="#$navPlanUrl#"><xar:mlstring>Overview</xar:mlstring></a></dd>
         <xar:else />
-            <dd><a href="#$navPlanUrl#"><xar:mlstring>Plan</xar:mlstring></a></dd>
+            <dd><a href="#$navPlanUrl#"><xar:mlstring>Overview</xar:mlstring></a></dd>
         </xar:if>
         <xar:if condition="$whatFunc eq 'itsp'">
-            <dd class="active"><a href="#$navITSPUrl#"><xar:mlstring>Your ITSP</xar:mlstring></a></dd>
+            <dd class="active"><a href="#$navITSPUrl#"><xar:mlstring>My ITSP</xar:mlstring></a></dd>
         <xar:else />
-            <dd><a href="#$navITSPUrl#"><xar:mlstring>Your ITSP</xar:mlstring></a></dd>
+            <dd><a href="#$navITSPUrl#"><xar:mlstring>My ITSP</xar:mlstring></a></dd>
         </xar:if>
-
+        <dt class="help"><xar:mlstring>Sections</xar:mlstring>:</dt>
         <xar:if condition="!empty($pitems)">
             <xar:foreach in="$pitems" value="$item">
                 <xar:if condition="(!empty($pitemid)) AND ($item.pitemid eq $pitemid)">

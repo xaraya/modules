@@ -8,7 +8,7 @@
     <!-- the variables used in this menu template come from itsp_user_menu() -->
     <xar:template type="module" file="user-menu" />
 
-    <h2><xar:mlstring>Your plan</xar:mlstring></h2>
+    <h2><xar:mlstring>My ITSP</xar:mlstring></h2>
     <xar:if condition="xarSessionGetVar('statusmsg') ne ''">
         <p>#xarSessionGetVar('statusmsg')#</p>
     </xar:if>
