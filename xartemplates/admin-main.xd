@@ -8,37 +8,38 @@
 <div class="xar-mod-body">
     <h2><xar:mlstring>Overview</xar:mlstring></h2>
 
-        <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+    <h3>What is it?</h3>
+    <p>
+        <xar:mlstring>Helpdesk is system which enables system admin support to its users though a web based interface.  It allows admin to track the progress of tickets.</xar:mlstring>
+    </p>
 
-        <p>
-            <xar:mlstring>Helpdesk is system which enables system admin support to its users though a web based interface.  It allows admin to track the progress of tickets.</xar:mlstring>
-        </p>
+    <h3>How to use it?</h3>
+    <p>
+        <xar:mlstring>From the menu, you have three choices.  "Overview", "View Items", and "Modify Configuration".</xar:mlstring>
+        <ul>
+            <li><xar:mlstring>Overview -- Allows you to view this screen.</xar:mlstring></li>
+            <li><xar:mlstring>View Items -- Allows you to manage any helpdesk item.</xar:mlstring></li>
+            <li><xar:mlstring>Modify Configuration -- Allows you to set certain configuration routines for forums.</xar:mlstring></li>
+        </ul>
+    </p>
+    <h3>Important Setup Instructions!</h3>
+    <p>
+        Helpdesk Techs have changed since using the security module.  Techs need to be set as a default group in the security module for helpdesk tickets with Overview thru Write privileges.
+    </p>
 
-        <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
-        <p>
-            <xar:mlstring>
-            From the menu, you have three choices.  "Overview", "View Items", and "Modify Configuration".
-            </xar:mlstring>
-            <ul>
-                <li><xar:mlstring>Overview -- Allows you to view this screen.</xar:mlstring></li>
-                <li><xar:mlstring>View Items -- Allows you to manage any helpdesk item.</xar:mlstring></li>
-                <li><xar:mlstring>Modify Configuration -- Allows you to set certain configuration routines for forums.</xar:mlstring></li>
-            </ul>
-        </p>
-        <p>
-            Helpdesk Techs have changed since using the security module. Techs need to be set as a default group in the security module for helpdesk tickets with Overview thru Write privileges.
-        </p>
+    <p>Once you create a "Techs" group in the roles module, goto AdminMenu -> Security -> Modify Hook Settings</p>
 
+    <p>Select helpdesk - 1 and click the reload button.  More options should then appear.</p>
 
-        <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
-        <p>
-            <xar:mlstring>There are no included blocks</xar:mlstring>
-        </p>
+    <p>The security module is a Unix style privilege system for xaraya based items, except that security has different levels and more of them.  In security you have three types of "groups", User(just you), Groups(roles based group), and World(everyone).</p>
 
-        <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
-        <p>
-            <xar:mlstring>There are no included hooks</xar:mlstring>
-        <p/>
+    <p>When an item is created,  every group the user is in a set of privileges is created unless one of the groups is in the modules exclude list. It is recommended that you add the "Users" group to this list.</p>
+
+    <p>It is recommended to have the "Default Group Level" set to 60 for the helpdesk module, but you may decide to use a different value once you get the hang how that works.</p>
+
+    <p>In the Security field set give the "User" column Overview thru Manage access by checking the check boxes.  Then Add your helpdesk techs group and give them Overview thru Write. Then give World nothing at all.  This will make it so that User can and techs can see and write to the ticket and no one else can see it.</p>
+
+    <p>The Security module does make the Helpdesk a little more complicated to get setup at first, but it expands the capabilities of the helpdesk.  It allows you to define who should be able to see tickets once they are created w/o modifing code.  <xar:comment>One thing you can do is have different companies(a roles group), having your users in the various companies. Then you set it so that the group can modify/comment on the ticket which maybe useful in some cases.</xar:comment>  Helpdesk now has a very flexible security system.</p>
 
   <h3>
     <xar:mlstring>Further Information</xar:mlstring>
@@ -56,5 +57,5 @@
   <p class="xar-sub">
     <strong>&nbsp;<xar:mlstring>Helpdesk Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2006-04-12
   </p>
-    </div>
+
 </div>

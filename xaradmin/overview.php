@@ -28,6 +28,6 @@ function helpdesk_admin_overview($args)
 
     $data = array();
 
-    return $data;
+    return xarTplModule('helpdesk', 'admin', 'main', $data,'main');
 }
 ?>
