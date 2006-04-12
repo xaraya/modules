@@ -7,23 +7,15 @@
 
 <div class="xar-mod-body">
     <h2><xar:mlstring>Overview</xar:mlstring></h2>
-    <div style="padding: 1px;" class="xar-norm-outline">
-        <div style="float:right;padding:10px;">
-            <img src="modules/adminpanels/xarimages/admin.gif" alt="official icon" width="96" height="96" />
-        </div>
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>What is it?</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+
+        <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+
+        <p>
             <xar:mlstring>Helpdesk is system which enables system admin support to its users though a web based interface.  It allows admin to track the progress of tickets.</xar:mlstring>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>How to use it?</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+        </p>
+
+        <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
+        <p>
             <xar:mlstring>
             From the menu, you have three choices.  "Overview", "View Items", and "Modify Configuration".
             </xar:mlstring>
@@ -32,28 +24,37 @@
                 <li><xar:mlstring>View Items -- Allows you to manage any helpdesk item.</xar:mlstring></li>
                 <li><xar:mlstring>Modify Configuration -- Allows you to set certain configuration routines for forums.</xar:mlstring></li>
             </ul>
-        </div>
-        
-        <div style="margin: 1em; text-align:left;">
-        <p>
-            Helpdesk Techs have chagned since using the security module.  Techs need to be set as a default group in the security module for helpdesk tickets with Overview thru Write privileges.
         </p>
-        </div>        
+        <p>
+            Helpdesk Techs have changed since using the security module. Techs need to be set as a default group in the security module for helpdesk tickets with Overview thru Write privileges.
+        </p>
 
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>Included Blocks</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+
+        <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
+        <p>
             <xar:mlstring>There are no included blocks</xar:mlstring>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>Included Hooks</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+        </p>
+
+        <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
+        <p>
             <xar:mlstring>There are no included hooks</xar:mlstring>
-        </div>
+        <p/>
+
+  <h3>
+    <xar:mlstring>Further Information</xar:mlstring>
+  </h3>
+  <p>
+    <xar:mlstring>Further information on the Helpdesk module can be found at</xar:mlstring>
+  </p>
+  <ul>
+    <li><xar:mlstring>Helpdesk Extension page at</xar:mlstring> <a title="#xarML('Helpdesk Module - Xaraya Extension 910')#" href="http://www.xaraya.com/index.php/release/910.html">Xaraya Extension and Releases</a>.
+      <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+    </li>
+    <li><xar:mlstring>Related tutorials and documentation on Example found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/helpdesk/" title="#xarML('Related documentation on Example')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+    </li>
+  </ul>
+  <p class="xar-sub">
+    <strong>&nbsp;<xar:mlstring>Helpdesk Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2006-04-12
+  </p>
     </div>
 </div>

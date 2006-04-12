@@ -2,8 +2,8 @@
 /**
  * Helpdesk Module
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -23,23 +23,22 @@
 /* http://www.dimensionquest.net                        */
 /********************************************************/
 
-$modversion['id'] = '910';
-$modversion['name'] = 'helpdesk';
-$modversion['version'] = '0.7.2';
-$modversion['displayname'] = xarML('HelpDesk');
-$modversion['description'] = 'HelpDesk Module';
-$modversion['credits'] = 'docs/credits.txt';
-$modversion['help'] = 'docs/help.txt';
-$modversion['changelog'] = 'docs/changelog.txt';
-$modversion['license'] = 'docs/license.txt';
-$modversion['official'] = 0;
-$modversion['author'] = 'Brian McGilligan';
-$modversion['contact'] = 'brian@envisionnet.net';
-$modversion['user'] = 1;
-$modversion['admin'] = 1;
-$modversion['securityschema'] = array('helpdesk::' => '::');
-$modversion['class'] = 'Complete';
-$modversion['category'] = 'Content';
+$modversion['id']           = '910';
+$modversion['name']         = 'helpdesk';
+$modversion['version']      = '0.7.2';
+$modversion['displayname']  = xarML('HelpDesk');
+$modversion['description']  = 'HelpDesk Module';
+$modversion['credits']      = 'docs/credits.txt';
+$modversion['help']         = 'docs/help.txt';
+$modversion['changelog']    = 'docs/changelog.txt';
+$modversion['license']      = 'docs/license.txt';
+$modversion['official']     = 0;
+$modversion['author']       = 'Brian McGilligan';
+$modversion['contact']      = 'brian@envisionnet.net';
+$modversion['user']         = 1;
+$modversion['admin']        = 1;
+$modversion['class']        = 'Complete';
+$modversion['category']     = 'Content';
 
 /*
     269 - Owner Module
