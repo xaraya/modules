@@ -2,8 +2,7 @@
     <xar:if condition="!empty($format) and $format eq 'textupload'">
         <xar:loop name="$Attachments">#file:#$loop:item['fileId']## </xar:loop>
     <xar:else/>
-        <xar:set name="$stylesheet">xarTplAddStyleLink('uploads', 'uploads')</xar:set>
-
+        <xar:style module="uploads" scope="module" file="uploads" />
         <xar:loop name="$Attachments">
             <xar:if condition="isset($style) AND $style eq 'icon'">
                 <div class="xar-uploads-icon">
