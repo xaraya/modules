@@ -311,22 +311,24 @@
                         #xarlocalegetformatteddate('medium',$item.last_modified)#
                     </div>
                </fieldset>
-               <fieldset>
-               <div class="xar-form-input-wrapper-after">
-                   <xar:if condition="!$closed">
-                       <xar:if condition="$enrolled == 0">
-                           <input type="hidden" name="planningid" id="planningid" value="#$planningid#" />
-                           <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                           <input type="submit" value="#$enrollbutton#" />
-                       <xar:else />
-                           <h3>#$enrollbutton#</h3>
-                       </xar:if>
-                   <xar:else />
-                       <xar:mlstring>Registration Closed</xar:mlstring>
-                   </xar:if>
-               </div>
-              </fieldset>
+               <xar:if condition="$allowregistration">
+                   <fieldset>
 
+                       <div class="xar-form-input-wrapper-after">
+                           <xar:if condition="!$closed">
+                               <xar:if condition="$enrolled == 0">
+                                   <input type="hidden" name="planningid" id="planningid" value="#$planningid#" />
+                                   <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                                   <input type="submit" value="#$enrollbutton#" />
+                               <xar:else />
+                                   <h3>#$enrollbutton#</h3>
+                               </xar:if>
+                           <xar:elseif condition ="$closed" />
+                               <xar:mlstring>Registration Closed</xar:mlstring>
+                           </xar:if>
+                       </div>
+                  </fieldset>
+               </xar:if>
             <H2>#xarML('Other occurences of this course')#</H2>
             <table>
                 <thead>
@@ -343,7 +345,7 @@
                     <td>#$item['location']#</td>
                     <td>#$item['credits']#</td>
                     <td>
-                       <xar:if condition="!empty($item['enrollurl'])">
+                       <xar:if condition="(!empty($item['enrollurl']) AND $allowregistration)">
                            <a href="#$item['enrollurl']#">#$item.enrolltitle#</a>
                        </xar:if>
                        <xar:if condition="!empty($item['detailsurl'])">
@@ -358,7 +360,7 @@
                        |
                            <a href="#$item['statusurl']#">#$item.statustitle#</a>
                        </xar:if>
-                       <xar:if condition="!empty($item.participantsurl)">
+                       <xar:if condition="(!empty($item.participantsurl) AND $allowregistration)">
                        |
                            <a href="#$item['participantsurl']#">#$item.participantstitle#</a>
                        </xar:if>

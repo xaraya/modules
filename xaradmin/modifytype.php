@@ -3,7 +3,7 @@
  * Modify an item
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -18,19 +18,21 @@
  * This is a standard function that is called whenever an administrator
  * wishes to modify a current module item
  *
- * @author Courses Module Development Team
+ * @author MichelV <michelv@xaraya.com>
  * @param  $ 'tid' the id of the item to be modified
+ * @return array
  */
 function courses_admin_modifytype($args)
 {
     extract($args);
 
-    if (!xarVarFetch('tid',     'id',     $tid)) return;
-    if (!xarVarFetch('objectid', 'id',     $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('invalid',  'array', $invalid, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('coursetype', 'str:1:',    $coursetype, $coursetype, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('descr',      'str:1:255', $descr,      $descr,      XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('settings',   'str:1:255', $settings,   $settings,   XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('tid',         'id',        $tid)) return;
+    if (!xarVarFetch('objectid',    'id',        $objectid,   $objectid,   XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('invalid',     'array',     $invalid,    $invalid,    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('coursetype',  'str:1:',    $coursetype, $coursetype, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('descr',       'str:1:255', $descr,      $descr,      XARVAR_NOT_REQUIRED)) return;
+   // if (!xarVarFetch('settings',    'str:1:255', $settings,   $settings,   XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('allowregi',   'checkbox',  $allowregi,  $allowregi,  XARVAR_NOT_REQUIRED)) return;
 
     if (!empty($objectid)) {
         $tid = $objectid;
@@ -81,10 +83,11 @@ function courses_admin_modifytype($args)
     $data['authid']   = xarSecGenAuthKey();
     $data['coursetype']   = $coursetype;
     $data['descr']        = $descr;
-    $data['settings']     = $settings;
+   // $data['settings']     = $settings;
+    $data['allowregi']    = $allowregi ? true : false;
+    $data['allowregi_checked'] = xarmodgetvar('courses', 'allowregi'.$tid) ? true : false;
     $data['invalid']      = $invalid;
     $data['item']         = $item;
-
     return $data;
 }
 ?>

@@ -3,7 +3,7 @@
  * Standard function to update a current item
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -12,26 +12,30 @@
  * @author Courses module development team
  */
 /**
- * Standard function to update a current item
+ * Update the coursetype
  *
  * This function is called with the results of the
- * form supplied by xarModFunc('courses','admin','modify') to update a current item
+ * form supplied by xarModFunc('courses','admin','modifytype') to update a current item
  *
  * @author MichelV <michelv@xaraya.com>
  * @param  $ 'tid' the id of the type to be updated
- * @param  $ 'name' the name of the item to be updated
- * @param  $ 'number' the number of the item to be updated
+ * @param  $ 'coursetype' the name of the item to be updated
+ * @param  $ 'desc' the desciption for this coursetype
+ * @param string settings Not in use, collection of settings
+ * @param bool allowregi Allow registration in this coursetype
+ * @return bool true on success of update and redirect
  */
 function courses_admin_updatetype($args)
 {
     extract($args);
 
-    if (!xarVarFetch('tid',        'id',     $tid,     $tid,     XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('objectid',   'id',     $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('invalid',    'array',  $invalid,  $invalid,        XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('coursetype', 'str:1:',    $coursetype, $coursetype, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('descr',      'str:1:255', $descr,      $descr,      XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('settings',   'str:1:255', $settings,   $settings,   XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('tid',        'id',        $tid)) return;
+    if (!xarVarFetch('objectid',   'id',        $objectid,   $objectid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('invalid',    'array',     $invalid,    array(),   XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('coursetype', 'str:1:',    $coursetype, '',        XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('descr',      'str:1:255', $descr,      '',        XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('settings',   'str:1:255', $settings,   '',        XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('allowregi',  'checkbox',  $allowregi,  false,     XARVAR_NOT_REQUIRED)) return;
 
     if (!empty($objectid)) {
         $tid = $objectid;
@@ -56,9 +60,11 @@ function courses_admin_updatetype($args)
                           array('coursetype' => $coursetype,
                                 'descr'      => $descr,
                                 'settings'   => $settings,
+                                'allowregi'  => $allowregi,
                                 'invalid'    => $invalid));
     }
-
+    // Update settings
+    xarModSetVar('courses', 'allowregi'.$tid, $allowregi);
     /* The API function is called. Note that the name of the API function and  */
     if (!xarModAPIFunc('courses',
                        'admin',

@@ -3,7 +3,7 @@
  * Display a planned course
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -19,7 +19,7 @@
  *
  * @author MichelV <michelv@xarayahosting.nl>
  *
- * @param id $objectid A generic object id (if called by other modules)
+ * @param id $objectid A generic object id (if called by other modules) OPTIONAL
  * @param id $planningid The ID of the planned course
  * @return array Data for the template
  */
@@ -60,10 +60,14 @@ function courses_user_displayplanned($args)
     $data['course'] = $course;
     $data['levelname'] = xarModAPIFunc('courses', 'user', 'getlevel',
                                       array('level' => $course['level']));
+    $allowregistration = xarModGetVar('courses','allowregi'.$course['coursetype']) ? true : false;
+    $data['allowregistration'] = $allowregistration;
+    $data['closed'] = false;
+    $data['enrolled'] = false;
 
     // Get the username so we can pass it to the enrollment function
     $uid = xarUserGetVar('uid');
-    if (xarSecurityCheck('ReadCourses', 0, 'Course', "$courseid:$planningid:All")) {
+    if (xarSecurityCheck('ReadCourses', 0, 'Course', "$courseid:$planningid:All") && $allowregistration) {
         // See if the date for enrollment is surpassed
         $closedate = $item['closedate'];
         $timenow = time();
@@ -112,7 +116,7 @@ function courses_user_displayplanned($args)
     for ($i = 0; $i < count($items); $i++) {
         $planitem = $items[$i];
         $planningid = $planitem['planningid'];
-        if (xarSecurityCheck('EditCourses', 0, 'Course', "$courseid:$planningid:All")) {
+        if ((xarSecurityCheck('EditCourses', 0, 'Course', "$courseid:$planningid:All")) && $allowregistration) {
             $items[$i]['participantsurl'] = xarModURL('courses',
                 'admin',
                 'participants',
@@ -122,7 +126,7 @@ function courses_user_displayplanned($args)
         }
         $items[$i]['participantstitle'] = xarML('Participants');
 
-        if (xarSecurityCheck('ReadCourses', 0, 'Course', "$courseid:$planningid:All")) {
+        if ((xarSecurityCheck('ReadCourses', 0, 'Course', "$courseid:$planningid:All")) && $allowregistration) {
             // See if the date for enrollment is surpassed
             $closedate = $planitem['closedate'];
             $timenow = time();

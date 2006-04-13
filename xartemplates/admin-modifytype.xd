@@ -26,7 +26,7 @@
     <form method="post" action="&xar-modurl-courses-admin-updatetype;" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
         <fieldset>
             <legend>
-                <xar:mlstring>Item to Modify</xar:mlstring>
+                <xar:mlstring>Coursetype to Modify</xar:mlstring>
             </legend>
 
             <div class="xar-form-input-wrapper">
@@ -64,13 +64,13 @@
              </xar:if>
             </div>
             <div class="xar-form-input-wrapper">
-                 <label for="settings" class="xar-form-label" title="#xarML('This is the course type name')#">
-                        <xar:mlstring>Settings</xar:mlstring>
+                 <label for="settings" class="xar-form-label" title="#xarML('When not allowed, users will be redirected to other website')#">
+                        <xar:mlstring>Allow registration</xar:mlstring>
                  </label>
-             <xar:if condition="!empty($settings)">
-                 <input type="text" name="settings" id="settings" value="#$settings#" maxlength="100" class="xar-form-textlong" />
+             <xar:if condition="$allowregi_checked">
+                 <input type="checkbox" name="allowregi" id="allowregi" value="1" checked="checked"/>
              <xar:else />
-                 <input type="text" name="settings" id="settings" value="#$item.settings#" maxlength="100" class="xar-form-textlong" />
+                 <input type="checkbox" name="allowregi" id="allowregi" value="1" />
              </xar:if>
              <xar:if condition="!empty($invalid['settings'])">
                  <div class="xar-error">

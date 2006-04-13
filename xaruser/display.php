@@ -69,58 +69,63 @@ function courses_user_display($args)
     // TODO: howto check for correctness here?
     if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
+    $allowregistration = xarModGetVar('courses','allowregi'.$item['coursetype']) ? true : false;
+    $data['allowregistration'] = $allowregistration;
+
     // Check individual permissions for Enroll/Edit/Viewstatus
     for ($i = 0; $i < count($items); $i++) {
         $planitem = $items[$i];
         $planningid = $planitem['planningid'];
-        // Check to see if user is teacher
-        $check = xarModAPIFunc('courses',
-                               'admin',
-                               'check_teacher',
-                                array('userid' => $uid,
-                                      'planningid' => $planningid));
-        // With a result, the teacher can see the menu, or when there is an appropriate priv
-        if (count($check)!=0 || xarSecurityCheck('EditCourses', 0, 'Course', "$courseid:$planningid:All")) {
-            $items[$i]['participantsurl'] = xarModURL('courses',
-                'admin',
-                'participants',
-                array('planningid' => $planningid));
-        } else {
-            $items[$i]['participantsurl'] = '';
-        }
-        $items[$i]['participantstitle'] = xarML('Participants');
-
-        if (xarSecurityCheck('ReadCourses', 0, 'Course', "$courseid:$planningid:All")) {
-            // See if the date for enrollment is surpassed
-            $closedate = $planitem['closedate'];
-            $timenow = time();
-            if($closedate > $timenow) {
-                // Add check for already enrolled
-                $enrolled = xarModAPIFunc('courses',
-                              'user',
-                              'check_enrolled',
-                              array('uid' => $uid,
-                                    'planningid' => $planningid));
-                if (count($enrolled)!=0) {
-                    $items[$i]['enrolltitle'] = xarML('Enrolled');
-                    // When enrolled, redirect to details page instead
-                    $items[$i]['enrollurl'] = xarModURL('courses',
-                                              'user',
-                                              'displayplanned',
-                                               array('planningid' => $planningid));
-                } else {
-                    $items[$i]['enrolltitle'] = xarML('Enroll');
-                    $items[$i]['enrollurl'] = xarModURL('courses',
-                        'user',
-                        'enroll',
-                        array('planningid' => $planningid));
-                }
+        if ($allowregistration) {
+            // Check to see if user is teacher
+            $check = xarModAPIFunc('courses',
+                                   'admin',
+                                   'check_teacher',
+                                    array('userid' => $uid,
+                                          'planningid' => $planningid));
+            // With a result, the teacher can see the menu, or when there is an appropriate priv
+            if (count($check)!=0 || xarSecurityCheck('EditCourses', 0, 'Course', "$courseid:$planningid:All")) {
+                $items[$i]['participantsurl'] = xarModURL('courses',
+                    'admin',
+                    'participants',
+                    array('planningid' => $planningid));
             } else {
-                $items[$i]['enrolltitle'] = xarML('Registration Closed');
-                $items[$i]['enrollurl'] = xarModURL('courses',
+                $items[$i]['participantsurl'] = '';
+            }
+            $items[$i]['participantstitle'] = xarML('Participants');
+
+            if (xarSecurityCheck('ReadCourses', 0, 'Course', "$courseid:$planningid:All")) {
+                // See if the date for enrollment is surpassed
+                $closedate = $planitem['closedate'];
+                $timenow = time();
+                if($closedate > $timenow) {
+                    // Add check for already enrolled
+                    $enrolled = xarModAPIFunc('courses',
+                                  'user',
+                                  'check_enrolled',
+                                  array('uid' => $uid,
+                                        'planningid' => $planningid));
+                    if (count($enrolled)!=0) {
+                        $items[$i]['enrolltitle'] = xarML('Enrolled');
+                        // When enrolled, redirect to details page instead
+                        $items[$i]['enrollurl'] = xarModURL('courses',
                                                   'user',
                                                   'displayplanned',
                                                    array('planningid' => $planningid));
+                    } else {
+                        $items[$i]['enrolltitle'] = xarML('Enroll');
+                        $items[$i]['enrollurl'] = xarModURL('courses',
+                            'user',
+                            'enroll',
+                            array('planningid' => $planningid));
+                    }
+                } else {
+                    $items[$i]['enrolltitle'] = xarML('Registration Closed');
+                    $items[$i]['enrollurl'] = xarModURL('courses',
+                                                      'user',
+                                                      'displayplanned',
+                                                       array('planningid' => $planningid));
+                }
             }
         }
 

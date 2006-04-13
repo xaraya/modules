@@ -95,21 +95,21 @@
                         <td>#$item.location#</td>
                         <td>#$item.credits#</td>
                         <td>
-                           <xar:if condition="!empty($item['enrollurl'])">
+                            <xar:if condition="!empty($item['enrollurl'])">
                                <a href="#$item['enrollurl']#">#$item['enrolltitle']#</a>
-                           </xar:if>
-                           <xar:if condition="!empty($item['detailsurl'])">
-                           |
+                            </xar:if>
+                            <xar:if condition="!empty($item['detailsurl'])">
+                            <xar:if condition="$allowregistration">|</xar:if>
                                <a href="#$item['detailsurl']#">#$item['detailstitle']#</a>
-                           </xar:if>
-                           <xar:if condition="!empty($item['editurl'])">
-                           |
+                            </xar:if>
+                            <xar:if condition="!empty($item['editurl'])">
+                               |
                                <a href="#$item['editurl']#">#$item['edittitle']#</a>
-                           </xar:if>
-                           <xar:if condition="!empty($item['participantsurl'])">
-                           |
+                            </xar:if>
+                            <xar:if condition="!empty($item['participantsurl'])">
+                               |
                                <a href="#$item['participantsurl']#">#$item['participantstitle']#</a>
-                           </xar:if>
+                            </xar:if>
                         </td>
                     </tr>
                     </xar:foreach>
