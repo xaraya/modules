@@ -7,9 +7,17 @@
 function security_admin_main($args)
 {
     extract($args);
-    
-    xarResponseRedirect(xarModURL('security', 'admin', 'enablemodulesecurity'));
-    
+    if( !xarSecurityCheck('AdminSecurity') ){ return false; }
+
+    if( xarModGetVar('adminpanels', 'overview') == 0 )
+    {
+        xarResponseRedirect(xarModURL('security', 'admin', 'overview'));
+    }
+    else
+    {
+        xarResponseRedirect(xarModURL('security', 'admin', 'hook_settings'));
+    }
+
     return false;
 }
 ?>

@@ -1,17 +1,25 @@
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:mlstring>Security Hook Settings</xar:mlstring>
+        <xar:mlstring>Security Administration - Hook Settings</xar:mlstring>
     </span>
 </div>
 <div class="xar-mod-body">
 
-    <form action="#xarModURL('security', 'admin', 'hook_settings')#" method="POST">
+    <xar:template file="admin-menu" />
+
+    <p>
+        Configure default security settings for various module / itemtype combinations.
+    </p>
+
+    <form name="hook_settings" action="&xar-modurl-security-admin-hook_settings;" method="POST">
     <fieldset>
         <legend><xar:mlstring>Item Type</xar:mlstring></legend>
-        
+
         <div class="xar-form-input-wrapper">
             <label class="xar-form-label"><xar:mlstring>Module / Item Type</xar:mlstring></label>
-            <select name="mod_itemtype" class="xar-form-textlong">
+            <input type="hidden" name="reload" value="" />
+
+            <select name="mod_itemtype" class="xar-form-textlong" onchange="javascript: document.hook_settings.reload.value='reload'; submit();">
                 <option value="-">Default Options</option>
                 <xar:foreach in="$hook_list" key="$module" value="$itemtypes">
                     <xar:foreach in="$itemtypes" key="$itemtype" value="$value">
@@ -24,15 +32,11 @@
                 </xar:foreach>
              </select>
         </div>
-        <div class="xar-form-input-wrapper-after">
-            <input name="submit" type="submit" value="Reload" class="xar-form-textlong" />
-        </div>
-    </fieldset> 
+    </fieldset>
 
-    <xar:if condition="!empty($settings)">
     <fieldset>
         <legend><xar:mlstring>Options</xar:mlstring></legend>
-        
+
         <div class="xar-form-input-wrapper">
             <label class="xar-form-label"><xar:mlstring>Exclude Groups</xar:mlstring></label>
             <select name="exclude_gids[]" multiple="multiple" class="xar-form-textlong">
@@ -49,13 +53,63 @@
             <label class="xar-form-label"><xar:mlstring>Default Group Level</xar:mlstring></label>
             <input type="text" name="default_group_level" value="#$settings['default_group_level']#" class="xar-form-textshort">
         </div>
-    </fieldset> 
-    </xar:if>
-    
-    <xar:if condition="!empty($levels)">
+    </fieldset>
+
+    <fieldset>
+        <legend><xar:mlstring>Owner</xar:mlstring></legend>
+
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Item Table</xar:mlstring></label>
+            <select name="owner_table" class="xar-form-textlong"
+                onchange="javascript: submit();">
+                <option value="">Use Owner Module</option>
+                <xar:foreach in="$tables" key="$key" value="$table">
+                    <xar:if condition="$table eq $owner_table">
+                        <option value="#$table#" selected="selected"><xar:var name="table" /></option>
+                    <xar:else />
+                        <option value="#$table#"><xar:var name="table" /></option>
+                    </xar:if>
+                </xar:foreach>
+             </select>
+        </div>
+
+        <xar:if condition="!empty($columns)">
+            <div class="xar-form-input-wrapper">
+                <label class="xar-form-label"><xar:mlstring>Primary Key</xar:mlstring></label>
+                <select name="primary_key" class="xar-form-textlong">
+                    <option value="">Select Primary Key</option>
+                    <xar:foreach in="$columns" key="$key" value="$column">
+                        <xar:if condition="$column:name eq $owner_primary_key">
+                            <option value="#$column:name#" selected="selected"><xar:var name="column:name" /></option>
+                        <xar:else />
+                            <option value="#$column:name#"><xar:var name="column:name" /></option>
+                        </xar:if>
+                    </xar:foreach>
+                 </select>
+            </div>
+        </xar:if>
+
+        <xar:if condition="!empty($columns)">
+            <div class="xar-form-input-wrapper">
+                <label class="xar-form-label"><xar:mlstring>Owner Column</xar:mlstring></label>
+                <select name="owner_column" class="xar-form-textlong">
+                    <option value="">Select Owner Column</option>
+                    <xar:foreach in="$columns" key="$key" value="$column">
+                        <xar:if condition="$column:name eq $owner_column">
+                            <option value="#$column:name#" selected="selected"><xar:var name="column:name" /></option>
+                        <xar:else />
+                            <option value="#$column:name#"><xar:var name="column:name" /></option>
+                        </xar:if>
+                    </xar:foreach>
+                 </select>
+            </div>
+        </xar:if>
+
+    </fieldset>
+
     <fieldset>
         <legend><xar:mlstring>Security</xar:mlstring></legend>
-        
+
         <xar:if condition="!empty($all_groups)">
         <div class="xar-floatright" style="width: 40%;">
         <select name="group">
@@ -63,22 +117,21 @@
                 <option value="#$group.uid#"><xar:var name="group.name" /></option>
             </xar:foreach>
         </select>
-            <input type="submit" name="submit" value="#xarML('Add Group')#" />
+            <input type="submit" name="submit_button" value="#xarML('Add Group')#" />
         </div>
-        </xar:if>        
+        </xar:if>
 
         <xar:template file="security-table" />
-        
-    </fieldset> 
-    
+
+    </fieldset>
+
     <fieldset>
         <legend><xar:mlstring>Actions</xar:mlstring></legend>
-        
+
         <div class="xar-form-input-wrapper-after">
-            <input name="submit" type="submit" value="Update" class="xar-form-textlong"/>
+            <input name="submit_button" type="submit" value="Update" class="xar-form-textlong"/>
         </div>
-    </fieldset> 
-    </xar:if>
-    
-    </form>   
+    </fieldset>
+
+    </form>
 </div>

@@ -3,6 +3,7 @@
         <th><xar:mlstring>Access</xar:mlstring></th>
         <th><xar:mlstring>User</xar:mlstring></th>
         <xar:foreach in="$levels.groups" key="$key" value="$group">
+            <xar:if condition="isset($all_groups[$key])">
             <th>
                 #$all_groups[$key]['name']#<br />
                 <xar:comment>
@@ -11,6 +12,7 @@
                 </xar:if>
                 </xar:comment>
             </th>
+            </xar:if>
         </xar:foreach>
         <th><xar:mlstring>World</xar:mlstring></th>
     </tr>
@@ -32,9 +34,9 @@
             </xar:if>
             <xar:else />
                 <input type="checkbox" name="user[]" value="#$sec_level['level']#" />
-            </xar:if>            
+            </xar:if>
         </td>
-        
+
         <xar:foreach in="$levels.groups" key="$key" value="$group">
         <xar:set name="groupLevel">$sec_map[$key][$currentLevel]</xar:set>
         <td>
@@ -46,16 +48,16 @@
             <input type="checkbox" name="groups[#$key#][]" value="#$sec_level['level']#" checked="checked" #$extra# />
             <xar:else />
                 <input type="checkbox" name="groups[#$key#][]" value="#$sec_level['level']#"  #$extra# />
-            </xar:if>            
+            </xar:if>
         </td>
         </xar:foreach>
-        
+
         <td>
            <xar:if condition="!empty($worldLevel)">
                 <input type="checkbox" name="world[]" value="#$sec_level['level']#" checked="checked" />
             <xar:else />
                 <input type="checkbox" name="world[]" value="#$sec_level['level']#" />
-            </xar:if>            
+            </xar:if>
         </td>
     </tr>
     </xar:foreach>

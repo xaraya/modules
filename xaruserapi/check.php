@@ -14,7 +14,15 @@ function security_userapi_check($args)
 {
     extract($args);
 
-    if( xarSecurityCheck('AdminPanel', 0) ){ return true; }
+    //if( xarSecurityCheck('AdminPanel', 0) ){ return true; }
+
+    // Not really needed
+    /*$cache_name = md5(serialize($args));
+    if( xarVarIsCached('security', $cache_name) )
+    {
+        return xarVarGetCached('security', $cache_name);
+    }*/
+
 
     // Make sure the need module API's are loaded
     xarModAPILoad('owner', 'user');
@@ -22,6 +30,14 @@ function security_userapi_check($args)
     // Get current user and groups
     $currentUserId = xarUserGetVar('uid');
     $groups = array();
+
+    // Get Module Settings
+    $settings = xarModAPIFunc('security', 'user', 'get_default_settings',
+        array(
+            'modid' => !empty($modid)?$modid:null,
+            'itemtype' => !empty($itemtype)?$itemtype:null
+        )
+    );
 
     // Get DB conn ready
     $dbconn =& xarDBGetConn();
@@ -34,13 +50,28 @@ function security_userapi_check($args)
     $bindvars = array();
     $where = array();
     $query = "
-        SELECT $ownerTable.xar_uid, xar_userlevel, xar_worldlevel,
+        SELECT xar_userlevel, xar_worldlevel,
                $secGroupLevelTable.xar_gid, $secGroupLevelTable.xar_level
         FROM $secTable
-        LEFT JOIN $ownerTable ON
-            $secTable.xar_modid    = $ownerTable.xar_modid  AND
-            $secTable.xar_itemtype = $ownerTable.xar_itemtype AND
-            $secTable.xar_itemid   = $ownerTable.xar_itemid
+    ";
+
+    if( !is_null($settings['owner']) and count($settings['owner']) == 3 )
+    {
+        $query .= "
+            LEFT JOIN {$settings['owner']['table']} ON
+            $secTable.xar_itemid = {$settings['owner']['primary_key']}
+        ";
+    }
+    else
+    {
+        $query .= "
+            LEFT JOIN $ownerTable ON
+                $secTable.xar_modid    = $ownerTable.xar_modid  AND
+                $secTable.xar_itemtype = $ownerTable.xar_itemtype AND
+                $secTable.xar_itemid   = $ownerTable.xar_itemid
+        ";
+    }
+    $query .= "
         LEFT JOIN $secGroupLevelTable ON
             $secTable.xar_modid    = $secGroupLevelTable.xar_modid AND
             $secTable.xar_itemtype = $secGroupLevelTable.xar_itemtype AND
@@ -66,9 +97,20 @@ function security_userapi_check($args)
     // User Check
     $currentUserId = (int)$currentUserId;
     $level = (int)$level;
-    $secCheck[] = " ( $secTable.xar_userlevel & $level AND $ownerTable.xar_uid = $currentUserId ) ";
+    if( !is_null($settings['owner']) and count($settings['owner']) == 3 )
+    {
+        $secCheck[] = " ( $secTable.xar_userlevel & $level AND
+            {$settings['owner']['table']}.{$settings['owner']['column']} = ? ) ";
+        $bindvars[] = $currentUserId;
+    }
+    else
+    {
+        $secCheck[] = " ( $secTable.xar_userlevel & $level AND $ownerTable.xar_uid = ? ) ";
+        $bindvars[] = $currentUserId;
+    }
 
     //Check Groups
+    // TODO: Maybe join on the roles members table for this prolly faster
     $roles = new xarRoles();
     $user = $roles->getRole($currentUserId);
     $parents = $user->getParents();
@@ -87,6 +129,7 @@ function security_userapi_check($args)
         $query .= ' WHERE ' . join(' AND ', $where);
     }
 
+    //var_dump($query);
     $result = $dbconn->Execute($query, $bindvars);
 
     if( $result->EOF )
@@ -96,9 +139,12 @@ function security_userapi_check($args)
             $msg = "You do not have the proper security to perform this action!";
             xarErrorSet(XAR_USER_EXCEPTION, 'NO_PRIVILEGES', $msg);
         }
+
+        //xarVarSetCached('security', $cache_name, false);
         return false;
     }
 
+    //xarVarSetCached('security', $cache_name, true);
     return true;
 }
 ?>

@@ -1,0 +1,34 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Security Administration</xar:mlstring>
+    </span>
+</div>
+<div class="xar-mod-body">
+
+    <xar:template file="admin-menu" />
+
+    <h2><xar:mlstring>Overview</xar:mlstring></h2>
+    <h3>What is it?</h3>
+    <p>
+        <xar:mlstring>The security module is a Unix style privilege system for xaraya based items.</xar:mlstring>
+    </p>
+
+    <h3>How to use it?</h3>
+    <p>
+        <xar:mlstring>From the menu, you have three choices.  "Overview",
+            "Hooks Settings", and "Enable Module Security".</xar:mlstring>
+        <ul>
+            <li><xar:mlstring>Overview -- Allows you to view this screen.</xar:mlstring></li>
+            <li><xar:mlstring>Hooks Settings -- Allows you to set default
+                security levels for module / itemtype pairs.</xar:mlstring></li>
+            <li><xar:mlstring>Enable Module Security -- Allows you to create levels
+                for existing items.</xar:mlstring></li>
+        </ul>
+    </p>
+
+    <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
+    <p><xar:mlstring>There are no included blocks</xar:mlstring></p>
+
+    <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
+    <p><xar:mlstring>There are hooks to create and update security levels.</xar:mlstring></p>
+</div>

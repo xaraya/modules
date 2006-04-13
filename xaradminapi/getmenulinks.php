@@ -1,7 +1,7 @@
 <?php
 /**
    utility function pass individual menu items to the main menu
- 
+
    @return array containing the menulinks for the main menu items.
 */
 function security_adminapi_getmenulinks()
@@ -12,20 +12,19 @@ function security_adminapi_getmenulinks()
     // Security Check
 	if (xarSecurityCheck('AdminSecurity',0))
     {
-
         $menulinks[] = array(
-            'url'   => xarModURL('security', 'admin', 'main'),
+            'url'   => xarModURL('security', 'admin', 'overview'),
             'title' => xarML('Overview'),
             'label' => xarML('Overview')
         );
-                              
-                              
+
+
         $menulinks[] = Array(
             'url'   => xarModURL('security', 'admin', 'hook_settings'),
             'title' => xarML('Modify Hook Settings'),
             'label' => xarML('Modify Hook Settings')
         );
-            
+
         $menulinks[] = Array(
             'url'   => xarModURL('security', 'admin', 'enablemodulesecurity'),
             'title' => xarML('Enable Module Security'),
