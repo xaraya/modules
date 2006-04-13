@@ -5,7 +5,8 @@
 </div>
 
 <div class="xar-mod-body">
-  <img src="modules/xarlinkme/xarimages/admin.gif" class="xar-module-icon" alt="official icon" width="96" height="96" />
+<xar:template module="xarlinkme" type="module" file="admin-menu" />
+  <img src="#xarTplGetImage('admin_generic.gif','base')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
 
   <h2><xar:mlstring>Overview</xar:mlstring></h2>
 

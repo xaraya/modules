@@ -3,6 +3,7 @@
     <span class="xar-mod-title"><xar:mlstring>xarLinkMe Administration</xar:mlstring></span>
 </div>
 <div class="xar-mod-body">
+<xar:template module="xarlinkme" type="module" file="admin-menu" />
     <h2><xar:mlstring>Client Banner Management</xar:mlstring></h2>
     <p>    <p>CLIENT BANNER SETUP AND MANAGEMENT - IN PROGRESS/TODO</p></p>
 </div>

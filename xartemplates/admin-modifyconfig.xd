@@ -8,9 +8,11 @@
     </span>
 </div>
 <div class="xar-mod-body">
-    <h2><xar:mlstring>Modify XarLinkMe Configuration</xar:mlstring></h2>
+<xar:template module="xarlinkme" type="module" file="admin-menu" />
+    <h2><xar:mlstring>Modify Configuration</xar:mlstring></h2>
+
    <dl class="xar-tabs">
-        <dt class="help" title="Choose a set of configuration options"><xar:mlstring>Actions</xar:mlstring> :</dt>
+        <dt class="help" title="Choose a set of configuration options"><xar:mlstring>Configure</xar:mlstring> :</dt>
         <xar:if condition="$tab eq 'basicconfig'">
             <dd class="active"><a href="&xar-modurl-xarlinkme-admin-modifyconfig;&amp;tab=basicconfig">
                     <xar:mlstring>General Configuration</xar:mlstring>
