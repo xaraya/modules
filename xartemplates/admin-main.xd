@@ -63,6 +63,6 @@
           </li>
       </ul>
       <p class="xar-sub">
-         <strong>&nbsp;<xar:mlstring>Headlines module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.1&nbsp; #xarLocaleGetFormattedDate('short','1138794329')#
+         <strong>&nbsp;<xar:mlstring>Headlines module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.2&nbsp; 2006-04-09
   </p>
 </div>
