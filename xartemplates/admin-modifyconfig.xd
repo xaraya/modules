@@ -14,6 +14,7 @@
     </span>
 </div>
 <div class="xar-mod-body">
+     <xar:template module="censor" type="module" file="admin-menu" />
     <h2>
         <xar:mlstring>Modify configuration</xar:mlstring>
     </h2>
