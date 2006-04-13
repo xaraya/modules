@@ -11,7 +11,7 @@
     </h2>
 
     <div align="center">
-        <table border="0" width="100%" cellpadding="0" cellspacing="0">
+        <table border="0" width="100%" cellpadding="2" cellspacing="1">
             <tr>
                 <th valign="center" width="40%">
                     <xar:mlstring><b>Module<br />Name</b></xar:mlstring>
@@ -30,11 +30,6 @@
                 </th>
             </tr>
 
-            <tr>
-                <td colspan="5">
-                    &nbsp;
-                </td>
-            </tr>
 
             <xar:if condition="!isset($data) or empty($data) or count($data) eq '0'">
                 <tr>
@@ -48,11 +43,7 @@
                     </td>
                 </tr>
             <xar:else />
-                <tr>
-                    <td colspan="5">
-                        <div class="xar-alt"></div>
-                    </td>
-                </tr>
+
                 <xar:loop name="$data">
                     <tr>
                         <td valign="center" width="40%">
@@ -71,11 +62,7 @@
                             <a href="#$loop:item['delete_url']#"><b>Delete</b></a>
                         </td>
                     </tr>
-                    <tr>
-                        <td colspan="5">
-                            <div class="xar-alt"></div>
-                        </td>
-                    </tr>
+
                 </xar:loop>
                 <tr>
                     <td valign="center" width="40%">
@@ -94,11 +81,10 @@
                         <a href="#$delete_all_url#">Delete All</a>
                     </td>
                 </tr>
+            </table>
             </xar:if>
 
-            <tr>
-                <td colspan="5">
-                    <div class="xar-accent xar-norm-outline xar-padding-thick">
+                    <div class="xar-accent xar-norm-outline">
                         <xar:mlstring>
                             By clicking on <b>Delete</b> you can delete all comments associated with a particular
                             module. Clicking on a module will take you to that module's statistics page containing
@@ -106,9 +92,6 @@
                             From there you can delete all comments associated with a particular item.
                         </xar:mlstring>
                     </div>
-                </td>
-            </tr>
-        </table>
     </div>
 </div>
 
