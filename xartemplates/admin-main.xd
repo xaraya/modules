@@ -12,22 +12,24 @@
             <xar:mlstring>What is it?</xar:mlstring>
     </h3>
         <p><em><xar:mlstring>Keywords is a Xaraya Utility Module.</xar:mlstring></em>
-        <xar:mlstring>that allows you to assign keywords to module items (taxonomy) and to look up items by keyword. Enable its hooks for any module where you want to use it...</xar:mlstring>
+        <xar:mlstring>The Keywords module allows you to assign keywords to module items (taxonomy) and to look up items by keyword.
+        To use keywords in your content items you must </xar:mlstring>
+        <a href="&xar-modurl-modules-admin-hooks;&amp;hook=keywords"><xar:mlstring>hook the Keywords module</xar:mlstring></a><xar:mlstring> to any module or itemtype where where you want to use it.</xar:mlstring>
         </p>
         <h3>
             <xar:mlstring>How to use it?</xar:mlstring>
        </h3>
-         <p><xar:mlstring>After enabling the keywords hooks for a particular module, you'll see an input box where you can fill in relevant keywords whenever you create or modify a module item.
-         Afterwards, when viewing an item, you can retrieve a list of other items having the same keyword(s).</xar:mlstring></p>
-         <p><xar:mlstring>This module, now, may also restrict keywords to a predefined set of words, tipical for each hooked module.</xar:mlstring>
+         <p><xar:mlstring>After enabling the keywords hooks for a particular module and itemtype, you'll see an input box when entering content in the module item. Here you can fill in relevant keywords whenever you create or modify a module item.
+         When viewing an item that has keywords associated, you can retrieve a list of other items having the same keyword(s).</xar:mlstring></p>
+         <p><xar:mlstring>You can also restrict keywords to a predefined set of words. Further you can make them specific for each hooked module and itemtype.</xar:mlstring>
          </p>
-         <p><xar:mlstring>In the future thi module may try to extract keywords
+         <p><xar:mlstring>In the future this module may try to extract keywords
          automatically from other fields on create/update. Contributions in that or other directions are welcome :-)</xar:mlstring></p>
          <h3>
             <xar:mlstring>Included Blocks</xar:mlstring>
         </h3>
            <p>
-           <xar:mlstring>There are no included blocks at this time</xar:mlstring>
+           <xar:mlstring>There are no included blocks at this time. However you can use Keywords in your Meta Block. The keywords from your Keyword module for any given item (eg an article) are inserted into your webpage page keyword metatag.</xar:mlstring>
            </p>
         <h3>
             <xar:mlstring>Included Hooks</xar:mlstring>
