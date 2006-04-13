@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Helpdesk Module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Helpdesk Module
+ * @link http://www.abraisontechnoloy.com/
+ * @author Brian McGilligan <brianmcgilligan@gmail.com>
+ */
 /**
  * utility function pass individual menu items to the main menu
  *
@@ -29,7 +40,7 @@ function helpdesk_userapi_menulinks()
                               'title' => xarML('Main Page'),
                               'label' => xarML('Main Page'));
     }
-    
+
     // Security Check
     if (xarSecurityCheck('adminhelpdesk',0)) {
 
@@ -43,8 +54,8 @@ function helpdesk_userapi_menulinks()
     }
 
     // Security Check
-    if (xarSecurityCheck('readhelpdesk',0) && 
-        (($userisloggedin && $allowusersubmitticket) || 
+    if (xarSecurityCheck('readhelpdesk',0) &&
+        (($userisloggedin && $allowusersubmitticket) ||
          (!$userisloggedin && $allowanonsubmitticket))) {
 
         $menulinks[] = Array('url'   => xarModURL('helpdesk',
@@ -64,7 +75,7 @@ function helpdesk_userapi_menulinks()
                              'title' => xarML('Search'),
                              'label' => xarML('Search'));
     }
-    
+
     // Security Check
     if (xarSecurityCheck('readhelpdesk',0)) {
         $menulinks[] = Array('url'   => xarModURL('helpdesk',
@@ -74,7 +85,7 @@ function helpdesk_userapi_menulinks()
                              'title' => xarML('View Tickets'),
                              'label' => xarML('View Tickets'));
     }
-    
+
 
     return $menulinks;
 }

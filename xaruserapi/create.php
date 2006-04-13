@@ -1,8 +1,20 @@
 <?php
 /**
+ * Helpdesk Module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Helpdesk Module
+ * @link http://www.abraisontechnoloy.com/
+ * @author Brian McGilligan <brianmcgilligan@gmail.com>
+ */
+/**
     Creates the Ticket
     @author Brian McGilligan
-    @param - all the ticket info 
+    @param - all the ticket info
     @return The new ticket id
 */
 function helpdesk_userapi_create($args)
@@ -37,7 +49,7 @@ function helpdesk_userapi_create($args)
                                     xar_name,
                                     xar_phone,
                                     xar_email
-                                   ) 
+                                   )
                            VALUES  ( $nextid, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
     $bindvars = array($domain, $status, $priority, $source, $whosubmit, $subject, $time, $time, $assignedto, $closedby, $name, $phone, $email
     );

@@ -1,23 +1,35 @@
 <?php
 /**
+ * Helpdesk Module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Helpdesk Module
+ * @link http://www.abraisontechnoloy.com/
+ * @author Brian McGilligan <brianmcgilligan@gmail.com>
+ */
+/**
     Display Ticket
 
     Display the selected Ticket
 
     @author  Brian McGilligan bmcgilligan@abrasiontechnology.com
     @access  public / private / protected
-    @param   
-    @param   
+    @param
+    @param
     @return  template
     @throws  list of exception identifiers which can be thrown
-    @todo    <Brian McGilligan> ;  
-*/ 
+    @todo    <Brian McGilligan> ;
+*/
 function helpdesk_user_display($args)
 {
     // Verify that required field is set
     if( !xarVarFetch('ticket_id', 'int:1:',  $ticket_id, null,  XARVAR_NOT_REQUIRED) ){ return false; }
     if( !xarVarFetch('tid',       'int:1:',  $ticket_id, null,  XARVAR_NOT_REQUIRED) ){ return false; }
-    
+
     // Cheap way to pass info to security event
     //$_GET['itemype'] = 1;
     //$_GET['itemid'] = $ticket_id;
@@ -25,7 +37,7 @@ function helpdesk_user_display($args)
     /*
         SECURITY CHECK NEEDED HERE USING SECURITY MODULE
     */
-    if( empty($ticket_id) ) 
+    if( empty($ticket_id) )
     {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                      'ticket id', 'user', 'viewticket', 'helpdesk');
@@ -33,15 +45,15 @@ function helpdesk_user_display($args)
                        new SystemException($msg));
         return false;
     }
-    
+
     // Load the API
     if( !xarModAPILoad('helpdesk', 'user') ){
         return false;
     }
-    
+
     // Get the ticket Data:
     xarModAPILoad('security', 'user');
-    $data = xarModAPIFunc('helpdesk', 'user', 'getticket', 
+    $data = xarModAPIFunc('helpdesk', 'user', 'getticket',
         array(
             'tid' => $ticket_id,
             'security_level' => SECURITY_READ
@@ -49,11 +61,11 @@ function helpdesk_user_display($args)
     );
 
     /*
-        If we don't get a ticket back, then the user does not have privs 
+        If we don't get a ticket back, then the user does not have privs
         to view this ticket
     */
     if( empty($data) ){ return false; }
-    
+
     /*
         Call the hooks
     */
@@ -67,11 +79,11 @@ function helpdesk_user_display($args)
     }else {
         $data['hookoutput'] = $hooks;
     }
-                                             
+
     $data['enabledimages'] = xarModGetVar('helpdesk', 'Enable Images');
-    $data['menu']    = xarModFunc('helpdesk', 'user', 'menu');    
-    $data['summary'] = xarModFunc('helpdesk', 'user', 'summaryfooter');    
-    
+    $data['menu']    = xarModFunc('helpdesk', 'user', 'menu');
+    $data['summary'] = xarModFunc('helpdesk', 'user', 'summaryfooter');
+
     return xarTplModule('helpdesk', 'user', 'display', $data);
 }
 ?>

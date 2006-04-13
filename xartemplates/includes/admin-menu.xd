@@ -33,7 +33,8 @@
           </a>
         </dd>
 
-        <xar:set name="tabclass">$activetab=='overview'?'active':''</xar:set>
+        <xar:set name="manage_funcs">array('main', 'overview')</xar:set>
+        <xar:set name="tabclass">in_array($activetab, $manage_funcs)?'active':''</xar:set>
         <dd class="#$tabclass#">
           <a href="&xar-modurl-helpdesk-admin-overview;">
             <xar:mlstring>Overview</xar:mlstring>

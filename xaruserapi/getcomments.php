@@ -1,4 +1,16 @@
 <?php
+/**
+ * Helpdesk Module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Helpdesk Module
+ * @link http://www.abraisontechnoloy.com/
+ * @author Brian McGilligan <brianmcgilligan@gmail.com>
+ */
 //=========================================================================
 // Get ticket comments
 //=========================================================================
@@ -8,7 +20,7 @@ function helpdesk_userapi_getcomments($args)
 
     $modid = xarModGetIDFromName(xarModGetName());
 
-    $comments = xarModAPIFunc('comments', 'user', 'get_multiple', 
+    $comments = xarModAPIFunc('comments', 'user', 'get_multiple',
                               array('modid' => $modid,
                                     'objectid' => $tid));
 

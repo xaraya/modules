@@ -1,5 +1,17 @@
 <?php
 /**
+ * Helpdesk Module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Helpdesk Module
+ * @link http://www.abraisontechnoloy.com/
+ * @author Brian McGilligan <brianmcgilligan@gmail.com>
+ */
+/**
    View Tickets
 
    @param $selection - The Key of what is being viewed (optional)
@@ -24,15 +36,15 @@ function helpdesk_user_view($args)
     if( !xarVarFetch('keywords',     'str',     $keywords,    null,  XARVAR_NOT_REQUIRED) ){ return false; }
 
     $check_session_vars = array(
-        'selection' => 'MYALL', 
-        'sortorder' => 'TICKET_ID', 
+        'selection' => 'MYALL',
+        'sortorder' => 'TICKET_ID',
         'order' => 'ASC',
         'startnum' => 1,
         'statusfilter' => '',
         'company' => '',
         'catid' => ''
     );
-     
+
     foreach( $check_session_vars as $var => $value )
     {
         if( empty($$var) )
@@ -41,9 +53,9 @@ function helpdesk_user_view($args)
         }
         if( empty($$var) ){ $$var = $value; }
         if( $$var == -1 ){ $$var = ''; }
-        xarSessionSetVar("Modules.helpdesk.view.$var", $$var); 
+        xarSessionSetVar("Modules.helpdesk.view.$var", $$var);
     }
-        
+
     $data = array();
     $data['menu']    = xarModFunc('helpdesk', 'user', 'menu');
     $data['summary'] = xarModFunc('helpdesk', 'user', 'summaryfooter');
@@ -117,12 +129,12 @@ function helpdesk_user_view($args)
     $data['sortorder']    = $sortorder;
     $data['order']        = $order;
     $data['statusfilter'] = $statusfilter;
-    $data['status']       = xarModAPIFunc('helpdesk', 'user', 'gets', 
+    $data['status']       = xarModAPIFunc('helpdesk', 'user', 'gets',
         array('itemtype' => 3)
     );
     $data['companies']    = xarModAPIFunc('helpdesk', 'user', 'get_companies');
     $data['company']      = $company;
-    
+
     // Get Column View preferences
     $data['showassignedtoinsummary']    = xarModGetVar('helpdesk', 'ShowAssignedToInSummary');
     $data['showclosedbyinsummary']      = xarModGetVar('helpdesk', 'ShowClosedByInSummary');

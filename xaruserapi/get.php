@@ -1,5 +1,17 @@
 <?php
 /**
+ * Helpdesk Module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Helpdesk Module
+ * @link http://www.abraisontechnoloy.com/
+ * @author Brian McGilligan <brianmcgilligan@gmail.com>
+ */
+/**
   Get an item of an object
 
   @author Brian McGilligan
@@ -19,35 +31,35 @@ function helpdesk_userapi_get($args)
                        new SystemException($msg));
         return false;
     }
-               
+
     if (empty($itemid)) { return xarML('Undefined'); }
-    
+
     $modid = xarModGetIDFromName('helpdesk');
- 
+
     // Do what we can to find the name of the field we want
     if(empty($field) && is_string($object)){
         $name = $object;
     }elseif(!empty($field) && is_string($field)){
         $name = $field;
-    }    
-       
+    }
+
     // Gets the item types of the objects
-    switch($object){            
+    switch($object){
         case 'priority':
             $itemtype = 2;
             $name = null;
             break;
-            
+
         case 'status':
             $itemtype = 3;
             break;
-            
+
         case 'source':
             $itemtype = 4;
             break;
     }
-       
-    $item = xarModAPIFunc('dynamicdata', 'user', 'getitem', 
+
+    $item = xarModAPIFunc('dynamicdata', 'user', 'getitem',
                           array('moduleid' => $modid,
                                 'itemtype' => $itemtype,
                                 'itemid'   => $itemid

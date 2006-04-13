@@ -1,16 +1,16 @@
 <?php
 /**
-    Helpdesk
- 
-    @package Xaraya eXtensible Management System
-    @copyright (C) 2003-2004 by Envision Net, Inc.
-    @license GPL <http://www.gnu.org/licenses/gpl.html>
-    @link http://www.envisionnet.net/
- 
-    @subpackage Helpdesk module
-    @author Brian McGilligan <brian@envisionnet.net>
-*/
-
+ * Helpdesk Module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Helpdesk Module
+ * @link http://www.abraisontechnoloy.com/
+ * @author Brian McGilligan <brianmcgilligan@gmail.com>
+ */
 // Based On:
 /********************************************************/
 /* Dimensionquest Help Desk                             */
@@ -44,11 +44,11 @@ function helpdesk_xartables()
     // Name for helpdesk database entities
     $coprefix = xarDBGetSiteTablePrefix() . '_helpdesk';
 
-    $xartable['helpdesk_tickets'] = $coprefix.'_tickets';                
+    $xartable['helpdesk_tickets'] = $coprefix.'_tickets';
     $xartable['helpdesk_status'] = $coprefix . '_status';
     $xartable['helpdesk_source'] = $coprefix . '_source';
     $xartable['helpdesk_priority'] = $coprefix . '_priority';
-    
+
     // Return table information
     return $xartable;
 }

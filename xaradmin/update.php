@@ -1,7 +1,19 @@
 <?php
 /**
+ * Helpdesk Module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Helpdesk Module
+ * @link http://www.abraisontechnoloy.com/
+ * @author Brian McGilligan <brianmcgilligan@gmail.com>
+ */
+/**
    Update an item of a specified item type
-   
+
    @param $itemtype - type of item that is being updated (required)
    @param $itemid - item id  (required)
    @param $preview  - do a preview if set (optional)
@@ -91,7 +103,7 @@ function helpdesk_admin_update($args)
     }else {
     $data['hooks'] = $hooks;
     }
-    
+
     // let's go back to the admin view
     xarResponseRedirect(xarModURL('helpdesk', 'admin', 'view', array('itemtype' => $itemtype)));
 

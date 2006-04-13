@@ -1,5 +1,17 @@
 <?php
 /**
+ * Helpdesk Module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Helpdesk Module
+ * @link http://www.abraisontechnoloy.com/
+ * @author Brian McGilligan <brianmcgilligan@gmail.com>
+ */
+/**
   Creates a new ticket
 
   @author Brian McGilligan
@@ -64,14 +76,14 @@ function helpdesk_user_new()
     }
 
     /*
-        Get the companies the current user has access to 
+        Get the companies the current user has access to
     */
-    $data['groups'] = xarModAPIFunc('helpdesk', 'user', 'get_companies', 
+    $data['groups'] = xarModAPIFunc('helpdesk', 'user', 'get_companies',
         array(
             'parent' => 'Companies',
         )
-    );    
-    
+    );
+
     $item = array();
     $item['module']   = 'helpdesk';
     $item['itemtype'] = $itemtype;
@@ -86,8 +98,8 @@ function helpdesk_user_new()
 
     $data['enforceauthkey'] = xarModGetVar('helpdesk', 'EnforceAuthKey');
     $data['action']  = xarModURL('helpdesk', 'user', 'create');
-    $data['summary'] = xarModFunc('helpdesk', 'user', 'summaryfooter');    
-    
+    $data['summary'] = xarModFunc('helpdesk', 'user', 'summaryfooter');
+
     return xarTplModule('helpdesk', 'user', 'new', $data);
 }
 ?>
