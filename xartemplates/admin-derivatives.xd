@@ -28,7 +28,7 @@
             </legend>
             <div class="xar-form-input-wrapper">
             <p class="xar-align-center">
-                <img src="#$selimage['fileDownload']#" border="0" />
+                <img src="#$selimage['fileDownload']#" class="xar-noborder" alt=""/>
             </p>
             </div>
         </fieldset>
@@ -57,16 +57,14 @@
                      #xarLocaleGetFormattedDate('short',$selimage['fileModified'])#
                 </div>
                 <div class="xar-form-input-wrapper">
-                    <label class="xar-form-label">
                     <xar:if condition="!empty($selimage['fileSetting'])">
-                     <xar:mlstring>Settings</xar:mlstring> :</label>
+                     <label class="xar-form-label"><xar:mlstring>Settings</xar:mlstring> :</label>
                       #$selimage['fileSetting']#
                     </xar:if>
                 </div>
                 <div class="xar-form-input-wrapper">
-                    <label class="xar-form-label">
                     <xar:if condition="!empty($selimage['original'])">
-                          <xar:mlstring>Original</xar:mlstring> : </label>
+                          <label class="xar-form-label"><xar:mlstring>Original</xar:mlstring> : </label>
                           <a href="#xarModURL('images', 'admin', 'uploads', array('action' => 'view', 'fileId' => $selimage['original']['fileId']))#">#$selimage['original']['fileName']#</a>
                     </xar:if>
                 </div>

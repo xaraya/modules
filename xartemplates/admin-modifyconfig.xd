@@ -10,8 +10,8 @@
         <xar:mlstring>Modify Images Configuration</xar:mlstring>
     </h2>
 
-    <form method="post" name="post" id="post" action="#xarModURL('images', 'admin', 'updateconfig')#">
-        <input type="hidden" name="authid" value="#$authid#"/>
+    <form method="post" id="post" action="#xarModURL('images', 'admin', 'updateconfig')#">
+
         <fieldset>
             <legend>
                 <xar:mlstring>Image Module Options</xar:mlstring>
@@ -77,14 +77,14 @@
                <br />
                 <div class="xar-form-input-wrapper-after">
                     <xar:if condition="$shortURLs eq TRUE">
-                        <input type="checkbox" name="shortURLs" value="true" checked="checked"/>
+                        <input type="checkbox" id="shortURLs" name="shortURLs" value="true" checked="checked"/>
                     <xar:else />
-                        <input type="checkbox" name="shortURLs" value="true"/>
+                        <input type="checkbox" id="shortURLs" name="shortURLs"  value="true"/>
                     </xar:if>
                     <label for="shortURLs" title="#xarML('Support short urls?')#">
                         <strong><xar:mlstring>Support Short URLs?</xar:mlstring></strong>
                     </label>
-                    </p>
+
                     <p class="xar-form-input-wrapper">
                     <xar:mlstring>
                         This will cause urls to be displayed in a condescenced format.
@@ -158,6 +158,7 @@
              </fieldset>
 
             <div class="xar-form-input-wrapper">
+                <input type="hidden" name="authid" value="#$authid#"/>
                 <input type="submit" name="update" value="#xarML('Update Configuration')#"/>
             </div>
         </form>

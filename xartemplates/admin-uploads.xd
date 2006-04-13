@@ -58,9 +58,9 @@
             <p class="xar-align-center">
             <a href="#xarModURL('images','admin','uploads',array('action' => $action,'getprev' => $selimage['fileName']))#">&lt;&lt;</a>&nbsp;&nbsp;&nbsp;
             <xar:if condition="!empty($width) or !empty($height)">
-                <img src="#$selimage['fileDownload']#" width="#$width#" height="#$height#" border="0" align="top" />
+                <img src="#$selimage['fileDownload']#" width="#$width#" height="#$height#" class="xar-noborder xar-valign-top" />
             <xar:else/>
-                <img src="#$selimage['fileDownload']#" border="0" align="top" />
+                <img src="#$selimage['fileDownload']#" class="xar-noborder xar-valign-top" alt=""/>
             </xar:if>
             &nbsp;&nbsp;&nbsp;<a href="#xarModURL('images','admin','uploads',array('action' => $action,'getnext' => $selimage['fileName']))#">&gt;&gt;</a>
            </p>
@@ -130,6 +130,7 @@
                  <xar:else/>
                      <p><xar:mlstring>No Associations</xar:mlstring></p>
                 </xar:if>
+                </div>
                 </fieldset>
         </xar:if>
 
@@ -143,7 +144,7 @@
 
         <xar:base-include-javascript module="base" filename="checkall.js" />
 
-        <form name="viewuploads" id="viewuploads" method="post" action="&xar-modurl-images-admin-uploads;">
+        <form id="viewuploads" method="post" action="&xar-modurl-images-admin-uploads;">
         <table class="xar-accent">
             <tr>
                 <th>
@@ -231,7 +232,7 @@
                     <xar:if condition="!empty($pager)">
                         #$pager#
                     </xar:if>
-<script language="JavaScript" type="text/javascript"><![CDATA[
+<script type="text/javascript"><![CDATA[
     document.write("[ <a href=\"javascript:xar_base_checkall(document.forms['viewuploads'],true)\"><xar:mlstring>Check All</xar:mlstring></a> | ");
     document.write("<a href=\"javascript:xar_base_checkall(document.forms['viewuploads'],false)\"><xar:mlstring>Uncheck All</xar:mlstring></a> ]");
 ]]>

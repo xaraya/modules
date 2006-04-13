@@ -57,9 +57,9 @@
             <p class="xar-align-center">
                 <a href="#xarModURL('images','admin','browse',array('action' => $action,'bid' => $baseId,'getprev' => $selimage['fileId']))#">&lt;&lt;</a>&nbsp;&nbsp;&nbsp;
                 <xar:if condition="!empty($width) or !empty($height)">
-                    <img src="#$selimage['fileDownload']#" width="#$width#" height="#$height#" border="0" align="top" />
+                    <img src="#$selimage['fileDownload']#" width="#$width#" height="#$height#" class="xar-noborder xar-valign-top" />
                 <xar:else/>
-                    <img src="#$selimage['fileDownload']#" border="0" align="top" />
+                    <img src="#$selimage['fileDownload']#" class="xar-noborder xar-valign-top" alt="" />
                </xar:if>
                &nbsp;&nbsp; &nbsp;<a href="#xarModURL('images','admin','browse',array('action' => $action,'bid' => $baseId,'getnext' => $selimage['fileId']))#">&gt;&gt;</a>
              </p>
@@ -175,7 +175,7 @@
 
         <xar:base-include-javascript module="base" filename="checkall.js" />
 
-        <form name="viewimages" id="viewimages" method="post" action="&xar-modurl-images-admin-browse;">
+        <form id="viewimages" method="post" action="&xar-modurl-images-admin-browse;">
         <table class="xar-accent">
             <tr>
                 <th>
@@ -262,7 +262,7 @@
                     <xar:if condition="!empty($pager)">
                         #$pager#
                     </xar:if>
-<script language="JavaScript" type="text/javascript"><![CDATA[
+<script type="text/javascript"><![CDATA[
     document.write("[ <a href=\"javascript:xar_base_checkall(document.forms['viewimages'],true)\"><xar:mlstring>Check All</xar:mlstring></a> | ");
     document.write("<a href=\"javascript:xar_base_checkall(document.forms['viewimages'],false)\"><xar:mlstring>Uncheck All</xar:mlstring></a> ]");
 ]]>
