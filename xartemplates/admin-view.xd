@@ -6,7 +6,6 @@
 <div class="xar-mod-body">
    <xar:template type="module" file="admin-menu" />
     <h2><xar:mlstring>View Files</xar:mlstring></h2>
-
         <xar:if condition="isset($diskUsage)">
             <table summary="Files" width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent xar-accent-outline">
                 <tr>
@@ -18,7 +17,7 @@
                     <td class="xar-norm" align="center"><xar:mlstring>Total / Used / Free</xar:mlstring></td>
                     <td class="xar-norm" align="center"><xar:mlstring>current view / stored total</xar:mlstring></td>
                     <td class="xar-norm" align="center"><xar:mlstring>current view / stored total</xar:mlstring></td>
-                </tr>  
+                </tr>
                 <tr>
                     <td class="xar-norm" align="center">
                         #$diskUsage['device_total']['short']# / #$diskUsage['device_used']['short']# / #$diskUsage['device_free']['short']#
@@ -27,15 +26,15 @@
                         #$diskUsage['stored_size_filtered']['short']# / #$diskUsage['stored_size_total']['short']#
                     </td>
                     <td class="xar-norm" align="center">
-                        #$diskUsage['numfiles_filtered']# / #$diskUsage['numfiles_total']# 
+                        #$diskUsage['numfiles_filtered']# / #$diskUsage['numfiles_total']#
                     </td>
                 </tr>
             </table>
 
-            <br />                    
-        </xar:if>        
+            <br />
+        </xar:if>
         <xar:template file="filter_bar" type="module" />
-        
+
         <xar:base-include-javascript filename="openDialog.js" />
         <xar:base-include-javascript module="base" filename="checkall.js" />
 
@@ -48,13 +47,13 @@
                 <th><a href="#xarModURL('uploads','admin','view',array('sort' => 'id'))#"><xar:mlstring>File Date</xar:mlstring></a></th>
                 <th><a href="#xarModURL('uploads','admin','view',array('sort' => 'user'))#"><xar:mlstring>Uploaded By</xar:mlstring></a></th>
                 <th><a href="#xarModURL('uploads','admin','view',array('sort' => 'status'))#"><xar:mlstring>Status</xar:mlstring></a></th>
-            </tr>   
+            </tr>
             <xar:if condition="count($items)">
-                <form name="viewfiles" id="viewfiles" action="#xarModUrl('uploads','admin','view')#" method="post">
-                <xar:loop name="$items">
+                <form id="viewfiles" action="#xarModUrl('uploads','admin','view')#" method="post">
+                    <xar:loop name="$items">
                     <xar:if condition="(($loop:index + 1) % 2)">
                         <tr>
-                            <td class="xar-norm" align="center">
+                            <td class="xar-norm xar-align-center" >
                                 <input type="checkbox" name="fileId[]" id="fileId_#$loop:item['fileId']#" value="#$loop:item['fileId']#"/>
                             </td>
                             <td class="xar-norm" align="center">&nbsp;
@@ -85,19 +84,19 @@
                             <td class="xar-accent" align="center">&nbsp;#$loop:item['fileStatusName']#</td>
                         </tr>  
                     </xar:if>
-                </xar:loop>
-                <tr>
+                    </xar:loop>
+                    <tr>
                     <td colspan="7" class="xar-norm" align="center">
-<script language="JavaScript" type="text/javascript"><![CDATA[
+<script type="text/javascript"><![CDATA[
     document.write("[ <a href=\"javascript:xar_base_checkall(document.forms['viewfiles'],true)\"><xar:mlstring>Check All</xar:mlstring></a> | ");
     document.write("<a href=\"javascript:xar_base_checkall(document.forms['viewfiles'],false)\"><xar:mlstring>Uncheck All</xar:mlstring></a> ]");
 ]]>
 </script>
                         #$pager#
                     </td>
-                </tr>
-                <tr>
-                    <td colspan="4" >
+                    </tr>
+                    <tr>
+                        <td colspan="4" >
                         <table summary="Commands" width="100%" border="0" cellpadding="0" cellspacing="0" class="xar-norm">
                             <tr>
                                 <td width="100%">
@@ -105,10 +104,10 @@
                                     <select name="action" id="action">
                                         <xar:foreach in="$filters['status']" key="$key" value="$status">
                                             <xar:if condition="$key eq '0'">
-                                                <xar:comment> skip </xar:comment> 
+                                                <xar:comment> skip </xar:comment>
                                             <xar:else />
                                                 <option value="#$status['statusId']#">
-                                                    #$status['statusName']# 
+                                                    #$status['statusName']#
                                                 </option>
                                             </xar:if>
                                         </xar:foreach>
@@ -117,9 +116,9 @@
                                 </td>
                             </tr>
                         </table>
-                    </td>
-                     </form>
-                    <td colspan="3">
+                         </td>
+
+                        <td colspan="3">
                     <xar:if condition="!xarModGetVar('uploads','file.auto-purge')">
                         <form action="#xarModUrl('uploads','admin','purge_rejected')#" method="post">
                                 <table summary="Commands" width="100%" border="0" cellpadding="0" cellspacing="0" class="xar-norm">
@@ -131,13 +130,13 @@
                                     </tr>
                                 </table>
                         </form>
-                    <xar:else />
+                   <xar:else />
                        &nbsp;
                     </xar:if>
                     </td>
-                </tr>
+                     </tr>
             <xar:else />
-                <tr>
+                    <tr>
                     <td class="xar-norm" colspan="6" align="center">
                        <p>
                         <xar:mlstring>
@@ -145,8 +144,8 @@
                         </xar:mlstring>
                         </p>
                     </td>
-                </tr>
+                   </tr>
             </xar:if>
+            </form>
         </table>
-
 </div>
