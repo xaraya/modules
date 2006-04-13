@@ -5,7 +5,7 @@
 
     <xar:if condition="empty($modid)">
         <div class="xar-fullwidth">
-        <table border="0" width="100%" cellpadding="0" cellspacing="0">
+        <table border="0" width="100%" cellpadding="2" cellspacing="1">
             <tr>
                 <th class="xar-align-center" valign="center" width="40%">
                     <xar:mlstring><strong>Module Name</strong></xar:mlstring>
@@ -82,7 +82,7 @@
     <h3><xar:ml><xar:mlstring>Module #(1)</xar:mlstring><xar:mlvar>#$modname#</xar:mlvar></xar:ml></h3>
 
         <div class="xar-fullwidth">
-        <table border="0" width="100%" cellpadding="0" cellspacing="0">
+        <table border="0" width="100%" cellpadding="2" cellspacing="1">
             <tr>
                 <th align="center" valign="center" width="50%">
                     <xar:if condition="empty($sortlink['itemid'])">
