@@ -6,7 +6,7 @@
 </div>
 <div class="xar-mod-body">
   <!-- include a standard tabbed admin menu via include file in the xartemplates/include folder -->
-  <xar:template type="module" file="admin-menu" />
+  <xar:template type="module" module="example" file="admin-menu" />
   <img src="#xarTplGetImage('admin_generic.gif','base')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
 
   <h2><xar:mlstring>Overview</xar:mlstring></h2>
