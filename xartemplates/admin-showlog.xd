@@ -2,6 +2,7 @@
     <span class="xar-mod-title"><xar:mlstring>Change Log</xar:mlstring></span>
 </div>
 <div class="xar-mod-body">
+    <xar:template module="changelog" type="module" file="admin-menu" />
     <h2><xar:mlstring>Overview of versions</xar:mlstring></h2>
     <div style="margin: auto;">
         <form method="POST" action="&xar-modurl-changelog-admin-showdiff;">
