@@ -37,36 +37,36 @@
                 <xar:mlstring>Derivative Image Details</xar:mlstring>
             </legend>
                 <div class="xar-form-input-wrapper">
-                    <label class="xar-form-label"><xar:mlstring>Filename</xar:mlstring> :<label>
+                    <label class="xar-form-label"><xar:mlstring>Filename</xar:mlstring> :</label>
                      #$selimage['fileName']#
                 </div>
                 <div class="xar-form-input-wrapper">
-                    <label class="xar-form-label"><xar:mlstring>Width</xar:mlstring> :<label>
+                    <label class="xar-form-label"><xar:mlstring>Width</xar:mlstring> :</label>
                      #$selimage['width']#
                 </div>
                 <div class="xar-form-input-wrapper">
-                    <label class="xar-form-label"><xar:mlstring>Height</xar:mlstring> :<label>
+                    <label class="xar-form-label"><xar:mlstring>Height</xar:mlstring> :</label>
                      #$selimage['height']#
                 </div>
                 <div class="xar-form-input-wrapper">
-                    <label class="xar-form-label"><xar:mlstring>Size</xar:mlstring> :<label>
+                    <label class="xar-form-label"><xar:mlstring>Size</xar:mlstring> :</label>
                      #$selimage['fileSize']#
                 </div>
                 <div class="xar-form-input-wrapper">
-                    <label class="xar-form-label"><xar:mlstring>Modified</xar:mlstring> :<label>
+                    <label class="xar-form-label"><xar:mlstring>Modified</xar:mlstring> :</label>
                      #xarLocaleGetFormattedDate('short',$selimage['fileModified'])#
                 </div>
                 <div class="xar-form-input-wrapper">
                     <label class="xar-form-label">
                     <xar:if condition="!empty($selimage['fileSetting'])">
-                     <xar:mlstring>Settings</xar:mlstring> :<label>
+                     <xar:mlstring>Settings</xar:mlstring> :</label>
                       #$selimage['fileSetting']#
                     </xar:if>
                 </div>
                 <div class="xar-form-input-wrapper">
                     <label class="xar-form-label">
                     <xar:if condition="!empty($selimage['original'])">
-                          <xar:mlstring>Original</xar:mlstring> : <label>
+                          <xar:mlstring>Original</xar:mlstring> : </label>
                           <a href="#xarModURL('images', 'admin', 'uploads', array('action' => 'view', 'fileId' => $selimage['original']['fileId']))#">#$selimage['original']['fileName']#</a>
                     </xar:if>
                 </div>

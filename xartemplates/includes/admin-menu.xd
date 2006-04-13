@@ -24,18 +24,7 @@
             <xar:mlstring>Derivatives</xar:mlstring>
           </a>
         </dd>
-        <!--
-        <xar:if condition="$activetab eq 'get_files' or $activetab eq 'addfile-status' or $activetab eq 'purge_rejected'">
-            <xar:set name="tabclass">'active'</xar:set>
-        <xar:else />
-            <xar:set name="tabclass">''</xar:set>
-        </xar:if>
-        <dd class="#$tabclass#">
-            <a href="&xar-modurl-images-admin-get_files;" >
-                <xar:mlstring>Add File</xar:mlstring>
-            </a>
-        </dd>
-        -->
+
         <xar:set name="tabclass">$activetab=='browse'?'active':''</xar:set>
         <dd class="#$tabclass#">
             <a href="&xar-modurl-images-admin-browse;" >
@@ -55,12 +44,13 @@
             <xar:mlstring>Modify Config</xar:mlstring>
           </a>
         </dd>
-    </xar:sec>
+
     <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
     <dd class="#$tabclass#">
       <a href="&xar-modurl-images-admin-overview;">
         <xar:mlstring>Overview</xar:mlstring>
       </a>
     </dd>
+    </xar:sec>    
   </dl>
 </div>

@@ -25,8 +25,10 @@
         <xar:elseif condition="!empty($action) and $action eq 'resize'"/>
         <form method="post" action="&xar-modurl-images-admin-browse;">
             <p><strong><xar:mlstring>Specify the width and/or height you want :</xar:mlstring></strong></p>
-            <label for="width"><xar:mlstring>Width</xar:mlstring></label> <input type="text" name="width" id="width" size="5" value="#$width#" />
-            <label for="height"><xar:mlstring>Height</xar:mlstring></label> <input type="text" name="height" id="height" size="5" value="#$height#" />
+            <label for="width"><xar:mlstring>Width</xar:mlstring></label> 
+                <input type="text" name="width" id="width" size="5" value="#$width#" />
+            <label for="height"><xar:mlstring>Height</xar:mlstring></label> 
+                <input type="text" name="height" id="height" size="5" value="#$height#" />
             <label for="replace"><xar:mlstring>Replace</xar:mlstring></label>
             <select name="replace" id="replace">
                 <xar:if condition="empty($replace)">
@@ -67,27 +69,29 @@
             <legend>
                 <xar:mlstring>Image Details</xar:mlstring>
             </legend>
+
                 <div class="xar-form-input-wrapper">
-                    <label class="xar-form-label"><xar:mlstring>Filename</xar:mlstring> :<label>
+                    <label class="xar-form-label"><xar:mlstring>Filename</xar:mlstring> :</label>
                      #$selimage['fileName']#
                 </div>
 
                 <div class="xar-form-input-wrapper">
-                    <label class="xar-form-label"><xar:mlstring>Width</xar:mlstring> :<label>
+                    <label class="xar-form-label"><xar:mlstring>Width</xar:mlstring> :</label>
                      #$selimage['width']#
                 </div>
                 <div class="xar-form-input-wrapper">
-                    <label class="xar-form-label"><xar:mlstring>Height</xar:mlstring> :<label>
+                    <label class="xar-form-label"><xar:mlstring>Height</xar:mlstring> :</label>
                      #$selimage['height']#
                 </div>
                 <div class="xar-form-input-wrapper">
-                    <label class="xar-form-label"><xar:mlstring>Size</xar:mlstring> :<label>
+                    <label class="xar-form-label"><xar:mlstring>Size</xar:mlstring> :</label>
                      #$selimage['fileSize']#
                 </div>
                 <div class="xar-form-input-wrapper">
-                    <label class="xar-form-label"><xar:mlstring>Modified</xar:mlstring> :<label>
+                    <label class="xar-form-label"><xar:mlstring>Modified</xar:mlstring> :</label>
                      #xarLocaleGetFormattedDate('short',$selimage['fileModified'])#
                 </div>
+  
             </fieldset>
             <fieldset>
                 <legend>
@@ -95,7 +99,7 @@
                 </legend>
                 <div class="xar-form-input-wrapper">
                 <xar:if condition="!empty($selimage['derivatives'])">
-                    <label class="xar-form-label"><xar:mlstring>Derivatives</xar:mlstring> :<label>
+                    <label class="xar-form-label"><xar:mlstring>Derivatives</xar:mlstring> :</label>
                     <xar:foreach in="$selimage['derivatives']" value="$derivimage">
                         <xar:if condition="!empty($derivimage['fileSetting'])">
                             <a href="#xarModURL('images','admin','derivatives',array('action' => 'view', 'fileId' => $derivimage['fileId']))#">#$derivimage['fileSetting']#</a>
