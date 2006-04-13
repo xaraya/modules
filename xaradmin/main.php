@@ -12,6 +12,7 @@
 function ie7_admin_main($args) 
 {
     if (!xarSecurityCheck('AdminIE7',0)) return;    
+    xarResponseRedirect(xarModURL('ie7', 'admin', 'modifyconfig'));    
     /* array of variables to pass to the admin-main template */
     return array();
 }
