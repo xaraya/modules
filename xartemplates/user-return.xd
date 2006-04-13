@@ -3,6 +3,7 @@
 </xar:comment>
 <xar:style scope="module" file="xarbb-layout" />
 
+<xar:style scope="module" module="xarbb" file="xarbb-layout" />
 <meta http-equiv="refresh" content="3;url=#$topicreturn#"/>
 
 <h4>
