@@ -1,9 +1,25 @@
 <xar:comment>http://www.gnu.org/licenses/gpl.html</xar:comment>
 
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Publish / Subscribe Administration</xar:mlstring></span></div>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Publish/Subscribe Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
-    <h2>#$modname# [#$catname#] - <xar:mlstring>Subscriber Summary</xar:mlstring></h2>
-    <div align="center">
+    <xar:template type="module" module="pubsub" file="admin-menu" />
+    <h2><xar:mlstring>Subscriber Summary</xar:mlstring></h2>
+
+    <fieldset>
+        <legend>
+        <xar:ml>
+        <xar:mlstring>Subscriber Summary for #(1) [#(2)]</xar:mlstring>
+        <xar:mlvar>
+          #$modname#
+        </xar:mlvar>
+        <xar:mlvar>
+          #$catname#
+        </xar:mlvar>
+        </xar:ml>
+        </legend>
+
+
+    <div class="xar-align-center">
     <table width="100%" border="0" cellspacing="0" cellpadding="2">
     <tr>
         <th>
@@ -45,5 +61,7 @@
 </table>
 </div>
 </div>
+<div class="xar-form-input-after">
 <!-- add the pager here -->
 #$pager#
+</div>

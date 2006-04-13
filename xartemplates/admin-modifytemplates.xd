@@ -1,6 +1,8 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Publish / Subscribe Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Modify Templates</xar:mlstring></h2>
-<div style="margin: auto;">
+<div class="xar-mod-body">
+    <xar:template type="module" module="pubsub" file="admin-menu" />
+    <h2><xar:mlstring>Modify Templates</xar:mlstring></h2>
+
 <table border="1" cellpadding="8" cellspacing="0">
 <tr>
   <th><xar:mlstring>ID</xar:mlstring></th>
@@ -20,49 +22,63 @@
   <td><a href="#$new#"><xar:mlstring>New</xar:mlstring></a> | <a href="#$recompile#"><xar:mlstring>Recompile All</xar:mlstring></a></td>
 </tr>
 </table>
-<br/><br/>
+
 <xar:if condition="!empty($action)">
     <xar:if condition="$action eq 'display'">
-    <table border="0" width="100%" cellpadding="4">
-      <tr>
-        <td valign="top"><xar:mlstring>Name:</xar:mlstring></td>
-        <td valign="top">#$name#</td>
-      </tr>
-      <tr>
-        <td valign="top"><xar:mlstring>Template:</xar:mlstring></td>
-        <td valign="top"><pre>#$template#</pre></td>
-      </tr>
-      <tr>
-        <td valign="top"><xar:mlstring>Preview:</xar:mlstring></td>
-        <td valign="top">#$preview#</td>
-      </tr>
-    </table>
+   <div class="xar-form-input-wrapper">
+     <fieldset>
+     <legend><xar:mlstring>View Template</xar:mlstring></legend>
+         <div class="xar-form-input-wrapper">
+             <label for="name" class="xar-form-label">
+                 <xar:mlstring>Name:</xar:mlstring>
+             </label>
+             #$name#
+         </div>
+         <div class="xar-form-input-wrapper">
+             <label for="template" class="xar-form-label">
+                 <xar:mlstring>Template:</xar:mlstring>
+             </label>
+             <div class="xar-form-input-wrapper xar-clearleft ">
+             <pre>#$template#</pre>
+             </div>
+         <div class="xar-form-input-wrapper">
+             <label for="preview" class="xar-form-label">
+                <xar:mlstring>Preview:</xar:mlstring>
+             </label>
+             #$preview#
+          </div>
+      </fieldset>
+      </div>
     <xar:else/>
-    <form method="post" action="#xarModURL('pubsub', 'admin', 'modifytemplates')#" enctype="application/x-www-form-urlencoded" >
-        <input type="hidden" name="authid" id="authid" value="#$authid#" />
-        <input type="hidden" name="action" id="action" value="#$action#" />
-        <input type="hidden" name="templateid" id="templateid" value="#$templateid#" />
-
+    <form method="post" action="&xar-modurl-pubsub-admin-modifytemplates;" enctype="application/x-www-form-urlencoded" >
+     <xar:set name="actionname">ucfirst($action)</xar:set>
+     <fieldset>
+     <legend>#$actionname#</legend>
         <xar:if condition="$action eq 'create' or $action eq 'update'">
-            <table border="0" width="100%" cellpadding="4">
-              <tr>
-                <td valign="top"><label for="name"><xar:mlstring>Name:</xar:mlstring></label></td>
-                <td valign="top"><input type="text" name="name" id="name" value="#$name#" /></td>
-              </tr>
-              <tr>
-                <td valign="top"><label for="template"><xar:mlstring>Template:</xar:mlstring></label></td>
-                <td valign="top"><textarea name="template" id="template" rows="10" cols="60">#$template#</textarea></td>
-              </tr>
-            </table>
+           <div class="xar-form-input-wrapper">
+                <label for="name" class="xar-form-label"><xar:mlstring>Name:</xar:mlstring></label>
+                <input type="text" name="name" id="name" value="#$name#" />
+           </div>
+           <div class="xar-form-input-wrapper">
+                <label for="template" class="xar-form-label"><xar:mlstring>Template:</xar:mlstring></label>
+                <textarea name="template" id="template" rows="10" cols="55">#$template#</textarea>
+            </div>
+        <div class="xar-form-input-wrapper-after">
         <xar:elseif condition="$action eq 'confirm'"/>
             <xar:ml><xar:mlstring>Are you sure you want to delete template '#(1)' ?</xar:mlstring><xar:mlvar>#$name#</xar:mlvar></xar:ml>
         <xar:else/>
             <xar:mlstring>Unknown Action</xar:mlstring>
         </xar:if>
-        <br /><br />
+        </div>
+     </fieldset>
+        <div class="xar-form-input-wrapper-after">
+         <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <input type="hidden" name="action" id="action" value="#$action#" />
+        <input type="hidden" name="templateid" id="templateid" value="#$templateid#" />
         <input type="submit" value="#$submitbutton#" />
+        </div>
     </form>
     </xar:if>
 </xar:if>
-</div>
+
 </div>

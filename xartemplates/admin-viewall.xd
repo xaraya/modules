@@ -2,10 +2,13 @@
 
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Publish / Subscribe Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
-    <h2><xar:mlstring>Subscription Summary</xar:mlstring></h2>
-    <div align="center">
+    <xar:template type="module" module="pubsub" file="admin-menu" />
+    <fieldset>
+        <legend>
+            <xar:mlstring>Add Subscribers</xar:mlstring>
+        </legend>
+    <div class="xar-align-center;">
 
-    
     <table width="100%" border="0" cellspacing="0" cellpadding="2">
     <tr>
         <th>
@@ -40,7 +43,7 @@
             #$item['numsubscribers']#
         </td>
         <td>
-            <a href="#xarModURL('pubsub','admin','viewsubscribers',array('eventid'=>$item['eventid']))#"><xar:mlstring>Subscribers</xar:mlstring></a>
+            <a href="&xar-modurl-pubsub-admin-viewsubscribers;&amp;eventid=#$item['eventid']#"><xar:mlstring>Subscribers</xar:mlstring></a>
         </td>
      </tr>
      </xar:foreach>
@@ -53,40 +56,53 @@
     </tr>
     </xar:if>
 </table>
+</fieldset>
     </div>
-    
-    
-    <h2><xar:mlstring>Add Subscribers</xar:mlstring></h2>
 
-    <form action="#xarModURL('pubsub','admin','addsubscriber')#" method="post">
-        <div>
-            <span style="font-weight:bold;"><xar:mlstring>Module Name</xar:mlstring></span>
-            <span><xar:data-input name="sub_module" type="19" /></span>
+
+
+    <form action="&xar-modurl-pubsub-admin-addsubscriber;" method="post">
+    <fieldset>
+        <legend>
+            <xar:mlstring>Add Subscribers</xar:mlstring>
+        </legend>
+
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label">
+               <xar:mlstring>Module Name</xar:mlstring>
+            </label>
+            <xar:data-input name="sub_module" type="19" />
         </div>
-        <div>
-            <span style="font-weight:bold;"><xar:mlstring>Item Type</xar:mlstring></span>
-            <span><input type="text" name="sub_itemtype"/></span>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label">
+                <xar:mlstring>Item Type</xar:mlstring>
+            </label>
+            <input type="text" name="sub_itemtype"/></span>
         </div>
-        <div>
-            <span style="font-weight:bold;"><xar:mlstring>Category</xar:mlstring></span>
-            <span>
-                <xar:set name="categories">xarModAPIFunc('categories','user','getcat')</xar:set>                    
-                <select name="sub_category">
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label">
+                <xar:mlstring>Category</xar:mlstring>
+            </label>
+            <xar:set name="categories">xarModAPIFunc('categories','user','getcat')</xar:set>
+            <select name="sub_category">
                     <xar:foreach in="$categories" value="$category">
                         <xar:set name="indent">$category['indentation'] - 1</xar:set>
                         <xar:set name="indent">str_repeat("&nbsp;&nbsp;&nbsp;", $indent)</xar:set>
 
                         <option value="#$category['cid']#">#$indent# #$category['name']#</option>
                     </xar:foreach>
-                </select>
-            </span>
+             </select>
         </div>
-        <div>
-            <span style="font-weight:bold;"><xar:mlstring>EMail Addresses</xar:mlstring></span>
-            <span><textarea name="sub_email" cols="64" rows="6"></textarea></span>
-            
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label">
+                <xar:mlstring>EMail Addresses</xar:mlstring>
+            </label>
+            <textarea name="sub_email" cols="55" rows="6"></textarea>
         </div>
-        <input type="submit" value="Add Subscriber"/>
+        </fieldset>
+        <div class="xar-form-input-wrapper-after">
+            <input type="submit" value="Add Subscriber"/>
+        </div>
     </form>
 
 </div>

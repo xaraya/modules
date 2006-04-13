@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id$
- *
  * Pubsub Admin API
  *
  * @package Xaraya eXtensible Management System

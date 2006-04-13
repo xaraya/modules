@@ -2,8 +2,8 @@
 
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Publish / Subscribe Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
+    <xar:template type="module" module="pubsub" file="admin-menu" />
     <h2><xar:mlstring>Event Queue</xar:mlstring></h2>
-    <div align="center">
 
     <form method="POST" action="&xar-modurl-pubsub-admin-viewq;">
         <input type="hidden" name="authid" value="#$authid#" />
@@ -71,7 +71,7 @@
     </xar:if>
 </table>
     </div>
-    
+
 </div>
 <!-- add the pager here -->
 #$pager#
