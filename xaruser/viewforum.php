@@ -1,11 +1,11 @@
 <?php
-/** 
+/**
  * View a list of topics in a forum
- * 
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ *
+ * @package modules
+ * @copyright (C) 2003-2006 The Digital Development Foundation.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.org
+ * @link http://www.xaraya.com
  *
  * @subpackage  xarbb Module
  * @author John Cox
@@ -99,7 +99,7 @@ function xarbb_user_viewforum()
     if (count($userlist) > 0) {
         $users = xarModAPIFunc('roles', 'user', 'getall', array('uidlist' => $userlist));
     }
- 
+
     for ($i = 0; $i < $totaltopics; $i++) {
         $topic = $topics[$i];
         list($topics[$i]['ttitle'], $topics[$i]['tpost']) = xarModCallHooks(
@@ -111,7 +111,7 @@ function xarbb_user_viewforum()
         if (!empty($read)){
             xarSessionSetVar(xarModGetVar('xarbb', 'cookiename') . '_t_' . $topic['tid'], time());
         }
-        
+
         $read_topic = xarSessionGetVar(xarModGetVar('xarbb', 'cookiename') . '_t_' . $topic['tid']);
 
         if (isset($read_topic)){
@@ -232,7 +232,7 @@ function xarbb_user_viewforum()
 
     // Forum Jump
     $data['forums'] = xarModAPIFunc('xarbb', 'user', 'getallforums');
-    
+
     return $data;
 }
 
@@ -246,7 +246,7 @@ function xarbb_user_viewforum_sort_topics(&$topics)
     $normal = array();
     $sticky = array();
     $announcements = array();
-    
+
     for($i=0, $max = count($topics); $i<$max; $i++) {
         switch($topics[$i]['tstatus']) {
             case '1':

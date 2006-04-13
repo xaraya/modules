@@ -2,12 +2,13 @@
 /**
  * Update a forum topic
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @package modules
+ * @copyright (C) 2003-2006 The Digital Development Foundation.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.org
+ * @link http://www.xaraya.com
  *
- * @subpackage  xarbb Module
+ * @subpackage xarbb Module
+ * @link http://xaraya.com/index.php/release/300.html
  * @author John Cox
  * @author Jo dalle Nogare
 */

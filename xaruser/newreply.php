@@ -1,17 +1,20 @@
 <?php
 /**
  * Add a new topic reply
- * 
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 by the Xaraya Development Team.
+ *
+ * @package modules
+ * @copyright (C) 2003-2006 The Digital Development Foundation.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.org
+ * @link http://www.xaraya.com
  *
  * @subpackage  xarbb Module
+ * @link http://xaraya.com/index.php/release/300.html
  * @author John Cox
  * @author Jo Dalle Nogare
 */
-//TODO FInish this function.
+/**
+ * @TODO Finish this function.
+ */
 function xarbb_user_newreply()
 {
     if (!xarVarFetch('tid', 'int:1:', $tid, '', XARVAR_NOT_REQUIRED)) return;

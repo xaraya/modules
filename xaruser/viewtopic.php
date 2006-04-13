@@ -2,12 +2,13 @@
 /**
  * View a forum topic and replies
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @package modules
+ * @copyright (C) 2003-2006 The Digital Development Foundation.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.org
+ * @link http://www.xaraya.com
  *
  * @subpackage  xarbb Module
+ * @link http://xaraya.com/index.php/release/300.html
  * @author John Cox
  * @author Jo dalle Nogare
 */
@@ -272,7 +273,7 @@ function xarbb_user_viewtopic($args)
     $data['posterdatestamp'] = $regdatestamp;
     $data['usertopics'] = $topiccount;
     $data['xbbname']    = xarModGetVar('themes', 'SiteName');
-    
+
     //Pager data - to prevent topic should on every additional pager page
     $data['startnum'] = $startnum;
 
@@ -284,7 +285,7 @@ function xarbb_user_viewtopic($args)
     $item['module'] = 'xarbb';
     $item['itemtype'] = $data['fid']; // Forum Topics
     $item['itemid'] = $tid;
- 
+
 
     // for display hooks, we need to pass a returnurl
     $item['returnurl'] = xarModURL('xarbb', 'user', 'viewtopic',
@@ -330,7 +331,7 @@ function xarbb_user_viewtopic($args)
 
     // Forum Jump
     $data['forums'] = xarModAPIFunc('xarbb', 'user', 'getallforums');
-    
+
     // Lets check our options as well for a dual status topic
     if (!empty($topic['toptions'])){
         $topicoptions = unserialize($data['toptions']);

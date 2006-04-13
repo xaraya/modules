@@ -1,8 +1,7 @@
 <xar:comment>
     License: GPL http://www.gnu.org/copyleft/gpl.html
 </xar:comment>
-<xar:if condition="xarTplAddStyleLink('xarbb', 'xarbb-layout')">
-</xar:if>
+<xar:style scope="module" file="xarbb-layout" />
 
 <meta http-equiv="refresh" content="3;url=#$topicreturn#"/>
 
@@ -15,19 +14,19 @@
         </xar:if>
         #xarModGetVar('themes', 'SiteTitleSeparator', 0)#
         <xar:mlstring>
-            Forum Index 
+            Forum Index
         </xar:mlstring>
     </a>
 </h4>
 <div class="xarbb-tablewrapper">
     <table>
-        <tr> 
+        <tr>
             <th>
                 <xar:mlstring>Information</xar:mlstring>
             </th>
         </tr>
-        <tr> 
-            <td class="xar-norm"> 
+        <tr>
+            <td class="xar-norm">
                 <p>
                     <xar:mlstring>Your message has been entered successfully.</xar:mlstring>
                 </p>
