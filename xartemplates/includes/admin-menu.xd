@@ -42,11 +42,13 @@
       The overview function uses the admin-main template so we test
       to see if $activetab is equal to main and set the tab active if it matches.
     </xar:comment>
+    <xar:sec mask="EditExample" catch="false">
     <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
     <dd class="#$tabclass#">
       <a href="&xar-modurl-example-admin-overview;">
         <xar:mlstring>Overview</xar:mlstring>
       </a>
     </dd>
+    </xar:sec>
   </dl>
 </div>
