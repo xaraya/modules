@@ -1,9 +1,9 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Change Log Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
     <xar:template module="changelog" type="module" file="admin-menu" />
-<h2><xar:mlstring>View Changes</xar:mlstring></h2><br />
-<div style="margin: auto;">
-<xar:if condition="empty($modid)">
+    <h2><xar:mlstring>View Changes</xar:mlstring></h2><br />
+
+    <xar:if condition="empty($modid)">
         <table border="0" width="100%" cellpadding="0" cellspacing="0">
             <tr>
                 <th align="center" valign="center" width="25%">
@@ -196,5 +196,5 @@
             </tr>
         </table>
 </xar:if>
-</div>
+
 </div>

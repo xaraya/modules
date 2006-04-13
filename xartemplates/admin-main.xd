@@ -3,42 +3,40 @@
 <div class="xar-mod-body">
     <xar:template module="changelog" type="module" file="admin-menu" />
     <h2><xar:mlstring>Overview</xar:mlstring></h2>
+    <img src="#xarTplGetImage('admin_generic.gif','base')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
 
-    <div style="padding: 1px;" class="xar-norm-outline">
-        <div style="float:right;padding:10px;">
-            <img src="modules/changelog/xarimages/admin_generic.gif" alt="official icon" width="96" height="96" />
-        </div>
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>What is it?</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+    <h2><xar:mlstring>Overview</xar:mlstring></h2>
+
+    <h2><xar:mlstring>What is it?</xar:mlstring></h2>
         <p><em><xar:mlstring>ChangeLog is a Xaraya Utility Module.</xar:mlstring></em>
         <xar:mlstring>that allows you to keep track of changes in module items.</xar:mlstring></p>
-        </div>
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>How to use it?</xar:mlstring>
-        </div>
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+    <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
          <p><xar:mlstring>For each hooked module, specify the fields you want to keep track of - someday, perhaps... :-)</xar:mlstring></p>
-         </div>
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>Included Blocks</xar:mlstring>
-        </div>
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+    <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
            <p><xar:mlstring>There are no included blocks at this time</xar:mlstring></p>
-        </div>
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>Included Hooks</xar:mlstring>
-        </div>
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+
+    <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
+        <p>
             <ul>
                 <li><xar:mlstring>create/modify/update/delete -- Allows you to create/update change logs</xar:mlstring></li>
                 <li><xar:mlstring>display -- Allows you to display change logs</xar:mlstring></li>
             </ul>
-        </div>
-        <div class="xar-norm-outline xar-accent" style="text-align: center; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
-            <p></p>
-        </div>
-</div>
+        </p>
+
+    <h3>
+        <xar:mlstring>Further Information</xar:mlstring>
+    </h3>
+    <p>
+        <xar:mlstring>Further information on the Changelog module can be found at</xar:mlstring>
+    </p>
+    <ul>
+        <li><xar:mlstring>Changelog Extension page at</xar:mlstring> <a title="#xarML('Changelog Module - Xaraya Extension 185')#" href="http://www.xaraya.com/index.php/release/185.html">Xaraya Extension and Releases</a>.
+            <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+        </li>
+        <li><xar:mlstring>Related tutorials and documentation on Changelog found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/changelog/" title="#xarML('Related documentation on Changelog')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+        </li>
+     </ul>
+  <p class="xar-sub">
+    <strong>&nbsp;<xar:mlstring>Changelog Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2006-04-09
+  </p>
 </div>
