@@ -19,12 +19,7 @@ function recommend_adminapi_getmenulinks()
 { 
    /*  Security Check */
     if (xarSecurityCheck('EditRecommend', 0)) {
-        $menulinks[] = Array('url' => xarModURL('recommend',
-                                                'admin',
-                                                'overview'),
-            'title' => xarML('Recommend Overview'),
-            'label' => xarML('Overview'));
- 
+   
         $menulinks[] = Array('url' => xarModURL('recommend',
                 'admin',
                 'modifyconfig'),
