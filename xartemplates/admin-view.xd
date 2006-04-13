@@ -1,30 +1,26 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Change Log Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
     <xar:template module="changelog" type="module" file="admin-menu" />
-    <h2><xar:mlstring>View Changes</xar:mlstring></h2><br />
+    <h2><xar:mlstring>View Change Log Items</xar:mlstring></h2>
 
     <xar:if condition="empty($modid)">
+        <div class="xar-fullwidth">
         <table border="0" width="100%" cellpadding="0" cellspacing="0">
             <tr>
-                <th align="center" valign="center" width="25%">
-                    <xar:mlstring><b>Module<br />Name</b></xar:mlstring>
+                <th class="xar-align-center" valign="center" width="40%">
+                    <xar:mlstring><strong>Module Name</strong></xar:mlstring>
                 </th>
-                <th align="center" valign="center" width="25%">
-                    <xar:mlstring><b>Module<br />Items</b></xar:mlstring>
+                <th class="xar-align-center"  valign="center" width="15%">
+                    <xar:mlstring><strong>Module Items</strong></xar:mlstring>
                 </th>
-                <th align="center" valign="center" width="25%">
-                    <xar:mlstring><b>Total<br />Changes</b></xar:mlstring>
+                <th class="xar-align-center"  valign="center" width="15%">
+                    <xar:mlstring><strong>Total Changes</strong></xar:mlstring>
                 </th>
-                <th align="center" valign="center" width="25%">
-                    <xar:mlstring><b>Action</b></xar:mlstring>
+                <th class="xar-align-center"  valign="center" width="30%">
+                    <xar:mlstring><strong>Action</strong></xar:mlstring>
                 </th>
             </tr>
 
-            <tr>
-                <td colspan="4">
-                    &nbsp;
-                </td>
-            </tr>
 
             <xar:if condition="empty($moditems) or count($moditems) eq '0'">
                 <tr>
@@ -38,14 +34,9 @@
                     </td>
                 </tr>
             <xar:else />
-                <tr>
-                    <td colspan="4">
-                        <div class="xar-norm-outline" style=" margin-left: 1em; margin-right: 1em; width: auto;border-style: dotted none none none;"></div>
-                    </td>
-                </tr>
                 <xar:foreach in="$moditems" value="$moditem">
                     <tr>
-                        <td align="center" valign="center" width="25%">
+                        <td align="center" valign="center" width="40%">
                             <a href="#$moditem['link']#">#$moditem['name']#</a>
                         </td>
                         <td align="center" valign="center" width="25%">
@@ -58,69 +49,58 @@
                             <a href="#$moditem['delete']#"><xar:mlstring>Delete</xar:mlstring></a>
                         </td>
                     </tr>
-                    <tr>
-                        <td colspan="5">
-                            <div class="xar-norm-outline" style=" margin-left: 1em; margin-right: 1em; width: auto;border-style: dotted none none none;"></div>
-                        </td>
-                    </tr>
+
                 </xar:foreach>
                 <tr>
                     <td align="center" valign="center" width="25%">
-                        <b><xar:mlstring>Grand Total</xar:mlstring></b>
+                        <strong><xar:mlstring>Grand Total</xar:mlstring></strong>
                     </td>
-                    <td align="center" valign="center" width="25%">
-                        <b>#$numitems#</b>
+                    <td align="center" valign="center" width="15%">
+                        <strong>#$numitems#</strong>
                     </td>
-                    <td align="center" valign="center" width="25%">
-                        <b>#$numchanges#</b>
+                    <td align="center" valign="center" width="15%">
+                        <strong>#$numchanges#</strong>
                     </td>
-                    <td align="center" valign="center" width="25%">
+                    <td align="center" valign="center" width="30%">
                         <a href="#$delete#"><xar:mlstring>Delete All</xar:mlstring></a>
                     </td>
                 </tr>
             </xar:if>
+             </table>
+            </div>
 
-            <tr>
-                <td colspan="4">
-                    <div class="xar-accent xar-norm-outline" style="text-align: justify;padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
+            <div class="xar-form-input-wrapper-before">
                         <xar:mlstring>
-                            By clicking on <b>Delete</b> you can delete all changes associated with a particular
-                            module. Clicking on a module will take you to that module's statistics page containing
-                            the figures for each of that module's items that have changes associated with them.
-                            From there you can delete all changes associated with a particular item.
+                            Click on <strong>Delete</strong> to delete <strong>all</strong> changes
+                            associated with a module. Click on a <strong>module name</strong> to go to the module's statistics page. This page
+                            contains the figures for all of the module's items that have changes associated with them.
+                            You can delete all changes associated with a particular item from this page.
                         </xar:mlstring>
-                    </div>
-                </td>
-            </tr>
-        </table>
+            </div>
+
 <xar:else/>
     <h3><xar:ml><xar:mlstring>Module #(1)</xar:mlstring><xar:mlvar>#$modname#</xar:mlvar></xar:ml></h3>
 
+        <div class="xar-fullwidth">
         <table border="0" width="100%" cellpadding="0" cellspacing="0">
             <tr>
                 <th align="center" valign="center" width="50%">
                     <xar:if condition="empty($sortlink['itemid'])">
-                        <xar:mlstring><b>Item<br/>Id</b></xar:mlstring>
+                        <xar:mlstring><strong>Item Id</strong></xar:mlstring>
                     <xar:else/>
-                        <a href="#$sortlink['itemid']#"><xar:mlstring><b>Item<br />Id</b></xar:mlstring></a>
+                        <a href="#$sortlink['itemid']#"><xar:mlstring><strong>Item Id</strong></xar:mlstring></a>
                     </xar:if>
                 </th>
                 <th align="center" valign="center" width="25%">
                     <xar:if condition="empty($sortlink['numchanges'])">
-                        <xar:mlstring><b>Changes</b></xar:mlstring>
+                        <xar:mlstring><strong>Changes</strong></xar:mlstring>
                     <xar:else/>
-                        <a href="#$sortlink['numchanges']#"><xar:mlstring><b>Changes</b></xar:mlstring></a>
+                        <a href="#$sortlink['numchanges']#"><xar:mlstring><strong>Changes</strong></xar:mlstring></a>
                     </xar:if>
                 </th>
                 <th align="center" valign="center" width="25%">
-                    <xar:mlstring><b>Action</b></xar:mlstring>
+                    <xar:mlstring><strong>Action</strong></xar:mlstring>
                 </th>
-            </tr>
-
-            <tr>
-                <td colspan="3">
-                    &nbsp;
-                </td>
             </tr>
 
             <xar:if condition="empty($moditems) or count($moditems) eq '0'">
@@ -135,11 +115,7 @@
                     </td>
                 </tr>
             <xar:else />
-                <tr>
-                    <td colspan="3">
-                        <div class="xar-norm-outline" style="margin-left: 1em; margin-right: 1em; width: auto;border-style: dotted none none none;"></div>
-                    </td>
-                </tr>
+
                 <xar:foreach in="$moditems" key="$itemid" value="$moditem">
                     <tr>
                         <xar:if condition="!empty($moditem['title']) and !empty($moditem['link'])">
@@ -159,11 +135,7 @@
                             <a href="#$moditem['delete']#"><xar:mlstring>Delete</xar:mlstring></a>
                         </td>
                     </tr>
-                    <tr>
-                        <td colspan="3">
-                        <div class="xar-norm-outline" style="margin-left: 1em; margin-right: 1em; width: auto;border-style: dotted none none none;"></div>
-                        </td>
-                    </tr>
+
                 </xar:foreach>
             <xar:if condition="!empty($pager)">
                 <tr>
@@ -174,27 +146,29 @@
             </xar:if>
                 <tr>
                     <td align="right" valign="center" width="50%">
-                        <b><xar:mlstring>Grand Total</xar:mlstring></b>:
+                        <strong><xar:mlstring>Grand Total</xar:mlstring></strong>:
                     </td>
                     <td align="center" valign="center" width="25%">
-                        <b>#$numchanges#</b>
+                        <strong>#$numchanges#</strong>
                     </td>
                     <td align="center" valign="center" width="25%">
                         <a href="#$delete#"><xar:mlstring>Delete All</xar:mlstring></a>
                     </td>
                 </tr>
             </xar:if>
-            <tr>
-                <td colspan="3">
-                    <div class="xar-accent xar-norm-outline" style="text-align: justify;padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
-                        <xar:mlstring>
-                            By clicking on <b>View Log</b> you can view all changes associated with a particular
-                            module's item, and by clicking on <b>Delete</b> you can delete them.
-                        </xar:mlstring>
-                    </div>
-                </td>
-            </tr>
         </table>
+             </div>
+
+            <div class="xar-form-input-wrapper-before">
+                <xar:mlstring>
+                    Click on <strong>View Log</strong> to see all changes associated with a particular
+                    module's item. <br />
+                    Click on <strong>Delete</strong> to delete all changes for a module item.<br />
+                    Click on <strong>Item Name</strong> to view the item.
+                </xar:mlstring>
+            </div>
+
+        </div>
 </xar:if>
 
 </div>

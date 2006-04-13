@@ -4,16 +4,23 @@
 <div class="xar-mod-body">
     <xar:template module="changelog" type="module" file="admin-menu" />
     <h2>
+        <xar:mlstring>Version Details</xar:mlstring>
+    </h2>
+    <p class="xar-form-input-wrapper-before">
+        <xar:if condition="!empty($itemlink)">
+        <a href="#$itemlink#">#$itemtitle#&nbsp;&quot;#$itemlabel#&quot;</a>
+        </xar:if>
+    </p>
+    <fieldset>
+        <legend>
         <xar:ml>
             <xar:mlstring>Version #(1) of #(2)</xar:mlstring>
             <xar:mlvar>#$version#</xar:mlvar>
             <xar:mlvar>#$numversions#</xar:mlvar>
         </xar:ml>
-    </h2>
-    <div style="margin: auto;">
-        <xar:if condition="!empty($itemlink)">
-        <p><a href="#$itemlink#">#$itemtitle#&nbsp;&quot;#$itemlabel#&quot;</a></p>
-        </xar:if>
+        </legend>
+        <div class="xar-form-input-wrapper">
+
         <table width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent">
             <tr>
                 <th><xar:mlstring>Version</xar:mlstring></th>
@@ -43,7 +50,7 @@
             </tr>
         </table>
         <p>
-            <a href="#$link#"><xar:mlstring>Back to overview</xar:mlstring></a>
+            <a href="#$link#"><xar:mlstring>Back to version listing</xar:mlstring></a>
             -
             <xar:if condition="!empty($prevversion)">
             <a href="#$prevversion#"><xar:mlstring>Show previous version</xar:mlstring></a>
@@ -55,6 +62,13 @@
             [<a href="#$nextdiff#"><xar:mlstring>diff</xar:mlstring></a>]
             </xar:if>
         </p>
+        </fieldset>
+        </div>
+        <fieldset>
+        <legend>
+           <xar:mlstring>Field List</xar:mlstring>
+        </legend>
+        <div class="xar-form-input-wrapper">
         <table width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent">
             <tr>
                 <th><xar:mlstring>Fields</xar:mlstring></th>
@@ -67,5 +81,7 @@
             </tr>
             </xar:foreach>
         </table>
-    </div>
+        </div>
+        </fieldset>
+
 </div>

@@ -3,13 +3,21 @@
 <xar:style scope="module" module="base" file="navtabs" />
 
 <xar:set name="activetab">$_bl_module_func</xar:set>
+<xar:comment>We hide the whole menu here unless there are admin rights
+    As those with view privs can see the changelog per item view</xar:comment>
+<xar:sec mask="AdminChangeLog" catch="false">
 <div>
   <dl class="xar-tabs">
     <dt class="help" title="Choose an action to perform">
       <xar:mlstring>Actions:</xar:mlstring>
     </dt>
-    <xar:sec mask="AdminChangeLog" catch="false">
-        <xar:set name="tabclass">$activetab=='view'?'active':''</xar:set>
+
+        <xar:if condition="$activetab eq 'view' or $activetab eq 'delete' or $activetab eq 'modify'
+                or $activetab eq 'showversion' or $activetab eq 'showdiff' or $activetab eq 'showlog'">
+            <xar:set name="tabclass">'active'</xar:set>
+        <xar:else />
+            <xar:set name="tabclass">''</xar:set>
+        </xar:if>
         <dd class="#$tabclass#">
           <a href="&xar-modurl-changelog-admin-view;">
             <xar:mlstring>Manage Changelog Entries</xar:mlstring>
@@ -29,6 +37,6 @@
         <xar:mlstring>Overview</xar:mlstring>
       </a>
     </dd>
-    </xar:sec>
   </dl>
 </div>
+    </xar:sec>

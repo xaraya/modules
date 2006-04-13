@@ -3,16 +3,15 @@
 </div>
 <div class="xar-mod-body">
     <xar:template module="changelog" type="module" file="admin-menu" />
-    <h2><xar:mlstring>Overview of versions</xar:mlstring></h2>
-    <div style="margin: auto;">
+    <h2><xar:mlstring>Changelog Version Listing</xar:mlstring></h2>
+    <xar:if condition="!empty($itemlink)">
+        <h3><a href="#$itemlink#">#$itemtitle# &nbsp; &quot;#$itemlabel#&quot;</a></h3>
+    </xar:if>
         <form method="POST" action="&xar-modurl-changelog-admin-showdiff;">
-        <input type="hidden" name="modid" value="#$modid#" />
-        <input type="hidden" name="itemtype" value="#$itemtype#" />
-        <input type="hidden" name="itemid" value="#$itemid#" />
-        <xar:if condition="!empty($itemlink)">
-        <p><a href="#$itemlink#">#$itemtitle#&nbsp;&quot;#$itemlabel#&quot;</a></p>
-        </xar:if>
-        <table width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent">
+    <fieldset>
+        <legend><xar:mlstring>Versions For This Item</xar:mlstring></legend>
+        <div class="xar-form-input-wrapper">
+            <table width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent">
             <tr>
                 <th><xar:mlstring>Version</xar:mlstring></th>
                 <th><xar:mlstring>Status</xar:mlstring></th>
@@ -49,7 +48,9 @@
             </tr>
             </xar:foreach>
         </table>
-        <p>
+        </div>
+    </fieldset>
+        <p class="xar-form-input-wrapper-before">
             <xar:if condition="!empty($prevversion)">
             <a href="#$prevversion#"><xar:mlstring>Show first version</xar:mlstring></a>
                 <xar:if condition="!empty($prevdiff)">
@@ -64,6 +65,12 @@
                 </xar:if>
             </xar:if>
         </p>
+
+
+    <div class="xar-form-input-wrapper-before xar-padding-thicktop">
+        <input type="hidden" name="modid" value="#$modid#" />
+        <input type="hidden" name="itemtype" value="#$itemtype#" />
+        <input type="hidden" name="itemid" value="#$itemid#" />
         <input type="submit" value="#xarML('Diff')#" />
         </form>
     </div>

@@ -4,17 +4,25 @@
 <div class="xar-mod-body">
     <xar:template module="changelog" type="module" file="admin-menu" />
     <h2>
+        <xar:mlstring>Version Differences</xar:mlstring>
+    </h2>
+    <h3>
+        <xar:if condition="!empty($itemlink)">
+            <a href="#$itemlink#">#$itemtitle#&nbsp;&quot;#$itemlabel#&quot;</a>
+        </xar:if>
+
+    </h3>
+    <fieldset>
+        <legend>
         <xar:ml>
-            <xar:mlstring>Differences between versions #(1) and #(2) of #(3)</xar:mlstring>
+            <xar:mlstring>Difference between version #(1) and #(2) of #(3)</xar:mlstring>
             <xar:mlvar>#$oldversion#</xar:mlvar>
             <xar:mlvar>#$newversion#</xar:mlvar>
             <xar:mlvar>#$numversions#</xar:mlvar>
         </xar:ml>
-    </h2>
-    <div style="margin: auto;">
-        <xar:if condition="!empty($itemlink)">
-        <p><a href="#$itemlink#">#$itemtitle#&nbsp;&quot;#$itemlabel#&quot;</a></p>
-        </xar:if>
+        </legend>
+        <div class="xar-form-input-wrapper">
+
         <table width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent">
             <tr>
                 <th><xar:mlstring>Version</xar:mlstring></th>
@@ -52,7 +60,7 @@
             </xar:foreach>
         </table>
         <p>
-            <a href="#$link#"><xar:mlstring>Back to overview</xar:mlstring></a>
+            <a href="#$link#"><xar:mlstring>Back to version listing</xar:mlstring></a>
             -
             <xar:if condition="!empty($prevdiff)">
             <a href="#$prevdiff#"><xar:mlstring>Show previous diff</xar:mlstring></a>
@@ -62,6 +70,13 @@
             <a href="#$nextdiff#"><xar:mlstring>Show next diff</xar:mlstring></a>
             </xar:if>
         </p>
+       </div>
+       </fieldset>
+       <fieldset>
+        <legend>
+            <xar:mlstring>Field listing</xar:mlstring>
+         </legend>
+
         <table width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent">
             <tr>
                 <th><xar:mlstring>Fields</xar:mlstring></th>
@@ -74,5 +89,6 @@
             </tr>
             </xar:foreach>
         </table>
-    </div>
+        </fieldset>
+
 </div>
