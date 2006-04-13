@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 by the Xaraya Development Team.
@@ -35,36 +36,34 @@ function xarbb_userapi_get_allposts($args)
     $modid=xarModGetIDFromName('xarbb');
 
     if ( !isset($modid) || empty($modid) ) {
-        $msg = xarML('Invalid #(1) [#(2)] for #(3) function #(4)() in module #(5)',
-                                 'modid', $modid, 'userapi', 'get_multiple', 'comments');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                                        new SystemException(__FILE__.'('.__LINE__.'):  '.$msg));
+        $msg = xarML(
+            'Invalid #(1) [#(2)] for #(3) function #(4)() in module #(5)',
+            'modid', $modid, 'userapi', 'get_multiple', 'comments'
+        );
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return false;
     }
 
     if ( (!isset($objectid) || empty($objectid)) && !isset($author) ) {
-        $msg = xarML('Invalid #(1) [#(2)] for #(3) function #(4)() in module #(5)',
-                                 'objectid', $objectid, 'userapi', 'get_multiple', 'comments');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                                        new SystemException(__FILE__.'('.__LINE__.'):  '.$msg));
+        $msg = xarML(
+            'Invalid #(1) [#(2)] for #(3) function #(4)() in module #(5)',
+            'objectid', $objectid, 'userapi', 'get_multiple', 'comments'
+        );
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return false;
-    } else
-        if (!isset($objectid) && isset($author)) {
-            $objectid = 0;
+    } elseif (!isset($objectid) && isset($author)) {
+        $objectid = 0;
     }
 
     if (!isset($cid) || !is_numeric($cid)) {
         $cid = 0;
     } else {
-        $nodelr = xarModAPIFunc('comments',
-                                'user',
-                                'get_node_lrvalues',
-                                 array('cid' => $cid));
+        $nodelr = xarModAPIFunc('comments', 'user', 'get_node_lrvalues', array('cid' => $cid));
     }
 
     // Optional argument for Pager - 
     // for those modules that use comments and require this
-     if (!isset($startnum)) {
+    if (!isset($startnum)) {
         $startnum = 1;
     } 
     if (!isset($numitems)) {
@@ -128,20 +127,19 @@ function xarbb_userapi_get_allposts($args)
     if (isset($numitems) && is_numeric($numitems)) {
         $result =& $dbconn->SelectLimit($sql, $numitems, $startnum-1,$bindvars);
     } else {
-       $result =& $dbconn->Execute($query,$bindvars);
+        $result =& $dbconn->Execute($query,$bindvars);
     }
     //$result =& $dbconn->Execute($sql);
     if (!$result) return;
 
-    // if we have nothing to return
-    // we return nothing ;) duh? lol
+    // Nothing to return, so return an empty array.
     if ($result->EOF) {
         return array();
     }
 
     if (!xarModLoad('comments','renderer')) {
         $msg = xarML('Unable to load #(1) #(2)','comments','renderer');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UNABLE_TO_LOAD', new SystemException(__FILE__.'('.__LINE__.'):  '.$msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UNABLE_TO_LOAD', new SystemException($msg));
         return;
     }
 
@@ -160,9 +158,11 @@ function xarbb_userapi_get_allposts($args)
 
     if (!comments_renderer_array_markdepths_bypid($commentlist)) {
         $msg = xarML('Unable to create depth by pid');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'SYSTEM_ERROR', new SystemException(__FILE__.'('.__LINE__.'):  '.$msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'SYSTEM_ERROR', new SystemException($msg));
         return;
     }
+
     return $commentlist;
 }
+
 ?>
