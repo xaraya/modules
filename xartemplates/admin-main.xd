@@ -3,6 +3,7 @@
   <span class="xar-mod-title"><xar:mlstring>Scheduler Administration </xar:mlstring></span>
 </div>
 <div class="xar-mod-body">
+  <xar:template type="module" module="scheduler" file="admin-menu" />
   <img src="#xarTplGetImage('admin_generic.gif', 'base')#" alt="official icon" width="96" height="96" class="xar-module-icon" />
   <h2>
     <xar:mlstring>
@@ -86,9 +87,21 @@
       <li><xar:mlstring>to be defined</xar:mlstring></li>
     </ul>
   </p>
-</div>
-<div class="xar-mod-foot xar-align-center xar-padding-thick">
+  <h3>
+    <xar:mlstring>Further Information</xar:mlstring>
+  </h3>
   <p>
-    <xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring>
+    <xar:mlstring>Further information on the Scheduler module can be found at</xar:mlstring>
+  </p>
+  <ul>
+    <li><xar:mlstring>Example Extension page at</xar:mlstring> <a title="#xarML('Scheduler Module - Xaraya Extension 189')#" href="http://www.xaraya.com/index.php/release/189.html">Xaraya Extension and Releases</a>.
+      <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+    </li>
+    <li><xar:mlstring>Related tutorials and documentation on Scheduler found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/scheduler/" title="#xarML('Related documentation on Scheduler')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+    </li>
+  </ul>
+  <p class="xar-sub">
+    <strong>&nbsp;<xar:mlstring>Scheduler Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2006-04-09
   </p>
 </div>
+

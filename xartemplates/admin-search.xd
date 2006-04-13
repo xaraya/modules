@@ -5,7 +5,8 @@
     </span>
 </div>
 <div class="xar-mod-body">
-            <h3><xar:mlstring>Scheduler API Functions</xar:mlstring></h3>
+      <xar:template type="module" module="scheduler" file="admin-menu" />
+    <h3><xar:mlstring>Scheduler API Functions</xar:mlstring></h3>
 <xar:if condition="!empty($found) and count($found) gt 0">
     <ul>
     <xar:foreach in="$found" value="$api">

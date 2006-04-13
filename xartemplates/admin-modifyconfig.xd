@@ -5,10 +5,11 @@
     </span>
 </div>
 <div class="xar-mod-body">
+  <xar:template type="module" module="scheduler" file="admin-menu" />
     <h2>
         <xar:mlstring>Modify Configuration</xar:mlstring>
     </h2>
-<div style="margin: auto;">
+
 <form method="post" action="&xar-modurl-scheduler-admin-updateconfig;">
   <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <fieldset>
@@ -201,5 +202,5 @@
             <input type="submit" value="#xarML('Update Configuration')#" />
         </div>
 </form>
-</div>
+
 </div>
