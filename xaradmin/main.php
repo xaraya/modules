@@ -14,12 +14,8 @@ function ratings_admin_main()
     // Security Check
     if (!xarSecurityCheck('AdminRatings')) return;
 
-    if (xarModGetVar('adminpanels', 'overview') == 0) {
-        // Return the output
-        return array();
-    } else {
         xarResponseRedirect(xarModURL('ratings', 'admin', 'modifyconfig'));
-    } 
+
     // success
     return true;
 } 

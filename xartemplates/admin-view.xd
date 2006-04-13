@@ -5,6 +5,7 @@
     </span>
 </div>
 <div class="xar-mod-body">
+    <xar:template type="module" module="ratings" file="admin-menu" />
     <h2><xar:mlstring>View Statistics</xar:mlstring></h2><br />
 <xar:if condition="empty($modid)">
         <table class="xar-fullwidth">

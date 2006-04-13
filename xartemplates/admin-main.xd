@@ -3,6 +3,7 @@
     <span class="xar-mod-title"><xar:mlstring>Ratings Administration</xar:mlstring></span>
         </div>
 <div class="xar-mod-body">
+    <xar:template type="module" module="ratings" file="admin-menu" />
    <img src="#xarTplGetImage('admin_generic.gif', 'base')#" alt="official icon" width="96" height="96" class="xar-module-icon" />
     <h2>
         <xar:mlstring>Overview</xar:mlstring>
@@ -37,9 +38,21 @@
         <p>
             <xar:mlstring>The ratings hook is a display hook to allow content modules to rate content.</xar:mlstring>
         </p>
-        </div>
-        <div class="xar-mod-foot xar-align-center xar-padding-thick">
-    <p>
-        <xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring>
-    </p>
+
+  <h3>
+    <xar:mlstring>Further Information</xar:mlstring>
+  </h3>
+  <p>
+    <xar:mlstring>Further information on the Ratings module can be found at</xar:mlstring>
+  </p>
+  <ul>
+    <li><xar:mlstring>Ratings Extension page at</xar:mlstring> <a title="#xarML('Ratings Module - Xaraya Extension 41')#" href="http://www.xaraya.com/index.php/release/41.html">Xaraya Extension and Releases</a>.
+      <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+    </li>
+    <li><xar:mlstring>Related tutorials and documentation on Ratings found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/ratings/" title="#xarML('Related documentation on Ratings')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+    </li>
+  </ul>
+  <p class="xar-sub">
+    <strong>&nbsp;<xar:mlstring>Ratings Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2006-04-09
+  </p>
 </div>

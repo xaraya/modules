@@ -7,16 +7,18 @@
     </span>
 </div>
 <div class="xar-mod-body">
-    <form class="xar-formwidget" name="post" id="post" action="&xar-modurl-ratings-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded">
-        <fieldset class="formelements xar-norm">
+    <xar:template type="module" module="ratings" file="admin-menu" />
+
+    <form id="post" action="&xar-modurl-ratings-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded">
+        <fieldset>
                 <legend>
                     <xar:mlstring>Modify Configuration</xar:mlstring>
                 </legend>
-    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+
     <xar:foreach in="$settings" key="$modname" value="$config">
-            <div class="xar-form-input-wrapper xar-clear-both">
+            <div class="xar-form-input-wrapper">
                 <p>
-                    <b>#$config['label']#</b>
+                    <strong>#$config['label']#</strong>
                 </p>
                 <label for="ratstyle" class="xar-form-label">
                     <xar:mlstring>Rating Style</xar:mlstring>:
@@ -31,7 +33,7 @@
                 </xar:foreach>
                 </select>
             </div>
-            <div class="xar-form-input-wrapper xar-clear-both">
+            <div class="xar-form-input-wrapper">
               <label for="seclev" class="xar-form-label">
                     <xar:mlstring>Security Level</xar:mlstring>:
                 </label>
@@ -47,8 +49,9 @@
             </div>
     </xar:foreach>
         </fieldset>
-        <div class="xar-clear-both xar-align-center">
-            <input type="submit" value="#xarML('Save config')#" />
-</div>
+        <div class="xar-form-input-after">
+           <input type="hidden" name="authid" id="authid" value="#$authid#" />
+           <input type="submit" value="#xarML('Save config')#" />
+        </div>
     </form>
 </div>
