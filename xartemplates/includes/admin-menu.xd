@@ -52,23 +52,23 @@
         <xar:if condition="($activetype eq 'util')">
             <xar:set name="tabclass">'active'</xar:set>
         <xar:else />
-             <xar:set name="tabclass">$activetab==''</xar:set>
+             <xar:set name="tabclass">''</xar:set>
         </xar:if>
         <dd class="#$tabclass#">
           <a href="&xar-modurl-autolinks-util-main;">
             <xar:mlstring>Utilities</xar:mlstring>
           </a>
         </dd>
-    </xar:sec>
-    <xar:if condition="$activetype eq 'admin'">
-        <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
-    <xar:else />
-        <xar:set name="tabclass">$activetab==''</xar:set>
-    </xar:if>
+        <xar:if condition="$activetab eq 'main' and $activetype eq 'admin'">
+           <xar:set name="tabclass">'active'</xar:set>
+        <xar:else />
+          <xar:set name="tabclass">''</xar:set>
+        </xar:if>
     <dd class="#$tabclass#">
       <a href="&xar-modurl-autolinks-admin-overview;">
         <xar:mlstring>Overview</xar:mlstring>
       </a>
     </dd>
+    </xar:sec>
   </dl>
 </div>
