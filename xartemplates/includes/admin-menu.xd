@@ -1,0 +1,65 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:comment>Common Administration menu</xar:comment>
+<xar:style scope="module" module="base" file="navtabs" />
+
+<xar:set name="activetab">$_bl_module_func</xar:set>
+<div>
+  <dl class="xar-tabs">
+    <dt class="help" title="Choose an action to perform">
+      <xar:mlstring>Actions:</xar:mlstring>
+    </dt>
+    <xar:sec mask="AddHTML" catch="false">
+        <xar:set name="tabclass">$activetab=='new'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-html-admin-new;">
+            <xar:mlstring>Add Tag</xar:mlstring>
+          </a>
+        </dd>
+        <xar:if condition="$activetab eq 'set' or $activetab eq 'delete' or $activetab eq 'edit'">
+            <xar:set name="tabclass">'active'</xar:set>
+        <xar:else />
+            <xar:set name="tabclass">''</xar:set>
+        </xar:if>
+        <dd class="#$tabclass#">
+            <a href="&xar-modurl-html-admin-set;" >
+                <xar:mlstring>Set &amp; Manage Tags</xar:mlstring>
+            </a>
+        </dd>
+    </xar:sec>
+    <xar:sec mask="AddHTML" catch="false">
+        <xar:if condition="$activetab eq 'viewtypes' or $activetab eq 'deletetype' or $activetab eq 'edittype'">
+            <xar:set name="tabclass">'active'</xar:set>
+        <xar:else />
+            <xar:set name="tabclass">''</xar:set>
+        </xar:if>
+         <dd class="#$tabclass#">
+          <a href="&xar-modurl-html-admin-viewtypes;">
+            <xar:mlstring>Manage Tag Types</xar:mlstring>
+          </a>
+        </dd>
+    </xar:sec>
+    <xar:sec mask="ReadHTML" catch="false">
+        <xar:set name="tabclass">$activetab=='newtype'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-html-admin-newtype;">
+            <xar:mlstring>Add Tag Type</xar:mlstring>
+          </a>
+        </dd>
+    </xar:sec>
+    <xar:sec mask="AdminHTML" catch="false">
+        <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-html-admin-modifyconfig;">
+            <xar:mlstring>Modify Config</xar:mlstring>
+          </a>
+        </dd>
+    </xar:sec>
+    
+    <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
+    <dd class="#$tabclass#">
+      <a href="&xar-modurl-html-admin-overview;">
+        <xar:mlstring>Overview</xar:mlstring>
+      </a>
+    </dd>
+  </dl>
+</div>
