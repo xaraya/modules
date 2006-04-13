@@ -96,6 +96,24 @@
         </li>
     </xar:if>
 
+    <xar:if condition="$owner_ok eq true">
+        <li>
+            <h4>The security module owner settings look to be ok.</h4>
+            <p>
+            </p>
+        </li>
+    <xar:else />
+        <li>
+            <h4 class="xar-error">The security module owner settings are NOT ok.</h4>
+            <p>
+            This means you probably haven't set default security owner for the
+            helpdesk tickets. This can be setup automatically and will give you a basic
+            setup. If you do not understand how the security module works just let this
+            module set it up for you.
+            </p>
+        </li>
+    </xar:if>
+
     </ul>
 
     <fieldset>

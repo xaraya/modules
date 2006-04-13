@@ -8,7 +8,9 @@ function helpdesk_admin_setup_security($args)
 
     $data = array();
 
-    // Check for Techs group
+    /*
+        Check for Techs group
+    */
     $tech_group_id = xarModGetVar('helpdesk', 'tech_group');
     if( empty($tech_group_id) )
     {
@@ -42,7 +44,9 @@ function helpdesk_admin_setup_security($args)
     if( !empty($tech_group_name) and xarFindRole($tech_group_name) ){ $data['tech_exists'] = true; }
     else{ $data['tech_exists'] = false; }
 
-    // Check for hooks
+    /*
+        Check for hooks
+    */
     if( xarModIsHooked('security', 'helpdesk') ){ $data['security_hooked'] = true; }
     else{ $data['security_hooked'] = true; }
 
@@ -53,6 +57,9 @@ function helpdesk_admin_setup_security($args)
             'itemtype' => 1 //Ticket
         )
     );
+    /*
+        Check security levels
+    */
     if( $settings['levels']['user'] >= 60 ){ $data['security_user_levels_ok'] = true; }
     else{ $data['security_user_levels_ok'] = false; }
 
@@ -64,7 +71,15 @@ function helpdesk_admin_setup_security($args)
     if( $settings['levels']['world'] == 0 ){ $data['security_world_levels_ok'] = true; }
     else{ $data['security_world_levels_ok'] = false; }
 
-    // Now we know what needs to be fixed we can try and fix things
+    /*
+        Check owner settings. We want do have them so we don't use the owner module
+    */
+    if( $settings['owner'] == null ){ $data['owner_ok'] = false; }
+    else{ $data['owner_ok'] = true; }
+
+    /*
+        Now we know what needs to be fixed we can try and fix things
+    */
     if( !is_null($setup) )
     {
         // Try to update security
@@ -116,6 +131,18 @@ function helpdesk_admin_setup_security($args)
             $update_security_levels = true;
         }
 
+        if( $data['owner_ok'] == false )
+        {
+            xarModAPILoad('helpdesk');
+            $xartable =& xarDBGetTables();
+
+            $settings['owner']['table'] = $xartable['helpdesk_tickets'];
+            $settings['owner']['column'] = 'xar_openedby';
+            $settings['owner']['primary_key'] = 'xar_id';
+
+            $update_security_levels = true;
+        }
+
         if( $update_security_levels == true )
         {
             $result = xarModAPIFunc('security', 'admin', 'set_hook_settings',
@@ -130,6 +157,7 @@ function helpdesk_admin_setup_security($args)
                 $data['security_user_levels_ok'] = true;
                 $data['security_tech_levels_ok'] = true;
                 $data['security_world_levels_ok'] = true;
+                $data['owner_ok'] = true;
             }
         }
     }
