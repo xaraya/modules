@@ -70,7 +70,7 @@ being set to blank.
 
     <form name="jump_to_page" method="post" action="#xarModURL('julian','user','jump')#" onsubmit="return validate(this)">
         <div>
-            <input type="submit" name="submit" value="Jump to" />
+            <input type="submit" name="submit" value="#xarML('Jump to')#" />
             <select name="jump_month" onchange="populateSelect(this, this.form.jump_day, this.form.jump_year)">
                 <option value=""></option>
                 <xar:for start="$i = 1" test="$i le 12" iter="$i++">
