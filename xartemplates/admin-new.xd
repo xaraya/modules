@@ -15,7 +15,7 @@
 </div>
 
 <div class="xar-mod-body">
-    <xar:template file="admin-menu" type="module"/>
+    <xar:template file="admin-menu" module="xarcpshop" type="module"/>
 
     <h2><xar:mlstring>Add A Shop</xar:mlstring></h2>
     <form method="post" action="&xar-modurl-xarcpshop-admin-create;" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">

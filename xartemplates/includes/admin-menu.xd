@@ -1,12 +1,49 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-    <ul>
-    <xar:loop name="$menuitems">
-    <li class="xar-align-center xar-displayinline-block " style="width: 20%; float:left;">
-        <a href="#$loop:item['menulink']#">#$loop:item['menulabel']#</a>
-    </li>
-    </xar:loop>
-    </ul>
-    <p style="clear:left; margin-bottom:20px;" />
+<xar:comment>Common Administration menu</xar:comment>
+<xar:style scope="module" module="base" file="navtabs" />
 
-
-
+<xar:set name="activetab">$_bl_module_func</xar:set>
+<div>
+  <dl class="xar-tabs">
+    <dt class="help" title="Choose an action to perform">
+      <xar:mlstring>Actions:</xar:mlstring>
+    </dt>
+    <xar:sec mask="AddxarCPShop" catch="false">
+        <xar:set name="tabclass">$activetab=='new'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-xarcpshop-admin-new;">
+            <xar:mlstring>Add Shop</xar:mlstring>
+          </a>
+        </dd>
+    </xar:sec>
+    <xar:sec mask="EditxarCPShop" catch="false">
+      <xar:if condition="$activetab eq 'view' or $activetab eq 'modify' or $activetab eq 'delete'">
+        <xar:set name="tabclass">'active'</xar:set>
+      <xar:else />
+        <xar:set name="tabclass">''</xar:set>
+      </xar:if>
+        <dd class="#$tabclass#">
+            <a href="&xar-modurl-xarcpshop-admin-view;" >
+                <xar:mlstring>Manage Shops</xar:mlstring>
+            </a>
+        </dd>
+    </xar:sec>
+    <xar:sec mask="AdminxarCPShop" catch="false">
+        <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-xarcpshop-admin-modifyconfig;">
+            <xar:mlstring>Modify Config</xar:mlstring>
+          </a>
+        </dd>
+    </xar:sec>
+    
+    <xar:sec mask="EditxarCPShop" catch="false">
+    <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
+    <dd class="#$tabclass#">
+      <a href="&xar-modurl-xarcpshop-admin-overview;">
+        <xar:mlstring>Overview</xar:mlstring>
+      </a>
+    </dd>
+    </xar:sec>
+  </dl>
+</div>

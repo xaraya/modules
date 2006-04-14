@@ -6,6 +6,7 @@
     </span>
 </div>
 <div class="xar-mod-body">
+    <xar:template file="admin-menu" module="xarcpshop" type="module"/>
   <img src="#xarTplGetImage('admin.gif','xarcpshop')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
 
     <h2><xar:mlstring>Overview</xar:mlstring></h2>
