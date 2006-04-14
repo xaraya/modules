@@ -3,7 +3,7 @@
  * Get all participants for one planned course
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -11,24 +11,44 @@
  * @link http://xaraya.com/index.php/release/179.html
  * @author Courses module development team
  */
-
 /**
  * get all participants for a planned course
  *
- * @author the Courses module development team
  * @author MichelV <michelv@xarayahosting.nl>
- * @param numitems $ the number of items to retrieve (default -1 = all)
- * @param startnum $ start with this item number (default 1)
- * @returns array
- * @return array of items, or false on failure
+ * @param id planningid The id of the planned course to get the students for
+ * @param int numitems $ the number of items to retrieve (default -1 = all)
+ * @param int startnum $ start with this item number (default 1)
+ * @return array Array of students for one planned course, or false on failure
  * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function courses_adminapi_getallparticipants($args)
 {
     extract($args);
-    if (!xarVarFetch('planningid', 'id', $planningid)) return;
-    if (!xarVarFetch('startnum', 'int:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('numitems', 'int:1:', $numitems, '-1', XARVAR_NOT_REQUIRED)) return;
+    // Optional arguments.
+    if (!isset($startnum)) {
+        $startnum = 1;
+    }
+    if (!isset($numitems)) {
+        $numitems = -1;
+    }
+    // Argument check
+    $invalid = array();
+    if (!isset($startnum) || !is_numeric($startnum)) {
+        $invalid[] = 'startnum';
+    }
+    if (!isset($numitems) || !is_numeric($numitems)) {
+        $invalid[] = 'numitems';
+    }
+    if (!isset($planningid) || !is_numeric($planningid)) {
+        $invalid[] = 'planningid';
+    }
+    if (count($invalid) > 0) {
+        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
+            join(', ', $invalid), 'admin', 'getallparticipants', 'courses');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+            new SystemException($msg));
+        return;
+    }
 
     $items = array();
     if (!xarSecurityCheck('EditCourses', '1', 'Course', "All:$planningid:All")) return;
@@ -61,8 +81,7 @@ function courses_adminapi_getallparticipants($args)
                              'regdate'    => $regdate);
         }
     }
-    // All successful database queries produce a result set, and that result
-    // set should be closed when it has been finished with
+    // Close result
     $result->Close();
     // Return the items
     return $items;
