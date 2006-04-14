@@ -959,7 +959,10 @@ function articles_user_view($args)
                                          'slink'  => $sortlink);
         }
     }
-
+   // Specific layout within a template (optional)
+    if (isset($layout)) {
+        $data['layout'] = $layout;
+    }
     if ($ishome) {
         $template = 'frontpage';
     } elseif (!empty($ptid)) {
