@@ -1,0 +1,18 @@
+Things TODO for workflow module:
+
+Generic:
+* loop protection: if there is a process which has a set 
+  of activities which are autorouted and non-interactive (easy to spot
+  in small processes, but sometimes harder in bigger ones) there may
+  be an infinite loop, which will very quickly fill up the database
+  with workitems. 
+  Detection of these loops is a known NP complete problem unless we 
+  specifically implement a detector (the looping as such can be
+  intented within the same instance, so it's not enough to detect on
+  instance) Perhaps a detector that for each activity a 'trace' can be
+  checked with a list of activities that has been run since the last
+  time we were at that specific activity. The check could then be to
+  have at least 1 interactive activity in that trace.
+
+
+Xaraya specific:
