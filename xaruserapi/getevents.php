@@ -31,6 +31,7 @@
  * @param int $args['catid'] Category ID
  * @return array of items, or false on failure
  * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
+ * @todo MichelV: rewrite some queries for pgsql
  */
 function julian_userapi_getevents($args)
 {

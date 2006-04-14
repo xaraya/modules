@@ -58,7 +58,7 @@ function julian_userapi_getorganizers($args)
 
     $items = array();
     // Security check.
-    if (!xarSecurityCheck('Viewjulian')) return;
+    if (!xarSecurityCheck('ViewJulian')) return;
 
     // Load categories API.
     // Needed?
