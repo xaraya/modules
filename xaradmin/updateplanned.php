@@ -1,9 +1,9 @@
 <?php
 /**
- * Standard function to update a current course
+ * Update a planned course
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -15,9 +15,10 @@
  * This is a standard function that is called with the results of the
  * form supplied by xarModFunc('courses','admin','modifycourse') to update a current item
  *
- * @param  $ 'planningid' the id of the course to be updated
- * @param  $ 'name' the name of the course to be updated
- * @param  $ 'number' the number of the course to be updated
+ * @param  id $ 'planningid' the id of the course to be updated
+ * @param  string $ 'name' the name of the course to be updated
+ * @param  string $ 'number' the number of the course to be updated
+ * @return bool true on success
  */
 function courses_admin_updateplanned($args)
 {
@@ -31,9 +32,9 @@ function courses_admin_updateplanned($args)
     if (!xarVarFetch('coursetype', 'str:1:', $coursetype, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('level', 'int:1:', $level, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('year', 'int:1:', $year, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('credits', 'int::', $credits, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('creditsmin', 'int::', $creditsmin, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('creditsmax', 'int::', $creditsmax, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('credits', 'float::', $credits, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('creditsmin', 'float::', $creditsmin, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('creditsmax', 'float::', $creditsmax, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('longdesc', 'str:1:', $longdesc, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('prerequisites', 'str:1:', $prerequisites, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('program', 'str:1:', $program, '', XARVAR_NOT_REQUIRED)) return;
@@ -128,11 +129,12 @@ function courses_admin_updateplanned($args)
         // call the admin_modifycourse function and return the template vars
         // (you need to copy admin-new.xd to admin-create.xd here)
         return xarModFunc('courses', 'admin', 'modifyplanned',
-                          array('name' => $name,
+                          array('planningid' => $planningid,
+                                'name' => $name,
                                 'number' => $number,
                                 'year' => $year,
                                 'credits' => $credits,
-                                'creditdsmin' => $creditsmin,
+                                'creditsmin' => $creditsmin,
                                 'creditsmax' => $creditsmax,
                                 'startdate' => $startdate,
                                 'enddate' => $enddate,
@@ -160,11 +162,12 @@ function courses_admin_updateplanned($args)
     if (!xarModAPIFunc('courses',
                        'admin',
                        'updateplanned',
-                       array(   'name' => $name,
+                       array(   'planningid' => $planningid,
+                                'name' => $name,
                                 'number' => $number,
                                 'year' => $year,
                                 'credits' => $credits,
-                                'creditdsmin' => $creditsmin,
+                                'creditsmin' => $creditsmin,
                                 'creditsmax' => $creditsmax,
                                 'startdate' => $startdate,
                                 'enddate' => $enddate,

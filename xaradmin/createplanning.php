@@ -26,9 +26,9 @@ function courses_admin_createplanning($args)
     // Get parameters from whatever input we need.
     if (!xarVarFetch('courseid',        'id', $courseid, $courseid)) return;
     if (!xarVarFetch('year',            'int:1:', $year)) return;
-    if (!xarVarFetch('credits',         'int:1:', $credits, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('creditsmin',      'int::', $creditsmin, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('creditsmax',      'int::', $creditsmax, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('credits',         'float:1:', $credits, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('creditsmin',      'float::', $creditsmin, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('creditsmax',      'float::', $creditsmax, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('startdate',       'str::', $startdate, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('enddate',         'str::', $enddate, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('prerequisites',   'str:1:', $prerequisites, '', XARVAR_NOT_REQUIRED)) return;

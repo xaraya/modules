@@ -23,7 +23,7 @@
 function courses_adminapi_updateplanned($args)
 {
     extract($args);
-
+/*
     // Get parameters from whatever input we need.
     if (!xarVarFetch('planningid', 'id', $planningid)) return;
     if (!xarVarFetch('name', 'str:1:', $name, '', XARVAR_NOT_REQUIRED)) return;
@@ -47,7 +47,7 @@ function courses_adminapi_updateplanned($args)
     if (!xarVarFetch('invalid', 'str::', $invalid, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('minparticipants', 'int::', $minparticipants, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('maxparticipants', 'int::', $maxparticipants, '', XARVAR_NOT_REQUIRED)) return;
-
+*/
     // The user API function is called.
     $item = xarModAPIFunc('courses',
         'user',

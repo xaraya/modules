@@ -31,9 +31,9 @@ function courses_admin_plancourse($args)
     if (!xarVarFetch('coursetype',      'str:1:', $coursetype, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('level',           'int:1:', $level, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('year',            'int:1:', $year, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('credits',         'int::', $credits, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('creditsmin',      'int::', $creditsmin, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('creditsmax',      'int::', $creditsmax, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('credits',         'float::', $credits, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('creditsmin',      'float::', $creditsmin, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('creditsmax',      'float::', $creditsmax, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('shortdesc',       'str:1:', $shortdesc, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('prerequisites',   'str:1:', $prerequisites, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('aim',             'str:1:', $aim, '', XARVAR_NOT_REQUIRED)) return;

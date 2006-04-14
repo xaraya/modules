@@ -38,7 +38,7 @@ function courses_admin_createcourse($args)
     if (!xarVarFetch('coursetype',  'int:1:', $coursetype, 1, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('level',       'isset', $level, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('shortdesc',   'str:1:', $shortdesc, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('intendedcredits', 'int:1:30', $intendedcredits, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('intendedcredits', 'float::', $intendedcredits, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('freq',        'str:1:', $freq, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('contact',     'str:1:', $contact, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('contactuid',  'int:1:', $contactuid, '', XARVAR_NOT_REQUIRED)) return;
