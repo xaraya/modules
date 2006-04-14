@@ -4,12 +4,17 @@
 
 <xar:set name="activetab">$_bl_module_func</xar:set>
 <xar:set name="activetype">$_bl_module_type</xar:set>
+<xar:comment>This menu is used by all users not just admin. Let us
+    hide the menu unless they have edit level privs.
+    The New tab is redundant if you only have submit level privs.
+</xar:comment>
+<xar:sec mask="EditArticles" catch="false">
 <div>
   <dl class="xar-tabs">
     <dt class="help" title="Choose an action to perform">
       <xar:mlstring>Actions:</xar:mlstring>
     </dt>
-    <xar:sec mask="EditArticles" catch="false">
+
         <xar:if condition="$_bl_module_func eq 'view' or $_bl_module_func eq 'modify' or $_bl_module_func eq 'delete'">
             <xar:set name="tabclass">'active'</xar:set>
         <xar:else />
@@ -20,15 +25,14 @@
             <xar:mlstring>Manage Articles</xar:mlstring>
           </a>
         </dd>
-    </xar:sec>
-    <xar:sec mask="SubmitArticles" catch="false">
+
         <xar:set name="tabclass">$activetab=='new'?'active':''</xar:set>
         <dd class="#$tabclass#">
             <a href="&xar-modurl-articles-admin-new;" >
                 <xar:mlstring>New Article</xar:mlstring>
             </a>
         </dd>
-    </xar:sec>
+
     <xar:sec mask="AdminArticles" catch="false">
         <xar:if condition="$_bl_module_func eq 'pubtypes' or $_bl_module_func eq 'importpubtype'  or $_bl_module_func eq 'exportpubtype'">
             <xar:set name="tabclass">'active'</xar:set>
@@ -57,13 +61,12 @@
           </a>
         </dd>
     </xar:sec>
-    <xar:sec mask="EditArticles" catch="false">
         <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
         <dd class="#$tabclass#">
           <a href="&xar-modurl-articles-admin-overview;">
             <xar:mlstring>Overview</xar:mlstring>
           </a>
         </dd>
-    </xar:sec>
   </dl>
 </div>
+</xar:sec>
