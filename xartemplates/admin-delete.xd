@@ -1,22 +1,30 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Sniffer Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
-<h2><xar:mlstring>Delete a Sniff</xar:mlstring></h2>
-<div align="center">
-<form method="post" action="#xarModURL('sniffer', 'admin', 'delete')#" enctype="application/x-www-form-urlencoded">
+  <xar:template type="module" module="sniffer" file="admin-menu" />
+  <h2><xar:mlstring>Delete a Sniff</xar:mlstring></h2>
+  
+  <form method="post" action="&xar-modurl-sniffer-admin-delete;" enctype="application/x-www-form-urlencoded">
+
+  <fieldset>
+      <legend><xar:mlstring>Delete confirmation</xar:mlstring></legend>
+          <div class="xar-form-input-wrapper-before">
+          <label class="xar-form-label"><xar:mlstring>Delete this sniff?</xar:mlstring></label>
+             <div class="xar-form-container-after">
+              #$agent#
+              </div>
+         </div>
+  </fieldset>
+  <div class="xar-form-input-wrapper-after">
+    <input type="submit" value="#$submitlabel#"  />
     <input type="hidden" name="authid" value="#$authid#" />
     <input type="hidden" name="id" id="cid" value="#$id#" />
     <input type="hidden" name="confirm" id="confirm" value="1"/>
     <input type="hidden" name="startnum" id="startnum" value="#$startnum#" />
     <input type="hidden" name="sortby" id="sortby" value="#$sortby#" />
+  </div>
 
-    <font class="xar-title"><xar:mlstring>Confirm deletion of the sniff</xar:mlstring></font>
-    <br /><br />
-    #$agent#
-    <br /><br />
+  <a href="#$cancelurl#"><xar:mlstring>Cancel deletion of the sniff</xar:mlstring>.</a>
 
-    <input type="submit" value="#$submitlabel#"  /><br /><br />
-    
-    <a href="#$cancelurl#"><xar:mlstring>Cancel deletion of the sniff</xar:mlstring>.</a>
-</form>        
-</div>
+</form>
+
 </div>

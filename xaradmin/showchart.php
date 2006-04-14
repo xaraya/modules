@@ -60,8 +60,8 @@ function sniffer_admin_showchart()
             break;
     }
 
-    xarModAPIFunc('sniffer', 
-                  'admin', 
+    xarModAPIFunc('sniffer',
+                  'admin',
                   'drawchart',
                   array('type' => $type,
                         'title' => $title));

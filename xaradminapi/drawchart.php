@@ -242,7 +242,7 @@ function sniffer_adminapi_drawchart($args)
     imagestring( $pic1, 3, $titleX, $labelY, "Total:", $black );
     imagestring( $pic1, 3, $titleX + $labelWidth + 60, $labelY, $dataTotal, $black );
 
-    // Display the chart.
+    // Display the chart. 
     Header( "Content-type: image/jpeg" ); //output image
     imagejpeg( $pic1 );
     imagedestroy( $pic1 ); //remove image from memory

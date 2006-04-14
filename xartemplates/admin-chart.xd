@@ -1,18 +1,29 @@
 <div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
 <div class="xar-mod-body">
-    <h2><xar:mlstring>Chart Sniffs</xar:mlstring></h2><br />
-    <div style="text-align: left;margin: auto;">
-        <form action="#xarModURL('sniffer','admin','showchart')#" method="post" target="_blank">
+  <xar:template type="module" module="sniffer" file="admin-menu" />
+    <h2><xar:mlstring>Chart Sniffs</xar:mlstring></h2>
+
+     <form action="&xar-modurl-sniffer-admin-showchart;" method="post" target="_blank">
+     <fieldset>
+         <legend><xar:mlstring>Chart options</xar:mlstring></legend>
+         <div class="xar-form-input-wrapper-after">
             <input type="radio" value="osnam" name="snifftype" id="osnam" checked="checked" />
-            &nbsp;&nbsp;<xar:mlstring>OS Name</xar:mlstring>
-            <br /><br />
+            <label><xar:mlstring>OS Name</xar:mlstring></label>
+         </div>
+         <div class="xar-form-input-wrapper-after">
             <input type="radio" value="osver" name="snifftype" id="osver" />
-            &nbsp;&nbsp;<xar:mlstring>OS Version</xar:mlstring>
-            <br /><br />
+           <label><xar:mlstring>OS Version</xar:mlstring></label>
+         </div>
+
+         <div class="xar-form-input-wrapper-after">
             <input type="radio" value="agnam" name="snifftype" id="agnam" />
-            &nbsp;&nbsp;<xar:mlstring>Browser Name</xar:mlstring>
-            <br /><br />
+            <label><xar:mlstring>Browser Name</xar:mlstring></label>
+         </div>
+
+     </fieldset>
+    <div class="xar-form-input-wrapper-after">
             <input type="submit" value="#xarML('Generate Pie Chart')#"/>
-        </form>
     </div>
+    </form>
+
 </div>

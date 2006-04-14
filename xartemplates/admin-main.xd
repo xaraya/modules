@@ -1,41 +1,39 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Administration - Sniffer</xar:mlstring></span></div>
 <div class="xar-mod-body">
-    <h2><xar:mlstring>Overview</xar:mlstring></h2>
-    <div style="padding: 1px;" class="xar-norm-outline">
-        <div style="float:right;padding:10px;">
-            <img src="modules/adminpanels/xarimages/admin.gif" alt="official icon" width="96" height="96" />
-        </div>
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>What is it?</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+  <!-- include a standard tabbed admin menu via include file in the xartemplates/include folder -->
+  <xar:template type="module" module="sniffer" file="admin-menu" />
+  <img src="#xarTplGetImage('admin_generic.gif','base')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
+
+  <h2><xar:mlstring>Overview</xar:mlstring></h2>
+
+  <h2><xar:mlstring>What is it?</xar:mlstring></h3>
+      <p>
             <xar:mlstring>The Sniffer module is a utility module used for browser detection.  For best results, the Sniffer module should be used in conjunction with the Stats module.</xar:mlstring>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>How to use it?</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>The sniffer module will automatically detect a visitors OS and browser.</xar:mlstring>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+      </p>
+      <h3>
+           <xar:mlstring>How to use it?</xar:mlstring>
+      </h3>
+      <p><xar:mlstring>The sniffer module will automatically detect a visitors OS and browser.</xar:mlstring></p>
+
+      <h3>
             <xar:mlstring>Included Blocks</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>There are no included blocks with this module.</xar:mlstring>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>Included Hooks</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>There are no included hooks with this module.</xar:mlstring>
-        </div>
-        <br />
-    </div>
+      </h3>
+      <p><xar:mlstring>There are no included blocks with this module.</xar:mlstring></p>
+      <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
+      <p><xar:mlstring>There are no included hooks with this module.</xar:mlstring></p>
+  <h3><xar:mlstring>Further Information</xar:mlstring>
+  </h3>
+  <p>
+    <xar:mlstring>Further information on the Sniffer module can be found at</xar:mlstring>
+  </p>
+  <ul>
+    <li><xar:mlstring>Sniffer Extension page at</xar:mlstring> <a title="#xarML('Sniffer Module - Xaraya Extension 775')#" href="http://www.xaraya.com/index.php/release/775.html">Xaraya Extension and Releases</a>.
+      <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+    </li>
+    <li><xar:mlstring>Related tutorials and documentation on Sniffer found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/sniffer/" title="#xarML('Related documentation on Sniffer')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+    </li>
+  </ul>
+  <p class="xar-sub">
+    <strong>&nbsp;<xar:mlstring>Sniffer Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2006-04-12
+  </p>
 </div>

@@ -1,8 +1,9 @@
 <div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>View Sniffs</xar:mlstring></h2><br />
-<div style="text-align: left;margin: auto;">
+<div class="xar-mod-body">
+  <xar:template type="module" module="sniffer" file="admin-menu" />
+  <h2><xar:mlstring>View Sniffs</xar:mlstring></h2>
 
-<table width="100%" border="1" cellspacing="0" cellpadding="4">
+  <table width="100%" border="1" cellspacing="0" cellpadding="4">
     <tr>
         <xar:if condition="$agentlink != ''">
             <th><a href="#$agentlink#"><xar:mlstring>Agent</xar:mlstring></a></th>
@@ -47,9 +48,9 @@
         </td>
     </tr>
     </xar:loop>
-</table>
-<br />
-<!-- add the pager here -->
-#$pager#
-</div>
+    </table>
+    <div class="xar-input-form-wrapper-before">
+    <!-- add the pager here -->
+    #$pager#
+    </div>
 </div>
