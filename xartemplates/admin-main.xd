@@ -34,12 +34,14 @@
             <li><xar:mlstring>Go to Admin - DynamicData - View Objects</xar:mlstring> and <a href="&xar-modurl-dynamicdata-admin-new;"><xar:mlstring>create a new object</xar:mlstring></a> <xar:mlstring>(Create New)</xar:mlstring>.
             <xar:mlstring>This new dynamic data object will hold the subitem information.</xar:mlstring> 
             </li>
-            <li><xar:mlstring>Go to Dynamic Data - View Objects - Edit [YOUR OBJECT] and this displays the Modify Dynamic Properties. Add your properties (fields) for your object. 
-             You <strong>must have</strong> at least one field with a Property Type of 'ItemID', default of 0 and Status of Display Only. </xar:mlstring>
+            <li><xar:mlstring>Go to Dynamic Data - View Objects - Edit [YOUR OBJECT]. This displays the Modify Dynamic Properties screen.</xar:mlstring></li>
+            <li><xar:mlstring>Add your properties (fields) for your object. You <strong>must have</strong> at least
+            one field with a Property Type of 'ItemID', default of 0 and Status of Display Only. </xar:mlstring>
              </li>
 
-           <li><xar:mlstring>Go to Admin - Subitems module (admin area) - Add link. There, choose the object you have just created, and select the module and the itemtype that you will attach this property to.</xar:mlstring></li>
-            <li><xar:mlstring>Go to the module Modules - Configure Hooks. Choose the Subitems module and enable the hook for the module /itemtype combination, that you just created the link for</xar:mlstring></li>
+           <li><xar:mlstring>Go to </xar:mlstring><a href="&xar-modurl-subitems-admin-ddobjectlink_new;"><xar:mlstring>Admin - Subitems module (admin area) - Add link</xar:mlstring></a><xar:mlstring>. There, choose the object you have just created, and select the module and the itemtype that you will attach this property to.</xar:mlstring></li>
+            <li><xar:mlstring>Go to </xar:mlstring><a href="&xar-modurl-modules-admin-hooks;&amp;hook=subitems"><xar:mlstring>Modules - Configure Hooks</xar:mlstring></a>
+            <xar:mlstring> where you can choose the Subitems module. Enable  the hook for the module and itemtype combination that you just created the link for</xar:mlstring></li>
           </ol>
       </p>
       <p><xar:mlstring>That should be it (it has been tested with custom pubtypes)</xar:mlstring>.</p>
