@@ -1,65 +1,75 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Administration - Subitems</xar:mlstring></span></div>
-<div class="xar-mod-body" style="display:block;">
-    <h2><xar:mlstring>Overview</xar:mlstring></h2>
-    <div style="border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 1px;">
-        <div style="float:right;display:block;background-color:#ffffff;padding:10px;">
-            <img src="modules/adminpanels/xarimages/admin.gif" alt="official icon" width="96" height="96" />
-        </div>
-        <div class="xar-mod-title" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
-            <xar:mlstring>What is it?</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <em><xar:mlstring>This module allows you to create and display sub-items for any module item. In the words of the author :</xar:mlstring></em>
-            <p><xar:mlstring>For example, if you want to have a publication type (pubtype) "cooking recipe". This pubtype could be to store the ingredients of the meal, thus there would be required a list of input fields: ingredient1, quantity1,
-            pic1(extended info :-) ) , ingredient2, quantity2, pic2,...</xar:mlstring></p>
-            <p><xar:mlstring>The disadvantage of this is the high number of fields. To ensure that your users aren't going against the limit there... Furthermore all input fields would always be displayed. That is of course not a very nice
-            way to accomplish this.</xar:mlstring></p>
-            <p><xar:mlstring>As I didn't know how to do this better, I had a dream about a module, which can be hooked from any other module and which is able to display /
-            provide editing / etc. subitems to an item. I had a dream about a table, which saves the information, which DD-Object stores the subitems
-            of "module" / "itemtype" combination and another table containing which DD-Itemids belong to "module" / "itemtype" / "itemid" in this DD-Object
-            (1 to n Relation). I had the dream to share my module with the community. Now, the module is here, and all dreams got true. If you didn't get my
-            technical information, don't worry. </xar:mlstring></p>
-        </div>
-        <br />
-        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
-            <xar:mlstring>How to use it?</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <ol>
+<div class="xar-mod-body">
+  <xar:template type="module" module="subitems" file="admin-menu" />
+  <img src="#xarTplGetImage('admin_generic.gif','base')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
+
+  <h2><xar:mlstring>Overview</xar:mlstring></h2>
+
+  <h2><xar:mlstring>What is it?</xar:mlstring></h3>
+
+      <p>
+          <em><xar:mlstring>The Subitems module allows you to create and display subitems for any module item.</xar:mlstring></em>
+      </p>
+      <p><xar:mlstring>As an illustration of how subitems could be used</xar:mlstring>:
+         <ul>
+             <li><xar:mlstring>You may want a publication type (Articles pubtype) to hold 'cooking recipies'</xar:mlstring></li>
+             <li><xar:mlstring>This pubtype would store and display recipe details such as ingredients. Namely ingredient1, quantity 1, picture1 and for another article ingredient2, quantity2, picture2.
+             Each article or recipe would need to contain a different number of ingredients.</xar:mlstring></li>
+         </ul>
+      </p>
+      <p><xar:mlstring>The disadvantage of this is the high number of ingredient fields you would need to ensure that your users always have sufficient ingredient fields for entry. Furthermore all input fields are always displayed.
+         So, the above is not a practical way to accomplish this.</xar:mlstring>
+      </p>
+      <p><xar:mlstring>The module author's intent was to produce a module which can be hooked from any other module and is able to both display and provide
+            editing of subitems for an item. The design provides for one table which saves the subitem information with module/itemtype. A second table
+            contains  the DD Itemids with corresponding module/itemtype/itemid in the DD object (1 to n Relation). 
+            </xar:mlstring>
+      </p>
+
+  <a name="subitemshow"><h3><xar:mlstring>How to use it?</xar:mlstring></h3></a>
+      <p>
+          <ol>
             <li><xar:mlstring>Install the module (done by now, as you are seeing this page)</xar:mlstring> </li>
-            <li><xar:mlstring>Go to Admin > DynamicData > View Objects > </xar:mlstring><a href="&xar-modurl-dynamicdata-admin-new;"><xar:mlstring>Create New </xar:mlstring></a>. <xar:mlstring>There, create a new dynamic data object
-            , which should hold the subitem information.</xar:mlstring> </li>
-            <li><xar:mlstring>Go to Dynamic Data > View Objects > Edit [YOUR OBJECT] > Modify Dynamic Properties and add properties (fields). You must have at least one field with a chosen label, Property Type of ItemID, default of 0 and Status of Display Only. </xar:mlstring></li>
-            <li><xar:mlstring>Go to Admin > Subitems module (admin area) > Add link. There, choose the object you have just created, the module and the itemtype that you will attach this property to.</xar:mlstring></li>
-            <li><xar:mlstring>Go to the module Modules > Configure Hooks. Choose the Subitems module and enable the hook for the module /itemtype combination, that you just created the link for</xar:mlstring></li>
-            </ol>
-            <p><xar:mlstring>Now it should work (It has been tested with custom pubtypes)</xar:mlstring></p>
-        </div>
-        <br />
-        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
-            <xar:mlstring>Included Blocks</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>none</xar:mlstring>
-        </div>
-        <br />
-        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
-            <xar:mlstring>Included Hooks</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <ul>
-                <li><xar:mlstring>new/create/modify/update/delete -- Allows you to create/update sub-items</xar:mlstring></li>
-                <li><xar:mlstring>display -- Allows you to display sub-items</xar:mlstring></li>
-            </ul>
-        </div>
-        <br />
-        <div class="xar-accent" style="text-align: center; border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
-            <xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring>
-        </div>
-    </div>
+            <li><xar:mlstring>Go to Admin - DynamicData - View Objects</xar:mlstring> and <a href="&xar-modurl-dynamicdata-admin-new;"><xar:mlstring>create a new object</xar:mlstring></a> <xar:mlstring>(Create New)</xar:mlstring>.
+            <xar:mlstring>This new dynamic data object will hold the subitem information.</xar:mlstring> 
+            </li>
+            <li><xar:mlstring>Go to Dynamic Data - View Objects - Edit [YOUR OBJECT] and this displays the Modify Dynamic Properties. Add your properties (fields) for your object. 
+             You <strong>must have</strong> at least one field with a Property Type of 'ItemID', default of 0 and Status of Display Only. </xar:mlstring>
+             </li>
+
+           <li><xar:mlstring>Go to Admin - Subitems module (admin area) - Add link. There, choose the object you have just created, and select the module and the itemtype that you will attach this property to.</xar:mlstring></li>
+            <li><xar:mlstring>Go to the module Modules - Configure Hooks. Choose the Subitems module and enable the hook for the module /itemtype combination, that you just created the link for</xar:mlstring></li>
+          </ol>
+      </p>
+      <p><xar:mlstring>That should be it (it has been tested with custom pubtypes)</xar:mlstring>.</p>
+
+  <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
+      <p> 
+          <xar:mlstring>none</xar:mlstring>
+      </p>
+
+  <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
+      <p>
+          <ul>
+              <li><xar:mlstring>new/create/modify/update/delete -- Allows you to create/update sub-items</xar:mlstring></li>
+              <li><xar:mlstring>display -- Allows you to display sub-items</xar:mlstring></li>
+          </ul>
+      </p>
+  <h3>
+    <xar:mlstring>Further Information</xar:mlstring>
+  </h3>
+  <p>
+    <xar:mlstring>Further information on the Subitems module can be found at</xar:mlstring>
+  </p>
+  <ul>
+    <li><xar:mlstring>Subitems Extension page at</xar:mlstring> <a title="#xarML('Subitems Module - Xaraya Extension 9356')#" href="http://www.xaraya.com/index.php/release/9356.html">Xaraya Extension and Releases</a>.
+      <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+    </li>
+    <li><xar:mlstring>Related tutorials and documentation on Subitems found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/subitems/" title="#xarML('Related documentation on Subitems')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+    </li>
+  </ul>
+  <p class="xar-sub">
+    <strong>&nbsp;<xar:mlstring>Subitems Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2006-04-12
+  </p>
 </div>

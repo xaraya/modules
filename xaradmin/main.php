@@ -14,6 +14,7 @@
 function subitems_admin_main()
 {
     $data = array();
+    xarResponseRedirect(xarModURL('subitems', 'admin', 'modifyconfig'));    
     return $data;
 }
 ?>

@@ -1,5 +1,8 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<h2><xar:mlstring>Delete Subitem</xar:mlstring></h2>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Administration - Subitems</xar:mlstring></span></div>
+<div class="xar-mod-body">
+    <xar:template type="module" module="subitems" file="admin-menu" />
+    <h2><xar:mlstring>Delete Subitem</xar:mlstring></h2>
 
 <xar:if condition="!empty($preview)">
     <table width="100%" border="1" cellspacing="0" cellpadding="4">
@@ -32,4 +35,5 @@
         </tr>
     </table>
 </form>
+</div>
 

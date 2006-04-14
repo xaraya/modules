@@ -1,55 +1,55 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:template type="module" file="menu" />
-
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Administration - Subitems</xar:mlstring></span></div>
 <div class="xar-mod-body">
+    <xar:template type="module" module="subitems" file="admin-menu" />
     <h2>
         <xar:mlstring>Add link to Subitems</xar:mlstring>
-    </h2><br />
-    <table width="100%" border="0" cellspacing="1" cellpadding="8">
+    </h2>
+
+    <fieldset>
+        <legend><xar:mlstring>Link details</xar:mlstring></legend>
+
         <form action="&xar-modurl-subitems-admin-ddobjectlink_new;" method="POST" enctype="multipart/form-data">
-            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-            <tr>
-                <td><xar:mlstring>Which object contains the subitems?</xar:mlstring></td>
-                <td>
+           
+            <p>
+                <xar:mlstring>See the </xar:mlstring><a href="&xar-modurl-subitems-admin-overview;##subitemshow"><xar:mlstring>overview </xar:mlstring></a>
+                <xar:mlstring>for details on creating your object and attached subitems.</xar:mlstring>
+            </p>
+
+            <div class="xar-form-input-wrapper">
+                <label class="xar-form-label"><xar:mlstring>Which object contains the subitems?</xar:mlstring></label>
                     <xar:data-input name="objectid" value="$objectid['value']" type="object" />
                     <xar:if condition="!empty($objectid['error'])">
                         <span style="color:red">#$objectid.error:msg#</span>
                     </xar:if>
-                </td>
-            </tr>
-            <tr>
-                <td><xar:mlstring>Which module contains the parent items?</xar:mlstring></td>
-                <td>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label class="xar-form-label"><xar:mlstring>Which module contains the parent items?</xar:mlstring></label>
                     <xar:data-input name="modid" type="module" value="$module['value']" />
                     <input type="submit" name="reload" value="#xarML('Reload itemtypes')#"/>
                     <xar:if condition="!empty($module['error'])">
                         <span style="color:red">#$module.error:msg#</span>
                     </xar:if>
-                </td>
-            </tr>
-            <tr>
-                <td><xar:mlstring>Which itemtype from that module?</xar:mlstring></td>
-                <td>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label class="xar-form-label"><xar:mlstring>Which itemtype from that module?</xar:mlstring></label>
                     <xar:data-input name="itemtype" type="itemtype" module="$module_name" value="$itemtype['value']" />
                     <xar:if condition="!empty($itemtype['error'])">
                         <span style="color:red">#$itemtype.error:msg#</span>
                     </xar:if>
-                </td>
-            </tr>
-            <tr>
-                <td><xar:mlstring>Template to use</xar:mlstring></td>
-                <td>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label class="xar-form-label"><xar:mlstring>Template to use</xar:mlstring></label>
                     <input type="text" name="template" value="#$template['value']#" />
                     <xar:if condition="!empty($template['error'])">
                          <span style="color:red">#$template.error:msg#</span>
                     </xar:if>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2" align="center">
-                    <input type="submit" name="confirm" value="#xarML('Create New DDSubobjectlink')#" />
-                </td>
-            </tr>
-        </form>
-    </table>
+            </div>
+
+       </fieldset>
+       <div class="xar-form-input-wrapper-after">
+            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+            <input type="submit" name="confirm" value="#xarML('Create New DD Subitem Object Link')#" />
+       </div>
+    </form>
 </div>

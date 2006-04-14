@@ -1,9 +1,8 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:template type="module" file="menu" />
-
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Administration - Subitems</xar:mlstring></span></div>
 <div class="xar-mod-body">
-    <h2><xar:mlstring>View Links to Subitems</xar:mlstring></h2><br />
-
+    <xar:template type="module" module="subitems" file="admin-menu" />
+    <h2><xar:mlstring>View Links to Subitems</xar:mlstring></h2>
     <fieldset>
         <legend><xar:mlstring>List of all registered subitem links</xar:mlstring></legend>
 
