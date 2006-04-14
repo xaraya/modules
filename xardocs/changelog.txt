@@ -435,3 +435,5 @@ Add category selector for blocks
 Add choice for short urls
 The functions are now checked and should all have a working short url version
 When an event is allday, the time fields are now disabled instead of invisible
+0.4.4
+Improved multilanguage settings

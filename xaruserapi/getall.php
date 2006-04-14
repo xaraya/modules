@@ -130,11 +130,10 @@ function julian_userapi_getall($args)
     /*
      * Switch query according to db type
      * MySQL friendly query is standard
-     *
      */
 
     $dbtype = xarDBGetType();
-    if (substr($dbtype,0,4) == 'pgsql' || substr($dbtype,0,5) == 'postgres') {
+    if (substr($dbtype,0,5) == 'pgsql' || substr($dbtype,0,8) == 'postgres') {
         /**
          * @author Zsolt
          */
