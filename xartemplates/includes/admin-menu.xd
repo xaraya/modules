@@ -1,0 +1,32 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:comment>Common Administration menu</xar:comment>
+<xar:style scope="module" module="base" file="navtabs" />
+
+<xar:set name="activetab">$_bl_module_func</xar:set>
+<div>
+  <dl class="xar-tabs">
+    <dt class="help" title="Choose an action to perform">
+      <xar:mlstring>Actions:</xar:mlstring>
+    </dt>
+    <xar:sec mask="AdminWindow" catch="false">
+        <xar:set name="tabclass">$activetab=='general'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-window-admin-general;">
+            <xar:mlstring>General Settings</xar:mlstring>
+          </a>
+        </dd>
+        <xar:set name="tabclass">$activetab=='url'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-window-admin-addurl;">
+            <xar:mlstring>Specific Settings</xar:mlstring>
+          </a>
+        </dd>
+    <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
+    <dd class="#$tabclass#">
+      <a href="&xar-modurl-window-admin-overview;">
+        <xar:mlstring>Overview</xar:mlstring>
+      </a>
+    </dd>
+    </xar:sec>
+  </dl>
+</div>

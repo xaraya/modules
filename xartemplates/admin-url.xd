@@ -1,6 +1,9 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Applications Window Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>URL Specific Settings</xar:mlstring></h2>
-<div style="text-align: center; margin: auto;">
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Window Appication Administration</xar:mlstring></span></div>
+<div class="xar-mod-body">
+<xar:template type="module" module="window" file="admin-menu" />
+<h2><xar:mlstring>URL Specific Settings</xar:mlstring></h2>
+
+<xar:comment> Prior Menuing 
 <table border="0" width="50%">
     <tr align="center" valign="middle">
         <td align="center" valign="middle">
@@ -14,26 +17,32 @@
         </td>
     </tr>
 </table>
-</div>
-<div style="text-align: left; margin: auto;">
+</xar:comment>
+
+
+
 <form action="#$action#" method="post" enctype="application/x-www-form-urlencoded">
 <input type="hidden" name="authid" id="authid" value="#$authid#" />
 <input type="hidden" name="id" id="authid" value="#$id#" />
 
 <input type="hidden" name="window_status" id="window_status" value="#$window_status#" />
-<table border="0" width="80%">
-<tr align="left" valign="middle">
-    <td>
-        <b><xar:mlstring>URL Address</xar:mlstring></b>
-    </td>
-    <td>
-        <b><xar:mlstring>Alias</xar:mlstring></b>
-    </td>
+<fieldset>
+    <legend>
+        <xar:mlstring>URL Listing and Editing</xar:mlstring>
+    </legend>
+   <table class="xar-fullwidth xar-noborder" tablespacing="1" tablepadding="2">
+      <tr class="xar-alt xar-align-left xar-valign-middle">
+      <td>
+        <strong><xar:mlstring>URL Address</xar:mlstring></strong>
+     </td>
+     <td>
+        <strong><xar:mlstring>Alias</xar:mlstring></strong>
+     </td>
 
     <td>
-        <b><xar:mlstring>Options</xar:mlstring></b>
+        <strong><xar:mlstring>Options</xar:mlstring></strong>
     </td>
-</tr>
+    </tr>
 
 <xar:if condition =" count($urls) eq 0">
 <tr align="left" valign="middle">
@@ -72,12 +81,6 @@
 </xar:if>
 
 <tr align="left" valign="middle">
-    <td colspan="3">
-        <hr />
-
-    </td>
-</tr>
-<tr align="left" valign="middle">
     <td>
         <input type="text" name="host" id="host" value="#$host#" size="30" maxlength="255" tabindex="1" />
     </td>
@@ -85,24 +88,28 @@
         <input type="text" name="alias" id="alias" value="#$alias#" size="30" maxlength="50" tabindex="2" />
     </td>
     <td>
+        <input type="submit" value="#$lang_action#"  tabindex="3" />
 
-    <input type="submit" value="#$lang_action#"  tabindex="3" />
     <xar:if condition =" $window_status eq 'edit'">
         &nbsp;&nbsp;<a href="#xarModURL('window','admin','addurl')#">Cancel</a>
     </xar:if>
     </td>
 </tr>
-<tr>
-    <td colspan="3">
-        <b><xar:mlstring>The values below override the general settings for the URL you are adding.</xar:mlstring></b>
+</table>
+    </fieldset>
 
-    </td>
-</tr>
-<tr>
-    <td colspan="2">
-        <xar:mlstring>Only for registered users</xar:mlstring>
-    </td>
-    <td nowrap="nowrap">
+     <fieldset>
+        <legend>
+            <xar:mlstring>Specific URL Settings</xar:mlstring>
+        </legend>
+    <p class="xar-form-input-wrapper-before xar-padding-thick">
+        <xar:mlstring>The values below apply to the <strong>URL you are editing above</strong>, and override the module general settings.</xar:mlstring>
+
+    </p>
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label">
+            <xar:mlstring>Only for registered users?</xar:mlstring>
+        </label>
         <xar:if condition =" $reg_user_only eq 1">
             <input type="radio" name="reg_user_only" id="reg_user_only" value="0" tabindex="11" />
 
@@ -116,14 +123,11 @@
 
             <xar:mlstring>Yes</xar:mlstring>
         </xar:if>
-    </td>
-</tr>
-<tr>
-    <td colspan="2">
-        <xar:mlstring>Add link for Open in new window</xar:mlstring>
-    </td>
-    <td nowrap="nowrap">
-
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label">
+            <xar:mlstring>Add link for Open in new window?</xar:mlstring>
+        </label>
         <xar:if condition =" $open_direct eq 1">
             <input type="radio" name="open_direct" id="open_direct" value="0"  tabindex="13" />
             <xar:mlstring>No</xar:mlstring>
@@ -136,14 +140,11 @@
             <input type="radio" name="open_direct" id="open_direct" value="1" tabindex="14" />
             <xar:mlstring>Yes</xar:mlstring>
         </xar:if>
-    </td>
-</tr>
-<tr>
-    <td colspan="2">
-        <xar:mlstring>Use fixed title</xar:mlstring>
-    </td>
-
-    <td nowrap="nowrap">
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label">
+            <xar:mlstring>Use fixed title?</xar:mlstring>
+       </label>
         <xar:if condition =" $use_fixed_title eq 1">
             <input type="radio" name="use_fixed_title" id="use_fixed_title" value="0"  tabindex="15" />
             <xar:mlstring>No</xar:mlstring>
@@ -156,14 +157,11 @@
             <input type="radio" name="use_fixed_title" id="use_fixed_title" value="1" tabindex="16" />
             <xar:mlstring>Yes</xar:mlstring>
         </xar:if>
-    </td>
-</tr>
-<tr>
-    <td colspan="2">
-        <xar:mlstring>Auto resize window</xar:mlstring>
-
-    </td>
-    <td nowrap="nowrap">
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label">
+            <xar:mlstring>Auto resize window?</xar:mlstring>
+        </label>
         <xar:if condition =" $auto_resize eq 1">
             <input type="radio" name="auto_resize" id="auto_resize" value="0"  tabindex="17" />
             <xar:mlstring>No</xar:mlstring>
@@ -176,31 +174,26 @@
             <input type="radio" name="auto_resize" id="auto_resize" value="1" tabindex="18" />
             <xar:mlstring>Yes</xar:mlstring>
         </xar:if>
-    </td>
-</tr>
-<tr>
-    <td colspan="2">
+    </div>
 
-        <xar:mlstring>Height of viewing window in pixels</xar:mlstring>
-        <br />
-        (<xar:mlstring>Only if Auto resize window = No, in which case this is the height of the content window.</xar:mlstring>)
-    </td>
-    <td>
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label">
+            <xar:mlstring>Height of viewing window:</xar:mlstring>
+        <label>
         <input type="text" name="vsize" id="vsize" value="#$vsize#" size="4" maxlength="4" tabindex="19" />
-    </td>
-</tr>
+        <xar:mlstring>In pixels.</xar:mlstring>
+        <p class="xar-form-input-wrapper-after">
+            (<xar:mlstring>Valid only if Auto resize window = No in which case this is the height of the content window.</xar:mlstring>).
+        </p>
+    <div>
 
-<tr>
-    <td colspan="2">
-        <xar:mlstring>Width of viewing window in pixels or percent</xar:mlstring>
-        (<xar:mlstring>If percent use %</xar:mlstring>)
-    </td>
-    <td>
-<input type="text" name="hsize" id="hsize" value="#$hsize#" size="4" maxlength="4" tabindex="20" />
-    </td>
-</tr>
-</table>
-
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label">
+            <xar:mlstring>Width of viewing window:</xar:mlstring>
+        </label>
+        <input type="text" name="hsize" id="hsize" value="#$hsize#" size="4" maxlength="4" tabindex="20" />
+        <xar:mlstring>In pixels or percent </xar:mlstring>(<xar:mlstring>if percent use %</xar:mlstring>).
+    </div>
+    </fieldset>
 </form>
-</div>
 </div>
