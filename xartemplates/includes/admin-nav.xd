@@ -9,8 +9,10 @@
       <xar:mlstring>Actions:</xar:mlstring>
     </dt>
     <xar:sec mask="AdminTranslations" catch="false">
-      <xar:if condition="$activetab eq 'start' or $activetab eq 'core_overview' or $activetab eq 'theme_overview' or $activetab eq 'module_overview' 
-      or $activetab eq 'choose_a_theme' or $activetab eq 'choose_a_module' ">
+      <xar:if condition="$activetab eq 'start' or $activetab eq 'core_overview' or $activetab eq 'theme_overview' or $activetab eq 'module_overview'
+      or $activetab eq 'choose_a_theme' or $activetab eq 'choose_a_module' or $activetab eq 'generate_skels_info'
+      or $activetab eq 'generate_skels_result' or $activetab eq 'generate_skels_info' or $activetab eq 'translate'
+      or $activetab eq 'translate_subtype' or $activetab eq 'delete_fuzzy'">
         <xar:set name="tabclass">'active'</xar:set>
       <xar:else />
         <xar:set name="tabclass">''</xar:set>

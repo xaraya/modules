@@ -4,7 +4,7 @@
 </div>
 <div class="xar-mod-body">
    <xar:template type="module" module="translations" file="admin-nav" />
-   <h2><xar:mlstring>Translate</xar:mlstring></h2>
+   <h2><xar:mlstring>Start Translate</xar:mlstring></h2>
    <xar:template file="admin-menu" type="module"/>
 
 <form id="workingLocaleForm" action="&xar-modurl-translations-admin-update_working_locale;" method="post">
