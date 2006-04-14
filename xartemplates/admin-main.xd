@@ -56,7 +56,7 @@
     <li><xar:mlstring>Metaweblogapi Extension page at</xar:mlstring> <a title="#xarML('Metaweblogapi Module - Xaraya Extension 747')#" href="http://www.xaraya.com/index.php/release/747.html">Xaraya Extension and Releases</a>.
       <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
     </li>
-    <li><xar:mlstring>Related tutorials and documentation on Metaweblogapi found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/netaweblogapi/" title="#xarML('Related documentation on Metaweblogapi')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+    <li><xar:mlstring>Related tutorials and documentation on Metaweblogapi found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/metaweblogapi/" title="#xarML('Related documentation on Metaweblogapi')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
     </li>
   </ul>
 
