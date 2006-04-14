@@ -45,18 +45,6 @@ if (!function_exists('xarTimeToDHMS')) {
     }
 }
 
-/**
- * Common Galaxia database connection handler
- */
-if (!isset($GLOBALS['dbGalaxia'])) {
-    // Galaxia needs its own connect as it has a different fetch mode.
-    $GLOBALS['dbGalaxia'] =& xarDBNewConn();
-    
-    // Set the fetch mode to assoc by default (needed by lib/Galaxia)
-    $oldmode = $GLOBALS['dbGalaxia']->SetFetchMode(ADODB_FETCH_ASSOC);
-}
-global $dbGalaxia;
-
 // Retrieve the current user
 global $user;
 $user = xarUserGetVar('uid');

@@ -23,9 +23,9 @@ class Base extends Observable {
     function query($query, $values = null, $numrows = -1, $offset = -1, $reporterrors = true) {
         $this->convert_query($query);
         if ($numrows == -1 && $offset == -1)
-            $result = $this->db->Execute($query, $values);
+            $result = $this->db->Execute($query, $values,GALAXIA_FETCHMODE);
         else
-            $result = $this->db->SelectLimit($query, $numrows, $offset, $values);
+            $result = $this->db->SelectLimit($query, $numrows, $offset, $values,GALAXIA_FETCHMODE);
         if (!$result && $reporterrors)
             $this->sql_error($query, $values, $result);
         $this->num_queries++;
@@ -34,7 +34,7 @@ class Base extends Observable {
 
     function getOne($query, $values = null, $reporterrors = true) {
         $this->convert_query($query);
-        $result = $this->db->SelectLimit($query, 1, 0, $values);
+        $result = $this->db->SelectLimit($query, 1, 0,$values,GALAXIA_FETCHMODE);
         if (!$result && $reporterrors)
             $this->sql_error($query, $values, $result);
 

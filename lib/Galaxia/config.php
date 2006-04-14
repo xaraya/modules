@@ -61,12 +61,16 @@ if (!isset($dbGalaxia)) {
     $dbGalaxia =& xarDBNewConn();
 
     // Set the fetch mode to assoc by default (needed by lib/Galaxia)
-    if(!defined('ADODB_FETCH_ASSOC')) {
-        // Desperate now :-)
-        define('ADODB_FETCH_ASSOC',ResultSet::FETCHMODE_ASSOC);
+    if(defined('ADODB_FETCH_ASSOC')) {
+        // Adodb can set fetch mode on the whole connection, so lets do that in any case
+        $oldmode = $dbGalaxia->SetFetchMode(ADODB_FETCH_ASSOC);
+        define('GALAXIA_FETCHMODE',ADODB_FETCH_ASSOC);
+    } elseif(defined('XARCORE_GENERATION') && XARCORE_GENERATION == 2) {
+        // This means we're in the 2 series of Xaraya
+        define('GALAXIA_FETCHMODE',ResultSet::FETCHMODE_ASSOC);
+    } else {
+        // Hope that everything works out :-)
     }
-    // This is wrong (adodb's fault) a fetchmode doesnt make sense for a connection, only for a resultset
-    $oldmode = $dbGalaxia->SetFetchMode(ADODB_FETCH_ASSOC);
 }
 
 // Specify how error messages should be shown (for use in compiler and activity code)

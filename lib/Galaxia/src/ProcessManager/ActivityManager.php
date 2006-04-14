@@ -478,11 +478,15 @@ class ActivityManager extends BaseManager {
         // And we have to remove the user and compiled files
         // for this activity
         $procname = $proc_info['normalized_name'];
-        unlink(GALAXIA_PROCESSES."/$procname/code/activities/$actname".'.php'); 
-        if (file_exists(GALAXIA_PROCESSES."/$procname/code/templates/$actname".'.tpl')) {
-            @unlink(GALAXIA_PROCESSES."/$procname/code/templates/$actname".'.tpl'); 
+        if (file_exists(GALAXIA_PROCESSES."/$procname/code/activities/$actname".'.php')) {
+            unlink(GALAXIA_PROCESSES."/$procname/code/activities/$actname".'.php'); 
         }
-        unlink(GALAXIA_PROCESSES."/$procname/compiled/$actname".'.php'); 
+        if (file_exists(GALAXIA_PROCESSES."/$procname/code/templates/$actname".'.tpl')) {
+            unlink(GALAXIA_PROCESSES."/$procname/code/templates/$actname".'.tpl'); 
+        }
+        if (file_exists(GALAXIA_PROCESSES."/$procname/compiled/$actname".'.php')) {
+            unlink(GALAXIA_PROCESSES."/$procname/compiled/$actname".'.php'); 
+        }
         return true;
     }
     
@@ -826,9 +830,10 @@ class ActivityManager extends BaseManager {
         }
         
         $min = $this->getOne("select min(flowNum) from ".GALAXIA_TABLE_PREFIX."activities where pId=?",array($pId));
-        $query = "update ".GALAXIA_TABLE_PREFIX."activities set flowNum=flowNum-$min where pId=?";
-        $this->query($query, array($pId));
-        
+        if(isset($min)) {
+            $query = "update ".GALAXIA_TABLE_PREFIX."activities set flowNum=flowNum-$min where pId=?";
+            $this->query($query, array($pId));
+        }
         //$query = "update ".GALAXIA_TABLE_PREFIX."activities set flowNum=0 where flowNum=$cant+1";
         //$this->query($query);
     }

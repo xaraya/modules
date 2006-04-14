@@ -71,9 +71,7 @@ if (isset($_REQUEST['sendInstance'])) {
     //and we have to send it to some activity to be determined
     include_once (GALAXIA_LIBRARY.'/src/API/Instance.php');
 
-    $dbconn =& xarDBGetConn();
-    $dbconn->SetFetchMode(ADODB_FETCH_ASSOC);
-    $instance = new Instance($dbconn);
+    $instance = new Instance($GLOBALS['dbGalaxia']);
     $instance->getInstance($_REQUEST['sendInstance']);
     // Do not add a workitem since the instance must be already completed!
     $instance->complete($_REQUEST['activityId'], true, false);
