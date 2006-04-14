@@ -14,10 +14,6 @@ class Process extends Base {
   public $normalizedName;
   public $pId = 0;
 
-  function Process($db) {
-    $this->db=$db;
-  }
-  
   /*!
   Loads a process form the database
   */

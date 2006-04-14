@@ -6,9 +6,11 @@ include_once(GALAXIA_LIBRARY.'/src/API/BaseActivity.php');
 This class handles activities of type 'end'
 */
 class End extends BaseActivity {
-	function End($db)
+    
+	function __construct($db)
 	{
-	  $this->setDb($db);
+        parent::__construct($db);
+        $this->type='end';
 	}
 }
 ?>

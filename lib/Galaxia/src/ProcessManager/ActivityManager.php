@@ -11,17 +11,6 @@ include_once(GALAXIA_LIBRARY.'/src/ProcessManager/BaseManager.php');
 class ActivityManager extends BaseManager {
   public $error='';
       
-  /*!
-    Constructor takes a PEAR::Db object to be used
-    to manipulate activities in the database.
-  */
-  function ActivityManager($db) {
-    if(!$db) {
-      die("Invalid db object passed to activityManager constructor");  
-    }
-    $this->db = $db;  
-  }
-  
   function get_error() {
     return $this->error;
   }

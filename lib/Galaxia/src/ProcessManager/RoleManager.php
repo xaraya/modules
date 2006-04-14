@@ -16,18 +16,6 @@ include_once(GALAXIA_LIBRARY.'/src/ProcessManager/BaseManager.php');
 
 class RoleManager extends BaseManager {
     
-  /*!
-    Constructor takes a PEAR::Db object to be used
-    to manipulate roles in the database.
-  */
-  function RoleManager($db) 
-  {
-    if(!$db) {
-      die("Invalid db object passed to RoleManager constructor");  
-    }
-    $this->db = $db;  
-  }
-  
   function get_role_id($pid,$name)
   {
     return ($this->getOne("select roleId from ".GALAXIA_TABLE_PREFIX."roles where name=? and pId=?",array($name,$pid)));

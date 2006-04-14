@@ -19,7 +19,7 @@ class BaseActivity extends Base {
   public $inbound=Array();
   public $pId;
   public $activityId;
-  public $type;
+  public $type = 'base';
   public $expirationTime = 0;
   
   function setDb($db)
@@ -27,10 +27,9 @@ class BaseActivity extends Base {
     $this->db=$db;
   }
   
-  function BaseActivity($db)
+  function __construct($db)
   {
-    $this->db=$db;
-    $this->type='base';
+      $this->setDb($db);
   }
   
   

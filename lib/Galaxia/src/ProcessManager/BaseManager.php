@@ -8,15 +8,6 @@ database connection, database methods and the Observable interface.
 */
 class BaseManager extends Base {
 
-  // Constructor receiving an ADODB database object.
-  function BaseManager($db)
-  {
-    if(!$db) {
-      die("Invalid db object passed to BaseManager constructor");
-    }
-    $this->db = $db;
-  }
-
 } //end of class
 
 ?>

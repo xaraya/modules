@@ -13,18 +13,6 @@ class ProcessManager extends BaseManager {
   public $buffer = '';
   
   /*!
-    Constructor takes a PEAR::Db object to be used
-    to manipulate roles in the database.
-  */
-  function ProcessManager($db) 
-  {
-    if(!$db) {
-      die("Invalid db object passed to ProcessManager constructor");  
-    }
-    $this->db = $db;  
-  }
- 
-  /*!
     Sets a process as active
   */
   function activate_process($pId)

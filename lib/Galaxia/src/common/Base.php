@@ -11,10 +11,11 @@ class Base extends Observable {
     public $num_queries = 0;
 
   // Constructor receiving a ADODB database object.
-  function Base($db)
+  function __construct($db)
   {
     if(!$db) {
-      die("Invalid db object passed to Base constructor");
+        // Show the childs class which errored out, but also show we detected it here
+        die("Invalid db object passed to :'".get_class($this)."' constructor. (detected in: '".__CLASS__."')");
     }
     $this->db = $db;
   }

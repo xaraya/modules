@@ -9,7 +9,7 @@ include_once(GALAXIA_LIBRARY.'/src/common/Observer.php');
 class Logger extends Observer {
 	private $_filename;
 	
-	function Logger($filename) {
+	function __construct($filename) {
 		$this->_filename = $filename;
 		$fp = fopen($this->_filename,"a");
 		if(!$fp) {

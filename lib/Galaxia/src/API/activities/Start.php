@@ -6,9 +6,11 @@ include_once(GALAXIA_LIBRARY.'/src/API/BaseActivity.php');
 This class handles activities of type 'start'
 */
 class Start extends BaseActivity {
-	function Start($db)
+
+	function __construct($db)
 	{
-	  $this->setDb($db);
+        parent::__construct($db);
+        $this->type='start';
 	}
 }
 ?>

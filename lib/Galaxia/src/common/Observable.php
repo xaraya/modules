@@ -15,7 +15,7 @@
 class Observable {
   public $_observers=Array();
   
-  function Observable() {
+  function __construct() {
   
   }
   

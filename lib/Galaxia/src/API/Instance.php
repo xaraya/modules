@@ -24,10 +24,7 @@ class Instance extends Base {
   /// An array of workitem ids
   public $workitems = Array(); 
   
-  function Instance($db) {
-    $this->db = $db;
-  }
-  
+ 
   /*!
   Method used to load an instance data from the database.
   */

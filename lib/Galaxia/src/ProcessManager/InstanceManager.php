@@ -8,18 +8,6 @@ include_once(GALAXIA_LIBRARY.'/src/ProcessManager/BaseManager.php');
 */
 class InstanceManager extends BaseManager {
   
-  /*!
-    Constructor takes a PEAR::Db object to be used
-    to manipulate roles in the database.
-  */
-  function InstanceManager($db) 
-  {
-    if(!$db) {
-      die("Invalid db object passed to InstanceManager constructor");  
-    }
-    $this->db = $db;  
-  }
-  
   function get_instance_activities($iid)
   {
     $query = "select ga.type,ga.isInteractive,ga.isAutoRouted,gi.pId,ga.activityId,ga.name,gi.instanceId,gi.status,gia.activityId,gia.user,gi.started,gia.status as actstatus " .
