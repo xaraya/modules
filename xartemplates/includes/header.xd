@@ -1,7 +1,7 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
 
-<xar:if condition="xarTplAddStyleLink('base', 'navtabs')"></xar:if>
-<xar:style scope="module" />
+<xar:style scope="module" module="base" file="navtabs" />
+<xar:style scope="module" module="julian" />
 <script type="text/javascript" src="modules/julian/xarjavascript/utilities_lite.js"></script>
 <script type="text/javascript" src="modules/julian/xarjavascript/validateheader.js"></script>
 <xar:comment>
@@ -68,7 +68,7 @@ being set to blank.
         </xar:if>
     </dl>
 
-    <form name="jump_to_page" method="post" action="#xarModURL('julian','user','jump')#" onsubmit="return validate(this)">
+    <form method="post" action="#xarModURL('julian','user','jump')#" onsubmit="return validate(this)">
         <div>
             <input type="submit" name="submit" value="#xarML('Jump to')#" />
             <select name="jump_month" onchange="populateSelect(this, this.form.jump_day, this.form.jump_year)">
@@ -125,12 +125,12 @@ being set to blank.
             <xar:set name="$cats">xarModAPIFunc('julian','user','getcategories')</xar:set>
             <xar:set name="$key">''</xar:set>
             <xar:foreach in="$cats" key="$cid" value="$info">
-               <xar:set name="$key">$key."<font color=" .$info['color']. ">&bull;</font>&nbsp;&nbsp;" . addslashes($info['name']) . "<br />"</xar:set>
+               <xar:set name="$key">$key.'<span style='.'"'.'display:inline;color:' .$info['color'].'"'.'>'."$Bullet</span>" . addslashes($info['name']).'<br />'</xar:set>
             </xar:foreach>
             <xar:set name="$caption">xarML('Category Legend')</xar:set>
             <a href="javascript:void(0)" class="xar-julian-event">
-               <span class="tt">#$caption# #$key#</span>
-              <img src="#xarTplGetImage('key.gif')#" alt="#xarML('Category Legend')#" align="middle" />
+               <span class="tt">#$caption# <br />#$key#</span>
+              <img src="#xarTplGetImage('key.gif')#" alt="#xarML('Category Legend')#" style="align:middle" />
             </a>
         </div>
     </form>

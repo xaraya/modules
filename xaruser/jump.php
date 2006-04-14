@@ -33,7 +33,7 @@ function julian_user_jump($args)
     extract($args);
     unset($args);
     if (!xarVarFetch('cal_date','int::',$cal_date,'',XARVAR_NOT_REQUIRED)) return;
-        xarVarFetch('jump_to','str::',$jump_to);
+    if (!xarVarFetch('jump_to','str::',$jump_to)) return;
     // If there is no cal_date already, we need to make one
     if (empty($cal_date) || !is_numeric($cal_date)) {
 

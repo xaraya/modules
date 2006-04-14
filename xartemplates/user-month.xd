@@ -79,7 +79,7 @@
                                                 </xar:if>
                                             </div>
                                             <xar:comment>Show a bullet with the color of the event category.</xar:comment>
-                                                <font size="3" color="#$event_array[$dbdate][$index]['color']#">#$Bullet#</font>
+                                                <span style="font-size:large;color:#$event_array[$dbdate][$index]['color']#">#$Bullet#</span>
                                             <xar:comment>Show popup when mouse over event name. If event is all day, don't show the time</xar:comment>
                                                 <xar:if condition="!$event_array[$dbdate][$index]['isallday']">
                                                     <span class="xar-julian-sub">#$event_array[$dbdate][$index]['time']#</span>
