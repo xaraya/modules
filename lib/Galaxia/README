@@ -11,3 +11,7 @@ Site administrators are encouraged to have a look at the configuration
 settings if they want to change the location of directories, database
 table names etc.
 
+
+NOTE for Xaraya Repo:
+- the config.php *is* already configured for Xaraya. (config.xaraya.php in terms of what would be sent upstream)
+  the config.xaraya.php file as such is not tracked in *our* repository
