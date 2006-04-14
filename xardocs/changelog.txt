@@ -14,3 +14,10 @@ Creation of courses is now from the page of coursetypes
 Version 0.3.3
 Fixed Bug 5472 Formatting of emails improved
 Fixed Bug 5470 Correct JOIN format in query
+
+Version 0.4.0 Released
+This software is still BETA. This means that it should NOT be used on a production site without thorough testing.
+
+You will need to create coursetypes now before you can add a course to one of those types. A coursetype can hold configuration options
+Compare to pubtypes in articles.
+

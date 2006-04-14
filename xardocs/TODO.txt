@@ -1,4 +1,4 @@
-1. Create checks for input: when is a student already enrolled, when has he enrolled in the course. (done?)
+1. Create checks for input: when is a student already enrolled, when has he enrolled in the course. [done]
 2. Make tables for other course items eg Courseyear, Courselevel, Intended audience (?), method (?), ...; check import into Dyn Data
 3. Admin functions to adjust those dyn data values via module interface [Done]
 4. Create user interface
@@ -16,14 +16,14 @@
 10. Minimum/max participants (Partly done, need check for enroll)
 11. Improve the admin functions
 12. Link teachers to the planned courses, besides showing their addresses
-13. Link course coordinators to courses (done?)
-14. Check all security functions
-15. Short URLs.
-16. Integration with categories(done, needs checking)
+13. Link course coordinators to courses [done]
+14. Check all security functions [done mostly]
+15. Short URLs. [in progress]
+16. Integration with categories [done, needs checking]
 17. Redefine itemtypes for coursetypes.
 
 ad 17. Courses that are itemtypes are not the solution
     the level needs to be higher. Therefore we need to add real course types. Those can have different behaviours [in progress].
 
-18 Enable digits in credits (eg 1.5)
+18 Enable digits in credits (eg 1.5) [done version 0.4.0]
 19 Add check on teacher status in usermenu
