@@ -1,4 +1,10 @@
-<xar:template type="module" file="admin-menu"/>
+<div class="xar-mod-head">
+  <span class="xar-mod-title"><xar:mlstring>Translations Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+   <xar:template type="module" module="translations" file="admin-nav" />
+   <h2><xar:mlstring>Translate Modules</xar:mlstring></h2>
+   <xar:template file="admin-menu" type="module"/>
 
 <xar:template type="module" file="druidbar" />
 <xar:mlstring>Module name</xar:mlstring>: #$displayname#<br />
@@ -8,3 +14,4 @@
 <xar:mlstring>Make a choice</xar:mlstring>:<br />
 <br />
 <xar:template type="module" file="opbar" />
+</div>

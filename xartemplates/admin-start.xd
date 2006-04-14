@@ -1,15 +1,26 @@
-<xar:template file="admin-menu" type="module"/>
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+  <span class="xar-mod-title"><xar:mlstring>Translations Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+   <xar:template type="module" module="translations" file="admin-nav" />
+   <h2><xar:mlstring>Translate</xar:mlstring></h2>
+   <xar:template file="admin-menu" type="module"/>
 
-<h4><xar:mlstring>Choose a translation to work on</xar:mlstring></h4>
-<form name="workingLocaleForm" id="workingLocaleForm" action="#xarModURL('translations', 'admin', 'update_working_locale')#" method="post">
-  <p>
-    <xar:mlstring>While working inside the translations module, you always work on the translation of one particular
-      locale. You choose that locale below. It will activate the proper storage location for the translated
-      items while you are working on a translation.</xar:mlstring><br />
-    <xar:mlstring>If you don't see the locale you want in the dropdown below, you will need to create it and activate it in the Modify Config page of the Base module.</xar:mlstring>
+<form id="workingLocaleForm" action="&xar-modurl-translations-admin-update_working_locale;" method="post">
+  <fieldset>
+      <legend><xar:mlstring>Choose locale to work on</xar:mlstring></legend>
+
+  <p class="xar-form-input-wrapper-before">
+    <xar:mlstring>While working with the Translations module you always work on the translation of one particular
+      locale. Choose that locale below. Choosing the locale will activate the proper storage location for the translated
+      items while you are working on a translation.</xar:mlstring></p>
+  <p class="xar-form-input-wrapper-before">
+    <xar:mlstring>If you don't see the locale you want to translation in the dropdown below, you will need to create it (in your var/locale directory) and </xar:mlstring>
+    <a href="&xar-modurl-tranlsations-admin-modifyconfig;"><xar:mlstring>activate it in the Modify Config page</xar:mlstring></a>
   </p>
-  <p>
-    <xar:mlstring>Choose the working locale</xar:mlstring>:
+  <p class="xar-form-input-wrapper xar-padding-thickends">
+    <label class="xar-form-label"><xar:mlstring>Choose the working locale</xar:mlstring>:</label>
     <select name="locale" id="locale" onchange="document.workingLocaleForm.submit();">
       <xar:for start="$i=0" test="$i lt count($locales)" iter="$i++">
         <xar:if condition="$locales[$i] eq $working_locale">
@@ -19,28 +30,38 @@
         </xar:if>
       </xar:for>
     </select>
-    <xar:set name="$select_locale"><xar:mlstring>Select this locale</xar:mlstring></xar:set>
+
+   <xar:set name="$select_locale"><xar:mlstring>Select this locale</xar:mlstring></xar:set>
     <input type="submit" value="#$select_locale#"/>
   </p>
+  </fieldset>
 </form>
 
-<h4><xar:mlstring>Translation jobs</xar:mlstring></h4>
-<p>
-  <ul>
+ <fieldset>
+      <legend><xar:mlstring>Choose a translation job</xar:mlstring></legend>
+
+<p class="xar-form-input-wrapper-before">
+  <xar:mlstring>After you have set the working locale above, choose a translation job:</xar:mlstring>
+</p>
+
+ <ul>
     <li>
-      <a href="#xarModURL('translations', 'admin', 'update_info', array('dntype'=>'core'))#">
+      <a href="&xar-modurl-translations-admin-update_info;&amp;dntype=core">
         <xar:mlstring>Translate the core</xar:mlstring>
       </a>
     </li>
     <li>
-      <a href="#xarModURL('translations', 'admin', 'update_info', array('dntype'=>'module'))#">
+      <a href="&xar-modurl-translations-admin-update_info;&amp;dntype=module">
         <xar:mlstring>Translate a module</xar:mlstring>
       </a>
     </li>
     <li>
-      <a href="#xarModURL('translations', 'admin', 'update_info', array('dntype'=>'theme'))#">
+      <a href="&xar-modurl-translations-admin-update_info;&amp;dntype=theme">
         <xar:mlstring>Translate a theme</xar:mlstring>
       </a>
     </li>
   </ul>
-</p>
+
+  </fieldset>
+
+</div>

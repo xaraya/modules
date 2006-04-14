@@ -1,8 +1,10 @@
 <div class="xar-mod-head">
-  <span class="xar-mod-title">
-    <xar:mlstring>Translations Bulk Operations</xar:mlstring>
-  </span>
+  <span class="xar-mod-title"><xar:mlstring>Translations Administration</xar:mlstring></span>
 </div>
+<div class="xar-mod-body">
+   <xar:template type="module" module="translations" file="admin-nav" />
+   <h2><xar:mlstring>Batch Operations</xar:mlstring></h2>
+
 
 <h4><xar:mlstring>Possible operations</xar:mlstring></h4>
 <p>
@@ -12,3 +14,4 @@
     <li><xar:mlstring>Packaging the generated translations in a downloadable archives</xar:mlstring></li>
   </ol>
 </p>
+</div>

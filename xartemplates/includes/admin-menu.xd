@@ -1,9 +1,4 @@
 <!-- include the module header on all admin pages -->
-<div class="xar-mod-head">
-  <span class="xar-mod-title">
-    <xar:mlstring>Translations Administration</xar:mlstring>
-  </span>
-</div>
 
 <xar:if condition="isset($dnType)">
 <xar:if condition="$dnType == XARMLS_DNTYPE_CORE"><xar:set name="$menu_dntypetext">'core'</xar:set></xar:if>
@@ -19,28 +14,29 @@
 <xar:set name="$menu_dnnametext">''</xar:set>
 </xar:if>
 
-<div class="xar-mod-body">
-  <h3><xar:mlstring>Summary of Current Settings</xar:mlstring></h3>
 
-<table>
-    <tr>
-        <td width="45%" valign="top">
-            <span><b><xar:mlstring>Translation Settings</xar:mlstring></b></span>
-        </td>
-        <td>
-        </td>
-        <td>
-            <span><b><xar:mlstring>Site MLS Settings</xar:mlstring></b></span>
-        </td>
+<fieldset>
+    <legend>
+       <xar:mlstring>Summary of Current Settings</xar:mlstring>
+    </legend>
+
+<table class="xar-fullwidth xar-noborder xar-align-left" cellpadding="2" cellspacing="1">
+    <tr >
+        <th class="xar-alt" width="45%" valign="top">
+            <xar:mlstring>Translation Settings</xar:mlstring>
+        </th>
+        <th class="xar-alt">
+            <xar:mlstring>Site MLS Settings</xar:mlstring>
+        </th>
     </tr>
     <tr>
         <td width="45%" valign="top">
-            <span><xar:mlstring>Translating</xar:mlstring></span>
+            <xar:mlstring>Translating</xar:mlstring>
             <span class="xar-title">
         <!-- TODO: we are using the session var here, but it is really the directory, to cater for name/dir independence -->
                 #$menu_dntypetext#&nbsp;#$menu_dnnametext#
             </span>
-            <span><xar:mlstring>to:</xar:mlstring></span>
+            <xar:mlstring>to:</xar:mlstring>
             <span class="xar-title">
                 <a href="#xarModURL('translations','admin','start')#">
                     #xarSessionGetVar('translations_working_locale')#
@@ -48,7 +44,7 @@
             </span>
 <xar:comment>
             <br/>
-            <span><xar:mlstring>Translation Backend</xar:mlstring>:</span>
+            <xar:mlstring>Translation Backend</xar:mlstring>:
             <span class="xar-title">
                 <a href="#xarModURL('translations','admin','modifyconfig')#">
                     #xarConfigGetVar('Site.MLS.TranslationsBackend')#
@@ -56,18 +52,16 @@
             </span>
 </xar:comment>
             <br/>
-            <span><xar:mlstring>Release Backend</xar:mlstring>:</span>
+            <xar:mlstring>Release Backend</xar:mlstring>:
             <span class="xar-title">
                 <a href="#xarModURL('translations','admin','modifyconfig')#">
                     #xarModGetVar('translations', 'release_backend_type')#
                 </a>
             </span>
         </td>
-        <td width="10%">
-            &nbsp;
-        </td>
+
         <td width="45%" valign="top">
-            <span><xar:mlstring>Site Display Locale</xar:mlstring>:</span>
+            <xar:mlstring>Site Display Locale</xar:mlstring>:
             <span class="xar-title">
                 <a href="#xarModURL('base','admin','modifyconfig')#">
                     #xarConfigGetVar('Site.MLS.DefaultLocale')#
@@ -75,7 +69,7 @@
             </span>
             <xar:mlstring>(recommended: utf)</xar:mlstring>
             <br/>
-            <span><xar:mlstring>MLS Mode</xar:mlstring>:</span>
+            <xar:mlstring>MLS Mode</xar:mlstring>:
             <span class="xar-title">
                 <a href="#xarModURL('translations','admin','modifyconfig')#">
                     #xarConfigGetVar('Site.MLS.MLSMode')#
@@ -85,4 +79,5 @@
         </td>
     </tr>
 </table>
-</div>
+</fieldset>
+

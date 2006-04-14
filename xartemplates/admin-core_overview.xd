@@ -1,4 +1,11 @@
-<xar:template file="admin-menu" type="module"/>
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+  <span class="xar-mod-title"><xar:mlstring>Translations Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+   <xar:template type="module" module="translations" file="admin-nav" />
+   <h2><xar:mlstring>Translate Core</xar:mlstring></h2>
+   <xar:template file="admin-menu" type="module"/>
 
 <h4><xar:mlstring>Translating the core</xar:mlstring></h4>
 <xar:mlstring>Xaraya version number</xar:mlstring>: #$verNum#<br />
@@ -8,3 +15,4 @@
 <xar:mlstring>Make a choice</xar:mlstring>:<br />
 <br />
 <xar:template type="module" file="opbar" />
+</div>

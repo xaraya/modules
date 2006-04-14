@@ -1,0 +1,58 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:comment>Common Administration menu</xar:comment>
+<xar:style scope="module" module="base" file="navtabs" />
+
+<xar:set name="activetab">$_bl_module_func</xar:set>
+<div>
+  <dl class="xar-tabs">
+    <dt class="help" title="Choose an action to perform">
+      <xar:mlstring>Actions:</xar:mlstring>
+    </dt>
+    <xar:sec mask="AdminTranslations" catch="false">
+      <xar:if condition="$activetab eq 'start' or $activetab eq 'core_overview' or $activetab eq 'theme_overview' or $activetab eq 'module_overview' 
+      or $activetab eq 'choose_a_theme' or $activetab eq 'choose_a_module' ">
+        <xar:set name="tabclass">'active'</xar:set>
+      <xar:else />
+        <xar:set name="tabclass">''</xar:set>
+      </xar:if>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-translations-admin-start;">
+            <xar:mlstring>Translate</xar:mlstring>
+          </a>
+        </dd>
+    </xar:sec>
+    <xar:sec mask="AdminTranslations" catch="false">
+        <xar:set name="tabclass">$activetab=='bulk'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+            <a href="&xar-modurl-translations-admin-bulk;" >
+                <xar:mlstring>Batch Operations</xar:mlstring>
+            </a>
+        </dd>
+    </xar:sec>
+    <xar:sec mask="ReadTranslations" catch="false">
+        <xar:set name="tabclass">$activetab=='show_status'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+            <a href="&xar-modurl-translations-admin-show_status;">
+                <xar:mlstring>Translation Status</xar:mlstring>
+            </a>
+        </dd>
+    </xar:sec>
+    <xar:sec mask="AdminTranslations" catch="false">
+        <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-translations-admin-modifyconfig;">
+            <xar:mlstring>Modify Config</xar:mlstring>
+          </a>
+        </dd>
+    </xar:sec>
+    
+    <xar:sec mask="AdminTranslations" catch="false">
+    <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
+    <dd class="#$tabclass#">
+      <a href="&xar-modurl-translations-admin-overview;">
+        <xar:mlstring>Overview</xar:mlstring>
+      </a>
+    </dd>
+    </xar:sec>
+  </dl>
+</div>
