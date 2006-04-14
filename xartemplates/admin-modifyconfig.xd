@@ -3,30 +3,33 @@
         <xar:mlstring>Weather</xar:mlstring>
     </span>
 </div>
-<div class="xar-mod-body" style="display:block;">
+<div class="xar-mod-body">
+    <xar:template type="module" module="weather" file="admin-menu" />
     <h2><xar:mlstring>Modify Config</xar:mlstring></h2>
     
-    <div style="border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 1px;">
-        <div style="float: right; text-align:right; display:block;padding:10px;">
-            <a href="http://www.weather.com"><img 
-                src="modules/weather/xarimages/TWClogo_64px.png" border="0" 
+       <form name="Weather" action="&xar-modurl-weather-admin-updateconfig;" method="post">
+        <fieldset>
+            <legend>
+                <xar:mlstring>Weather configuration options</xar:mlstring>
+            </legend>
+            <a href="http://www.weather.com"><img class="xar-module-icon"
+                src="modules/weather/xarimages/TWClogo_64px.png"
                 alt="weather.com&reg;" width="86" height="64" /></a>
-        </div>
-        <div style="margin-left: 1em; margin-right: 1em; margin-top: 2em; text-align:left;">
-        <form name="Weather" action="#xarModURL('weather','admin','updateconfig')#" method="post">
-        <table border="0" cellpadding="2" cellspacing="2">
-            <tr>
-                <td><xar:mlstring>Partner ID</xar:mlstring> : </td>
-                <td><input size="25" type="text" name="partner_id" value="#$partner_id#" /></td>
-            </tr><tr>
-                <td><xar:mlstring>License Key</xar:mlstring> : </td>
-                <td><input size="25" type="text" name="license_key" value="#$license_key#" /></td>
-            </tr><tr>
-                <td><xar:mlstring>Default Location</xar:mlstring> : </td>
-                <td><input size="25" type="text" name="default_location" value="#$default_location#" /></td>
-            </tr><tr>
-                <td><xar:mlstring>Number of Days for Extended Forecasts</xar:mlstring> : </td>
-                <td>
+            <div class="xar-form-input-wrapper">
+                <label class="xar-form-label" for="partner_id"><xar:mlstring>Partner ID</xar:mlstring> : </label>
+                <input size="25" type="text" name="partner_id" value="#$partner_id#" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label class="xar-form-label" for="license_key"><xar:mlstring>License Key</xar:mlstring> : </label>
+                <input size="25" type="text" name="license_key" value="#$license_key#" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label class="xar-form-label" for="default_location"><xar:mlstring>Default Location</xar:mlstring> : </label>
+                <input size="25" type="text" name="default_location" value="#$default_location#" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label class="xar-form-label" for="extdays"><xar:mlstring>Number of Days for Extended Forecasts</xar:mlstring> : </label>
+
                     <select name="extdays">
                         <xar:for start="$i = 1" test="$i le 10" iter="$i++">
                             <xar:if condition="$extdays eq $i">
@@ -36,10 +39,9 @@
                             </xar:if>
                         </xar:for>
                     </select>
-                </td>
-            </tr><tr>
-                <td><xar:mlstring>Measurement Units</xar:mlstring> : </td>
-                <td>
+              </div>
+              <div class="xar-form-input-wrapper">
+                <label class="xar-form-label" for="units"><xar:mlstring>Measurement Units</xar:mlstring> : </label>
                     <select name="units">
                         <xar:set name="$StandardUnits"><xar:mlstring>Standard</xar:mlstring></xar:set>
                         <xar:set name="$MetricUnits"><xar:mlstring>Metric</xar:mlstring></xar:set>
@@ -54,26 +56,30 @@
                             <option value="m">#$MetricUnits#</option>
                         </xar:if>
                     </select>
-                </td>
-            </tr><tr>
-                <td><xar:mlstring>Current Conditions Cache Time</xar:mlstring> : </td>
-                <td><input type="text" name="cc_cache_time" value="#$cc_cache_time#" /> in minutes (minimum = 30)</td>
-            </tr><tr>
-                <td><xar:mlstring>Extended Forecast Cache Time</xar:mlstring> : </td>
-                <td><input type="text" name="ext_cache_time" value="#$ext_cache_time#" /> in hours (minimum = 2)</td>
-            </tr><tr>
-                <td><label for="shorturls"><xar:mlstring>Enable Short URLs</xar:mlstring> : </label></td>
-                <td>
+              </div>
+              <div class="xar-form-input-wrapper">
+                <label class="xar-form-label" for="cc_cache_time"><xar:mlstring>Current Conditions Cache Time</xar:mlstring> : </label>
+                <input type="text" name="cc_cache_time" value="#$cc_cache_time#" /> in minutes (minimum = 30)
+              </div>
+              
+              <div class="xar-form-input-wrapper">
+                <label class="xar-form-label" for="ext_cache_time"><xar:mlstring>Extended Forecast Cache Time</xar:mlstring> : </label>
+                <input type="text" name="ext_cache_time" value="#$ext_cache_time#" /> in hours (minimum = 2)
+              </div>
+
+              <div class="xar-form-input-wrapper-after">
                     <xar:if condition="xarModGetVar('weather','SupportShortURLs') eq 1">
                         <input type="checkbox" id="shorturls" name="shorturls" value="1" checked="checked" />
                     <xar:else />
                         <input type="checkbox" id="shorturls" name="shorturls" value="1" />
                     </xar:if>
-                </td>
-            </tr>
-        </table>
-        <p><input type="submit" name="submit" value="#xarML('Modify Config')#" /></p>
-        </form>           
+                <label for="shorturls"><xar:mlstring>Enable Short URLs?</xar:mlstring></label>
+              </div>
+        </fieldset>
+
+        <div class="xar-form-input-wrapper-after">
+            <input type="submit" name="submit" value="#xarML('Modify Config')#" />
         </div>
-    </div>
+        </form>
+
 </div>

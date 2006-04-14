@@ -4,6 +4,7 @@
     </span>
 </div>
 <div class="xar-mod-body">
+    <xar:template type="module" module="weather" file="admin-menu" />
     <a href="http://www.weather.com"><img src="#xarTplGetImage('TWClogo_64px.png','weather')#" border="0"  class="xar-module-icon" alt="weather.com&reg;" width="86" height="64" /></a>
 
     <h2><xar:mlstring>Overview</xar:mlstring></h2>
