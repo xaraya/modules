@@ -17,7 +17,7 @@
         </dd>
     </xar:sec>
 
-    <xar:sec mask="AdminExample" catch="false">
+    <xar:sec mask="AdminScheduler" catch="false">
         <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
         <dd class="#$tabclass#">
           <a href="&xar-modurl-scheduler-admin-modifyconfig;">
