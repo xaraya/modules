@@ -67,7 +67,11 @@ if (!isset($dbGalaxia)) {
         define('GALAXIA_FETCHMODE',ADODB_FETCH_ASSOC);
     } elseif(defined('XARCORE_GENERATION') && XARCORE_GENERATION == 2) {
         // This means we're in the 2 series of Xaraya
-        define('GALAXIA_FETCHMODE',ResultSet::FETCHMODE_ASSOC);
+        // To prevent parse errors in php 4, we can not use the class constant here, even if this code doesnt
+        // actually run, because php errors out with a parse error.
+        // ResultSet::FETCHMODE_ASSOC has the value 1
+        $ResultSet__FETCHMODE_ASSOC=1;
+        define('GALAXIA_FETCHMODE',$ResultSet__FETCHMODE_ASSOC);
     } else {
         // Hope that everything works out :-)
     }
