@@ -7,10 +7,10 @@ include_once(GALAXIA_LIBRARY.'/src/ProcessManager/BaseManager.php');
   processes.
 */
 class ProcessManager extends BaseManager {
-  var $parser;
-  var $tree;
-  var $current;
-  var $buffer = '';
+  public $parser;
+  public $tree;
+  public $current;
+  public $buffer = '';
   
   /*!
     Constructor takes a PEAR::Db object to be used

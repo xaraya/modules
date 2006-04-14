@@ -18,7 +18,7 @@
 
 class Observer {
   ///This will be assigned by an observable object when attaching.
-  var $_observerId='';
+  public $_observerId='';
   
   function notify($event, $msg) {
     // do something...

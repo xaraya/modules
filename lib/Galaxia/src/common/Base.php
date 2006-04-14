@@ -7,8 +7,8 @@ This class is derived by all the API classes so they get the
 database connection, database methods and the Observable interface.
 */
 class Base extends Observable {
-  var $db;  // The ADODB object used to access the database
-    var $num_queries = 0;
+    public $db;  // The ADODB object used to access the database
+    public $num_queries = 0;
 
   // Constructor receiving a ADODB database object.
   function Base($db)

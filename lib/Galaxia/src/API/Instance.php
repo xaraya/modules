@@ -9,20 +9,20 @@ process being executed in the activity or even a to-be-created instance
 if the activity is a start activity.
 */
 class Instance extends Base {
-  var $properties = Array();
-  var $owner = '';
-  var $status = '';
-  var $started;
-  var $name = '';
-  var $nextActivity;
-  var $nextUser;
-  var $ended;
+  public $properties = Array();
+  public $owner = '';
+  public $status = '';
+  public $started;
+  public $name = '';
+  public $nextActivity;
+  public $nextUser;
+  public $ended;
   /// Array of asocs(activityId,status,started,user)
-  var $activities = Array();
-  var $pId;
-  var $instanceId = 0;
+  public $activities = Array();
+  public $pId;
+  public $instanceId = 0;
   /// An array of workitem ids
-  var $workitems = Array(); 
+  public $workitems = Array(); 
   
   function Instance($db) {
     $this->db = $db;

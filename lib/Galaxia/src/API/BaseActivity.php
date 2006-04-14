@@ -9,18 +9,18 @@ class can be found in the activities subfolder.
 This class is observable.
 */
 class BaseActivity extends Base {
-  var $name;
-  var $normalizedName;
-  var $description;
-  var $isInteractive;
-  var $isAutoRouted;
-  var $roles=Array();
-  var $outbound=Array();
-  var $inbound=Array();
-  var $pId;
-  var $activityId;
-  var $type;
-  var $expirationTime = 0;
+  public $name;
+  public $normalizedName;
+  public $description;
+  public $isInteractive;
+  public $isAutoRouted;
+  public $roles=Array();
+  public $outbound=Array();
+  public $inbound=Array();
+  public $pId;
+  public $activityId;
+  public $type;
+  public $expirationTime = 0;
   
   function setDb($db)
   {

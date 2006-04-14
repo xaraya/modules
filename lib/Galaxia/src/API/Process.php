@@ -8,11 +8,11 @@ is executed. You can access this class methods using $process from any activity.
 No need to instantiate a new object.
 */
 class Process extends Base {
-  var $name;
-  var $description;
-  var $version;
-  var $normalizedName;
-  var $pId = 0;
+  public $name;
+  public $description;
+  public $version;
+  public $normalizedName;
+  public $pId = 0;
 
   function Process($db) {
     $this->db=$db;

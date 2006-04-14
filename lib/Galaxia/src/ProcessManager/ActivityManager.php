@@ -9,7 +9,7 @@ include_once(GALAXIA_LIBRARY.'/src/ProcessManager/BaseManager.php');
   activity belongs to some process.
 */
 class ActivityManager extends BaseManager {
-  var $error='';
+  public $error='';
       
   /*!
     Constructor takes a PEAR::Db object to be used

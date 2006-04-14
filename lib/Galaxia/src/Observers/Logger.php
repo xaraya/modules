@@ -7,7 +7,7 @@ include_once(GALAXIA_LIBRARY.'/src/common/Observer.php');
   blah....
 */
 class Logger extends Observer {
-	var $_filename;
+	private $_filename;
 	
 	function Logger($filename) {
 		$this->_filename = $filename;

@@ -13,7 +13,7 @@
   notify($event,$msg) method.
 */
 class Observable {
-  var $_observers=Array();
+  public $_observers=Array();
   
   function Observable() {
   

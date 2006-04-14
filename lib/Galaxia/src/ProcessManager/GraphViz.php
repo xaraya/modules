@@ -60,23 +60,23 @@ class Process_GraphViz {
     *
     * @var  string
     */
-    var $dotCommand = 'dot';
+    public $dotCommand = 'dot';
     
-    var $pid;
+    public $pid;
 
     /**
     * Path to GraphViz/neato command
     *
     * @var  string
     */
-    var $neatoCommand = 'neato';
+    public $neatoCommand = 'neato';
 
     /**
     * Representation of the graph
     *
     * @var  array
     */
-    var $graph;
+    public $graph;
 
     /**
     * Constructor
