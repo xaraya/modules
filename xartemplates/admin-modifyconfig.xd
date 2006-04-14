@@ -3,6 +3,7 @@
     <span class="xar-mod-title"><xar:mlstring>Search Administration</xar:mlstring></span>
 </div>
 <div class="xar-mod-body">
+     <xar:template type="module" module="search" file="admin-menu" />
     <h2><xar:mlstring>Modify Config</xar:mlstring></h2>
 
     <xar:if condition="xarSessionGetVar('statusmsg') != ''">
