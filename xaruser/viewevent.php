@@ -140,8 +140,14 @@ function julian_user_viewevent()
    if(strcmp($bl_data['duration'],""))
    {
      list($hours,$minutes) = explode(":",$bl_data['duration']);
-     $duration="&#160;".xarML('from')."&#160;".date("g:i A",strtotime($bl_data['dtstart']))."&#160;".xarML('to')."&#160;".date("g:i A",strtotime("+".$hours." hours ".$minutes." minutes",strtotime($bl_data['dtstart'])));
+     $duration=xarML('from #(1) to #(2)',(date("g:i A",strtotime($bl_data['dtstart']))),(date("g:i A",strtotime("+".$hours." hours ".$minutes." minutes",strtotime($bl_data['dtstart'])))));
    }
+   /*
+           $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
+            'item ID', 'user', 'get', 'Example');
+
+   */
+
    //Checking if we are viewing a reoccuring event
    if ($bl_data['recur_freq']) {
       $recur_count = $bl_data['recur_count'];
@@ -150,37 +156,37 @@ function julian_user_viewevent()
       $intervals = array("1"=>xarML('Day(s)'),"2"=>xarML('Week(s)'),"3"=>xarML('Month(s)'),"4"=>xarML('Year(s)'));
       $day_array = array("1"=>xarML('Sunday'),"2"=>xarML('Monday'),"3"=>xarML('Tuesday'),"4"=>xarML('Wednesday'),"5"=>xarML('Thursday'),"6"=>xarML('Friday'),"7"=>xarML('Saturday'));
       //build the effective date string
-      $eff ="&#160;".xarML('effective')."&#160;".date("$dateformat",strtotime($bl_data['dtstart']));
+      $eff =xarML('effective #(1)',(date("$dateformat",strtotime($bl_data['dtstart']))));
+
       //start the time string
-      $time = xarML('Occurs ');
       //Build the strings to describe the repeating event.
       if (!$bl_data['recur_count']) {
          //this is for the 'every' recurring event type
-         $time .= xarML('every')."&#160;".$bl_data['recur_freq']." ".$intervals[$rrule]."&#160;".xarML('on')."&#160;".date('l',strtotime($bl_data['dtstart'])) . $eff;
+         $time = xarML('Occurs every #(1) on #(2) #(3)',($bl_data['recur_freq']." ".$intervals[$rrule]),(date('l',strtotime($bl_data['dtstart']))),$eff);
       } else {
          // build a day array
          $weektimes = array("1"=>xarML('First'),"2"=>xarML('Second'),"3"=>xarML('Third'),"4"=>xarML('Fourth'),"5"=>xarML('Last'));
          // this is for the 'on every' recurring event type
-         $time .= xarML('the')."&#160;".$weektimes[$recur_interval] ."&#160;".$day_array[$recur_count]."&#160;".xarML('every')."&#160;".$bl_data['recur_freq']." ". $intervals[$rrule] . $eff;
+         $time = xarML('Occurs the #(1) #(2) every #(3) #(4) #(5)',$weektimes[$recur_interval],$day_array[$recur_count],$bl_data['recur_freq'],$intervals[$rrule],$eff);
       }
 
       //add the end date if one exists
       //TODO: MichelV move this to template
       if (strcmp($bl_data['recur_until'],"") && strcmp($bl_data['recur_until'],"recur_until")){
-         $time .= "&#160;".xarML('until ')."&#160;".date("$dateformat",strtotime($bl_data['recur_until']));
+         $time = xarML('#(1) until #(2)',$time,(date("$dateformat",strtotime($bl_data['recur_until']))));
       }
-     //if the duration has not been set and this is not an all day event, add the start time to the string
-     $duration=strcmp($duration,"")?$duration:($bl_data['isallday']?'':"&#160;".xarML('at')."&#160;".date("g:i A",strtotime($bl_data['dtstart'])));
-     $bl_data['time'] = $time.$duration .".";
+      //if the duration has not been set and this is not an all day event, add the start time to the string
+      $duration=strcmp($duration,"") ?$duration:($bl_data['isallday']?'':"&#160;".xarML('at #(1)',date("g:i A",strtotime($bl_data['dtstart']))));
+      $bl_data['time'] = $time;
 
    // If there is no duration and this is not an all day event, show the time at the front.
    } else if (!$bl_data['isallday'] && !strcmp($duration,'')) {
       $bl_data['time'] = date("g:i A l, $dateformat",strtotime($bl_data['dtstart']));
    } else {
-      $bl_data['time'] = date("l, $dateformat",strtotime($bl_data['dtstart'])).$duration;
+      $bl_data['time'] = date("l, $dateformat",strtotime($bl_data['dtstart']));
    }
    $bl_data['cal_date']=$cal_date;
-
+   $bl_data['duration'] = $duration;
    // Set the url to this page in session as the last page viewed
    $lastview=xarModURL('julian','user','viewevent',array('cal_date'=>$cal_date,'event_id'=>$event_id));
    xarSessionSetVar('lastview',$lastview);

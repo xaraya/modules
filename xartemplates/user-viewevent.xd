@@ -29,7 +29,7 @@
                         </xar:if>
                     </div>
                     <xar:if condition="!$isallday">
-                         #$time#
+                         #$time# #$duration#
                     <xar:else />
                         #$time# <xar:mlstring>All Day Event</xar:mlstring>
                     </xar:if>
