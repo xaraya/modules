@@ -23,14 +23,12 @@ function workflow_admin_graph()
         $tplData['msg'] =  xarML("This feature is disabled");
         
         return xarTplModule('workflow', 'admin', 'error', $tplData);
-        die;
     }
     
     if ($tiki_p_admin_workflow != 'y') {
         $tplData['msg'] =  xarML("Permission denied");
         
         return xarTplModule('workflow', 'admin', 'error', $tplData);
-        die;
     }
 
     // Check if we are editing an existing process

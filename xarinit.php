@@ -674,7 +674,7 @@ function workflow_remove_directory($dir)
     }
     closedir($h);
     @rmdir($dir);
-    @unlink($dir);
+    if(file_exists($dir)) @unlink($dir);
 }
 
 ?>

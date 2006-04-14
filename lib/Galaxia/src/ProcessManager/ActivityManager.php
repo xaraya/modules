@@ -562,8 +562,7 @@ class ActivityManager extends BaseManager {
             $activityId = $this->getOne("select max(activityId) from $TABLE_NAME where pId=$pId and lastModif=$now"); 
             $ret = $activityId;
             if(!$activityId) {
-                print("select max(activityId) from $TABLE_NAME where pId=$pId and lastModif=$now");
-                die;      
+                throw new Exception("No result from: select max(activityId) from $TABLE_NAME where pId=$pId and lastModif=$now");
             }
             // Should create the code file
             $procname = $proc_info["normalized_name"];

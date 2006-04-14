@@ -23,14 +23,12 @@ if ($feature_workflow != 'y') {
     $tplData['msg'] =  xarML("This feature is disabled");
 
     return xarTplModule('workflow', 'user', 'error', $tplData);
-    die;
 }
 
 if ($tiki_p_use_workflow != 'y') {
     $tplData['msg'] =  xarML("Permission denied");
 
     return xarTplModule('workflow', 'user', 'error', $tplData);
-    die;
 }
 
 // Filtering data to be received by request and

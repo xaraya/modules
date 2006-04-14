@@ -15,7 +15,7 @@ class Base extends Observable {
   {
     if(!$db) {
         // Show the childs class which errored out, but also show we detected it here
-        die("Invalid db object passed to :'".get_class($this)."' constructor. (detected in: '".__CLASS__."')");
+        throw new Exception("Invalid db object passed to :'".get_class($this)."' constructor. (detected in: '".__CLASS__."')");
     }
     $this->db = $db;
   }
@@ -50,11 +50,10 @@ class Base extends Observable {
     function sql_error($query, $values, $result) {
         global $ADODB_LASTDB;
 
-        trigger_error($ADODB_LASTDB . " error:  " . $this->db->ErrorMsg(). " in query:<br/>" . $query . "<br/>", E_USER_WARNING);
+        throw new Exception($ADODB_LASTDB . " error:  " . $this->db->ErrorMsg(). " in query:<br/>" . $query . "<br/>", E_USER_WARNING);
         // only for debugging.
-        print_r($values);
+        // print_r($values);
         //echo "<br />";
-        die;
     }
 
     // functions to support DB abstraction

@@ -24,14 +24,12 @@ if ($feature_workflow != 'y') {
     $tplData['msg'] =  xarML("This feature is disabled");
 
     return xarTplModule('workflow', 'admin', 'error', $tplData);
-    die;
 }
 
 if ($tiki_p_admin_workflow != 'y') {
     $tplData['msg'] =  xarML("Permission denied");
 
     return xarTplModule('workflow', 'admin', 'error', $tplData);
-    die;
 }
 
 // Check if we are editing an existing process
@@ -83,7 +81,6 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
         $tplData['msg'] =  xarML("The process name already exists");
 
         return xarTplModule('workflow', 'admin', 'error', $tplData);
-        die;
     } else {
         $processManager->import_process($process_data);
     }
@@ -117,7 +114,6 @@ if (isset($_REQUEST['save'])) {
         $tplData['msg'] =  xarML("Process already exists");
 
         return xarTplModule('workflow', 'admin', 'error', $tplData);
-        die;
     }
 
     if (isset($_REQUEST['isActive']) && $_REQUEST['isActive'] == 'on') {

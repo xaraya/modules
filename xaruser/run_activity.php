@@ -31,7 +31,6 @@ if ($feature_workflow != 'y') {
   $tplData['msg'] =  xarML("This feature is disabled");
 
   return xarTplModule('workflow', 'user', 'error', $tplData);
-  die;
 }
 
 if (!isset($_REQUEST['auto'])) {
@@ -39,7 +38,6 @@ if (!isset($_REQUEST['auto'])) {
     $tplData['msg'] =  xarML("Permission denied");
 
     return xarTplModule('workflow', 'user', 'error', $tplData);
-    die;
   }
 }
 
@@ -71,7 +69,6 @@ if ($activity->isInteractive() == 'y') {
     $tplData['msg'] =  xarML("You can't execute this activity");
 
     return xarTplModule('workflow', 'user', 'error', $tplData);
-    die;
   }
 }
 

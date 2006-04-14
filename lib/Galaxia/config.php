@@ -94,11 +94,6 @@ if (!function_exists('galaxia_execute_activity')) {
                                 array('activityId' => $activityId,
                                       'iid' => $iid,
                                       'auto' => $auto));
-        if (empty($result)) {
-        // TODO: clean this up
-            echo xarErrorRender('html');
-            die;
-        }
     }
 }
 
