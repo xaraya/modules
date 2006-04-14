@@ -5,15 +5,13 @@
 </div>
 
 <div class="xar-mod-body">
-    <h2><xar:mlstring>Overview</xar:mlstring></h2>
-    <div style="padding: 1px;" class="xar-norm-outline">
-        <div style="float:right;padding:10px;">
-            <img src="modules/base/xarimages/admin_generic.gif" alt="official icon" width="96" height="96" />
-        </div>
-             
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <h3><xar:mlstring>What is it?</xar:mlstring></h3>
-            
+
+  <img src="#xarTplGetImage('admin_generic.gif','base')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
+
+  <h2><xar:mlstring>Overview</xar:mlstring></h2>
+
+      <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+
             <p>
                 <xar:mlstring>The Moveabletype API is a XML-RPC API used for blogging,
                 which builds on the MetaWeblog API and the Blogger API. It both adds
@@ -42,6 +40,19 @@
             <p>
                 Not all of these features are supported by Xaraya at the moment.
             </p>
-        </div>
-    </div>
+  <h3>
+    <xar:mlstring>Further Information</xar:mlstring>
+  </h3>
+  <p>
+    <xar:mlstring>Further information on the Moveabletype module can be found at</xar:mlstring>
+  </p>
+  <ul>
+    <li><xar:mlstring>Moveabletype Extension page at</xar:mlstring> <a title="#xarML('Moveabletype Module - Xaraya Extension 329')#" href="http://www.xaraya.com/index.php/release/329.html">Xaraya Extension and Releases</a>.
+      <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+    </li>
+    <li><xar:mlstring>Related tutorials and documentation on Moveabletype found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/moveabletype/" title="#xarML('Related documentation on Moveabletype')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+    </li>
+  </ul>
+
 </div>
+
