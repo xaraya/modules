@@ -11,11 +11,15 @@ class Base extends Observable {
     public $num_queries = 0;
 
   // Constructor receiving a ADODB database object.
-  function __construct($db)
+  function __construct($db=null)
   {
     if(!$db) {
-        // Show the childs class which errored out, but also show we detected it here
-        throw new Exception("Invalid db object passed to :'".get_class($this)."' constructor. (detected in: '".__CLASS__."')");
+        // Try to save the day
+        $db = &xarDbGetConn();
+        if(!$db) {
+            // Show the childs class which errored out, but also show we detected it here
+            throw new Exception("Invalid db object passed to :'".get_class($this)."' constructor. (detected in: '".__CLASS__."')");
+        }
     }
     $this->db = $db;
   }

@@ -57,8 +57,7 @@ if (!defined('GRAPHVIZ_BIN_DIR')) {
 // Database handler
 global $dbGalaxia;
 if (!isset($dbGalaxia)) {
-    // Galaxia needs its own connection for the associative fetch mode.
-    $dbGalaxia =& xarDBNewConn();
+    $dbGalaxia =& xarDBGetConn();
 
     // Set the fetch mode to assoc by default (needed by lib/Galaxia)
     if(defined('ADODB_FETCH_ASSOC')) {
@@ -75,7 +74,7 @@ if (!isset($dbGalaxia)) {
     } else {
         // Hope that everything works out :-)
     }
-}
+ }
 
 // Specify how error messages should be shown (for use in compiler and activity code)
 if (!function_exists('galaxia_show_error')) {

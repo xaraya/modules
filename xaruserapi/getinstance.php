@@ -30,7 +30,7 @@ function workflow_userapi_getInstance($args)
         include_once(GALAXIA_LIBRARY.'/API.php');
     }
 
-    $inst = new Instance($dbGalaxia);
+    $inst = new Instance();
     $inst->getInstance($instanceId);
 
     return $inst;

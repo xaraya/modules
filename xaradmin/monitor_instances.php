@@ -69,7 +69,7 @@ if (isset($_REQUEST['sendInstance'])) {
     //and we have to send it to some activity to be determined
     include_once (GALAXIA_LIBRARY.'/src/API/Instance.php');
 
-    $instance = new Instance($GLOBALS['dbGalaxia']);
+    $instance = new Instance();
     $instance->getInstance($_REQUEST['sendInstance']);
     // Do not add a workitem since the instance must be already completed!
     $instance->complete($_REQUEST['activityId'], true, false);

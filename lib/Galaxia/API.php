@@ -15,8 +15,8 @@ include_once (GALAXIA_LIBRARY.'/src/API/activities/Start.php');
 include_once (GALAXIA_LIBRARY.'/src/API/activities/SwitchActivity.php');
 include_once (GALAXIA_LIBRARY.'/src/Observers/Logger.php');
 
-$process = new Process($dbGalaxia);
-$instance = new Instance($dbGalaxia);
-$baseActivity = new BaseActivity($dbGalaxia);
+$process = new Process();
+$instance = new Instance();
+$baseActivity = new BaseActivity();
 
 ?>
