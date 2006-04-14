@@ -1,0 +1,34 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:comment>Common Administration menu</xar:comment>
+<xar:style scope="module" module="base" file="navtabs" />
+
+<xar:set name="activetab">$_bl_module_func</xar:set>
+<xar:set name="activetype">$_bl_module_type</xar:set>
+<div>
+  <dl class="xar-tabs">
+    <dt class="help" title="Choose an action to perform">
+      <xar:mlstring>Actions:</xar:mlstring>
+    </dt>
+    <xar:if condition="$activetab eq 'main' and $activetype eq 'user'">
+        <xar:set name="tabclass">'active'</xar:set>
+    <xar:else />
+        <xar:set name="tabclass">''</xar:set>
+    </xar:if>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-overlib-user-main;">
+            <xar:mlstring>Overlib Test</xar:mlstring>
+          </a>
+        </dd>
+    <xar:if condition="$activetab eq 'main' and $activetype eq 'admin'">
+        <xar:set name="tabclass">'active'</xar:set>
+    <xar:else />
+        <xar:set name="tabclass">''</xar:set>
+    </xar:if>
+    <dd class="#$tabclass#">
+      <a href="&xar-modurl-overlib-admin-overview;">
+        <xar:mlstring>Overview</xar:mlstring>
+      </a>
+    </dd>
+
+  </dl>
+</div>

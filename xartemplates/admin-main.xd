@@ -1,31 +1,25 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Administration - Overlib</xar:mlstring></span></div>
 <div class="xar-mod-body">
-    <h2><xar:mlstring>Overview</xar:mlstring></h2>
-    <div style="padding: 1px;" class="xar-norm-outline">
-        <div style="float:right;padding:10px;">
-            <img src="modules/overlib/xarimages/admin.gif" alt="official icon" width="88" height="31" />
-        </div>
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>What is it?</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <em><xar:mlstring>Overlib is Xaraya Utility Module.</xar:mlstring></em>
-            <xar:mlstring>It is currently responsible for accomplishing these tasks:</xar:mlstring>
+  <xar:template type="module" module="overlib" file="admin-menu" />
+  <img src="#xarTplGetImage('admin.gif','overlib')#" class="xar-module-icon" alt="official icon" width="88" height="31" />
+
+  <h2><xar:mlstring>Overview</xar:mlstring></h2>
+
+  <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+      <p><em><xar:mlstring>Overlib is Xaraya Utility Module.</xar:mlstring></em>
+        <xar:mlstring>It is currently responsible for accomplishing these tasks:</xar:mlstring>
             <ul>
                 <li><xar:mlstring>Creating overLIB style JavaScript popups</xar:mlstring></li>
             </ul>
-            <xar:mlstring>
+      </p>
+      <p> <xar:mlstring>
                 All configuration is handled in the templates and all default configuration is inside the config.inc.js file
                 located in the modules/overlib directory.
             </xar:mlstring>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>How to use it?</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+      </p>
+
+      <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
+      <p>
             <xar:mlstring>
             This utility module supplies you with three blocklayout tags that can be used to create a number of overLIB popups.  I'll get
             to explaining it another time.  In the meantime, please take a look at the user-main.xd template for some examples.
@@ -33,18 +27,16 @@
             <br />
             <a href="index.php?module=overlib&amp;func=main">overLIB Test</a>
             </xar:mlstring>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+      </p>
+      <h3>
             <xar:mlstring>Included BlockLayout Tags</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <ul>
+      </h3>
+      <p>
+          <ul>
                 <li><xar:mlstring>&lt;xar:overlib-init /&gt;</xar:mlstring></li>
                 <li><xar:mlstring>&lt;xar:overlib-popup-open /&gt;</xar:mlstring></li>
                 <li><xar:mlstring>&lt;xar:overlib-popup-close /&gt;</xar:mlstring></li>
             </ul>
-        </div>
-    </div>
+      </p>
+
 </div>

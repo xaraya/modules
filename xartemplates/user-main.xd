@@ -1,4 +1,8 @@
 <xar:comment> This call will initialize the overlib js library </xar:comment>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Administration - Overlib</xar:mlstring></span></div>
+<div class="xar-mod-body">
+  <xar:template type="module" module="overlib" file="admin-menu" />
+    <h2><xar:mlstring>Overlib Test</xar:mlstring></h2>
 <xar:overlib-init />
 
 <xar:comment> Here we create a basic popup </xar:comment>
@@ -117,4 +121,5 @@
 <p><a href="javascript:void(0);" 
    onmouseover="#$olopen#" 
    onmouseout="#$olclose#">Look &amp; Feel : Example 3</a></p>
-   
+
+</div>
