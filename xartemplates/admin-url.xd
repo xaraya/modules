@@ -3,7 +3,7 @@
 <xar:template type="module" module="window" file="admin-menu" />
 <h2><xar:mlstring>URL Specific Settings</xar:mlstring></h2>
 
-<xar:comment> Prior Menuing 
+<xar:comment> Prior Menuing
 <table border="0" width="50%">
     <tr align="center" valign="middle">
         <td align="center" valign="middle">
@@ -22,15 +22,12 @@
 
 
 <form action="#$action#" method="post" enctype="application/x-www-form-urlencoded">
-<input type="hidden" name="authid" id="authid" value="#$authid#" />
-<input type="hidden" name="id" id="authid" value="#$id#" />
 
-<input type="hidden" name="window_status" id="window_status" value="#$window_status#" />
 <fieldset>
     <legend>
         <xar:mlstring>URL Listing and Editing</xar:mlstring>
     </legend>
-   <table class="xar-fullwidth xar-noborder" tablespacing="1" tablepadding="2">
+   <table class="xar-fullwidth xar-noborder" cellspacing="1" cellpadding="2">
       <tr class="xar-alt xar-align-left xar-valign-middle">
       <td>
         <strong><xar:mlstring>URL Address</xar:mlstring></strong>
@@ -58,7 +55,7 @@
     <xar:else />
       <xar:set name="rowclass">'xar-norm'</xar:set>
     </xar:if>
-    <tr class="#$rowclass#" align="left" valigne="middle">
+    <tr class="#$rowclass# xar-align-left xar-valign-middle">
             <td>
                 #$loop:item['urladdress']#
             </td>
@@ -80,7 +77,7 @@
     </xar:loop>
 </xar:if>
 
-<tr align="left" valign="middle">
+<tr class="xar-align-left xar-valign-middle">
     <td>
         <input type="text" name="host" id="host" value="#$host#" size="30" maxlength="255" tabindex="1" />
     </td>
@@ -88,10 +85,13 @@
         <input type="text" name="alias" id="alias" value="#$alias#" size="30" maxlength="50" tabindex="2" />
     </td>
     <td>
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <input type="hidden" name="id" id="id" value="#$id#" />
+        <input type="hidden" name="window_status" id="window_status" value="#$window_status#" />
         <input type="submit" value="#$lang_action#"  tabindex="3" />
 
     <xar:if condition =" $window_status eq 'edit'">
-        &nbsp;&nbsp;<a href="#xarModURL('window','admin','addurl')#">Cancel</a>
+        &nbsp;&nbsp;<a href="&xar-modurl-window-admin-addurl;">Cancel</a>
     </xar:if>
     </td>
 </tr>
@@ -185,7 +185,7 @@
         <p class="xar-form-input-wrapper-after">
             (<xar:mlstring>Valid only if Auto resize window = No in which case this is the height of the content window.</xar:mlstring>).
         </p>
-    <div>
+    </div>
 
     <div class="xar-form-input-wrapper">
         <label class="xar-form-label">
