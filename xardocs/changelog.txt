@@ -437,3 +437,10 @@ The functions are now checked and should all have a working short url version
 When an event is allday, the time fields are now disabled instead of invisible
 0.4.4
 Improved multilanguage settings
+Bug 5563 Typo in sec mask
+Bug 5560
+Bug 5561 Add db detection for PostGres and pass correct query format
+Bug 5555 partly MLS string building
+Bug 5554 partly MLS string building
+Bug 5530 Type in alerts
+Bug 5504 Don't put all fields in linked events
