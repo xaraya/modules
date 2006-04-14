@@ -48,7 +48,7 @@
                         </div>
                         <div class="cal-icons">
                             <xar:comment>Show Add icon (plus sign) on each day in the month and allow the administrator to add an event.</xar:comment>
-                            <xar:sec id="unique1" mask="Editjulian" catch="false">
+                            <xar:sec id="unique1" mask="EditJulian" catch="false">
                             <a href="#xarModURL('julian','user','addevent',array('cal_date'=>$date))#">
                                 <img src="#xarTplGetImage('new.gif')#" alt="#xarML('Add Event')#" />
                             </a>

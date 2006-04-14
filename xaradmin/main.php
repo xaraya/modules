@@ -21,7 +21,7 @@
  */
 function julian_admin_main()
 {
-    if (!xarSecurityCheck('Editjulian')) return;
+    if (!xarSecurityCheck('EditJulian')) return;
     return array();
 }
 ?>
