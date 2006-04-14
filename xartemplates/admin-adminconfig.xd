@@ -3,6 +3,7 @@
 </div>
 
 <div class="xar-mod-body">
+<xar:template type="module" module="multisites" file="admin-menu" />
     <h2><xar:mlstring>Administration Configuration</xar:mlstring></h2>
 
     <xar:set name="$btntxt"><xar:mlstring>Update Admin Configuration</xar:mlstring></xar:set>

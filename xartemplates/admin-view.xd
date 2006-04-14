@@ -4,6 +4,7 @@
 </div>
 
 <div class="xar-mod-body">
+<xar:template type="module" module="multisites" file="admin-menu" />
     <h2><xar:mlstring>View All Sites</xar:mlstring></h2>
 
     <xar:if condition="$mastersite eq false">

@@ -1,48 +1,34 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Multisites Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
+<xar:template type="module" module="multisites" file="admin-menu" />
     <h2><xar:mlstring>Overview</xar:mlstring></h2>
-    <div style="padding: 1px;" class="xar-norm-outline">
-        <div style="float:right;padding:10px;">
-            <xar:if condition="file_exists('modules/multisites/xarimages/admin.gif')" >
-               <img src="modules/multisites/xarimages/admin.gif" alt="official icon" width="96" height="96" />
-            <xar:else /> <img src="modules/multisites/xarimages/admin_generic.gif" alt="official icon" width="96" height="96" />
-            </xar:if>
-         </div>
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>What is it?</xar:mlstring>
-        </div>
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            
+
+  <img src="#xarTplGetImage('admin_generic.gif','base')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
+     <h2><xar:mlstring>What is it?</xar:mlstring></h2>
       <p><xar:mlstring>The current Multisites Module assists with the creation of Xaraya
         multisites. A Site Administrator can create and run multiple Xaraya sites from a single
-        installation of the Xaraya code base. There is currently a review of multisite logic 
+        installation of the Xaraya code base. There is currently a review of multisite logic
         in Xaraya code in order to provide the functionality we ultimately are aiming for.</xar:mlstring></p>
 
       <p><xar:mlstring>At this time, the Multisites Module creates the
         scripts and directories required to run your multisites.</xar:mlstring></p>
-        </div>
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>How to use it?</xar:mlstring>
-        </div>
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-
+      <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
       <p><xar:mlstring>To use Xaraya multisites, you must have all domain and
         subdomains that you wish to use for your 'subsites' resolving to the same
         IP as your master Xaraya site domain name, or pointed to the same directory
         as your main Xaraya install. </xar:mlstring></p>
       <p><xar:mlstring>Assuming you already have installed Xaraya, we'll call this the 'master' site,
         you must then run the Xaraya Installer for each additional site you wish to install. This will
-        create the database tables for each of your new sites. Make sure you protect the master 
-        config.system.php file found in the /var directory so that it is not overwritten by each 
+        create the database tables for each of your new sites. Make sure you protect the master
+        config.system.php file found in the /var directory so that it is not overwritten by each
         additional subsite install process. Copy it out, and then put it back when
         you have finished the install for the subsite(s).</xar:mlstring></p>
       <p><xar:mlstring>From the menu, you have four choices:</xar:mlstring></p>
-        </div>
-        
+
     <ul>
-      <li> <xar:mlstring>Add Site - Once you have set up the Master Multisite 
-        Configuration</xar:mlstring>, you can use this option to set up necessary 
-        scripts and directories for a subsite. At this time, the option creates 
+      <li> <xar:mlstring>Add Site - Once you have set up the Master Multisite
+        Configuration</xar:mlstring>, you can use this option to set up necessary
+        scripts and directories for a subsite. At this time, the option creates
         the required directory tree and config.system.php file for your subsite. It
         also creates appropriate configuration variables for the site.<br/>
       </li>
@@ -57,27 +43,10 @@
         file so it can recognize your subsites, and also creates the main subsite
         data directory and directory tree used for individual subsite configuration.</li>
     </ul>
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-          <xar:mlstring>Included Blocks</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>Multisites Module has no blocks included at this time.</xar:mlstring>
-        </div>
-         <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-           <xar:mlstring>Included Hooks</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-           <xar:mlstring>The Multisites Module has no hooks included.</xar:mlstring>
-        </div>
-        <br />
-        <div class="xar-norm-outline xar-accent" style="text-align: center; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
-           <xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring>
-        </div>
-      </div>
-  </div>
-<div align="center">
-<b><xar:var scope="session" name="$multisites_statusmsg" /></b>
+    <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
+        <p><xar:mlstring>Multisites Module has no blocks included at this time.</xar:mlstring></p>
+        <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
+           <p><xar:mlstring>The Multisites Module has no hooks included.</xar:mlstring></p>
+
+
 </div>

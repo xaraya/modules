@@ -4,7 +4,7 @@
     </span>
 </div>
 <div class="xar-mod-body">
-
+    <xar:template type="module" module="multisites" file="admin-menu" />
     <h2><xar:mlstring>Modify Multisites Configuration</xar:mlstring></h2>
 
     <xar:if condition="$modifysite eq 0">

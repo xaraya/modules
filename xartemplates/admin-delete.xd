@@ -3,6 +3,7 @@
 </div>
 
 <div class="xar-mod-body">
+<xar:template type="module" module="multisites" file="admin-menu" />
     <h2><xar:mlstring>Delete A Site</xar:mlstring></h2>
 
     <xar:set name="$btntxt"><xar:mlstring>Delete Site</xar:mlstring></xar:set>

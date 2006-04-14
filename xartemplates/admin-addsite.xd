@@ -2,6 +2,7 @@
     <span class="xar-mod-title"><xar:mlstring>Multisites Administration</xar:mlstring></span>
 </div>
 <div class="xar-mod-body">
+<xar:template type="module" module="multisites" file="admin-menu" />
     <h2><xar:mlstring>Add A New Site</xar:mlstring></h2>
 
 <xar:set name="$btntxt"><xar:mlstring>Create New Site</xar:mlstring></xar:set>
