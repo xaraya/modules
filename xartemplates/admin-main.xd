@@ -6,19 +6,17 @@
 
 <div class="xar-mod-body">
     <h2><xar:mlstring>Overview</xar:mlstring></h2>
-    <div style="padding: 1px;" class="xar-norm-outline">
-        <div style="float:right;padding:10px;">
-            <img src="modules/base/xarimages/admin_generic.gif" alt="official icon" width="96" height="96" />
-        </div>
-             
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <h3><xar:mlstring>What is it?</xar:mlstring></h3>
-            
+
+    <img src="#xarTplGetImage('admin_generic.gif','base')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
+
+    <h2><xar:mlstring>Overview</xar:mlstring></h2>
+
+    <h3><xar:mlstring>What is it?</xar:mlstring></h3>
             <p>
-                <xar:mlstring>The MetaWeblog API is a XML-RPC API used for blogging. 
+                <xar:mlstring>The MetaWeblog API is a XML-RPC API used for blogging.
                 It is basically an extended version of the original blogger API, 
                 where the format of the messages which can be passed between a client
-                and a server is more structured and more rich. Additional support 
+                and a server is more structured and more rich. Additional support
                 for categorizing posts and integrating other media (like pictures)
                 makes this API more attractive for blogging.</xar:mlstring>
             </p>
@@ -48,6 +46,18 @@
                 If your site wants to support both blogger clients and metaweblog client, you will have to take the above into 
                 account when designing your category hierarchy.
             </p>
-        </div>
-    </div>
+  <h3>
+    <xar:mlstring>Further Information</xar:mlstring>
+  </h3>
+  <p>
+    <xar:mlstring>Further information on the Metaweblogapi module can be found at</xar:mlstring>
+  </p>
+  <ul>
+    <li><xar:mlstring>Metaweblogapi Extension page at</xar:mlstring> <a title="#xarML('Metaweblogapi Module - Xaraya Extension 747')#" href="http://www.xaraya.com/index.php/release/747.html">Xaraya Extension and Releases</a>.
+      <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+    </li>
+    <li><xar:mlstring>Related tutorials and documentation on Metaweblogapi found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/netaweblogapi/" title="#xarML('Related documentation on Metaweblogapi')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+    </li>
+  </ul>
+
 </div>
