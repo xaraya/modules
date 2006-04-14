@@ -24,6 +24,7 @@ function courses_upcomingblock_init()
 
 /**
  * get information on block
+ * @return array
  */
 function courses_upcomingblock_info()
 {
@@ -40,6 +41,7 @@ function courses_upcomingblock_info()
 
 /**
  * display block
+ * @return array $blockinfo
  */
 function courses_upcomingblock_display($blockinfo)
 {

@@ -15,15 +15,13 @@
  * Delete a course
  *
  * @author the Courses module development team
- * @param  $args ['courseid'] ID of the item
- * @returns bool
- * @return true on success, false on failure
+ * @param  id $args['courseid'] ID of the course
+ * @return bool true on success, false on failure
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function courses_adminapi_delete($args)
 {
     extract($args);
-    if (!xarVarFetch('courseid', 'int:1:', $courseid)) return;
 
     if (!isset($courseid) || !is_numeric($courseid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
@@ -40,7 +38,7 @@ function courses_adminapi_delete($args)
     // Check for exceptions
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
-    if (!xarSecurityCheck('DeleteCourses', 1, 'Course', '$courseid:All:All')) {
+    if (!xarSecurityCheck('DeleteCourses', 1, 'Course', "$courseid:All:All")) {
         return;
     }
     // Get database setup

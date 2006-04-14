@@ -3,7 +3,7 @@
  * Create a new course type
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -37,19 +37,14 @@ function courses_adminapi_createtype($args)
             new SystemException($msg));
         return;
     }
-    /* Security check - important to do this as early on as possible to
-     * avoid potential security holes or just too much wasted processing
-     */
+    /* Security check */
     if (!xarSecurityCheck('AdminCourses')) {
         return;
     }
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $table = $xartable['courses_types'];
-    /* Get next ID in table - this is required prior to any insert that
-     * uses a unique ID, and ensures that the ID generation is carried
-     * out in a database-portable fashion
-     */
+    /* Get next ID in table */
     $nextId = $dbconn->GenId($table);
     $query = "INSERT INTO $table (
               xar_tid,
@@ -57,7 +52,7 @@ function courses_adminapi_createtype($args)
               xar_descr,
               xar_settings)
             VALUES (?,?,?,?)";
-    $bindvars = array($nextId, (string) $coursetype,$descr,$settings);
+    $bindvars = array($nextId, (string)$coursetype,$descr,$settings);
     $result = &$dbconn->Execute($query,$bindvars);
 
     /* Check for an error with the database code, adodb has already raised

@@ -15,9 +15,9 @@
  * Check for already existing name and/or coursecode
  *
  * @author MichelV <michelv@xarayahosting.nl>
- * @param name coursename
- * @param number coursecode
- * @return array
+ * @param string name coursename
+ * @param string number coursecode
+ * @return array Found course
  */
 function courses_adminapi_validatecourse($args)
 {

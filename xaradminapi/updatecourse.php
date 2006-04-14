@@ -16,10 +16,10 @@
  *
  * @author MichelV <michelv@xaraya.com>
  * @param  int $args ['courseid'] the ID of the course
- * @param  $args ['name'] the new name of the item
+ * @param  string $args ['name'] the new name of the item
  * @param  int $args ['number'] the code for the course
  * @param  $args all other course variables ;)
- * @return bool
+ * @return bool true on success of update
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function courses_adminapi_updatecourse($args)
