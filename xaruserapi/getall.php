@@ -126,29 +126,33 @@ function julian_userapi_getall($args)
         $query .= " FROM $event_table
                     WHERE ";
     }
-    /* MySQL friendly query
-     * Comment this one if you need to use PostGres
+
+    /*
+     * Switch query according to db type
+     * MySQL friendly query is standard
+     *
      */
 
-    $query .= " ( $event_table.organizer = $current_user
+    $dbtype = xarDBGetType();
+    if (substr($dbtype,0,4) == 'pgsql' || substr($dbtype,0,5) == 'postgres') {
+        /**
+         * @author Zsolt
+         */
+        $query .= " ( $event_table.organizer = $current_user
+                     OR ($event_table.class= '0' AND $event_table.organizer != '" .$current_user."' )
+                     OR " . $current_user . "=ANY(STRING_TO_ARRAY(share_uids, ','))
+                     )
+                     $condition
+                     ORDER BY $event_table.$sortby $orderby";
+    } else {
+        // All others
+        $query .= " ( $event_table.organizer = $current_user
                 OR ($event_table.class= '0' AND $event_table.organizer != '" .$current_user."' )
                 OR FIND_IN_SET('".$current_user."',share_uids))
                 $condition
                 ORDER BY $event_table.$sortby $orderby";
-
-     /* PostGres Query. Uncomment this one to use with PostGres.
-      * I could only replace the MySQL-specific FIND_IN_SET() with a (PostgreSQL-specific)
-      * feature (arrays). This should be redesigned to use standard SQL features to make sure
-      * it will work with various DBs.
-      * @author Zsolt
-
-     $query .= " ( $event_table.organizer = $current_user
-                 OR ($event_table.class= '0' AND $event_table.organizer != '" .$current_user."' )
-                 OR " . $current_user . "=ANY(STRING_TO_ARRAY(share_uids, ','))
-                 )
-                 $condition
-                 ORDER BY $event_table.$sortby $orderby";
-      */
+    }
+    // Submit query
     $result = $dbconn->SelectLimit($query, $numitems, $startnum-1);
 
     if (!$result) return;
