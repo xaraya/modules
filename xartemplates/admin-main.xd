@@ -3,19 +3,15 @@
     <xar:mlstring>Blogger API Administration</xar:mlstring>
   </span>
 </div>
+    <xar:template type="module" module="bloggerapi" file="admin-menu" />
+   <img src="#xarTplGetImage('admin_generic.gif','base')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
 
-<div class="xar-mod-body">
-  <h2><xar:mlstring>Overview</xar:mlstring></h2>
-  <div style="padding: 1px;" class="xar-norm-outline">
-    <div style="float:right;padding:10px;">
-      <img src="modules/base/xarimages/admin_generic.gif" alt="official icon" width="96" height="96" />
-    </div>
-             
-    <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-      <h3><xar:mlstring>What is it?</xar:mlstring></h3>
-            
+    <h2><xar:mlstring>Overview</xar:mlstring></h2>
+
+    <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+
         <p>
-              <xar:mlstring>The Blogger API is a XML-RPC API used for blogging. The API is very simple and is 
+              <xar:mlstring>The Blogger API is a XML-RPC API used for blogging. The API is very simple and is
               basically a way to exchange strings between xmlrpc clients and servers.</xar:mlstring>
             </p>
             <p><xar:mlstring>In Xaraya the xmlrpcserver module is responsible for providing the xmlrpc transport
@@ -28,7 +24,7 @@
         xmlrpcsystemAPI module is also activated.</xar:mlstring>
       </p>
             <p>
-              <xar:mlstring>You can find the specification of the Blogger API at</xar:mlstring>
+              <xar:mlstring>You can find the specification of the Blogger API at </xar:mlstring>
               <a href="http://plant.blogger.com/api/index.html">http://plant.blogger.com/api/index.html</a>
             </p>
 
@@ -73,10 +69,18 @@
       <p>
         <xar:mlstring>There are no included hooks.</xar:mlstring>
       </p>
-    </div>
-        
-    <div class="xar-norm-outline xar-accent" style="text-align: center; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
-      <xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring>
-    </div>
-  </div>
+ <h3>
+    <xar:mlstring>Further Information</xar:mlstring>
+  </h3>
+  <p>
+    <xar:mlstring>Further information on the Bloggerapi module can be found at</xar:mlstring>
+  </p>
+  <ul>
+    <li><xar:mlstring>Bloggerapi Extension page at</xar:mlstring> <a title="#xarML('Bloggerapi Module - Xaraya Extension 745')#" href="http://www.xaraya.com/index.php/release/745.html">Xaraya Extension and Releases</a>.
+      <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+    </li>
+    <li><xar:mlstring>Related tutorials and documentation on Bloggerapi found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/bloggerapi/" title="#xarML('Related documentation on Bloggerapi')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+    </li>
+  </ul>
+
 </div>

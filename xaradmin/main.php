@@ -21,12 +21,7 @@ function bloggerapi_admin_main()
 {
     // Security Check
     if(!xarSecurityCheck('AdminBloggerAPI')) return;
-    if (xarModGetVar('adminpanels', 'overview') == 0){
-        // Return the output
-        return array();
-    } else {
         xarResponseRedirect(xarModURL('bloggerapi', 'admin', 'modifyconfig'));
-    }
     // success
     return true;
 }
