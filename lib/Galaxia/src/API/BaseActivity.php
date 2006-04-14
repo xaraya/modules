@@ -27,11 +27,6 @@ class BaseActivity extends Base {
     $this->db=$db;
   }
   
-  function __construct($db)
-  {
-      $this->setDb($db);
-  }
-  
   
   /*!
   Factory method returning an activity of the desired type
