@@ -36,7 +36,6 @@ if (!isset($_REQUEST['iid'])) {
     $tplData['msg'] =  xarML("No instance indicated");
 
     return xarTplModule('workflow', 'admin', 'error', $tplData);
-    die;
 }
 
 $tplData['iid'] =  $_REQUEST['iid'];

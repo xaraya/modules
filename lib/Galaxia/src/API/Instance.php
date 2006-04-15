@@ -42,7 +42,7 @@ class Instance extends Base {
     $this->instanceId = $res['instanceId'];
     $this->owner = $res['owner'];
     $this->started = $res['started'];
-    //    $this->name = $res['name']; // Not it the db anymore
+    $this->name = $res['name']; 
     $this->ended = $res['ended'];
     $this->nextActivity = $res['nextActivity'];
     $this->nextUser = $res['nextUser'];
@@ -102,9 +102,8 @@ class Instance extends Base {
     $this->started=$now;
     $this->owner = $user;
     $props=serialize($this->properties);
-    //$query = "insert into `".GALAXIA_TABLE_PREFIX."instances`(`started`,`ended`,`status`,`name`,`pId`,`owner`,`properties`) values(?,?,?,?,?,?,?)";
-    $query = "insert into `".GALAXIA_TABLE_PREFIX."instances`(`started`,`ended`,`status`,`pId`,`owner`,`properties`) values(?,?,?,?,?,?)";
-    $this->query($query,array($now,0,'active',$pid,$user,$props));
+    $query = "insert into `".GALAXIA_TABLE_PREFIX."instances`(`started`,`ended`,`status`,`name`,`pId`,`owner`,`properties`) values(?,?,?,?,?,?,?)";
+    $this->query($query,array($now,0,'active',$this->name,$pid,$user,$props));
     $this->instanceId = $this->getOne("select max(`instanceId`) from `".GALAXIA_TABLE_PREFIX."instances` where `started`=? and `owner`=?",array((int)$now,$user));
     $iid=$this->instanceId;
     

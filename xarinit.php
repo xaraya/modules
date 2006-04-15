@@ -35,22 +35,22 @@ function workflow_init()
             break;
     }
 
-// From file db/tiki.sql of TikiWiki 1.8 in CVS :
+    // From file db/tiki.sql of TikiWiki 1.8 in CVS :
     /*
     $queries[] =
-"CREATE TABLE $xartable[workflow_activities] (
-  activityId int(14) NOT NULL auto_increment,
-  name varchar(80) default NULL,
-  normalized_name varchar(80) default NULL,
-  pId int(14) NOT NULL default '0',
-  type enum('start','end','split','switch','join','activity','standalone') default NULL,
-  isAutoRouted char(1) default NULL,
-  flowNum int(10) default NULL,
-  isInteractive char(1) default NULL,
-  lastModif int(14) default NULL,
-  description text,
-  PRIMARY KEY  (activityId)
-)";
+    "CREATE TABLE $xartable[workflow_activities] (
+    activityId int(14) NOT NULL auto_increment,
+    name varchar(80) default NULL,
+    normalized_name varchar(80) default NULL,
+    pId int(14) NOT NULL default '0',
+    type enum('start','end','split','switch','join','activity','standalone') default NULL,
+    isAutoRouted char(1) default NULL,
+    flowNum int(10) default NULL,
+    isInteractive char(1) default NULL,
+    lastModif int(14) default NULL,
+    description text,
+    PRIMARY KEY  (activityId)
+    )";
     */
 
     // Create table workflow_activities
@@ -79,11 +79,11 @@ function workflow_init()
 
     /*
     $queries[] =
-"CREATE TABLE $xartable[workflow_activity_roles] (
-  activityId int(14) NOT NULL default '0',
-  roleId int(14) NOT NULL default '0',
-  PRIMARY KEY  (activityId,roleId)
-)";
+    "CREATE TABLE $xartable[workflow_activity_roles] (
+    activityId int(14) NOT NULL default '0',
+    roleId int(14) NOT NULL default '0',
+    PRIMARY KEY  (activityId,roleId)
+    )";
     */
     // Create table workflow_activity_roles
     $table = $xartable['workflow_activity_roles'];
@@ -437,7 +437,7 @@ function workflow_init()
     xarRegisterMask('AdminWorkflow', 'All', 'workflow', 'Item', 'All:All:All', 'ACCESS_ADMIN');
 
     // Initialisation successful
-    return true;
+    return workflow_upgrade('1.4.0');
 }
 
 /**

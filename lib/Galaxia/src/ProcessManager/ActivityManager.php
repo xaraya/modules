@@ -705,6 +705,7 @@ class ActivityManager extends BaseManager {
     /*!
      \private Returns the activity shape
     */
+    // @todo this belong is the derived classes.
     function _get_activity_shape($type)
     {
         switch($type) {
