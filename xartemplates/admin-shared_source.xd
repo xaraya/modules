@@ -14,21 +14,15 @@ function setSomeElement(elemID, toInsert) {
    elem.focus();
 }
 
-function keypresshandler(elem,event)
+function keypresshandler(elemID,event)
 {
     var tabKey = 9;
-    if (event.keyCode == tabKey && elem.id=="src") {
-      if(typeof elem.selectionStart != 'undefined') {
-          var start = elem.selectionStart;
-          var end   = elem.selectionEnd;
-          elem.value = elem.value.substr(0, start) + "\t" + elem.value.substr(end);
-          elem.selectionStart = start + 1;
-          elem.selectionEnd = end + 1;
-          elem.focus();
-      }
+    if (event.keyCode == tabKey && elemID=="src") { // to be sure we dont disable tabs on anything but the src for now
+      setSomeElement(elemID,"    ");
       event.returnValue = false;
-      return false
-   }
+      return false;
+    }
+    return true;
 }
 
 </script>
@@ -71,7 +65,13 @@ function keypresshandler(elem,event)
           &nbsp;
         </div>
          <div class="xar-form-input-wrapper-before">
-           <textarea style="width: 100%" id='src' name="source" rows="20" cols="80" onkeypress="return keypresshandler(this,event);">#$data#</textarea>
+           <!--
+               This is the area where templating and code is editted
+           -->
+           <textarea style="font-family: monospace; white-space: pre; width: 100%" id='src' name="source" rows="20" cols="80" onkeypress="return keypresshandler(this.id,event);">#$data#</textarea>
+           <!--
+               End of it
+           -->
          </div>
          <div class="xar-form-input-wrapper-before">
                <p>
