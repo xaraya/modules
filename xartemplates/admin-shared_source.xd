@@ -1,8 +1,27 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Workflow Administration</xar:mlstring></span></div>
 <script type="text/javascript">
+
 function setSomeElement(fooel, foo1) {
     document.getElementById(fooel).value = document.getElementById(fooel).value + foo1;
 }
+
+function keypresshandler(elem,event)
+{
+    var tabKey = 9;
+    if (event.keyCode == tabKey && elem.id=="src") {
+      if(typeof elem.selectionStart != 'undefined') {
+          var start = elem.selectionStart;
+          var end   = elem.selectionEnd;
+          elem.value = elem.value.substr(0, start) + "\t" + elem.value.substr(end);
+          elem.selectionStart = start + 1;
+          elem.selectionEnd = end + 1;
+          elem.focus();
+      }
+      event.returnValue = false;
+      return false
+   }
+}
+
 </script>
 <div class="xar-mod-body">
     <xar:template module="workflow" type="module" file="admin-menu" />
@@ -43,7 +62,7 @@ function setSomeElement(fooel, foo1) {
           &nbsp;
         </div>
          <div class="xar-form-input-wrapper-before">
-                 <textarea style="width: 100%" id='src' name="source" rows="20" cols="80">#$data#</textarea>
+           <textarea style="width: 100%" id='src' name="source" rows="20" cols="80" onkeypress="return keypresshandler(this,event);">#$data#</textarea>
          </div>
          <div class="xar-form-input-wrapper-before">
                <p>
