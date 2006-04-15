@@ -22,13 +22,9 @@ function multisites_admin_main()
     if (!xarSecurityCheck('AdminMultisites')) {
 
     }
-   // we only really need to show the default view (overview in this case)
-     if (xarModGetVar('adminpanels', 'overview') == 0) {
-        // Return the output
-        return array();
-    } else {
+   
         xarResponseRedirect(xarModURL('multisites', 'admin', 'modifyconfig'));
-    }
+
    // success
     return true;
 }
