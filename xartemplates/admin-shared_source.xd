@@ -1,8 +1,17 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Workflow Administration</xar:mlstring></span></div>
 <script type="text/javascript">
 
-function setSomeElement(fooel, foo1) {
-    document.getElementById(fooel).value = document.getElementById(fooel).value + foo1;
+function setSomeElement(elemID, toInsert) {
+   var elem = document.getElementById(elemID);
+
+   if(typeof elem.selectionStart != 'undefined') {
+       var start = elem.selectionStart;
+       var end   = elem.selectionEnd;
+       elem.value = elem.value.substr(0, start) + toInsert + elem.value.substr(end);
+       elem.selectionStart = start + toInsert.length;
+       elem.selectionEnd = end + toInsert.length;
+   }
+   elem.focus();
 }
 
 function keypresshandler(elem,event)
