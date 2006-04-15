@@ -194,11 +194,12 @@ function helpdesk_init()
         );
     }
 
+    xarModAPILoad('helpdesk');
     // Enable categories hooks for helpdesk
     xarModAPIFunc('modules','admin','enablehooks',
         array(
             'callerModName' => 'helpdesk',
-            'callerItemType' => 1, // Ticket Item Type
+            'callerItemType' => TICKET_ITEMTYPE, // Ticket Item Type
             'hookModName' => 'categories'
         )
     );
@@ -207,16 +208,7 @@ function helpdesk_init()
     xarModAPIFunc('modules','admin','enablehooks',
         array(
             'callerModName' => 'helpdesk',
-            'callerItemType' => 1, // Ticket Item Type
-            'hookModName' => 'comments'
-        )
-    );
-
-    // Enable comments hooks for helpdesk
-    xarModAPIFunc('modules','admin','enablehooks',
-        array(
-            'callerModName' => 'helpdesk',
-            'callerItemType' => 1, // Ticket Item Type
+            'callerItemType' => TICKET_ITEMTYPE, // Ticket Item Type
             'hookModName' => 'hitcount'
         )
     );
@@ -229,7 +221,7 @@ function helpdesk_init()
     xarModAPIFunc('modules','admin','enablehooks',
         array(
             'callerModName' => 'helpdesk',
-            'callerItemType' => 1, // Ticket Item Type
+            'callerItemType' => TICKET_ITEMTYPE, // Ticket Item Type
             'hookModName' => 'security'
         )
     );
@@ -295,6 +287,8 @@ function helpdesk_init()
 */
 function helpdesk_upgrade($oldversion)
 {
+    xarModAPILoad('helpdesk');
+
     // Get database information
     $dbconn   =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -445,7 +439,7 @@ function helpdesk_upgrade($oldversion)
             xarModAPIFunc('modules','admin','enablehooks',
                 array(
                     'callerModName' => 'helpdesk',
-                    'callerItemType' => 1, // Ticket Item Type
+                    'callerItemType' => TICKET_ITEMTYPE, // Ticket Item Type
                     'hookModName' => 'security'
                 )
             );
@@ -455,6 +449,14 @@ function helpdesk_upgrade($oldversion)
                 array(
                     'callerModName' => 'helpdesk',
                     'hookModName' => 'owner'
+                )
+            );
+
+        case '0.7.5':
+            xarModAPIFunc('modules','admin','disablehooks',
+                array(
+                    'callerModName' => 'helpdesk',
+                    'hookModName' => 'comments'
                 )
             );
 

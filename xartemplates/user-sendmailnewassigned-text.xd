@@ -10,10 +10,10 @@
 
 <xar:mlstring>Notes:</xar:mlstring> #$notes#
 
-<xar:mlstring>Link to the ticket:</xar:mlstring>
+<xar:mlstring>Link to the ticket:</xar:mlstring>&nbsp;
 #$viewticket#
 
-<xar:mlstring>Link all your tickets:</xar:mlstring>
+<xar:mlstring>Link all your tickets:</xar:mlstring>&nbsp;
 #$viewtickets#
 
 <xar:comment>

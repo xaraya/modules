@@ -1,0 +1,29 @@
+<fieldset>
+    <legend><xar:mlstring>Additional Comments</xar:mlstring></legend>
+
+    <form action="&xar-modurl-helpdesk-user-add_history;" method="POST">
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label"><xar:mlstring>Status</xar:mlstring></label>
+        <select name="status" class="xar-form-textlong">
+            <xar:foreach in="$statuses" key="$key" value="$value">
+                <xar:if condition="$value['status'] eq $status">
+                <option value="#$key#" selected="selected"><xar:var name="value.status" /></option>
+                <xar:else />
+                <option value="#$key#"><xar:var name="value.status" /></option>
+                </xar:if>
+            </xar:foreach>
+        </select>
+    </div>
+
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label"><xar:mlstring>Comment</xar:mlstring></label>
+        <textarea name="comment" class="xar-form-textarealarge"></textarea>
+    </div>
+
+    <div class="xar-form-input-wrapper-after">
+        <input type="hidden" name="itemid" value="#$tid#" />
+        <input name="add_comment" type="submit" value="#xarML('Commit')#" />
+    </div>
+    </form>
+
+</fieldset>

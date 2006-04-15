@@ -31,12 +31,9 @@ function helpdesk_user_display($args)
     if( !xarVarFetch('tid',       'int:1:',  $ticket_id, null,  XARVAR_NOT_REQUIRED) ){ return false; }
 
     // Cheap way to pass info to security event
-    //$_GET['itemype'] = 1;
+    //$_GET['itemype'] = TICKET_ITEMTYPE;
     //$_GET['itemid'] = $ticket_id;
 
-    /*
-        SECURITY CHECK NEEDED HERE USING SECURITY MODULE
-    */
     if( empty($ticket_id) )
     {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
@@ -47,9 +44,7 @@ function helpdesk_user_display($args)
     }
 
     // Load the API
-    if( !xarModAPILoad('helpdesk', 'user') ){
-        return false;
-    }
+    if( !xarModAPILoad('helpdesk', 'user') ){ return false; }
 
     // Get the ticket Data:
     xarModAPILoad('security', 'user');
@@ -66,12 +61,24 @@ function helpdesk_user_display($args)
     */
     if( empty($data) ){ return false; }
 
+    $data['history'] = xarModAPIFunc('helpdesk', 'user', 'getcomments',
+        array(
+            'itemid' => $ticket_id
+        )
+    );
+
+    $data['statuses'] = xarModAPIFunc('helpdesk', 'user', 'gets',
+        array(
+            'itemtype' => STATUS_ITEMTYPE
+        )
+    );
+
     /*
         Call the hooks
     */
     $item = array();
     $item['module']    = 'helpdesk';
-    $item['itemtype']  = 1;
+    $item['itemtype']  = TICKET_ITEMTYPE;
     $item['returnurl'] =  xarModURL('helpdesk', 'user', 'display', array('tid' => $ticket_id));
     $hooks = xarModCallHooks('item', 'display', $ticket_id, $item);
     if( empty($hooks) ){

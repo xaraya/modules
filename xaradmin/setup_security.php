@@ -18,6 +18,8 @@ function helpdesk_admin_setup_security($args)
 
     if( !xarVarFetch('setup', 'str', $setup, null, XARVAR_NOT_REQUIRED) ){ return false; }
 
+    xarModAPILoad('helpdesk');
+
     $data = array();
 
     /*
@@ -66,7 +68,7 @@ function helpdesk_admin_setup_security($args)
     $settings = xarModAPIFunc('security', 'user', 'get_default_settings',
         array(
             'modid'    => xarModGetIDFromName('helpdesk'),
-            'itemtype' => 1 //Ticket
+            'itemtype' => TICKET_ITEMTYPE //Ticket
         )
     );
     /*
@@ -113,7 +115,7 @@ function helpdesk_admin_setup_security($args)
             $result = xarModAPIFunc('modules','admin','enablehooks',
                 array(
                     'callerModName' => 'helpdesk',
-                    'callerItemType' => 1, // Ticket Item Type
+                    'callerItemType' => TICKET_ITEMTYPE, // Ticket Item Type
                     'hookModName' => 'security'
                 )
             );

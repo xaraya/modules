@@ -32,9 +32,10 @@ function helpdesk_user_new()
     $data['openedbydefaulttologgedin']   = xarModGetVar('helpdesk', 'OpenedByDefaultToLoggedIn');
     $data['assignedtodefaulttologgedin'] = xarModGetVar('helpdesk', 'AssignedToDefaultToLoggedIn');
     $data['userisloggedin']        = xarUserIsLoggedIn();
-
     $data['menu'] = xarModFunc('helpdesk', 'user', 'menu');
     $data['enabledimages'] = xarModGetVar('helpdesk', 'Enable Images');
+
+    xarModAPILoad('helpdesk');
 
     // Maybe use a security check here
     if( !$data['allowanonsubmitticket'] && !xarUserIsLoggedIn() ){ return false; }
@@ -60,18 +61,22 @@ function helpdesk_user_new()
     * These funcs should be rethought once we get the rest working
     */
     $data['priority'] = xarModAPIFunc('helpdesk', 'user', 'gets',
-                                      array('itemtype' => 2));
+        array('itemtype' => PRIORITY_ITEMTYPE)
+    );
 
     $data['sources'] = xarModAPIFunc('helpdesk', 'user', 'gets',
-                                     array('itemtype' => 4));
+        array('itemtype' => SOURCE_ITEMTYPE)
+    );
 
     $data['status'] = xarModAPIFunc('helpdesk', 'user', 'gets',
-                                     array('itemtype' => 3));
+        array('itemtype' => STATUS_ITEMTYPE)
+    );
 
     if( $data['editaccess'] )
     {
         $data['reps'] = xarModAPIFunc('helpdesk', 'user', 'gets',
-                                      array('itemtype' => 10));
+            array('itemtype' => REPRESENTATIVE_ITEMTYPE)
+        );
         $data['users'] = xarModAPIFunc('roles', 'user', 'getall');
     }
 

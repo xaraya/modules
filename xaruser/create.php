@@ -35,7 +35,8 @@ function helpdesk_user_create($args)
     }
     // Get some info about the mod and a ticket type id
     $modid = xarModGetIDFromName('helpdesk');
-    $itemtype = 1;
+    xarModAPILoad('helpdesk');
+    $itemtype = TICKET_ITEMTYPE;
 
     // Get parameters from whatever input we need.
     xarVarFetch('name',     'str:1:',   $name,      '',  XARVAR_NOT_REQUIRED);
@@ -65,12 +66,11 @@ function helpdesk_user_create($args)
         $whosubmit = $openedby;
     }
 
-    if (empty($name)){ $name = xarUserGetVar('name', $whosubmit); }
-    if (empty($email)){ $email = xarUserGetVar('email', $whosubmit); }
+    if( empty($name) ){ $name = xarUserGetVar('name', $whosubmit); }
+    if( empty($email) ){ $email = xarUserGetVar('email', $whosubmit); }
 
     // If it is closed by someone, the ticket must be closed
-    if(!empty($closedby))
-        $status = 3;
+    if( !empty($closedby) ){ $status = 3; }
 
     // If there is not assigned to rep we will try and
     // find a rep to assign the ticket to
@@ -82,9 +82,7 @@ function helpdesk_user_create($args)
     }
 
     // If closed by field is empty, then set closed by to 0
-    if (empty($closedby)) {
-        $closedby = 0;
-    }
+    if( empty($closedby) ){ $closedby = 0; }
 
     $return_val = xarModAPIFunc('helpdesk','user','create',
         array(
@@ -157,7 +155,8 @@ function helpdesk_user_create($args)
     );
 
     // Check if the email has been sent.
-    if ($mail === false) {
+    if( $mail === false )
+    {
         $msg = xarML('Email to user was not sent!');
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
         new SystemException($msg));
@@ -202,7 +201,7 @@ function helpdesk_user_create($args)
     // Adds the Issue
     $pid = 0; // parent id
     $itemid = $return_val; // id of ticket just created
-    $itemtype = 1;
+    $itemtype = TICKET_ITEMTYPE;
     $result = xarModAPIFunc('comments', 'user', 'add',
         array(
             'modid'    => $modid,

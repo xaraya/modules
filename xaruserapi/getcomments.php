@@ -11,26 +11,29 @@
  * @link http://www.abraisontechnoloy.com/
  * @author Brian McGilligan <brianmcgilligan@gmail.com>
  */
-//=========================================================================
-// Get ticket comments
-//=========================================================================
+/*
+    Get ticket comments
+*/
 function helpdesk_userapi_getcomments($args)
 {
     extract($args);
 
+    if( empty($itemid) ){ return false; }
+
     $modid = xarModGetIDFromName(xarModGetName());
 
     $comments = xarModAPIFunc('comments', 'user', 'get_multiple',
-                              array('modid' => $modid,
-                                    'objectid' => $tid));
+        array(
+            'modid' => $modid,
+            'objectid' => $itemid
+        )
+    );
 
-    if (is_array($comments) && count($comments) > 0) {
-        if (!xarModAPILoad('comments', 'renderer')) {
-            return false;
-        }
+    if (is_array($comments) && count($comments) > 0)
+    {
+        if( !xarModAPILoad('comments', 'renderer') ){ return false; }
         comments_renderer_array_markdepths_bychildren($comments);
-        comments_renderer_array_sort($comments, _COM_SORTBY_DATE, _COM_SORT_DESC);
-
+        comments_renderer_array_sort($comments, _COM_SORTBY_DATE, _COM_SORT_ASC);
     }
     return $comments;
 }

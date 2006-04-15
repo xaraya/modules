@@ -10,8 +10,6 @@
 
 <p><xar:var name="menu" /></p>
 
-<div class="tborder">
-
 <p>
    <xar:ml>
        <xar:mlstring>Your new ticket has been submitted! Please reference ticket number #(1) when referencing this issue.</xar:mlstring>
@@ -38,8 +36,6 @@
         </xar:if>
     </form>
 </xar:if>
-
-</div>
 
 <p><xar:var name="summaryfooter" /></p>
 

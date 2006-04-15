@@ -20,7 +20,7 @@
     <xar:mlstring>Notes:</xar:mlstring> #$notes#<br />
 </p>
 <p>
-    <xar:mlstring>View the ticket:</xar:mlstring> <br />
+    <xar:mlstring>View your ticket:</xar:mlstring> <br />
     <a href="#$viewticket#">#$viewticket#</a>
 </p>
 

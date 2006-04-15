@@ -8,92 +8,110 @@
 </div>
 <div class="xar-mod-body">
 
-<xar:var name="menu" />
+    <xar:var name="menu" />
 
-<table width="100%">
-    <tr>
-        <th colspan="4" class="xar-title" style="text-align: left;">###$tid# - #$subject#</th>
-    </tr>
-    <tr class="xar-accent">
-        <td style="font-weight: bold;"><xar:mlstring>Name:</xar:mlstring></td>
-        <td>#$name#</td>
-        <td style="font-weight: bold;"><xar:mlstring>Phone Number:</xar:mlstring></td>
-        <td>#$phone#</td>
-    </tr>
-    <tr>
-        <td style="font-weight: bold;"><xar:mlstring>Date Opened:</xar:mlstring></td>
-        <td>#$date#</td>
-        <td style="font-weight: bold;"><xar:mlstring>Updated:</xar:mlstring></td>
-        <td>#$updated#</td>
-    </tr>
-    <tr class="xar-accent">
-        <td style="font-weight: bold;"><xar:mlstring>Status:</xar:mlstring></td>
-        <td>#$status#</td>
-        <td style="font-weight: bold;"><xar:mlstring>Source:</xar:mlstring></td>
-        <td colspan="3">#$source#</td>
-    </tr>
-    <tr >
-        <td style="font-weight: bold;"><xar:mlstring>Openedby:</xar:mlstring></td>
-        <td>#$openedbyname#</td>
-        <td style="font-weight: bold;"><xar:mlstring>Priority:</xar:mlstring></td>
-        <td style="background-color: ###$priority['color']#;">#$priority['priority']#</td>
-    </tr>
-    <tr class="xar-accent">
-        <td style="font-weight: bold;"><xar:mlstring>Assigned To:</xar:mlstring></td>
-        <td>#$assignedtoname#</td>
-        <td style="font-weight: bold;"><xar:mlstring>Closed By:</xar:mlstring></td>
-        <td>#$closedbyname#</td>
-    </tr>
-    <tr>
-        <td style="font-weight: bold;"><xar:mlstring>Domain:</xar:mlstring></td>
-        <td colspan="3">#$domain#</td>
-    </tr>
-    <tr class="xar-accent">
-        <td style="font-weight: bold;"><xar:mlstring>Categories:</xar:mlstring></td>
-        <td colspan="3">
-        <xar:categories-navigation layout="" module="helpdesk" itemtype="1" itemid="$tid" />
-        </td>
-    </tr>
-    <tr class="">
-        <td><b><xar:mlstring>Ticket Options:</xar:mlstring></b></td>
-        <td colspan="3">
-            <a href="#xarModURL('helpdesk', 'user', 'modify', array('tid' => $tid, 'authkey' => xarSecGenAuthKey()))#">Modify</a> |
-            <a href="#xarModURL('helpdesk', 'user', 'delete', array('tid' => $tid, 'authkey' => xarSecGenAuthKey()))#">Delete</a>
-        </td>
-    </tr>
-    <xar:if condition="xarModIsHooked('dynamicdata','helpdesk',1)">
-        <xar:data-getitem name="$ddprops" module="helpdesk" itemtype="1" itemid="$tid" />
-        <xar:if condition="!empty($ddprops)">
-            <xar:foreach in="$ddprops" key="$ddname">
-            <tr class="xar-accent">
-                <td style="font-weight: bold;">
-                    <xar:data-label property="$ddprops[$ddname]" />
-                </td>
-                <td colspan="3">
-                    <xar:comment>
-                        Note: we want to show DD Upload values in a customised way here...
-                    </xar:comment>
-                    <xar:set name="isupload">!empty($ddprops[$ddname]->upload)</xar:set>
-                    <xar:set name="value">$ddprops[$ddname]->value</xar:set>
-                    <xar:if condition="$isupload and xarModIsAvailable('uploads') and substr($value,0,1) eq ';'">
-                        <xar:set name="filelist">xarModAPIFunc('uploads','user','showoutput',array('value' => $value, 'multiple' => true))</xar:set>
-                        <xar:foreach in="$filelist" key="$fileid" value="$fileinfo">
-                            <a href="#$fileinfo['fileDownload']#">#$fileinfo['fileName']#</a>
-                        </xar:foreach>
-                    <xar:else/>
-                        <xar:data-output property="$ddprops[$ddname]" />
-                    </xar:if>
-                </td>
-            </tr>
-            </xar:foreach>
+    <table width="100%">
+        <tr>
+            <th colspan="4" class="xar-title xar-align-left">
+                # <xar:var name="tid" /> - <xar:var name="subject" />
+            </th>
+        </tr>
+        <tr class="xar-accent">
+            <td class="xar-title"><xar:mlstring>Name:</xar:mlstring></td>
+            <td><xar:var name="name" /></td>
+            <td class="xar-title"><xar:mlstring>Phone Number:</xar:mlstring></td>
+            <td><xar:var name="phone" /></td>
+        </tr>
+        <tr>
+            <td class="xar-title"><xar:mlstring>Date Opened:</xar:mlstring></td>
+            <td><xar:var name="date" /></td>
+            <td class="xar-title"><xar:mlstring>Updated:</xar:mlstring></td>
+            <td><xar:var name="updated" /></td>
+        </tr>
+        <tr class="xar-accent">
+            <td class="xar-title"><xar:mlstring>Status:</xar:mlstring></td>
+            <td><xar:var name="status" /></td>
+            <td class="xar-title"><xar:mlstring>Source:</xar:mlstring></td>
+            <td><xar:var name="source" /></td>
+        </tr>
+        <tr >
+            <td class="xar-title"><xar:mlstring>Openedby:</xar:mlstring></td>
+            <td><xar:var name="openedbyname" /></td>
+            <td class="xar-title"><xar:mlstring>Priority:</xar:mlstring></td>
+            <td style="background-color: ###$priority['color']#;"><xar:var name="priority.priority" /></td>
+        </tr>
+        <tr class="xar-accent">
+            <td class="xar-title"><xar:mlstring>Assigned To:</xar:mlstring></td>
+            <td><xar:var name="assignedtoname" /></td>
+            <td class="xar-title"><xar:mlstring>Closed By:</xar:mlstring></td>
+            <td><xar:var name="closedbyname" /></td>
+        </tr>
+        <tr>
+            <td class="xar-title"><xar:mlstring>Domain:</xar:mlstring></td>
+            <td colspan="3"><xar:var name="domain" /></td>
+        </tr>
+        <tr class="xar-accent">
+            <td class="xar-title"><xar:mlstring>Categories:</xar:mlstring></td>
+            <td colspan="3">
+            <xar:categories-navigation layout="" module="helpdesk" itemtype="1" itemid="$tid" />
+            </td>
+        </tr>
+        <tr class="">
+            <td><b><xar:mlstring>Ticket Options:</xar:mlstring></b></td>
+            <td colspan="3">
+                <a href="#xarModURL('helpdesk', 'user', 'modify', array('tid' => $tid, 'authkey' => xarSecGenAuthKey()))#">Modify</a> |
+                <a href="#xarModURL('helpdesk', 'user', 'delete', array('tid' => $tid, 'authkey' => xarSecGenAuthKey()))#">Delete</a>
+            </td>
+        </tr>
+        <xar:if condition="xarModIsHooked('dynamicdata','helpdesk',1)">
+            <xar:data-getitem name="$ddprops" module="helpdesk" itemtype="1" itemid="$tid" />
+            <xar:if condition="!empty($ddprops)">
+                <xar:foreach in="$ddprops" key="$ddname">
+                <tr class="xar-accent">
+                    <td class="xar-title">
+                        <xar:data-label property="$ddprops[$ddname]" />
+                    </td>
+                    <td colspan="3">
+                        <xar:comment>
+                            Note: we want to show DD Upload values in a customised way here...
+                        </xar:comment>
+                        <xar:set name="isupload">!empty($ddprops[$ddname]->upload)</xar:set>
+                        <xar:set name="value">$ddprops[$ddname]->value</xar:set>
+                        <xar:if condition="$isupload and xarModIsAvailable('uploads') and substr($value,0,1) eq ';'">
+                            <xar:set name="filelist">xarModAPIFunc('uploads','user','showoutput',array('value' => $value, 'multiple' => true))</xar:set>
+                            <xar:foreach in="$filelist" key="$fileid" value="$fileinfo">
+                                <a href="#$fileinfo['fileDownload']#">#$fileinfo['fileName']#</a>
+                            </xar:foreach>
+                        <xar:else/>
+                            <xar:data-output property="$ddprops[$ddname]" />
+                        </xar:if>
+                    </td>
+                </tr>
+                </xar:foreach>
+            </xar:if>
         </xar:if>
-    </xar:if>
-</table>
+    </table>
 
-<xar:foreach in="$hookoutput" value="$hook">
-    <xar:var name="hook" />
-</xar:foreach>
+    <xar:template file="additional-comments-form" />
 
-<div class="xar-margin-thickends"><xar:var name="summary" /></div>
+    <h3><xar:mlstring>Comments</xar:mlstring></h3>
+    <xar:foreach in="$history" value="$comment">
+        <xar:set name="date">xarLocaleGetFormattedDate('long', $comment['xar_datetime'])</xar:set>
+        <xar:set name="time">xarLocaleGetFormattedTime('long', $comment['xar_datetime'])</xar:set>
+
+        <span class="xar-floatright"><xar:var name="date" /> <xar:var name="time" /></span>
+        <xar:comment>
+        <h4><xar:var name="comment.xar_title" /></h4>
+        </xar:comment>
+        <span class="xar-title">Posted by:</span> <xar:var name="comment.xar_author" />
+        <p><xar:var name="comment.xar_text" /></p>
+        <hr />
+    </xar:foreach>
+
+    <xar:foreach in="$hookoutput" value="$hook">
+        <xar:var name="hook" />
+    </xar:foreach>
+
+    <div class="xar-margin-thickends"><xar:var name="summary" /></div>
 
 </div>

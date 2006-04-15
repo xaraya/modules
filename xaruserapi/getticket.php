@@ -65,7 +65,7 @@ function helpdesk_userapi_getticket($args)
         $security_def = xarModAPIFunc('security', 'user', 'leftjoin',
             array(
                 'modid'    => xarModGetIdFromName('helpdesk'),
-                'itemtype' => 1,
+                'itemtype' => TICKET_ITEMTYPE,
                 'itemid'   => "xar_id",
                 'user_field' => "$db_table.xar_openedby",
                 'level' => isset($level) ? $level : null,
@@ -100,7 +100,7 @@ function helpdesk_userapi_getticket($args)
     $cats = xarModAPIFunc('categories', 'user', 'getitemcats',
         array(
             'modid'    => 910,
-            'itemtype' => 1,
+            'itemtype' => TICKET_ITEMTYPE,
             'itemid'   => $ticket_id,
         )
     );
@@ -117,6 +117,7 @@ function helpdesk_userapi_getticket($args)
         'subject'       => $subject,
         'domain'        => $domain,
         'date'          => xarModAPIFunc('helpdesk', 'user', 'formatdate', array('date'     => $ticketdate)),
+        'statusid'      => $statusid,
         'status'        => xarModAPIFunc('helpdesk', 'user', 'get', array('object' => 'status', 'itemid'   => $statusid, 'field'=> '')),
         'assignedto'    => $assignedto,
         'assignedtoname'=> !empty($assignedto) ? xarUserGetVar('name', $assignedto): '',

@@ -105,12 +105,15 @@ function helpdesk_user_sendmail($args)
                 $ticket_args['assignedtoname'] =
                     xarUserGetVar('name', $assignedto);
             }
+            // Ticket is never assigned to admin.  If we want to default
+            // to an admin then that should be done in the assignto function
+            /*
             else
             {
                 $recipients = xarModGetVar('mail', 'adminmail');
                 $ticket_args['assignedtoname'] =
                     xarModGetVar('mail', 'adminname');
-            }
+            }*/
 
             // Does not generate errors
             if(isset($recipients))

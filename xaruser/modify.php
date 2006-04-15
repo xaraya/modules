@@ -122,22 +122,22 @@ function helpdesk_user_modify($args)
     */
     $data['priority'] = xarModAPIFunc('helpdesk', 'user', 'gets',
         array(
-            'itemtype' => 2
+            'itemtype' => PRIORITY_ITEMTYPE
         )
     );
     $data['status'] = xarModAPIFunc('helpdesk', 'user', 'gets',
         array(
-            'itemtype' => 3
+            'itemtype' => STATUS_ITEMTYPE
         )
     );
     $data['sources'] = xarModAPIFunc('helpdesk', 'user', 'gets',
         array(
-            'itemtype' => 4
+            'itemtype' => SOURCE_ITEMTYPE
         )
     );
     $data['reps'] = xarModAPIFunc('helpdesk', 'user', 'gets',
         array(
-            'itemtype' => 10
+            'itemtype' => REPRESENTATIVE_ITEMTYPE
         )
     );
 

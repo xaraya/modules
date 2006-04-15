@@ -4,13 +4,13 @@
     The ticket that you submitted to our helpdesk system has been closed.
 </xar:mlstring>
 
-<xar:mlstring>Subject:</xar:mlstring> #$subject#<br />
+<xar:mlstring>Subject:</xar:mlstring> #$subject#
 
-<xar:mlstring>Link to the ticket:</xar:mlstring>
-#$viewticket#<br />
+<xar:mlstring>Link to your ticket:</xar:mlstring>&nbsp;
+#$viewticket#
 
-<xar:mlstring>Link all your tickets:</xar:mlstring>
-#$viewtickets#<br />
+<xar:mlstring>Link all your tickets:</xar:mlstring>&nbsp;
+#$viewtickets#
 
 <xar:comment>
 More parameters available:

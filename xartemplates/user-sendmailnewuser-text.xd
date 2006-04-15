@@ -2,15 +2,15 @@
 
 <xar:mlstring>You have submitted a ticket to our helpdesk system.</xar:mlstring>
 
-<xar:mlstring>Subject:</xar:mlstring> #$subject#<br />
+<xar:mlstring>Subject:</xar:mlstring> #$subject#
 
-<xar:mlstring>Issue:</xar:mlstring> #$issue#<br />
+<xar:mlstring>Issue:</xar:mlstring> #$issue#
 
-<xar:mlstring>View the ticket:</xar:mlstring>
-#$viewticket#<br />
+<xar:mlstring>View your ticket:</xar:mlstring>&nbsp;
+#$viewticket#
 
-<xar:mlstring>View all your tickets:</xar:mlstring>
-#$viewtickets#<br />
+<xar:mlstring>View all your tickets:</xar:mlstring>&nbsp;
+#$viewtickets#
 
 <xar:comment>
 

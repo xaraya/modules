@@ -13,7 +13,7 @@
     <xar:mlstring>Issue:</xar:mlstring> #$issue#
 </p>
 <p>
-    <xar:mlstring>View the ticket:</xar:mlstring><br />
+    <xar:mlstring>View your ticket:</xar:mlstring><br />
     <a href="#$viewticket#">#$viewticket#</a>
 </p>
 <p>
