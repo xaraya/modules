@@ -116,9 +116,9 @@ class ActivityManager extends BaseManager {
     /*!
      Returns all the transitions for a process
     */
-    function get_process_transitions($pId,$actid=0)
+    function get_process_transitions($pId,$actId=0)
     {
-        if(!$actid) {
+        if(!$actId) {
             $query = "select a1.name as actFromName, a2.name as actToName, actFromId, actToId from ".GALAXIA_TABLE_PREFIX."transitions gt,".GALAXIA_TABLE_PREFIX."activities a1, ".GALAXIA_TABLE_PREFIX."activities a2 where gt.actFromId = a1.activityId and gt.actToId = a2.activityId and gt.pId = ?";
             $bindvars = array($pId);
         } else {

@@ -162,11 +162,6 @@
                 </td>
               </tr>
             </xar:foreach>
-            <tr>
-              <td>&nbsp;</td>
-              <td><input type="submit" name="delete_act" value="#xarML('Delete selected')#" /></td>
-              <td colspan="4">&nbsp;</td>
-            </tr>
             <xar:else/>
             <tr>
               <td colspan="6">
@@ -178,6 +173,7 @@
             <td>
               <input type="submit" name="update_act" value="#xarML('Update')#" />
             </td>
+            <td colspan="6"><input type="submit" name="delete_act" value="#xarML('Delete selected')#" /></td>
           </tr>
         </table>
       </form>

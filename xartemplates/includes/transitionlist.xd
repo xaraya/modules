@@ -33,11 +33,9 @@
       <form action="&xar-modurl-workflow-admin-activities;" method="post">
         <input type="hidden" name="pid" value="#$pid#" />
         <input type="hidden" name="activityId" value="#$info['activityId']#" />
-        <input type="hidden" name="find" value="#$find2#" />
-        <input type="hidden" name="where" value="#$where2#" />
+        <input type="hidden" name="find" value="#$find#" />
+        <input type="hidden" name="where" value="#$where#" />
         <input type="hidden" name="sort_mode" value="#$sort_mode#" />
-        <input type="hidden" name="where2" value="#$where2#" />
-        <input type="hidden" name="sort_mode2" value="#$sort_mode2#" />
 
         <!-- Little trick to get the base link into a variable, save some typing ahead -->
         <xar:set name="urlbase">&xar-modurl-workflow-admin-activities;</xar:set>
@@ -53,7 +51,8 @@
                 <a href="#$baselink#&amp;sort_mode=actFromName_desc"><xar:mlstring>Origin</xar:mlstring></a>
               </xar:if>
             </th>
-            <th colspan="2">
+            <th>&nbsp;</th>
+            <th>
               <xar:if condition="$sort_mode eq 'actToName_desc'">
                 <a href="#$baselink#&amp;sort_mode=actToName_asc"><xar:mlstring>To</xar:mlstring></a>
               <xar:else/>
@@ -82,45 +81,32 @@
               </tr>
             </xar:foreach>
             <tr>
-              <td><input type="submit" name="delete_tran" value="#xarML('Delete selected')# " /></td>
-              <td colspan="2">&nbsp;</td>
+              <td>
+                <select name="actFromId">
+                  <xar:foreach in="$items" key="$ix">
+                    <option value="#$items[$ix]['activityId']#">#$items[$ix]['name']#</option>
+                  </xar:foreach>
+                </select>
+              </td>
+              <td>
+                <img src='modules/workflow/lib/Galaxia/img/icons/next.gif' alt='to' />
+              </td>
+              <td>
+                <select name="actToId">
+                  <xar:foreach in="$items" key="$ix">
+                    <option value="#$items[$ix]['activityId']#">#$items[$ix]['name']#</option>
+                  </xar:foreach>
+                </select>
+                <input type="submit" name="add_trans" value="#xarML('Add transition')#" />
+              </td>
+            </tr>
+            <tr>
+              <td colspan="3"><input type="submit" name="delete_tran" value="#xarML('Delete selected')# " /></td>
             </tr>
           <xar:else/>
             <tr><td colspan="3"><xar:mlstring>No transitions defined yet</xar:mlstring></td></tr>
           </xar:if>
         </table>
-      </form>
-    </fieldset>
-
-    <fieldset>
-      <legend><xar:mlstring>Add a transition</xar:mlstring></legend>
-      <form action="&xar-modurl-workflow-admin-activities;" method="post">
-        <input type="hidden" name="pid" value="#$pid#" />
-        <input type="hidden" name="activityId" value="#$info['activityId']#" />
-        <input type="hidden" name="find" value="#$find2#" />
-        <input type="hidden" name="where" value="#$where2#" />
-        <input type="hidden" name="sort_mode" value="#$sort_mode#" />
-        <input type="hidden" name="where2" value="#$where2#" />
-        <input type="hidden" name="sort_mode2" value="#$sort_mode2#" />
-        <div class="xar-form-input-wrapper">
-          <label class="xar-form-label"><xar:mlstring>From:</xar:mlstring></label>
-          <select name="actFromId">
-            <xar:foreach in="$items" key="$ix">
-              <option value="#$items[$ix]['activityId']#">#$items[$ix]['name']#</option>
-            </xar:foreach>
-          </select>
-        </div>
-        <div class="xar-form-input-wrapper">
-          <label class="xar-form-label"><xar:mlstring>To:</xar:mlstring></label>
-          <select name="actToId">
-            <xar:foreach in="$items" key="$ix">
-              <option value="#$items[$ix]['activityId']#">#$items[$ix]['name']#</option>
-            </xar:foreach>
-          </select>
-        </div>
-        <div class="xar-form-input-wrapper-after">
-          <input type="submit" name="add_trans" value="#xarML('Add transition')#" />
-        </div>
       </form>
     </fieldset>
 </div>
