@@ -27,7 +27,7 @@
   </dd>
 
   <xar:set name="classstring">''</xar:set>
-  <xar:if condition="$func eq 'monitor_instances'">
+  <xar:if condition="$func eq 'monitor_instances' or $func eq 'instance'">
     <xar:set name="classstring">'active'</xar:set>
   </xar:if>
   <dd class="#$classstring#">
@@ -38,7 +38,7 @@
   </dd>
 
   <xar:set name="classstring">''</xar:set>
-  <xar:if condition="$func eq 'monitor_workitems'">
+  <xar:if condition="$func eq 'monitor_workitems'or $func eq 'workitem'">
     <xar:set name="classstring">'active'</xar:set>
   </xar:if>
   <dd class="#$classstring#">

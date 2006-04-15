@@ -1,4 +1,5 @@
 <div class="xar-mod-body">
+  <xar:template module="workflow" type="module" file="admin-menu" />
   <xar:template file="monitor_bar" type="module"/>
   
   <xar:template file="help"/>

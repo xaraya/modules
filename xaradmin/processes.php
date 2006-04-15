@@ -11,234 +11,163 @@ function workflow_admin_processes()
     // Security Check
     if (!xarSecurityCheck('AdminWorkflow')) return;
 
-// Common setup for Galaxia environment
+    // Common setup for Galaxia environment
     include_once('modules/workflow/tiki-setup.php');
-    $tplData = array();
+    $data = array();
 
-// Adapted from tiki-g-admin_processes.php
+    // Adapted from tiki-g-admin_processes.php
+    include_once(GALAXIA_LIBRARY.'/ProcessManager.php');
 
-include_once(GALAXIA_LIBRARY.'/ProcessManager.php');
-
-// The galaxia process manager PHP script.
-if ($feature_workflow != 'y') {
-    $tplData['msg'] =  xarML("This feature is disabled");
-
-    return xarTplModule('workflow', 'admin', 'error', $tplData);
-}
-
-if ($tiki_p_admin_workflow != 'y') {
-    $tplData['msg'] =  xarML("Permission denied");
-
-    return xarTplModule('workflow', 'admin', 'error', $tplData);
-}
-
-// Check if we are editing an existing process
-// if so retrieve the process info and assign it.
-if (!isset($_REQUEST['pid']))
-    $_REQUEST['pid'] = 0;
-
-if ($_REQUEST["pid"]) {
-    $info = $processManager->get_process($_REQUEST["pid"]);
-    $info['graph'] = GALAXIA_PROCESSES."/" . $info['normalized_name'] . "/graph/" . $info['normalized_name'] . ".png";
-} else {
-    $info = array(
-        'name' => '',
-        'description' => '',
-        'version' => '1.0',
-        'isActive' => 'n',
-        'pId' => 0
-    );
-}
-
-$tplData['proc_info'] = $info;
-$tplData['pid'] =  $_REQUEST['pid'];
-$tplData['info'] =  $info;
-
-//Check here for an uploaded process
-if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
-    // move the uploaded file to some temporary wf* file in cache/templates
-    $tmpdir = xarCoreGetVarDirPath();
-    $tmpdir .= '/cache/templates';
-    $tmpfile = tempnam($tmpdir, 'wf');
-    if (move_uploaded_file($_FILES['userfile1']['tmp_name'], $tmpfile) && file_exists($tmpfile)) {
-        $fp = fopen($tmpfile, "rb");
-
-    $data = '';
-    $fhash = '';
-
-    while (!feof($fp)) {
-        $data .= fread($fp, 8192 * 16);
+    // The galaxia process manager PHP script.
+    if ($feature_workflow != 'y') {
+        $data['msg'] =  xarML("This feature is disabled");
+        return xarTplModule('workflow', 'admin', 'error', $data);
     }
 
-    fclose ($fp);
-    $size = $_FILES['userfile1']['size'];
-    $name = $_FILES['userfile1']['name'];
-    $type = $_FILES['userfile1']['type'];
+    if ($tiki_p_admin_workflow != 'y') {
+        $data['msg'] =  xarML("Permission denied");
+        return xarTplModule('workflow', 'admin', 'error', $data);
+    }
 
-    $process_data = $processManager->unserialize_process($data);
-
-    if ($processManager->process_name_exists($process_data['name'], $process_data['version'])) {
-        $tplData['msg'] =  xarML("The process name already exists");
-
-        return xarTplModule('workflow', 'admin', 'error', $tplData);
+    // Check if we are editing an existing process
+    // if so retrieve the process info and assign it.
+    if (!isset($_REQUEST['pid'])) $_REQUEST['pid'] = 0;
+    if ($_REQUEST["pid"]) {
+        $data['proc_info'] = $processManager->get_process($_REQUEST["pid"]);
+        $data['proc_info']['graph'] = GALAXIA_PROCESSES."/" . $data['proc_info']['normalized_name'] . "/graph/" . $data['proc_info']['normalized_name'] . ".png";
     } else {
-        $processManager->import_process($process_data);
+        $data['proc_info'] = array('name' => '', 'description' => '',
+                      'version' => '1.0','isActive' => 'n','pId' => 0);
     }
-        unlink($tmpfile);
+    $data['pid'] =  $_REQUEST['pid'];
+    
+    //Check here for an uploaded process
+    if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
+        // move the uploaded file to some temporary wf* file in cache/templates
+        $tmpdir = xarCoreGetVarDirPath();
+        $tmpdir .= '/cache/templates';
+        $tmpfile = tempnam($tmpdir, 'wf');
+        if (move_uploaded_file($_FILES['userfile1']['tmp_name'], $tmpfile) && file_exists($tmpfile)) {
+            $fp = fopen($tmpfile, "rb");
+            
+            $xml = ''; $fhash = '';
+            // Read it in
+            while (!feof($fp)) $xml .= fread($fp, 8192 * 16);
+                        
+            fclose ($fp);
+            $size = $_FILES['userfile1']['size'];
+            $name = $_FILES['userfile1']['name'];
+            $type = $_FILES['userfile1']['type'];
+            
+            $process_data = $processManager->unserialize_process($xml);
+            
+            if ($processManager->process_name_exists($process_data['name'], $process_data['version'])) {
+                $data['msg'] =  xarML("The process name already exists");
+                return xarTplModule('workflow', 'admin', 'error', $data);
+            } else {
+                $processManager->import_process($process_data);
+            }
+            unlink($tmpfile);
+        }
     }
-}
-
-if (isset($_REQUEST["delete"])) {
-    foreach (array_keys($_REQUEST["process"])as $item) {
-        $processManager->remove_process($item);
+    
+    if (isset($_REQUEST["delete"])) {
+        foreach (array_keys($_REQUEST["process"])as $item) {
+            $processManager->remove_process($item);
+        }
     }
-}
-
-if (isset($_REQUEST['newminor'])) {
-    $processManager->new_process_version($_REQUEST['newminor']);
-}
-
-if (isset($_REQUEST['newmajor'])) {
-    $processManager->new_process_version($_REQUEST['newmajor'], false);
-}
-
-if (isset($_REQUEST['save'])) {
-    $vars = array(
-        'name' => $_REQUEST['name'],
-        'description' => $_REQUEST['description'],
-        'version' => $_REQUEST['version'],
-        'isActive' => 'n'
-    );
-
-    if ($processManager->process_name_exists($_REQUEST['name'], $_REQUEST['version']) && $_REQUEST['pid'] == 0) {
-        $tplData['msg'] =  xarML("Process already exists");
-
-        return xarTplModule('workflow', 'admin', 'error', $tplData);
+    
+    // New minor version of the process
+    if (isset($_REQUEST['newminor'])) {
+        $processManager->new_process_version($_REQUEST['newminor']);
     }
-
-    if (isset($_REQUEST['isActive']) && $_REQUEST['isActive'] == 'on') {
-        $vars['isActive'] = 'y';
+    
+    // New major version of the process
+    if (isset($_REQUEST['newmajor'])) {
+        $processManager->new_process_version($_REQUEST['newmajor'], false);
     }
+    
+    // Update or create action
+    if (isset($_REQUEST['save'])) {
+        $vars = array('name' => $_REQUEST['name'],
+                      'description' => $_REQUEST['description'],
+                      'version' => $_REQUEST['version'],
+                      'isActive' => 'n'
+                      );
+        
+        // If process is known and we're not updating, error out.
+        if ($processManager->process_name_exists($_REQUEST['name'], $_REQUEST['version']) && $_REQUEST['pid'] == 0) {
+            $data['msg'] =  xarML("Process already exists");
+            return xarTplModule('workflow', 'admin', 'error', $data);
+        }
+        
+        if (isset($_REQUEST['isActive']) && $_REQUEST['isActive'] == 'on') {
+            $vars['isActive'] = 'y';
+        }
+        // Replace the info on the process with the new values (or create them)
+        $pid = $processManager->replace_process($_REQUEST['pid'], $vars);
+        // Validate the process and deactivate it if it turns out to be invalid.
+        $valid = $activityManager->validate_process_activities($pid);
+        if (!$valid) $processManager->deactivate_process($pid);
 
-    $pid = $processManager->replace_process($_REQUEST['pid'], $vars);
-
-    $valid = $activityManager->validate_process_activities($pid);
-
-    if (!$valid) {
-        $processManager->deactivate_process($pid);
+        // Reget the process info for the UI
+        $data['proc_info'] = $processManager->get_process($_REQUEST["pid"]);
+        $data['proc_info']['graph'] = GALAXIA_PROCESSES."/" . $data['proc_info']['normalized_name'] . "/graph/" . $data['proc_info']['normalized_name'] . ".png";        
     }
-
-    $info = array(
-        'name' => '',
-        'description' => '',
-        'version' => '1.0',
-        'isActive' => 'n',
-        'pId' => 0
-    );
-
-    $tplData['info'] =  $info;
-}
-
-$where = '';
-$wheres = array();
-
-if (isset($_REQUEST['filter'])) {
-    if ($_REQUEST['filter_name']) {
-        $wheres[] = " name='" . $_REQUEST['filter_name'] . "'";
+    
+    // Filtering by name, status or direct
+    $data['where'] = '';
+    $wheres = array();
+    if (isset($_REQUEST['filter'])) {
+        if ($_REQUEST['filter_name'])   $wheres[]=" name='".$_REQUEST['filter_name']."'";
+        if ($_REQUEST['filter_active']) $wheres[]=" isActive='" . $_REQUEST['filter_active']."'";
+        $data['where'] = implode('and', $wheres);
     }
+    if (isset($_REQUEST['where'])) $data['where'] = $_REQUEST['where'];
+        
+    // Specific sorting specified?
+    $data['sort_mode'] = isset($_REQUEST["sort_mode"]) ? $_REQUEST["sort_mode"] : 'lastModif_desc';
+    // Offset into the processlist
+    $data['offset'] = isset($_REQUEST["offset"]) ? $_REQUEST["offset"] : 1;
+    // Specific find text
+    $data['find'] = isset($_REQUEST["find"]) ? $_REQUEST["find"] : '';
 
-    if ($_REQUEST['filter_active']) {
-        $wheres[] = " isActive='" . $_REQUEST['filter_active'] . "'";
+    // MaxRecords comes from tiki-setup.php (modvar)
+    $items = $processManager->list_processes($data['offset'] - 1, $maxRecords, $data['sort_mode'], $data['find'], $data['where']);
+    $data['cant'] =  $items['cant'];
+    
+    $data['cant_pages'] =  ceil($items["cant"] / $maxRecords);
+    $data['actual_page'] =  1 + (($data['offset'] - 1) / $maxRecords);
+    
+    $data['next_offset'] =  -1;
+    if ($items["cant"] >= ($data['offset'] + $maxRecords)) {
+        $data['next_offset'] =  $data['offset'] + $maxRecords;
+    } 
+
+    $data['prev_offset'] =  -1;
+    if ($data['offset'] > 1) {
+        $data['prev_offset'] =  $data['offset'] - $maxRecords;
+    } 
+    $data['items'] =  $items["data"];
+    
+    // Validate the process
+    if ($_REQUEST['pid']) {
+        $valid = $activityManager->validate_process_activities($_REQUEST['pid']);
+        $data['errors'] = array();
+        if (!$valid) {
+            $processManager->deactivate_process($_REQUEST['pid']);
+            $data['errors'] = $activityManager->get_error();
+        }
     }
-
-    $where = implode('and', $wheres);
-}
-
-if (isset($_REQUEST['where'])) {
-    $where = $_REQUEST['where'];
-}
-
-if (!isset($_REQUEST["sort_mode"])) {
-    $sort_mode = 'lastModif_desc';
-} else {
-    $sort_mode = $_REQUEST["sort_mode"];
-}
-
-if (!isset($_REQUEST["offset"])) {
-    $offset = 1;
-} else {
-    $offset = $_REQUEST["offset"];
-}
-
-$tplData['offset'] = $offset;
-
-if (isset($_REQUEST["find"])) {
-    $find = $_REQUEST["find"];
-} else {
-    $find = '';
-}
-
-$tplData['find'] =  $find;
-$tplData['where'] =  $where;
-$tplData['sort_mode'] = $sort_mode;
-
-$items = $processManager->list_processes($offset - 1, $maxRecords, $sort_mode, $find, $where);
-$tplData['cant'] =  $items['cant'];
-
-$cant_pages = ceil($items["cant"] / $maxRecords);
-$tplData['cant_pages'] =  $cant_pages;
-$tplData['actual_page'] =  1 + (($offset - 1) / $maxRecords);
-
-if ($items["cant"] >= ($offset + $maxRecords)) {
-    $tplData['next_offset'] =  $offset + $maxRecords;
-} else {
-    $tplData['next_offset'] =  -1;
-}
-
-if ($offset > 1) {
-    $tplData['prev_offset'] =  $offset - $maxRecords;
-} else {
-    $tplData['prev_offset'] =  -1;
-}
-
-$tplData['items'] =  $items["data"];
-
-if ($_REQUEST['pid']) {
-    $valid = $activityManager->validate_process_activities($_REQUEST['pid']);
-
-    $errors = array();
-
-    if (!$valid) {
-        $processManager->deactivate_process($_REQUEST['pid']);
-
-        $errors = $activityManager->get_error();
-    }
-
-    $tplData['errors'] =  $errors;
-}
-
-$sameurl_elements = array(
-    'offset',
-    'sort_mode',
-    'where',
-    'find',
-    'filter_name',
-    'filter_active'
-);
-
-$all_procs = $items = $processManager->list_processes(0, -1, 'name_desc', '', '');
-$tplData['all_procs'] =  $all_procs['data'];
-
-$tplData['mid'] =  'tiki-g-admin_processes.tpl';
-
-    $tplData['feature_help'] = $feature_help;
-    $tplData['direct_pagination'] = $direct_pagination;
+    
+    // Huh? why?
+    $items = $processManager->list_processes(0, -1, 'name_desc', '', '');
+    $data['all_procs'] =  $items['data'];
+    $data['feature_help'] = $feature_help;
+    $data['direct_pagination'] = $direct_pagination;
     $url = xarServerGetCurrentURL(array('offset' => '%%'));
-    $tplData['pager'] = xarTplGetPager($tplData['offset'],
-                                       $items['cant'],
-                                       $url,
-                                       $maxRecords);
-    return $tplData;
+    $data['pager'] = xarTplGetPager($data['offset'], $items['cant'], $url, $maxRecords);
+    return $data;
 }
 
 ?>
