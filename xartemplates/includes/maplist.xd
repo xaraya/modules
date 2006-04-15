@@ -15,7 +15,7 @@
       <input type="hidden" name="find" value="#$find#" />
       <input type="hidden" name="sort_mode" value="#$sort_mode#" />
       <input type="hidden" name="sort_mode2" value="#$sort_mode2#" />
-      <table style="border-collapse: separate;">
+      <table class="xar-halfwidth" style="border-collapse: separate;">
         <tr>
           <xar:if condition="$sort_mode eq 'name_desc'">
             <th>
@@ -68,7 +68,7 @@
               </td>
             </tr>
           </xar:foreach>
-          <tr><td><input type="submit" name="delete_map" value="#xarML('Delete selected')# " /></td></tr>
+          <tr><td colspan="2"><input type="submit" name="delete_map" value="#xarML('Delete selected')# " /></td></tr>
         <xar:else/>
           <tr><td colspan="3"><xar:mlstring>No mappings defined yet</xar:mlstring></td>
           </tr>    

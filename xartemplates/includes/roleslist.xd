@@ -9,7 +9,7 @@
       <input type="hidden" name="sort_mode2" value="#$sort_mode2#" />
       <input type="hidden" name="find" value="#$find#" />
       <input type="hidden" name="offset" value="#$offset#" />
-      <table style="border-collapse: separate;">
+      <table class="xar-fullwidth" style="border-collapse: separate;">
         <tr>
           <xar:if condition="$sort_mode2 eq 'name_desc'">
             <th>
@@ -55,7 +55,7 @@
               </td>
             </tr>
           </xar:foreach>
-          <tr><td><input type="submit" name="delete" value="#xarML('Delete selected')# " /></td></tr>
+          <tr><td colspan="2"><input type="submit" name="delete" value="#xarML('Delete selected')# " /></td></tr>
           <xar:else/>
           <tr><td colspan="3"><xar:mlstring>No roles defined yet</xar:mlstring></td>
           </tr>    
