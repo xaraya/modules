@@ -8,7 +8,7 @@
 </div>
 
 <div class="xar-mod-body">
-  
+
   <xar:var name="menu" />
 
   <xar:set name="$width">'100%'</xar:set>
@@ -44,7 +44,7 @@
   </script>
 
   <form action="#$action#" method="POST" name="newticket" enctype="multipart/form-data">
-    
+
     <xar:if condition="$enforceauthkey">
       <input type="hidden" name="authid" value="#xarSecGenAuthKey()#" />
     </xar:if>
@@ -86,13 +86,13 @@
     <xar:if condition="!empty($groups)">
     <div class="xar-form-input-wrapper">
         <label class="xar-form-label"><xar:mlstring>Company:</xar:mlstring></label>
-        <select name="security_extra_groups[]" class="xar-form-textlong">
+        <select name="security_select_groups[]" class="xar-form-textlong">
         <option value="">
         <xar:foreach in="$groups" value="$group">
             <option value="#$group.uid#">#$group.name#</option>
         </xar:foreach>
         </select>
-    </div>    
+    </div>
     </xar:if>
     <div class="xar-form-input-wrapper">
       #$hooks['categories']#
@@ -165,14 +165,14 @@
       <label class="xar-form-label"><xar:mlstring>Issue Description:</xar:mlstring></label>
       <textarea name="issue" class="xar-form-textarealarge"></textarea>
     </div>
-    
+
     <xar:if condition="$editaccess">
       <div class="xar-form-input-wrapper">
         <label class="xar-form-label"><xar:mlstring>Technician Notes:</xar:mlstring></label>
         <textarea name="notes" class="xar-form-textarealarge"></textarea>
       </div>
     </xar:if>
-    
+
     <div class="xar-form-input-wrapper-after">
       <xar:if condition="$enabledimages">
         <a href="javascript:submitIt();"><img src="#xarTplGetImage('submit.gif', 'helpdesk')#" border="0"/></a>

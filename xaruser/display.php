@@ -80,12 +80,7 @@ function helpdesk_user_display($args)
     $item['module']    = 'helpdesk';
     $item['itemtype']  = TICKET_ITEMTYPE;
     $item['returnurl'] =  xarModURL('helpdesk', 'user', 'display', array('tid' => $ticket_id));
-    $hooks = xarModCallHooks('item', 'display', $ticket_id, $item);
-    if( empty($hooks) ){
-        $data['hookoutput'] = array();
-    }else {
-        $data['hookoutput'] = $hooks;
-    }
+    $data['hooks'] = xarModCallHooks('item', 'display', $ticket_id, $item);
 
     $data['enabledimages'] = xarModGetVar('helpdesk', 'Enable Images');
     $data['menu']    = xarModFunc('helpdesk', 'user', 'menu');

@@ -108,7 +108,7 @@
         <hr />
     </xar:foreach>
 
-    <xar:foreach in="$hookoutput" value="$hook">
+    <xar:foreach in="$hooks" value="$hook">
         <xar:var name="hook" />
     </xar:foreach>
 
