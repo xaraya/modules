@@ -28,8 +28,6 @@ function security_userapi_leftjoin($args)
 
     $info = array();
 
-    if( xarModIsAvailable('owner') ){ xarModAPILoad('owner', 'user'); }
-
     if( !isset($level) ){ $level = SECURITY_OVERVIEW; }
 
     // Get current user and groups
@@ -39,7 +37,6 @@ function security_userapi_leftjoin($args)
     $xartable =& xarDBGetTables();
 
     $info['iid'] = "{$xartable['security']}.xar_itemid";
-
 
     $secTable = $xartable['security'];
     $secGroupLevelTable = $xartable['security_group_levels'];
@@ -73,8 +70,9 @@ function security_userapi_leftjoin($args)
     }
 
     // user id field passed in so we can bypass the owner module.
-    if( empty($user_field) )
+    if( empty($user_field) &&  xarModIsAvailable('owner') )
     {
+        xarModAPILoad('owner', 'user');
         $ownerTable = $xartable['owner'];
         $left_join .= "
             LEFT JOIN $ownerTable ON
@@ -82,6 +80,7 @@ function security_userapi_leftjoin($args)
                 $secTable.xar_itemtype = $ownerTable.xar_itemtype AND
                 $secTable.xar_itemid   = $ownerTable.xar_itemid
         ";
+        $secCheck[] = " ( $secTable.xar_userlevel & $level AND $ownerTable.xar_uid = $currentUserId ) ";
     }
     $left_join .= "
         LEFT JOIN $secGroupLevelTable ON
@@ -94,10 +93,6 @@ function security_userapi_leftjoin($args)
     if( !empty($user_field) )
     {
         $secCheck[] = " ( $secTable.xar_userlevel & $level AND $user_field = $currentUserId ) ";
-    }
-    else
-    {
-        $secCheck[] = " ( $secTable.xar_userlevel & $level AND $ownerTable.xar_uid = $currentUserId ) ";
     }
 
     //Check Groups
