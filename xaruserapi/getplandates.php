@@ -16,8 +16,8 @@
  *
  * @author the Courses module development team
  * @param id courseid The course to get all the dates for
- * @param numitems $ the number of items to retrieve (default -1 = all)
- * @param startnum $ start with this item number (default 1)
+ * @param int numitems the number of items to retrieve (default -1 = all)
+ * @param int startnum start with this item number (default 1)
  * @param int startafter The date for which the startdate should be after OPTIONAL
  * @param int closeafter The date for which the closedate should be after OPTIONAL
  * @return array of items, or false on failure
@@ -26,15 +26,12 @@
 function courses_userapi_getplandates($args)
 {
     extract($args);
-  //  if (!xarVarFetch('courseid', 'id',     $courseid)) return;
-   // if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
-   // if (!xarVarFetch('numitems', 'int:1:', $numitems, -1, XARVAR_NOT_REQUIRED)) return;
-
+    // Initialise items array
     $items = array();
     // Security check
     if (!xarSecurityCheck('ReadCourses')) return;
-
-    if (xarSecurityCheck('EditCourses', 0)) {
+    // See if we have Edit rights for this course
+    if (xarSecurityCheck('EditCourses', 0, 'Course', "$courseid:All:All")) {
         $where = "0, 1";
     } else {
         $where = "0";
@@ -43,7 +40,6 @@ function courses_userapi_getplandates($args)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $planningtable = $xartable['courses_planning'];
-    // TODO: implement security check when this item is hidden from display
 
     // Get items
     $query = "SELECT xar_planningid,
