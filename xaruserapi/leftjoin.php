@@ -28,7 +28,7 @@ function security_userapi_leftjoin($args)
 
     $info = array();
 
-    xarModAPILoad('owner', 'user');
+    if( xarModIsAvailable('owner') ){ xarModAPILoad('owner', 'user'); }
 
     if( !isset($level) ){ $level = SECURITY_OVERVIEW; }
 
