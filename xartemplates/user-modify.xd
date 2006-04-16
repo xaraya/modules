@@ -1,3 +1,4 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
     <xar:ml>
@@ -117,13 +118,13 @@
             <input type="hidden" name="closedby" value="#$ticketdata['closedby']#" />
         </xar:if>
     </fieldset>
-    
+
     <xar:if condition="is_array($hookoutput)">
     <xar:foreach in="$hookoutput" value="$hook">
         <tr><td colspan="4">#$hook#</td></tr>
     </xar:foreach>
     </xar:if>
-    
+
     <fieldset>
         <legend>Actions</legend>
 
@@ -131,7 +132,7 @@
             <input type="hidden" name="authid" value="#xarSecGenAuthKey()#"/>
             <input type="hidden" name="tid"   value="#$tid#" />
             <input type="hidden" name="confirm" value="true" />
-            
+
             <xar:if condition="$enabledimages">
                 <a href="javascript:document.modify.submit();" title="Modify Ticket">
                 <img src="#xarTplGetImage('modify.gif', 'helpdesk')#" border="0"/></a>
@@ -139,9 +140,9 @@
                 <input type="submit" name="Update" value="Update" class="xar-form-textlong" />
             </xar:if>
         </div>
-        
-    </fieldset>                
+
+    </fieldset>
     </form>
-                
+
     <xar:var name="summary" />
 </div>

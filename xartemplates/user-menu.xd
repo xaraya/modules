@@ -1,14 +1,15 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:set name="tmp">xarTplAddStyleLink('base', 'navtabs')</xar:set>
 <dl class="xar-tabs" style="margin-bottom: 0px;">
-    
+
     <xar:foreach in="$menulinks" key="$key" value="$link">
-    
+
     <xar:if condition="$page eq $link.page AND empty($link.type)">
     <dd class="active"><a href="#$link.url#">#$link.label#</a></dd>
     <xar:else />
     <dd><a href="#$link.url#">#$link.label#</a></dd>
     </xar:if>
-    
+
     </xar:foreach>
-    
+
 </dl>

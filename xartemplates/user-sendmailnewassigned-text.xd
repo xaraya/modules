@@ -1,3 +1,4 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:mlstring>Dear</xar:mlstring> #$assignedtoname#,
 
 <xar:mlstring>A new HelpDesk ticket has been assigned to you.</xar:mlstring>
