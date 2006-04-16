@@ -2,14 +2,13 @@
 /**
  * Owner - Tracks who creates xaraya based items.
  *
- * @package Xaraya Modules
- * @copyright (C) 2003-2005 by Envision Net, Inc.
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.envisionnet.net/
+ * @link http://www.xaraya.com
  *
- * @subpackage Owner module
- * @link http://www.envisionnet.net/home/products/security/
- * @author Brian McGilligan <brian@envisionnet.net>
+ * @subpackage Owner Module
+ * @author Brian McGilligan <brian@mcgilligan.us>
  */
 /**
     Logs who created a xaraya item

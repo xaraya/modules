@@ -1,5 +1,6 @@
+<xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
 <fieldset>
     <legend>Change Owner</legend>
-    
+
     <xar:var name="owner.name" />
 </fieldset>

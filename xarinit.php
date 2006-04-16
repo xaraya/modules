@@ -1,16 +1,15 @@
 <?php
 /**
-    Owner - Tracks who creates xaraya based items.
- 
-    @package Xaraya Modules
-    @copyright (C) 2003-2005 by Envision Net, Inc.
-    @license GPL {@link http://www.gnu.org/licenses/gpl.html}
-    @link http://www.envisionnet.net/
- 
-    @subpackage Owner module
-	@link http://www.envisionnet.net/home/products/security/
-    @author Brian McGilligan <brian@envisionnet.net>
-*/
+ * Owner - Tracks who creates xaraya based items.
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Owner Module
+ * @author Brian McGilligan <brian@mcgilligan.us>
+ */
 /**
  * Initialize the module
  */
@@ -19,9 +18,9 @@ function owner_init()
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
-    
+
     $prefix   =  xarDBGetSiteTablePrefix();
-    
+
     /* Get a data dictionary object with all the item create methods in it */
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
 
@@ -41,7 +40,7 @@ function owner_init()
         array('xar_modid', 'xar_itemtype', 'xar_itemid')
     );
     if (!$result) {return;}
-    
+
     // Set up module hooks
     if (!xarModRegisterHook('item', 'display', 'GUI',
             'owner', 'admin', 'changeowner')) {
@@ -67,7 +66,7 @@ function owner_init()
     */
     xarRegisterMask('ViewOwner', 'All', 'owner', 'All', 'All', 'ACCESS_READ');
     xarRegisterMask('ChangeOwner', 'All', 'owner', 'All', 'All', 'ACCESS_ADMIN');
-    
+
     // Initialisation successful
     return true;
 }
@@ -82,7 +81,7 @@ function owner_upgrade($oldversion)
     $xartable =& xarDBGetTables();
 
     // Upgrade dependent on old version number
-    switch($oldversion) 
+    switch($oldversion)
     {
         case '0.1.0':
             // fall through to the next upgrade
@@ -118,11 +117,11 @@ function owner_delete()
 
     /* Get a data dictionary object with item create and delete methods */
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
-    
+
     /* Drop the security tables */
     $result = $datadict->dropTable($xartable['owner']);
     if( !$result ){ return false; }
-    
+
     //
     xarModDelAllVars('owner');
 
