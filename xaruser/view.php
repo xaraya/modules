@@ -130,7 +130,7 @@ function helpdesk_user_view($args)
     $data['order']        = $order;
     $data['statusfilter'] = $statusfilter;
     $data['status']       = xarModAPIFunc('helpdesk', 'user', 'gets',
-        array('itemtype' => 3)
+        array('itemtype' => STATUS_ITEMTYPE)
     );
     $data['companies']    = xarModAPIFunc('helpdesk', 'user', 'get_companies');
     $data['company']      = $company;

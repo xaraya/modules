@@ -54,7 +54,8 @@ function helpdesk_userapi_update($args)
         $bindvars[] = $assignedto;
     }
 
-    if ($statusid =='3' && empty($closedby))
+    $resolved_statuses = xarModAPIFunc('helpdesk', 'user', 'get_resolved_statuses');
+    if( in_array($statusid, $resolved_statuses) && empty($closedby) )
     {
         // User has changed status to closed but not specified closer
         // so, set current user as closer
@@ -64,11 +65,11 @@ function helpdesk_userapi_update($args)
     if (!empty($closedby))
     {
         // If a closer was specified but status wasn't changed to closed, then we need to set to close
-        $closer        = $closedby;
-        $statusid     = 3;
+        $closer       = $closedby;
+        $statusid     = xarModGetVar('helpdesk', 'default_resolved_status');
     }
 
-    if ($statusid == '3')
+    if( in_array($statusid, $resolved_statuses) )
     {
         $sql .=", xar_closedby = ?";
         $bindvars[] = $closer;
@@ -79,8 +80,8 @@ function helpdesk_userapi_update($args)
     $sql .=" WHERE xar_id     = ?";
     $bindvars[] = $tid;
 
-    $dbconn->Execute($sql, $bindvars);
-    if( $dbconn->ErrorNo() != 0 ){ return false; }
+    $result = $dbconn->Execute($sql, $bindvars);
+    if( !$result ){ return false; }
 
     return true;
 }

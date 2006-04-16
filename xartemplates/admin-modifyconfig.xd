@@ -48,6 +48,26 @@
             <xar:set name="tech_group">xarModGetVar('helpdesk', 'tech_group')</xar:set>
             <xar:data-input name="tech_group" type="grouplist" value="$tech_group"/>
         </div>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Default Open Status</xar:mlstring></label>
+            <xar:set name="default_open">xarModGetVar('helpdesk', 'default_open_status')</xar:set>
+            <xar:data-input name="default_open_status" type="dropdown" validation="$statuses" value="$default_open" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Open Statuses</xar:mlstring></label>
+            <xar:set name="open">@unserialize(xarModGetVar('helpdesk', 'open_statuses'))</xar:set>
+            <xar:data-input name="open_statuses" type="multiselect" validation="$statuses" value="$open" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Default Resolved Status</xar:mlstring></label>
+            <xar:set name="default_resolved">xarModGetVar('helpdesk', 'default_resolved_status')</xar:set>
+            <xar:data-input name="default_resolved_status" type="dropdown" validation="$statuses" value="$default_resolved" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Resolved Statuses</xar:mlstring></label>
+            <xar:set name="resolved">@unserialize(xarModGetVar('helpdesk', 'resolved_statuses'))</xar:set>
+            <xar:data-input name="resolved_statuses" type="multiselect" validation="$statuses" value="$resolved"/>
+        </div>
 
     </fieldset>
 
@@ -143,7 +163,9 @@
 
     </fieldset>
 
-    <xar:var name="hooks" />
+    <xar:foreach in="$hooks" value="$hook">
+        <xar:var name="hook" />
+    </xar:foreach>
 
     <fieldset class="">
         <legend>Actions</legend>

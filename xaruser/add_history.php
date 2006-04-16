@@ -21,6 +21,10 @@ function helpdesk_user_add_history($args)
     );
     if( empty($ticket) ){ return false; }
 
+    /*
+        Compare Current Status with New status to determine if it needs to be
+        updated and wether or not to send mail out.
+    */
     if( $ticket['statusid'] != $statusid )
     {
         $result = xarModAPIFunc('helpdesk', 'user', 'update_status',
@@ -29,6 +33,7 @@ function helpdesk_user_add_history($args)
                 'status' => $statusid
             )
         );
+        if( !$result ){ return false; }
     }
 
     $result = xarModAPIFunc('comments', 'user', 'add',
@@ -36,14 +41,14 @@ function helpdesk_user_add_history($args)
             'modid'    => xarModGetIdFromName('helpdesk'),
             'objectid' => $itemid,
             'itemtype' => TICKET_ITEMTYPE,
-            //'pid'      => 0, // parent id
             'title'    => $ticket['subject'],
             'comment'  => $comment,
-            //'postanon' => 0,
             'author'   => xarUserGetVar('uid')
         )
     );
+    if( !$result ){ return false; }
 
+    // Return to where we can from
     xarResponseRedirect(xarServerGetVar('HTTP_REFERER'));
     return false;
 }

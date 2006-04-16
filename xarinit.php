@@ -119,6 +119,10 @@ function helpdesk_init()
     xarModSetVar('helpdesk', 'Website', 'http://www.abrasiontechnology.com/');
     xarModSetVar('helpdesk', 'Default rows per page', 20);
     xarModSetVar('helpdesk', 'Page Count Limit', 10);
+    xarModSetVar('helpdesk', 'default_open_status', 2);
+    xarModSetVar('helpdesk', 'open_statuses', serialize(array(1,2)));
+    xarModSetVar('helpdesk', 'default_resolved_status', 3);
+    xarModSetVar('helpdesk', 'resolved_statuses', serialize(array(3,4,5)));
 
     xarModSetVar('helpdesk', 'Tech NewTicket Msg', 'New Tech Ticket');
     xarModSetVar('helpdesk', 'User NewTicket Msg', 'New User Ticket');
@@ -153,7 +157,6 @@ function helpdesk_init()
     xarRegisterMask('addhelpdesk',    'All','helpdesk','helpdesk','All', 'ACCESS_ADD');
     xarRegisterMask('deletehelpdesk', 'All','helpdesk','helpdesk','All', 'ACCESS_DELETE');
     xarRegisterMask('adminhelpdesk',  'All','helpdesk','helpdesk','All', 'ACCESS_ADMIN');
-
 
     // let's hook cats in
     $cid = xarModAPIFunc('categories', 'admin', 'create',
@@ -459,6 +462,15 @@ function helpdesk_upgrade($oldversion)
                     'hookModName' => 'comments'
                 )
             );
+
+        case '0.7.6':
+            xarModSetVar('helpdesk', 'open_statuses', serialize(array(1,2)));
+            xarModSetVar('helpdesk', 'resolved_statuses', serialize(array(3,4,5)));
+        case '0.7.7':
+            xarModSetVar('helpdesk', 'default_open_status', 2);
+            xarModSetVar('helpdesk', 'default_resolved_status', 3);
+        case '0.7.8':
+        case '0.7.9':
 
         default:
             break;

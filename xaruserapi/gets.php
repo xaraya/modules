@@ -29,6 +29,33 @@ function helpdesk_userapi_gets($args)
 
     $items = xarModAPIFunc('dynamicdata', 'user', 'getitems', $info);
 
+    if( isset($keyvalue) and $keyvalue === true )
+    {
+        switch($itemtype)
+        {
+            case PRIORITY_ITEMTYPE:
+                $field = 'priority';
+                break;
+            case STATUS_ITEMTYPE:
+                $field = 'status';
+                break;
+            case SOURCE_ITEMTYPE:
+                $field = 'source';
+                break;
+            case REPRESENTATIVE_ITEMTYPE:
+                $field = 'name';
+                break;
+        }
+
+        if( !empty($field) )
+        {
+            foreach( $items as $key => $value )
+            {
+                $items[$key] = $value[$field];
+            }
+        }
+    }
+
     return $items;
 }
 ?>

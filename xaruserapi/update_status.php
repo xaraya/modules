@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Helpdesk Module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Helpdesk Module
+ * @link http://www.abraisontechnoloy.com/
+ * @author Brian McGilligan <brianmcgilligan@gmail.com>
+ */
 /**
  * Updates just the status of a ticket
  *
@@ -17,7 +28,8 @@ function helpdesk_userapi_update_status($args)
     $xartable =& xarDBGetTables();
     $db_table = $xartable['helpdesk_tickets'];
 
-    if( $status == '3' ){ $closer = xarUserGet('uid'); }
+    $resolved_statuses = xarModAPIFunc('helpdesk', 'user', 'get_resolved_statuses');
+    if( in_array($status, $resolved_statuses) ){ $closer = xarUserGetVar('uid'); }
     else{ $closer = null; }
 
     $sql = "

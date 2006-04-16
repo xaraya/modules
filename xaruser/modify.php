@@ -19,14 +19,13 @@
 */
 function helpdesk_user_modify($args)
 {
+    if( !xarModAPILoad('helpdesk', 'user') ){ return false; }
+    if( !xarModAPILoad('security', 'user') ){ return false; }
+
+    if( !xarVarFetch('tid',        'int:1:',  $tid,        null,  XARVAR_NOT_REQUIRED) ) { return false; }
+    if( !xarVarFetch('confirm',    'isset',   $confirm,    null,  XARVAR_NOT_REQUIRED) ) { return false; }
+    if( !xarVarFetch('itemtype',   'int',     $itemtype,   TICKET_ITEMTYPE, XARVAR_NOT_REQUIRED) ) { return false; }
     extract($args);
-
-    xarVarFetch('tid',        'int:1:',  $tid,        null,  XARVAR_NOT_REQUIRED);
-    xarVarFetch('confirm',    'isset',   $confirm,    null,  XARVAR_NOT_REQUIRED);
-    xarVarFetch('itemtype',   'int',     $itemtype,   1,     XARVAR_NOT_REQUIRED);
-
-    if (!xarModAPILoad('helpdesk', 'user')) { return false; }
-    if (!xarModAPILoad('security', 'user')) { return false; }
 
     /*
         Security check to prevent un authorized users from modifying it
@@ -80,7 +79,8 @@ function helpdesk_user_modify($args)
             @author MichelV.
             $mail needs to be set
         */
-        if( $statusid == '3' )
+        $resolved_statuses = xarModAPIFunc('helpdesk', 'user', 'get_resolved_statuses');
+        if( in_array($statusid, $resolved_statuses) == true )
         {
             $mailaction = 'closed';
             $params['mailaction'] = $mailaction;
@@ -146,12 +146,7 @@ function helpdesk_user_modify($args)
     $item = array();
     $item['module'] = 'helpdesk';
     $item['itemtype'] = $itemtype;
-    $hooks = xarModCallHooks('item', 'modify', $tid, $item);
-    if (empty($hooks)) {
-        $data['hookoutput'] = array();
-    }else {
-        $data['hookoutput'] = $hooks;
-    }
+    $data['hooks'] = xarModCallHooks('item', 'modify', $tid, $item);
 
     $data['tid']            = $tid;
     $data['menu']           = xarModFunc('helpdesk', 'user', 'menu');

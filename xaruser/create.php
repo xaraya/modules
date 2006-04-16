@@ -22,7 +22,7 @@ function helpdesk_user_create($args)
     $allowanonadd = xarModGetVar('helpdesk', 'Anonymous Can Submit');
 
     if (empty($allowanonadd)){
-        if (!xarSecurityCheck('readhelpdesk')) return false;
+        if( !xarSecurityCheck('readhelpdesk') ){ return false; }
     }
 
     $data['enforceauthkey'] = xarModGetVar('helpdesk', 'EnforceAuthKey');
@@ -39,23 +39,24 @@ function helpdesk_user_create($args)
     $itemtype = TICKET_ITEMTYPE;
 
     // Get parameters from whatever input we need.
-    xarVarFetch('name',     'str:1:',   $name,      '',  XARVAR_NOT_REQUIRED);
-    xarVarFetch('userid',   'int:1:',   $userid,    0,  XARVAR_NOT_REQUIRED);
-    xarVarFetch('phone',    'str:1:',   $phone,     '',  XARVAR_NOT_REQUIRED);
-    xarVarFetch('email',    'email:1:', $email,     '',  XARVAR_NOT_REQUIRED);
-    xarVarFetch('domain',   'str:1:',   $domain,    '',  XARVAR_NOT_REQUIRED);
-    xarVarFetch('subject',  'str:1:',   $subject,   '',  XARVAR_NOT_REQUIRED);
-    xarVarFetch('nontech',  'str:1:',   $nontech,   '',  XARVAR_NOT_REQUIRED);
-    xarVarFetch('source',   'int:1:',   $source,    0,  XARVAR_NOT_REQUIRED);
-    xarVarFetch('status',   'int:1:',   $status,    2,     XARVAR_NOT_REQUIRED); // default = 2 or Open
-    xarVarFetch('priority', 'int:1:',   $priority,  0,  XARVAR_NOT_REQUIRED);
-    xarVarFetch('openedby', 'int:1:',   $openedby,  0,  XARVAR_NOT_REQUIRED);
-    xarVarFetch('assignedto','int:1:',  $assignedto,0,  XARVAR_NOT_REQUIRED);
-    xarVarFetch('closedby', 'int:1:',   $closedby,  0,  XARVAR_NOT_REQUIRED);
-    xarVarFetch('issue',    'str:1:',   $issue,     '',  XARVAR_NOT_REQUIRED);
-    xarVarFetch('notes',    'str:1:',   $notes,     '',  XARVAR_NOT_REQUIRED);
-    xarVarFetch('cids',     'array',    $cids,      array(),    XARVAR_NOT_REQUIRED);
-    xarVarFetch('closeonsubmit', 'int', $closeonsubmit,  0,  XARVAR_NOT_REQUIRED);
+    if( !xarVarFetch('name',     'str:1:',   $name,      '', XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('userid',   'int:1:',   $userid,    0,  XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('phone',    'str:1:',   $phone,     '', XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('email',    'email:1:', $email,     '', XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('domain',   'str:1:',   $domain,    '', XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('subject',  'str:1:',   $subject,   '', XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('nontech',  'str:1:',   $nontech,   '', XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('source',   'int:1:',   $source,    0,  XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('status',   'int:1:',   $status,    0,  XARVAR_NOT_REQUIRED) ){ return false; }
+    if( empty($status) ){ $status = xarModGetVar('helpdesk', 'default_open_status'); }
+    if( !xarVarFetch('priority', 'int:1:',   $priority,  0,  XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('openedby', 'int:1:',   $openedby,  0,  XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('assignedto','int:1:',  $assignedto,0,  XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('closedby', 'int:1:',   $closedby,  0,  XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('issue',    'str:1:',   $issue,     '', XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('notes',    'str:1:',   $notes,     '', XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('cids',     'array',    $cids, array(), XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('closeonsubmit','int', $closeonsubmit,0,XARVAR_NOT_REQUIRED) ){ return false; }
 
     if ($nontech || $openedby == 0){
         // If the NONTECHSUBMIT flag is set, then this means a regular user or anonymous
@@ -70,7 +71,7 @@ function helpdesk_user_create($args)
     if( empty($email) ){ $email = xarUserGetVar('email', $whosubmit); }
 
     // If it is closed by someone, the ticket must be closed
-    if( !empty($closedby) ){ $status = 3; }
+    if( !empty($closedby) ){ $status = xarModGetVar('helpdesk', 'default_resolved_status'); }
 
     // If there is not assigned to rep we will try and
     // find a rep to assign the ticket to
@@ -80,9 +81,6 @@ function helpdesk_user_create($args)
             array('cids' => $cids)
         );
     }
-
-    // If closed by field is empty, then set closed by to 0
-    if( empty($closedby) ){ $closedby = 0; }
 
     $return_val = xarModAPIFunc('helpdesk','user','create',
         array(
@@ -199,7 +197,6 @@ function helpdesk_user_create($args)
     }
 
     // Adds the Issue
-    $pid = 0; // parent id
     $itemid = $return_val; // id of ticket just created
     $itemtype = TICKET_ITEMTYPE;
     $result = xarModAPIFunc('comments', 'user', 'add',
@@ -207,7 +204,6 @@ function helpdesk_user_create($args)
             'modid'    => $modid,
             'objectid' => $itemid,
             'itemtype' => $itemtype,
-            'pid'      => $pid,
             'title'    => $subject,
             'comment'  => $issue,
             'postanon' => 0,

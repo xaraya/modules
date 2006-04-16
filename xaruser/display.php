@@ -30,10 +30,6 @@ function helpdesk_user_display($args)
     if( !xarVarFetch('ticket_id', 'int:1:',  $ticket_id, null,  XARVAR_NOT_REQUIRED) ){ return false; }
     if( !xarVarFetch('tid',       'int:1:',  $ticket_id, null,  XARVAR_NOT_REQUIRED) ){ return false; }
 
-    // Cheap way to pass info to security event
-    //$_GET['itemype'] = TICKET_ITEMTYPE;
-    //$_GET['itemid'] = $ticket_id;
-
     if( empty($ticket_id) )
     {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',

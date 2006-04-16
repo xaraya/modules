@@ -13,12 +13,14 @@
  */
 function helpdesk_user_delete($args)
 {
-    xarVarFetch('tid',        'int:1:',  $tid,        null,  XARVAR_NOT_REQUIRED);
-    xarVarFetch('confirm',    'isset',   $confirm,    null,  XARVAR_NOT_REQUIRED);
-    xarVarFetch('itemtype',   'int',     $itemtype,   1,     XARVAR_NOT_REQUIRED);
-
     if( !xarModAPILoad('helpdesk', 'user') ) { return false; }
     if( !xarModAPILoad('security', 'user') ) { return false; }
+
+    if( !xarVarFetch('tid',        'int:1:',  $tid,        null,  XARVAR_NOT_REQUIRED) ) { return false; }
+    if( !xarVarFetch('confirm',    'isset',   $confirm,    null,  XARVAR_NOT_REQUIRED) ) { return false; }
+    if( !xarVarFetch('itemtype',   'int',     $itemtype,   TICKET_ITEMTYPE, XARVAR_NOT_REQUIRED) ) { return false; }
+
+    extract($args);
 
     /*
         Security check to prevent un authorized users from deleting it

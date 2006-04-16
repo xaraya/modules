@@ -99,7 +99,7 @@ function helpdesk_userapi_getticket($args)
 
     $cats = xarModAPIFunc('categories', 'user', 'getitemcats',
         array(
-            'modid'    => 910,
+            'modid'    => xarModGetIdFromName('helpdesk'),
             'itemtype' => TICKET_ITEMTYPE,
             'itemid'   => $ticket_id,
         )

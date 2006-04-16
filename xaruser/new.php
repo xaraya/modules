@@ -40,7 +40,7 @@ function helpdesk_user_new()
     // Maybe use a security check here
     if( !$data['allowanonsubmitticket'] && !xarUserIsLoggedIn() ){ return false; }
 
-    if (!xarVarFetch('itemtype', 'int', $itemtype, 1, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('itemtype', 'int', $itemtype, TICKET_ITEMTYPE, XARVAR_NOT_REQUIRED)) return;
 
     $data['username'] = xarUserGetVar('uname');
     $data['name']     = xarUserGetVar('name');
@@ -94,12 +94,7 @@ function helpdesk_user_new()
     $item['itemtype'] = $itemtype;
     $item['multiple'] = false;
     $item['returnurl'] = xarModURL('helpdesk', 'user', 'main');
-    $hooks = xarModCallHooks('item', 'new', $itemtype, $item, 'helpdesk');
-    if (empty($hooks)) {
-        $data['hooks'] = array();
-    } else {
-        $data['hooks'] = $hooks;
-    }
+    $data['hooks'] = xarModCallHooks('item', 'new', $itemtype, $item, 'helpdesk');
 
     $data['enforceauthkey'] = xarModGetVar('helpdesk', 'EnforceAuthKey');
     $data['action']  = xarModURL('helpdesk', 'user', 'create');

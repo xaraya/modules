@@ -119,11 +119,9 @@
         </xar:if>
     </fieldset>
 
-    <xar:if condition="is_array($hookoutput)">
-    <xar:foreach in="$hookoutput" value="$hook">
-        <tr><td colspan="4">#$hook#</td></tr>
+    <xar:foreach in="$hooks" value="$hook">
+        <xar:var name="hook" />
     </xar:foreach>
-    </xar:if>
 
     <fieldset>
         <legend>Actions</legend>

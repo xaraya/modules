@@ -20,8 +20,8 @@ function helpdesk_userapi_cats($args)
     extract($args);
 
     $cats = xarModAPIFunc('categories', 'user', 'getchildren',
-                          array('cids' => $cids)
-                         );
+        array('cids' => $cids)
+    );
 
     if(!$cats) { return; }
 

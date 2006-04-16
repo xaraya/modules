@@ -41,16 +41,12 @@ function helpdesk_user_search()
     // No need for a security check if Anonymous Adding is enabled:
     // So ONLY check security if AllowAnonAdd is NOT TRUE
     if (!$AllowAnonSubmitTicket){
-        if (!xarSecurityCheck('readhelpdesk')) {
-            return;
-        }
+        if( !xarSecurityCheck('readhelpdesk') ){ return false; }
     }
 
     $data['enabledimages']   = xarModGetVar('helpdesk', 'Enable Images');
-
     $data['username'] = xarUserGetVar('uname');
     $data['userid'] = xarUserGetVar('uid');
-
     $data['summary'] = xarModFunc('helpdesk', 'user', 'summaryfooter');
 
     return xarTplModule('helpdesk', 'user', 'search', $data);

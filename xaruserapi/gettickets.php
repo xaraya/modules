@@ -24,17 +24,9 @@ function helpdesk_userapi_gettickets($args)
     extract($args);
 
     // Optional arguments.
-    if(!isset($startnum)) {
-        $startnum = 1;
-    }
-
-    if (!isset($numitems)) {
-        $numitems = 20;
-    }
-
-    if( !isset($count) ){
-        $count = false;
-    }
+    if( !isset($startnum) ){ $startnum = 1; }
+    if( !isset($numitems) ){ $numitems = 20; }
+    if( !isset($count) ){ $count = false; }
 
     // Database information
     $dbconn         =& xarDBGetConn();
@@ -43,7 +35,7 @@ function helpdesk_userapi_gettickets($args)
 
     xarSessionSetVar('ResultTitle', '');
 
-    xarVarFetch('override',  'str:1:', $override,  null,  XARVAR_NOT_REQUIRED);
+    if( !xarVarFetch('override',  'str:1:', $override,  null,  XARVAR_NOT_REQUIRED) ){ return false; }
 
     /*
         Init query parts
@@ -71,7 +63,7 @@ function helpdesk_userapi_gettickets($args)
     {
         $categoriesdef = xarModAPIFunc('categories', 'user', 'leftjoin',
                               array('modid'    => xarModGetIdFromName('helpdesk'),
-                                    'itemtype' => 1,
+                                    'itemtype' => TICKET_ITEMTYPE,
                                     'cids'     => array($catid),
                                     'andcids'  => 1));
     }
@@ -84,7 +76,7 @@ function helpdesk_userapi_gettickets($args)
         $security_def = xarModAPIFunc('security', 'user', 'leftjoin',
             array(
                 'modid'    => xarModGetIdFromName('helpdesk'),
-                'itemtype' => 1,
+                'itemtype' => TICKET_ITEMTYPE,
                 'itemid'   => "$helpdesktable.xar_id",
                 'user_field' => "$helpdesktable.xar_openedby",
                 'level' => isset($level) ? $level : null,
@@ -182,22 +174,10 @@ function helpdesk_userapi_gettickets($args)
     /*
         Start putting the condition parts of the query together
     */
-    if( count($left_join) > 0 )
-    {
-        $sql .= join(' ', $left_join);
-    }
-
-    if(count($whereor) > 0)
-    {
-        $where[] = ' ( ' . join(' OR ', $whereor) . ' ) ';
-    }
-    if(count($where) > 0)
-    {
-        $sql .= ' WHERE ' . join(' AND ', $where);
-    }
-
-    if( $count != true )
-        $sql .= " GROUP BY xar_id ";
+    if( count($left_join) > 0 ){ $sql .= join(' ', $left_join); }
+    if( count($whereor) > 0 ){ $where[] = '(' . join(' OR ', $whereor) . ')'; }
+    if( count($where) > 0 ){ $sql .= ' WHERE ' . join(' AND ', $where); }
+    if( $count != true ){ $sql .= " GROUP BY xar_id"; }
 
     switch($sortorder)
     {

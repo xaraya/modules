@@ -25,7 +25,7 @@ function helpdesk_user_menu()
     xarVarFetch('func',      'str', $data['page'],       'main', XARVAR_NOT_REQUIRED);
     xarVarFetch('selection', 'str', $data['selection'],  '',     XARVAR_NOT_REQUIRED);
 
-    $data['menulinks'] = xarModAPIFunc('helpdesk', 'user', 'menulinks');
+    $data['menulinks'] = xarModAPIFunc('helpdesk', 'user', 'getmenulinks');
 
     $data['enabledimages']  = xarModGetVar('helpdesk', 'Enable Images');
 

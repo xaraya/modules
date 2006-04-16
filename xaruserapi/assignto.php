@@ -22,18 +22,23 @@ function helpdesk_userapi_assignto($args)
 {
     extract($args);
 
+    if( !xarModAPILoad('helpdesk') ){ return false; }
+
     // Get reps for further processing
     $reps = xarModAPIFunc('dynamicdata', 'user', 'getitems',
-                          array('module' => 'helpdesk',
-                                'itemtype' => 10
-                               )
-                         );
+        array(
+            'module' => 'helpdesk',
+            'itemtype' => REPRESENTATIVE_ITEMTYPE
+        )
+    );
 
     $cats = xarModAPIFunc('categories', 'user', 'getlinks',
-                          array('modid'    => 910,
-                                'itemtype' => 10,
-                                'cids'     => $cids)
-                         );
+        array(
+            'modid'    => xarModGetIdFromName('helpdesk'),
+            'itemtype' => REPRESENTATIVE_ITEMTYPE,
+            'cids'     => $cids
+        )
+    );
 
     $rids = array();
     if(!empty($cats)){
@@ -49,9 +54,9 @@ function helpdesk_userapi_assignto($args)
     mt_srand((double)microtime()*100);
     $index = mt_rand(0, (sizeof($rids) - 1));
 
-    foreach($reps as $rep){
-        if($rep['id'] == $rids[$index])
-            return $rep['name'];
+    foreach($reps as $rep)
+    {
+        if( $rep['id'] == $rids[$index] ){ return $rep['name']; }
     }
     return 0;
 }

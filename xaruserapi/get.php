@@ -25,10 +25,11 @@ function helpdesk_userapi_get($args)
     extract($args);
 
     if (!isset($object)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                     'object', 'userapi', 'get', 'helpdesk');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+        $msg = xarML(
+            'Invalid #(1) for #(2) function #(3)() in module #(4)',
+            'object', 'userapi', 'get', 'helpdesk'
+        );
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return false;
     }
 
@@ -46,25 +47,26 @@ function helpdesk_userapi_get($args)
     // Gets the item types of the objects
     switch($object){
         case 'priority':
-            $itemtype = 2;
+            $itemtype = PRIORITY_ITEMTYPE;
             $name = null;
             break;
 
         case 'status':
-            $itemtype = 3;
+            $itemtype = STATUS_ITEMTYPE;
             break;
 
         case 'source':
-            $itemtype = 4;
+            $itemtype = SOURCE_ITEMTYPE;
             break;
     }
 
     $item = xarModAPIFunc('dynamicdata', 'user', 'getitem',
-                          array('moduleid' => $modid,
-                                'itemtype' => $itemtype,
-                                'itemid'   => $itemid
-                               )
-                         );
+        array(
+            'moduleid' => $modid,
+            'itemtype' => $itemtype,
+            'itemid'   => $itemid
+        )
+    );
 
     // if there is no name then just return the whole object or item
     if(!empty($name)){
