@@ -329,46 +329,49 @@
                        </div>
                   </fieldset>
                </xar:if>
-            <H2>#xarML('Other occurences of this course')#</H2>
-            <table>
-                <thead>
-                    <tr>
-                        <th><xar:mlstring>Starts</xar:mlstring></th>
-                        <th><xar:mlstring>Location</xar:mlstring></th>
-                        <th><xar:mlstring>Credits</xar:mlstring></th>
-                        <th><xar:mlstring>Options</xar:mlstring></th>
-                    </tr>
-                </thead>
-                <xar:foreach in="$items" value="$item">
-                <tr>
-                    <td>#xarlocalegetformatteddate('medium',$item['startdate'])#</td>
-                    <td>#$item['location']#</td>
-                    <td>#$item['credits']#</td>
-                    <td>
-                       <xar:if condition="(!empty($item['enrollurl']) AND $allowregistration)">
-                           <a href="#$item['enrollurl']#">#$item.enrolltitle#</a>
-                       </xar:if>
-                       <xar:if condition="!empty($item['detailsurl'])">
-                       |
-                           <a href="#$item['detailsurl']#">#$item.detailstitle#</a>
-                       </xar:if>
-                       <xar:if condition="!empty($item.editurl)">
-                       |
-                           <a href="#$item['editurl']#">#$item.edittitle#</a>
-                       </xar:if>
-                       <xar:if condition="!empty($item.statusurl)">
-                       |
-                           <a href="#$item['statusurl']#">#$item.statustitle#</a>
-                       </xar:if>
-                       <xar:if condition="(!empty($item.participantsurl) AND $allowregistration)">
-                       |
-                           <a href="#$item['participantsurl']#">#$item.participantstitle#</a>
-                       </xar:if>
-                    </td>
-                </tr>
-                </xar:foreach>
-            </table>
-
+            <xar:if condition="(count($items)-1) gt 0">
+                <H2>#xarML('Other occurences of this course')#</H2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th><xar:mlstring>Starts</xar:mlstring></th>
+                            <th><xar:mlstring>Location</xar:mlstring></th>
+                            <th><xar:mlstring>Credits</xar:mlstring></th>
+                            <th><xar:mlstring>Options</xar:mlstring></th>
+                        </tr>
+                    </thead>
+                    <xar:foreach in="$items" value="$item">
+                        <xar:if condition="!($item['planningid']==$planningid)">
+                            <tr>
+                                <td>#xarlocalegetformatteddate('medium',$item['startdate'])#</td>
+                                <td>#$item['location']#</td>
+                                <td>#$item['credits']#</td>
+                                <td>
+                                   <xar:if condition="(!empty($item['enrollurl']) AND $allowregistration)">
+                                       <a href="#$item['enrollurl']#">#$item.enrolltitle#</a>
+                                   </xar:if>
+                                   <xar:if condition="!empty($item['detailsurl'])">
+                                   |
+                                       <a href="#$item['detailsurl']#">#$item.detailstitle#</a>
+                                   </xar:if>
+                                   <xar:if condition="!empty($item.editurl)">
+                                   |
+                                       <a href="#$item['editurl']#">#$item.edittitle#</a>
+                                   </xar:if>
+                                   <xar:if condition="!empty($item.statusurl)">
+                                   |
+                                       <a href="#$item['statusurl']#">#$item.statustitle#</a>
+                                   </xar:if>
+                                   <xar:if condition="(!empty($item.participantsurl) AND $allowregistration)">
+                                   |
+                                       <a href="#$item['participantsurl']#">#$item.participantstitle#</a>
+                                   </xar:if>
+                                </td>
+                            </tr>
+                        </xar:if>
+                    </xar:foreach>
+                </table>
+            </xar:if>
             </form>
             <br />
 

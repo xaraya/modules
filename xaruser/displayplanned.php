@@ -117,18 +117,18 @@ function courses_user_displayplanned($args)
     // Check individual permissions for Enroll/Edit/Viewstatus
     for ($i = 0; $i < count($items); $i++) {
         $planitem = $items[$i];
-        $planningid = $planitem['planningid'];
-        if ((xarSecurityCheck('EditCourses', 0, 'Course', "$courseid:$planningid:All")) && $allowregistration) {
+        $planid = $planitem['planningid'];
+        if ((xarSecurityCheck('EditCourses', 0, 'Course', "$courseid:$planid:All")) && $allowregistration) {
             $items[$i]['participantsurl'] = xarModURL('courses',
                 'admin',
                 'participants',
-                array('planningid' => $planningid));
+                array('planningid' => $planid));
         } else {
             $items[$i]['participantsurl'] = '';
         }
         $items[$i]['participantstitle'] = xarML('Participants');
 
-        if ((xarSecurityCheck('ReadCourses', 0, 'Course', "$courseid:$planningid:All")) && $allowregistration) {
+        if ((xarSecurityCheck('ReadCourses', 0, 'Course', "$courseid:$planid:All")) && $allowregistration) {
             // See if the date for enrollment is surpassed
             $closedate = $planitem['closedate'];
             $timenow = time();
@@ -138,35 +138,35 @@ function courses_user_displayplanned($args)
                               'user',
                               'check_enrolled',
                               array('uid' => $uid,
-                                    'planningid' => $planningid));
+                                    'planningid' => $planid));
                 if (count($enrolled)!=0) {
                     $items[$i]['enrolltitle'] = xarML('Enrolled');
                     // When enrolled, redirect to details page instead
                     $items[$i]['enrollurl'] = xarModURL('courses',
                                               'user',
                                               'displayplanned',
-                                               array('planningid' => $planningid));
+                                               array('planningid' => $planid));
                 } else {
                     $items[$i]['enrolltitle'] = xarML('Enroll');
                     $items[$i]['enrollurl'] = xarModURL('courses',
                         'user',
                         'enroll',
-                        array('planningid' => $planningid));
+                        array('planningid' => $planid));
                 }
             } else {
                 $items[$i]['enrolltitle'] = xarML('Registration Closed');
                 $items[$i]['enrollurl'] = xarModURL('courses',
                                                   'user',
                                                   'displayplanned',
-                                                   array('planningid' => $planningid));
+                                                   array('planningid' => $planid));
             }
         }
 
-        if (xarSecurityCheck('EditCourses', 0, 'Course', "$courseid:$planningid:All")) {
+        if (xarSecurityCheck('EditCourses', 0, 'Course', "$courseid:$planid:All")) {
             $items[$i]['deleteurl'] = xarModURL('courses',
                 'admin',
                 'deleteplanned',
-                array('planningid' => $planningid));
+                array('planningid' => $planid));
         } else {
             $items[$i]['statusurl'] = '';
         }
