@@ -11,7 +11,10 @@
  * @link http://www.abraisontechnoloy.com/
  * @author Brian McGilligan <brianmcgilligan@gmail.com>
  */
-
+/**
+ * Setup the security
+ * @since April 2006
+ */
 function helpdesk_admin_setup_security($args)
 {
     extract($args);
@@ -60,6 +63,8 @@ function helpdesk_admin_setup_security($args)
 
     /*
         Check for hooks
+        MichelV: This will cause 'security_hooked to always be true. It also will continue the code and get the settings,
+        even if the hook is not available.
     */
     if( xarModIsHooked('security', 'helpdesk') ){ $data['security_hooked'] = true; }
     else{ $data['security_hooked'] = true; }
@@ -86,7 +91,7 @@ function helpdesk_admin_setup_security($args)
     else{ $data['security_world_levels_ok'] = false; }
 
     /*
-        Check owner settings. We want do have them so we don't use the owner module
+        Check owner settings. We want to have them so we don't use the owner module
     */
     if( $settings['owner'] == null ){ $data['owner_ok'] = false; }
     else{ $data['owner_ok'] = true; }
