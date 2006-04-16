@@ -33,10 +33,6 @@ function security_userapi_check($args)
         return xarVarGetCached('security', $cache_name);
     }*/
 
-
-    // Make sure the need module API's are loaded
-    xarModAPILoad('owner', 'user');
-
     // Get current user and groups
     $currentUserId = xarUserGetVar('uid');
     $groups = array();
@@ -55,7 +51,7 @@ function security_userapi_check($args)
 
     $secTable = $xartable['security'];
     $secGroupLevelTable = $xartable['security_group_levels'];
-    $ownerTable = $xartable['owner'];
+
 
     $bindvars = array();
     $where = array();
@@ -65,15 +61,11 @@ function security_userapi_check($args)
         FROM $secTable
     ";
 
-    if( !is_null($settings['owner']) and count($settings['owner']) == 3 )
+    // Make sure the need module API's are loaded
+    if( xarModIsAvailable('owner') and is_null($settings['owner']) )
     {
-        $query .= "
-            LEFT JOIN {$settings['owner']['table']} ON
-            $secTable.xar_itemid = {$settings['owner']['primary_key']}
-        ";
-    }
-    else
-    {
+        xarModAPILoad('owner', 'user');
+        $ownerTable = $xartable['owner'];
         $query .= "
             LEFT JOIN $ownerTable ON
                 $secTable.xar_modid    = $ownerTable.xar_modid  AND
@@ -81,6 +73,14 @@ function security_userapi_check($args)
                 $secTable.xar_itemid   = $ownerTable.xar_itemid
         ";
     }
+    elseif( !is_null($settings['owner']) and count($settings['owner']) == 3 )
+    {
+        $query .= "
+            LEFT JOIN {$settings['owner']['table']} ON
+            $secTable.xar_itemid = {$settings['owner']['primary_key']}
+        ";
+    }
+
     $query .= "
         LEFT JOIN $secGroupLevelTable ON
             $secTable.xar_modid    = $secGroupLevelTable.xar_modid AND
