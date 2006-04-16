@@ -86,7 +86,7 @@ function keypresshandler(elemID,event)
                   </xar:if>
                   <xar:if condition="$act_info['type'] eq 'switch'">
                     <a href="javascript:setSomeElement('src','$instance->setNextActivity(\'\');');"><xar:mlstring>Set Next act</xar:mlstring></a>&nbsp;
-                    <a href="javascript:setSomeElement('src','if(true) {\n\t$instance->setNextActivity(\'\');\n}');"><xar:mlstring>If:SetNextact</xar:mlstring></a>&nbsp;
+                    <a href="javascript:setSomeElement('src','if(true) {\n    $instance->setNextActivity(\'\');\n}');"><xar:mlstring>If:SetNextact</xar:mlstring></a>&nbsp;
                     <a href="javascript:setSomeElement('src','switch($instance->get(\'\')){\n  case:\'\':\n  $instance->setNextActivity(\'\');\n  break;\n}');"><xar:mlstring>Switch construct</xar:mlstring></a>&nbsp;
                   </xar:if>
                 </xar:if>
@@ -100,8 +100,6 @@ function keypresshandler(elemID,event)
             <input type="submit" name='cancel' value="#xarML('Cancel')#" />
         </div>
   </form>
-
-
-<!-- Show a courtesy footer -->
-<xar:template file="galaxfooter"/>
+  <!-- Show a courtesy footer -->
+  <xar:template file="galaxfooter"/>
 </div>
