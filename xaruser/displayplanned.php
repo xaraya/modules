@@ -103,12 +103,14 @@ function courses_user_displayplanned($args)
     } else {
         $data['editlink'] ='';
     }
-
+    // Get the number of months that we will show in the past
+    $nummonths = xarModGetVar('courses', 'OldPlannedMonths');
+    $startafter = mktime(0, 0, 0, date("m")-$nummonths, date("d"), date("Y"));
     // Get all planned courses for this course
     $items = xarModAPIFunc('courses',
         'user',
         'getplandates',
-        array('courseid' => $courseid));
+        array('courseid' => $courseid, 'startafter'=>$startafter));
     //TODO: howto check for correctness here?
     //if (!isset($plandates) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 

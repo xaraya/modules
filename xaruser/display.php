@@ -62,10 +62,13 @@ function courses_user_display($args)
     $uid = xarUserGetVar('uid');
     $data['levelname'] = xarModAPIFunc('courses', 'user', 'getlevel',
                                       array('level' => $item['level']));
+    // Get the number of months that we will show in the past
+    $nummonths = xarModGetVar('courses', 'OldPlannedMonths');
+    $startafter = mktime(0, 0, 0, date("m")-$nummonths, date("d"), date("Y"));
     $items = xarModAPIFunc('courses',
         'user',
         'getplandates',
-        array('courseid' => $courseid));
+        array('courseid' => $courseid,'startafter'=>$startafter));
     // TODO: howto check for correctness here?
     if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
