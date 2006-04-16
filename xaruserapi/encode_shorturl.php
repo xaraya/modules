@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Encode module parameters for Short URL support
  *
@@ -12,8 +11,9 @@
  * @link http://xaraya.com/index.php/release/36.html
  * @author Example Module Development Team
  */
-
-/*
+/**
+ * return the path for a short URL to xarModURL for this module
+ *
  * Support for short URLs (user functions)
  *
  * The following two functions encode module parameters into some
@@ -52,19 +52,12 @@
  * except that by default, the URLs will start with index.php/admin/example.
  * The encode/decode functions for admin functions are in xaradminapi.php.
  *
- */
-
-/**
- * return the path for a short URL to xarModURL for this module
- * 
- * @author the Example module development team 
+ * @author the Example module development team
  * @param  $args the function and arguments passed to xarModURL
- * @returns string
- * @return path to be added to index.php for a short URL, or empty if failed
+ * @return string Path to be added to index.php for a short URL, or empty if failed
  */
-
 function example_userapi_encode_shorturl($args)
-{ 
+{
     // Get arguments from argument array.
     extract($args);
 
@@ -72,7 +65,7 @@ function example_userapi_encode_shorturl($args)
     // Returning without a value at any point will result in a 'long' URL
     // being generated, i.e. a URL consisting entirely of GET paramaters.
     if (!isset($func)) {return;}
-    
+
     // The components of the path.
     // On return, we can pass back two arrays: the 'path' part of the URL
     // and the 'GET' part of the URL.

@@ -3,7 +3,7 @@
  * Extract function and arguments from short URLs
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -11,18 +11,17 @@
  * @link http://xaraya.com/index.php/release/36.html
  * @author Example Module Development Team
  */
-
 /**
  * Extract function and arguments from short URLs for this module, and pass
  * them back to xarGetRequestInfo()
- * 
- * @author the Example module development team 
- * @param  $params array containing the different elements of the virtual path
+ *
+ * @author the Example module development team
+ * @param  array $params array containing the different elements of the virtual path
  * @return array containing func the function to be called and args the query
  *          string arguments, or empty if it failed
  */
 function example_userapi_decode_shorturl($params)
-{ 
+{
     /* Initialise the argument list we will return */
     $args = array();
     $module = 'example';
@@ -34,7 +33,6 @@ function example_userapi_decode_shorturl($params)
     } else{
         $usealias = false;
     }
-
 
     /* Analyse the different parts of the virtual path
      * $params[1] contains the first part after index.php/example
@@ -99,5 +97,5 @@ function example_userapi_decode_shorturl($params)
          */
     }
     /* default : return nothing -> no short URL decoded */
-} 
+}
 ?>
