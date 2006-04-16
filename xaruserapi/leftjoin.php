@@ -43,7 +43,6 @@ function security_userapi_leftjoin($args)
 
     $secTable = $xartable['security'];
     $secGroupLevelTable = $xartable['security_group_levels'];
-    $ownerTable = $xartable['owner'];
 
     $left = array();
 
@@ -76,6 +75,7 @@ function security_userapi_leftjoin($args)
     // user id field passed in so we can bypass the owner module.
     if( empty($user_field) )
     {
+        $ownerTable = $xartable['owner'];
         $left_join .= "
             LEFT JOIN $ownerTable ON
                 $secTable.xar_modid    = $ownerTable.xar_modid AND
