@@ -86,7 +86,7 @@
             <xar:if condition="!empty($companies)">
             <td>
             	<select name="company" onChange="javascript:document.options.submit();" class="xar-form-textmedium">
-                <option value=""></option>
+                <option value="-1"></option>
             	<xar:foreach in="$companies" key="$key" value="$value">
             	   <xar:if condition="$value.uid eq $company">
             	   <option value="#$value.uid#" selected="selected"><xar:var name="value.name" /></option>

@@ -133,9 +133,9 @@ function helpdesk_userapi_gettickets($args)
     {
         case 'MYALL':
             xarSessionSetVar('ResultTitle', xarML('All My Tickets'));
-            $where[] = " ( xar_openedby = ? OR xar_assignedto = ? ) ";
-            $bindvars[] = (int)$userid;
-            $bindvars[] = (int)$userid;
+            //$where[] = " ( xar_openedby = ? OR xar_assignedto = ? ) ";
+            //$bindvars[] = (int)$userid;
+            //$bindvars[] = (int)$userid;
             break;
 
         case 'ALL':

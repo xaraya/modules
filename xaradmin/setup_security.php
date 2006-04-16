@@ -62,12 +62,10 @@ function helpdesk_admin_setup_security($args)
     else{ $data['tech_exists'] = false; }
 
     /*
-        Check for hooks
-        MichelV: This will cause 'security_hooked to always be true. It also will continue the code and get the settings,
-        even if the hook is not available.
+        Check for hooks.
     */
-    if( xarModIsHooked('security', 'helpdesk') ){ $data['security_hooked'] = true; }
-    else{ $data['security_hooked'] = true; }
+    if( xarModIsAvailable('security') && xarModIsHooked('security', 'helpdesk', TICKET_ITEMTYPE) ){ $data['security_hooked'] = true; }
+    else{ $data['security_hooked'] = false; }
 
     // Check for security levels set for tickets.
     $settings = xarModAPIFunc('security', 'user', 'get_default_settings',
