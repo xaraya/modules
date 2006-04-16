@@ -20,10 +20,8 @@ function security_admin_changesecurity($args)
         $itemtype = $extrainfo['itemtype'];
 
     $itemid = '';
-    if( !empty($objectid) )
-        $itemid = $objectid;
+    if( !empty($objectid) ){ $itemid = $objectid; }
 
-    $returnUrl = '';
     if( !empty($extrainfo['returnurl']) )
         $returnUrl = $extrainfo['returnurl'];
     else
@@ -33,19 +31,19 @@ function security_admin_changesecurity($args)
 
     $has_security = xarModAPIFunc('security', 'user', 'securityexists',
         array(
-            'modid' => $modid,
+            'modid'    => $modid,
             'itemtype' => $itemtype,
             'itemid'   => $itemid
         )
     );
+    $settings = xarModAPIFunc('security', 'user', 'get_default_settings',
+        array(
+            'modid'    => $modid,
+            'itemtype' => $itemtype
+        )
+    );
     if( !$has_security )
     {
-        $settings = xarModAPIFunc('security', 'user', 'get_default_settings',
-            array(
-                'modid' => $modid,
-                'itemtype' => $itemtype
-            )
-        );
         xarModAPIFunc('security', 'admin', 'create',
             array(
                 'modid'    => $modid,
@@ -81,8 +79,25 @@ function security_admin_changesecurity($args)
     if( !$levels ) return '';
 
     // Make user this has an owner otherwise quit
-    $owner = xarModAPIFunc('owner', 'user', 'get', $args);
-    if( !$owner ) return '';
+    if( is_null($settings['owner']) )
+    {
+        $owner = xarModAPIFunc('owner', 'user', 'get', $args);
+        if( !$owner ) return '';
+    }
+    else
+    {
+        // Use owner table field settings to extract the owner from the database
+        $dbconn   =& xarDBGetConn();
+        $sql = "
+            SELECT {$settings['owner']['column']}
+            FROM {$settings['owner']['table']}
+            WHERE {$settings['owner']['primary_key']} = ?
+        ";
+        $result = $dbconn->Execute($sql, array($itemid));
+        if( !$result ){ return false; }
+        $owner['uid'] = $result->fields[0];
+    }
+
 
     /*
         Get all the groups just incase it's needed for display purposes
@@ -99,10 +114,8 @@ function security_admin_changesecurity($args)
         This allows the admin to assign privs how ever they want even if the
         user can not do it.
     */
-    if( xarSecurityCheck('AdminPanel', 0) )
-        $uid = xarUserGetVar('uid');
-    else
-        $uid = $owner['uid'];
+    if( xarSecurityCheck('AdminPanel', 0) ){ $uid = xarUserGetVar('uid'); }
+    else{ $uid = $owner['uid']; }
 
     /*
         These groups are used in the Add groups menu thing to create new group privs
@@ -111,11 +124,9 @@ function security_admin_changesecurity($args)
         $groups = $all_groups;
     else
         $groups = xarModAPIFunc('roles', 'user', 'getancestors', array('uid' => $uid));
+
     $tmp = array();
-    foreach ($groups as $key => $group)
-    {
-        $tmp[$group['uid']] = $group;
-    }
+    foreach( $groups as $key => $group ){ $tmp[$group['uid']] = $group; }
     $groups = $tmp;
 
     $secLevels = xarModAPIFunc('security', 'user', 'getlevels');
@@ -147,7 +158,6 @@ function security_admin_changesecurity($args)
     $data['secLevels']= $secLevels; // different security levels
     $data['secMap']   = $secMap; // Security Map
     $data['levels']   = $levels; // Sec levels for each group
-    $data['owner']    = $owner;
     $data['all_groups'] = $all_groups;
     $data['user_groups']   = $groups; // Groups user is in
     $data['groupCache']= $groupCache;

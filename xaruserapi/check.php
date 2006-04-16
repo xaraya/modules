@@ -14,7 +14,7 @@ function security_userapi_check($args)
 {
     extract($args);
 
-    //if( xarSecurityCheck('AdminPanel', 0) ){ return true; }
+    if( xarSecurityCheck('AdminPanel', 0) ){ return true; }
 
     // Not really needed
     /*$cache_name = md5(serialize($args));
