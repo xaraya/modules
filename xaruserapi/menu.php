@@ -87,7 +87,7 @@ function itsp_userapi_menu()
                 $item['mincredit'] = $pitem['mincredit'];
                 $item['credits'] = $pitem['credits'];
                 $item['pitemid']=$pitemid;
-                $creditsnow = xarModApiFunc('itsp','user','countcredits',array('uid' => xarUserGetVar('uid'), 'pitemid' => $pitemid, 'itspid' => $itspid));
+                $creditsnow = xarModApiFunc('itsp','user','countcredits',array('uid' => $userid, 'pitemid' => $pitemid, 'itspid' => $itspid));
                 $item['creditsnow'] = $creditsnow;
                 $sumcreditsnow = $sumcreditsnow + $creditsnow;
                 // Format the name
