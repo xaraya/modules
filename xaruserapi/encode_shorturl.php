@@ -58,28 +58,30 @@ function xarbb_userapi_encode_shorturl($args)
         $fid = $objectid;
     }
 
-    $module = 'xarbb';
-    $alias = xarModGetAlias($module);
-
-    $aliasisset = xarModGetVar('xarbb', 'useModuleAlias');
-    $aliasname = xarModGetVar('xarbb', 'aliasname');
-    if (($aliasisset) && isset($aliasname)) {
-        $usealias = true;
-    } else{
-        $usealias = false;
-    }
-
     // The components of the path.
     $path = array();
     $get = $args;
 
+    // This module
+    $module = 'xarbb';
+
+    // Alias for the module, set in the config screen.
+    $aliasisset = xarModGetVar($module, 'useModuleAlias');
+    $aliasname = xarModGetVar($module, 'aliasname');
+
+    if (!empty($aliasisset) && isset($aliasname)) {
+        $module_for_alias = xarModGetAlias($aliasname);
+
+        // If the alias is for this module, then
+        // use it instead of the module name.
+        if ($module_for_alias == $module) {
+            $module = $aliasname;
+        }
+    }
+
     // Set the first part of the path, which will always be the 
     // module name or alias.
-    if (($module == $alias) && ($usealias)){
-        $path[] = $aliasname;
-    } else{
-        $path[] = $module;
-    }
+    $path[] = $module;
 
     if ($func == 'main') {
         unset($get['func']);
