@@ -42,7 +42,6 @@ function helpdesk_userapi_update_status($args)
     ";
     $bindvars = array($status, $closer, date("Y-m-d H:i:s"), $itemid);
 
-
     $result = $dbconn->Execute($sql, $bindvars);
     if( !$result ){ return false; }
 

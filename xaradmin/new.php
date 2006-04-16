@@ -56,12 +56,7 @@ function helpdesk_admin_new($args)
     $item = array();
     $item['module'] = 'helpdesk';
     $item['itemtype'] = $itemtype;
-    $hooks = xarModCallHooks('item','new','',$item);
-    if (empty($hooks)) {
-        $data['hooks'] = '';
-    }else {
-        $data['hooks'] = $hooks;
-    }
+    $data['hooks'] = xarModCallHooks('item','new','',$item);
 
     $data['itemtype'] = $itemtype;
 

@@ -48,6 +48,23 @@ function helpdesk_user_add_history($args)
     );
     if( !$result ){ return false; }
 
+    // Send Mail
+    //if(  )
+    $result = xarModFunc('helpdesk','user','sendmail',
+        array(
+            'userid'      => xarUserGetVar('uid'),
+            'subject'     => $ticket['subject'],
+            'status'      => $statusid,
+            'openedby'    => $ticket['openedby'],
+            'assignedto'  => $ticket['assignedto'],
+            'closedby'    => $ticket['closedby'],
+            'comment'     => $comment,
+            'tid'         => $itemid,
+            'mailaction'  => 'additionalcomment'
+        )
+    );
+    if( !$result ){ return false; }
+
     // Return to where we can from
     xarResponseRedirect(xarServerGetVar('HTTP_REFERER'));
     return false;

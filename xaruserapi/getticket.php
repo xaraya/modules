@@ -90,7 +90,6 @@ function helpdesk_userapi_getticket($args)
 
     $results = $dbconn->Execute($sql, array($tid));
     if( !$results ){ return false; }
-
     if( $results->EOF ){ return false; }
 
     list($priorityid, $sourceid, $openedby,   $subject,  $domain,
@@ -116,7 +115,7 @@ function helpdesk_userapi_getticket($args)
         'openedbyname'  => !empty($openedby) ? xarUserGetVar('name', $openedby) : '',
         'subject'       => $subject,
         'domain'        => $domain,
-        'date'          => xarModAPIFunc('helpdesk', 'user', 'formatdate', array('date'     => $ticketdate)),
+        'date'          => xarModAPIFunc('helpdesk', 'user', 'formatdate', array('date' => $ticketdate)),
         'statusid'      => $statusid,
         'status'        => xarModAPIFunc('helpdesk', 'user', 'get', array('object' => 'status', 'itemid'   => $statusid, 'field'=> '')),
         'assignedto'    => $assignedto,

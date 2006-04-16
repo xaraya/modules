@@ -129,7 +129,6 @@ function helpdesk_user_create($args)
         @author MichelV.
         $mail needs to be set
     */
-    $usernew = 'usernew';
     $mail = xarModFunc('helpdesk','user','sendmail',
         array(
             'userid'      => $userid,
@@ -148,7 +147,7 @@ function helpdesk_user_create($args)
             'issue'       => $issue,
             'notes'       => $notes,
             'tid'         => $return_val,
-            'mailaction'  => $usernew
+            'mailaction'  => 'usernew'
         )
     );
 
@@ -165,7 +164,6 @@ function helpdesk_user_create($args)
     * @author MichelV.
     * $mail needs to be set
     */
-    $assignednew = 'assignednew';
     $assignedmail = xarModFunc('helpdesk','user','sendmail',
         array(
             'userid'      => $userid,
@@ -184,7 +182,7 @@ function helpdesk_user_create($args)
             'issue'       => $issue,
             'notes'       => $notes,
             'tid'         => $return_val,
-            'mailaction'  => $assignednew
+            'mailaction'  => 'assignednew'
         )
     );
 

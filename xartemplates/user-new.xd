@@ -182,6 +182,5 @@
       </xar:if>
     </div>
   </form>
-  <br />
   <xar:var name="summary" />
 </div>
