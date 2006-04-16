@@ -1,5 +1,16 @@
 <?php
 /**
+ * Security - Provides unix style privileges to xaraya items.
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Security Module
+ * @author Brian McGilligan <brian@mcgilligan.us>
+ */
+/**
     If a xaraya item is detected perform a security check out it.
 
     @param $module   name of module
@@ -19,8 +30,7 @@ function security_eventapi_OnServerRequest($args)
     $itemid = xarRequestGetVar('itemid');
     $catid = xarRequestGetVar('catid');
 
-    if( empty($module) )
-        $module = xarModGetName();
+    if( empty($module) ){ $module = xarModGetName(); }
 
     $modid = xarModGetIdFromName($module);
 
@@ -28,21 +38,17 @@ function security_eventapi_OnServerRequest($args)
     {
         $modid = xarModGetIdFromName('categories');
         $module = 'categories';
-
-        if( empty($itemid) )
-            $itemid = $catid;
+        if( empty($itemid) ){ $itemid = $catid; }
     }
 
     if( !empty($itemid) && xarModIsHooked('security', $module) )
     {
-        if( empty($itemtype) )
-            $itemtype = null;
+        if( empty($itemtype) ){ $itemtype = null; }
 
         // If no security exists then we don't care about it
         $args = array('modid' => $modid, 'itemtype' => $itemtype, 'itemid' => $itemid);
         $securityExists = xarModAPIFunc('security', 'user', 'securityexists', $args);
-        if( !$securityExists )
-            return true;
+        if( !$securityExists ){ return true; }
 
         $args['level'] = SECURITY_READ;
         $check = xarModAPIFunc('security', 'user', 'check', $args);

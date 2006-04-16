@@ -1,16 +1,15 @@
 <?php
 /**
-    Security - Provides unix style privileges to xaraya items.
- 
-    @copyright (C) 2003-2005 by Envision Net, Inc.
-    @license GPL (http://www.gnu.org/licenses/gpl.html)
-    @link http://www.envisionnet.net/
-    @author Brian McGilligan <brian@envisionnet.net>
- 
-    @package Xaraya eXtensible Management System
-    @subpackage Security module
-*/
-
+ * Security - Provides unix style privileges to xaraya items.
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Security Module
+ * @author Brian McGilligan <brian@mcgilligan.us>
+ */
 /**
     specifies module tables namees
 
@@ -19,19 +18,19 @@
     @return  $xartable array
 */
 function security_xartables()
-{ 
+{
     // Initialise table array
-    $xartable = array(); 
-    
+    $xartable = array();
+
     // Name for ratings database entities
-    $table = xarDBGetSiteTablePrefix() . '_security'; 
-    
+    $table = xarDBGetSiteTablePrefix() . '_security';
+
     // Table name
-    $xartable['security'] = $table; 
+    $xartable['security'] = $table;
     $xartable['security_group_levels'] = $table . '_group_levels';
-     
+
     // Return table information
     return $xartable;
-} 
+}
 
 ?>

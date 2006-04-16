@@ -1,16 +1,15 @@
 <?php
 /**
-    Security - Provides unix style privileges to xaraya items.
- 
-    @copyright (C) 2003-2005 by Envision Net, Inc.
-    @license GPL (http://www.gnu.org/licenses/gpl.html)
-    @link http://www.envisionnet.net/
-    @author Brian McGilligan <brian@envisionnet.net>
- 
-    @package Xaraya eXtensible Management System
-    @subpackage Security module
-*/
-
+ * Security - Provides unix style privileges to xaraya items.
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Security Module
+ * @author Brian McGilligan <brian@mcgilligan.us>
+ */
 /**
     Initialize the module
 */
@@ -19,7 +18,7 @@ function security_init()
     $dbconn   =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $prefix   =  xarDBGetSiteTablePrefix();
-    
+
     /* Get a data dictionary object with all the item create methods in it */
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
 
@@ -41,7 +40,7 @@ function security_init()
         array('xar_modid', 'xar_itemtype', 'xar_itemid')
     );
     if (!$result) {return;}
-	
+
 	$sec_group_fields = "
         xar_modid    I NotNull DEFAULT 0,
         xar_itemtype I NotNull DEFAULT 0,
@@ -86,7 +85,7 @@ function security_init()
     */
     xarRegisterMask('UseSecurity', 'All', 'security', 'All', 'All', 'ACCESS_READ');
     xarRegisterMask('AdminSecurity', 'All', 'security', 'All', 'All', 'ACCESS_ADMIN');
-    
+
     // Initialisation successful
     return true;
 }
@@ -99,13 +98,14 @@ function security_upgrade($oldversion)
 {
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-    
+
     // Upgrade dependent on old version number
     switch($oldversion) {
         case '0.1.0':
         case '0.1.1':
         case '0.5.0':
         case '0.8.0':
+        case '0.8.1':
 
             break;
 
@@ -127,22 +127,23 @@ function security_delete()
     // Get datbase setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-    
+
     /* Get a data dictionary object with item create and delete methods */
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
-    
+
     /* Drop the security tables */
     $result = $datadict->dropTable($xartable['security']);
     if( !$result ){ return false; }
     $result = $datadict->dropTable($xartable['security_group_levels']);
     if( !$result ){ return false; }
-    
+
     // cleans up the module vars
     xarModDelAllVars('security');
 
     /* Unregister each of the hooks that have been created */
     $result = xarModUnregisterHook('item', 'display', 'GUI', 'security', 'admin', 'changesecurity');
     if( !$result ){ return false; }
+
     $result = xarModUnregisterHook('item', 'modify', 'GUI', 'security', 'admin', 'changesecurity');
     if( !$result ){ return false; }
 
