@@ -27,8 +27,8 @@
             </div>
             -->
             <div class="xar-form-input-wrapper">
-                <label for="username" class="xar-form-label" title="#xarML('Enter user name')#">
-                       <xar:mlstring>Username</xar:mlstring>:
+                <label for="username" class="xar-form-label" title="#xarML('Select a unique login name - no spaces')#">
+                       <xar:mlstring>Login name</xar:mlstring>:
                 </label>
                 <input type="text" name="username" id="username" value="#xarVarPrepForDisplay($values['username'])#" size="25" maxlength="255" />
                 <xar:if condition="!empty($invalid['username'])">
@@ -36,7 +36,7 @@
                 </xar:if>
             </div>
             <div class="xar-form-input-wrapper">
-                <label for="realname" class="xar-form-label" title="#xarML('Enter user name')#">
+                <label for="realname" class="xar-form-label" title="#xarML('Enter the name you would like displayed to other site users')#">
                        <xar:mlstring>Display Name</xar:mlstring>:
                 </label>
                 <input type="text" name="realname" id="realname" value="#xarVarPrepForDisplay($values['realname'])#" size="25" maxlength="255" />
@@ -45,7 +45,7 @@
                 </xar:if>
             </div>
             <div class="xar-form-input-wrapper">
-                <label for="email" class="xar-form-label" title="#xarML('Enter email address')#">
+                <label for="email" class="xar-form-label" title="#xarML('Enter your email address')#">
                        <xar:mlstring>E-mail Address</xar:mlstring>:
                 </label>
                 <input type="text" name="email" id="email" value="#xarVarPrepForDisplay($values['email'])#" size="25" maxlength="255" />
