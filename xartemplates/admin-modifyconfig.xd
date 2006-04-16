@@ -31,7 +31,7 @@
                         <span class="required" >#xarML('Message to show when a planned course is selected for hiding')#</span>
                     </label>
                     <span class="fullright">
-                        <textarea class="fullright" name="hideplanningmsg" id="hideplanningmsg" wrap="virtual" rows="10" cols="40">#$hideplanningmsg#</textarea>
+                        <textarea class="fullright" name="hideplanningmsg" id="hideplanningmsg" wrap="virtual" rows="10" cols="40">#xarModGetVar('courses', 'hideplanningmsg')#</textarea>
                     </span>
                     <xar:if condition="!empty($invalid['hideplanningmsg'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid hideplanning message</xar:mlstring></span>
@@ -42,7 +42,7 @@
                         <span class="required" >#xarML('Message to show when a complete course is selected for hiding')#</span>
                     </label>
                     <span class="fullright" class="xar-form-label">
-                        <textarea class="fullright" name="hidecoursemsg" id="hidecoursemsg" wrap="virtual" rows="10" cols="40">#$hidecoursemsg#</textarea>
+                        <textarea class="fullright" name="hidecoursemsg" id="hidecoursemsg" wrap="virtual" rows="10" cols="40">#xarModGetVar('courses', 'hidecoursemsg')#</textarea>
                     </span>
                     <xar:if condition="!empty($invalid['hidecoursemsg'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid hidecourse message!</xar:mlstring></span>
@@ -63,6 +63,14 @@
                     </label>
                     <input type="checkbox" name="HideEmptyFields" id="HideEmptyFields" value="1" #$hideemptyfieldschecked# />
                 </div>
+              <div class="xar-form-input-wrapper">
+                <label for="OldPlannedMonths" class="xar-form-label" title="#xarML('The number of months that a planned course will show up after it has started.')#">
+                  <xar:mlstring>
+                    Number of month to show planned course
+                  </xar:mlstring>
+                </label>
+                <input type="text" name="OldPlannedMonths" id="OldPlannedMonths" value="#xarModGetVar('courses', 'OldPlannedMonths')#" size="3" maxlength="4" /><xar:mlstring>Months</xar:mlstring>
+              </div>
                 <div class="xar-form-input-wrapper">
                     <label for="ShowShortDesc" class="xar-form-label" title="#xarML('Show table column with short description for every course?')#">
                         #xarML('Show short description on user view page?')#

@@ -215,8 +215,10 @@ function courses_init()
     // If your module supports short URLs, the website administrator should
     // be able to turn it on or off in your module administration
     xarModSetVar('courses', 'SupportShortURLs', 0);
-    // Amount of days for the upcoming block to look ahead
+    // Number of days for the upcoming block to look ahead
     xarModSetVar('courses', 'BlockDays', 7);
+    // Number of months that a planning in the past will be shown (today - months = last occurence shown)
+    xarModSetVar('courses', 'OldPlannedMonths', 12);
     // Messages
     xarModSetVar('courses', 'hidecoursemsg', 'This course is currently hidden for display');
     xarModSetVar('courses', 'hideplanningmsg', 'This occurence is currently hidden for display');
@@ -734,6 +736,9 @@ function courses_upgrade($oldversion)
             $result = $datadict->alterColumn($coursestable, 'xar_intendedcredits N(5.2)');
             if (!$result) return;
         case '0.4.0':
+            // Number of months that a planning in the past will be shown (today - months = last occurence shown)
+            xarModSetVar('courses', 'OldPlannedMonths', 12);
+        case '0.4.1':
             break;
     }
     // Update successful
