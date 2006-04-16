@@ -1,9 +1,10 @@
 <?php
+
 /**
  * Encode module parameters for Short URL support
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -11,6 +12,7 @@
  * @link http://xaraya.com/index.php/release/36.html
  * @author Example Module Development Team
  */
+
 /*
  * Support for short URLs (user functions)
  *
@@ -18,33 +20,33 @@
  * virtual path that will be added to index.php, and decode a virtual
  * path back to the original module parameters.
  *
- * The result is that people (and search engines) can use URLs like :
+ * The result is that people (and search engines) can use URLs like:
  *
  * - http://mysite.com/index.php/example/ (main function)
- * - http://mysite.com/index.php/example/list.html (view function)
- * - http://mysite.com/index.php/example/123.html (display function)
+ * - http://mysite.com/index.php/example/list (view function)
+ * - http://mysite.com/index.php/example/123 (display function)
  *
- * in addition to the 'normal' Xaraya URLs that look like :
+ * in addition to the 'normal' Xaraya URLs that look like:
  *
  * - http://mysite.com/index.php?module=example&func=display&exid=123
  *
- * You can also combine the two, e.g. for less frequently-used parameters :
+ * You can also combine the two, e.g. for less frequently-used parameters:
  *
- * - http://mysite.com/index.php/example/list.html?startnum=21
+ * - http://mysite.com/index.php/example/list?startnum=21
  *
  *
  * Module developers who wish to support this feature are strongly
  * recommended to create virtual paths that are 'semantically meaningful',
  * so that people navigating in your module can understand at a glance what
  * the short URLs mean, and how they could e.g. display item 234 simply
- * by changing the 123.html into 234.html.
+ * by changing the .../123 into .../234
  *
  * For older modules with many different optional parameters and functions,
  * this generally implies re-thinking which parameters could easily be set
  * to some default to cover the most frequently-used cases, and rethinking
  * how each function could be represented inside some "virtual directory
- * structure". E.g. .../archive/2002/05/, .../forums/12/345.html, ../recent.html
- * or .../<categoryname>/123.html
+ * structure". E.g. .../archive/2002/05/, .../forums/12/345, ../recent
+ * or .../<categoryname>/123
  *
  * The same kind of encoding/decoding can be done for admin functions as well,
  * except that by default, the URLs will start with index.php/admin/example.
@@ -60,137 +62,96 @@
  * @returns string
  * @return path to be added to index.php for a short URL, or empty if failed
  */
+
 function example_userapi_encode_shorturl($args)
 { 
-    /* Get arguments from argument array */
+    // Get arguments from argument array.
     extract($args);
 
-    /* Check if we have something to work with */
-    if (!isset($func)) {
-        return;
-    }
+    // Check if we have something to work with.
+    // Returning without a value at any point will result in a 'long' URL
+    // being generated, i.e. a URL consisting entirely of GET paramaters.
+    if (!isset($func)) {return;}
     
-    /* Check if we have module alias set or not */
-    $aliasisset = xarModGetVar('example', 'useModuleAlias');
-    $aliasname = xarModGetVar('example','aliasname');
-    if (($aliasisset) && isset($aliasname)) {
-        $usealias   = true;
-    } else{
-        $usealias = false;
-    }
+    // The components of the path.
+    // On return, we can pass back two arrays: the 'path' part of the URL
+    // and the 'GET' part of the URL.
+    // In generating the path-part, we will consume the args passed in.
+    // We may even generate further get paramaters.
+    $path = array();
+    $get = $args;
 
-    /* Note : make sure you don't pass the following variables as arguments in
-     * your module too - adapt here if necessary
-     * default path is empty -> no short URL
-     */
-    $path = '';
-
-    /* if we want to add some common arguments as URL parameters below */
-    $join = '?';
-    
-    /* we can't rely on xarModGetName() here -> you must specify the modname ! */
+    // This module name.
     $module = 'example';
-    $alias = xarModGetAlias($module);
-    /* specify some short URLs relevant to your module 
-     * If you have a module alias make provision for it
-     * The following code should be changed to suit and
-     * demonstrates overtly how alias name is added instead of module
-     */
+
+    // Check if we have a module alias set.
+    // These two variables are set in the module config screen.
+    // They allow the module to take on a new alias.
+    $aliasisset = xarModGetVar($module, 'useModuleAlias');
+    $aliasname = xarModGetVar($module, 'aliasname');
+
+    // It should be noted that most module aliases are not set in this way.
+    // A module can have many aliases, and these can be linked to individual
+    // datasets within the module, and so are set dynamically here, according
+    // to the args passed in, rather than via module variables (as it is here).
+
+    if (!empty($aliasisset) && !empty($aliasname)) {
+        // Check this alias really is a module alias, by mapping
+        // it back to its module name.
+        $module_for_alias = xarModGetAlias($aliasname);
+
+        if ($module_for_alias == $module) {
+            // Yes, we have a valid module alias, so use it
+            // now instead of the module name.
+            $module = $aliasname;
+        }
+    }
+
+    // The first part of the URL must be either the module name or one of its alias.
+    // Store the module or alias in the first part of the path.
+    $path[] = $module;
+
+    // Specify some short URLs relevant to your module.
+    // If you have a module alias make provision for it.
+    // The following code should be changed to suit and
+    // demonstrates overtly how alias name is added instead
+    // of module.
 
     if ($func == 'main') {
-        if (($module == $alias) && ($usealias)){
-            $path = '/' . $aliasname . '/';
-        } else {
-            $path = '/' . $module . '/';
-        }
-        /* Note : if your main function calls some other function by default,
-         * you should set the path to directly to that other function
-         */
+        // Consume the 'func' parameter only.
+        unset($get['func']);
     } elseif ($func == 'view') {
-      if (($module == $alias) && ($usealias)){
-            $path = '/' . $aliasname . '/list.html';
-        } else {
-            $path = '/' . $module . '/list.html';
-        }
-        /* we'll add the optional $startnum parameter below, as a regular
-         * URL parameter
-         * you might have some additional parameter that you want to use to
-         * create different virtual paths here - for example a category name
-         * if (!empty($cid) && is_numeric($cid)) {
-         * // use a cache to avoid re-querying for each URL in the same cat
-         * static $catcache = array();
-         * if (xarModAPILoad('categories','user')) {
-         * if (isset($catcache[$cid])) {
-         * $cat = $catcache[$cid];
-         * } else {
-         * $cat = xarModAPIFunc('categories','user','getcatinfo',
-         * array('cid' => $cid));
-         * // put the category in cache
-         * $catcache[$cid] = $cat;
-         * }
-         * if (!empty($cat) && !empty($cat['name'])) {
-         * // use the category name as part of the path here
-         * $path = '/' . $module . '/' . rawurlencode($cat['name']);
-         * }
-         * }
-         * }
-         * if you have some additional parameters that you want to keep as
-         * regular URL parameters - example for an array :
-         * if (isset($other) && is_array($other) && count($other) > 0) {
-         * foreach ($other as $id => $val) {
-         * $path .= $join . 'other['.$id.']='.$val;
-         * // change the join character (once would be enough)
-         * $join = '&';
-         * }
-         * } 
-         */
+        $path[] = 'list';
+        unset($get['func']);
     } elseif ($func == 'display') {
-         /* check for required parameters */
+        // check for required parameters
         if (isset($exid) && is_numeric($exid)) {
-            if (($module == $alias) && ($usealias)){
-                $path = '/' . $aliasname . '/'. $exid . '.html';
-            } else {
-                $path = '/' . $module . '/' . $exid . '.html';
-            }
-            /* you might have some additional parameter that you want to use to
-             * create different virtual paths here - for example a category name
-             * See above for an example...
-             */
+            unset($get['func']);
+
+            // Add the exid to the path, then consume it.
+            $path[] = $exid;
+            unset($get['exid']);
+
+            // You might have some additional parameter that you want to use to
+            // create different virtual paths here - for example a category name
+            // See above for an example...
         } else {
-            /* we don't know how to handle that -> don't create a path here
-             * Note : this generally means that someone tried to create a
-             * link to your module, but used invalid parameters for xarModURL
-             * -> you might want to provide a default path to return to
-             * $path = '/' . $module . '/list.html';
-             */
+            // we don't know how to handle that -> don't create a path here
+            // Note : this generally means that someone tried to create a
+            // link to your module, but used invalid parameters for xarModURL
+            // -> you might want to provide a default path to return to
+            // $path = array($module, 'list')
         }
     } else {
-        /* anything else that you haven't defined a short URL equivalent for
-         *  -> don't create a path here
-         */
+        // anything else that you haven't defined a short URL equivalent for
+        //  -> don't create a path here
     }
 
-    /* add some other module arguments as standard URL parameters */
-    if (!empty($path)) {
-        if (isset($startnum)) {
-            $path .= $join . 'startnum=' . $startnum;
-            $join = '&';
-        }
-        if (!empty($catid)) {
-            $path .= $join . 'catid=' . $catid;
-            $join = '&';
-        } elseif (!empty($cids) && count($cids) > 0) {
-            if (!empty($andcids)) {
-                $catid = join('+', $cids);
-            } else {
-                $catid = join('-', $cids);
-            }
-            $path .= $join . 'catid=' . $catid;
-            $join = '&';
-        }
-    }
+    // Any GET parameters in the args that have not been consumed, will
+    // be passed back in the 'get' array, and so will be added to the
+    // end of the URL.
 
-    return $path;
+    return array('path' => $path, 'get' => $get);
 }
 
 ?>
