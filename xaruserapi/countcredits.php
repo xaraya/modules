@@ -54,8 +54,9 @@ function itsp_userapi_countcredits($args)
 
         $query = "SELECT SUM(xar_icoursecredits)
                   FROM $table
-                  WHERE xar_pitemid = ?";
-        $result = &$dbconn->Execute($query,array($pitemid));
+                  WHERE xar_pitemid = ?
+                  AND   xar_itspid = ?";
+        $result = &$dbconn->Execute($query,array($pitemid, $itspid));
         /* Check for an error with the database code, adodb has already raised
          * the exception so we just return
          */
