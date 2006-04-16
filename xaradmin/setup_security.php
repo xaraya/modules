@@ -106,6 +106,7 @@ function helpdesk_admin_setup_security($args)
             if( ($group = xarMakeGroup($tech_group_name)) != false )
             {
                 $tech_group_id = $group['uid'];
+                xarModSetVar('helpdesk', 'tech_group', $tech_group_id);
                 if( xarMakeRoleMemberByName($tech_group_name, "Users") )
                 {
                     $data['tech_exists'] = true;
@@ -132,7 +133,7 @@ function helpdesk_admin_setup_security($args)
             $update_security_levels = true;
         }
 
-        if( $data['security_tech_levels_ok'] == false )
+        if( $data['security_tech_levels_ok'] == false && $tech_group_id > 0 )
         {
             $settings['levels']['groups'][$tech_group_id] = 60;
             $update_security_levels = true;
