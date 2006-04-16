@@ -1,0 +1,14 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<xar:mlstring>Dear</xar:mlstring> #$name#,
+
+<xar:mlstring>A comment has been logged against ticket:</xar:mlstring> ###$tid# #$subject#
+
+<xar:mlstring>Comment:</xar:mlstring>
+#$comment#
+
+<xar:mlstring>View your ticket:</xar:mlstring>
+<a href="#$viewticket#">#$viewticket#</a>
+
+<xar:mlstring>View all your tickets:</xar:mlstring>
+<a href="#$viewtickets#">#$viewtickets#</a>
