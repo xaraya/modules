@@ -19,8 +19,7 @@
  * @author the ITSP module development team
  * @param  $args ['itspid'] id of itsp item to get
  * @param  $args ['userid'] id of the user to get the itsp for
- * @returns array
- * @return item array, or false on failure
+ * @return array with item, or false on failure
  * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function itsp_userapi_get($args)

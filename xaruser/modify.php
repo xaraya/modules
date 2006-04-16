@@ -60,8 +60,9 @@ function itsp_user_modify($args)
     $planid = $itsp['planid'];
     $itspid = $itsp['itspid'];
     $userid = $itsp['userid']; // User for MySelf
+
     /* Security check */
-    if (!xarSecurityCheck('ReadITSP', 1, 'ITSP', "$itspid:$planid:$userid")) {
+    if (!xarSecurityCheck('EditITSP', 1, 'ITSP', "$itspid:$planid:$userid")) {
         return;
     }
 
@@ -89,10 +90,7 @@ function itsp_user_modify($args)
                 // for each linked course get the details
                 if (!isset($courselinks) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
-                /* TODO: check for conflicts between transformation hook output and xarVarPrepForDisplay
-                 * Loop through each item and display it.
-                 */
-                 $creditsnow = 0;
+                $creditsnow = 0;
                 foreach ($courselinks as $lcourse) {
                     // Add read link
                     $courseid = $lcourse['lcourseid'];
@@ -126,7 +124,7 @@ function itsp_user_modify($args)
                 foreach ($courselinks as $icourse) {
                     // Add read link
                     $icourseid = $icourse['icourseid'];
-                    if (xarSecurityCheck('ReadITSP', 0, 'ITSP', "$itspid:All:$userid")) {
+                    if (xarSecurityCheck('ReadITSP', 0, 'ITSP', "$itspid:$planid:$userid")) {
                         $icourse['link'] = xarModURL('itsp',
                             'user',
                             'display_icourse',
@@ -222,7 +220,7 @@ function itsp_user_modify($args)
     $data['pitemid'] = $pitemid;
 
     $item['module'] = 'itsp';
-    $item['itemid'] = 2;
+    $item['itemtype'] = 2;
     $hooks = array();
     $hooks = xarModCallHooks('item', 'modify', $itspid, $item);
 

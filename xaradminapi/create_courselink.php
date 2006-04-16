@@ -31,10 +31,10 @@ function itsp_adminapi_create_courselink($args)
     if (!isset($lcourseid) || !is_int($lcourseid)) {
         $invalid[] = 'lcourseid';
     }
-    if (!isset($itspid) || !is_numeric($itspid)) {
+    if (!isset($itspid) || !is_int($itspid)) {
         $invalid[] = 'itspid';
     }
-    if (!isset($pitemid) || !is_numeric($pitemid)) {
+    if (!isset($pitemid) || !is_int($pitemid)) {
         $invalid[] = 'pitemid';
     }
     if (count($invalid) > 0) {
@@ -47,8 +47,12 @@ function itsp_adminapi_create_courselink($args)
     /* Security check - important to do this as early on as possible to
      * avoid potential security holes or just too much wasted processing
      */
-    if (!xarSecurityCheck('EditITSP', 1, 'ITSP', "$itspid:All")) {//TODO: check
-        return;
+     echo $itspid;
+    $itsp = xarModApiFunc('itsp','user','get',array('itspid'=>$itspid));
+    $planid = $itsp['planid'];
+    $userid = $itsp['userid'];
+    if (!xarSecurityCheck('EditITSP', 1, 'ITSP', "$itspid:$planid:$userid")) {
+       return;
     }
     if (!empty($dateappr) && is_string($dateappr)) {
         $dateappr = strtotime($dateappr);

@@ -33,7 +33,7 @@ function itsp_userapi_countcredits($args)
     $credits = 0;
     // See where we will get the credits from
     $rules = xarModApiFunc('itsp','user','splitrules',array('pitemid'=>$pitemid));
-    if ($rules['rule_source'] == 'courses') {
+    if (strcmp($rules['rule_source'],'courses')==0) {
         //get them from courses
         // Get the linked courses
         $lcourses = xarModApiFunc('itsp','user','getall_courselinks',array('itspid' => $itspid, 'pitemid' => $pitemid));

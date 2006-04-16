@@ -49,7 +49,7 @@ function itsp_user_update()
     $planid = $itsp['planid'];
     /* Security check */
     $userid = $itsp['userid'];
-    if (!xarSecurityCheck('ReadITSP', 1, 'ITSP', "$itspid:$planid:$userid")) {
+    if (!xarSecurityCheck('EditITSP', 1, 'ITSP', "$itspid:$planid:$userid")) {
         return;
     }
 
