@@ -322,7 +322,7 @@ function articles_user_view($args)
         if (empty($cids)) {
             $cids = array();
         }
-        if (empty($andcids)) {
+        if (!isset($andcids)) {
             $andcids = true;
         }
     }
