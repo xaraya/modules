@@ -1,23 +1,31 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Categories Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Delete Category Links</xar:mlstring></h2><br />
-<div style="margin: auto;">
-
-<div align="center">
-<xar:if condition="empty($modname)">
-    <xar:mlstring>Are you sure you want to delete all category links ?</xar:mlstring>
-<xar:elseif condition="empty($itemid)"/>
-    <xar:ml><xar:mlstring>Are you sure you want to delete all category links for module <b>#(1)</b> ?</xar:mlstring><xar:mlvar>#$modname#</xar:mlvar></xar:ml>
-<xar:else/>
-    <xar:ml><xar:mlstring>Are you sure you want to delete all category links for module <b>#(1)</b> item <b>#(2)</b> ?</xar:mlstring><xar:mlvar>#$modname#</xar:mlvar><xar:mlvar>#$itemid#</xar:mlvar></xar:ml>
-</xar:if>
-<br /><br />
+<div class="xar-mod-body">
+<xar:template type="module" file="admin-menu" />
+<h2><xar:mlstring>Delete Category Links</xar:mlstring></h2>
 <form method="post" action="&xar-modurl-categories-admin-unlink;">
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <input type="hidden" name="modid" id="modid" value="#$modid#" />
     <input type="hidden" name="itemtype" id="itemtype" value="#$itemtype#" />
     <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
-
-    <input type="submit" name="confirm" id="confirm" value="#$confirmbutton#"  />
-</form></div>
-</div>
+    <fieldset>
+        <legend>
+            <xar:mlstring>Confirm deletion</xar:mlstring>
+     </legend>
+    <div class="xar-form-input-wrapper-before">
+<xar:if condition="empty($modname)">
+        <xar:mlstring>Are you sure you want to delete all category links ?</xar:mlstring>
+<xar:elseif condition="empty($itemid)"/>
+        <xar:ml>
+            <xar:mlstring>Are you sure you want to delete all category links for module <strong>#(1)</strong> ?</xar:mlstring>
+            <xar:mlvar>#$modname#</xar:mlvar>
+        </xar:ml>
+<xar:else/>
+    <xar:ml><xar:mlstring>Are you sure you want to delete all category links for module <strong>#(1)</strong> item <strong>#(2)</strong> ?</xar:mlstring><xar:mlvar>#$modname#</xar:mlvar><xar:mlvar>#$itemid#</xar:mlvar></xar:ml>
+</xar:if>
+    </div>
+    </fieldset>
+    <div class="xar-form-input-wrapper-after">
+        <input type="submit" name="confirm" id="confirm" value="#$confirmbutton#"  />
+    </div>
+</form>
 </div>
