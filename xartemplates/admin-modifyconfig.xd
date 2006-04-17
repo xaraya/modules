@@ -111,21 +111,22 @@
                         <xar:else />
                         <input type="checkbox" name="showterms" id="showterms" value="1" />
                     </xar:if>
-                    <label for="showterms" title="#xarML('Show terms of service in Roles user menu')#">
+                    <label for="showterms" title="#xarML('Show terms of service in Registration user menu')#">
                         <xar:mlstring>
-                            Show Terms of Service
+                            Show Terms of Service link in the menu?
                         </xar:mlstring>
                     </label>
                 </div>
+
                 <div class="xar-form-input-wrapper-after">
                     <xar:if condition="xarModGetVar('registration', 'showprivacy')">
                         <input type="checkbox" name="showprivacy" id="showprivacy" value="1" checked="checked" />
                     <xar:else />
                         <input type="checkbox" name="showprivacy" id="showprivacy" value="1" />
                     </xar:if>
-                    <label for="showprivacy" title="#xarML('Show privacy policy in Roles user menu')#">
+                    <label for="showprivacy" title="#xarML('Show privacy policy in Registration user menu')#">
                         <xar:mlstring>
-                            Show Privacy Policy
+                            Show Privacy Policy link in the menu?
                         </xar:mlstring>
                     </label>
                 </div>
