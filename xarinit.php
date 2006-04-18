@@ -36,11 +36,10 @@ function courses_init()
         'xar_type'          => array('type' => 'varchar', 'size' => 10, 'default' => 'NULL'),
         'xar_level'         => array('type' => 'varchar', 'size' => 20, 'default' => 'NULL'),
         'xar_shortdesc'     => array('null'=>FALSE, 'type'=>'text'),
-      //  'xar_intendedcredits' => array('type' => 'integer', 'size' => 30, 'default' => 'NULL'),
         'xar_intendedcredits' => array('type'=>'float', 'size' =>'decimal', 'width'=>5, 'decimals'=>2),
         'xar_freq'          => array('null'=>TRUE, 'type' => 'varchar', 'size' => 20, 'default' => 'NULL'),
         'xar_contactuid'    => array('type' => 'integer', 'size' => 'medium', 'null' => true, 'default' => 'NULL'),
-        'xar_contact'       => array('null'=>TRUE, 'type' => 'varchar', 'size' => 255, 'default' => 'NULL'),
+        'xar_contact'       => array('null'=>TRUE, 'type' => 'text', 'default' => 'NULL'),
         'xar_hidecourse'    => array('type' => 'integer', 'size' => 'tiny', 'null' => false, 'default' => '0'),
         'xar_last_modified' => array('type'=>'integer','size' => 11,'null'=>FALSE)
         );
@@ -56,9 +55,6 @@ function courses_init()
     $fields = array(
         'xar_planningid'    => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
         'xar_courseid'      => array('type' => 'integer', 'null' => false),
-       // 'xar_credits'       => array('type' => 'integer', 'size' => 'tiny', 'unsigned'=>TRUE, 'null' => false, 'default' => '0'),
-      //  'xar_creditsmin'    => array('type' => 'integer', 'size' => 'tiny', 'unsigned'=>TRUE, 'null' => false, 'default' => '0'),
-      //  'xar_creditsmax'    => array('type' => 'integer', 'size' => 'tiny', 'unsigned'=>TRUE, 'null' => false, 'default' => '0'),
         'xar_credits'       => array('type'=>'float', 'size' =>'decimal', 'width'=>5, 'decimals'=>2),
         'xar_creditsmin'    => array('type'=>'float', 'size' =>'decimal', 'width'=>5, 'decimals'=>2),
         'xar_creditsmax'    => array('type'=>'float', 'size' =>'decimal', 'width'=>5, 'decimals'=>2),
@@ -739,6 +735,16 @@ function courses_upgrade($oldversion)
             // Number of months that a planning in the past will be shown (today - months = last occurence shown)
             xarModSetVar('courses', 'OldPlannedMonths', 12);
         case '0.4.1':
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+            // Using the Datadict method to be up to date ;)
+            $datadict =& xarDBNewDataDict($dbconn, 'CREATE');
+            $coursestable = $xartable['courses'];
+
+            // Apply changes
+            xarDBLoadTableMaintenanceAPI();
+            $result = $datadict->alterColumn($coursestable, 'xar_contact X NULL');
+        case '0.5.0':
             break;
     }
     // Update successful
