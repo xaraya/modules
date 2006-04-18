@@ -10,22 +10,22 @@
         <xar:mlstring>Comments Module Statistics</xar:mlstring>
     </h2>
 
-    <div align="center">
+    <div class="xar-align-center">
         <table border="0" width="100%" cellpadding="2" cellspacing="1">
             <tr>
-                <th valign="center" width="40%">
+                <th class="xar-valign-middle" width="40%">
                     <xar:mlstring><b>Module<br />Name</b></xar:mlstring>
                 </th>
-                <th align="center" valign="center" width="15%">
+                <th class="xar-valign-middle xar-align-center" width="15%">
                     <xar:mlstring><b>Module<br />Items</b></xar:mlstring>
                 </th>
-                <th align="center" valign="center" width="15%">
+                <th class="xar-valign-middle xar-align-center"width="15%">
                     <xar:mlstring><b>Total<br />Comments</b></xar:mlstring>
                 </th>
-                <th align="center" valign="center" width="15%">
+                <th class="xar-valign-middle xar-align-center" width="15%">
                     <xar:mlstring><b>Inactive<br />Comments</b></xar:mlstring>
                 </th>
-                <th align="center" valign="center" width="15%">
+                <th class="xar-valign-middle xar-align-center" width="15%">
                     <xar:mlstring><b>Action</b></xar:mlstring>
                 </th>
             </tr>
@@ -46,52 +46,52 @@
 
                 <xar:loop name="$data">
                     <tr>
-                        <td valign="center" width="40%">
+                        <td class="xar-valign-middle" width="40%">
                             <a href="#$loop:item['module_url']#">#$loop:item['modname']#</a>
                         </td>
-                        <td align="center" valign="center" width="15%">
+                        <td class="xar-valign-middle xar-align-center" width="15%">
                             #$loop:item['pages']#
                         </td>
-                        <td align="center" valign="center" width="15%">
+                        <td class="xar-valign-middle xar-align-center" width="15%">
                             #$loop:item['total']#
                         </td>
-                        <td align="center" valign="center" width="15%">
+                        <td class="xar-valign-middle xar-align-center" width="15%">
                             #$loop:item['inactive']#
                         </td>
-                        <td align="center" valign="center" width="15%">
+                        <td class="xar-valign-middle xar-align-center" width="15%">
                             <a href="#$loop:item['delete_url']#"><b>Delete</b></a>
                         </td>
                     </tr>
 
                 </xar:loop>
                 <tr>
-                    <td valign="center" width="40%">
+                    <td class="xar-valign-middle" width="40%">
                         <b><xar:mlstring>Grand Total</xar:mlstring></b>
                     </td>
-                    <td align="center" valign="center" width="15%">
+                    <td class="xar-valign-middle xar-align-center" valign="center" width="15%">
                         <b>#$gt_pages#</b>
                     </td>
-                    <td align="center" valign="center" width="15%">
+                    <td class="xar-valign-middle xar-align-center" width="15%">
                         <b>#$gt_total#</b>
                     </td>
-                    <td align="center" valign="center" width="15%">
+                    <td class="xar-valign-middle xar-align-center" width="15%">
                         <b>#$gt_inactive#</b>
                     </td>
-                    <td align="center" valign="center" width="15%">
+                    <td class="xar-valign-middle xar-align-center" width="15%">
                         <a href="#$delete_all_url#">Delete All</a>
                     </td>
                 </tr>
-            </table>
-            </xar:if>
 
-                    <div class="xar-accent xar-norm-outline">
+            </xar:if>
+           </table>
+            <p class="xar-accent xar-norm-outline">
                         <xar:mlstring>
                             By clicking on <b>Delete</b> you can delete all comments associated with a particular
                             module. Clicking on a module will take you to that module's statistics page containing
                             the figures for each of that module's items that have comments associated with them.
                             From there you can delete all comments associated with a particular item.
                         </xar:mlstring>
-                    </div>
+           </p>
     </div>
 </div>
 
