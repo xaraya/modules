@@ -25,12 +25,10 @@ function xarbb_adminapi_delete($args)
         return;
     }
     // The user API function is called.
-    $data = xarModAPIFunc('xarbb',
-                          'user',
-                          'getforum',
-                          array('fid' => $fid));
+    $data = xarModAPIFunc('xarbb', 'user', 'getforum', array('fid' => $fid));
     if (empty($data)) return;
-    if(!xarSecurityCheck('DeletexarBB',1,'Forum',$data['catid'].':'.$data['fid'])) return;
+
+    if (!xarSecurityCheck('DeletexarBB', 1, 'Forum', $data['catid'] . ':' . $data['fid'])) return;
 
     // topics and comments are deleted in delete gui func so do not care
     // shouldn't this call be here?
@@ -42,11 +40,15 @@ function xarbb_adminapi_delete($args)
     $xbbforumstable = $xartable['xbbforums'];
 
     // Delete the item
-    $query = "DELETE FROM $xbbforumstable
-              WHERE xar_fid = ?";
+    $query = "DELETE FROM $xbbforumstable WHERE xar_fid = ?";
     $result =& $dbconn->Execute($query, array($fid));
     if (!$result) return;
-   // Let any hooks know that we have deleted a forum
+
+    // Remove module variables in use.
+    xarModDelVar('xarbb', 'f_' . $fid);
+    xarModDelVar('xarbb', 'topics_' . $fid);
+
+    // Let any hooks know that we have deleted a forum
     $args['module'] = 'xarbb';
     $args['itemtype'] = 0; // forum
     $args['itemid'] = $fid;
