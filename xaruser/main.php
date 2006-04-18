@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Main user function to display list of all existing forums
  * And existing categories
@@ -23,15 +24,18 @@
  * @param   catid when not on top level forum
  * @return  array
 */
+
 function xarbb_user_main()
 {
    // Get parameters from whatever input we need
     if (!xarVarFetch('startnum', 'id', $startnum, NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('catid', 'isset', $catid, NULL, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('catid', 'id', $catid, NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('read', 'isset', $read, NULL, XARVAR_DONT_SET)) return;
 
     // Security Check
     if (!xarSecurityCheck('ViewxarBB', 1, 'Forum')) return;
+
+    $now = time();
 
     // Variable Needed for output
     $args               = array();
@@ -41,11 +45,12 @@ function xarbb_user_main()
     $data['pager']      = '';
     $data['uid']        = xarUserGetVar('uid');
     $data['catid']      = $catid;
-    $data['now']        = time();
+    $data['now']        = $now;
     $data['items']      = array();
     $sitename           = xarModGetVar('themes', 'SiteName', 0);
     $xarbbtitle         = xarModGetVar('xarbb', 'xarbbtitle', 0);
     $data['xarbbtitle'] = isset($xarbbtitle) ? $xarbbtitle : '';
+
     // Login
     $data['return_url'] = xarModURL('xarbb', 'user', 'main');
     $data['submitlabel']= xarML('Submit');
@@ -61,7 +66,7 @@ function xarbb_user_main()
         $items = array();
         $catcount = count($cats);
         foreach($cats as $cat) {
-            if(xarSecurityCheck('ViewxarBB', 0, 'Forum', $cat['cid'] . ':All')) {
+            if (xarSecurityCheck('ViewxarBB', 0, 'Forum', $cat['cid'] . ':All')) {
                 $items[] = $cat;
             }
         }
@@ -74,18 +79,31 @@ function xarbb_user_main()
             $args['basecat'] = $item['cid'];
             $items[$i]['cbchild'] = xarModAPIfunc('categories', 'user', 'getchildren', array('cid' => $item['cid']));
             $forums = xarModAPIFunc('xarbb', 'user', 'getallforums', array('catid' => $item['cid']));
+
             // Security check: remove forums the user should not see
             $forumcount = count($forums);
             $items[$i]['forums'] = array();
-            foreach($forums as $forum){
-                if(xarSecurityCheck('ViewxarBB',0,'Forum','All:'.$forum['fid'])) {
+            foreach($forums as $forum) {
+                if (xarSecurityCheck('ViewxarBB', 0, 'Forum', 'All:' . $forum['fid'])) {
                     $items[$i]['forums'][] = $forum;
+
+                    // This is the 'mark all forums as read' option.
+                    if (isset($read)) {
+                        // Reset the time last visit for the forum.
+                        xarModAPIfunc('xarbb', 'admin', 'set_cookie', array('name' => 'f_' . $forum['fid'], 'value' => $now));
+
+                        // Also set the topic tracking flags, so there are no topics within
+                        // the forum marked as unread.
+
+                        // We can simple clear all entried in the topic tracking array, since we 
+                        // have set the last visited time on the forum itself.
+                        $topic_tracking = array();
+                        xarModAPIfunc('xarbb', 'admin', 'set_cookie', array('name' => 'topics_' . $forum['fid'], 'value' => serialize($topic_tracking)));
+                    }
                 }
-                if (isset($read)){
-                    xarSessionSetVar(xarModGetVar('xarbb', 'cookiename') . '_f_' . $forum['fid'], time());
-                }
+
                 $args = $items[$i]['forums'];
-                $items[$i]['forums'] = xarbb_user__getforuminfo($args);
+                $items[$i]['forums'] = xarbb_user_main__getforuminfo($args);
             }
         }
     } else {
@@ -108,6 +126,7 @@ function xarbb_user_main()
         $totalitems = count($items);
         for ($i = 0; $i < $totalitems; $i++) {
             $item = $items[$i];
+
             // Get an array of assigned category details for a specific item
             $args['basecat'] = $item['cid'];
             $items[$i]['cbchild'] = xarModAPIfunc('categories', 'user', 'getchildren', array('cid' => $item['cid']));
@@ -119,36 +138,41 @@ function xarbb_user_main()
             $forumcount = count($forums);
             $items[$i]['forums'] = array();
             foreach($forums as $forum) {
-                if(xarSecurityCheck('ViewxarBB',0,'Forum','All:'.$forum['fid'])) {
+                if (xarSecurityCheck('ViewxarBB', 0, 'Forum', 'All:' . $forum['fid'])) {
                     $items[$i]['forums'][] = $forum;
                 }
             }
 
             $args = $items[$i]['forums'];
-            $items[$i]['forums'] = xarbb_user__getforuminfo($args);
+            $items[$i]['forums'] = xarbb_user_main__getforuminfo($args);
             if (isset($read)) {
-                xarSessionSetVar(xarModGetVar('xarbb', 'cookiename') . '_f_' . $forum['fid'], time());
+                xarModAPIfunc('xarbb', 'admin', 'set_cookie', array('name' => 'f_' . $forum['fid'], 'value' => time()));
             }
         }
     }
+
     // Debug
     // $pre = var_export($items, true); echo "<pre>$pre</pre>"; return;
     // Add the array of items to the template variables
     $data['items'] = $items;
 
     // Don't really need to do this for visitors, just users.
-    if (xarUserIsLoggedIn()){
+    if (xarUserIsLoggedIn()) {
         // Check the cookie for the date to display
-        $lastvisitsession = xarSessionGetVar(xarModGetVar('xarbb', 'cookiename') . 'lastvisit');
-        if (isset($lastvisitsession)){
-            $data['lastvisitdate'] = xarSessionGetVar(xarModGetVar('xarbb', 'cookiename') . 'lastvisit');
+        $lastvisitsession = xarModAPIfunc('xarbb', 'admin', 'get_cookie', array('name' => 'lastvisit'));
+
+        if (!empty($lastvisitsession)){
+            $data['lastvisitdate'] = $lastvisitsession;
         } else {
             $data['lastvisitdate'] = time();
         }
     }
-    xarTplSetPageTitle(xarVarPrepForDisplay(xarML('Forum Index')));
+
+    xarTplSetPageTitle(xarML('Forum Index'));
+
     return $data;
 }
+
 /**
  * Configure forums and categories for display
  *
@@ -156,7 +180,7 @@ function xarbb_user_main()
  * @param   args contains that catid of forums
  * @return  array of forum information
 */
-function xarbb_user__getforuminfo($args)
+function xarbb_user_main__getforuminfo($args)
 {
     $forums = $args;
     $totalforums = count($forums);
@@ -164,7 +188,7 @@ function xarbb_user__getforuminfo($args)
     for ($i = 0; $i < $totalforums; $i++) {
         $forum = $forums[$i];
         //bug #4070 - all posts, topics deleted by last poster still there
-        if ($forum['ftopics']>0) {
+        if ($forum['ftopics'] > 0) {
             $getname = array();
             if (!empty($forum['fposter'])) {
                 // Get the name of the poster.  Does it make sense to split this
@@ -178,7 +202,7 @@ function xarbb_user__getforuminfo($args)
             }
         }
 
-        if (!empty($forum['foptions']) && is_string($forum['foptions'])){
+        if (!empty($forum['foptions']) && is_string($forum['foptions'])) {
             $forums[$i]['foptions'] = unserialize($forum['foptions']);
         }
 
@@ -187,29 +211,41 @@ function xarbb_user__getforuminfo($args)
         if ($forum['fstatus'] == 1) {
             $forums[$i]['timeimage'] = 1;
         } else {
-            if (xarUserIsLoggedIn()) {
-                // Here we can check the updated images or standard ones.
-                $lastvisitforumsession = xarSessionGetVar(xarModGetVar('xarbb', 'cookiename') . '_f_' . $forum['fid']);
-                if (isset($lastvisitforumsession)){
-                    $forumtimecompare = xarSessionGetVar(xarModGetVar('xarbb', 'cookiename') . '_f_' . $forum['fid']);
+            // Either the latest post is greater than the last visit time to the forum,
+            // or we have never visited it, or there is at least one unread topic.
+
+            $lastvisitforum = xarModAPIfunc('xarbb', 'admin', 'get_cookie', array('name' => 'f_' . $forum['fid']));
+
+            if (empty($lastvisitforum) || $forum['fpostid'] > $lastvisitforum) {
+                $unread_flag = true;
+            } else {
+                // Get the topic tracking list for this forum.
+                $topic_tracking = xarModAPIfunc('xarbb', 'admin', 'get_cookie', array('name' => 'topics_' . $forum['fid']));
+                if (!empty($topic_tracking)) $topic_tracking = unserialize($topic_tracking);
+
+                if (empty($topic_tracking)) {
+                    // There is no topic tracking set, so we know nothing about what is inside the forum.
+                    // But we do know that there are no new posts since we last visited, so assume there
+                    // is nothing new in it.
+                    $unread_flag = false;
+                } elseif (is_array($topic_tracking) && in_array(0, $topic_tracking)) {
+                    $unread_flag = true;
                 } else {
-                    $forumtimecompare = '';
+                    $unread_flag = false;
                 }
+            }
 
-                //$time_compare = max($alltimecompare, $forumtimecompare);
-
-                $time_compare = $forumtimecompare;
-
-                if ($time_compare > $forum['fpostid']) {
-                    $forums[$i]['timeimage'] = 2;
-                } else {
-                    $forums[$i]['timeimage'] = 3;
-                }
+            // Set the image for the forum, according to whether it contains unread items.
+            // TODO: replace these numbers with strings or module defines. The numbers mean
+            // nothing when looking at this code.
+            if ($unread_flag) {
+                $forums[$i]['timeimage'] = 3;
             } else {
                 $forums[$i]['timeimage'] = 2;
             }
         }
     }
+
     return $forums;
 }
 

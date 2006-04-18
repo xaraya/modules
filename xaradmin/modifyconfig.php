@@ -76,23 +76,18 @@ function xarbb_admin_modifyconfig()
             if (!xarVarFetch('nntpport','int:1:4',$nntpport, 119, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('nntpserver', 'str:1:', $nntpserver, 'news.xaraya.com', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('nntpgroup', 'str:1:', $nntpgroup, 'xaraya.test', XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('cookiename', 'str:1:', $cookiename, 'xarbb', XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('cookiepath', 'str:1:', $cookiepath, '/', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('xarbbtitle', 'str:1:', $xarbbtitle, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('aliasname', 'str:1:', $aliasname, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('masternntpsetting', 'checkbox', $masternntpsetting, false, XARVAR_NOT_REQUIRED)) return;
             // Update module variables
             xarModSetVar('xarbb', 'SupportShortURLs', $supportshorturls);
-            xarModSetVar('xarbb', 'cookiename', $cookiename);
-            xarModSetVar('xarbb', 'cookiepath', $cookiepath);
             xarModSetVar('xarbb', 'xarbbtitle', $xarbbtitle);
             xarModSetVar('xarbb', 'masternntpsetting', $masternntpsetting);            
             if (isset($aliasname) && trim($aliasname)<>'') {
                 xarModSetVar('xarbb', 'useModuleAlias', $modulealias);
             } else{
-              xarModSetVar('xarbb', 'useModuleAlias', 0);
+                xarModSetVar('xarbb', 'useModuleAlias', 0);
             }
-            //xarModSetVar('xarbb', 'cookiedomain', $cookiedomain);
             xarModSetVar('xarbb', 'forumsperpage', $forumsperpage); //only required for admin view
             // default settings for xarbb
             $settings = array();

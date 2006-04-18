@@ -1,4 +1,5 @@
 <?php
+
 /**
  * View a forum topic and replies
  *
@@ -16,12 +17,15 @@
 function xarbb_user_viewtopic($args)
 {
    // Get parameters from whatever input we need
-    if(!xarVarFetch('startnum', 'id', $startnum,1, XARVAR_NOT_REQUIRED)) return;
-    if(!xarVarFetch('post', 'str', $post, 2, XARVAR_NOT_REQUIRED)) return;
-    if(!xarVarFetch('tid', 'id', $tid)) return;
-    if(!xarVarFetch('view', 'str', $view,'', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('startnum', 'id', $startnum,1, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('post', 'str', $post, 2, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('tid', 'id', $tid)) return;
+    if (!xarVarFetch('view', 'enum:next:previous:prev', $view, '', XARVAR_NOT_REQUIRED)) return;
 
     extract($args);
+
+    $now = time();
+
     // redirect to previous/next topic
     if (!empty($view)) {
         if ($view == 'next') {
@@ -41,10 +45,31 @@ function xarbb_user_viewtopic($args)
         }
     }
 
-    // Session for topic read
-    xarSessionSetVar(xarModGetVar('xarbb', 'cookiename') . '_t_' . $tid, time());
+    $topic = xarModAPIFunc('xarbb', 'user', 'gettopic', array('tid' => $tid));
+    // TODO: redirect to a nicer error page within xarBB if the topic does not exist.
+    if (empty($topic)) return;
 
-    if (!$topic = xarModAPIFunc('xarbb', 'user', 'gettopic', array('tid' => $tid))) return;
+    $fid = $topic['fid'];
+
+    // Fetch the topic tracking array for this forum.
+    $topic_tracking = xarModAPIfunc('xarbb', 'admin', 'get_cookie', array('name' => 'topics_' . $fid));
+    if (empty($topic_tracking)) {
+        $topic_tracking = array();
+    } else {
+        $topic_tracking = unserialize($topic_tracking);
+    }
+
+    // If this topic is in the array, then set the last visited time.
+    // If it is not in the array, then it was never marked as 'unread'
+    // and so can be safely ignored.
+    if (isset($topic_tracking[$tid])) {
+        $topic_tracking[$tid] = $topic['ttime'];
+
+        // Store the topic tracking array for this forum (only bother if we have changed it).
+        // No need to sort and truncate it as we are not adding anything to it.
+        xarModAPIfunc('xarbb', 'admin', 'set_cookie', array('name' => 'topics_' . $fid, 'value' => serialize($topic_tracking)));
+    }
+
 
     if ($topic['fstatus'] == 1) {
         $msg = xarML('Forum -- #(1) -- all associated topics have been locked by administrator', $topic['fname']);
@@ -52,13 +77,13 @@ function xarbb_user_viewtopic($args)
         return;
     }
 
-    // Lets deal with the cookie in a more sane manner
-    if (xarUserIsLoggedIn()){
-        xarSessionSetVar(xarModGetVar('xarbb', 'cookiename') . '_f_' . $topic['fid'], time());
-        xarSessionSetVar(xarModGetVar('xarbb', 'cookiename') . 'lastvisit', time());
-    }
+    // Store the last visited times.
+    // TODO: put the forums into one array, so we don't need to create module
+    // variables for each new forum.
+    xarModAPIfunc('xarbb', 'admin', 'set_cookie', array('name' => 'f_' . $fid, 'value' => $now));
+    xarModAPIfunc('xarbb', 'admin', 'set_cookie', array('name' => 'lastvisit', 'value' => $now));
 
-    $settings = unserialize(xarModGetVar('xarbb', 'settings.' . $topic['fid']));
+    $settings = unserialize(xarModGetVar('xarbb', 'settings.' . $fid));
     if (isset($settings['allowhtml'])) {
         $allowhtml = $settings['allowhtml'];
     } else {
@@ -69,15 +94,15 @@ function xarbb_user_viewtopic($args)
     } else {
         $allowbbcode = false;
     }
-    $postperpage = $settings['postsperpage'];
+
+    $postsperpage = $settings['postsperpage'];
 
 
     // Security Check
     if (!xarSecurityCheck('ReadxarBB', 1, 'Forum', $topic['catid'] . ':' . $topic['fid'])) return;
 
-    // The user API function is called and returns all forum and topic data
-    //<jojodee> Do we need to call this again?
-    $data = $topic; //to cover us for any use of $data
+    // Data for the template.
+    $data = $topic;
 
     $data['pager'] = '';
 
@@ -101,7 +126,8 @@ function xarbb_user_viewtopic($args)
     $data['transformedtitle'] = str_replace("</p>", "", $data['transformedtitle']);
     // End
 
-    xarTplSetPageTitle(xarVarPrepForDisplay($data['ttitle']));
+    xarTplSetPageTitle($data['ttitle']);
+
     // The user API function is called
     $posterdata = xarModAPIFunc('roles', 'user', 'get', array('uid' => $data['tposter']));
 
@@ -145,7 +171,7 @@ function xarbb_user_viewtopic($args)
             'itemtype' => $data['fid'],
             'objectid' => $header['objectid'],
             'startnum' => $startnum,
-            'numitems' => $postperpage,
+            'numitems' => $postsperpage,
             'reverse'  => $reverse
         )
     );
@@ -312,7 +338,7 @@ function xarbb_user_viewtopic($args)
     $data['pager'] = xarTplGetPager(
         $startnum, $topic['treplies'],
         xarModURL('xarbb', 'user', 'viewtopic', array('startnum' => '%%', 'tid' => $tid)),
-        $postperpage
+        $postsperpage
     );
 
     // Return the template variables defined in this function

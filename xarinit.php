@@ -231,7 +231,6 @@ function xarbb_init()
  */
 function xarbb_upgrade($oldversion)
 {
-
     // Upgrade dependent on old version number
     switch ($oldversion) {
 
@@ -406,6 +405,7 @@ function xarbb_upgrade($oldversion)
             xarModDelVar('xarbb', 'topicsperpage');
             xarModDelVar('xarbb', 'postsperpage');
             xarModDelVar('xarbb', 'allowhtml');
+
             xarModSetVar('xarbb', 'cookiename', 'xarbb');
             xarModSetVar('xarbb', 'cookiepath', '/');
             xarModSetVar('xarbb', 'cookiedomain', '');
@@ -516,6 +516,7 @@ function xarbb_upgrade($oldversion)
         case '1.1.5':
             $modversion['name'] = 'xarbb';
             // fall through to next upgrade
+
         case '1.1.6':
             // Set up database tables
            $dbconn =& xarDBGetConn();
@@ -544,6 +545,31 @@ function xarbb_upgrade($oldversion)
              $result2->Close();
              $result3->Close();
             // fall through to next upgrade
+
+        case '1.1.7':
+            // In this version (1.2.1) we introduce a new way to handle
+            // topic tracking. Some module variables need to be created
+            // for each forum.
+
+            // Remove old module variables we no longer need.
+            xarModDelVar('xarbb', 'cookiename');
+            xarModDelVar('xarbb', 'cookiepath');
+            xarModDelVar('xarbb', 'cookiedomain');
+
+            // For each forum that already exists, create a set of module
+            // variables for user tracking.
+            $all_forums = xarModAPIFunc('xarbb', 'user', 'getallforums');
+            foreach($all_forums as $forum) {
+                $fid = $forum['fid'];
+                // Last visited time.
+                xarModSetVar('xarbb', 'f_' . $fid, '0');
+                // Topic tracking array.
+                $topic_tracking = array();
+                xarModSetVar('xarbb', 'topics_' . $fid, serialize($topic_tracking));
+            }
+
+            // Fall through to next upgrade version.
+        
         default:
             break;
     }
@@ -601,6 +627,7 @@ function xarbb_delete()
 
     return true;
 }
+
 /**
  * Update the new first post field introduced in v 1.0.1
  *
@@ -646,11 +673,13 @@ function xarbb_updatetopicstable()
 
  return true;
 }
+
 /**
  * Copy fields from temp fields to new fields
  * Due to change from datetime to integer field types for topic table dates in 1.0.2
  * Routine for forum and topics table
 */
+
 function xarbb_copydates()
 {
        $dbconn =& xarDBGetConn();
@@ -707,6 +736,7 @@ function xarbb_copydates()
        $result->close();
  return true;
 }
+
 /**
  * Convert topic table ttime and tftime datetime fields to integer and copy to temporary fields
  * Due to change from datetime to integer field types for topic table dates in 1.0.2
@@ -825,8 +855,9 @@ function xarbb_convertdates()
             if (!$result) return;
            $result->Close();
 
-return true;
+    return true;
 }
+
 //Cleanout catlinkage table so only xarbb itemtypes of 0 remain
 function xarbb_cleanitemtypes()
 {   //We have to assume here everyone has been working with itemtype = 1 for forums
@@ -851,4 +882,5 @@ function xarbb_cleanitemtypes()
     $result->Close();
     return true;
 }
+
 ?>

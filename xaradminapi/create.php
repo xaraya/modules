@@ -78,6 +78,7 @@ function xarbb_adminapi_create($args)
     if ((!isset($fpostid)) || (empty($fpostid))){
         $fpostid= time();
     } 
+
     // Add item
     $query = "INSERT INTO $xbbforumstable (
               xar_fid,
@@ -88,35 +89,40 @@ function xarbb_adminapi_create($args)
               xar_fposter,
               xar_fpostid,
               xar_fstatus)
-            VALUES (
-              ?,
-              ?,
-              ?,
-              ?,
-              ?,
-              ?,
-              ?,
-              ?)";
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
     $result =& $dbconn->Execute($query, array($nextId, $fname, $fdesc, $ftopics, $fposts, $fposter, $fpostid, $fstatus));
     if (!$result) return;
 
     // Get the ID of the item that we inserted
     $fid = $dbconn->PO_Insert_ID($xbbforumstable, 'xar_fid');
     
-    $forder=$fid;
-    //Now update the forder field .. can't do this in the create ...
-       $query = 'UPDATE ' . $xbbforumstable
-               . ' SET xar_forder = ?'
-               . ' WHERE xar_fid = ?';
+    $forder = $fid;
 
-        $result = $dbconn->execute($query, array($forder, $fid));
-        if (!$result) return;
-   $result->close();
+    // Create some module variables for the forum.
+    // Users will override these variables to track which forums and topics
+    // they have read.
+    //
+    // Last visited time.
+    xarModSetVar('xarbb', 'f_' . $fid, '0');
+    // Topic tracking array.
+    $topic_tracking = array();
+    xarModSetVar('xarbb', 'topics_' . $fid, serialize($topic_tracking));
+
+    // Now update the forder field .. can't do this in the create ...
+    $query = 'UPDATE ' . $xbbforumstable
+        . ' SET xar_forder = ?'
+        . ' WHERE xar_fid = ?';
+
+    $result = $dbconn->execute($query, array($forder, $fid));
+    if (!$result) return;
+    $result->close();
 
     if (empty($cids)) {
         //Set them to the master categories
         $cids = explode(';',xarModGetVar('xarbb', 'mastercids'));
     }
+
     // Let any hooks know that we have created a new forum
     $args['module'] = 'xarbb';
     $args['itemtype'] = 0; // forum

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * XarBB - A lightweight BB for Xaraya
  *
@@ -11,9 +12,10 @@
  * @link http://xaraya.com/index.php/release/300.html
  * @author John Cox, Mikespub, Jo Dalle Nogare
 */
+
 $modversion['name']         = 'xarbb';
 $modversion['id']           = '300';
-$modversion['version']      = '1.1.7';
+$modversion['version']      = '1.2.1';
 $modversion['displayname']  = xarML('xarBB');
 $modversion['description']  = 'A lightweight BB for Xaraya';
 $modversion['credits']      = 'xardocs/credits.txt';
@@ -29,4 +31,5 @@ $modversion['user']         = 1;
 $modversion['class']        = 'Complete';
 $modversion['category']     = 'Content';
 $modversion['dependency']   = array(147, 177, 14);
+
 ?>

@@ -68,14 +68,6 @@
             </div>
 
             <div class="xar-form-input-wrapper">
-                <label for="cookiename" class="xar-form-label" title="#xarML('The name of the session that xarBB will create.')#">
-                        <xar:mlstring>
-                            Cookie Name
-                        </xar:mlstring>
-                </label>
-                <input type="text" name="cookiename" id="cookiename" value="#xarModGetVar('xarbb', 'cookiename', 1)#" size="32" maxlength="100" />
-            </div>
-            <div class="xar-form-input-wrapper">
                 <label for="forumsperpage" class="xar-form-label" title="#xarML('Default number of forums to show per page in admin view.')#">
                         <xar:mlstring>
                             Admin Forums per Page
