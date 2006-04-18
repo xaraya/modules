@@ -65,6 +65,7 @@ function xarbb_user_main()
         // Security check: remove categories the user should not see
         $items = array();
         $catcount = count($cats);
+
         foreach($cats as $cat) {
             if (xarSecurityCheck('ViewxarBB', 0, 'Forum', $cat['cid'] . ':All')) {
                 $items[] = $cat;
@@ -74,7 +75,9 @@ function xarbb_user_main()
         $totalitems = count($items);
 
         for ($i = 0; $i < $totalitems; $i++) {
+            // Assume category category array is zero-based index.
             $item = $items[$i];
+
             // The user API function is called
             $args['basecat'] = $item['cid'];
             $items[$i]['cbchild'] = xarModAPIfunc('categories', 'user', 'getchildren', array('cid' => $item['cid']));
@@ -84,7 +87,7 @@ function xarbb_user_main()
             $forumcount = count($forums);
             $items[$i]['forums'] = array();
             foreach($forums as $forum) {
-                if (xarSecurityCheck('ViewxarBB', 0, 'Forum', 'All:' . $forum['fid'])) {
+                if (xarSecurityCheck('ViewxarBB', 0, 'Forum', $item['cid'] . ':' . $forum['fid'])) {
                     $items[$i]['forums'][] = $forum;
 
                     // This is the 'mark all forums as read' option.

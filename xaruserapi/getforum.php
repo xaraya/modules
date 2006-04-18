@@ -31,9 +31,10 @@ function xarbb_userapi_getforum($args)
     $xbbforumstable = $xartable['xbbforums'];
 
     // Get link
-    $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
-                                   array('cids' => array(),
-                                        'modid' => xarModGetIDFromName('xarbb')));
+    $categoriesdef = xarModAPIFunc(
+        'categories', 'user', 'leftjoin',
+        array('cids' => array(), 'modid' => xarModGetIDFromName('xarbb'))
+    );
     if (empty($categoriesdef)) return;
 
     // Get links

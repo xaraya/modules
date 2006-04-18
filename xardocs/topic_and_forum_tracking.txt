@@ -1,0 +1,52 @@
+Forum and Topic Tracking - some notes
+========================
+
+The basic idea behind this, is to show a user any new topics or posts that have been
+created since they lsat looked. There are a few problems with this:
+
+- We cannot keep track of whether a user has visited every single topic, as the
+  amount of data required when the forums scale up would be excessive.
+- We need to be able to 'tick off' topics that have been read in any random order,
+  so a simple 'last viewed' time that would apply to all topics would not suffice.
+
+We need the concept of 'last visited time' to operate this. The last visited time
+should be a timestamp reset each time the user starts a session in the forums.
+
+phpBB will show a forum as containing unread posts, so long as there is at least one
+topic that shows up as containing unread posts. As soon as each of those topics is
+read, then the forum will show up as containing no new posts. Note that topics can
+be read in any order, so this is not a simple timestamp comparison against the
+forum latest post timestamp. It also means that in order to set the flag on the forum,
+it is necessary to dig into the topics, something we would like to avoid (OR perhaps
+the last visited time is used to set the flag, a list of unread topics is built
+when the user goes into the forum, and then the forum-level flag is only reset when
+that topic list marks all topics as read).
+
+For each forum, we know:
+
+- The timestamp of the last new topic created
+- The timestamp of the last new topic reply
+(taking the latest of each, we have the timestamp of the latest post)
+
+We also know the last visit time the user made to each forum.
+
+We can assume there are new posts in a forum if the last user visit timestamp is
+less than the latest post timestamp of that forum.
+
+It gets more complicated when the visit timestamp is later than the latest post.
+Then we need to look at the array of visited topics.
+
+When entering a forum, all posts on the first page should be stored in an array
+against the current user. Better still, all posts on any page should be stored
+and merged with the current array, with the older posts being truncated.
+
+For each of those topics, the array would store the last visited time. There would be
+no time for a topic that has not been visited at all.
+
+When the forum is viewed, any topic that has been updated (a newer post than the last
+visited time) can have its time reset. (can we do this - how do we reorder, i.e. tell
+which are the older topics to truncate?)
+
+A forum would therefore then be one which has at least one unread topic, i.e. one topic
+that does not have a last visited time.
+
