@@ -29,10 +29,9 @@ function helpdesk_admin_setup_security($args)
         Check for Techs group
     */
     $tech_group_id = xarModGetVar('helpdesk', 'tech_group');
+    $tech_group_name = xarML("Helpdesk Representatives");
     if( empty($tech_group_id) )
     {
-        $tech_group_name = xarML("Helpdesk Representatives");
-
         // Do a quick check incase group exists but helpdesk as not be informed yet.
         $tech_role = xarModAPIFunc('roles', 'user', 'get',
             array(
@@ -56,9 +55,18 @@ function helpdesk_admin_setup_security($args)
                 'uid' => (int)$tech_group_id
             )
         );
-        $tech_group_name = $tech_role['name'];
+        if( $tech_role['state'] == 0 )
+        {
+            // Role is deleted so we can not use it.
+            $tech_group_id = null;
+        }
+        else
+        {
+            // Otherwise we are ok.
+            $tech_group_name = $tech_role['name'];
+        }
     }
-    if( !empty($tech_group_name) and xarFindRole($tech_group_name) ){ $data['tech_exists'] = true; }
+    if( $tech_group_id > 0 ){ $data['tech_exists'] = true; }
     else{ $data['tech_exists'] = false; }
 
     /*
@@ -103,13 +111,17 @@ function helpdesk_admin_setup_security($args)
         if( $data['tech_exists']  == false )
         {
             // Create tech group
-            if( ($group = xarMakeGroup($tech_group_name)) != false )
+            if( xarMakeGroup($tech_group_name) === true )
             {
-                $tech_group_id = $group['uid'];
-                xarModSetVar('helpdesk', 'tech_group', $tech_group_id);
-                if( xarMakeRoleMemberByName($tech_group_name, "Users") )
+                $role = xarFindRole($tech_group_name);
+                if( is_object($role) )
                 {
-                    $data['tech_exists'] = true;
+                    $tech_group_id = $role->uid;
+                    xarModSetVar('helpdesk', 'tech_group', $tech_group_id);
+                    if( xarMakeRoleMemberByName($tech_group_name, "Users") )
+                    {
+                        $data['tech_exists'] = true;
+                    }
                 }
             }
         }
