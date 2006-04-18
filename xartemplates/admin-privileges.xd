@@ -24,16 +24,19 @@
                         <xar:mlstring>Plan ID</xar:mlstring>
                     </th>
                     <td>
-                        <select name="planid" id="planid" onchange="javascript:this.form.submit();">
+                        <select name="pid" id="pid" onchange="javascript:this.form.submit();">
                             <option value="0">
                                 <xar:mlstring>All </xar:mlstring>
                             </option>
-                        <xar:foreach in="$planlist" key="$planid">#$planlist[$planid]#
-                        <br />
-                        <br /></xar:foreach>
-                    <xar:if condition="!empty($title)">
-                    <br />
-                    <xar:mlstring>Title</xar:mlstring>: #$title#</xar:if></td>
+                            <xar:foreach in="$planlist" value="$plan">
+                                <xar:if condition="$plan['planid'] eq $pid">
+                                    <option value="#$plan['planid']#" selected="selected">#$plan['planname']#</option>
+                                <xar:else />
+                                    <option value="#$plan['planid']#">#$plan['planname']#</option>
+                                </xar:if>
+                            </xar:foreach>
+                        </select>
+                    </td>
                 </tr>
                 <tr>
                     <th valign="top" align="right">
@@ -54,9 +57,9 @@
                             </option>
                             <xar:foreach in="$itsplist" key="$uid">
                                 <xar:if condition="$userid eq $uid">
-                                    <option value="#$userid#" selected="selected">#$itsplist[$userid]#</option>
+                                    <option value="#$uid#" selected="selected">#xarUserGetVar('uname',$uid)#</option>
                                     <xar:else />
-                                    <option value="#$userid#">#$itsplist[$userid]#</option>
+                                    <option value="#$uid#">#$itsplist[$uid]#</option>
                                 </xar:if>
                             </xar:foreach>
                         </select>
