@@ -7,16 +7,15 @@
     </span>
 </div>
 <div class="xar-mod-body">
-    <form class="xar-formwidget" name="post" id="post" action="&xar-modurl-stats-admin-modifyconfig;" method="post" enctype="application/x-www-form-urlencoded">
-        <fieldset class="formelements xar-norm">
+<xar:template type="module" module="stats" file="admin-menu" />
+    <form name="post" id="post" action="&xar-modurl-stats-admin-modifyconfig;" method="post" enctype="application/x-www-form-urlencoded">
+        <fieldset>
             <legend>
                 <xar:mlstring>
                     Modify Configuration
                 </xar:mlstring>
             </legend>
-    <input type="hidden" name="authid" id="authid" value="#$authid#" />
-    <input type="hidden" name="phase" id="phase" value="update" />
-            <div class="xar-form-input-wrapper xar-clear-both">
+            <div class="xar-form-input-wrapper">
                 <label for="countadmin" class="xar-form-label">
                     <xar:mlstring>Count Administrator Hits</xar:mlstring>
                 </label>
@@ -26,7 +25,7 @@
             <input type="checkbox" name="countadmin" id="countadmin" value="1" />
                 </xar:if>
             </div>
-            <div class="xar-form-input-wrapper xar-clear-both">
+            <div class="xar-form-input-wrapper">
                 <label for="excludelist" class="xar-form-label">
                     <xar:mlstring>IP exclude list</xar:mlstring>
                     <xar:mlstring>(One IP per line.)</xar:mlstring>
@@ -34,7 +33,10 @@
                 <textarea name="excludelist" rows="5" cols="30">#xarModGetVar('stats', 'excludelist')#</textarea>
 </div>
         </fieldset>
-        <div class="xar-clear-both xar-align-center">
+        <div class="xar-form-input-wrapper-after">
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="hidden" name="phase" id="phase" value="update" />
+
             <input type="submit" value="#xarML('Save config')#" />
         </div>
     </form>
