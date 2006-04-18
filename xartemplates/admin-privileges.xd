@@ -1,0 +1,184 @@
+<xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>ITSP Administration</xar:mlstring>
+    </span>
+</div>
+<div class="xar-mod-body">
+    <h2>
+        <xar:ml>
+            <xar:mlstring>Choose the combination of plans and itsp for privilege '#(1)'</xar:mlstring>
+            <xar:mlvar>#$extname#</xar:mlvar>
+        </xar:ml>
+    </h2>
+        <form method="post" action="&xar-modurl-itsp-admin-privileges;">
+            <div>
+            <input type="hidden" name="extpid" id="extpid" value="#$extpid#" />
+            <input type="hidden" name="extname" id="extname" value="#$extname#" />
+            <input type="hidden" name="extrealm" id="extrealm" value="#$extrealm#" />
+            <input type="hidden" name="extmodule" id="extmodule" value="#$extmodule#" />
+            <input type="hidden" name="extcomponent" id="extcomponent" value="#$extcomponent#" />
+            <table border="1" cellpadding="8" cellspacing="0">
+                <tr>
+                    <th valign="top" align="right">
+                        <xar:mlstring>Calendar ID</xar:mlstring>
+                    </th>
+                    <td>
+                        <select name="calendar_id" onchange="javascript:this.form.submit();">
+                            <option value="0">
+                                <xar:mlstring>All</xar:mlstring>
+                            </option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th valign="top" align="right">
+                        <xar:mlstring>User of ITSP</xar:mlstring>
+                    </th>
+                    <td>
+                    <xar:comment>
+                        <select name="userid" id="userid" onchange="javascript:this.form.submit();">
+                            <option value="0">
+                                <xar:mlstring>All / Other --&gt;</xar:mlstring>
+                            </option>
+                            <xar:foreach in="$userlist" key="$userid">
+                                <xar:if condition="$org_id eq $uid">
+                                    <option value="#$org_id#" selected="selected">#$organizerlist[$org_id]#</option>
+                                    <xar:else />
+                                    <option value="#$org_id#">#$organizerlist[$org_id]#</option>
+                                </xar:if>
+                            </xar:foreach>
+                        </select>
+                    </xar:comment>
+                        <input type="text" name="userid" id="userid" value="#$userid#" size="10" onchange="javascript:this.form.submit();" />
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top" align="right">
+                        <xar:mlstring>Plan</xar:mlstring>
+                    </th>
+                    <td>
+                    <xar:mlstring>Enter Plan number</xar:mlstring>:
+                    <input type="text" name="planid" id="planid" value="#$planid#" size="5" onchange="javascript:this.form.submit();" />
+                    <!-- TODO: show dropdown box for all relevant events (if not too many) -->
+                    <xar:if condition="!empty($title)">
+                    <br />
+                    <xar:mlstring>Title</xar:mlstring>: #$title#</xar:if></td>
+                </tr>
+                <tr>
+                    <th valign="top" align="right">
+                        <xar:mlstring></xar:mlstring>
+                    </th>
+                    <td>
+                        <xar:foreach in="$planlist" key="$planid">#$planlist[$planid]#
+                        <br />
+                        <br /></xar:foreach>
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top" align="right">
+                        <xar:mlstring>Access Level</xar:mlstring>
+                    </th>
+                    <td>
+
+                        <select name="extlevel" id="extlevel">
+                            <xar:if condition="$extlevel eq 0">
+                                <option value="0" selected="selected">
+                                    <xar:mlstring>No Access</xar:mlstring>
+                                </option>
+                                <xar:else />
+                                <option value="0">
+                                    <xar:mlstring>No Access</xar:mlstring>
+                                </option>
+                            </xar:if>
+                            <xar:if condition="$extlevel eq 100">
+                                <option value="100" selected="selected">
+                                    <xar:mlstring>Overview</xar:mlstring>
+                                </option>
+                                <xar:else />
+                                <option value="100">
+                                    <xar:mlstring>Overview</xar:mlstring>
+                                </option>
+                            </xar:if>
+                            <xar:if condition="$extlevel eq 200">
+                                <option value="200" selected="selected">
+                                    <xar:mlstring>Read</xar:mlstring>
+                                </option>
+                                <xar:else />
+                                <option value="200">
+                                    <xar:mlstring>Read</xar:mlstring>
+                                </option>
+                            </xar:if>
+                            <xar:if condition="$extlevel eq 500">
+                                <option value="500" selected="selected">
+                                    <xar:mlstring>Edit</xar:mlstring>
+                                </option>
+                                <xar:else />
+                                <option value="500">
+                                    <xar:mlstring>Edit</xar:mlstring>
+                                </option>
+                            </xar:if>
+                            <xar:if condition="$extlevel eq 600">
+                                <option value="600" selected="selected">
+                                    <xar:mlstring>Add</xar:mlstring>
+                                </option>
+                                <xar:else />
+                                <option value="600">
+                                    <xar:mlstring>Add</xar:mlstring>
+                                </option>
+                            </xar:if>
+                            <xar:if condition="$extlevel eq 700">
+                                <option value="700" selected="selected">
+                                    <xar:mlstring>Delete</xar:mlstring>
+                                </option>
+                                <xar:else />
+                                <option value="700">
+                                    <xar:mlstring>Delete</xar:mlstring>
+                                </option>
+                            </xar:if>
+                            <xar:if condition="$extlevel eq 800">
+                                <option value="800" selected="selected">
+                                    <xar:mlstring>Admin</xar:mlstring>
+                                </option>
+                                <xar:else />
+                                <option value="800">
+                                    <xar:mlstring>Admin</xar:mlstring>
+                                </option>
+                            </xar:if>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <input type="submit" value="#$refreshlabel#" />
+                    </td>
+                </tr>
+            </table>
+            <br />
+            <xar:ml>
+                <xar:mlstring>There are #(1) events matching these selection criteria at the moment</xar:mlstring>
+                <xar:mlvar>#$numitems#</xar:mlvar>
+            </xar:ml>
+            <br />
+            <hr />
+            <br />(Instance Definition #$extinstance#)
+            <br />
+            <br />
+            <input type="submit" name="apply" value="#$applylabel#" /></div>
+        </form>
+        <br />
+        <xar:mlstring>Some examples : (assuming your users have read access by default)</xar:mlstring>
+        <br />
+        <br />- <xar:mlstring>In order to allow 'Friends' to submit events (and only that), define a privilege 'AddJulianEvent' (or whatever name you prefer), and access level "Add" above.
+              Press "Finish and Apply to Privilege", and then assign that privilege to the 'Friends' role.</xar:mlstring>
+        <br />
+        <br />- <xar:mlstring>When you want users to add events, and have them also edit or delete their own, then use the organizer (submitter) role 'Myself'. Eg All:Myself:All:All and an access level of 'Delete' will give users Delete rights to all events in all categories that they have added themselves.</xar:mlstring>
+        <br />
+        <br />- <xar:mlstring>In order to stop 'Strangers' from viewing Events, define some privilege 'DenyJulianEvents' (instance All:All:All:All) and access level "No Access". Then assign that privilege to the 'Strangers' role.</xar:mlstring>
+        <br />
+        <br />- ...
+        <br />
+        <br />
+        <xar:mlstring>Note: if you want to deny access to all events in a particular category with ID 123, you can also define a privilege for module 'categories', component 'Category', category name 'All' and category ID '123'. This will remove the category from the Julian map and categories navigation as well.</xar:mlstring>
+</div>

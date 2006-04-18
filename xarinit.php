@@ -304,6 +304,7 @@ This table deals with the free courses. So: how to add the custom courses/items 
      * instances is greater than the limit (e.g. registered users), the UI instead presents an
      * input field for manual input, which is then checked for validity.
      */
+
     $query1 = "SELECT DISTINCT xar_pitemid FROM " . $planitemstable;
     $query2 = "SELECT DISTINCT xar_itspid FROM " . $itsptable;
     $query3 = "SELECT DISTINCT xar_planid FROM " . $planstable;
@@ -320,7 +321,7 @@ This table deals with the free courses. So: how to add the custom courses/items 
             )
         );
     xarDefineInstance('itsp', 'Plan', $instances);
-    // For the ITSP
+     /*    // For the ITSP
     $instances = array(
         array('header' => 'ITSP ID:',
             'query' => $query2,
@@ -336,9 +337,9 @@ This table deals with the free courses. So: how to add the custom courses/items 
             )
         );
     xarDefineInstance('itsp', 'ITSP', $instances);
+     */
 
-
-    /* You can also use some external "wizard" function to specify instances :
+     /*You can also use some external "wizard" function to specify instances : */
 
       $instances = array(
           array('header' => 'external', // this keyword indicates an external "wizard"
@@ -346,9 +347,9 @@ This table deals with the free courses. So: how to add the custom courses/items 
                 'limit'  => 0
           )
       );
-      xarDefineInstance('itsp', 'Item', $instances);
+      xarDefineInstance('itsp', 'ITSP', $instances);
 
-     */
+
     /**
      * Register the module components that are privileges objects
      * Format is
@@ -516,6 +517,14 @@ function itsp_upgrade($oldversion)
 
             return itsp_upgrade('0.3.5');
         case '0.3.5':
+              $instances = array(
+                  array('header' => 'external', // this keyword indicates an external "wizard"
+                        'query'  => xarModURL('itsp','admin','privileges',array('foo' =>'bar')),
+                        'limit'  => 0
+                  )
+              );
+              xarDefineInstance('itsp', 'ITSP', $instances);
+        case '0.3.6':
             break;
     }
     /* Update successful */
