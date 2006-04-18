@@ -258,23 +258,26 @@ function xarbb_user_viewforum()
             $topicsperpage, array(), 'multipage'
         );
     }
-    xarbb_user_viewforum_sort_topics($topics);
+    xarbb_user_viewforum__sort_topics($topics);
     $data['items'] = $topics;
 
     // Store the topic tracking array for this forum.
-    // TODO: sort and truncate it, limiting it to N elements.
+    // Sort and truncate it, limiting it to N elements.
     // TODO: should this be configurable, i.e. the number of topics to keep
     // track of, for each forum?
-    $max_topic_tracking = 1;
+    $max_topic_tracking = 100;
     if (count($topic_tracking) > $max_topic_tracking) {
         // We need to remove the oldest topics from the array.
         // These will be the lowest non-zero element values.
-        asort($topic_tracking);
-        // TODO: remove a slice, which will be in the middle of the array
-        // after the zero-values. If we run out of non-zero values
-        // then start on the zero values, older (smaller) topic IDs first.
+        // The oldest elements will be at the end after sorting.
+        // Pre-sort by the topic IDs (the keys) first, in case all topics in
+        // the array are marked 'unread'.
+        krsort($topic_tracking);
+        uasort($topic_tracking, 'xarbb_user_viewforum__cmp');
+
+        // Calculate the size of the slice to remove, then pop them off the end of the array.
         $slice_size = count($topic_tracking) - $max_topic_tracking;
-        //var_dump($topic_tracking);
+        for (; $slice_size > 0; $slice_size--) array_pop($topic_tracking);
     }
     // TODO: provide user with ability to reset this array, to mark all topics as read.
     xarModAPIfunc('xarbb', 'admin', 'set_cookie', array('name' => 'topics_' . $fid, 'value' => serialize($topic_tracking)));
@@ -296,11 +299,20 @@ function xarbb_user_viewforum()
 }
 
 /**
+ * Helper function for sorting the topic tracking array.
+ */
+function xarbb_user_viewforum__cmp($a, $b)
+{
+    if ($a == $b) return 0;
+    return (($a == 0 || $a < $b) ? -1 : 1);
+}
+
+/**
  *  Function to help sort the topics array by order of importance
  *  @params $topics array topics to be sorted passed in by reference
  *  @return null
  */
-function xarbb_user_viewforum_sort_topics(&$topics)
+function xarbb_user_viewforum__sort_topics(&$topics)
 {
     $normal = array();
     $sticky = array();

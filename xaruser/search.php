@@ -17,15 +17,17 @@
  */
 function xarbb_user_search( $args ) 
 {
-    if (!xarVarFetch('startnum', 'isset', $startnum,  NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('startnum', 'int:1', $startnum,  NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('header',   'isset', $header,    NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('q',        'isset', $q,         NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('q',        'str:1', $q,         NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('bool',     'isset', $bool,      NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('sort',     'isset', $sort,      NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('author',   'isset', $author,    NULL, XARVAR_DONT_SET)) {return;}
+
     $postinfo   = array('q' => $q, 'author' => $author);
     $data       = array();
     $search     = array();
+
     // TODO:  check 'q' and 'author' for '%' value
     //        and sterilize if found
     if (!isset($q) || strlen(trim($q)) <= 0) {
@@ -47,6 +49,7 @@ function xarbb_user_search( $args )
     if (!isset($startnum)) {
         $startnum = 1;
     }
+    // CHECKME: can numitems be passed in?
     if (!isset($numitems)) {
         $numitems = 20;
     }
@@ -109,4 +112,5 @@ function xarbb_user_search( $args )
     $data['header'] = $header;
     return $data;
 }
+
 ?>

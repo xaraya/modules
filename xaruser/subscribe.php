@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Subscribe to a topic
  * 
@@ -11,25 +12,31 @@
  * @author John Cox
  * @todo merge with pubsub ?
 */
+
 function xarbb_user_subscribe()
 {
     // No anons please
     if (!xarUserIsLoggedIn()) return;
+
     // And you better have rights.
-    if (!xarSecurityCheck('ViewxarBB',1,'Forum')) return;
+    if (!xarSecurityCheck('ViewxarBB', 1, 'Forum')) return;
+
     // All we need is who and where.
-    if (!xarVarFetch('tid','int:1:',$tid)) return;
+    if (!xarVarFetch('tid', 'id', $tid)) return;
+
     // Do not allow specifying the uid via URL parameters !
-    $uid = (int) xarUserGetVar('uid');
+    $uid = (int)xarUserGetVar('uid');
+
     // Get the topic data
     $data = xarModAPIFunc('xarbb', 'user', 'gettopic', array('tid' => $tid));
+
     // If there are subscribers already, we need to update that array
     // else we start a new array.
     if (!empty($data['toptions'])){
         $topicoptions = unserialize($data['toptions']);
         if (!isset($topicoptions['subscribers'])) {
             $topicoptions['subscribers'] = array();
-        } elseif (in_array($uid,$topicoptions['subscribers'])) {
+        } elseif (in_array($uid, $topicoptions['subscribers'])) {
             // We're already subscribed
             xarResponseRedirect(xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $tid)));
             return true;
@@ -46,12 +53,14 @@ function xarbb_user_subscribe()
             'tid'      => $tid,
             'fid'      => $data['fid'],
             'ttime'    => $data['ttime'],
-            'toptions' => $mergedarray)
+            'toptions' => $mergedarray
         )
-    ) return;
+    )) return;
 
     // And then go back to the topic.
     xarResponseRedirect(xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $tid)));
+
     return true;
 }
+
 ?>

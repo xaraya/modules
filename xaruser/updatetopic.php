@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Update a forum topic
  *
@@ -12,14 +13,15 @@
  * @author John Cox
  * @author Jo dalle Nogare
 */
+
 function xarbb_user_updatetopic()
 {
-// We need to update the statistics about the forum and the topics here.
-// We do this by updating both tables at once and then giving the poster a chance to reply to the
-// topic or go back to the forum of which he came.
+    // We need to update the statistics about the forum and the topics here.
+    // We do this by updating both tables at once and then giving the poster a chance to reply to the
+    // topic or go back to the forum of which he came.
 
-    if (!xarVarFetch('tid', 'int:1:', $tid)) return;
-    if (!xarVarFetch('modify', 'int:1:', $modify, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('tid', 'id', $tid)) return;
+    if (!xarVarFetch('modify', 'int:0:1', $modify, 0, XARVAR_NOT_REQUIRED)) return;
 
     // Need to handle locked topics
     $data = xarModAPIFunc('xarbb', 'user', 'gettopic', array('tid' => $tid));
@@ -44,8 +46,7 @@ function xarbb_user_updatetopic()
     );
 
     //Don't count up if the topic is being edited ? Need to add modify test here.
-    if ($modify != 1){
-
+    if ($modify != 1) {
         // get the last comment
         $comments = xarModAPIFunc('comments', 'user', 'get_multiple',
             array(
@@ -56,8 +57,9 @@ function xarbb_user_updatetopic()
                 'numitems' => 1
             )
         );
-        $totalcomments=count($comments);
-        $isanon=$comments[$totalcomments-1]['xar_postanon'];
+
+        $totalcomments = count($comments);
+        $isanon = $comments[$totalcomments-1]['xar_postanon'];
         $anonuid = xarConfigGetVar('Site.User.AnonymousUID');
 
         if ($isanon==1) {
@@ -65,9 +67,11 @@ function xarbb_user_updatetopic()
         } else {
             $poster = xarUserGetVar('uid');
         }
+
         if (!xarModAPIFunc('xarbb', 'user', 'updatetopicsview',
-            array('tid' => $tid, 'treplies' => $count, 'treplier' => $poster))
-        ) return;
+            array('tid' => $tid, 'treplies' => $count, 'treplier' => $poster)
+        )) return;
+       
         if (!xarModAPIFunc('xarbb', 'user', 'updateforumview',
             array(
                 'fid'      => $data['fid'],
@@ -76,9 +80,9 @@ function xarbb_user_updatetopic()
                 'treplies' => $count,
                 'replies'  => 1,
                 'move'     => 'positive',
-                'fposter'  => $poster)
+                'fposter'  => $poster
             )
-        ) return;
+        )) return;
 
         // While we are here, let's send any subscribers notifications.
         // TODO: provide an option to queue the notificiations, because if there are lot of
@@ -90,7 +94,7 @@ function xarbb_user_updatetopic()
     $replyreturn = xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $tid, 'startnum' => $count));
     $topicreturn = xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $tid));
     $xarbbtitle = xarModGetVar('xarbb', 'xarbbtitle', 0);
-    $xarbbtitle = isset($xarbbtitle) ? $xarbbtitle :'';
+    $xarbbtitle = (isset($xarbbtitle) ? $xarbbtitle : '');
     $data = xarTplModule('xarbb', 'user', 'return',
         array(
             'forumreturn'     => $forumreturn,
@@ -102,4 +106,5 @@ function xarbb_user_updatetopic()
 
     return $data;
 }
+
 ?>

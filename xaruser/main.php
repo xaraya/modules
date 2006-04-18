@@ -143,14 +143,18 @@ function xarbb_user_main()
             foreach($forums as $forum) {
                 if (xarSecurityCheck('ViewxarBB', 0, 'Forum', 'All:' . $forum['fid'])) {
                     $items[$i]['forums'][] = $forum;
+
+                    // Reset the last visited time if we want to mark all forums as read.
+                    if (isset($read)) {
+                        xarModAPIfunc('xarbb', 'admin', 'set_cookie', array('name' => 'f_' . $forum['fid'], 'value' => $now));
+                        $topic_tracking = array();
+                        xarModAPIfunc('xarbb', 'admin', 'set_cookie', array('name' => 'topics_' . $forum['fid'], 'value' => serialize($topic_tracking)));
+                    }
                 }
             }
 
             $args = $items[$i]['forums'];
             $items[$i]['forums'] = xarbb_user_main__getforuminfo($args);
-            if (isset($read)) {
-                xarModAPIfunc('xarbb', 'admin', 'set_cookie', array('name' => 'f_' . $forum['fid'], 'value' => time()));
-            }
         }
     }
 

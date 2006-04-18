@@ -12,18 +12,23 @@
 */
 function xarbb_user_viewforumrss()
 {
-    if (!xarVarFetch('fid', 'int:1', $fid)) return;
+    if (!xarVarFetch('fid', 'id', $fid)) return;
 
     // The user API function is called.
     $data = xarModAPIFunc('xarbb', 'user', 'getforum', array('fid' => $fid));
+
     if (empty($data)) return;
+
     // Security Check
-    if(!xarSecurityCheck('ReadxarBB', 1, 'Forum', $data['catid'] . ':' . $data['fid'])) return;
+    // - although 'getforum' already has security checks and will not return
+    // forums for which the user does not have access.
+    if (!xarSecurityCheck('ReadxarBB', 1, 'Forum', $data['catid'] . ':' . $data['fid'])) return;
 
     // The user API function is called
-    $topics = xarModAPIFunc('xarbb', 'user', 'getalltopics', array('fid' => $fid));
+    // TODO: hard-coded 20 items for now, but make it configurable.
+    $topics = xarModAPIFunc('xarbb', 'user', 'getalltopics', array('fid' => $fid, 'numitems' => 20));
 
-    $totaltopics=count($topics);
+    $totaltopics = count($topics);
 
     for ($i = 0; $i < $totaltopics; $i++) {
         $topic = $topics[$i];
@@ -34,7 +39,9 @@ function xarbb_user_viewforumrss()
     // Add the array of items to the template variables
     $data['fid'] = $fid;
     $data['items'] = $topics;
+
     xarTplSetPageTitle(xarVarPrepForDisplay($data['fname']));
+
     // Return the template variables defined in this function
     return $data;
 }

@@ -200,7 +200,7 @@
 <div class="xarbb-noteswrapper">
     <xar:if condition="xarUserIsLoggedIn()">
         <span class="xar-sub leftnote">
-            <a href="#xarModURL('xarbb', 'user', 'main', array('read' =&gt; 1))#">
+            <a href="#xarServerGetCurrentURL(array('read'=&gt;1))#">
                 <xar:mlstring>Mark all forums as read</xar:mlstring>
             </a>
         </span>

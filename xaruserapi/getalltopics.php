@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Get all topics in a forum
  * 
@@ -17,13 +18,16 @@
  * @param $args['tids'] array of topic ids
  * @param $args['sortby'] string optional sort field (default 'time')
  * @param $args['order'] string optional sort order (default 'DESC' for time, replies etc.)
+ * @param $args['cids'] array of category ids
  * @returns array
  * @return array of links, or false on failure
  */
+
 function xarbb_userapi_getalltopics($args)
 {
     extract($args);
-     // Optional argument
+
+    // Optional argument
     if (!isset($startnum)) {
         $startnum = 1;
     }
@@ -63,7 +67,7 @@ function xarbb_userapi_getalltopics($args)
     if (empty($categoriesdef)) return;
 
     // CHECKME: this won't work for forums that are assigned to more (or less) than 1 category
-    // Do we want to support that in the future ?
+    // Do we want to support that in the future?
     // make only one query to speed up
     // Get links
     //Fix for duplicates listings of topics with topic itemtypes - select distinct - get bug #2335

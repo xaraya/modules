@@ -20,7 +20,8 @@ function xarbb_userapi_getforum($args)
 {
     extract($args);
 
-    if (empty($fid) && empty($fname)) { $msg = xarML('Invalid Parameter Count', '', 'userapi', 'get', 'xarbb');
+    if (empty($fid) && empty($fname)) {
+        $msg = xarML('Invalid Parameter Count', '', 'userapi', 'get', 'xarbb');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
@@ -72,21 +73,25 @@ function xarbb_userapi_getforum($args)
     list($fid, $fname, $fdesc, $ftopics, $fposts, $fposter, $fpostid, $fstatus, $foptions, $forder, $catid) = $result->fields;
     $result->Close();
 
-    if (!xarSecurityCheck('ViewxarBB', 0, 'Forum',"$catid:$fid")) {
+    if (!xarSecurityCheck('ViewxarBB', 0, 'Forum', "$catid:$fid")) {
         return;
     }
-    $forum = array('fid'     => $fid,
-                   'fname'   => $fname,
-                   'fdesc'   => $fdesc,
-                   'ftopics' => $ftopics,
-                   'fposts'  => $fposts,
-                   'fposter' => $fposter,
-                   'fpostid' => $fpostid,
-                   'fstatus' => $fstatus,
-                   'foptions'=> $foptions,
-                   'forder'  => $forder,
-                   'catid'   => $catid);
 
-   return $forum;
+    $forum = array(
+        'fid'     => $fid,
+        'fname'   => $fname,
+        'fdesc'   => $fdesc,
+        'ftopics' => $ftopics,
+        'fposts'  => $fposts,
+        'fposter' => $fposter,
+        'fpostid' => $fpostid,
+        'fstatus' => $fstatus,
+        'foptions'=> $foptions,
+        'forder'  => $forder,
+        'catid'   => $catid
+    );
+
+    return $forum;
 }
+
 ?>

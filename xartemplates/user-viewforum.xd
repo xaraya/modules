@@ -21,7 +21,7 @@
         </div>
         <ul>
             <li>
-                <a href="#xarModUrl('xarbb', 'user', 'viewforum', array('fid' => $fid, 'read' => 1))#">
+                <a href="#xarServerGetCurrentURL(array('read'=&gt;1))#">
                     <xar:mlstring>
                         Mark All Topics as Read 
                     </xar:mlstring>
