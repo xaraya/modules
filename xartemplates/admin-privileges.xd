@@ -52,19 +52,20 @@
                     </th>
                     <td>
                         <select name="userid" id="userid" onchange="javascript:this.form.submit();">
-                            <option value="0">
+                            <option value="0" selected="selected">
                                 <xar:mlstring>All / Other </xar:mlstring>--&gt;
                             </option>
-                            <xar:foreach in="$itsplist" key="$uid">
-                                <xar:if condition="$userid eq $uid">
-                                    <option value="#$uid#" selected="selected">#xarUserGetVar('uname',$uid)#</option>
+                            <option value="Myself">
+                                Myself
+                            </option>
+                            <xar:foreach in="$itsplist" value="$itsp">
+                                <xar:if condition="$userid eq $itsp['userid']">
+                                    <option value="#$itsp['userid']#" selected="selected">#xarUserGetVar('uname',$itsp['userid'])#</option>
                                     <xar:else />
-                                    <option value="#$uid#">#$itsplist[$uid]#</option>
+                                    <option value="#$itsp['userid']#">#xarUserGetVar('uname',$itsp['userid'])#</option>
                                 </xar:if>
                             </xar:foreach>
                         </select>
-                    <xar:comment>                    </xar:comment>
-                        <input type="text" name="userid" id="userid" value="#$userid#" size="10" onchange="javascript:this.form.submit();" />
                     </td>
                 </tr>
 

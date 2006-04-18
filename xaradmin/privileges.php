@@ -26,7 +26,6 @@ function itsp_admin_privileges($args)
 
     // fixed params
     if (!xarVarFetch('itspid',       'isset', $itspid,       NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('username',     'isset', $username,     NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('userid',       'isset', $userid,       NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('uid',          'isset', $uid,          NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('pitemid',      'isset', $pitemid,      NULL, XARVAR_DONT_SET)) {return;}
@@ -68,27 +67,14 @@ function itsp_admin_privileges($args)
     $itsplist = xarModApiFunc('itsp','user','getall');
 
     if (strtolower($userid) == 'myself') {
-        $userid = 'Myself';
-        $uid =0;
-    } elseif (empty($userid) || $userid == 'All' || (!is_numeric($userid) && (strtolower($userid) != 'myself'))) {
-        $userid = 0;
-    } elseif (!empty($userid) && (strtolower($username) != 'myself')) {
+        $userid ='Myself';
+    } elseif (empty($userid) || $userid == 'All' || (!is_numeric($userid) && strtolower($userid) == 'all')) {
+        $userid = '';
+    } elseif (!empty($userid) && (is_numeric($userid) && $userid >0 )) {
         $user = xarModApiFunc('roles','user','get',array('uname'=>$userid));
-        if (!empty($user)) {
-            if (strtolower($userid) == 'myself') {
-                $uid = 0;
-            } else {
-                $uid = $user['uid'];
-            }
-        } else {
-            $username = '';
+        if (empty($user)) {
+            $userid = 'All';
         }
-
-    } elseif (is_numeric($userid)) {
-        $username = xarUserGetVar('name',$userid);
-    } else {
-        $userid = 0;
-        $username = '';
     }
     //$itspid:$planid:$userid
     // define the new instance
@@ -126,7 +112,6 @@ function itsp_admin_privileges($args)
                   'userid'       => $userid,
                   'uid'          => $uid,
                   'itsplist'     => $itsplist,
-                  'username'     => xarVarPrepForDisplay($username),
                   'planlist'     => $planlist,
                   'itspid'       => $itspid,
                   'numitems'     => $numitems,
