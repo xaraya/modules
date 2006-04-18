@@ -6,14 +6,14 @@
     <xar:mlstring>A comment has been logged against ticket:</xar:mlstring> ###$tid# #$subject#
 </p>
 <p>
-    <xar:mlstring>Comment:</xar:mlstring><br />
-    #$comment#
+    <strong><xar:mlstring>Comment:</xar:mlstring></strong><br />
+    #$comment_html#
 </p>
 <p>
-    <xar:mlstring>View your ticket:</xar:mlstring><br />
+    <strong><xar:mlstring>View your ticket:</xar:mlstring></strong><br />
     <a href="#$viewticket#">#$viewticket#</a>
 </p>
 <p>
-    <xar:mlstring>View all your tickets:</xar:mlstring><br />
+    <strong><xar:mlstring>View all your tickets:</xar:mlstring></strong><br />
     <a href="#$viewtickets#">#$viewtickets#</a>
 </p>

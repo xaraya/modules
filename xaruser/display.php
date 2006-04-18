@@ -63,6 +63,13 @@ function helpdesk_user_display($args)
         )
     );
 
+    foreach( $data['history'] as $key => $comment )
+    {
+        // Simple method for making comments more readable
+        $comment['xar_text'] = preg_replace(array("/\r\n/","/\n/","/\r/"), "<br />", $comment['xar_text']);
+        $data['history'][$key]['xar_text'] = xarVarPrepHTMLDisplay($comment['xar_text']);
+    }
+
     $data['statuses'] = xarModAPIFunc('helpdesk', 'user', 'gets',
         array(
             'itemtype' => STATUS_ITEMTYPE

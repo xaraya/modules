@@ -12,7 +12,7 @@ function helpdesk_user_add_history($args)
 
     if( !xarVarFetch('itemid',  'id',      $itemid) ){ return false; }
     if( !xarVarFetch('status',  'int',     $statusid,  null) ){ return false; }
-    if( !xarVarFetch('comment', 'str:1:',  $comment,  null) ){ return false; }
+    if( !xarVarFetch('comment', 'html:basic', $comment,  null) ){ return false; }
 
     $ticket = xarModAPIFunc('helpdesk', 'user', 'getticket',
         array(

@@ -36,6 +36,7 @@ function helpdesk_user_sendmail($args)
         $userid, $name and $email releated to the user receiving that particular email.
     */
 
+    $newline_chars = array("/\r\n/","/\n/","/\r/");
     $ticket_args = array(
         'subject'     => $subject,
         'domain'      => isset($domain) ? $domain : null,
@@ -47,9 +48,12 @@ function helpdesk_user_sendmail($args)
         'closedby'    => $closedby,
         // Issue and notes vars are only needed for new tickets
         'issue'       => isset($issue) ? $issue : null,
+        'issue_html'  => isset($issue) ? preg_replace($newline_chars, "<br />", $issue) : null,
         'notes'       => isset($notes) ? $notes : null,
+        'notes_html'  => isset($notes) ? preg_replace($newline_chars, "<br />", $notes) : null,
         // Used for additional comments
         'comment'     => isset($comment) ? $comment : null,
+        'comment_html'=> isset($comment) ? preg_replace($newline_chars, "<br />", $comment) : null,
         'viewticket'  => xarModUrl('helpdesk', 'user', 'display', array('tid' => $tid)),
         'tid'         => $tid
     );

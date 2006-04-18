@@ -48,8 +48,8 @@ function helpdesk_user_create($args)
     if( !xarVarFetch('openedby', 'int:1:',   $openedby,  $userid,  XARVAR_NOT_REQUIRED) ){ return false; }
     if( !xarVarFetch('assignedto','int:1:',  $assignedto,0,  XARVAR_NOT_REQUIRED) ){ return false; }
     if( !xarVarFetch('closedby', 'int:1:',   $closedby,  0,  XARVAR_NOT_REQUIRED) ){ return false; }
-    if( !xarVarFetch('issue',    'str:1:',   $issue,     '', XARVAR_NOT_REQUIRED) ){ return false; }
-    if( !xarVarFetch('notes',    'str:1:',   $notes,     '', XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('issue',    'html:basic',$issue,     '', XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('notes',    'html:basic',$notes,     '', XARVAR_NOT_REQUIRED) ){ return false; }
     if( !xarVarFetch('cids',     'array',    $cids, array(), XARVAR_NOT_REQUIRED) ){ return false; }
     if( !xarVarFetch('closeonsubmit','int', $closeonsubmit,0,XARVAR_NOT_REQUIRED) ){ return false; }
     //extract($args);

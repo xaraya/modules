@@ -13,16 +13,16 @@
 </p>
 
 <p>
-    <xar:mlstring>Subject:</xar:mlstring> #$subject#
+    <strong><xar:mlstring>Subject:</xar:mlstring></strong> #$subject#
 </p>
 
 <p>
-    <xar:mlstring>View your ticket:</xar:mlstring> <br />
+    <strong><xar:mlstring>View your ticket:</xar:mlstring></strong> <br />
     <a href="#$viewticket#">#$viewticket#</a>
 </p>
 
 <p>
-    <xar:mlstring>View all your tickets:</xar:mlstring> <br />
+    <strong><xar:mlstring>View all your tickets:</xar:mlstring></strong> <br />
     <a href="#$viewtickets#">#$viewtickets#</a>
 </p>
 
