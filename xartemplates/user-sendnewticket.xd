@@ -20,10 +20,7 @@
 
 <xar:if condition="xarUserIsLoggedIn()">
     <form action="#xarModURL('helpdesk', 'user', 'display')#" method="post" name="viewticket">
-        <xar:if condition="$enforceauthkey">
-            <input type="hidden" name="authid" value="#xarSecGenAuthKey()#" />
-        </xar:if>
-
+        <input type="hidden" name="authid" value="#xarSecGenAuthKey()#" />
         <input type="hidden" name="activity"  value="sendnewticket" />
         <input type="hidden" name="userid"    value="#$userid#" />
         <input type="hidden" name="ticket_id" value="#$return_val#" />

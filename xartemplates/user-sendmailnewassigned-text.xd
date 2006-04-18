@@ -1,9 +1,9 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:mlstring>Dear</xar:mlstring> #$assignedtoname#,
+<xar:mlstring>Dear</xar:mlstring> #$name#,
 
-<xar:mlstring>A new HelpDesk ticket has been assigned to you.</xar:mlstring>
+<xar:mlstring>A new Helpdesk ticket has been assigned to you.</xar:mlstring>
 
-<xar:mlstring>Name of submitter:</xar:mlstring> #$name#
+<xar:mlstring>Name of submitter:</xar:mlstring> #xarUserGetVar('name', $openedby)#
 
 <xar:mlstring>Subject:</xar:mlstring> #$subject#
 

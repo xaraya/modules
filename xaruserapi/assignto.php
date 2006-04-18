@@ -48,8 +48,12 @@ function helpdesk_userapi_assignto($args)
             }
         }
     }
-
-    if(empty($rids[0])){ return 0; }
+    else
+    {
+        foreach( $reps as $rep ){ $rids[] = $rep['id']; }
+        reset($reps);
+    }
+    if( count($rids) == 0 ){ return 0; }
 
     mt_srand((double)microtime()*100);
     $index = mt_rand(0, (sizeof($rids) - 1));

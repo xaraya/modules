@@ -1,24 +1,24 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <p>
-   <xar:mlstring>Dear</xar:mlstring> #$assignedtoname#,
+   <xar:mlstring>Dear</xar:mlstring> #$name#,
 </p>
 <p>
     <xar:mlstring>
-        A new HelpDesk ticket has been assigned to you.
+        A new Helpdesk ticket has been assigned to you.
     </xar:mlstring>
 </p>
 <p>
-    <xar:mlstring>Name of submitter:</xar:mlstring> #$name# <br />
-    <xar:mlstring>Email of submitter:</xar:mlstring> #$email#
+    <xar:mlstring>Name of submitter:</xar:mlstring> #xarUserGetVar('name', $openedby)# <br />
+    <xar:mlstring>Email of submitter:</xar:mlstring> #xarUserGetVar('email', $openedby)#
 </p>
 <p>
     <xar:mlstring>Subject:</xar:mlstring> #$subject#
 </p>
 <p>
-    <xar:mlstring>Issue:</xar:mlstring> #$issue#
+    <xar:mlstring>Issue:</xar:mlstring><br /> #$issue#
 </p>
 <p>
-    <xar:mlstring>Notes:</xar:mlstring> #$notes#<br />
+    <xar:mlstring>Notes:</xar:mlstring><br /> #$notes#
 </p>
 <p>
     <xar:mlstring>View your ticket:</xar:mlstring> <br />

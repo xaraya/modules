@@ -27,9 +27,9 @@ function helpdesk_userapi_create($args)
     $db_table  = $xartable['helpdesk_tickets'];
     $time = date("Y-m-d H:i:s");
 
-    if (empty($name)){ $name = xarUserGetVar('name', $whosubmit); }
-    if (empty($email)){ $email = xarUserGetVar('email', $whosubmit); }
-    if (empty($phone)){ $phone = ''; }
+    if (empty($name)){ $name = xarUserGetVar('name', $openedby); }
+    if (empty($email)){ $email = xarUserGetVar('email', $openedby); }
+    if (!isset($phone)){ $phone = ''; }
 
     // Get next ID inserted into table
     $nextid = $dbconn->GenID('xar_id');
@@ -51,7 +51,7 @@ function helpdesk_userapi_create($args)
                                     xar_email
                                    )
                            VALUES  ( $nextid, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
-    $bindvars = array($domain, $status, $priority, $source, $whosubmit, $subject, $time, $time, $assignedto, $closedby, $name, $phone, $email
+    $bindvars = array($domain, $status, $priority, $source, $openedby, $subject, $time, $time, $assignedto, $closedby, $name, $phone, $email
     );
     $result = $dbconn->Execute($sql, $bindvars);
 

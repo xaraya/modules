@@ -12,22 +12,31 @@
  * @author Brian McGilligan <brianmcgilligan@gmail.com>
  */
 /**
-    Send an e-mail to submitter/assignedto of the ticket
-
-    @author jojodee/Michel V.
-
-    @param $mailaction: what e-mail to send
-*/
+ * Send an e-mails based on action against a ticket.
+ * Valid Events:
+ *      new
+ *      closed
+ *      additionalcomment
+ *
+ * @author jojodee/Michel V.
+ *
+ * @param $mailaction: what e-mail to send
+ */
 function helpdesk_user_sendmail($args)
 {
     // Get parameters
-    extract ($args);
+    extract($args);
+
+    /*
+        NOTE: $ticket_args releated directly to the ticket.
+        $ticket_args used to generate $mail_args which is used to send mail to an user.
+        $ticket_args maybe read and mail may get sent out to multiple users.
+
+        In the templates $mail_args and $template_args are merged together. where
+        $userid, $name and $email releated to the user receiving that particular email.
+    */
 
     $ticket_args = array(
-        'userid'      => $userid,
-        'name'        => isset($name) ? $name : xarUserGetVar('name', $userid),
-        'phone'       => isset($phone) ? $phone : null,
-        'email'       => isset($email) ? $email : xarUserGetVar('email', $userid),
         'subject'     => $subject,
         'domain'      => isset($domain) ? $domain : null,
         'source'      => isset($source) ? $source : null,
@@ -49,150 +58,136 @@ function helpdesk_user_sendmail($args)
         Generate the HTML and Text versions of the message and
         let the mail module decide which to send
     */
+    $mail_args = array();
     switch($mailaction)
     {
-        case 'usernew':
+        case 'new':
+            // Setup Ticket.
+            $mail_args = array();
+            $mail_args['userid'] = $ticket_args['openedby'];
+            $mail_args['name'] = xarUserGetVar('name',$ticket_args['openedby']);
+            $mail_args['email'] = xarUserGetVar('email',$ticket_args['openedby']);
+            $mail_args['mailsubject'] =
+                xarModGetVar('themes', 'SiteName') . " [#$tid] $subject ";
+            $ticket_args['viewtickets'] = xarModUrl('helpdesk', 'user', 'view',
+                array('selection' => 'MYALL')
+            );
 
-            if( !empty($email) ){ $recipients = $email; }
-            else{ $recipients = xarUserGetVar('email'); }
+            $data = array_merge($ticket_args, $mail_args);
+            $textmessage = xarTplModule('helpdesk', 'user', 'sendmailnewuser', $data, 'text');
+            $htmlmessage = xarTplModule('helpdesk', 'user', 'sendmailnewuser', $data, 'html');
+            helpdesk_userapi_sendmail($mail_args, $htmlmessage, $textmessage);
 
-            // Does not generate errors
-            if( isset($recipients) )
+            /**
+             * Send out a email to user assigned to ticket if one exists
+             */
+            if( !empty($ticket_args['assignedto']) )
             {
-                $ticket_args['mailsubject'] =
+                $mail_args = array();
+                $mail_args['userid'] = $ticket_args['assignedto'];
+                $mail_args['name'] = xarUserGetVar('name',$ticket_args['assignedto']);
+                $mail_args['email'] = xarUserGetVar('email',$ticket_args['assignedto']);
+                $mail_args['mailsubject'] =
                     xarModGetVar('themes', 'SiteName') . " [#$tid] $subject ";
-                    //xarVarPrepForDisplay(xarML('New ticket submitted'));
-                $ticket_args['viewtickets'] = xarModUrl('helpdesk', 'user', 'view',
-                    array('selection' => 'MYALL')
-                );
-
-                // startnew message
-                $textmessage = xarTplModule('helpdesk', 'user', 'sendmailnewuser', $ticket_args, 'text');
-                $htmlmessage = xarTplModule('helpdesk', 'user', 'sendmailnewuser', $ticket_args, 'html');
-            }
-
-            break;
-
-        case 'closed':
-
-            if( !empty($email) ){ $recipients = $email;  }
-            else { $recipients = xarUserGetVar('email'); }
-
-            // Does not generate errors
-            if( isset($recipients) )
-            {
-                $ticket_args['mailsubject'] =
-                    "Closed: " . xarModGetVar('themes', 'SiteName') .
-                    " [#$tid] $subject ";
-
-                $ticket_args['viewtickets'] = xarModUrl('helpdesk', 'user', 'view',
-                    array('selection' => 'MYALL')
-                );
-
-                // startnew message
-                $textmessage = xarTplModule('helpdesk', 'user', 'sendmailcloseduser', $ticket_args, 'text');
-
-                $htmlmessage = xarTplModule('helpdesk', 'user', 'sendmailcloseduser', $ticket_args, 'html');
-            }
-
-            break;
-
-        case 'assignednew':
-
-            if( !empty($assignedto) )
-            {
-                $recipients = xarUserGetVar('email', $assignedto);
-                $ticket_args['assignedtoname'] =
-                    xarUserGetVar('name', $assignedto);
-            }
-            // Ticket is never assigned to admin.  If we want to default
-            // to an admin then that should be done in the assignto function
-            /*
-            else
-            {
-                $recipients = xarModGetVar('mail', 'adminmail');
-                $ticket_args['assignedtoname'] =
-                    xarModGetVar('mail', 'adminname');
-            }*/
-
-            // Does not generate errors
-            if(isset($recipients))
-            {
-                $ticket_args['mailsubject'] =
-                    xarModGetVar('themes', 'SiteName') . " [#$tid] $subject ";
-                //    xarVarPrepForDisplay(xarML('New ticket assigned to you'));
 
                 $ticket_args['viewtickets'] = xarModUrl('helpdesk', 'user', 'view',
                     array('selection' => 'MYASSIGNEDALL')
                 );
 
-                // startnew message
-                $textmessage = xarTplModule('helpdesk', 'user', 'sendmailnewassigned', $ticket_args, 'text');
+                $data = array_merge($ticket_args, $mail_args);
+                $textmessage = xarTplModule('helpdesk', 'user', 'sendmailnewassigned', $data, 'text');
+                $htmlmessage = xarTplModule('helpdesk', 'user', 'sendmailnewassigned', $data, 'html');
+                helpdesk_userapi_sendmail($mail_args, $htmlmessage, $textmessage);
 
-                $htmlmessage = xarTplModule('helpdesk', 'user', 'sendmailnewassigned', $ticket_args, 'html');
+            }
+            break;
 
-             }
+        case 'closed':
 
-             break;
+            $users = array('openedby', 'assignedto', 'closedby');
+            $sent_mail = array();
+            foreach( $users as $user )
+            {
+                if( !empty($ticket_args[$user]) && !in_array($ticket_args[$user], $sent_mail) )
+                {
+                    $mail_args = array();
+                    $mail_args['userid'] = $ticket_args[$user];
+                    $mail_args['name'] = xarUserGetVar('name',$ticket_args[$user]);
+                    $mail_args['email'] = xarUserGetVar('email',$ticket_args[$user]);
+                    $mail_args['mailsubject'] =
+                        "Closed: " . xarModGetVar('themes', 'SiteName') . " [#$tid] $subject ";
+                    $ticket_args['viewtickets'] = xarModUrl('helpdesk', 'user', 'view',
+                        array('selection' => 'MYALL')
+                    );
 
+                    $data = array_merge($ticket_args, $mail_args);
+                    $textmessage = xarTplModule('helpdesk', 'user', 'sendmailcloseduser', $data, 'text');
+                    $htmlmessage = xarTplModule('helpdesk', 'user', 'sendmailcloseduser', $data, 'html');
+                    helpdesk_userapi_sendmail($mail_args, $htmlmessage, $textmessage);
+                    $sent_mail[] = $ticket_args[$user];
+                }
+            }
+
+            break;
+
+        /**
+         * Addition comments should be sent out to all users associated with the
+         * ticket except for the current user.
+         */
         case 'additionalcomment':
 
-            if( !empty($email) ){ $recipients = $email;  }
-            else { $recipients = xarUserGetVar('email'); }
-
-            // Does not generate errors
-            if( isset($recipients) )
+            $users = array('openedby', 'assignedto', 'closedby');
+            $sent_mail = array();
+            foreach( $users as $user )
             {
-                $ticket_args['mailsubject'] =
-                    xarModGetVar('themes', 'SiteName') . " [#$tid] $subject";
+                if( !empty($ticket_args[$user]) && !in_array($ticket_args[$user], $sent_mail) )
+                {
+                    $mail_args = array();
+                    $mail_args['userid'] = $ticket_args[$user];
+                    $mail_args['name'] = xarUserGetVar('name',$ticket_args[$user]);
+                    $mail_args['email'] = xarUserGetVar('email',$ticket_args[$user]);
+                    $mail_args['mailsubject'] =
+                        xarModGetVar('themes', 'SiteName') . " [#$tid] $subject ";
+                    $ticket_args['viewtickets'] = xarModUrl('helpdesk', 'user', 'view',
+                        array('selection' => 'MYALL')
+                    );
 
-                $ticket_args['viewtickets'] = xarModUrl('helpdesk', 'user', 'view',
-                    array('selection' => 'MYALL')
-                );
-
-                // startnew message
-                $textmessage = xarTplModule('helpdesk', 'user', 'sendmailadditionalcomment', $ticket_args, 'text');
-                $htmlmessage = xarTplModule('helpdesk', 'user', 'sendmailadditionalcomment', $ticket_args, 'html');
+                    $data = array_merge($ticket_args, $mail_args);
+                    $textmessage = xarTplModule('helpdesk', 'user', 'sendmailadditionalcomment', $data, 'text');
+                    $htmlmessage = xarTplModule('helpdesk', 'user', 'sendmailadditionalcomment', $data, 'html');
+                    helpdesk_userapi_sendmail($mail_args, $htmlmessage, $textmessage);
+                    $sent_mail[] = $ticket_args[$user];
+                }
             }
 
             break;
 
     } //End switch
 
-    /*
-        Text and HTML Messages have been generated,
-        Now send the message to the recipients
-    */
-    if( isset($recipients) )
-    {
-        // Get the webmaster name TODO: make admin var
-        $fromname = xarModGetVar('mail', 'adminname');
-        // Get the webmaster email
-        $femail = xarModGetVar('mail', 'adminmail');
-
-        //let's send the email now
-        $usermail = xarModAPIFunc('mail', 'admin', 'sendmail',
-            array(
-                'info'         => $recipients,
-                'name'         => $ticket_args['name'],
-                'subject'      => $ticket_args['mailsubject'],
-                'htmlmessage'  => $htmlmessage,
-                'message'      => $textmessage,
-                'from'         => $femail,
-                'fromname'     => $fromname
-            )
-        );
-
-        if( $usermail )
-        {
-            xarSessionSetVar('helpdesk_statusmsg', xarML('User mail sent','helpdesk'));
-        }
-        else
-        {
-            return false;
-        }
-    }
 
     return true;
 }
+
+function helpdesk_userapi_sendmail($mail_args, $htmlmessage=null, $textmessage=null)
+{
+    $usermail = false;
+    if( isset($mail_args['email']) )
+    {
+        //let's send the email now
+        $usermail = xarModAPIFunc('mail', 'admin', 'sendmail',
+            array(
+                'info'         => $mail_args['email'],
+                'name'         => $mail_args['name'],
+                'subject'      => $mail_args['mailsubject'],
+                'htmlmessage'  => $htmlmessage,
+                'message'      => $textmessage,
+                //'from'         => $femail,
+                //'fromname'     => $fromname
+            )
+        );
+    }
+
+    return $usermail;
+}
+
 ?>
