@@ -88,10 +88,10 @@ function itsp_admin_privileges($args)
     if (strtolower($userid) == 'myself') {
         $username = 'Myself';
     } elseif (empty($userid) || $userid == 'All' || (!is_numeric($userid) && (strtolower($userid) != 'myself'))) {
-        $userid = 0;
-        if (!empty($username)) {
+        $userid = 'All';
+        if (!empty($username) && (strtolower($username) != 'myself')) {
             $user = xarModApiFunc('roles','user','get',array('name'=>$username));
-            if (!empty($user) && !empty($username)) {
+            if (!empty($user)) {
                 if (strtolower($userid) == 'myself') {
                     $username = 'Myself';
                 } else {

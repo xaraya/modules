@@ -26,14 +26,11 @@
                     <td>
                         <select name="planid" id="planid" onchange="javascript:this.form.submit();">
                             <option value="0">
-                                <xar:mlstring>All / Other </xar:mlstring>--&gt;
+                                <xar:mlstring>All </xar:mlstring>
                             </option>
                         <xar:foreach in="$planlist" key="$planid">#$planlist[$planid]#
                         <br />
                         <br /></xar:foreach>
-
-                    <input type="text" name="planid" id="planid" value="#$planid#" size="5" onchange="javascript:this.form.submit();" />
-                    <!-- TODO: show dropdown box for all relevant events (if not too many) -->
                     <xar:if condition="!empty($title)">
                     <br />
                     <xar:mlstring>Title</xar:mlstring>: #$title#</xar:if></td>
