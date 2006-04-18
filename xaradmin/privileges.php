@@ -26,8 +26,7 @@ function itsp_admin_privileges($args)
 
     // fixed params
     if (!xarVarFetch('itspid',  'isset', $calendar_id,  NULL, XARVAR_DONT_SET)) {return;}
- //   if (!xarVarFetch('cid',          'isset', $cid,          NULL, XARVAR_DONT_SET)) {return;}
- //   if (!xarVarFetch('cids',         'isset', $cids,         NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('username',     'isset', $username,     NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('userid',       'isset', $userid,       NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('pitemid',      'isset', $pitemid,      NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('planid',       'isset', $planid,       NULL, XARVAR_DONT_SET)) {return;}
@@ -45,20 +44,22 @@ function itsp_admin_privileges($args)
         if (count($parts) > 0 && !empty($parts[0])) $itspid = $parts[0];
         if (count($parts) > 1 && !empty($parts[1])) $planid = $parts[1];
         if (count($parts) > 2 && !empty($parts[2])) $userid = $parts[2];
-    //    if (count($parts) > 3 && !empty($parts[3])) $cid         = $parts[3];
     }
 
     if (!xarSecurityCheck('AdminITSP')) return;
 
     if (empty($itspid) || $itspid == 'All' || !is_numeric($itspid)) {
-        $itspid = 0;
+        $itspid = 'All';
     }
     $title = '';
-    if (!empty($planid)) {
+    if (empty($planid) || $planid == 'All' || !is_numeric($planid)) {
+        $planid = 'All';
+    } elseif ($planid >0) {
+
         $plan = xarModAPIFunc('itsp','user','get_plan',
                                  array('planid' => $planid));
         if (empty($plan)) {
-            $planid = 0;
+            $title = '';
         } else {
             $title = $plan['planname'];
             // override whatever other params we might have here
@@ -81,23 +82,27 @@ function itsp_admin_privileges($args)
         }
     }
 
+    // Get a userlist
+    $itsplist = xarModApiFunc('itsp','user','getall');
 // TODO: figure out how to handle groups of users and/or the current user (later)
     if (strtolower($userid) == 'myself') {
-        $userid = 'Myself';
+        $username = 'Myself';
     } elseif (empty($userid) || $userid == 'All' || (!is_numeric($userid) && (strtolower($userid) != 'myself'))) {
         $userid = 0;
-        if (!empty($userid)) {
-            $username = xarUserGetVar('name',$userid);
-            if (!empty($username) && !empty($userid)) {
-                if (strtolower($userid) == 'myself') $userid = 'Myself';
-                else $userid = $user['uid'];
+        if (!empty($username)) {
+            $user = xarModApiFunc('roles','user','get',array('name'=>$username));
+            if (!empty($user) && !empty($username)) {
+                if (strtolower($userid) == 'myself') {
+                    $username = 'Myself';
+                } else {
+                    $userid = $user['uid'];
+                }
             } else {
                 $username = '';
             }
         }
     } else {
         $username = '';
-
     }
     //$itspid:$planid:$userid
     // define the new instance
@@ -130,13 +135,12 @@ function itsp_admin_privileges($args)
         $numitems = xarModAPIFunc('itsp','user','countitems',
                                   array('itemtype' => $itemtype));
     } else {
-        $numitems = 1;
+        $numitems = 0;
     }
 
-    $data = array(
-                  'calendar_id'  => $calendar_id,
-                  'cid'          => $cid,
+    $data = array('planid'       => $planid,
                   'userid'       => $userid,
+                  'itsplist'     => $itsplist,
                   'username'     => xarVarPrepForDisplay($username),
                   'planlist'     => $planlist,
                   'itspid'       => $itspid,

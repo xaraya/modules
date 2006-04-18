@@ -18,48 +18,20 @@
             <input type="hidden" name="extrealm" id="extrealm" value="#$extrealm#" />
             <input type="hidden" name="extmodule" id="extmodule" value="#$extmodule#" />
             <input type="hidden" name="extcomponent" id="extcomponent" value="#$extcomponent#" />
-            <table border="1" cellpadding="8" cellspacing="0">
+            <table>
                 <tr>
                     <th valign="top" align="right">
-                        <xar:mlstring>Calendar ID</xar:mlstring>
+                        <xar:mlstring>Plan ID</xar:mlstring>
                     </th>
                     <td>
-                        <select name="calendar_id" onchange="javascript:this.form.submit();">
+                        <select name="planid" id="planid" onchange="javascript:this.form.submit();">
                             <option value="0">
-                                <xar:mlstring>All</xar:mlstring>
+                                <xar:mlstring>All / Other </xar:mlstring>--&gt;
                             </option>
-                        </select>
-                    </td>
-                </tr>
+                        <xar:foreach in="$planlist" key="$planid">#$planlist[$planid]#
+                        <br />
+                        <br /></xar:foreach>
 
-                <tr>
-                    <th valign="top" align="right">
-                        <xar:mlstring>User of ITSP</xar:mlstring>
-                    </th>
-                    <td>
-                    <xar:comment>
-                        <select name="userid" id="userid" onchange="javascript:this.form.submit();">
-                            <option value="0">
-                                <xar:mlstring>All / Other --&gt;</xar:mlstring>
-                            </option>
-                            <xar:foreach in="$userlist" key="$userid">
-                                <xar:if condition="$org_id eq $uid">
-                                    <option value="#$org_id#" selected="selected">#$organizerlist[$org_id]#</option>
-                                    <xar:else />
-                                    <option value="#$org_id#">#$organizerlist[$org_id]#</option>
-                                </xar:if>
-                            </xar:foreach>
-                        </select>
-                    </xar:comment>
-                        <input type="text" name="userid" id="userid" value="#$userid#" size="10" onchange="javascript:this.form.submit();" />
-                    </td>
-                </tr>
-                <tr>
-                    <th valign="top" align="right">
-                        <xar:mlstring>Plan</xar:mlstring>
-                    </th>
-                    <td>
-                    <xar:mlstring>Enter Plan number</xar:mlstring>:
                     <input type="text" name="planid" id="planid" value="#$planid#" size="5" onchange="javascript:this.form.submit();" />
                     <!-- TODO: show dropdown box for all relevant events (if not too many) -->
                     <xar:if condition="!empty($title)">
@@ -68,14 +40,35 @@
                 </tr>
                 <tr>
                     <th valign="top" align="right">
-                        <xar:mlstring></xar:mlstring>
+                        <xar:mlstring>ITSP ID</xar:mlstring>
                     </th>
                     <td>
-                        <xar:foreach in="$planlist" key="$planid">#$planlist[$planid]#
-                        <br />
-                        <br /></xar:foreach>
+                    <input type="text" name="itspid" id="itspid" value="#$itspid#" size="5" onchange="javascript:this.form.submit();" />
                     </td>
                 </tr>
+                <tr>
+                    <th valign="top" align="right">
+                        <xar:mlstring>User of ITSP</xar:mlstring>
+                    </th>
+                    <td>
+                        <select name="userid" id="userid" onchange="javascript:this.form.submit();">
+                            <option value="0">
+                                <xar:mlstring>All / Other </xar:mlstring>--&gt;
+                            </option>
+                            <xar:foreach in="$itsplist" key="$uid">
+                                <xar:if condition="$userid eq $uid">
+                                    <option value="#$userid#" selected="selected">#$itsplist[$userid]#</option>
+                                    <xar:else />
+                                    <option value="#$userid#">#$itsplist[$userid]#</option>
+                                </xar:if>
+                            </xar:foreach>
+                        </select>
+                    <xar:comment>                    </xar:comment>
+                        <input type="text" name="userid" id="userid" value="#$userid#" size="10" onchange="javascript:this.form.submit();" />
+                    </td>
+                </tr>
+
+
                 <tr>
                     <th valign="top" align="right">
                         <xar:mlstring>Access Level</xar:mlstring>
@@ -157,7 +150,7 @@
             </table>
             <br />
             <xar:ml>
-                <xar:mlstring>There are #(1) events matching these selection criteria at the moment</xar:mlstring>
+                <xar:mlstring>There are #(1) ITSPs matching these selection criteria at the moment</xar:mlstring>
                 <xar:mlvar>#$numitems#</xar:mlvar>
             </xar:ml>
             <br />
@@ -170,15 +163,10 @@
         <br />
         <xar:mlstring>Some examples : (assuming your users have read access by default)</xar:mlstring>
         <br />
-        <br />- <xar:mlstring>In order to allow 'Friends' to submit events (and only that), define a privilege 'AddJulianEvent' (or whatever name you prefer), and access level "Add" above.
-              Press "Finish and Apply to Privilege", and then assign that privilege to the 'Friends' role.</xar:mlstring>
         <br />
-        <br />- <xar:mlstring>When you want users to add events, and have them also edit or delete their own, then use the organizer (submitter) role 'Myself'. Eg All:Myself:All:All and an access level of 'Delete' will give users Delete rights to all events in all categories that they have added themselves.</xar:mlstring>
         <br />
-        <br />- <xar:mlstring>In order to stop 'Strangers' from viewing Events, define some privilege 'DenyJulianEvents' (instance All:All:All:All) and access level "No Access". Then assign that privilege to the 'Strangers' role.</xar:mlstring>
         <br />
         <br />- ...
         <br />
         <br />
-        <xar:mlstring>Note: if you want to deny access to all events in a particular category with ID 123, you can also define a privilege for module 'categories', component 'Category', category name 'All' and category ID '123'. This will remove the category from the Julian map and categories navigation as well.</xar:mlstring>
 </div>
