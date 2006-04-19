@@ -161,7 +161,7 @@ function helpdesk_init()
     // let's hook cats in
     $cid = xarModAPIFunc('categories', 'admin', 'create',
         array(
-            'name' => 'Helpdesk',
+            'name' => 'Help Desk',
             'description' => 'Main Helpdesk Cats.',
             'parent_id' => 0
         )
@@ -171,7 +171,7 @@ function helpdesk_init()
     xarModSetVar('helpdesk', 'mastercids', $cid);
     $categories = array();
     $categories[] = array(
-        'name' => "General Helpdesk",
+        'name' => "General Help Desk",
         'description' => "General helpdesk"
     );
     $categories[] = array(
@@ -337,14 +337,14 @@ function helpdesk_upgrade($oldversion)
 
             // let's hook it in
             $cid = xarModAPIFunc('categories', 'admin', 'create',
-                                array('name' => 'Helpdesk',
+                                array('name' => 'Help Desk',
                                     'description' => 'Main Helpdesk Cats.',
                                     'parent_id' => 0));
             // Note: you can have more than 1 mastercid (cfr. articles module)
             xarModSetVar('helpdesk', 'number_of_categories', 1);
             xarModSetVar('helpdesk', 'mastercids', $cid);
             $categories = array();
-            $categories[] = array('name' => "General Helpdesk",
+            $categories[] = array('name' => "General Help Desk",
                                 'description' => "General helpdesk");
             $categories[] = array('name' => "Networking",
                                 'description' => "Networking");

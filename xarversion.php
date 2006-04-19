@@ -24,10 +24,10 @@
 /********************************************************/
 
 $modversion['id']           = '910';
-$modversion['name']         = 'helpdesk';
+$modversion['name']         = 'Help Desk';
 $modversion['version'] = '0.7.8';
-$modversion['displayname']  = xarML('HelpDesk');
-$modversion['description']  = 'HelpDesk Module';
+$modversion['displayname']  = xarML('Help Desk');
+$modversion['description']  = 'Helpdesk Module';
 $modversion['credits']      = 'docs/credits.txt';
 $modversion['help']         = 'docs/help.txt';
 $modversion['changelog']    = 'docs/changelog.txt';
@@ -39,15 +39,15 @@ $modversion['user']         = 1;
 $modversion['admin']        = 1;
 $modversion['class']        = 'Complete';
 $modversion['category']     = 'Content';
-$modversion['displayname'] = xarML('HelpDesk');
-$modversion['description'] = 'HelpDesk Module';
+$modversion['displayname'] = xarML('Help Desk');
+$modversion['description'] = 'Help Desk Module';
 $modversion['credits'] = 'docs/credits.txt';
 $modversion['help'] = 'docs/help.txt';
 $modversion['changelog'] = 'docs/changelog.txt';
 $modversion['license'] = 'docs/license.txt';
 $modversion['official'] = 0;
 $modversion['author'] = 'Brian McGilligan';
-$modversion['contact'] = 'brian@envisionnet.net';
+$modversion['contact'] = 'brian@mcgilligan.us';
 $modversion['user'] = 1;
 $modversion['admin'] = 1;
 $modversion['securityschema'] = array('helpdesk::' => '::');
