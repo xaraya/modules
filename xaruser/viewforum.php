@@ -112,6 +112,8 @@ function xarbb_user_viewforum()
 
     // Fetch the topic tracking array for this forum.
     // TODO: move this to a separate API, as we need to do this deserialisation thing a lot.
+    // TODO: perhaps we can remove topics from this list after they are aged out, perhaps after
+    // 24 hours, or some cofigurable value? This would help to keep the array size down.
     if (!isset($read)) {
         // Normal handling
         $topic_tracking = xarModAPIfunc('xarbb', 'admin', 'get_cookie', array('name' => 'topics_' . $fid));

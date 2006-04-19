@@ -27,7 +27,7 @@
 
 function xarbb_user_main()
 {
-   // Get parameters from whatever input we need
+    // Get parameters from whatever input we need
     if (!xarVarFetch('startnum', 'id', $startnum, NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('catid', 'id', $catid, NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('read', 'isset', $read, NULL, XARVAR_DONT_SET)) return;
@@ -47,17 +47,21 @@ function xarbb_user_main()
     $data['catid']      = $catid;
     $data['now']        = $now;
     $data['items']      = array();
-    $sitename           = xarModGetVar('themes', 'SiteName', 0);
-    $xarbbtitle         = xarModGetVar('xarbb', 'xarbbtitle', 0);
-    $data['xarbbtitle'] = isset($xarbbtitle) ? $xarbbtitle : '';
+    $sitename           = xarModGetVar('themes', 'SiteName');
+    $xarbbtitle         = xarModGetVar('xarbb', 'xarbbtitle');
+    $data['xarbbtitle'] = (isset($xarbbtitle) ? $xarbbtitle : '');
 
     // Login
+    // TODO: Should the return URL be the same page that the user logged into,
+    // rather than the module main page?
     $data['return_url'] = xarModURL('xarbb', 'user', 'main');
+
+    // TODO: move text to template
     $data['submitlabel']= xarML('Submit');
 
     // List the categories available as well
 
-    // Regular Categories
+    // A category that the user has selected.
     if (isset($catid)) {
         $args['cid'] = $catid;
         $cats = xarModAPIfunc('categories', 'user', 'getcat', $args);
@@ -72,6 +76,7 @@ function xarbb_user_main()
             }
         }
 
+        // Count of categories
         $totalitems = count($items);
 
         for ($i = 0; $i < $totalitems; $i++) {
@@ -110,8 +115,9 @@ function xarbb_user_main()
             }
         }
     } else {
-        // Base Categories
+        // Base categories - the user has not selected a category.
         // Get an array of assigned category details for a specific item
+
         $cats = xarModAPIfunc('categories', 'user', 'getallcatbases', $args);
         if (empty($cats)) {
             $cats = array();
@@ -131,8 +137,14 @@ function xarbb_user_main()
             $item = $items[$i];
 
             // Get an array of assigned category details for a specific item
+            // Apply privileges to the child categories before accepting and displaying them.
             $args['basecat'] = $item['cid'];
-            $items[$i]['cbchild'] = xarModAPIfunc('categories', 'user', 'getchildren', array('cid' => $item['cid']));
+            $child_cats = xarModAPIfunc('categories', 'user', 'getchildren', array('cid' => $item['cid']));
+            foreach($child_cats as $child_cat) {
+                if (xarSecurityCheck('ViewxarBB', 0, 'Forum', $child_cat['cid'] . ':All')) {
+                    $items[$i]['cbchild'][] = $child_cat;
+                }
+            }
 
             // The user API function is called
             $forums = xarModAPIFunc('xarbb', 'user', 'getallforums', array('catid' => $item['cid']));
@@ -141,7 +153,7 @@ function xarbb_user_main()
             $forumcount = count($forums);
             $items[$i]['forums'] = array();
             foreach($forums as $forum) {
-                if (xarSecurityCheck('ViewxarBB', 0, 'Forum', 'All:' . $forum['fid'])) {
+                if (xarSecurityCheck('ViewxarBB', 0, 'Forum', $item['cid'] . ':' . $forum['fid'])) {
                     $items[$i]['forums'][] = $forum;
 
                     // Reset the last visited time if we want to mark all forums as read.
@@ -158,8 +170,6 @@ function xarbb_user_main()
         }
     }
 
-    // Debug
-    // $pre = var_export($items, true); echo "<pre>$pre</pre>"; return;
     // Add the array of items to the template variables
     $data['items'] = $items;
 
