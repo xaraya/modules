@@ -3,23 +3,18 @@
         <xar:template file="catnavigation"/>
     </xar:if>
     <xar:if condition="empty($layout) or $layout eq 'default'">
-        <table border="0" cellspacing="0" cellpadding="4">
-            <tr>
-                <td class="xar-accent">
-                    <xar:mlstring>
-                        Template : modules/dyn_example/xartemplates/objects/showview-dyn_example.xd<br/>
-                        This is a specific user view template for the dyn_example object (if you want this)
-                        in the dyn_example module (if you want that)
-                    </xar:mlstring>
-                </td>
-            </tr>
+        <p class="xar-accent xar-fullwidth">
+            <xar:mlstring>
+                Template : <strong>modules/dyn_example/xartemplates/objects/showview-dyn_example.xd</strong><br/>
+                This is a specific user view template for the dyn_example object (if you want this)
+                in the dyn_example module (if you want that)
+            </xar:mlstring>
+        </p>
             <xar:foreach in="$items" key="$itemid" value="$fields">
-                <tr>
-                    <td>
-                        <table border="0" cellspacing="0" cellpadding="4">
+                        <table class="xar-noborder xar-fullwidth" cellspacing="1" cellpadding="2" >
                             <xar:foreach in="$properties" key="$name">
                                 <tr>
-                                    <td>
+                                    <td class="xar-align-right xar-alt xar-valign-middle" width="15%">
                                         <xar:data-label property="$properties[$name]" />:
                                     </td>
                                     <xar:if condition="empty($fields[$name])">
@@ -37,7 +32,7 @@
                             </xar:foreach>
                             <xar:if condition="empty($linkfield) and !empty($links[$itemid]) and count($links[$itemid]) gt 0">
                                 <tr>
-                                    <td>&nbsp;</td>
+                                    <td class="xar-align-right  xar-alt xar-valign-middle">&nbsp;</td>
                                     <td>
                                         <xar:foreach in="$links[$itemid]" value="$option">
                                             #$option['ojoin']# <a href="#$option['olink']#">#$option['otitle']#</a>
@@ -46,15 +41,7 @@
                                 </tr>
                             </xar:if>
                         </table>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        &nbsp;
-                    </td>
-                </tr>
             </xar:foreach>
-        </table>
 
         <xar:if condition="!empty($prevurl) or !empty($nexturl)">
             <div class="xar-align-center">
@@ -73,10 +60,10 @@
         </xar:if>
 
     <xar:elseif condition="$layout eq 'list'" />
-        <table border="0" cellspacing="0" cellpadding="4">
+        <table class="xar-noborder xar-fullwidth" cellspacing="1" cellpadding="2" >
             <tr>
                 <xar:foreach in="$properties" key="$name">
-                    <th align="center"><xar:data-label property="$properties[$name]" /></th>
+                    <th class=xar-align-center"><xar:data-label property="$properties[$name]" /></th>
                 </xar:foreach>
                 <xar:if condition="empty($linkfield)">
                     <th>
@@ -89,15 +76,15 @@
                     <!-- we could use xar:data-display here too, instead of looping over fields ourselves -->
                     <xar:foreach in="$properties" key="$name">
                         <xar:if condition="empty($fields[$name])">
-                            <td valign="top">&nbsp;</td>
+                            <td class="xar-valign-top">&nbsp;</td>
                         <xar:elseif condition="!empty($linkfield) and $linkfield eq $name"/>
-                            <td valign="top"><a href="#$links[$itemid]['display']['olink']#"><xar:data-output property="$properties[$name]" value="$fields[$name]" /></a></td>
+                            <td class="xar-valign-top"><a href="#$links[$itemid]['display']['olink']#"><xar:data-output property="$properties[$name]" value="$fields[$name]" /></a></td>
                         <xar:else />
-                            <td valign="top"><xar:data-output property="$properties[$name]" value="$fields[$name]" /></td>
+                            <td class="xar-valign-top"><xar:data-output property="$properties[$name]" value="$fields[$name]" /></td>
                         </xar:if>
                     </xar:foreach>
                     <xar:if condition="empty($linkfield)">
-                        <td valign="top" align="center">
+                        <td class="xar-align-center xar-valign-top">
                             <xar:if condition="!empty($links[$itemid]) and count($links[$itemid]) gt 0">
                                 <xar:foreach in="$links[$itemid]" value="$option">
                                     #$option['ojoin']# <a href="#$option['olink']#">#$option['otitle']#</a>
